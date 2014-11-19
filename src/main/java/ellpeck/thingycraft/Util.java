@@ -6,7 +6,7 @@ import org.lwjgl.input.Keyboard;
 
 public class Util {
 
-    public static final String[] gemTypes = {"Malachite", "Agate", "MaliGarnet", "MawSitSit", "Melanite", "Moldavite", "Amazonite", "Amber", "Amethyst", "Nuummite", "Apatite", "Onyx", "Orthoclase", "Bloodstone", "Peridot", "ChromeDiopside"};
+    public static final String[] gemTypes = {"Onyx", "AlmandineGarnet", "ChromeDiopside", "Jasper", "Sodalite", "Iolite", "Smithsonite", "Danburite", "Hematite", "Lepidolite", "Tourmaline", "Sphene", "ParaibaTourlamine", "Rhodochrosite", "Clinohumite", "Goshenite"};
 
     public static boolean isShiftPressed(){
         return Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT);
