@@ -16,9 +16,10 @@ import java.util.List;
 
 public class ItemGem extends Item {
 
-    public static final IIcon[] textures = new IIcon[Util.gemTypes.length];
+    public final IIcon[] textures;
 
     public ItemGem(){
+        textures = new IIcon[Util.gemList.size()];
         this.setHasSubtypes(true);
         this.setCreativeTab(CreativeTabs.tabBrewing);
         this.setUnlocalizedName("itemGem");
@@ -28,8 +29,8 @@ public class ItemGem extends Item {
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld) {
         if(Util.isShiftPressed()){
-            for(int i = 0; i < Util.gemTypes.length; i++){
-                if(this.getDamage(stack) == i) list.add(StatCollector.translateToLocal("tooltip.gem" + Util.gemTypes[i] + ".desc"));
+            for(int i = 0; i < Util.gemList.size(); i++){
+                if(this.getDamage(stack) == i) list.add(StatCollector.translateToLocal("tooltip.gem" + Util.gemList.get(i).name.substring(5) + ".desc"));
             }
         }
         else{
@@ -38,13 +39,13 @@ public class ItemGem extends Item {
     }
 
     public String getUnlocalizedName(ItemStack stack){
-        return this.getUnlocalizedName() + Util.gemTypes[stack.getItemDamage()];
+        return this.getUnlocalizedName() + Util.gemList.get(stack.getItemDamage()).name.substring(5);
     }
 
     @SuppressWarnings("unchecked")
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item item, CreativeTabs tabs, List list){
-        for (int i = 0; i < Util.gemTypes.length; i++) {
+        for (int i = 0; i < Util.gemList.size(); i++) {
             list.add(new ItemStack(item, 1, i));
         }
     }
@@ -56,8 +57,8 @@ public class ItemGem extends Item {
 
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister iconReg){
-        for (int i = 0; i < Util.gemTypes.length; i++) {
-            textures[i] = iconReg.registerIcon(ThingyCraft.MOD_ID + ":" + this.getUnlocalizedName().substring(5) + Util.gemTypes[i]);
+        for (int i = 0; i < Util.gemList.size(); i++) {
+            textures[i] = iconReg.registerIcon(ThingyCraft.MOD_ID + ":" + this.getUnlocalizedName().substring(5) + Util.gemList.get(i).name.substring(5));
         }
     }
 

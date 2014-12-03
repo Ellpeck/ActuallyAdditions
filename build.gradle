@@ -17,12 +17,12 @@ buildscript {
 
 apply plugin: 'forge'
 
-version = "1.7.10-1.0"
+version = "1.7.10-1.0.1"
 group = "ellpeck.thingycraft"
 archivesBaseName = "ThingyCraft"
 
 minecraft {
-    version = "1.7.10-10.13.2.1230"
+    version = "1.7.10-10.13.2.1236"
     runDir = "idea"
 }
 

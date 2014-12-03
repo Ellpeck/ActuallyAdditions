@@ -29,8 +29,8 @@ public class OreGen implements IWorldGenerator {
     }
 
     private void generateSurface(World world, Random random, int x, int z){
-        for(int i = 0; i < Util.gemTypes.length; i++) {
-            this.addOreSpawn(InitBlocks.oreGem, i, Blocks.stone, world, random, x, z, 4 + random.nextInt(3), 8, 1, 70);
+        for(int i = 0; i < Util.gemList.size(); i++) {
+            this.addOreSpawn(InitBlocks.oreGem, i, Blocks.stone, world, random, x, z, 4 + random.nextInt(3), 6, 1, 70);
         }
     }
 

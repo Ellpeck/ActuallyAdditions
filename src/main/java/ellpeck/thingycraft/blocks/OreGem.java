@@ -12,15 +12,17 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
+
 import java.util.List;
 import java.util.Random;
 
 public class OreGem extends Block{
 
-    public static final IIcon[] textures = new IIcon[Util.gemTypes.length];
+    public final IIcon[] textures;
 
     public OreGem() {
         super(Material.rock);
+        textures = new IIcon[Util.gemList.size()];
         this.setHardness(3.0F);
         this.setResistance(5.0F);
         this.setStepSound(soundTypeStone);
@@ -31,7 +33,7 @@ public class OreGem extends Block{
 
     @SuppressWarnings("unchecked")
     public void getSubBlocks(Item stack, CreativeTabs tab, List list) {
-        for (int i = 0; i < Util.gemTypes.length; i++) {
+        for (int i = 0; i < Util.gemList.size(); i++) {
             list.add(new ItemStack(stack, 1, i));
         }
     }
@@ -54,8 +56,8 @@ public class OreGem extends Block{
 
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconReg) {
-        for (int i = 0; i < Util.gemTypes.length; i++) {
-            textures[i] = iconReg.registerIcon(ThingyCraft.MOD_ID + ":" + this.getUnlocalizedName().substring(5) + Util.gemTypes[i]);
+        for (int i = 0; i < Util.gemList.size(); i++) {
+            textures[i] = iconReg.registerIcon(ThingyCraft.MOD_ID + ":" + this.getUnlocalizedName().substring(5) + Util.gemList.get(i).name.substring(5));
         }
     }
 }
