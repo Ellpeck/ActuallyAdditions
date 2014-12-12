@@ -1,7 +1,7 @@
-Gemification.iws
-Gemification.ipr
-Gemification.iml
-idea
-.gradle
-build
-out
+/.gradle
+/build
+/out
+/idea
+/*.iml
+/*.ipr
+/*.iws
