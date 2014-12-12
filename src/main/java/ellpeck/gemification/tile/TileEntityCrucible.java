@@ -18,17 +18,8 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 
-public class TileEntityCrucible extends TileEntity implements ISidedInventory {
+public class TileEntityCrucible extends TileEntityInventoryBase{
 
-    /**
-     * 0-3: Inputs
-     * 4: Main Input
-     * 5-8: Inputs
-     * 9: Water
-     * 10: Gem
-     * 11: Output
-     */
-    public ItemStack slots[] = new ItemStack[12];
     public final int slotOutput = 11;
     public final int slotMainInput = 4;
     public final int slotWater = 9;
@@ -44,6 +35,18 @@ public class TileEntityCrucible extends TileEntity implements ISidedInventory {
 
     private boolean isCrafting = false;
     public static ItemStack output;
+
+    public TileEntityCrucible(){
+        /**
+         * 0-3: Inputs
+         * 4: Main Input
+         * 5-8: Inputs
+         * 9: Water
+         * 10: Gem
+         * 11: Output
+         */
+        this.slots = new ItemStack[12];
+    }
 
     public void updateEntity(){
         if(!worldObj.isRemote){
@@ -101,125 +104,21 @@ public class TileEntityCrucible extends TileEntity implements ISidedInventory {
         }
     }
 
-    public int getSizeInventory() {
-        return slots.length;
-    }
-
-    public ItemStack getStackInSlot(int i) {
-        return slots[i];
-    }
-
-    public ItemStack decrStackSize(int i, int j) {
-        if (slots[i] != null) {
-            ItemStack stackAt;
-            if (slots[i].stackSize <= j) {
-                stackAt = slots[i];
-                slots[i] = null;
-                return stackAt;
-            } else {
-                stackAt = slots[i].splitStack(j);
-                if (slots[i].stackSize == 0)
-                    slots[i] = null;
-                return stackAt;
-            }
-        }
-        return null;
-    }
-
-    public ItemStack getStackInSlotOnClosing(int i) {
-        return getStackInSlot(i);
-    }
-
-    public void setInventorySlotContents(int i, ItemStack stack){
-        this.slots[i] = stack;
-    }
-
     public String getInventoryName() {
         return InitBlocks.blockCrucible.getUnlocalizedName().substring(5);
     }
 
-    public boolean hasCustomInventoryName() {
-        return false;
-    }
-
-    public int getInventoryStackLimit() {
-        return 64;
-    }
-
-    public boolean isUseableByPlayer(EntityPlayer player) {
-        return worldObj.getTileEntity(xCoord, yCoord, zCoord) == this && player.getDistanceSq(xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D) <= 64;
-    }
-
-    public void openInventory() {
-
-    }
-
-    public void closeInventory() {
-
-    }
-
-    public boolean isItemValidForSlot(int i, ItemStack stack) {
-        return false;
-    }
-
     public void writeToNBT(NBTTagCompound compound){
         super.writeToNBT(compound);
-        NBTTagList tagList = new NBTTagList();
-        for(int currentIndex = 0; currentIndex < slots.length; ++currentIndex){
-            if (slots[currentIndex] != null){
-                NBTTagCompound tagCompound = new NBTTagCompound();
-                tagCompound.setByte("Slot", (byte)currentIndex);
-                slots[currentIndex].writeToNBT(tagCompound);
-                tagList.appendTag(tagCompound);
-            }
-        }
-        compound.setTag("Items", tagList);
-
         compound.setInteger("CurrentFluidID", this.currentFluidID);
     }
 
-    public void readFromNBT(NBTTagCompound nbtTagCompound){
-        super.readFromNBT(nbtTagCompound);
-        NBTTagList tagList = nbtTagCompound.getTagList("Items", 10);
-        for (int i = 0; i < tagList.tagCount(); ++i){
-            NBTTagCompound tagCompound = tagList.getCompoundTagAt(i);
-            byte slotIndex = tagCompound.getByte("Slot");
-            if (slotIndex >= 0 && slotIndex < slots.length){
-                slots[slotIndex] = ItemStack.loadItemStackFromNBT(tagCompound);
-            }
-        }
-
-        this.currentFluidID = nbtTagCompound.getInteger("CurrentFluidID");
+    public void readFromNBT(NBTTagCompound compound){
+        super.readFromNBT(compound);
+        this.currentFluidID = compound.getInteger("CurrentFluidID");
         if(this.currentFluidID == Util.fluidWater.ID) this.currentFluid = Util.fluidWater;
         else if(this.currentFluidID == Util.fluidNone.ID) this.currentFluid = Util.fluidNone;
         else this.currentFluid = Util.gemList.get(this.currentFluidID);
-    }
-
-    public Packet getDescriptionPacket() {
-        NBTTagCompound compound = new NBTTagCompound();
-        this.writeToNBT(compound);
-        return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord, this.getBlockMetadata(), compound);
-    }
-
-    public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity packet) {
-        super.onDataPacket(net, packet);
-        this.readFromNBT(packet.func_148857_g());
-    }
-
-    public String getName() {
-        return InitBlocks.blockCrucible.getUnlocalizedName().substring(5);
-    }
-
-    public int[] getAccessibleSlotsFromSide(int side) {
-        return new int[0];
-    }
-
-    public boolean canInsertItem(int par1, ItemStack stack, int par3) {
-        return false;
-    }
-
-    public boolean canExtractItem(int par1, ItemStack stack, int par3) {
-        return false;
     }
 
     @SideOnly(Side.CLIENT)

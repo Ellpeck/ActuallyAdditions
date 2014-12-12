@@ -18,10 +18,10 @@ public class CrucibleCraftingManager{
 
     @SuppressWarnings("all")
     public void initRecipes(){
-        this.addRecipe(new ItemStack(Blocks.acacia_stairs), Util.fluidNone, 200, new Object[]{"ccc", "cgc", "ccc", 'c', Blocks.cobblestone, 'g', new ItemStack(Items.stick)});
+        this.addRecipe(new ItemStack(Blocks.acacia_stairs), Util.fluidChromeDiopside, 200, new Object[]{"ccc", "cgc", "ccc", 'c', Blocks.cobblestone, 'g', new ItemStack(Items.stick)});
     }
 
-    @SuppressWarnings("static-access, unchecked")
+    @SuppressWarnings("unchecked, static-access")
     public void addRecipe(ItemStack output, GemType fluidNeeded, int processTimeNeeded, Object ... recipe){
         String s = "";
         int i = 0;

@@ -3,7 +3,7 @@ package ellpeck.gemification.blocks.models;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 
-public class ModelCrucible extends ModelBase{
+public class ModelCrucible extends ModelBaseG{
     public ModelRenderer floor, rimOne, rimTwo, rimThree, rimFour, wallOne, wallTwo, wallThree, wallFour, supportOne, supportTwo, supportThree, supportFour;
 
     public ModelCrucible() {
@@ -50,7 +50,7 @@ public class ModelCrucible extends ModelBase{
         this.supportThree.addBox(0.0F, 0.0F, 0.0F, 2, 3, 2);
     }
 
-    public void render(float f) {
+    public void render(float f){
         this.supportTwo.render(f);
         this.wallTwo.render(f);
         this.floor.render(f);

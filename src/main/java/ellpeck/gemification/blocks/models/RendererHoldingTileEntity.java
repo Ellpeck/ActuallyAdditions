@@ -8,10 +8,10 @@ import org.lwjgl.opengl.GL11;
 
 public class RendererHoldingTileEntity implements IItemRenderer {
 
-    ModelCrucible model;
+    ModelBaseG model;
     ResourceLocation texture;
 
-    public RendererHoldingTileEntity(ModelCrucible model, ResourceLocation res){
+    public RendererHoldingTileEntity(ModelBaseG model, ResourceLocation res){
         this.model = model;
         texture = res;
     }
