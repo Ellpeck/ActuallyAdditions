@@ -2,20 +2,14 @@ package ellpeck.gemification.tile;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ellpeck.gemification.GemType;
-import ellpeck.gemification.Util;
 import ellpeck.gemification.blocks.InitBlocks;
 import ellpeck.gemification.crafting.CrucibleCraftingManager;
 import ellpeck.gemification.items.ItemGem;
-import net.minecraft.entity.player.EntityPlayer;
+import ellpeck.gemification.util.GemType;
+import ellpeck.gemification.util.Util;
 import net.minecraft.init.Items;
-import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.Packet;
-import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 
 public class TileEntityCrucible extends TileEntityInventoryBase{
@@ -32,8 +26,9 @@ public class TileEntityCrucible extends TileEntityInventoryBase{
     public int currentFluidID;
     public int currentProcessTime;
     public int processTimeNeeded;
+    public int burnTime;
+    public int burnTimeOfItem;
 
-    private boolean isCrafting = false;
     public static ItemStack output;
 
     public TileEntityCrucible(){
@@ -48,41 +43,65 @@ public class TileEntityCrucible extends TileEntityInventoryBase{
         this.slots = new ItemStack[12];
     }
 
+    @SuppressWarnings("static-access")
     public void updateEntity(){
+        boolean isCraftingFlag = this.isCrafting();
         if(!worldObj.isRemote){
+            if(!this.isCrafting()) this.output = CrucibleCraftingManager.instance.getCraftingResult(slots, 0, 8, currentFluid);
+            this.getBurnFromBelow();
             this.craft();
             this.addWaterByWaterSlot();
             this.colorGemWater();
             this.currentFluidID = this.currentFluid.ID;
         }
+        if(isCraftingFlag != this.isCrafting()){
+            this.markDirty();
+            worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+        }
+    }
+
+    public boolean isCrafting(){
+        return this.currentProcessTime > 0;
     }
 
     @SuppressWarnings("static-access")
     public void craft(){
-        if(!this.isCrafting){
-            this.output = CrucibleCraftingManager.instance.getCraftingResult(slots, 0, 8, currentFluid);
-            if (output != null) {
-                this.processTimeNeeded = CrucibleCraftingManager.instance.getProcessTimeNeeded(output);
-                for(int i = 0; i <= 8; i++){
-                    this.slots[i].stackSize--;
-                    if (this.slots[i].stackSize == 0){
-                        this.slots[i] = slots[i].getItem().getContainerItem(slots[i]);
+        if(this.burnTime > 0){
+            if (!this.isCrafting()){
+                if (output != null && (this.slots[slotOutput] == null || this.slots[slotOutput].isItemEqual(output))) {
+                    this.processTimeNeeded = this.currentProcessTime = CrucibleCraftingManager.instance.getProcessTimeNeeded(slots, 0, 8);
+                    for (int i = 0; i <= 8; i++){
+                        this.slots[i].stackSize--;
+                        if (this.slots[i].stackSize == 0) {
+                            this.slots[i] = slots[i].getItem().getContainerItem(slots[i]);
+                        }
                     }
+                    this.currentFluid = Util.fluidNone;
                 }
-                this.currentFluid = Util.fluidNone;
-                this.isCrafting = true;
+            }
+            if(this.isCrafting()){
+                this.currentProcessTime--;
+                if (this.currentProcessTime <= 0){
+                    if (this.slots[slotOutput] == null) this.slots[slotOutput] = output.copy();
+                    else if (this.slots[slotOutput].getItem() == output.getItem())
+                        this.slots[slotOutput].stackSize += output.stackSize;
+                    this.output = null;
+                    this.currentProcessTime = 0;
+                    this.processTimeNeeded = 0;
+                }
             }
         }
-        if(this.isCrafting){
-            this.currentProcessTime++;
-            if(this.currentProcessTime >= this.processTimeNeeded){
-                if(this.slots[slotOutput] == null) this.slots[slotOutput] = output.copy();
-                else if(this.slots[slotOutput].getItem() == output.getItem()) this.slots[slotOutput].stackSize += output.stackSize;
-                this.output = null;
-                this.currentProcessTime = 0;
-                this.processTimeNeeded = 0;
-                this.isCrafting = false;
-            }
+    }
+
+    public void getBurnFromBelow(){
+        TileEntity tileDown = worldObj.getTileEntity(this.xCoord, this.yCoord - 1, this.zCoord);
+        if(tileDown instanceof TileEntityCrucibleFire){
+            this.burnTime = ((TileEntityCrucibleFire)tileDown).burnTime;
+            this.burnTimeOfItem = ((TileEntityCrucibleFire)tileDown).burnTimeOfItem;
+        }
+        else{
+            this.burnTime = 0;
+            this.burnTimeOfItem = 0;
         }
     }
 
@@ -110,12 +129,27 @@ public class TileEntityCrucible extends TileEntityInventoryBase{
 
     public void writeToNBT(NBTTagCompound compound){
         super.writeToNBT(compound);
+
         compound.setInteger("CurrentFluidID", this.currentFluidID);
+        compound.setInteger("ProcessTime", this.currentProcessTime);
+        compound.setInteger("ProcessTimeNeeded", this.processTimeNeeded);
+
+        if(output != null) {
+            NBTTagCompound compoundOutput = new NBTTagCompound();
+            compoundOutput = output.writeToNBT(compoundOutput);
+            compound.setTag("Output", compoundOutput);
+        }
     }
 
+    @SuppressWarnings("static-access")
     public void readFromNBT(NBTTagCompound compound){
         super.readFromNBT(compound);
+
         this.currentFluidID = compound.getInteger("CurrentFluidID");
+        this.currentProcessTime = compound.getInteger("ProcessTime");
+        this.processTimeNeeded = compound.getInteger("ProcessTimeNeeded");
+        this.output = ItemStack.loadItemStackFromNBT(compound.getCompoundTag("Output"));
+
         if(this.currentFluidID == Util.fluidWater.ID) this.currentFluid = Util.fluidWater;
         else if(this.currentFluidID == Util.fluidNone.ID) this.currentFluid = Util.fluidNone;
         else this.currentFluid = Util.gemList.get(this.currentFluidID);
@@ -123,6 +157,11 @@ public class TileEntityCrucible extends TileEntityInventoryBase{
 
     @SideOnly(Side.CLIENT)
     public int getCraftProcessScaled(int par1){
-        return this.currentProcessTime * par1 / this.processTimeNeeded;
+        return (this.processTimeNeeded-this.currentProcessTime) * par1 / this.processTimeNeeded;
+    }
+
+    @SideOnly(Side.CLIENT)
+    public int getBurnTimeRemainingScaled(int i){
+        return this.burnTime * i / this.burnTimeOfItem;
     }
 }

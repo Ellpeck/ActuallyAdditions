@@ -1,7 +1,9 @@
-package ellpeck.gemification;
+package ellpeck.gemification.gen;
 
 import cpw.mods.fml.common.IWorldGenerator;
+import cpw.mods.fml.common.registry.GameRegistry;
 import ellpeck.gemification.blocks.InitBlocks;
+import ellpeck.gemification.util.Util;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
@@ -47,5 +49,9 @@ public class OreGen implements IWorldGenerator {
             int posZ = blockZPos + random.nextInt(16);
             (new WorldGenMinable(block, meta, maxVeinSize, blockIn)).generate(world, random, posX, posY, posZ);
         }
+    }
+
+    public static void init(){
+        GameRegistry.registerWorldGenerator(new OreGen(), 0);
     }
 }

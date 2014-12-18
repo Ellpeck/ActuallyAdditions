@@ -1,5 +1,7 @@
 package ellpeck.gemification.tile;
 
+import cpw.mods.fml.common.registry.GameRegistry;
+import ellpeck.gemification.util.Util;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
@@ -19,4 +21,8 @@ public class TileEntityBase extends TileEntity{
         this.readFromNBT(packet.func_148857_g());
     }
 
+    public static void init(){
+        GameRegistry.registerTileEntity(TileEntityCrucible.class, Util.MOD_ID + "tileEntityCrucible");
+        GameRegistry.registerTileEntity(TileEntityCrucibleFire.class, Util.MOD_ID + "tileEntityCrucibleFire");
+    }
 }

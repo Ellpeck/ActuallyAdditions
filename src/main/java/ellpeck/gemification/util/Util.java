@@ -1,4 +1,4 @@
-package ellpeck.gemification;
+package ellpeck.gemification.util;
 
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
@@ -7,6 +7,10 @@ import org.lwjgl.input.Keyboard;
 import java.util.ArrayList;
 
 public class Util {
+
+    public static final String MOD_ID = "gemification";
+    public static final String NAME = "Gemification";
+    public static final String VERSION = "1.7.10-1.0.1";
 
     public static ArrayList<GemType> gemList = new ArrayList<GemType>();
 
@@ -33,8 +37,7 @@ public class Util {
         return Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT);
     }
 
-    public static String shiftForInfo(){
-        return (EnumChatFormatting.ITALIC + StatCollector.translateToLocal("tooltip.shiftForInfo.desc"));
+    public static String shiftForInfo() {
+        return ((char)167+"2" + EnumChatFormatting.ITALIC + StatCollector.translateToLocal("tooltip.shiftForInfo.desc"));
     }
-
 }

@@ -6,7 +6,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 
-public class TileEntityInventoryBase extends TileEntityBase implements ISidedInventory{
+public abstract class TileEntityInventoryBase extends TileEntityBase implements ISidedInventory{
 
     public ItemStack slots[];
 
@@ -78,10 +78,6 @@ public class TileEntityInventoryBase extends TileEntityBase implements ISidedInv
 
     public void setInventorySlotContents(int i, ItemStack stack){
         this.slots[i] = stack;
-    }
-
-    public String getInventoryName() {
-        return null;
     }
 
     public int getSizeInventory() {

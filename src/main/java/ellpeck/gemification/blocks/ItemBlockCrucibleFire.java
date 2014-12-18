@@ -11,9 +11,9 @@ import net.minecraft.util.StatCollector;
 
 import java.util.List;
 
-public class ItemBlockCrucible extends ItemBlock {
+public class ItemBlockCrucibleFire extends ItemBlock {
 
-    public ItemBlockCrucible(Block block){
+    public ItemBlockCrucibleFire(Block block){
         super(block);
         setHasSubtypes(false);
     }

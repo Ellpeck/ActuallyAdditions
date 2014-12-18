@@ -1,11 +1,14 @@
-package ellpeck.gemification.container;
+package ellpeck.gemification.inventory.container;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.gemification.tile.TileEntityCrucible;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.*;
+import net.minecraft.inventory.Container;
+import net.minecraft.inventory.ICrafting;
+import net.minecraft.inventory.Slot;
+import net.minecraft.inventory.SlotFurnace;
 
 public class ContainerCrucible extends Container {
 
@@ -14,6 +17,8 @@ public class ContainerCrucible extends Container {
     private int lastCurrentFluidID;
     private int lastProcessTime;
     private int lastProcessTimeNeeded;
+    private int lastBurnTime;
+    private int lastBurnTimeOfItem;
 
     public ContainerCrucible(InventoryPlayer inventoryPlayer, TileEntityCrucible tileCrucible) {
         this.tileCrucible = tileCrucible;
@@ -54,6 +59,8 @@ public class ContainerCrucible extends Container {
         iCraft.sendProgressBarUpdate(this, 0, this.tileCrucible.currentFluidID);
         iCraft.sendProgressBarUpdate(this, 1, this.tileCrucible.currentProcessTime);
         iCraft.sendProgressBarUpdate(this, 2, this.tileCrucible.processTimeNeeded);
+        iCraft.sendProgressBarUpdate(this, 3, this.tileCrucible.burnTime);
+        iCraft.sendProgressBarUpdate(this, 4, this.tileCrucible.burnTimeOfItem);
     }
 
     public void detectAndSendChanges(){
@@ -64,11 +71,15 @@ public class ContainerCrucible extends Container {
             if (this.lastCurrentFluidID != this.tileCrucible.currentFluidID) iCraft.sendProgressBarUpdate(this, 0, this.tileCrucible.currentFluidID);
             if (this.lastProcessTime != this.tileCrucible.currentProcessTime) iCraft.sendProgressBarUpdate(this, 1, this.tileCrucible.currentProcessTime);
             if (this.lastProcessTimeNeeded != this.tileCrucible.processTimeNeeded) iCraft.sendProgressBarUpdate(this, 2, this.tileCrucible.processTimeNeeded);
+            if (this.lastBurnTime != this.tileCrucible.burnTime) iCraft.sendProgressBarUpdate(this, 3, this.tileCrucible.burnTime);
+            if (this.lastBurnTimeOfItem != this.tileCrucible.burnTimeOfItem) iCraft.sendProgressBarUpdate(this, 4, this.tileCrucible.burnTimeOfItem);
         }
 
         this.lastCurrentFluidID = this.tileCrucible.currentFluidID;
         this.lastProcessTime = this.tileCrucible.currentProcessTime;
         this.lastProcessTimeNeeded = this.tileCrucible.processTimeNeeded;
+        this.lastBurnTime = this.tileCrucible.burnTime;
+        this.lastBurnTimeOfItem = this.tileCrucible.burnTimeOfItem;
     }
 
     @SideOnly(Side.CLIENT)
@@ -76,6 +87,7 @@ public class ContainerCrucible extends Container {
         if (par1 == 0) this.tileCrucible.currentFluidID = par2;
         if (par1 == 1) this.tileCrucible.currentProcessTime = par2;
         if (par1 == 2) this.tileCrucible.processTimeNeeded = par2;
-
+        if (par1 == 3) this.tileCrucible.burnTime = par2;
+        if (par1 == 4) this.tileCrucible.burnTimeOfItem = par2;
     }
 }

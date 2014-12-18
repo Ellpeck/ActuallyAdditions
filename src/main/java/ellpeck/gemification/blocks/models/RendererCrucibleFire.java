@@ -6,13 +6,13 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
-public class RendererCrucible extends TileEntitySpecialRenderer{
+public class RendererCrucibleFire extends TileEntitySpecialRenderer{
 
-    public static final ResourceLocation resLoc = new ResourceLocation(Util.MOD_ID, "textures/blocks/models/modelCrucible.png");
-    private ModelCrucible model;
+    public static final ResourceLocation resLoc = new ResourceLocation(Util.MOD_ID, "textures/blocks/models/modelCrucibleFire.png");
+    private ModelCrucibleFire model;
 
-    public RendererCrucible(){
-        this.model = new ModelCrucible();
+    public RendererCrucibleFire(){
+        this.model = new ModelCrucibleFire();
     }
 
     public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float par5) {

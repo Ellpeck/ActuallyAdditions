@@ -1,8 +1,8 @@
-package ellpeck.gemification.container;
+package ellpeck.gemification.inventory.gui;
 
-import ellpeck.gemification.Gemification;
-import ellpeck.gemification.Util;
+import ellpeck.gemification.inventory.container.ContainerCrucible;
 import ellpeck.gemification.tile.TileEntityCrucible;
+import ellpeck.gemification.util.Util;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -16,9 +16,9 @@ public class GuiCrucible extends GuiContainer{
 
     private TileEntityCrucible tileCrucible;
 
-    public static final ResourceLocation resLoc = new ResourceLocation(Gemification.MOD_ID, "textures/gui/guiCrucible.png");
+    public static final ResourceLocation resLoc = new ResourceLocation(Util.MOD_ID, "textures/gui/guiCrucible.png");
 
-    public GuiCrucible(InventoryPlayer inventoryPlayer, TileEntityCrucible tileCrucible) {
+    public GuiCrucible(InventoryPlayer inventoryPlayer, TileEntityCrucible tileCrucible){
         super(new ContainerCrucible(inventoryPlayer, tileCrucible));
         this.tileCrucible = tileCrucible;
 
@@ -34,6 +34,11 @@ public class GuiCrucible extends GuiContainer{
         if(this.tileCrucible.currentProcessTime > 0){
             int i = this.tileCrucible.getCraftProcessScaled(32);
             this.drawTexturedModalRect(guiLeft + 107, guiTop + 55, 176, 0, i, 45);
+        }
+
+        if(this.tileCrucible.burnTime > 0 && this.tileCrucible.burnTimeOfItem > 0) {
+            int i = this.tileCrucible.getBurnTimeRemainingScaled(13);
+            this.drawTexturedModalRect(guiLeft + 141, guiTop + 21 + 12 - i, 188, 45 + 12 - i, 14, i + 1);
         }
 
         if(this.tileCrucible.currentFluidID == Util.fluidWater.ID) this.drawTexturedModalRect(guiLeft + 141, guiTop + 7, 176, 47, 12, 12);
@@ -58,6 +63,7 @@ public class GuiCrucible extends GuiContainer{
     @SuppressWarnings("static-access")
     public void drawScreen(int par1, int par2, float par3){
         super.drawScreen(par1, par2, par3);
+
         RenderHelper.enableGUIStandardItemLighting();
         GL11.glEnable(GL11.GL_LIGHTING);
         itemRender.renderItemAndEffectIntoGUI(fontRendererObj, mc.getTextureManager(), tileCrucible.output, guiLeft + 112, guiTop + 65);

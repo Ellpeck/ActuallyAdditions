@@ -1,4 +1,4 @@
-package ellpeck.gemification;
+package ellpeck.gemification.util;
 
 public class GemType {
 

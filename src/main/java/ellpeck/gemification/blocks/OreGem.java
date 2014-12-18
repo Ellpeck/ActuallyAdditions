@@ -2,10 +2,9 @@ package ellpeck.gemification.blocks;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ellpeck.gemification.CreativeTab;
-import ellpeck.gemification.Gemification;
-import ellpeck.gemification.Util;
+import ellpeck.gemification.creative.CreativeTab;
 import ellpeck.gemification.items.InitItems;
+import ellpeck.gemification.util.Util;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -58,7 +57,7 @@ public class OreGem extends Block{
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconReg) {
         for (int i = 0; i < Util.gemList.size(); i++) {
-            textures[i] = iconReg.registerIcon(Gemification.MOD_ID + ":" + this.getUnlocalizedName().substring(5) + Util.gemList.get(i).name.substring(5));
+            textures[i] = iconReg.registerIcon(Util.MOD_ID + ":" + this.getUnlocalizedName().substring(5) + Util.gemList.get(i).name.substring(5));
         }
     }
 }

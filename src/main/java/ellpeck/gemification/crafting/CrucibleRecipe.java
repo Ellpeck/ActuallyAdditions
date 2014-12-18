@@ -1,6 +1,6 @@
 package ellpeck.gemification.crafting;
 
-import ellpeck.gemification.GemType;
+import ellpeck.gemification.util.GemType;
 import net.minecraft.item.ItemStack;
 
 public class CrucibleRecipe{

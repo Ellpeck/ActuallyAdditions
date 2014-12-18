@@ -2,7 +2,7 @@ package ellpeck.gemification.blocks;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ellpeck.gemification.Util;
+import ellpeck.gemification.util.Util;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
