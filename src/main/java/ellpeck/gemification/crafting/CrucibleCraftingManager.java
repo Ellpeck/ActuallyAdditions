@@ -1,12 +1,10 @@
 package ellpeck.gemification.crafting;
 
 import ellpeck.gemification.util.GemType;
-import ellpeck.gemification.util.Util;
 import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,11 +13,6 @@ public class CrucibleCraftingManager{
 
     public static final CrucibleCraftingManager instance = new CrucibleCraftingManager();
     public static ArrayList<CrucibleRecipe> recipes = new ArrayList<CrucibleRecipe>();
-
-    @SuppressWarnings("all")
-    public void initRecipes(){
-        this.addRecipe(new ItemStack(Blocks.acacia_stairs), Util.fluidChromeDiopside, 200, new Object[]{"ccc", "cgc", "ccc", 'c', Blocks.cobblestone, 'g', new ItemStack(Items.stick)});
-    }
 
     @SuppressWarnings("unchecked, static-access")
     public void addRecipe(ItemStack output, GemType fluidNeeded, int processTimeNeeded, Object ... recipe){
@@ -51,10 +44,10 @@ public class CrucibleCraftingManager{
             ItemStack stack1 = null;
 
             if (recipe[i + 1] instanceof Item){
-                stack1 = new ItemStack((Item)recipe[i + 1], 1, 32767);
+                stack1 = new ItemStack((Item)recipe[i + 1], 1, OreDictionary.WILDCARD_VALUE);
             }
             else if (recipe[i + 1] instanceof Block){
-                stack1 = new ItemStack((Block)recipe[i + 1], 1, 32767);
+                stack1 = new ItemStack((Block)recipe[i + 1], 1, OreDictionary.WILDCARD_VALUE);
             }
             else if (recipe[i + 1] instanceof ItemStack){
                 stack1 = (ItemStack)recipe[i + 1];
@@ -102,7 +95,7 @@ public class CrucibleCraftingManager{
             int k = 0;
             for (int j = 0; j < maxSlot - minSlot + 1; j++){
                 if (slots[minSlot + j] != null && inputs[j] != null && slots[minSlot + j].getItem() == inputs[j].getItem()){
-                    if(inputs[j].getItemDamage() == 32767 || inputs[j].getItemDamage() == slots[minSlot + j].getItemDamage()) {
+                    if(inputs[j].getItemDamage() == OreDictionary.WILDCARD_VALUE || inputs[j].getItemDamage() == slots[minSlot + j].getItemDamage()) {
                         k++;
                     }
                 }

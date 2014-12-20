@@ -1,26 +1,28 @@
 package ellpeck.gemification.blocks;
 
 import cpw.mods.fml.client.registry.RenderingRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.gemification.Gemification;
 import ellpeck.gemification.creative.CreativeTab;
 import ellpeck.gemification.inventory.GuiHandler;
 import ellpeck.gemification.tile.TileEntityCrucible;
+import ellpeck.gemification.tile.TileEntityInventoryBase;
 import ellpeck.gemification.util.Util;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
-import java.util.Random;
+import java.util.List;
 
-public class BlockCrucible extends BlockContainer{
+public class BlockCrucible extends BlockContainerBase{
 
     protected BlockCrucible(){
         super(Material.rock);
@@ -56,31 +58,28 @@ public class BlockCrucible extends BlockContainer{
         this.blockIcon = Blocks.hopper.getIcon(0, 0);
     }
 
-    public void breakBlock(World world, int x, int y, int z, Block block, int meta){
-        this.dropInventory(world, x, y, z);
-        super.breakBlock(world, x, y, z, block, meta);
-    }
-
-    public void dropInventory(World world, int x, int y, int z){
-        TileEntityCrucible tileEntity = (TileEntityCrucible)world.getTileEntity(x, y, z);
-        for (int i = 0; i < tileEntity.getSizeInventory(); i++){
-            ItemStack itemStack = tileEntity.getStackInSlot(i);
-            if (itemStack != null && itemStack.stackSize > 0){
-                Random rand = new Random();
-                float dX = rand.nextFloat() * 0.8F + 0.1F;
-                float dY = rand.nextFloat() * 0.8F + 0.1F;
-                float dZ = rand.nextFloat() * 0.8F + 0.1F;
-                EntityItem entityItem = new EntityItem(world, x + dX, y + dY, z + dZ, itemStack.copy());
-                if (itemStack.hasTagCompound()) entityItem.getEntityItem().setTagCompound((NBTTagCompound) itemStack.getTagCompound().copy());
-                float factor = 0.05F;
-                entityItem.motionX = rand.nextGaussian() * factor;
-                entityItem.motionY = rand.nextGaussian() * factor + 0.2F;
-                entityItem.motionZ = rand.nextGaussian() * factor;
-                world.spawnEntityInWorld(entityItem);
-                itemStack.stackSize = 0;
-            }
-        }
+    public TileEntityInventoryBase dropInventory(World world, int x, int y, int z){
+        TileEntityCrucible tileEntity = (TileEntityCrucible)super.dropInventory(world, x, y, z);
         if(tileEntity.currentFluid != Util.fluidNone) world.setBlock(x, y, z, Blocks.flowing_water);
+        return tileEntity;
     }
 
+    public static class ItemBlockCrucible extends ItemBlock {
+
+        public ItemBlockCrucible(Block block){
+            super(block);
+            setHasSubtypes(false);
+        }
+
+        public String getUnlocalizedName(ItemStack stack) {
+            return this.getUnlocalizedName();
+        }
+
+        @SuppressWarnings("unchecked")
+        @SideOnly(Side.CLIENT)
+        public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld) {
+            if(Util.isShiftPressed()) list.add(StatCollector.translateToLocal("tooltip." + this.getUnlocalizedName().substring(5) + ".desc"));
+            else list.add(Util.shiftForInfo());
+        }
+    }
 }

@@ -7,21 +7,22 @@ import ellpeck.gemification.Gemification;
 import ellpeck.gemification.creative.CreativeTab;
 import ellpeck.gemification.inventory.GuiHandler;
 import ellpeck.gemification.tile.TileEntityCrucibleFire;
+import ellpeck.gemification.util.Util;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
+import java.util.List;
 import java.util.Random;
 
-public class BlockCrucibleFire extends BlockContainer{
+public class BlockCrucibleFire extends BlockContainerBase{
 
     protected BlockCrucibleFire(){
         super(Material.rock);
@@ -58,32 +59,6 @@ public class BlockCrucibleFire extends BlockContainer{
         this.blockIcon = Blocks.hopper.getIcon(0, 0);
     }
 
-    public void breakBlock(World world, int x, int y, int z, Block block, int meta){
-        this.dropInventory(world, x, y, z);
-        super.breakBlock(world, x, y, z, block, meta);
-    }
-
-    public void dropInventory(World world, int x, int y, int z){
-        TileEntityCrucibleFire tileEntity = (TileEntityCrucibleFire)world.getTileEntity(x, y, z);
-        for (int i = 0; i < tileEntity.getSizeInventory(); i++){
-            ItemStack itemStack = tileEntity.getStackInSlot(i);
-            if (itemStack != null && itemStack.stackSize > 0){
-                Random rand = new Random();
-                float dX = rand.nextFloat() * 0.8F + 0.1F;
-                float dY = rand.nextFloat() * 0.8F + 0.1F;
-                float dZ = rand.nextFloat() * 0.8F + 0.1F;
-                EntityItem entityItem = new EntityItem(world, x + dX, y + dY, z + dZ, itemStack.copy());
-                if(itemStack.hasTagCompound()) entityItem.getEntityItem().setTagCompound((NBTTagCompound)itemStack.getTagCompound().copy());
-                float factor = 0.05F;
-                entityItem.motionX = rand.nextGaussian() * factor;
-                entityItem.motionY = rand.nextGaussian() * factor + 0.2F;
-                entityItem.motionZ = rand.nextGaussian() * factor;
-                world.spawnEntityInWorld(entityItem);
-                itemStack.stackSize = 0;
-            }
-        }
-    }
-
     @SideOnly(Side.CLIENT)
     public void randomDisplayTick(World world, int x, int y, int z, Random rand){
         if(((TileEntityCrucibleFire)world.getTileEntity(x, y, z)).isBurning()){
@@ -91,6 +66,25 @@ public class BlockCrucibleFire extends BlockContainer{
                 world.spawnParticle("flame", (double) x + rand.nextFloat() * 0.5F + 0.25F, (double) y + 0.55F, (double) z + rand.nextFloat() * 0.5F + 0.25F, 0.0D, 0.0D, 0.0D);
                 world.spawnParticle("smoke", (double) x + rand.nextFloat() * 0.5F + 0.25F, (double) y + 0.55F, (double) z + rand.nextFloat() * 0.5F + 0.25F, 0.0D, 0.0D, 0.0D);
             }
+        }
+    }
+
+    public static class ItemBlockCrucibleFire extends ItemBlock {
+
+        public ItemBlockCrucibleFire(Block block){
+            super(block);
+            setHasSubtypes(false);
+        }
+
+        public String getUnlocalizedName(ItemStack stack) {
+            return this.getUnlocalizedName();
+        }
+
+        @SuppressWarnings("unchecked")
+        @SideOnly(Side.CLIENT)
+        public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld) {
+            if(Util.isShiftPressed()) list.add(StatCollector.translateToLocal("tooltip." + this.getUnlocalizedName().substring(5) + ".desc"));
+            else list.add(Util.shiftForInfo());
         }
     }
 }

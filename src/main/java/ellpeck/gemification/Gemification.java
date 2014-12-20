@@ -8,7 +8,8 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import ellpeck.gemification.blocks.InitBlocks;
-import ellpeck.gemification.crafting.CrucibleCraftingManager;
+import ellpeck.gemification.booklet.ChapterList;
+import ellpeck.gemification.crafting.InitCrafting;
 import ellpeck.gemification.gen.OreGen;
 import ellpeck.gemification.inventory.GuiHandler;
 import ellpeck.gemification.items.InitItems;
@@ -28,6 +29,7 @@ public class Gemification{
     @SuppressWarnings("unused")
     @EventHandler()
     public void preInit(FMLPreInitializationEvent event){
+        ChapterList.init();
         InitBlocks.init();
         InitItems.init();
         proxy.preInit();
@@ -36,11 +38,11 @@ public class Gemification{
     @SuppressWarnings("unused")
     @EventHandler()
     public void init(FMLInitializationEvent event){
-        CrucibleCraftingManager.instance.initRecipes();
-        proxy.init();
+        InitCrafting.init();
         GuiHandler.init();
         OreGen.init();
         TileEntityBase.init();
+        proxy.init();
     }
 
     @SuppressWarnings("unused")

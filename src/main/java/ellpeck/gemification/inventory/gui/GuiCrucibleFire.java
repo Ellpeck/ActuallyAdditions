@@ -33,8 +33,4 @@ public class GuiCrucibleFire extends GuiContainer{
             this.drawTexturedModalRect(guiLeft + 96, guiTop + 10 + 12 - i, 176, 12 - i, 14, i + 1);
         }
     }
-
-    public void drawScreen(int par1, int par2, float par3){
-        super.drawScreen(par1, par2, par3);
-    }
 }

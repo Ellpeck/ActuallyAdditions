@@ -15,9 +15,9 @@ public class InitBlocks{
         blockCrucible = new BlockCrucible();
         blockCrucibleFire = new BlockCrucibleFire();
 
-        GameRegistry.registerBlock(oreGem, ItemBlockOreGem.class, oreGem.getUnlocalizedName().substring(5));
-        GameRegistry.registerBlock(blockCrucible, ItemBlockCrucible.class, blockCrucible.getUnlocalizedName().substring(5));
-        GameRegistry.registerBlock(blockCrucibleFire, ItemBlockCrucibleFire.class, blockCrucibleFire.getUnlocalizedName().substring(5));
+        GameRegistry.registerBlock(oreGem, OreGem.ItemBlockOreGem.class, oreGem.getUnlocalizedName().substring(5));
+        GameRegistry.registerBlock(blockCrucible, BlockCrucible.ItemBlockCrucible.class, blockCrucible.getUnlocalizedName().substring(5));
+        GameRegistry.registerBlock(blockCrucibleFire, BlockCrucibleFire.ItemBlockCrucibleFire.class, blockCrucibleFire.getUnlocalizedName().substring(5));
 
     }
 

@@ -2,8 +2,8 @@ package ellpeck.gemification.util;
 
 public class GemType {
 
-    public int ID;
-    public String name;
+    public final int ID;
+    public final String name;
 
     public GemType(int ID, String name, boolean shouldAddToList){
         this.ID = ID;
