@@ -18,8 +18,8 @@ buildscript {
 apply plugin: 'forge'
 
 version = "1.7.10-1.0.1"
-group = "ellpeck.gemification"
-archivesBaseName = "Gemification"
+group = "ellpeck.someprettytechystuff"
+archivesBaseName = "SomePrettyTechyStuff"
 
 minecraft {
     version = "1.7.10-10.13.2.1264"
