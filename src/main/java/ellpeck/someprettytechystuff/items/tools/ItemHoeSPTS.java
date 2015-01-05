@@ -6,15 +6,14 @@ import ellpeck.someprettytechystuff.creative.CreativeTab;
 import ellpeck.someprettytechystuff.util.Util;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemSpade;
+import net.minecraft.item.ItemHoe;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.StatCollector;
 
 import java.util.List;
 
-public class ItemShovelG extends ItemSpade{
+public class ItemHoeSPTS extends ItemHoe{
 
-    public ItemShovelG(ToolMaterial toolMat, String unlocalizedName){
+    public ItemHoeSPTS(ToolMaterial toolMat, String unlocalizedName){
         super(toolMat);
         this.setUnlocalizedName(unlocalizedName);
         this.setCreativeTab(CreativeTab.instance);
@@ -22,9 +21,8 @@ public class ItemShovelG extends ItemSpade{
 
     @SuppressWarnings("unchecked")
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld) {
-        if(Util.isShiftPressed()) list.add(StatCollector.translateToLocal("tooltip." + this.getUnlocalizedName().substring(5) + ".desc"));
-        else list.add(Util.shiftForInfo());
+    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld){
+        Util.addStandardInformation(this);
     }
 
     @SideOnly(Side.CLIENT)

@@ -2,10 +2,7 @@ package ellpeck.someprettytechystuff.gen;
 
 import cpw.mods.fml.common.IWorldGenerator;
 import cpw.mods.fml.common.registry.GameRegistry;
-import ellpeck.someprettytechystuff.blocks.InitBlocks;
-import ellpeck.someprettytechystuff.util.Util;
 import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.feature.WorldGenMinable;
@@ -31,9 +28,7 @@ public class OreGen implements IWorldGenerator {
     }
 
     private void generateSurface(World world, Random random, int x, int z){
-        for(int i = 0; i < Util.gemList.size(); i++) {
-            this.addOreSpawn(InitBlocks.oreGem, i, Blocks.stone, world, random, x, z, 4 + random.nextInt(3), 6, 1, 70);
-        }
+
     }
 
     @SuppressWarnings("unused")

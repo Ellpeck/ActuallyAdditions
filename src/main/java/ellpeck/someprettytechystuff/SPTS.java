@@ -8,7 +8,6 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import ellpeck.someprettytechystuff.blocks.InitBlocks;
-import ellpeck.someprettytechystuff.booklet.ChapterList;
 import ellpeck.someprettytechystuff.crafting.InitCrafting;
 import ellpeck.someprettytechystuff.gen.OreGen;
 import ellpeck.someprettytechystuff.inventory.GuiHandler;
@@ -18,10 +17,10 @@ import ellpeck.someprettytechystuff.tile.TileEntityBase;
 import ellpeck.someprettytechystuff.util.Util;
 
 @Mod(modid = Util.MOD_ID, name = Util.NAME, version = Util.VERSION)
-public class Gemification{
+public class SPTS{
 
     @Instance(Util.MOD_ID)
-    public static Gemification instance;
+    public static SPTS instance;
 
     @SidedProxy(clientSide = "ellpeck.someprettytechystuff.proxy.ClientProxy", serverSide = "ellpeck.someprettytechystuff.proxy.ServerProxy")
     public static IProxy proxy;
@@ -29,7 +28,6 @@ public class Gemification{
     @SuppressWarnings("unused")
     @EventHandler()
     public void preInit(FMLPreInitializationEvent event){
-        ChapterList.init();
         InitBlocks.init();
         InitItems.init();
         proxy.preInit();

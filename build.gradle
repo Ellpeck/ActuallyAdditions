@@ -17,12 +17,12 @@ buildscript {
 
 apply plugin: 'forge'
 
-version = "1.7.10-1.0.1"
+version = "1.7.10-0.0.1"
 group = "ellpeck.someprettytechystuff"
 archivesBaseName = "SomePrettyTechyStuff"
 
 minecraft {
-    version = "1.7.10-10.13.2.1264"
+    version = "1.7.10-10.13.2.1277"
     runDir = "idea"
 }
 
@@ -30,8 +30,8 @@ dependencies {
 
 }
 
-processResources
-{
+processResources{
+
     inputs.property "version", project.version
     inputs.property "mcversion", project.minecraft.version
 
@@ -43,5 +43,11 @@ processResources
         
     from(sourceSets.main.resources.srcDirs) {
         exclude 'mcmod.info'
+    }
+}
+
+sourceSets {
+    main {
+        output.resourcesDir = output.classesDir
     }
 }
