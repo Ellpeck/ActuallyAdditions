@@ -1,8 +1,8 @@
 package ellpeck.someprettytechystuff.creative;
 
-import ellpeck.someprettytechystuff.items.InitItems;
 import ellpeck.someprettytechystuff.util.Util;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 
 public class CreativeTab extends CreativeTabs{
@@ -14,6 +14,6 @@ public class CreativeTab extends CreativeTabs{
     }
 
     public Item getTabIconItem() {
-        return InitItems.itemInfoBook;
+        return Items.command_block_minecart;
     }
 }

@@ -9,6 +9,7 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import ellpeck.someprettytechystuff.blocks.InitBlocks;
 import ellpeck.someprettytechystuff.crafting.InitCrafting;
+import ellpeck.someprettytechystuff.event.UpdateEvent;
 import ellpeck.someprettytechystuff.gen.OreGen;
 import ellpeck.someprettytechystuff.inventory.GuiHandler;
 import ellpeck.someprettytechystuff.items.InitItems;
@@ -40,6 +41,7 @@ public class SPTS{
         GuiHandler.init();
         OreGen.init();
         TileEntityBase.init();
+        UpdateEvent.init();
         proxy.init();
     }
 

@@ -15,6 +15,11 @@ public class Util{
         return Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT);
     }
 
+    public static boolean isControlPressed(){
+        return Keyboard.isKeyDown(Keyboard.KEY_LCONTROL) || Keyboard.isKeyDown(Keyboard.KEY_RCONTROL);
+    }
+
+
     public static String shiftForInfo() {
         return (char)167+"2" + (char)167+"o" + StatCollector.translateToLocal("tooltip.shiftForInfo.desc");
     }

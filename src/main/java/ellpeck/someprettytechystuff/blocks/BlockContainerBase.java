@@ -19,7 +19,7 @@ public abstract class BlockContainerBase extends BlockContainer{
 
     public TileEntityInventoryBase dropInventory(World world, int x, int y, int z) {
         TileEntityInventoryBase tileEntity = (TileEntityInventoryBase) world.getTileEntity(x, y, z);
-        for (int i = 0; i < tileEntity.getSizeInventory(); i++) {
+        for (int i = 0; i < tileEntity.getSizeInventory(); i++){
             ItemStack itemStack = tileEntity.getStackInSlot(i);
             if (itemStack != null && itemStack.stackSize > 0) {
                 Random rand = new Random();
@@ -41,7 +41,7 @@ public abstract class BlockContainerBase extends BlockContainer{
     }
 
     public void breakBlock(World world, int x, int y, int z, Block block, int meta){
-        this.dropInventory(world, x, y, z);
+        if(world.getTileEntity(x, y, z) instanceof TileEntityInventoryBase) this.dropInventory(world, x, y, z);
         super.breakBlock(world, x, y, z, block, meta);
     }
 }

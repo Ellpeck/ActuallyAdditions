@@ -14,10 +14,10 @@ public class DefaultItemBlock extends ItemBlock{
 
     public DefaultItemBlock(Block block){
         super(block);
-        setHasSubtypes(false);
+        this.setHasSubtypes(false);
     }
 
-    public String getUnlocalizedName(ItemStack stack) {
+    public String getUnlocalizedName(ItemStack stack){
         return this.getUnlocalizedName();
     }
 
