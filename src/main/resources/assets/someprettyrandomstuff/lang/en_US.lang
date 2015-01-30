@@ -1,0 +1,57 @@
+itemGroup.someprettytechystuff=SomePrettyTechyStuff
+
+item.itemMiscMashedFood.name=Mashed Food
+item.itemMiscRefinedIron.name=Refined Iron
+item.itemMiscRefinedRedstone.name=Refined Redstone
+item.itemMiscCompressedIron.name=Compressed Iron
+item.itemMiscSteel.name=Steel
+item.itemFertilizer.name=Fertilizer
+item.itemMiscDough.name=Dough
+item.itemMiscPaperCone.name=Paper Cone
+
+item.itemFoodBaguette.name=Baguette
+item.itemFoodPizza.name=Pizza
+item.itemFoodHamburger.name=Hamburger
+item.itemFoodBigCookie.name=Big Cookie
+item.itemFoodSubmarineSandwich.name=Submarine Sandwich
+item.itemFoodToast.name=Toast
+item.itemFoodChocolate.name=Chocolate
+item.itemFoodChocolateCake.name=Chocolate Cake
+item.itemFoodNoodle.name=Noodle
+item.itemFoodSpaghetti.name=Spaghetti
+item.itemFoodFrenchFry.name=French Fry
+item.itemFoodFrenchFries.name=French Fries
+item.itemFoodFishNChips.name=Fish 'N' Chips
+item.itemFoodCarrotJuice.name=Carrot Juice
+item.itemFoodPumpkinStew.name=Pumpkin Stew
+item.itemFoodCheese.name=Cheese
+
+tooltip.shiftForInfo.desc=Press Shift for Info
+tooltip.hunger.desc=Fills
+tooltip.saturation.desc=Saturation
+
+tooltip.itemMiscMashedFood.desc=Used to make Fertilizer
+tooltip.itemMiscRefinedIron.desc=Iron, but better
+tooltip.itemMiscRefinedRedstone.desc=Redstone, but better
+tooltip.itemMiscCompressedIron.desc=Iron, but compressed
+tooltip.itemMiscSteel.desc=Like Iron, but stronger. Much stronger.
+tooltip.itemFertilizer.desc=Om nom nom. Don't eat it.
+tooltip.itemMiscDough.desc=Used to make things that involve dough.
+tooltip.itemMiscPaperCone.desc=Used to store foodstuffs!
+
+tooltip.itemFoodBaguette.desc=It's french. It's noms.
+tooltip.itemFoodPizza.desc=Who doesn't like it?
+tooltip.itemFoodHamburger.desc=It's from a german city!
+tooltip.itemFoodBigCookie.desc=Do you know? The Subway Thing?
+tooltip.itemFoodSubmarineSandwich.desc=Do you know? The Subway and everything else Thing?
+tooltip.itemFoodToast.desc="GHOSTS! GHOSTS! TOAST!"
+tooltip.itemFoodChocolate.desc=Lari likes.
+tooltip.itemFoodChocolateCake.desc=Looks delicious. With redberries. Or something.
+tooltip.itemFoodNoodle.desc=Just one. Like... that's not much.
+tooltip.itemFoodSpaghetti.desc=The most generic food ever. So clichée.
+tooltip.itemFoodFrenchFry.desc=French. Fry.
+tooltip.itemFoodFrenchFries.desc=Much like French Fires, but actually taste good.
+tooltip.itemFoodFishNChips.desc=It's Fish. It's Chips. Or French Fries. Whatevs.
+tooltip.itemFoodCarrotJuice.desc=Carrots, but pressed!
+tooltip.itemFoodPumpkinStew.desc=Like Mushroom Stew or Rabbit Stew, but pumpykinny.
+tooltip.itemFoodCheese.desc=Cheese.
