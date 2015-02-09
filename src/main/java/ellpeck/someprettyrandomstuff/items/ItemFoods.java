@@ -1,11 +1,8 @@
 package ellpeck.someprettyrandomstuff.items;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.someprettyrandomstuff.creative.CreativeTab;
 import ellpeck.someprettyrandomstuff.items.metalists.TheFoods;
 import ellpeck.someprettyrandomstuff.util.Util;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,50 +10,45 @@ import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
 public class ItemFoods extends ItemFood{
 
-    private final TheFoods[] allFoods = TheFoods.values();
+    public static final TheFoods[] allFoods = TheFoods.values();
 
     public ItemFoods(){
         super(0, 0.0F, false);
         this.setUnlocalizedName("itemFood");
         this.setHasSubtypes(true);
+        this.setMaxDamage(0);
         this.setCreativeTab(CreativeTab.instance);
         this.setAlwaysEdible();
+        TheFoods.setReturnItems();
     }
 
-    public int func_150905_g(ItemStack stack){
+    public int getHealAmount(ItemStack stack){
         return allFoods[stack.getItemDamage()].healAmount;
     }
 
-    public float func_150906_h(ItemStack stack){
+    public float getSaturationModifier(ItemStack stack){
         return allFoods[stack.getItemDamage()].saturation;
     }
 
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister iconReg){
-        for(TheFoods theFood : allFoods){
-            theFood.theIcon = iconReg.registerIcon(Util.MOD_ID + ":" + this.getUnlocalizedName().substring(5) + theFood.name);
-        }
-    }
-
-    @SideOnly(Side.CLIENT)
-    public IIcon getIconFromDamage(int par1){
-        return allFoods[par1].theIcon;
-    }
-
     public EnumAction getItemUseAction(ItemStack stack){
-        return allFoods[stack.getItemDamage()].getsDrunken ? EnumAction.drink : EnumAction.eat;
+        return allFoods[stack.getItemDamage()].getsDrunken ? EnumAction.DRINK : EnumAction.EAT;
     }
 
     public int getMaxItemUseDuration(ItemStack stack){
         return allFoods[stack.getItemDamage()].useDuration;
+    }
+
+    public int getMetadata(int damage){
+        return damage;
     }
 
     @SuppressWarnings("all")
@@ -71,14 +63,14 @@ public class ItemFoods extends ItemFood{
         return this.getUnlocalizedName() + allFoods[stack.getItemDamage()].name;
     }
 
-    public ItemStack onEaten(ItemStack stack, World world, EntityPlayer player){
-        ItemStack stackToReturn = super.onEaten(stack, world, player);
+    public ItemStack onItemUseFinish(ItemStack stack, World world, EntityPlayer player){
+        ItemStack stackToReturn = super.onItemUseFinish(stack, world, player);
         ItemStack returnItem = allFoods[stack.getItemDamage()].returnItem;
         if (returnItem != null){
             if(!player.inventory.addItemStackToInventory(returnItem.copy())){
                 if(!world.isRemote){
                     EntityItem entityItem = new EntityItem(player.worldObj, player.posX, player.posY, player.posZ, returnItem.copy());
-                    entityItem.delayBeforeCanPickup = 0;
+                    entityItem.setPickupDelay(0);
                     player.worldObj.spawnEntityInWorld(entityItem);
                 }
             }

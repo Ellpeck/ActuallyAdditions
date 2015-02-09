@@ -1,4 +1,7 @@
-itemGroup.someprettytechystuff=SomePrettyTechyStuff
+itemGroup.SomePrettyRandomStuff=SomePrettyRandomStuff
+achievement.page.SomePrettyRandomStuff=SomePrettyRandomStuff
+
+tile.blockCompost.name=Compost
 
 item.itemMiscMashedFood.name=Mashed Food
 item.itemMiscRefinedIron.name=Refined Iron
@@ -30,6 +33,8 @@ tooltip.shiftForInfo.desc=Press Shift for Info
 tooltip.hunger.desc=Fills
 tooltip.saturation.desc=Saturation
 
+tooltip.blockCompost.desc=Used to make Fertilizer with Mashed Food
+
 tooltip.itemMiscMashedFood.desc=Used to make Fertilizer
 tooltip.itemMiscRefinedIron.desc=Iron, but better
 tooltip.itemMiscRefinedRedstone.desc=Redstone, but better
@@ -55,3 +60,24 @@ tooltip.itemFoodFishNChips.desc=It's Fish. It's Chips. Or French Fries. Whatevs.
 tooltip.itemFoodCarrotJuice.desc=Carrots, but pressed!
 tooltip.itemFoodPumpkinStew.desc=Like Mushroom Stew or Rabbit Stew, but pumpykinny.
 tooltip.itemFoodCheese.desc=Cheese.
+
+achievement.smeltBaguette=Better than Bread!
+achievement.smeltBaguette.desc=Bake a Baguette
+achievement.craftDough=Knead, knead!
+achievement.craftDough.desc=Craft some Dough
+achievement.craftCompost=Throw it all in!
+achievement.craftCompost.desc=Craft a Compost
+achievement.craftFertilizer=Better than Bone Meal!
+achievement.craftFertilizer.desc=Make Fertilizer
+achievement.craftSubSandwich=Metro, Underground, Tube, Nom!
+achievement.craftSubSandwich.desc=Craft a Submarine Sandwich
+achievement.craftPaperCone=Witch's hat!
+achievement.craftPaperCone.desc=Craft a Paper Cone
+achievement.craftFrenchFry=Just the single one...
+achievement.craftFrenchFry.desc=Craft a French Fry
+achievement.craftFrenchFries=French Fires?
+achievement.craftFrenchFries.desc=Craft French Fries
+achievement.craftFishNChips=It's Fish! It's Chips!
+achievement.craftFishNChips.desc=Craft Fish 'N' Chips
+achievement.craftMashedFood=Munch munch munch!
+achievement.craftMashedFood.desc=Craft Mashed Food

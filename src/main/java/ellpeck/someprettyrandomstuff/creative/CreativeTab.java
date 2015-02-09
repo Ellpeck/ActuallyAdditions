@@ -20,6 +20,6 @@ public class CreativeTab extends CreativeTabs{
     }
 
     public ItemStack getIconItemStack(){
-        return new ItemStack(this.getTabIconItem(), 1, TheFoods.CHOCOLATE.ordinal());
+        return new ItemStack(this.getTabIconItem(), 1, TheFoods.SUBMARINE_SANDWICH.ordinal());
     }
 }

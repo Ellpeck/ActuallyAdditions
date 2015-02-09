@@ -1,10 +1,8 @@
 package ellpeck.someprettyrandomstuff.items.metalists;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.util.IIcon;
+import ellpeck.someprettyrandomstuff.util.IItemEnum;
 
-public enum TheMiscItems{
+public enum TheMiscItems implements IItemEnum{
 
     PAPER_CONE("PaperCone"),
     MASHED_FOOD("MashedFood"),
@@ -12,13 +10,17 @@ public enum TheMiscItems{
     REFINED_REDSTONE("RefinedRedstone"),
     COMPRESSED_IRON("CompressedIron"),
     STEEL("Steel"),
+    KNIFE_BLADE("KnifeBlade"),
+    KNIFE_HANDLE("KnifeHandle"),
     DOUGH("Dough");
 
     public final String name;
-    @SideOnly(Side.CLIENT)
-    public IIcon theIcon;
 
     private TheMiscItems(String name){
         this.name = name;
+    }
+
+    public String getName(){
+        return this.name;
     }
 }

@@ -17,16 +17,16 @@ buildscript {
 
 apply plugin: 'forge'
 
-version = "1.7.10-0.0.1"
+version = "1.8-0.0.1"
 group = "ellpeck.someprettyrandomstuff"
 archivesBaseName = "SomePrettyRandomStuff"
 
 minecraft {
-    version = "1.7.10-10.13.2.1277"
+    version = "1.8-11.14.0.1295-1.8"
     runDir = "idea"
 }
 
-dependencies {
+dependencies{
 
 }
 

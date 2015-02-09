@@ -1,12 +1,12 @@
 package ellpeck.someprettyrandomstuff.tile;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.ISidedInventory;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 
-public abstract class TileEntityInventoryBase extends TileEntityBase implements ISidedInventory{
+public abstract class TileEntityInventoryBase extends TileEntityBase implements IInventory{
 
     public ItemStack slots[];
 
@@ -36,36 +36,12 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
         }
     }
 
-    public int[] getAccessibleSlotsFromSide(int side) {
-        return new int[0];
-    }
-
-    public boolean canInsertItem(int par1, ItemStack stack, int par3) {
-        return false;
-    }
-
-    public boolean canExtractItem(int par1, ItemStack stack, int par3) {
-        return false;
-    }
-
-    public boolean hasCustomInventoryName() {
-        return false;
-    }
-
     public int getInventoryStackLimit() {
         return 64;
     }
 
     public boolean isUseableByPlayer(EntityPlayer player) {
-        return worldObj.getTileEntity(xCoord, yCoord, zCoord) == this && player.getDistanceSq(xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D) <= 64;
-    }
-
-    public void openInventory() {
-
-    }
-
-    public void closeInventory() {
-
+        return worldObj.getTileEntity(this.getPos()) == this && player.getDistanceSq(this.getPos().getX() + 0.5D, this.getPos().getY() + 0.5D, this.getPos().getZ() + 0.5D) <= 64;
     }
 
     public boolean isItemValidForSlot(int i, ItemStack stack) {

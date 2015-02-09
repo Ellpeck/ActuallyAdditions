@@ -1,23 +1,21 @@
 package ellpeck.someprettyrandomstuff.items;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.someprettyrandomstuff.creative.CreativeTab;
 import ellpeck.someprettyrandomstuff.items.metalists.TheMiscItems;
 import ellpeck.someprettyrandomstuff.util.Util;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
 public class ItemMisc extends Item{
 
-    private final TheMiscItems[] allMiscItems = TheMiscItems.values();
+    public static final TheMiscItems[] allMiscItems = TheMiscItems.values();
 
     public ItemMisc(){
         this.setUnlocalizedName("itemMisc");
@@ -25,22 +23,14 @@ public class ItemMisc extends Item{
         this.setCreativeTab(CreativeTab.instance);
     }
 
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister iconReg){
-        for(TheMiscItems theMisc : allMiscItems){
-            theMisc.theIcon = iconReg.registerIcon(Util.MOD_ID + ":" + this.getUnlocalizedName().substring(5) + theMisc.name);
-        }
-    }
-
-    @SideOnly(Side.CLIENT)
-    public IIcon getIconFromDamage(int par1){
-        return allMiscItems[par1].theIcon;
+    public int getMetadata(int damage){
+        return damage;
     }
 
     @SuppressWarnings("all")
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item item, CreativeTabs tab, List list){
-        for (int j = 0; j < allMiscItems.length; j++){
+        for(int j = 0; j < allMiscItems.length; j++){
             list.add(new ItemStack(this, 1, j));
         }
     }

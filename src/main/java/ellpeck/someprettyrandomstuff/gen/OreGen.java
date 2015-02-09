@@ -1,18 +1,20 @@
 package ellpeck.someprettyrandomstuff.gen;
 
-import cpw.mods.fml.common.IWorldGenerator;
-import cpw.mods.fml.common.registry.GameRegistry;
-import net.minecraft.block.Block;
+import ellpeck.someprettyrandomstuff.util.Util;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.feature.WorldGenMinable;
+import net.minecraftforge.fml.common.IWorldGenerator;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import java.util.Random;
 
-public class OreGen implements IWorldGenerator {
+public class OreGen implements IWorldGenerator{
 
     public void generate(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider){
-        switch (world.provider.dimensionId){
+        switch (world.provider.getDimensionId()){
             case -1:
                 generateNether(world, random, chunkX*16, chunkZ*16);
             case 0:
@@ -36,17 +38,18 @@ public class OreGen implements IWorldGenerator {
 
     }
 
-    public void addOreSpawn(Block block, int meta, Block blockIn, World world, Random random, int blockXPos, int blockZPos, int maxVeinSize, int chancesToSpawn, int minY, int maxY){
+    public void addOreSpawn(IBlockState state, World world, Random random, int blockXPos, int blockZPos, int maxVeinSize, int chancesToSpawn, int minY, int maxY){
         int yDiff = maxY - minY;
         for(int i = 0; i < chancesToSpawn; i++){
             int posX = blockXPos + random.nextInt(16);
             int posY = minY + random.nextInt(yDiff);
             int posZ = blockZPos + random.nextInt(16);
-            (new WorldGenMinable(block, meta, maxVeinSize, blockIn)).generate(world, random, posX, posY, posZ);
+            (new WorldGenMinable(state, maxVeinSize)).generate(world, random, new BlockPos(posX, posY, posZ));
         }
     }
 
     public static void init(){
+        Util.logInfo("Registering World Generator...");
         GameRegistry.registerWorldGenerator(new OreGen(), 0);
     }
 }
