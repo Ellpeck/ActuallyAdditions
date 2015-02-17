@@ -1,14 +1,14 @@
 package ellpeck.someprettyrandomstuff.achievement;
 
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.PlayerEvent;
 import ellpeck.someprettyrandomstuff.blocks.InitBlocks;
 import ellpeck.someprettyrandomstuff.items.InitItems;
 import ellpeck.someprettyrandomstuff.items.metalists.TheFoods;
 import ellpeck.someprettyrandomstuff.items.metalists.TheMiscItems;
 import ellpeck.someprettyrandomstuff.util.Util;
 import net.minecraft.item.Item;
-import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 
 public class AchievementEvent{
 
@@ -29,6 +29,12 @@ public class AchievementEvent{
             }
             if(event.crafting.getItem() == InitItems.itemMisc && event.crafting.getItemDamage() == TheMiscItems.MASHED_FOOD.ordinal()){
                 event.player.addStat(InitAchievements.achievementCraftMashedFood, 1);
+            }
+            if(event.crafting.getItem() == InitItems.itemMisc && event.crafting.getItemDamage() == TheMiscItems.KNIFE_BLADE.ordinal()){
+                event.player.addStat(InitAchievements.achievementCraftKnifeBlade, 1);
+            }
+            if(event.crafting.getItem() == InitItems.itemKnife){
+                event.player.addStat(InitAchievements.achievementCraftKnife, 1);
             }
             if(event.crafting.getItem() == InitItems.itemFoods && event.crafting.getItemDamage() == TheFoods.SUBMARINE_SANDWICH.ordinal()){
                 event.player.addStat(InitAchievements.achievementCraftSubSandwich, 1);

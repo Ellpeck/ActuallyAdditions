@@ -22,7 +22,7 @@ group = "ellpeck.someprettyrandomstuff"
 archivesBaseName = "SomePrettyRandomStuff"
 
 minecraft {
-    version = "1.8-11.14.0.1295-1.8"
+    version = "1.7.10-10.13.2.1291"
     runDir = "idea"
 }
 

@@ -1,7 +1,12 @@
-itemGroup.SomePrettyRandomStuff=SomePrettyRandomStuff
-achievement.page.SomePrettyRandomStuff=SomePrettyRandomStuff
+itemGroup.someprettyrandomstuff=SomePrettyRandomStuff
+achievement.page.someprettyrandomstuff=SomePrettyRandomStuff
 
 tile.blockCompost.name=Compost
+tile.blockMiscOreBlackQuartz.name=Black Quartz Ore
+tile.blockMiscBlackQuartz.name=Block of Black Quartz
+tile.blockMiscBlackQuartzChiseled.name=Chiseled Block of Black Quartz
+tile.blockMiscBlackQuartzPillar.name=Pillar of Black Quartz
+tile.blockFeeder.name=Automatic Feeder
 
 item.itemMiscMashedFood.name=Mashed Food
 item.itemMiscRefinedIron.name=Refined Iron
@@ -11,6 +16,21 @@ item.itemMiscSteel.name=Steel
 item.itemFertilizer.name=Fertilizer
 item.itemMiscDough.name=Dough
 item.itemMiscPaperCone.name=Paper Cone
+item.itemMiscKnifeBlade.name=Knife Blade
+item.itemMiscKnifeHandle.name=Knife Handle
+item.itemMiscBlackQuartz.name=Black Quartz
+
+item.itemKnife.name=Knife
+item.itemPickaxeEmerald.name=Emerald Pickaxe
+item.itemAxeEmerald.name=Emerald Axe
+item.itemShovelEmerald.name=Emerald Shovel
+item.itemHoeEmerald.name=Emerald Hoe
+item.itemSwordEmerald.name=Emerald Sword
+item.itemPickaxeObsidian.name=Obsidian Pickaxe
+item.itemAxeObsidian.name=Obsidian Axe
+item.itemShovelObsidian.name=Obsidian Shovel
+item.itemHoeObsidian.name=Obsidian Hoe
+item.itemSwordObsidian.name=Obsidian Sword
 
 item.itemFoodBaguette.name=Baguette
 item.itemFoodPizza.name=Pizza
@@ -32,8 +52,14 @@ item.itemFoodCheese.name=Cheese
 tooltip.shiftForInfo.desc=Press Shift for Info
 tooltip.hunger.desc=Fills
 tooltip.saturation.desc=Saturation
+tooltip.durability.desc=Durability
 
 tooltip.blockCompost.desc=Used to make Fertilizer with Mashed Food
+tooltip.blockMiscOreBlackQuartz.desc=The darkest form of Quartz. Also: You had Silk Touch!
+tooltip.blockMiscBlackQuartz.desc=Black, eerie Quartz! Nice for decorating.
+tooltip.blockMiscBlackQuartzChiseled.desc=Black, eerie chiseled Quartz! Nice for decorating.
+tooltip.blockMiscBlackQuartzPillar.desc=Kind of a pillar. Not really, though. It's fake! Fake I say!
+tooltip.blockFeeder.desc=Feeds Animals on its own!
 
 tooltip.itemMiscMashedFood.desc=Used to make Fertilizer
 tooltip.itemMiscRefinedIron.desc=Iron, but better
@@ -43,13 +69,28 @@ tooltip.itemMiscSteel.desc=Like Iron, but stronger. Much stronger.
 tooltip.itemFertilizer.desc=Om nom nom. Don't eat it.
 tooltip.itemMiscDough.desc=Used to make things that involve dough.
 tooltip.itemMiscPaperCone.desc=Used to store foodstuffs!
+tooltip.itemMiscKnifeBlade.desc=Sharp like a tooth! A whale's tooth!
+tooltip.itemMiscKnifeHandle.desc=Fits comfortably in your hand.
+tooltip.itemMiscBlackQuartz.desc=Used in the Quartz Enchanter!
+
+tooltip.itemKnife.desc=Cuts things! Only food though, don't think of stuff...
+tooltip.itemPickaxeEmerald.desc=Mines Stone.
+tooltip.itemAxeEmerald.desc=Mines Wood.
+tooltip.itemShovelEmerald.desc=Mines Dirt.
+tooltip.itemHoeEmerald.desc=Mines... uhm... yea.
+tooltip.itemSwordEmerald.desc=Mines... mobs?
+tooltip.itemPickaxeObsidian.desc=Mines Stone. Slooooowly.
+tooltip.itemAxeObsidian.desc=Mines Wood. Slooooowly.
+tooltip.itemShovelObsidian.desc=Mines Dirt. Slooooowly.
+tooltip.itemHoeObsidian.desc=Mines... uhm... yea.
+tooltip.itemSwordObsidian.desc=Mines... mobs?
 
 tooltip.itemFoodBaguette.desc=It's french. It's noms.
 tooltip.itemFoodPizza.desc=Who doesn't like it?
 tooltip.itemFoodHamburger.desc=It's from a german city!
 tooltip.itemFoodBigCookie.desc=Do you know? The Subway Thing?
 tooltip.itemFoodSubmarineSandwich.desc=Do you know? The Subway and everything else Thing?
-tooltip.itemFoodToast.desc="GHOSTS! GHOSTS! TOAST!"
+tooltip.itemFoodToast.desc="GHOSTS! GHOSTS! TOASTS!"
 tooltip.itemFoodChocolate.desc=Lari likes.
 tooltip.itemFoodChocolateCake.desc=Looks delicious. With redberries. Or something.
 tooltip.itemFoodNoodle.desc=Just one. Like... that's not much.
@@ -81,3 +122,13 @@ achievement.craftFishNChips=It's Fish! It's Chips!
 achievement.craftFishNChips.desc=Craft Fish 'N' Chips
 achievement.craftMashedFood=Munch munch munch!
 achievement.craftMashedFood.desc=Craft Mashed Food
+achievement.craftKnifeBlade=Sharp! So sharp!
+achievement.craftKnifeBlade.desc=Craft a Knife Blade
+achievement.craftKnife=Sharper! Even sharper!
+achievement.craftKnife.desc=Craft a Knife
+
+feeder.animal.desc=Animal
+feeder.animalsSuffix.desc=s
+feeder.enoughToBreed.desc=Enough to breed!
+feeder.tooMany.desc=Too many to breed!
+feeder.notEnough.desc=Not enough to breed!

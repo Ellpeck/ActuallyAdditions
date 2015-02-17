@@ -6,7 +6,6 @@ import net.minecraft.block.material.Material;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 
 import java.util.Random;
@@ -17,8 +16,8 @@ public abstract class BlockContainerBase extends BlockContainer{
         super(mat);
     }
 
-    public TileEntityInventoryBase dropInventory(World world, BlockPos blockPos){
-        TileEntityInventoryBase tileEntity = (TileEntityInventoryBase) world.getTileEntity(blockPos);
+    public TileEntityInventoryBase dropInventory(World world, int x, int y, int z){
+        TileEntityInventoryBase tileEntity = (TileEntityInventoryBase)world.getTileEntity(x, y, z);
         for (int i = 0; i < tileEntity.getSizeInventory(); i++){
             ItemStack itemStack = tileEntity.getStackInSlot(i);
             if (itemStack != null && itemStack.stackSize > 0) {
@@ -26,7 +25,7 @@ public abstract class BlockContainerBase extends BlockContainer{
                 float dX = rand.nextFloat() * 0.8F + 0.1F;
                 float dY = rand.nextFloat() * 0.8F + 0.1F;
                 float dZ = rand.nextFloat() * 0.8F + 0.1F;
-                EntityItem entityItem = new EntityItem(world, blockPos.getX() + dX, blockPos.getY() + dY, blockPos.getZ() + dZ, itemStack.copy());
+                EntityItem entityItem = new EntityItem(world, x + dX, y + dY, z + dZ, itemStack.copy());
                 if (itemStack.hasTagCompound())
                     entityItem.getEntityItem().setTagCompound((NBTTagCompound) itemStack.getTagCompound().copy());
                 float factor = 0.05F;

@@ -12,7 +12,8 @@ public enum TheMiscItems implements IItemEnum{
     STEEL("Steel"),
     KNIFE_BLADE("KnifeBlade"),
     KNIFE_HANDLE("KnifeHandle"),
-    DOUGH("Dough");
+    DOUGH("Dough"),
+    QUARTZ("BlackQuartz");
 
     public final String name;
 

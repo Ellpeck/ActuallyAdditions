@@ -17,6 +17,9 @@ public class InitAchievements{
     public static AchievementPage theAchievementPage;
     public static ArrayList<Achievement> achievementList = new ArrayList<Achievement>();
 
+    public static Achievement achievementCraftKnifeBlade;
+    public static Achievement achievementCraftKnife;
+
     public static Achievement achievementCraftDough;
     public static Achievement achievementSmeltBaguette;
     public static Achievement achievementCraftSubSandwich;
@@ -33,21 +36,24 @@ public class InitAchievements{
     public static void init(){
         Util.logInfo("Initializing Achievements...");
 
-        achievementCraftDough = new AchievementSPRS("craftDough", 0, -3, new ItemStack(InitItems.itemMisc, 1, TheMiscItems.DOUGH.ordinal()), null);
+        achievementCraftKnifeBlade = new AchievementSPRS("craftKnifeBlade", -2, 0, new ItemStack(InitItems.itemMisc, 1, TheMiscItems.KNIFE_BLADE.ordinal()), null);
+        achievementCraftKnife = new AchievementSPRS("craftKnife", 0, 0, new ItemStack(InitItems.itemKnife), achievementCraftKnifeBlade);
+
+        achievementCraftDough = new AchievementSPRS("craftDough", 0, -3, new ItemStack(InitItems.itemMisc, 1, TheMiscItems.DOUGH.ordinal()), achievementCraftKnife);
         achievementSmeltBaguette = new AchievementSPRS("smeltBaguette", 2, -3, new ItemStack(InitItems.itemFoods, 1, TheFoods.BAGUETTE.ordinal()), achievementCraftDough);
         achievementCraftSubSandwich = new AchievementSPRS("craftSubSandwich", 4, -3, new ItemStack(InitItems.itemFoods, 1, TheFoods.SUBMARINE_SANDWICH.ordinal()), achievementSmeltBaguette);
 
-        achievementCraftMashedFood = new AchievementSPRS("craftMashedFood", 0, 0 , new ItemStack(InitItems.itemMisc, 1, TheMiscItems.MASHED_FOOD.ordinal()), null);
-        achievementCraftCompost = new AchievementSPRS("craftCompost", 2, 0, new ItemStack(InitBlocks.blockCompost), achievementCraftMashedFood);
-        achievementCraftFertilizer = new AchievementSPRS("craftFertilizer", 4, 0, new ItemStack(InitItems.itemFertilizer), achievementCraftCompost);
+        achievementCraftMashedFood = new AchievementSPRS("craftMashedFood", 3, 0, new ItemStack(InitItems.itemMisc, 1, TheMiscItems.MASHED_FOOD.ordinal()), achievementCraftKnife);
+        achievementCraftCompost = new AchievementSPRS("craftCompost", 5, 0, new ItemStack(InitBlocks.blockCompost), achievementCraftMashedFood);
+        achievementCraftFertilizer = new AchievementSPRS("craftFertilizer", 7, 0, new ItemStack(InitItems.itemFertilizer), achievementCraftCompost);
 
-        achievementCraftPaperCone = new AchievementSPRS("craftPaperCone", 0, 3, new ItemStack(InitItems.itemMisc, 1, TheMiscItems.PAPER_CONE.ordinal()), null);
+        achievementCraftPaperCone = new AchievementSPRS("craftPaperCone", 0, 3, new ItemStack(InitItems.itemMisc, 1, TheMiscItems.PAPER_CONE.ordinal()), achievementCraftKnife);
         achievementCraftFrenchFry = new AchievementSPRS("craftFrenchFry", 2, 3, new ItemStack(InitItems.itemFoods, 1, TheFoods.FRENCH_FRY.ordinal()), achievementCraftPaperCone);
         achievementCraftFrenchFries = new AchievementSPRS("craftFrenchFries", 4, 4, new ItemStack(InitItems.itemFoods, 1, TheFoods.FRENCH_FRIES.ordinal()), achievementCraftFrenchFry);
         achievementCraftFishNChips = new AchievementSPRS("craftFishNChips", 4, 2, new ItemStack(InitItems.itemFoods, 1, TheFoods.FISH_N_CHIPS.ordinal()), achievementCraftFrenchFry);
 
 
-        theAchievementPage = new AchievementPage(StatCollector.translateToLocal("achievement.page." + Util.MOD_ID), achievementList.toArray(new Achievement[achievementList.size()]));
+        theAchievementPage = new AchievementPage(StatCollector.translateToLocal("achievement.page." + Util.MOD_ID_LOWER), achievementList.toArray(new Achievement[achievementList.size()]));
         AchievementPage.registerAchievementPage(theAchievementPage);
     }
 

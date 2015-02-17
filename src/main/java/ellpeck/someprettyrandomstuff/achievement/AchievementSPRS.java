@@ -8,7 +8,7 @@ public class AchievementSPRS extends Achievement{
     public AchievementSPRS(String name, int x, int y, ItemStack displayStack, Achievement hasToHaveBefore){
         super("achievement." + name, name, x, y, displayStack, hasToHaveBefore);
         InitAchievements.achievementList.add(this);
-        if(hasToHaveBefore == null) this.func_180789_a();
-        this.func_180788_c();
+        if(hasToHaveBefore == null) this.initIndependentStat();
+        this.registerStat();
     }
 }

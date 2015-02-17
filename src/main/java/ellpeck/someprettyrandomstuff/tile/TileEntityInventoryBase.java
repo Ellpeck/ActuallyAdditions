@@ -9,6 +9,12 @@ import net.minecraft.nbt.NBTTagList;
 public abstract class TileEntityInventoryBase extends TileEntityBase implements IInventory{
 
     public ItemStack slots[];
+    public String name;
+
+    public TileEntityInventoryBase(int slots, String name){
+        this.initializeSlots(slots);
+        this.name = name;
+    }
 
     public void writeToNBT(NBTTagCompound compound){
         super.writeToNBT(compound);
@@ -36,19 +42,19 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
         }
     }
 
-    public int getInventoryStackLimit() {
+    public int getInventoryStackLimit(){
         return 64;
     }
 
-    public boolean isUseableByPlayer(EntityPlayer player) {
-        return worldObj.getTileEntity(this.getPos()) == this && player.getDistanceSq(this.getPos().getX() + 0.5D, this.getPos().getY() + 0.5D, this.getPos().getZ() + 0.5D) <= 64;
+    public boolean isUseableByPlayer(EntityPlayer player){
+        return player.getDistanceSq(xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D) <= 64;
     }
 
-    public boolean isItemValidForSlot(int i, ItemStack stack) {
+    public boolean isItemValidForSlot(int i, ItemStack stack){
         return false;
     }
 
-    public ItemStack getStackInSlotOnClosing(int i) {
+    public ItemStack getStackInSlotOnClosing(int i){
         return getStackInSlot(i);
     }
 
@@ -56,15 +62,15 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
         this.slots[i] = stack;
     }
 
-    public int getSizeInventory() {
+    public int getSizeInventory(){
         return slots.length;
     }
 
-    public ItemStack getStackInSlot(int i) {
+    public ItemStack getStackInSlot(int i){
         return slots[i];
     }
 
-    public ItemStack decrStackSize(int i, int j) {
+    public ItemStack decrStackSize(int i, int j){
         if (slots[i] != null) {
             ItemStack stackAt;
             if (slots[i].stackSize <= j) {
@@ -79,5 +85,25 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
             }
         }
         return null;
+    }
+
+    public void initializeSlots(int itemAmount){
+        this.slots = new ItemStack[itemAmount];
+    }
+
+    public String getInventoryName(){
+        return this.name;
+    }
+
+    public boolean hasCustomInventoryName(){
+        return false;
+    }
+
+    public void openInventory(){
+
+    }
+
+    public void closeInventory(){
+
     }
 }

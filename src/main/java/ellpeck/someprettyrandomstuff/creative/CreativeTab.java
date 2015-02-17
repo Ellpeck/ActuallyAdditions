@@ -12,7 +12,7 @@ public class CreativeTab extends CreativeTabs{
     public static CreativeTab instance = new CreativeTab();
 
     public CreativeTab(){
-        super(Util.MOD_ID);
+        super(Util.MOD_ID_LOWER);
     }
 
     public Item getTabIconItem(){
