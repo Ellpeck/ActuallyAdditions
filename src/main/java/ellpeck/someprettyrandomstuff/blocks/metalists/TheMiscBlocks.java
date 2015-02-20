@@ -1,8 +1,8 @@
 package ellpeck.someprettyrandomstuff.blocks.metalists;
 
-import ellpeck.someprettyrandomstuff.util.IItemEnum;
+import ellpeck.someprettyrandomstuff.util.IName;
 
-public enum TheMiscBlocks implements IItemEnum{
+public enum TheMiscBlocks implements IName{
 
     QUARTZ_PILLAR("BlackQuartzPillar"),
     QUARTZ_CHISELED("BlackQuartzChiseled"),
@@ -15,6 +15,7 @@ public enum TheMiscBlocks implements IItemEnum{
         this.name = name;
     }
 
+    @Override
     public String getName(){
         return this.name;
     }

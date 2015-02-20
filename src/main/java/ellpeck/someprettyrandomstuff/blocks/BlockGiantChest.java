@@ -5,7 +5,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.someprettyrandomstuff.SomePrettyRandomStuff;
 import ellpeck.someprettyrandomstuff.creative.CreativeTab;
 import ellpeck.someprettyrandomstuff.inventory.GuiHandler;
-import ellpeck.someprettyrandomstuff.tile.TileEntityFeeder;
+import ellpeck.someprettyrandomstuff.tile.TileEntityGiantChest;
 import ellpeck.someprettyrandomstuff.util.IName;
 import ellpeck.someprettyrandomstuff.util.Util;
 import net.minecraft.block.Block;
@@ -16,11 +16,11 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
-public class BlockFeeder extends BlockContainerBase implements IName{
+public class BlockGiantChest extends BlockContainerBase implements IName{
 
     private IIcon topIcon;
 
-    public BlockFeeder(){
+    public BlockGiantChest(){
         super(Material.wood);
         this.setBlockName(Util.getNamePrefix() + this.getName());
         this.setCreativeTab(CreativeTab.instance);
@@ -31,12 +31,12 @@ public class BlockFeeder extends BlockContainerBase implements IName{
 
     @Override
     public TileEntity createNewTileEntity(World world, int par2){
-        return new TileEntityFeeder();
+        return new TileEntityGiantChest();
     }
 
     @Override
     public IIcon getIcon(int side, int metadata){
-        return (side == 0 || side == 1) ? this.topIcon : this.blockIcon;
+        return side == 1 ? this.topIcon : this.blockIcon;
     }
 
     @Override
@@ -49,8 +49,8 @@ public class BlockFeeder extends BlockContainerBase implements IName{
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9){
         if(!world.isRemote){
-            TileEntityFeeder feeder = (TileEntityFeeder)world.getTileEntity(x, y, z);
-            if (feeder != null) player.openGui(SomePrettyRandomStuff.instance, GuiHandler.FEEDER_ID, world, x, y, z);
+            TileEntityGiantChest chest = (TileEntityGiantChest)world.getTileEntity(x, y, z);
+            if (chest != null) player.openGui(SomePrettyRandomStuff.instance, GuiHandler.GIANT_CHEST_ID, world, x, y, z);
             return true;
         }
         return true;
@@ -64,6 +64,6 @@ public class BlockFeeder extends BlockContainerBase implements IName{
 
     @Override
     public String getName(){
-        return "blockFeeder";
+        return "blockGiantChest";
     }
 }

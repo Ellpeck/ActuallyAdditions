@@ -12,6 +12,7 @@ import java.util.Random;
 
 public class OreGen implements IWorldGenerator{
 
+    @Override
     public void generate(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider){
         switch (world.provider.dimensionId){
             case -1:

@@ -7,6 +7,8 @@ import ellpeck.someprettyrandomstuff.items.ItemFertilizer;
 import ellpeck.someprettyrandomstuff.items.ItemMisc;
 import ellpeck.someprettyrandomstuff.items.metalists.TheMiscItems;
 import ellpeck.someprettyrandomstuff.tile.TileEntityCompost;
+import ellpeck.someprettyrandomstuff.util.IName;
+import ellpeck.someprettyrandomstuff.util.Util;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
@@ -18,17 +20,18 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class BlockCompost extends BlockContainerBase{
+public class BlockCompost extends BlockContainerBase implements IName{
 
     public BlockCompost(){
         super(Material.wood);
         this.setCreativeTab(CreativeTab.instance);
-        this.setBlockName("blockCompost");
+        this.setBlockName(Util.getNamePrefix() + this.getName());
         this.setHarvestLevel("axe", 0);
         this.setHardness(1.0F);
         this.setStepSound(soundTypeWood);
     }
 
+    @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int f6, float f7, float f8, float f9){
         if(!world.isRemote){
             ItemStack stackPlayer = player.getCurrentEquippedItem();
@@ -50,6 +53,7 @@ public class BlockCompost extends BlockContainerBase{
         return true;
     }
 
+    @Override
     public void addCollisionBoxesToList(World world, int x, int y, int z, AxisAlignedBB mask, List list, Entity collidingEntity){
         this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.3125F, 1.0F);
         super.addCollisionBoxesToList(world, x, y, z, mask, list, collidingEntity);
@@ -65,28 +69,39 @@ public class BlockCompost extends BlockContainerBase{
         this.setBlockBoundsForItemRender();
     }
 
+    @Override
     public void setBlockBoundsForItemRender(){
         this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
     }
 
+    @Override
     public boolean isOpaqueCube(){
         return false;
     }
 
+    @Override
     public boolean renderAsNormalBlock(){
         return false;
     }
 
+    @Override
     public int getRenderType(){
         return RenderingRegistry.getNextAvailableRenderId();
     }
 
+    @Override
     public TileEntity createNewTileEntity(World world, int meta){
         return new TileEntityCompost();
     }
 
+    @Override
     public void breakBlock(World world, int x, int y, int z, Block block, int par6){
         this.dropInventory(world, x, y, z);
         super.breakBlock(world, x, y, z, block, par6);
+    }
+
+    @Override
+    public String getName(){
+        return "blockCompost";
     }
 }

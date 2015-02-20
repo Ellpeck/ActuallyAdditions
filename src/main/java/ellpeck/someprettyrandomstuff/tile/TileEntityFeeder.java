@@ -1,8 +1,11 @@
 package ellpeck.someprettyrandomstuff.tile;
 
+import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.someprettyrandomstuff.config.ConfigValues;
+import ellpeck.someprettyrandomstuff.network.PacketHandler;
+import ellpeck.someprettyrandomstuff.network.PacketTileEntityFeeder;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
@@ -18,13 +21,12 @@ public class TileEntityFeeder extends TileEntityInventoryBase{
 
     public int currentTimer;
     public int currentAnimalAmount;
-    //Is 0 or 1, gets sent to the GUI for display
-    public int isBred;
 
     public TileEntityFeeder(){
         super(1, "tileEntityFeeder");
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public void updateEntity(){
         if(!worldObj.isRemote){
@@ -37,35 +39,31 @@ public class TileEntityFeeder extends TileEntityInventoryBase{
                             this.currentTimer = 0;
                             EntityAnimal randomAnimal = animals.get(new Random().nextInt(this.currentAnimalAmount));
                             if(!randomAnimal.isInLove() && randomAnimal.getGrowingAge() == 0 && randomAnimal.isBreedingItem(this.slots[0])){
-                                randomAnimal.func_146082_f(null);
+
+                                PacketHandler.theNetwork.sendToAllAround(new PacketTileEntityFeeder(this, randomAnimal.getEntityId()), new NetworkRegistry.TargetPoint(this.worldObj.provider.dimensionId, this.xCoord, this.yCoord, this.zCoord, 80));
+                                this.feedAnimal(randomAnimal);
+
                                 this.slots[0].stackSize--;
                                 if(this.slots[0].stackSize == 0) this.slots[0] = this.slots[0].getItem().getContainerItem(this.slots[0]);
-
-                                this.isBred = 1;
-                                Random rand = new Random();
-                                for(int i = 0; i < 7; i++){
-                                    double d = rand.nextGaussian() * 0.02D;
-                                    double d1 = rand.nextGaussian() * 0.02D;
-                                    double d2 = rand.nextGaussian() * 0.02D;
-                                    worldObj.spawnParticle("heart", (randomAnimal.posX + (double)(rand.nextFloat() * randomAnimal.width * 2.0F)) - randomAnimal.width, randomAnimal.posY + 0.5D + (double)(rand.nextFloat() * randomAnimal.height), (randomAnimal.posZ + (double)(rand.nextFloat() * randomAnimal.width * 2.0F)) - randomAnimal.width, d, d1, d2);
-                                }
                             }
                         }
-                        else{
-                            if(this.currentTimer == timerGoal/10) this.isBred = 0;
-                            this.currentTimer++;
-                        }
+                        else this.currentTimer++;
                     }
-                    else{
-                        this.currentTimer = 0;
-                        this.isBred = 0;
-                    }
+                    else this.currentTimer = 0;
                 }
-                else{
-                    this.currentTimer = 0;
-                    this.isBred = 0;
-                }
+                else this.currentTimer = 0;
             }
+        }
+    }
+
+    public void feedAnimal(EntityAnimal animal){
+        animal.func_146082_f(null);
+        Random rand = new Random();
+        for(int i = 0; i < 7; i++){
+            double d = rand.nextGaussian() * 0.02D;
+            double d1 = rand.nextGaussian() * 0.02D;
+            double d2 = rand.nextGaussian() * 0.02D;
+            worldObj.spawnParticle("heart", (animal.posX + (double)(rand.nextFloat() * animal.width * 2.0F)) - animal.width, animal.posY + 0.5D + (double)(rand.nextFloat() * animal.height), (animal.posZ + (double)(rand.nextFloat() * animal.width * 2.0F)) - animal.width, d, d1, d2);
         }
     }
 
@@ -74,11 +72,13 @@ public class TileEntityFeeder extends TileEntityInventoryBase{
         return this.currentTimer * i / this.timerGoal;
     }
 
+    @Override
     public void writeToNBT(NBTTagCompound compound){
         super.writeToNBT(compound);
         compound.setInteger("Timer", this.currentTimer);
     }
 
+    @Override
     public void readFromNBT(NBTTagCompound compound){
         super.readFromNBT(compound);
         this.currentTimer = compound.getInteger("Timer");

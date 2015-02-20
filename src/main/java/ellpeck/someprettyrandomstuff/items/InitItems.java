@@ -3,6 +3,7 @@ package ellpeck.someprettyrandomstuff.items;
 import cpw.mods.fml.common.registry.GameRegistry;
 import ellpeck.someprettyrandomstuff.items.tools.*;
 import ellpeck.someprettyrandomstuff.material.InitItemMaterials;
+import ellpeck.someprettyrandomstuff.util.IName;
 import ellpeck.someprettyrandomstuff.util.Util;
 import net.minecraft.item.Item;
 
@@ -29,16 +30,16 @@ public class InitItems{
         Util.logInfo("Initializing Items...");
 
         itemFertilizer = new ItemFertilizer();
-        GameRegistry.registerItem(itemFertilizer, Util.getSubbedUnlocalized(itemFertilizer));
+        GameRegistry.registerItem(itemFertilizer, ((IName)itemFertilizer).getName());
 
         itemMisc = new ItemMisc();
-        GameRegistry.registerItem(itemMisc, Util.getSubbedUnlocalized(itemMisc));
+        GameRegistry.registerItem(itemMisc, ((IName)itemMisc).getName());
 
         itemFoods = new ItemFoods();
-        GameRegistry.registerItem(itemFoods, Util.getSubbedUnlocalized(itemFoods));
+        GameRegistry.registerItem(itemFoods, ((IName)itemFoods).getName());
 
         itemKnife = new ItemKnife();
-        GameRegistry.registerItem(itemKnife, Util.getSubbedUnlocalized(itemKnife));
+        GameRegistry.registerItem(itemKnife, ((IName)itemKnife).getName());
 
         itemPickaxeEmerald = new ItemPickaxeSPRS(InitItemMaterials.toolMaterialEmerald, "itemPickaxeEmerald");
         itemAxeEmerald = new ItemAxeSPRS(InitItemMaterials.toolMaterialEmerald, "itemAxeEmerald");

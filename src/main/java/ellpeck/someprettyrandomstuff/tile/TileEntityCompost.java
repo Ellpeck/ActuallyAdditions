@@ -17,6 +17,7 @@ public class TileEntityCompost extends TileEntityInventoryBase{
         super(1, "tileEntityCompost");
     }
 
+    @Override
     public void updateEntity(){
         if(!worldObj.isRemote){
             if(this.slots[0] != null && !(this.slots[0].getItem() instanceof ItemFertilizer) && this.slots[0].stackSize >= this.amountNeededToConvert){
@@ -29,11 +30,13 @@ public class TileEntityCompost extends TileEntityInventoryBase{
         }
     }
 
+    @Override
     public void writeToNBT(NBTTagCompound compound){
         super.writeToNBT(compound);
         compound.setInteger("ConversionTime", this.conversionTime);
     }
 
+    @Override
     public void readFromNBT(NBTTagCompound compound){
         super.readFromNBT(compound);
         this.conversionTime = compound.getInteger("ConversionTime");

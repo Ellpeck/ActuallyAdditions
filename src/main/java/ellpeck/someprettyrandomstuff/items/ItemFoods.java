@@ -4,6 +4,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.someprettyrandomstuff.creative.CreativeTab;
 import ellpeck.someprettyrandomstuff.items.metalists.TheFoods;
+import ellpeck.someprettyrandomstuff.util.IName;
 import ellpeck.someprettyrandomstuff.util.Util;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
@@ -19,14 +20,14 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class ItemFoods extends ItemFood{
+public class ItemFoods extends ItemFood implements IName{
 
     public static final TheFoods[] allFoods = TheFoods.values();
     public IIcon[] textures = new IIcon[allFoods.length];
 
     public ItemFoods(){
         super(0, 0.0F, false);
-        this.setUnlocalizedName("itemFood");
+        this.setUnlocalizedName(Util.getNamePrefix() + this.getName());
         this.setHasSubtypes(true);
         this.setMaxDamage(0);
         this.setCreativeTab(CreativeTab.instance);
@@ -34,22 +35,27 @@ public class ItemFoods extends ItemFood{
         TheFoods.setReturnItems();
     }
 
+    @Override
     public int func_150905_g(ItemStack stack){
         return allFoods[stack.getItemDamage()].healAmount;
     }
 
+    @Override
     public float func_150906_h(ItemStack stack){
         return allFoods[stack.getItemDamage()].saturation;
     }
 
+    @Override
     public EnumAction getItemUseAction(ItemStack stack){
         return allFoods[stack.getItemDamage()].getsDrunken ? EnumAction.drink : EnumAction.eat;
     }
 
+    @Override
     public int getMaxItemUseDuration(ItemStack stack){
         return allFoods[stack.getItemDamage()].useDuration;
     }
 
+    @Override
     public int getMetadata(int damage){
         return damage;
     }
@@ -62,10 +68,12 @@ public class ItemFoods extends ItemFood{
         }
     }
 
+    @Override
     public String getUnlocalizedName(ItemStack stack){
-        return this.getUnlocalizedName() + allFoods[stack.getItemDamage()].name;
+        return this.getUnlocalizedName() + allFoods[stack.getItemDamage()].getName();
     }
 
+    @Override
     public ItemStack onEaten(ItemStack stack, World world, EntityPlayer player){
         ItemStack stackToReturn = super.onEaten(stack, world, player);
         ItemStack returnItem = allFoods[stack.getItemDamage()].returnItem;
@@ -81,25 +89,33 @@ public class ItemFoods extends ItemFood{
         return stackToReturn;
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld){
         if(Util.isShiftPressed()){
-            list.add(StatCollector.translateToLocal("tooltip." + this.getUnlocalizedName(stack).substring(5) + ".desc"));
-            list.add(StatCollector.translateToLocal("tooltip.hunger.desc") + ": " + allFoods[stack.getItemDamage()].healAmount);
-            list.add(StatCollector.translateToLocal("tooltip.saturation.desc") + ": " + allFoods[stack.getItemDamage()].saturation);
+            list.add(StatCollector.translateToLocal("tooltip." + Util.MOD_ID_LOWER + "." + this.getName() + allFoods[stack.getItemDamage()].getName() + ".desc"));
+            list.add(StatCollector.translateToLocal("tooltip." + Util.MOD_ID_LOWER + ".hunger.desc") + ": " + allFoods[stack.getItemDamage()].healAmount);
+            list.add(StatCollector.translateToLocal("tooltip." + Util.MOD_ID_LOWER + ".saturation.desc") + ": " + allFoods[stack.getItemDamage()].saturation);
         }
         else list.add(Util.shiftForInfo());
     }
 
+    @Override
     public IIcon getIconFromDamage(int par1){
         return textures[par1];
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister iconReg){
         for(int i = 0; i < textures.length; i++){
-            textures[i] = iconReg.registerIcon(Util.MOD_ID_LOWER + ":" + Util.getSubbedUnlocalized(this) + allFoods[i].getName());
+            textures[i] = iconReg.registerIcon(Util.MOD_ID_LOWER + ":" + this.getName() + allFoods[i].getName());
         }
+    }
+
+    @Override
+    public String getName(){
+        return "itemFood";
     }
 }

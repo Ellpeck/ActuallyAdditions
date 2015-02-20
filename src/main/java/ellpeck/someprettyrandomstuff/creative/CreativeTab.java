@@ -15,10 +15,12 @@ public class CreativeTab extends CreativeTabs{
         super(Util.MOD_ID_LOWER);
     }
 
+    @Override
     public Item getTabIconItem(){
         return InitItems.itemFoods;
     }
 
+    @Override
     public ItemStack getIconItemStack(){
         return new ItemStack(this.getTabIconItem(), 1, TheFoods.SUBMARINE_SANDWICH.ordinal());
     }

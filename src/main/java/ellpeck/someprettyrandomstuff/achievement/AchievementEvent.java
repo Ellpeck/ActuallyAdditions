@@ -74,10 +74,10 @@ public class AchievementEvent{
     public static void init(){
         Util.logInfo("Initializing Events...");
 
-        FMLCommonHandler.instance().bus().register(new AchievementEvent.SmeltEvent());
-        FMLCommonHandler.instance().bus().register(new AchievementEvent.CraftEvent());
-        FMLCommonHandler.instance().bus().register(new AchievementEvent.PickupEvent());
-        FMLCommonHandler.instance().bus().register(new AchievementEvent.LoginEvent());
+        FMLCommonHandler.instance().bus().register(new SmeltEvent());
+        FMLCommonHandler.instance().bus().register(new CraftEvent());
+        FMLCommonHandler.instance().bus().register(new PickupEvent());
+        FMLCommonHandler.instance().bus().register(new LoginEvent());
     }
 
 }

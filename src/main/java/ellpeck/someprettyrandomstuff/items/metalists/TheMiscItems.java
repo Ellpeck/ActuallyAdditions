@@ -1,8 +1,8 @@
 package ellpeck.someprettyrandomstuff.items.metalists;
 
-import ellpeck.someprettyrandomstuff.util.IItemEnum;
+import ellpeck.someprettyrandomstuff.util.IName;
 
-public enum TheMiscItems implements IItemEnum{
+public enum TheMiscItems implements IName{
 
     PAPER_CONE("PaperCone"),
     MASHED_FOOD("MashedFood"),
@@ -21,6 +21,7 @@ public enum TheMiscItems implements IItemEnum{
         this.name = name;
     }
 
+    @Override
     public String getName(){
         return this.name;
     }

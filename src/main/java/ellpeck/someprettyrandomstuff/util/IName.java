@@ -1,6 +1,6 @@
 package ellpeck.someprettyrandomstuff.util;
 
-public interface IItemEnum{
+public interface IName{
 
     public abstract String getName();
 

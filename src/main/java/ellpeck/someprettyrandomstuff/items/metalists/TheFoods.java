@@ -1,11 +1,11 @@
 package ellpeck.someprettyrandomstuff.items.metalists;
 
 import ellpeck.someprettyrandomstuff.items.InitItems;
-import ellpeck.someprettyrandomstuff.util.IItemEnum;
+import ellpeck.someprettyrandomstuff.util.IName;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
-public enum TheFoods implements IItemEnum{
+public enum TheFoods implements IName{
 
     CHEESE("Cheese", 1, 0.1F, false, 3),
     PUMPKIN_STEW("PumpkinStew", 10, 0.4F, true, 30),
@@ -47,6 +47,7 @@ public enum TheFoods implements IItemEnum{
         this.useDuration = useDuration;
     }
 
+    @Override
     public String getName(){
         return this.name;
     }

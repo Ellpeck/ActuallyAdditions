@@ -1,9 +1,6 @@
 package ellpeck.someprettyrandomstuff.util;
 
-import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.relauncher.Side;
-import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
@@ -25,6 +22,7 @@ public class Util{
     public static final Logger SPRS_LOGGER = LogManager.getLogger(MOD_ID);
 
     public static final int WILDCARD = OreDictionary.WILDCARD_VALUE;
+    public static final ResourceLocation GUI_INVENTORY_LOCATION = getGuiLocation("guiInventory");
 
     public static final String BLACK = (char)167 + "0";
     public static final String BLUE = (char)167 + "1";
@@ -56,37 +54,34 @@ public class Util{
     }
 
     public static String shiftForInfo(){
-        return GREEN + ITALIC + StatCollector.translateToLocal("tooltip.shiftForInfo.desc");
+        return GREEN + ITALIC + StatCollector.translateToLocal("tooltip." + MOD_ID_LOWER + ".shiftForInfo.desc");
     }
 
     public static String addStandardInformation(Item item){
-        if(isShiftPressed()) return StatCollector.translateToLocal("tooltip." + getSubbedUnlocalized(item) + ".desc");
-        else return shiftForInfo();
+        if(item instanceof IName){
+            if(isShiftPressed()) return StatCollector.translateToLocal("tooltip." + Util.MOD_ID_LOWER + "." + ((IName)item).getName() + ".desc");
+            else return shiftForInfo();
+        }
+        return null;
     }
 
     public static void logInfo(String text){
         SPRS_LOGGER.log(Level.INFO, text);
     }
 
-    public static boolean isClientSide(){
-        return FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT;
-    }
-
-    public static String getSubbedUnlocalized(Item item){
-        return item.getUnlocalizedName().substring(5);
-    }
-
-    public static String getSubbedUnlocalized(Block block){
-        return block.getUnlocalizedName().substring(5);
-    }
-
     public static void registerItems(Item[] items){
         for(Item item : items){
-            GameRegistry.registerItem(item, getSubbedUnlocalized(item));
+            if(item instanceof IName){
+                GameRegistry.registerItem(item, ((IName)item).getName());
+            }
         }
     }
 
     public static ResourceLocation getGuiLocation(String file){
         return new ResourceLocation(MOD_ID_LOWER, "textures/gui/" + file + ".png");
+    }
+
+    public static String getNamePrefix(){
+        return MOD_ID_LOWER + ".";
     }
 }
