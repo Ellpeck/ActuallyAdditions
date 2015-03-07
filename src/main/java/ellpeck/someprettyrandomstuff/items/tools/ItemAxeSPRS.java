@@ -7,6 +7,7 @@ import ellpeck.someprettyrandomstuff.util.IName;
 import ellpeck.someprettyrandomstuff.util.Util;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemAxe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
@@ -17,11 +18,13 @@ import java.util.List;
 public class ItemAxeSPRS extends ItemAxe implements IName{
 
     private String name;
+    private EnumRarity rarity;
 
-    public ItemAxeSPRS(ToolMaterial toolMat, String unlocalizedName){
+    public ItemAxeSPRS(ToolMaterial toolMat, String unlocalizedName, EnumRarity rarity){
         super(toolMat);
         this.name = unlocalizedName;
-        this.setUnlocalizedName(Util.getNamePrefix() + this.getName());
+        this.rarity = rarity;
+        this.setUnlocalizedName(Util.setUnlocalizedName(this));
         this.setCreativeTab(CreativeTab.instance);
     }
 
@@ -44,6 +47,11 @@ public class ItemAxeSPRS extends ItemAxe implements IName{
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister iconReg){
         this.itemIcon = iconReg.registerIcon(Util.MOD_ID_LOWER + ":" + this.getName());
+    }
+
+    @Override
+    public EnumRarity getRarity(ItemStack stack){
+        return this.rarity;
     }
 
     @Override

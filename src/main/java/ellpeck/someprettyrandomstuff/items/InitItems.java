@@ -1,10 +1,9 @@
 package ellpeck.someprettyrandomstuff.items;
 
-import cpw.mods.fml.common.registry.GameRegistry;
 import ellpeck.someprettyrandomstuff.items.tools.*;
 import ellpeck.someprettyrandomstuff.material.InitItemMaterials;
-import ellpeck.someprettyrandomstuff.util.IName;
 import ellpeck.someprettyrandomstuff.util.Util;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 
 public class InitItems{
@@ -13,6 +12,9 @@ public class InitItems{
     public static Item itemMisc;
     public static Item itemFoods;
     public static Item itemKnife;
+    public static Item itemCrafterOnAStick;
+    public static Item itemDust;
+    public static Item itemSpecialDrop;
 
     public static Item itemPickaxeEmerald;
     public static Item itemAxeEmerald;
@@ -30,29 +32,38 @@ public class InitItems{
         Util.logInfo("Initializing Items...");
 
         itemFertilizer = new ItemFertilizer();
-        GameRegistry.registerItem(itemFertilizer, ((IName)itemFertilizer).getName());
+        Util.register(itemFertilizer);
 
         itemMisc = new ItemMisc();
-        GameRegistry.registerItem(itemMisc, ((IName)itemMisc).getName());
+        Util.register(itemMisc);
 
         itemFoods = new ItemFoods();
-        GameRegistry.registerItem(itemFoods, ((IName)itemFoods).getName());
+        Util.register(itemFoods);
 
         itemKnife = new ItemKnife();
-        GameRegistry.registerItem(itemKnife, ((IName)itemKnife).getName());
+        Util.register(itemKnife);
 
-        itemPickaxeEmerald = new ItemPickaxeSPRS(InitItemMaterials.toolMaterialEmerald, "itemPickaxeEmerald");
-        itemAxeEmerald = new ItemAxeSPRS(InitItemMaterials.toolMaterialEmerald, "itemAxeEmerald");
-        itemShovelEmerald = new ItemShovelSPRS(InitItemMaterials.toolMaterialEmerald, "itemShovelEmerald");
-        itemSwordEmerald = new ItemSwordSPRS(InitItemMaterials.toolMaterialEmerald, "itemSwordEmerald");
-        itemHoeEmerald = new ItemHoeSPRS(InitItemMaterials.toolMaterialEmerald, "itemHoeEmerald");
+        itemCrafterOnAStick = new ItemCrafterOnAStick();
+        Util.register(itemCrafterOnAStick);
+
+        itemDust = new ItemDust();
+        Util.register(itemDust);
+
+        itemSpecialDrop = new ItemSpecialDrop();
+        Util.register(itemSpecialDrop);
+
+        itemPickaxeEmerald = new ItemPickaxeSPRS(InitItemMaterials.toolMaterialEmerald, "itemPickaxeEmerald", EnumRarity.rare);
+        itemAxeEmerald = new ItemAxeSPRS(InitItemMaterials.toolMaterialEmerald, "itemAxeEmerald", EnumRarity.rare);
+        itemShovelEmerald = new ItemShovelSPRS(InitItemMaterials.toolMaterialEmerald, "itemShovelEmerald", EnumRarity.rare);
+        itemSwordEmerald = new ItemSwordSPRS(InitItemMaterials.toolMaterialEmerald, "itemSwordEmerald", EnumRarity.rare);
+        itemHoeEmerald = new ItemHoeSPRS(InitItemMaterials.toolMaterialEmerald, "itemHoeEmerald", EnumRarity.rare);
         Util.registerItems(new Item[]{itemPickaxeEmerald, itemAxeEmerald, itemShovelEmerald, itemSwordEmerald, itemHoeEmerald});
 
-        itemPickaxeObsidian = new ItemPickaxeSPRS(InitItemMaterials.toolMaterialObsidian, "itemPickaxeObsidian");
-        itemAxeObsidian = new ItemAxeSPRS(InitItemMaterials.toolMaterialObsidian, "itemAxeObsidian");
-        itemShovelObsidian = new ItemShovelSPRS(InitItemMaterials.toolMaterialObsidian, "itemShovelObsidian");
-        itemSwordObsidian = new ItemSwordSPRS(InitItemMaterials.toolMaterialObsidian, "itemSwordObsidian");
-        itemHoeObsidian = new ItemHoeSPRS(InitItemMaterials.toolMaterialObsidian, "itemHoeObsidian");
+        itemPickaxeObsidian = new ItemPickaxeSPRS(InitItemMaterials.toolMaterialObsidian, "itemPickaxeObsidian", EnumRarity.uncommon);
+        itemAxeObsidian = new ItemAxeSPRS(InitItemMaterials.toolMaterialObsidian, "itemAxeObsidian", EnumRarity.uncommon);
+        itemShovelObsidian = new ItemShovelSPRS(InitItemMaterials.toolMaterialObsidian, "itemShovelObsidian", EnumRarity.uncommon);
+        itemSwordObsidian = new ItemSwordSPRS(InitItemMaterials.toolMaterialObsidian, "itemSwordObsidian", EnumRarity.uncommon);
+        itemHoeObsidian = new ItemHoeSPRS(InitItemMaterials.toolMaterialObsidian, "itemHoeObsidian", EnumRarity.uncommon);
         Util.registerItems(new Item[]{itemPickaxeObsidian, itemAxeObsidian, itemShovelObsidian, itemSwordObsidian, itemHoeObsidian});
 
     }

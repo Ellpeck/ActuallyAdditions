@@ -8,12 +8,11 @@ tile.someprettyrandomstuff.blockMiscBlackQuartzChiseled.name=Chiseled Block of B
 tile.someprettyrandomstuff.blockMiscBlackQuartzPillar.name=Pillar of Black Quartz
 tile.someprettyrandomstuff.blockFeeder.name=Automatic Feeder
 tile.someprettyrandomstuff.blockGiantChest.name=Giant Chest
+tile.someprettyrandomstuff.blockGrinder.name=Crusher
+tile.someprettyrandomstuff.blockGrinderDouble.name=Double Crusher
+tile.someprettyrandomstuff.blockFurnaceDouble.name=Double Furnace
 
 item.someprettyrandomstuff.itemMiscMashedFood.name=Mashed Food
-item.someprettyrandomstuff.itemMiscRefinedIron.name=Refined Iron
-item.someprettyrandomstuff.itemMiscRefinedRedstone.name=Refined Redstone
-item.someprettyrandomstuff.itemMiscCompressedIron.name=Compressed Iron
-item.someprettyrandomstuff.itemMiscSteel.name=Steel
 item.someprettyrandomstuff.itemFertilizer.name=Fertilizer
 item.someprettyrandomstuff.itemMiscDough.name=Dough
 item.someprettyrandomstuff.itemMiscPaperCone.name=Paper Cone
@@ -32,6 +31,7 @@ item.someprettyrandomstuff.itemAxeObsidian.name=Obsidian Axe
 item.someprettyrandomstuff.itemShovelObsidian.name=Obsidian Shovel
 item.someprettyrandomstuff.itemHoeObsidian.name=Obsidian Hoe
 item.someprettyrandomstuff.itemSwordObsidian.name=Obsidian Sword
+item.someprettyrandomstuff.itemCrafterOnAStick.name=Crafting Table On A Stick
 
 item.someprettyrandomstuff.itemFoodBaguette.name=Baguette
 item.someprettyrandomstuff.itemFoodPizza.name=Pizza
@@ -50,24 +50,42 @@ item.someprettyrandomstuff.itemFoodCarrotJuice.name=Carrot Juice
 item.someprettyrandomstuff.itemFoodPumpkinStew.name=Pumpkin Stew
 item.someprettyrandomstuff.itemFoodCheese.name=Cheese
 
+item.someprettyrandomstuff.itemSpecialUnknownSubstance.name=Unknown Substance
+item.someprettyrandomstuff.itemSpecialSolidifiedExperience.name=Solidified Experience
+item.someprettyrandomstuff.itemSpecialBloodFragment.name=Blood Fragment
+item.someprettyrandomstuff.itemSpecialHeartPart.name=Part of a Heart
+item.someprettyrandomstuff.itemSpecialPearlShard.name=Ender Pearl Shard
+item.someprettyrandomstuff.itemSpecialEmeraldShard.name=Emerald Shard
+
+item.someprettyrandomstuff.itemDustIron.name=Crushed Iron
+item.someprettyrandomstuff.itemDustGold.name=Crushed Gold
+item.someprettyrandomstuff.itemDustDiamond.name=Crushed Diamond
+item.someprettyrandomstuff.itemDustLapis.name=Crushed Lapis
+item.someprettyrandomstuff.itemDustEmerald.name=Crushed Emerald
+
 tooltip.someprettyrandomstuff.shiftForInfo.desc=Press Shift for Info
 tooltip.someprettyrandomstuff.hunger.desc=Fills
 tooltip.someprettyrandomstuff.saturation.desc=Saturation
 tooltip.someprettyrandomstuff.durability.desc=Durability
 
-tooltip.someprettyrandomstuff.blockCompost.desc=Used to make Fertilizer with Mashed Food
+tooltip.someprettyrandomstuff.blockCompost.desc.1=Used to make Fertilizer with Mashed Food
+tooltip.someprettyrandomstuff.blockCompost.desc.2=BETA INFO: Will visually contain Compost in the Future!
 tooltip.someprettyrandomstuff.blockMiscOreBlackQuartz.desc=The darkest form of Quartz. Also: You had Silk Touch!
 tooltip.someprettyrandomstuff.blockMiscBlackQuartz.desc=Black, eerie Quartz! Nice for decorating.
 tooltip.someprettyrandomstuff.blockMiscBlackQuartzChiseled.desc=Black, eerie chiseled Quartz! Nice for decorating.
 tooltip.someprettyrandomstuff.blockMiscBlackQuartzPillar.desc=Kind of a pillar. Not really, though. It's fake! Fake I say!
 tooltip.someprettyrandomstuff.blockFeeder.desc=Feeds Animals on its own!
 tooltip.someprettyrandomstuff.blockGiantChest.desc=GUI Scale on 'Auto'? That's a problem!
+tooltip.someprettyrandomstuff.blockGrinder.desc.1=Crushes Ores into Dusts!
+tooltip.someprettyrandomstuff.blockGrinder.desc.2=You get two Dusts per Ore and Extras!
+tooltip.someprettyrandomstuff.blockGrinder.desc.3=To crush two ores simultaneously,
+tooltip.someprettyrandomstuff.blockGrinder.desc.4=build the Double Crusher!
+tooltip.someprettyrandomstuff.blockGrinderDouble.desc.1=Crushes Ores into Dusts!
+tooltip.someprettyrandomstuff.blockGrinderDouble.desc.2=You get two Dusts per Ore and Extras!
+tooltip.someprettyrandomstuff.blockGrinderDouble.desc.3=Can crush two Ores simultaneously!
+tooltip.someprettyrandomstuff.blockFurnaceDouble.desc=Smelts two Things simultaneously!
 
 tooltip.someprettyrandomstuff.itemMiscMashedFood.desc=Used to make Fertilizer
-tooltip.someprettyrandomstuff.itemMiscRefinedIron.desc=Iron, but better
-tooltip.someprettyrandomstuff.itemMiscRefinedRedstone.desc=Redstone, but better
-tooltip.someprettyrandomstuff.itemMiscCompressedIron.desc=Iron, but compressed
-tooltip.someprettyrandomstuff.itemMiscSteel.desc=Like Iron, but stronger. Much stronger.
 tooltip.someprettyrandomstuff.itemFertilizer.desc=Om nom nom. Don't eat it.
 tooltip.someprettyrandomstuff.itemMiscDough.desc=Used to make things that involve dough.
 tooltip.someprettyrandomstuff.itemMiscPaperCone.desc=Used to store foodstuffs!
@@ -86,12 +104,13 @@ tooltip.someprettyrandomstuff.itemAxeObsidian.desc=Mines Wood. Slooooowly.
 tooltip.someprettyrandomstuff.itemShovelObsidian.desc=Mines Dirt. Slooooowly.
 tooltip.someprettyrandomstuff.itemHoeObsidian.desc=Mines... uhm... yea.
 tooltip.someprettyrandomstuff.itemSwordObsidian.desc=Mines... mobs?
+tooltip.someprettyrandomstuff.itemCrafterOnAStick.desc=A Crafting Table you can carry around!
 
 tooltip.someprettyrandomstuff.itemFoodBaguette.desc=It's french. It's noms.
 tooltip.someprettyrandomstuff.itemFoodPizza.desc=Who doesn't like it?
 tooltip.someprettyrandomstuff.itemFoodHamburger.desc=It's from a german city!
 tooltip.someprettyrandomstuff.itemFoodBigCookie.desc=Do you know? The Subway Thing?
-tooltip.someprettyrandomstuff.itemFoodSubmarineSandwich.desc=Do you know? The Subway and everything else Thing?
+tooltip.someprettyrandomstuff.itemFoodSubmarineSandwich.desc=Just like Subway used to make! ...still does, right?
 tooltip.someprettyrandomstuff.itemFoodToast.desc="GHOSTS! GHOSTS! TOASTS!"
 tooltip.someprettyrandomstuff.itemFoodChocolate.desc=Lari likes.
 tooltip.someprettyrandomstuff.itemFoodChocolateCake.desc=Looks delicious. With redberries. Or something.
@@ -103,6 +122,19 @@ tooltip.someprettyrandomstuff.itemFoodFishNChips.desc=It's Fish. It's Chips. Or 
 tooltip.someprettyrandomstuff.itemFoodCarrotJuice.desc=Carrots, but pressed!
 tooltip.someprettyrandomstuff.itemFoodPumpkinStew.desc=Like Mushroom Stew or Rabbit Stew, but pumpykinny.
 tooltip.someprettyrandomstuff.itemFoodCheese.desc=Cheese.
+
+tooltip.someprettyrandomstuff.itemSpecialUnknownSubstance.desc=Dropped by Skeletons. BETA INFO: Useless as of yet.
+tooltip.someprettyrandomstuff.itemSpecialSolidifiedExperience.desc=Dropped by everyone. BETA INFO: Useless as of yet.
+tooltip.someprettyrandomstuff.itemSpecialBloodFragment.desc=Dropped by everyone. BETA INFO: Useless as of yet.
+tooltip.someprettyrandomstuff.itemSpecialHeartPart.desc=Dropped by everyone. BETA INFO: Useless as of yet.
+tooltip.someprettyrandomstuff.itemSpecialPearlShard.desc=Dropped by Endermen. BETA INFO: Useless as of yet.
+tooltip.someprettyrandomstuff.itemSpecialEmeraldShard.desc=Dropped by Creepers. BETA INFO: Useless as of yet.
+
+tooltip.someprettyrandomstuff.itemDustIron.desc=Iron! Crushed in the Crusher!
+tooltip.someprettyrandomstuff.itemDustGold.desc=Gold! Crushed in the Crusher!
+tooltip.someprettyrandomstuff.itemDustDiamond.desc=Diamond! Crushed in the Crusher!
+tooltip.someprettyrandomstuff.itemDustLapis.desc=Lapis! Crushed in the Crusher!
+tooltip.someprettyrandomstuff.itemDustEmerald.desc=Emerald! Crushed in the Crusher!
 
 achievement.someprettyrandomstuff.smeltBaguette=Better than Bread!
 achievement.someprettyrandomstuff.smeltBaguette.desc=Bake a Baguette
@@ -129,8 +161,7 @@ achievement.someprettyrandomstuff.craftKnifeBlade.desc=Craft a Knife Blade
 achievement.someprettyrandomstuff.craftKnife=Sharper! Even sharper!
 achievement.someprettyrandomstuff.craftKnife.desc=Craft a Knife
 
-info.someprettyrandomstuff.feeder.animal.desc=Animal
-info.someprettyrandomstuff.feeder.animalsSuffix.desc=s
+info.someprettyrandomstuff.feeder.animals.desc=Animals
 info.someprettyrandomstuff.feeder.enoughToBreed.desc=Enough to breed!
 info.someprettyrandomstuff.feeder.tooMany.desc=Too many to breed!
 info.someprettyrandomstuff.feeder.notEnough.desc=Not enough to breed!

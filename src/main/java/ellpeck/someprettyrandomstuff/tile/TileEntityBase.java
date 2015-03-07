@@ -2,13 +2,16 @@ package ellpeck.someprettyrandomstuff.tile;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import ellpeck.someprettyrandomstuff.util.Util;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockAir;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
 
-public abstract class TileEntityBase extends TileEntity{
+public class TileEntityBase extends TileEntity{
 
     @Override
     public Packet getDescriptionPacket(){
@@ -28,5 +31,12 @@ public abstract class TileEntityBase extends TileEntity{
         GameRegistry.registerTileEntity(TileEntityCompost.class, Util.MOD_ID_LOWER + ":tileEntityCompost");
         GameRegistry.registerTileEntity(TileEntityFeeder.class, Util.MOD_ID_LOWER + ":tileEntityFeeder");
         GameRegistry.registerTileEntity(TileEntityGiantChest.class, Util.MOD_ID_LOWER + ":tileEntityGiantChest");
+        GameRegistry.registerTileEntity(TileEntityGrinder.class, Util.MOD_ID_LOWER + ":tileEntityGrinder");
+        GameRegistry.registerTileEntity(TileEntityFurnaceDouble.class, Util.MOD_ID_LOWER + ":tileEntityFurnaceDouble");
+    }
+
+    @Override
+    public boolean shouldRefresh(Block oldBlock, Block newBlock, int oldMeta, int newMeta, World world, int x, int y, int z){
+        return newBlock == null || newBlock instanceof BlockAir;
     }
 }

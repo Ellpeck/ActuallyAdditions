@@ -7,6 +7,7 @@ import ellpeck.someprettyrandomstuff.config.ConfigValues;
 import ellpeck.someprettyrandomstuff.network.PacketHandler;
 import ellpeck.someprettyrandomstuff.network.PacketTileEntityFeeder;
 import net.minecraft.entity.passive.EntityAnimal;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
 
@@ -82,5 +83,20 @@ public class TileEntityFeeder extends TileEntityInventoryBase{
     public void readFromNBT(NBTTagCompound compound){
         super.readFromNBT(compound);
         this.currentTimer = compound.getInteger("Timer");
+    }
+
+    @Override
+    public boolean isItemValidForSlot(int i, ItemStack stack){
+        return true;
+    }
+
+    @Override
+    public boolean canInsertItem(int slot, ItemStack stack, int side){
+        return this.isItemValidForSlot(slot, stack);
+    }
+
+    @Override
+    public boolean canExtractItem(int slot, ItemStack stack, int side){
+        return false;
     }
 }

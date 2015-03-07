@@ -10,10 +10,7 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.EnumAction;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemFood;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.*;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
@@ -27,12 +24,17 @@ public class ItemFoods extends ItemFood implements IName{
 
     public ItemFoods(){
         super(0, 0.0F, false);
-        this.setUnlocalizedName(Util.getNamePrefix() + this.getName());
+        this.setUnlocalizedName(Util.setUnlocalizedName(this));
         this.setHasSubtypes(true);
         this.setMaxDamage(0);
         this.setCreativeTab(CreativeTab.instance);
         this.setAlwaysEdible();
         TheFoods.setReturnItems();
+    }
+
+    @Override
+    public EnumRarity getRarity(ItemStack stack){
+        return allFoods[stack.getItemDamage()].rarity;
     }
 
     @Override

@@ -1,12 +1,12 @@
 package ellpeck.someprettyrandomstuff.tile;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 
-public abstract class TileEntityInventoryBase extends TileEntityBase implements IInventory{
+public abstract class TileEntityInventoryBase extends TileEntityBase implements ISidedInventory{
 
     public ItemStack slots[];
     public String name;
@@ -20,7 +20,7 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
     public void writeToNBT(NBTTagCompound compound){
         super.writeToNBT(compound);
         NBTTagList tagList = new NBTTagList();
-        for(int currentIndex = 0; currentIndex < slots.length; ++currentIndex){
+        for(int currentIndex = 0; currentIndex < slots.length; currentIndex++){
             if (slots[currentIndex] != null){
                 NBTTagCompound tagCompound = new NBTTagCompound();
                 tagCompound.setByte("Slot", (byte)currentIndex);
@@ -35,7 +35,7 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
     public void readFromNBT(NBTTagCompound compound){
         super.readFromNBT(compound);
         NBTTagList tagList = compound.getTagList("Items", 10);
-        for (int i = 0; i < tagList.tagCount(); ++i){
+        for (int i = 0; i < tagList.tagCount(); i++){
             NBTTagCompound tagCompound = tagList.getCompoundTagAt(i);
             byte slotIndex = tagCompound.getByte("Slot");
             if (slotIndex >= 0 && slotIndex < slots.length){
@@ -119,5 +119,14 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
     @Override
     public void closeInventory(){
 
+    }
+
+    @Override
+    public int[] getAccessibleSlotsFromSide(int side){
+        int[] theInt = new int[slots.length];
+        for(int i = 0; i < theInt.length; i++){
+            theInt[i] = i;
+        }
+        return theInt;
     }
 }

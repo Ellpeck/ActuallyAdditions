@@ -1,24 +1,23 @@
 package ellpeck.someprettyrandomstuff.items.metalists;
 
 import ellpeck.someprettyrandomstuff.util.IName;
+import net.minecraft.item.EnumRarity;
 
 public enum TheMiscItems implements IName{
 
-    PAPER_CONE("PaperCone"),
-    MASHED_FOOD("MashedFood"),
-    REFINED_IRON("RefinedIron"),
-    REFINED_REDSTONE("RefinedRedstone"),
-    COMPRESSED_IRON("CompressedIron"),
-    STEEL("Steel"),
-    KNIFE_BLADE("KnifeBlade"),
-    KNIFE_HANDLE("KnifeHandle"),
-    DOUGH("Dough"),
-    QUARTZ("BlackQuartz");
+    PAPER_CONE("PaperCone", EnumRarity.common),
+    MASHED_FOOD("MashedFood", EnumRarity.uncommon),
+    KNIFE_BLADE("KnifeBlade", EnumRarity.common),
+    KNIFE_HANDLE("KnifeHandle", EnumRarity.common),
+    DOUGH("Dough", EnumRarity.common),
+    QUARTZ("BlackQuartz", EnumRarity.epic);
 
     public final String name;
+    public final EnumRarity rarity;
 
-    private TheMiscItems(String name){
+    private TheMiscItems(String name, EnumRarity rarity){
         this.name = name;
+        this.rarity = rarity;
     }
 
     @Override

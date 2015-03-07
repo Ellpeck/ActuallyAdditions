@@ -3,6 +3,8 @@ package ellpeck.someprettyrandomstuff.tile;
 import ellpeck.someprettyrandomstuff.config.ConfigValues;
 import ellpeck.someprettyrandomstuff.items.InitItems;
 import ellpeck.someprettyrandomstuff.items.ItemFertilizer;
+import ellpeck.someprettyrandomstuff.items.ItemMisc;
+import ellpeck.someprettyrandomstuff.items.metalists.TheMiscItems;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
@@ -31,6 +33,11 @@ public class TileEntityCompost extends TileEntityInventoryBase{
     }
 
     @Override
+    public int getInventoryStackLimit(){
+        return this.amountNeededToConvert;
+    }
+
+    @Override
     public void writeToNBT(NBTTagCompound compound){
         super.writeToNBT(compound);
         compound.setInteger("ConversionTime", this.conversionTime);
@@ -40,5 +47,20 @@ public class TileEntityCompost extends TileEntityInventoryBase{
     public void readFromNBT(NBTTagCompound compound){
         super.readFromNBT(compound);
         this.conversionTime = compound.getInteger("ConversionTime");
+    }
+
+    @Override
+    public boolean isItemValidForSlot(int i, ItemStack stack){
+        return stack.getItem() instanceof ItemMisc && stack.getItemDamage() == TheMiscItems.MASHED_FOOD.ordinal();
+    }
+
+    @Override
+    public boolean canInsertItem(int slot, ItemStack stack, int side){
+        return this.isItemValidForSlot(slot, stack);
+    }
+
+    @Override
+    public boolean canExtractItem(int slot, ItemStack stack, int side){
+        return stack.getItem() instanceof ItemFertilizer;
     }
 }

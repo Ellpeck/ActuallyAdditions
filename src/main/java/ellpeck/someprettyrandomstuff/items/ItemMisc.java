@@ -9,6 +9,7 @@ import ellpeck.someprettyrandomstuff.util.Util;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
@@ -22,7 +23,7 @@ public class ItemMisc extends Item implements IName{
     public IIcon[] textures = new IIcon[allMiscItems.length];
 
     public ItemMisc(){
-        this.setUnlocalizedName(Util.getNamePrefix() + this.getName());
+        this.setUnlocalizedName(Util.setUnlocalizedName(this));
         this.setHasSubtypes(true);
         this.setCreativeTab(CreativeTab.instance);
     }
@@ -30,6 +31,11 @@ public class ItemMisc extends Item implements IName{
     @Override
     public String getName(){
         return "itemMisc";
+    }
+
+    @Override
+    public EnumRarity getRarity(ItemStack stack){
+        return allMiscItems[stack.getItemDamage()].rarity;
     }
 
     @Override

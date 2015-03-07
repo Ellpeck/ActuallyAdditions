@@ -13,6 +13,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -29,7 +30,7 @@ public class BlockMisc extends Block implements IName{
 
     public BlockMisc(){
         super(Material.rock);
-        this.setBlockName(Util.getNamePrefix() + this.getName());
+        this.setBlockName(Util.setUnlocalizedName(this));
         this.setCreativeTab(CreativeTab.instance);
     }
 
@@ -74,15 +75,20 @@ public class BlockMisc extends Block implements IName{
         return "blockMisc";
     }
 
-    public static class ItemBlockMisc extends ItemBlock{
+    public static class TheItemBlock extends ItemBlock{
 
         private Block theBlock;
 
-        public ItemBlockMisc(Block block){
+        public TheItemBlock(Block block){
             super(block);
             this.theBlock = block;
             this.setHasSubtypes(true);
             this.setMaxDamage(0);
+        }
+
+        @Override
+        public EnumRarity getRarity(ItemStack stack){
+            return allMiscBlocks[stack.getItemDamage()].rarity;
         }
 
         @Override

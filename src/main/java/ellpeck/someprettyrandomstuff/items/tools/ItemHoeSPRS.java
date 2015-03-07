@@ -7,6 +7,7 @@ import ellpeck.someprettyrandomstuff.util.IName;
 import ellpeck.someprettyrandomstuff.util.Util;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemHoe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
@@ -17,11 +18,13 @@ import java.util.List;
 public class ItemHoeSPRS extends ItemHoe implements IName{
 
     private String name;
+    private EnumRarity rarity;
 
-    public ItemHoeSPRS(ToolMaterial toolMat, String unlocalizedName){
+    public ItemHoeSPRS(ToolMaterial toolMat, String unlocalizedName, EnumRarity rarity){
         super(toolMat);
         this.name = unlocalizedName;
-        this.setUnlocalizedName(Util.getNamePrefix() + this.getName());
+        this.rarity = rarity;
+        this.setUnlocalizedName(Util.setUnlocalizedName(this));
         this.setCreativeTab(CreativeTab.instance);
     }
 
@@ -33,6 +36,11 @@ public class ItemHoeSPRS extends ItemHoe implements IName{
         if(Util.isShiftPressed()){
             list.add(StatCollector.translateToLocal("tooltip." + Util.MOD_ID_LOWER + ".durability.desc") + ": " + (this.getMaxDamage()-this.getDamage(stack)) + "/" + this.getMaxDamage());
         }
+    }
+
+    @Override
+    public EnumRarity getRarity(ItemStack stack){
+        return this.rarity;
     }
 
     @Override

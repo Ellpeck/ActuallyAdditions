@@ -58,7 +58,7 @@ public class GuiFeeder extends GuiContainer{
     public void drawScreen(int x, int y, float f){
         super.drawScreen(x, y, f);
         if(x >= guiLeft+69 && y >= guiTop+30 && x <= guiLeft+69+10 && y <= guiTop+30+10){
-            String[] array = new String[]{(this.tileFeeder.currentAnimalAmount + " " + StatCollector.translateToLocal("info." + Util.MOD_ID_LOWER + ".feeder.animal.desc") + (this.tileFeeder.currentAnimalAmount == 1 ? "" : StatCollector.translateToLocal("info." + Util.MOD_ID_LOWER + ".feeder.animalsSuffix.desc"))), ((this.tileFeeder.currentAnimalAmount >= 2 && this.tileFeeder.currentAnimalAmount < this.tileFeeder.animalThreshold) ? StatCollector.translateToLocal("info." + Util.MOD_ID_LOWER + ".feeder.enoughToBreed.desc") : (this.tileFeeder.currentAnimalAmount >= this.tileFeeder.animalThreshold ? StatCollector.translateToLocal("info." + Util.MOD_ID_LOWER + ".feeder.tooMany.desc") : StatCollector.translateToLocal("info." + Util.MOD_ID_LOWER + ".feeder.notEnough.desc")))};
+            String[] array = new String[]{(this.tileFeeder.currentAnimalAmount + " " + StatCollector.translateToLocal("info." + Util.MOD_ID_LOWER + ".feeder.animals.desc")), ((this.tileFeeder.currentAnimalAmount >= 2 && this.tileFeeder.currentAnimalAmount < this.tileFeeder.animalThreshold) ? StatCollector.translateToLocal("info." + Util.MOD_ID_LOWER + ".feeder.enoughToBreed.desc") : (this.tileFeeder.currentAnimalAmount >= this.tileFeeder.animalThreshold ? StatCollector.translateToLocal("info." + Util.MOD_ID_LOWER + ".feeder.tooMany.desc") : StatCollector.translateToLocal("info." + Util.MOD_ID_LOWER + ".feeder.notEnough.desc")))};
             this.func_146283_a(Arrays.asList(array), x, y);
         }
     }

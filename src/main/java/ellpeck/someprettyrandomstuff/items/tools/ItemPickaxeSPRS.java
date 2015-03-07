@@ -7,6 +7,7 @@ import ellpeck.someprettyrandomstuff.util.IName;
 import ellpeck.someprettyrandomstuff.util.Util;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
@@ -17,11 +18,13 @@ import java.util.List;
 public class ItemPickaxeSPRS extends ItemPickaxe implements IName{
 
     private String name;
+    private EnumRarity rarity;
 
-    public ItemPickaxeSPRS(ToolMaterial toolMat, String unlocalizedName){
+    public ItemPickaxeSPRS(ToolMaterial toolMat, String unlocalizedName, EnumRarity rarity){
         super(toolMat);
         this.name = unlocalizedName;
-        this.setUnlocalizedName(Util.getNamePrefix() + this.getName());
+        this.rarity = rarity;
+        this.setUnlocalizedName(Util.setUnlocalizedName(this));
         this.setCreativeTab(CreativeTab.instance);
     }
 
@@ -38,6 +41,11 @@ public class ItemPickaxeSPRS extends ItemPickaxe implements IName{
     @Override
     public IIcon getIcon(ItemStack stack, int pass){
         return this.itemIcon;
+    }
+
+    @Override
+    public EnumRarity getRarity(ItemStack stack){
+        return this.rarity;
     }
 
     @Override

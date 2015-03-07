@@ -4,20 +4,22 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.someprettyrandomstuff.config.ConfigValues;
 import ellpeck.someprettyrandomstuff.creative.CreativeTab;
+import ellpeck.someprettyrandomstuff.util.IInformation;
 import ellpeck.someprettyrandomstuff.util.IName;
 import ellpeck.someprettyrandomstuff.util.Util;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 
 import java.util.List;
 
-public class ItemKnife extends Item implements IName{
+public class ItemKnife extends Item implements IName, IInformation{
 
     public ItemKnife(){
-        this.setUnlocalizedName(Util.getNamePrefix() + this.getName());
+        this.setUnlocalizedName(Util.setUnlocalizedName(this));
         this.setMaxDamage(ConfigValues.itemKnifeMaxDamage);
         this.setCreativeTab(CreativeTab.instance);
         this.setMaxStackSize(1);
@@ -30,6 +32,11 @@ public class ItemKnife extends Item implements IName{
         theStack.setItemDamage(theStack.getItemDamage() + 1);
         theStack.stackSize = 1;
         return theStack;
+    }
+
+    @Override
+    public EnumRarity getRarity(ItemStack stack){
+        return EnumRarity.epic;
     }
 
     @Override
@@ -58,5 +65,10 @@ public class ItemKnife extends Item implements IName{
     @Override
     public String getName(){
         return "itemKnife";
+    }
+
+    @Override
+    public String[] getInformationString(){
+        return new String[]{"This is a test too but it's more cool senn se assa"};
     }
 }

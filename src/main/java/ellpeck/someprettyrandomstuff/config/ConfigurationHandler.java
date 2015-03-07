@@ -9,14 +9,12 @@ public class ConfigurationHandler{
 
     public static final String CATEGORY_FOOD_CRAFTING = "food crafting";
     public static final String CATEGORY_MISC_CRAFTING = "misc crafting";
-    public static final String CATEGORY_COMPOST_VALUES = "compost values";
     public static final String CATEGORY_BLOCKS_CRAFTING = "block crafting";
     public static final String CATEGORY_ITEMS_CRAFTING = "items crafting";
-    public static final String CATEGORY_ITEM_DAMAGE_VALUES = "item damage values";
     public static final String CATEGORY_TOOL_VALUES = "tool values";
-    public static final String CATEGORY_FEEDER_VALUES = "feeder values";
+    public static final String CATEGORY_MACHINE_VALUES = "machine values";
+    public static final String CATEGORY_MOB_DROPS = "mob drops";
 
-    public static Configuration config;
 
     public static void init(File configFile){
         Util.logInfo("Grabbing Configurations...");

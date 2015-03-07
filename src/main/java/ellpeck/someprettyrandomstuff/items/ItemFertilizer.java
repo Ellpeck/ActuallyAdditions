@@ -7,6 +7,7 @@ import ellpeck.someprettyrandomstuff.util.IName;
 import ellpeck.someprettyrandomstuff.util.Util;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
@@ -18,7 +19,7 @@ import java.util.List;
 public class ItemFertilizer extends Item implements IName{
 
     public ItemFertilizer(){
-        this.setUnlocalizedName(Util.getNamePrefix() + this.getName());
+        this.setUnlocalizedName(Util.setUnlocalizedName(this));
         this.setCreativeTab(CreativeTab.instance);
     }
 
@@ -29,6 +30,11 @@ public class ItemFertilizer extends Item implements IName{
             return true;
         }
         return super.onItemUse(stack, player, world, x, y, z, par7, par8, par9, par10);
+    }
+
+    @Override
+    public EnumRarity getRarity(ItemStack stack){
+        return EnumRarity.rare;
     }
 
     @Override
