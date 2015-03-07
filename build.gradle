@@ -17,9 +17,9 @@ buildscript {
 
 apply plugin: 'forge'
 
-version = "1.7.10-0.0.1"
-group = "ellpeck.someprettyrandomstuff"
-archivesBaseName = "SomePrettyRandomStuff"
+version = "1.7.10-0.0.1.1"
+group = "ellpeck.actuallyadditions"
+archivesBaseName = "ActuallyAdditions"
 
 minecraft {
     version = "1.7.10-10.13.2.1291"
