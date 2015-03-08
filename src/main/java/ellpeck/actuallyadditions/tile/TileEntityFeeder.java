@@ -34,9 +34,9 @@ public class TileEntityFeeder extends TileEntityInventoryBase{
             List<EntityAnimal> animals = worldObj.getEntitiesWithinAABB(EntityAnimal.class, AxisAlignedBB.getBoundingBox(this.xCoord - reach, this.yCoord - reach, this.zCoord - reach, this.xCoord + reach, this.yCoord + reach, this.zCoord + reach));
             if(animals != null){
                 this.currentAnimalAmount = animals.size();
-                if(this.currentAnimalAmount >= 2 && this.slots[0] != null){
+                if(this.currentAnimalAmount >= 2){
                     if(this.currentAnimalAmount < this.animalThreshold){
-                        if(this.currentTimer >= this.timerGoal){
+                        if(this.currentTimer >= this.timerGoal && this.slots[0] != null){
                             this.currentTimer = 0;
                             EntityAnimal randomAnimal = animals.get(new Random().nextInt(this.currentAnimalAmount));
                             if(!randomAnimal.isInLove() && randomAnimal.getGrowingAge() == 0 && randomAnimal.isBreedingItem(this.slots[0])){

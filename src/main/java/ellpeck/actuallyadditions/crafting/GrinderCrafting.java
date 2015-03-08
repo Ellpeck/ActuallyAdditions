@@ -28,25 +28,31 @@ public class GrinderCrafting{
         for(String name : names){
             if(name.contains("ore")){
                 String nameOfOre = name.substring(3);
-                ArrayList<ItemStack> allDusts = OreDictionary.getOres("dust" + nameOfOre);
+                ArrayList<ItemStack> allDusts;
+
+                if(nameOfOre.contains("Nether")) allDusts = OreDictionary.getOres("dust" + nameOfOre.substring(6));
+                else allDusts = OreDictionary.getOres("dust" + nameOfOre);
+
                 if(allDusts != null && allDusts.size() > 0){
-                    ItemStack output = allDusts.get(0);
-                    output.stackSize = 2;
                     ArrayList<ItemStack> allOresOfName = OreDictionary.getOres(name);
                     if(allOresOfName != null && allOresOfName.size() > 0){
-                        for(ItemStack input : allOresOfName){
-                            if(GrinderRecipes.instance().getOutput(input, false) == null){
+                        for(ItemStack output : allDusts){
+                            output.stackSize = 2;
+                            for(ItemStack input : allOresOfName){
+                                if(GrinderRecipes.instance().getOutput(input, false) == null){
 
-                                //Special Second Outputs
-                                if(name.equals("oreNickel")) GrinderRecipes.instance().registerRecipe(input, output, OreDictionary.getOres("dustPlatinum").get(0), 10);
+                                    //Special Second Outputs
+                                    if(name.equals("oreNickel"))
+                                        GrinderRecipes.instance().registerRecipe(input, output, OreDictionary.getOres("dustPlatinum").get(0), 10);
 
-                                else GrinderRecipes.instance().registerRecipe(input, output, null, 0);
+                                    else GrinderRecipes.instance().registerRecipe(input, output, null, 0);
+                                }
                             }
                         }
                     }
-                    else Util.SPRS_LOGGER.log(Level.ERROR, "Couldn't register Crusher Recipe! Didn't find Items registered as '" + name + "'! This shouldn't happen as there is something registered as '" + name + "' that doesn't exist!");
+                    else Util.AA_LOGGER.log(Level.ERROR, "Couldn't register Crusher Recipe! Didn't find Items registered as '" + name + "'! This shouldn't happen as there is something registered as '" + name + "' that doesn't exist!");
                 }
-                else Util.SPRS_LOGGER.log(Level.WARN, "Couldn't register Crusher Recipe! An Item with OreDictionary Registry 'dust" + nameOfOre + "' doesn't exist! This is not an Error, just a bit sad :(");
+                else Util.AA_LOGGER.log(Level.WARN, "Couldn't register Crusher Recipe! An Item with OreDictionary Registry 'dust" + nameOfOre + "' doesn't exist! It should correspond to '" + name + "'! This is not an Error, just a bit sad :(");
             }
 
         }

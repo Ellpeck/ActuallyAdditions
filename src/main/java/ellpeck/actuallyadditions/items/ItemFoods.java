@@ -2,7 +2,6 @@ package ellpeck.actuallyadditions.items;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ellpeck.actuallyadditions.creative.CreativeTab;
 import ellpeck.actuallyadditions.items.metalists.TheFoods;
 import ellpeck.actuallyadditions.util.IName;
 import ellpeck.actuallyadditions.util.Util;
@@ -24,10 +23,8 @@ public class ItemFoods extends ItemFood implements IName{
 
     public ItemFoods(){
         super(0, 0.0F, false);
-        this.setUnlocalizedName(Util.setUnlocalizedName(this));
         this.setHasSubtypes(true);
         this.setMaxDamage(0);
-        this.setCreativeTab(CreativeTab.instance);
         this.setAlwaysEdible();
         TheFoods.setReturnItems();
     }

@@ -3,7 +3,6 @@ package ellpeck.actuallyadditions.blocks;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.ActuallyAdditions;
-import ellpeck.actuallyadditions.creative.CreativeTab;
 import ellpeck.actuallyadditions.inventory.GuiHandler;
 import ellpeck.actuallyadditions.tile.TileEntityGrinder;
 import ellpeck.actuallyadditions.util.IName;
@@ -33,10 +32,8 @@ public class BlockGrinder extends BlockContainerBase implements IName{
     private boolean isDouble;
 
     public BlockGrinder(boolean isDouble){
-        super(Material.wood);
+        super(Material.rock);
         this.isDouble = isDouble;
-        this.setBlockName(Util.setUnlocalizedName(this));
-        this.setCreativeTab(CreativeTab.instance);
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(1.0F);
         this.setStepSound(soundTypeStone);

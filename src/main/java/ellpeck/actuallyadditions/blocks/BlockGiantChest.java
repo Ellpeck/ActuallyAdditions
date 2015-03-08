@@ -3,7 +3,6 @@ package ellpeck.actuallyadditions.blocks;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.ActuallyAdditions;
-import ellpeck.actuallyadditions.creative.CreativeTab;
 import ellpeck.actuallyadditions.inventory.GuiHandler;
 import ellpeck.actuallyadditions.tile.TileEntityGiantChest;
 import ellpeck.actuallyadditions.util.IName;
@@ -28,8 +27,6 @@ public class BlockGiantChest extends BlockContainerBase implements IName{
 
     public BlockGiantChest(){
         super(Material.wood);
-        this.setBlockName(Util.setUnlocalizedName(this));
-        this.setCreativeTab(CreativeTab.instance);
         this.setHarvestLevel("axe", 0);
         this.setHardness(1.0F);
         this.setStepSound(soundTypeWood);

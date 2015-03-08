@@ -2,7 +2,6 @@ package ellpeck.actuallyadditions.items;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ellpeck.actuallyadditions.creative.CreativeTab;
 import ellpeck.actuallyadditions.items.metalists.TheDusts;
 import ellpeck.actuallyadditions.util.IName;
 import ellpeck.actuallyadditions.util.Util;
@@ -22,9 +21,7 @@ public class ItemDust extends Item implements IName{
     public static final TheDusts[] allDusts = TheDusts.values();
 
     public ItemDust(){
-        this.setUnlocalizedName(Util.setUnlocalizedName(this));
         this.setHasSubtypes(true);
-        this.setCreativeTab(CreativeTab.instance);
     }
 
     @Override

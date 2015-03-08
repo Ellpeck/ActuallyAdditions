@@ -4,7 +4,6 @@ import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.achievement.InitAchievements;
-import ellpeck.actuallyadditions.creative.CreativeTab;
 import ellpeck.actuallyadditions.items.ItemFertilizer;
 import ellpeck.actuallyadditions.items.ItemMisc;
 import ellpeck.actuallyadditions.items.metalists.TheMiscItems;
@@ -32,8 +31,6 @@ public class BlockCompost extends BlockContainerBase implements IName{
 
     public BlockCompost(){
         super(Material.wood);
-        this.setCreativeTab(CreativeTab.instance);
-        this.setBlockName(Util.setUnlocalizedName(this));
         this.setHarvestLevel("axe", 0);
         this.setHardness(1.0F);
         this.setStepSound(soundTypeWood);

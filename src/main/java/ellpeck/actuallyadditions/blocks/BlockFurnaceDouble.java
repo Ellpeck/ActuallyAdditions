@@ -3,7 +3,6 @@ package ellpeck.actuallyadditions.blocks;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.ActuallyAdditions;
-import ellpeck.actuallyadditions.creative.CreativeTab;
 import ellpeck.actuallyadditions.inventory.GuiHandler;
 import ellpeck.actuallyadditions.tile.TileEntityFurnaceDouble;
 import ellpeck.actuallyadditions.util.IName;
@@ -33,9 +32,7 @@ public class BlockFurnaceDouble extends BlockContainerBase implements IName{
     private IIcon frontIcon;
 
     public BlockFurnaceDouble(){
-        super(Material.wood);
-        this.setBlockName(Util.setUnlocalizedName(this));
-        this.setCreativeTab(CreativeTab.instance);
+        super(Material.rock);
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(1.0F);
         this.setStepSound(soundTypeStone);

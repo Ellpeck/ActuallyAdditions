@@ -3,7 +3,6 @@ package ellpeck.actuallyadditions.items;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.config.ConfigValues;
-import ellpeck.actuallyadditions.creative.CreativeTab;
 import ellpeck.actuallyadditions.util.IName;
 import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -18,9 +17,7 @@ import java.util.List;
 public class ItemKnife extends Item implements IName{
 
     public ItemKnife(){
-        this.setUnlocalizedName(Util.setUnlocalizedName(this));
         this.setMaxDamage(ConfigValues.itemKnifeMaxDamage);
-        this.setCreativeTab(CreativeTab.instance);
         this.setMaxStackSize(1);
         this.setContainerItem(this);
     }

@@ -2,7 +2,6 @@ package ellpeck.actuallyadditions.items;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ellpeck.actuallyadditions.creative.CreativeTab;
 import ellpeck.actuallyadditions.items.metalists.TheSpecialDrops;
 import ellpeck.actuallyadditions.util.IName;
 import ellpeck.actuallyadditions.util.Util;
@@ -23,9 +22,7 @@ public class ItemSpecialDrop extends Item implements IName{
     public IIcon[] textures = new IIcon[allDrops.length];
 
     public ItemSpecialDrop(){
-        this.setUnlocalizedName(Util.setUnlocalizedName(this));
         this.setHasSubtypes(true);
-        this.setCreativeTab(CreativeTab.instance);
     }
 
     @Override

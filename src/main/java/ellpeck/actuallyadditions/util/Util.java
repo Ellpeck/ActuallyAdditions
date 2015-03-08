@@ -2,6 +2,7 @@ package ellpeck.actuallyadditions.util;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.registry.GameRegistry;
+import ellpeck.actuallyadditions.creative.CreativeTab;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
@@ -17,13 +18,13 @@ import org.lwjgl.input.Keyboard;
 @SuppressWarnings("unused")
 public class Util{
 
-    public static final String VERSION = "1.7.10-0.0.1.1";
+    public static final String VERSION = "1.7.10-0.0.1.3";
 
     public static final String MOD_ID = "ActuallyAdditions";
     public static final String NAME = "Actually Additions";
     public static final String MOD_ID_LOWER = MOD_ID.toLowerCase();
 
-    public static final Logger SPRS_LOGGER = LogManager.getLogger(MOD_ID);
+    public static final Logger AA_LOGGER = LogManager.getLogger(MOD_ID);
 
     public static final int WILDCARD = OreDictionary.WILDCARD_VALUE;
     public static final ResourceLocation GUI_INVENTORY_LOCATION = getGuiLocation("guiInventory");
@@ -70,7 +71,7 @@ public class Util{
     }
 
     public static void logInfo(String text){
-        SPRS_LOGGER.log(Level.INFO, text);
+        AA_LOGGER.log(Level.INFO, text);
     }
 
     public static void registerItems(Item[] items){
@@ -92,10 +93,14 @@ public class Util{
     }
 
     public static void register(Item item){
+        item.setCreativeTab(CreativeTab.instance);
+        item.setUnlocalizedName(setUnlocalizedName(item));
         GameRegistry.registerItem(item, ((IName)item).getName());
     }
 
     public static void register(Block block, Class<? extends ItemBlock> itemBlock){
+        block.setCreativeTab(CreativeTab.instance);
+        block.setBlockName(setUnlocalizedName(block));
         GameRegistry.registerBlock(block, itemBlock, ((IName)block).getName());
     }
 

@@ -3,7 +3,6 @@ package ellpeck.actuallyadditions.blocks;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.blocks.metalists.TheMiscBlocks;
-import ellpeck.actuallyadditions.creative.CreativeTab;
 import ellpeck.actuallyadditions.util.IName;
 import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.block.Block;
@@ -27,8 +26,6 @@ public class BlockMisc extends Block implements IName{
 
     public BlockMisc(){
         super(Material.rock);
-        this.setBlockName(Util.setUnlocalizedName(this));
-        this.setCreativeTab(CreativeTab.instance);
     }
 
     @SuppressWarnings("all")

@@ -2,7 +2,6 @@ package ellpeck.actuallyadditions.items.tools;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ellpeck.actuallyadditions.creative.CreativeTab;
 import ellpeck.actuallyadditions.util.IName;
 import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -25,7 +24,6 @@ public class ItemAxeAA extends ItemAxe implements IName{
         this.name = unlocalizedName;
         this.rarity = rarity;
         this.setUnlocalizedName(Util.setUnlocalizedName(this));
-        this.setCreativeTab(CreativeTab.instance);
     }
 
     @Override

@@ -62,6 +62,9 @@ item.actuallyadditions.itemDustGold.name=Crushed Gold
 item.actuallyadditions.itemDustDiamond.name=Crushed Diamond
 item.actuallyadditions.itemDustLapis.name=Crushed Lapis
 item.actuallyadditions.itemDustEmerald.name=Crushed Emerald
+item.actuallyadditions.itemDustQuartz.name=Crushed Quartz
+item.actuallyadditions.itemDustCoal.name=Crushed Coal
+item.actuallyadditions.itemDustQuartzBlack.name=Crushed Black Quartz
 
 tooltip.actuallyadditions.shiftForInfo.desc=Press Shift for Info
 tooltip.actuallyadditions.hunger.desc=Fills
@@ -70,7 +73,7 @@ tooltip.actuallyadditions.durability.desc=Durability
 
 tooltip.actuallyadditions.blockCompost.desc.1=Used to make Fertilizer with Mashed Food
 tooltip.actuallyadditions.blockCompost.desc.2=BETA INFO: Will visually contain Compost in the Future!
-tooltip.actuallyadditions.blockMiscOreBlackQuartz.desc=The darkest form of Quartz. Also: You had Silk Touch!
+tooltip.actuallyadditions.blockMiscOreBlackQuartz.desc=The darkest form of Quartz.
 tooltip.actuallyadditions.blockMiscBlackQuartz.desc=Black, eerie Quartz! Nice for decorating.
 tooltip.actuallyadditions.blockMiscBlackQuartzChiseled.desc=Black, eerie chiseled Quartz! Nice for decorating.
 tooltip.actuallyadditions.blockMiscBlackQuartzPillar.desc=Kind of a pillar. Not really, though. It's fake! Fake I say!
@@ -86,7 +89,7 @@ tooltip.actuallyadditions.blockGrinderDouble.desc.3=Can crush two Ores simultane
 tooltip.actuallyadditions.blockFurnaceDouble.desc=Smelts two Things simultaneously!
 
 tooltip.actuallyadditions.itemMiscMashedFood.desc=Used to make Fertilizer
-tooltip.actuallyadditions.itemFertilizer.desc=Om nom nom. Don't eat it.
+tooltip.actuallyadditions.itemFertilizer.desc=Om nom nom. Don't eat it. Made in a Compost.
 tooltip.actuallyadditions.itemMiscDough.desc=Used to make things that involve dough.
 tooltip.actuallyadditions.itemMiscPaperCone.desc=Used to store foodstuffs!
 tooltip.actuallyadditions.itemMiscKnifeBlade.desc=Sharp like a tooth! A whale's tooth!
@@ -135,6 +138,9 @@ tooltip.actuallyadditions.itemDustGold.desc=Gold! Crushed in the Crusher!
 tooltip.actuallyadditions.itemDustDiamond.desc=Diamond! Crushed in the Crusher!
 tooltip.actuallyadditions.itemDustLapis.desc=Lapis! Crushed in the Crusher!
 tooltip.actuallyadditions.itemDustEmerald.desc=Emerald! Crushed in the Crusher!
+tooltip.actuallyadditions.itemDustQuartz.desc=Quartz! Crushed in the Crusher!
+tooltip.actuallyadditions.itemDustCoal.desc=Coal! Crushed in the Crusher!
+tooltip.actuallyadditions.itemDustQuartzBlack.desc=Black Quartz! Crushed in the Crusher!
 
 achievement.actuallyadditions.smeltBaguette=Better than Bread!
 achievement.actuallyadditions.smeltBaguette.desc=Bake a Baguette

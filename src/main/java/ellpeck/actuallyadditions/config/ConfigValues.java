@@ -51,16 +51,28 @@ public class ConfigValues{
     public static boolean enablePearlShardDrop;
     public static boolean enableEmeraldShardDrop;
 
+    public static boolean generateBlackQuartz;
+    public static int blackQuartzBaseAmount;
+    public static int blackQuartzAdditionalChance;
+    public static int blackQuartzChance;
+    public static int blackQuartzMinHeight;
+    public static int blackQuartzMaxHeight;
+
     public static void defineConfigValues(Configuration config){
 
         for(int i = 0; i < enabledFoodRecipes.length; i++){
             enabledFoodRecipes[i] = config.getBoolean(TheFoods.values()[i].name, ConfigurationHandler.CATEGORY_FOOD_CRAFTING, true, "If the Crafting Recipe for " + TheFoods.values()[i].name +  " is Enabled");
         }
         for(int i = 0; i < enabledMiscRecipes.length; i++){
-            if(i != TheMiscItems.QUARTZ.ordinal()){
-                enabledMiscRecipes[i] = config.getBoolean(TheMiscItems.values()[i].name, ConfigurationHandler.CATEGORY_MISC_CRAFTING, true, "If the Crafting Recipe for " + TheMiscItems.values()[i].name +  " is Enabled");
-            }
+            enabledMiscRecipes[i] = config.getBoolean(TheMiscItems.values()[i].name, ConfigurationHandler.CATEGORY_MISC_CRAFTING, true, "If the Crafting Recipe for " + TheMiscItems.values()[i].name +  " is Enabled");
         }
+
+        generateBlackQuartz = config.getBoolean("Black Quartz", ConfigurationHandler.CATEGORY_WORLD_GEN, true, "If the Black Quartz generates in the world");
+        blackQuartzBaseAmount = config.getInt("Black Quartz Amount", ConfigurationHandler.CATEGORY_WORLD_GEN, 3, 1, 50, "How big a Black Quartz Vein is at least");
+        blackQuartzAdditionalChance = config.getInt("Black Quartz Additional Chance", ConfigurationHandler.CATEGORY_WORLD_GEN, 3, 0, 50, "How much bigger than the Base Amount a Black Quartz Vein can get");
+        blackQuartzChance = config.getInt("Black Quartz Chance", ConfigurationHandler.CATEGORY_WORLD_GEN, 25, 1, 150, "How often the Black Quartz tries to generate");
+        blackQuartzMinHeight = config.getInt("Black Quartz Min Height", ConfigurationHandler.CATEGORY_WORLD_GEN, 0, 0, 256, "How high the Black Quartz starts to generate");
+        blackQuartzMaxHeight = config.getInt("Black Quartz Max Height", ConfigurationHandler.CATEGORY_WORLD_GEN, 25, 0, 256, "How high the Black Quartz stops to generate at");
 
         //TODO CHANGE TO BE TRUE BY DEFAULT
         enableExperienceDrop = config.getBoolean("Solidified Experience", ConfigurationHandler.CATEGORY_MOB_DROPS, false, "If the Solidified Experience drops from Mobs");

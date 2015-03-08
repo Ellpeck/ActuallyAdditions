@@ -14,6 +14,7 @@ public class ConfigurationHandler{
     public static final String CATEGORY_TOOL_VALUES = "tool values";
     public static final String CATEGORY_MACHINE_VALUES = "machine values";
     public static final String CATEGORY_MOB_DROPS = "mob drops";
+    public static final String CATEGORY_WORLD_GEN = "world gen";
 
 
     public static void init(File configFile){

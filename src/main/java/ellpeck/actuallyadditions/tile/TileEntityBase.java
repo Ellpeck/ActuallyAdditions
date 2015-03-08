@@ -33,6 +33,7 @@ public class TileEntityBase extends TileEntity{
         GameRegistry.registerTileEntity(TileEntityGiantChest.class, Util.MOD_ID_LOWER + ":tileEntityGiantChest");
         GameRegistry.registerTileEntity(TileEntityGrinder.class, Util.MOD_ID_LOWER + ":tileEntityGrinder");
         GameRegistry.registerTileEntity(TileEntityFurnaceDouble.class, Util.MOD_ID_LOWER + ":tileEntityFurnaceDouble");
+        GameRegistry.registerTileEntity(TileEntityPackager.class, Util.MOD_ID_LOWER + ":tileEntityPackager");
     }
 
     @Override

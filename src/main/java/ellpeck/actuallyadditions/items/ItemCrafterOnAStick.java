@@ -3,7 +3,6 @@ package ellpeck.actuallyadditions.items;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.ActuallyAdditions;
-import ellpeck.actuallyadditions.creative.CreativeTab;
 import ellpeck.actuallyadditions.inventory.GuiHandler;
 import ellpeck.actuallyadditions.util.IName;
 import ellpeck.actuallyadditions.util.Util;
@@ -20,8 +19,6 @@ import java.util.List;
 public class ItemCrafterOnAStick extends Item implements IName{
 
     public ItemCrafterOnAStick(){
-        this.setUnlocalizedName(Util.setUnlocalizedName(this));
-        this.setCreativeTab(CreativeTab.instance);
         this.setMaxStackSize(1);
     }
 

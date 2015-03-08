@@ -2,7 +2,6 @@ package ellpeck.actuallyadditions.items;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ellpeck.actuallyadditions.creative.CreativeTab;
 import ellpeck.actuallyadditions.util.IName;
 import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -17,11 +16,6 @@ import net.minecraft.world.World;
 import java.util.List;
 
 public class ItemFertilizer extends Item implements IName{
-
-    public ItemFertilizer(){
-        this.setUnlocalizedName(Util.setUnlocalizedName(this));
-        this.setCreativeTab(CreativeTab.instance);
-    }
 
     @Override
     public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int par7, float par8, float par9, float par10){

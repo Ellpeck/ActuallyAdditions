@@ -19,14 +19,13 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase{
     public int coalTime;
     public int coalTimeLeft;
 
-    public final int maxBurnTime;
+    public final int maxBurnTime = ConfigValues.furnaceDoubleSmeltTime;
 
     public int firstSmeltTime;
     public int secondSmeltTime;
 
     public TileEntityFurnaceDouble(){
         super(5, "tileEntityFurnaceDouble");
-        this.maxBurnTime = ConfigValues.furnaceDoubleSmeltTime;
     }
 
     @Override
