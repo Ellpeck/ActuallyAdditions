@@ -1,0 +1,255 @@
+itemGroup.actuallyadditions=Actually Additions
+achievement.page.actuallyadditions=Actually Additions
+
+tile.actuallyadditions.blockCompost.name=Kompost
+tile.actuallyadditions.blockMiscOreBlackQuartz.name=Schwarzquartzerz
+tile.actuallyadditions.blockMiscBlackQuartz.name=Schwarzquartzblock
+tile.actuallyadditions.blockMiscBlackQuartzChiseled.name=Gemeißelter Schwarzquartzblock
+tile.actuallyadditions.blockMiscBlackQuartzPillar.name=Schwarzquartzsäule
+tile.actuallyadditions.blockFeeder.name=Fütterungsanlage
+tile.actuallyadditions.blockGiantChest.name=Riesenkiste
+tile.actuallyadditions.blockGrinder.name=Zerkleinerer
+tile.actuallyadditions.blockGrinderDouble.name=Zerkleinerte Mk2
+tile.actuallyadditions.blockFurnaceDouble.name=Ofen Mk2
+
+item.actuallyadditions.itemMiscMashedFood.name=Brei
+item.actuallyadditions.itemFertilizer.name=Dünger
+item.actuallyadditions.itemMiscDough.name=Teigling
+item.actuallyadditions.itemMiscPaperCone.name=Papiertüte
+item.actuallyadditions.itemMiscKnifeBlade.name=Messerklinge
+item.actuallyadditions.itemMiscKnifeHandle.name=Messergriff
+item.actuallyadditions.itemMiscBlackQuartz.name=Schwarzquartz
+
+item.actuallyadditions.itemKnife.name=Messee
+item.actuallyadditions.itemPickaxeEmerald.name=Smaragdspitzhacke
+item.actuallyadditions.itemAxeEmerald.name=Smaragdaxt
+item.actuallyadditions.itemShovelEmerald.name=Smaragdspaten
+item.actuallyadditions.itemHoeEmerald.name=Smaragdhacke
+item.actuallyadditions.itemSwordEmerald.name=Smaragdschwert
+item.actuallyadditions.itemPickaxeObsidian.name=Obsidianspitzhacke
+item.actuallyadditions.itemAxeObsidian.name=Obsidianaxt
+item.actuallyadditions.itemShovelObsidian.name=Obsidianspaten
+item.actuallyadditions.itemHoeObsidian.name=Obsidianhacke
+item.actuallyadditions.itemSwordObsidian.name=Obsidianschwert
+item.actuallyadditions.itemCrafterOnAStick.name=Stockwerkbank
+
+item.actuallyadditions.itemFoodBaguette.name=Baguette
+item.actuallyadditions.itemFoodPizza.name=Pizza
+item.actuallyadditions.itemFoodHamburger.name=Hamburger
+item.actuallyadditions.itemFoodBigCookie.name=Risencookie
+item.actuallyadditions.itemFoodSubmarineSandwich.name=Submarine Sandwich
+item.actuallyadditions.itemFoodToast.name=Toast
+item.actuallyadditions.itemFoodChocolate.name=Schokolade
+item.actuallyadditions.itemFoodChocolateCake.name=Schokoladenkuchen °-°
+item.actuallyadditions.itemFoodNoodle.name=Nudeln
+item.actuallyadditions.itemFoodSpaghetti.name=Spaghetti
+item.actuallyadditions.itemFoodFrenchFry.name=Pommes
+item.actuallyadditions.itemFoodFrenchFries.name=Pommes
+item.actuallyadditions.itemFoodFishNChips.name=Fish 'N' Chips
+item.actuallyadditions.itemFoodCarrotJuice.name=Karottensaft
+item.actuallyadditions.itemFoodPumpkinStew.name=Kürbissuppe
+item.actuallyadditions.itemFoodCheese.name=Käse
+
+item.actuallyadditions.itemSpecialUnknownSubstance.name=Undefinierbare Masse
+item.actuallyadditions.itemSpecialSolidifiedExperience.name=Versteinerte Erfahrung
+item.actuallyadditions.itemSpecialBloodFragment.name=Bluttropfen
+item.actuallyadditions.itemSpecialHeartPart.name=Herzstück
+item.actuallyadditions.itemSpecialPearlShard.name=Enderperlensplitter
+item.actuallyadditions.itemSpecialEmeraldShard.name=Smaragdsplitter
+
+item.actuallyadditions.itemDustIron.name=Eisenstaub
+item.actuallyadditions.itemDustGold.name=Goldstaub
+item.actuallyadditions.itemDustDiamond.name=Diamantstaub
+item.actuallyadditions.itemDustLapis.name=Lapisstaub
+item.actuallyadditions.itemDustEmerald.name=Smaragdstaub
+item.actuallyadditions.itemDustQuartz.name=Quartzstaub
+item.actuallyadditions.itemDustCoal.name=Kohlestaub
+item.actuallyadditions.itemDustQuartzBlack.name=Schwarzquartzstaub
+
+tooltip.actuallyadditions.shiftForInfo.desc=Drücke Shift für mehr Informationen
+tooltip.actuallyadditions.hunger.desc=Füllt
+tooltip.actuallyadditions.saturation.desc=Sättigung
+tooltip.actuallyadditions.durability.desc=Haltbarkeit
+
+tooltip.actuallyadditions.blockCompost.desc.1=Wird verwendet, um zusammen mit Brei Dünger herzustellen
+tooltip.actuallyadditions.blockCompost.desc.2=BETA INFO: Wird in Zukunft Kompost enthalten.
+tooltip.actuallyadditions.blockMiscOreBlackQuartz.desc=Das dunkelste aller Quartze.
+tooltip.actuallyadditions.blockMiscBlackQuartz.desc=Black, eerie Quartz! Nice for decorating.
+tooltip.actuallyadditions.blockMiscBlackQuartzChiseled.desc=Black, eerie chiseled Quartz! Nice for decorating.
+tooltip.actuallyadditions.blockMiscBlackQuartzPillar.desc=Kind of a pillar. Not really, though. It's fake! Fake I say!
+tooltip.actuallyadditions.blockFeeder.desc=Vergewaltigt, ääh füttert Tiere ganz alleine!
+tooltip.actuallyadditions.blockGiantChest.desc=GUI Scale on 'Auto'? That's a problem!
+tooltip.actuallyadditions.blockGrinder.desc.1=Macht Staub aus Erzen!
+tooltip.actuallyadditions.blockGrinder.desc.2=Aus 1 macht zwei und BONI!!!
+tooltip.actuallyadditions.blockGrinder.desc.3=To crush two ores simultaneousitemGroup.actuallyadditions=Actually Additions
+achievement.page.actuallyadditions=Actually Additions
+
+tile.actuallyadditions.blockCompost.name=Compost
+tile.actuallyadditions.blockMiscOreBlackQuartz.name=Black Quartz Ore
+tile.actuallyadditions.blockMiscBlackQuartz.name=Block of Black Quartz
+tile.actuallyadditions.blockMiscBlackQuartzChiseled.name=Chiseled Block of Black Quartz
+tile.actuallyadditions.blockMiscBlackQuartzPillar.name=Pillar of Black Quartz
+tile.actuallyadditions.blockFeeder.name=Automatic Feeder
+tile.actuallyadditions.blockGiantChest.name=Giant Chest
+tile.actuallyadditions.blockGrinder.name=Crusher
+tile.actuallyadditions.blockGrinderDouble.name=Double Crusher
+tile.actuallyadditions.blockFurnaceDouble.name=Double Furnace
+
+item.actuallyadditions.itemMiscMashedFood.name=Mashed Food
+item.actuallyadditions.itemFertilizer.name=Fertilizer
+item.actuallyadditions.itemMiscDough.name=Dough
+item.actuallyadditions.itemMiscPaperCone.name=Paper Cone
+item.actuallyadditions.itemMiscKnifeBlade.name=Knife Blade
+item.actuallyadditions.itemMiscKnifeHandle.name=Knife Handle
+item.actuallyadditions.itemMiscBlackQuartz.name=Black Quartz
+
+item.actuallyadditions.itemKnife.name=Knife
+item.actuallyadditions.itemPickaxeEmerald.name=Emerald Pickaxe
+item.actuallyadditions.itemAxeEmerald.name=Emerald Axe
+item.actuallyadditions.itemShovelEmerald.name=Emerald Shovel
+item.actuallyadditions.itemHoeEmerald.name=Emerald Hoe
+item.actuallyadditions.itemSwordEmerald.name=Emerald Sword
+item.actuallyadditions.itemPickaxeObsidian.name=Obsidian Pickaxe
+item.actuallyadditions.itemAxeObsidian.name=Obsidian Axe
+item.actuallyadditions.itemShovelObsidian.name=Obsidian Shovel
+item.actuallyadditions.itemHoeObsidian.name=Obsidian Hoe
+item.actuallyadditions.itemSwordObsidian.name=Obsidian Sword
+item.actuallyadditions.itemCrafterOnAStick.name=Crafting Table On A Stick
+
+item.actuallyadditions.itemFoodBaguette.name=Baguette
+item.actuallyadditions.itemFoodPizza.name=Pizza
+item.actuallyadditions.itemFoodHamburger.name=Hamburger
+item.actuallyadditions.itemFoodBigCookie.name=Big Cookie
+item.actuallyadditions.itemFoodSubmarineSandwich.name=Submarine Sandwich
+item.actuallyadditions.itemFoodToast.name=Toast
+item.actuallyadditions.itemFoodChocolate.name=Chocolate
+item.actuallyadditions.itemFoodChocolateCake.name=Chocolate Cake
+item.actuallyadditions.itemFoodNoodle.name=Noodle
+item.actuallyadditions.itemFoodSpaghetti.name=Spaghetti
+item.actuallyadditions.itemFoodFrenchFry.name=French Fry
+item.actuallyadditions.itemFoodFrenchFries.name=French Fries
+item.actuallyadditions.itemFoodFishNChips.name=Fish 'N' Chips
+item.actuallyadditions.itemFoodCarrotJuice.name=Carrot Juice
+item.actuallyadditions.itemFoodPumpkinStew.name=Pumpkin Stew
+item.actuallyadditions.itemFoodCheese.name=Cheese
+
+item.actuallyadditions.itemSpecialUnknownSubstance.name=Unknown Substance
+item.actuallyadditions.itemSpecialSolidifiedExperience.name=Solidified Experience
+item.actuallyadditions.itemSpecialBloodFragment.name=Blood Fragment
+item.actuallyadditions.itemSpecialHeartPart.name=Part of a Heart
+item.actuallyadditions.itemSpecialPearlShard.name=Ender Pearl Shard
+item.actuallyadditions.itemSpecialEmeraldShard.name=Emerald Shard
+
+item.actuallyadditions.itemDustIron.name=Crushed Iron
+item.actuallyadditions.itemDustGold.name=Crushed Gold
+item.actuallyadditions.itemDustDiamond.name=Crushed Diamond
+item.actuallyadditions.itemDustLapis.name=Crushed Lapis
+item.actuallyadditions.itemDustEmerald.name=Crushed Emerald
+item.actuallyadditions.itemDustQuartz.name=Crushed Quartz
+item.actuallyadditions.itemDustCoal.name=Crushed Coal
+item.actuallyadditions.itemDustQuartzBlack.name=Crushed Black Quartz
+
+tooltip.actuallyadditions.shiftForInfo.desc=Press Shift for Info
+tooltip.actuallyadditions.hunger.desc=Fills
+tooltip.actuallyadditions.saturation.desc=Saturation
+tooltip.actuallyadditions.durability.desc=Durability
+
+tooltip.actuallyadditions.blockCompost.desc.1=Used to make Fertilizer with Mashed Food
+tooltip.actuallyadditions.blockCompost.desc.2=BETA INFO: Will visually contain Compost in the Future!
+tooltip.actuallyadditions.blockMiscOreBlackQuartz.desc=The darkest form of Quartz.
+tooltip.actuallyadditions.blockMiscBlackQuartz.desc=Black, eerie Quartz! Nice for decorating.
+tooltip.actuallyadditions.blockMiscBlackQuartzChiseled.desc=Black, eerie chiseled Quartz! Nice for decorating.
+tooltip.actuallyadditions.blockMiscBlackQuartzPillar.desc=Kind of a pillar. Not really, though. It's fake! Fake I say!
+tooltip.actuallyadditions.blockFeeder.desc=Feeds Animals on its own!
+tooltip.actuallyadditions.blockGiantChest.desc=GUI Scale on 'Auto'? That's a problem!
+tooltip.actuallyadditions.blockGrinder.desc.1=Crushes Ores into Dusts!
+tooltip.actuallyadditions.blockGrinder.desc.2=You get two Dusts per Ore and Extrasly,
+tooltip.actuallyadditions.blockGrinder.desc.4=build the Double Crusher!
+tooltip.actuallyadditions.blockGrinderDouble.desc.1=Crushes Ores into Dusts!
+tooltip.actuallyadditions.blockGrinderDouble.desc.2=You get two Dusts per Ore and Extras!
+tooltip.actuallyadditions.blockGrinderDouble.desc.3=Can crush two Ores simultaneously!
+tooltip.actuallyadditions.blockFurnaceDouble.desc=Smelts two Things simultaneously!
+
+tooltip.actuallyadditions.itemMiscMashedFood.desc=Used to make Fertilizer
+tooltip.actuallyadditions.itemFertilizer.desc=Om nom nom. Don't eat it. Made in a Compost.
+tooltip.actuallyadditions.itemMiscDough.desc=Used to make things that involve dough.
+tooltip.actuallyadditions.itemMiscPaperCone.desc=Used to store foodstuffs!
+tooltip.actuallyadditions.itemMiscKnifeBlade.desc=Sharp like a tooth! A whale's tooth!
+tooltip.actuallyadditions.itemMiscKnifeHandle.desc=Fits comfortably in your hand.
+tooltip.actuallyadditions.itemMiscBlackQuartz.desc=Used in the Quartz Enchanter!
+
+tooltip.actuallyadditions.itemKnife.desc=Cuts things! Only food though, don't think of stuff...
+tooltip.actuallyadditions.itemPickaxeEmerald.desc=Mines Stone.
+tooltip.actuallyadditions.itemAxeEmerald.desc=Mines Wood.
+tooltip.actuallyadditions.itemShovelEmerald.desc=Mines Dirt.
+tooltip.actuallyadditions.itemHoeEmerald.desc=Mines... uhm... yea.
+tooltip.actuallyadditions.itemSwordEmerald.desc=Mines... mobs?
+tooltip.actuallyadditions.itemPickaxeObsidian.desc=Mines Stone. Slooooowly.
+tooltip.actuallyadditions.itemAxeObsidian.desc=Mines Wood. Slooooowly.
+tooltip.actuallyadditions.itemShovelObsidian.desc=Mines Dirt. Slooooowly.
+tooltip.actuallyadditions.itemHoeObsidian.desc=Mines... uhm... yea.
+tooltip.actuallyadditions.itemSwordObsidian.desc=Mines... mobs?
+tooltip.actuallyadditions.itemCrafterOnAStick.desc=A Crafting Table you can carry around!
+
+tooltip.actuallyadditions.itemFoodBaguette.desc=It's french. It's noms.
+tooltip.actuallyadditions.itemFoodPizza.desc=Who doesn't like it?
+tooltip.actuallyadditions.itemFoodHamburger.desc=It's from a german city!
+tooltip.actuallyadditions.itemFoodBigCookie.desc=Do you know? The Subway Thing?
+tooltip.actuallyadditions.itemFoodSubmarineSandwich.desc=Just like Subway used to make! ...still does, right?
+tooltip.actuallyadditions.itemFoodToast.desc="GHOSTS! GHOSTS! TOASTS!"
+tooltip.actuallyadditions.itemFoodChocolate.desc=Lari likes.
+tooltip.actuallyadditions.itemFoodChocolateCake.desc=Looks delicious. With redberries. Or something.
+tooltip.actuallyadditions.itemFoodNoodle.desc=Just one. Like... that's not much.
+tooltip.actuallyadditions.itemFoodSpaghetti.desc=The most generic food ever. So clichée.
+tooltip.actuallyadditions.itemFoodFrenchFry.desc=French. Fry.
+tooltip.actuallyadditions.itemFoodFrenchFries.desc=Much like French Fires, but actually taste good.
+tooltip.actuallyadditions.itemFoodFishNChips.desc=It's Fish. It's Chips. Or French Fries. Whatevs.
+tooltip.actuallyadditions.itemFoodCarrotJuice.desc=Carrots, but pressed!
+tooltip.actuallyadditions.itemFoodPumpkinStew.desc=Like Mushroom Stew or Rabbit Stew, but pumpykinny.
+tooltip.actuallyadditions.itemFoodCheese.desc=Cheese.
+
+tooltip.actuallyadditions.itemSpecialUnknownSubstance.desc=Dropped by Skeletons. BETA INFO: Useless as of yet.
+tooltip.actuallyadditions.itemSpecialSolidifiedExperience.desc=Dropped by everyone. BETA INFO: Useless as of yet.
+tooltip.actuallyadditions.itemSpecialBloodFragment.desc=Dropped by everyone. BETA INFO: Useless as of yet.
+tooltip.actuallyadditions.itemSpecialHeartPart.desc=Dropped by everyone. BETA INFO: Useless as of yet.
+tooltip.actuallyadditions.itemSpecialPearlShard.desc=Dropped by Endermen. BETA INFO: Useless as of yet.
+tooltip.actuallyadditions.itemSpecialEmeraldShard.desc=Dropped by Creepers. BETA INFO: Useless as of yet.
+
+tooltip.actuallyadditions.itemDustIron.desc=Iron! Crushed in the Crusher!
+tooltip.actuallyadditions.itemDustGold.desc=Gold! Crushed in the Crusher!
+tooltip.actuallyadditions.itemDustDiamond.desc=Diamond! Crushed in the Crusher!
+tooltip.actuallyadditions.itemDustLapis.desc=Lapis! Crushed in the Crusher!
+tooltip.actuallyadditions.itemDustEmerald.desc=Emerald! Crushed in the Crusher!
+tooltip.actuallyadditions.itemDustQuartz.desc=Quartz! Crushed in the Crusher!
+tooltip.actuallyadditions.itemDustCoal.desc=Coal! Crushed in the Crusher!
+tooltip.actuallyadditions.itemDustQuartzBlack.desc=Black Quartz! Crushed in the Crusher!
+
+achievement.actuallyadditions.smeltBaguette=Better than Bread!
+achievement.actuallyadditions.smeltBaguette.desc=Bake a Baguette
+achievement.actuallyadditions.craftDough=Knead, knead!
+achievement.actuallyadditions.craftDough.desc=Craft some Dough
+achievement.actuallyadditions.craftCompost=Throw it all in!
+achievement.actuallyadditions.craftCompost.desc=Craft a Compost
+achievement.actuallyadditions.craftFertilizer=Better than Bone Meal!
+achievement.actuallyadditions.craftFertilizer.desc=Make Fertilizer
+achievement.actuallyadditions.craftSubSandwich=Metro, Underground, Tube, Nom!
+achievement.actuallyadditions.craftSubSandwich.desc=Craft a Submarine Sandwich
+achievement.actuallyadditions.craftPaperCone=Witch's hat!
+achievement.actuallyadditions.craftPaperCone.desc=Craft a Paper Cone
+achievement.actuallyadditions.craftFrenchFry=Just the single one...
+achievement.actuallyadditions.craftFrenchFry.desc=Craft a French Fry
+achievement.actuallyadditions.craftFrenchFries=French Fires?
+achievement.actuallyadditions.craftFrenchFries.desc=Craft French Fries
+achievement.actuallyadditions.craftFishNChips=It's Fish! It's Chips!
+achievement.actuallyadditions.craftFishNChips.desc=Craft Fish 'N' Chips
+achievement.actuallyadditions.craftMashedFood=Munch munch munch!
+achievement.actuallyadditions.craftMashedFood.desc=Craft Mashed Food
+achievement.actuallyadditions.craftKnifeBlade=Sharp! So sharp!
+achievement.actuallyadditions.craftKnifeBlade.desc=Craft a Knife Blade
+achievement.actuallyadditions.craftKnife=Sharper! Even sharper!
+achievement.actuallyadditions.craftKnife.desc=Craft a Knife
+
+info.actuallyadditions.feeder.animals.desc=Animals
+info.actuallyadditions.feeder.enoughToBreed.desc=Enough to breed!
+info.actuallyadditions.feeder.tooMany.desc=Too many to breed!
+info.actuallyadditions.feeder.notEnough.desc=Not enough to breed!
