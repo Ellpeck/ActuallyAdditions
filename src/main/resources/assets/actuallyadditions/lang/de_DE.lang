@@ -81,94 +81,12 @@ tooltip.actuallyadditions.blockFeeder.desc=Vergewaltigt, ääh füttert Tiere ga
 tooltip.actuallyadditions.blockGiantChest.desc=GUI Scale on 'Auto'? That's a problem!
 tooltip.actuallyadditions.blockGrinder.desc.1=Macht Staub aus Erzen!
 tooltip.actuallyadditions.blockGrinder.desc.2=Aus 1 macht zwei und BONI!!!
-tooltip.actuallyadditions.blockGrinder.desc.3=To crush two ores simultaneousitemGroup.actuallyadditions=Actually Additions
-achievement.page.actuallyadditions=Actually Additions
-
-tile.actuallyadditions.blockCompost.name=Compost
-tile.actuallyadditions.blockMiscOreBlackQuartz.name=Black Quartz Ore
-tile.actuallyadditions.blockMiscBlackQuartz.name=Block of Black Quartz
-tile.actuallyadditions.blockMiscBlackQuartzChiseled.name=Chiseled Block of Black Quartz
-tile.actuallyadditions.blockMiscBlackQuartzPillar.name=Pillar of Black Quartz
-tile.actuallyadditions.blockFeeder.name=Automatic Feeder
-tile.actuallyadditions.blockGiantChest.name=Giant Chest
-tile.actuallyadditions.blockGrinder.name=Crusher
-tile.actuallyadditions.blockGrinderDouble.name=Double Crusher
-tile.actuallyadditions.blockFurnaceDouble.name=Double Furnace
-
-item.actuallyadditions.itemMiscMashedFood.name=Mashed Food
-item.actuallyadditions.itemFertilizer.name=Fertilizer
-item.actuallyadditions.itemMiscDough.name=Dough
-item.actuallyadditions.itemMiscPaperCone.name=Paper Cone
-item.actuallyadditions.itemMiscKnifeBlade.name=Knife Blade
-item.actuallyadditions.itemMiscKnifeHandle.name=Knife Handle
-item.actuallyadditions.itemMiscBlackQuartz.name=Black Quartz
-
-item.actuallyadditions.itemKnife.name=Knife
-item.actuallyadditions.itemPickaxeEmerald.name=Emerald Pickaxe
-item.actuallyadditions.itemAxeEmerald.name=Emerald Axe
-item.actuallyadditions.itemShovelEmerald.name=Emerald Shovel
-item.actuallyadditions.itemHoeEmerald.name=Emerald Hoe
-item.actuallyadditions.itemSwordEmerald.name=Emerald Sword
-item.actuallyadditions.itemPickaxeObsidian.name=Obsidian Pickaxe
-item.actuallyadditions.itemAxeObsidian.name=Obsidian Axe
-item.actuallyadditions.itemShovelObsidian.name=Obsidian Shovel
-item.actuallyadditions.itemHoeObsidian.name=Obsidian Hoe
-item.actuallyadditions.itemSwordObsidian.name=Obsidian Sword
-item.actuallyadditions.itemCrafterOnAStick.name=Crafting Table On A Stick
-
-item.actuallyadditions.itemFoodBaguette.name=Baguette
-item.actuallyadditions.itemFoodPizza.name=Pizza
-item.actuallyadditions.itemFoodHamburger.name=Hamburger
-item.actuallyadditions.itemFoodBigCookie.name=Big Cookie
-item.actuallyadditions.itemFoodSubmarineSandwich.name=Submarine Sandwich
-item.actuallyadditions.itemFoodToast.name=Toast
-item.actuallyadditions.itemFoodChocolate.name=Chocolate
-item.actuallyadditions.itemFoodChocolateCake.name=Chocolate Cake
-item.actuallyadditions.itemFoodNoodle.name=Noodle
-item.actuallyadditions.itemFoodSpaghetti.name=Spaghetti
-item.actuallyadditions.itemFoodFrenchFry.name=French Fry
-item.actuallyadditions.itemFoodFrenchFries.name=French Fries
-item.actuallyadditions.itemFoodFishNChips.name=Fish 'N' Chips
-item.actuallyadditions.itemFoodCarrotJuice.name=Carrot Juice
-item.actuallyadditions.itemFoodPumpkinStew.name=Pumpkin Stew
-item.actuallyadditions.itemFoodCheese.name=Cheese
-
-item.actuallyadditions.itemSpecialUnknownSubstance.name=Unknown Substance
-item.actuallyadditions.itemSpecialSolidifiedExperience.name=Solidified Experience
-item.actuallyadditions.itemSpecialBloodFragment.name=Blood Fragment
-item.actuallyadditions.itemSpecialHeartPart.name=Part of a Heart
-item.actuallyadditions.itemSpecialPearlShard.name=Ender Pearl Shard
-item.actuallyadditions.itemSpecialEmeraldShard.name=Emerald Shard
-
-item.actuallyadditions.itemDustIron.name=Crushed Iron
-item.actuallyadditions.itemDustGold.name=Crushed Gold
-item.actuallyadditions.itemDustDiamond.name=Crushed Diamond
-item.actuallyadditions.itemDustLapis.name=Crushed Lapis
-item.actuallyadditions.itemDustEmerald.name=Crushed Emerald
-item.actuallyadditions.itemDustQuartz.name=Crushed Quartz
-item.actuallyadditions.itemDustCoal.name=Crushed Coal
-item.actuallyadditions.itemDustQuartzBlack.name=Crushed Black Quartz
-
-tooltip.actuallyadditions.shiftForInfo.desc=Press Shift for Info
-tooltip.actuallyadditions.hunger.desc=Fills
-tooltip.actuallyadditions.saturation.desc=Saturation
-tooltip.actuallyadditions.durability.desc=Durability
-
-tooltip.actuallyadditions.blockCompost.desc.1=Used to make Fertilizer with Mashed Food
-tooltip.actuallyadditions.blockCompost.desc.2=BETA INFO: Will visually contain Compost in the Future!
-tooltip.actuallyadditions.blockMiscOreBlackQuartz.desc=The darkest form of Quartz.
-tooltip.actuallyadditions.blockMiscBlackQuartz.desc=Black, eerie Quartz! Nice for decorating.
-tooltip.actuallyadditions.blockMiscBlackQuartzChiseled.desc=Black, eerie chiseled Quartz! Nice for decorating.
-tooltip.actuallyadditions.blockMiscBlackQuartzPillar.desc=Kind of a pillar. Not really, though. It's fake! Fake I say!
-tooltip.actuallyadditions.blockFeeder.desc=Feeds Animals on its own!
-tooltip.actuallyadditions.blockGiantChest.desc=GUI Scale on 'Auto'? That's a problem!
-tooltip.actuallyadditions.blockGrinder.desc.1=Crushes Ores into Dusts!
-tooltip.actuallyadditions.blockGrinder.desc.2=You get two Dusts per Ore and Extrasly,
-tooltip.actuallyadditions.blockGrinder.desc.4=build the Double Crusher!
-tooltip.actuallyadditions.blockGrinderDouble.desc.1=Crushes Ores into Dusts!
-tooltip.actuallyadditions.blockGrinderDouble.desc.2=You get two Dusts per Ore and Extras!
-tooltip.actuallyadditions.blockGrinderDouble.desc.3=Can crush two Ores simultaneously!
-tooltip.actuallyadditions.blockFurnaceDouble.desc=Smelts two Things simultaneously!
+tooltip.actuallyadditions.blockGrinder.desc.3=Mk2 kann sogar zwei Sachen
+tooltip.actuallyadditions.blockGrinder.desc.4=gleichzeitig verarbeiten!
+tooltip.actuallyadditions.blockGrinderDouble.desc.1=Macht Staub aus Erzen!
+tooltip.actuallyadditions.blockGrinderDouble.desc.2=Aus 1 mach 2 und BONI!!
+tooltip.actuallyadditions.blockGrinderDouble.desc.3=Kann zwei Sachen gleichzeitig verarbeiten!
+tooltip.actuallyadditions.blockFurnaceDouble.desc=Kann zwei Sachen gleichzeitig verarbeiten!
 
 tooltip.actuallyadditions.itemMiscMashedFood.desc=Used to make Fertilizer
 tooltip.actuallyadditions.itemFertilizer.desc=Om nom nom. Don't eat it. Made in a Compost.
