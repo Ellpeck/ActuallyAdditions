@@ -31,6 +31,11 @@ public class ItemKnife extends Item implements IName{
     }
 
     @Override
+    public boolean doesContainerItemLeaveCraftingGrid(ItemStack stack){
+        return false;
+    }
+
+    @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.epic;
     }

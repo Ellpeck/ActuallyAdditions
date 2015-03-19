@@ -10,6 +10,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import ellpeck.actuallyadditions.achievement.InitAchievements;
 import ellpeck.actuallyadditions.blocks.InitBlocks;
 import ellpeck.actuallyadditions.config.ConfigurationHandler;
+import ellpeck.actuallyadditions.crafting.GrinderCrafting;
 import ellpeck.actuallyadditions.crafting.InitCrafting;
 import ellpeck.actuallyadditions.event.InitEvents;
 import ellpeck.actuallyadditions.gen.OreGen;
@@ -67,6 +68,7 @@ public class ActuallyAdditions{
     public void postInit(FMLPostInitializationEvent event){
         Util.logInfo("Starting PostInitialization Phase...");
 
+        GrinderCrafting.init();
         proxy.postInit();
 
         Util.logInfo("PostInitialization Finished.");

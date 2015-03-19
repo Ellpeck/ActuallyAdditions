@@ -26,6 +26,7 @@ public class CreativeTab extends CreativeTabs{
     public void displayAllReleventItems(List list){
         this.list = list;
 
+        this.addBlock(InitBlocks.blockInputter);
         this.addBlock(InitBlocks.blockGrinder);
         this.addBlock(InitBlocks.blockGrinderDouble);
         this.addBlock(InitBlocks.blockFurnaceDouble);
@@ -58,7 +59,7 @@ public class CreativeTab extends CreativeTabs{
 
     @Override
     public Item getTabIconItem(){
-        return Item.getItemFromBlock(InitBlocks.blockGrinderDouble);
+        return Item.getItemFromBlock(InitBlocks.blockInputter);
     }
 
     @Override

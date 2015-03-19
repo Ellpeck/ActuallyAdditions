@@ -4,6 +4,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.config.ConfigValues;
 import ellpeck.actuallyadditions.recipe.GrinderRecipes;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntityFurnace;
@@ -90,6 +91,7 @@ public class TileEntityGrinder extends TileEntityInventoryBase{
 
             if(theFlag != this.coalTimeLeft > 0){
                 worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, (this.coalTimeLeft > 0 ? 1 : 0), 2);
+                this.markDirty();
             }
         }
     }
@@ -181,6 +183,6 @@ public class TileEntityGrinder extends TileEntityInventoryBase{
 
     @Override
     public boolean canExtractItem(int slot, ItemStack stack, int side){
-        return slot == SLOT_OUTPUT_1_1 || slot == SLOT_OUTPUT_1_2 || slot == SLOT_OUTPUT_2_1 || slot == SLOT_OUTPUT_2_2;
+        return slot == SLOT_OUTPUT_1_1 || slot == SLOT_OUTPUT_1_2 || slot == SLOT_OUTPUT_2_1 || slot == SLOT_OUTPUT_2_2 || (slot == SLOT_COAL && stack.getItem() == Items.bucket);
     }
 }

@@ -18,11 +18,13 @@ public class ItemSwordAA extends ItemSword implements IName{
 
     private String name;
     private EnumRarity rarity;
+    private ItemStack repairItem;
 
-    public ItemSwordAA(ToolMaterial toolMat, String unlocalizedName, EnumRarity rarity){
+    public ItemSwordAA(ToolMaterial toolMat, ItemStack repairItem, String unlocalizedName, EnumRarity rarity){
         super(toolMat);
         this.name = unlocalizedName;
         this.rarity = rarity;
+        this.repairItem = repairItem;
         this.setUnlocalizedName(Util.setUnlocalizedName(this));
     }
 
@@ -34,6 +36,11 @@ public class ItemSwordAA extends ItemSword implements IName{
         if(Util.isShiftPressed()){
             list.add(StatCollector.translateToLocal("tooltip." + Util.MOD_ID_LOWER + ".durability.desc") + ": " + (this.getMaxDamage()-this.getDamage(stack)) + "/" + this.getMaxDamage());
         }
+    }
+
+    @Override
+    public boolean getIsRepairable(ItemStack itemToRepair, ItemStack stack){
+        return stack.getItem() == repairItem.getItem();
     }
 
     @Override

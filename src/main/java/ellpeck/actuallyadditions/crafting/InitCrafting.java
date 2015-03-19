@@ -12,7 +12,6 @@ public class InitCrafting {
         MiscCrafting.init();
         FoodCrafting.init();
         ToolCrafting.init();
-        GrinderCrafting.init();
 
     }
 
