@@ -48,8 +48,8 @@ public class Util{
     public static final String BOLD = (char)167 + "l";
     public static final String UNDERLINE = (char)167 + "n";
     public static final String ITALIC = (char)167 + "o";
-    public static final String OBFUSCATED = (char) 167 + "k";
-    public static final String RESET = (char) 167 + "r";
+    public static final String OBFUSCATED = (char)167 + "k";
+    public static final String RESET = (char)167 + "r";
 
     public static final String[] ROMAN_NUMERALS = new String[]{"", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"};
 

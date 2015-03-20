@@ -12,7 +12,6 @@ public enum TheSpecialDrops implements IName{
 
     SOLIDIFIED_EXPERIENCE("SolidifiedExperience", 70, 3, EntityCreature.class, EnumRarity.uncommon, ConfigValues.enableExperienceDrop),
     BLOOD_FRAGMENT("BloodFragment", 30, 1, EntityCreature.class, EnumRarity.uncommon, ConfigValues.enableBloodDrop),
-    //Change this into a Heart Fragment that is later crafted into a heart used to revive Villagers
     HEART_PART("HeartPart", 10, 1, EntityCreature.class, EnumRarity.rare, ConfigValues.enableHeartDrop),
     UNKNOWN_SUBSTANCE("UnknownSubstance", 5, 1, EntitySkeleton.class, EnumRarity.epic, ConfigValues.enableSubstanceDrop),
     PEARL_SHARD("PearlShard", 20, 3, EntityEnderman.class, EnumRarity.epic, ConfigValues.enablePearlShardDrop),
