@@ -64,8 +64,11 @@ public class TileEntityInputter extends TileEntityInventoryBase{
                     }
                 }
                 else{
-                    this.setInventorySlotContents(0, theStack.copy());
-                    theInventory.setInventorySlotContents(theSlotToPull, null);
+                    ItemStack toBePut = theStack.copy();
+                    if(theInventory.getInventoryStackLimit() < toBePut.stackSize) toBePut.stackSize = theInventory.getInventoryStackLimit();
+                    this.setInventorySlotContents(0, toBePut);
+                    if(theStack.stackSize == toBePut.stackSize) theInventory.setInventorySlotContents(theSlotToPull, null);
+                    else theStack.stackSize -= toBePut.stackSize;
                 }
             }
         }
@@ -103,8 +106,11 @@ public class TileEntityInputter extends TileEntityInventoryBase{
                         }
                     }
                     else{
-                        theInventory.setInventorySlotContents(theSlotToPut, this.slots[0].copy());
-                        this.slots[0] = null;
+                        ItemStack toBePut = this.slots[0].copy();
+                        if(theInventory.getInventoryStackLimit() < toBePut.stackSize) toBePut.stackSize = theInventory.getInventoryStackLimit();
+                        theInventory.setInventorySlotContents(theSlotToPut, toBePut);
+                        if(this.slots[0].stackSize == toBePut.stackSize) this.slots[0] = null;
+                        else this.slots[0].stackSize -= toBePut.stackSize;
                     }
                 }
             }

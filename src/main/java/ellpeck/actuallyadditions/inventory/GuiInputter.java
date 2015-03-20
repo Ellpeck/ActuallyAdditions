@@ -92,11 +92,11 @@ public class GuiInputter extends GuiContainer{
         this.fontRendererObj.drawString(StatCollector.translateToLocal("info." + Util.MOD_ID_LOWER + ".gui.put"), guiLeft + 22 + 3, guiTop + 32, 4210752);
         this.fontRendererObj.drawString(StatCollector.translateToLocal("info." + Util.MOD_ID_LOWER + ".gui.pull"), guiLeft + 107 + 3, guiTop + 32, 4210752);
 
-        this.fontRendererObj.drawString(sideString[tileInputter.sideToPut+1], guiLeft + 24 + 3, guiTop + 45 + 1, 4210752);
-        this.fontRendererObj.drawString(StatCollector.translateToLocal("info." + Util.MOD_ID_LOWER + ".gui.slot") + " " + (tileInputter.slotToPut == -1 ? StatCollector.translateToLocal("info." + Util.MOD_ID_LOWER + ".gui.all") : tileInputter.slotToPut).toString(), guiLeft + 24, guiTop + 66 + 1, 4210752);
+        this.fontRendererObj.drawString(sideString[tileInputter.sideToPut+1], guiLeft + 24 + 1, guiTop + 45 + 3, 4210752);
+        this.fontRendererObj.drawString(StatCollector.translateToLocal("info." + Util.MOD_ID_LOWER + ".gui.slot") + " " + (tileInputter.slotToPut == -1 ? StatCollector.translateToLocal("info." + Util.MOD_ID_LOWER + ".gui.all") : tileInputter.slotToPut).toString(), guiLeft + 24 + 3, guiTop + 66 + 3, 4210752);
 
-        this.fontRendererObj.drawString(sideString[tileInputter.sideToPull+1], guiLeft + 109 + 3, guiTop + 45 + 1, 4210752);
-        this.fontRendererObj.drawString(StatCollector.translateToLocal("info." + Util.MOD_ID_LOWER + ".gui.slot") + " " + (tileInputter.slotToPull == -1 ? StatCollector.translateToLocal("info." + Util.MOD_ID_LOWER + ".gui.all") : tileInputter.slotToPull).toString(), guiLeft + 109, guiTop + 66 + 1, 4210752);
+        this.fontRendererObj.drawString(sideString[tileInputter.sideToPull+1], guiLeft + 109 + 1, guiTop + 45 + 3, 4210752);
+        this.fontRendererObj.drawString(StatCollector.translateToLocal("info." + Util.MOD_ID_LOWER + ".gui.slot") + " " + (tileInputter.slotToPull == -1 ? StatCollector.translateToLocal("info." + Util.MOD_ID_LOWER + ".gui.all") : tileInputter.slotToPull).toString(), guiLeft + 109 + 3, guiTop + 66 + 3, 4210752);
     }
 
     @Override
@@ -142,7 +142,7 @@ public class GuiInputter extends GuiContainer{
                 else if (!this.enabled) color = 10526880;
                 else if (this.field_146123_n) color = 16777120;
 
-                this.drawCenteredString(renderer, this.displayString, this.xPosition + this.width / 2, this.yPosition + (this.height-3) / 2, color);
+                this.drawCenteredString(renderer, this.displayString, this.xPosition + this.width / 2, this.yPosition + (this.height-8) / 2, color);
             }
         }
     }

@@ -11,6 +11,8 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.FurnaceRecipes;
+import net.minecraft.tileentity.TileEntityFurnace;
 
 public class ContainerFurnaceDouble extends Container{
 
@@ -27,8 +29,8 @@ public class ContainerFurnaceDouble extends Container{
         this.addSlotToContainer(new Slot(this.tileFurnace, TileEntityFurnaceDouble.SLOT_COAL, 80, 21));
 
         this.addSlotToContainer(new Slot(this.tileFurnace, TileEntityFurnaceDouble.SLOT_INPUT_1, 51, 21));
-        this.addSlotToContainer(new Slot(this.tileFurnace, TileEntityFurnaceDouble.SLOT_INPUT_2, 109, 21));
         this.addSlotToContainer(new SlotOutput(this.tileFurnace, TileEntityFurnaceDouble.SLOT_OUTPUT_1, 51, 69));
+        this.addSlotToContainer(new Slot(this.tileFurnace, TileEntityFurnaceDouble.SLOT_INPUT_2, 109, 21));
         this.addSlotToContainer(new SlotOutput(this.tileFurnace, TileEntityFurnaceDouble.SLOT_OUTPUT_2, 108, 69));
 
         for (int i = 0; i < 3; i++){
@@ -84,6 +86,46 @@ public class ContainerFurnaceDouble extends Container{
 
     @Override
     public ItemStack transferStackInSlot(EntityPlayer player, int slot){
+        final int inventoryStart = 5;
+        final int inventoryEnd = inventoryStart+26;
+        final int hotbarStart = inventoryEnd+1;
+        final int hotbarEnd = hotbarStart+8;
+
+        Slot theSlot = (Slot)this.inventorySlots.get(slot);
+        if(theSlot.getHasStack()){
+            ItemStack currentStack = theSlot.getStack();
+            ItemStack newStack = currentStack.copy();
+
+            if(slot <= hotbarEnd && slot >= inventoryStart){
+                if(FurnaceRecipes.smelting().getSmeltingResult(currentStack) != null){
+                    this.mergeItemStack(newStack, TileEntityFurnaceDouble.SLOT_INPUT_1, TileEntityFurnaceDouble.SLOT_INPUT_1+1, false);
+                    this.mergeItemStack(newStack, TileEntityFurnaceDouble.SLOT_INPUT_2, TileEntityFurnaceDouble.SLOT_INPUT_2+2, false);
+                }
+
+                if(TileEntityFurnace.getItemBurnTime(currentStack) > 0){
+                    this.mergeItemStack(newStack, TileEntityFurnaceDouble.SLOT_COAL, TileEntityFurnaceDouble.SLOT_COAL+1, false);
+                }
+            }
+
+            if(slot <= hotbarEnd && slot >= hotbarStart){
+                this.mergeItemStack(newStack, inventoryStart, inventoryEnd+1, false);
+            }
+
+            else if(slot <= inventoryEnd && slot >= inventoryStart){
+                this.mergeItemStack(newStack, hotbarStart, hotbarEnd+1, false);
+            }
+
+            else if(slot < inventoryStart){
+                this.mergeItemStack(newStack, inventoryStart, hotbarEnd+1, false);
+            }
+
+            if(newStack.stackSize == 0) theSlot.putStack(null);
+            else theSlot.onSlotChanged();
+            if(newStack.stackSize == currentStack.stackSize) return null;
+            theSlot.onPickupFromSlot(player, newStack);
+
+            return currentStack;
+        }
         return null;
     }
 }

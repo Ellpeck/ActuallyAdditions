@@ -100,6 +100,7 @@ tooltip.actuallyadditions.blockGrinder.desc.4=build the Double Crusher!
 tooltip.actuallyadditions.blockGrinderDouble.desc.1=Crushes Ores into Dusts!
 tooltip.actuallyadditions.blockGrinderDouble.desc.2=You get two Dusts per Ore and Extras!
 tooltip.actuallyadditions.blockGrinderDouble.desc.3=Can crush two Ores simultaneously!
+tooltip.actuallyadditions.blockFurnaceDouble.desc=Smelts two things simultaneously!
 tooltip.actuallyadditions.blockInputter.desc.1=Its real name is %sObfuscated%s!
 tooltip.actuallyadditions.blockInputter.desc.2=Acts like a more advanced Hopper
 tooltip.actuallyadditions.blockInputter.desc.3=Configurable:
