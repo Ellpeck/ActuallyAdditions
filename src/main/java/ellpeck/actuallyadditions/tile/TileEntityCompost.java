@@ -22,12 +22,16 @@ public class TileEntityCompost extends TileEntityInventoryBase{
     @Override
     public void updateEntity(){
         if(!worldObj.isRemote){
+            boolean theFlag = this.conversionTime > 0;
             if(this.slots[0] != null && !(this.slots[0].getItem() instanceof ItemFertilizer) && this.slots[0].stackSize >= this.amountNeededToConvert){
                 this.conversionTime++;
                 if(this.conversionTime >= this.conversionTimeNeeded){
                     this.slots[0] = new ItemStack(InitItems.itemFertilizer, this.amountNeededToConvert);
                     this.conversionTime = 0;
                 }
+            }
+            if(theFlag != this.conversionTime > 0){
+                this.markDirty();
             }
         }
     }

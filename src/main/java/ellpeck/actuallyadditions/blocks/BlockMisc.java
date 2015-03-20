@@ -26,6 +26,8 @@ public class BlockMisc extends Block implements IName{
 
     public BlockMisc(){
         super(Material.rock);
+        this.setHarvestLevel("pickaxe", 0);
+        this.setHardness(1.0F);
     }
 
     @SuppressWarnings("all")

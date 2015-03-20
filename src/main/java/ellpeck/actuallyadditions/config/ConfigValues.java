@@ -74,7 +74,6 @@ public class ConfigValues{
         blackQuartzMinHeight = config.getInt("Black Quartz Min Height", ConfigurationHandler.CATEGORY_WORLD_GEN, 0, 0, 256, "How high the Black Quartz starts to generate");
         blackQuartzMaxHeight = config.getInt("Black Quartz Max Height", ConfigurationHandler.CATEGORY_WORLD_GEN, 25, 0, 256, "How high the Black Quartz stops to generate at");
 
-        //TODO CHANGE TO BE TRUE BY DEFAULT
         enableExperienceDrop = config.getBoolean("Solidified Experience", ConfigurationHandler.CATEGORY_MOB_DROPS, false, "If the Solidified Experience drops from Mobs");
         enableBloodDrop = config.getBoolean("Blood Fragments", ConfigurationHandler.CATEGORY_MOB_DROPS, false, "If the Blood Fragments drop from Mobs");
         enableHeartDrop = config.getBoolean("Heart Parts", ConfigurationHandler.CATEGORY_MOB_DROPS, false, "If the Heart Parts drop from Mobs");

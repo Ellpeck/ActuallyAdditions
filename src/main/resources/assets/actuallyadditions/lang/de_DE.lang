@@ -9,7 +9,7 @@ tile.actuallyadditions.blockMiscBlackQuartzPillar.name=Schwarzquartzsäule
 tile.actuallyadditions.blockFeeder.name=Fütterungsanlage
 tile.actuallyadditions.blockGiantChest.name=Riesenkiste
 tile.actuallyadditions.blockGrinder.name=Zerkleinerer
-tile.actuallyadditions.blockGrinderDouble.name=Zerkleinerte Mk2
+tile.actuallyadditions.blockGrinderDouble.name=Zerkleinerer Mk2
 tile.actuallyadditions.blockFurnaceDouble.name=Ofen Mk2
 
 item.actuallyadditions.itemMiscMashedFood.name=Brei
@@ -168,6 +168,6 @@ achievement.actuallyadditions.craftKnife=Noch schärfer? Definitiv Phillips!
 achievement.actuallyadditions.craftKnife.desc=Baue ein Messer.
 
 info.actuallyadditions.feeder.animals.desc=Tiere
-info.actuallyadditions.feeder.enoughToBreed.desc=Nicht genug zur Züchtung!
+info.actuallyadditions.feeder.enoughToBreed.desc=Genug zur Züchtung!
 info.actuallyadditions.feeder.tooMany.desc=Zu viele zur Züchtung!
 info.actuallyadditions.feeder.notEnough.desc=Nicht genug zur Züchtung!

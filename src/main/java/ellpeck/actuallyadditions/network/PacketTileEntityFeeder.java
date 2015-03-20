@@ -4,6 +4,8 @@ import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.inventory.GuiFeeder;
 import ellpeck.actuallyadditions.tile.TileEntityFeeder;
 import io.netty.buffer.ByteBuf;
@@ -50,6 +52,7 @@ public class PacketTileEntityFeeder implements IMessage{
     public static class Handler implements IMessageHandler<PacketTileEntityFeeder, IMessage>{
 
         @Override
+        @SideOnly(Side.CLIENT)
         public IMessage onMessage(PacketTileEntityFeeder message, MessageContext ctx){
             World world = FMLClientHandler.instance().getClient().theWorld;
             TileEntity tile = world.getTileEntity(message.tileX, message.tileY, message.tileZ);

@@ -3,6 +3,7 @@ package ellpeck.actuallyadditions.tile;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.config.ConfigValues;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.nbt.NBTTagCompound;
@@ -76,6 +77,7 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase{
             if(theFlag != this.coalTimeLeft > 0){
                 int metaBefore = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
                 worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, (this.coalTimeLeft > 0 ? metaBefore+4 : metaBefore-4), 2);
+                this.markDirty();
             }
         }
 
@@ -149,6 +151,6 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase{
 
     @Override
     public boolean canExtractItem(int slot, ItemStack stack, int side){
-        return slot == SLOT_OUTPUT_1 || slot == SLOT_OUTPUT_2;
+        return slot == SLOT_OUTPUT_1 || slot == SLOT_OUTPUT_2 || (slot == SLOT_COAL && stack.getItem() == Items.bucket);
     }
 }

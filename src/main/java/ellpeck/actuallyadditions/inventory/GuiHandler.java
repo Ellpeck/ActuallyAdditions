@@ -31,6 +31,9 @@ public class GuiHandler implements IGuiHandler{
             case FURNACE_DOUBLE_ID:
                 TileEntityBase tileFurnace = (TileEntityBase)world.getTileEntity(x, y, z);
                 return new ContainerFurnaceDouble(entityPlayer.inventory, tileFurnace);
+            case INPUTTER_ID:
+                TileEntityBase tileInputter = (TileEntityBase)world.getTileEntity(x, y, z);
+                return new ContainerInputter(entityPlayer.inventory, tileInputter);
             default:
                 return null;
         }
@@ -56,6 +59,9 @@ public class GuiHandler implements IGuiHandler{
             case FURNACE_DOUBLE_ID:
                 TileEntityBase tileFurnace = (TileEntityBase)world.getTileEntity(x, y, z);
                 return new GuiFurnaceDouble(entityPlayer.inventory, tileFurnace);
+            case INPUTTER_ID:
+                TileEntityBase tileInputter = (TileEntityBase)world.getTileEntity(x, y, z);
+                return new GuiInputter(entityPlayer.inventory, tileInputter, x, y, z, world);
             default:
                 return null;
         }
@@ -67,6 +73,7 @@ public class GuiHandler implements IGuiHandler{
     public static final int GRINDER_ID = 3;
     public static final int GRINDER_DOUBLE_ID = 4;
     public static final int FURNACE_DOUBLE_ID = 5;
+    public static final int INPUTTER_ID = 6;
 
     public static void init(){
         Util.logInfo("Initializing GuiHandler...");

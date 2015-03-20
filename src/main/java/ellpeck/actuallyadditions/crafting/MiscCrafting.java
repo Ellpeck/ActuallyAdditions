@@ -30,9 +30,10 @@ public class MiscCrafting{
 
         //Knife Blade
         if(ConfigValues.enabledMiscRecipes[TheMiscItems.KNIFE_BLADE.ordinal()])
-            GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.KNIFE_BLADE.ordinal()),
-                    new ItemStack(Items.iron_ingot),
-                    new ItemStack(Items.flint));
+            GameRegistry.addRecipe(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.KNIFE_BLADE.ordinal()),
+                    "KF",
+                    'K', new ItemStack(Items.iron_ingot),
+                    'F', new ItemStack(Items.flint));
 
     }
 

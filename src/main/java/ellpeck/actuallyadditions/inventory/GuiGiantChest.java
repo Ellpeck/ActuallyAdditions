@@ -18,15 +18,15 @@ public class GuiGiantChest extends GuiContainer{
         super(new ContainerGiantChest(inventory, tile));
 
         this.xSize = 242;
-        this.ySize = 244+86;
+        this.ySize = 172+86;
     }
 
     @Override
     public void drawGuiContainerBackgroundLayer(float f, int x, int y){
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(resLoc);
-        this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 242, 244);
+        this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 242, 190);
         this.mc.getTextureManager().bindTexture(Util.GUI_INVENTORY_LOCATION);
-        this.drawTexturedModalRect(this.guiLeft+33, this.guiTop+244, 0, 0, 176, 86);
+        this.drawTexturedModalRect(this.guiLeft+33, this.guiTop+172, 0, 0, 176, 86);
     }
 }
