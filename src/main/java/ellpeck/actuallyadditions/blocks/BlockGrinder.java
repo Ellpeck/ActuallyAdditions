@@ -137,8 +137,8 @@ public class BlockGrinder extends BlockContainerBase implements IName{
         }
 
         @Override
-        public int getMetadata(int damage){
-            return damage;
+        public int getMetadata(int meta){
+            return meta;
         }
     }
 }
