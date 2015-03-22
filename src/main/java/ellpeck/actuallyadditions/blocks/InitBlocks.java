@@ -1,7 +1,5 @@
 package ellpeck.actuallyadditions.blocks;
 
-import cpw.mods.fml.common.registry.GameRegistry;
-import ellpeck.actuallyadditions.util.IName;
 import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.block.Block;
 
@@ -42,6 +40,6 @@ public class InitBlocks{
         Util.register(blockFurnaceDouble, BlockFurnaceDouble.TheItemBlock.class);
 
         blockInputter = new BlockInputter();
-        GameRegistry.registerBlock(blockInputter, BlockInputter.TheItemBlock.class, ((IName)blockInputter).getName());
+       Util.register(blockInputter, BlockInputter.TheItemBlock.class);
     }
 }

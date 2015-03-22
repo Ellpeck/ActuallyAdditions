@@ -3,7 +3,6 @@ package ellpeck.actuallyadditions.blocks;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.ActuallyAdditions;
-import ellpeck.actuallyadditions.creative.CreativeTab;
 import ellpeck.actuallyadditions.inventory.GuiHandler;
 import ellpeck.actuallyadditions.tile.TileEntityInputter;
 import ellpeck.actuallyadditions.util.IName;
@@ -30,16 +29,12 @@ public class BlockInputter extends BlockContainerBase implements IName{
 
     public static final int NAME_FLAVOUR_AMOUNTS = 12;
 
-    private long lastSysTime;
-    private int toPick;
-
     public BlockInputter(){
         super(Material.rock);
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(1.0F);
         this.setStepSound(soundTypeStone);
         this.setTickRandomly(true);
-        this.setCreativeTab(CreativeTab.instance);
     }
 
     @Override
@@ -70,21 +65,6 @@ public class BlockInputter extends BlockContainerBase implements IName{
         if (rotation == 1) world.setBlockMetadataWithNotify(x, y, z, 3, 2);
         if (rotation == 2) world.setBlockMetadataWithNotify(x, y, z, 1, 2);
         if (rotation == 3) world.setBlockMetadataWithNotify(x, y, z, 2, 2);
-    }
-
-    @Override
-    public String getUnlocalizedName(){
-        String norm = "tile." + Util.MOD_ID_LOWER + "." + this.getName();
-
-        Random rand = new Random();
-        long sysTime = System.currentTimeMillis();
-
-        if(this.lastSysTime+5000 < sysTime){
-            this.lastSysTime = sysTime;
-            this.toPick = rand.nextInt(NAME_FLAVOUR_AMOUNTS+1);
-        }
-
-        return norm + "." + this.toPick;
     }
 
     @Override
@@ -133,6 +113,9 @@ public class BlockInputter extends BlockContainerBase implements IName{
 
         private Block theBlock;
 
+        private long lastSysTime;
+        private int toPick;
+
         public TheItemBlock(Block block){
             super(block);
             this.theBlock = block;
@@ -143,6 +126,19 @@ public class BlockInputter extends BlockContainerBase implements IName{
         @Override
         public EnumRarity getRarity(ItemStack stack){
             return EnumRarity.rare;
+        }
+
+        @Override
+        public String getItemStackDisplayName(ItemStack stack){
+            Random rand = new Random();
+            long sysTime = System.currentTimeMillis();
+
+            if(this.lastSysTime+5000 < sysTime){
+                this.lastSysTime = sysTime;
+                this.toPick = rand.nextInt(NAME_FLAVOUR_AMOUNTS+1);
+            }
+
+            return StatCollector.translateToLocal(this.getUnlocalizedName() + ".name") + " (" + StatCollector.translateToLocal(this.getUnlocalizedName() + ".add." + this.toPick + ".name") + ")";
         }
 
         @Override
