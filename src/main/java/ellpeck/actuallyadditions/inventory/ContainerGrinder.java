@@ -3,6 +3,7 @@ package ellpeck.actuallyadditions.inventory;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.inventory.slot.SlotOutput;
+import ellpeck.actuallyadditions.recipe.GrinderRecipes;
 import ellpeck.actuallyadditions.tile.TileEntityBase;
 import ellpeck.actuallyadditions.tile.TileEntityGrinder;
 import net.minecraft.entity.player.EntityPlayer;
@@ -11,6 +12,7 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntityFurnace;
 
 public class ContainerGrinder extends Container{
 
@@ -90,6 +92,46 @@ public class ContainerGrinder extends Container{
 
     @Override
     public ItemStack transferStackInSlot(EntityPlayer player, int slot){
+        final int inventoryStart = this.isDouble ? 7 : 4;
+        final int inventoryEnd = inventoryStart+26;
+        final int hotbarStart = inventoryEnd+1;
+        final int hotbarEnd = hotbarStart+8;
+
+        Slot theSlot = (Slot)this.inventorySlots.get(slot);
+        if(theSlot.getHasStack()){
+            ItemStack currentStack = theSlot.getStack();
+            ItemStack newStack = currentStack.copy();
+
+            if(slot <= hotbarEnd && slot >= inventoryStart){
+                if(GrinderRecipes.instance().getOutput(currentStack, false) != null){
+                    this.mergeItemStack(newStack, TileEntityGrinder.SLOT_INPUT_1, TileEntityGrinder.SLOT_INPUT_1+1, false);
+                    if(this.isDouble) this.mergeItemStack(newStack, TileEntityGrinder.SLOT_INPUT_2, TileEntityGrinder.SLOT_INPUT_2+1, false);
+                }
+
+                if(TileEntityFurnace.getItemBurnTime(currentStack) > 0){
+                    this.mergeItemStack(newStack, TileEntityGrinder.SLOT_COAL, TileEntityGrinder.SLOT_COAL+1, false);
+                }
+            }
+
+            if(slot <= hotbarEnd && slot >= hotbarStart){
+                this.mergeItemStack(newStack, inventoryStart, inventoryEnd+1, false);
+            }
+
+            else if(slot <= inventoryEnd && slot >= inventoryStart){
+                this.mergeItemStack(newStack, hotbarStart, hotbarEnd+1, false);
+            }
+
+            else if(slot < inventoryStart){
+                this.mergeItemStack(newStack, inventoryStart, hotbarEnd+1, false);
+            }
+
+            if(newStack.stackSize == 0) theSlot.putStack(null);
+            else theSlot.onSlotChanged();
+            if(newStack.stackSize == currentStack.stackSize) return null;
+            theSlot.onPickupFromSlot(player, newStack);
+
+            return currentStack;
+        }
         return null;
     }
 }

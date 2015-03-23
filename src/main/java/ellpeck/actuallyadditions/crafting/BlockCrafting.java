@@ -21,6 +21,13 @@ public class BlockCrafting{
                     'W', new ItemStack(Blocks.planks, 1, Util.WILDCARD),
                     'F', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.MASHED_FOOD.ordinal()));
 
+        //Inputter
+        if(ConfigValues.enableInputterRecipe)
+            GameRegistry.addRecipe(new ItemStack(InitBlocks.blockInputter),
+                    "WWW", "WHW", "WWW",
+                    'W', new ItemStack(Blocks.planks, 1, Util.WILDCARD),
+                    'H', new ItemStack(Blocks.hopper));
+
         //Crusher
         if(ConfigValues.enableCrusherRecipe)
             GameRegistry.addRecipe(new ItemStack(InitBlocks.blockGrinder),

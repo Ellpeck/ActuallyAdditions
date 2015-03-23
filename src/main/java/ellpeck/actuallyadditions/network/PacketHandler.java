@@ -10,7 +10,7 @@ public class PacketHandler{
     public static SimpleNetworkWrapper theNetwork;
 
     public static void init(){
-        theNetwork = NetworkRegistry.INSTANCE.newSimpleChannel(Util.MOD_ID + "Channel");
+        theNetwork = NetworkRegistry.INSTANCE.newSimpleChannel(Util.MOD_ID_LOWER);
 
         theNetwork.registerMessage(PacketTileEntityFeeder.Handler.class, PacketTileEntityFeeder.class, 0, Side.CLIENT);
         theNetwork.registerMessage(PacketInputterButton.Handler.class, PacketInputterButton.class, 1, Side.SERVER);

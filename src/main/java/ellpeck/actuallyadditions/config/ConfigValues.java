@@ -16,6 +16,7 @@ public class ConfigValues{
     public static boolean enableGiantChestRecipe;
     public static boolean enableFeederRecipe;
     public static boolean enableCrafterRecipe;
+    public static boolean enableInputterRecipe;
 
     public static int tileEntityCompostAmountNeededToConvert;
     public static int tileEntityCompostConversionTimeNeeded;
@@ -87,6 +88,7 @@ public class ConfigValues{
         enableCrusherRecipe = config.getBoolean("Crusher", ConfigurationHandler.CATEGORY_BLOCKS_CRAFTING, true, "If the Crafting Recipe for the Crusher is Enabled");
         enableFurnaceDoubleRecipe = config.getBoolean("Double Furnace", ConfigurationHandler.CATEGORY_BLOCKS_CRAFTING, true, "If the Crafting Recipe for the Double Furnace is Enabled");
         enableGiantChestRecipe = config.getBoolean("Giant Chest", ConfigurationHandler.CATEGORY_BLOCKS_CRAFTING, true, "If the Crafting Recipe for the Giant Chest is Enabled");
+        enableInputterRecipe = config.getBoolean("ESD", ConfigurationHandler.CATEGORY_BLOCKS_CRAFTING, true, "If the Crafting Recipe for the ESD is Enabled");
         enableFeederRecipe = config.getBoolean("Feeder", ConfigurationHandler.CATEGORY_BLOCKS_CRAFTING, true, "If the Crafting Recipe for the Feeder is Enabled");
         enableCrafterRecipe = config.getBoolean("Crafting Table On A Stick", ConfigurationHandler.CATEGORY_ITEMS_CRAFTING, true, "If the Crafting Recipe for the Crafting Table On A Stick is Enabled");
 
