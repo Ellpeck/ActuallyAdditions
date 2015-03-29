@@ -3,6 +3,7 @@ package ellpeck.actuallyadditions.crafting;
 import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.items.metalists.TheDusts;
 import ellpeck.actuallyadditions.recipe.GrinderRecipes;
+import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -37,11 +38,11 @@ public class GrinderCrafting{
             }
             if(name.length() > 9 && name.substring(0, 9).equals("oreNether")){
                 nameOfOre = name.substring(9);
-                resultAmount = 2;
+                resultAmount = 4;
             }
             if(name.length() > 8 && name.substring(0, 8).equals("denseore")){
                 nameOfOre = name.substring(8);
-                resultAmount = 6;
+                resultAmount = 12;
             }
             if(name.length() > 3 && name.substring(0, 3).equals("gem")) nameOfOre = name.substring(3);
             if(name.length() > 5 && name.substring(0, 5).equals("ingot")) nameOfOre = name.substring(5);
@@ -55,24 +56,30 @@ public class GrinderCrafting{
                 if(allDusts != null && allDusts.size() > 0){
                     ArrayList<ItemStack> allOresOfName = OreDictionary.getOres(name);
                     if(allOresOfName != null && allOresOfName.size() > 0){
-                        for(ItemStack output : allDusts){
+                        for(ItemStack theDust : allDusts){
+                            ItemStack output = theDust.copy();
                             output.stackSize = resultAmount;
-                            for(ItemStack input : allOresOfName){
+                            for(ItemStack theInput : allOresOfName){
+                                ItemStack input = theInput.copy();
                                 if(GrinderRecipes.instance().getOutput(input, false) == null){
+                                    ArrayList<ItemStack> specialStacks = null;
 
-                                    if(name.equals("oreNickel")){
-                                        ArrayList<ItemStack> specialStacks = OreDictionary.getOres("dustPlatinum");
-                                        for(ItemStack theSpecial : specialStacks) GrinderRecipes.instance().registerRecipe(input, output, theSpecial, 10);
+                                    if(name.equals("oreNickel")) specialStacks = OreDictionary.getOres("dustPlatinum");
+                                    
+                                    if(specialStacks != null){
+                                        for(ItemStack theSpecial : specialStacks){
+                                            ItemStack special = theSpecial.copy();
+                                            GrinderRecipes.instance().registerRecipe(input, output, special, 10);
+                                        }
                                     }
-
                                     else GrinderRecipes.instance().registerRecipe(input, output, null, 0);
                                 }
                             }
                         }
                     }
-                    else Util.AA_LOGGER.log(Level.ERROR, "Couldn't register Crusher Recipe! Didn't find Items registered as '" + name + "'! This shouldn't happen as there is something registered as '" + name + "' that doesn't exist!");
+                    else ModUtil.AA_LOGGER.log(Level.ERROR, "Couldn't register Crusher Recipe! Didn't find Items registered as '" + name + "'! This shouldn't happen as there is something registered as '" + name + "' that doesn't exist!");
                 }
-                else if(!name.equals("ingotBrick") && !name.equals("ingotBrickNether")) Util.AA_LOGGER.log(Level.WARN, "Couldn't register Crusher Recipe! An Item with OreDictionary Registry '" + nameToGetFrom + "' doesn't exist! It should correspond to '" + name + "'! This is not an Error, just a bit sad :(");
+                else if(!name.equals("ingotBrick") && !name.equals("ingotBrickNether")) ModUtil.AA_LOGGER.log(Level.WARN, "Couldn't register Crusher Recipe! An Item with OreDictionary Registry '" + nameToGetFrom + "' doesn't exist! It should correspond to '" + name + "'! This is not an Error, just a bit sad :(");
             }
         }
     }

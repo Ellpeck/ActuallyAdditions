@@ -1,7 +1,7 @@
 package ellpeck.actuallyadditions.items.metalists;
 
 import ellpeck.actuallyadditions.util.IName;
-import ellpeck.actuallyadditions.util.Util;
+import ellpeck.actuallyadditions.util.StringUtil;
 import net.minecraft.item.EnumRarity;
 
 public enum TheDusts implements IName{
@@ -11,7 +11,7 @@ public enum TheDusts implements IName{
     DIAMOND("Diamond", 292003, EnumRarity.rare),
     EMERALD("Emerald", 4319527, EnumRarity.epic),
     LAPIS("Lapis", 1849791, EnumRarity.uncommon),
-    QUARTZ("Quartz", Util.DECIMAL_COLOR_WHITE, EnumRarity.uncommon),
+    QUARTZ("Quartz", StringUtil.DECIMAL_COLOR_WHITE, EnumRarity.uncommon),
     COAL("Coal", 0, EnumRarity.uncommon),
     QUARTZ_BLACK("QuartzBlack", 18, EnumRarity.rare);
 

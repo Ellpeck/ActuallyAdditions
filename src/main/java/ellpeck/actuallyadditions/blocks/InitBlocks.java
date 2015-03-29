@@ -1,5 +1,6 @@
 package ellpeck.actuallyadditions.blocks;
 
+import ellpeck.actuallyadditions.util.BlockUtil;
 import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.block.Block;
 
@@ -19,27 +20,27 @@ public class InitBlocks{
         Util.logInfo("Initializing Blocks...");
 
         blockCompost = new BlockCompost();
-        Util.register(blockCompost, BlockCompost.TheItemBlock.class);
+        BlockUtil.register(blockCompost, BlockCompost.TheItemBlock.class);
 
         blockMisc = new BlockMisc();
-        Util.register(blockMisc, BlockMisc.TheItemBlock.class);
+        BlockUtil.register(blockMisc, BlockMisc.TheItemBlock.class);
 
         blockFeeder = new BlockFeeder();
-        Util.register(blockFeeder, BlockFeeder.TheItemBlock.class);
+        BlockUtil.register(blockFeeder, BlockFeeder.TheItemBlock.class);
 
         blockGiantChest = new BlockGiantChest();
-        Util.register(blockGiantChest, BlockGiantChest.TheItemBlock.class);
+        BlockUtil.register(blockGiantChest, BlockGiantChest.TheItemBlock.class);
 
         blockGrinder = new BlockGrinder(false);
-        Util.register(blockGrinder, BlockGrinder.TheItemBlock.class);
+        BlockUtil.register(blockGrinder, BlockGrinder.TheItemBlock.class);
 
         blockGrinderDouble = new BlockGrinder(true);
-        Util.register(blockGrinderDouble, BlockGrinder.TheItemBlock.class);
+        BlockUtil.register(blockGrinderDouble, BlockGrinder.TheItemBlock.class);
 
         blockFurnaceDouble = new BlockFurnaceDouble();
-        Util.register(blockFurnaceDouble, BlockFurnaceDouble.TheItemBlock.class);
+        BlockUtil.register(blockFurnaceDouble, BlockFurnaceDouble.TheItemBlock.class);
 
         blockInputter = new BlockInputter();
-       Util.register(blockInputter, BlockInputter.TheItemBlock.class);
+        BlockUtil.register(blockInputter, BlockInputter.TheItemBlock.class);
     }
 }

@@ -4,7 +4,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.blocks.InitBlocks;
 import ellpeck.actuallyadditions.items.InitItems;
-import ellpeck.actuallyadditions.util.Util;
+import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -18,7 +18,7 @@ public class CreativeTab extends CreativeTabs{
     private List list;
 
     public CreativeTab(){
-        super(Util.MOD_ID_LOWER);
+        super(ModUtil.MOD_ID_LOWER);
     }
 
     @Override
@@ -43,6 +43,8 @@ public class CreativeTab extends CreativeTabs{
         this.addItem(InitItems.itemCrafterOnAStick);
         this.addItem(InitItems.itemDust);
         this.addItem(InitItems.itemSpecialDrop);
+        this.addItem(InitItems.itemLeafBlower);
+        this.addItem(InitItems.itemLeafBlowerAdvanced);
 
         this.addItem(InitItems.itemPickaxeEmerald);
         this.addItem(InitItems.itemSwordEmerald);

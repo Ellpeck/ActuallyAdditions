@@ -4,7 +4,9 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.items.metalists.TheMiscItems;
 import ellpeck.actuallyadditions.util.IName;
-import ellpeck.actuallyadditions.util.Util;
+import ellpeck.actuallyadditions.util.ItemUtil;
+import ellpeck.actuallyadditions.util.KeyUtil;
+import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -57,8 +59,8 @@ public class ItemMisc extends Item implements IName{
     @SuppressWarnings("unchecked")
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld){
-        if(Util.isShiftPressed()) list.add(StatCollector.translateToLocal("tooltip." + Util.MOD_ID_LOWER + "." + this.getName() + allMiscItems[stack.getItemDamage()].getName() + ".desc"));
-        else list.add(Util.shiftForInfo());
+        if(KeyUtil.isShiftPressed()) list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + "." + this.getName() + allMiscItems[stack.getItemDamage()].getName() + ".desc"));
+        else list.add(ItemUtil.shiftForInfo());
     }
 
     @Override
@@ -70,7 +72,7 @@ public class ItemMisc extends Item implements IName{
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister iconReg){
         for(int i = 0; i < textures.length; i++){
-            textures[i] = iconReg.registerIcon(Util.MOD_ID_LOWER + ":" + this.getName() + allMiscItems[i].getName());
+            textures[i] = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":" + this.getName() + allMiscItems[i].getName());
         }
     }
 }

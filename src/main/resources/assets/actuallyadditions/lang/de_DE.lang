@@ -20,7 +20,7 @@ item.actuallyadditions.itemMiscKnifeBlade.name=Messerklinge
 item.actuallyadditions.itemMiscKnifeHandle.name=Messergriff
 item.actuallyadditions.itemMiscBlackQuartz.name=Schwarzquartz
 
-item.actuallyadditions.itemKnife.name=Messee
+item.actuallyadditions.itemKnife.name=Messer
 item.actuallyadditions.itemPickaxeEmerald.name=Smaragdspitzhacke
 item.actuallyadditions.itemAxeEmerald.name=Smaragdaxt
 item.actuallyadditions.itemShovelEmerald.name=Smaragdspaten
@@ -87,7 +87,7 @@ tooltip.actuallyadditions.blockGrinderDouble.desc.1=Macht Staub aus Erzen!
 tooltip.actuallyadditions.blockGrinderDouble.desc.2=Aus 1 mach 2 und BONI!!
 tooltip.actuallyadditions.blockGrinderDouble.desc.3=Kann zwei Sachen gleichzeitig verarbeiten!
 tooltip.actuallyadditions.blockInputter.desc.1=Ich bin eine Biene!
-tooltip.actuallyadditions.blockInputter.desc.2=%s%sIch bin klüger als ein Hopper.
+tooltip.actuallyadditions.blockInputter.desc.2=Ich bin klüger als ein Hopper.
 tooltip.actuallyadditions.blockInputter.desc.3=Stell mich ein:
 tooltip.actuallyadditions.blockInputter.desc.4=-Ein-/Ausgabeseite und
 tooltip.actuallyadditions.blockInputter.desc.5=-Slots, die verwendet werden sollen.

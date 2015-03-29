@@ -21,12 +21,13 @@ import ellpeck.actuallyadditions.network.PacketHandler;
 import ellpeck.actuallyadditions.oredict.OreDictRegistry;
 import ellpeck.actuallyadditions.proxy.IProxy;
 import ellpeck.actuallyadditions.tile.TileEntityBase;
+import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.Util;
 
-@Mod(modid = Util.MOD_ID, name = Util.NAME, version = Util.VERSION)
+@Mod(modid = ModUtil.MOD_ID, name = ModUtil.NAME, version = ModUtil.VERSION)
 public class ActuallyAdditions{
 
-    @Instance(Util.MOD_ID)
+    @Instance(ModUtil.MOD_ID)
     public static ActuallyAdditions instance;
 
     @SidedProxy(clientSide = "ellpeck.actuallyadditions.proxy.ClientProxy", serverSide = "ellpeck.actuallyadditions.proxy.ServerProxy")

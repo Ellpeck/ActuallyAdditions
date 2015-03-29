@@ -6,7 +6,8 @@ import ellpeck.actuallyadditions.network.PacketHandler;
 import ellpeck.actuallyadditions.network.PacketInputterButton;
 import ellpeck.actuallyadditions.tile.TileEntityBase;
 import ellpeck.actuallyadditions.tile.TileEntityInputter;
-import ellpeck.actuallyadditions.util.Util;
+import ellpeck.actuallyadditions.util.AssetUtil;
+import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
@@ -21,7 +22,7 @@ import org.lwjgl.opengl.GL11;
 @SideOnly(Side.CLIENT)
 public class GuiInputter extends GuiContainer{
 
-    private static final ResourceLocation resLoc = Util.getGuiLocation("guiInputter");
+    private static final ResourceLocation resLoc = AssetUtil.getGuiLocation("guiInputter");
     private TileEntityInputter tileInputter;
 
     private int x;
@@ -35,13 +36,13 @@ public class GuiInputter extends GuiContainer{
     private SmallerButton buttonSlotPullM;
 
     public static final String[] sideString = new String[]{
-            StatCollector.translateToLocal("info." + Util.MOD_ID_LOWER + ".gui.disabled"),
-            StatCollector.translateToLocal("info." + Util.MOD_ID_LOWER + ".gui.up"),
-            StatCollector.translateToLocal("info." + Util.MOD_ID_LOWER + ".gui.down"),
-            StatCollector.translateToLocal("info." + Util.MOD_ID_LOWER + ".gui.north"),
-            StatCollector.translateToLocal("info." + Util.MOD_ID_LOWER + ".gui.east"),
-            StatCollector.translateToLocal("info." + Util.MOD_ID_LOWER + ".gui.south"),
-            StatCollector.translateToLocal("info." + Util.MOD_ID_LOWER + ".gui.west")};
+            StatCollector.translateToLocal("info." + ModUtil.MOD_ID_LOWER + ".gui.disabled"),
+            StatCollector.translateToLocal("info." + ModUtil.MOD_ID_LOWER + ".gui.up"),
+            StatCollector.translateToLocal("info." + ModUtil.MOD_ID_LOWER + ".gui.down"),
+            StatCollector.translateToLocal("info." + ModUtil.MOD_ID_LOWER + ".gui.north"),
+            StatCollector.translateToLocal("info." + ModUtil.MOD_ID_LOWER + ".gui.east"),
+            StatCollector.translateToLocal("info." + ModUtil.MOD_ID_LOWER + ".gui.south"),
+            StatCollector.translateToLocal("info." + ModUtil.MOD_ID_LOWER + ".gui.west")};
 
     public GuiInputter(InventoryPlayer inventory, TileEntityBase tile, int x, int y, int z, World world){
         super(new ContainerInputter(inventory, tile));
@@ -83,20 +84,20 @@ public class GuiInputter extends GuiContainer{
     public void drawGuiContainerBackgroundLayer(float f, int x, int y){
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 
-        this.mc.getTextureManager().bindTexture(Util.GUI_INVENTORY_LOCATION);
+        this.mc.getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop+93, 0, 0, 176, 86);
 
         this.mc.getTextureManager().bindTexture(resLoc);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 93);
 
-        this.fontRendererObj.drawString(StatCollector.translateToLocal("info." + Util.MOD_ID_LOWER + ".gui.put"), guiLeft + 22 + 3, guiTop + 32, 4210752);
-        this.fontRendererObj.drawString(StatCollector.translateToLocal("info." + Util.MOD_ID_LOWER + ".gui.pull"), guiLeft + 107 + 3, guiTop + 32, 4210752);
+        this.fontRendererObj.drawString(StatCollector.translateToLocal("info." + ModUtil.MOD_ID_LOWER + ".gui.put"), guiLeft + 22 + 3, guiTop + 32, 4210752);
+        this.fontRendererObj.drawString(StatCollector.translateToLocal("info." + ModUtil.MOD_ID_LOWER + ".gui.pull"), guiLeft + 107 + 3, guiTop + 32, 4210752);
 
         this.fontRendererObj.drawString(sideString[tileInputter.sideToPut+1], guiLeft + 24 + 1, guiTop + 45 + 3, 4210752);
-        this.fontRendererObj.drawString(StatCollector.translateToLocal("info." + Util.MOD_ID_LOWER + ".gui.slot") + " " + (tileInputter.slotToPut == -1 ? StatCollector.translateToLocal("info." + Util.MOD_ID_LOWER + ".gui.all") : tileInputter.slotToPut).toString(), guiLeft + 24 + 3, guiTop + 66 + 3, 4210752);
+        this.fontRendererObj.drawString(StatCollector.translateToLocal("info." + ModUtil.MOD_ID_LOWER + ".gui.slot") + " " + (tileInputter.slotToPut == -1 ? StatCollector.translateToLocal("info." + ModUtil.MOD_ID_LOWER + ".gui.all") : tileInputter.slotToPut).toString(), guiLeft + 24 + 3, guiTop + 66 + 3, 4210752);
 
         this.fontRendererObj.drawString(sideString[tileInputter.sideToPull+1], guiLeft + 109 + 1, guiTop + 45 + 3, 4210752);
-        this.fontRendererObj.drawString(StatCollector.translateToLocal("info." + Util.MOD_ID_LOWER + ".gui.slot") + " " + (tileInputter.slotToPull == -1 ? StatCollector.translateToLocal("info." + Util.MOD_ID_LOWER + ".gui.all") : tileInputter.slotToPull).toString(), guiLeft + 109 + 3, guiTop + 66 + 3, 4210752);
+        this.fontRendererObj.drawString(StatCollector.translateToLocal("info." + ModUtil.MOD_ID_LOWER + ".gui.slot") + " " + (tileInputter.slotToPull == -1 ? StatCollector.translateToLocal("info." + ModUtil.MOD_ID_LOWER + ".gui.all") : tileInputter.slotToPull).toString(), guiLeft + 109 + 3, guiTop + 66 + 3, 4210752);
     }
 
     @Override
@@ -117,7 +118,7 @@ public class GuiInputter extends GuiContainer{
 
     public class SmallerButton extends GuiButton{
 
-        private final ResourceLocation resLoc = Util.getGuiLocation("guiInputter");
+        private final ResourceLocation resLoc = AssetUtil.getGuiLocation("guiInputter");
 
         public SmallerButton(int id, int x, int y, String display){
             super(id, x, y, 16, 16, display);

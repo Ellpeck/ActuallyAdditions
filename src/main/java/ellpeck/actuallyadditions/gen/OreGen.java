@@ -5,6 +5,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import ellpeck.actuallyadditions.blocks.InitBlocks;
 import ellpeck.actuallyadditions.blocks.metalists.TheMiscBlocks;
 import ellpeck.actuallyadditions.config.ConfigValues;
+import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
@@ -53,7 +54,7 @@ public class OreGen implements IWorldGenerator{
                 new WorldGenMinable(block, meta, maxVeinSize, blockIn).generate(world, random, posX, posY, posZ);
             }
         }
-        else Util.AA_LOGGER.log(Level.FATAL, "Couldn't generate '" + block.getUnlocalizedName() + "' into the world because the Min Y coordinate is bigger than the Max! This is definitely a Config Error! Check the Files!");
+        else ModUtil.AA_LOGGER.log(Level.FATAL, "Couldn't generate '" + block.getUnlocalizedName() + "' into the world because the Min Y coordinate is bigger than the Max! This is definitely a Config Error! Check the Files!");
     }
 
     public int getRandom(int base, int extra, Random rand){

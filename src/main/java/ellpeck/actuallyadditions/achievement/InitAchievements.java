@@ -4,6 +4,7 @@ import ellpeck.actuallyadditions.blocks.InitBlocks;
 import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.items.metalists.TheFoods;
 import ellpeck.actuallyadditions.items.metalists.TheMiscItems;
+import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.Achievement;
@@ -53,7 +54,7 @@ public class InitAchievements{
         achievementCraftFishNChips = new AchievementAA("craftFishNChips", 4, 2, new ItemStack(InitItems.itemFoods, 1, TheFoods.FISH_N_CHIPS.ordinal()), achievementCraftFrenchFry);
 
 
-        theAchievementPage = new AchievementPage(StatCollector.translateToLocal("achievement.page." + Util.MOD_ID_LOWER), achievementList.toArray(new Achievement[achievementList.size()]));
+        theAchievementPage = new AchievementPage(StatCollector.translateToLocal("achievement.page." + ModUtil.MOD_ID_LOWER), achievementList.toArray(new Achievement[achievementList.size()]));
         AchievementPage.registerAchievementPage(theAchievementPage);
     }
 

@@ -35,6 +35,8 @@ item.actuallyadditions.itemMiscKnifeBlade.name=Knife Blade
 item.actuallyadditions.itemMiscKnifeHandle.name=Knife Handle
 item.actuallyadditions.itemMiscBlackQuartz.name=Black Quartz
 
+item.actuallyadditions.itemLeafBlower.name=Leaf Blower
+item.actuallyadditions.itemLeafBlowerAdvanced.name=Advanced Leaf Blower
 item.actuallyadditions.itemKnife.name=Knife
 item.actuallyadditions.itemPickaxeEmerald.name=Emerald Pickaxe
 item.actuallyadditions.itemAxeEmerald.name=Emerald Axe
@@ -116,6 +118,10 @@ tooltip.actuallyadditions.itemMiscKnifeBlade.desc=Sharp like a tooth! A whale's 
 tooltip.actuallyadditions.itemMiscKnifeHandle.desc=Fits comfortably in your hand.
 tooltip.actuallyadditions.itemMiscBlackQuartz.desc=Used in the Quartz Enchanter!
 
+tooltip.actuallyadditions.itemLeafBlower.desc.1=Destroys Grass and Flowers around you
+tooltip.actuallyadditions.itemLeafBlowerAdvanced.desc.1=Destroys Grass, Flowers and Leaves around you
+tooltip.actuallyadditions.itemLeafBlower.desc.2=The Pants once said the Game needed that,
+tooltip.actuallyadditions.itemLeafBlower.desc.3=Then the Honka came, said it again.
 tooltip.actuallyadditions.itemKnife.desc=Cuts things! Only food though, don't think of stuff...
 tooltip.actuallyadditions.itemPickaxeEmerald.desc=Mines Stone.
 tooltip.actuallyadditions.itemAxeEmerald.desc=Mines Wood.

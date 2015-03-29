@@ -18,6 +18,24 @@ public class ItemCrafting{
 
     public static void init(){
 
+        //Leaf Blower
+        if(ConfigValues.enableLeafBlowerRecipe)
+            GameRegistry.addRecipe(new ItemStack(InitItems.itemLeafBlower),
+                    " F", "IP", "IR",
+                    'F', new ItemStack(Items.flint),
+                    'I', new ItemStack(Items.iron_ingot),
+                    'P', new ItemStack(Blocks.piston),
+                    'R', new ItemStack(Items.redstone));
+
+        //Advanced Leaf Blower
+        if(ConfigValues.enableLeafBlowerAdvancedRecipe)
+            GameRegistry.addRecipe(new ItemStack(InitItems.itemLeafBlowerAdvanced),
+                    " F", "DP", "DR",
+                    'F', new ItemStack(Items.flint),
+                    'D', new ItemStack(Items.diamond),
+                    'P', new ItemStack(Blocks.piston),
+                    'R', new ItemStack(Items.redstone));
+
         //Quartz
         if(ConfigValues.enabledMiscRecipes[TheMiscItems.QUARTZ.ordinal()])
             GameRegistry.addSmelting(new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.ORE_QUARTZ.ordinal()),
@@ -39,7 +57,6 @@ public class ItemCrafting{
         //Mashed Food
         if(ConfigValues.enabledMiscRecipes[TheMiscItems.MASHED_FOOD.ordinal()])
             initMashedFoodRecipes();
-
 
         //Ingots from Dusts
         GameRegistry.addSmelting(new ItemStack(InitItems.itemDust, 1, TheDusts.IRON.ordinal()),
