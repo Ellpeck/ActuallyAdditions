@@ -2,6 +2,7 @@ package ellpeck.actuallyadditions.items;
 
 import ellpeck.actuallyadditions.items.tools.*;
 import ellpeck.actuallyadditions.material.InitItemMaterials;
+import ellpeck.actuallyadditions.util.ItemUtil;
 import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -18,6 +19,8 @@ public class InitItems{
     public static Item itemCrafterOnAStick;
     public static Item itemDust;
     public static Item itemSpecialDrop;
+    public static Item itemLeafBlower;
+    public static Item itemLeafBlowerAdvanced;
 
     public static Item itemPickaxeEmerald;
     public static Item itemAxeEmerald;
@@ -35,39 +38,45 @@ public class InitItems{
         Util.logInfo("Initializing Items...");
 
         itemFertilizer = new ItemFertilizer();
-        Util.register(itemFertilizer);
+        ItemUtil.register(itemFertilizer);
 
         itemMisc = new ItemMisc();
-        Util.register(itemMisc);
+        ItemUtil.register(itemMisc);
 
         itemFoods = new ItemFoods();
-        Util.register(itemFoods);
+        ItemUtil.register(itemFoods);
 
         itemKnife = new ItemKnife();
-        Util.register(itemKnife);
+        ItemUtil.register(itemKnife);
 
         itemCrafterOnAStick = new ItemCrafterOnAStick();
-        Util.register(itemCrafterOnAStick);
+        ItemUtil.register(itemCrafterOnAStick);
 
         itemDust = new ItemDust();
-        Util.register(itemDust);
+        ItemUtil.register(itemDust);
 
         itemSpecialDrop = new ItemSpecialDrop();
-        Util.register(itemSpecialDrop);
+        ItemUtil.register(itemSpecialDrop);
+
+        itemLeafBlower = new ItemLeafBlower(false);
+        ItemUtil.register(itemLeafBlower);
+
+        itemLeafBlowerAdvanced = new ItemLeafBlower(true);
+        ItemUtil.register(itemLeafBlowerAdvanced);
 
         itemPickaxeEmerald = new ItemPickaxeAA(InitItemMaterials.toolMaterialEmerald, new ItemStack(Items.emerald), "itemPickaxeEmerald", EnumRarity.rare);
         itemAxeEmerald = new ItemAxeAA(InitItemMaterials.toolMaterialEmerald, new ItemStack(Items.emerald), "itemAxeEmerald", EnumRarity.rare);
         itemShovelEmerald = new ItemShovelAA(InitItemMaterials.toolMaterialEmerald, new ItemStack(Items.emerald), "itemShovelEmerald", EnumRarity.rare);
         itemSwordEmerald = new ItemSwordAA(InitItemMaterials.toolMaterialEmerald, new ItemStack(Items.emerald), "itemSwordEmerald", EnumRarity.rare);
         itemHoeEmerald = new ItemHoeAA(InitItemMaterials.toolMaterialEmerald, new ItemStack(Items.emerald), "itemHoeEmerald", EnumRarity.rare);
-        Util.registerItems(new Item[]{itemPickaxeEmerald, itemAxeEmerald, itemShovelEmerald, itemSwordEmerald, itemHoeEmerald});
+        ItemUtil.registerItems(new Item[]{itemPickaxeEmerald, itemAxeEmerald, itemShovelEmerald, itemSwordEmerald, itemHoeEmerald});
 
         itemPickaxeObsidian = new ItemPickaxeAA(InitItemMaterials.toolMaterialObsidian, new ItemStack(Blocks.obsidian), "itemPickaxeObsidian", EnumRarity.uncommon);
         itemAxeObsidian = new ItemAxeAA(InitItemMaterials.toolMaterialObsidian, new ItemStack(Blocks.obsidian), "itemAxeObsidian", EnumRarity.uncommon);
         itemShovelObsidian = new ItemShovelAA(InitItemMaterials.toolMaterialObsidian, new ItemStack(Blocks.obsidian), "itemShovelObsidian", EnumRarity.uncommon);
         itemSwordObsidian = new ItemSwordAA(InitItemMaterials.toolMaterialObsidian, new ItemStack(Blocks.obsidian), "itemSwordObsidian", EnumRarity.uncommon);
         itemHoeObsidian = new ItemHoeAA(InitItemMaterials.toolMaterialObsidian, new ItemStack(Blocks.obsidian), "itemHoeObsidian", EnumRarity.uncommon);
-        Util.registerItems(new Item[]{itemPickaxeObsidian, itemAxeObsidian, itemShovelObsidian, itemSwordObsidian, itemHoeObsidian});
+        ItemUtil.registerItems(new Item[]{itemPickaxeObsidian, itemAxeObsidian, itemShovelObsidian, itemSwordObsidian, itemHoeObsidian});
 
     }
 }

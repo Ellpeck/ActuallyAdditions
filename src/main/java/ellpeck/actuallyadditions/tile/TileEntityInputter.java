@@ -1,6 +1,7 @@
 package ellpeck.actuallyadditions.tile;
 
 import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -37,38 +38,53 @@ public class TileEntityInputter extends TileEntityInventoryBase{
         if(this.placeToPullSlotAmount > 0){
             IInventory theInventory = (IInventory)placeToPull;
             int theSlotToPull = this.slotToPull;
+            int maxSize = theInventory.getInventoryStackLimit();
+            ISidedInventory theSided = null;
+            if(theInventory instanceof ISidedInventory) theSided = (ISidedInventory)theInventory;
 
             ItemStack theStack = null;
-            if(theSlotToPull != -1) theStack = theInventory.getStackInSlot(theSlotToPull);
-            else{
-                for(int i = 0; i < this.placeToPullSlotAmount; i++){
-                    ItemStack tempStack = theInventory.getStackInSlot(i);
-                    if(tempStack != null && (this.slots[0] == null || (tempStack.isItemEqual(this.slots[0]) && this.slots[0].stackSize < this.getInventoryStackLimit()))){
+            for(int i = (theSlotToPull != -1 ? theSlotToPull : 0); i < (theSlotToPull != -1 ? theSlotToPull+1 : placeToPullSlotAmount); i++){
+                ItemStack tempStack = theInventory.getStackInSlot(i);
+                if(tempStack != null){
+                    if(tempStack.getMaxStackSize() < this.getInventoryStackLimit()) maxSize = tempStack.getMaxStackSize();
+                    else maxSize = this.getInventoryStackLimit();
+                }
+                if(tempStack != null && (this.slots[0] == null || (tempStack.isItemEqual(this.slots[0]) && this.slots[0].stackSize < maxSize))){
+                    if(theSided != null){
+                        for(int j = 0; j < 5; j++){
+                            if(theSided.canExtractItem(i, tempStack, j)){
+                                theStack = tempStack;
+                                theSlotToPull = i;
+                                break;
+                            }
+                        }
+                    }
+                    else{
                         theStack = tempStack;
                         theSlotToPull = i;
                         break;
                     }
                 }
             }
-            if(theSlotToPull != -1 && theStack != null){
+            if(theStack != null){
                 if(this.slots[0] != null){
                     if(theStack.isItemEqual(this.slots[0])){
-                        if(theStack.stackSize <= this.getInventoryStackLimit() - this.slots[0].stackSize){
+                        if(theStack.stackSize <= maxSize - this.slots[0].stackSize){
                             this.slots[0].stackSize += theStack.stackSize;
                             theInventory.setInventorySlotContents(theSlotToPull, null);
                         }
-                        else if(theStack.stackSize > this.getInventoryStackLimit() - this.slots[0].stackSize){
-                            theStack.stackSize -= (this.getInventoryStackLimit() - this.slots[0].stackSize);
-                            this.slots[0].stackSize = this.getInventoryStackLimit();
+                        else if(theStack.stackSize > maxSize - this.slots[0].stackSize){
+                            theInventory.decrStackSize(theSlotToPull, maxSize - this.slots[0].stackSize);
+                            this.slots[0].stackSize = maxSize;
                         }
                     }
                 }
                 else{
                     ItemStack toBePut = theStack.copy();
-                    if(theInventory.getInventoryStackLimit() < toBePut.stackSize) toBePut.stackSize = theInventory.getInventoryStackLimit();
+                    if(maxSize < toBePut.stackSize) toBePut.stackSize = maxSize;
                     this.setInventorySlotContents(0, toBePut);
                     if(theStack.stackSize == toBePut.stackSize) theInventory.setInventorySlotContents(theSlotToPull, null);
-                    else theStack.stackSize -= toBePut.stackSize;
+                    else theInventory.decrStackSize(theSlotToPull, toBePut.stackSize);
                 }
             }
         }
@@ -78,39 +94,57 @@ public class TileEntityInputter extends TileEntityInventoryBase{
         if(this.placeToPutSlotAmount > 0){
             IInventory theInventory = (IInventory)placeToPut;
             int theSlotToPut = this.slotToPut;
+            int maxSize = theInventory.getInventoryStackLimit();
+            ISidedInventory theSided = null;
+            if(theInventory instanceof ISidedInventory) theSided = (ISidedInventory)theInventory;
+            boolean can = false;
 
             if(this.slots[0] != null){
                 ItemStack theStack = null;
-                if(theSlotToPut != -1) theStack = theInventory.getStackInSlot(theSlotToPut);
-                else{
-                    for(int i = 0; i < this.placeToPutSlotAmount; i++){
-                        ItemStack tempStack = theInventory.getStackInSlot(i);
-                        if(tempStack == null || (theInventory.isItemValidForSlot(i, this.slots[0]) && tempStack.isItemEqual(this.slots[0]) && tempStack.stackSize < theInventory.getInventoryStackLimit())){
+                for(int i = (theSlotToPut != -1 ? theSlotToPut : 0); i < (theSlotToPut != -1 ? theSlotToPut+1 : placeToPutSlotAmount); i++){
+                    ItemStack tempStack = theInventory.getStackInSlot(i);
+                    if(tempStack != null){
+                        if(tempStack.getMaxStackSize() < theInventory.getInventoryStackLimit()) maxSize = tempStack.getMaxStackSize();
+                        else maxSize = theInventory.getInventoryStackLimit();
+                    }
+                    if(tempStack == null || (theInventory.isItemValidForSlot(i, this.slots[0]) && tempStack.isItemEqual(this.slots[0]) && tempStack.stackSize < maxSize)){
+                        if(theSided != null){
+                            for(int j = 0; j < 5; j++){
+                                if(theSided.canInsertItem(i, this.slots[0], j)){
+                                    theStack = tempStack;
+                                    theSlotToPut = i;
+                                    can = true;
+                                    break;
+                                }
+                            }
+                        }
+                        else{
                             theStack = tempStack;
                             theSlotToPut = i;
+                            can = true;
                             break;
                         }
                     }
                 }
-                if(theSlotToPut != -1 && theInventory.isItemValidForSlot(theSlotToPut, this.slots[0])){
+                if(can){
                     if(theStack != null){
                         if(theStack.isItemEqual(this.slots[0])){
-                            if(this.slots[0].stackSize <= theInventory.getInventoryStackLimit() - theStack.stackSize){
+                            if(this.slots[0].stackSize <= maxSize - theStack.stackSize){
                                 theStack.stackSize += this.slots[0].stackSize;
                                 this.slots[0] = null;
                             }
-                            else if(this.slots[0].stackSize > theInventory.getInventoryStackLimit() - theStack.stackSize){
-                                this.slots[0].stackSize -= (theInventory.getInventoryStackLimit() - theStack.stackSize);
-                                theStack.stackSize = theInventory.getInventoryStackLimit();
+                            else if(this.slots[0].stackSize > maxSize - theStack.stackSize){
+                                this.decrStackSize(0, maxSize - theStack.stackSize);
+                                theStack.stackSize = maxSize;
                             }
                         }
                     }
                     else{
                         ItemStack toBePut = this.slots[0].copy();
-                        if(theInventory.getInventoryStackLimit() < toBePut.stackSize) toBePut.stackSize = theInventory.getInventoryStackLimit();
+                        if(maxSize < toBePut.stackSize) toBePut.stackSize = maxSize;
                         theInventory.setInventorySlotContents(theSlotToPut, toBePut);
                         if(this.slots[0].stackSize == toBePut.stackSize) this.slots[0] = null;
-                        else this.slots[0].stackSize -= toBePut.stackSize;
+                        else this.decrStackSize(0, toBePut.stackSize);
                     }
                 }
             }

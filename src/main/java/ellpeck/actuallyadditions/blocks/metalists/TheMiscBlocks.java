@@ -13,7 +13,7 @@ public enum TheMiscBlocks implements IName{
     public final String name;
     public final EnumRarity rarity;
 
-    private TheMiscBlocks(String name, EnumRarity rarity){
+    TheMiscBlocks(String name, EnumRarity rarity){
         this.name = name;
         this.rarity = rarity;
     }

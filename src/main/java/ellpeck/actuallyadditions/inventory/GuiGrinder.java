@@ -4,7 +4,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.tile.TileEntityBase;
 import ellpeck.actuallyadditions.tile.TileEntityGrinder;
-import ellpeck.actuallyadditions.util.Util;
+import ellpeck.actuallyadditions.util.AssetUtil;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -13,8 +13,8 @@ import org.lwjgl.opengl.GL11;
 @SideOnly(Side.CLIENT)
 public class GuiGrinder extends GuiContainer{
 
-    private static final ResourceLocation resLoc = Util.getGuiLocation("guiGrinder");
-    private static final ResourceLocation resLocDouble = Util.getGuiLocation("guiGrinderDouble");
+    private static final ResourceLocation resLoc = AssetUtil.getGuiLocation("guiGrinder");
+    private static final ResourceLocation resLocDouble = AssetUtil.getGuiLocation("guiGrinderDouble");
     private TileEntityGrinder tileGrinder;
     private boolean isDouble;
 
@@ -30,7 +30,7 @@ public class GuiGrinder extends GuiContainer{
     public void drawGuiContainerBackgroundLayer(float f, int x, int y){
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 
-        this.mc.getTextureManager().bindTexture(Util.GUI_INVENTORY_LOCATION);
+        this.mc.getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop+93, 0, 0, 176, 86);
 
         this.mc.getTextureManager().bindTexture(this.isDouble ? resLocDouble : resLoc);

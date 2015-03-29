@@ -14,6 +14,8 @@ public class FoodCrafting{
 
     public static void init(){
 
+        ItemStack knifeStack = new ItemStack(InitItems.itemKnife, 1, Util.WILDCARD);
+
         //Baguette
         if(ConfigValues.enabledFoodRecipes[TheFoods.BAGUETTE.ordinal()])
             GameRegistry.addSmelting(new ItemStack(InitItems.itemMisc, 1,
@@ -27,7 +29,7 @@ public class FoodCrafting{
                     'M', new ItemStack(Blocks.brown_mushroom),
                     'C', new ItemStack(Items.carrot),
                     'F', new ItemStack(Items.cooked_fished, 1, Util.WILDCARD),
-                    'K', new ItemStack(InitItems.itemKnife, 1, Util.WILDCARD),
+                    'K', knifeStack,
                     'H', new ItemStack(InitItems.itemFoods, 1, TheFoods.CHEESE.ordinal()));
 
         //Hamburger
@@ -36,7 +38,7 @@ public class FoodCrafting{
                     "KT ", "CB ", " T ",
                     'T', new ItemStack(InitItems.itemFoods, 1, TheFoods.TOAST.ordinal()),
                     'C', new ItemStack(InitItems.itemFoods, 1, TheFoods.CHEESE.ordinal()),
-                    'K', new ItemStack(InitItems.itemKnife, 1, Util.WILDCARD),
+                    'K', knifeStack,
                     'B', new ItemStack(Items.cooked_beef));
 
         //Big Cookie
@@ -54,13 +56,13 @@ public class FoodCrafting{
                     'C', new ItemStack(InitItems.itemFoods, 1, TheFoods.CHEESE.ordinal()),
                     'F', new ItemStack(Items.cooked_fished, 1, Util.WILDCARD),
                     'B', new ItemStack(InitItems.itemFoods, 1, TheFoods.BAGUETTE.ordinal()),
-                    'K', new ItemStack(InitItems.itemKnife, 1, Util.WILDCARD));
+                    'K', knifeStack);
 
         //French Fry
         if(ConfigValues.enabledFoodRecipes[TheFoods.FRENCH_FRY.ordinal()])
-            GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemFoods, 1, TheFoods.FRENCH_FRY.ordinal()),
+            GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemFoods, 2, TheFoods.FRENCH_FRY.ordinal()),
                     new ItemStack(Items.baked_potato),
-                    new ItemStack(InitItems.itemKnife, 1, Util.WILDCARD));
+                    knifeStack);
 
         //French Fries
         if(ConfigValues.enabledFoodRecipes[TheFoods.FRENCH_FRIES.ordinal()])
@@ -92,7 +94,7 @@ public class FoodCrafting{
         //Carrot Juice
         if(ConfigValues.enabledFoodRecipes[TheFoods.CARROT_JUICE.ordinal()])
             GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemFoods, 1, TheFoods.CARROT_JUICE.ordinal()),
-                    new ItemStack(Items.glass_bottle), new ItemStack(Items.carrot), new ItemStack(InitItems.itemKnife));
+                    new ItemStack(Items.glass_bottle), new ItemStack(Items.carrot), knifeStack);
 
         //Spaghetti
         if(ConfigValues.enabledFoodRecipes[TheFoods.SPAGHETTI.ordinal()])
@@ -104,7 +106,7 @@ public class FoodCrafting{
         //Noodle
         if(ConfigValues.enabledFoodRecipes[TheFoods.NOODLE.ordinal()])
             GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemFoods, 1, TheFoods.NOODLE.ordinal()),
-                    new ItemStack(Items.wheat), new ItemStack(InitItems.itemKnife));
+                    new ItemStack(Items.wheat), knifeStack);
 
         //Chocolate
         if(ConfigValues.enabledFoodRecipes[TheFoods.CHOCOLATE.ordinal()])

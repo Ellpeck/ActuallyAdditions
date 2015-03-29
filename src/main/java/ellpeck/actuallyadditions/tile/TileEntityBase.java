@@ -1,6 +1,7 @@
 package ellpeck.actuallyadditions.tile;
 
 import cpw.mods.fml.common.registry.GameRegistry;
+import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockAir;
@@ -28,12 +29,12 @@ public class TileEntityBase extends TileEntity{
 
     public static void init(){
         Util.logInfo("Registering TileEntities...");
-        GameRegistry.registerTileEntity(TileEntityCompost.class, Util.MOD_ID_LOWER + ":tileEntityCompost");
-        GameRegistry.registerTileEntity(TileEntityFeeder.class, Util.MOD_ID_LOWER + ":tileEntityFeeder");
-        GameRegistry.registerTileEntity(TileEntityGiantChest.class, Util.MOD_ID_LOWER + ":tileEntityGiantChest");
-        GameRegistry.registerTileEntity(TileEntityGrinder.class, Util.MOD_ID_LOWER + ":tileEntityGrinder");
-        GameRegistry.registerTileEntity(TileEntityFurnaceDouble.class, Util.MOD_ID_LOWER + ":tileEntityFurnaceDouble");
-        GameRegistry.registerTileEntity(TileEntityInputter.class, Util.MOD_ID_LOWER + ":tileEntityInputter");
+        GameRegistry.registerTileEntity(TileEntityCompost.class, ModUtil.MOD_ID_LOWER + ":tileEntityCompost");
+        GameRegistry.registerTileEntity(TileEntityFeeder.class, ModUtil.MOD_ID_LOWER + ":tileEntityFeeder");
+        GameRegistry.registerTileEntity(TileEntityGiantChest.class, ModUtil.MOD_ID_LOWER + ":tileEntityGiantChest");
+        GameRegistry.registerTileEntity(TileEntityGrinder.class, ModUtil.MOD_ID_LOWER + ":tileEntityGrinder");
+        GameRegistry.registerTileEntity(TileEntityFurnaceDouble.class, ModUtil.MOD_ID_LOWER + ":tileEntityFurnaceDouble");
+        GameRegistry.registerTileEntity(TileEntityInputter.class, ModUtil.MOD_ID_LOWER + ":tileEntityInputter");
     }
 
     @Override

@@ -9,7 +9,9 @@ import ellpeck.actuallyadditions.items.ItemMisc;
 import ellpeck.actuallyadditions.items.metalists.TheMiscItems;
 import ellpeck.actuallyadditions.tile.TileEntityCompost;
 import ellpeck.actuallyadditions.util.IName;
-import ellpeck.actuallyadditions.util.Util;
+import ellpeck.actuallyadditions.util.ItemUtil;
+import ellpeck.actuallyadditions.util.KeyUtil;
+import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -147,12 +149,12 @@ public class BlockCompost extends BlockContainerBase implements IName{
         @SuppressWarnings("unchecked")
         @SideOnly(Side.CLIENT)
         public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld) {
-            if(Util.isShiftPressed()){
-                list.add(StatCollector.translateToLocal("tooltip." + Util.MOD_ID_LOWER + "." + ((IName)theBlock).getName() + ".desc.1"));
+            if(KeyUtil.isShiftPressed()){
+                list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + "." + ((IName)theBlock).getName() + ".desc.1"));
                 //TODO Remove second info
-                list.add(StatCollector.translateToLocal("tooltip." + Util.MOD_ID_LOWER + "." + ((IName)theBlock).getName() + ".desc.2"));
+                list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + "." + ((IName)theBlock).getName() + ".desc.2"));
             }
-            else list.add(Util.shiftForInfo());
+            else list.add(ItemUtil.shiftForInfo());
         }
 
         @Override

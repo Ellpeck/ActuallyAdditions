@@ -6,7 +6,9 @@ import ellpeck.actuallyadditions.ActuallyAdditions;
 import ellpeck.actuallyadditions.inventory.GuiHandler;
 import ellpeck.actuallyadditions.tile.TileEntityFurnaceDouble;
 import ellpeck.actuallyadditions.util.IName;
-import ellpeck.actuallyadditions.util.Util;
+import ellpeck.actuallyadditions.util.ItemUtil;
+import ellpeck.actuallyadditions.util.KeyUtil;
+import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -90,10 +92,10 @@ public class BlockFurnaceDouble extends BlockContainerBase implements IName{
     @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconReg){
-        this.blockIcon = iconReg.registerIcon(Util.MOD_ID_LOWER + ":" + this.getName());
-        this.topIcon = iconReg.registerIcon(Util.MOD_ID_LOWER + ":" + this.getName() + "Top");
-        this.onIcon = iconReg.registerIcon(Util.MOD_ID_LOWER + ":" + this.getName() + "On");
-        this.frontIcon = iconReg.registerIcon(Util.MOD_ID_LOWER + ":" + this.getName() + "Front");
+        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":" + this.getName());
+        this.topIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":" + this.getName() + "Top");
+        this.onIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":" + this.getName() + "On");
+        this.frontIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":" + this.getName() + "Front");
     }
 
     @Override
@@ -177,8 +179,8 @@ public class BlockFurnaceDouble extends BlockContainerBase implements IName{
         @SuppressWarnings("unchecked")
         @SideOnly(Side.CLIENT)
         public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld) {
-            if(Util.isShiftPressed()) list.add(StatCollector.translateToLocal("tooltip." + Util.MOD_ID_LOWER + "." + ((IName)theBlock).getName() + ".desc"));
-            else list.add(Util.shiftForInfo());
+            if(KeyUtil.isShiftPressed()) list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + "." + ((IName)theBlock).getName() + ".desc"));
+            else list.add(ItemUtil.shiftForInfo());
         }
 
         @Override

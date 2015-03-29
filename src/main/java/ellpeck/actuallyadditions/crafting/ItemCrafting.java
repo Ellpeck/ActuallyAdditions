@@ -7,6 +7,7 @@ import ellpeck.actuallyadditions.config.ConfigValues;
 import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.items.metalists.TheDusts;
 import ellpeck.actuallyadditions.items.metalists.TheMiscItems;
+import ellpeck.actuallyadditions.items.metalists.TheSpecialDrops;
 import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -17,6 +18,34 @@ import net.minecraft.item.ItemStack;
 public class ItemCrafting{
 
     public static void init(){
+
+        //Leaf Blower
+        if(ConfigValues.enableLeafBlowerRecipe)
+            GameRegistry.addRecipe(new ItemStack(InitItems.itemLeafBlower),
+                    " F", "IP", "IR",
+                    'F', new ItemStack(Items.flint),
+                    'I', new ItemStack(Items.iron_ingot),
+                    'P', new ItemStack(Blocks.piston),
+                    'R', new ItemStack(Items.redstone));
+
+        //Ender Pearl
+        GameRegistry.addRecipe(new ItemStack(Items.ender_pearl),
+                "XXX", "XXX", "XXX",
+                'X', new ItemStack(InitItems.itemSpecialDrop, 1, TheSpecialDrops.PEARL_SHARD.ordinal()));
+
+        //Emerald
+        GameRegistry.addRecipe(new ItemStack(Items.emerald),
+                "XXX", "XXX", "XXX",
+                'X', new ItemStack(InitItems.itemSpecialDrop, 1, TheSpecialDrops.EMERALD_SHARD.ordinal()));
+
+        //Advanced Leaf Blower
+        if(ConfigValues.enableLeafBlowerAdvancedRecipe)
+            GameRegistry.addRecipe(new ItemStack(InitItems.itemLeafBlowerAdvanced),
+                    " F", "DP", "DR",
+                    'F', new ItemStack(Items.flint),
+                    'D', new ItemStack(Items.diamond),
+                    'P', new ItemStack(Blocks.piston),
+                    'R', new ItemStack(Items.redstone));
 
         //Quartz
         if(ConfigValues.enabledMiscRecipes[TheMiscItems.QUARTZ.ordinal()])
@@ -39,7 +68,6 @@ public class ItemCrafting{
         //Mashed Food
         if(ConfigValues.enabledMiscRecipes[TheMiscItems.MASHED_FOOD.ordinal()])
             initMashedFoodRecipes();
-
 
         //Ingots from Dusts
         GameRegistry.addSmelting(new ItemStack(InitItems.itemDust, 1, TheDusts.IRON.ordinal()),

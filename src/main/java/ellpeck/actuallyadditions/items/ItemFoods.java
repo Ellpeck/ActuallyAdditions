@@ -4,7 +4,9 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.items.metalists.TheFoods;
 import ellpeck.actuallyadditions.util.IName;
-import ellpeck.actuallyadditions.util.Util;
+import ellpeck.actuallyadditions.util.ItemUtil;
+import ellpeck.actuallyadditions.util.KeyUtil;
+import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.item.EntityItem;
@@ -25,7 +27,6 @@ public class ItemFoods extends ItemFood implements IName{
         super(0, 0.0F, false);
         this.setHasSubtypes(true);
         this.setMaxDamage(0);
-        this.setAlwaysEdible();
         TheFoods.setReturnItems();
     }
 
@@ -92,12 +93,12 @@ public class ItemFoods extends ItemFood implements IName{
     @SuppressWarnings("unchecked")
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld){
-        if(Util.isShiftPressed()){
-            list.add(StatCollector.translateToLocal("tooltip." + Util.MOD_ID_LOWER + "." + this.getName() + allFoods[stack.getItemDamage()].getName() + ".desc"));
-            list.add(StatCollector.translateToLocal("tooltip." + Util.MOD_ID_LOWER + ".hunger.desc") + ": " + allFoods[stack.getItemDamage()].healAmount);
-            list.add(StatCollector.translateToLocal("tooltip." + Util.MOD_ID_LOWER + ".saturation.desc") + ": " + allFoods[stack.getItemDamage()].saturation);
+        if(KeyUtil.isShiftPressed()){
+            list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + "." + this.getName() + allFoods[stack.getItemDamage()].getName() + ".desc"));
+            list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + ".hunger.desc") + ": " + allFoods[stack.getItemDamage()].healAmount);
+            list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + ".saturation.desc") + ": " + allFoods[stack.getItemDamage()].saturation);
         }
-        else list.add(Util.shiftForInfo());
+        else list.add(ItemUtil.shiftForInfo());
     }
 
     @Override
@@ -109,7 +110,7 @@ public class ItemFoods extends ItemFood implements IName{
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister iconReg){
         for(int i = 0; i < textures.length; i++){
-            textures[i] = iconReg.registerIcon(Util.MOD_ID_LOWER + ":" + this.getName() + allFoods[i].getName());
+            textures[i] = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":" + this.getName() + allFoods[i].getName());
         }
     }
 

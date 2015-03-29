@@ -7,6 +7,7 @@ import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.items.metalists.TheFoods;
 
 public class SmeltEvent{
+
     @SubscribeEvent
     public void onSmeltedEvent(PlayerEvent.ItemSmeltedEvent event){
         if(event.smelting.getItem() == InitItems.itemFoods && event.smelting.getItemDamage() == TheFoods.BAGUETTE.ordinal()){

@@ -1,6 +1,6 @@
 package ellpeck.actuallyadditions.blocks.render;
 
-import ellpeck.actuallyadditions.util.Util;
+import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -14,7 +14,7 @@ public class RenderItems implements IItemRenderer{
 
     public RenderItems(ModelBaseAA model){
         this.theModel = model;
-        this.theTexture = new ResourceLocation(Util.MOD_ID_LOWER, "textures/blocks/models/" + this.theModel.getName() + ".png");
+        this.theTexture = new ResourceLocation(ModUtil.MOD_ID_LOWER, "textures/blocks/models/" + this.theModel.getName() + ".png");
     }
 
     @Override

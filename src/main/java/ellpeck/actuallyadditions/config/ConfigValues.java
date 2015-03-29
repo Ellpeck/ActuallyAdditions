@@ -59,6 +59,14 @@ public class ConfigValues{
     public static int blackQuartzMinHeight;
     public static int blackQuartzMaxHeight;
 
+    public static boolean enableLeafBlowerRecipe;
+    public static boolean enableLeafBlowerAdvancedRecipe;
+    public static int leafBlowerRangeSides;
+    public static int leafBlowerRangeUp;
+    public static boolean leafBlowerDropItems;
+    public static boolean leafBlowerParticles;
+    public static boolean leafBlowerHasSound;
+
     public static void defineConfigValues(Configuration config){
 
         for(int i = 0; i < enabledFoodRecipes.length; i++){
@@ -67,6 +75,14 @@ public class ConfigValues{
         for(int i = 0; i < enabledMiscRecipes.length; i++){
             enabledMiscRecipes[i] = config.getBoolean(TheMiscItems.values()[i].name, ConfigurationHandler.CATEGORY_MISC_CRAFTING, true, "If the Crafting Recipe for " + TheMiscItems.values()[i].name +  " is Enabled");
         }
+
+        enableLeafBlowerRecipe = config.getBoolean("Leaf Blower", ConfigurationHandler.CATEGORY_ITEMS_CRAFTING, true, "If the Crafting Recipe for the Leaf Blower is Enabled");
+        enableLeafBlowerAdvancedRecipe = config.getBoolean("Advanced Leaf Blower", ConfigurationHandler.CATEGORY_ITEMS_CRAFTING, true, "If the Crafting Recipe for the Advanced Leaf Blower is Enabled");
+        leafBlowerDropItems = config.getBoolean("Leaf Blower: Drops Items", ConfigurationHandler.CATEGORY_TOOL_VALUES, true, "If the Leaf Blower lets destroyed Blocks' Drops drop");
+        leafBlowerParticles = config.getBoolean("Leaf Blower: Particles", ConfigurationHandler.CATEGORY_TOOL_VALUES, true, "If the Leaf Blower lets destroyed Blocks have particles when getting destroyed");
+        leafBlowerHasSound = config.getBoolean("Leaf Blower: Sound", ConfigurationHandler.CATEGORY_TOOL_VALUES, true, "If the Leaf Blower makes Sounds");
+        leafBlowerRangeSides = config.getInt("Leaf Blower: Side Range", ConfigurationHandler.CATEGORY_TOOL_VALUES, 5, 1, 25, "The Leaf Blower's Range to the Sides");
+        leafBlowerRangeUp = config.getInt("Leaf Blower: Height Range", ConfigurationHandler.CATEGORY_TOOL_VALUES, 1, 1, 10, "The Leaf Blower's Range to the Top and Bottom");
 
         generateBlackQuartz = config.getBoolean("Black Quartz", ConfigurationHandler.CATEGORY_WORLD_GEN, true, "If the Black Quartz generates in the world");
         blackQuartzBaseAmount = config.getInt("Black Quartz Amount", ConfigurationHandler.CATEGORY_WORLD_GEN, 3, 1, 50, "How big a Black Quartz Vein is at least");

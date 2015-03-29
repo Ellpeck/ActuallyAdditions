@@ -4,7 +4,8 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.tile.TileEntityBase;
 import ellpeck.actuallyadditions.tile.TileEntityFeeder;
-import ellpeck.actuallyadditions.util.Util;
+import ellpeck.actuallyadditions.util.AssetUtil;
+import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -16,7 +17,7 @@ import java.util.Arrays;
 @SideOnly(Side.CLIENT)
 public class GuiFeeder extends GuiContainer{
 
-    private static final ResourceLocation resLoc = Util.getGuiLocation("guiFeeder");
+    private static final ResourceLocation resLoc = AssetUtil.getGuiLocation("guiFeeder");
     private TileEntityFeeder tileFeeder;
 
     public int loveCounter;
@@ -31,7 +32,7 @@ public class GuiFeeder extends GuiContainer{
     @Override
     public void drawGuiContainerBackgroundLayer(float f, int x, int y){
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        this.mc.getTextureManager().bindTexture(Util.GUI_INVENTORY_LOCATION);
+        this.mc.getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop+70, 0, 0, 176, 86);
         this.mc.getTextureManager().bindTexture(resLoc);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 70);
@@ -58,7 +59,7 @@ public class GuiFeeder extends GuiContainer{
     public void drawScreen(int x, int y, float f){
         super.drawScreen(x, y, f);
         if(x >= guiLeft+69 && y >= guiTop+30 && x <= guiLeft+69+10 && y <= guiTop+30+10){
-            String[] array = new String[]{(this.tileFeeder.currentAnimalAmount + " " + StatCollector.translateToLocal("info." + Util.MOD_ID_LOWER + ".gui.animals")), ((this.tileFeeder.currentAnimalAmount >= 2 && this.tileFeeder.currentAnimalAmount < this.tileFeeder.animalThreshold) ? StatCollector.translateToLocal("info." + Util.MOD_ID_LOWER + ".gui.enoughToBreed") : (this.tileFeeder.currentAnimalAmount >= this.tileFeeder.animalThreshold ? StatCollector.translateToLocal("info." + Util.MOD_ID_LOWER + ".gui.tooMany") : StatCollector.translateToLocal("info." + Util.MOD_ID_LOWER + ".gui.notEnough")))};
+            String[] array = new String[]{(this.tileFeeder.currentAnimalAmount + " " + StatCollector.translateToLocal("info." + ModUtil.MOD_ID_LOWER + ".gui.animals")), ((this.tileFeeder.currentAnimalAmount >= 2 && this.tileFeeder.currentAnimalAmount < this.tileFeeder.animalThreshold) ? StatCollector.translateToLocal("info." + ModUtil.MOD_ID_LOWER + ".gui.enoughToBreed") : (this.tileFeeder.currentAnimalAmount >= this.tileFeeder.animalThreshold ? StatCollector.translateToLocal("info." + ModUtil.MOD_ID_LOWER + ".gui.tooMany") : StatCollector.translateToLocal("info." + ModUtil.MOD_ID_LOWER + ".gui.notEnough")))};
             this.func_146283_a(Arrays.asList(array), x, y);
         }
     }
