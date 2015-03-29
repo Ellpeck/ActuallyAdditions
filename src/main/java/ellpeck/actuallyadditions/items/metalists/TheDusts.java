@@ -19,7 +19,7 @@ public enum TheDusts implements IName{
     public final int color;
     public final EnumRarity rarity;
 
-    private TheDusts(String name, int color, EnumRarity rarity){
+    TheDusts(String name, int color, EnumRarity rarity){
         this.name = name;
         this.color = color;
         this.rarity = rarity;

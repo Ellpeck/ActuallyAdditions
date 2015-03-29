@@ -15,7 +15,7 @@ public enum TheMiscItems implements IName{
     public final String name;
     public final EnumRarity rarity;
 
-    private TheMiscItems(String name, EnumRarity rarity){
+    TheMiscItems(String name, EnumRarity rarity){
         this.name = name;
         this.rarity = rarity;
     }

@@ -114,11 +114,6 @@ public class ItemLeafBlower extends Item implements IName{
     }
 
     @Override
-    public boolean getShareTag(){
-        return true;
-    }
-
-    @Override
     public IIcon getIcon(ItemStack stack, int pass){
         return this.itemIcon;
     }

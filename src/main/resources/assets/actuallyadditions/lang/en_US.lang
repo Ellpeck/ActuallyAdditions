@@ -153,11 +153,11 @@ tooltip.actuallyadditions.itemFoodPumpkinStew.desc=Like Mushroom Stew or Rabbit 
 tooltip.actuallyadditions.itemFoodCheese.desc=Cheese.
 
 tooltip.actuallyadditions.itemSpecialUnknownSubstance.desc=Dropped by Skeletons. BETA INFO: Useless as of yet.
-tooltip.actuallyadditions.itemSpecialSolidifiedExperience.desc=Dropped by everyone. BETA INFO: Useless as of yet.
+tooltip.actuallyadditions.itemSpecialSolidifiedExperience.desc=Dropped by everyone. Right-Click to get XP.
 tooltip.actuallyadditions.itemSpecialBloodFragment.desc=Dropped by everyone. BETA INFO: Useless as of yet.
 tooltip.actuallyadditions.itemSpecialHeartPart.desc=Dropped by everyone. BETA INFO: Useless as of yet.
-tooltip.actuallyadditions.itemSpecialPearlShard.desc=Dropped by Endermen. BETA INFO: Useless as of yet.
-tooltip.actuallyadditions.itemSpecialEmeraldShard.desc=Dropped by Creepers. BETA INFO: Useless as of yet.
+tooltip.actuallyadditions.itemSpecialPearlShard.desc=Dropped by Endermen. 3x3 Crafting to an Ender Pearl
+tooltip.actuallyadditions.itemSpecialEmeraldShard.desc=Dropped by Creepers. 3x3 Crafting to an Emerald
 
 tooltip.actuallyadditions.itemDustIron.desc=Iron! Crushed in the Crusher!
 tooltip.actuallyadditions.itemDustGold.desc=Gold! Crushed in the Crusher!

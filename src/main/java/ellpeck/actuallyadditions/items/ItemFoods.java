@@ -27,7 +27,6 @@ public class ItemFoods extends ItemFood implements IName{
         super(0, 0.0F, false);
         this.setHasSubtypes(true);
         this.setMaxDamage(0);
-        this.setAlwaysEdible();
         TheFoods.setReturnItems();
     }
 

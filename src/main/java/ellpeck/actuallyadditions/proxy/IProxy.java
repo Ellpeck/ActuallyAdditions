@@ -2,9 +2,9 @@ package ellpeck.actuallyadditions.proxy;
 
 public interface IProxy{
 
-    public abstract void preInit();
+    void preInit();
 
-    public abstract void init();
+    void init();
 
-    public abstract void postInit();
+    void postInit();
 }

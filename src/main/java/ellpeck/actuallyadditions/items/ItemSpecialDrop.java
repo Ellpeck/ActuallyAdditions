@@ -9,14 +9,17 @@ import ellpeck.actuallyadditions.util.KeyUtil;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
+import net.minecraft.world.World;
 
 import java.util.List;
+import java.util.Random;
 
 public class ItemSpecialDrop extends Item implements IName{
 
@@ -25,6 +28,17 @@ public class ItemSpecialDrop extends Item implements IName{
 
     public ItemSpecialDrop(){
         this.setHasSubtypes(true);
+    }
+
+    @Override
+    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player){
+        if(!world.isRemote){
+            if(stack.getItemDamage() == TheSpecialDrops.SOLIDIFIED_EXPERIENCE.ordinal()){
+                world.spawnEntityInWorld(new EntityXPOrb(world, player.posX+0.5, player.posY+0.5, player.posZ+0.5, 5+new Random().nextInt(6)));
+                if(!player.capabilities.isCreativeMode) stack.stackSize--;
+            }
+        }
+        return stack;
     }
 
     @Override

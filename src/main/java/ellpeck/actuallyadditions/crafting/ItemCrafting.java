@@ -7,6 +7,7 @@ import ellpeck.actuallyadditions.config.ConfigValues;
 import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.items.metalists.TheDusts;
 import ellpeck.actuallyadditions.items.metalists.TheMiscItems;
+import ellpeck.actuallyadditions.items.metalists.TheSpecialDrops;
 import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -26,6 +27,16 @@ public class ItemCrafting{
                     'I', new ItemStack(Items.iron_ingot),
                     'P', new ItemStack(Blocks.piston),
                     'R', new ItemStack(Items.redstone));
+
+        //Ender Pearl
+        GameRegistry.addRecipe(new ItemStack(Items.ender_pearl),
+                "XXX", "XXX", "XXX",
+                'X', new ItemStack(InitItems.itemSpecialDrop, 1, TheSpecialDrops.PEARL_SHARD.ordinal()));
+
+        //Emerald
+        GameRegistry.addRecipe(new ItemStack(Items.emerald),
+                "XXX", "XXX", "XXX",
+                'X', new ItemStack(InitItems.itemSpecialDrop, 1, TheSpecialDrops.EMERALD_SHARD.ordinal()));
 
         //Advanced Leaf Blower
         if(ConfigValues.enableLeafBlowerAdvancedRecipe)
