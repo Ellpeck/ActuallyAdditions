@@ -11,6 +11,8 @@ tile.actuallyadditions.blockGiantChest.name=Riesenkiste
 tile.actuallyadditions.blockGrinder.name=Zerkleinerer
 tile.actuallyadditions.blockGrinderDouble.name=Zerkleinerer Mk2
 tile.actuallyadditions.blockFurnaceDouble.name=Ofen Mk2
+tile.actuallyadditions.blockFishingNet.name=Fischernetz
+tile.actuallyadditions.blockFurnaceSolar.name=Solarplatte
 
 item.actuallyadditions.itemMiscMashedFood.name=Brei
 item.actuallyadditions.itemFertilizer.name=Dünger
@@ -20,6 +22,8 @@ item.actuallyadditions.itemMiscKnifeBlade.name=Messerklinge
 item.actuallyadditions.itemMiscKnifeHandle.name=Messergriff
 item.actuallyadditions.itemMiscBlackQuartz.name=Schwarzquartz
 
+item.actuallyadditions.itemLeafBlower.name=Laubgebläse
+item.actuallyadditions.itemLeafBlowerAdvanced.name=Laubgebläse Drölftausend
 item.actuallyadditions.itemKnife.name=Messer
 item.actuallyadditions.itemPickaxeEmerald.name=Smaragdspitzhacke
 item.actuallyadditions.itemAxeEmerald.name=Smaragdaxt
@@ -100,15 +104,19 @@ tooltip.actuallyadditions.itemMiscKnifeBlade.desc=Scharf wie ein Zahn. Wie ein W
 tooltip.actuallyadditions.itemMiscKnifeHandle.desc=Fühlt sich gut an. Fast schon zu gut...
 tooltip.actuallyadditions.itemMiscBlackQuartz.desc=Findet Verwendung in der Quartzverzauberung.
 
-tooltip.actuallyadditions.itemKnife.desc=Schneidet Dinge. Seltsamerweise nur Essen...
+tooltip.actuallyadditions.itemLeafBlower.desc.1=Grass? Blumen? Pah, wer braucht das schon!
+tooltip.actuallyadditions.itemLeafBlowerAdvanced.desc.1=Jetzt auch noch Blattwerk? I liebe es!
+tooltip.actuallyadditions.itemLeafBlower.desc.2=The Pants once said the Game needed that,
+tooltip.actuallyadditions.itemLeafBlower.desc.3=Der Ellpeck schrieb hier ein Gedicht,
+tooltip.actuallyadditions.itemKnife.desc=Doch Paktosan, der übersetzt es nicht.
 tooltip.actuallyadditions.itemPickaxeEmerald.desc=Baut Stein ab.
 tooltip.actuallyadditions.itemAxeEmerald.desc=Baut Holz ab.
 tooltip.actuallyadditions.itemShovelEmerald.desc=Baut Dreck ab.
 tooltip.actuallyadditions.itemHoeEmerald.desc=Mines... uhm... yea.
 tooltip.actuallyadditions.itemSwordEmerald.desc=Mines... mobs?
-tooltip.actuallyadditions.itemPickaxeObsidian.desc=Mines Stone. Slooooowly.
-tooltip.actuallyadditions.itemAxeObsidian.desc=Mines Wood. Slooooowly.
-tooltip.actuallyadditions.itemShovelObsidian.desc=Mines Dirt. Slooooowly.
+tooltip.actuallyadditions.itemPickaxeObsidian.desc=Baut Stein ab. Laaaangsaaaam.
+tooltip.actuallyadditions.itemAxeObsidian.desc=Baut Holz ab. Laaaangsaaaam.
+tooltip.actuallyadditions.itemShovelObsidian.desc=Baut Dreck ab. Laaaangsaaaam.
 tooltip.actuallyadditions.itemHoeObsidian.desc=Mines... uhm... yea.
 tooltip.actuallyadditions.itemSwordObsidian.desc=Mines... mobs?
 tooltip.actuallyadditions.itemCrafterOnAStick.desc=Tragbare Werkbank.
@@ -131,11 +139,11 @@ tooltip.actuallyadditions.itemFoodPumpkinStew.desc=Wie Pilz- oder Kaninchensuppe
 tooltip.actuallyadditions.itemFoodCheese.desc=KÄÄÄSEEE!!!!
 
 tooltip.actuallyadditions.itemSpecialUnknownSubstance.desc=Dropped by Skeletons. BETA INFO: Useless as of yet.
-tooltip.actuallyadditions.itemSpecialSolidifiedExperience.desc=Dropped by everyone. BETA INFO: Useless as of yet.
+tooltip.actuallyadditions.itemSpecialSolidifiedExperience.desc=Rechtsklicken, um Erfahrung zu erhalten.
 tooltip.actuallyadditions.itemSpecialBloodFragment.desc=Dropped by everyone. BETA INFO: Useless as of yet.
 tooltip.actuallyadditions.itemSpecialHeartPart.desc=Dropped by everyone. BETA INFO: Useless as of yet.
-tooltip.actuallyadditions.itemSpecialPearlShard.desc=Dropped by Endermen. BETA INFO: Useless as of yet.
-tooltip.actuallyadditions.itemSpecialEmeraldShard.desc=Dropped by Creepers. BETA INFO: Useless as of yet.
+tooltip.actuallyadditions.itemSpecialPearlShard.desc=Offenbar hat ihn ein Enderman verloren... 3x3 in der Werkbank ergibt eine Enderperle.
+tooltip.actuallyadditions.itemSpecialEmeraldShard.desc=Offenbar hat ihn ein Creepr verloren... 3x3 in der Werkbank ergibt einen Smaragd.
 
 tooltip.actuallyadditions.itemDustIron.desc=Eisen, nur staubiger.
 tooltip.actuallyadditions.itemDustGold.desc=Gold, nur staubiger.
