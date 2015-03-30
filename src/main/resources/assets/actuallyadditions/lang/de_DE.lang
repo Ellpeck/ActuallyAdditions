@@ -11,6 +11,8 @@ tile.actuallyadditions.blockGiantChest.name=Riesenkiste
 tile.actuallyadditions.blockGrinder.name=Zerkleinerer
 tile.actuallyadditions.blockGrinderDouble.name=Zerkleinerer Mk2
 tile.actuallyadditions.blockFurnaceDouble.name=Ofen Mk2
+tile.actuallyadditions.blockFishingNet.name=Fischernetz
+tile.actuallyadditions.blockFurnaceSolar.name=Solarplatte
 
 item.actuallyadditions.itemMiscMashedFood.name=Brei
 item.actuallyadditions.itemFertilizer.name=Dünger
