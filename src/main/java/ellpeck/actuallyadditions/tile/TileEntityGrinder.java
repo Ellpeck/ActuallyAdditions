@@ -136,7 +136,6 @@ public class TileEntityGrinder extends TileEntityInventoryBase{
         compound.setInteger("CoalTimeLeft", this.coalTimeLeft);
         compound.setInteger("FirstCrushTime", this.firstCrushTime);
         compound.setInteger("SecondCrushTime", this.secondCrushTime);
-        compound.setInteger("MaxCrushTime", this.maxCrushTime);
         compound.setBoolean("IsDouble", this.isDouble);
         compound.setString("Name", this.name);
         compound.setInteger("Slots", this.slots.length);
@@ -149,9 +148,9 @@ public class TileEntityGrinder extends TileEntityInventoryBase{
         this.coalTimeLeft = compound.getInteger("CoalTimeLeft");
         this.firstCrushTime = compound.getInteger("FirstCrushTime");
         this.secondCrushTime = compound.getInteger("SecondCrushTime");
-        this.maxCrushTime = compound.getInteger("MaxCrushTime");
         this.isDouble = compound.getBoolean("IsDouble");
         this.name = compound.getString("Name");
+        this.maxCrushTime = isDouble ? ConfigValues.grinderDoubleCrushTime : ConfigValues.grinderCrushTime;
         this.initializeSlots(compound.getInteger("Slots"));
         super.readFromNBT(compound);
     }

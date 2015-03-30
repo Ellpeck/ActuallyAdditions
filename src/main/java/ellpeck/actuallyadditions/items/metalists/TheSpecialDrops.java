@@ -14,8 +14,8 @@ public enum TheSpecialDrops implements IName{
     BLOOD_FRAGMENT("BloodFragment", 15, 1, EntityCreature.class, EnumRarity.uncommon, ConfigValues.enableBloodDrop),
     HEART_PART("HeartPart", 5, 1, EntityCreature.class, EnumRarity.rare, ConfigValues.enableHeartDrop),
     UNKNOWN_SUBSTANCE("UnknownSubstance", 3, 1, EntitySkeleton.class, EnumRarity.epic, ConfigValues.enableSubstanceDrop),
-    PEARL_SHARD("PearlShard", 20, 3, EntityEnderman.class, EnumRarity.epic, ConfigValues.enablePearlShardDrop),
-    EMERALD_SHARD("EmeraldShard", 15, 1, EntityCreeper.class, EnumRarity.rare, ConfigValues.enableEmeraldShardDrop);
+    PEARL_SHARD("PearlShard", 30, 3, EntityEnderman.class, EnumRarity.epic, ConfigValues.enablePearlShardDrop),
+    EMERALD_SHARD("EmeraldShard", 30, 3, EntityCreeper.class, EnumRarity.rare, ConfigValues.enableEmeraldShardDrop);
 
     public final String name;
     public final int chance;

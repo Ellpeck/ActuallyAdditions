@@ -11,6 +11,8 @@ tile.actuallyadditions.blockGiantChest.name=Giant Chest
 tile.actuallyadditions.blockGrinder.name=Crusher
 tile.actuallyadditions.blockGrinderDouble.name=Double Crusher
 tile.actuallyadditions.blockFurnaceDouble.name=Double Furnace
+tile.actuallyadditions.blockFishingNet.name=Fishing Net
+tile.actuallyadditions.blockFurnaceSolar.name=Solar Panel
 
 tile.actuallyadditions.blockInputter.name=ESD
 tile.actuallyadditions.blockInputter.add.0.name=Ellpeck's Slot Device
@@ -109,6 +111,8 @@ tooltip.actuallyadditions.blockInputter.desc.2=Acts like a more advanced Hopper
 tooltip.actuallyadditions.blockInputter.desc.3=Configurable:
 tooltip.actuallyadditions.blockInputter.desc.4=-Side to Output to and Input from
 tooltip.actuallyadditions.blockInputter.desc.5=-Slot in the other Inventory to Output to and Input from
+tooltip.actuallyadditions.blockFishingNet.desc=Catches Fish automatically when placed above Water
+tooltip.actuallyadditions.blockFurnaceSolar.desc=Powers Furnaces and Crushers below it in Daylight
 
 tooltip.actuallyadditions.itemMiscMashedFood.desc=Used to make Fertilizer
 tooltip.actuallyadditions.itemFertilizer.desc=Om nom nom. Don't eat it. Made in a Compost.

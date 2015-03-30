@@ -1,21 +1,8 @@
 package ellpeck.actuallyadditions.achievement;
 
-import ellpeck.actuallyadditions.blocks.InitBlocks;
-import ellpeck.actuallyadditions.items.InitItems;
-import ellpeck.actuallyadditions.items.metalists.TheFoods;
-import ellpeck.actuallyadditions.items.metalists.TheMiscItems;
-import ellpeck.actuallyadditions.util.ModUtil;
-import ellpeck.actuallyadditions.util.Util;
-import net.minecraft.item.ItemStack;
-import net.minecraft.stats.Achievement;
-import net.minecraft.util.StatCollector;
-import net.minecraftforge.common.AchievementPage;
-
-import java.util.ArrayList;
-
 public class InitAchievements{
 
-    public static AchievementPage theAchievementPage;
+    /*public static AchievementPage theAchievementPage;
     public static ArrayList<Achievement> achievementList = new ArrayList<Achievement>();
 
     public static Achievement achievementCraftKnifeBlade;
@@ -32,10 +19,10 @@ public class InitAchievements{
     public static Achievement achievementCraftPaperCone;
     public static Achievement achievementCraftFrenchFry;
     public static Achievement achievementCraftFrenchFries;
-    public static Achievement achievementCraftFishNChips;
+    public static Achievement achievementCraftFishNChips;*/
 
     public static void init(){
-        Util.logInfo("Initializing Achievements...");
+        /*Util.logInfo("Initializing Achievements...");
 
         achievementCraftKnifeBlade = new AchievementAA("craftKnifeBlade", -2, 0, new ItemStack(InitItems.itemMisc, 1, TheMiscItems.KNIFE_BLADE.ordinal()), null);
         achievementCraftKnife = new AchievementAA("craftKnife", 0, 0, new ItemStack(InitItems.itemKnife), achievementCraftKnifeBlade);
@@ -55,7 +42,7 @@ public class InitAchievements{
 
 
         theAchievementPage = new AchievementPage(StatCollector.translateToLocal("achievement.page." + ModUtil.MOD_ID_LOWER), achievementList.toArray(new Achievement[achievementList.size()]));
-        AchievementPage.registerAchievementPage(theAchievementPage);
+        AchievementPage.registerAchievementPage(theAchievementPage);*/
     }
 
 }

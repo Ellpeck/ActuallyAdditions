@@ -15,6 +15,8 @@ public class InitBlocks{
     public static Block blockGrinderDouble;
     public static Block blockFurnaceDouble;
     public static Block blockInputter;
+    public static Block blockFishingNet;
+    public static Block blockFurnaceSolar;
 
     public static void init(){
         Util.logInfo("Initializing Blocks...");
@@ -42,5 +44,11 @@ public class InitBlocks{
 
         blockInputter = new BlockInputter();
         BlockUtil.register(blockInputter, BlockInputter.TheItemBlock.class);
+
+        blockFishingNet = new BlockFishingNet();
+        BlockUtil.register(blockFishingNet, BlockFishingNet.TheItemBlock.class);
+
+        blockFurnaceSolar = new BlockFurnaceSolar();
+        BlockUtil.register(blockFurnaceSolar, BlockFurnaceSolar.TheItemBlock.class);
     }
 }

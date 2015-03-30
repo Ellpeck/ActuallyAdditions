@@ -2,6 +2,7 @@ package ellpeck.actuallyadditions.crafting;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import ellpeck.actuallyadditions.blocks.InitBlocks;
+import ellpeck.actuallyadditions.blocks.metalists.TheMiscBlocks;
 import ellpeck.actuallyadditions.config.ConfigValues;
 import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.items.metalists.TheMiscItems;
@@ -20,6 +21,27 @@ public class BlockCrafting{
                     "W W", "WFW", "WWW",
                     'W', new ItemStack(Blocks.planks, 1, Util.WILDCARD),
                     'F', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.MASHED_FOOD.ordinal()));
+
+        //Quartz Block
+        GameRegistry.addRecipe(new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.QUARTZ.ordinal()),
+                "QQ", "QQ",
+                'Q', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal()));
+
+        //Fishing Net
+        GameRegistry.addRecipe(new ItemStack(InitBlocks.blockFishingNet),
+                "SSS", "SDS", "SSS",
+                'D', new ItemStack(Items.diamond),
+                'S', new ItemStack(Items.string));
+
+        //Quartz Pillar
+        GameRegistry.addRecipe(new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.QUARTZ_PILLAR.ordinal()),
+                "Q", "Q",
+                'Q', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal()));
+
+        //Chiseled Quartz
+        GameRegistry.addRecipe(new ItemStack(InitBlocks.blockMisc, 2, TheMiscBlocks.QUARTZ_CHISELED.ordinal()),
+                "Q", "Q",
+                'Q', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.QUARTZ.ordinal()));
 
         //Inputter
         if(ConfigValues.enableInputterRecipe)

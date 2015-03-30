@@ -30,6 +30,8 @@ public class CreativeTab extends CreativeTabs{
         this.addBlock(InitBlocks.blockGrinder);
         this.addBlock(InitBlocks.blockGrinderDouble);
         this.addBlock(InitBlocks.blockFurnaceDouble);
+        this.addBlock(InitBlocks.blockFurnaceSolar);
+        this.addBlock(InitBlocks.blockFishingNet);
 
         this.addBlock(InitBlocks.blockMisc);
         this.addBlock(InitBlocks.blockFeeder);
