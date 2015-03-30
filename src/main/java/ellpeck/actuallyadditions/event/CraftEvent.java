@@ -2,18 +2,12 @@ package ellpeck.actuallyadditions.event;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent;
-import ellpeck.actuallyadditions.achievement.InitAchievements;
-import ellpeck.actuallyadditions.blocks.InitBlocks;
-import ellpeck.actuallyadditions.items.InitItems;
-import ellpeck.actuallyadditions.items.metalists.TheFoods;
-import ellpeck.actuallyadditions.items.metalists.TheMiscItems;
-import net.minecraft.item.Item;
 
 public class CraftEvent{
 
     @SubscribeEvent
     public void onCraftedEvent(PlayerEvent.ItemCraftedEvent event){
-        if(event.crafting.getItem() == InitItems.itemMisc && event.crafting.getItemDamage() == TheMiscItems.DOUGH.ordinal()){
+        /*if(event.crafting.getItem() == InitItems.itemMisc && event.crafting.getItemDamage() == TheMiscItems.DOUGH.ordinal()){
             event.player.addStat(InitAchievements.achievementCraftDough, 1);
         }
         if(event.crafting.getItem() == InitItems.itemMisc && event.crafting.getItemDamage() == TheMiscItems.MASHED_FOOD.ordinal()){
@@ -42,6 +36,6 @@ public class CraftEvent{
         }
         if(event.crafting.getItem()== Item.getItemFromBlock(InitBlocks.blockCompost)){
             event.player.addStat(InitAchievements.achievementCraftCompost, 1);
-        }
+        }*/
     }
 }

@@ -67,6 +67,7 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
     @Override
     public void setInventorySlotContents(int i, ItemStack stack){
         this.slots[i] = stack;
+        this.markDirty();
     }
 
     @Override
@@ -81,16 +82,18 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
 
     @Override
     public ItemStack decrStackSize(int i, int j){
-        if (slots[i] != null) {
+        if (slots[i] != null){
             ItemStack stackAt;
-            if (slots[i].stackSize <= j) {
+            if(slots[i].stackSize <= j){
                 stackAt = slots[i];
                 slots[i] = null;
+                this.markDirty();
                 return stackAt;
-            } else {
+            }
+            else{
                 stackAt = slots[i].splitStack(j);
-                if (slots[i].stackSize == 0)
-                    slots[i] = null;
+                if (slots[i].stackSize == 0) slots[i] = null;
+                this.markDirty();
                 return stackAt;
             }
         }

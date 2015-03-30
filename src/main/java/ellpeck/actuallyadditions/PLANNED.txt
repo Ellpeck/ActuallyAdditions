@@ -1,0 +1,69 @@
+-Redstone Control for the ESD
+
+-Quartz Enchanter
+    -Lets you enchant Tools with Black Quartz
+    -Doesn't use Levels
+    -Needs Quartz and Diamond Blocks instead of Bookcases around
+
+-Advanced ESD
+    -Has a Filter
+
+-Heat Collector
+    -Powers Furnaces when next to them
+    -Needs Warmth Sources around it
+
+-Instant Teleport Device
+    -Teleports Players to where they look (Much like the Bukkit Compass)
+
+-Magnet
+    -Pulls Mobs and Items towards it
+    -Has a certain Redstone Output depending on Mob Amount
+    -Can be toggled On and Off
+
+-Void Bag
+    -Sucks up picked up Items
+    -Has a Filter
+    -Destroys excess Items (also determined by a Filter)
+    -Gets emptied into Chest on Right-Click
+
+-Rice
+    -Gets planted in the Water
+    -Used to make Rice Flour and Rice Bread
+
+-Auto-Crafting Item
+    -Has a Recipe saved
+    -Crafts Recipe on Shift-Right-Click if all Items are in Inventory
+
+-Repair Station
+    -Powered by Coal
+    -Repairs Items slowly
+
+-TNT Arrows
+
+-Teleport Arrows
+    -Teleport hit Entities randomly
+
+-Thorn Plant
+    -Grows on the Floor
+    -Damages Entities walking on it
+    -Has Thorn Armor which damages the Enemy
+
+-Cobblestone and Stone Signs
+
+-Potion Rings
+    -Give certain Potion Effects when held
+
+-Binoculars
+    -Allow you to see farther and closer
+    -With Night Vision Addon
+
+-Sound Irritation Device
+    -Plays Random or Configured Sounds randomly
+
+-Uncrafting Table
+
+-Decorative Lead
+    -Can be placed between two Fences for Decoration
+
+-Greenhouse Glass
+    -Gives Plants below more Growth Ticks

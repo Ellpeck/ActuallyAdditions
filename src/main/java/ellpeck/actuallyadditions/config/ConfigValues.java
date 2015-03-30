@@ -25,6 +25,8 @@ public class ConfigValues{
     public static int tileEntityFeederTimeNeeded;
     public static int tileEntityFeederThreshold;
 
+    public static int tileFishingNetTime;
+
     public static int itemKnifeMaxDamage;
 
     public static int toolEmeraldHarvestLevel;
@@ -91,12 +93,12 @@ public class ConfigValues{
         blackQuartzMinHeight = config.getInt("Black Quartz Min Height", ConfigurationHandler.CATEGORY_WORLD_GEN, 0, 0, 256, "How high the Black Quartz starts to generate");
         blackQuartzMaxHeight = config.getInt("Black Quartz Max Height", ConfigurationHandler.CATEGORY_WORLD_GEN, 25, 0, 256, "How high the Black Quartz stops to generate at");
 
-        enableExperienceDrop = config.getBoolean("Solidified Experience", ConfigurationHandler.CATEGORY_MOB_DROPS, false, "If the Solidified Experience drops from Mobs");
+        enableExperienceDrop = config.getBoolean("Solidified Experience", ConfigurationHandler.CATEGORY_MOB_DROPS, true, "If the Solidified Experience drops from Mobs");
         enableBloodDrop = config.getBoolean("Blood Fragments", ConfigurationHandler.CATEGORY_MOB_DROPS, false, "If the Blood Fragments drop from Mobs");
         enableHeartDrop = config.getBoolean("Heart Parts", ConfigurationHandler.CATEGORY_MOB_DROPS, false, "If the Heart Parts drop from Mobs");
         enableSubstanceDrop = config.getBoolean("Unknown Substance", ConfigurationHandler.CATEGORY_MOB_DROPS, false, "If the Unknown Substance drops from Mobs");
-        enablePearlShardDrop = config.getBoolean("Ender Pearl Shard", ConfigurationHandler.CATEGORY_MOB_DROPS, false, "If the Ender Pearl Shard drops from Mobs");
-        enableEmeraldShardDrop = config.getBoolean("Emerald Shard", ConfigurationHandler.CATEGORY_MOB_DROPS, false, "If the Emerald Shard drops from Mobs");
+        enablePearlShardDrop = config.getBoolean("Ender Pearl Shard", ConfigurationHandler.CATEGORY_MOB_DROPS, true, "If the Ender Pearl Shard drops from Mobs");
+        enableEmeraldShardDrop = config.getBoolean("Emerald Shard", ConfigurationHandler.CATEGORY_MOB_DROPS, true, "If the Emerald Shard drops from Mobs");
 
         enableCompostRecipe = config.getBoolean("Compost", ConfigurationHandler.CATEGORY_BLOCKS_CRAFTING, true, "If the Crafting Recipe for the Compost is Enabled");
         enableKnifeRecipe = config.getBoolean("Knife", ConfigurationHandler.CATEGORY_ITEMS_CRAFTING, true, "If the Crafting Recipe for the Knife is Enabled");
@@ -110,6 +112,8 @@ public class ConfigValues{
 
         tileEntityCompostAmountNeededToConvert = config.getInt("Compost: Amount Needed To Convert", ConfigurationHandler.CATEGORY_MACHINE_VALUES, 10, 1, 64, "How many items are needed in the Compost to convert to Fertilizer");
         tileEntityCompostConversionTimeNeeded = config.getInt("Compost: Conversion Time Needed", ConfigurationHandler.CATEGORY_MACHINE_VALUES, 1000, 30, 10000, "How long the Compost needs to convert to Fertilizer");
+
+        tileFishingNetTime = config.getInt("Fishing Net: Time Needed", ConfigurationHandler.CATEGORY_MACHINE_VALUES, 2000, 50, 50000, "How long it takes on Average until the Fishing Net catches a Fish");
 
         tileEntityFeederReach = config.getInt("Feeder: Reach", ConfigurationHandler.CATEGORY_MACHINE_VALUES, 5, 1, 20, "The Radius of Action of the Feeder");
         tileEntityFeederTimeNeeded = config.getInt("Feeder: Time Needed", ConfigurationHandler.CATEGORY_MACHINE_VALUES, 100, 50, 5000, "The time spent between feeding animals with the Feeder");
