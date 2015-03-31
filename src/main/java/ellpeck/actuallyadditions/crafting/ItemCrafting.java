@@ -7,6 +7,7 @@ import ellpeck.actuallyadditions.config.ConfigValues;
 import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.items.metalists.TheDusts;
 import ellpeck.actuallyadditions.items.metalists.TheMiscItems;
+import ellpeck.actuallyadditions.items.metalists.ThePotionRings;
 import ellpeck.actuallyadditions.items.metalists.TheSpecialDrops;
 import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.init.Blocks;
@@ -69,6 +70,9 @@ public class ItemCrafting{
         if(ConfigValues.enabledMiscRecipes[TheMiscItems.MASHED_FOOD.ordinal()])
             initMashedFoodRecipes();
 
+        //Rings
+        initPotionRingRecipes();
+
         //Ingots from Dusts
         GameRegistry.addSmelting(new ItemStack(InitItems.itemDust, 1, TheDusts.IRON.ordinal()),
                 new ItemStack(Items.iron_ingot), 1F);
@@ -87,6 +91,22 @@ public class ItemCrafting{
         GameRegistry.addSmelting(new ItemStack(InitItems.itemDust, 1, TheDusts.COAL.ordinal()),
                 new ItemStack(Items.coal), 1F);
 
+    }
+
+    public static void initPotionRingRecipes(){
+        GameRegistry.addRecipe(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.RING.ordinal()),
+                "IGI", "GDG", "IGI",
+                'G', new ItemStack(Items.gold_ingot),
+                'I', new ItemStack(Items.iron_ingot),
+                'D', new ItemStack(Items.glowstone_dust));
+
+        for(int i = 0; i < ThePotionRings.values().length; i++){
+            if(ConfigValues.enablePotionRingRecipes[i]){
+                ItemStack mainStack = ThePotionRings.values()[i].craftingItem;
+                GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemPotionRing, 1, i), mainStack, mainStack, mainStack, mainStack, new ItemStack(Blocks.diamond_block), new ItemStack(Items.nether_wart), new ItemStack(Items.potionitem), new ItemStack(InitItems.itemMisc, 1, TheMiscItems.RING.ordinal()));
+                GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemPotionRingAdvanced, 1, i), new ItemStack(InitItems.itemPotionRing, 1, i), new ItemStack(Items.nether_star));
+            }
+        }
     }
 
     public static void initMashedFoodRecipes(){

@@ -2,12 +2,14 @@ package ellpeck.actuallyadditions.config;
 
 import ellpeck.actuallyadditions.items.metalists.TheFoods;
 import ellpeck.actuallyadditions.items.metalists.TheMiscItems;
+import ellpeck.actuallyadditions.items.metalists.ThePotionRings;
 import net.minecraftforge.common.config.Configuration;
 
 public class ConfigValues{
 
     public static boolean[] enabledFoodRecipes = new boolean[TheFoods.values().length];
     public static boolean[] enabledMiscRecipes = new boolean[TheMiscItems.values().length];
+    public static boolean[] enablePotionRingRecipes = new boolean[ThePotionRings.values().length];
     public static boolean enableCompostRecipe;
     public static boolean enableKnifeRecipe;
     public static boolean enableCrusherRecipe;
@@ -69,6 +71,13 @@ public class ConfigValues{
     public static boolean leafBlowerParticles;
     public static boolean leafBlowerHasSound;
 
+    public static boolean enableSolarRecipe;
+    public static boolean enableFishingNetRecipe;
+    public static boolean enableHeatCollectorRecipe;
+
+    public static int heatCollectorRandomChance;
+    public static int heatCollectorBlocksNeeded;
+
     public static void defineConfigValues(Configuration config){
 
         for(int i = 0; i < enabledFoodRecipes.length; i++){
@@ -76,6 +85,10 @@ public class ConfigValues{
         }
         for(int i = 0; i < enabledMiscRecipes.length; i++){
             enabledMiscRecipes[i] = config.getBoolean(TheMiscItems.values()[i].name, ConfigurationHandler.CATEGORY_MISC_CRAFTING, true, "If the Crafting Recipe for " + TheMiscItems.values()[i].name +  " is Enabled");
+        }
+
+        for(int i = 0; i < enablePotionRingRecipes.length; i++){
+            enablePotionRingRecipes[i] = config.getBoolean(ThePotionRings.values()[i].name, ConfigurationHandler.CATEGORY_POTION_RING_CRAFTING, i != ThePotionRings.SATURATION.ordinal(), "If the Crafting Recipe for the Ring of " + ThePotionRings.values()[i].name +  " is Enabled");
         }
 
         enableLeafBlowerRecipe = config.getBoolean("Leaf Blower", ConfigurationHandler.CATEGORY_ITEMS_CRAFTING, true, "If the Crafting Recipe for the Leaf Blower is Enabled");
@@ -110,6 +123,10 @@ public class ConfigValues{
         enableFeederRecipe = config.getBoolean("Feeder", ConfigurationHandler.CATEGORY_BLOCKS_CRAFTING, true, "If the Crafting Recipe for the Feeder is Enabled");
         enableCrafterRecipe = config.getBoolean("Crafting Table On A Stick", ConfigurationHandler.CATEGORY_ITEMS_CRAFTING, true, "If the Crafting Recipe for the Crafting Table On A Stick is Enabled");
 
+        enableSolarRecipe = config.getBoolean("Solar Panel", ConfigurationHandler.CATEGORY_BLOCKS_CRAFTING, true, "If the Crafting Recipe for the Solar Panel is Enabled");
+        enableFishingNetRecipe = config.getBoolean("Fishing Net", ConfigurationHandler.CATEGORY_BLOCKS_CRAFTING, true, "If the Crafting Recipe for the Fishing Net is Enabled");
+        enableHeatCollectorRecipe = config.getBoolean("Heat Collector", ConfigurationHandler.CATEGORY_BLOCKS_CRAFTING, true, "If the Crafting Recipe for the Heat Collector is Enabled");
+
         tileEntityCompostAmountNeededToConvert = config.getInt("Compost: Amount Needed To Convert", ConfigurationHandler.CATEGORY_MACHINE_VALUES, 10, 1, 64, "How many items are needed in the Compost to convert to Fertilizer");
         tileEntityCompostConversionTimeNeeded = config.getInt("Compost: Conversion Time Needed", ConfigurationHandler.CATEGORY_MACHINE_VALUES, 1000, 30, 10000, "How long the Compost needs to convert to Fertilizer");
 
@@ -138,5 +155,8 @@ public class ConfigValues{
         grinderCrushTime = config.getInt("Crusher: Crush Time", ConfigurationHandler.CATEGORY_MACHINE_VALUES, 200, 10, 1000, "How long the Crusher takes to crush an item");
         grinderDoubleCrushTime = config.getInt("Double Crusher: Crush Time", ConfigurationHandler.CATEGORY_MACHINE_VALUES, 300, 10, 1000, "How long the Double Crusher takes to crush an item");
         furnaceDoubleSmeltTime = config.getInt("Double Furnace: Smelt Time", ConfigurationHandler.CATEGORY_MACHINE_VALUES, 300, 10, 1000, "How long the Double Furnace takes to crush an item");
+
+        heatCollectorBlocksNeeded = config.getInt("Heat Collector: Blocks Needed", ConfigurationHandler.CATEGORY_MACHINE_VALUES, 4, 1, 5, "How many Blocks are needed for the Heat Collector to power Machines above it");
+        heatCollectorRandomChance = config.getInt("Heat Collector: Random Chance", ConfigurationHandler.CATEGORY_MACHINE_VALUES, 2000, 10, 100000, "The Chance of the Heat Collector destroying a Lava Block around (Default Value 2000 meaning a 1/2000 Chance!)");
     }
 }

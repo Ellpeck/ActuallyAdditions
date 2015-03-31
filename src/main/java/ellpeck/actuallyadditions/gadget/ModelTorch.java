@@ -22,6 +22,6 @@ public class ModelTorch extends ModelBaseAA{
 
     @Override
     public String getName(){
-        return "modelTorch";
+        return "modelHose";
     }
 }

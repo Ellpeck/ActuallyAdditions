@@ -13,6 +13,7 @@ tile.actuallyadditions.blockGrinderDouble.name=Double Crusher
 tile.actuallyadditions.blockFurnaceDouble.name=Double Furnace
 tile.actuallyadditions.blockFishingNet.name=Fishing Net
 tile.actuallyadditions.blockFurnaceSolar.name=Solar Panel
+tile.actuallyadditions.blockHeatCollector.name=Heat Collector
 
 tile.actuallyadditions.blockInputter.name=ESD
 tile.actuallyadditions.blockInputter.add.0.name=Ellpeck's Slot Device
@@ -36,6 +37,7 @@ item.actuallyadditions.itemMiscPaperCone.name=Paper Cone
 item.actuallyadditions.itemMiscKnifeBlade.name=Knife Blade
 item.actuallyadditions.itemMiscKnifeHandle.name=Knife Handle
 item.actuallyadditions.itemMiscBlackQuartz.name=Black Quartz
+item.actuallyadditions.itemMiscRing.name=Ring
 
 item.actuallyadditions.itemLeafBlower.name=Leaf Blower
 item.actuallyadditions.itemLeafBlowerAdvanced.name=Advanced Leaf Blower
@@ -68,6 +70,9 @@ item.actuallyadditions.itemFoodFishNChips.name=Fish 'N' Chips
 item.actuallyadditions.itemFoodCarrotJuice.name=Carrot Juice
 item.actuallyadditions.itemFoodPumpkinStew.name=Pumpkin Stew
 item.actuallyadditions.itemFoodCheese.name=Cheese
+
+item.actuallyadditions.itemPotionRing.name=Ring of
+item.actuallyadditions.itemPotionRingAdvanced.name=Advanced Ring of
 
 item.actuallyadditions.itemSpecialUnknownSubstance.name=Unknown Substance
 item.actuallyadditions.itemSpecialSolidifiedExperience.name=Solidified Experience
@@ -113,6 +118,9 @@ tooltip.actuallyadditions.blockInputter.desc.4=-Side to Output to and Input from
 tooltip.actuallyadditions.blockInputter.desc.5=-Slot in the other Inventory to Output to and Input from
 tooltip.actuallyadditions.blockFishingNet.desc=Catches Fish automatically when placed above Water
 tooltip.actuallyadditions.blockFurnaceSolar.desc=Powers Furnaces and Crushers below it in Daylight
+tooltip.actuallyadditions.blockHeatCollector.desc.1=Powers Furnaces and Crushers above it
+tooltip.actuallyadditions.blockHeatCollector.desc.2=Needs a bunch of Lava around it
+tooltip.actuallyadditions.blockHeatCollector.desc.3=Occasionally steals the Lava. Watch out!
 
 tooltip.actuallyadditions.itemMiscMashedFood.desc=Used to make Fertilizer
 tooltip.actuallyadditions.itemFertilizer.desc=Om nom nom. Don't eat it. Made in a Compost.
@@ -121,6 +129,15 @@ tooltip.actuallyadditions.itemMiscPaperCone.desc=Used to store foodstuffs!
 tooltip.actuallyadditions.itemMiscKnifeBlade.desc=Sharp like a tooth! A whale's tooth!
 tooltip.actuallyadditions.itemMiscKnifeHandle.desc=Fits comfortably in your hand.
 tooltip.actuallyadditions.itemMiscBlackQuartz.desc=Used in the Quartz Enchanter!
+tooltip.actuallyadditions.itemMiscRing.desc=Used for crafting Effect Rings
+
+tooltip.actuallyadditions.itemPotionRing.desc.1=Gives Potion Effect of Level 1
+tooltip.actuallyadditions.itemPotionRing.desc.2=Needs to be held in Hand
+tooltip.actuallyadditions.itemPotionRing.desc.off.1=Crafting Recipe of this particular Potion Effect is turned OFF by default
+tooltip.actuallyadditions.itemPotionRing.desc.off.2=as it is extremely overpowered! Turn it on in the Config File if needed.
+
+tooltip.actuallyadditions.itemPotionRingAdvanced.desc.1=Gives Potion Effect of a High Level
+tooltip.actuallyadditions.itemPotionRingAdvanced.desc.2=Can be anywhere in the Inventory
 
 tooltip.actuallyadditions.itemLeafBlower.desc.1=Destroys Grass and Flowers around you
 tooltip.actuallyadditions.itemLeafBlowerAdvanced.desc.1=Destroys Grass, Flowers and Leaves around you
@@ -212,3 +229,15 @@ info.actuallyadditions.gui.all=All
 info.actuallyadditions.gui.slot=Slot
 info.actuallyadditions.gui.put=Put
 info.actuallyadditions.gui.pull=Pull
+
+effect.actuallyadditions.speed.name=Speed
+effect.actuallyadditions.haste.name=Haste
+effect.actuallyadditions.strength.name=Strength
+effect.actuallyadditions.jumpBoost.name=Jump Boost
+effect.actuallyadditions.regen.name=Regeneration
+effect.actuallyadditions.resistance.name=Resistance
+effect.actuallyadditions.fireResistance.name=Fire Resistance
+effect.actuallyadditions.waterBreathing.name=Water Breathing
+effect.actuallyadditions.invisibility.name=Invisibility
+effect.actuallyadditions.nightVision.name=Night Vision
+effect.actuallyadditions.saturation.name=Saturation

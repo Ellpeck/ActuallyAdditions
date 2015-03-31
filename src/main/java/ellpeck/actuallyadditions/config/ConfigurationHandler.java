@@ -15,6 +15,7 @@ public class ConfigurationHandler{
     public static final String CATEGORY_MACHINE_VALUES = "machine values";
     public static final String CATEGORY_MOB_DROPS = "mob drops";
     public static final String CATEGORY_WORLD_GEN = "world gen";
+    public static final String CATEGORY_POTION_RING_CRAFTING = "ring crafting";
 
 
     public static void init(File configFile){

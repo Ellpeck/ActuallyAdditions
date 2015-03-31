@@ -3,14 +3,14 @@
   "modid": "ActuallyAdditions",
   "name": "Actually Additions",
   "description": "A bunch of random stuff added to your Game to make it even more fun, exciting and add some more variety!",
-  "version": "0.0.2.3",
+  "version": "0.0.3.2",
   "mcversion": "1.7.10",
   "url": "https://github.com/Ellpeck/ActuallyAdditions",
   "updateUrl": "",
   "authorList": [
     "Ellpeck"
   ],
-  "credits": "GlenthorLP for all of the awesome Graphics",
+  "credits": "GlenthorLP for all of the awesome Graphics, xdqmhose for a bunch of Ideas",
   "logoFile": "assets/actuallyadditions/textures/logo.png",
   "screenshots": [
   ],

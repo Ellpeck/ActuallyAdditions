@@ -22,6 +22,9 @@ public class InitItems{
     public static Item itemLeafBlower;
     public static Item itemLeafBlowerAdvanced;
 
+    public static Item itemPotionRing;
+    public static Item itemPotionRingAdvanced;
+
     public static Item itemPickaxeEmerald;
     public static Item itemAxeEmerald;
     public static Item itemShovelEmerald;
@@ -63,6 +66,12 @@ public class InitItems{
 
         itemLeafBlowerAdvanced = new ItemLeafBlower(true);
         ItemUtil.register(itemLeafBlowerAdvanced);
+
+        itemPotionRing = new ItemPotionRing(false);
+        ItemUtil.register(itemPotionRing);
+
+        itemPotionRingAdvanced = new ItemPotionRing(true);
+        ItemUtil.register(itemPotionRingAdvanced);
 
         itemPickaxeEmerald = new ItemPickaxeAA(InitItemMaterials.toolMaterialEmerald, new ItemStack(Items.emerald), "itemPickaxeEmerald", EnumRarity.rare);
         itemAxeEmerald = new ItemAxeAA(InitItemMaterials.toolMaterialEmerald, new ItemStack(Items.emerald), "itemAxeEmerald", EnumRarity.rare);

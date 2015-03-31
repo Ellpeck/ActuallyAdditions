@@ -28,10 +28,28 @@ public class BlockCrafting{
                 'Q', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal()));
 
         //Fishing Net
-        GameRegistry.addRecipe(new ItemStack(InitBlocks.blockFishingNet),
-                "SSS", "SDS", "SSS",
-                'D', new ItemStack(Items.diamond),
-                'S', new ItemStack(Items.string));
+        if(ConfigValues.enableFishingNetRecipe)
+            GameRegistry.addRecipe(new ItemStack(InitBlocks.blockFishingNet),
+                    "SSS", "SDS", "SSS",
+                    'D', new ItemStack(Items.diamond),
+                    'S', new ItemStack(Items.string));
+
+        //Solar Panel
+        if(ConfigValues.enableSolarRecipe)
+            GameRegistry.addRecipe(new ItemStack(InitBlocks.blockFurnaceSolar),
+                    "IBI", "BDB", "IBI",
+                    'D', new ItemStack(Blocks.diamond_block),
+                    'I', new ItemStack(Items.iron_ingot),
+                    'B', new ItemStack(Blocks.iron_bars));
+
+        //Heat Collector
+        if(ConfigValues.enableHeatCollectorRecipe)
+            GameRegistry.addRecipe(new ItemStack(InitBlocks.blockHeatCollector),
+                    "BRB", "LDL", "BRB",
+                    'D', new ItemStack(Blocks.diamond_block),
+                    'R', new ItemStack(Items.repeater),
+                    'L', new ItemStack(Items.lava_bucket),
+                    'B', new ItemStack(Blocks.iron_bars));
 
         //Quartz Pillar
         GameRegistry.addRecipe(new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.QUARTZ_PILLAR.ordinal()),
