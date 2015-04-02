@@ -13,6 +13,8 @@ tile.actuallyadditions.blockGrinderDouble.name=Zerkleinerer Mk2
 tile.actuallyadditions.blockFurnaceDouble.name=Ofen Mk2
 tile.actuallyadditions.blockFishingNet.name=Fischernetz
 tile.actuallyadditions.blockFurnaceSolar.name=Solarplatte
+tile.actuallyadditions.blockHeatCollector.name=Wärmesammler
+tile.actuallyadditions.blockItemRepairer.name=Reperaturwerkbank
 
 item.actuallyadditions.itemMiscMashedFood.name=Brei
 item.actuallyadditions.itemFertilizer.name=Dünger
@@ -21,6 +23,7 @@ item.actuallyadditions.itemMiscPaperCone.name=Papiertüte
 item.actuallyadditions.itemMiscKnifeBlade.name=Messerklinge
 item.actuallyadditions.itemMiscKnifeHandle.name=Messergriff
 item.actuallyadditions.itemMiscBlackQuartz.name=Schwarzquartz
+item.actuallyadditions.itemMiscRing.name=Ring
 
 item.actuallyadditions.itemLeafBlower.name=Laubgebläse
 item.actuallyadditions.itemLeafBlowerAdvanced.name=Laubgebläse Drölftausend
@@ -53,6 +56,9 @@ item.actuallyadditions.itemFoodFishNChips.name=Fish 'N' Chips
 item.actuallyadditions.itemFoodCarrotJuice.name=Karottensaft
 item.actuallyadditions.itemFoodPumpkinStew.name=Kürbissuppe
 item.actuallyadditions.itemFoodCheese.name=Käse
+
+item.actuallyadditions.itemPotionRing.name=Ring der
+item.actuallyadditions.itemPotionRingAdvanced.name=Erweiterter Ring der
 
 item.actuallyadditions.itemSpecialUnknownSubstance.name=Undefinierbare Masse
 item.actuallyadditions.itemSpecialSolidifiedExperience.name=Versteinerte Erfahrung
@@ -95,6 +101,10 @@ tooltip.actuallyadditions.blockInputter.desc.2=Ich bin klüger als ein Hopper.
 tooltip.actuallyadditions.blockInputter.desc.3=Stell mich ein:
 tooltip.actuallyadditions.blockInputter.desc.4=-Ein-/Ausgabeseite und
 tooltip.actuallyadditions.blockInputter.desc.5=-Slots, die verwendet werden sollen.
+tooltip.actuallyadditions.blockHeatCollector.desc.1=Leitet Energie an nahe Öfen und Zerkleinerer weiter
+tooltip.actuallyadditions.blockHeatCollector.desc.2=Braucht eine Menge Lava in seiner Nähe
+tooltip.actuallyadditions.blockHeatCollector.desc.3=Manchmal lässt er sie auch verschwinden...
+tooltip.actuallyadditions.blockItemRepairer.desc=Repariert Rüstungen und Werkzeuge automatisch.
 
 tooltip.actuallyadditions.itemMiscMashedFood.desc=Zur Herstellung von Dünger benötigt.
 tooltip.actuallyadditions.itemFertilizer.desc=Om nom nom. Don't eat it. Made in a Compost.
@@ -103,6 +113,15 @@ tooltip.actuallyadditions.itemMiscPaperCone.desc=Zum Verstauen von Mahlzeiten.
 tooltip.actuallyadditions.itemMiscKnifeBlade.desc=Scharf wie ein Zahn. Wie ein Walzahn.
 tooltip.actuallyadditions.itemMiscKnifeHandle.desc=Fühlt sich gut an. Fast schon zu gut...
 tooltip.actuallyadditions.itemMiscBlackQuartz.desc=Findet Verwendung in der Quartzverzauberung.
+
+tooltip.actuallyadditions.itemMiscRing.desc=Zum Bau von Effektringen
+tooltip.actuallyadditions.itemPotionRing.desc.1=Fügt Level 1 Trankeffekt hinzu
+tooltip.actuallyadditions.itemPotionRing.desc.2=Muss in der Hand gehalten werden
+tooltip.actuallyadditions.itemPotionRing.desc.off.1=Das Bauen dieses Trankeffektes ist standardmäßig deaktiviert,
+tooltip.actuallyadditions.itemPotionRing.desc.off.2=da es extrem mächtig ist. Wenn nötig, so muss es in der Konfiguration aktiviert werden.
+
+tooltip.actuallyadditions.itemPotionRingAdvanced.desc.1=Fügt hohen Level des Trankeffekt hinzu.
+tooltip.actuallyadditions.itemPotionRingAdvanced.desc.2=Kann irgendwo liegen. Hauptsache im Inventar.
 
 tooltip.actuallyadditions.itemLeafBlower.desc.1=Grass? Blumen? Pah, wer braucht das schon!
 tooltip.actuallyadditions.itemLeafBlowerAdvanced.desc.1=Jetzt auch noch Blattwerk? I liebe es!
@@ -210,3 +229,15 @@ info.actuallyadditions.gui.all=Alle
 info.actuallyadditions.gui.slot=Slot
 info.actuallyadditions.gui.put=Hinlegen
 info.actuallyadditions.gui.pull=Rausnehmen
+
+effect.actuallyadditions.speed.name=Geschwindigkeit
+effect.actuallyadditions.haste.name=Eile
+effect.actuallyadditions.strength.name=Kraft
+effect.actuallyadditions.jumpBoost.name=Sprungkraft
+effect.actuallyadditions.regen.name=Regeneration
+effect.actuallyadditions.resistance.name=Resistenz
+effect.actuallyadditions.fireResistance.name=Feuerresistenz
+effect.actuallyadditions.waterBreathing.name=Kiemen
+effect.actuallyadditions.invisibility.name=Unsichtbarkeit
+effect.actuallyadditions.nightVision.name=Nachtsicht
+effect.actuallyadditions.saturation.name=Sättigung
