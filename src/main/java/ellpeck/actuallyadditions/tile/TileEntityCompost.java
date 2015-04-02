@@ -10,8 +10,8 @@ import net.minecraft.nbt.NBTTagCompound;
 
 public class TileEntityCompost extends TileEntityInventoryBase{
 
-    public final int amountNeededToConvert = ConfigValues.tileEntityCompostAmountNeededToConvert;
-    public final int conversionTimeNeeded = ConfigValues.tileEntityCompostConversionTimeNeeded;
+    public final int amountNeededToConvert = ConfigValues.compostAmountNeededToConvert;
+    public final int conversionTimeNeeded = ConfigValues.compostConversionTimeNeeded;
 
     public int conversionTime;
 

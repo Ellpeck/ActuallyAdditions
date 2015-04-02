@@ -18,6 +18,7 @@ public class InitBlocks{
     public static Block blockFishingNet;
     public static Block blockFurnaceSolar;
     public static Block blockHeatCollector;
+    public static Block blockItemRepairer;
 
     public static void init(){
         Util.logInfo("Initializing Blocks...");
@@ -54,5 +55,8 @@ public class InitBlocks{
 
         blockHeatCollector = new BlockHeatCollector();
         BlockUtil.register(blockHeatCollector, BlockHeatCollector.TheItemBlock.class);
+
+        blockItemRepairer = new BlockItemRepairer();
+        BlockUtil.register(blockItemRepairer, BlockItemRepairer.TheItemBlock.class);
     }
 }

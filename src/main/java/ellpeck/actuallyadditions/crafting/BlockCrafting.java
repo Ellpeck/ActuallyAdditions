@@ -34,6 +34,14 @@ public class BlockCrafting{
                     'D', new ItemStack(Items.diamond),
                     'S', new ItemStack(Items.string));
 
+        //Repairer
+        if(ConfigValues.enableRepairerRecipe)
+            GameRegistry.addRecipe(new ItemStack(InitBlocks.blockItemRepairer),
+                    "DID", "DCD", "DID",
+                    'D', new ItemStack(Items.diamond),
+                    'I', new ItemStack(Items.iron_ingot),
+                    'C', new ItemStack(Blocks.crafting_table));
+
         //Solar Panel
         if(ConfigValues.enableSolarRecipe)
             GameRegistry.addRecipe(new ItemStack(InitBlocks.blockFurnaceSolar),

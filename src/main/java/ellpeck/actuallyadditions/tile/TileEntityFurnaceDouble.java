@@ -9,7 +9,7 @@ import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntityFurnace;
 
-public class TileEntityFurnaceDouble extends TileEntityInventoryBase{
+public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements IPowerAcceptor{
 
     public static final int SLOT_COAL = 0;
     public static final int SLOT_INPUT_1 = 1;
@@ -152,5 +152,26 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase{
     @Override
     public boolean canExtractItem(int slot, ItemStack stack, int side){
         return slot == SLOT_OUTPUT_1 || slot == SLOT_OUTPUT_2 || (slot == SLOT_COAL && stack.getItem() == Items.bucket);
+    }
+
+    @Override
+    public void setBlockMetadataToOn(){
+        int metaBefore = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
+        worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, metaBefore+4, 2);
+    }
+
+    @Override
+    public void setPower(int power){
+        this.coalTimeLeft = power;
+    }
+
+    @Override
+    public void setItemPower(int power){
+        this.coalTime = power;
+    }
+
+    @Override
+    public int getItemPower(){
+        return this.coalTime;
     }
 }

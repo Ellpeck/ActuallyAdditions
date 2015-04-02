@@ -14,6 +14,7 @@ tile.actuallyadditions.blockFurnaceDouble.name=Double Furnace
 tile.actuallyadditions.blockFishingNet.name=Fishing Net
 tile.actuallyadditions.blockFurnaceSolar.name=Solar Panel
 tile.actuallyadditions.blockHeatCollector.name=Heat Collector
+tile.actuallyadditions.blockItemRepairer.name=Item Repairer
 
 tile.actuallyadditions.blockInputter.name=ESD
 tile.actuallyadditions.blockInputter.add.0.name=Ellpeck's Slot Device
@@ -121,6 +122,7 @@ tooltip.actuallyadditions.blockFurnaceSolar.desc=Powers Furnaces and Crushers be
 tooltip.actuallyadditions.blockHeatCollector.desc.1=Powers Furnaces and Crushers above it
 tooltip.actuallyadditions.blockHeatCollector.desc.2=Needs a bunch of Lava around it
 tooltip.actuallyadditions.blockHeatCollector.desc.3=Occasionally steals the Lava. Watch out!
+tooltip.actuallyadditions.blockItemRepairer.desc=Repairs Tools and Armor automatically
 
 tooltip.actuallyadditions.itemMiscMashedFood.desc=Used to make Fertilizer
 tooltip.actuallyadditions.itemFertilizer.desc=Om nom nom. Don't eat it. Made in a Compost.

@@ -22,7 +22,7 @@ public class RenderSpecial{
 
     public void render(EntityPlayer player, float renderTick, float size, float offsetUp){
         int bobHeight = 70;
-        double rotationModifier = 3;
+        double rotationModifier = 2;
 
         long time = player.worldObj.getTotalWorldTime();
         if(time-bobHeight >= lastTimeForBobbing){
@@ -49,7 +49,7 @@ public class RenderSpecial{
             GL11.glTranslated(0, -((double)time-lastTimeForBobbing)/100+(double)bobHeight/100, 0);
         }
 
-        GL11.glRotated(time * rotationModifier, 0, 1, 0);
+        GL11.glRotated((double)time*rotationModifier, 0, 1, 0);
 
         Minecraft.getMinecraft().renderEngine.bindTexture(theTexture);
         theModel.render(0.0625F);

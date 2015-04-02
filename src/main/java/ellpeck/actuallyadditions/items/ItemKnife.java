@@ -20,7 +20,7 @@ import java.util.List;
 public class ItemKnife extends Item implements IName{
 
     public ItemKnife(){
-        this.setMaxDamage(ConfigValues.itemKnifeMaxDamage);
+        this.setMaxDamage(ConfigValues.knifeMaxDamage);
         this.setMaxStackSize(1);
         this.setContainerItem(this);
     }
