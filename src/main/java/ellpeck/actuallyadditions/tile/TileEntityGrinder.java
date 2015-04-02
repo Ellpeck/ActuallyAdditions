@@ -11,7 +11,7 @@ import net.minecraft.tileentity.TileEntityFurnace;
 
 import java.util.Random;
 
-public class TileEntityGrinder extends TileEntityInventoryBase{
+public class TileEntityGrinder extends TileEntityInventoryBase implements IPowerAcceptor{
 
     public static final int SLOT_COAL = 0;
     public static final int SLOT_INPUT_1 = 1;
@@ -183,5 +183,25 @@ public class TileEntityGrinder extends TileEntityInventoryBase{
     @Override
     public boolean canExtractItem(int slot, ItemStack stack, int side){
         return slot == SLOT_OUTPUT_1_1 || slot == SLOT_OUTPUT_1_2 || slot == SLOT_OUTPUT_2_1 || slot == SLOT_OUTPUT_2_2 || (slot == SLOT_COAL && stack.getItem() == Items.bucket);
+    }
+
+    @Override
+    public void setBlockMetadataToOn(){
+        worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 1, 2);
+    }
+
+    @Override
+    public void setPower(int power){
+        this.coalTimeLeft = power;
+    }
+
+    @Override
+    public void setItemPower(int power){
+        this.coalTime = power;
+    }
+
+    @Override
+    public int getItemPower(){
+        return this.coalTime;
     }
 }

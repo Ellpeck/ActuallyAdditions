@@ -2,14 +2,18 @@ package ellpeck.actuallyadditions.config;
 
 import ellpeck.actuallyadditions.items.metalists.TheFoods;
 import ellpeck.actuallyadditions.items.metalists.TheMiscItems;
+import ellpeck.actuallyadditions.items.metalists.ThePotionRings;
 import net.minecraftforge.common.config.Configuration;
 
 public class ConfigValues{
 
     public static boolean[] enabledFoodRecipes = new boolean[TheFoods.values().length];
     public static boolean[] enabledMiscRecipes = new boolean[TheMiscItems.values().length];
+    public static boolean[] enablePotionRingRecipes = new boolean[ThePotionRings.values().length];
     public static boolean enableCompostRecipe;
     public static boolean enableKnifeRecipe;
+    public static boolean enableLeafBlowerRecipe;
+    public static boolean enableLeafBlowerAdvancedRecipe;
     public static boolean enableCrusherRecipe;
     public static boolean enableCrusherDoubleRecipe;
     public static boolean enableFurnaceDoubleRecipe;
@@ -17,42 +21,42 @@ public class ConfigValues{
     public static boolean enableFeederRecipe;
     public static boolean enableCrafterRecipe;
     public static boolean enableInputterRecipe;
-
-    public static int tileEntityCompostAmountNeededToConvert;
-    public static int tileEntityCompostConversionTimeNeeded;
-
-    public static int tileEntityFeederReach;
-    public static int tileEntityFeederTimeNeeded;
-    public static int tileEntityFeederThreshold;
-
-    public static int tileFishingNetTime;
-
-    public static int itemKnifeMaxDamage;
-
-    public static int toolEmeraldHarvestLevel;
-    public static int toolEmeraldMaxUses;
-    public static float toolEmeraldEfficiency;
-    public static float toolEmeraldDamage;
-    public static int toolEmeraldEnchantability;
+    public static boolean enableRepairerRecipe;
+    public static boolean enableSolarRecipe;
+    public static boolean enableFishingNetRecipe;
+    public static boolean enableHeatCollectorRecipe;
     public static boolean enableToolEmeraldRecipe;
-
-    public static int toolObsidianHarvestLevel;
-    public static int toolObsidianMaxUses;
-    public static float toolObsidianEfficiency;
-    public static float toolObsidianDamage;
-    public static int toolObsidianEnchantability;
     public static boolean enableToolObsidianRecipe;
 
+    public static int knifeMaxDamage;
+    public static int toolEmeraldHarvestLevel;
+    public static int toolEmeraldMaxUses;
+    public static int toolEmeraldEnchantability;
+    public static int toolObsidianHarvestLevel;
+    public static int toolObsidianMaxUses;
+    public static int toolObsidianEnchantability;
+    public static float toolObsidianEfficiency;
+    public static float toolObsidianDamage;
+    public static float toolEmeraldEfficiency;
+    public static float toolEmeraldDamage;
+
+    public static int compostAmountNeededToConvert;
+    public static int compostConversionTimeNeeded;
+    public static int feederReach;
+    public static int feederTimeNeeded;
+    public static int feederThreshold;
+    public static int fishingNetTime;
     public static int furnaceDoubleSmeltTime;
     public static int grinderDoubleCrushTime;
     public static int grinderCrushTime;
-
-    public static boolean enableExperienceDrop;
-    public static boolean enableBloodDrop;
-    public static boolean enableHeartDrop;
-    public static boolean enableSubstanceDrop;
-    public static boolean enablePearlShardDrop;
-    public static boolean enableEmeraldShardDrop;
+    public static int leafBlowerRangeSides;
+    public static int leafBlowerRangeUp;
+    public static int heatCollectorRandomChance;
+    public static int heatCollectorBlocksNeeded;
+    public static int repairerSpeedSlowdown;
+    public static boolean leafBlowerDropItems;
+    public static boolean leafBlowerParticles;
+    public static boolean leafBlowerHasSound;
 
     public static boolean generateBlackQuartz;
     public static int blackQuartzBaseAmount;
@@ -61,13 +65,12 @@ public class ConfigValues{
     public static int blackQuartzMinHeight;
     public static int blackQuartzMaxHeight;
 
-    public static boolean enableLeafBlowerRecipe;
-    public static boolean enableLeafBlowerAdvancedRecipe;
-    public static int leafBlowerRangeSides;
-    public static int leafBlowerRangeUp;
-    public static boolean leafBlowerDropItems;
-    public static boolean leafBlowerParticles;
-    public static boolean leafBlowerHasSound;
+    public static boolean enableExperienceDrop;
+    public static boolean enableBloodDrop;
+    public static boolean enableHeartDrop;
+    public static boolean enableSubstanceDrop;
+    public static boolean enablePearlShardDrop;
+    public static boolean enableEmeraldShardDrop;
 
     public static void defineConfigValues(Configuration config){
 
@@ -76,6 +79,9 @@ public class ConfigValues{
         }
         for(int i = 0; i < enabledMiscRecipes.length; i++){
             enabledMiscRecipes[i] = config.getBoolean(TheMiscItems.values()[i].name, ConfigurationHandler.CATEGORY_MISC_CRAFTING, true, "If the Crafting Recipe for " + TheMiscItems.values()[i].name +  " is Enabled");
+        }
+        for(int i = 0; i < enablePotionRingRecipes.length; i++){
+            enablePotionRingRecipes[i] = config.getBoolean(ThePotionRings.values()[i].name, ConfigurationHandler.CATEGORY_POTION_RING_CRAFTING, i != ThePotionRings.SATURATION.ordinal(), "If the Crafting Recipe for the Ring of " + ThePotionRings.values()[i].name +  " is Enabled");
         }
 
         enableLeafBlowerRecipe = config.getBoolean("Leaf Blower", ConfigurationHandler.CATEGORY_ITEMS_CRAFTING, true, "If the Crafting Recipe for the Leaf Blower is Enabled");
@@ -101,6 +107,7 @@ public class ConfigValues{
         enableEmeraldShardDrop = config.getBoolean("Emerald Shard", ConfigurationHandler.CATEGORY_MOB_DROPS, true, "If the Emerald Shard drops from Mobs");
 
         enableCompostRecipe = config.getBoolean("Compost", ConfigurationHandler.CATEGORY_BLOCKS_CRAFTING, true, "If the Crafting Recipe for the Compost is Enabled");
+        enableRepairerRecipe = config.getBoolean("Item Repairer", ConfigurationHandler.CATEGORY_BLOCKS_CRAFTING, true, "If the Crafting Recipe for the Item Repairer is Enabled");
         enableKnifeRecipe = config.getBoolean("Knife", ConfigurationHandler.CATEGORY_ITEMS_CRAFTING, true, "If the Crafting Recipe for the Knife is Enabled");
         enableCrusherDoubleRecipe = config.getBoolean("Double Crusher", ConfigurationHandler.CATEGORY_BLOCKS_CRAFTING, true, "If the Crafting Recipe for the Double Crusher is Enabled");
         enableCrusherRecipe = config.getBoolean("Crusher", ConfigurationHandler.CATEGORY_BLOCKS_CRAFTING, true, "If the Crafting Recipe for the Crusher is Enabled");
@@ -110,16 +117,20 @@ public class ConfigValues{
         enableFeederRecipe = config.getBoolean("Feeder", ConfigurationHandler.CATEGORY_BLOCKS_CRAFTING, true, "If the Crafting Recipe for the Feeder is Enabled");
         enableCrafterRecipe = config.getBoolean("Crafting Table On A Stick", ConfigurationHandler.CATEGORY_ITEMS_CRAFTING, true, "If the Crafting Recipe for the Crafting Table On A Stick is Enabled");
 
-        tileEntityCompostAmountNeededToConvert = config.getInt("Compost: Amount Needed To Convert", ConfigurationHandler.CATEGORY_MACHINE_VALUES, 10, 1, 64, "How many items are needed in the Compost to convert to Fertilizer");
-        tileEntityCompostConversionTimeNeeded = config.getInt("Compost: Conversion Time Needed", ConfigurationHandler.CATEGORY_MACHINE_VALUES, 1000, 30, 10000, "How long the Compost needs to convert to Fertilizer");
+        enableSolarRecipe = config.getBoolean("Solar Panel", ConfigurationHandler.CATEGORY_BLOCKS_CRAFTING, true, "If the Crafting Recipe for the Solar Panel is Enabled");
+        enableFishingNetRecipe = config.getBoolean("Fishing Net", ConfigurationHandler.CATEGORY_BLOCKS_CRAFTING, true, "If the Crafting Recipe for the Fishing Net is Enabled");
+        enableHeatCollectorRecipe = config.getBoolean("Heat Collector", ConfigurationHandler.CATEGORY_BLOCKS_CRAFTING, true, "If the Crafting Recipe for the Heat Collector is Enabled");
 
-        tileFishingNetTime = config.getInt("Fishing Net: Time Needed", ConfigurationHandler.CATEGORY_MACHINE_VALUES, 2000, 50, 50000, "How long it takes on Average until the Fishing Net catches a Fish");
+        compostAmountNeededToConvert = config.getInt("Compost: Amount Needed To Convert", ConfigurationHandler.CATEGORY_MACHINE_VALUES, 10, 1, 64, "How many items are needed in the Compost to convert to Fertilizer");
+        compostConversionTimeNeeded = config.getInt("Compost: Conversion Time Needed", ConfigurationHandler.CATEGORY_MACHINE_VALUES, 1000, 30, 10000, "How long the Compost needs to convert to Fertilizer");
 
-        tileEntityFeederReach = config.getInt("Feeder: Reach", ConfigurationHandler.CATEGORY_MACHINE_VALUES, 5, 1, 20, "The Radius of Action of the Feeder");
-        tileEntityFeederTimeNeeded = config.getInt("Feeder: Time Needed", ConfigurationHandler.CATEGORY_MACHINE_VALUES, 100, 50, 5000, "The time spent between feeding animals with the Feeder");
-        tileEntityFeederThreshold = config.getInt("Feeder: Threshold", ConfigurationHandler.CATEGORY_MACHINE_VALUES, 30, 3, 500, "How many animals need to be in the area for the Feeder to stop");
+        fishingNetTime = config.getInt("Fishing Net: Time Needed", ConfigurationHandler.CATEGORY_MACHINE_VALUES, 2000, 50, 50000, "How long it takes on Average until the Fishing Net catches a Fish");
 
-        itemKnifeMaxDamage = config.getInt("Knife: Max Uses", ConfigurationHandler.CATEGORY_TOOL_VALUES, 100, 5, 5000, "How often the Knife can be crafted with");
+        feederReach = config.getInt("Feeder: Reach", ConfigurationHandler.CATEGORY_MACHINE_VALUES, 5, 1, 20, "The Radius of Action of the Feeder");
+        feederTimeNeeded = config.getInt("Feeder: Time Needed", ConfigurationHandler.CATEGORY_MACHINE_VALUES, 100, 50, 5000, "The time spent between feeding animals with the Feeder");
+        feederThreshold = config.getInt("Feeder: Threshold", ConfigurationHandler.CATEGORY_MACHINE_VALUES, 30, 3, 500, "How many animals need to be in the area for the Feeder to stop");
+
+        knifeMaxDamage = config.getInt("Knife: Max Uses", ConfigurationHandler.CATEGORY_TOOL_VALUES, 100, 5, 5000, "How often the Knife can be crafted with");
         
         toolEmeraldHarvestLevel = config.getInt("Emerald: Harvest Level", ConfigurationHandler.CATEGORY_TOOL_VALUES, 3, 0, 3, "What Harvest Level Emerald Tools have (0 = Wood, 1 = Stone, 2 = Iron, 3 = Diamond)");
         toolEmeraldMaxUses = config.getInt("Emerald: Max Uses", ConfigurationHandler.CATEGORY_TOOL_VALUES, 2000, 50, 10000, "How often Emerald Tools can be used");
@@ -138,5 +149,9 @@ public class ConfigValues{
         grinderCrushTime = config.getInt("Crusher: Crush Time", ConfigurationHandler.CATEGORY_MACHINE_VALUES, 200, 10, 1000, "How long the Crusher takes to crush an item");
         grinderDoubleCrushTime = config.getInt("Double Crusher: Crush Time", ConfigurationHandler.CATEGORY_MACHINE_VALUES, 300, 10, 1000, "How long the Double Crusher takes to crush an item");
         furnaceDoubleSmeltTime = config.getInt("Double Furnace: Smelt Time", ConfigurationHandler.CATEGORY_MACHINE_VALUES, 300, 10, 1000, "How long the Double Furnace takes to crush an item");
+
+        repairerSpeedSlowdown = config.getInt("Item Repairer: Speed Slowdown", ConfigurationHandler.CATEGORY_MACHINE_VALUES, 2, 1, 100, "How much slower the Item Repairer repairs");
+        heatCollectorBlocksNeeded = config.getInt("Heat Collector: Blocks Needed", ConfigurationHandler.CATEGORY_MACHINE_VALUES, 4, 1, 5, "How many Blocks are needed for the Heat Collector to power Machines above it");
+        heatCollectorRandomChance = config.getInt("Heat Collector: Random Chance", ConfigurationHandler.CATEGORY_MACHINE_VALUES, 10000, 10, 100000, "The Chance of the Heat Collector destroying a Lava Block around (Default Value 2000 meaning a 1/2000 Chance!)");
     }
 }

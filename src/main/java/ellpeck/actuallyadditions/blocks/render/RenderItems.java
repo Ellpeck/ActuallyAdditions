@@ -28,7 +28,7 @@ public class RenderItems implements IItemRenderer{
     }
 
     @Override
-    public void renderItem(ItemRenderType type, ItemStack item, Object... data){
+    public void renderItem(ItemRenderType type, ItemStack stack, Object... data){
         switch(type){
             case INVENTORY:
                 GL11.glPushMatrix();

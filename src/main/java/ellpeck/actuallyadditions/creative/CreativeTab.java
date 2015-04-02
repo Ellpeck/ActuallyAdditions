@@ -32,6 +32,8 @@ public class CreativeTab extends CreativeTabs{
         this.addBlock(InitBlocks.blockFurnaceDouble);
         this.addBlock(InitBlocks.blockFurnaceSolar);
         this.addBlock(InitBlocks.blockFishingNet);
+        this.addBlock(InitBlocks.blockHeatCollector);
+        this.addBlock(InitBlocks.blockItemRepairer);
 
         this.addBlock(InitBlocks.blockMisc);
         this.addBlock(InitBlocks.blockFeeder);
@@ -59,6 +61,9 @@ public class CreativeTab extends CreativeTabs{
         this.addItem(InitItems.itemAxeObsidian);
         this.addItem(InitItems.itemShovelObsidian);
         this.addItem(InitItems.itemHoeObsidian);
+
+        this.addItem(InitItems.itemPotionRing);
+        this.addItem(InitItems.itemPotionRingAdvanced);
     }
 
     @Override

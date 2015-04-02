@@ -10,7 +10,8 @@ public enum TheMiscItems implements IName{
     KNIFE_BLADE("KnifeBlade", EnumRarity.common),
     KNIFE_HANDLE("KnifeHandle", EnumRarity.common),
     DOUGH("Dough", EnumRarity.common),
-    QUARTZ("BlackQuartz", EnumRarity.epic);
+    QUARTZ("BlackQuartz", EnumRarity.epic),
+    RING("Ring", EnumRarity.uncommon);
 
     public final String name;
     public final EnumRarity rarity;

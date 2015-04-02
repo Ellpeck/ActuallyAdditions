@@ -2,15 +2,15 @@
 {
   "modid": "ActuallyAdditions",
   "name": "Actually Additions",
-  "description": "A bunch of random stuff added to your Game to make it even more fun, exciting and add some more variety!",
-  "version": "0.0.2.3",
+  "description": "Actually Additions is a mod that adds a lot of Random Things and Gadgets to your Minecraft, including better Furnaces, Crushers that double your Ores, Automation, a bunch of food and lots more!",
+  "version": "0.0.3.3",
   "mcversion": "1.7.10",
   "url": "https://github.com/Ellpeck/ActuallyAdditions",
   "updateUrl": "",
   "authorList": [
     "Ellpeck"
   ],
-  "credits": "GlenthorLP for all of the awesome Graphics",
+  "credits": "xdqmhose, GlenthorLP, Paktosan",
   "logoFile": "assets/actuallyadditions/textures/logo.png",
   "screenshots": [
   ],

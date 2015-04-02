@@ -44,7 +44,7 @@ public class BlockCompost extends BlockContainerBase implements IName{
             ItemStack stackPlayer = player.getCurrentEquippedItem();
             TileEntityCompost tile = (TileEntityCompost)world.getTileEntity(x, y, z);
             //Add items to be composted
-            if(stackPlayer != null && stackPlayer.getItem() instanceof ItemMisc && stackPlayer.getItemDamage() == TheMiscItems.MASHED_FOOD.ordinal() && (tile.slots[0] == null || (!(tile.slots[0].getItem() instanceof ItemFertilizer) && tile.slots[0].stackSize < ConfigValues.tileEntityCompostAmountNeededToConvert))){
+            if(stackPlayer != null && stackPlayer.getItem() instanceof ItemMisc && stackPlayer.getItemDamage() == TheMiscItems.MASHED_FOOD.ordinal() && (tile.slots[0] == null || (!(tile.slots[0].getItem() instanceof ItemFertilizer) && tile.slots[0].stackSize < ConfigValues.compostAmountNeededToConvert))){
                 if(tile.slots[0] == null) tile.slots[0] = new ItemStack(stackPlayer.getItem(), 1, TheMiscItems.MASHED_FOOD.ordinal());
                 else tile.slots[0].stackSize++;
                 if(!player.capabilities.isCreativeMode) player.inventory.getCurrentItem().stackSize--;

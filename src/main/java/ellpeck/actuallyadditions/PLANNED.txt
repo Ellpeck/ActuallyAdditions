@@ -8,10 +8,6 @@
 -Advanced ESD
     -Has a Filter
 
--Heat Collector
-    -Powers Furnaces when next to them
-    -Needs Warmth Sources around it
-
 -Instant Teleport Device
     -Teleports Players to where they look (Much like the Bukkit Compass)
 
@@ -49,9 +45,6 @@
     -Has Thorn Armor which damages the Enemy
 
 -Cobblestone and Stone Signs
-
--Potion Rings
-    -Give certain Potion Effects when held
 
 -Binoculars
     -Allow you to see farther and closer

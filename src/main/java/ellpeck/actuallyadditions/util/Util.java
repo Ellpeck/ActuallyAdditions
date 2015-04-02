@@ -15,7 +15,7 @@ public class Util{
     }
 
     public static void registerEvent(Object o){
-        FMLCommonHandler.instance().bus().register(o);
         MinecraftForge.EVENT_BUS.register(o);
+        FMLCommonHandler.instance().bus().register(o);
     }
 }

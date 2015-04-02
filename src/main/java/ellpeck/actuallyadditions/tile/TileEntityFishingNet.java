@@ -10,7 +10,7 @@ import java.util.Random;
 
 public class TileEntityFishingNet extends TileEntityBase{
 
-    public int timeUntilNextDropToSet = ConfigValues.tileFishingNetTime;
+    public int timeUntilNextDropToSet = ConfigValues.fishingNetTime;
 
     public int timeUntilNextDrop;
 

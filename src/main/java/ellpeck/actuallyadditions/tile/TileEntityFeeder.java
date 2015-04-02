@@ -16,9 +16,9 @@ import java.util.Random;
 
 public class TileEntityFeeder extends TileEntityInventoryBase{
 
-    public int reach = ConfigValues.tileEntityFeederReach;
-    public int timerGoal = ConfigValues.tileEntityFeederTimeNeeded;
-    public int animalThreshold = ConfigValues.tileEntityFeederThreshold;
+    public int reach = ConfigValues.feederReach;
+    public int timerGoal = ConfigValues.feederTimeNeeded;
+    public int animalThreshold = ConfigValues.feederThreshold;
 
     public int currentTimer;
     public int currentAnimalAmount;
