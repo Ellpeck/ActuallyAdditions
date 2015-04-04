@@ -8,10 +8,7 @@ import ellpeck.actuallyadditions.items.ItemFertilizer;
 import ellpeck.actuallyadditions.items.ItemMisc;
 import ellpeck.actuallyadditions.items.metalists.TheMiscItems;
 import ellpeck.actuallyadditions.tile.TileEntityCompost;
-import ellpeck.actuallyadditions.util.IName;
-import ellpeck.actuallyadditions.util.ItemUtil;
-import ellpeck.actuallyadditions.util.KeyUtil;
-import ellpeck.actuallyadditions.util.ModUtil;
+import ellpeck.actuallyadditions.util.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -29,7 +26,7 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class BlockCompost extends BlockContainerBase implements IName{
+public class BlockCompost extends BlockContainerBase implements INameableItem{
 
     public BlockCompost(){
         super(Material.wood);
@@ -125,6 +122,11 @@ public class BlockCompost extends BlockContainerBase implements IName{
         return "blockCompost";
     }
 
+    @Override
+    public String getOredictName(){
+        return this.getName();
+    }
+
     public static class TheItemBlock extends ItemBlock{
 
         private Block theBlock;
@@ -151,9 +153,10 @@ public class BlockCompost extends BlockContainerBase implements IName{
         @SideOnly(Side.CLIENT)
         public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld) {
             if(KeyUtil.isShiftPressed()){
-                list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + "." + ((IName)theBlock).getName() + ".desc.1"));
+                list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + "." + ((INameableItem)theBlock).getName() + ".desc.1"));
                 //TODO Remove second info
-                list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + "." + ((IName)theBlock).getName() + ".desc.2"));
+                list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + "." + ((INameableItem)theBlock).getName() + ".desc.2"));
+                BlockUtil.addOredictName(theBlock, list);
             }
             else list.add(ItemUtil.shiftForInfo());
         }

@@ -3,7 +3,7 @@ package ellpeck.actuallyadditions.items;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.config.ConfigValues;
-import ellpeck.actuallyadditions.util.IName;
+import ellpeck.actuallyadditions.util.INameableItem;
 import ellpeck.actuallyadditions.util.ItemUtil;
 import ellpeck.actuallyadditions.util.KeyUtil;
 import ellpeck.actuallyadditions.util.ModUtil;
@@ -17,7 +17,7 @@ import net.minecraft.util.StatCollector;
 
 import java.util.List;
 
-public class ItemKnife extends Item implements IName{
+public class ItemKnife extends Item implements INameableItem{
 
     public ItemKnife(){
         this.setMaxDamage(ConfigValues.knifeMaxDamage);
@@ -39,6 +39,11 @@ public class ItemKnife extends Item implements IName{
     }
 
     @Override
+    public String getOredictName(){
+        return this.getName();
+    }
+
+    @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.epic;
     }
@@ -50,6 +55,7 @@ public class ItemKnife extends Item implements IName{
         if(KeyUtil.isShiftPressed()){
             list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + "." + this.getName() + ".desc"));
             list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + ".durability.desc") + ": " + (this.getMaxDamage()-this.getDamage(stack)) + "/" + this.getMaxDamage());
+            ItemUtil.addOredictName(this, list);
         }
         else list.add(ItemUtil.shiftForInfo());
 

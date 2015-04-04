@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class GrinderCrafting{
 
     public static void init(){
-        Util.logInfo("Initializing Grinder Recipes...");
+        Util.logInfo("Initializing Crusher Recipes...");
 
         GrinderRecipes.instance().registerRecipe(new ItemStack(Blocks.iron_ore), new ItemStack(InitItems.itemDust, 2, TheDusts.IRON.ordinal()), new ItemStack(InitItems.itemDust, 1, TheDusts.GOLD.ordinal()), 10);
         GrinderRecipes.instance().registerRecipe(new ItemStack(Blocks.redstone_ore), new ItemStack(Items.redstone, 10), null, 0);
@@ -66,7 +66,7 @@ public class GrinderCrafting{
 
                                     if(name.equals("oreNickel")) specialStacks = OreDictionary.getOres("dustPlatinum");
                                     
-                                    if(specialStacks != null){
+                                    if(specialStacks != null && specialStacks.size() > 0){
                                         for(ItemStack theSpecial : specialStacks){
                                             ItemStack special = theSpecial.copy();
                                             GrinderRecipes.instance().registerRecipe(input, output, special, 10);

@@ -15,6 +15,7 @@ public class InitBlocks{
     public static Block blockGrinderDouble;
     public static Block blockFurnaceDouble;
     public static Block blockInputter;
+    public static Block blockInputterAdvanced;
     public static Block blockFishingNet;
     public static Block blockFurnaceSolar;
     public static Block blockHeatCollector;
@@ -27,7 +28,7 @@ public class InitBlocks{
         BlockUtil.register(blockCompost, BlockCompost.TheItemBlock.class);
 
         blockMisc = new BlockMisc();
-        BlockUtil.register(blockMisc, BlockMisc.TheItemBlock.class);
+        BlockUtil.register(blockMisc, BlockMisc.TheItemBlock.class, BlockMisc.allMiscBlocks);
 
         blockFeeder = new BlockFeeder();
         BlockUtil.register(blockFeeder, BlockFeeder.TheItemBlock.class);
@@ -44,8 +45,11 @@ public class InitBlocks{
         blockFurnaceDouble = new BlockFurnaceDouble();
         BlockUtil.register(blockFurnaceDouble, BlockFurnaceDouble.TheItemBlock.class);
 
-        blockInputter = new BlockInputter();
+        blockInputter = new BlockInputter(false);
         BlockUtil.register(blockInputter, BlockInputter.TheItemBlock.class);
+
+        blockInputterAdvanced = new BlockInputter(true);
+        BlockUtil.register(blockInputterAdvanced, BlockInputter.TheItemBlock.class);
 
         blockFishingNet = new BlockFishingNet();
         BlockUtil.register(blockFishingNet, BlockFishingNet.TheItemBlock.class);

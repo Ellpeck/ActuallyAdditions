@@ -9,6 +9,9 @@ import net.minecraft.world.World;
 
 public class TileEntityInputter extends TileEntityInventoryBase{
 
+    public static final int PUT_FILTER_START = 1;
+    public static final int PULL_FILTER_START = 7;
+
     public int sideToPut = -1;
     public int slotToPut = -1;
     public int placeToPutSlotAmount;
@@ -19,8 +22,15 @@ public class TileEntityInputter extends TileEntityInventoryBase{
     public int placeToPullSlotAmount;
     public TileEntity placeToPull;
 
+    public boolean isAdvanced;
+
     public TileEntityInputter(){
-        super(1, "tileEntityInputter");
+        super(0, "");
+    }
+
+    public TileEntityInputter(boolean isAdvanced){
+        super(isAdvanced ? 13 : 1, isAdvanced ? "tilEntityInputterAdvanced" : "tileEntityInputter");
+        this.isAdvanced = isAdvanced;
     }
 
     @Override
@@ -28,9 +38,11 @@ public class TileEntityInputter extends TileEntityInventoryBase{
         if(!worldObj.isRemote){
             this.initVars();
 
-            if(!(this.sideToPull == this.sideToPut && this.slotToPull == this.slotToPut)){
-                if(sideToPull != -1) this.pull();
-                if(sideToPut != -1) this.put();
+            if(!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)){
+                if(!(this.sideToPull == this.sideToPut && this.slotToPull == this.slotToPut)){
+                    if(sideToPull != -1) this.pull();
+                    if(sideToPut != -1) this.put();
+                }
             }
         }
     }
@@ -50,7 +62,7 @@ public class TileEntityInputter extends TileEntityInventoryBase{
                     if(tempStack.getMaxStackSize() < this.getInventoryStackLimit()) maxSize = tempStack.getMaxStackSize();
                     else maxSize = this.getInventoryStackLimit();
                 }
-                if(tempStack != null && (this.slots[0] == null || (tempStack.isItemEqual(this.slots[0]) && this.slots[0].stackSize < maxSize))){
+                if(tempStack != null && (this.slots[0] == null || (tempStack.isItemEqual(this.slots[0]) && this.slots[0].stackSize < maxSize)) && this.checkFilters(tempStack, true)){
                     if(theSided != null){
                         for(int j = 0; j < 5; j++){
                             if(theSided.canExtractItem(i, tempStack, j)){
@@ -108,7 +120,7 @@ public class TileEntityInputter extends TileEntityInventoryBase{
                         if(tempStack.getMaxStackSize() < theInventory.getInventoryStackLimit()) maxSize = tempStack.getMaxStackSize();
                         else maxSize = theInventory.getInventoryStackLimit();
                     }
-                    if(tempStack == null || (theInventory.isItemValidForSlot(i, this.slots[0]) && tempStack.isItemEqual(this.slots[0]) && tempStack.stackSize < maxSize)){
+                    if((tempStack == null || (theInventory.isItemValidForSlot(i, this.slots[0]) && tempStack.isItemEqual(this.slots[0]) && tempStack.stackSize < maxSize)) && this.checkFilters(this.slots[0], false)){
                         if(theSided != null){
                             for(int j = 0; j < 5; j++){
                                 if(theSided.canInsertItem(i, this.slots[0], j)){
@@ -150,6 +162,18 @@ public class TileEntityInputter extends TileEntityInventoryBase{
                 }
             }
         }
+    }
+
+    public boolean checkFilters(ItemStack stack, boolean isPull){
+        if(!this.isAdvanced) return true;
+
+        int slotStart = isPull ? PULL_FILTER_START : PUT_FILTER_START;
+        int slotStop = slotStart+6;
+
+        for(int i = slotStart; i < slotStop; i++){
+            if(this.slots[i] != null && this.slots[i].isItemEqual(stack)) return true;
+        }
+        return false;
     }
 
     public void initVars(){
@@ -211,20 +235,26 @@ public class TileEntityInputter extends TileEntityInventoryBase{
         compound.setInteger("SlotToPut", this.slotToPut);
         compound.setInteger("SideToPull", this.sideToPull);
         compound.setInteger("SlotToPull", this.slotToPull);
+        compound.setBoolean("IsAdvanced", this.isAdvanced);
+        compound.setString("Name", this.name);
+        compound.setInteger("Slots", this.slots.length);
     }
 
     @Override
     public void readFromNBT(NBTTagCompound compound){
-        super.readFromNBT(compound);
+        this.initializeSlots(compound.getInteger("Slots"));
         this.sideToPut = compound.getInteger("SideToPut");
         this.slotToPut = compound.getInteger("SlotToPut");
         this.sideToPull = compound.getInteger("SideToPull");
         this.slotToPull = compound.getInteger("SlotToPull");
+        this.isAdvanced = compound.getBoolean("IsAdvanced");
+        this.name = compound.getString("Name");
+        super.readFromNBT(compound);
     }
-
+    
     @Override
     public boolean isItemValidForSlot(int i, ItemStack stack){
-        return true;
+        return i == 0;
     }
 
     @Override
@@ -234,6 +264,6 @@ public class TileEntityInputter extends TileEntityInventoryBase{
 
     @Override
     public boolean canExtractItem(int slot, ItemStack stack, int side){
-        return true;
+        return slot == 0;
     }
 }

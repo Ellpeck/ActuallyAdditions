@@ -33,7 +33,10 @@ public class GuiHandler implements IGuiHandler{
                 return new ContainerFurnaceDouble(entityPlayer.inventory, tileFurnace);
             case INPUTTER_ID:
                 TileEntityBase tileInputter = (TileEntityBase)world.getTileEntity(x, y, z);
-                return new ContainerInputter(entityPlayer.inventory, tileInputter);
+                return new ContainerInputter(entityPlayer.inventory, tileInputter, false);
+            case INPUTTER_ADVANCED_ID:
+                TileEntityBase tileInputterAdvanced = (TileEntityBase)world.getTileEntity(x, y, z);
+                return new ContainerInputter(entityPlayer.inventory, tileInputterAdvanced, true);
             case REPAIRER_ID:
                 TileEntityBase tileRepairer = (TileEntityBase)world.getTileEntity(x, y, z);
                 return new ContainerRepairer(entityPlayer.inventory, tileRepairer);
@@ -64,7 +67,10 @@ public class GuiHandler implements IGuiHandler{
                 return new GuiFurnaceDouble(entityPlayer.inventory, tileFurnace);
             case INPUTTER_ID:
                 TileEntityBase tileInputter = (TileEntityBase)world.getTileEntity(x, y, z);
-                return new GuiInputter(entityPlayer.inventory, tileInputter, x, y, z, world);
+                return new GuiInputter(entityPlayer.inventory, tileInputter, x, y, z, world, false);
+            case INPUTTER_ADVANCED_ID:
+                TileEntityBase tileInputterAdvanced = (TileEntityBase)world.getTileEntity(x, y, z);
+                return new GuiInputter(entityPlayer.inventory, tileInputterAdvanced, x, y, z, world, true);
             case REPAIRER_ID:
                 TileEntityBase tileRepairer = (TileEntityBase)world.getTileEntity(x, y, z);
                 return new GuiRepairer(entityPlayer.inventory, tileRepairer);
@@ -81,6 +87,7 @@ public class GuiHandler implements IGuiHandler{
     public static final int FURNACE_DOUBLE_ID = 5;
     public static final int INPUTTER_ID = 6;
     public static final int REPAIRER_ID = 7;
+    public static final int INPUTTER_ADVANCED_ID = 8;
 
     public static void init(){
         Util.logInfo("Initializing GuiHandler...");

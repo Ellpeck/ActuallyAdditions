@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class ItemLeafBlower extends Item implements IName{
+public class ItemLeafBlower extends Item implements INameableItem{
 
     public final int range = ConfigValues.leafBlowerRangeSides;
     public final int rangeUp = ConfigValues.leafBlowerRangeUp;
@@ -46,6 +46,16 @@ public class ItemLeafBlower extends Item implements IName{
                 if(this.hasSound) player.worldObj.playSoundAtEntity(player, "minecart.base", 0.3F, 0.001F);
             }
         }
+    }
+
+    @Override
+    public String getOredictName(){
+        return this.getName();
+    }
+
+    @Override
+    public boolean shouldRotateAroundWhenRendering(){
+        return false;
     }
 
     public void breakStuff(World world, int x, int y, int z){
@@ -82,12 +92,12 @@ public class ItemLeafBlower extends Item implements IName{
 
     @Override
     public int getMaxItemUseDuration(ItemStack stack){
-        return 100000;
+        return 1000000;
     }
 
     @Override
     public EnumAction getItemUseAction(ItemStack stack){
-        return EnumAction.none;
+        return EnumAction.bow;
     }
 
     @Override
@@ -109,6 +119,7 @@ public class ItemLeafBlower extends Item implements IName{
             list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + "." + this.getName() + ".desc." + 1));
             list.add(StringUtil.ITALIC + StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + ".itemLeafBlower.desc.2"));
             list.add(StringUtil.ITALIC + StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + ".itemLeafBlower.desc.3"));
+            ItemUtil.addOredictName(this, list);
         }
         else list.add(ItemUtil.shiftForInfo());
     }

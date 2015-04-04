@@ -4,7 +4,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.ActuallyAdditions;
 import ellpeck.actuallyadditions.inventory.GuiHandler;
-import ellpeck.actuallyadditions.util.IName;
+import ellpeck.actuallyadditions.util.INameableItem;
 import ellpeck.actuallyadditions.util.ItemUtil;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -17,7 +17,7 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class ItemCrafterOnAStick extends Item implements IName{
+public class ItemCrafterOnAStick extends Item implements INameableItem{
 
     public ItemCrafterOnAStick(){
         this.setMaxStackSize(1);
@@ -27,7 +27,7 @@ public class ItemCrafterOnAStick extends Item implements IName{
     @SuppressWarnings("unchecked")
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld) {
-        list.add(ItemUtil.addStandardInformation(this));
+        ItemUtil.addStandardInformation(this, list);
     }
 
     @Override
@@ -55,5 +55,10 @@ public class ItemCrafterOnAStick extends Item implements IName{
     @Override
     public String getName(){
         return "itemCrafterOnAStick";
+    }
+
+    @Override
+    public String getOredictName(){
+        return this.getName();
     }
 }

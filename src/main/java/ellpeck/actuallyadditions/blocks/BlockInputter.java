@@ -21,21 +21,29 @@ import net.minecraft.world.World;
 import java.util.List;
 import java.util.Random;
 
-public class BlockInputter extends BlockContainerBase implements IName{
+public class BlockInputter extends BlockContainerBase implements INameableItem{
 
-    public static final int NAME_FLAVOUR_AMOUNTS = 12;
+    public static final int NAME_FLAVOUR_AMOUNTS = 15;
 
-    public BlockInputter(){
+    public boolean isAdvanced;
+
+    public BlockInputter(boolean isAdvanced){
         super(Material.rock);
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(1.0F);
         this.setStepSound(soundTypeStone);
         this.setTickRandomly(true);
+        this.isAdvanced = isAdvanced;
+    }
+
+    @Override
+    public String getOredictName(){
+        return this.getName();
     }
 
     @Override
     public TileEntity createNewTileEntity(World world, int par2){
-        return new TileEntityInputter();
+        return new TileEntityInputter(this.isAdvanced);
     }
 
     @Override
@@ -53,7 +61,7 @@ public class BlockInputter extends BlockContainerBase implements IName{
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9){
         if(!world.isRemote){
             TileEntityInputter inputter = (TileEntityInputter)world.getTileEntity(x, y, z);
-            if (inputter != null) player.openGui(ActuallyAdditions.instance, GuiHandler.INPUTTER_ID, world, x, y, z);
+            if (inputter != null) player.openGui(ActuallyAdditions.instance, this.isAdvanced ? GuiHandler.INPUTTER_ADVANCED_ID : GuiHandler.INPUTTER_ID, world, x, y, z);
             return true;
         }
         return true;
@@ -67,7 +75,7 @@ public class BlockInputter extends BlockContainerBase implements IName{
 
     @Override
     public String getName(){
-        return "blockInputter";
+        return this.isAdvanced ? "blockInputterAdvanced" : "blockInputter";
     }
 
     public static class TheItemBlock extends ItemBlock{
@@ -86,7 +94,7 @@ public class BlockInputter extends BlockContainerBase implements IName{
 
         @Override
         public EnumRarity getRarity(ItemStack stack){
-            return EnumRarity.rare;
+            return ((BlockInputter)theBlock).isAdvanced ? EnumRarity.epic : EnumRarity.rare;
         }
 
         @Override
@@ -99,7 +107,7 @@ public class BlockInputter extends BlockContainerBase implements IName{
                 this.toPick = rand.nextInt(NAME_FLAVOUR_AMOUNTS+1);
             }
 
-            return StatCollector.translateToLocal(this.getUnlocalizedName() + ".name") + " (" + StatCollector.translateToLocal(this.getUnlocalizedName() + ".add." + this.toPick + ".name") + ")";
+            return StatCollector.translateToLocal(this.getUnlocalizedName() + ".name") + " (" + StatCollector.translateToLocal("tile." + ModUtil.MOD_ID_LOWER + ".blockInputter.add." + this.toPick + ".name") + ")";
         }
 
         @Override
@@ -112,10 +120,12 @@ public class BlockInputter extends BlockContainerBase implements IName{
         @SideOnly(Side.CLIENT)
         public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld) {
             if(KeyUtil.isShiftPressed()){
-                list.add(StatCollector.translateToLocalFormatted("tooltip." + ModUtil.MOD_ID_LOWER + "." + ((IName)theBlock).getName() + ".desc." + 1, StringUtil.OBFUSCATED, StringUtil.LIGHT_GRAY));
-                for(int i = 1; i < 5; i++){
-                    list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + "." + ((IName)theBlock).getName() + ".desc." + (i + 1)));
+                list.add(StatCollector.translateToLocalFormatted("tooltip." + ModUtil.MOD_ID_LOWER + ".blockInputter.desc." + 1, StringUtil.OBFUSCATED, StringUtil.LIGHT_GRAY));
+                for(int i = 1; i < 6; i++){
+                    list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + ".blockInputter.desc." + (i + 1)));
                 }
+                if((((BlockInputter)theBlock).isAdvanced)) list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + "." + ((INameableItem)theBlock).getName() + ".desc"));
+                BlockUtil.addOredictName(theBlock, list);
             }
             else list.add(ItemUtil.shiftForInfo());
         }

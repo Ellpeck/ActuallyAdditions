@@ -4,12 +4,13 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import ellpeck.actuallyadditions.blocks.InitBlocks;
 import ellpeck.actuallyadditions.blocks.metalists.TheMiscBlocks;
 import ellpeck.actuallyadditions.config.ConfigValues;
-import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.items.metalists.TheMiscItems;
-import ellpeck.actuallyadditions.util.Util;
+import ellpeck.actuallyadditions.util.INameableItem;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.oredict.ShapedOreRecipe;
+import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 public class BlockCrafting{
 
@@ -17,103 +18,124 @@ public class BlockCrafting{
 
         //Compost
         if(ConfigValues.enableCompostRecipe)
-            GameRegistry.addRecipe(new ItemStack(InitBlocks.blockCompost),
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockCompost),
                     "W W", "WFW", "WWW",
-                    'W', new ItemStack(Blocks.planks, 1, Util.WILDCARD),
-                    'F', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.MASHED_FOOD.ordinal()));
+                    'W', "plankWood",
+                    'F', TheMiscItems.MASHED_FOOD.getOredictName()));
+
+        //Wood Casing
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.WOOD_CASING.ordinal()),
+                "WSW", "SRS", "WSW",
+                'W', "plankWood",
+                'R', "dustRedstone",
+                'S', "stickWood"));
+
+        //Stone Casing
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.STONE_CASING.ordinal()),
+                "WSW", "SRS", "WSW",
+                'W', "cobblestone",
+                'R', "dustRedstone",
+                'S', "stickWood"));
 
         //Quartz Block
-        GameRegistry.addRecipe(new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.QUARTZ.ordinal()),
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.QUARTZ.ordinal()),
                 "QQ", "QQ",
-                'Q', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal()));
+                'Q', TheMiscItems.QUARTZ.getOredictName()));
 
         //Fishing Net
         if(ConfigValues.enableFishingNetRecipe)
-            GameRegistry.addRecipe(new ItemStack(InitBlocks.blockFishingNet),
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockFishingNet),
                     "SSS", "SDS", "SSS",
-                    'D', new ItemStack(Items.diamond),
-                    'S', new ItemStack(Items.string));
+                    'D', "gemDiamond",
+                    'S', Items.string));
 
         //Repairer
         if(ConfigValues.enableRepairerRecipe)
-            GameRegistry.addRecipe(new ItemStack(InitBlocks.blockItemRepairer),
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockItemRepairer),
                     "DID", "DCD", "DID",
-                    'D', new ItemStack(Items.diamond),
-                    'I', new ItemStack(Items.iron_ingot),
-                    'C', new ItemStack(Blocks.crafting_table));
+                    'D', "gemDiamond",
+                    'I', "ingotIron",
+                    'C', Blocks.crafting_table));
 
         //Solar Panel
         if(ConfigValues.enableSolarRecipe)
-            GameRegistry.addRecipe(new ItemStack(InitBlocks.blockFurnaceSolar),
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockFurnaceSolar),
                     "IBI", "BDB", "IBI",
-                    'D', new ItemStack(Blocks.diamond_block),
-                    'I', new ItemStack(Items.iron_ingot),
-                    'B', new ItemStack(Blocks.iron_bars));
+                    'D', "blockDiamond",
+                    'I', "ingotIron",
+                    'B', new ItemStack(Blocks.iron_bars)));
 
         //Heat Collector
         if(ConfigValues.enableHeatCollectorRecipe)
-            GameRegistry.addRecipe(new ItemStack(InitBlocks.blockHeatCollector),
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockHeatCollector),
                     "BRB", "LDL", "BRB",
-                    'D', new ItemStack(Blocks.diamond_block),
+                    'D', "blockDiamond",
                     'R', new ItemStack(Items.repeater),
                     'L', new ItemStack(Items.lava_bucket),
-                    'B', new ItemStack(Blocks.iron_bars));
+                    'B', new ItemStack(Blocks.iron_bars)));
 
         //Quartz Pillar
-        GameRegistry.addRecipe(new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.QUARTZ_PILLAR.ordinal()),
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.QUARTZ_PILLAR.ordinal()),
                 "Q", "Q",
-                'Q', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal()));
+                'Q', TheMiscItems.QUARTZ.getOredictName()));
 
         //Chiseled Quartz
-        GameRegistry.addRecipe(new ItemStack(InitBlocks.blockMisc, 2, TheMiscBlocks.QUARTZ_CHISELED.ordinal()),
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockMisc, 2, TheMiscBlocks.QUARTZ_CHISELED.ordinal()),
                 "Q", "Q",
-                'Q', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.QUARTZ.ordinal()));
+                'Q', TheMiscBlocks.QUARTZ.getOredictName()));
 
         //Inputter
-        if(ConfigValues.enableInputterRecipe)
-            GameRegistry.addRecipe(new ItemStack(InitBlocks.blockInputter),
+        if(ConfigValues.enableInputterRecipe){
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockInputter),
                     "WWW", "WHW", "WWW",
-                    'W', new ItemStack(Blocks.planks, 1, Util.WILDCARD),
-                    'H', new ItemStack(Blocks.hopper));
+                    'W', "plankWood",
+                    'H', new ItemStack(Blocks.hopper)));
+
+            GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitBlocks.blockInputterAdvanced),
+                    ((INameableItem)InitBlocks.blockInputter).getOredictName(),
+                    "gemQuartz",
+                    TheMiscItems.QUARTZ.getOredictName(),
+                    "dustRedstone"));
+        }
 
         //Crusher
         if(ConfigValues.enableCrusherRecipe)
-            GameRegistry.addRecipe(new ItemStack(InitBlocks.blockGrinder),
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockGrinder),
                     "CFC", "CPC", "CFC",
-                    'C', new ItemStack(Blocks.cobblestone),
+                    'C', "cobblestone",
                     'P', new ItemStack(Blocks.piston),
-                    'F', new ItemStack(Items.flint));
+                    'F', new ItemStack(Items.flint)));
 
         //Double Crusher
         if(ConfigValues.enableCrusherDoubleRecipe)
-            GameRegistry.addRecipe(new ItemStack(InitBlocks.blockGrinderDouble),
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockGrinderDouble),
                     "CCC", "RPR", "CCC",
-                    'C', new ItemStack(Blocks.cobblestone),
-                    'R', new ItemStack(InitBlocks.blockGrinder),
-                    'P', new ItemStack(Blocks.piston));
+                    'C', "cobblestone",
+                    'R', ((INameableItem)InitBlocks.blockGrinder).getOredictName(),
+                    'P', new ItemStack(Blocks.piston)));
 
         //Double Furnace
         if(ConfigValues.enableFurnaceDoubleRecipe)
-            GameRegistry.addRecipe(new ItemStack(InitBlocks.blockFurnaceDouble),
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockFurnaceDouble),
                     "CCC", "RPR", "CCC",
-                    'C', new ItemStack(Blocks.cobblestone),
+                    'C', "cobblestone",
                     'R', new ItemStack(Blocks.furnace),
-                    'P', new ItemStack(Items.brick));
+                    'P', "ingotBrick"));
 
         //Feeder
         if(ConfigValues.enableFeederRecipe)
-            GameRegistry.addRecipe(new ItemStack(InitBlocks.blockFeeder),
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockFeeder),
                     "WCW", "WHW", "WCW",
-                    'W', new ItemStack(Blocks.planks, 1, Util.WILDCARD),
+                    'W', "plankWood",
                     'C', new ItemStack(Items.golden_carrot),
-                    'H', new ItemStack(Items.wheat));
+                    'H', "cropWheat"));
 
         //Giant Chest
         if(ConfigValues.enableGiantChestRecipe)
-            GameRegistry.addRecipe(new ItemStack(InitBlocks.blockGiantChest),
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockGiantChest),
                     "CWC", "W W", "CWC",
                     'C', new ItemStack(Blocks.chest),
-                    'W', new ItemStack(Blocks.planks, 1, Util.WILDCARD));
+                    'W', "plankWood"));
 
     }
 

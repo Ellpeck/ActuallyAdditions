@@ -5,10 +5,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.ActuallyAdditions;
 import ellpeck.actuallyadditions.inventory.GuiHandler;
 import ellpeck.actuallyadditions.tile.TileEntityGrinder;
-import ellpeck.actuallyadditions.util.IName;
-import ellpeck.actuallyadditions.util.ItemUtil;
-import ellpeck.actuallyadditions.util.KeyUtil;
-import ellpeck.actuallyadditions.util.ModUtil;
+import ellpeck.actuallyadditions.util.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -25,7 +22,7 @@ import net.minecraft.world.World;
 import java.util.List;
 import java.util.Random;
 
-public class BlockGrinder extends BlockContainerBase implements IName{
+public class BlockGrinder extends BlockContainerBase implements INameableItem{
 
     private IIcon topIcon;
     private IIcon onIcon;
@@ -95,6 +92,11 @@ public class BlockGrinder extends BlockContainerBase implements IName{
     }
 
     @Override
+    public String getOredictName(){
+        return this.getName();
+    }
+
+    @Override
     public void breakBlock(World world, int x, int y, int z, Block block, int par6){
         this.dropInventory(world, x, y, z);
         super.breakBlock(world, x, y, z, block, par6);
@@ -132,8 +134,9 @@ public class BlockGrinder extends BlockContainerBase implements IName{
         public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld) {
             if(KeyUtil.isShiftPressed()){
                 for(int i = 0; i < (((BlockGrinder)theBlock).isDouble ? 3 : 4); i++){
-                    list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + "." + ((IName)theBlock).getName() + ".desc." + (i+1)));
+                    list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + "." + ((INameableItem)theBlock).getName() + ".desc." + (i+1)));
                 }
+                BlockUtil.addOredictName(theBlock, list);
             }
             else list.add(ItemUtil.shiftForInfo());
         }

@@ -5,9 +5,8 @@ import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.ActuallyAdditions;
 import ellpeck.actuallyadditions.inventory.GuiHandler;
 import ellpeck.actuallyadditions.tile.TileEntityFurnaceDouble;
-import ellpeck.actuallyadditions.util.IName;
-import ellpeck.actuallyadditions.util.ItemUtil;
-import ellpeck.actuallyadditions.util.KeyUtil;
+import ellpeck.actuallyadditions.util.BlockUtil;
+import ellpeck.actuallyadditions.util.INameableItem;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -20,14 +19,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
-import net.minecraft.util.StatCollector;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 import java.util.List;
 import java.util.Random;
 
-public class BlockFurnaceDouble extends BlockContainerBase implements IName{
+public class BlockFurnaceDouble extends BlockContainerBase implements INameableItem{
 
     private IIcon topIcon;
     private IIcon onIcon;
@@ -39,6 +37,11 @@ public class BlockFurnaceDouble extends BlockContainerBase implements IName{
         this.setHardness(1.0F);
         this.setStepSound(soundTypeStone);
         this.setTickRandomly(true);
+    }
+
+    @Override
+    public String getOredictName(){
+        return this.getName();
     }
 
     @Override
@@ -179,8 +182,7 @@ public class BlockFurnaceDouble extends BlockContainerBase implements IName{
         @SuppressWarnings("unchecked")
         @SideOnly(Side.CLIENT)
         public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld) {
-            if(KeyUtil.isShiftPressed()) list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + "." + ((IName)theBlock).getName() + ".desc"));
-            else list.add(ItemUtil.shiftForInfo());
+            BlockUtil.addStandardInformation(theBlock, list);
         }
 
         @Override

@@ -5,9 +5,8 @@ import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.ActuallyAdditions;
 import ellpeck.actuallyadditions.inventory.GuiHandler;
 import ellpeck.actuallyadditions.tile.TileEntityGiantChest;
-import ellpeck.actuallyadditions.util.IName;
-import ellpeck.actuallyadditions.util.ItemUtil;
-import ellpeck.actuallyadditions.util.KeyUtil;
+import ellpeck.actuallyadditions.util.BlockUtil;
+import ellpeck.actuallyadditions.util.INameableItem;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -18,14 +17,14 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
-import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
 import java.util.List;
 
-public class BlockGiantChest extends BlockContainerBase implements IName{
+public class BlockGiantChest extends BlockContainerBase implements INameableItem{
 
     private IIcon topIcon;
+    private IIcon bottomIcon;
 
     public BlockGiantChest(){
         super(Material.wood);
@@ -35,13 +34,18 @@ public class BlockGiantChest extends BlockContainerBase implements IName{
     }
 
     @Override
+    public String getOredictName(){
+        return this.getName();
+    }
+
+    @Override
     public TileEntity createNewTileEntity(World world, int par2){
         return new TileEntityGiantChest();
     }
 
     @Override
     public IIcon getIcon(int side, int metadata){
-        return side == 1 ? this.topIcon : this.blockIcon;
+        return side == 1 ? this.topIcon : (side == 0 ? this.bottomIcon : this.blockIcon);
     }
 
     @Override
@@ -49,6 +53,7 @@ public class BlockGiantChest extends BlockContainerBase implements IName{
     public void registerBlockIcons(IIconRegister iconReg){
         this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":" + this.getName());
         this.topIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":" + this.getName() + "Top");
+        this.bottomIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":" + this.getName() + "Bottom");
     }
 
     @Override
@@ -97,8 +102,7 @@ public class BlockGiantChest extends BlockContainerBase implements IName{
         @SuppressWarnings("unchecked")
         @SideOnly(Side.CLIENT)
         public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld) {
-            if(KeyUtil.isShiftPressed()) list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + "." + ((IName)theBlock).getName() + ".desc"));
-            else list.add(ItemUtil.shiftForInfo());
+            BlockUtil.addStandardInformation(theBlock, list);
         }
 
         @Override

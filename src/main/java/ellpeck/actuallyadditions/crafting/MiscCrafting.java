@@ -6,6 +6,8 @@ import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.items.metalists.TheMiscItems;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.oredict.ShapedOreRecipe;
+import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 public class MiscCrafting{
 
@@ -13,8 +15,8 @@ public class MiscCrafting{
 
         //Dough
         if(ConfigValues.enabledMiscRecipes[TheMiscItems.DOUGH.ordinal()])
-            GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemMisc, 2, TheMiscItems.DOUGH.ordinal()),
-                    new ItemStack(Items.wheat), new ItemStack(Items.wheat));
+            GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemMisc, 2, TheMiscItems.DOUGH.ordinal()),
+                    "cropWheat", "cropWheat"));
 
         //Paper Cone
         if(ConfigValues.enabledMiscRecipes[TheMiscItems.PAPER_CONE.ordinal()])
@@ -24,16 +26,16 @@ public class MiscCrafting{
 
         //Knife Handle
         if(ConfigValues.enabledMiscRecipes[TheMiscItems.KNIFE_HANDLE.ordinal()])
-            GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.KNIFE_HANDLE.ordinal()),
-                    new ItemStack(Items.stick),
-                    new ItemStack(Items.leather));
+            GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.KNIFE_HANDLE.ordinal()),
+                    "stickWood",
+                    new ItemStack(Items.leather)));
 
         //Knife Blade
         if(ConfigValues.enabledMiscRecipes[TheMiscItems.KNIFE_BLADE.ordinal()])
-            GameRegistry.addRecipe(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.KNIFE_BLADE.ordinal()),
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.KNIFE_BLADE.ordinal()),
                     "KF",
-                    'K', new ItemStack(Items.iron_ingot),
-                    'F', new ItemStack(Items.flint));
+                    'K', "ingotIron",
+                    'F', new ItemStack(Items.flint)));
 
     }
 

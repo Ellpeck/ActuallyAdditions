@@ -1,12 +1,12 @@
 package ellpeck.actuallyadditions.items.metalists;
 
-import ellpeck.actuallyadditions.util.IName;
+import ellpeck.actuallyadditions.util.INameableItem;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 
-public enum ThePotionRings implements IName{
+public enum ThePotionRings implements INameableItem{
 
     SPEED("Speed", 8171462, 1, 0, 3, 10, false, EnumRarity.uncommon, new ItemStack(Items.sugar)),
     //TODO Slowness
@@ -57,5 +57,10 @@ public enum ThePotionRings implements IName{
     @Override
     public String getName(){
         return this.name;
+    }
+
+    @Override
+    public String getOredictName(){
+        return "itemPotionRing";
     }
 }

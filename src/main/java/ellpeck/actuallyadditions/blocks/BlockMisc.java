@@ -3,10 +3,7 @@ package ellpeck.actuallyadditions.blocks;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.blocks.metalists.TheMiscBlocks;
-import ellpeck.actuallyadditions.util.IName;
-import ellpeck.actuallyadditions.util.ItemUtil;
-import ellpeck.actuallyadditions.util.KeyUtil;
-import ellpeck.actuallyadditions.util.ModUtil;
+import ellpeck.actuallyadditions.util.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -21,7 +18,7 @@ import net.minecraft.util.StatCollector;
 
 import java.util.List;
 
-public class BlockMisc extends Block implements IName{
+public class BlockMisc extends Block implements INameableItem{
 
     public static final TheMiscBlocks[] allMiscBlocks = TheMiscBlocks.values();
     public IIcon[] textures = new IIcon[allMiscBlocks.length];
@@ -63,6 +60,11 @@ public class BlockMisc extends Block implements IName{
         return "blockMisc";
     }
 
+    @Override
+    public String getOredictName(){
+        return "";
+    }
+
     public static class TheItemBlock extends ItemBlock{
 
         private Block theBlock;
@@ -88,7 +90,10 @@ public class BlockMisc extends Block implements IName{
         @SuppressWarnings("unchecked")
         @SideOnly(Side.CLIENT)
         public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld) {
-            if(KeyUtil.isShiftPressed()) list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + "." + ((IName)theBlock).getName() + allMiscBlocks[stack.getItemDamage()].getName() + ".desc"));
+            if(KeyUtil.isShiftPressed()){
+                list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + "." + ((INameableItem)theBlock).getName() + allMiscBlocks[stack.getItemDamage()].getName() + ".desc"));
+                list.add(StringUtil.GRAY + StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + ".oredictName.desc") + ": " + allMiscBlocks[stack.getItemDamage()].getOredictName());
+            }
             else list.add(ItemUtil.shiftForInfo());
         }
 

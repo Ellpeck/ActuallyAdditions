@@ -15,6 +15,8 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.oredict.ShapedOreRecipe;
+import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 public class ItemCrafting{
 
@@ -22,12 +24,26 @@ public class ItemCrafting{
 
         //Leaf Blower
         if(ConfigValues.enableLeafBlowerRecipe)
-            GameRegistry.addRecipe(new ItemStack(InitItems.itemLeafBlower),
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemLeafBlower),
                     " F", "IP", "IR",
                     'F', new ItemStack(Items.flint),
-                    'I', new ItemStack(Items.iron_ingot),
+                    'I', "ingotIron",
                     'P', new ItemStack(Blocks.piston),
-                    'R', new ItemStack(Items.redstone));
+                    'R', "dustRedstone"));
+
+        //Coil
+        if(ConfigValues.enabledMiscRecipes[TheMiscItems.COIL.ordinal()])
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL.ordinal()),
+                    " R ", "RIR", " R ",
+                    'I', "ingotIron",
+                    'R', "dustRedstone"));
+
+        //Advanced Coil
+        if(ConfigValues.enabledMiscRecipes[TheMiscItems.COIL_ADVANCED.ordinal()])
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal()),
+                    " G ", "GCG", " G ",
+                    'C', TheMiscItems.COIL.getOredictName(),
+                    'G', "ingotGold"));
 
         //Ender Pearl
         GameRegistry.addRecipe(new ItemStack(Items.ender_pearl),
@@ -41,12 +57,12 @@ public class ItemCrafting{
 
         //Advanced Leaf Blower
         if(ConfigValues.enableLeafBlowerAdvancedRecipe)
-            GameRegistry.addRecipe(new ItemStack(InitItems.itemLeafBlowerAdvanced),
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemLeafBlowerAdvanced),
                     " F", "DP", "DR",
                     'F', new ItemStack(Items.flint),
-                    'D', new ItemStack(Items.diamond),
+                    'D', "gemDiamond",
                     'P', new ItemStack(Blocks.piston),
-                    'R', new ItemStack(Items.redstone));
+                    'R', "dustRedstone"));
 
         //Quartz
         if(ConfigValues.enabledMiscRecipes[TheMiscItems.QUARTZ.ordinal()])
@@ -55,9 +71,9 @@ public class ItemCrafting{
 
         //Knife
         if(ConfigValues.enableKnifeRecipe)
-            GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemKnife),
-                    new ItemStack(InitItems.itemMisc, 1, TheMiscItems.KNIFE_BLADE.ordinal()),
-                    new ItemStack(InitItems.itemMisc, 1, TheMiscItems.KNIFE_HANDLE.ordinal()));
+            GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemKnife),
+                    TheMiscItems.KNIFE_BLADE.getOredictName(),
+                    TheMiscItems.KNIFE_HANDLE.getOredictName()));
 
         //Crafter on a Stick
         if(ConfigValues.enableCrafterRecipe)
@@ -94,11 +110,11 @@ public class ItemCrafting{
     }
 
     public static void initPotionRingRecipes(){
-        GameRegistry.addRecipe(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.RING.ordinal()),
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.RING.ordinal()),
                 "IGI", "GDG", "IGI",
-                'G', new ItemStack(Items.gold_ingot),
-                'I', new ItemStack(Items.iron_ingot),
-                'D', new ItemStack(Items.glowstone_dust));
+                'G', "ingotGold",
+                'I', "ingotIron",
+                'D', "dustGlowstone"));
 
         for(int i = 0; i < ThePotionRings.values().length; i++){
             if(ConfigValues.enablePotionRingRecipes[i]){

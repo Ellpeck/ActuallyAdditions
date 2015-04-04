@@ -3,10 +3,7 @@ package ellpeck.actuallyadditions.items;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.items.metalists.TheDusts;
-import ellpeck.actuallyadditions.util.IName;
-import ellpeck.actuallyadditions.util.ItemUtil;
-import ellpeck.actuallyadditions.util.KeyUtil;
-import ellpeck.actuallyadditions.util.ModUtil;
+import ellpeck.actuallyadditions.util.*;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -18,7 +15,7 @@ import net.minecraft.util.StatCollector;
 
 import java.util.List;
 
-public class ItemDust extends Item implements IName{
+public class ItemDust extends Item implements INameableItem{
 
     public static final TheDusts[] allDusts = TheDusts.values();
 
@@ -29,6 +26,11 @@ public class ItemDust extends Item implements IName{
     @Override
     public String getName(){
         return "itemDust";
+    }
+
+    @Override
+    public String getOredictName(){
+        return "";
     }
 
     @Override
@@ -58,7 +60,10 @@ public class ItemDust extends Item implements IName{
     @SuppressWarnings("unchecked")
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld){
-        if(KeyUtil.isShiftPressed()) list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + "." + this.getName() + allDusts[stack.getItemDamage()].getName() + ".desc"));
+        if(KeyUtil.isShiftPressed()){
+            list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + "." + this.getName() + allDusts[stack.getItemDamage()].getName() + ".desc"));
+            list.add(StringUtil.GRAY + StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + ".oredictName.desc") + ": " + allDusts[stack.getItemDamage()].getOredictName());
+        }
         else list.add(ItemUtil.shiftForInfo());
     }
 

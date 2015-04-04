@@ -23,6 +23,8 @@ import org.lwjgl.opengl.GL11;
 public class GuiInputter extends GuiContainer{
 
     private static final ResourceLocation resLoc = AssetUtil.getGuiLocation("guiInputter");
+    private static final ResourceLocation resLocAdvanced = AssetUtil.getGuiLocation("guiInputterAdvanced");
+
     private TileEntityInputter tileInputter;
 
     private int x;
@@ -35,6 +37,8 @@ public class GuiInputter extends GuiContainer{
     private SmallerButton buttonSlotPutM;
     private SmallerButton buttonSlotPullM;
 
+    private boolean isAdvanced;
+
     public static final String[] sideString = new String[]{
             StatCollector.translateToLocal("info." + ModUtil.MOD_ID_LOWER + ".gui.disabled"),
             StatCollector.translateToLocal("info." + ModUtil.MOD_ID_LOWER + ".gui.up"),
@@ -44,15 +48,16 @@ public class GuiInputter extends GuiContainer{
             StatCollector.translateToLocal("info." + ModUtil.MOD_ID_LOWER + ".gui.south"),
             StatCollector.translateToLocal("info." + ModUtil.MOD_ID_LOWER + ".gui.west")};
 
-    public GuiInputter(InventoryPlayer inventory, TileEntityBase tile, int x, int y, int z, World world){
-        super(new ContainerInputter(inventory, tile));
+    public GuiInputter(InventoryPlayer inventory, TileEntityBase tile, int x, int y, int z, World world, boolean isAdvanced){
+        super(new ContainerInputter(inventory, tile, isAdvanced));
         this.tileInputter = (TileEntityInputter)tile;
         this.x = x;
         this.y = y;
         this.z = z;
         this.world = world;
         this.xSize = 176;
-        this.ySize = 93+86;
+        this.ySize = 93+86 + (isAdvanced ? 12 : 0);
+        this.isAdvanced = isAdvanced;
     }
 
     @SuppressWarnings("unchecked")
@@ -60,15 +65,15 @@ public class GuiInputter extends GuiContainer{
     public void initGui(){
         super.initGui();
 
-        SmallerButton buttonSidePutP = new SmallerButton(0, guiLeft + 70, guiTop + 43, ">");
-        SmallerButton buttonSidePutM = new SmallerButton(1, guiLeft + 5, guiTop + 43, "<");
-        buttonSlotPutP = new SmallerButton(2, guiLeft + 70, guiTop + 64, "+");
-        buttonSlotPutM = new SmallerButton(3, guiLeft + 5, guiTop + 64, "-");
+        SmallerButton buttonSidePutP = new SmallerButton(0, guiLeft + 70, guiTop + 43 + (isAdvanced ? 12 : 0), ">");
+        SmallerButton buttonSidePutM = new SmallerButton(1, guiLeft + 5, guiTop + 43 + (isAdvanced ? 12 : 0), "<");
+        buttonSlotPutP = new SmallerButton(2, guiLeft + 70, guiTop + 64 + (isAdvanced ? 12 : 0), "+");
+        buttonSlotPutM = new SmallerButton(3, guiLeft + 5, guiTop + 64 + (isAdvanced ? 12 : 0), "-");
 
-        SmallerButton buttonSidePullP = new SmallerButton(4, guiLeft + 155, guiTop + 43, ">");
-        SmallerButton buttonSidePullM = new SmallerButton(5, guiLeft + 90, guiTop + 43, "<");
-        buttonSlotPullP = new SmallerButton(6, guiLeft+ 155, guiTop + 64, "+");
-        buttonSlotPullM = new SmallerButton(7, guiLeft + 90, guiTop + 64, "-");
+        SmallerButton buttonSidePullP = new SmallerButton(4, guiLeft + 155, guiTop + 43 + (isAdvanced ? 12 : 0), ">");
+        SmallerButton buttonSidePullM = new SmallerButton(5, guiLeft + 90, guiTop + 43 + (isAdvanced ? 12 : 0), "<");
+        buttonSlotPullP = new SmallerButton(6, guiLeft+ 155, guiTop + 64 + (isAdvanced ? 12 : 0), "+");
+        buttonSlotPullM = new SmallerButton(7, guiLeft + 90, guiTop + 64 + (isAdvanced ? 12 : 0), "-");
 
         this.buttonList.add(buttonSidePutP);
         this.buttonList.add(buttonSlotPutP);
@@ -85,19 +90,19 @@ public class GuiInputter extends GuiContainer{
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 
         this.mc.getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
-        this.drawTexturedModalRect(this.guiLeft, this.guiTop+93, 0, 0, 176, 86);
+        this.drawTexturedModalRect(this.guiLeft, this.guiTop+93 + (isAdvanced ? 12 : 0), 0, 0, 176, 86);
 
-        this.mc.getTextureManager().bindTexture(resLoc);
-        this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 93);
+        this.mc.getTextureManager().bindTexture(this.isAdvanced ? resLocAdvanced : resLoc);
+        this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 93 + (isAdvanced ? 12 : 0));
 
-        this.fontRendererObj.drawString(StatCollector.translateToLocal("info." + ModUtil.MOD_ID_LOWER + ".gui.put"), guiLeft + 22 + 3, guiTop + 32, 4210752);
-        this.fontRendererObj.drawString(StatCollector.translateToLocal("info." + ModUtil.MOD_ID_LOWER + ".gui.pull"), guiLeft + 107 + 3, guiTop + 32, 4210752);
+        this.fontRendererObj.drawString(StatCollector.translateToLocal("info." + ModUtil.MOD_ID_LOWER + ".gui.put"), guiLeft + 22 + 3, guiTop + 32 + (isAdvanced ? 12 : 0), 4210752);
+        this.fontRendererObj.drawString(StatCollector.translateToLocal("info." + ModUtil.MOD_ID_LOWER + ".gui.pull"), guiLeft + 107 + 3, guiTop + 32 + (isAdvanced ? 12 : 0), 4210752);
 
-        this.fontRendererObj.drawString(sideString[tileInputter.sideToPut+1], guiLeft + 24 + 1, guiTop + 45 + 3, 4210752);
-        this.fontRendererObj.drawString(StatCollector.translateToLocal("info." + ModUtil.MOD_ID_LOWER + ".gui.slot") + " " + (tileInputter.slotToPut == -1 ? StatCollector.translateToLocal("info." + ModUtil.MOD_ID_LOWER + ".gui.all") : tileInputter.slotToPut).toString(), guiLeft + 24 + 3, guiTop + 66 + 3, 4210752);
+        this.fontRendererObj.drawString(sideString[tileInputter.sideToPut+1], guiLeft + 24 + 1, guiTop + 45 + 3 + (isAdvanced ? 12 : 0), 4210752);
+        this.fontRendererObj.drawString(StatCollector.translateToLocal("info." + ModUtil.MOD_ID_LOWER + ".gui.slot") + " " + (tileInputter.slotToPut == -1 ? StatCollector.translateToLocal("info." + ModUtil.MOD_ID_LOWER + ".gui.all") : tileInputter.slotToPut).toString(), guiLeft + 24 + 3, guiTop + 66 + 3 + (isAdvanced ? 12 : 0), 4210752);
 
-        this.fontRendererObj.drawString(sideString[tileInputter.sideToPull+1], guiLeft + 109 + 1, guiTop + 45 + 3, 4210752);
-        this.fontRendererObj.drawString(StatCollector.translateToLocal("info." + ModUtil.MOD_ID_LOWER + ".gui.slot") + " " + (tileInputter.slotToPull == -1 ? StatCollector.translateToLocal("info." + ModUtil.MOD_ID_LOWER + ".gui.all") : tileInputter.slotToPull).toString(), guiLeft + 109 + 3, guiTop + 66 + 3, 4210752);
+        this.fontRendererObj.drawString(sideString[tileInputter.sideToPull+1], guiLeft + 109 + 1, guiTop + 45 + 3 + (isAdvanced ? 12 : 0), 4210752);
+        this.fontRendererObj.drawString(StatCollector.translateToLocal("info." + ModUtil.MOD_ID_LOWER + ".gui.slot") + " " + (tileInputter.slotToPull == -1 ? StatCollector.translateToLocal("info." + ModUtil.MOD_ID_LOWER + ".gui.all") : tileInputter.slotToPull).toString(), guiLeft + 109 + 3, guiTop + 66 + 3 + (isAdvanced ? 12 : 0), 4210752);
     }
 
     @Override

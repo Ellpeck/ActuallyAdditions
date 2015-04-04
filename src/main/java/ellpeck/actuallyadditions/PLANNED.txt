@@ -1,12 +1,7 @@
--Redstone Control for the ESD
-
 -Quartz Enchanter
     -Lets you enchant Tools with Black Quartz
     -Doesn't use Levels
     -Needs Quartz and Diamond Blocks instead of Bookcases around
-
--Advanced ESD
-    -Has a Filter
 
 -Instant Teleport Device
     -Teleports Players to where they look (Much like the Bukkit Compass)
@@ -29,10 +24,6 @@
 -Auto-Crafting Item
     -Has a Recipe saved
     -Crafts Recipe on Shift-Right-Click if all Items are in Inventory
-
--Repair Station
-    -Powered by Coal
-    -Repairs Items slowly
 
 -TNT Arrows
 

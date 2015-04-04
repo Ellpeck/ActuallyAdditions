@@ -18,7 +18,7 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class ItemPotionRing extends Item implements IName{
+public class ItemPotionRing extends Item implements INameableItem{
 
     public static final ThePotionRings[] allRings = ThePotionRings.values();
 
@@ -28,6 +28,11 @@ public class ItemPotionRing extends Item implements IName{
         this.setHasSubtypes(true);
         this.setMaxStackSize(1);
         this.isAdvanced = isAdvanced;
+    }
+
+    @Override
+    public String getOredictName(){
+        return "";
     }
 
     @Override
@@ -90,6 +95,7 @@ public class ItemPotionRing extends Item implements IName{
                 list.add(StringUtil.RED + StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + ".itemPotionRing.desc.off.1"));
                 list.add(StringUtil.RED + StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + ".itemPotionRing.desc.off.2"));
             }
+            list.add(StringUtil.GRAY + StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + ".oredictName.desc") + ": " + allRings[stack.getItemDamage()].getOredictName());
         }
         else list.add(ItemUtil.shiftForInfo());
     }

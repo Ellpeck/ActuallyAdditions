@@ -3,10 +3,7 @@ package ellpeck.actuallyadditions.items;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.items.metalists.TheFoods;
-import ellpeck.actuallyadditions.util.IName;
-import ellpeck.actuallyadditions.util.ItemUtil;
-import ellpeck.actuallyadditions.util.KeyUtil;
-import ellpeck.actuallyadditions.util.ModUtil;
+import ellpeck.actuallyadditions.util.*;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.item.EntityItem;
@@ -18,7 +15,7 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class ItemFoods extends ItemFood implements IName{
+public class ItemFoods extends ItemFood implements INameableItem{
 
     public static final TheFoods[] allFoods = TheFoods.values();
     public IIcon[] textures = new IIcon[allFoods.length];
@@ -28,6 +25,11 @@ public class ItemFoods extends ItemFood implements IName{
         this.setHasSubtypes(true);
         this.setMaxDamage(0);
         TheFoods.setReturnItems();
+    }
+
+    @Override
+    public String getOredictName(){
+        return "";
     }
 
     @Override
@@ -97,6 +99,7 @@ public class ItemFoods extends ItemFood implements IName{
             list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + "." + this.getName() + allFoods[stack.getItemDamage()].getName() + ".desc"));
             list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + ".hunger.desc") + ": " + allFoods[stack.getItemDamage()].healAmount);
             list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + ".saturation.desc") + ": " + allFoods[stack.getItemDamage()].saturation);
+            list.add(StringUtil.GRAY + StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + ".oredictName.desc") + ": " + allFoods[stack.getItemDamage()].getOredictName());
         }
         else list.add(ItemUtil.shiftForInfo());
     }

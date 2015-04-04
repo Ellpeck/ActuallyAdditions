@@ -18,7 +18,6 @@ import ellpeck.actuallyadditions.inventory.GuiHandler;
 import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.material.InitItemMaterials;
 import ellpeck.actuallyadditions.network.PacketHandler;
-import ellpeck.actuallyadditions.oredict.OreDictRegistry;
 import ellpeck.actuallyadditions.proxy.IProxy;
 import ellpeck.actuallyadditions.tile.TileEntityBase;
 import ellpeck.actuallyadditions.util.ModUtil;
@@ -42,7 +41,6 @@ public class ActuallyAdditions{
         InitItemMaterials.init();
         InitBlocks.init();
         InitItems.init();
-        OreDictRegistry.init();
         proxy.preInit();
 
         Util.logInfo("PreInitialization Finished.");

@@ -44,10 +44,10 @@ public class InitItems{
         ItemUtil.register(itemFertilizer);
 
         itemMisc = new ItemMisc();
-        ItemUtil.register(itemMisc);
+        ItemUtil.register(itemMisc, ItemMisc.allMiscItems);
 
         itemFoods = new ItemFoods();
-        ItemUtil.register(itemFoods);
+        ItemUtil.register(itemFoods, ItemFoods.allFoods);
 
         itemKnife = new ItemKnife();
         ItemUtil.register(itemKnife);
@@ -56,10 +56,10 @@ public class InitItems{
         ItemUtil.register(itemCrafterOnAStick);
 
         itemDust = new ItemDust();
-        ItemUtil.register(itemDust);
+        ItemUtil.register(itemDust, ItemDust.allDusts);
 
         itemSpecialDrop = new ItemSpecialDrop();
-        ItemUtil.register(itemSpecialDrop);
+        ItemUtil.register(itemSpecialDrop, ItemSpecialDrop.allDrops);
 
         itemLeafBlower = new ItemLeafBlower(false);
         ItemUtil.register(itemLeafBlower);
