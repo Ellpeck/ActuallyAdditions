@@ -6,6 +6,7 @@ For more information, visit the main Minecraft Forum Thread at http://www.minecr
 
 ### LICENSE:
 All Rights Reserved
+This License doesn't apply for any of the APIs used as they are not mine.
 
 What that means? I can decide what I want to do with the License myself.
 
