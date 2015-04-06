@@ -72,6 +72,9 @@ public class ConfigValues{
     public static boolean enablePearlShardDrop;
     public static boolean enableEmeraldShardDrop;
 
+    public static int jamVillagerID;
+    public static boolean jamVillagerExists;
+
     public static void defineConfigValues(Configuration config){
 
         for(int i = 0; i < enabledFoodRecipes.length; i++){
@@ -83,6 +86,9 @@ public class ConfigValues{
         for(int i = 0; i < enablePotionRingRecipes.length; i++){
             enablePotionRingRecipes[i] = config.getBoolean(ThePotionRings.values()[i].name, ConfigurationHandler.CATEGORY_POTION_RING_CRAFTING, i != ThePotionRings.SATURATION.ordinal(), "If the Crafting Recipe for the Ring of " + ThePotionRings.values()[i].name +  " is Enabled");
         }
+
+        jamVillagerID = config.getInt("Jam Villager: ID", ConfigurationHandler.CATEGORY_WORLD_GEN, 493827, 100, 1000000, "The ID of the Jam Selling Villager");
+        jamVillagerExists = config.getBoolean("Jam Villager: Existence", ConfigurationHandler.CATEGORY_WORLD_GEN, true, "If the Jam Villager and his House exist");
 
         enableLeafBlowerRecipe = config.getBoolean("Leaf Blower", ConfigurationHandler.CATEGORY_ITEMS_CRAFTING, true, "If the Crafting Recipe for the Leaf Blower is Enabled");
         enableLeafBlowerAdvancedRecipe = config.getBoolean("Advanced Leaf Blower", ConfigurationHandler.CATEGORY_ITEMS_CRAFTING, true, "If the Crafting Recipe for the Advanced Leaf Blower is Enabled");

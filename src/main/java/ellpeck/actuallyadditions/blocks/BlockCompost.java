@@ -8,7 +8,8 @@ import ellpeck.actuallyadditions.items.ItemFertilizer;
 import ellpeck.actuallyadditions.items.ItemMisc;
 import ellpeck.actuallyadditions.items.metalists.TheMiscItems;
 import ellpeck.actuallyadditions.tile.TileEntityCompost;
-import ellpeck.actuallyadditions.util.*;
+import ellpeck.actuallyadditions.util.BlockUtil;
+import ellpeck.actuallyadditions.util.INameableItem;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -21,7 +22,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.IIcon;
-import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -152,13 +152,7 @@ public class BlockCompost extends BlockContainerBase implements INameableItem{
         @SuppressWarnings("unchecked")
         @SideOnly(Side.CLIENT)
         public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld) {
-            if(KeyUtil.isShiftPressed()){
-                list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + "." + ((INameableItem)theBlock).getName() + ".desc.1"));
-                //TODO Remove second info
-                list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + "." + ((INameableItem)theBlock).getName() + ".desc.2"));
-                BlockUtil.addOredictName(theBlock, list);
-            }
-            else list.add(ItemUtil.shiftForInfo());
+            BlockUtil.addInformation(theBlock, list, 2, "");
         }
 
         @Override

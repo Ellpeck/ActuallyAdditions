@@ -65,6 +65,8 @@ public class CreativeTab extends CreativeTabs{
 
         this.addItem(InitItems.itemPotionRing);
         this.addItem(InitItems.itemPotionRingAdvanced);
+
+        this.addItem(InitItems.itemJams);
     }
 
     @Override

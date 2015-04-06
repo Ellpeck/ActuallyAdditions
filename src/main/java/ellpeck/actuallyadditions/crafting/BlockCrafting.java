@@ -19,9 +19,9 @@ public class BlockCrafting{
         //Compost
         if(ConfigValues.enableCompostRecipe)
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockCompost),
-                    "W W", "WFW", "WWW",
+                    "W W", "W W", "WCW",
                     'W', "plankWood",
-                    'F', TheMiscItems.MASHED_FOOD.getOredictName()));
+                    'C', TheMiscBlocks.WOOD_CASING.getOredictName()));
 
         //Wood Casing
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.WOOD_CASING.ordinal()),
@@ -52,26 +52,31 @@ public class BlockCrafting{
         //Repairer
         if(ConfigValues.enableRepairerRecipe)
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockItemRepairer),
-                    "DID", "DCD", "DID",
+                    "DID", "OCO", "DID",
                     'D', "gemDiamond",
                     'I', "ingotIron",
-                    'C', Blocks.crafting_table));
+                    'O', TheMiscItems.COIL.getOredictName(),
+                    'C', TheMiscBlocks.STONE_CASING.getOredictName()));
 
         //Solar Panel
         if(ConfigValues.enableSolarRecipe)
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockFurnaceSolar),
-                    "IBI", "BDB", "IBI",
+                    "IQI", "CDC", "IBI",
                     'D', "blockDiamond",
                     'I', "ingotIron",
+                    'Q', TheMiscBlocks.STONE_CASING.getOredictName(),
+                    'C', TheMiscItems.COIL_ADVANCED.getOredictName(),
                     'B', new ItemStack(Blocks.iron_bars)));
 
         //Heat Collector
         if(ConfigValues.enableHeatCollectorRecipe)
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockHeatCollector),
-                    "BRB", "LDL", "BRB",
+                    "BRB", "CDC", "BQB",
                     'D', "blockDiamond",
                     'R', new ItemStack(Items.repeater),
+                    'Q', TheMiscBlocks.STONE_CASING.getOredictName(),
                     'L', new ItemStack(Items.lava_bucket),
+                    'C', TheMiscItems.COIL_ADVANCED.getOredictName(),
                     'B', new ItemStack(Blocks.iron_bars)));
 
         //Quartz Pillar
@@ -87,13 +92,14 @@ public class BlockCrafting{
         //Inputter
         if(ConfigValues.enableInputterRecipe){
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockInputter),
-                    "WWW", "WHW", "WWW",
+                    "WWW", "CHC", "WWW",
                     'W', "plankWood",
+                    'C', TheMiscBlocks.WOOD_CASING.getOredictName(),
                     'H', new ItemStack(Blocks.hopper)));
 
             GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitBlocks.blockInputterAdvanced),
                     ((INameableItem)InitBlocks.blockInputter).getOredictName(),
-                    "gemQuartz",
+                    TheMiscItems.COIL_ADVANCED.getOredictName(),
                     TheMiscItems.QUARTZ.getOredictName(),
                     "dustRedstone"));
         }
@@ -101,40 +107,48 @@ public class BlockCrafting{
         //Crusher
         if(ConfigValues.enableCrusherRecipe)
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockGrinder),
-                    "CFC", "CPC", "CFC",
+                    "CFC", "DQD", "CFC",
                     'C', "cobblestone",
+                    'D', TheMiscItems.COIL.getOredictName(),
+                    'Q', TheMiscBlocks.STONE_CASING.getOredictName(),
                     'P', new ItemStack(Blocks.piston),
                     'F', new ItemStack(Items.flint)));
 
         //Double Crusher
         if(ConfigValues.enableCrusherDoubleRecipe)
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockGrinderDouble),
-                    "CCC", "RPR", "CCC",
+                    "CDC", "RFR", "CDC",
                     'C', "cobblestone",
+                    'D', TheMiscItems.COIL_ADVANCED.getOredictName(),
                     'R', ((INameableItem)InitBlocks.blockGrinder).getOredictName(),
+                    'F', TheMiscBlocks.STONE_CASING.getOredictName(),
                     'P', new ItemStack(Blocks.piston)));
 
         //Double Furnace
         if(ConfigValues.enableFurnaceDoubleRecipe)
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockFurnaceDouble),
-                    "CCC", "RPR", "CCC",
+                    "CDC", "RFR", "CDC",
                     'C', "cobblestone",
+                    'D', TheMiscItems.COIL.getOredictName(),
                     'R', new ItemStack(Blocks.furnace),
+                    'F', TheMiscBlocks.STONE_CASING.getOredictName(),
                     'P', "ingotBrick"));
 
         //Feeder
         if(ConfigValues.enableFeederRecipe)
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockFeeder),
-                    "WCW", "WHW", "WCW",
+                    "WCW", "DHD", "WCW",
                     'W', "plankWood",
+                    'D', TheMiscItems.COIL.getOredictName(),
                     'C', new ItemStack(Items.golden_carrot),
-                    'H', "cropWheat"));
+                    'H', TheMiscBlocks.WOOD_CASING.getOredictName()));
 
         //Giant Chest
         if(ConfigValues.enableGiantChestRecipe)
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockGiantChest),
-                    "CWC", "W W", "CWC",
+                    "CWC", "WDW", "CWC",
                     'C', new ItemStack(Blocks.chest),
+                    'D', TheMiscBlocks.WOOD_CASING.getOredictName(),
                     'W', "plankWood"));
 
     }

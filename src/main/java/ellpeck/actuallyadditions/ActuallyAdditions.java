@@ -13,6 +13,7 @@ import ellpeck.actuallyadditions.config.ConfigurationHandler;
 import ellpeck.actuallyadditions.crafting.GrinderCrafting;
 import ellpeck.actuallyadditions.crafting.InitCrafting;
 import ellpeck.actuallyadditions.event.InitEvents;
+import ellpeck.actuallyadditions.gen.InitVillager;
 import ellpeck.actuallyadditions.gen.OreGen;
 import ellpeck.actuallyadditions.inventory.GuiHandler;
 import ellpeck.actuallyadditions.items.InitItems;
@@ -41,6 +42,7 @@ public class ActuallyAdditions{
         InitItemMaterials.init();
         InitBlocks.init();
         InitItems.init();
+        InitVillager.init();
         proxy.preInit();
 
         Util.logInfo("PreInitialization Finished.");

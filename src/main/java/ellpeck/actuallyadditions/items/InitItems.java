@@ -15,6 +15,7 @@ public class InitItems{
     public static Item itemFertilizer;
     public static Item itemMisc;
     public static Item itemFoods;
+    public static Item itemJams;
     public static Item itemKnife;
     public static Item itemCrafterOnAStick;
     public static Item itemDust;
@@ -48,6 +49,9 @@ public class InitItems{
 
         itemFoods = new ItemFoods();
         ItemUtil.register(itemFoods, ItemFoods.allFoods);
+
+        itemJams = new ItemJams();
+        ItemUtil.register(itemJams, ItemJams.allJams);
 
         itemKnife = new ItemKnife();
         ItemUtil.register(itemKnife);

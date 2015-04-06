@@ -3,7 +3,9 @@ package ellpeck.actuallyadditions.items;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.items.metalists.TheMiscItems;
-import ellpeck.actuallyadditions.util.*;
+import ellpeck.actuallyadditions.util.INameableItem;
+import ellpeck.actuallyadditions.util.ItemUtil;
+import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -11,7 +13,6 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
-import net.minecraft.util.StatCollector;
 
 import java.util.List;
 
@@ -61,11 +62,7 @@ public class ItemMisc extends Item implements INameableItem{
     @SuppressWarnings("unchecked")
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld){
-        if(KeyUtil.isShiftPressed()){
-            list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + "." + this.getName() + allMiscItems[stack.getItemDamage()].getName() + ".desc"));
-            list.add(StringUtil.GRAY + StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + ".oredictName.desc") + ": " + allMiscItems[stack.getItemDamage()].getOredictName());
-        }
-        else list.add(ItemUtil.shiftForInfo());
+        ItemUtil.addInformation(this, list, 1, allMiscItems[stack.getItemDamage()].getName(), allMiscItems[stack.getItemDamage()].getOredictName());
     }
 
     @Override

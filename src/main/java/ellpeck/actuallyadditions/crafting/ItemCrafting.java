@@ -25,11 +25,11 @@ public class ItemCrafting{
         //Leaf Blower
         if(ConfigValues.enableLeafBlowerRecipe)
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemLeafBlower),
-                    " F", "IP", "IR",
+                    " F", "IP", "IC",
                     'F', new ItemStack(Items.flint),
                     'I', "ingotIron",
                     'P', new ItemStack(Blocks.piston),
-                    'R', "dustRedstone"));
+                    'C', TheMiscItems.COIL_ADVANCED.getOredictName()));
 
         //Coil
         if(ConfigValues.enabledMiscRecipes[TheMiscItems.COIL.ordinal()])
@@ -58,11 +58,11 @@ public class ItemCrafting{
         //Advanced Leaf Blower
         if(ConfigValues.enableLeafBlowerAdvancedRecipe)
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemLeafBlowerAdvanced),
-                    " F", "DP", "DR",
+                    " F", "DP", "DC",
                     'F', new ItemStack(Items.flint),
                     'D', "gemDiamond",
                     'P', new ItemStack(Blocks.piston),
-                    'R', "dustRedstone"));
+                    'C', TheMiscItems.COIL_ADVANCED.getOredictName()));
 
         //Quartz
         if(ConfigValues.enabledMiscRecipes[TheMiscItems.QUARTZ.ordinal()])

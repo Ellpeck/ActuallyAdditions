@@ -5,7 +5,9 @@ import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.ActuallyAdditions;
 import ellpeck.actuallyadditions.inventory.GuiHandler;
 import ellpeck.actuallyadditions.tile.TileEntityGrinder;
-import ellpeck.actuallyadditions.util.*;
+import ellpeck.actuallyadditions.util.BlockUtil;
+import ellpeck.actuallyadditions.util.INameableItem;
+import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -15,7 +17,6 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
-import net.minecraft.util.StatCollector;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
@@ -132,13 +133,7 @@ public class BlockGrinder extends BlockContainerBase implements INameableItem{
         @SuppressWarnings("unchecked")
         @SideOnly(Side.CLIENT)
         public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld) {
-            if(KeyUtil.isShiftPressed()){
-                for(int i = 0; i < (((BlockGrinder)theBlock).isDouble ? 3 : 4); i++){
-                    list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + "." + ((INameableItem)theBlock).getName() + ".desc." + (i+1)));
-                }
-                BlockUtil.addOredictName(theBlock, list);
-            }
-            else list.add(ItemUtil.shiftForInfo());
+            BlockUtil.addInformation(theBlock, list, ((BlockGrinder)theBlock).isDouble ? 3 : 4, "");
         }
 
         @Override

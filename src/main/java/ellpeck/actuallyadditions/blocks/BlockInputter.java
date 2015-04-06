@@ -125,9 +125,10 @@ public class BlockInputter extends BlockContainerBase implements INameableItem{
                     list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + ".blockInputter.desc." + (i + 1)));
                 }
                 if((((BlockInputter)theBlock).isAdvanced)) list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + "." + ((INameableItem)theBlock).getName() + ".desc"));
-                BlockUtil.addOredictName(theBlock, list);
             }
             else list.add(ItemUtil.shiftForInfo());
+
+            if(KeyUtil.isControlPressed()) BlockUtil.addOredictName(((INameableItem)theBlock).getOredictName(), list);
         }
 
         @Override

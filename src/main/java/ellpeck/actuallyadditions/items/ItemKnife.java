@@ -55,9 +55,10 @@ public class ItemKnife extends Item implements INameableItem{
         if(KeyUtil.isShiftPressed()){
             list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + "." + this.getName() + ".desc"));
             list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + ".durability.desc") + ": " + (this.getMaxDamage()-this.getDamage(stack)) + "/" + this.getMaxDamage());
-            ItemUtil.addOredictName(this, list);
         }
         else list.add(ItemUtil.shiftForInfo());
+
+        if(KeyUtil.isControlPressed()) ItemUtil.addOredictName(this.getOredictName(), list);
 
     }
 

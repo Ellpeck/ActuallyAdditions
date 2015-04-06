@@ -11,14 +11,25 @@ import java.util.List;
 
 public class ItemUtil{
 
+    public static void addInformation(Item item, List list, int lines, String extraName){
+        addInformation(item, list, lines, extraName, ((INameableItem)item).getOredictName());
+    }
+
     @SuppressWarnings("unchecked")
-    public static void addStandardInformation(Item item, List list){
+    public static void addInformation(Item item, List list, int lines, String extraName, String extraOredictName){
         if(KeyUtil.isShiftPressed()){
-            list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + "." + ((INameableItem)item).getName() + ".desc"));
-            addOredictName(item, list);
+            for(int i = 0; i < lines; i++){
+                list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + "." + ((INameableItem)item).getName() + extraName + ".desc" + (lines > 1 ? "." +(i+1) : "")));
+            }
         }
         else list.add(shiftForInfo());
+
+        if(KeyUtil.isControlPressed()){
+            addOredictName(extraOredictName, list);
+        }
     }
+
+
 
     public static void registerItems(Item[] items){
         for(Item item : items){
@@ -27,8 +38,8 @@ public class ItemUtil{
     }
 
     @SuppressWarnings("unchecked")
-    public static void addOredictName(Item item, List list){
-        list.add(StringUtil.GRAY + StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + ".oredictName.desc") + ": " + ((INameableItem)item).getOredictName());
+    public static void addOredictName(String name, List list){
+        list.add(StringUtil.GRAY + StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + ".oredictName.desc") + ": " + name);
     }
 
     public static void register(Item item){
@@ -54,5 +65,4 @@ public class ItemUtil{
     public static String shiftForInfo(){
         return StringUtil.GREEN + StringUtil.ITALIC + StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + ".shiftForInfo.desc");
     }
-
 }

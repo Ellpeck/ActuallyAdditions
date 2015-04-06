@@ -36,11 +36,12 @@ public class ItemPickaxeAA extends ItemPickaxe implements INameableItem{
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld) {
         if(KeyUtil.isShiftPressed()){
-            list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + "." + ((INameableItem)this).getName() + ".desc"));
+            list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + "." + this.getName() + ".desc"));
             list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + ".durability.desc") + ": " + (this.getMaxDamage()-this.getDamage(stack)) + "/" + this.getMaxDamage());
-            ItemUtil.addOredictName(this, list);
         }
-        else ItemUtil.addStandardInformation(this, list);
+        else list.add(ItemUtil.shiftForInfo());
+
+        if(KeyUtil.isControlPressed()) ItemUtil.addOredictName(this.getOredictName(), list);
     }
 
     @Override

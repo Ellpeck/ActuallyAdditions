@@ -3,7 +3,9 @@ package ellpeck.actuallyadditions.blocks;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.blocks.metalists.TheMiscBlocks;
-import ellpeck.actuallyadditions.util.*;
+import ellpeck.actuallyadditions.util.BlockUtil;
+import ellpeck.actuallyadditions.util.INameableItem;
+import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -14,7 +16,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
-import net.minecraft.util.StatCollector;
 
 import java.util.List;
 
@@ -25,8 +26,8 @@ public class BlockMisc extends Block implements INameableItem{
 
     public BlockMisc(){
         super(Material.rock);
-        this.setHarvestLevel("pickaxe", 0);
-        this.setHardness(1.0F);
+        this.setHardness(1.5F);
+        this.setHarvestLevel("pickaxe", 1);
     }
 
     @SuppressWarnings("all")
@@ -90,11 +91,7 @@ public class BlockMisc extends Block implements INameableItem{
         @SuppressWarnings("unchecked")
         @SideOnly(Side.CLIENT)
         public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld) {
-            if(KeyUtil.isShiftPressed()){
-                list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + "." + ((INameableItem)theBlock).getName() + allMiscBlocks[stack.getItemDamage()].getName() + ".desc"));
-                list.add(StringUtil.GRAY + StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + ".oredictName.desc") + ": " + allMiscBlocks[stack.getItemDamage()].getOredictName());
-            }
-            else list.add(ItemUtil.shiftForInfo());
+            BlockUtil.addInformation(theBlock, list, 1, allMiscBlocks[stack.getItemDamage()].getName(), allMiscBlocks[stack.getItemDamage()].getOredictName());
         }
 
         @Override

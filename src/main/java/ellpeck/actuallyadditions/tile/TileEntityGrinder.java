@@ -151,7 +151,8 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IPower
         this.isDouble = compound.getBoolean("IsDouble");
         this.name = compound.getString("Name");
         this.maxCrushTime = isDouble ? ConfigValues.grinderDoubleCrushTime : ConfigValues.grinderCrushTime;
-        this.initializeSlots(compound.getInteger("Slots"));
+        int slots = compound.getInteger("Slots");
+        this.initializeSlots(slots == 0 ? 4 : slots);
         super.readFromNBT(compound);
     }
 

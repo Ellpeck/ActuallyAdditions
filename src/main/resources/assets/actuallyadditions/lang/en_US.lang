@@ -16,6 +16,9 @@ tile.actuallyadditions.blockFurnaceSolar.name=Solar Panel
 tile.actuallyadditions.blockHeatCollector.name=Heat Collector
 tile.actuallyadditions.blockItemRepairer.name=Item Repairer
 
+tile.actuallyadditions.blockMiscWoodCasing.name=Wood Casing
+tile.actuallyadditions.blockMiscStoneCasing.name=Stone Casing
+
 tile.actuallyadditions.blockInputter.name=ESD
 tile.actuallyadditions.blockInputterAdvanced.name=Advanced ESD
 tile.actuallyadditions.blockInputter.add.0.name=Ellpeck's Slot Device
@@ -43,6 +46,12 @@ item.actuallyadditions.itemMiscKnifeBlade.name=Knife Blade
 item.actuallyadditions.itemMiscKnifeHandle.name=Knife Handle
 item.actuallyadditions.itemMiscBlackQuartz.name=Black Quartz
 item.actuallyadditions.itemMiscRing.name=Ring
+
+item.actuallyadditions.itemJamCuBaRa.name=CuBaRa-Jam
+item.actuallyadditions.itemJamGraKiBa.name=GraKiBa-Jam
+item.actuallyadditions.itemJamPlApLe.name=PlApLe-Jam
+item.actuallyadditions.itemJamChApCi.name=ChApCi-Jam
+item.actuallyadditions.itemJamHoMeKi.name=HoMeKi-Jam
 
 item.actuallyadditions.itemLeafBlower.name=Leaf Blower
 item.actuallyadditions.itemLeafBlowerAdvanced.name=Advanced Leaf Blower
@@ -76,6 +85,9 @@ item.actuallyadditions.itemFoodCarrotJuice.name=Carrot Juice
 item.actuallyadditions.itemFoodPumpkinStew.name=Pumpkin Stew
 item.actuallyadditions.itemFoodCheese.name=Cheese
 
+item.actuallyadditions.itemMiscCoil.name=Basic Coil
+item.actuallyadditions.itemMiscCoilAdvanced.name=Advanced Coil
+
 item.actuallyadditions.itemPotionRing.name=Ring of
 item.actuallyadditions.itemPotionRingAdvanced.name=Advanced Ring of
 
@@ -101,6 +113,14 @@ tooltip.actuallyadditions.saturation.desc=Saturation
 tooltip.actuallyadditions.durability.desc=Durability
 tooltip.actuallyadditions.oredictName.desc=OreDictionary Name
 
+tooltip.actuallyadditions.itemJam.desc.1=A delicious Jam consisting of
+tooltip.actuallyadditions.itemJam.desc.2=Also gives you some Effects!
+tooltip.actuallyadditions.itemJamCuBaRa.desc=Currant, Banana and Raspberry
+tooltip.actuallyadditions.itemJamGraKiBa.desc=Grape, Kiwi and Banana
+tooltip.actuallyadditions.itemJamPlApLe.desc=Plum, Apple and Lemon
+tooltip.actuallyadditions.itemJamChApCi.desc=Cherry, Apple and Cinnamon
+tooltip.actuallyadditions.itemJamHoMeKi.desc=Honeydew Melon and Kiwi
+
 tooltip.actuallyadditions.blockCompost.desc.1=Used to make Fertilizer with Mashed Food
 tooltip.actuallyadditions.blockCompost.desc.2=BETA INFO: Will visually contain Compost in the Future!
 tooltip.actuallyadditions.blockMiscOreBlackQuartz.desc=The darkest form of Quartz.
@@ -125,8 +145,8 @@ tooltip.actuallyadditions.blockInputter.desc.5=-Side to Output to and Input from
 tooltip.actuallyadditions.blockInputter.desc.6=-Slot in the other Inventory to Output to and Input from
 tooltip.actuallyadditions.blockInputterAdvanced.desc=Has an Input and Output Filter!
 tooltip.actuallyadditions.blockFishingNet.desc=Catches Fish automatically when placed above Water
-tooltip.actuallyadditions.blockFurnaceSolar.desc=Powers Furnaces and Crushers below it in Daylight
-tooltip.actuallyadditions.blockHeatCollector.desc.1=Powers Furnaces and Crushers above it
+tooltip.actuallyadditions.blockFurnaceSolar.desc=Powers Actually Additions Machines and Vanilla Furnaces below it in Daylight
+tooltip.actuallyadditions.blockHeatCollector.desc.1=Powers Actually Additions Machines and Vanilla Furnaces above it
 tooltip.actuallyadditions.blockHeatCollector.desc.2=Needs a bunch of Lava around it
 tooltip.actuallyadditions.blockHeatCollector.desc.3=Occasionally steals the Lava. Watch out!
 tooltip.actuallyadditions.blockItemRepairer.desc=Repairs Tools and Armor automatically
@@ -140,10 +160,16 @@ tooltip.actuallyadditions.itemMiscKnifeHandle.desc=Fits comfortably in your hand
 tooltip.actuallyadditions.itemMiscBlackQuartz.desc=Used in the Quartz Enchanter!
 tooltip.actuallyadditions.itemMiscRing.desc=Used for crafting Effect Rings
 
+tooltip.actuallyadditions.blockMiscWoodCasing.desc=Not so sturdy Casing, used for Crafting
+tooltip.actuallyadditions.blockMiscStoneCasing.desc=Pretty sturdy Casing, used for Crafting
+
 tooltip.actuallyadditions.itemPotionRing.desc.1=Gives Potion Effect of Level 1
 tooltip.actuallyadditions.itemPotionRing.desc.2=Needs to be held in Hand
 tooltip.actuallyadditions.itemPotionRing.desc.off.1=Crafting Recipe of this particular Potion Effect is turned OFF by default
 tooltip.actuallyadditions.itemPotionRing.desc.off.2=as it is extremely overpowered! Turn it on in the Config File if needed.
+
+tooltip.actuallyadditions.itemMiscCoil.desc=Lower Tier Coil, used for Crafting
+tooltip.actuallyadditions.itemMiscCoilAdvanced.desc=Higher Tier Coil, used for Crafting
 
 tooltip.actuallyadditions.itemPotionRingAdvanced.desc.1=Gives Potion Effect of a High Level
 tooltip.actuallyadditions.itemPotionRingAdvanced.desc.2=Can be anywhere in the Inventory

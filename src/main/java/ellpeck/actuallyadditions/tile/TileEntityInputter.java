@@ -242,7 +242,8 @@ public class TileEntityInputter extends TileEntityInventoryBase{
 
     @Override
     public void readFromNBT(NBTTagCompound compound){
-        this.initializeSlots(compound.getInteger("Slots"));
+        int slots = compound.getInteger("Slots");
+        this.initializeSlots(slots == 0 ? 1 : slots);
         this.sideToPut = compound.getInteger("SideToPut");
         this.slotToPut = compound.getInteger("SlotToPut");
         this.sideToPull = compound.getInteger("SideToPull");

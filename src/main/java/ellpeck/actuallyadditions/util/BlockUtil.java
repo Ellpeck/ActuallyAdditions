@@ -17,17 +17,26 @@ public class BlockUtil{
     }
 
     @SuppressWarnings("unchecked")
-    public static void addStandardInformation(Block block, List list){
+    public static void addInformation(Block block, List list, int lines, String extraName, String extraOredictName){
         if(KeyUtil.isShiftPressed()){
-            list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + "." + ((INameableItem)block).getName() + ".desc"));
-            addOredictName(block, list);
+            for(int i = 0; i < lines; i++){
+                list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + "." + ((INameableItem)block).getName() + extraName + ".desc" + (lines > 1 ? "." +(i+1) : "")));
+            }
         }
         else list.add(ItemUtil.shiftForInfo());
+
+        if(KeyUtil.isControlPressed()){
+            addOredictName(extraOredictName, list);
+        }
+    }
+
+    public static void addInformation(Block block, List list, int lines, String extraName){
+        addInformation(block, list, lines, extraName, ((INameableItem)block).getOredictName());
     }
 
     @SuppressWarnings("unchecked")
-    public static void addOredictName(Block block, List list){
-        list.add(StringUtil.GRAY + StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + ".oredictName.desc") + ": " + ((INameableItem)block).getOredictName());
+    public static void addOredictName(String name, List list){
+        list.add(StringUtil.GRAY + StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + ".oredictName.desc") + ": " + name);
     }
 
     public static void register(Block block, Class<? extends ItemBlock> itemBlock, Enum[] list){
