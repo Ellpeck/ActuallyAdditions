@@ -35,7 +35,7 @@ public class ContainerInputter extends Container{
             for(int i = 0; i < 2; i++){
                 this.addSlotToContainer(new SlotFilter(this.tileInputter, 1+i*6, 20+i*84, 6));
                 this.addSlotToContainer(new SlotFilter(this.tileInputter, 2+i*6, 38+i*84, 6));
-                this.addSlotToContainer(new SlotFilter(this.tileInputter, 3+i*6, 56+i*85, 6));
+                this.addSlotToContainer(new SlotFilter(this.tileInputter, 3+i*6, 56+i*84, 6));
                 this.addSlotToContainer(new SlotFilter(this.tileInputter, 4+i*6, 20+i*84, 24));
                 this.addSlotToContainer(new SlotFilter(this.tileInputter, 5+i*6, 38+i*84, 24));
                 this.addSlotToContainer(new SlotFilter(this.tileInputter, 6+i*6, 56+i*84, 24));

@@ -27,5 +27,6 @@ public class StringUtil{
     public static final String[] ROMAN_NUMERALS = new String[]{"", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"};
 
     public static final int DECIMAL_COLOR_WHITE = 16777215;
+    public static final int DECIMAL_COLOR_GRAY_TEXT = 4210752;
 
 }

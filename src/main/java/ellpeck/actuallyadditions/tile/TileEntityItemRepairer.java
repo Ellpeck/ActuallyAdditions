@@ -22,7 +22,7 @@ public class TileEntityItemRepairer extends TileEntityInventoryBase implements I
     public int nextRepairTick;
 
     public TileEntityItemRepairer(){
-        super(3, "tileEntityItemRepairer");
+        super(3, "repairer");
     }
 
     @Override

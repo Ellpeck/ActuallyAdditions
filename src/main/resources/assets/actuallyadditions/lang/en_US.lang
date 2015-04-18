@@ -18,6 +18,9 @@ tile.actuallyadditions.blockItemRepairer.name=Item Repairer
 
 tile.actuallyadditions.blockMiscWoodCasing.name=Wood Casing
 tile.actuallyadditions.blockMiscStoneCasing.name=Stone Casing
+tile.actuallyadditions.blockGreenhouseGlass.name=Greenhouse Glass
+tile.actuallyadditions.blockBreaker.name=Breaker
+tile.actuallyadditions.blockPlacer.name=Placer
 
 tile.actuallyadditions.blockInputter.name=ESD
 tile.actuallyadditions.blockInputterAdvanced.name=Advanced ESD
@@ -150,6 +153,8 @@ tooltip.actuallyadditions.blockHeatCollector.desc.1=Powers Actually Additions Ma
 tooltip.actuallyadditions.blockHeatCollector.desc.2=Needs a bunch of Lava around it
 tooltip.actuallyadditions.blockHeatCollector.desc.3=Occasionally steals the Lava. Watch out!
 tooltip.actuallyadditions.blockItemRepairer.desc=Repairs Tools and Armor automatically
+tooltip.actuallyadditions.blockBreaker.desc=Breaks Blocks and stores them in its internal Inventory
+tooltip.actuallyadditions.blockPlacer.desc=Places Blocks stored in its internal Inventory
 
 tooltip.actuallyadditions.itemMiscMashedFood.desc=Used to make Fertilizer
 tooltip.actuallyadditions.itemFertilizer.desc=Om nom nom. Don't eat it. Made in a Compost.
@@ -162,6 +167,8 @@ tooltip.actuallyadditions.itemMiscRing.desc=Used for crafting Effect Rings
 
 tooltip.actuallyadditions.blockMiscWoodCasing.desc=Not so sturdy Casing, used for Crafting
 tooltip.actuallyadditions.blockMiscStoneCasing.desc=Pretty sturdy Casing, used for Crafting
+tooltip.actuallyadditions.blockGreenhouseGlass.desc=Lets Crops below it grow faster when it is Daytime
+tooltip.actuallyadditions.blockCrafter.desc=Automatically crafts Items without needing any form of Power
 
 tooltip.actuallyadditions.itemPotionRing.desc.1=Gives Potion Effect of Level 1
 tooltip.actuallyadditions.itemPotionRing.desc.2=Needs to be held in Hand
@@ -224,31 +231,6 @@ tooltip.actuallyadditions.itemDustQuartz.desc=Quartz! Crushed in the Crusher!
 tooltip.actuallyadditions.itemDustCoal.desc=Coal! Crushed in the Crusher!
 tooltip.actuallyadditions.itemDustQuartzBlack.desc=Black Quartz! Crushed in the Crusher!
 
-achievement.actuallyadditions.smeltBaguette=Better than Bread!
-achievement.actuallyadditions.smeltBaguette.desc=Bake a Baguette
-achievement.actuallyadditions.craftDough=Knead, knead!
-achievement.actuallyadditions.craftDough.desc=Craft some Dough
-achievement.actuallyadditions.craftCompost=Throw it all in!
-achievement.actuallyadditions.craftCompost.desc=Craft a Compost
-achievement.actuallyadditions.craftFertilizer=Better than Bone Meal!
-achievement.actuallyadditions.craftFertilizer.desc=Make Fertilizer
-achievement.actuallyadditions.craftSubSandwich=Metro, Underground, Tube, Nom!
-achievement.actuallyadditions.craftSubSandwich.desc=Craft a Submarine Sandwich
-achievement.actuallyadditions.craftPaperCone=Witch's hat!
-achievement.actuallyadditions.craftPaperCone.desc=Craft a Paper Cone
-achievement.actuallyadditions.craftFrenchFry=Just the single one...
-achievement.actuallyadditions.craftFrenchFry.desc=Craft a French Fry
-achievement.actuallyadditions.craftFrenchFries=French Fires?
-achievement.actuallyadditions.craftFrenchFries.desc=Craft French Fries
-achievement.actuallyadditions.craftFishNChips=It's Fish! It's Chips!
-achievement.actuallyadditions.craftFishNChips.desc=Craft Fish 'N' Chips
-achievement.actuallyadditions.craftMashedFood=Munch munch munch!
-achievement.actuallyadditions.craftMashedFood.desc=Craft Mashed Food
-achievement.actuallyadditions.craftKnifeBlade=Sharp! So sharp!
-achievement.actuallyadditions.craftKnifeBlade.desc=Craft a Knife Blade
-achievement.actuallyadditions.craftKnife=Sharper! Even sharper!
-achievement.actuallyadditions.craftKnife.desc=Craft a Knife
-
 info.actuallyadditions.gui.animals=Animals
 info.actuallyadditions.gui.enoughToBreed=Enough to breed!
 info.actuallyadditions.gui.tooMany=Too many to breed!
@@ -276,3 +258,32 @@ effect.actuallyadditions.waterBreathing.name=Water Breathing
 effect.actuallyadditions.invisibility.name=Invisibility
 effect.actuallyadditions.nightVision.name=Night Vision
 effect.actuallyadditions.saturation.name=Saturation
+
+container.actuallyadditions.inputter.name=ESD
+container.actuallyadditions.inputterAdvanced.name=Advanced ESD
+container.actuallyadditions.grinder.name=Crusher
+container.actuallyadditions.grinderDouble.name=Double Crusher
+container.actuallyadditions.furnaceDouble.name=Double Furnace
+container.actuallyadditions.feeder.name=Feeder
+container.actuallyadditions.giantChest.name=Storage Crate
+container.actuallyadditions.repairer.name=Repairer
+container.actuallyadditions.placer.name=Placer
+container.actuallyadditions.breaker.name=Breaker
+container.actuallyadditions.crafting.name=Crafting Table On A Stick
+
+achievement.actuallyadditions.pickUpSolidXP=Hard and Rich and Stuff
+achievement.actuallyadditions.pickUpSolidXP.desc=Pick up some Solidified Experience
+achievement.actuallyadditions.craftKnifeBlade=Sharp! So Sharp!
+achievement.actuallyadditions.craftKnifeBlade.desc=Craft a Knife Blade
+achievement.actuallyadditions.craftKnife=Cutcutcutcutcutcutcutcutcutcutcut!
+achievement.actuallyadditions.craftKnife.desc=Craft a Knife
+achievement.actuallyadditions.craftMashedFood=Munch munch munch!
+achievement.actuallyadditions.craftMashedFood.desc=Craft some Mashed Food
+achievement.actuallyadditions.craftWoodenCasing=Hard and sturdy!
+achievement.actuallyadditions.craftWoodenCasing.desc=Craft a Wooden Casing
+achievement.actuallyadditions.craftStoneCasing=Harder and sturdier!
+achievement.actuallyadditions.craftStoneCasing.desc=Craft a Stone Casing
+achievement.actuallyadditions.craftBasicCoil=Transmits.. power.. or something?
+achievement.actuallyadditions.craftBasicCoil.desc=Craft a Basic Coil
+achievement.actuallyadditions.craftAdvancedCoil=Transmits... more power I guess.
+achievement.actuallyadditions.craftAdvancedCoil.desc=Craft an Advanced Coil

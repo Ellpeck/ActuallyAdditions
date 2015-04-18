@@ -37,7 +37,7 @@ public class JamVillagerTradeHandler implements VillagerRegistry.IVillageTradeHa
             ItemStack wantsOne = villagerWants.get(i);
             wantsOne.stackSize = rand.nextInt(10)+10;
             if(wantsOne.stackSize > wantsOne.getMaxStackSize()) wantsOne.stackSize = wantsOne.getMaxStackSize();
-            if(rand.nextInt(10) == 0){
+            if(rand.nextInt(5) == 0){
                 wantsTwo = villagerWants.get(rand.nextInt(villagerWants.size()));
                 wantsTwo.stackSize = rand.nextInt(10)+1;
                 if(wantsTwo.stackSize > wantsTwo.getMaxStackSize()) wantsTwo.stackSize = wantsTwo.getMaxStackSize();

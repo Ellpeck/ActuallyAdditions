@@ -16,7 +16,7 @@ public class TileEntityCompost extends TileEntityInventoryBase{
     public int conversionTime;
 
     public TileEntityCompost(){
-        super(1, "tileEntityCompost");
+        super(1, "compost");
     }
 
     @Override

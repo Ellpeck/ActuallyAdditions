@@ -10,6 +10,7 @@ public class InitEvents{
         Util.registerEvent(new SmeltEvent());
         Util.registerEvent(new CraftEvent());
         Util.registerEvent(new KilledEvent());
+        Util.registerEvent(new PickupEvent());
     }
 
 }

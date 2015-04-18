@@ -75,6 +75,8 @@ public class ConfigValues{
     public static int jamVillagerID;
     public static boolean jamVillagerExists;
 
+    public static int greenhouseGlassTimeNeeded;
+
     public static void defineConfigValues(Configuration config){
 
         for(int i = 0; i < enabledFoodRecipes.length; i++){
@@ -159,5 +161,7 @@ public class ConfigValues{
         repairerSpeedSlowdown = config.getInt("Item Repairer: Speed Slowdown", ConfigurationHandler.CATEGORY_MACHINE_VALUES, 2, 1, 100, "How much slower the Item Repairer repairs");
         heatCollectorBlocksNeeded = config.getInt("Heat Collector: Blocks Needed", ConfigurationHandler.CATEGORY_MACHINE_VALUES, 4, 1, 5, "How many Blocks are needed for the Heat Collector to power Machines above it");
         heatCollectorRandomChance = config.getInt("Heat Collector: Random Chance", ConfigurationHandler.CATEGORY_MACHINE_VALUES, 10000, 10, 100000, "The Chance of the Heat Collector destroying a Lava Block around (Default Value 2000 meaning a 1/2000 Chance!)");
+
+        greenhouseGlassTimeNeeded = config.getInt("Greenhouse Glass: Time Needed", ConfigurationHandler.CATEGORY_MACHINE_VALUES, 1000, 10, 1000000, "The Time Needed for the Greenhouse Glass to grow a Plant below it");
     }
 }

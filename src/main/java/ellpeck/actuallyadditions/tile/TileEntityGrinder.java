@@ -36,7 +36,7 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IPower
     }
 
     public TileEntityGrinder(boolean isDouble){
-        super(isDouble ? 7 : 4, isDouble ? "tileEntityGrinderDouble" : "tileEntityGrinder");
+        super(isDouble ? 7 : 4, isDouble ? "grinderDouble" : "grinder");
         this.maxCrushTime = isDouble ? ConfigValues.grinderDoubleCrushTime : ConfigValues.grinderCrushTime;
         this.isDouble = isDouble;
     }

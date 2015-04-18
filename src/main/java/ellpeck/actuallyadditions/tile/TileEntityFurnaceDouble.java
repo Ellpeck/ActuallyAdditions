@@ -26,7 +26,7 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
     public int secondSmeltTime;
 
     public TileEntityFurnaceDouble(){
-        super(5, "tileEntityFurnaceDouble");
+        super(5, "furnaceDouble");
     }
 
     @Override

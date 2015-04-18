@@ -83,14 +83,11 @@ public class ItemJams extends ItemFood implements INameableItem{
         ItemStack stackToReturn = super.onEaten(stack, world, player);
 
         if(!world.isRemote){
-            if(allJams[stack.getItemDamage()].firstEffectToGet != 0){
-                PotionEffect firstEffectToGet = new PotionEffect(allJams[stack.getItemDamage()].firstEffectToGet, 200);
-                player.addPotionEffect(firstEffectToGet);
-            }
-            if(allJams[stack.getItemDamage()].secondEffectToGet != 0){
-                PotionEffect secondEffectToGet = new PotionEffect(allJams[stack.getItemDamage()].secondEffectToGet, 600);
-                player.addPotionEffect(secondEffectToGet);
-            }
+            PotionEffect firstEffectToGet = new PotionEffect(allJams[stack.getItemDamage()].firstEffectToGet, 200);
+            player.addPotionEffect(firstEffectToGet);
+
+            PotionEffect secondEffectToGet = new PotionEffect(allJams[stack.getItemDamage()].secondEffectToGet, 600);
+            player.addPotionEffect(secondEffectToGet);
 
             ItemStack returnItem = new ItemStack(Items.glass_bottle);
             if(!player.inventory.addItemStackToInventory(returnItem.copy())){

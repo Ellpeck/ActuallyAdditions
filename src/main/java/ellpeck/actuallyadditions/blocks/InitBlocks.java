@@ -20,6 +20,9 @@ public class InitBlocks{
     public static Block blockFurnaceSolar;
     public static Block blockHeatCollector;
     public static Block blockItemRepairer;
+    public static Block blockGreenhouseGlass;
+    public static Block blockBreaker;
+    public static Block blockPlacer;
 
     public static void init(){
         Util.logInfo("Initializing Blocks...");
@@ -62,5 +65,14 @@ public class InitBlocks{
 
         blockItemRepairer = new BlockItemRepairer();
         BlockUtil.register(blockItemRepairer, BlockItemRepairer.TheItemBlock.class);
+
+        blockGreenhouseGlass = new BlockGreenhouseGlass();
+        BlockUtil.register(blockGreenhouseGlass, BlockGreenhouseGlass.TheItemBlock.class);
+
+        blockBreaker = new BlockBreaker(false);
+        BlockUtil.register(blockBreaker, BlockBreaker.TheItemBlock.class);
+
+        blockPlacer = new BlockBreaker(true);
+        BlockUtil.register(blockPlacer, BlockBreaker.TheItemBlock.class);
     }
 }

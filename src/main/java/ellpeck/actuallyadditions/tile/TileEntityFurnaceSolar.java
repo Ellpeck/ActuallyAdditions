@@ -1,5 +1,6 @@
 package ellpeck.actuallyadditions.tile;
 
+import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.block.BlockFurnace;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityFurnace;
@@ -10,7 +11,7 @@ public class TileEntityFurnaceSolar extends TileEntityBase{
     public void updateEntity(){
         if(!worldObj.isRemote){
             if(worldObj.canBlockSeeTheSky(xCoord, yCoord, zCoord) && worldObj.isDaytime()){
-                TileEntity tileBelow = TileEntityInputter.getTileEntityFromSide(1, worldObj, xCoord, yCoord, zCoord);
+                TileEntity tileBelow = WorldUtil.getTileEntityFromSide(1, worldObj, xCoord, yCoord, zCoord);
 
                 givePowerTo(tileBelow);
             }

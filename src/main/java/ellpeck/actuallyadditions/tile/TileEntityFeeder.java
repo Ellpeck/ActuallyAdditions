@@ -24,7 +24,7 @@ public class TileEntityFeeder extends TileEntityInventoryBase{
     public int currentAnimalAmount;
 
     public TileEntityFeeder(){
-        super(1, "tileEntityFeeder");
+        super(1, "feeder");
     }
 
     @Override

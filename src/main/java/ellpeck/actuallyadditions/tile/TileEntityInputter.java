@@ -1,11 +1,11 @@
 package ellpeck.actuallyadditions.tile;
 
+import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
 
 public class TileEntityInputter extends TileEntityInventoryBase{
 
@@ -29,7 +29,7 @@ public class TileEntityInputter extends TileEntityInventoryBase{
     }
 
     public TileEntityInputter(boolean isAdvanced){
-        super(isAdvanced ? 13 : 1, isAdvanced ? "tilEntityInputterAdvanced" : "tileEntityInputter");
+        super(isAdvanced ? 13 : 1, isAdvanced ? "inputterAdvanced" : "inputter");
         this.isAdvanced = isAdvanced;
     }
 
@@ -177,8 +177,8 @@ public class TileEntityInputter extends TileEntityInventoryBase{
     }
 
     public void initVars(){
-        this.placeToPull = getTileEntityFromSide(this.sideToPull, this.worldObj, this.xCoord, this.yCoord, this.zCoord);
-        this.placeToPut = getTileEntityFromSide(this.sideToPut, this.worldObj, this.xCoord, this.yCoord, this.zCoord);
+        this.placeToPull = WorldUtil.getTileEntityFromSide(this.sideToPull, this.worldObj, this.xCoord, this.yCoord, this.zCoord);
+        this.placeToPut = WorldUtil.getTileEntityFromSide(this.sideToPut, this.worldObj, this.xCoord, this.yCoord, this.zCoord);
 
         if(this.placeToPull != null && this.placeToPull instanceof IInventory){
             this.placeToPullSlotAmount = ((IInventory)this.placeToPull).getSizeInventory();
@@ -195,16 +195,6 @@ public class TileEntityInputter extends TileEntityInventoryBase{
             this.placeToPutSlotAmount = 0;
             this.slotToPut = -1;
         }
-    }
-
-    public static TileEntity getTileEntityFromSide(int side, World world, int x, int y, int z){
-        if(side == 0) return world.getTileEntity(x, y+1, z);
-        if(side == 1) return world.getTileEntity(x, y-1, z);
-        if(side == 2) return world.getTileEntity(x, y, z-1);
-        if(side == 3) return world.getTileEntity(x-1, y, z);
-        if(side == 4) return world.getTileEntity(x, y, z+1);
-        if(side == 5) return world.getTileEntity(x+1, y, z);
-        else return null;
     }
 
     public void onButtonPressed(int buttonID){
