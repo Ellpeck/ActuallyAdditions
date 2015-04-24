@@ -3,7 +3,7 @@ package ellpeck.actuallyadditions.blocks;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ellpeck.actuallyadditions.config.ConfigValues;
+import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.items.ItemFertilizer;
 import ellpeck.actuallyadditions.items.ItemMisc;
 import ellpeck.actuallyadditions.items.metalists.TheMiscItems;
@@ -41,7 +41,7 @@ public class BlockCompost extends BlockContainerBase implements INameableItem{
             ItemStack stackPlayer = player.getCurrentEquippedItem();
             TileEntityCompost tile = (TileEntityCompost)world.getTileEntity(x, y, z);
             //Add items to be composted
-            if(stackPlayer != null && stackPlayer.getItem() instanceof ItemMisc && stackPlayer.getItemDamage() == TheMiscItems.MASHED_FOOD.ordinal() && (tile.slots[0] == null || (!(tile.slots[0].getItem() instanceof ItemFertilizer) && tile.slots[0].stackSize < ConfigValues.compostAmountNeededToConvert))){
+            if(stackPlayer != null && stackPlayer.getItem() instanceof ItemMisc && stackPlayer.getItemDamage() == TheMiscItems.MASHED_FOOD.ordinal() && (tile.slots[0] == null || (!(tile.slots[0].getItem() instanceof ItemFertilizer) && tile.slots[0].stackSize < ConfigIntValues.COMPOST_AMOUNT.getValue()))){
                 if(tile.slots[0] == null) tile.slots[0] = new ItemStack(stackPlayer.getItem(), 1, TheMiscItems.MASHED_FOOD.ordinal());
                 else tile.slots[0].stackSize++;
                 if(!player.capabilities.isCreativeMode) player.inventory.getCurrentItem().stackSize--;
@@ -152,7 +152,7 @@ public class BlockCompost extends BlockContainerBase implements INameableItem{
         @SuppressWarnings("unchecked")
         @SideOnly(Side.CLIENT)
         public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld) {
-            BlockUtil.addInformation(theBlock, list, 2, "");
+            BlockUtil.addInformation(theBlock, list, 1, "");
         }
 
         @Override

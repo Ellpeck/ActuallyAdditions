@@ -2,7 +2,8 @@ package ellpeck.actuallyadditions.items;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ellpeck.actuallyadditions.config.ConfigValues;
+import ellpeck.actuallyadditions.config.values.ConfigBoolValues;
+import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.util.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
@@ -21,15 +22,14 @@ import net.minecraft.world.World;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class ItemLeafBlower extends Item implements INameableItem{
 
-    public final int range = ConfigValues.leafBlowerRangeSides;
-    public final int rangeUp = ConfigValues.leafBlowerRangeUp;
-    public final boolean doesDrop = ConfigValues.leafBlowerDropItems;
-    public final boolean hasParticles = ConfigValues.leafBlowerParticles;
-    public final boolean hasSound = ConfigValues.leafBlowerHasSound;
+    public final int range = ConfigIntValues.LEAF_BLOWER_RANGE_SIDES.getValue();
+    public final int rangeUp = ConfigIntValues.LEAF_BLOWER_RANGE_UP.getValue();
+    public final boolean doesDrop = ConfigBoolValues.LEAF_BLOWER_ITEMS.isEnabled();
+    public final boolean hasParticles = ConfigBoolValues.LEAF_BLOWER_PARTICLES.isEnabled();
+    public final boolean hasSound = ConfigBoolValues.LEAF_BLOWER_SOUND.isEnabled();
 
     private final boolean isAdvanced;
 
@@ -54,32 +54,27 @@ public class ItemLeafBlower extends Item implements INameableItem{
     }
 
     public void breakStuff(World world, int x, int y, int z){
-        ArrayList<ChunkCoordinates> theCoords = new ArrayList<ChunkCoordinates>();
-
         for(int reachX = -range; reachX < range+1; reachX++){
             for(int reachZ = -range; reachZ < range+1; reachZ++){
                 for(int reachY = (this.isAdvanced ? -range : -rangeUp); reachY < (this.isAdvanced ? range+1 : rangeUp+1); reachY++){
                     Block block = world.getBlock(x+reachX, y+reachY, z+reachZ);
                     if(block != null && (block instanceof BlockBush || (this.isAdvanced && block instanceof BlockLeavesBase))){
-                        theCoords.add(new ChunkCoordinates(x+reachX, y+reachY, z+reachZ));
+                        ChunkCoordinates theCoord = new ChunkCoordinates(x+reachX, y+reachY, z+reachZ);
+                        Block theBlock = world.getBlock(theCoord.posX, theCoord.posY, theCoord.posZ);
+                        ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
+                        int meta = world.getBlockMetadata(theCoord.posX, theCoord.posY, theCoord.posZ);
+                        drops.addAll(theBlock.getDrops(world, theCoord.posX, theCoord.posY, theCoord.posZ, meta, 0));
+
+                        world.setBlockToAir(theCoord.posX, theCoord.posY, theCoord.posZ);
+                        if(this.hasParticles) world.playAuxSFX(2001, theCoord.posX, theCoord.posY, theCoord.posZ, Block.getIdFromBlock(theBlock)+(meta << 12));
+
+                        if(this.doesDrop){
+                            for(ItemStack theDrop : drops){
+                                world.spawnEntityInWorld(new EntityItem(world, theCoord.posX + 0.5, theCoord.posY + 0.5, theCoord.posZ + 0.5, theDrop));
+                            }
+                        }
+                        return;
                     }
-                }
-            }
-        }
-
-        if(theCoords.size() > 0){
-            ChunkCoordinates theCoord = theCoords.get(new Random().nextInt(theCoords.size()));
-            Block theBlock = world.getBlock(theCoord.posX, theCoord.posY, theCoord.posZ);
-            ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-            int meta = world.getBlockMetadata(theCoord.posX, theCoord.posY, theCoord.posZ);
-            drops.addAll(theBlock.getDrops(world, theCoord.posX, theCoord.posY, theCoord.posZ, meta, 0));
-
-            world.setBlockToAir(theCoord.posX, theCoord.posY, theCoord.posZ);
-            if(this.hasParticles) world.playAuxSFX(2001, theCoord.posX, theCoord.posY, theCoord.posZ, Block.getIdFromBlock(theBlock)+(meta << 12));
-
-            if(this.doesDrop){
-                for(ItemStack theDrop : drops){
-                    world.spawnEntityInWorld(new EntityItem(world, theCoord.posX + 0.5, theCoord.posY + 0.5, theCoord.posZ + 0.5, theDrop));
                 }
             }
         }

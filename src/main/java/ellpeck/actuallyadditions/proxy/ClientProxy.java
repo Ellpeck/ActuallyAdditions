@@ -5,7 +5,7 @@ import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.common.registry.VillagerRegistry;
 import ellpeck.actuallyadditions.blocks.InitBlocks;
 import ellpeck.actuallyadditions.blocks.render.*;
-import ellpeck.actuallyadditions.config.ConfigValues;
+import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.event.RenderPlayerEventAA;
 import ellpeck.actuallyadditions.tile.TileEntityCompost;
 import ellpeck.actuallyadditions.tile.TileEntityFishingNet;
@@ -37,7 +37,7 @@ public class ClientProxy implements IProxy{
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFurnaceSolar.class, new RenderTileEntity(new ModelFurnaceSolar()));
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(InitBlocks.blockFurnaceSolar), new RenderItems(new ModelFurnaceSolar()));
 
-        VillagerRegistry.instance().registerVillagerSkin(ConfigValues.jamVillagerID, new ResourceLocation(ModUtil.MOD_ID_LOWER, "textures/entity/villager/jamVillager.png"));
+        VillagerRegistry.instance().registerVillagerSkin(ConfigIntValues.JAM_VILLAGER_ID.getValue(), new ResourceLocation(ModUtil.MOD_ID_LOWER, "textures/entity/villager/jamVillager.png"));
 
         Util.registerEvent(new RenderPlayerEventAA());
     }

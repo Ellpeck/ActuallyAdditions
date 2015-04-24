@@ -1,6 +1,6 @@
 package ellpeck.actuallyadditions.tile;
 
-import ellpeck.actuallyadditions.config.ConfigValues;
+import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockAir;
 import net.minecraft.block.BlockGrass;
@@ -16,7 +16,7 @@ import java.util.Random;
 
 public class TileEntityGreenhouseGlass extends TileEntityBase{
 
-    private int timeUntilNextFertToSet = ConfigValues.greenhouseGlassTimeNeeded;
+    private int timeUntilNextFertToSet = ConfigIntValues.GLASS_TIME_NEEDED.getValue();
 
     private int timeUntilNextFert;
 

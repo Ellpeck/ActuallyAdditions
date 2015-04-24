@@ -22,6 +22,7 @@ public class ContainerFurnaceDouble extends Container{
     private int lastCoalTimeLeft;
     private int lastFirstCrushTime;
     private int lastSecondCrushTime;
+    private int lastBurnTime;
 
     public ContainerFurnaceDouble(InventoryPlayer inventory, TileEntityBase tile){
         this.tileFurnace = (TileEntityFurnaceDouble)tile;
@@ -32,6 +33,8 @@ public class ContainerFurnaceDouble extends Container{
         this.addSlotToContainer(new SlotOutput(this.tileFurnace, TileEntityFurnaceDouble.SLOT_OUTPUT_1, 51, 69));
         this.addSlotToContainer(new Slot(this.tileFurnace, TileEntityFurnaceDouble.SLOT_INPUT_2, 109, 21));
         this.addSlotToContainer(new SlotOutput(this.tileFurnace, TileEntityFurnaceDouble.SLOT_OUTPUT_2, 108, 69));
+
+        this.addSlotToContainer(new Slot(this.tileFurnace, this.tileFurnace.speedUpgradeSlot, 155, 21));
 
         for (int i = 0; i < 3; i++){
             for (int j = 0; j < 9; j++){
@@ -50,6 +53,7 @@ public class ContainerFurnaceDouble extends Container{
         iCraft.sendProgressBarUpdate(this, 1, this.tileFurnace.coalTimeLeft);
         iCraft.sendProgressBarUpdate(this, 2, this.tileFurnace.firstSmeltTime);
         iCraft.sendProgressBarUpdate(this, 3, this.tileFurnace.secondSmeltTime);
+        iCraft.sendProgressBarUpdate(this, 4, this.tileFurnace.maxBurnTime);
     }
 
     @Override
@@ -62,12 +66,14 @@ public class ContainerFurnaceDouble extends Container{
             if(this.lastCoalTimeLeft != this.tileFurnace.coalTimeLeft) iCraft.sendProgressBarUpdate(this, 1, this.tileFurnace.coalTimeLeft);
             if(this.lastFirstCrushTime != this.tileFurnace.firstSmeltTime) iCraft.sendProgressBarUpdate(this, 2, this.tileFurnace.firstSmeltTime);
             if(this.lastSecondCrushTime != this.tileFurnace.secondSmeltTime) iCraft.sendProgressBarUpdate(this, 3, this.tileFurnace.secondSmeltTime);
+            if(this.lastBurnTime != this.tileFurnace.maxBurnTime) iCraft.sendProgressBarUpdate(this, 4, this.tileFurnace.maxBurnTime);
         }
 
         this.lastCoalTime = this.tileFurnace.coalTime;
         this.lastCoalTimeLeft = this.tileFurnace.coalTimeLeft;
         this.lastFirstCrushTime = this.tileFurnace.firstSmeltTime;
         this.lastSecondCrushTime = this.tileFurnace.secondSmeltTime;
+        this.lastBurnTime = this.tileFurnace.maxBurnTime;
     }
 
     @Override
@@ -77,6 +83,7 @@ public class ContainerFurnaceDouble extends Container{
         if(par1 == 1) this.tileFurnace.coalTimeLeft = par2;
         if(par1 == 2) this.tileFurnace.firstSmeltTime = par2;
         if(par1 == 3) this.tileFurnace.secondSmeltTime = par2;
+        if(par1 == 4) this.tileFurnace.maxBurnTime = par2;
     }
 
     @Override
@@ -86,7 +93,7 @@ public class ContainerFurnaceDouble extends Container{
 
     @Override
     public ItemStack transferStackInSlot(EntityPlayer player, int slot){
-        final int inventoryStart = 5;
+        final int inventoryStart = 6;
         final int inventoryEnd = inventoryStart+26;
         final int hotbarStart = inventoryEnd+1;
         final int hotbarEnd = hotbarStart+8;

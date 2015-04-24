@@ -2,7 +2,7 @@ package ellpeck.actuallyadditions.items;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ellpeck.actuallyadditions.config.ConfigValues;
+import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.util.INameableItem;
 import ellpeck.actuallyadditions.util.ItemUtil;
 import ellpeck.actuallyadditions.util.KeyUtil;
@@ -20,7 +20,7 @@ import java.util.List;
 public class ItemKnife extends Item implements INameableItem{
 
     public ItemKnife(){
-        this.setMaxDamage(ConfigValues.knifeMaxDamage);
+        this.setMaxDamage(ConfigIntValues.KNIFE_DAMAGE.getValue());
         this.setMaxStackSize(1);
         this.setContainerItem(this);
     }

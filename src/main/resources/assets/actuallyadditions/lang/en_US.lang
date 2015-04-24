@@ -12,8 +12,8 @@ tile.actuallyadditions.blockGrinder.name=Crusher
 tile.actuallyadditions.blockGrinderDouble.name=Double Crusher
 tile.actuallyadditions.blockFurnaceDouble.name=Double Furnace
 tile.actuallyadditions.blockFishingNet.name=Fishing Net
-tile.actuallyadditions.blockFurnaceSolar.name=Solar Panel
-tile.actuallyadditions.blockHeatCollector.name=Heat Collector
+tile.actuallyadditions.blockFurnaceSolar.name=Solar Panel [TEMPORARILY UNIMPLEMENTED]
+tile.actuallyadditions.blockHeatCollector.name=Heat Collector [TEMPORARILY UNIMPLEMENTED]
 tile.actuallyadditions.blockItemRepairer.name=Item Repairer
 
 tile.actuallyadditions.blockMiscWoodCasing.name=Wood Casing
@@ -55,6 +55,7 @@ item.actuallyadditions.itemJamGraKiBa.name=GraKiBa-Jam
 item.actuallyadditions.itemJamPlApLe.name=PlApLe-Jam
 item.actuallyadditions.itemJamChApCi.name=ChApCi-Jam
 item.actuallyadditions.itemJamHoMeKi.name=HoMeKi-Jam
+item.actuallyadditions.itemJamPiCo.name=PiCo-Jam
 
 item.actuallyadditions.itemLeafBlower.name=Leaf Blower
 item.actuallyadditions.itemLeafBlowerAdvanced.name=Advanced Leaf Blower
@@ -87,6 +88,8 @@ item.actuallyadditions.itemFoodFishNChips.name=Fish 'N' Chips
 item.actuallyadditions.itemFoodCarrotJuice.name=Carrot Juice
 item.actuallyadditions.itemFoodPumpkinStew.name=Pumpkin Stew
 item.actuallyadditions.itemFoodCheese.name=Cheese
+
+item.actuallyadditions.itemUpgradeSpeed=Speed Upgrade
 
 item.actuallyadditions.itemMiscCoil.name=Basic Coil
 item.actuallyadditions.itemMiscCoilAdvanced.name=Advanced Coil
@@ -123,9 +126,15 @@ tooltip.actuallyadditions.itemJamGraKiBa.desc=Grape, Kiwi and Banana
 tooltip.actuallyadditions.itemJamPlApLe.desc=Plum, Apple and Lemon
 tooltip.actuallyadditions.itemJamChApCi.desc=Cherry, Apple and Cinnamon
 tooltip.actuallyadditions.itemJamHoMeKi.desc=Honeydew Melon and Kiwi
+tooltip.actuallyadditions.itemJamPiCo.desc=Pineapple and Coconut
 
-tooltip.actuallyadditions.blockCompost.desc.1=Used to make Fertilizer with Mashed Food
-tooltip.actuallyadditions.blockCompost.desc.2=BETA INFO: Will visually contain Compost in the Future!
+tooltip.actuallyadditions.itemUpgradeSpeed.desc.1=Speeds up Machines when placed in their Upgrade Slot
+tooltip.actuallyadditions.itemUpgradeSpeed.desc.2=Works in:
+tooltip.actuallyadditions.itemUpgradeSpeed.desc.3=-Double Furnace
+tooltip.actuallyadditions.itemUpgradeSpeed.desc.4=-Crusher
+tooltip.actuallyadditions.itemUpgradeSpeed.desc.5=-Double Crusher
+
+tooltip.actuallyadditions.blockCompost.desc=Used to make Fertilizer with Mashed Food
 tooltip.actuallyadditions.blockMiscOreBlackQuartz.desc=The darkest form of Quartz.
 tooltip.actuallyadditions.blockMiscBlackQuartz.desc=Black, eerie Quartz! Nice for decorating.
 tooltip.actuallyadditions.blockMiscBlackQuartzChiseled.desc=Black, eerie chiseled Quartz! Nice for decorating.

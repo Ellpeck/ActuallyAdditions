@@ -1,7 +1,8 @@
 package ellpeck.actuallyadditions.gen;
 
 import cpw.mods.fml.common.registry.VillagerRegistry;
-import ellpeck.actuallyadditions.config.ConfigValues;
+import ellpeck.actuallyadditions.config.values.ConfigBoolValues;
+import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.items.metalists.TheJams;
 import ellpeck.actuallyadditions.util.ModUtil;
@@ -21,9 +22,9 @@ public class InitVillager{
     public static void init(){
         Util.logInfo("Initializing Village Addons...");
 
-        if(ConfigValues.jamVillagerExists){
+        if(ConfigBoolValues.JAM_VILLAGER_EXISTS.isEnabled()){
 
-            int jamID = ConfigValues.jamVillagerID;
+            int jamID = ConfigIntValues.JAM_VILLAGER_ID.getValue();
             VillagerRegistry.instance().registerVillagerId(jamID);
             VillagerRegistry.instance().registerVillageTradeHandler(jamID, new JamVillagerTradeHandler());
 

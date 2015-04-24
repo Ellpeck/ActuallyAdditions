@@ -1,13 +1,15 @@
 package ellpeck.actuallyadditions.tile;
 
-import ellpeck.actuallyadditions.util.WorldUtil;
-import net.minecraft.block.BlockFurnace;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityFurnace;
-
 public class TileEntityFurnaceSolar extends TileEntityBase{
 
     @Override
+    public boolean canUpdate(){
+        return false;
+    }
+
+    //TODO Reimplement
+
+    /*@Override
     public void updateEntity(){
         if(!worldObj.isRemote){
             if(worldObj.canBlockSeeTheSky(xCoord, yCoord, zCoord) && worldObj.isDaytime()){
@@ -38,5 +40,5 @@ public class TileEntityFurnaceSolar extends TileEntityBase{
                 BlockFurnace.updateFurnaceBlockState(true, tile.getWorldObj(), furnaceBelow.xCoord, furnaceBelow.yCoord, furnaceBelow.zCoord);
             }
         }
-    }
+    }*/
 }

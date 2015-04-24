@@ -1,5 +1,6 @@
 package ellpeck.actuallyadditions.blocks.render;
 
+import ellpeck.actuallyadditions.tile.TileEntityCompost;
 import net.minecraft.client.model.ModelRenderer;
 
 public class ModelCompost extends ModelBaseAA{
@@ -9,10 +10,12 @@ public class ModelCompost extends ModelBaseAA{
     public ModelRenderer wallTwo;
     public ModelRenderer wallThree;
     public ModelRenderer wallFour;
+    public ModelRenderer[] innerRawList = new ModelRenderer[13];
+    public ModelRenderer innerDone;
 
     public ModelCompost(){
         this.textureWidth = 64;
-        this.textureHeight = 64;
+        this.textureHeight = 128;
         this.wallThree = new ModelRenderer(this, 0, 0);
         this.wallThree.setRotationPoint(-6.0F, 8.0F, 6.0F);
         this.wallThree.addBox(0.0F, 0.0F, 0.0F, 12, 15, 1, 0.0F);
@@ -28,6 +31,29 @@ public class ModelCompost extends ModelBaseAA{
         this.floor = new ModelRenderer(this, 0, 0);
         this.floor.setRotationPoint(-7.0F, 23.0F, -7.0F);
         this.floor.addBox(0.0F, 0.0F, 0.0F, 14, 1, 14, 0.0F);
+
+        for(int i = 0; i < this.innerRawList.length; i++){
+            this.innerRawList[i] = new ModelRenderer(this, 0, 29);
+            this.innerRawList[i].setRotationPoint(-6.0F, 10.0F, -6.0F);
+            this.innerRawList[i].addBox(0.0F, 12-i, 0.0F, 12, i+1, 12, 0.0F);
+        }
+
+        this.innerDone = new ModelRenderer(this, 0, 54);
+        this.innerDone.setRotationPoint(-6.0F, 10.0F, -6.0F);
+        this.innerDone.addBox(0.0F, 0.0F, 0.0F, 12, 13, 12, 0.0F);
+    }
+
+    public void renderExtra(float f, TileEntityCompost tile){
+        int meta = tile.getWorldObj().getBlockMetadata(tile.xCoord, tile.yCoord, tile.zCoord);
+        if(meta > 0 && meta <= tile.amountNeededToConvert){
+            int heightToDisplay = meta*13/tile.amountNeededToConvert;
+            if(heightToDisplay > 13) heightToDisplay = 13;
+
+            this.innerRawList[heightToDisplay-1].render(f);
+        }
+        if(meta == tile.amountNeededToConvert+1){
+            this.innerDone.render(f);
+        }
     }
 
     @Override

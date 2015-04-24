@@ -2,7 +2,7 @@ package ellpeck.actuallyadditions.tile;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ellpeck.actuallyadditions.config.ConfigValues;
+import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.recipe.GrinderRecipes;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -11,7 +11,7 @@ import net.minecraft.tileentity.TileEntityFurnace;
 
 import java.util.Random;
 
-public class TileEntityGrinder extends TileEntityInventoryBase implements IPowerAcceptor{
+public class TileEntityGrinder extends TileEntityUpgradable implements IPowerAcceptor{
 
     public static final int SLOT_COAL = 0;
     public static final int SLOT_INPUT_1 = 1;
@@ -36,25 +36,28 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IPower
     }
 
     public TileEntityGrinder(boolean isDouble){
-        super(isDouble ? 7 : 4, isDouble ? "grinderDouble" : "grinder");
-        this.maxCrushTime = isDouble ? ConfigValues.grinderDoubleCrushTime : ConfigValues.grinderCrushTime;
+        super(isDouble ? 8 : 5, isDouble ? "grinderDouble" : "grinder");
+        this.maxCrushTime = this.getStandardSpeed();
         this.isDouble = isDouble;
+        this.speedUpgradeSlot = isDouble ? 7 : 4;
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public void updateEntity(){
         if(!worldObj.isRemote){
+            this.speedUp();
+
             boolean theFlag = this.coalTimeLeft > 0;
 
-            if(this.coalTimeLeft > 0) this.coalTimeLeft--;
+            if(this.coalTimeLeft > 0) this.coalTimeLeft -= 1+this.burnTimeAmplifier;
 
             boolean canCrushOnFirst = this.canCrushOn(SLOT_INPUT_1, SLOT_OUTPUT_1_1, SLOT_OUTPUT_1_2);
             boolean canCrushOnSecond = false;
             if(this.isDouble) canCrushOnSecond = this.canCrushOn(SLOT_INPUT_2, SLOT_OUTPUT_2_1, SLOT_OUTPUT_2_2);
 
             if((canCrushOnFirst || canCrushOnSecond) && this.coalTimeLeft <= 0 && this.slots[SLOT_COAL] != null){
-                this.coalTime = TileEntityFurnace.getItemBurnTime(this.slots[SLOT_COAL]);
+                this.coalTime =  TileEntityFurnace.getItemBurnTime(this.slots[SLOT_COAL]);
                 this.coalTimeLeft = this.coalTime;
                 if(this.coalTime > 0){
                     this.slots[SLOT_COAL].stackSize--;
@@ -150,9 +153,10 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IPower
         this.secondCrushTime = compound.getInteger("SecondCrushTime");
         this.isDouble = compound.getBoolean("IsDouble");
         this.name = compound.getString("Name");
-        this.maxCrushTime = isDouble ? ConfigValues.grinderDoubleCrushTime : ConfigValues.grinderCrushTime;
+        this.maxCrushTime = this.getStandardSpeed();
+        this.speedUpgradeSlot = isDouble ? 7 : 4;
         int slots = compound.getInteger("Slots");
-        this.initializeSlots(slots == 0 ? 4 : slots);
+        this.initializeSlots(slots == 0 ? 5 : slots);
         super.readFromNBT(compound);
     }
 
@@ -204,5 +208,15 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IPower
     @Override
     public int getItemPower(){
         return this.coalTime;
+    }
+
+    @Override
+    public int getStandardSpeed(){
+        return this.isDouble ? ConfigIntValues.GRINDER_DOUBLE_CRUSH_TIME.getValue() : ConfigIntValues.GRINDER_CRUSH_TIME.getValue();
+    }
+
+    @Override
+    public void setSpeed(int newSpeed){
+        this.maxCrushTime = newSpeed;
     }
 }

@@ -38,6 +38,8 @@ public class InitItems{
     public static Item itemSwordObsidian;
     public static Item itemHoeObsidian;
 
+    public static Item itemSpeedUpgrade;
+
     public static void init(){
         Util.logInfo("Initializing Items...");
 
@@ -76,6 +78,9 @@ public class InitItems{
 
         itemPotionRingAdvanced = new ItemPotionRing(true);
         ItemUtil.register(itemPotionRingAdvanced);
+
+        itemSpeedUpgrade = new ItemUpgrade(ItemUpgrade.UpgradeType.SPEED, "itemUpgradeSpeed", 2+3);
+        ItemUtil.register(itemSpeedUpgrade);
 
         itemPickaxeEmerald = new ItemPickaxeAA(InitItemMaterials.toolMaterialEmerald, new ItemStack(Items.emerald), "itemPickaxeEmerald", EnumRarity.rare);
         itemAxeEmerald = new ItemAxeAA(InitItemMaterials.toolMaterialEmerald, new ItemStack(Items.emerald), "itemAxeEmerald", EnumRarity.rare);

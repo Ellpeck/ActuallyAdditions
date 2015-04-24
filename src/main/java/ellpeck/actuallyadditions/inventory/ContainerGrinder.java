@@ -23,6 +23,7 @@ public class ContainerGrinder extends Container{
     private int lastCoalTimeLeft;
     private int lastFirstCrushTime;
     private int lastSecondCrushTime;
+    private int lastMaxCrushTime;
 
     public ContainerGrinder(InventoryPlayer inventory, TileEntityBase tile, boolean isDouble){
         this.tileGrinder = (TileEntityGrinder)tile;
@@ -38,6 +39,8 @@ public class ContainerGrinder extends Container{
             this.addSlotToContainer(new SlotOutput(this.tileGrinder, TileEntityGrinder.SLOT_OUTPUT_2_1, 96, 69));
             this.addSlotToContainer(new SlotOutput(this.tileGrinder, TileEntityGrinder.SLOT_OUTPUT_2_2, 121, 69));
         }
+
+        this.addSlotToContainer(new Slot(this.tileGrinder, this.tileGrinder.speedUpgradeSlot, this.isDouble ? 155 : 146, 21));
 
         for (int i = 0; i < 3; i++){
             for (int j = 0; j < 9; j++){
@@ -55,7 +58,8 @@ public class ContainerGrinder extends Container{
         iCraft.sendProgressBarUpdate(this, 0, this.tileGrinder.coalTime);
         iCraft.sendProgressBarUpdate(this, 1, this.tileGrinder.coalTimeLeft);
         iCraft.sendProgressBarUpdate(this, 2, this.tileGrinder.firstCrushTime);
-        if(this.isDouble) iCraft.sendProgressBarUpdate(this, 3, this.tileGrinder.secondCrushTime);
+        iCraft.sendProgressBarUpdate(this, 3, this.tileGrinder.maxCrushTime);
+        if(this.isDouble) iCraft.sendProgressBarUpdate(this, 4, this.tileGrinder.secondCrushTime);
     }
 
     @Override
@@ -67,12 +71,14 @@ public class ContainerGrinder extends Container{
             if(this.lastCoalTime != this.tileGrinder.coalTime) iCraft.sendProgressBarUpdate(this, 0, this.tileGrinder.coalTime);
             if(this.lastCoalTimeLeft != this.tileGrinder.coalTimeLeft) iCraft.sendProgressBarUpdate(this, 1, this.tileGrinder.coalTimeLeft);
             if(this.lastFirstCrushTime != this.tileGrinder.firstCrushTime) iCraft.sendProgressBarUpdate(this, 2, this.tileGrinder.firstCrushTime);
-            if(this.isDouble) if(this.lastSecondCrushTime != this.tileGrinder.secondCrushTime) iCraft.sendProgressBarUpdate(this, 3, this.tileGrinder.secondCrushTime);
+            if(this.lastMaxCrushTime != this.tileGrinder.maxCrushTime) iCraft.sendProgressBarUpdate(this, 3, this.tileGrinder.maxCrushTime);
+            if(this.isDouble) if(this.lastSecondCrushTime != this.tileGrinder.secondCrushTime) iCraft.sendProgressBarUpdate(this, 4, this.tileGrinder.secondCrushTime);
         }
 
         this.lastCoalTime = this.tileGrinder.coalTime;
         this.lastCoalTimeLeft = this.tileGrinder.coalTimeLeft;
         this.lastFirstCrushTime = this.tileGrinder.firstCrushTime;
+        this.lastMaxCrushTime = this.tileGrinder.maxCrushTime;
         if(this.isDouble) this.lastSecondCrushTime = this.tileGrinder.secondCrushTime;
     }
 
@@ -82,7 +88,8 @@ public class ContainerGrinder extends Container{
         if(par1 == 0) this.tileGrinder.coalTime = par2;
         if(par1 == 1) this.tileGrinder.coalTimeLeft = par2;
         if(par1 == 2) this.tileGrinder.firstCrushTime = par2;
-        if(this.isDouble && par1 == 3) this.tileGrinder.secondCrushTime = par2;
+        if(par1 == 3) this.tileGrinder.maxCrushTime = par2;
+        if(this.isDouble && par1 == 4) this.tileGrinder.secondCrushTime = par2;
     }
 
     @Override
@@ -92,7 +99,7 @@ public class ContainerGrinder extends Container{
 
     @Override
     public ItemStack transferStackInSlot(EntityPlayer player, int slot){
-        final int inventoryStart = this.isDouble ? 7 : 4;
+        final int inventoryStart = this.isDouble ? 8 : 5;
         final int inventoryEnd = inventoryStart+26;
         final int hotbarStart = inventoryEnd+1;
         final int hotbarEnd = hotbarStart+8;

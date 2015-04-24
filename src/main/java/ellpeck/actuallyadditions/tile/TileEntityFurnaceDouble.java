@@ -2,14 +2,14 @@ package ellpeck.actuallyadditions.tile;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ellpeck.actuallyadditions.config.ConfigValues;
+import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntityFurnace;
 
-public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements IPowerAcceptor{
+public class TileEntityFurnaceDouble extends TileEntityUpgradable implements IPowerAcceptor{
 
     public static final int SLOT_COAL = 0;
     public static final int SLOT_INPUT_1 = 1;
@@ -20,22 +20,25 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
     public int coalTime;
     public int coalTimeLeft;
 
-    public final int maxBurnTime = ConfigValues.furnaceDoubleSmeltTime;
+    public int maxBurnTime = this.getStandardSpeed();
 
     public int firstSmeltTime;
     public int secondSmeltTime;
 
     public TileEntityFurnaceDouble(){
-        super(5, "furnaceDouble");
+        super(6, "furnaceDouble");
+        this.speedUpgradeSlot = 5;
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public void updateEntity(){
         if(!worldObj.isRemote){
+            this.speedUp();
+
             boolean theFlag = this.coalTimeLeft > 0;
 
-            if(this.coalTimeLeft > 0) this.coalTimeLeft--;
+            if(this.coalTimeLeft > 0) this.coalTimeLeft -= 1+this.burnTimeAmplifier;
 
             boolean canSmeltOnFirst = this.canSmeltOn(SLOT_INPUT_1, SLOT_OUTPUT_1);
             boolean canSmeltOnSecond = this.canSmeltOn(SLOT_INPUT_2, SLOT_OUTPUT_2);
@@ -173,5 +176,15 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
     @Override
     public int getItemPower(){
         return this.coalTime;
+    }
+
+    @Override
+    public int getStandardSpeed(){
+        return ConfigIntValues.FURNACE_DOUBLE_SMELT_TIME.getValue();
+    }
+
+    @Override
+    public void setSpeed(int newSpeed){
+        this.maxBurnTime = newSpeed;
     }
 }

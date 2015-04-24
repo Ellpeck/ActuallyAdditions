@@ -1,7 +1,7 @@
 package ellpeck.actuallyadditions.crafting;
 
 import cpw.mods.fml.common.registry.GameRegistry;
-import ellpeck.actuallyadditions.config.ConfigValues;
+import ellpeck.actuallyadditions.config.values.ConfigCrafting;
 import ellpeck.actuallyadditions.items.InitItems;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -12,7 +12,7 @@ public class ToolCrafting{
 
     public static void init(){
 
-        if(ConfigValues.enableToolEmeraldRecipe){
+        if(ConfigCrafting.TOOL_EMERALD.isEnabled()){
             //Pickaxe
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemPickaxeEmerald),
                     "EEE", " S ", " S ",
@@ -44,7 +44,7 @@ public class ToolCrafting{
                     'S', new ItemStack(Items.stick)));
         }
 
-        if(ConfigValues.enableToolObsidianRecipe){
+        if(ConfigCrafting.TOOL_OBSIDIAN.isEnabled()){
             //Pickaxe
             GameRegistry.addRecipe(new ItemStack(InitItems.itemPickaxeObsidian),
                     "EEE", " S ", " S ",

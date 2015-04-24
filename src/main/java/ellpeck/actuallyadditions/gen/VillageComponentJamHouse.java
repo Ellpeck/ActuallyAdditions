@@ -1,6 +1,6 @@
 package ellpeck.actuallyadditions.gen;
 
-import ellpeck.actuallyadditions.config.ConfigValues;
+import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
@@ -188,6 +188,6 @@ public class VillageComponentJamHouse extends StructureVillagePieces.House1{
 
     @Override
     protected int getVillagerType(int par1){
-        return ConfigValues.jamVillagerID;
+        return ConfigIntValues.JAM_VILLAGER_ID.getValue();
     }
 }

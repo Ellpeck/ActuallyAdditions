@@ -1,21 +1,20 @@
 package ellpeck.actuallyadditions.tile;
 
-import ellpeck.actuallyadditions.config.ConfigValues;
-import ellpeck.actuallyadditions.util.WorldUtil;
-import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ChunkCoordinates;
-
-import java.util.ArrayList;
-import java.util.Random;
+import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 
 public class TileEntityHeatCollector extends TileEntityBase{
 
-    private int randomChance = ConfigValues.heatCollectorRandomChance;
-    private int blocksNeeded = ConfigValues.heatCollectorBlocksNeeded;
+    private int randomChance = ConfigIntValues.HEAT_COLLECTOR_LAVA_CHANCE.getValue();
+    private int blocksNeeded = ConfigIntValues.HEAT_COLLECTOR_BLOCKS.getValue();
 
     @Override
+    public boolean canUpdate(){
+        return false;
+    }
+
+    //TODO Reimplement
+
+    /*@Override
     public void updateEntity(){
         if(!worldObj.isRemote){
             ArrayList<Integer> blocksAround = new ArrayList<Integer>();
@@ -42,5 +41,5 @@ public class TileEntityHeatCollector extends TileEntityBase{
                 }
             }
         }
-    }
+    }*/
 }
