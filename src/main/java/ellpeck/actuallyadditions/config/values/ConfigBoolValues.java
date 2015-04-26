@@ -18,7 +18,9 @@ public enum ConfigBoolValues{
     HEART_DROP("Heart Parts", ConfigCategories.MOB_DROPS, false, "If the Heart Parts drop from Mobs"),
     SUBSTANCE_DROP("Unknown Substance", ConfigCategories.MOB_DROPS, false, "If the Unknown Substance drops from Mobs"),
     PEARL_SHARD_DROP("Ender Pearl Shard", ConfigCategories.MOB_DROPS, true, "If the Ender Pearl Shard drops from Mobs"),
-    EMERALD_SHARD_CROP("Emerald Shard", ConfigCategories.MOB_DROPS, true, "If the Emerald Shard drops from Mobs");
+    EMERALD_SHARD_CROP("Emerald Shard", ConfigCategories.MOB_DROPS, true, "If the Emerald Shard drops from Mobs"),
+
+    DO_UPDATE_CHECK("Do Update Check", ConfigCategories.OTHER, true, "If Actually Additions should check for an Update on joining a World");
 
     public final String name;
     public final String category;

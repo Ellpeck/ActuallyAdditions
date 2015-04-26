@@ -40,6 +40,10 @@ public class WailaDataProvider implements IWailaDataProvider{
             if(meta <= tile.amountNeededToConvert){
                 String tip1 = StatCollector.translateToLocal(WAILA_PRE_LANG + "compostAmount" + ".name") + ": " + meta + "/" + tile.amountNeededToConvert;
                 currentTip.add(tip1);
+
+                if(meta == tile.amountNeededToConvert){
+                    currentTip.add(StatCollector.translateToLocal(WAILA_PRE_LANG + "compostConverting" + ".name"));
+                }
             }
 
             if(meta == tile.amountNeededToConvert+1){
@@ -55,6 +59,7 @@ public class WailaDataProvider implements IWailaDataProvider{
         return currentTip;
     }
 
+    @Override
     public NBTTagCompound getNBTData(TileEntity te, NBTTagCompound tag, World world, int x, int y, int z){
         return tag;
     }

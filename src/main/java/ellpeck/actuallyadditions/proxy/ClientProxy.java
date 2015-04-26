@@ -5,11 +5,13 @@ import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.common.registry.VillagerRegistry;
 import ellpeck.actuallyadditions.blocks.InitBlocks;
 import ellpeck.actuallyadditions.blocks.render.*;
+import ellpeck.actuallyadditions.config.values.ConfigBoolValues;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.event.RenderPlayerEventAA;
 import ellpeck.actuallyadditions.tile.TileEntityCompost;
 import ellpeck.actuallyadditions.tile.TileEntityFishingNet;
 import ellpeck.actuallyadditions.tile.TileEntityFurnaceSolar;
+import ellpeck.actuallyadditions.update.UpdateChecker;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.item.Item;
@@ -40,6 +42,7 @@ public class ClientProxy implements IProxy{
         VillagerRegistry.instance().registerVillagerSkin(ConfigIntValues.JAM_VILLAGER_ID.getValue(), new ResourceLocation(ModUtil.MOD_ID_LOWER, "textures/entity/villager/jamVillager.png"));
 
         Util.registerEvent(new RenderPlayerEventAA());
+        if(ConfigBoolValues.DO_UPDATE_CHECK.isEnabled()) new UpdateChecker().init();
     }
 
     @Override

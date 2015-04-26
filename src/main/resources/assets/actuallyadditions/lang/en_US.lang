@@ -283,6 +283,11 @@ container.actuallyadditions.nei.crushing.name=Crusher
 
 gui.actuallyadditions.waila.compostAmount.name=Amount of Mashed Food
 gui.actuallyadditions.waila.compostDone.name=Done!
+gui.actuallyadditions.waila.compostConverting.name=Converting...
+
+info.actuallyadditions.update.generic.desc=[{"text":"There is an "},{"text":"Update ","bold":"true"},{"text":"for ","bold":"false"},{"text":"Actually Additions ","color":"dark_green","bold":"true"},{"text":"available!","color":"none","bold":"false"}]
+info.actuallyadditions.update.versionComp.desc=[{"text":"You have Version "},{"text":"%s","color":"dark_red","italic":"false"},{"text":", the newest one is ","color":"none","italic":"false"},{"text":"%s","color":"dark_green","underlined":"false"},{"text":"!","color":"none","underlined":"false"}]
+info.actuallyadditions.update.download.desc=[{"text":"Download the newest Version "},{"text":"here! (Click me!)","color":"dark_green","underlined":"true","clickEvent":{"action":"open_url","value":"%s"},"hoverEvent":{"action":"show_text","value":{"text":"","extra":[{"text":"Click here to open your Browser and download the newest Version!"}]}}}]
 
 achievement.actuallyadditions.pickUpSolidXP=Hard and Rich and Stuff
 achievement.actuallyadditions.pickUpSolidXP.desc=Pick up some Solidified Experience
