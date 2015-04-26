@@ -16,19 +16,42 @@ buildscript {
 }
 
 apply plugin: 'forge'
+apply plugin: 'maven'
 
-version = "1.7.10-0.0.3.5"
+version = "1.7.10-0.0.4"
 group = "ellpeck.actuallyadditions"
 archivesBaseName = "ActuallyAdditions"
 
 minecraft {
-    version = "1.7.10-10.13.2.1291"
+    version = "1.7.10-10.13.3.1395-1710ls"
     runDir = "idea"
 }
 
-dependencies{
-
+repositories {
+    maven {
+        name "Mobius"
+        url "http://mobiusstrip.eu/maven"
+    }
+    maven {
+        name "ChickenBones"
+        url "http://chickenbones.net/maven/"
+    }
 }
+
+dependencies {
+    compile "mcp.mobius.waila:Waila:1.5.6_1.7.10"
+}
+
+task copyChicken(type: Copy, dependsOn: "extractUserDev") {
+    from { configurations.compile }
+    include "**/*Chicken*.jar", "**/*NotEnoughItems*.jar"
+    exclude "**/CodeChickenLib*"
+    into file("./run/mods")
+    mustRunAfter "deobfBinJar"
+    mustRunAfter "repackMinecraft"
+}
+tasks.setupDevWorkspace.dependsOn copyChicken
+tasks.setupDecompWorkspace.dependsOn copyChicken
 
 processResources{
 

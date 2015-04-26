@@ -24,8 +24,7 @@ tile.actuallyadditions.blockPlacer.name=Placer
 
 tile.actuallyadditions.blockInputter.name=ESD
 tile.actuallyadditions.blockInputterAdvanced.name=Advanced ESD
-tile.actuallyadditions.blockInputter.add.0.name=Ellpeck's Slot Device
-tile.actuallyadditions.blockInputter.add.1.name=Energetic Solo Dancer
+tile.actuallyadditions.blockInputter.add.1.name=Ellpeck's Slot Device
 tile.actuallyadditions.blockInputter.add.2.name=Ethereal System Dude
 tile.actuallyadditions.blockInputter.add.3.name=Energy Stuff Distributor
 tile.actuallyadditions.blockInputter.add.4.name=Existing Stuff Donator
@@ -36,7 +35,7 @@ tile.actuallyadditions.blockInputter.add.8.name=Extraordinary Sample Deliverer
 tile.actuallyadditions.blockInputter.add.9.name=Express Sending Doughnut
 tile.actuallyadditions.blockInputter.add.10.name=Expelling Sugar Dagger
 tile.actuallyadditions.blockInputter.add.11.name=Extra-Long Solidifying Dissociation
-tile.actuallyadditions.blockInputter.add.12.name=Extravagant Supreme Dirt
+tile.actuallyadditions.blockInputter.add.12.name=Energetic Solo Dancer
 tile.actuallyadditions.blockInputter.add.13.name=Efficient Sucking Dilettant
 tile.actuallyadditions.blockInputter.add.14.name=Extreme Sand Digger
 tile.actuallyadditions.blockInputter.add.15.name=MISSINGNO
@@ -279,6 +278,11 @@ container.actuallyadditions.repairer.name=Repairer
 container.actuallyadditions.placer.name=Placer
 container.actuallyadditions.breaker.name=Breaker
 container.actuallyadditions.crafting.name=Crafting Table On A Stick
+
+container.actuallyadditions.nei.crushing.name=Crusher
+
+gui.actuallyadditions.waila.compostAmount.name=Amount of Mashed Food
+gui.actuallyadditions.waila.compostDone.name=Done!
 
 achievement.actuallyadditions.pickUpSolidXP=Hard and Rich and Stuff
 achievement.actuallyadditions.pickUpSolidXP.desc=Pick up some Solidified Experience

@@ -104,7 +104,7 @@ public class BlockInputter extends BlockContainerBase implements INameableItem{
 
             if(this.lastSysTime+5000 < sysTime){
                 this.lastSysTime = sysTime;
-                this.toPick = rand.nextInt(NAME_FLAVOUR_AMOUNTS+1);
+                this.toPick = rand.nextInt(NAME_FLAVOUR_AMOUNTS)+1;
             }
 
             return StatCollector.translateToLocal(this.getUnlocalizedName() + ".name") + " (" + StatCollector.translateToLocal("tile." + ModUtil.MOD_ID_LOWER + ".blockInputter.add." + this.toPick + ".name") + ")";
