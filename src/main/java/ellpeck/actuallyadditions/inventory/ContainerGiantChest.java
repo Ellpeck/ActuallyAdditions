@@ -2,12 +2,14 @@ package ellpeck.actuallyadditions.inventory;
 
 import ellpeck.actuallyadditions.tile.TileEntityBase;
 import ellpeck.actuallyadditions.tile.TileEntityGiantChest;
+import invtweaks.api.container.ChestContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
+@ChestContainer(rowSize = 13)
 public class ContainerGiantChest extends Container{
 
     public TileEntityGiantChest tileChest;

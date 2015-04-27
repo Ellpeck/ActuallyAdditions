@@ -2,12 +2,14 @@ package ellpeck.actuallyadditions.inventory;
 
 import ellpeck.actuallyadditions.tile.TileEntityBase;
 import ellpeck.actuallyadditions.tile.TileEntityBreaker;
+import invtweaks.api.container.InventoryContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
+@InventoryContainer
 public class ContainerBreaker extends Container{
 
     private TileEntityBreaker breaker;

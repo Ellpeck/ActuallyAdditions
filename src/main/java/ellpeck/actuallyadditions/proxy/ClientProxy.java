@@ -30,6 +30,10 @@ public class ClientProxy implements IProxy{
     public void init(){
         Util.logInfo("Initializing ClientProxy...");
 
+        if(ConfigBoolValues.DO_UPDATE_CHECK.isEnabled()){
+            new UpdateChecker().init();
+        }
+
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCompost.class, new RenderTileEntity(new ModelCompost()));
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(InitBlocks.blockCompost), new RenderItems(new ModelCompost()));
 
@@ -42,7 +46,6 @@ public class ClientProxy implements IProxy{
         VillagerRegistry.instance().registerVillagerSkin(ConfigIntValues.JAM_VILLAGER_ID.getValue(), new ResourceLocation(ModUtil.MOD_ID_LOWER, "textures/entity/villager/jamVillager.png"));
 
         Util.registerEvent(new RenderPlayerEventAA());
-        if(ConfigBoolValues.DO_UPDATE_CHECK.isEnabled()) new UpdateChecker().init();
     }
 
     @Override

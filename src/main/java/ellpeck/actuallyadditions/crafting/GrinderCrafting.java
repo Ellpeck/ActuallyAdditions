@@ -63,13 +63,17 @@ public class GrinderCrafting{
                                 ItemStack input = theInput.copy();
                                 if(GrinderRecipes.instance().getOutput(input, false) == null){
                                     ArrayList<ItemStack> specialStacks = null;
+                                    int specialAmount = 0;
 
-                                    if(name.equals("oreNickel")) specialStacks = OreDictionary.getOres("dustPlatinum");
+                                    if(name.equals("oreNickel")){
+                                        specialStacks = OreDictionary.getOres("dustPlatinum");
+                                        specialAmount = 30;
+                                    }
                                     
                                     if(specialStacks != null && specialStacks.size() > 0){
                                         for(ItemStack theSpecial : specialStacks){
                                             ItemStack special = theSpecial.copy();
-                                            GrinderRecipes.instance().registerRecipe(input, output, special, 10);
+                                            GrinderRecipes.instance().registerRecipe(input, output, special, specialAmount);
                                         }
                                     }
                                     else GrinderRecipes.instance().registerRecipe(input, output, null, 0);

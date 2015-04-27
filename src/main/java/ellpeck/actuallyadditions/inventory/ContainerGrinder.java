@@ -6,6 +6,7 @@ import ellpeck.actuallyadditions.inventory.slot.SlotOutput;
 import ellpeck.actuallyadditions.recipe.GrinderRecipes;
 import ellpeck.actuallyadditions.tile.TileEntityBase;
 import ellpeck.actuallyadditions.tile.TileEntityGrinder;
+import invtweaks.api.container.InventoryContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -14,6 +15,7 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityFurnace;
 
+@InventoryContainer
 public class ContainerGrinder extends Container{
 
     private TileEntityGrinder tileGrinder;

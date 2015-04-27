@@ -34,24 +34,28 @@ public class WailaDataProvider implements IWailaDataProvider{
     public List<String> getWailaBody(ItemStack itemStack, List<String> currentTip, IWailaDataAccessor accessor, IWailaConfigHandler config){
 
         if (accessor.getTileEntity() instanceof TileEntityCompost){
-            int meta = accessor.getMetadata();
-            TileEntityCompost tile = (TileEntityCompost)accessor.getTileEntity();
-
-            if(meta <= tile.amountNeededToConvert){
-                String tip1 = StatCollector.translateToLocal(WAILA_PRE_LANG + "compostAmount" + ".name") + ": " + meta + "/" + tile.amountNeededToConvert;
-                currentTip.add(tip1);
-
-                if(meta == tile.amountNeededToConvert){
-                    currentTip.add(StatCollector.translateToLocal(WAILA_PRE_LANG + "compostConverting" + ".name"));
-                }
-            }
-
-            if(meta == tile.amountNeededToConvert+1){
-                currentTip.add(StatCollector.translateToLocal(WAILA_PRE_LANG + "compostDone" + ".name"));
-            }
+            this.compostBody(accessor, currentTip);
         }
 
         return currentTip;
+    }
+
+    public void compostBody(IWailaDataAccessor accessor, List<String> currentTip){
+        int meta = accessor.getMetadata();
+        TileEntityCompost tile = (TileEntityCompost)accessor.getTileEntity();
+
+        if(meta <= tile.amountNeededToConvert){
+            String tip1 = StatCollector.translateToLocal(WAILA_PRE_LANG + "compostAmount" + ".name") + ": " + meta + "/" + tile.amountNeededToConvert;
+            currentTip.add(tip1);
+
+            if(meta == tile.amountNeededToConvert){
+                currentTip.add(StatCollector.translateToLocal(WAILA_PRE_LANG + "compostConverting" + ".name"));
+            }
+        }
+
+        if(meta == tile.amountNeededToConvert+1){
+            currentTip.add(StatCollector.translateToLocal(WAILA_PRE_LANG + "compostDone" + ".name"));
+        }
     }
 
     @Override

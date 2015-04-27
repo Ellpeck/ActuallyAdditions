@@ -65,6 +65,7 @@ public class UpdateChecker{
                 BufferedReader r = new BufferedReader(new InputStreamReader(url.openStream()));
                 onlineVersion = r.readLine();
                 r.close();
+                Util.logInfo("Update Check done!");
             }
             catch(Exception e){
                 ModUtil.AA_LOGGER.log(Level.ERROR, "Update Check failed!");

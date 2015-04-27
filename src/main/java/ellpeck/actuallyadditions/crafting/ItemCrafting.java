@@ -83,7 +83,7 @@ public class ItemCrafting{
 
         //SpeedUpgrade
         if(ConfigCrafting.SPEED_UPGRADE.isEnabled())
-            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemSpeedUpgrade),
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemSpeedUpgrade, 2),
                     "RGR", "GUG", "RGR",
                     'U', TheMiscItems.COIL.getOredictName(),
                     'R', "dustRedstone",

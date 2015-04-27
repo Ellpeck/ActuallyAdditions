@@ -158,7 +158,7 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler{
         if(crush.resultTwo != null){
             int secondChance = crush.secondChance;
             String secondString = secondChance + "%";
-            GuiDraw.drawString(secondString, 87, 24, StringUtil.DECIMAL_COLOR_WHITE, false);
+            GuiDraw.drawString(secondString, 87, 24, StringUtil.DECIMAL_COLOR_GRAY_TEXT, false);
         }
     }
 
