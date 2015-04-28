@@ -4,6 +4,7 @@ import codechicken.lib.gui.GuiDraw;
 import codechicken.nei.ItemList;
 import codechicken.nei.NEIServerUtils;
 import codechicken.nei.PositionedStack;
+import codechicken.nei.recipe.RecipeInfo;
 import codechicken.nei.recipe.TemplateRecipeHandler;
 import ellpeck.actuallyadditions.inventory.GuiGrinder;
 import ellpeck.actuallyadditions.recipe.GrinderRecipes;
@@ -28,6 +29,11 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler{
 
     public static ArrayList<Fuel> fuels;
 
+    public CrusherRecipeHandler(){
+        super();
+        RecipeInfo.setGuiOffset(this.getGuiClass(), 0, 0);
+    }
+
     public class CachedCrush extends CachedRecipe{
 
         public PositionedStack ingredient;
@@ -37,9 +43,9 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler{
 
         public CachedCrush(ItemStack in, ItemStack resultOne, ItemStack resultTwo, int secondChance){
             in.stackSize = 1;
-            this.ingredient = new PositionedStack(in, 7, 37);
-            this.resultOne = new PositionedStack(resultOne, 60, 39);
-            if(resultTwo != null) this.resultTwo = new PositionedStack(resultTwo, 86, 39);
+            this.ingredient = new PositionedStack(in, 80, 21);
+            this.resultOne = new PositionedStack(resultOne, 66, 69);
+            if(resultTwo != null) this.resultTwo = new PositionedStack(resultTwo, 94, 69);
             this.secondChance = secondChance;
         }
 
@@ -67,10 +73,15 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler{
         }
     }
 
+    @Override
+    public int recipiesPerPage(){
+        return 1;
+    }
+
     public static class Fuel{
 
         public Fuel(ItemStack in, int burnTime){
-            this.stack = new PositionedStack(in, 7, 3, false);
+            this.stack = new PositionedStack(in, 51, 21, false);
             this.burnTime = burnTime;
         }
 
@@ -80,8 +91,8 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler{
 
     @Override
     public void loadTransferRects(){
-        transferRects.add(new RecipeTransferRect(new Rectangle(29, 3, 16, 16), FUEL));
-        transferRects.add(new RecipeTransferRect(new Rectangle(29, 32, 22, 22), NAME));
+        transferRects.add(new RecipeTransferRect(new Rectangle(51, 5, 14, 14), FUEL));
+        transferRects.add(new RecipeTransferRect(new Rectangle(80, 40, 24, 22), NAME));
     }
 
     @Override
@@ -139,26 +150,26 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler{
 
     @Override
     public String getGuiTexture(){
-        return ModUtil.MOD_ID_LOWER + ":textures/gui/nei/grinder.png";
+        return ModUtil.MOD_ID_LOWER + ":textures/gui/guiGrinder.png";
     }
 
     @Override
     public void drawBackground(int recipeIndex){
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         GuiDraw.changeTexture(getGuiTexture());
-        GuiDraw.drawTexturedModalRect(0, 0, 0, 0, 113, 66);
+        GuiDraw.drawTexturedModalRect(49, 5, 49, 5, 66, 86);
     }
 
     @Override
     public void drawExtras(int recipe){
-        drawProgressBar(29, 4, 113, 44, 14, 14, 48, 7);
-        drawProgressBar(29, 32, 113, 0, 22, 22, 48, 0);
+        drawProgressBar(51, 5, 176, 44, 14, 14, 48, 7);
+        drawProgressBar(80, 40, 176, 0, 24, 23, 48, 1);
 
         CachedCrush crush = (CachedCrush)this.arecipes.get(recipe);
         if(crush.resultTwo != null){
             int secondChance = crush.secondChance;
             String secondString = secondChance + "%";
-            GuiDraw.drawString(secondString, 87, 24, StringUtil.DECIMAL_COLOR_GRAY_TEXT, false);
+            GuiDraw.drawString(secondString, 118, 73, StringUtil.DECIMAL_COLOR_GRAY_TEXT, false);
         }
     }
 

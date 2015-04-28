@@ -56,3 +56,8 @@
 
 -File Jukebox
     -Plays Sound Files put into your Minecraft Folder
+
+-RF Implementation
+    -Power Acceptor Block that powers Machines
+    -Machines still don't accept RF themselves!
+    -Solar Panel & Heat Collector produce RF

@@ -46,7 +46,7 @@ public class ItemUtil{
         item.setCreativeTab(CreativeTab.instance);
         item.setUnlocalizedName(createUnlocalizedName(item));
         GameRegistry.registerItem(item, ((INameableItem)item).getName());
-        OreDictionary.registerOre(((INameableItem)item).getOredictName(), item);
+        if(!((INameableItem)item).getOredictName().isEmpty()) OreDictionary.registerOre(((INameableItem)item).getOredictName(), item);
     }
 
     public static void register(Item item, Enum[] list){
@@ -54,7 +54,7 @@ public class ItemUtil{
         item.setUnlocalizedName(createUnlocalizedName(item));
         GameRegistry.registerItem(item, ((INameableItem)item).getName());
         for(Enum current : list){
-            OreDictionary.registerOre(((INameableItem)current).getOredictName(), new ItemStack(item, 1, current.ordinal()));
+            if(!((INameableItem)current).getOredictName().isEmpty()) OreDictionary.registerOre(((INameableItem)current).getOredictName(), new ItemStack(item, 1, current.ordinal()));
         }
     }
 

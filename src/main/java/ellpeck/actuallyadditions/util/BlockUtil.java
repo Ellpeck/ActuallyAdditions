@@ -44,7 +44,7 @@ public class BlockUtil{
         block.setBlockName(createUnlocalizedName(block));
         GameRegistry.registerBlock(block, itemBlock, ((INameableItem)block).getName());
         for(Enum current : list){
-            OreDictionary.registerOre(((INameableItem)current).getOredictName(), new ItemStack(block, 1, current.ordinal()));
+            if(!((INameableItem)current).getOredictName().isEmpty()) OreDictionary.registerOre(((INameableItem)current).getOredictName(), new ItemStack(block, 1, current.ordinal()));
         }
     }
 
@@ -52,7 +52,7 @@ public class BlockUtil{
         block.setCreativeTab(CreativeTab.instance);
         block.setBlockName(createUnlocalizedName(block));
         GameRegistry.registerBlock(block, itemBlock, ((INameableItem)block).getName());
-        OreDictionary.registerOre(((INameableItem)block).getOredictName(), block);
+        if(!((INameableItem)block).getOredictName().isEmpty()) OreDictionary.registerOre(((INameableItem)block).getOredictName(), block);
     }
 
 }

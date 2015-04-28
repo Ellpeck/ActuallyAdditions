@@ -16,7 +16,7 @@ import java.util.List;
 
 public class ItemUpgrade extends Item implements INameableItem{
 
-    private String name;
+    private final String name;
     public UpgradeType type;
     private int textAmount;
 
