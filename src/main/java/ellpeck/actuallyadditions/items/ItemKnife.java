@@ -58,8 +58,6 @@ public class ItemKnife extends Item implements INameableItem{
         }
         else list.add(ItemUtil.shiftForInfo());
 
-        if(KeyUtil.isControlPressed()) ItemUtil.addOredictName(this.getOredictName(), list);
-
     }
 
     @Override

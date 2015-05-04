@@ -22,6 +22,7 @@ public enum ConfigCrafting{
     GREENHOUSE_GLASS("Greenhouse Glass", ConfigCategories.BLOCKS_CRAFTING),
     BREAKER("Breaker", ConfigCategories.BLOCKS_CRAFTING),
     PLACER("Placer", ConfigCategories.BLOCKS_CRAFTING),
+    DROPPER("Dropper", ConfigCategories.BLOCKS_CRAFTING),
     SPEED_UPGRADE("Speed Upgrade", ConfigCategories.BLOCKS_CRAFTING),
 
     BAGUETTE("Baguette", ConfigCategories.FOOD_CRAFTING),

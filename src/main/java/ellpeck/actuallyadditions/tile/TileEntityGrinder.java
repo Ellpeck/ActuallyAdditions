@@ -13,6 +13,17 @@ import java.util.Random;
 
 public class TileEntityGrinder extends TileEntityUpgradable implements IPowerAcceptor{
 
+    public static class TileEntityGrinderDouble extends TileEntityGrinder{
+
+        public TileEntityGrinderDouble(){
+            super(8, "grinderDouble");
+            this.isDouble = true;
+            this.maxCrushTime = this.getStandardSpeed();
+            this.speedUpgradeSlot = 7;
+        }
+
+    }
+
     public static final int SLOT_COAL = 0;
     public static final int SLOT_INPUT_1 = 1;
     public static final int SLOT_OUTPUT_1_1 = 2;
@@ -31,15 +42,15 @@ public class TileEntityGrinder extends TileEntityUpgradable implements IPowerAcc
 
     public boolean isDouble;
 
-    public TileEntityGrinder(){
-        super(0, "");
+    public TileEntityGrinder(int slots, String name){
+        super(slots, name);
     }
 
-    public TileEntityGrinder(boolean isDouble){
-        super(isDouble ? 8 : 5, isDouble ? "grinderDouble" : "grinder");
+    public TileEntityGrinder(){
+        super(5, "grinder");
+        this.isDouble = false;
         this.maxCrushTime = this.getStandardSpeed();
-        this.isDouble = isDouble;
-        this.speedUpgradeSlot = isDouble ? 7 : 4;
+        this.speedUpgradeSlot = 4;
     }
 
     @Override
@@ -139,9 +150,6 @@ public class TileEntityGrinder extends TileEntityUpgradable implements IPowerAcc
         compound.setInteger("CoalTimeLeft", this.coalTimeLeft);
         compound.setInteger("FirstCrushTime", this.firstCrushTime);
         compound.setInteger("SecondCrushTime", this.secondCrushTime);
-        compound.setBoolean("IsDouble", this.isDouble);
-        compound.setString("Name", this.name);
-        compound.setInteger("Slots", this.slots.length);
         super.writeToNBT(compound);
     }
 
@@ -151,12 +159,6 @@ public class TileEntityGrinder extends TileEntityUpgradable implements IPowerAcc
         this.coalTimeLeft = compound.getInteger("CoalTimeLeft");
         this.firstCrushTime = compound.getInteger("FirstCrushTime");
         this.secondCrushTime = compound.getInteger("SecondCrushTime");
-        this.isDouble = compound.getBoolean("IsDouble");
-        this.name = compound.getString("Name");
-        this.maxCrushTime = this.getStandardSpeed();
-        this.speedUpgradeSlot = isDouble ? 7 : 4;
-        int slots = compound.getInteger("Slots");
-        this.initializeSlots(slots == 0 ? 5 : slots);
         super.readFromNBT(compound);
     }
 

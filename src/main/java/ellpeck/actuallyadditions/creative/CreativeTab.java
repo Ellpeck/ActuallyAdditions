@@ -40,6 +40,7 @@ public class CreativeTab extends CreativeTabs{
         this.addBlock(InitBlocks.blockFishingNet);
         this.addBlock(InitBlocks.blockBreaker);
         this.addBlock(InitBlocks.blockPlacer);
+        this.addBlock(InitBlocks.blockDropper);
 
         this.addBlock(InitBlocks.blockMisc);
         this.addBlock(InitBlocks.blockFeeder);

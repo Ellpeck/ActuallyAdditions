@@ -62,7 +62,7 @@ public class ItemMisc extends Item implements INameableItem{
     @SuppressWarnings("unchecked")
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld){
-        ItemUtil.addInformation(this, list, 1, allMiscItems[stack.getItemDamage()].getName(), allMiscItems[stack.getItemDamage()].getOredictName());
+        ItemUtil.addInformation(this, list, 1, allMiscItems[stack.getItemDamage()].getName());
     }
 
     @Override

@@ -15,47 +15,71 @@ import java.util.Random;
 
 public class JamVillagerTradeHandler implements VillagerRegistry.IVillageTradeHandler{
 
-    private ArrayList<ItemStack> villagerWants = new ArrayList<ItemStack>();
+    private ArrayList<Trade> trades = new ArrayList<Trade>();
 
     public JamVillagerTradeHandler(){
-        this.addWants("ingotGold");
-        this.addWants("cropWheat");
-        this.addWants("dustRedstone");
-        this.addWants(new ItemStack(Items.bucket));
-        this.addWants(new ItemStack(Items.glass_bottle));
-        this.addWants(new ItemStack(Items.potionitem));
-        this.addWants("ingotIron");
-        this.addWants("gemDiamond");
-        this.addWants("dustGlowstone");
+        this.addWants("ingotGold", 3, 2);
+        this.addWants("cropWheat", 10, 10);
+        this.addWants("dustRedstone", 15, 15);
+        this.addWants(new ItemStack(Items.bucket), 1, 4);
+        this.addWants(new ItemStack(Items.glass_bottle), 5, 5);
+        this.addWants(new ItemStack(Items.potionitem), 1, 0);
+        this.addWants("ingotIron", 5, 5);
+        this.addWants("gemDiamond", 1, 1);
+        this.addWants("dustGlowstone", 5, 10);
     }
 
     @Override
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings("all")
     public void manipulateTradesForVillager(EntityVillager villager, MerchantRecipeList recipeList, Random rand){
-        for(int i = 0; i < villagerWants.size(); i++){
-            ItemStack wantsTwo = null;
-            ItemStack wantsOne = villagerWants.get(i);
-            wantsOne.stackSize = rand.nextInt(10)+10;
-            if(wantsOne.stackSize > wantsOne.getMaxStackSize()) wantsOne.stackSize = wantsOne.getMaxStackSize();
-            if(rand.nextInt(5) == 0){
-                wantsTwo = villagerWants.get(rand.nextInt(villagerWants.size()));
-                wantsTwo.stackSize = rand.nextInt(10)+1;
-                if(wantsTwo.stackSize > wantsTwo.getMaxStackSize()) wantsTwo.stackSize = wantsTwo.getMaxStackSize();
-            }
-            if(wantsOne == wantsTwo) wantsTwo = null;
+        for(int i = 0; i < trades.size(); i++){
+            for(int j = 0; j < trades.get(i).wants.size(); j++){
+                ItemStack wantsTwo = null;
+                ItemStack wantsOne = trades.get(i).wants.get(j);
 
-            for(int j = 0; j < TheJams.values().length; j++){
-                recipeList.add(new MerchantRecipe(wantsOne, wantsTwo, new ItemStack(InitItems.itemJams, rand.nextInt(3)+1, j)));
+                wantsOne.stackSize = rand.nextInt(trades.get(i).extraStackSize) + trades.get(i).baseStackSize;
+                if(rand.nextInt(3) == 0){
+                    int toGet = rand.nextInt(trades.size());
+                    for(int k = 0; k < trades.get(toGet).wants.size(); k++){
+                        wantsTwo = trades.get(toGet).wants.get(k);
+                        wantsTwo.stackSize = rand.nextInt(trades.get(k).extraStackSize) + trades.get(k).baseStackSize;
+                    }
+                }
+                if(wantsOne == wantsTwo) wantsTwo = null;
+
+                for(int k = 0; k < TheJams.values().length; k++){
+                    recipeList.add(new MerchantRecipe(wantsOne, wantsTwo, new ItemStack(InitItems.itemJams, rand.nextInt(5)+1, k)));
+                }
             }
         }
     }
 
-    public void addWants(String oredictName){
+    public void addWants(String oredictName, int minSize, int maxSize){
         ArrayList<ItemStack> stacks = OreDictionary.getOres(oredictName);
-        villagerWants.addAll(stacks);
+        trades.add(new Trade(stacks, minSize, maxSize));
     }
 
-    public void addWants(ItemStack stack){
-        villagerWants.add(stack);
+    public void addWants(ItemStack stack, int minSize, int maxSize){
+        trades.add(new Trade(stack, minSize, maxSize));
+    }
+
+    public static class Trade{
+
+        public final ArrayList<ItemStack> wants = new ArrayList<ItemStack>();
+        public final int baseStackSize;
+        public final int extraStackSize;
+
+        public Trade(ArrayList<ItemStack> wants, int minStackSize, int maxStackSize){
+            this.wants.addAll(wants);
+            this.baseStackSize = minStackSize <= 0 ? 1 : minStackSize;
+            this.extraStackSize = maxStackSize <= 0 ? 1 : maxStackSize;
+        }
+
+        public Trade(ItemStack want, int minStackSize, int maxStackSize){
+            this.wants.add(want);
+            this.baseStackSize = minStackSize <= 0 ? 1 : minStackSize;
+            this.extraStackSize = maxStackSize <= 0 ? 1 : maxStackSize;
+        }
+
     }
 }

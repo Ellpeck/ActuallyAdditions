@@ -11,25 +11,15 @@ import java.util.List;
 
 public class ItemUtil{
 
-    public static void addInformation(Item item, List list, int lines, String extraName){
-        addInformation(item, list, lines, extraName, ((INameableItem)item).getOredictName());
-    }
-
     @SuppressWarnings("unchecked")
-    public static void addInformation(Item item, List list, int lines, String extraName, String extraOredictName){
+    public static void addInformation(Item item, List list, int lines, String extraName){
         if(KeyUtil.isShiftPressed()){
             for(int i = 0; i < lines; i++){
                 list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + "." + ((INameableItem)item).getName() + extraName + ".desc" + (lines > 1 ? "." +(i+1) : "")));
             }
         }
         else list.add(shiftForInfo());
-
-        if(KeyUtil.isControlPressed()){
-            addOredictName(extraOredictName, list);
-        }
     }
-
-
 
     public static void registerItems(Item[] items){
         for(Item item : items){
@@ -37,16 +27,11 @@ public class ItemUtil{
         }
     }
 
-    @SuppressWarnings("unchecked")
-    public static void addOredictName(String name, List list){
-        list.add(StringUtil.GRAY + StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + ".oredictName.desc") + ": " + name);
-    }
-
     public static void register(Item item){
         item.setCreativeTab(CreativeTab.instance);
         item.setUnlocalizedName(createUnlocalizedName(item));
         GameRegistry.registerItem(item, ((INameableItem)item).getName());
-        if(!((INameableItem)item).getOredictName().isEmpty()) OreDictionary.registerOre(((INameableItem)item).getOredictName(), item);
+        if(!((INameableItem)item).getOredictName().isEmpty()) OreDictionary.registerOre(((INameableItem)item).getOredictName(), new ItemStack(item, 1, Util.WILDCARD));
     }
 
     public static void register(Item item, Enum[] list){

@@ -61,7 +61,7 @@ public class ItemDust extends Item implements INameableItem{
     @SuppressWarnings("unchecked")
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld){
-        ItemUtil.addInformation(this, list, 1, allDusts[stack.getItemDamage()].getName(), allDusts[stack.getItemDamage()].getOredictName());
+        ItemUtil.addInformation(this, list, 1, allDusts[stack.getItemDamage()].getName());
     }
 
     @Override

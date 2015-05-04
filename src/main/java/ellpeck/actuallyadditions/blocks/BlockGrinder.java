@@ -42,7 +42,7 @@ public class BlockGrinder extends BlockContainerBase implements INameableItem{
 
     @Override
     public TileEntity createNewTileEntity(World world, int par2){
-        return new TileEntityGrinder(this.isDouble);
+        return this.isDouble ? new TileEntityGrinder.TileEntityGrinderDouble() : new TileEntityGrinder();
     }
 
     @Override

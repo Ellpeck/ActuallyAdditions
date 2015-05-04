@@ -7,24 +7,33 @@ import net.minecraft.block.BlockAir;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ChunkCoordinates;
+import net.minecraftforge.common.util.ForgeDirection;
 
 import java.util.ArrayList;
 
 public class TileEntityBreaker extends TileEntityInventoryBase{
 
-    private boolean isPlacer;
+    public static class TileEntityPlacer extends TileEntityBreaker{
+
+        public TileEntityPlacer(){
+            super(9, "placer");
+            this.isPlacer = true;
+        }
+
+    }
+
+    public boolean isPlacer;
 
     private final int timeNeeded = ConfigIntValues.BREAKER_TIME_NEEDED.getValue();
     private int currentTime;
 
-    @SuppressWarnings("unused")
-    public TileEntityBreaker(){
-        super(9, "");
+    public TileEntityBreaker(int slots, String name){
+        super(slots, name);
     }
 
-    public TileEntityBreaker(boolean isPlacer){
-        super(9, isPlacer ? "placer" : "breaker");
-        this.isPlacer = isPlacer;
+    public TileEntityBreaker(){
+        super(9, "breaker");
+        this.isPlacer = false;
     }
 
     @Override
@@ -35,37 +44,27 @@ public class TileEntityBreaker extends TileEntityInventoryBase{
                 if(this.currentTime > 0){
                     this.currentTime--;
                     if(this.currentTime <= 0){
-                        int sideToBreak = -1;
+                        ForgeDirection sideToManipulate = ForgeDirection.getOrientation(worldObj.getBlockMetadata(xCoord, yCoord, zCoord));
 
-                        int metaOfCurrentBlock = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
-                        if(metaOfCurrentBlock == 0) sideToBreak = 1;
-                        else if(metaOfCurrentBlock == 1) sideToBreak = 0;
-                        else if(metaOfCurrentBlock == 2) sideToBreak = 2;
-                        else if(metaOfCurrentBlock == 3) sideToBreak = 4;
-                        else if(metaOfCurrentBlock == 4) sideToBreak = 5;
-                        else if(metaOfCurrentBlock == 5) sideToBreak = 3;
-
-                        ChunkCoordinates coordsOfBlockToBreak = WorldUtil.getCoordsFromSide(sideToBreak, xCoord, yCoord, zCoord);
-                        if(coordsOfBlockToBreak != null){
-                            Block blockToBreak = worldObj.getBlock(coordsOfBlockToBreak.posX, coordsOfBlockToBreak.posY, coordsOfBlockToBreak.posZ);
-                            if(!this.isPlacer && blockToBreak != null && blockToBreak.getBlockHardness(worldObj, coordsOfBlockToBreak.posX, coordsOfBlockToBreak.posY, coordsOfBlockToBreak.posZ) > -1.0F){
+                        ChunkCoordinates coordsBlock = WorldUtil.getCoordsFromSide(sideToManipulate, xCoord, yCoord, zCoord);
+                        if(coordsBlock != null){
+                            Block blockToBreak = worldObj.getBlock(coordsBlock.posX, coordsBlock.posY, coordsBlock.posZ);
+                            if(!this.isPlacer && blockToBreak != null && blockToBreak.getBlockHardness(worldObj, coordsBlock.posX, coordsBlock.posY, coordsBlock.posZ) > -1.0F){
                                 ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-                                int meta = worldObj.getBlockMetadata(coordsOfBlockToBreak.posX, coordsOfBlockToBreak.posY, coordsOfBlockToBreak.posZ);
-                                drops.addAll(blockToBreak.getDrops(worldObj, coordsOfBlockToBreak.posX, coordsOfBlockToBreak.posY, coordsOfBlockToBreak.posZ, meta, 0));
+                                int meta = worldObj.getBlockMetadata(coordsBlock.posX, coordsBlock.posY, coordsBlock.posZ);
+                                drops.addAll(blockToBreak.getDrops(worldObj, coordsBlock.posX, coordsBlock.posY, coordsBlock.posZ, meta, 0));
 
                                 if(this.addToInventory(drops, false)){
-                                    worldObj.playAuxSFX(2001, coordsOfBlockToBreak.posX, coordsOfBlockToBreak.posY, coordsOfBlockToBreak.posZ, Block.getIdFromBlock(blockToBreak) + (meta << 12));
-                                    WorldUtil.breakBlockAtSide(sideToBreak, worldObj, xCoord, yCoord, zCoord);
+                                    worldObj.playAuxSFX(2001, coordsBlock.posX, coordsBlock.posY, coordsBlock.posZ, Block.getIdFromBlock(blockToBreak) + (meta << 12));
+                                    WorldUtil.breakBlockAtSide(sideToManipulate, worldObj, xCoord, yCoord, zCoord);
                                     this.addToInventory(drops, true);
                                     this.markDirty();
                                 }
                             }
-                            else if(this.isPlacer && (worldObj.getBlock(coordsOfBlockToBreak.posX, coordsOfBlockToBreak.posY, coordsOfBlockToBreak.posZ).isReplaceable(worldObj, coordsOfBlockToBreak.posX, coordsOfBlockToBreak.posY, coordsOfBlockToBreak.posZ))){
+                            else if(this.isPlacer && (worldObj.getBlock(coordsBlock.posX, coordsBlock.posY, coordsBlock.posZ).isReplaceable(worldObj, coordsBlock.posX, coordsBlock.posY, coordsBlock.posZ))){
                                 ItemStack removeFalse = this.removeFromInventory(false);
-                                if(removeFalse != null && Block.getBlockFromItem(removeFalse.getItem()) != blockToBreak && Block.getBlockFromItem(removeFalse.getItem()).canPlaceBlockAt(worldObj, coordsOfBlockToBreak.posX, coordsOfBlockToBreak.posY, coordsOfBlockToBreak.posZ)){
-                                    ItemStack stack = this.removeFromInventory(true);
-                                    //TODO insert sound effect
-                                    WorldUtil.placeBlockAtSide(sideToBreak, worldObj, xCoord, yCoord, zCoord, stack);
+                                if(removeFalse != null && Block.getBlockFromItem(removeFalse.getItem()) != blockToBreak && WorldUtil.placeBlockAtSide(sideToManipulate, worldObj, xCoord, yCoord, zCoord, removeFalse)){
+                                    this.removeFromInventory(true);
                                 }
                             }
                         }
@@ -79,16 +78,12 @@ public class TileEntityBreaker extends TileEntityInventoryBase{
     @Override
     public void writeToNBT(NBTTagCompound compound){
         super.writeToNBT(compound);
-        compound.setBoolean("IsPlacer", this.isPlacer);
-        compound.setString("Name", this.name);
         compound.setInteger("CurrentTime", this.currentTime);
     }
 
     @Override
     public void readFromNBT(NBTTagCompound compound){
         super.readFromNBT(compound);
-        this.isPlacer = compound.getBoolean("IsPlacer");
-        this.name = compound.getString("Name");
         this.currentTime = compound.getInteger("CurrentTime");
     }
 

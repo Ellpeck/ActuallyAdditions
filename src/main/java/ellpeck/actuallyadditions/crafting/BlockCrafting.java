@@ -61,17 +61,17 @@ public class BlockCrafting{
                     'C', TheMiscBlocks.STONE_CASING.getOredictName()));
 
         //Solar Panel
-        if(ConfigCrafting.SOLAR_PANEL.isEnabled())
+        /*if(ConfigCrafting.SOLAR_PANEL.isEnabled())
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockFurnaceSolar),
                     "IQI", "CDC", "IBI",
                     'D', "blockDiamond",
                     'I', "ingotIron",
                     'Q', TheMiscBlocks.STONE_CASING.getOredictName(),
                     'C', TheMiscItems.COIL_ADVANCED.getOredictName(),
-                    'B', new ItemStack(Blocks.iron_bars)));
+                    'B', new ItemStack(Blocks.iron_bars)));*/
 
         //Heat Collector
-        if(ConfigCrafting.HEAT_COLLECTOR.isEnabled())
+        /*if(ConfigCrafting.HEAT_COLLECTOR.isEnabled())
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockHeatCollector),
                     "BRB", "CDC", "BQB",
                     'D', "blockDiamond",
@@ -79,7 +79,7 @@ public class BlockCrafting{
                     'Q', TheMiscBlocks.STONE_CASING.getOredictName(),
                     'L', new ItemStack(Items.lava_bucket),
                     'C', TheMiscItems.COIL_ADVANCED.getOredictName(),
-                    'B', new ItemStack(Blocks.iron_bars)));
+                    'B', new ItemStack(Blocks.iron_bars)));*/
 
         //Quartz Pillar
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.QUARTZ_PILLAR.ordinal()),
@@ -176,6 +176,14 @@ public class BlockCrafting{
                     'C', "cobblestone",
                     'R', TheMiscItems.COIL.getOredictName(),
                     'P', Items.diamond_pickaxe));
+
+        //Dropper
+        if(ConfigCrafting.DROPPER.isEnabled())
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockDropper),
+                    "CCC", "CDR", "CCC",
+                    'C', "cobblestone",
+                    'D', Blocks.dropper,
+                    'R', TheMiscItems.COIL_ADVANCED.getOredictName()));
 
     }
 

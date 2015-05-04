@@ -11,6 +11,7 @@ public class InitEvents{
         Util.registerEvent(new CraftEvent());
         Util.registerEvent(new KilledEvent());
         Util.registerEvent(new PickupEvent());
+        Util.registerEvent(new TooltipEvent());
     }
 
 }

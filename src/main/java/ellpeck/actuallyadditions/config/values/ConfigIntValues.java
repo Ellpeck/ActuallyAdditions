@@ -45,8 +45,8 @@ public enum ConfigIntValues{
 
     GLASS_TIME_NEEDED("Greenhouse Glass: Time Needed", ConfigCategories.MACHINE_VALUES, 1000, 10, 1000000, "The Time Needed for the Greenhouse Glass to grow a Plant below it"),
 
-    BREAKER_TIME_NEEDED("Breaker and Placer: Time Needed", ConfigCategories.MACHINE_VALUES, 15, 1, 10000, "The Time Needed for the Breaker and the Placer to place or break a Block");
-
+    BREAKER_TIME_NEEDED("Breaker and Placer: Time Needed", ConfigCategories.MACHINE_VALUES, 15, 1, 10000, "The Time Needed for the Breaker and the Placer to place or break a Block"),
+    DROPPER_TIME_NEEDED("Dropper: Time Needed", ConfigCategories.MACHINE_VALUES, 10, 1, 10000, "The Time Needed for the Dropper to drop an Item");
 
     public final String name;
     public final String category;

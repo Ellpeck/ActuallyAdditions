@@ -111,8 +111,6 @@ public class ItemJams extends ItemFood implements INameableItem{
             list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + ".saturation.desc") + ": " + allJams[stack.getItemDamage()].saturation);
         }
         else list.add(ItemUtil.shiftForInfo());
-
-        if(KeyUtil.isControlPressed()) ItemUtil.addOredictName(allJams[stack.getItemDamage()].getOredictName(), list);
     }
 
     @Override

@@ -67,6 +67,14 @@ public class BlockFurnaceDouble extends BlockContainerBase implements INameableI
     @Override
     public IIcon getIcon(int side, int meta){
         if(side == 1) return this.topIcon;
+        if(side == 3) return this.frontIcon;
+        return this.blockIcon;
+    }
+
+    @Override
+    public IIcon getIcon(IBlockAccess world, int x, int y, int z, int side){
+        int meta = world.getBlockMetadata(x, y, z);
+        if(side == 1) return this.topIcon;
         if(side == meta+2 && meta <= 3) return this.frontIcon;
         else if(side == meta-2 && meta > 3) return this.onIcon;
         return this.blockIcon;

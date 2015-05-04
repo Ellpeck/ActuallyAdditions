@@ -27,6 +27,15 @@ public class GrinderRecipes{
         return null;
     }
 
+    public boolean hasExactRecipe(ItemStack input, ItemStack outputOne){
+        for(GrinderRecipe recipe : recipes){
+            if(recipe.input.isItemEqual(input) && recipe.firstOutput.isItemEqual(outputOne)){
+                return true;
+            }
+        }
+        return false;
+    }
+
     public int getSecondChance(ItemStack input){
         for(GrinderRecipe recipe : recipes){
             if(recipe.input.isItemEqual(input)){

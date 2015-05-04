@@ -19,6 +19,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -51,11 +52,19 @@ public class BlockBreaker extends BlockContainerBase implements INameableItem{
 
     @Override
     public TileEntity createNewTileEntity(World world, int par2){
-        return new TileEntityBreaker(this.isPlacer);
+        return this.isPlacer ? new TileEntityBreaker.TileEntityPlacer() : new TileEntityBreaker();
     }
 
     @Override
     public IIcon getIcon(int side, int meta){
+        if(side == 0 || side == 1) return this.topIcon;
+        if(side == 3) return this.frontIcon;
+        return this.blockIcon;
+    }
+
+    @Override
+    public IIcon getIcon(IBlockAccess world, int x, int y, int z, int side){
+        int meta = world.getBlockMetadata(x, y, z);
         if(side != meta && (side == 0 || side == 1)) return this.topIcon;
         if(side == meta) return this.frontIcon;
         return this.blockIcon;

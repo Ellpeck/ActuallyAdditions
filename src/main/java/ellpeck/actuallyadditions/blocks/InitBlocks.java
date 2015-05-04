@@ -21,10 +21,10 @@ public class InitBlocks{
     public static Block blockHeatCollector;
     public static Block blockItemRepairer;
     public static Block blockGreenhouseGlass;
+
     public static Block blockBreaker;
     public static Block blockPlacer;
-
-    //public static Block blockCoffeeMachine;
+    public static Block blockDropper;
 
     public static void init(){
         Util.logInfo("Initializing Blocks...");
@@ -77,7 +77,7 @@ public class InitBlocks{
         blockPlacer = new BlockBreaker(true);
         BlockUtil.register(blockPlacer, BlockBreaker.TheItemBlock.class);
 
-        //blockCoffeeMachine = new BlockCoffeeMachine();
-        //BlockUtil.register(blockCoffeeMachine, BlockCoffeeMachine.TheItemBlock.class);
+        blockDropper = new BlockDropper();
+        BlockUtil.register(blockDropper, BlockDropper.TheItemBlock.class);
     }
 }

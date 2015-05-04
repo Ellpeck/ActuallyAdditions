@@ -111,8 +111,6 @@ public class ItemLeafBlower extends Item implements INameableItem{
             list.add(StringUtil.ITALIC + StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + ".itemLeafBlower.desc.3"));
         }
         else list.add(ItemUtil.shiftForInfo());
-
-        if(KeyUtil.isControlPressed()) ItemUtil.addOredictName(this.getOredictName(), list);
     }
 
     @Override

@@ -17,6 +17,7 @@ import java.net.URL;
 public class UpdateChecker{
 
     public boolean doneChecking = false;
+    public boolean checkFailed = false;
     public boolean notified = false;
     public String onlineVersion;
 
@@ -29,9 +30,11 @@ public class UpdateChecker{
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent event){
         if(doneChecking && event.phase == TickEvent.Phase.END && Minecraft.getMinecraft().thePlayer != null && !notified){
-            if(onlineVersion.length() > 0){
-                EntityPlayer player = Minecraft.getMinecraft().thePlayer;
-
+            EntityPlayer player = Minecraft.getMinecraft().thePlayer;
+            if(checkFailed){
+                player.addChatComponentMessage(IChatComponent.Serializer.func_150699_a(StatCollector.translateToLocal("info." + ModUtil.MOD_ID_LOWER + ".update.failed.desc")));
+            }
+            else if(onlineVersion.length() > 0){
                 int update = Integer.parseInt(onlineVersion.replace("-", "").replace(".", ""));
                 int client = Integer.parseInt(ModUtil.VERSION.replace("-", "").replace(".", ""));
 
@@ -69,6 +72,7 @@ public class UpdateChecker{
             }
             catch(Exception e){
                 ModUtil.AA_LOGGER.log(Level.ERROR, "Update Check failed!");
+                checkFailed = true;
                 e.printStackTrace();
             }
             doneChecking = true;

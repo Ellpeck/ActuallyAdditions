@@ -40,8 +40,6 @@ public class ItemHoeAA extends ItemHoe implements INameableItem{
             list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + ".durability.desc") + ": " + (this.getMaxDamage()-this.getDamage(stack)) + "/" + this.getMaxDamage());
         }
         else list.add(ItemUtil.shiftForInfo());
-
-        if(KeyUtil.isControlPressed()) ItemUtil.addOredictName(this.getOredictName(), list);
     }
 
     @Override

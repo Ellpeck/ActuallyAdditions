@@ -9,6 +9,15 @@ import net.minecraft.tileentity.TileEntity;
 
 public class TileEntityInputter extends TileEntityInventoryBase{
 
+    public static class TileEntityInputterAdvanced extends TileEntityInputter{
+
+        public TileEntityInputterAdvanced(){
+            super(13, "inputterAdvanced");
+            this.isAdvanced = true;
+        }
+
+    }
+
     public static final int PUT_FILTER_START = 1;
     public static final int PULL_FILTER_START = 7;
 
@@ -24,13 +33,13 @@ public class TileEntityInputter extends TileEntityInventoryBase{
 
     public boolean isAdvanced;
 
-    public TileEntityInputter(){
-        super(0, "");
+    public TileEntityInputter(int slots, String name){
+        super(slots, name);
     }
 
-    public TileEntityInputter(boolean isAdvanced){
-        super(isAdvanced ? 13 : 1, isAdvanced ? "inputterAdvanced" : "inputter");
-        this.isAdvanced = isAdvanced;
+    public TileEntityInputter(){
+        super(1, "inputter");
+        this.isAdvanced = false;
     }
 
     @Override
@@ -177,8 +186,9 @@ public class TileEntityInputter extends TileEntityInventoryBase{
     }
 
     public void initVars(){
-        this.placeToPull = WorldUtil.getTileEntityFromSide(this.sideToPull, this.worldObj, this.xCoord, this.yCoord, this.zCoord);
-        this.placeToPut = WorldUtil.getTileEntityFromSide(this.sideToPut, this.worldObj, this.xCoord, this.yCoord, this.zCoord);
+
+        this.placeToPull = WorldUtil.getTileEntityFromSide(WorldUtil.getDirectionByRotatingSide(this.sideToPull), this.worldObj, this.xCoord, this.yCoord, this.zCoord);
+        this.placeToPut = WorldUtil.getTileEntityFromSide(WorldUtil.getDirectionByRotatingSide(this.sideToPut), this.worldObj, this.xCoord, this.yCoord, this.zCoord);
 
         if(this.placeToPull != null && this.placeToPull instanceof IInventory){
             this.placeToPullSlotAmount = ((IInventory)this.placeToPull).getSizeInventory();
@@ -225,21 +235,14 @@ public class TileEntityInputter extends TileEntityInventoryBase{
         compound.setInteger("SlotToPut", this.slotToPut);
         compound.setInteger("SideToPull", this.sideToPull);
         compound.setInteger("SlotToPull", this.slotToPull);
-        compound.setBoolean("IsAdvanced", this.isAdvanced);
-        compound.setString("Name", this.name);
-        compound.setInteger("Slots", this.slots.length);
     }
 
     @Override
     public void readFromNBT(NBTTagCompound compound){
-        int slots = compound.getInteger("Slots");
-        this.initializeSlots(slots == 0 ? 1 : slots);
         this.sideToPut = compound.getInteger("SideToPut");
         this.slotToPut = compound.getInteger("SlotToPut");
         this.sideToPull = compound.getInteger("SideToPull");
         this.slotToPull = compound.getInteger("SlotToPull");
-        this.isAdvanced = compound.getBoolean("IsAdvanced");
-        this.name = compound.getString("Name");
         super.readFromNBT(compound);
     }
     

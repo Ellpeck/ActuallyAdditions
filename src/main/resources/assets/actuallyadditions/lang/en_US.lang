@@ -19,8 +19,10 @@ tile.actuallyadditions.blockItemRepairer.name=Item Repairer
 tile.actuallyadditions.blockMiscWoodCasing.name=Wood Casing
 tile.actuallyadditions.blockMiscStoneCasing.name=Stone Casing
 tile.actuallyadditions.blockGreenhouseGlass.name=Greenhouse Glass
-tile.actuallyadditions.blockBreaker.name=Breaker
-tile.actuallyadditions.blockPlacer.name=Placer
+
+tile.actuallyadditions.blockBreaker.name=Auto-Breaker
+tile.actuallyadditions.blockPlacer.name=Auto-Placer
+tile.actuallyadditions.blockDropper.name=Automatic Precision Dropper
 
 tile.actuallyadditions.blockInputter.name=ESD
 tile.actuallyadditions.blockInputterAdvanced.name=Advanced ESD
@@ -88,7 +90,7 @@ item.actuallyadditions.itemFoodCarrotJuice.name=Carrot Juice
 item.actuallyadditions.itemFoodPumpkinStew.name=Pumpkin Stew
 item.actuallyadditions.itemFoodCheese.name=Cheese
 
-item.actuallyadditions.itemUpgradeSpeed=Speed Upgrade
+item.actuallyadditions.itemUpgradeSpeed.name=Speed Upgrade
 
 item.actuallyadditions.itemMiscCoil.name=Basic Coil
 item.actuallyadditions.itemMiscCoilAdvanced.name=Advanced Coil
@@ -116,7 +118,9 @@ tooltip.actuallyadditions.shiftForInfo.desc=Press Shift for Info
 tooltip.actuallyadditions.hunger.desc=Fills
 tooltip.actuallyadditions.saturation.desc=Saturation
 tooltip.actuallyadditions.durability.desc=Durability
-tooltip.actuallyadditions.oredictName.desc=OreDictionary Name
+
+tooltip.actuallyadditions.oredictName.desc=OreDictionary Entries
+tooltip.actuallyadditions.noOredictNameAvail.desc=Has No OreDictionary Entries
 
 tooltip.actuallyadditions.itemJam.desc.1=A delicious Jam consisting of
 tooltip.actuallyadditions.itemJam.desc.2=Also gives you some Effects!
@@ -126,6 +130,54 @@ tooltip.actuallyadditions.itemJamPlApLe.desc=Plum, Apple and Lemon
 tooltip.actuallyadditions.itemJamChApCi.desc=Cherry, Apple and Cinnamon
 tooltip.actuallyadditions.itemJamHoMeKi.desc=Honeydew Melon and Kiwi
 tooltip.actuallyadditions.itemJamPiCo.desc=Pineapple and Coconut
+
+tile.actuallyadditions.blockCompactIronSingle.name=Single Compact Iron
+tile.actuallyadditions.blockCompactIronDouble.name=Double Compact Iron
+tile.actuallyadditions.blockCompactIronTriple.name=Triple Compact Iron
+tile.actuallyadditions.blockCompactIronQuadruple.name=Quadruple Compact Iron
+tile.actuallyadditions.blockCompactIronQuintuple.name=Quintuple Compact Iron
+tile.actuallyadditions.blockCompactIronSextuple.name=Sextuple Compact Iron
+tooltip.actuallyadditions.blockCompactIron.desc=Iron, but bunched together!
+
+tile.actuallyadditions.blockCompactGoldSingle.name=Single Compact Gold
+tile.actuallyadditions.blockCompactGoldDouble.name=Double Compact Gold
+tile.actuallyadditions.blockCompactGoldTriple.name=Triple Compact Gold
+tile.actuallyadditions.blockCompactGoldQuadruple.name=Quadruple Compact Gold
+tile.actuallyadditions.blockCompactGoldQuintuple.name=Quintuple Compact Gold
+tile.actuallyadditions.blockCompactGoldSextuple.name=Sextuple Compact Gold
+tooltip.actuallyadditions.blockCompactGold.desc=Gold, but bunched together!
+
+tile.actuallyadditions.blockCompactDiamondSingle.name=Single Compact Diamond
+tile.actuallyadditions.blockCompactDiamondDouble.name=Double Compact Diamond
+tile.actuallyadditions.blockCompactDiamondTriple.name=Triple Compact Diamond
+tile.actuallyadditions.blockCompactDiamondQuadruple.name=Quadruple Compact Diamond
+tile.actuallyadditions.blockCompactDiamondQuintuple.name=Quintuple Compact Diamond
+tile.actuallyadditions.blockCompactDiamondSextuple.name=Sextuple Compact Diamond
+tooltip.actuallyadditions.blockCompactDiamond.desc=Diamond, but bunched together!
+
+tile.actuallyadditions.blockCompactRedstoneSingle.name=Single Compact Redstone
+tile.actuallyadditions.blockCompactRedstoneDouble.name=Double Compact Redstone
+tile.actuallyadditions.blockCompactRedstoneTriple.name=Triple Compact Redstone
+tile.actuallyadditions.blockCompactRedstoneQuadruple.name=Quadruple Compact Redstone
+tile.actuallyadditions.blockCompactRedstoneQuintuple.name=Quintuple Compact Redstone
+tile.actuallyadditions.blockCompactRedstoneSextuple.name=Sextuple Compact Redstone
+tooltip.actuallyadditions.blockCompactRedstone.desc=Redstone, but bunched together!
+
+tile.actuallyadditions.blockCompactCoalSingle.name=Single Compact Coal
+tile.actuallyadditions.blockCompactCoalDouble.name=Double Compact Coal
+tile.actuallyadditions.blockCompactCoalTriple.name=Triple Compact Coal
+tile.actuallyadditions.blockCompactCoalQuadruple.name=Quadruple Compact Coal
+tile.actuallyadditions.blockCompactCoalQuintuple.name=Quintuple Compact Coal
+tile.actuallyadditions.blockCompactCoalSextuple.name=Sextuple Compact Coal
+tooltip.actuallyadditions.blockCompactCoal.desc=Coal, but bunched together!
+
+tile.actuallyadditions.blockCompactLapisSingle.name=Single Compact Lapis
+tile.actuallyadditions.blockCompactLapisDouble.name=Double Compact Lapis
+tile.actuallyadditions.blockCompactLapisTriple.name=Triple Compact Lapis
+tile.actuallyadditions.blockCompactLapisQuadruple.name=Quadruple Compact Lapis
+tile.actuallyadditions.blockCompactLapisQuintuple.name=Quintuple Compact Lapis
+tile.actuallyadditions.blockCompactLapisSextuple.name=Sextuple Compact Lapis
+tooltip.actuallyadditions.blockCompactLapis.desc=Lapis, but bunched together!
 
 tooltip.actuallyadditions.itemUpgradeSpeed.desc.1=Speeds up Machines when placed in their Upgrade Slot
 tooltip.actuallyadditions.itemUpgradeSpeed.desc.2=Works in:
@@ -161,8 +213,10 @@ tooltip.actuallyadditions.blockHeatCollector.desc.1=Powers Actually Additions Ma
 tooltip.actuallyadditions.blockHeatCollector.desc.2=Needs a bunch of Lava around it
 tooltip.actuallyadditions.blockHeatCollector.desc.3=Occasionally steals the Lava. Watch out!
 tooltip.actuallyadditions.blockItemRepairer.desc=Repairs Tools and Armor automatically
+
 tooltip.actuallyadditions.blockBreaker.desc=Breaks Blocks and stores them in its internal Inventory
 tooltip.actuallyadditions.blockPlacer.desc=Places Blocks stored in its internal Inventory
+tooltip.actuallyadditions.blockDropper.desc=Drops Items automatically (Without spewing them all over the Place!)
 
 tooltip.actuallyadditions.itemMiscMashedFood.desc=Used to make Fertilizer
 tooltip.actuallyadditions.itemFertilizer.desc=Om nom nom. Don't eat it. Made in a Compost.
@@ -277,6 +331,7 @@ container.actuallyadditions.giantChest.name=Storage Crate
 container.actuallyadditions.repairer.name=Repairer
 container.actuallyadditions.placer.name=Placer
 container.actuallyadditions.breaker.name=Breaker
+container.actuallyadditions.dropper.name=Precision Dropper
 container.actuallyadditions.crafting.name=Crafting Table On A Stick
 
 container.actuallyadditions.nei.crushing.name=Crusher
@@ -288,6 +343,7 @@ gui.actuallyadditions.waila.compostConverting.name=Converting...
 info.actuallyadditions.update.generic.desc=[{"text":"There is an "},{"text":"Update ","bold":"true"},{"text":"for ","bold":"false"},{"text":"Actually Additions ","color":"dark_green","bold":"true"},{"text":"available!","color":"none","bold":"false"}]
 info.actuallyadditions.update.versionComp.desc=[{"text":"You have Version "},{"text":"%s","color":"dark_red","italic":"false"},{"text":", the newest one is ","color":"none","italic":"false"},{"text":"%s","color":"dark_green","underlined":"false"},{"text":"!","color":"none","underlined":"false"}]
 info.actuallyadditions.update.download.desc=[{"text":"Download the newest Version "},{"text":"here! (Click me!)","color":"dark_green","underlined":"true","clickEvent":{"action":"open_url","value":"%s"},"hoverEvent":{"action":"show_text","value":{"text":"","extra":[{"text":"Click here to open your Browser and download the newest Version!"}]}}}]
+info.actuallyadditions.update.failed.desc=[{"text":"The Update Check for "},{"text":"Actually Additions ","color":"dark_green","bold":"true"},{"text":"failed! Check your Internet Connection and the Logs for more Info!","color":"none"}]
 
 achievement.actuallyadditions.pickUpSolidXP=Hard and Rich and Stuff
 achievement.actuallyadditions.pickUpSolidXP.desc=Pick up some Solidified Experience

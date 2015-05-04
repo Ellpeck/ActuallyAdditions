@@ -43,6 +43,9 @@ public class GuiHandler implements IGuiHandler{
             case BREAKER_ID:
                 TileEntityBase tileBreaker = (TileEntityBase)world.getTileEntity(x, y, z);
                 return new ContainerBreaker(entityPlayer.inventory, tileBreaker);
+            case DROPPER_ID:
+                TileEntityBase tileDropper = (TileEntityBase)world.getTileEntity(x, y, z);
+                return new ContainerDropper(entityPlayer.inventory, tileDropper);
             default:
                 return null;
         }
@@ -80,6 +83,9 @@ public class GuiHandler implements IGuiHandler{
             case BREAKER_ID:
                 TileEntityBase tileBreaker = (TileEntityBase)world.getTileEntity(x, y, z);
                 return new GuiBreaker(entityPlayer.inventory, tileBreaker);
+            case DROPPER_ID:
+                TileEntityBase tileDropper = (TileEntityBase)world.getTileEntity(x, y, z);
+                return new GuiDropper(entityPlayer.inventory, tileDropper);
             default:
                 return null;
         }
@@ -95,6 +101,7 @@ public class GuiHandler implements IGuiHandler{
     public static final int REPAIRER_ID = 7;
     public static final int INPUTTER_ADVANCED_ID = 8;
     public static final int BREAKER_ID = 9;
+    public static final int DROPPER_ID = 10;
 
     public static void init(){
         Util.logInfo("Initializing GuiHandler...");
