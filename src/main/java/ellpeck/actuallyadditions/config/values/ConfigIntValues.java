@@ -19,7 +19,7 @@ public enum ConfigIntValues{
     COMPOST_AMOUNT("Compost: Amount Needed To Convert", ConfigCategories.MACHINE_VALUES, 10, 1, 64, "How many items are needed in the Compost to convert to Fertilizer"),
     COMPOST_TIME("Compost: Conversion Time Needed", ConfigCategories.MACHINE_VALUES, 1000, 30, 10000, "How long the Compost needs to convert to Fertilizer"),
 
-    FISHER_TIME("Fishing Net: Time Needed", ConfigCategories.MACHINE_VALUES, 2000, 50, 50000, "How long it takes on Average until the Fishing Net catches a Fish"),
+    FISHER_TIME("Fishing Net: Time Needed", ConfigCategories.MACHINE_VALUES, 10000, 50, 500000, "How long it takes on Average until the Fishing Net catches a Fish"),
 
     FEEDER_REACH("Feeder: Reach", ConfigCategories.MACHINE_VALUES, 5, 1, 20, "The Radius of Action of the Feeder"),
     FEEDER_TIME("Feeder: Time Needed", ConfigCategories.MACHINE_VALUES, 100, 50, 5000, "The time spent between feeding animals with the Feeder"),
@@ -39,14 +39,16 @@ public enum ConfigIntValues{
     GRINDER_DOUBLE_CRUSH_TIME("Double Crusher: Crush Time", ConfigCategories.MACHINE_VALUES, 300, 10, 1000, "How long the Double Crusher takes to crush an item"),
     FURNACE_DOUBLE_SMELT_TIME("Double Furnace: Smelt Time", ConfigCategories.MACHINE_VALUES, 300, 10, 1000, "How long the Double Furnace takes to crush an item"),
 
-    REPAIRER_SPEED_SLOWDOWN("Item Repairer: Speed Slowdown", ConfigCategories.MACHINE_VALUES, 2, 1, 100, "How much slower the Item Repairer repairs"),
+    REPAIRER_SPEED_SLOWDOWN("Item Repairer: Speed Slowdown", ConfigCategories.MACHINE_VALUES, 3, 1, 100, "How much slower the Item Repairer repairs"),
     HEAT_COLLECTOR_BLOCKS("Heat Collector: Blocks Needed", ConfigCategories.MACHINE_VALUES, 4, 1, 5, "How many Blocks are needed for the Heat Collector to power Machines above it"),
     HEAT_COLLECTOR_LAVA_CHANCE("Heat Collector: Random Chance", ConfigCategories.MACHINE_VALUES, 10000, 10, 100000, "The Chance of the Heat Collector destroying a Lava Block around (Default Value 2000 meaning a 1/2000 Chance!)"),
 
     GLASS_TIME_NEEDED("Greenhouse Glass: Time Needed", ConfigCategories.MACHINE_VALUES, 1000, 10, 1000000, "The Time Needed for the Greenhouse Glass to grow a Plant below it"),
 
     BREAKER_TIME_NEEDED("Breaker and Placer: Time Needed", ConfigCategories.MACHINE_VALUES, 15, 1, 10000, "The Time Needed for the Breaker and the Placer to place or break a Block"),
-    DROPPER_TIME_NEEDED("Dropper: Time Needed", ConfigCategories.MACHINE_VALUES, 10, 1, 10000, "The Time Needed for the Dropper to drop an Item");
+    DROPPER_TIME_NEEDED("Dropper: Time Needed", ConfigCategories.MACHINE_VALUES, 10, 1, 10000, "The Time Needed for the Dropper to drop an Item"),
+
+    CAT_DROP_CHANCE("Cat Drops: Chance", ConfigCategories.OTHER, 5000, 5, 10000000, "The 1 in X chance for a Hairy Ball to Drop from a Cat with X being this value");
 
     public final String name;
     public final String category;

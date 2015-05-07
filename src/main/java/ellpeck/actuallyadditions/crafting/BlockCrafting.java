@@ -58,7 +58,7 @@ public class BlockCrafting{
                     'D', "gemDiamond",
                     'I', "ingotIron",
                     'O', TheMiscItems.COIL.getOredictName(),
-                    'C', TheMiscBlocks.STONE_CASING.getOredictName()));
+                    'C', Items.nether_star));
 
         //Solar Panel
         /*if(ConfigCrafting.SOLAR_PANEL.isEnabled())

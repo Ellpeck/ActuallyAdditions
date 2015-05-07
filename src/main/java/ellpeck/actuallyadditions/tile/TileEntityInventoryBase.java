@@ -78,7 +78,10 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
 
     @Override
     public ItemStack getStackInSlot(int i){
-        return slots[i];
+        if(i < this.getSizeInventory()){
+            return slots[i];
+        }
+        return null;
     }
 
     @Override

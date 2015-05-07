@@ -18,7 +18,6 @@ public class GrinderRecipeHandler{
 
     public ArrayList<SearchCase> searchCases = new ArrayList<SearchCase>();
     public ArrayList<String> exceptions = new ArrayList<String>();
-    public ArrayList<SpecialOreCase> specialOreCases = new ArrayList<SpecialOreCase>();
 
     public static class SearchCase{
 
@@ -29,20 +28,6 @@ public class GrinderRecipeHandler{
             this.name = name;
             this.resultAmount = resultAmount;
         }
-    }
-
-    public static class SpecialOreCase{
-
-        public final String inputName;
-        public final String secondResultName;
-        public final int secondResultChance;
-
-        public SpecialOreCase(String inputName, String secondResultName, int secondResultChance){
-            this.inputName = inputName;
-            this.secondResultChance = secondResultChance;
-            this.secondResultName = secondResultName;
-        }
-
     }
 
     public void registerFinally(){
@@ -73,23 +58,8 @@ public class GrinderRecipeHandler{
                                     ItemStack input = theInput.copy();
                                     ItemStack output = theDust.copy();
                                     output.stackSize = resultAmount;
-                                    if(!GrinderRecipes.instance().hasExactRecipe(input, output)){
-                                        ArrayList<ItemStack> specialStacks = null;
-                                        int specialAmount = 0;
-
-                                        for(SpecialOreCase theCase : specialOreCases){
-                                            if(inputName.equals(theCase.inputName)){
-                                                specialStacks = OreDictionary.getOres(theCase.secondResultName);
-                                                specialAmount = theCase.secondResultChance;
-                                            }
-                                        }
-                                        if(specialStacks != null && specialStacks.size() > 0){
-                                            for(ItemStack theSpecial : specialStacks){
-                                                ItemStack special = theSpecial.copy();
-                                                GrinderRecipes.instance().registerRecipe(input, output, special, specialAmount);
-                                            }
-                                        }
-                                        else GrinderRecipes.instance().registerRecipe(input, output, null, 0);
+                                    if(!GrinderRecipes.instance().hasRecipe(inputName, inputWithDustPrefix)){
+                                        GrinderRecipes.instance().registerRecipe(input, output, null, 0);
                                     }
                                 }
                             }

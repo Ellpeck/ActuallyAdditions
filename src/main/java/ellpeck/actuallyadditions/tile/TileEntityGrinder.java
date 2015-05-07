@@ -57,6 +57,15 @@ public class TileEntityGrinder extends TileEntityUpgradable implements IPowerAcc
     @SuppressWarnings("unchecked")
     public void updateEntity(){
         if(!worldObj.isRemote){
+
+            //TODO Remove after some Updating
+            if(this.isDouble && this.getClass() != TileEntityGrinderDouble.class){
+                ItemStack[] theSlots = this.slots.clone();
+                worldObj.removeTileEntity(xCoord, yCoord, zCoord);
+                worldObj.setTileEntity(xCoord, yCoord, zCoord, new TileEntityGrinderDouble());
+                ((TileEntityGrinderDouble)worldObj.getTileEntity(xCoord, yCoord, zCoord)).slots = theSlots.clone();
+            }
+
             this.speedUp();
 
             boolean theFlag = this.coalTimeLeft > 0;

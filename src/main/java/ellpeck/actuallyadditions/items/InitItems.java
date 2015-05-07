@@ -2,6 +2,7 @@ package ellpeck.actuallyadditions.items;
 
 import ellpeck.actuallyadditions.items.tools.*;
 import ellpeck.actuallyadditions.material.InitItemMaterials;
+import ellpeck.actuallyadditions.recipe.HairyBallHandler;
 import ellpeck.actuallyadditions.util.ItemUtil;
 import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.init.Blocks;
@@ -39,6 +40,8 @@ public class InitItems{
     public static Item itemHoeObsidian;
 
     public static Item itemSpeedUpgrade;
+
+    public static Item itemHairyBall;
 
     public static void init(){
         Util.logInfo("Initializing Items...");
@@ -81,6 +84,10 @@ public class InitItems{
 
         itemSpeedUpgrade = new ItemUpgrade(ItemUpgrade.UpgradeType.SPEED, "itemUpgradeSpeed", 2+3);
         ItemUtil.register(itemSpeedUpgrade);
+
+        itemHairyBall = new ItemHairyBall();
+        ItemUtil.register(itemHairyBall);
+        HairyBallHandler.init();
 
         itemPickaxeEmerald = new ItemPickaxeAA(InitItemMaterials.toolMaterialEmerald, new ItemStack(Items.emerald), "itemPickaxeEmerald", EnumRarity.rare);
         itemAxeEmerald = new ItemAxeAA(InitItemMaterials.toolMaterialEmerald, new ItemStack(Items.emerald), "itemAxeEmerald", EnumRarity.rare);

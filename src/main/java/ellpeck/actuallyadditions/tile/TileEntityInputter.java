@@ -45,6 +45,15 @@ public class TileEntityInputter extends TileEntityInventoryBase{
     @Override
     public void updateEntity(){
         if(!worldObj.isRemote){
+
+            //TODO Remove after some Updating
+            if(this.isAdvanced && this.getClass() != TileEntityInputterAdvanced.class){
+                ItemStack[] theSlots = this.slots.clone();
+                worldObj.removeTileEntity(xCoord, yCoord, zCoord);
+                worldObj.setTileEntity(xCoord, yCoord, zCoord, new TileEntityInputterAdvanced());
+                ((TileEntityInputterAdvanced)worldObj.getTileEntity(xCoord, yCoord, zCoord)).slots = theSlots.clone();
+            }
+
             this.initVars();
 
             if(!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)){

@@ -1,6 +1,7 @@
 package ellpeck.actuallyadditions.recipe;
 
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
 
@@ -18,6 +19,36 @@ public class GrinderRecipes{
         this.recipes.add(new GrinderRecipe(input, outputOne, outputTwo, secondChance));
     }
 
+    public void registerRecipe(String input, String outputOne, String outputTwo, int secondChance, int outputTwoAmount){
+        ArrayList<ItemStack> inputStacks = OreDictionary.getOres(input);
+        ArrayList<ItemStack> outputOneStacks = OreDictionary.getOres(outputOne);
+        ArrayList<ItemStack> outputTwoStacks = OreDictionary.getOres(outputTwo);
+
+        if(inputStacks != null && !inputStacks.isEmpty()){
+            for(ItemStack theInput : inputStacks){
+                if(outputOneStacks != null && !outputOneStacks.isEmpty()){
+                    for(ItemStack theOutputOne : outputOneStacks){
+                        theOutputOne.stackSize =  outputTwoAmount;
+                        if(outputTwoStacks != null && !outputTwoStacks.isEmpty()){
+                            for(ItemStack theOutputTwo : outputTwoStacks){
+                                this.registerRecipe(theInput, theOutputOne, theOutputTwo, secondChance);
+                            }
+                        }
+                        else this.registerRecipe(theInput, theOutputOne, null, 0);
+                    }
+                }
+            }
+        }
+    }
+
+    public void registerRecipe(String input, String outputOne){
+        this.registerRecipe(input, outputOne, "", 0, 1);
+    }
+
+    public void registerRecipe(ItemStack input, ItemStack outputOne){
+        this.registerRecipe(input, outputOne, null, 0);
+    }
+
     public ItemStack getOutput(ItemStack input, boolean wantSecond){
         for(GrinderRecipe recipe : recipes){
             if(recipe.input.isItemEqual(input)){
@@ -27,13 +58,28 @@ public class GrinderRecipes{
         return null;
     }
 
-    public boolean hasExactRecipe(ItemStack input, ItemStack outputOne){
+    public boolean hasRecipe(String input, String outputOne){
+        boolean containsInput = false;
+        boolean containsOutput = false;
+
         for(GrinderRecipe recipe : recipes){
-            if(recipe.input.isItemEqual(input) && recipe.firstOutput.isItemEqual(outputOne)){
-                return true;
+            int[] recipeInputIDs = OreDictionary.getOreIDs(recipe.input);
+            for(int recipeInputID : recipeInputIDs){
+                if(input.equals(OreDictionary.getOreName(recipeInputID))){
+                    containsInput = true;
+                    break;
+                }
+            }
+
+            int[] recipeOutputIDs = OreDictionary.getOreIDs(recipe.firstOutput);
+            for(int recipeOutputID : recipeOutputIDs){
+                if(outputOne.equals(OreDictionary.getOreName(recipeOutputID))){
+                    containsOutput = true;
+                    break;
+                }
             }
         }
-        return false;
+        return containsInput && containsOutput;
     }
 
     public int getSecondChance(ItemStack input){

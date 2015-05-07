@@ -29,7 +29,7 @@ public class BlockGrinder extends BlockContainerBase implements INameableItem{
     private IIcon onIcon;
     private IIcon bottomIcon;
 
-    private boolean isDouble;
+    private final boolean isDouble;
 
     public BlockGrinder(boolean isDouble){
         super(Material.rock);

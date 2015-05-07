@@ -47,6 +47,7 @@ public class CreativeTab extends CreativeTabs{
         this.addBlock(InitBlocks.blockCompost);
         this.addBlock(InitBlocks.blockGiantChest);
 
+        this.addItem(InitItems.itemHairyBall);
         this.addItem(InitItems.itemSpeedUpgrade);
         this.addItem(InitItems.itemMisc);
         this.addItem(InitItems.itemFertilizer);

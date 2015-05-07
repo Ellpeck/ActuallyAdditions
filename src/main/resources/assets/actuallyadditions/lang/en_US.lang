@@ -58,6 +58,7 @@ item.actuallyadditions.itemJamChApCi.name=ChApCi-Jam
 item.actuallyadditions.itemJamHoMeKi.name=HoMeKi-Jam
 item.actuallyadditions.itemJamPiCo.name=PiCo-Jam
 
+item.actuallyadditions.itemHairyBall.name=Ball of Hair
 item.actuallyadditions.itemLeafBlower.name=Leaf Blower
 item.actuallyadditions.itemLeafBlowerAdvanced.name=Advanced Leaf Blower
 item.actuallyadditions.itemKnife.name=Knife
@@ -131,53 +132,8 @@ tooltip.actuallyadditions.itemJamChApCi.desc=Cherry, Apple and Cinnamon
 tooltip.actuallyadditions.itemJamHoMeKi.desc=Honeydew Melon and Kiwi
 tooltip.actuallyadditions.itemJamPiCo.desc=Pineapple and Coconut
 
-tile.actuallyadditions.blockCompactIronSingle.name=Single Compact Iron
-tile.actuallyadditions.blockCompactIronDouble.name=Double Compact Iron
-tile.actuallyadditions.blockCompactIronTriple.name=Triple Compact Iron
-tile.actuallyadditions.blockCompactIronQuadruple.name=Quadruple Compact Iron
-tile.actuallyadditions.blockCompactIronQuintuple.name=Quintuple Compact Iron
-tile.actuallyadditions.blockCompactIronSextuple.name=Sextuple Compact Iron
-tooltip.actuallyadditions.blockCompactIron.desc=Iron, but bunched together!
-
-tile.actuallyadditions.blockCompactGoldSingle.name=Single Compact Gold
-tile.actuallyadditions.blockCompactGoldDouble.name=Double Compact Gold
-tile.actuallyadditions.blockCompactGoldTriple.name=Triple Compact Gold
-tile.actuallyadditions.blockCompactGoldQuadruple.name=Quadruple Compact Gold
-tile.actuallyadditions.blockCompactGoldQuintuple.name=Quintuple Compact Gold
-tile.actuallyadditions.blockCompactGoldSextuple.name=Sextuple Compact Gold
-tooltip.actuallyadditions.blockCompactGold.desc=Gold, but bunched together!
-
-tile.actuallyadditions.blockCompactDiamondSingle.name=Single Compact Diamond
-tile.actuallyadditions.blockCompactDiamondDouble.name=Double Compact Diamond
-tile.actuallyadditions.blockCompactDiamondTriple.name=Triple Compact Diamond
-tile.actuallyadditions.blockCompactDiamondQuadruple.name=Quadruple Compact Diamond
-tile.actuallyadditions.blockCompactDiamondQuintuple.name=Quintuple Compact Diamond
-tile.actuallyadditions.blockCompactDiamondSextuple.name=Sextuple Compact Diamond
-tooltip.actuallyadditions.blockCompactDiamond.desc=Diamond, but bunched together!
-
-tile.actuallyadditions.blockCompactRedstoneSingle.name=Single Compact Redstone
-tile.actuallyadditions.blockCompactRedstoneDouble.name=Double Compact Redstone
-tile.actuallyadditions.blockCompactRedstoneTriple.name=Triple Compact Redstone
-tile.actuallyadditions.blockCompactRedstoneQuadruple.name=Quadruple Compact Redstone
-tile.actuallyadditions.blockCompactRedstoneQuintuple.name=Quintuple Compact Redstone
-tile.actuallyadditions.blockCompactRedstoneSextuple.name=Sextuple Compact Redstone
-tooltip.actuallyadditions.blockCompactRedstone.desc=Redstone, but bunched together!
-
-tile.actuallyadditions.blockCompactCoalSingle.name=Single Compact Coal
-tile.actuallyadditions.blockCompactCoalDouble.name=Double Compact Coal
-tile.actuallyadditions.blockCompactCoalTriple.name=Triple Compact Coal
-tile.actuallyadditions.blockCompactCoalQuadruple.name=Quadruple Compact Coal
-tile.actuallyadditions.blockCompactCoalQuintuple.name=Quintuple Compact Coal
-tile.actuallyadditions.blockCompactCoalSextuple.name=Sextuple Compact Coal
-tooltip.actuallyadditions.blockCompactCoal.desc=Coal, but bunched together!
-
-tile.actuallyadditions.blockCompactLapisSingle.name=Single Compact Lapis
-tile.actuallyadditions.blockCompactLapisDouble.name=Double Compact Lapis
-tile.actuallyadditions.blockCompactLapisTriple.name=Triple Compact Lapis
-tile.actuallyadditions.blockCompactLapisQuadruple.name=Quadruple Compact Lapis
-tile.actuallyadditions.blockCompactLapisQuintuple.name=Quintuple Compact Lapis
-tile.actuallyadditions.blockCompactLapisSextuple.name=Sextuple Compact Lapis
-tooltip.actuallyadditions.blockCompactLapis.desc=Lapis, but bunched together!
+tooltip.actuallyadditions.itemHairyBall.desc.1=A Ball of Hair dropped from a Cat...
+tooltip.actuallyadditions.itemHairyBall.desc.2=Maybe you can get something from it by using it...
 
 tooltip.actuallyadditions.itemUpgradeSpeed.desc.1=Speeds up Machines when placed in their Upgrade Slot
 tooltip.actuallyadditions.itemUpgradeSpeed.desc.2=Works in:
@@ -344,6 +300,7 @@ info.actuallyadditions.update.generic.desc=[{"text":"There is an "},{"text":"Upd
 info.actuallyadditions.update.versionComp.desc=[{"text":"You have Version "},{"text":"%s","color":"dark_red","italic":"false"},{"text":", the newest one is ","color":"none","italic":"false"},{"text":"%s","color":"dark_green","underlined":"false"},{"text":"!","color":"none","underlined":"false"}]
 info.actuallyadditions.update.download.desc=[{"text":"Download the newest Version "},{"text":"here! (Click me!)","color":"dark_green","underlined":"true","clickEvent":{"action":"open_url","value":"%s"},"hoverEvent":{"action":"show_text","value":{"text":"","extra":[{"text":"Click here to open your Browser and download the newest Version!"}]}}}]
 info.actuallyadditions.update.failed.desc=[{"text":"The Update Check for "},{"text":"Actually Additions ","color":"dark_green","bold":"true"},{"text":"failed! Check your Internet Connection and the Logs for more Info!","color":"none"}]
+info.actuallyadditions.update.new.desc=Important Changes:
 
 achievement.actuallyadditions.pickUpSolidXP=Hard and Rich and Stuff
 achievement.actuallyadditions.pickUpSolidXP.desc=Pick up some Solidified Experience
