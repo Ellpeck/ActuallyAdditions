@@ -1,6 +1,6 @@
 package ellpeck.actuallyadditions.tile;
 
-import ellpeck.actuallyadditions.config.ConfigValues;
+import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.nbt.NBTTagCompound;
@@ -10,7 +10,7 @@ import java.util.Random;
 
 public class TileEntityFishingNet extends TileEntityBase{
 
-    public int timeUntilNextDropToSet = ConfigValues.fishingNetTime;
+    public int timeUntilNextDropToSet = ConfigIntValues.FISHER_TIME.getValue();
 
     public int timeUntilNextDrop;
 

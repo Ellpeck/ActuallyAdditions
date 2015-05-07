@@ -1,5 +1,6 @@
 package ellpeck.actuallyadditions.tile;
 
+import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
@@ -13,7 +14,7 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
 
     public TileEntityInventoryBase(int slots, String name){
         this.initializeSlots(slots);
-        this.name = name;
+        this.name = "container." + ModUtil.MOD_ID_LOWER + "." + name;
     }
 
     @Override

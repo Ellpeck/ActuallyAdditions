@@ -8,7 +8,7 @@ import net.minecraft.nbt.NBTTagList;
 public class TileEntityGiantChest extends TileEntityInventoryBase{
 
     public TileEntityGiantChest(){
-        super(9*13, "tileEntityGiantChest");
+        super(9*13, "giantChest");
     }
 
     @Override

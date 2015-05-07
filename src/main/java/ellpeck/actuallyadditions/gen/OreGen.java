@@ -4,7 +4,8 @@ import cpw.mods.fml.common.IWorldGenerator;
 import cpw.mods.fml.common.registry.GameRegistry;
 import ellpeck.actuallyadditions.blocks.InitBlocks;
 import ellpeck.actuallyadditions.blocks.metalists.TheMiscBlocks;
-import ellpeck.actuallyadditions.config.ConfigValues;
+import ellpeck.actuallyadditions.config.values.ConfigBoolValues;
+import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.block.Block;
@@ -36,7 +37,7 @@ public class OreGen implements IWorldGenerator{
     }
 
     private void generateSurface(World world, Random random, int x, int z){
-        if(ConfigValues.generateBlackQuartz) this.addOreSpawn(InitBlocks.blockMisc, TheMiscBlocks.ORE_QUARTZ.ordinal(), Blocks.stone, world, random, x, z, this.getRandom(ConfigValues.blackQuartzBaseAmount, ConfigValues.blackQuartzAdditionalChance, random), ConfigValues.blackQuartzChance, ConfigValues.blackQuartzMinHeight, ConfigValues.blackQuartzMaxHeight);
+        if(ConfigBoolValues.GENERATE_QUARTZ.isEnabled()) this.addOreSpawn(InitBlocks.blockMisc, TheMiscBlocks.ORE_QUARTZ.ordinal(), Blocks.stone, world, random, x, z, this.getRandom(ConfigIntValues.BLACK_QUARTZ_BASE_AMOUNT.getValue(), ConfigIntValues.BLACK_QUARTZ_ADD_CHANCE.getValue(), random), ConfigIntValues.BLACK_QUARTZ_CHANCE.getValue(), ConfigIntValues.BLACK_QUARTZ_MIN_HEIGHT.getValue(), ConfigIntValues.BLACK_QUARTZ_MAX_HEIGHT.getValue());
     }
 
     @SuppressWarnings("unused")

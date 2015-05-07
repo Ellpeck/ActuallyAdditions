@@ -6,7 +6,6 @@ import net.minecraft.client.model.ModelRenderer;
 public class ModelStandardBlock extends ModelBaseAA{
 
     public ModelRenderer s;
-
     private String name;
 
     public ModelStandardBlock(String name){

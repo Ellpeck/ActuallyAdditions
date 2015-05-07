@@ -3,7 +3,7 @@ package ellpeck.actuallyadditions.tile;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ellpeck.actuallyadditions.config.ConfigValues;
+import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.network.PacketHandler;
 import ellpeck.actuallyadditions.network.PacketTileEntityFeeder;
 import net.minecraft.entity.passive.EntityAnimal;
@@ -16,15 +16,15 @@ import java.util.Random;
 
 public class TileEntityFeeder extends TileEntityInventoryBase{
 
-    public int reach = ConfigValues.feederReach;
-    public int timerGoal = ConfigValues.feederTimeNeeded;
-    public int animalThreshold = ConfigValues.feederThreshold;
+    public int reach = ConfigIntValues.FEEDER_REACH.getValue();
+    public int timerGoal = ConfigIntValues.FEEDER_TIME.getValue();
+    public int animalThreshold = ConfigIntValues.FEEDER_THRESHOLD.getValue();
 
     public int currentTimer;
     public int currentAnimalAmount;
 
     public TileEntityFeeder(){
-        super(1, "tileEntityFeeder");
+        super(1, "feeder");
     }
 
     @Override

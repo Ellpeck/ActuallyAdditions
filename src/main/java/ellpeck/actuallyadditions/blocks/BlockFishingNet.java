@@ -4,10 +4,8 @@ import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.tile.TileEntityFishingNet;
-import ellpeck.actuallyadditions.util.IName;
-import ellpeck.actuallyadditions.util.ItemUtil;
-import ellpeck.actuallyadditions.util.KeyUtil;
-import ellpeck.actuallyadditions.util.ModUtil;
+import ellpeck.actuallyadditions.util.BlockUtil;
+import ellpeck.actuallyadditions.util.INameableItem;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -18,12 +16,11 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
-import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
 import java.util.List;
 
-public class BlockFishingNet extends BlockContainerBase implements IName{
+public class BlockFishingNet extends BlockContainerBase implements INameableItem{
 
     public BlockFishingNet(){
         super(Material.wood);
@@ -31,6 +28,11 @@ public class BlockFishingNet extends BlockContainerBase implements IName{
         this.setHardness(1.0F);
         this.setStepSound(soundTypeWood);
         this.setBlockBounds(0F, 0F, 0F, 1F, 1F/16F, 1F);
+    }
+
+    @Override
+    public String getOredictName(){
+        return this.getName();
     }
 
     @Override
@@ -94,8 +96,7 @@ public class BlockFishingNet extends BlockContainerBase implements IName{
         @SuppressWarnings("unchecked")
         @SideOnly(Side.CLIENT)
         public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld) {
-            if(KeyUtil.isShiftPressed()) list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + "." + ((IName)theBlock).getName() + ".desc"));
-            else list.add(ItemUtil.shiftForInfo());
+            BlockUtil.addInformation(theBlock, list, 1, "");
         }
 
         @Override

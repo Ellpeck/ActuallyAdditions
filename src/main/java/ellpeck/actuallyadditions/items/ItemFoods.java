@@ -3,7 +3,7 @@ package ellpeck.actuallyadditions.items;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.items.metalists.TheFoods;
-import ellpeck.actuallyadditions.util.IName;
+import ellpeck.actuallyadditions.util.INameableItem;
 import ellpeck.actuallyadditions.util.ItemUtil;
 import ellpeck.actuallyadditions.util.KeyUtil;
 import ellpeck.actuallyadditions.util.ModUtil;
@@ -18,7 +18,7 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class ItemFoods extends ItemFood implements IName{
+public class ItemFoods extends ItemFood implements INameableItem{
 
     public static final TheFoods[] allFoods = TheFoods.values();
     public IIcon[] textures = new IIcon[allFoods.length];
@@ -28,6 +28,11 @@ public class ItemFoods extends ItemFood implements IName{
         this.setHasSubtypes(true);
         this.setMaxDamage(0);
         TheFoods.setReturnItems();
+    }
+
+    @Override
+    public String getOredictName(){
+        return "";
     }
 
     @Override

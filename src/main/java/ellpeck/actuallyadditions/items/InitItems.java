@@ -15,6 +15,7 @@ public class InitItems{
     public static Item itemFertilizer;
     public static Item itemMisc;
     public static Item itemFoods;
+    public static Item itemJams;
     public static Item itemKnife;
     public static Item itemCrafterOnAStick;
     public static Item itemDust;
@@ -37,6 +38,8 @@ public class InitItems{
     public static Item itemSwordObsidian;
     public static Item itemHoeObsidian;
 
+    public static Item itemSpeedUpgrade;
+
     public static void init(){
         Util.logInfo("Initializing Items...");
 
@@ -44,10 +47,13 @@ public class InitItems{
         ItemUtil.register(itemFertilizer);
 
         itemMisc = new ItemMisc();
-        ItemUtil.register(itemMisc);
+        ItemUtil.register(itemMisc, ItemMisc.allMiscItems);
 
         itemFoods = new ItemFoods();
-        ItemUtil.register(itemFoods);
+        ItemUtil.register(itemFoods, ItemFoods.allFoods);
+
+        itemJams = new ItemJams();
+        ItemUtil.register(itemJams, ItemJams.allJams);
 
         itemKnife = new ItemKnife();
         ItemUtil.register(itemKnife);
@@ -56,10 +62,10 @@ public class InitItems{
         ItemUtil.register(itemCrafterOnAStick);
 
         itemDust = new ItemDust();
-        ItemUtil.register(itemDust);
+        ItemUtil.register(itemDust, ItemDust.allDusts);
 
         itemSpecialDrop = new ItemSpecialDrop();
-        ItemUtil.register(itemSpecialDrop);
+        ItemUtil.register(itemSpecialDrop, ItemSpecialDrop.allDrops);
 
         itemLeafBlower = new ItemLeafBlower(false);
         ItemUtil.register(itemLeafBlower);
@@ -72,6 +78,9 @@ public class InitItems{
 
         itemPotionRingAdvanced = new ItemPotionRing(true);
         ItemUtil.register(itemPotionRingAdvanced);
+
+        itemSpeedUpgrade = new ItemUpgrade(ItemUpgrade.UpgradeType.SPEED, "itemUpgradeSpeed", 2+3);
+        ItemUtil.register(itemSpeedUpgrade);
 
         itemPickaxeEmerald = new ItemPickaxeAA(InitItemMaterials.toolMaterialEmerald, new ItemStack(Items.emerald), "itemPickaxeEmerald", EnumRarity.rare);
         itemAxeEmerald = new ItemAxeAA(InitItemMaterials.toolMaterialEmerald, new ItemStack(Items.emerald), "itemAxeEmerald", EnumRarity.rare);

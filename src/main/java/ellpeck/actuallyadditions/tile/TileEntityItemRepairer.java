@@ -2,7 +2,7 @@ package ellpeck.actuallyadditions.tile;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ellpeck.actuallyadditions.config.ConfigValues;
+import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -14,7 +14,7 @@ public class TileEntityItemRepairer extends TileEntityInventoryBase implements I
     public static final int SLOT_INPUT = 1;
     public static final int SLOT_OUTPUT = 2;
 
-    private final int speedSlowdown = ConfigValues.repairerSpeedSlowdown;
+    private final int speedSlowdown = ConfigIntValues.REPAIRER_SPEED_SLOWDOWN.getValue();
 
     public int coalTime;
     public int coalTimeLeft;
@@ -22,7 +22,7 @@ public class TileEntityItemRepairer extends TileEntityInventoryBase implements I
     public int nextRepairTick;
 
     public TileEntityItemRepairer(){
-        super(3, "tileEntityItemRepairer");
+        super(3, "repairer");
     }
 
     @Override

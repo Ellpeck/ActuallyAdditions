@@ -5,9 +5,8 @@ import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.ActuallyAdditions;
 import ellpeck.actuallyadditions.inventory.GuiHandler;
 import ellpeck.actuallyadditions.tile.TileEntityFurnaceDouble;
-import ellpeck.actuallyadditions.util.IName;
-import ellpeck.actuallyadditions.util.ItemUtil;
-import ellpeck.actuallyadditions.util.KeyUtil;
+import ellpeck.actuallyadditions.util.BlockUtil;
+import ellpeck.actuallyadditions.util.INameableItem;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -20,14 +19,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
-import net.minecraft.util.StatCollector;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 import java.util.List;
 import java.util.Random;
 
-public class BlockFurnaceDouble extends BlockContainerBase implements IName{
+public class BlockFurnaceDouble extends BlockContainerBase implements INameableItem{
 
     private IIcon topIcon;
     private IIcon onIcon;
@@ -42,23 +40,8 @@ public class BlockFurnaceDouble extends BlockContainerBase implements IName{
     }
 
     @Override
-    public void onBlockAdded(World world, int x, int y, int z){
-        super.onBlockAdded(world, x, y, z);
-
-        if (!world.isRemote){
-            Block block1 = world.getBlock(x, y, z-1);
-            Block block2 = world.getBlock(x, y, z+1);
-            Block block3 = world.getBlock(x-1, y, z);
-            Block block4 = world.getBlock(x+1, y, z);
-
-            int metaToSet = 1;
-            if (block1.func_149730_j() && !block2.func_149730_j()) metaToSet = 0;
-            if (block2.func_149730_j() && !block1.func_149730_j()) metaToSet = 1;
-            if (block3.func_149730_j() && !block4.func_149730_j()) metaToSet = 2;
-            if (block4.func_149730_j() && !block3.func_149730_j()) metaToSet = 3;
-
-            world.setBlockMetadataWithNotify(x, y, z, metaToSet, 2);
-        }
+    public String getOredictName(){
+        return this.getName();
     }
 
     @Override
@@ -83,6 +66,14 @@ public class BlockFurnaceDouble extends BlockContainerBase implements IName{
 
     @Override
     public IIcon getIcon(int side, int meta){
+        if(side == 1) return this.topIcon;
+        if(side == 3) return this.frontIcon;
+        return this.blockIcon;
+    }
+
+    @Override
+    public IIcon getIcon(IBlockAccess world, int x, int y, int z, int side){
+        int meta = world.getBlockMetadata(x, y, z);
         if(side == 1) return this.topIcon;
         if(side == meta+2 && meta <= 3) return this.frontIcon;
         else if(side == meta-2 && meta > 3) return this.onIcon;
@@ -179,8 +170,7 @@ public class BlockFurnaceDouble extends BlockContainerBase implements IName{
         @SuppressWarnings("unchecked")
         @SideOnly(Side.CLIENT)
         public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld) {
-            if(KeyUtil.isShiftPressed()) list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + "." + ((IName)theBlock).getName() + ".desc"));
-            else list.add(ItemUtil.shiftForInfo());
+            BlockUtil.addInformation(theBlock, list, 1, "");
         }
 
         @Override

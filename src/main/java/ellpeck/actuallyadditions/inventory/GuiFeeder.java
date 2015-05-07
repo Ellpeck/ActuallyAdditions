@@ -30,6 +30,11 @@ public class GuiFeeder extends GuiContainer{
     }
 
     @Override
+    public void drawGuiContainerForegroundLayer(int x, int y){
+        AssetUtil.displayNameAndInventoryString(this.fontRendererObj, xSize, 70-5, -10, this.tileFeeder.getInventoryName());
+    }
+
+    @Override
     public void drawGuiContainerBackgroundLayer(float f, int x, int y){
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);

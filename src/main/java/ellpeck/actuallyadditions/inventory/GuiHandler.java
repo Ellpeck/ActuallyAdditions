@@ -33,10 +33,19 @@ public class GuiHandler implements IGuiHandler{
                 return new ContainerFurnaceDouble(entityPlayer.inventory, tileFurnace);
             case INPUTTER_ID:
                 TileEntityBase tileInputter = (TileEntityBase)world.getTileEntity(x, y, z);
-                return new ContainerInputter(entityPlayer.inventory, tileInputter);
+                return new ContainerInputter(entityPlayer.inventory, tileInputter, false);
+            case INPUTTER_ADVANCED_ID:
+                TileEntityBase tileInputterAdvanced = (TileEntityBase)world.getTileEntity(x, y, z);
+                return new ContainerInputter(entityPlayer.inventory, tileInputterAdvanced, true);
             case REPAIRER_ID:
                 TileEntityBase tileRepairer = (TileEntityBase)world.getTileEntity(x, y, z);
                 return new ContainerRepairer(entityPlayer.inventory, tileRepairer);
+            case BREAKER_ID:
+                TileEntityBase tileBreaker = (TileEntityBase)world.getTileEntity(x, y, z);
+                return new ContainerBreaker(entityPlayer.inventory, tileBreaker);
+            case DROPPER_ID:
+                TileEntityBase tileDropper = (TileEntityBase)world.getTileEntity(x, y, z);
+                return new ContainerDropper(entityPlayer.inventory, tileDropper);
             default:
                 return null;
         }
@@ -64,10 +73,19 @@ public class GuiHandler implements IGuiHandler{
                 return new GuiFurnaceDouble(entityPlayer.inventory, tileFurnace);
             case INPUTTER_ID:
                 TileEntityBase tileInputter = (TileEntityBase)world.getTileEntity(x, y, z);
-                return new GuiInputter(entityPlayer.inventory, tileInputter, x, y, z, world);
+                return new GuiInputter(entityPlayer.inventory, tileInputter, x, y, z, world, false);
+            case INPUTTER_ADVANCED_ID:
+                TileEntityBase tileInputterAdvanced = (TileEntityBase)world.getTileEntity(x, y, z);
+                return new GuiInputter(entityPlayer.inventory, tileInputterAdvanced, x, y, z, world, true);
             case REPAIRER_ID:
                 TileEntityBase tileRepairer = (TileEntityBase)world.getTileEntity(x, y, z);
                 return new GuiRepairer(entityPlayer.inventory, tileRepairer);
+            case BREAKER_ID:
+                TileEntityBase tileBreaker = (TileEntityBase)world.getTileEntity(x, y, z);
+                return new GuiBreaker(entityPlayer.inventory, tileBreaker);
+            case DROPPER_ID:
+                TileEntityBase tileDropper = (TileEntityBase)world.getTileEntity(x, y, z);
+                return new GuiDropper(entityPlayer.inventory, tileDropper);
             default:
                 return null;
         }
@@ -81,6 +99,9 @@ public class GuiHandler implements IGuiHandler{
     public static final int FURNACE_DOUBLE_ID = 5;
     public static final int INPUTTER_ID = 6;
     public static final int REPAIRER_ID = 7;
+    public static final int INPUTTER_ADVANCED_ID = 8;
+    public static final int BREAKER_ID = 9;
+    public static final int DROPPER_ID = 10;
 
     public static void init(){
         Util.logInfo("Initializing GuiHandler...");

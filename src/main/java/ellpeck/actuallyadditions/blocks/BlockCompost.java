@@ -3,15 +3,13 @@ package ellpeck.actuallyadditions.blocks;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ellpeck.actuallyadditions.config.ConfigValues;
+import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.items.ItemFertilizer;
 import ellpeck.actuallyadditions.items.ItemMisc;
 import ellpeck.actuallyadditions.items.metalists.TheMiscItems;
 import ellpeck.actuallyadditions.tile.TileEntityCompost;
-import ellpeck.actuallyadditions.util.IName;
-import ellpeck.actuallyadditions.util.ItemUtil;
-import ellpeck.actuallyadditions.util.KeyUtil;
-import ellpeck.actuallyadditions.util.ModUtil;
+import ellpeck.actuallyadditions.util.BlockUtil;
+import ellpeck.actuallyadditions.util.INameableItem;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -24,12 +22,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.IIcon;
-import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
 import java.util.List;
 
-public class BlockCompost extends BlockContainerBase implements IName{
+public class BlockCompost extends BlockContainerBase implements INameableItem{
 
     public BlockCompost(){
         super(Material.wood);
@@ -44,7 +41,7 @@ public class BlockCompost extends BlockContainerBase implements IName{
             ItemStack stackPlayer = player.getCurrentEquippedItem();
             TileEntityCompost tile = (TileEntityCompost)world.getTileEntity(x, y, z);
             //Add items to be composted
-            if(stackPlayer != null && stackPlayer.getItem() instanceof ItemMisc && stackPlayer.getItemDamage() == TheMiscItems.MASHED_FOOD.ordinal() && (tile.slots[0] == null || (!(tile.slots[0].getItem() instanceof ItemFertilizer) && tile.slots[0].stackSize < ConfigValues.compostAmountNeededToConvert))){
+            if(stackPlayer != null && stackPlayer.getItem() instanceof ItemMisc && stackPlayer.getItemDamage() == TheMiscItems.MASHED_FOOD.ordinal() && (tile.slots[0] == null || (!(tile.slots[0].getItem() instanceof ItemFertilizer) && tile.slots[0].stackSize < ConfigIntValues.COMPOST_AMOUNT.getValue()))){
                 if(tile.slots[0] == null) tile.slots[0] = new ItemStack(stackPlayer.getItem(), 1, TheMiscItems.MASHED_FOOD.ordinal());
                 else tile.slots[0].stackSize++;
                 if(!player.capabilities.isCreativeMode) player.inventory.getCurrentItem().stackSize--;
@@ -125,6 +122,11 @@ public class BlockCompost extends BlockContainerBase implements IName{
         return "blockCompost";
     }
 
+    @Override
+    public String getOredictName(){
+        return this.getName();
+    }
+
     public static class TheItemBlock extends ItemBlock{
 
         private Block theBlock;
@@ -150,12 +152,7 @@ public class BlockCompost extends BlockContainerBase implements IName{
         @SuppressWarnings("unchecked")
         @SideOnly(Side.CLIENT)
         public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld) {
-            if(KeyUtil.isShiftPressed()){
-                list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + "." + ((IName)theBlock).getName() + ".desc.1"));
-                //TODO Remove second info
-                list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + "." + ((IName)theBlock).getName() + ".desc.2"));
-            }
-            else list.add(ItemUtil.shiftForInfo());
+            BlockUtil.addInformation(theBlock, list, 1, "");
         }
 
         @Override

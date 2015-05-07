@@ -16,18 +16,44 @@ buildscript {
 }
 
 apply plugin: 'forge'
+apply plugin: 'maven'
 
-version = "1.7.10-0.0.3.3"
+version = "1.7.10-0.0.4.3"
 group = "ellpeck.actuallyadditions"
 archivesBaseName = "ActuallyAdditions"
 
 minecraft {
-    version = "1.7.10-10.13.2.1291"
+    version = "1.7.10-10.13.3.1395-1710ls"
     runDir = "idea"
 }
 
-dependencies{
+repositories {
+    maven {
+        name "Mobius"
+        url "http://mobiusstrip.eu/maven"
+    }
+    maven {
+        name "ChickenBones"
+        url "http://chickenbones.net/maven/"
+    }
+}
 
+dependencies {
+    compile "mcp.mobius.waila:Waila:1.5.6_1.7.10"
+
+    /*When Compiling from Github, you will need to have this file present
+    because InventoryTweaks doesn't have a Maven Repo.
+    But no one is going to download and compile this anyway, so it doesn't really matter. */
+    compile files("lib/InventoryTweaks-api-1.58-147.jar")
+}
+
+task copyChickenBones(type: Copy, dependsOn: "extractUserDev") {
+    from { configurations.compile }
+    include "**/*Chicken*.jar", "**/*NotEnoughItems*.jar"
+    exclude "**/CodeChickenLib*"
+    into file("./run/mods")
+    mustRunAfter "deobfBinJar"
+    mustRunAfter "repackMinecraft"
 }
 
 processResources{
@@ -38,7 +64,7 @@ processResources{
     from(sourceSets.main.resources.srcDirs) {
         include 'mcmod.info'
                 
-        expand 'version':project.version, 'mcversion':project.minecraft.version
+        expand 'update':project.version, 'mcversion':project.minecraft.version
     }
         
     from(sourceSets.main.resources.srcDirs) {

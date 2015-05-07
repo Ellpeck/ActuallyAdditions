@@ -2,8 +2,10 @@ package ellpeck.actuallyadditions.inventory;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import ellpeck.actuallyadditions.inventory.slot.SlotFilter;
 import ellpeck.actuallyadditions.tile.TileEntityBase;
 import ellpeck.actuallyadditions.tile.TileEntityInputter;
+import invtweaks.api.container.InventoryContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -11,6 +13,7 @@ import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
+@InventoryContainer
 public class ContainerInputter extends Container{
 
     private TileEntityInputter tileInputter;
@@ -22,18 +25,32 @@ public class ContainerInputter extends Container{
     private int lastPlaceToPutSlotAmount;
     private int lastPlaceToPullSlotAmount;
 
-    public ContainerInputter(InventoryPlayer inventory, TileEntityBase tile){
+    private boolean isAdvanced;
+
+    public ContainerInputter(InventoryPlayer inventory, TileEntityBase tile, boolean isAdvanced){
         this.tileInputter = (TileEntityInputter)tile;
+        this.isAdvanced = isAdvanced;
 
-        this.addSlotToContainer(new Slot(this.tileInputter, 0, 80, 21));
+        this.addSlotToContainer(new Slot(this.tileInputter, 0, 80, 21 + (isAdvanced ? 12 : 0)));
 
-        for (int i = 0; i < 3; i++){
-            for (int j = 0; j < 9; j++){
-                this.addSlotToContainer(new Slot(inventory, j + i * 9 + 9, 8 + j * 18, 97 + i * 18));
+        if(isAdvanced){
+            for(int i = 0; i < 2; i++){
+                this.addSlotToContainer(new SlotFilter(this.tileInputter, 1+i*6, 20+i*84, 6));
+                this.addSlotToContainer(new SlotFilter(this.tileInputter, 2+i*6, 38+i*84, 6));
+                this.addSlotToContainer(new SlotFilter(this.tileInputter, 3+i*6, 56+i*84, 6));
+                this.addSlotToContainer(new SlotFilter(this.tileInputter, 4+i*6, 20+i*84, 24));
+                this.addSlotToContainer(new SlotFilter(this.tileInputter, 5+i*6, 38+i*84, 24));
+                this.addSlotToContainer(new SlotFilter(this.tileInputter, 6+i*6, 56+i*84, 24));
             }
         }
-        for (int i = 0; i < 9; i++){
-            this.addSlotToContainer(new Slot(inventory, i, 8 + i * 18, 155));
+
+        for(int i = 0; i < 3; i++){
+            for (int j = 0; j < 9; j++){
+                this.addSlotToContainer(new Slot(inventory, j + i * 9 + 9, 8 + j * 18, 97 + i * 18 + (isAdvanced ? 12 : 0)));
+            }
+        }
+        for(int i = 0; i < 9; i++){
+            this.addSlotToContainer(new Slot(inventory, i, 8 + i * 18, 155 + (isAdvanced ? 12 : 0)));
         }
     }
 
@@ -87,7 +104,7 @@ public class ContainerInputter extends Container{
 
     @Override
     public ItemStack transferStackInSlot(EntityPlayer player, int slot){
-        final int inventoryStart = 1;
+        final int inventoryStart = this.isAdvanced ? 13 : 1;
         final int inventoryEnd = inventoryStart+26;
         final int hotbarStart = inventoryEnd+1;
         final int hotbarEnd = hotbarStart+8;

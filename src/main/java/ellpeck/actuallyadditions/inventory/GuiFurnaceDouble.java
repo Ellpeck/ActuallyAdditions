@@ -24,6 +24,11 @@ public class GuiFurnaceDouble extends GuiContainer{
     }
 
     @Override
+    public void drawGuiContainerForegroundLayer(int x, int y){
+        AssetUtil.displayNameAndInventoryString(this.fontRendererObj, xSize, 93-5, -10, this.tileFurnace.getInventoryName());
+    }
+
+    @Override
     public void drawGuiContainerBackgroundLayer(float f, int x, int y){
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 

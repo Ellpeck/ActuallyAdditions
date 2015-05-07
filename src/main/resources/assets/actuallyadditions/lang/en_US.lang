@@ -7,18 +7,26 @@ tile.actuallyadditions.blockMiscBlackQuartz.name=Block of Black Quartz
 tile.actuallyadditions.blockMiscBlackQuartzChiseled.name=Chiseled Block of Black Quartz
 tile.actuallyadditions.blockMiscBlackQuartzPillar.name=Pillar of Black Quartz
 tile.actuallyadditions.blockFeeder.name=Automatic Feeder
-tile.actuallyadditions.blockGiantChest.name=Giant Chest
+tile.actuallyadditions.blockGiantChest.name=Storage Crate
 tile.actuallyadditions.blockGrinder.name=Crusher
 tile.actuallyadditions.blockGrinderDouble.name=Double Crusher
 tile.actuallyadditions.blockFurnaceDouble.name=Double Furnace
 tile.actuallyadditions.blockFishingNet.name=Fishing Net
-tile.actuallyadditions.blockFurnaceSolar.name=Solar Panel
-tile.actuallyadditions.blockHeatCollector.name=Heat Collector
+tile.actuallyadditions.blockFurnaceSolar.name=Solar Panel [TEMPORARILY UNIMPLEMENTED]
+tile.actuallyadditions.blockHeatCollector.name=Heat Collector [TEMPORARILY UNIMPLEMENTED]
 tile.actuallyadditions.blockItemRepairer.name=Item Repairer
 
+tile.actuallyadditions.blockMiscWoodCasing.name=Wood Casing
+tile.actuallyadditions.blockMiscStoneCasing.name=Stone Casing
+tile.actuallyadditions.blockGreenhouseGlass.name=Greenhouse Glass
+
+tile.actuallyadditions.blockBreaker.name=Auto-Breaker
+tile.actuallyadditions.blockPlacer.name=Auto-Placer
+tile.actuallyadditions.blockDropper.name=Automatic Precision Dropper
+
 tile.actuallyadditions.blockInputter.name=ESD
-tile.actuallyadditions.blockInputter.add.0.name=Ellpeck's Slot Device
-tile.actuallyadditions.blockInputter.add.1.name=Energetic Solo Dancer
+tile.actuallyadditions.blockInputterAdvanced.name=Advanced ESD
+tile.actuallyadditions.blockInputter.add.1.name=Ellpeck's Slot Device
 tile.actuallyadditions.blockInputter.add.2.name=Ethereal System Dude
 tile.actuallyadditions.blockInputter.add.3.name=Energy Stuff Distributor
 tile.actuallyadditions.blockInputter.add.4.name=Existing Stuff Donator
@@ -29,7 +37,10 @@ tile.actuallyadditions.blockInputter.add.8.name=Extraordinary Sample Deliverer
 tile.actuallyadditions.blockInputter.add.9.name=Express Sending Doughnut
 tile.actuallyadditions.blockInputter.add.10.name=Expelling Sugar Dagger
 tile.actuallyadditions.blockInputter.add.11.name=Extra-Long Solidifying Dissociation
-tile.actuallyadditions.blockInputter.add.12.name=Extravagant Supreme Dirt
+tile.actuallyadditions.blockInputter.add.12.name=Energetic Solo Dancer
+tile.actuallyadditions.blockInputter.add.13.name=Efficient Sucking Dilettant
+tile.actuallyadditions.blockInputter.add.14.name=Extreme Sand Digger
+tile.actuallyadditions.blockInputter.add.15.name=MISSINGNO
 
 item.actuallyadditions.itemMiscMashedFood.name=Mashed Food
 item.actuallyadditions.itemFertilizer.name=Fertilizer
@@ -39,6 +50,13 @@ item.actuallyadditions.itemMiscKnifeBlade.name=Knife Blade
 item.actuallyadditions.itemMiscKnifeHandle.name=Knife Handle
 item.actuallyadditions.itemMiscBlackQuartz.name=Black Quartz
 item.actuallyadditions.itemMiscRing.name=Ring
+
+item.actuallyadditions.itemJamCuBaRa.name=CuBaRa-Jam
+item.actuallyadditions.itemJamGraKiBa.name=GraKiBa-Jam
+item.actuallyadditions.itemJamPlApLe.name=PlApLe-Jam
+item.actuallyadditions.itemJamChApCi.name=ChApCi-Jam
+item.actuallyadditions.itemJamHoMeKi.name=HoMeKi-Jam
+item.actuallyadditions.itemJamPiCo.name=PiCo-Jam
 
 item.actuallyadditions.itemLeafBlower.name=Leaf Blower
 item.actuallyadditions.itemLeafBlowerAdvanced.name=Advanced Leaf Blower
@@ -72,6 +90,11 @@ item.actuallyadditions.itemFoodCarrotJuice.name=Carrot Juice
 item.actuallyadditions.itemFoodPumpkinStew.name=Pumpkin Stew
 item.actuallyadditions.itemFoodCheese.name=Cheese
 
+item.actuallyadditions.itemUpgradeSpeed.name=Speed Upgrade
+
+item.actuallyadditions.itemMiscCoil.name=Basic Coil
+item.actuallyadditions.itemMiscCoilAdvanced.name=Advanced Coil
+
 item.actuallyadditions.itemPotionRing.name=Ring of
 item.actuallyadditions.itemPotionRingAdvanced.name=Advanced Ring of
 
@@ -96,14 +119,79 @@ tooltip.actuallyadditions.hunger.desc=Fills
 tooltip.actuallyadditions.saturation.desc=Saturation
 tooltip.actuallyadditions.durability.desc=Durability
 
-tooltip.actuallyadditions.blockCompost.desc.1=Used to make Fertilizer with Mashed Food
-tooltip.actuallyadditions.blockCompost.desc.2=BETA INFO: Will visually contain Compost in the Future!
+tooltip.actuallyadditions.oredictName.desc=OreDictionary Entries
+tooltip.actuallyadditions.noOredictNameAvail.desc=Has No OreDictionary Entries
+
+tooltip.actuallyadditions.itemJam.desc.1=A delicious Jam consisting of
+tooltip.actuallyadditions.itemJam.desc.2=Also gives you some Effects!
+tooltip.actuallyadditions.itemJamCuBaRa.desc=Currant, Banana and Raspberry
+tooltip.actuallyadditions.itemJamGraKiBa.desc=Grape, Kiwi and Banana
+tooltip.actuallyadditions.itemJamPlApLe.desc=Plum, Apple and Lemon
+tooltip.actuallyadditions.itemJamChApCi.desc=Cherry, Apple and Cinnamon
+tooltip.actuallyadditions.itemJamHoMeKi.desc=Honeydew Melon and Kiwi
+tooltip.actuallyadditions.itemJamPiCo.desc=Pineapple and Coconut
+
+tile.actuallyadditions.blockCompactIronSingle.name=Single Compact Iron
+tile.actuallyadditions.blockCompactIronDouble.name=Double Compact Iron
+tile.actuallyadditions.blockCompactIronTriple.name=Triple Compact Iron
+tile.actuallyadditions.blockCompactIronQuadruple.name=Quadruple Compact Iron
+tile.actuallyadditions.blockCompactIronQuintuple.name=Quintuple Compact Iron
+tile.actuallyadditions.blockCompactIronSextuple.name=Sextuple Compact Iron
+tooltip.actuallyadditions.blockCompactIron.desc=Iron, but bunched together!
+
+tile.actuallyadditions.blockCompactGoldSingle.name=Single Compact Gold
+tile.actuallyadditions.blockCompactGoldDouble.name=Double Compact Gold
+tile.actuallyadditions.blockCompactGoldTriple.name=Triple Compact Gold
+tile.actuallyadditions.blockCompactGoldQuadruple.name=Quadruple Compact Gold
+tile.actuallyadditions.blockCompactGoldQuintuple.name=Quintuple Compact Gold
+tile.actuallyadditions.blockCompactGoldSextuple.name=Sextuple Compact Gold
+tooltip.actuallyadditions.blockCompactGold.desc=Gold, but bunched together!
+
+tile.actuallyadditions.blockCompactDiamondSingle.name=Single Compact Diamond
+tile.actuallyadditions.blockCompactDiamondDouble.name=Double Compact Diamond
+tile.actuallyadditions.blockCompactDiamondTriple.name=Triple Compact Diamond
+tile.actuallyadditions.blockCompactDiamondQuadruple.name=Quadruple Compact Diamond
+tile.actuallyadditions.blockCompactDiamondQuintuple.name=Quintuple Compact Diamond
+tile.actuallyadditions.blockCompactDiamondSextuple.name=Sextuple Compact Diamond
+tooltip.actuallyadditions.blockCompactDiamond.desc=Diamond, but bunched together!
+
+tile.actuallyadditions.blockCompactRedstoneSingle.name=Single Compact Redstone
+tile.actuallyadditions.blockCompactRedstoneDouble.name=Double Compact Redstone
+tile.actuallyadditions.blockCompactRedstoneTriple.name=Triple Compact Redstone
+tile.actuallyadditions.blockCompactRedstoneQuadruple.name=Quadruple Compact Redstone
+tile.actuallyadditions.blockCompactRedstoneQuintuple.name=Quintuple Compact Redstone
+tile.actuallyadditions.blockCompactRedstoneSextuple.name=Sextuple Compact Redstone
+tooltip.actuallyadditions.blockCompactRedstone.desc=Redstone, but bunched together!
+
+tile.actuallyadditions.blockCompactCoalSingle.name=Single Compact Coal
+tile.actuallyadditions.blockCompactCoalDouble.name=Double Compact Coal
+tile.actuallyadditions.blockCompactCoalTriple.name=Triple Compact Coal
+tile.actuallyadditions.blockCompactCoalQuadruple.name=Quadruple Compact Coal
+tile.actuallyadditions.blockCompactCoalQuintuple.name=Quintuple Compact Coal
+tile.actuallyadditions.blockCompactCoalSextuple.name=Sextuple Compact Coal
+tooltip.actuallyadditions.blockCompactCoal.desc=Coal, but bunched together!
+
+tile.actuallyadditions.blockCompactLapisSingle.name=Single Compact Lapis
+tile.actuallyadditions.blockCompactLapisDouble.name=Double Compact Lapis
+tile.actuallyadditions.blockCompactLapisTriple.name=Triple Compact Lapis
+tile.actuallyadditions.blockCompactLapisQuadruple.name=Quadruple Compact Lapis
+tile.actuallyadditions.blockCompactLapisQuintuple.name=Quintuple Compact Lapis
+tile.actuallyadditions.blockCompactLapisSextuple.name=Sextuple Compact Lapis
+tooltip.actuallyadditions.blockCompactLapis.desc=Lapis, but bunched together!
+
+tooltip.actuallyadditions.itemUpgradeSpeed.desc.1=Speeds up Machines when placed in their Upgrade Slot
+tooltip.actuallyadditions.itemUpgradeSpeed.desc.2=Works in:
+tooltip.actuallyadditions.itemUpgradeSpeed.desc.3=-Double Furnace
+tooltip.actuallyadditions.itemUpgradeSpeed.desc.4=-Crusher
+tooltip.actuallyadditions.itemUpgradeSpeed.desc.5=-Double Crusher
+
+tooltip.actuallyadditions.blockCompost.desc=Used to make Fertilizer with Mashed Food
 tooltip.actuallyadditions.blockMiscOreBlackQuartz.desc=The darkest form of Quartz.
 tooltip.actuallyadditions.blockMiscBlackQuartz.desc=Black, eerie Quartz! Nice for decorating.
 tooltip.actuallyadditions.blockMiscBlackQuartzChiseled.desc=Black, eerie chiseled Quartz! Nice for decorating.
 tooltip.actuallyadditions.blockMiscBlackQuartzPillar.desc=Kind of a pillar. Not really, though. It's fake! Fake I say!
 tooltip.actuallyadditions.blockFeeder.desc=Feeds Animals on its own!
-tooltip.actuallyadditions.blockGiantChest.desc=GUI Scale on 'Auto'? That's a problem!
+tooltip.actuallyadditions.blockGiantChest.desc=Stores a whole lot of stuff. Bigger than a Double Chest!
 tooltip.actuallyadditions.blockGrinder.desc.1=Crushes Ores into Dusts!
 tooltip.actuallyadditions.blockGrinder.desc.2=You get two Dusts per Ore and Extras!
 tooltip.actuallyadditions.blockGrinder.desc.3=To crush two ores simultaneously,
@@ -114,15 +202,21 @@ tooltip.actuallyadditions.blockGrinderDouble.desc.3=Can crush two Ores simultane
 tooltip.actuallyadditions.blockFurnaceDouble.desc=Smelts two things simultaneously!
 tooltip.actuallyadditions.blockInputter.desc.1=Its real name is %sObfuscated%s!
 tooltip.actuallyadditions.blockInputter.desc.2=Acts like a more advanced Hopper
-tooltip.actuallyadditions.blockInputter.desc.3=Configurable:
-tooltip.actuallyadditions.blockInputter.desc.4=-Side to Output to and Input from
-tooltip.actuallyadditions.blockInputter.desc.5=-Slot in the other Inventory to Output to and Input from
+tooltip.actuallyadditions.blockInputter.desc.3=Turn me off with Redstone!
+tooltip.actuallyadditions.blockInputter.desc.4=Configurable:
+tooltip.actuallyadditions.blockInputter.desc.5=-Side to Output to and Input from
+tooltip.actuallyadditions.blockInputter.desc.6=-Slot in the other Inventory to Output to and Input from
+tooltip.actuallyadditions.blockInputterAdvanced.desc=Has an Input and Output Filter!
 tooltip.actuallyadditions.blockFishingNet.desc=Catches Fish automatically when placed above Water
-tooltip.actuallyadditions.blockFurnaceSolar.desc=Powers Furnaces and Crushers below it in Daylight
-tooltip.actuallyadditions.blockHeatCollector.desc.1=Powers Furnaces and Crushers above it
+tooltip.actuallyadditions.blockFurnaceSolar.desc=Powers Actually Additions Machines and Vanilla Furnaces below it in Daylight
+tooltip.actuallyadditions.blockHeatCollector.desc.1=Powers Actually Additions Machines and Vanilla Furnaces above it
 tooltip.actuallyadditions.blockHeatCollector.desc.2=Needs a bunch of Lava around it
 tooltip.actuallyadditions.blockHeatCollector.desc.3=Occasionally steals the Lava. Watch out!
 tooltip.actuallyadditions.blockItemRepairer.desc=Repairs Tools and Armor automatically
+
+tooltip.actuallyadditions.blockBreaker.desc=Breaks Blocks and stores them in its internal Inventory
+tooltip.actuallyadditions.blockPlacer.desc=Places Blocks stored in its internal Inventory
+tooltip.actuallyadditions.blockDropper.desc=Drops Items automatically (Without spewing them all over the Place!)
 
 tooltip.actuallyadditions.itemMiscMashedFood.desc=Used to make Fertilizer
 tooltip.actuallyadditions.itemFertilizer.desc=Om nom nom. Don't eat it. Made in a Compost.
@@ -133,10 +227,18 @@ tooltip.actuallyadditions.itemMiscKnifeHandle.desc=Fits comfortably in your hand
 tooltip.actuallyadditions.itemMiscBlackQuartz.desc=Used in the Quartz Enchanter!
 tooltip.actuallyadditions.itemMiscRing.desc=Used for crafting Effect Rings
 
+tooltip.actuallyadditions.blockMiscWoodCasing.desc=Not so sturdy Casing, used for Crafting
+tooltip.actuallyadditions.blockMiscStoneCasing.desc=Pretty sturdy Casing, used for Crafting
+tooltip.actuallyadditions.blockGreenhouseGlass.desc=Lets Crops below it grow faster when it is Daytime
+tooltip.actuallyadditions.blockCrafter.desc=Automatically crafts Items without needing any form of Power
+
 tooltip.actuallyadditions.itemPotionRing.desc.1=Gives Potion Effect of Level 1
 tooltip.actuallyadditions.itemPotionRing.desc.2=Needs to be held in Hand
 tooltip.actuallyadditions.itemPotionRing.desc.off.1=Crafting Recipe of this particular Potion Effect is turned OFF by default
 tooltip.actuallyadditions.itemPotionRing.desc.off.2=as it is extremely overpowered! Turn it on in the Config File if needed.
+
+tooltip.actuallyadditions.itemMiscCoil.desc=Lower Tier Coil, used for Crafting
+tooltip.actuallyadditions.itemMiscCoilAdvanced.desc=Higher Tier Coil, used for Crafting
 
 tooltip.actuallyadditions.itemPotionRingAdvanced.desc.1=Gives Potion Effect of a High Level
 tooltip.actuallyadditions.itemPotionRingAdvanced.desc.2=Can be anywhere in the Inventory
@@ -191,31 +293,6 @@ tooltip.actuallyadditions.itemDustQuartz.desc=Quartz! Crushed in the Crusher!
 tooltip.actuallyadditions.itemDustCoal.desc=Coal! Crushed in the Crusher!
 tooltip.actuallyadditions.itemDustQuartzBlack.desc=Black Quartz! Crushed in the Crusher!
 
-achievement.actuallyadditions.smeltBaguette=Better than Bread!
-achievement.actuallyadditions.smeltBaguette.desc=Bake a Baguette
-achievement.actuallyadditions.craftDough=Knead, knead!
-achievement.actuallyadditions.craftDough.desc=Craft some Dough
-achievement.actuallyadditions.craftCompost=Throw it all in!
-achievement.actuallyadditions.craftCompost.desc=Craft a Compost
-achievement.actuallyadditions.craftFertilizer=Better than Bone Meal!
-achievement.actuallyadditions.craftFertilizer.desc=Make Fertilizer
-achievement.actuallyadditions.craftSubSandwich=Metro, Underground, Tube, Nom!
-achievement.actuallyadditions.craftSubSandwich.desc=Craft a Submarine Sandwich
-achievement.actuallyadditions.craftPaperCone=Witch's hat!
-achievement.actuallyadditions.craftPaperCone.desc=Craft a Paper Cone
-achievement.actuallyadditions.craftFrenchFry=Just the single one...
-achievement.actuallyadditions.craftFrenchFry.desc=Craft a French Fry
-achievement.actuallyadditions.craftFrenchFries=French Fires?
-achievement.actuallyadditions.craftFrenchFries.desc=Craft French Fries
-achievement.actuallyadditions.craftFishNChips=It's Fish! It's Chips!
-achievement.actuallyadditions.craftFishNChips.desc=Craft Fish 'N' Chips
-achievement.actuallyadditions.craftMashedFood=Munch munch munch!
-achievement.actuallyadditions.craftMashedFood.desc=Craft Mashed Food
-achievement.actuallyadditions.craftKnifeBlade=Sharp! So sharp!
-achievement.actuallyadditions.craftKnifeBlade.desc=Craft a Knife Blade
-achievement.actuallyadditions.craftKnife=Sharper! Even sharper!
-achievement.actuallyadditions.craftKnife.desc=Craft a Knife
-
 info.actuallyadditions.gui.animals=Animals
 info.actuallyadditions.gui.enoughToBreed=Enough to breed!
 info.actuallyadditions.gui.tooMany=Too many to breed!
@@ -243,3 +320,44 @@ effect.actuallyadditions.waterBreathing.name=Water Breathing
 effect.actuallyadditions.invisibility.name=Invisibility
 effect.actuallyadditions.nightVision.name=Night Vision
 effect.actuallyadditions.saturation.name=Saturation
+
+container.actuallyadditions.inputter.name=ESD
+container.actuallyadditions.inputterAdvanced.name=Advanced ESD
+container.actuallyadditions.grinder.name=Crusher
+container.actuallyadditions.grinderDouble.name=Double Crusher
+container.actuallyadditions.furnaceDouble.name=Double Furnace
+container.actuallyadditions.feeder.name=Feeder
+container.actuallyadditions.giantChest.name=Storage Crate
+container.actuallyadditions.repairer.name=Repairer
+container.actuallyadditions.placer.name=Placer
+container.actuallyadditions.breaker.name=Breaker
+container.actuallyadditions.dropper.name=Precision Dropper
+container.actuallyadditions.crafting.name=Crafting Table On A Stick
+
+container.actuallyadditions.nei.crushing.name=Crusher
+
+gui.actuallyadditions.waila.compostAmount.name=Amount of Mashed Food
+gui.actuallyadditions.waila.compostDone.name=Done!
+gui.actuallyadditions.waila.compostConverting.name=Converting...
+
+info.actuallyadditions.update.generic.desc=[{"text":"There is an "},{"text":"Update ","bold":"true"},{"text":"for ","bold":"false"},{"text":"Actually Additions ","color":"dark_green","bold":"true"},{"text":"available!","color":"none","bold":"false"}]
+info.actuallyadditions.update.versionComp.desc=[{"text":"You have Version "},{"text":"%s","color":"dark_red","italic":"false"},{"text":", the newest one is ","color":"none","italic":"false"},{"text":"%s","color":"dark_green","underlined":"false"},{"text":"!","color":"none","underlined":"false"}]
+info.actuallyadditions.update.download.desc=[{"text":"Download the newest Version "},{"text":"here! (Click me!)","color":"dark_green","underlined":"true","clickEvent":{"action":"open_url","value":"%s"},"hoverEvent":{"action":"show_text","value":{"text":"","extra":[{"text":"Click here to open your Browser and download the newest Version!"}]}}}]
+info.actuallyadditions.update.failed.desc=[{"text":"The Update Check for "},{"text":"Actually Additions ","color":"dark_green","bold":"true"},{"text":"failed! Check your Internet Connection and the Logs for more Info!","color":"none"}]
+
+achievement.actuallyadditions.pickUpSolidXP=Hard and Rich and Stuff
+achievement.actuallyadditions.pickUpSolidXP.desc=Pick up some Solidified Experience
+achievement.actuallyadditions.craftKnifeBlade=Sharp! So Sharp!
+achievement.actuallyadditions.craftKnifeBlade.desc=Craft a Knife Blade
+achievement.actuallyadditions.craftKnife=Cutcutcutcutcutcutcutcutcutcutcut!
+achievement.actuallyadditions.craftKnife.desc=Craft a Knife
+achievement.actuallyadditions.craftMashedFood=Munch munch munch!
+achievement.actuallyadditions.craftMashedFood.desc=Craft some Mashed Food
+achievement.actuallyadditions.craftWoodenCasing=Hard and sturdy!
+achievement.actuallyadditions.craftWoodenCasing.desc=Craft a Wooden Casing
+achievement.actuallyadditions.craftStoneCasing=Harder and sturdier!
+achievement.actuallyadditions.craftStoneCasing.desc=Craft a Stone Casing
+achievement.actuallyadditions.craftBasicCoil=Transmits.. power.. or something?
+achievement.actuallyadditions.craftBasicCoil.desc=Craft a Basic Coil
+achievement.actuallyadditions.craftAdvancedCoil=Transmits... more power I guess.
+achievement.actuallyadditions.craftAdvancedCoil.desc=Craft an Advanced Coil

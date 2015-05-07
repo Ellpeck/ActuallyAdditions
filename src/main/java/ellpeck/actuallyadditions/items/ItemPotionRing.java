@@ -18,7 +18,7 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class ItemPotionRing extends Item implements IName{
+public class ItemPotionRing extends Item implements INameableItem{
 
     public static final ThePotionRings[] allRings = ThePotionRings.values();
 
@@ -31,22 +31,30 @@ public class ItemPotionRing extends Item implements IName{
     }
 
     @Override
+    public String getOredictName(){
+        return this.getName();
+    }
+
+    @Override
     @SuppressWarnings("unchecked")
     public void onUpdate(ItemStack stack, World world, Entity player, int par4, boolean par5){
         super.onUpdate(stack, world, player, par4, par5);
 
-        if(player instanceof  EntityPlayer){
-            EntityPlayer thePlayer = (EntityPlayer)player;
-            ItemStack equippedStack = ((EntityPlayer)player).getCurrentEquippedItem();
+        if(!world.isRemote){
+            if(player instanceof EntityPlayer){
+                EntityPlayer thePlayer = (EntityPlayer)player;
+                ItemStack equippedStack = ((EntityPlayer)player).getCurrentEquippedItem();
 
-            ThePotionRings effect = ThePotionRings.values()[stack.getItemDamage()];
-            if(!effect.needsWaitBeforeActivating || !thePlayer.isPotionActive(effect.effectID)){
-                if(!((ItemPotionRing)stack.getItem()).isAdvanced){
-                    if(equippedStack != null && stack.isItemEqual(equippedStack)){
-                        thePlayer.addPotionEffect(new PotionEffect(effect.effectID, effect.activeTime, effect.normalAmplifier, true));
+                ThePotionRings effect = ThePotionRings.values()[stack.getItemDamage()];
+                if(!effect.needsWaitBeforeActivating || !thePlayer.isPotionActive(effect.effectID)){
+                    if(!((ItemPotionRing)stack.getItem()).isAdvanced){
+                        if(equippedStack != null && stack.isItemEqual(equippedStack)){
+                            thePlayer.addPotionEffect(new PotionEffect(effect.effectID, effect.activeTime, effect.normalAmplifier, true));
+                        }
                     }
+                    else
+                        thePlayer.addPotionEffect(new PotionEffect(effect.effectID, effect.activeTime, effect.advancedAmplifier, true));
                 }
-                else thePlayer.addPotionEffect(new PotionEffect(effect.effectID, effect.activeTime, effect.advancedAmplifier, true));
             }
         }
     }
@@ -83,15 +91,14 @@ public class ItemPotionRing extends Item implements IName{
     @SuppressWarnings("unchecked")
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld){
+        ItemUtil.addInformation(this, list, 2, "");
+
         if(KeyUtil.isShiftPressed()){
-            list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + "." + this.getName() + ".desc.1"));
-            list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + "." + this.getName() + ".desc.2"));
             if(stack.getItemDamage() == ThePotionRings.SATURATION.ordinal()){
                 list.add(StringUtil.RED + StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + ".itemPotionRing.desc.off.1"));
                 list.add(StringUtil.RED + StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + ".itemPotionRing.desc.off.2"));
             }
         }
-        else list.add(ItemUtil.shiftForInfo());
     }
 
     @Override

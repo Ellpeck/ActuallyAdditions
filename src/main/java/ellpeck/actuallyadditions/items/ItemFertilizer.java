@@ -2,7 +2,7 @@ package ellpeck.actuallyadditions.items;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ellpeck.actuallyadditions.util.IName;
+import ellpeck.actuallyadditions.util.INameableItem;
 import ellpeck.actuallyadditions.util.ItemUtil;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -16,7 +16,7 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class ItemFertilizer extends Item implements IName{
+public class ItemFertilizer extends Item implements INameableItem{
 
     @Override
     public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int par7, float par8, float par9, float par10){
@@ -36,7 +36,7 @@ public class ItemFertilizer extends Item implements IName{
     @SuppressWarnings("unchecked")
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld) {
-        list.add(ItemUtil.addStandardInformation(this));
+        ItemUtil.addInformation(this, list, 1, "");
     }
 
     @Override
@@ -53,5 +53,10 @@ public class ItemFertilizer extends Item implements IName{
     @Override
     public String getName(){
         return "itemFertilizer";
+    }
+
+    @Override
+    public String getOredictName(){
+        return this.getName();
     }
 }

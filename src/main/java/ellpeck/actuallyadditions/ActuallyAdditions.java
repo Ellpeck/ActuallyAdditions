@@ -5,6 +5,7 @@ import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.event.FMLInterModComms;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import ellpeck.actuallyadditions.achievement.InitAchievements;
@@ -13,12 +14,12 @@ import ellpeck.actuallyadditions.config.ConfigurationHandler;
 import ellpeck.actuallyadditions.crafting.GrinderCrafting;
 import ellpeck.actuallyadditions.crafting.InitCrafting;
 import ellpeck.actuallyadditions.event.InitEvents;
+import ellpeck.actuallyadditions.gen.InitVillager;
 import ellpeck.actuallyadditions.gen.OreGen;
 import ellpeck.actuallyadditions.inventory.GuiHandler;
 import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.material.InitItemMaterials;
 import ellpeck.actuallyadditions.network.PacketHandler;
-import ellpeck.actuallyadditions.oredict.OreDictRegistry;
 import ellpeck.actuallyadditions.proxy.IProxy;
 import ellpeck.actuallyadditions.tile.TileEntityBase;
 import ellpeck.actuallyadditions.util.ModUtil;
@@ -42,7 +43,7 @@ public class ActuallyAdditions{
         InitItemMaterials.init();
         InitBlocks.init();
         InitItems.init();
-        OreDictRegistry.init();
+        InitVillager.init();
         proxy.preInit();
 
         Util.logInfo("PreInitialization Finished.");
@@ -59,6 +60,7 @@ public class ActuallyAdditions{
         TileEntityBase.init();
         InitEvents.init();
         InitCrafting.init();
+        FMLInterModComms.sendMessage("Waila", "register", "ellpeck.actuallyadditions.waila.WailaDataProvider.register");
         proxy.init();
 
         Util.logInfo("Initialization Finished.");

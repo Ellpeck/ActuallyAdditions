@@ -1,49 +1,50 @@
 package ellpeck.actuallyadditions.crafting;
 
 import cpw.mods.fml.common.registry.GameRegistry;
-import ellpeck.actuallyadditions.config.ConfigValues;
+import ellpeck.actuallyadditions.config.values.ConfigCrafting;
 import ellpeck.actuallyadditions.items.InitItems;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.oredict.ShapedOreRecipe;
 
 public class ToolCrafting{
 
     public static void init(){
 
-        if(ConfigValues.enableToolEmeraldRecipe){
+        if(ConfigCrafting.TOOL_EMERALD.isEnabled()){
             //Pickaxe
-            GameRegistry.addRecipe(new ItemStack(InitItems.itemPickaxeEmerald),
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemPickaxeEmerald),
                     "EEE", " S ", " S ",
-                    'E', new ItemStack(Items.emerald),
-                    'S', new ItemStack(Items.stick));
+                    'E', "gemEmerald",
+                    'S', new ItemStack(Items.stick)));
 
             //Sword
-            GameRegistry.addRecipe(new ItemStack(InitItems.itemSwordEmerald),
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemSwordEmerald),
                     "E", "E", "S",
-                    'E', new ItemStack(Items.emerald),
-                    'S', new ItemStack(Items.stick));
+                    'E', "gemEmerald",
+                    'S', new ItemStack(Items.stick)));
 
             //Axe
-            GameRegistry.addRecipe(new ItemStack(InitItems.itemAxeEmerald),
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemAxeEmerald),
                     "EE", "ES", " S",
-                    'E', new ItemStack(Items.emerald),
-                    'S', new ItemStack(Items.stick));
+                    'E', "gemEmerald",
+                    'S', new ItemStack(Items.stick)));
 
             //Shovel
-            GameRegistry.addRecipe(new ItemStack(InitItems.itemShovelEmerald),
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemShovelEmerald),
                     "E", "S", "S",
-                    'E', new ItemStack(Items.emerald),
-                    'S', new ItemStack(Items.stick));
+                    'E', "gemEmerald",
+                    'S', new ItemStack(Items.stick)));
 
             //Hoe
-            GameRegistry.addRecipe(new ItemStack(InitItems.itemHoeEmerald),
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemHoeEmerald),
                     "EE", " S", " S",
-                    'E', new ItemStack(Items.emerald),
-                    'S', new ItemStack(Items.stick));
+                    'E', "gemEmerald",
+                    'S', new ItemStack(Items.stick)));
         }
 
-        if(ConfigValues.enableToolObsidianRecipe){
+        if(ConfigCrafting.TOOL_OBSIDIAN.isEnabled()){
             //Pickaxe
             GameRegistry.addRecipe(new ItemStack(InitItems.itemPickaxeObsidian),
                     "EEE", " S ", " S ",

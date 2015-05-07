@@ -5,9 +5,8 @@ import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.ActuallyAdditions;
 import ellpeck.actuallyadditions.inventory.GuiHandler;
 import ellpeck.actuallyadditions.tile.TileEntityGrinder;
-import ellpeck.actuallyadditions.util.IName;
-import ellpeck.actuallyadditions.util.ItemUtil;
-import ellpeck.actuallyadditions.util.KeyUtil;
+import ellpeck.actuallyadditions.util.BlockUtil;
+import ellpeck.actuallyadditions.util.INameableItem;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -18,14 +17,13 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
-import net.minecraft.util.StatCollector;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 import java.util.List;
 import java.util.Random;
 
-public class BlockGrinder extends BlockContainerBase implements IName{
+public class BlockGrinder extends BlockContainerBase implements INameableItem{
 
     private IIcon topIcon;
     private IIcon onIcon;
@@ -44,7 +42,7 @@ public class BlockGrinder extends BlockContainerBase implements IName{
 
     @Override
     public TileEntity createNewTileEntity(World world, int par2){
-        return new TileEntityGrinder(this.isDouble);
+        return this.isDouble ? new TileEntityGrinder.TileEntityGrinderDouble() : new TileEntityGrinder();
     }
 
     @Override
@@ -95,6 +93,11 @@ public class BlockGrinder extends BlockContainerBase implements IName{
     }
 
     @Override
+    public String getOredictName(){
+        return this.getName();
+    }
+
+    @Override
     public void breakBlock(World world, int x, int y, int z, Block block, int par6){
         this.dropInventory(world, x, y, z);
         super.breakBlock(world, x, y, z, block, par6);
@@ -130,12 +133,7 @@ public class BlockGrinder extends BlockContainerBase implements IName{
         @SuppressWarnings("unchecked")
         @SideOnly(Side.CLIENT)
         public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld) {
-            if(KeyUtil.isShiftPressed()){
-                for(int i = 0; i < (((BlockGrinder)theBlock).isDouble ? 3 : 4); i++){
-                    list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + "." + ((IName)theBlock).getName() + ".desc." + (i+1)));
-                }
-            }
-            else list.add(ItemUtil.shiftForInfo());
+            BlockUtil.addInformation(theBlock, list, ((BlockGrinder)theBlock).isDouble ? 3 : 4, "");
         }
 
         @Override

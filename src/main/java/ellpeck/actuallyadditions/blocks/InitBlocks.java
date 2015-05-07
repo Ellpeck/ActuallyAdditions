@@ -15,10 +15,16 @@ public class InitBlocks{
     public static Block blockGrinderDouble;
     public static Block blockFurnaceDouble;
     public static Block blockInputter;
+    public static Block blockInputterAdvanced;
     public static Block blockFishingNet;
     public static Block blockFurnaceSolar;
     public static Block blockHeatCollector;
     public static Block blockItemRepairer;
+    public static Block blockGreenhouseGlass;
+
+    public static Block blockBreaker;
+    public static Block blockPlacer;
+    public static Block blockDropper;
 
     public static void init(){
         Util.logInfo("Initializing Blocks...");
@@ -27,7 +33,7 @@ public class InitBlocks{
         BlockUtil.register(blockCompost, BlockCompost.TheItemBlock.class);
 
         blockMisc = new BlockMisc();
-        BlockUtil.register(blockMisc, BlockMisc.TheItemBlock.class);
+        BlockUtil.register(blockMisc, BlockMisc.TheItemBlock.class, BlockMisc.allMiscBlocks);
 
         blockFeeder = new BlockFeeder();
         BlockUtil.register(blockFeeder, BlockFeeder.TheItemBlock.class);
@@ -44,8 +50,11 @@ public class InitBlocks{
         blockFurnaceDouble = new BlockFurnaceDouble();
         BlockUtil.register(blockFurnaceDouble, BlockFurnaceDouble.TheItemBlock.class);
 
-        blockInputter = new BlockInputter();
+        blockInputter = new BlockInputter(false);
         BlockUtil.register(blockInputter, BlockInputter.TheItemBlock.class);
+
+        blockInputterAdvanced = new BlockInputter(true);
+        BlockUtil.register(blockInputterAdvanced, BlockInputter.TheItemBlock.class);
 
         blockFishingNet = new BlockFishingNet();
         BlockUtil.register(blockFishingNet, BlockFishingNet.TheItemBlock.class);
@@ -58,5 +67,17 @@ public class InitBlocks{
 
         blockItemRepairer = new BlockItemRepairer();
         BlockUtil.register(blockItemRepairer, BlockItemRepairer.TheItemBlock.class);
+
+        blockGreenhouseGlass = new BlockGreenhouseGlass();
+        BlockUtil.register(blockGreenhouseGlass, BlockGreenhouseGlass.TheItemBlock.class);
+
+        blockBreaker = new BlockBreaker(false);
+        BlockUtil.register(blockBreaker, BlockBreaker.TheItemBlock.class);
+
+        blockPlacer = new BlockBreaker(true);
+        BlockUtil.register(blockPlacer, BlockBreaker.TheItemBlock.class);
+
+        blockDropper = new BlockDropper();
+        BlockUtil.register(blockDropper, BlockDropper.TheItemBlock.class);
     }
 }

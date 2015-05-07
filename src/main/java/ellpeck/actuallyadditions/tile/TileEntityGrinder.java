@@ -2,7 +2,7 @@ package ellpeck.actuallyadditions.tile;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ellpeck.actuallyadditions.config.ConfigValues;
+import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.recipe.GrinderRecipes;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -11,7 +11,18 @@ import net.minecraft.tileentity.TileEntityFurnace;
 
 import java.util.Random;
 
-public class TileEntityGrinder extends TileEntityInventoryBase implements IPowerAcceptor{
+public class TileEntityGrinder extends TileEntityUpgradable implements IPowerAcceptor{
+
+    public static class TileEntityGrinderDouble extends TileEntityGrinder{
+
+        public TileEntityGrinderDouble(){
+            super(8, "grinderDouble");
+            this.isDouble = true;
+            this.maxCrushTime = this.getStandardSpeed();
+            this.speedUpgradeSlot = 7;
+        }
+
+    }
 
     public static final int SLOT_COAL = 0;
     public static final int SLOT_INPUT_1 = 1;
@@ -31,30 +42,33 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IPower
 
     public boolean isDouble;
 
-    public TileEntityGrinder(){
-        super(0, "");
+    public TileEntityGrinder(int slots, String name){
+        super(slots, name);
     }
 
-    public TileEntityGrinder(boolean isDouble){
-        super(isDouble ? 7 : 4, isDouble ? "tileEntityGrinderDouble" : "tileEntityGrinder");
-        this.maxCrushTime = isDouble ? ConfigValues.grinderDoubleCrushTime : ConfigValues.grinderCrushTime;
-        this.isDouble = isDouble;
+    public TileEntityGrinder(){
+        super(5, "grinder");
+        this.isDouble = false;
+        this.maxCrushTime = this.getStandardSpeed();
+        this.speedUpgradeSlot = 4;
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public void updateEntity(){
         if(!worldObj.isRemote){
+            this.speedUp();
+
             boolean theFlag = this.coalTimeLeft > 0;
 
-            if(this.coalTimeLeft > 0) this.coalTimeLeft--;
+            if(this.coalTimeLeft > 0) this.coalTimeLeft -= 1+this.burnTimeAmplifier;
 
             boolean canCrushOnFirst = this.canCrushOn(SLOT_INPUT_1, SLOT_OUTPUT_1_1, SLOT_OUTPUT_1_2);
             boolean canCrushOnSecond = false;
             if(this.isDouble) canCrushOnSecond = this.canCrushOn(SLOT_INPUT_2, SLOT_OUTPUT_2_1, SLOT_OUTPUT_2_2);
 
             if((canCrushOnFirst || canCrushOnSecond) && this.coalTimeLeft <= 0 && this.slots[SLOT_COAL] != null){
-                this.coalTime = TileEntityFurnace.getItemBurnTime(this.slots[SLOT_COAL]);
+                this.coalTime =  TileEntityFurnace.getItemBurnTime(this.slots[SLOT_COAL]);
                 this.coalTimeLeft = this.coalTime;
                 if(this.coalTime > 0){
                     this.slots[SLOT_COAL].stackSize--;
@@ -136,9 +150,6 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IPower
         compound.setInteger("CoalTimeLeft", this.coalTimeLeft);
         compound.setInteger("FirstCrushTime", this.firstCrushTime);
         compound.setInteger("SecondCrushTime", this.secondCrushTime);
-        compound.setBoolean("IsDouble", this.isDouble);
-        compound.setString("Name", this.name);
-        compound.setInteger("Slots", this.slots.length);
         super.writeToNBT(compound);
     }
 
@@ -148,10 +159,6 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IPower
         this.coalTimeLeft = compound.getInteger("CoalTimeLeft");
         this.firstCrushTime = compound.getInteger("FirstCrushTime");
         this.secondCrushTime = compound.getInteger("SecondCrushTime");
-        this.isDouble = compound.getBoolean("IsDouble");
-        this.name = compound.getString("Name");
-        this.maxCrushTime = isDouble ? ConfigValues.grinderDoubleCrushTime : ConfigValues.grinderCrushTime;
-        this.initializeSlots(compound.getInteger("Slots"));
         super.readFromNBT(compound);
     }
 
@@ -203,5 +210,15 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IPower
     @Override
     public int getItemPower(){
         return this.coalTime;
+    }
+
+    @Override
+    public int getStandardSpeed(){
+        return this.isDouble ? ConfigIntValues.GRINDER_DOUBLE_CRUSH_TIME.getValue() : ConfigIntValues.GRINDER_CRUSH_TIME.getValue();
+    }
+
+    @Override
+    public void setSpeed(int newSpeed){
+        this.maxCrushTime = newSpeed;
     }
 }

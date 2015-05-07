@@ -39,6 +39,12 @@ public class TileEntityBase extends TileEntity{
         GameRegistry.registerTileEntity(TileEntityFurnaceSolar.class, ModUtil.MOD_ID_LOWER + ":tileEntityFurnaceSolar");
         GameRegistry.registerTileEntity(TileEntityHeatCollector.class, ModUtil.MOD_ID_LOWER + ":tileEntityHeatCollector");
         GameRegistry.registerTileEntity(TileEntityItemRepairer.class, ModUtil.MOD_ID_LOWER + ":tileEntityRepairer");
+        GameRegistry.registerTileEntity(TileEntityGreenhouseGlass.class, ModUtil.MOD_ID_LOWER + ":tileEntityGreenhouseGlass");
+        GameRegistry.registerTileEntity(TileEntityBreaker.class, ModUtil.MOD_ID_LOWER + ":tileEntityBreaker");
+        GameRegistry.registerTileEntity(TileEntityDropper.class, ModUtil.MOD_ID_LOWER + ":tileEntityDropper");
+        GameRegistry.registerTileEntity(TileEntityInputter.TileEntityInputterAdvanced.class, ModUtil.MOD_ID_LOWER + ":tileEntityInputterAdvanced");
+        GameRegistry.registerTileEntity(TileEntityBreaker.TileEntityPlacer.class, ModUtil.MOD_ID_LOWER + ":tileEntityPlacer");
+        GameRegistry.registerTileEntity(TileEntityGrinder.TileEntityGrinderDouble.class, ModUtil.MOD_ID_LOWER + ":tileEntityGrinderDouble");
     }
 
     @Override

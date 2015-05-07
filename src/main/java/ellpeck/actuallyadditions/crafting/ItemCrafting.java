@@ -3,7 +3,7 @@ package ellpeck.actuallyadditions.crafting;
 import cpw.mods.fml.common.registry.GameRegistry;
 import ellpeck.actuallyadditions.blocks.InitBlocks;
 import ellpeck.actuallyadditions.blocks.metalists.TheMiscBlocks;
-import ellpeck.actuallyadditions.config.ConfigValues;
+import ellpeck.actuallyadditions.config.values.ConfigCrafting;
 import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.items.metalists.TheDusts;
 import ellpeck.actuallyadditions.items.metalists.TheMiscItems;
@@ -15,19 +15,35 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.oredict.ShapedOreRecipe;
+import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 public class ItemCrafting{
 
     public static void init(){
 
-        //Leaf Blower
-        if(ConfigValues.enableLeafBlowerRecipe)
-            GameRegistry.addRecipe(new ItemStack(InitItems.itemLeafBlower),
-                    " F", "IP", "IR",
+       //Leaf Blower
+        if(ConfigCrafting.LEAF_BLOWER.isEnabled())
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemLeafBlower),
+                    " F", "IP", "IC",
                     'F', new ItemStack(Items.flint),
-                    'I', new ItemStack(Items.iron_ingot),
+                    'I', "ingotIron",
                     'P', new ItemStack(Blocks.piston),
-                    'R', new ItemStack(Items.redstone));
+                    'C', TheMiscItems.COIL_ADVANCED.getOredictName()));
+
+        //Coil
+        if(ConfigCrafting.COIL.isEnabled())
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL.ordinal()),
+                    " R ", "RIR", " R ",
+                    'I', "ingotIron",
+                    'R', "dustRedstone"));
+
+        //Advanced Coil
+        if(ConfigCrafting.ADV_COIL.isEnabled())
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal()),
+                    " G ", "GCG", " G ",
+                    'C', TheMiscItems.COIL.getOredictName(),
+                    'G', "ingotGold"));
 
         //Ender Pearl
         GameRegistry.addRecipe(new ItemStack(Items.ender_pearl),
@@ -40,34 +56,41 @@ public class ItemCrafting{
                 'X', new ItemStack(InitItems.itemSpecialDrop, 1, TheSpecialDrops.EMERALD_SHARD.ordinal()));
 
         //Advanced Leaf Blower
-        if(ConfigValues.enableLeafBlowerAdvancedRecipe)
-            GameRegistry.addRecipe(new ItemStack(InitItems.itemLeafBlowerAdvanced),
-                    " F", "DP", "DR",
+        if(ConfigCrafting.LEAF_BLOWER_ADVANCED.isEnabled())
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemLeafBlowerAdvanced),
+                    " F", "DP", "DC",
                     'F', new ItemStack(Items.flint),
-                    'D', new ItemStack(Items.diamond),
+                    'D', "gemDiamond",
                     'P', new ItemStack(Blocks.piston),
-                    'R', new ItemStack(Items.redstone));
+                    'C', TheMiscItems.COIL_ADVANCED.getOredictName()));
 
         //Quartz
-        if(ConfigValues.enabledMiscRecipes[TheMiscItems.QUARTZ.ordinal()])
-            GameRegistry.addSmelting(new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.ORE_QUARTZ.ordinal()),
-                    new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal()), 1F);
+        GameRegistry.addSmelting(new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.ORE_QUARTZ.ordinal()),
+                new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal()), 1F);
 
         //Knife
-        if(ConfigValues.enableKnifeRecipe)
-            GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemKnife),
-                    new ItemStack(InitItems.itemMisc, 1, TheMiscItems.KNIFE_BLADE.ordinal()),
-                    new ItemStack(InitItems.itemMisc, 1, TheMiscItems.KNIFE_HANDLE.ordinal()));
+        if(ConfigCrafting.KNIFE.isEnabled())
+            GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemKnife),
+                    TheMiscItems.KNIFE_BLADE.getOredictName(),
+                    TheMiscItems.KNIFE_HANDLE.getOredictName()));
 
         //Crafter on a Stick
-        if(ConfigValues.enableCrafterRecipe)
+        if(ConfigCrafting.STICK_CRAFTER.isEnabled())
             GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemCrafterOnAStick),
                     new ItemStack(Blocks.crafting_table),
                     new ItemStack(Items.sign),
                     new ItemStack(Items.slime_ball));
 
+        //SpeedUpgrade
+        if(ConfigCrafting.SPEED_UPGRADE.isEnabled())
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemSpeedUpgrade, 2),
+                    "RGR", "GUG", "RGR",
+                    'U', TheMiscItems.COIL.getOredictName(),
+                    'R', "dustRedstone",
+                    'G', "ingotGold"));
+
         //Mashed Food
-        if(ConfigValues.enabledMiscRecipes[TheMiscItems.MASHED_FOOD.ordinal()])
+        if(ConfigCrafting.MASHED_FOOD.isEnabled())
             initMashedFoodRecipes();
 
         //Rings
@@ -94,19 +117,29 @@ public class ItemCrafting{
     }
 
     public static void initPotionRingRecipes(){
-        GameRegistry.addRecipe(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.RING.ordinal()),
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.RING.ordinal()),
                 "IGI", "GDG", "IGI",
-                'G', new ItemStack(Items.gold_ingot),
-                'I', new ItemStack(Items.iron_ingot),
-                'D', new ItemStack(Items.glowstone_dust));
+                'G', "ingotGold",
+                'I', "ingotIron",
+                'D', "dustGlowstone"));
 
-        for(int i = 0; i < ThePotionRings.values().length; i++){
-            if(ConfigValues.enablePotionRingRecipes[i]){
-                ItemStack mainStack = ThePotionRings.values()[i].craftingItem;
-                GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemPotionRing, 1, i), mainStack, mainStack, mainStack, mainStack, new ItemStack(Blocks.diamond_block), new ItemStack(Items.nether_wart), new ItemStack(Items.potionitem), new ItemStack(InitItems.itemMisc, 1, TheMiscItems.RING.ordinal()));
-                GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemPotionRingAdvanced, 1, i), new ItemStack(InitItems.itemPotionRing, 1, i), new ItemStack(Items.nether_star));
-            }
-        }
+        if(ConfigCrafting.RING_SPEED.isEnabled()) addRingRecipeWithStack(ThePotionRings.SPEED.craftingItem, ThePotionRings.SPEED.ordinal());
+        if(ConfigCrafting.RING_HASTE.isEnabled()) addRingRecipeWithStack(ThePotionRings.HASTE.craftingItem, ThePotionRings.HASTE.ordinal());
+        if(ConfigCrafting.RING_STRENGTH.isEnabled()) addRingRecipeWithStack(ThePotionRings.STRENGTH.craftingItem, ThePotionRings.STRENGTH.ordinal());
+        if(ConfigCrafting.RING_JUMP_BOOST.isEnabled()) addRingRecipeWithStack(ThePotionRings.JUMP_BOOST.craftingItem, ThePotionRings.JUMP_BOOST.ordinal());
+        if(ConfigCrafting.RING_REGEN.isEnabled()) addRingRecipeWithStack(ThePotionRings.REGEN.craftingItem, ThePotionRings.REGEN.ordinal());
+        if(ConfigCrafting.RING_RESISTANCE.isEnabled()) addRingRecipeWithStack(ThePotionRings.RESISTANCE.craftingItem, ThePotionRings.RESISTANCE.ordinal());
+        if(ConfigCrafting.RING_FIRE_RESISTANCE.isEnabled()) addRingRecipeWithStack(ThePotionRings.FIRE_RESISTANCE.craftingItem, ThePotionRings.FIRE_RESISTANCE.ordinal());
+        if(ConfigCrafting.RING_WATER_BREATHING.isEnabled()) addRingRecipeWithStack(ThePotionRings.WATER_BREATHING.craftingItem, ThePotionRings.WATER_BREATHING.ordinal());
+        if(ConfigCrafting.RING_INVISIBILITY.isEnabled()) addRingRecipeWithStack(ThePotionRings.INVISIBILITY.craftingItem, ThePotionRings.INVISIBILITY.ordinal());
+        if(ConfigCrafting.RING_NIGHT_VISION.isEnabled()) addRingRecipeWithStack(ThePotionRings.NIGHT_VISION.craftingItem, ThePotionRings.NIGHT_VISION.ordinal());
+        if(ConfigCrafting.RING_SATURATION.isEnabled()) addRingRecipeWithStack(ThePotionRings.SATURATION.craftingItem, ThePotionRings.SATURATION.ordinal());
+
+    }
+
+    public static void addRingRecipeWithStack(ItemStack mainStack, int meta){
+        GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemPotionRing, 1, meta), mainStack, mainStack, mainStack, mainStack, new ItemStack(Blocks.diamond_block), new ItemStack(Items.nether_wart), new ItemStack(Items.potionitem), new ItemStack(InitItems.itemMisc, 1, TheMiscItems.RING.ordinal()));
+        GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemPotionRingAdvanced, 1, meta), new ItemStack(InitItems.itemPotionRing, 1, meta), new ItemStack(Items.nether_star));
     }
 
     public static void initMashedFoodRecipes(){

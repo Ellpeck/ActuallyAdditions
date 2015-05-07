@@ -1,7 +1,9 @@
 package ellpeck.actuallyadditions.util;
 
-public interface IName{
+public interface INameableItem{
 
     String getName();
+
+    String getOredictName();
 
 }

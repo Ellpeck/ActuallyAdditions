@@ -1,5 +1,6 @@
 package ellpeck.actuallyadditions.inventory;
 
+import invtweaks.api.container.InventoryContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.*;
@@ -7,6 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.world.World;
 
+@InventoryContainer
 public class ContainerCrafter extends Container{
 
     public InventoryCrafting craftMatrix = new InventoryCrafting(this, 3, 3);

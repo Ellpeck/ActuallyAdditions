@@ -27,19 +27,27 @@ public class CreativeTab extends CreativeTabs{
         this.list = list;
 
         this.addBlock(InitBlocks.blockInputter);
+        this.addBlock(InitBlocks.blockInputterAdvanced);
+        this.addBlock(InitBlocks.blockGreenhouseGlass);
         this.addBlock(InitBlocks.blockGrinder);
         this.addBlock(InitBlocks.blockGrinderDouble);
         this.addBlock(InitBlocks.blockFurnaceDouble);
-        this.addBlock(InitBlocks.blockFurnaceSolar);
-        this.addBlock(InitBlocks.blockFishingNet);
-        this.addBlock(InitBlocks.blockHeatCollector);
+
+        //TODO Re-add
+        //this.addBlock(InitBlocks.blockFurnaceSolar);
+        //this.addBlock(InitBlocks.blockHeatCollector);
         this.addBlock(InitBlocks.blockItemRepairer);
+        this.addBlock(InitBlocks.blockFishingNet);
+        this.addBlock(InitBlocks.blockBreaker);
+        this.addBlock(InitBlocks.blockPlacer);
+        this.addBlock(InitBlocks.blockDropper);
 
         this.addBlock(InitBlocks.blockMisc);
         this.addBlock(InitBlocks.blockFeeder);
         this.addBlock(InitBlocks.blockCompost);
         this.addBlock(InitBlocks.blockGiantChest);
 
+        this.addItem(InitItems.itemSpeedUpgrade);
         this.addItem(InitItems.itemMisc);
         this.addItem(InitItems.itemFertilizer);
         this.addItem(InitItems.itemFoods);
@@ -64,6 +72,8 @@ public class CreativeTab extends CreativeTabs{
 
         this.addItem(InitItems.itemPotionRing);
         this.addItem(InitItems.itemPotionRingAdvanced);
+
+        this.addItem(InitItems.itemJams);
     }
 
     @Override

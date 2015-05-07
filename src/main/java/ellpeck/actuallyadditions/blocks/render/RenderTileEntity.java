@@ -1,5 +1,6 @@
 package ellpeck.actuallyadditions.blocks.render;
 
+import ellpeck.actuallyadditions.tile.TileEntityCompost;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
@@ -17,11 +18,14 @@ public class RenderTileEntity extends TileEntitySpecialRenderer{
     @Override
     public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float par5){
         GL11.glPushMatrix();
-        GL11.glTranslatef((float)x+0.5F, (float)y-0.5F, (float)z+0.5F);
+        GL11.glTranslatef((float)x + 0.5F, (float)y - 0.5F, (float)z + 0.5F);
         GL11.glRotatef(180F, 0.0F, 0.0F, 1.0F);
         GL11.glTranslatef(0.0F, -2.0F, 0.0F);
         this.bindTexture(new ResourceLocation(ModUtil.MOD_ID_LOWER, "textures/blocks/models/" + this.theModel.getName() + ".png"));
         theModel.render(0.0625F);
+
+        if(tile instanceof TileEntityCompost && theModel instanceof ModelCompost) ((ModelCompost)theModel).renderExtra(0.0625F, (TileEntityCompost)tile);
+
         GL11.glPopMatrix();
     }
 

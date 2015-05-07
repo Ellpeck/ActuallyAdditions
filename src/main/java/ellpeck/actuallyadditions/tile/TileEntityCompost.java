@@ -1,6 +1,6 @@
 package ellpeck.actuallyadditions.tile;
 
-import ellpeck.actuallyadditions.config.ConfigValues;
+import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.items.ItemFertilizer;
 import ellpeck.actuallyadditions.items.ItemMisc;
@@ -10,18 +10,24 @@ import net.minecraft.nbt.NBTTagCompound;
 
 public class TileEntityCompost extends TileEntityInventoryBase{
 
-    public final int amountNeededToConvert = ConfigValues.compostAmountNeededToConvert;
-    public final int conversionTimeNeeded = ConfigValues.compostConversionTimeNeeded;
+    public final int amountNeededToConvert = ConfigIntValues.COMPOST_AMOUNT.getValue();
+    public final int conversionTimeNeeded = ConfigIntValues.COMPOST_TIME.getValue();
 
     public int conversionTime;
 
     public TileEntityCompost(){
-        super(1, "tileEntityCompost");
+        super(1, "compost");
     }
 
     @Override
     public void updateEntity(){
         if(!worldObj.isRemote){
+
+            if(this.slots[0] != null && this.slots[0].stackSize > 0){
+                worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, this.slots[0].stackSize + (this.slots[0].getItem() instanceof ItemFertilizer ? 1 : 0), 2);
+            }
+            else worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 0, 2);
+
             boolean theFlag = this.conversionTime > 0;
             if(this.slots[0] != null && !(this.slots[0].getItem() instanceof ItemFertilizer) && this.slots[0].stackSize >= this.amountNeededToConvert){
                 this.conversionTime++;
