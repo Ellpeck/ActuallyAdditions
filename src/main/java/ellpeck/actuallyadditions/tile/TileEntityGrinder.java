@@ -1,39 +1,60 @@
 package ellpeck.actuallyadditions.tile;
 
+import cofh.api.energy.EnergyStorage;
+import cofh.api.energy.IEnergyReceiver;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.recipe.GrinderRecipes;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntityFurnace;
+import net.minecraftforge.common.util.ForgeDirection;
 
 import java.util.Random;
 
-public class TileEntityGrinder extends TileEntityUpgradable implements IPowerAcceptor{
+public class TileEntityGrinder extends TileEntityInventoryBase implements IEnergyReceiver{
+
+    public EnergyStorage storage = new EnergyStorage(60000, energyUsePerTick+20);
+
+    @Override
+    public int receiveEnergy(ForgeDirection from, int maxReceive, boolean simulate){
+        return this.storage.receiveEnergy(maxReceive, simulate);
+    }
+
+    @Override
+    public int getEnergyStored(ForgeDirection from){
+        return this.storage.getEnergyStored();
+    }
+
+    @Override
+    public int getMaxEnergyStored(ForgeDirection from){
+        return this.storage.getMaxEnergyStored();
+    }
+
+    @Override
+    public boolean canConnectEnergy(ForgeDirection from){
+        return true;
+    }
 
     public static class TileEntityGrinderDouble extends TileEntityGrinder{
 
         public TileEntityGrinderDouble(){
-            super(8, "grinderDouble");
+            super(6, "grinderDouble");
             this.isDouble = true;
             this.maxCrushTime = this.getStandardSpeed();
-            this.speedUpgradeSlot = 7;
+            energyUsePerTick = ConfigIntValues.GRINDER_DOUBLE_ENERGY_USED.getValue();
         }
 
     }
 
-    public static final int SLOT_COAL = 0;
-    public static final int SLOT_INPUT_1 = 1;
-    public static final int SLOT_OUTPUT_1_1 = 2;
-    public static final int SLOT_OUTPUT_1_2 = 3;
-    public static final int SLOT_INPUT_2 = 4;
-    public static final int SLOT_OUTPUT_2_1 = 5;
-    public static final int SLOT_OUTPUT_2_2 = 6;
+    public static final int SLOT_INPUT_1 = 0;
+    public static final int SLOT_OUTPUT_1_1 = 1;
+    public static final int SLOT_OUTPUT_1_2 = 2;
+    public static final int SLOT_INPUT_2 = 3;
+    public static final int SLOT_OUTPUT_2_1 = 4;
+    public static final int SLOT_OUTPUT_2_2 = 5;
 
-    public int coalTime;
-    public int coalTimeLeft;
+    public static int energyUsePerTick;
 
     public int maxCrushTime;
 
@@ -47,10 +68,10 @@ public class TileEntityGrinder extends TileEntityUpgradable implements IPowerAcc
     }
 
     public TileEntityGrinder(){
-        super(5, "grinder");
+        super(3, "grinder");
         this.isDouble = false;
         this.maxCrushTime = this.getStandardSpeed();
-        this.speedUpgradeSlot = 4;
+        energyUsePerTick = ConfigIntValues.GRINDER_ENERGY_USED.getValue();
     }
 
     @Override
@@ -66,26 +87,11 @@ public class TileEntityGrinder extends TileEntityUpgradable implements IPowerAcc
                 ((TileEntityGrinderDouble)worldObj.getTileEntity(xCoord, yCoord, zCoord)).slots = theSlots.clone();
             }
 
-            this.speedUp();
-
-            boolean theFlag = this.coalTimeLeft > 0;
-
-            if(this.coalTimeLeft > 0) this.coalTimeLeft -= 1+this.burnTimeAmplifier;
-
             boolean canCrushOnFirst = this.canCrushOn(SLOT_INPUT_1, SLOT_OUTPUT_1_1, SLOT_OUTPUT_1_2);
             boolean canCrushOnSecond = false;
             if(this.isDouble) canCrushOnSecond = this.canCrushOn(SLOT_INPUT_2, SLOT_OUTPUT_2_1, SLOT_OUTPUT_2_2);
 
-            if((canCrushOnFirst || canCrushOnSecond) && this.coalTimeLeft <= 0 && this.slots[SLOT_COAL] != null){
-                this.coalTime =  TileEntityFurnace.getItemBurnTime(this.slots[SLOT_COAL]);
-                this.coalTimeLeft = this.coalTime;
-                if(this.coalTime > 0){
-                    this.slots[SLOT_COAL].stackSize--;
-                    if(this.slots[SLOT_COAL].stackSize <= 0) this.slots[SLOT_COAL] = this.slots[SLOT_COAL].getItem().getContainerItem(this.slots[SLOT_COAL]);
-                }
-            }
-
-            if(this.coalTimeLeft > 0){
+            if(this.storage.getEnergyStored() >= energyUsePerTick){
                 if(canCrushOnFirst){
                     this.firstCrushTime++;
                     if(this.firstCrushTime >= maxCrushTime){
@@ -109,13 +115,9 @@ public class TileEntityGrinder extends TileEntityUpgradable implements IPowerAcc
             else{
                 this.firstCrushTime = 0;
                 this.secondCrushTime = 0;
-                this.coalTime = 0;
             }
 
-            if(theFlag != this.coalTimeLeft > 0){
-                worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, (this.coalTimeLeft > 0 ? 1 : 0), 2);
-                this.markDirty();
-            }
+            if(this.firstCrushTime > 0 || this.secondCrushTime > 0) this.storage.extractEnergy(energyUsePerTick, false);
         }
     }
 
@@ -155,25 +157,23 @@ public class TileEntityGrinder extends TileEntityUpgradable implements IPowerAcc
 
     @Override
     public void writeToNBT(NBTTagCompound compound){
-        compound.setInteger("CoalTime", this.coalTime);
-        compound.setInteger("CoalTimeLeft", this.coalTimeLeft);
         compound.setInteger("FirstCrushTime", this.firstCrushTime);
         compound.setInteger("SecondCrushTime", this.secondCrushTime);
+        this.storage.writeToNBT(compound);
         super.writeToNBT(compound);
     }
 
     @Override
     public void readFromNBT(NBTTagCompound compound){
-        this.coalTime = compound.getInteger("CoalTime");
-        this.coalTimeLeft = compound.getInteger("CoalTimeLeft");
         this.firstCrushTime = compound.getInteger("FirstCrushTime");
         this.secondCrushTime = compound.getInteger("SecondCrushTime");
+        this.storage.readFromNBT(compound);
         super.readFromNBT(compound);
     }
 
     @SideOnly(Side.CLIENT)
-    public int getCoalTimeToScale(int i){
-        return this.coalTimeLeft * i / this.coalTime;
+    public int getEnergyScaled(int i){
+        return this.getEnergyStored(ForgeDirection.UNKNOWN) * i / this.getMaxEnergyStored(ForgeDirection.UNKNOWN);
     }
 
     @SideOnly(Side.CLIENT)
@@ -188,7 +188,7 @@ public class TileEntityGrinder extends TileEntityUpgradable implements IPowerAcc
 
     @Override
     public boolean isItemValidForSlot(int i, ItemStack stack){
-        return i == SLOT_COAL && TileEntityFurnace.getItemBurnTime(stack) > 0 || (i == SLOT_INPUT_1 || i == SLOT_INPUT_2) && GrinderRecipes.instance().getOutput(stack, false) != null;
+        return (i == SLOT_INPUT_1 || i == SLOT_INPUT_2) && GrinderRecipes.instance().getOutput(stack, false) != null;
     }
 
     @Override
@@ -198,36 +198,10 @@ public class TileEntityGrinder extends TileEntityUpgradable implements IPowerAcc
 
     @Override
     public boolean canExtractItem(int slot, ItemStack stack, int side){
-        return slot == SLOT_OUTPUT_1_1 || slot == SLOT_OUTPUT_1_2 || slot == SLOT_OUTPUT_2_1 || slot == SLOT_OUTPUT_2_2 || (slot == SLOT_COAL && stack.getItem() == Items.bucket);
+        return slot == SLOT_OUTPUT_1_1 || slot == SLOT_OUTPUT_1_2 || slot == SLOT_OUTPUT_2_1 || slot == SLOT_OUTPUT_2_2;
     }
 
-    @Override
-    public void setBlockMetadataToOn(){
-        worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 1, 2);
-    }
-
-    @Override
-    public void setPower(int power){
-        this.coalTimeLeft = power;
-    }
-
-    @Override
-    public void setItemPower(int power){
-        this.coalTime = power;
-    }
-
-    @Override
-    public int getItemPower(){
-        return this.coalTime;
-    }
-
-    @Override
     public int getStandardSpeed(){
         return this.isDouble ? ConfigIntValues.GRINDER_DOUBLE_CRUSH_TIME.getValue() : ConfigIntValues.GRINDER_CRUSH_TIME.getValue();
-    }
-
-    @Override
-    public void setSpeed(int newSpeed){
-        this.maxCrushTime = newSpeed;
     }
 }

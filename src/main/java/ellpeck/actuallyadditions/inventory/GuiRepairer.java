@@ -8,7 +8,10 @@ import ellpeck.actuallyadditions.util.AssetUtil;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.util.ForgeDirection;
 import org.lwjgl.opengl.GL11;
+
+import java.util.Collections;
 
 @SideOnly(Side.CLIENT)
 public class GuiRepairer extends GuiContainer{
@@ -25,7 +28,7 @@ public class GuiRepairer extends GuiContainer{
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y){
-        AssetUtil.displayNameAndInventoryString(this.fontRendererObj, xSize, 93-5, -10, this.tileRepairer.getInventoryName());
+        AssetUtil.displayNameString(this.fontRendererObj, xSize, -10, this.tileRepairer.getInventoryName());
     }
 
     @Override
@@ -38,9 +41,9 @@ public class GuiRepairer extends GuiContainer{
         this.mc.getTextureManager().bindTexture(resLoc);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 93);
 
-        if(this.tileRepairer.coalTime > 0){
-            int i = this.tileRepairer.getCoalTimeToScale(15);
-            this.drawTexturedModalRect(this.guiLeft+80, this.guiTop+5+14-i, 176, 44+14-i, 14, i);
+        if(this.tileRepairer.getEnergyStored(ForgeDirection.UNKNOWN) > 0){
+            int i = this.tileRepairer.getEnergyScaled(83);
+            drawTexturedModalRect(this.guiLeft+28, this.guiTop+89-i, 176, 44, 16, i);
         }
         if(TileEntityItemRepairer.canBeRepaired(this.tileRepairer.slots[TileEntityItemRepairer.SLOT_INPUT])){
             int i = this.tileRepairer.getItemDamageToScale(22);
@@ -51,5 +54,9 @@ public class GuiRepairer extends GuiContainer{
     @Override
     public void drawScreen(int x, int y, float f){
         super.drawScreen(x, y, f);
+        String text = this.tileRepairer.getEnergyStored(ForgeDirection.UNKNOWN) + "/" + this.tileRepairer.getMaxEnergyStored(ForgeDirection.UNKNOWN) + " RF";
+        if(x >= guiLeft+28 && y >= guiTop+6 && x <= guiLeft+43 && y <= guiTop+88){
+            this.func_146283_a(Collections.singletonList(text), x, y);
+        }
     }
 }

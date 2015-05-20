@@ -4,6 +4,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import ellpeck.actuallyadditions.blocks.InitBlocks;
 import ellpeck.actuallyadditions.blocks.metalists.TheMiscBlocks;
 import ellpeck.actuallyadditions.config.values.ConfigCrafting;
+import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.items.metalists.TheMiscItems;
 import ellpeck.actuallyadditions.util.INameableItem;
 import net.minecraft.init.Blocks;
@@ -23,6 +24,13 @@ public class BlockCrafting{
                     'W', "plankWood",
                     'C', TheMiscBlocks.WOOD_CASING.getOredictName()));
 
+        //Charcoal Block
+        GameRegistry.addRecipe(new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.CHARCOAL_BLOCK.ordinal()),
+                "CCC", "CCC", "CCC",
+                'C', new ItemStack(Items.coal, 1, 1));
+        GameRegistry.addShapelessRecipe(new ItemStack(Items.coal, 9, 1),
+                new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.CHARCOAL_BLOCK.ordinal()));
+
         //Wood Casing
         if(ConfigCrafting.WOOD_CASING.isEnabled())
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.WOOD_CASING.ordinal()),
@@ -30,6 +38,56 @@ public class BlockCrafting{
                     'W', "plankWood",
                     'R', "dustRedstone",
                     'S', "stickWood"));
+
+        //Canola Press
+        if(ConfigCrafting.CANOLA_PRESS.isEnabled())
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockCanolaPress),
+                    "CHC", "CDC", "CRC",
+                    'C', "cobblestone",
+                    'H', Blocks.hopper,
+                    'R', TheMiscItems.COIL_ADVANCED.getOredictName(),
+                    'D', TheMiscItems.CANOLA.getOredictName()));
+
+        //Fermenting Barrel
+        if(ConfigCrafting.FERMENTING_BARREL.isEnabled())
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockFermentingBarrel),
+                    "CHC", "CDC", "CRC",
+                    'C', "logWood",
+                    'H', Blocks.hopper,
+                    'R', TheMiscBlocks.WOOD_CASING.getOredictName(),
+                    'D', TheMiscItems.CANOLA.getOredictName()));
+
+        //Phantomface
+        if(ConfigCrafting.PHANTOMFACE.isEnabled())
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockPhantomface),
+                    "ECE", "EBE", "ESE",
+                    'E', Items.ender_eye,
+                    'C', Blocks.chest,
+                    'S', TheMiscItems.COIL_ADVANCED.getOredictName(),
+                    'B', TheMiscBlocks.ENDERPEARL_BLOCK.getOredictName()));
+
+        //Oil Generator
+        if(ConfigCrafting.OIL_GENERATOR.isEnabled())
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockOilGenerator),
+                    "CRC", "CBC", "CRC",
+                    'C', "cobblestone",
+                    'R', TheMiscBlocks.STONE_CASING.getOredictName(),
+                    'B', InitItems.itemBucketOil));
+
+        //Coal Generator
+        if(ConfigCrafting.COAL_GENERATOR.isEnabled())
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockCoalGenerator),
+                    "CRC", "CBC", "CRC",
+                    'C', "cobblestone",
+                    'R', TheMiscBlocks.STONE_CASING.getOredictName(),
+                    'B', "coal"));
+
+        //Enderpearl Block
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.ENDERPEARL_BLOCK.ordinal()),
+                "EE", "EE",
+                'E', Items.ender_pearl));
+        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Items.ender_pearl, 4),
+                TheMiscBlocks.ENDERPEARL_BLOCK.getOredictName()));
 
         //Stone Casing
         if(ConfigCrafting.STONE_CASING.isEnabled())
@@ -58,28 +116,28 @@ public class BlockCrafting{
                     'D', "gemDiamond",
                     'I', "ingotIron",
                     'O', TheMiscItems.COIL.getOredictName(),
-                    'C', Items.nether_star));
+                    'C', TheMiscBlocks.STONE_CASING.getOredictName()));
 
         //Solar Panel
-        /*if(ConfigCrafting.SOLAR_PANEL.isEnabled())
+        if(ConfigCrafting.SOLAR_PANEL.isEnabled())
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockFurnaceSolar),
                     "IQI", "CDC", "IBI",
                     'D', "blockDiamond",
                     'I', "ingotIron",
                     'Q', TheMiscBlocks.STONE_CASING.getOredictName(),
                     'C', TheMiscItems.COIL_ADVANCED.getOredictName(),
-                    'B', new ItemStack(Blocks.iron_bars)));*/
+                    'B', new ItemStack(Blocks.iron_bars)));
 
         //Heat Collector
-        /*if(ConfigCrafting.HEAT_COLLECTOR.isEnabled())
+        if(ConfigCrafting.HEAT_COLLECTOR.isEnabled())
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockHeatCollector),
                     "BRB", "CDC", "BQB",
-                    'D', "blockDiamond",
+                    'D', "gemDiamond",
                     'R', new ItemStack(Items.repeater),
                     'Q', TheMiscBlocks.STONE_CASING.getOredictName(),
                     'L', new ItemStack(Items.lava_bucket),
                     'C', TheMiscItems.COIL_ADVANCED.getOredictName(),
-                    'B', new ItemStack(Blocks.iron_bars)));*/
+                    'B', new ItemStack(Blocks.iron_bars)));
 
         //Quartz Pillar
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.QUARTZ_PILLAR.ordinal()),
@@ -158,7 +216,7 @@ public class BlockCrafting{
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockGreenhouseGlass),
                     "GSG", "SDS", "GSG",
                     'G', "blockGlass",
-                    'D', "gemDiamond",
+                    'D', "blockDiamond",
                     'S', "treeSapling"));
 
         //Placer

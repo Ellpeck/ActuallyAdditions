@@ -41,10 +41,6 @@ public class GrinderRecipes{
         }
     }
 
-    public void registerRecipe(String input, String outputOne){
-        this.registerRecipe(input, outputOne, "", 0, 1);
-    }
-
     public void registerRecipe(ItemStack input, ItemStack outputOne){
         this.registerRecipe(input, outputOne, null, 0);
     }
@@ -78,6 +74,8 @@ public class GrinderRecipes{
                     break;
                 }
             }
+
+            if(containsInput && containsOutput) break;
         }
         return containsInput && containsOutput;
     }

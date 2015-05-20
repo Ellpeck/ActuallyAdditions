@@ -3,6 +3,10 @@
     -Doesn't use Levels
     -Needs Quartz and Diamond Blocks instead of Bookcases around
 
+-Chestie
+    -Follows you around
+    -Has an Inventory, a Crafting Table and a Furnace
+
 -Instant Teleport Device
     -Teleports Players to where they look (Much like the Bukkit Compass)
 
@@ -16,10 +20,6 @@
     -Has a Filter
     -Destroys excess Items (also determined by a Filter)
     -Gets emptied into Chest on Right-Click
-
--Rice
-    -Gets planted in the Water
-    -Used to make Rice Flour and Rice Bread
 
 -Auto-Crafting Item
     -Has a Recipe saved
@@ -57,7 +57,30 @@
 -File Jukebox
     -Plays Sound Files put into your Minecraft Folder
 
--RF Implementation
-    -Power Acceptor Block that powers Machines
-    -Machines still don't accept RF themselves!
-    -Solar Panel & Heat Collector produce RF
+-Oil Plant
+    -Used to make Oil (For use with other mods' machines)
+
+-Pharmacy Plants
+    -Give you different effects
+
+-Multi-Block Ore Factory
+    -Fluids and things higher Multiplying Chance (x2, x3..)
+    -Speed Upgrades etc.
+
+-Advanced Redstone Transmitter
+    -You can mark an area
+    -On Activation, all blocks in the area get a Signal
+
+-Lava Factory
+    -2x3 Multi Block
+    -Requires Energy
+    -Produces Lava from Cobblestone
+    -Has Upgrade Slots
+
+-Phantom Chest
+    -Is bound to Inventory on Right-Click
+    -Allows you to open the bound Inventory when placed down
+    -Only accessible with Pipes etc.
+    -ISided like the bound Block
+    -Range of 10, Range Upgrade adds 15 Range
+    -Nether Star allows direct GUI Access and adds 50 Range

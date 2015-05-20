@@ -31,6 +31,7 @@ public class ItemHairyBall extends Item implements INameableItem{
                 player.worldObj.spawnEntityInWorld(entityItem);
             }
             stack.stackSize--;
+            world.playSoundAtEntity(player, "random.pop", 0.2F, new Random().nextFloat() * 0.1F + 0.9F);
         }
         return stack;
     }

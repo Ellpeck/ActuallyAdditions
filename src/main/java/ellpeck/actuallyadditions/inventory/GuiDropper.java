@@ -26,7 +26,7 @@ public class GuiDropper extends GuiContainer{
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y){
-        AssetUtil.displayNameAndInventoryString(this.fontRendererObj, xSize, 93-5, -10, this.dropper.getInventoryName());
+        AssetUtil.displayNameString(this.fontRendererObj, xSize, -10, this.dropper.getInventoryName());
     }
 
     @Override

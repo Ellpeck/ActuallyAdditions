@@ -28,7 +28,11 @@ public class ItemUtil{
     }
 
     public static void register(Item item){
-        item.setCreativeTab(CreativeTab.instance);
+        register(item, true);
+    }
+
+    public static void register(Item item, boolean addTab){
+        if(addTab) item.setCreativeTab(CreativeTab.instance);
         item.setUnlocalizedName(createUnlocalizedName(item));
         GameRegistry.registerItem(item, ((INameableItem)item).getName());
         if(!((INameableItem)item).getOredictName().isEmpty()) OreDictionary.registerOre(((INameableItem)item).getOredictName(), new ItemStack(item, 1, Util.WILDCARD));

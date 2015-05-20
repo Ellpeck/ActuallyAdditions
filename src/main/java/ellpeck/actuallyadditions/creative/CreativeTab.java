@@ -28,14 +28,16 @@ public class CreativeTab extends CreativeTabs{
 
         this.addBlock(InitBlocks.blockInputter);
         this.addBlock(InitBlocks.blockInputterAdvanced);
+        this.addBlock(InitBlocks.blockPhantomface);
         this.addBlock(InitBlocks.blockGreenhouseGlass);
         this.addBlock(InitBlocks.blockGrinder);
         this.addBlock(InitBlocks.blockGrinderDouble);
         this.addBlock(InitBlocks.blockFurnaceDouble);
 
-        //TODO Re-add
-        //this.addBlock(InitBlocks.blockFurnaceSolar);
-        //this.addBlock(InitBlocks.blockHeatCollector);
+        this.addBlock(InitBlocks.blockFurnaceSolar);
+        this.addBlock(InitBlocks.blockHeatCollector);
+        this.addBlock(InitBlocks.blockCoalGenerator);
+        this.addBlock(InitBlocks.blockOilGenerator);
         this.addBlock(InitBlocks.blockItemRepairer);
         this.addBlock(InitBlocks.blockFishingNet);
         this.addBlock(InitBlocks.blockBreaker);
@@ -46,10 +48,18 @@ public class CreativeTab extends CreativeTabs{
         this.addBlock(InitBlocks.blockFeeder);
         this.addBlock(InitBlocks.blockCompost);
         this.addBlock(InitBlocks.blockGiantChest);
+        this.addBlock(InitBlocks.blockCanolaPress);
+        this.addBlock(InitBlocks.blockFermentingBarrel);
 
+        this.addItem(InitItems.itemPhantomConnector);
+        this.addItem(InitItems.itemBucketCanolaOil);
+        this.addItem(InitItems.itemBucketOil);
+
+        this.addItem(InitItems.itemRiceSeed);
+        this.addItem(InitItems.itemCanolaSeed);
         this.addItem(InitItems.itemHairyBall);
-        this.addItem(InitItems.itemSpeedUpgrade);
         this.addItem(InitItems.itemMisc);
+        this.addItem(InitItems.itemResonantRice);
         this.addItem(InitItems.itemFertilizer);
         this.addItem(InitItems.itemFoods);
         this.addItem(InitItems.itemKnife);

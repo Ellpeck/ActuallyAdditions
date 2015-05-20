@@ -85,6 +85,7 @@ public class BlockHeatCollector extends BlockContainerBase implements INameableI
         @SideOnly(Side.CLIENT)
         public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld) {
             BlockUtil.addInformation(theBlock, list, 3, "");
+            BlockUtil.addPowerProductionInfo(list, TileEntityHeatCollector.energyProducedPerTick);
         }
 
         @Override

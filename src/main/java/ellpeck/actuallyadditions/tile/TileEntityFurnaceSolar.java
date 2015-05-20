@@ -1,44 +1,67 @@
 package ellpeck.actuallyadditions.tile;
 
-public class TileEntityFurnaceSolar extends TileEntityBase{
+import cofh.api.energy.EnergyStorage;
+import cofh.api.energy.IEnergyProvider;
+import ellpeck.actuallyadditions.config.values.ConfigIntValues;
+import ellpeck.actuallyadditions.util.WorldUtil;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.common.util.ForgeDirection;
+
+public class TileEntityFurnaceSolar extends TileEntityBase implements IEnergyProvider{
 
     @Override
-    public boolean canUpdate(){
-        return false;
+    public int extractEnergy(ForgeDirection from, int maxExtract, boolean simulate){
+        return this.storage.extractEnergy(maxExtract, simulate);
     }
 
-    //TODO Reimplement
+    @Override
+    public int getEnergyStored(ForgeDirection from){
+        return this.storage.getEnergyStored();
+    }
 
-    /*@Override
+    @Override
+    public int getMaxEnergyStored(ForgeDirection from){
+        return this.storage.getMaxEnergyStored();
+    }
+
+    @Override
+    public boolean canConnectEnergy(ForgeDirection from){
+        return from != ForgeDirection.UP;
+    }
+
+    public EnergyStorage storage = new EnergyStorage(30000, energyProducedPerTick+50);
+
+    public static int energyProducedPerTick = ConfigIntValues.FURNACE_SOLAR_ENERGY_PRODUCED.getValue();
+
+    @Override
     public void updateEntity(){
         if(!worldObj.isRemote){
             if(worldObj.canBlockSeeTheSky(xCoord, yCoord, zCoord) && worldObj.isDaytime()){
-                TileEntity tileBelow = WorldUtil.getTileEntityFromSide(1, worldObj, xCoord, yCoord, zCoord);
+                if(energyProducedPerTick <= this.getMaxEnergyStored(ForgeDirection.UNKNOWN)-this.getEnergyStored(ForgeDirection.UNKNOWN)){
+                    this.storage.receiveEnergy(energyProducedPerTick, false);
+                    this.markDirty();
+                }
+            }
 
-                givePowerTo(tileBelow);
+            if(this.getEnergyStored(ForgeDirection.UNKNOWN) > 0){
+                WorldUtil.pushEnergy(worldObj, xCoord, yCoord, zCoord, ForgeDirection.DOWN, storage);
+                WorldUtil.pushEnergy(worldObj, xCoord, yCoord, zCoord, ForgeDirection.NORTH, storage);
+                WorldUtil.pushEnergy(worldObj, xCoord, yCoord, zCoord, ForgeDirection.EAST, storage);
+                WorldUtil.pushEnergy(worldObj, xCoord, yCoord, zCoord, ForgeDirection.SOUTH, storage);
+                WorldUtil.pushEnergy(worldObj, xCoord, yCoord, zCoord, ForgeDirection.WEST, storage);
             }
         }
     }
 
-    public static void givePowerTo(TileEntity tile){
-        if(tile instanceof IPowerAcceptor){
-            IPowerAcceptor acceptor = (IPowerAcceptor)tile;
-            int coalTimeBefore = acceptor.getItemPower();
-            acceptor.setItemPower(42);
-            acceptor.setPower(42);
-            if(coalTimeBefore == 0){
-                acceptor.setBlockMetadataToOn();
-            }
-            return;
-        }
-        if(tile instanceof TileEntityFurnace){
-            TileEntityFurnace furnaceBelow = (TileEntityFurnace)tile;
-            int burnTimeBefore = furnaceBelow.furnaceBurnTime;
-            furnaceBelow.furnaceBurnTime = 42;
-            furnaceBelow.currentItemBurnTime = 42;
-            if(burnTimeBefore == 0){
-                BlockFurnace.updateFurnaceBlockState(true, tile.getWorldObj(), furnaceBelow.xCoord, furnaceBelow.yCoord, furnaceBelow.zCoord);
-            }
-        }
-    }*/
+    @Override
+    public void writeToNBT(NBTTagCompound compound){
+        this.storage.writeToNBT(compound);
+        super.writeToNBT(compound);
+    }
+
+    @Override
+    public void readFromNBT(NBTTagCompound compound){
+        this.storage.readFromNBT(compound);
+        super.readFromNBT(compound);
+    }
 }

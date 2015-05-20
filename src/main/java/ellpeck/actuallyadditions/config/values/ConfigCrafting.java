@@ -68,7 +68,19 @@ public enum ConfigCrafting{
     KNIFE_BLADE("Knife Blade", ConfigCategories.ITEMS_CRAFTING),
 
     TOOL_EMERALD("Emerald Tools", ConfigCategories.ITEMS_CRAFTING),
-    TOOL_OBSIDIAN("Obsidian Tools", ConfigCategories.ITEMS_CRAFTING);
+    TOOL_OBSIDIAN("Obsidian Tools", ConfigCategories.ITEMS_CRAFTING),
+    RICE_BREAD("Rice Bread", ConfigCategories.FOOD_CRAFTING),
+    RICE_DOUGH("Rice Dough", ConfigCategories.FOOD_CRAFTING),
+
+    RICE_GADGETS("Rice Gadgets", ConfigCategories.ITEMS_CRAFTING),
+    RESONANT_RICE("Resonant Rice", ConfigCategories.ITEMS_CRAFTING),
+
+    CANOLA_PRESS("Canola Press", ConfigCategories.BLOCKS_CRAFTING),
+    FERMENTING_BARREL("Fermenting Barrel", ConfigCategories.BLOCKS_CRAFTING),
+    COAL_GENERATOR("Coal Generator", ConfigCategories.BLOCKS_CRAFTING),
+    OIL_GENERATOR("Oil Generator", ConfigCategories.BLOCKS_CRAFTING),
+    PHANTOMFACE("Phantomface", ConfigCategories.BLOCKS_CRAFTING),
+    PHANTOM_CONNECTOR("Phantom Connector", ConfigCategories.ITEMS_CRAFTING);
 
     public final String name;
     public final String category;
@@ -87,5 +99,4 @@ public enum ConfigCrafting{
     public boolean isEnabled(){
         return ConfigValues.craftingValues[this.ordinal()];
     }
-
 }

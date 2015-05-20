@@ -27,7 +27,7 @@ public class GuiGiantChest extends GuiContainer{
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y){
-        AssetUtil.displayNameAndInventoryString(this.fontRendererObj, xSize, 172-5, -10, this.chest.getInventoryName());
+        AssetUtil.displayNameString(this.fontRendererObj, xSize, -10, this.chest.getInventoryName());
     }
 
     @Override

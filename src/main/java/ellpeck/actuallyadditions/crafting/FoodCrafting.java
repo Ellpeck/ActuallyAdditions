@@ -19,6 +19,11 @@ public class FoodCrafting{
 
         String knifeStack = ((INameableItem)InitItems.itemKnife).getOredictName();
 
+        //Rice Bread
+        if(ConfigCrafting.RICE_BREAD.isEnabled())
+            GameRegistry.addSmelting(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.RICE_DOUGH.ordinal()),
+                    new ItemStack(InitItems.itemFoods, 1, TheFoods.RICE_BREAD.ordinal()), 1F);
+
         //Baguette
         if(ConfigCrafting.BAGUETTE.isEnabled())
             GameRegistry.addSmelting(new ItemStack(InitItems.itemMisc, 1,

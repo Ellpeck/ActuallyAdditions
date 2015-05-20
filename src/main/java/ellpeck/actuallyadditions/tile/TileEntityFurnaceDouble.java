@@ -1,24 +1,25 @@
 package ellpeck.actuallyadditions.tile;
 
+import cofh.api.energy.EnergyStorage;
+import cofh.api.energy.IEnergyReceiver;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntityFurnace;
+import net.minecraftforge.common.util.ForgeDirection;
 
-public class TileEntityFurnaceDouble extends TileEntityUpgradable implements IPowerAcceptor{
+public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements IEnergyReceiver{
 
-    public static final int SLOT_COAL = 0;
-    public static final int SLOT_INPUT_1 = 1;
-    public static final int SLOT_OUTPUT_1 = 2;
-    public static final int SLOT_INPUT_2 = 3;
-    public static final int SLOT_OUTPUT_2 = 4;
+    public static final int SLOT_INPUT_1 = 0;
+    public static final int SLOT_OUTPUT_1 = 1;
+    public static final int SLOT_INPUT_2 = 2;
+    public static final int SLOT_OUTPUT_2 = 3;
 
-    public int coalTime;
-    public int coalTimeLeft;
+    public EnergyStorage storage = new EnergyStorage(30000, energyUsePerTick+30);
+
+    public static int energyUsePerTick = ConfigIntValues.FURNACE_ENERGY_USED.getValue();
 
     public int maxBurnTime = this.getStandardSpeed();
 
@@ -26,33 +27,18 @@ public class TileEntityFurnaceDouble extends TileEntityUpgradable implements IPo
     public int secondSmeltTime;
 
     public TileEntityFurnaceDouble(){
-        super(6, "furnaceDouble");
-        this.speedUpgradeSlot = 5;
+        super(4, "furnaceDouble");
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public void updateEntity(){
         if(!worldObj.isRemote){
-            this.speedUp();
-
-            boolean theFlag = this.coalTimeLeft > 0;
-
-            if(this.coalTimeLeft > 0) this.coalTimeLeft -= 1+this.burnTimeAmplifier;
 
             boolean canSmeltOnFirst = this.canSmeltOn(SLOT_INPUT_1, SLOT_OUTPUT_1);
             boolean canSmeltOnSecond = this.canSmeltOn(SLOT_INPUT_2, SLOT_OUTPUT_2);
 
-            if((canSmeltOnFirst || canSmeltOnSecond) && this.coalTimeLeft <= 0 && this.slots[SLOT_COAL] != null){
-                this.coalTime = TileEntityFurnace.getItemBurnTime(this.slots[SLOT_COAL]);
-                this.coalTimeLeft = this.coalTime;
-                if(this.coalTime > 0){
-                    this.slots[SLOT_COAL].stackSize--;
-                    if(this.slots[SLOT_COAL].stackSize <= 0) this.slots[SLOT_COAL] = this.slots[SLOT_COAL].getItem().getContainerItem(this.slots[SLOT_COAL]);
-                }
-            }
-
-            if(this.coalTimeLeft > 0){
+            if(this.storage.getEnergyStored() >= energyUsePerTick){
                 if(canSmeltOnFirst){
                     this.firstSmeltTime++;
                     if(this.firstSmeltTime >= maxBurnTime){
@@ -74,14 +60,9 @@ public class TileEntityFurnaceDouble extends TileEntityUpgradable implements IPo
             else{
                 this.firstSmeltTime = 0;
                 this.secondSmeltTime = 0;
-                this.coalTime = 0;
             }
 
-            if(theFlag != this.coalTimeLeft > 0){
-                int metaBefore = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
-                worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, (this.coalTimeLeft > 0 ? metaBefore+4 : metaBefore-4), 2);
-                this.markDirty();
-            }
+            if(this.firstSmeltTime > 0 || this.secondSmeltTime > 0) this.storage.extractEnergy(energyUsePerTick, false);
         }
 
     }
@@ -112,24 +93,22 @@ public class TileEntityFurnaceDouble extends TileEntityUpgradable implements IPo
     @Override
     public void writeToNBT(NBTTagCompound compound){
         super.writeToNBT(compound);
-        compound.setInteger("CoalTime", this.coalTime);
-        compound.setInteger("CoalTimeLeft", this.coalTimeLeft);
         compound.setInteger("FirstSmeltTime", this.firstSmeltTime);
         compound.setInteger("SecondSmeltTime", this.secondSmeltTime);
+        this.storage.writeToNBT(compound);
     }
 
     @Override
     public void readFromNBT(NBTTagCompound compound){
         super.readFromNBT(compound);
-        this.coalTime = compound.getInteger("CoalTime");
-        this.coalTimeLeft = compound.getInteger("CoalTimeLeft");
         this.firstSmeltTime = compound.getInteger("FirstSmeltTime");
         this.secondSmeltTime = compound.getInteger("SecondSmeltTime");
+        this.storage.readFromNBT(compound);
     }
 
     @SideOnly(Side.CLIENT)
-    public int getCoalTimeToScale(int i){
-        return this.coalTimeLeft * i / this.coalTime;
+    public int getEnergyScaled(int i){
+        return this.getEnergyStored(ForgeDirection.UNKNOWN) * i / this.getMaxEnergyStored(ForgeDirection.UNKNOWN);
     }
 
     @SideOnly(Side.CLIENT)
@@ -144,7 +123,7 @@ public class TileEntityFurnaceDouble extends TileEntityUpgradable implements IPo
 
     @Override
     public boolean isItemValidForSlot(int i, ItemStack stack){
-        return i == SLOT_COAL && TileEntityFurnace.getItemBurnTime(stack) > 0 || (i == SLOT_INPUT_1 || i == SLOT_INPUT_2) && FurnaceRecipes.smelting().getSmeltingResult(stack) != null;
+        return (i == SLOT_INPUT_1 || i == SLOT_INPUT_2) && FurnaceRecipes.smelting().getSmeltingResult(stack) != null;
     }
 
     @Override
@@ -154,37 +133,30 @@ public class TileEntityFurnaceDouble extends TileEntityUpgradable implements IPo
 
     @Override
     public boolean canExtractItem(int slot, ItemStack stack, int side){
-        return slot == SLOT_OUTPUT_1 || slot == SLOT_OUTPUT_2 || (slot == SLOT_COAL && stack.getItem() == Items.bucket);
+        return slot == SLOT_OUTPUT_1 || slot == SLOT_OUTPUT_2;
     }
 
-    @Override
-    public void setBlockMetadataToOn(){
-        int metaBefore = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
-        worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, metaBefore+4, 2);
-    }
-
-    @Override
-    public void setPower(int power){
-        this.coalTimeLeft = power;
-    }
-
-    @Override
-    public void setItemPower(int power){
-        this.coalTime = power;
-    }
-
-    @Override
-    public int getItemPower(){
-        return this.coalTime;
-    }
-
-    @Override
     public int getStandardSpeed(){
         return ConfigIntValues.FURNACE_DOUBLE_SMELT_TIME.getValue();
     }
 
     @Override
-    public void setSpeed(int newSpeed){
-        this.maxBurnTime = newSpeed;
+    public int receiveEnergy(ForgeDirection from, int maxReceive, boolean simulate){
+        return this.storage.receiveEnergy(maxReceive, simulate);
+    }
+
+    @Override
+    public int getEnergyStored(ForgeDirection from){
+        return this.storage.getEnergyStored();
+    }
+
+    @Override
+    public int getMaxEnergyStored(ForgeDirection from){
+        return this.storage.getMaxEnergyStored();
+    }
+
+    @Override
+    public boolean canConnectEnergy(ForgeDirection from){
+        return true;
     }
 }

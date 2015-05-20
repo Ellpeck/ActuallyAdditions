@@ -5,10 +5,7 @@ import ellpeck.actuallyadditions.blocks.InitBlocks;
 import ellpeck.actuallyadditions.blocks.metalists.TheMiscBlocks;
 import ellpeck.actuallyadditions.config.values.ConfigCrafting;
 import ellpeck.actuallyadditions.items.InitItems;
-import ellpeck.actuallyadditions.items.metalists.TheDusts;
-import ellpeck.actuallyadditions.items.metalists.TheMiscItems;
-import ellpeck.actuallyadditions.items.metalists.ThePotionRings;
-import ellpeck.actuallyadditions.items.metalists.TheSpecialDrops;
+import ellpeck.actuallyadditions.items.metalists.*;
 import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -21,6 +18,21 @@ import net.minecraftforge.oredict.ShapelessOreRecipe;
 public class ItemCrafting{
 
     public static void init(){
+
+        //Rice Stuff
+        if(ConfigCrafting.RICE_GADGETS.isEnabled()){
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.paper, 3),
+                    "RRR",
+                    'R', TheFoods.RICE.getOredictName()));
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemMisc, 4, TheMiscItems.RICE_SLIME.ordinal()),
+                    " R ", "RBR", " R ",
+                    'R', TheMiscItems.RICE_DOUGH.getOredictName(),
+                    'B', Items.water_bucket));
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemMisc, 4, TheMiscItems.RICE_SLIME.ordinal()),
+                    " R ", "RBR", " R ",
+                    'R', TheMiscItems.RICE_DOUGH.getOredictName(),
+                    'B', new ItemStack(Items.potionitem)));
+        }
 
        //Leaf Blower
         if(ConfigCrafting.LEAF_BLOWER.isEnabled())
@@ -37,6 +49,11 @@ public class ItemCrafting{
                     " R ", "RIR", " R ",
                     'I', "ingotIron",
                     'R', "dustRedstone"));
+
+        //Resonant Rice
+        if(ConfigCrafting.RESONANT_RICE.isEnabled())
+            GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemResonantRice),
+                    TheFoods.RICE.getOredictName(), "nuggetEnderium", Items.gunpowder));
 
         //Advanced Coil
         if(ConfigCrafting.ADV_COIL.isEnabled())
@@ -64,6 +81,14 @@ public class ItemCrafting{
                     'P', new ItemStack(Blocks.piston),
                     'C', TheMiscItems.COIL_ADVANCED.getOredictName()));
 
+        //Phantom Connector
+        if(ConfigCrafting.PHANTOM_CONNECTOR.isEnabled())
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemPhantomConnector),
+                    "YE", "EY", "S ",
+                    'Y', Items.ender_eye,
+                    'E', Items.ender_pearl,
+                    'S', "stickWood"));
+
         //Quartz
         GameRegistry.addSmelting(new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.ORE_QUARTZ.ordinal()),
                 new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal()), 1F);
@@ -81,13 +106,19 @@ public class ItemCrafting{
                     new ItemStack(Items.sign),
                     new ItemStack(Items.slime_ball));
 
-        //SpeedUpgrade
-        if(ConfigCrafting.SPEED_UPGRADE.isEnabled())
-            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemSpeedUpgrade, 2),
-                    "RGR", "GUG", "RGR",
-                    'U', TheMiscItems.COIL.getOredictName(),
-                    'R', "dustRedstone",
-                    'G', "ingotGold"));
+        //Tiny Coal
+        GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemMisc, 8, TheMiscItems.TINY_COAL.ordinal()),
+                new ItemStack(Items.coal));
+        GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemMisc, 8, TheMiscItems.TINY_CHAR.ordinal()),
+                new ItemStack(Items.coal, 1, 1));
+
+        //Rice Seeds
+        GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemRiceSeed),
+                new ItemStack(InitItems.itemFoods, 1, TheFoods.RICE.ordinal()));
+
+        //Canola Seeds
+        GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemCanolaSeed),
+                new ItemStack(InitItems.itemMisc, 1, TheMiscItems.CANOLA.ordinal()));
 
         //Mashed Food
         if(ConfigCrafting.MASHED_FOOD.isEnabled())
@@ -139,14 +170,14 @@ public class ItemCrafting{
 
     public static void addRingRecipeWithStack(ItemStack mainStack, int meta){
         GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemPotionRing, 1, meta), mainStack, mainStack, mainStack, mainStack, new ItemStack(Blocks.diamond_block), new ItemStack(Items.nether_wart), new ItemStack(Items.potionitem), new ItemStack(InitItems.itemMisc, 1, TheMiscItems.RING.ordinal()));
-        GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemPotionRingAdvanced, 1, meta), new ItemStack(InitItems.itemPotionRing, 1, meta), new ItemStack(Items.nether_star));
+        GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemPotionRingAdvanced, 1, meta), new ItemStack(InitItems.itemPotionRing, 1, meta), new ItemStack(Items.nether_star), new ItemStack(Items.nether_star));
     }
 
     public static void initMashedFoodRecipes(){
         for(Object nextIterator : Item.itemRegistry){
             if(nextIterator instanceof ItemFood){
                 ItemStack ingredient = new ItemStack((Item)nextIterator, 1, Util.WILDCARD);
-                GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemMisc, 8, TheMiscItems.MASHED_FOOD.ordinal()), ingredient, ingredient, ingredient, ingredient, new ItemStack(InitItems.itemKnife, 1, Util.WILDCARD));
+                GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemMisc, 12, TheMiscItems.MASHED_FOOD.ordinal()), ingredient, ingredient, ingredient, ingredient, new ItemStack(InitItems.itemKnife, 1, Util.WILDCARD));
             }
         }
     }

@@ -3,6 +3,7 @@ package ellpeck.actuallyadditions.crafting;
 import cpw.mods.fml.common.registry.GameRegistry;
 import ellpeck.actuallyadditions.config.values.ConfigCrafting;
 import ellpeck.actuallyadditions.items.InitItems;
+import ellpeck.actuallyadditions.items.metalists.TheFoods;
 import ellpeck.actuallyadditions.items.metalists.TheMiscItems;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -17,6 +18,11 @@ public class MiscCrafting{
         if(ConfigCrafting.DOUGH.isEnabled())
             GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemMisc, 2, TheMiscItems.DOUGH.ordinal()),
                     "cropWheat", "cropWheat"));
+
+        //Rice Dough
+        if(ConfigCrafting.RICE_DOUGH.isEnabled())
+            GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemMisc, 2, TheMiscItems.RICE_DOUGH.ordinal()),
+                    TheFoods.RICE.getOredictName(), TheFoods.RICE.getOredictName()));
 
         //Paper Cone
         if(ConfigCrafting.PAPER_CONE.isEnabled())

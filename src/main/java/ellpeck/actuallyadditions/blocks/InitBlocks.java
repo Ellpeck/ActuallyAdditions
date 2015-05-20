@@ -3,6 +3,10 @@ package ellpeck.actuallyadditions.blocks;
 import ellpeck.actuallyadditions.util.BlockUtil;
 import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
+import net.minecraft.item.EnumRarity;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
 
 public class InitBlocks{
 
@@ -26,8 +30,55 @@ public class InitBlocks{
     public static Block blockPlacer;
     public static Block blockDropper;
 
+    public static Block blockRice;
+    public static Block blockCanola;
+
+    public static Fluid fluidCanolaOil;
+    public static Block blockCanolaOil;
+    public static Fluid fluidOil;
+    public static Block blockOil;
+
+    public static Block blockCanolaPress;
+    public static Block blockFermentingBarrel;
+
+    public static Block blockCoalGenerator;
+    public static Block blockOilGenerator;
+
+    public static Block blockPhantomface;
+
     public static void init(){
         Util.logInfo("Initializing Blocks...");
+
+        fluidCanolaOil = new FluidAA("canolaOil").setDensity(1200).setViscosity(1500).setTemperature(300).setRarity(EnumRarity.uncommon);
+        FluidRegistry.registerFluid(fluidCanolaOil);
+        blockCanolaOil = new BlockFluidFlowing(fluidCanolaOil, Material.water, "blockCanolaOil");
+        BlockUtil.register(blockCanolaOil, BlockFluidFlowing.TheItemBlock.class, false);
+
+        fluidOil = new FluidAA("oil").setDensity(1200).setViscosity(1500).setTemperature(300).setRarity(EnumRarity.uncommon);
+        FluidRegistry.registerFluid(fluidOil);
+        blockOil = new BlockFluidFlowing(fluidOil, Material.water, "blockOil");
+        BlockUtil.register(blockOil, BlockFluidFlowing.TheItemBlock.class, false);
+
+        blockCanolaPress = new BlockCanolaPress();
+        BlockUtil.register(blockCanolaPress, BlockCanolaPress.TheItemBlock.class);
+
+        blockPhantomface = new BlockPhantomface();
+        BlockUtil.register(blockPhantomface, BlockPhantomface.TheItemBlock.class);
+
+        blockCoalGenerator = new BlockCoalGenerator();
+        BlockUtil.register(blockCoalGenerator, BlockCoalGenerator.TheItemBlock.class);
+
+        blockOilGenerator = new BlockOilGenerator();
+        BlockUtil.register(blockOilGenerator, BlockOilGenerator.TheItemBlock.class);
+
+        blockFermentingBarrel = new BlockFermentingBarrel();
+        BlockUtil.register(blockFermentingBarrel, BlockFermentingBarrel.TheItemBlock.class);
+
+        blockRice = new BlockPlant("blockRice", 6);
+        BlockUtil.register(blockRice, BlockPlant.TheItemBlock.class, false);
+
+        blockCanola = new BlockPlant("blockCanola", 4);
+        BlockUtil.register(blockCanola, BlockPlant.TheItemBlock.class, false);
 
         blockCompost = new BlockCompost();
         BlockUtil.register(blockCompost, BlockCompost.TheItemBlock.class);

@@ -10,7 +10,9 @@ public enum TheMiscBlocks implements INameableItem{
     QUARTZ("BlackQuartz", EnumRarity.rare, "blockQuartzBlack"),
     ORE_QUARTZ("OreBlackQuartz", EnumRarity.epic, "oreQuartzBlack"),
     WOOD_CASING("WoodCasing", EnumRarity.common, "blockCasingWood"),
-    STONE_CASING("StoneCasing", EnumRarity.uncommon, "blockCasingStone");
+    STONE_CASING("StoneCasing", EnumRarity.uncommon, "blockCasingStone"),
+    CHARCOAL_BLOCK("Charcoal", EnumRarity.common, "blockCharcoal"),
+    ENDERPEARL_BLOCK("Enderpearl", EnumRarity.rare, "blockEnderpearl");
 
     public final String name;
     public final String oredictName;

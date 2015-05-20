@@ -27,6 +27,11 @@ public class TileEntityBase extends TileEntity{
         GameRegistry.registerTileEntity(TileEntityInputter.TileEntityInputterAdvanced.class, ModUtil.MOD_ID_LOWER + ":tileEntityInputterAdvanced");
         GameRegistry.registerTileEntity(TileEntityBreaker.TileEntityPlacer.class, ModUtil.MOD_ID_LOWER + ":tileEntityPlacer");
         GameRegistry.registerTileEntity(TileEntityGrinder.TileEntityGrinderDouble.class, ModUtil.MOD_ID_LOWER + ":tileEntityGrinderDouble");
+        GameRegistry.registerTileEntity(TileEntityCanolaPress.class, ModUtil.MOD_ID_LOWER + ":tileEntityCanolaPress");
+        GameRegistry.registerTileEntity(TileEntityFermentingBarrel.class, ModUtil.MOD_ID_LOWER + ":tileEntityFermentingBarrel");
+        GameRegistry.registerTileEntity(TileEntityOilGenerator.class, ModUtil.MOD_ID_LOWER + ":tileEntityOilGenerator");
+        GameRegistry.registerTileEntity(TileEntityCoalGenerator.class, ModUtil.MOD_ID_LOWER + ":tileEntityCoalGenerator");
+        GameRegistry.registerTileEntity(TileEntityPhantomface.class, ModUtil.MOD_ID_LOWER + ":tileEntityPhantomface");
     }
 
     @Override

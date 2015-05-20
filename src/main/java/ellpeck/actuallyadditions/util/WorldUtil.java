@@ -1,5 +1,7 @@
 package ellpeck.actuallyadditions.util;
 
+import cofh.api.energy.EnergyStorage;
+import cofh.api.energy.IEnergyReceiver;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -7,6 +9,8 @@ import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.fluids.FluidTank;
+import net.minecraftforge.fluids.IFluidHandler;
 
 public class WorldUtil{
 
@@ -19,6 +23,28 @@ public class WorldUtil{
         ChunkCoordinates c = getCoordsFromSide(side, x, y, z);
         if(c != null){
             world.setBlockToAir(c.posX, c.posY, c.posZ);
+        }
+    }
+
+    public static void pushEnergy(World world, int x, int y, int z, ForgeDirection side, EnergyStorage storage){
+        TileEntity tile = getTileEntityFromSide(side, world, x, y, z);
+        if(tile != null && tile instanceof IEnergyReceiver){
+            if(((IEnergyReceiver)tile).canConnectEnergy(side.getOpposite())){
+                int receive = ((IEnergyReceiver)tile).receiveEnergy(side.getOpposite(), Math.min(storage.getMaxExtract(), storage.getEnergyStored()), false);
+                storage.extractEnergy(receive, false);
+                world.markBlockForUpdate(x+side.offsetX, y+side.offsetY, z+side.offsetZ);
+            }
+        }
+    }
+
+    public static void pushFluid(World world, int x, int y, int z, ForgeDirection side, FluidTank tank){
+        TileEntity tile = getTileEntityFromSide(side, world, x, y, z);
+        if(tile != null && tank.getFluid() != null && tile instanceof IFluidHandler){
+            if(((IFluidHandler)tile).canFill(side.getOpposite(), tank.getFluid().getFluid())){
+                int receive = ((IFluidHandler)tile).fill(side.getOpposite(), tank.getFluid(), true);
+                tank.drain(receive, true);
+                world.markBlockForUpdate(x+side.offsetX, y+side.offsetY, z+side.offsetZ);
+            }
         }
     }
 

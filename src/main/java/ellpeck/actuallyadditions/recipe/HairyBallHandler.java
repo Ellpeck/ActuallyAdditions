@@ -46,10 +46,12 @@ public class HairyBallHandler{
     public static class Return extends WeightedRandom.Item{
 
         public ItemStack returnItem;
+        public ItemStack inputItem;
 
         public Return(ItemStack returnItem, int chance){
             super(chance);
             this.returnItem = returnItem;
+            this.inputItem = new ItemStack(InitItems.itemHairyBall);
         }
 
     }

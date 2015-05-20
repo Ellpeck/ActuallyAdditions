@@ -3,6 +3,7 @@ package ellpeck.actuallyadditions.blocks;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.ActuallyAdditions;
+import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.inventory.GuiHandler;
 import ellpeck.actuallyadditions.tile.TileEntityGrinder;
 import ellpeck.actuallyadditions.util.BlockUtil;
@@ -134,6 +135,7 @@ public class BlockGrinder extends BlockContainerBase implements INameableItem{
         @SideOnly(Side.CLIENT)
         public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld) {
             BlockUtil.addInformation(theBlock, list, ((BlockGrinder)theBlock).isDouble ? 3 : 4, "");
+            BlockUtil.addPowerUsageInfo(list, ((BlockGrinder)theBlock).isDouble ? ConfigIntValues.GRINDER_DOUBLE_ENERGY_USED.getValue() : ConfigIntValues.GRINDER_ENERGY_USED.getValue());
         }
 
         @Override

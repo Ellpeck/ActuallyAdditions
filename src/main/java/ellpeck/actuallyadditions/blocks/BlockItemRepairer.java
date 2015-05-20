@@ -122,6 +122,7 @@ public class BlockItemRepairer extends BlockContainerBase implements INameableIt
         @SideOnly(Side.CLIENT)
         public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld) {
             BlockUtil.addInformation(theBlock, list, 1, "");
+            BlockUtil.addPowerUsageInfo(list, TileEntityItemRepairer.energyUsePerTick);
         }
 
         @Override

@@ -17,9 +17,16 @@ public class NEIActuallyAdditionsConfig implements IConfigureNEI{
         API.registerRecipeHandler(crusherRecipeHandler);
         API.registerUsageHandler(crusherRecipeHandler);
 
-        //TODO Re-add
-        API.hideItem(new ItemStack(InitBlocks.blockHeatCollector));
-        API.hideItem(new ItemStack(InitBlocks.blockFurnaceSolar));
+        HairyBallRecipeHandler ballRecipeHandler = new HairyBallRecipeHandler();
+        API.registerRecipeHandler(ballRecipeHandler);
+        API.registerUsageHandler(ballRecipeHandler);
+
+        CompostRecipeHandler compostRecipeHandler = new CompostRecipeHandler();
+        API.registerRecipeHandler(compostRecipeHandler);
+        API.registerUsageHandler(compostRecipeHandler);
+
+        API.hideItem(new ItemStack(InitBlocks.blockRice));
+        API.hideItem(new ItemStack(InitBlocks.blockCanola));
     }
 
     @Override

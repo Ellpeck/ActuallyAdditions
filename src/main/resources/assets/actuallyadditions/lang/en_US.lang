@@ -1,6 +1,9 @@
 itemGroup.actuallyadditions=Actually Additions
 achievement.page.actuallyadditions=Actually Additions
 
+fluid.oil=Oil
+fluid.canolaOil=Canola Oil
+
 tile.actuallyadditions.blockCompost.name=Compost
 tile.actuallyadditions.blockMiscOreBlackQuartz.name=Black Quartz Ore
 tile.actuallyadditions.blockMiscBlackQuartz.name=Block of Black Quartz
@@ -12,13 +15,76 @@ tile.actuallyadditions.blockGrinder.name=Crusher
 tile.actuallyadditions.blockGrinderDouble.name=Double Crusher
 tile.actuallyadditions.blockFurnaceDouble.name=Double Furnace
 tile.actuallyadditions.blockFishingNet.name=Fishing Net
-tile.actuallyadditions.blockFurnaceSolar.name=Solar Panel [TEMPORARILY UNIMPLEMENTED]
-tile.actuallyadditions.blockHeatCollector.name=Heat Collector [TEMPORARILY UNIMPLEMENTED]
+tile.actuallyadditions.blockFurnaceSolar.name=Solar Panel
+tile.actuallyadditions.blockHeatCollector.name=Heat Collector
 tile.actuallyadditions.blockItemRepairer.name=Item Repairer
 
 tile.actuallyadditions.blockMiscWoodCasing.name=Wood Casing
 tile.actuallyadditions.blockMiscStoneCasing.name=Stone Casing
 tile.actuallyadditions.blockGreenhouseGlass.name=Greenhouse Glass
+
+tile.actuallyadditions.blockRice.name=Rice Plant
+tooltip.actuallyadditions.blockRice.desc=It's growing... kind of..
+item.actuallyadditions.itemFoodRice.name=Rice
+tooltip.actuallyadditions.itemFoodRice.desc=Used to make all kinds of useful stuff!
+item.actuallyadditions.itemMiscRiceDough.name=Rice Dough
+tooltip.actuallyadditions.itemMiscRiceDough.desc=It's Dough, but made from Rice
+item.actuallyadditions.itemFoodRiceBread.name=Rice Bread
+tooltip.actuallyadditions.itemFoodRiceBread.desc=It's like Bread, but ricey!
+item.actuallyadditions.itemRiceSeed.name=Rice Seeds
+tooltip.actuallyadditions.itemRiceSeed.desc=Grows on Water!
+
+item.actuallyadditions.itemMiscTinyCoal.name=Tiny Coal
+tooltip.actuallyadditions.itemMiscTinyCoal.desc=Crafted from Coal, smelts one Item
+item.actuallyadditions.itemMiscTinyCharcoal.name=Tiny Charcoal
+tooltip.actuallyadditions.itemMiscTinyCharcoal.desc=Crafted from Charcoal, smelts one Item
+tile.actuallyadditions.blockMiscCharcoal.name=Block of Charcoal
+tooltip.actuallyadditions.blockMiscCharcoal.desc=Crafted from Charcoal
+item.actuallyadditions.itemMiscRiceSlime.name=Rice Slimeball
+tooltip.actuallyadditions.itemMiscRiceSlime.desc=It's sticky... and smells kinda good...
+
+tile.actuallyadditions.blockCoalGenerator.name=Coal Generator
+tooltip.actuallyadditions.blockCoalGenerator.desc=Produces Energy from Coal and other flammable Materials
+
+item.actuallyadditions.itemBucketCanolaOil.name=Canola Oil Bucket
+tooltip.actuallyadditions.itemBucketCanolaOil.desc=A Bucket filled with Canola Oil
+item.actuallyadditions.itemBucketOil.name=Oil Bucket
+tooltip.actuallyadditions.itemBucketOil.desc=Made in a Fermenting Barrel from Canola Oil
+
+tile.actuallyadditions.blockPhantomface.name=Phantomface
+tooltip.actuallyadditions.blockPhantomface.desc.1=Like a Pipe, only Wireless! Connect me with a Phantom Connector!
+tooltip.actuallyadditions.blockPhantomface.desc.2=Input things into me to input into connected Blocks!
+
+item.actuallyadditions.itemPhantomConnector.name=Phantom Connector
+tooltip.actuallyadditions.itemPhantomConnector.desc.1=Connects a Phantom Face to any Inventory Block!
+tooltip.actuallyadditions.itemPhantomConnector.desc.2=Press Control to clear the stored TileEntity
+
+item.actuallyadditions.itemCanolaSeed.name=Canola Seeds
+tooltip.actuallyadditions.itemCanolaSeed.desc=Grows on Grass!
+item.actuallyadditions.itemMiscCanola.name=Canola
+tooltip.actuallyadditions.itemMiscCanola.desc=Used to make Oil in a Canola Press
+tile.actuallyadditions.blockCanola.name=Canola Plant
+tooltip.actuallyadditions.blockCanola.desc=It's growing... kind of..
+
+item.actuallyadditions.itemResonantRice.name=Resonant Rice
+tooltip.actuallyadditions.itemResonantRice.desc=Don't know what it does... maybe if you right-click it?
+tooltip.actuallyadditions.itemResonantRice.uncraftable.desc=Uncraftable because there's no Mod installed that adds Enderium :(
+
+tile.actuallyadditions.blockCanolaPress.name=Canola Press
+tooltip.actuallyadditions.blockCanolaPress.desc=Makes Canola Oil from Canola
+tile.actuallyadditions.blockFermentingBarrel.name=Fermenting Barrel
+tooltip.actuallyadditions.blockFermentingBarrel.desc=Ferments Canola Oil made in a Press to Canola
+
+tile.actuallyadditions.blockCanolaOil.name=Canola Oil
+tooltip.actuallyadditions.blockCanolaOil.desc=Oil made from Canola
+tile.actuallyadditions.blockOil.name=Oil
+tooltip.actuallyadditions.blockOil.desc=Can be used to power Machines
+
+tile.actuallyadditions.blockMiscEnderpearl.name=Block of Enderpearl
+tooltip.actuallyadditions.blockMiscEnderpearl.desc=It's a Block. Made of Pearls. Wow.
+
+tile.actuallyadditions.blockOilGenerator.name=Oil Generator
+tooltip.actuallyadditions.blockOilGenerator.desc=Generates Power from Oil
 
 tile.actuallyadditions.blockBreaker.name=Auto-Breaker
 tile.actuallyadditions.blockPlacer.name=Auto-Placer
@@ -41,6 +107,16 @@ tile.actuallyadditions.blockInputter.add.12.name=Energetic Solo Dancer
 tile.actuallyadditions.blockInputter.add.13.name=Efficient Sucking Dilettant
 tile.actuallyadditions.blockInputter.add.14.name=Extreme Sand Digger
 tile.actuallyadditions.blockInputter.add.15.name=MISSINGNO
+
+tooltip.actuallyadditions.phantom.connected.desc=<TileEntity connected to this Phantomface!>
+tooltip.actuallyadditions.phantom.stored.desc=<TileEntity stored to this Connector!>
+tooltip.actuallyadditions.phantom.noBound.desc=The Connector has no Information stored!
+tooltip.actuallyadditions.phantom.notInventory.desc=This Block is not an Inventory!
+tooltip.actuallyadditions.phantom.inWorld.desc=In World
+tooltip.actuallyadditions.phantom.boundTo.desc=Bound to
+tooltip.actuallyadditions.phantom.connectedBlock.desc=Connected to TileEntity at %s, %s, %s
+tooltip.actuallyadditions.phantom.connectedNoRange.desc=Connected to TileEntity at %s, %s, %s but it is not in Range!
+tooltip.actuallyadditions.phantom.notConnected.desc=This Phantomface isn't connected to anything!
 
 item.actuallyadditions.itemMiscMashedFood.name=Mashed Food
 item.actuallyadditions.itemFertilizer.name=Fertilizer
@@ -164,8 +240,8 @@ tooltip.actuallyadditions.blockInputter.desc.5=-Side to Output to and Input from
 tooltip.actuallyadditions.blockInputter.desc.6=-Slot in the other Inventory to Output to and Input from
 tooltip.actuallyadditions.blockInputterAdvanced.desc=Has an Input and Output Filter!
 tooltip.actuallyadditions.blockFishingNet.desc=Catches Fish automatically when placed above Water
-tooltip.actuallyadditions.blockFurnaceSolar.desc=Powers Actually Additions Machines and Vanilla Furnaces below it in Daylight
-tooltip.actuallyadditions.blockHeatCollector.desc.1=Powers Actually Additions Machines and Vanilla Furnaces above it
+tooltip.actuallyadditions.blockFurnaceSolar.desc=Produces RF in Daylight
+tooltip.actuallyadditions.blockHeatCollector.desc.1=Produces RF
 tooltip.actuallyadditions.blockHeatCollector.desc.2=Needs a bunch of Lava around it
 tooltip.actuallyadditions.blockHeatCollector.desc.3=Occasionally steals the Lava. Watch out!
 tooltip.actuallyadditions.blockItemRepairer.desc=Repairs Tools and Armor automatically
@@ -265,6 +341,9 @@ info.actuallyadditions.gui.slot=Slot
 info.actuallyadditions.gui.put=Put
 info.actuallyadditions.gui.pull=Pull
 
+tooltip.actuallyadditions.uses.desc=Uses
+tooltip.actuallyadditions.produces.desc=Produces
+
 effect.actuallyadditions.speed.name=Speed
 effect.actuallyadditions.haste.name=Haste
 effect.actuallyadditions.strength.name=Strength
@@ -289,8 +368,14 @@ container.actuallyadditions.placer.name=Placer
 container.actuallyadditions.breaker.name=Breaker
 container.actuallyadditions.dropper.name=Precision Dropper
 container.actuallyadditions.crafting.name=Crafting Table On A Stick
+container.actuallyadditions.canolaPress.name=Canola Press
+container.actuallyadditions.fermentingBarrel.name=Fermenting Barrel
+container.actuallyadditions.coalGenerator.name=Coal Generator
+container.actuallyadditions.oilGenerator.name=Oil Generator
 
 container.actuallyadditions.nei.crushing.name=Crusher
+container.actuallyadditions.nei.ballOfHair.name=Ball Of Hair Usage
+container.actuallyadditions.nei.compost.name=Compost
 
 gui.actuallyadditions.waila.compostAmount.name=Amount of Mashed Food
 gui.actuallyadditions.waila.compostDone.name=Done!
@@ -300,7 +385,6 @@ info.actuallyadditions.update.generic.desc=[{"text":"There is an "},{"text":"Upd
 info.actuallyadditions.update.versionComp.desc=[{"text":"You have Version "},{"text":"%s","color":"dark_red","italic":"false"},{"text":", the newest one is ","color":"none","italic":"false"},{"text":"%s","color":"dark_green","underlined":"false"},{"text":"!","color":"none","underlined":"false"}]
 info.actuallyadditions.update.download.desc=[{"text":"Download the newest Version "},{"text":"here! (Click me!)","color":"dark_green","underlined":"true","clickEvent":{"action":"open_url","value":"%s"},"hoverEvent":{"action":"show_text","value":{"text":"","extra":[{"text":"Click here to open your Browser and download the newest Version!"}]}}}]
 info.actuallyadditions.update.failed.desc=[{"text":"The Update Check for "},{"text":"Actually Additions ","color":"dark_green","bold":"true"},{"text":"failed! Check your Internet Connection and the Logs for more Info!","color":"none"}]
-info.actuallyadditions.update.new.desc=Important Changes:
 
 achievement.actuallyadditions.pickUpSolidXP=Hard and Rich and Stuff
 achievement.actuallyadditions.pickUpSolidXP.desc=Pick up some Solidified Experience

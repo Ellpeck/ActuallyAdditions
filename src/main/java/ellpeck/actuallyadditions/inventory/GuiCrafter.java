@@ -23,7 +23,7 @@ public class GuiCrafter extends GuiContainer{
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y){
-        AssetUtil.displayNameAndInventoryString(this.fontRendererObj, xSize, 74, -10, "container." + ModUtil.MOD_ID_LOWER + ".crafting");
+        AssetUtil.displayNameString(this.fontRendererObj, xSize, -10, "container."+ModUtil.MOD_ID_LOWER+".crafting");
     }
 
     @Override

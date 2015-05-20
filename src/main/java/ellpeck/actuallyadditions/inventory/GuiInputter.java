@@ -62,7 +62,7 @@ public class GuiInputter extends GuiContainer{
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y){
-        AssetUtil.displayNameAndInventoryString(this.fontRendererObj, xSize, this.isAdvanced ? 105-5 : 93-5, -10, this.tileInputter.getInventoryName());
+        AssetUtil.displayNameString(this.fontRendererObj, xSize, -10, this.tileInputter.getInventoryName());
     }
 
     @SuppressWarnings("unchecked")

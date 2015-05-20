@@ -8,7 +8,10 @@ import ellpeck.actuallyadditions.util.AssetUtil;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.util.ForgeDirection;
 import org.lwjgl.opengl.GL11;
+
+import java.util.Collections;
 
 @SideOnly(Side.CLIENT)
 public class GuiGrinder extends GuiContainer{
@@ -28,7 +31,7 @@ public class GuiGrinder extends GuiContainer{
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y){
-        AssetUtil.displayNameAndInventoryString(this.fontRendererObj, xSize, 93-5, -10, this.tileGrinder.getInventoryName());
+        AssetUtil.displayNameString(this.fontRendererObj, xSize, -10, this.tileGrinder.getInventoryName());
     }
 
     @Override
@@ -41,9 +44,9 @@ public class GuiGrinder extends GuiContainer{
         this.mc.getTextureManager().bindTexture(this.isDouble ? resLocDouble : resLoc);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 93);
 
-        if(this.tileGrinder.coalTime > 0){
-            int i = this.tileGrinder.getCoalTimeToScale(15);
-            this.drawTexturedModalRect(this.guiLeft+(isDouble ? 80 : 51), this.guiTop+5+14-i, 176, 44+14-i, 14, i);
+        if(this.tileGrinder.getEnergyStored(ForgeDirection.UNKNOWN) > 0){
+            int i = this.tileGrinder.getEnergyScaled(83);
+            drawTexturedModalRect(this.guiLeft + (isDouble ? 14 : 43), this.guiTop+89-i, 176, (isDouble ? 44 : 23), 16, i);
         }
         if(this.tileGrinder.firstCrushTime > 0){
             int i = this.tileGrinder.getFirstTimeToScale(23);
@@ -60,5 +63,9 @@ public class GuiGrinder extends GuiContainer{
     @Override
     public void drawScreen(int x, int y, float f){
         super.drawScreen(x, y, f);
+        String text = this.tileGrinder.getEnergyStored(ForgeDirection.UNKNOWN) + "/" + this.tileGrinder.getMaxEnergyStored(ForgeDirection.UNKNOWN) + " RF";
+        if((this.isDouble && x >= guiLeft+14 && y >= guiTop+6 && x <= guiLeft+29 && y <= guiTop+88) || (!this.isDouble && x >= guiLeft+43 && y >= guiTop+6 && x <= guiLeft+58 && y <= guiTop+88)){
+            this.func_146283_a(Collections.singletonList(text), x, y);
+        }
     }
 }

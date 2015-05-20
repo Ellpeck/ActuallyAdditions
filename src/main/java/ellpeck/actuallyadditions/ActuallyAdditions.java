@@ -21,6 +21,7 @@ import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.material.InitItemMaterials;
 import ellpeck.actuallyadditions.network.PacketHandler;
 import ellpeck.actuallyadditions.proxy.IProxy;
+import ellpeck.actuallyadditions.recipe.FuelHandler;
 import ellpeck.actuallyadditions.tile.TileEntityBase;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.Util;
@@ -44,6 +45,7 @@ public class ActuallyAdditions{
         InitBlocks.init();
         InitItems.init();
         InitVillager.init();
+        FuelHandler.init();
         proxy.preInit();
 
         Util.logInfo("PreInitialization Finished.");

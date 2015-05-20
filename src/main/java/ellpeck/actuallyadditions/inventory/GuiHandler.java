@@ -13,7 +13,7 @@ public class GuiHandler implements IGuiHandler{
 
     @Override
     public Object getServerGuiElement(int id, EntityPlayer entityPlayer, World world, int x, int y, int z){
-        switch (id){
+        switch(id){
             case FEEDER_ID:
                 TileEntityBase tileFeeder = (TileEntityBase)world.getTileEntity(x, y, z);
                 return new ContainerFeeder(entityPlayer.inventory, tileFeeder);
@@ -46,6 +46,18 @@ public class GuiHandler implements IGuiHandler{
             case DROPPER_ID:
                 TileEntityBase tileDropper = (TileEntityBase)world.getTileEntity(x, y, z);
                 return new ContainerDropper(entityPlayer.inventory, tileDropper);
+            case CANOLA_PRESS_ID:
+                TileEntityBase tilePress = (TileEntityBase)world.getTileEntity(x, y, z);
+                return new ContainerCanolaPress(entityPlayer.inventory, tilePress);
+            case FERMENTING_BARREL_ID:
+                TileEntityBase tileBarrel = (TileEntityBase)world.getTileEntity(x, y, z);
+                return new ContainerFermentingBarrel(entityPlayer.inventory, tileBarrel);
+            case COAL_GENERATOR_ID:
+                TileEntityBase tileGenerator = (TileEntityBase)world.getTileEntity(x, y, z);
+                return new ContainerCoalGenerator(entityPlayer.inventory, tileGenerator);
+            case OIL_GENERATOR_ID:
+                TileEntityBase tileOilGen = (TileEntityBase)world.getTileEntity(x, y, z);
+                return new ContainerOilGenerator(entityPlayer.inventory, tileOilGen);
             default:
                 return null;
         }
@@ -53,7 +65,7 @@ public class GuiHandler implements IGuiHandler{
 
     @Override
     public Object getClientGuiElement(int id, EntityPlayer entityPlayer, World world, int x, int y, int z){
-        switch (id){
+        switch(id){
             case FEEDER_ID:
                 TileEntityBase tileFeeder = (TileEntityBase)world.getTileEntity(x, y, z);
                 return new GuiFeeder(entityPlayer.inventory, tileFeeder);
@@ -86,6 +98,18 @@ public class GuiHandler implements IGuiHandler{
             case DROPPER_ID:
                 TileEntityBase tileDropper = (TileEntityBase)world.getTileEntity(x, y, z);
                 return new GuiDropper(entityPlayer.inventory, tileDropper);
+            case CANOLA_PRESS_ID:
+                TileEntityBase tilePress = (TileEntityBase)world.getTileEntity(x, y, z);
+                return new GuiCanolaPress(entityPlayer.inventory, tilePress);
+            case FERMENTING_BARREL_ID:
+                TileEntityBase tileBarrel = (TileEntityBase)world.getTileEntity(x, y, z);
+                return new GuiFermentingBarrel(entityPlayer.inventory, tileBarrel);
+            case COAL_GENERATOR_ID:
+                TileEntityBase tileGenerator = (TileEntityBase)world.getTileEntity(x, y, z);
+                return new GuiCoalGenerator(entityPlayer.inventory, tileGenerator);
+            case OIL_GENERATOR_ID:
+                TileEntityBase tileOilGen = (TileEntityBase)world.getTileEntity(x, y, z);
+                return new GuiOilGenerator(entityPlayer.inventory, tileOilGen);
             default:
                 return null;
         }
@@ -102,6 +126,10 @@ public class GuiHandler implements IGuiHandler{
     public static final int INPUTTER_ADVANCED_ID = 8;
     public static final int BREAKER_ID = 9;
     public static final int DROPPER_ID = 10;
+    public static final int CANOLA_PRESS_ID = 11;
+    public static final int FERMENTING_BARREL_ID = 12;
+    public static final int COAL_GENERATOR_ID = 13;
+    public static final int OIL_GENERATOR_ID = 14;
 
     public static void init(){
         Util.logInfo("Initializing GuiHandler...");
