@@ -52,7 +52,8 @@ public class BlockPlant extends BlockCrops implements INameableItem, IFactoryHar
                     ret.add(new ItemStack(this.seedItem));
                 }
             }
-            ret.add(this.returnItem.copy());
+            if(this == InitBlocks.blockCanola) ret.add(new ItemStack(this.returnItem.getItem(), new Random().nextInt(3)+3, this.returnItem.getItemDamage()));
+            else ret.add(this.returnItem.copy());
         }
 
         return ret;

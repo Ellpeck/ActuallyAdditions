@@ -5,6 +5,7 @@ import cofh.api.energy.IEnergyProvider;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.blocks.InitBlocks;
+import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.init.Items;
@@ -19,10 +20,10 @@ public class TileEntityOilGenerator extends TileEntityInventoryBase implements I
 
     public FluidTank tank = new FluidTank(2*FluidContainerRegistry.BUCKET_VOLUME);
 
-    public static int energyProducedPerTick = 76;
+    public static int energyProducedPerTick = ConfigIntValues.OIL_GEN_ENERGY_PRODUCED.getValue();
 
-    public int fuelUsedPerBurnup = 50;
-    public int maxBurnTime = 100;
+    public int fuelUsedPerBurnup = ConfigIntValues.OIL_GEN_FUEL_USED.getValue();
+    public int maxBurnTime = ConfigIntValues.OIL_GEN_BURN_TIME.getValue();
 
     public int currentBurnTime;
 
@@ -40,7 +41,7 @@ public class TileEntityOilGenerator extends TileEntityInventoryBase implements I
                 this.storage.receiveEnergy(energyProducedPerTick, false);
             }
 
-            if(energyProducedPerTick <= this.getMaxEnergyStored(ForgeDirection.UNKNOWN)-this.getEnergyStored(ForgeDirection.UNKNOWN)){
+            if(energyProducedPerTick*this.maxBurnTime/2 <= this.getMaxEnergyStored(ForgeDirection.UNKNOWN)-this.getEnergyStored(ForgeDirection.UNKNOWN)){
                 if(this.currentBurnTime <= 0 && this.tank.getFluidAmount() >= this.fuelUsedPerBurnup){
                     this.currentBurnTime = this.maxBurnTime;
                     this.tank.drain(this.fuelUsedPerBurnup, true);

@@ -61,12 +61,7 @@ public class TileEntityFermentingBarrel extends TileEntityInventoryBase implemen
             }
 
             if(this.oilTank.getFluidAmount() > 0){
-                WorldUtil.pushFluid(worldObj, xCoord, yCoord, zCoord, ForgeDirection.UP, this.oilTank);
                 WorldUtil.pushFluid(worldObj, xCoord, yCoord, zCoord, ForgeDirection.DOWN, this.oilTank);
-                WorldUtil.pushFluid(worldObj, xCoord, yCoord, zCoord, ForgeDirection.NORTH, this.oilTank);
-                WorldUtil.pushFluid(worldObj, xCoord, yCoord, zCoord, ForgeDirection.EAST, this.oilTank);
-                WorldUtil.pushFluid(worldObj, xCoord, yCoord, zCoord, ForgeDirection.SOUTH, this.oilTank);
-                WorldUtil.pushFluid(worldObj, xCoord, yCoord, zCoord, ForgeDirection.WEST, this.oilTank);
             }
         }
     }
@@ -121,7 +116,7 @@ public class TileEntityFermentingBarrel extends TileEntityInventoryBase implemen
 
     @Override
     public int fill(ForgeDirection from, FluidStack resource, boolean doFill){
-        if(resource.getFluid() == FluidRegistry.getFluid(InitBlocks.fluidCanolaOil.getName())) return this.canolaTank.fill(resource, doFill);
+        if(from != ForgeDirection.DOWN && resource.getFluid() == FluidRegistry.getFluid(InitBlocks.fluidCanolaOil.getName())) return this.canolaTank.fill(resource, doFill);
         return 0;
     }
 
@@ -138,7 +133,7 @@ public class TileEntityFermentingBarrel extends TileEntityInventoryBase implemen
 
     @Override
     public boolean canFill(ForgeDirection from, Fluid fluid){
-        return fluid == FluidRegistry.getFluid(InitBlocks.fluidCanolaOil.getName());
+        return from != ForgeDirection.DOWN && fluid == FluidRegistry.getFluid(InitBlocks.fluidCanolaOil.getName());
     }
 
     @Override

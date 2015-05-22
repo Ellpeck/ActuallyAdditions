@@ -52,7 +52,7 @@ item.actuallyadditions.itemBucketOil.name=Oil Bucket
 tooltip.actuallyadditions.itemBucketOil.desc=Made in a Fermenting Barrel from Canola Oil
 
 tile.actuallyadditions.blockPhantomface.name=Phantomface
-tooltip.actuallyadditions.blockPhantomface.desc.1=Like a Pipe, only Wireless! Connect me with a Phantom Connector!
+tooltip.actuallyadditions.blockPhantomface.desc.1=Like a Hopper-Chain, only Wireless! Connect me with a Phantom Connector!
 tooltip.actuallyadditions.blockPhantomface.desc.2=Input things into me to input into connected Blocks!
 
 item.actuallyadditions.itemPhantomConnector.name=Phantom Connector

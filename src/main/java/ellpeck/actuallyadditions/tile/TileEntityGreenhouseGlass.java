@@ -1,6 +1,7 @@
 package ellpeck.actuallyadditions.tile;
 
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
+import ellpeck.actuallyadditions.util.FakePlayerUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockAir;
 import net.minecraft.block.BlockGrass;
@@ -9,8 +10,6 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChunkCoordinates;
-import net.minecraft.world.WorldServer;
-import net.minecraftforge.common.util.FakePlayerFactory;
 
 import java.util.Random;
 
@@ -53,6 +52,6 @@ public class TileEntityGreenhouseGlass extends TileEntityBase{
     }
 
     public boolean applyBonemealEffect(ChunkCoordinates coords){
-        return ItemDye.applyBonemeal(new ItemStack(Items.dye, 1, 15), worldObj, coords.posX, coords.posY, coords.posZ, FakePlayerFactory.getMinecraft((WorldServer)worldObj));
+        return ItemDye.applyBonemeal(new ItemStack(Items.dye, 1, 15), worldObj, coords.posX, coords.posY, coords.posZ, FakePlayerUtil.newFakePlayer(worldObj));
     }
 }

@@ -61,12 +61,7 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IE
             if(this.currentProcessTime > 0) this.storage.extractEnergy(energyUsedPerTick, false);
 
             if(this.tank.getFluidAmount() > 0){
-                WorldUtil.pushFluid(worldObj, xCoord, yCoord, zCoord, ForgeDirection.UP, this.tank);
                 WorldUtil.pushFluid(worldObj, xCoord, yCoord, zCoord, ForgeDirection.DOWN, this.tank);
-                WorldUtil.pushFluid(worldObj, xCoord, yCoord, zCoord, ForgeDirection.NORTH, this.tank);
-                WorldUtil.pushFluid(worldObj, xCoord, yCoord, zCoord, ForgeDirection.EAST, this.tank);
-                WorldUtil.pushFluid(worldObj, xCoord, yCoord, zCoord, ForgeDirection.SOUTH, this.tank);
-                WorldUtil.pushFluid(worldObj, xCoord, yCoord, zCoord, ForgeDirection.WEST, this.tank);
             }
         }
     }

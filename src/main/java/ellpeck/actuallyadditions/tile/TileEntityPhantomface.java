@@ -34,7 +34,7 @@ public class TileEntityPhantomface extends TileEntityInventoryBase{
     }
 
     public boolean isBoundTileInRage(){
-        if(this.hasBoundTile() && this.boundTile.getWorldObj().loadedTileEntityList.contains(this.boundTile)){
+        if(this.hasBoundTile()){
             int xDif = this.boundTile.xCoord-this.xCoord;
             int yDif = this.boundTile.yCoord-this.yCoord;
             int zDif = this.boundTile.zCoord-this.zCoord;
