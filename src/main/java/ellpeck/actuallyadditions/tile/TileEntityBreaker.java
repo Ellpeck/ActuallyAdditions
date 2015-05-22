@@ -3,7 +3,6 @@ package ellpeck.actuallyadditions.tile;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockAir;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ChunkCoordinates;
@@ -70,9 +69,9 @@ public class TileEntityBreaker extends TileEntityInventoryBase{
                                     this.markDirty();
                                 }
                             }
-                            else if(this.isPlacer && (worldObj.getBlock(coordsBlock.posX, coordsBlock.posY, coordsBlock.posZ).isReplaceable(worldObj, coordsBlock.posX, coordsBlock.posY, coordsBlock.posZ))){
+                            else if(this.isPlacer && worldObj.getBlock(coordsBlock.posX, coordsBlock.posY, coordsBlock.posZ).isReplaceable(worldObj, coordsBlock.posX, coordsBlock.posY, coordsBlock.posZ)){
                                 ItemStack removeFalse = this.removeFromInventory(false);
-                                if(removeFalse != null && Block.getBlockFromItem(removeFalse.getItem()) != blockToBreak && WorldUtil.placeBlockAtSide(sideToManipulate, worldObj, xCoord, yCoord, zCoord, removeFalse)){
+                                if(removeFalse != null && WorldUtil.placeBlockAtSide(sideToManipulate, worldObj, xCoord, yCoord, zCoord, removeFalse)){
                                     this.removeFromInventory(true);
                                 }
                             }
@@ -115,7 +114,7 @@ public class TileEntityBreaker extends TileEntityInventoryBase{
 
     public ItemStack removeFromInventory(boolean actuallyDo){
         for(int i = 0; i < this.slots.length; i++){
-            if(this.slots[i] != null && !(Block.getBlockFromItem(this.slots[i].getItem()) instanceof BlockAir)){
+            if(this.slots[i] != null){
                 ItemStack slot = this.slots[i].copy();
                 if(actuallyDo){
                     this.slots[i].stackSize--;

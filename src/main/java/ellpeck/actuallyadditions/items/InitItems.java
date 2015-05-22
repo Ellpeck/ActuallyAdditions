@@ -15,6 +15,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.EnumPlantType;
 import net.minecraftforge.fluids.FluidContainerRegistry;
+import powercrystals.minefactoryreloaded.api.FactoryRegistry;
 
 public class InitItems{
 
@@ -112,9 +113,11 @@ public class InitItems{
 
         itemRiceSeed = new ItemSeed("itemRiceSeed", InitBlocks.blockRice, Blocks.water, EnumPlantType.Water, new ItemStack(itemFoods, 1, TheFoods.RICE.ordinal()));
         ItemUtil.register(itemRiceSeed);
+        FactoryRegistry.sendMessage("registerPlantable", itemRiceSeed);
 
-        itemCanolaSeed = new ItemSeed("itemCanolaSeed", InitBlocks.blockCanola, Blocks.grass, EnumPlantType.Crop, new ItemStack(itemMisc, 1, TheMiscItems.CANOLA.ordinal()));
+        itemCanolaSeed = new ItemSeed("itemCanolaSeed", InitBlocks.blockCanola, Blocks.grass, EnumPlantType.Plains, new ItemStack(itemMisc, 1, TheMiscItems.CANOLA.ordinal()));
         ItemUtil.register(itemCanolaSeed);
+        FactoryRegistry.sendMessage("registerPlantable", itemCanolaSeed);
 
         itemPickaxeEmerald = new ItemPickaxeAA(InitItemMaterials.toolMaterialEmerald, new ItemStack(Items.emerald), "itemPickaxeEmerald", EnumRarity.rare);
         itemAxeEmerald = new ItemAxeAA(InitItemMaterials.toolMaterialEmerald, new ItemStack(Items.emerald), "itemAxeEmerald", EnumRarity.rare);

@@ -12,20 +12,22 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemSeeds;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.EnumPlantType;
-import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.util.BlockSnapshot;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.event.ForgeEventFactory;
+import powercrystals.minefactoryreloaded.api.IFactoryPlantable;
+import powercrystals.minefactoryreloaded.api.ReplacementBlock;
 
 import java.util.List;
 
-public class ItemSeed extends Item implements IPlantable, INameableItem{
+public class ItemSeed extends ItemSeeds implements INameableItem, IFactoryPlantable{
 
     public Block plant;
     public Block soilBlock;
@@ -33,6 +35,7 @@ public class ItemSeed extends Item implements IPlantable, INameableItem{
     public String name;
 
     public ItemSeed(String name, Block plant, Block soilBlock, EnumPlantType type, ItemStack returnItem){
+        super(plant, soilBlock);
         this.name = name;
         this.plant = plant;
         this.soilBlock = soilBlock;
@@ -64,7 +67,7 @@ public class ItemSeed extends Item implements IPlantable, INameableItem{
                     int j = pos.blockY;
                     int k = pos.blockZ;
 
-                    if(world.canMineBlock(player, i, j, k) && player.canPlayerEdit(i, j, k, pos.sideHit, stack)){
+                    if(player.canPlayerEdit(i, j, k, pos.sideHit, stack)){
                         if(world.getBlock(i, j, k).getMaterial() == Material.water && world.getBlockMetadata(i, j, k) == 0 && world.isAirBlock(i, j + 1, k)){
                             BlockSnapshot snap = BlockSnapshot.getBlockSnapshot(world, i, j+1, k);
                             world.setBlock(i, j + 1, k, this.plant);
@@ -126,5 +129,35 @@ public class ItemSeed extends Item implements IPlantable, INameableItem{
     @Override
     public String getOredictName(){
         return this.getName();
+    }
+
+    @Override
+    public Item getSeed(){
+        return this;
+    }
+
+    @Override
+    public boolean canBePlanted(ItemStack stack, boolean forFermenting){
+        return true;
+    }
+
+    @Override
+    public ReplacementBlock getPlantedBlock(World world, int x, int y, int z, ItemStack stack){
+        return new ReplacementBlock(this.plant);
+    }
+
+    @Override
+    public boolean canBePlantedHere(World world, int x, int y, int z, ItemStack stack){
+        return world.getBlock(x, y, z).isReplaceable(world, x, y, z) && ((BlockPlant)this.plant).canPlaceBlockOn(world.getBlock(x, y-1, z));
+    }
+
+    @Override
+    public void prePlant(World world, int x, int y, int z, ItemStack stack){
+
+    }
+
+    @Override
+    public void postPlant(World world, int x, int y, int z, ItemStack stack){
+
     }
 }

@@ -3,6 +3,7 @@ package ellpeck.actuallyadditions.waila;
 import ellpeck.actuallyadditions.blocks.BlockCompost;
 import ellpeck.actuallyadditions.config.values.ConfigBoolValues;
 import ellpeck.actuallyadditions.tile.TileEntityCompost;
+import ellpeck.actuallyadditions.util.BlockUtil;
 import ellpeck.actuallyadditions.util.INameableItem;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.Util;
@@ -18,15 +19,12 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings("unused")
 public class WailaDataProvider implements IWailaDataProvider{
 
     private final String WAILA_PRE_LANG = "gui." + ModUtil.MOD_ID_LOWER + ".waila.";
-
-    public static final ArrayList<Block> registerList = new ArrayList<Block>();
 
     @Override
     public ItemStack getWailaStack(IWailaDataAccessor accessor, IWailaConfigHandler config){
@@ -90,7 +88,7 @@ public class WailaDataProvider implements IWailaDataProvider{
 
         registrar.registerBodyProvider(provider, BlockCompost.class);
 
-        for(Block theBlock : registerList){
+        for(Block theBlock : BlockUtil.wailaRegisterList){
             registrar.registerHeadProvider(provider, theBlock.getClass());
         }
     }

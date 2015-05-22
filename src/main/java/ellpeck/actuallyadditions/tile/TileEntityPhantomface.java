@@ -80,7 +80,6 @@ public class TileEntityPhantomface extends TileEntityInventoryBase{
     public IInventory getInventory(){
         TileEntity tile = boundTile.getWorldObj().getTileEntity(boundTile.xCoord, boundTile.yCoord, boundTile.zCoord);
         if(tile != null && tile instanceof IInventory){
-            this.markDirty();
             return (IInventory)tile;
         }
         return null;
@@ -113,6 +112,7 @@ public class TileEntityPhantomface extends TileEntityInventoryBase{
     @Override
     public void setInventorySlotContents(int i, ItemStack stack){
         if(this.isBoundTileInRage()) this.getInventory().setInventorySlotContents(i, stack);
+        this.markDirty();
     }
 
     @Override

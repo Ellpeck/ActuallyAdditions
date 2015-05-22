@@ -65,7 +65,7 @@ public class ItemPhantomConnector extends Item implements INameableItem{
 
     @Override
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player){
-        if(KeyUtil.isControlPressed()) this.clearStorage(stack);
+        if(KeyUtil.isAltPressed()) this.clearStorage(stack);
         return stack;
     }
 

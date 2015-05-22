@@ -16,12 +16,17 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
+import powercrystals.minefactoryreloaded.api.FertilizerType;
+import powercrystals.minefactoryreloaded.api.HarvestType;
+import powercrystals.minefactoryreloaded.api.IFactoryFertilizable;
+import powercrystals.minefactoryreloaded.api.IFactoryHarvestable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
-public class BlockPlant extends BlockCrops implements INameableItem{
+public class BlockPlant extends BlockCrops implements INameableItem, IFactoryHarvestable, IFactoryFertilizable{
 
     private IIcon[] textures;
     private String name;
@@ -57,7 +62,6 @@ public class BlockPlant extends BlockCrops implements INameableItem{
     public Item getItemDropped(int meta, Random rand, int i){
         return null;
     }
-
 
     @Override
     public boolean canPlaceBlockOn(Block block){
@@ -134,5 +138,58 @@ public class BlockPlant extends BlockCrops implements INameableItem{
         public int getMetadata(int damage){
             return damage;
         }
+    }
+
+    @Override
+    public Block getPlant(){
+        return this;
+    }
+
+    @Override
+    public boolean canFertilize(World world, int x, int y, int z, FertilizerType fertilizerType){
+        return true;
+    }
+
+    @Override
+    public boolean fertilize(World world, Random rand, int x, int y, int z, FertilizerType fertilizerType){
+        if (this.func_149851_a(world, x, y, z, world.isRemote)){
+            if(!world.isRemote){
+                if(this.func_149852_a(world, world.rand, x, y, z)){
+                    this.func_149853_b(world, world.rand, x, y, z);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public HarvestType getHarvestType(){
+        return HarvestType.Normal;
+    }
+
+    @Override
+    public boolean breakBlock(){
+        return true;
+    }
+
+    @Override
+    public boolean canBeHarvested(World world, Map<String, Boolean> harvesterSettings, int x, int y, int z){
+        return world.getBlockMetadata(x, y, z) >= 7;
+    }
+
+    @Override
+    public List<ItemStack> getDrops(World world, Random rand, Map<String, Boolean> harvesterSettings, int x, int y, int z){
+        return this.getDrops(world, x, y, z, world.getBlockMetadata(x, y, z), 0);
+    }
+
+    @Override
+    public void preHarvest(World world, int x, int y, int z){
+
+    }
+
+    @Override
+    public void postHarvest(World world, int x, int y, int z){
+
     }
 }

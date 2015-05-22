@@ -43,7 +43,7 @@ public enum ConfigIntValues{
     HEAT_COLLECTOR_BLOCKS("Heat Collector: Blocks Needed", ConfigCategories.MACHINE_VALUES, 4, 1, 5, "How many Blocks are needed for the Heat Collector to power Machines above it"),
     HEAT_COLLECTOR_LAVA_CHANCE("Heat Collector: Random Chance", ConfigCategories.MACHINE_VALUES, 10000, 10, 100000, "The Chance of the Heat Collector destroying a Lava Block around (Default Value 2000 meaning a 1/2000 Chance!)"),
 
-    GLASS_TIME_NEEDED("Greenhouse Glass: Time Needed", ConfigCategories.MACHINE_VALUES, 4000, 10, 1000000, "The Time Needed for the Greenhouse Glass to grow a Plant below it"),
+    GLASS_TIME_NEEDED("Greenhouse Glass: Time", ConfigCategories.MACHINE_VALUES, 5000, 10, 1000000, "The Time Needed for the Greenhouse Glass to grow a Plant below it"),
 
     BREAKER_TIME_NEEDED("Breaker and Placer: Time Needed", ConfigCategories.MACHINE_VALUES, 15, 1, 10000, "The Time Needed for the Breaker and the Placer to place or break a Block"),
     DROPPER_TIME_NEEDED("Dropper: Time Needed", ConfigCategories.MACHINE_VALUES, 10, 1, 10000, "The Time Needed for the Dropper to drop an Item"),
@@ -61,7 +61,7 @@ public enum ConfigIntValues{
     FURNACE_ENERGY_USED("Energy Use: Double Furnace", ConfigCategories.MACHINE_VALUES, 25, 1, 500, "The Amount of Energy used by the Double Furnace per Tick"),
 
     PRESS_PROCESSING_TIME("Canola Press: Processing Time", ConfigCategories.MACHINE_VALUES, 30, 1, 1000, "The Amount of time it takes to process one Canola"),
-    PRESS_MB_PRODUCED("Canola Press: mB Produced", ConfigCategories.MACHINE_VALUES, 50, 1, 5000, "The Amount of Canola Oil produced from one Canola"),
+    PRESS_MB_PRODUCED("Canola Press: mB Produced", ConfigCategories.MACHINE_VALUES, 30, 1, 5000, "The Amount of Canola Oil produced from one Canola"),
     PRESS_ENERGY_USED("Energy Use: Canola Press", ConfigCategories.MACHINE_VALUES, 35, 10, 500, "The Amount of Energy used by the Canola Press per Tick"),
 
     BARREL_MB_PRODUCED("Fermenting Barrel: mB Produced", ConfigCategories.MACHINE_VALUES, 50, 1, 3000, "The Amount of mB produced by the Barrel per cycle"),

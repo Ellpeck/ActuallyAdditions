@@ -93,33 +93,35 @@ public class ContainerFermentingBarrel extends Container{
             ItemStack currentStack = theSlot.getStack();
             ItemStack newStack = currentStack.copy();
 
-            if(slot <= hotbarEnd && slot >= inventoryStart){
-                if(currentStack.getItem() == InitItems.itemBucketCanolaOil){
-                    this.mergeItemStack(newStack, 0, 1, false);
+            if(currentStack.getItem() != null){
+                if(slot <= hotbarEnd && slot >= inventoryStart){
+                    if(currentStack.getItem() == InitItems.itemBucketCanolaOil){
+                        this.mergeItemStack(newStack, 0, 1, false);
+                    }
+                    if(currentStack.getItem() == Items.bucket){
+                        this.mergeItemStack(newStack, 2, 3, false);
+                    }
                 }
-                if(currentStack.getItem() == Items.bucket){
-                    this.mergeItemStack(newStack, 2, 3, false);
+
+                if(slot <= hotbarEnd && slot >= hotbarStart){
+                    this.mergeItemStack(newStack, inventoryStart, inventoryEnd+1, false);
                 }
-            }
 
-            if(slot <= hotbarEnd && slot >= hotbarStart){
-                this.mergeItemStack(newStack, inventoryStart, inventoryEnd+1, false);
-            }
+                else if(slot <= inventoryEnd && slot >= inventoryStart){
+                    this.mergeItemStack(newStack, hotbarStart, hotbarEnd+1, false);
+                }
 
-            else if(slot <= inventoryEnd && slot >= inventoryStart){
-                this.mergeItemStack(newStack, hotbarStart, hotbarEnd+1, false);
-            }
-
-            else if(slot < inventoryStart){
+                else if(slot < inventoryStart){
                     this.mergeItemStack(newStack, inventoryStart, hotbarEnd+1, false);
+                }
+
+                if(newStack.stackSize == 0) theSlot.putStack(null);
+                else theSlot.onSlotChanged();
+                if(newStack.stackSize == currentStack.stackSize) return null;
+                theSlot.onPickupFromSlot(player, newStack);
+
+                return currentStack;
             }
-
-            if(newStack.stackSize == 0) theSlot.putStack(null);
-            else theSlot.onSlotChanged();
-            if(newStack.stackSize == currentStack.stackSize) return null;
-            theSlot.onPickupFromSlot(player, newStack);
-
-            return currentStack;
         }
         return null;
     }

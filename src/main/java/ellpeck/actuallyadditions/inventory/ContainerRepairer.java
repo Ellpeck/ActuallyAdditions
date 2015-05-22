@@ -78,30 +78,32 @@ public class ContainerRepairer extends Container{
             ItemStack currentStack = theSlot.getStack();
             ItemStack newStack = currentStack.copy();
 
-            if(slot <= hotbarEnd && slot >= inventoryStart){
-                if(TileEntityItemRepairer.canBeRepaired(currentStack)){
-                    this.mergeItemStack(newStack, TileEntityItemRepairer.SLOT_INPUT, TileEntityItemRepairer.SLOT_INPUT+1, false);
+            if(currentStack.getItem() != null){
+                if(slot <= hotbarEnd && slot >= inventoryStart){
+                    if(TileEntityItemRepairer.canBeRepaired(currentStack)){
+                        this.mergeItemStack(newStack, TileEntityItemRepairer.SLOT_INPUT, TileEntityItemRepairer.SLOT_INPUT+1, false);
+                    }
                 }
+
+                if(slot <= hotbarEnd && slot >= hotbarStart){
+                    this.mergeItemStack(newStack, inventoryStart, inventoryEnd+1, false);
+                }
+
+                else if(slot <= inventoryEnd && slot >= inventoryStart){
+                    this.mergeItemStack(newStack, hotbarStart, hotbarEnd+1, false);
+                }
+
+                else if(slot < inventoryStart){
+                    this.mergeItemStack(newStack, inventoryStart, hotbarEnd+1, false);
+                }
+
+                if(newStack.stackSize == 0) theSlot.putStack(null);
+                else theSlot.onSlotChanged();
+                if(newStack.stackSize == currentStack.stackSize) return null;
+                theSlot.onPickupFromSlot(player, newStack);
+
+                return currentStack;
             }
-
-            if(slot <= hotbarEnd && slot >= hotbarStart){
-                this.mergeItemStack(newStack, inventoryStart, inventoryEnd+1, false);
-            }
-
-            else if(slot <= inventoryEnd && slot >= inventoryStart){
-                this.mergeItemStack(newStack, hotbarStart, hotbarEnd+1, false);
-            }
-
-            else if(slot < inventoryStart){
-                this.mergeItemStack(newStack, inventoryStart, hotbarEnd+1, false);
-            }
-
-            if(newStack.stackSize == 0) theSlot.putStack(null);
-            else theSlot.onSlotChanged();
-            if(newStack.stackSize == currentStack.stackSize) return null;
-            theSlot.onPickupFromSlot(player, newStack);
-
-            return currentStack;
         }
         return null;
     }

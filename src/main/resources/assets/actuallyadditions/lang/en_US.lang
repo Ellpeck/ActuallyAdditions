@@ -57,7 +57,7 @@ tooltip.actuallyadditions.blockPhantomface.desc.2=Input things into me to input 
 
 item.actuallyadditions.itemPhantomConnector.name=Phantom Connector
 tooltip.actuallyadditions.itemPhantomConnector.desc.1=Connects a Phantom Face to any Inventory Block!
-tooltip.actuallyadditions.itemPhantomConnector.desc.2=Press Control to clear the stored TileEntity
+tooltip.actuallyadditions.itemPhantomConnector.desc.2=Hold ALT to clear the stored TileEntity
 
 item.actuallyadditions.itemCanolaSeed.name=Canola Seeds
 tooltip.actuallyadditions.itemCanolaSeed.desc=Grows on Grass!

@@ -7,6 +7,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.item.EnumRarity;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
+import powercrystals.minefactoryreloaded.api.FactoryRegistry;
 
 public class InitBlocks{
 
@@ -76,9 +77,13 @@ public class InitBlocks{
 
         blockRice = new BlockPlant("blockRice", 6);
         BlockUtil.register(blockRice, BlockPlant.TheItemBlock.class, false);
+        FactoryRegistry.sendMessage("registerHarvestable", blockRice);
+        FactoryRegistry.sendMessage("registerFertilizable", blockRice);
 
         blockCanola = new BlockPlant("blockCanola", 4);
         BlockUtil.register(blockCanola, BlockPlant.TheItemBlock.class, false);
+        FactoryRegistry.sendMessage("registerHarvestable", blockCanola);
+        FactoryRegistry.sendMessage("registerFertilizable", blockCanola);
 
         blockCompost = new BlockCompost();
         BlockUtil.register(blockCompost, BlockCompost.TheItemBlock.class);

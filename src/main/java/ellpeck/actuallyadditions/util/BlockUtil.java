@@ -2,13 +2,13 @@ package ellpeck.actuallyadditions.util;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import ellpeck.actuallyadditions.creative.CreativeTab;
-import ellpeck.actuallyadditions.waila.WailaDataProvider;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.oredict.OreDictionary;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BlockUtil{
@@ -41,6 +41,8 @@ public class BlockUtil{
         }
     }
 
+    public static final ArrayList<Block> wailaRegisterList = new ArrayList<Block>();
+
     public static void register(Block block, Class<? extends ItemBlock> itemBlock, Enum[] list){
         block.setCreativeTab(CreativeTab.instance);
         block.setBlockName(createUnlocalizedName(block));
@@ -49,7 +51,7 @@ public class BlockUtil{
             if(!((INameableItem)current).getOredictName().isEmpty()) OreDictionary.registerOre(((INameableItem)current).getOredictName(), new ItemStack(block, 1, current.ordinal()));
         }
 
-        WailaDataProvider.registerList.add(block);
+        wailaRegisterList.add(block);
     }
 
     public static void register(Block block, Class<? extends ItemBlock> itemBlock){
@@ -62,7 +64,6 @@ public class BlockUtil{
         GameRegistry.registerBlock(block, itemBlock, ((INameableItem)block).getName());
         if(!((INameableItem)block).getOredictName().isEmpty()) OreDictionary.registerOre(((INameableItem)block).getOredictName(), new ItemStack(block, 1, Util.WILDCARD));
 
-        WailaDataProvider.registerList.add(block);
+        wailaRegisterList.add(block);
     }
-
 }
