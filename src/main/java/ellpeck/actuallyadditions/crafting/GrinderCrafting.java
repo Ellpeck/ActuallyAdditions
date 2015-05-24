@@ -37,6 +37,7 @@ public class GrinderCrafting{
         grindRecHan.searchCases.add(new SearchCase("ingot", 1));
         grindRecHan.searchCases.add(new SearchCase("gem", 1));
         grindRecHan.searchCases.add(new SearchCase("ore", 2));
+
         grindRecHan.exceptions.add("ingotBrick");
         grindRecHan.exceptions.add("ingotBrickNether");
 

@@ -106,7 +106,6 @@ public class ContainerCanolaPress extends Container{
             if(slot <= hotbarEnd && slot >= hotbarStart){
                 this.mergeItemStack(newStack, inventoryStart, inventoryEnd+1, false);
             }
-
             else if(slot <= inventoryEnd && slot >= inventoryStart){
                 this.mergeItemStack(newStack, hotbarStart, hotbarEnd+1, false);
             }

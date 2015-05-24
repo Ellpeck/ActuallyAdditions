@@ -18,7 +18,7 @@ buildscript {
 apply plugin: 'forge'
 apply plugin: 'maven'
 
-version = "1.7.10-0.0.5.0"
+version = "1.7.10-0.0.5.1"
 group = "ellpeck.actuallyadditions"
 archivesBaseName = "ActuallyAdditions"
 
@@ -40,11 +40,6 @@ repositories {
 
 dependencies {
     compile "mcp.mobius.waila:Waila:1.5.6_1.7.10"
-
-    /*When Compiling from Github, you will need to have this file present
-    because InventoryTweaks doesn't have a Maven Repo.
-    But no one is going to download and compile this anyway, so it doesn't really matter. */
-    compile files("lib/InventoryTweaks-api-1.58-147.jar")
 }
 
 task copyChickenBones(type: Copy, dependsOn: "extractUserDev") {

@@ -10,6 +10,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.IFluidHandler;
 
@@ -51,6 +52,10 @@ public class WorldUtil{
 
     public static boolean placeBlockAtSide(ForgeDirection side, World world, int x, int y, int z, ItemStack stack){
         if(world instanceof WorldServer){
+            if(FluidContainerRegistry.isBucket(stack) && stack.isItemEqual(FluidContainerRegistry.EMPTY_BUCKET)){
+                //if()
+                return false;
+            }
             if(stack.getItem() instanceof IPlantable){
                 if(((IPlantable)stack.getItem()).getPlant(world, x, y, z).canPlaceBlockAt(world, x+side.offsetX, y+side.offsetY, z+side.offsetZ)){
                     return world.setBlock(x+side.offsetX, y+side.offsetY, z+side.offsetZ, ((IPlantable)stack.getItem()).getPlant(world, x, y, z));
@@ -86,13 +91,15 @@ public class WorldUtil{
     }
 
     public static ForgeDirection getDirectionByRotatingSide(int side){
-        if(side == 0) return ForgeDirection.UP;
-        if(side == 1) return ForgeDirection.DOWN;
-        if(side == 2) return ForgeDirection.NORTH;
-        if(side == 3) return ForgeDirection.EAST;
-        if(side == 4) return ForgeDirection.SOUTH;
-        if(side == 5) return ForgeDirection.WEST;
-        else return ForgeDirection.UNKNOWN;
+        switch(side){
+            case 0: return ForgeDirection.UP;
+            case 1: return ForgeDirection.DOWN;
+            case 2: return ForgeDirection.NORTH;
+            case 3: return ForgeDirection.EAST;
+            case 4: return ForgeDirection.SOUTH;
+            case 5: return ForgeDirection.WEST;
+            default: return ForgeDirection.UNKNOWN;
+        }
     }
 
 }

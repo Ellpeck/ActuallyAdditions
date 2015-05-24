@@ -19,18 +19,21 @@ public class GrinderRecipes{
         this.recipes.add(new GrinderRecipe(input, outputOne, outputTwo, secondChance));
     }
 
-    public void registerRecipe(String input, String outputOne, String outputTwo, int secondChance, int outputTwoAmount){
+    public void registerRecipe(String input, String outputOne, String outputTwo, int secondChance, int outputAmount){
         ArrayList<ItemStack> inputStacks = OreDictionary.getOres(input);
         ArrayList<ItemStack> outputOneStacks = OreDictionary.getOres(outputOne);
         ArrayList<ItemStack> outputTwoStacks = OreDictionary.getOres(outputTwo);
 
         if(inputStacks != null && !inputStacks.isEmpty()){
-            for(ItemStack theInput : inputStacks){
+            for(ItemStack anInput : inputStacks){
+                ItemStack theInput = anInput.copy();
                 if(outputOneStacks != null && !outputOneStacks.isEmpty()){
-                    for(ItemStack theOutputOne : outputOneStacks){
-                        theOutputOne.stackSize =  outputTwoAmount;
+                    for(ItemStack anOutputOne : outputOneStacks){
+                        ItemStack theOutputOne = anOutputOne.copy();
+                        theOutputOne.stackSize =  outputAmount;
                         if(outputTwoStacks != null && !outputTwoStacks.isEmpty()){
-                            for(ItemStack theOutputTwo : outputTwoStacks){
+                            for(ItemStack anOutputTwo : outputTwoStacks){
+                                ItemStack theOutputTwo = anOutputTwo.copy();
                                 this.registerRecipe(theInput, theOutputOne, theOutputTwo, secondChance);
                             }
                         }

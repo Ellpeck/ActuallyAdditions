@@ -10,10 +10,11 @@
 -Instant Teleport Device
     -Teleports Players to where they look (Much like the Bukkit Compass)
 
--Magnet
-    -Pulls Mobs and Items towards it
-    -Has a certain Redstone Output depending on Mob Amount
-    -Can be toggled On and Off
+-Ender Attractor / Repulsor
+    -Attracts/Repulses Mobs
+    -Has an aggressive and a friendly version
+    -Maybe for Items
+    -Crafted with an Ender Casing
 
 -Void Bag
     -Sucks up picked up Items
@@ -57,9 +58,6 @@
 -File Jukebox
     -Plays Sound Files put into your Minecraft Folder
 
--Oil Plant
-    -Used to make Oil (For use with other mods' machines)
-
 -Pharmacy Plants
     -Give you different effects
 
@@ -80,7 +78,9 @@
 -Phantom Chest
     -Is bound to Inventory on Right-Click
     -Allows you to open the bound Inventory when placed down
-    -Only accessible with Pipes etc.
-    -ISided like the bound Block
     -Range of 10, Range Upgrade adds 15 Range
     -Nether Star allows direct GUI Access and adds 50 Range
+
+-Thermopile
+    -Needs a hot and a cold fluid
+    -Depending on the fluids, it generates more power
