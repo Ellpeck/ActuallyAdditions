@@ -57,30 +57,11 @@ public class GrinderRecipes{
         return null;
     }
 
-    public boolean hasRecipe(String input, String outputOne){
-        boolean containsInput = false;
-        boolean containsOutput = false;
-
+    public boolean hasRecipe(ItemStack input, ItemStack outputOne){
         for(GrinderRecipe recipe : recipes){
-            int[] recipeInputIDs = OreDictionary.getOreIDs(recipe.input);
-            for(int recipeInputID : recipeInputIDs){
-                if(input.equals(OreDictionary.getOreName(recipeInputID))){
-                    containsInput = true;
-                    break;
-                }
-            }
-
-            int[] recipeOutputIDs = OreDictionary.getOreIDs(recipe.firstOutput);
-            for(int recipeOutputID : recipeOutputIDs){
-                if(outputOne.equals(OreDictionary.getOreName(recipeOutputID))){
-                    containsOutput = true;
-                    break;
-                }
-            }
-
-            if(containsInput && containsOutput) break;
+            if(recipe.input.isItemEqual(input) && recipe.firstOutput.isItemEqual(outputOne)) return true;
         }
-        return containsInput && containsOutput;
+        return false;
     }
 
     public int getSecondChance(ItemStack input){

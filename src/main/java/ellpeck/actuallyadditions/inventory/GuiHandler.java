@@ -58,6 +58,9 @@ public class GuiHandler implements IGuiHandler{
             case OIL_GENERATOR_ID:
                 TileEntityBase tileOilGen = (TileEntityBase)world.getTileEntity(x, y, z);
                 return new ContainerOilGenerator(entityPlayer.inventory, tileOilGen);
+            case PHANTOM_PLACER_ID:
+                TileEntityBase tilePlacer = (TileEntityBase)world.getTileEntity(x, y, z);
+                return new ContainerPhantomPlacer(entityPlayer.inventory, tilePlacer);
             default:
                 return null;
         }
@@ -110,6 +113,9 @@ public class GuiHandler implements IGuiHandler{
             case OIL_GENERATOR_ID:
                 TileEntityBase tileOilGen = (TileEntityBase)world.getTileEntity(x, y, z);
                 return new GuiOilGenerator(entityPlayer.inventory, tileOilGen);
+            case PHANTOM_PLACER_ID:
+                TileEntityBase tilePlacer = (TileEntityBase)world.getTileEntity(x, y, z);
+                return new GuiPhantomPlacer(entityPlayer.inventory, tilePlacer);
             default:
                 return null;
         }
@@ -130,6 +136,7 @@ public class GuiHandler implements IGuiHandler{
     public static final int FERMENTING_BARREL_ID = 12;
     public static final int COAL_GENERATOR_ID = 13;
     public static final int OIL_GENERATOR_ID = 14;
+    public static final int PHANTOM_PLACER_ID = 15;
 
     public static void init(){
         Util.logInfo("Initializing GuiHandler...");

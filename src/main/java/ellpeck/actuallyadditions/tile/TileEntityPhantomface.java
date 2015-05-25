@@ -22,14 +22,16 @@ public class TileEntityPhantomface extends TileEntityInventoryBase{
 
     @Override
     public void updateEntity(){
-        if(!this.hasBoundTile()) this.boundTile = null;
+        if(!worldObj.isRemote){
+            if(!this.hasBoundTile()) this.boundTile = null;
 
-        if(this.tempX > 0 || this.tempY > 0 || this.tempZ > 0){
-            this.boundTile = tempWorld.getTileEntity(tempX, tempY, tempZ);
-            this.tempX = 0;
-            this.tempY = 0;
-            this.tempZ = 0;
-            this.tempWorld = null;
+            if(this.tempX > 0 || this.tempY > 0 || this.tempZ > 0){
+                this.boundTile = tempWorld.getTileEntity(tempX, tempY, tempZ);
+                this.tempX = 0;
+                this.tempY = 0;
+                this.tempZ = 0;
+                this.tempWorld = null;
+            }
         }
     }
 
@@ -49,7 +51,14 @@ public class TileEntityPhantomface extends TileEntityInventoryBase{
     }
 
     public boolean hasBoundTile(){
-        return this.boundTile != null && boundTile.getWorldObj().getTileEntity(boundTile.xCoord, boundTile.yCoord, boundTile.zCoord) != null && boundTile.getWorldObj() == this.getWorldObj() && boundTile instanceof IInventory;
+        if(this.boundTile != null){
+            if(this.xCoord == this.boundTile.xCoord && this.yCoord == this.boundTile.yCoord && this.zCoord == this.boundTile.zCoord && this.worldObj == this.boundTile.getWorldObj()){
+                this.boundTile = null;
+                return false;
+            }
+            return boundTile instanceof IInventory && boundTile.getWorldObj().getTileEntity(boundTile.xCoord, boundTile.yCoord, boundTile.zCoord) == boundTile && boundTile.getWorldObj() == this.worldObj;
+        }
+        return false;
     }
 
     @Override

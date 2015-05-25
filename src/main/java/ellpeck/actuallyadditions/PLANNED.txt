@@ -75,12 +75,16 @@
     -Produces Lava from Cobblestone
     -Has Upgrade Slots
 
--Phantom Chest
-    -Is bound to Inventory on Right-Click
-    -Allows you to open the bound Inventory when placed down
-    -Range of 10, Range Upgrade adds 15 Range
-    -Nether Star allows direct GUI Access and adds 50 Range
-
 -Thermopile
     -Needs a hot and a cold fluid
     -Depending on the fluids, it generates more power
+
+-More Effect Rings
+    -Ring of Growth: Lets Plants grow, more Reach with Tier 2
+    -Ring of Thorns: Hurts Attackers when they hit you with a Projectile
+    -Ring of Water Walking
+    -Ring of Flight
+    -Ring of Aquadive: Fast underwater movement
+    -Ring of Suction: Sucks up Items in the area
+    -Ring of Water Absorption: Removes Water around
+    -Ring of Striptease (Or something like that): Attacker lose parts of their Armor

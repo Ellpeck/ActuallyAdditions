@@ -2,6 +2,9 @@ package ellpeck.actuallyadditions.blocks;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import ellpeck.actuallyadditions.ActuallyAdditions;
+import ellpeck.actuallyadditions.inventory.GuiHandler;
+import ellpeck.actuallyadditions.tile.TileEntityPhantomPlacer;
 import ellpeck.actuallyadditions.tile.TileEntityPhantomface;
 import ellpeck.actuallyadditions.util.BlockUtil;
 import ellpeck.actuallyadditions.util.INameableItem;
@@ -23,11 +26,24 @@ import java.util.List;
 
 public class BlockPhantomface extends BlockContainerBase implements INameableItem{
 
-    public BlockPhantomface(){
+    public static final int FACE = 0;
+    public static final int PLACER = 1;
+    public static final int BREAKER = 2;
+
+    public int type;
+
+    public BlockPhantomface(int type){
         super(Material.rock);
+        this.type = type;
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(1.0F);
         this.setStepSound(soundTypeStone);
+    }
+
+    @Override
+    public void breakBlock(World world, int x, int y, int z, Block block, int par6){
+        if(this.type == PLACER || this.type == BREAKER) this.dropInventory(world, x, y, z);
+        super.breakBlock(world, x, y, z, block, par6);
     }
 
     @Override
@@ -38,26 +54,47 @@ public class BlockPhantomface extends BlockContainerBase implements INameableIte
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int hitSide, float hitX, float hitY, float hitZ){
         if(!world.isRemote){
-            TileEntityPhantomface tile = (TileEntityPhantomface)world.getTileEntity(x, y, z);
+            TileEntity tile = world.getTileEntity(x, y, z);
             if(tile != null){
-                if(tile.hasBoundTile()){
-                    if(tile.isBoundTileInRage()){
-                        player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocalFormatted("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.connectedBlock.desc", tile.boundTile.xCoord, tile.boundTile.yCoord, tile.boundTile.zCoord)));
-                        return true;
+                if(tile instanceof TileEntityPhantomface){
+                    TileEntityPhantomface phantom = (TileEntityPhantomface)tile;
+                    if(phantom.hasBoundTile()){
+                        if(phantom.isBoundTileInRage()){
+                            player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocalFormatted("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.connectedBlock.desc", phantom.boundTile.xCoord, phantom.boundTile.yCoord, phantom.boundTile.zCoord)));
+                        }
+                        else player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocalFormatted("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.connectedNoRange.desc", phantom.boundTile.xCoord, phantom.boundTile.yCoord, phantom.boundTile.zCoord)));
                     }
-                    player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocalFormatted("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.connectedNoRange.desc", tile.boundTile.xCoord, tile.boundTile.yCoord, tile.boundTile.zCoord)));
-                    return true;
+                    else player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.notConnected.desc")));
                 }
-                player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.notConnected.desc")));
-                return true;
+
+                else if(tile instanceof TileEntityPhantomPlacer){
+                    if(player.isSneaking()){
+                        TileEntityPhantomPlacer phantom = (TileEntityPhantomPlacer)tile;
+                        if(phantom.hasBoundPosition()){
+                            if(phantom.isBoundPositionInRange()){
+                                player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocalFormatted("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.connectedBlock.desc", phantom.boundPosition.posX, phantom.boundPosition.posY, phantom.boundPosition.posZ)));
+                            }
+                            else player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocalFormatted("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.connectedNoRange.desc", phantom.boundPosition.posX, phantom.boundPosition.posY, phantom.boundPosition.posZ)));
+                        }
+                        else player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.notConnected.desc")));
+                    }
+                    else player.openGui(ActuallyAdditions.instance, GuiHandler.PHANTOM_PLACER_ID, world, x, y, z);
+                }
             }
         }
-        return false;
+        return true;
     }
 
     @Override
     public TileEntity createNewTileEntity(World world, int par2){
-        return new TileEntityPhantomface();
+        switch(this.type){
+            case PLACER:
+                return new TileEntityPhantomPlacer();
+            case BREAKER:
+                return new TileEntityPhantomPlacer.TileEntityPhantomBreaker();
+            default:
+                return new TileEntityPhantomface();
+        }
     }
 
     @Override
@@ -73,7 +110,7 @@ public class BlockPhantomface extends BlockContainerBase implements INameableIte
 
     @Override
     public String getName(){
-        return "blockPhantomface";
+        return this.type == PLACER ? "blockPhantomPlacer" : (this.type == BREAKER ? "blockPhantomBreaker" : "blockPhantomface");
     }
 
     public static class TheItemBlock extends ItemBlock{

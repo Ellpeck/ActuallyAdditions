@@ -8,11 +8,11 @@ import org.apache.logging.log4j.Level;
 
 import java.util.ArrayList;
 
-public class GrinderRecipeHandler{
+public class GrinderRecipeRegistry{
 
-    private static final GrinderRecipeHandler instance = new GrinderRecipeHandler();
+    private static final GrinderRecipeRegistry instance = new GrinderRecipeRegistry();
 
-    public static GrinderRecipeHandler instance(){
+    public static GrinderRecipeRegistry instance(){
         return instance;
     }
 
@@ -58,7 +58,7 @@ public class GrinderRecipeHandler{
                                     ItemStack input = theInput.copy();
                                     ItemStack output = theDust.copy();
                                     output.stackSize = resultAmount;
-                                    if(!GrinderRecipes.instance().hasRecipe(inputName, inputWithDustPrefix)){
+                                    if(!GrinderRecipes.instance().hasRecipe(input, output)){
                                         GrinderRecipes.instance().registerRecipe(input, output, null, 0);
                                     }
                                 }

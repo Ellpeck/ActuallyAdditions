@@ -3,8 +3,8 @@ package ellpeck.actuallyadditions.crafting;
 import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.items.metalists.TheDusts;
 import ellpeck.actuallyadditions.items.metalists.TheFoods;
-import ellpeck.actuallyadditions.recipe.GrinderRecipeHandler;
-import ellpeck.actuallyadditions.recipe.GrinderRecipeHandler.SearchCase;
+import ellpeck.actuallyadditions.recipe.GrinderRecipeRegistry;
+import ellpeck.actuallyadditions.recipe.GrinderRecipeRegistry.SearchCase;
 import ellpeck.actuallyadditions.recipe.GrinderRecipes;
 import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.init.Blocks;
@@ -13,7 +13,7 @@ import net.minecraft.item.ItemStack;
 
 public class GrinderCrafting{
 
-    private static GrinderRecipeHandler grindRecHan = GrinderRecipeHandler.instance();
+    private static GrinderRecipeRegistry grindRecReg = GrinderRecipeRegistry.instance();
     private static GrinderRecipes grindRec = GrinderRecipes.instance();
 
     public static void init(){
@@ -32,15 +32,15 @@ public class GrinderCrafting{
         grindRec.registerRecipe("oreNickel", "dustNickel", "dustPlatinum", 30, 2);
         grindRec.registerRecipe("oreIron", "dustIron", "dustGold", 20, 2);
 
-        grindRecHan.searchCases.add(new SearchCase("oreNether", 6));
-        grindRecHan.searchCases.add(new SearchCase("denseore", 8));
-        grindRecHan.searchCases.add(new SearchCase("ingot", 1));
-        grindRecHan.searchCases.add(new SearchCase("gem", 1));
-        grindRecHan.searchCases.add(new SearchCase("ore", 2));
+        grindRecReg.searchCases.add(new SearchCase("oreNether", 6));
+        grindRecReg.searchCases.add(new SearchCase("denseore", 8));
+        grindRecReg.searchCases.add(new SearchCase("ingot", 1));
+        grindRecReg.searchCases.add(new SearchCase("gem", 1));
+        grindRecReg.searchCases.add(new SearchCase("ore", 2));
 
-        grindRecHan.exceptions.add("ingotBrick");
-        grindRecHan.exceptions.add("ingotBrickNether");
+        grindRecReg.exceptions.add("ingotBrick");
+        grindRecReg.exceptions.add("ingotBrickNether");
 
-        grindRecHan.registerFinally();
+        grindRecReg.registerFinally();
     }
 }

@@ -138,7 +138,7 @@ public class TileEntityOilGenerator extends TileEntityInventoryBase implements I
 
     @Override
     public int fill(ForgeDirection from, FluidStack resource, boolean doFill){
-        if(resource.getFluid() == FluidRegistry.getFluid(InitBlocks.fluidOil.getName())) return this.tank.fill(resource, doFill);
+        if(resource.getFluid() == InitBlocks.fluidOil) return this.tank.fill(resource, doFill);
         return 0;
     }
 
@@ -154,7 +154,7 @@ public class TileEntityOilGenerator extends TileEntityInventoryBase implements I
 
     @Override
     public boolean canFill(ForgeDirection from, Fluid fluid){
-        return fluid == FluidRegistry.getFluid(InitBlocks.fluidOil.getName());
+        return fluid == InitBlocks.fluidOil;
     }
 
     @Override

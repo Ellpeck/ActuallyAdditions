@@ -143,7 +143,7 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IE
 
     @Override
     public FluidStack drain(ForgeDirection from, FluidStack resource, boolean doDrain){
-        if(resource.getFluid() == FluidRegistry.getFluid(InitBlocks.fluidCanolaOil.getName())) return this.tank.drain(resource.amount, doDrain);
+        if(resource.getFluid() == InitBlocks.fluidCanolaOil) return this.tank.drain(resource.amount, doDrain);
         return null;
     }
 

@@ -62,17 +62,17 @@ public class TileEntityBreaker extends TileEntityInventoryBase{
                                 int meta = worldObj.getBlockMetadata(coordsBlock.posX, coordsBlock.posY, coordsBlock.posZ);
                                 drops.addAll(blockToBreak.getDrops(worldObj, coordsBlock.posX, coordsBlock.posY, coordsBlock.posZ, meta, 0));
 
-                                if(this.addToInventory(drops, false)){
+                                if(addToInventory(this.slots, drops, false)){
                                     worldObj.playAuxSFX(2001, coordsBlock.posX, coordsBlock.posY, coordsBlock.posZ, Block.getIdFromBlock(blockToBreak) + (meta << 12));
                                     WorldUtil.breakBlockAtSide(sideToManipulate, worldObj, xCoord, yCoord, zCoord);
-                                    this.addToInventory(drops, true);
+                                    addToInventory(this.slots, drops, true);
                                     this.markDirty();
                                 }
                             }
                             else if(this.isPlacer && worldObj.getBlock(coordsBlock.posX, coordsBlock.posY, coordsBlock.posZ).isReplaceable(worldObj, coordsBlock.posX, coordsBlock.posY, coordsBlock.posZ)){
-                                ItemStack removeFalse = this.removeFromInventory(false);
+                                ItemStack removeFalse = removeFromInventory(this.slots, false);
                                 if(removeFalse != null && WorldUtil.placeBlockAtSide(sideToManipulate, worldObj, xCoord, yCoord, zCoord, removeFalse)){
-                                    this.removeFromInventory(true);
+                                    removeFromInventory(this.slots, true);
                                 }
                             }
                         }
@@ -95,15 +95,15 @@ public class TileEntityBreaker extends TileEntityInventoryBase{
         this.currentTime = compound.getInteger("CurrentTime");
     }
 
-    public boolean addToInventory(ArrayList<ItemStack> stacks, boolean actuallyDo){
+    public static boolean addToInventory(ItemStack[] slots, ArrayList<ItemStack> stacks, boolean actuallyDo){
         int working = 0;
         for(ItemStack stack : stacks){
-            for(int i = 0; i < this.slots.length; i++){
-                if(this.slots[i] == null || (this.slots[i].isItemEqual(stack) && this.slots[i].stackSize <= stack.getMaxStackSize()-stack.stackSize)){
+            for(int i = 0; i < slots.length; i++){
+                if(slots[i] == null || (slots[i].isItemEqual(stack) && slots[i].stackSize <= stack.getMaxStackSize()-stack.stackSize)){
                     working++;
                     if(actuallyDo){
-                        if(this.slots[i] == null) this.slots[i] = stack.copy();
-                        else this.slots[i].stackSize += stack.stackSize;
+                        if(slots[i] == null) slots[i] = stack.copy();
+                        else slots[i].stackSize += stack.stackSize;
                     }
                     break;
                 }
@@ -112,13 +112,13 @@ public class TileEntityBreaker extends TileEntityInventoryBase{
         return working >= stacks.size();
     }
 
-    public ItemStack removeFromInventory(boolean actuallyDo){
-        for(int i = 0; i < this.slots.length; i++){
-            if(this.slots[i] != null){
-                ItemStack slot = this.slots[i].copy();
+    public static ItemStack removeFromInventory(ItemStack[] slots, boolean actuallyDo){
+        for(int i = 0; i < slots.length; i++){
+            if(slots[i] != null){
+                ItemStack slot = slots[i].copy();
                 if(actuallyDo){
-                    this.slots[i].stackSize--;
-                    if(this.slots[i].stackSize <= 0) this.slots[i] = null;
+                    slots[i].stackSize--;
+                    if(slots[i].stackSize <= 0) slots[i] = null;
                 }
                 return slot;
             }

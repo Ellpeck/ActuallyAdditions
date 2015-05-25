@@ -116,13 +116,13 @@ public class TileEntityFermentingBarrel extends TileEntityInventoryBase implemen
 
     @Override
     public int fill(ForgeDirection from, FluidStack resource, boolean doFill){
-        if(from != ForgeDirection.DOWN && resource.getFluid() == FluidRegistry.getFluid(InitBlocks.fluidCanolaOil.getName())) return this.canolaTank.fill(resource, doFill);
+        if(from != ForgeDirection.DOWN && resource.getFluid() == InitBlocks.fluidCanolaOil) return this.canolaTank.fill(resource, doFill);
         return 0;
     }
 
     @Override
     public FluidStack drain(ForgeDirection from, FluidStack resource, boolean doDrain){
-        if(resource.getFluid() == FluidRegistry.getFluid(InitBlocks.fluidOil.getName())) return this.oilTank.drain(resource.amount, doDrain);
+        if(resource.getFluid() == InitBlocks.fluidOil) return this.oilTank.drain(resource.amount, doDrain);
         return null;
     }
 
@@ -133,12 +133,12 @@ public class TileEntityFermentingBarrel extends TileEntityInventoryBase implemen
 
     @Override
     public boolean canFill(ForgeDirection from, Fluid fluid){
-        return from != ForgeDirection.DOWN && fluid == FluidRegistry.getFluid(InitBlocks.fluidCanolaOil.getName());
+        return from != ForgeDirection.DOWN && fluid == InitBlocks.fluidCanolaOil;
     }
 
     @Override
     public boolean canDrain(ForgeDirection from, Fluid fluid){
-        return fluid == FluidRegistry.getFluid(InitBlocks.fluidOil.getName());
+        return fluid == InitBlocks.fluidOil;
     }
 
     @Override
