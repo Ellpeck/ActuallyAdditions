@@ -57,11 +57,11 @@ tooltip.actuallyadditions.blockPhantomface.desc.2=Input things into me to input 
 
 tile.actuallyadditions.blockPhantomPlacer.name=Phantom Placer
 tooltip.actuallyadditions.blockPhantomPlacer.desc.1=Places Blocks from a distance! Connect me with a Phantom Connector!
-tooltip.actuallyadditions.blockPhantomPlacer.desc.2=Shift-Right-Click with an empty hand to see its Connections!
+tooltip.actuallyadditions.blockPhantomPlacer.desc.2=Sneak-Right-Click with an empty hand to see its Connections!
 
 tile.actuallyadditions.blockPhantomBreaker.name=Phantom Breaker
 tooltip.actuallyadditions.blockPhantomBreaker.desc.1=Breaks Blocks from a distance! Connect me with a Phantom Connector!
-tooltip.actuallyadditions.blockPhantomBreaker.desc.2=Shift-Right-Click with an empty hand to see its Connections!
+tooltip.actuallyadditions.blockPhantomBreaker.desc.2=Sneak-Right-Click with an empty hand to see its Connections!
 
 item.actuallyadditions.itemPhantomConnector.name=Phantom Connector
 tooltip.actuallyadditions.itemPhantomConnector.desc.1=Connects a Phantom Face to any Inventory Block!
@@ -119,7 +119,7 @@ tile.actuallyadditions.blockInputter.add.15.name=MISSINGNO
 tooltip.actuallyadditions.phantom.connected.desc=<Block connected!>
 tooltip.actuallyadditions.phantom.stored.desc=<Block stored to this Connector!>
 tooltip.actuallyadditions.phantom.noBound.desc=The Connector has no Information stored!
-tooltip.actuallyadditions.phantom.notInventory.desc=The stored Block is not an Inventory!
+tooltip.actuallyadditions.phantom.notInventory.desc=The stored Block is not the right type of Inventory!
 tooltip.actuallyadditions.phantom.inWorld.desc=In World
 tooltip.actuallyadditions.phantom.boundTo.desc=Bound to
 tooltip.actuallyadditions.phantom.connectedBlock.desc=Connected to Block at %s, %s, %s
@@ -389,16 +389,13 @@ container.actuallyadditions.nei.crushing.name=Crusher
 container.actuallyadditions.nei.ballOfHair.name=Ball Of Hair Usage
 container.actuallyadditions.nei.compost.name=Compost
 
-gui.actuallyadditions.waila.compostAmount.name=Amount of Mashed Food
-gui.actuallyadditions.waila.compostDone.name=Done!
-gui.actuallyadditions.waila.compostConverting.name=Converting...
-
 info.actuallyadditions.update.generic.desc=[{"text":"There is an "},{"text":"Update ","bold":"true"},{"text":"for ","bold":"false"},{"text":"Actually Additions ","color":"dark_green","bold":"true"},{"text":"available!","color":"none","bold":"false"}]
 info.actuallyadditions.update.versionComp.desc=[{"text":"You have Version "},{"text":"%s","color":"dark_red","italic":"false"},{"text":", the newest one is ","color":"none","italic":"false"},{"text":"%s","color":"dark_green","underlined":"false"},{"text":"!","color":"none","underlined":"false"}]
 info.actuallyadditions.update.download.desc=[{"text":"Download the newest Version "},{"text":"here! (Click me!)","color":"dark_green","underlined":"true","clickEvent":{"action":"open_url","value":"%s"},"hoverEvent":{"action":"show_text","value":{"text":"","extra":[{"text":"Click here to open your Browser and download the newest Version!"}]}}}]
 info.actuallyadditions.update.failed.desc=[{"text":"The Update Check for "},{"text":"Actually Additions ","color":"dark_green","bold":"true"},{"text":"failed! Check your Internet Connection and the Logs for more Info!","color":"none"}]
+info.actuallyadditions.update.changelog.desc=Updates: %s
 
-achievement.actuallyadditions.pickUpSolidXP=Hard and Rich and Stuff
+achievement.actuallyadditions.pickUpSolidXP=Square and yummy!
 achievement.actuallyadditions.pickUpSolidXP.desc=Pick up some Solidified Experience
 achievement.actuallyadditions.craftKnifeBlade=Sharp! So Sharp!
 achievement.actuallyadditions.craftKnifeBlade.desc=Craft a Knife Blade

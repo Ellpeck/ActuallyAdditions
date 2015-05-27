@@ -42,7 +42,7 @@ public class ItemPhantomConnector extends Item implements INameableItem{
                     if(this.checkHasConnection(stack, player)){
                         ChunkCoordinates coords = this.getStoredPosition(stack);
                         TileEntity toStore = this.getStoredWorld(stack).getTileEntity(coords.posX, coords.posY, coords.posZ);
-                        if(toStore != null){
+                        if(toStore != null && ((TileEntityPhantomface)tile).canConnectTo(toStore)){
                             ((TileEntityPhantomface)tile).boundTile = toStore;
                             this.clearStorage(stack);
                             player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.connected.desc")));

@@ -46,8 +46,9 @@ public class InitBlocks{
     public static Block blockOilGenerator;
 
     public static Block blockPhantomface;
-    //public static Block blockPhantomPlacer;
-    //public static Block blockPhantomBreaker;
+    public static Block blockPhantomPlacer;
+    public static Block blockPhantomBreaker;
+    public static Block blockPhantomLiquiface;
 
     public static void init(){
         Util.logInfo("Initializing Blocks...");
@@ -68,11 +69,14 @@ public class InitBlocks{
         blockPhantomface = new BlockPhantomface(BlockPhantomface.FACE);
         BlockUtil.register(blockPhantomface, BlockPhantomface.TheItemBlock.class);
 
-        //blockPhantomPlacer = new BlockPhantomface(BlockPhantomface.PLACER);
-        //BlockUtil.register(blockPhantomPlacer, BlockPhantomface.TheItemBlock.class);
+        blockPhantomPlacer = new BlockPhantomface(BlockPhantomface.PLACER);
+        BlockUtil.register(blockPhantomPlacer, BlockPhantomface.TheItemBlock.class);
 
-        //blockPhantomBreaker = new BlockPhantomface(BlockPhantomface.BREAKER);
-        //BlockUtil.register(blockPhantomBreaker, BlockPhantomface.TheItemBlock.class);
+        blockPhantomLiquiface = new BlockPhantomface(BlockPhantomface.LIQUIFACE);
+        BlockUtil.register(blockPhantomLiquiface, BlockPhantomface.TheItemBlock.class);
+
+        blockPhantomBreaker = new BlockPhantomface(BlockPhantomface.BREAKER);
+        BlockUtil.register(blockPhantomBreaker, BlockPhantomface.TheItemBlock.class);
 
         blockCoalGenerator = new BlockCoalGenerator();
         BlockUtil.register(blockCoalGenerator, BlockCoalGenerator.TheItemBlock.class);

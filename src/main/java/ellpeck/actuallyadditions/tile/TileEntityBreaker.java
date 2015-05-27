@@ -118,7 +118,7 @@ public class TileEntityBreaker extends TileEntityInventoryBase{
                 ItemStack slot = slots[i].copy();
                 if(actuallyDo){
                     slots[i].stackSize--;
-                    if(slots[i].stackSize <= 0) slots[i] = null;
+                    if(slots[i].stackSize <= 0) slots[i] = slots[i].getItem().getContainerItem(slots[i]);
                 }
                 return slot;
             }

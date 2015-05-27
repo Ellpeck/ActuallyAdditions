@@ -6,6 +6,7 @@ import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.util.StatCollector;
 import org.apache.logging.log4j.Level;
@@ -20,6 +21,7 @@ public class UpdateChecker{
     public boolean checkFailed = false;
     public boolean notified = false;
     public String onlineVersion;
+    public String changelog;
 
     public void init(){
         Util.logInfo("Initializing Update Checker...");
@@ -42,9 +44,11 @@ public class UpdateChecker{
                     String notice1 = "info." + ModUtil.MOD_ID_LOWER + ".update.generic.desc";
                     String notice2 = "info." + ModUtil.MOD_ID_LOWER + ".update.versionComp.desc";
                     String notice3 = "info." + ModUtil.MOD_ID_LOWER + ".update.download.desc";
+                    String notice4 = "info." + ModUtil.MOD_ID_LOWER + ".update.changelog.desc";
                     player.addChatComponentMessage(IChatComponent.Serializer.func_150699_a(StatCollector.translateToLocal(notice1)));
                     player.addChatComponentMessage(IChatComponent.Serializer.func_150699_a(StatCollector.translateToLocalFormatted(notice2, ModUtil.VERSION, this.onlineVersion)));
                     player.addChatComponentMessage(IChatComponent.Serializer.func_150699_a(StatCollector.translateToLocalFormatted(notice3, "http://minecraft.curseforge.com/mc-mods/228404-actually-additions/files")));
+                    player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocalFormatted(notice4, changelog)));
                 }
 
             }
@@ -64,10 +68,16 @@ public class UpdateChecker{
         public void run(){
             Util.logInfo("Starting Update Check...");
             try{
-                URL url = new URL("https://raw.githubusercontent.com/Ellpeck/ActuallyAdditions/master/newestVersion.txt");
-                BufferedReader r = new BufferedReader(new InputStreamReader(url.openStream()));
-                onlineVersion = r.readLine();
-                r.close();
+                URL newestURL = new URL("https://raw.githubusercontent.com/Ellpeck/ActuallyAdditions/master/update/newestVersion.txt");
+                BufferedReader newestReader = new BufferedReader(new InputStreamReader(newestURL.openStream()));
+                onlineVersion = newestReader.readLine();
+                newestReader.close();
+
+                URL changeURL = new URL("https://raw.githubusercontent.com/Ellpeck/ActuallyAdditions/master/update/changelog.txt");
+                BufferedReader changeReader = new BufferedReader(new InputStreamReader(changeURL.openStream()));
+                changelog = changeReader.readLine();
+                changeReader.close();
+
                 Util.logInfo("Update Check done!");
             }
             catch(Exception e){

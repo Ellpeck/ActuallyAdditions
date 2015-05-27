@@ -10,6 +10,8 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.fluids.FluidContainerRegistry;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.IFluidHandler;
 
@@ -55,11 +57,21 @@ public class WorldUtil{
 
     public static boolean placeBlockAtSide(ForgeDirection side, World world, int x, int y, int z, ItemStack stack){
         if(world instanceof WorldServer){
+
+            //Fluids
+            FluidStack fluid = FluidContainerRegistry.getFluidForFilledItem(stack);
+            if(fluid != null && fluid.getFluid().getBlock() != null && fluid.getFluid().getBlock().canPlaceBlockAt(world, x+side.offsetX, y+side.offsetY, z+side.offsetZ)){
+                return world.setBlock(x+side.offsetX, y+side.offsetY, z+side.offsetZ, fluid.getFluid().getBlock());
+            }
+
+            //Plants
             if(stack.getItem() instanceof IPlantable){
                 if(((IPlantable)stack.getItem()).getPlant(world, x, y, z).canPlaceBlockAt(world, x+side.offsetX, y+side.offsetY, z+side.offsetZ)){
                     return world.setBlock(x+side.offsetX, y+side.offsetY, z+side.offsetZ, ((IPlantable)stack.getItem()).getPlant(world, x, y, z));
                 }
             }
+
+            //Blocks
             return stack.tryPlaceItemIntoWorld(FakePlayerUtil.newFakePlayer(world), world,x, y, z, side == ForgeDirection.UNKNOWN ? 0 : side.ordinal(), 0, 0, 0);
         }
         return false;

@@ -216,7 +216,7 @@ public class BlockCrafting{
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockGreenhouseGlass),
                     "GSG", "SDS", "GSG",
                     'G', "blockGlass",
-                    'D', "blockDiamond",
+                    'D', "gemDiamond",
                     'S', "treeSapling"));
 
         //Placer

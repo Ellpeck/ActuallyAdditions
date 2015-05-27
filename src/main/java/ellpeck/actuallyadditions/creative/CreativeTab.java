@@ -27,8 +27,8 @@ public class CreativeTab extends CreativeTabs{
         this.list = list;
 
         this.addBlock(InitBlocks.blockPhantomface);
-        //this.addBlock(InitBlocks.blockPhantomPlacer);
-        //this.addBlock(InitBlocks.blockPhantomBreaker);
+        this.addBlock(InitBlocks.blockPhantomPlacer);
+        this.addBlock(InitBlocks.blockPhantomBreaker);
         this.addBlock(InitBlocks.blockInputter);
         this.addBlock(InitBlocks.blockInputterAdvanced);
 
@@ -92,7 +92,7 @@ public class CreativeTab extends CreativeTabs{
 
     @Override
     public Item getTabIconItem(){
-        return Item.getItemFromBlock(InitBlocks.blockInputter);
+        return Item.getItemFromBlock(InitBlocks.blockPhantomPlacer);
     }
 
     @Override

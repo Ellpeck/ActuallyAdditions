@@ -1,5 +1,6 @@
 package ellpeck.actuallyadditions.tile;
 
+import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
@@ -26,9 +27,9 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase{
     public World boundWorld;
 
     public int currentTime;
-    public final int timeNeeded = 30;
+    public final int timeNeeded = ConfigIntValues.PHANTOM_PLACER_TIME.getValue();
 
-    public final int range = 3;
+    public final int range = ConfigIntValues.PHANTOM_PLACER_RANGE.getValue();
 
     public boolean isBreaker;
 

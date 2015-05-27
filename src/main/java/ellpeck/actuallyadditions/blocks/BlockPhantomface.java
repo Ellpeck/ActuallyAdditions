@@ -29,6 +29,8 @@ public class BlockPhantomface extends BlockContainerBase implements INameableIte
     public static final int FACE = 0;
     public static final int PLACER = 1;
     public static final int BREAKER = 2;
+    public static final int LIQUIFACE = 3;
+    public static final int ENERGYFACE = 4;
 
     public int type;
 
@@ -59,9 +61,7 @@ public class BlockPhantomface extends BlockContainerBase implements INameableIte
                 if(tile instanceof TileEntityPhantomface){
                     TileEntityPhantomface phantom = (TileEntityPhantomface)tile;
                     if(phantom.hasBoundTile()){
-                        if(phantom.isBoundTileInRage()){
-                            player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocalFormatted("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.connectedBlock.desc", phantom.boundTile.xCoord, phantom.boundTile.yCoord, phantom.boundTile.zCoord)));
-                        }
+                        if(phantom.isBoundTileInRage()) player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocalFormatted("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.connectedBlock.desc", phantom.boundTile.xCoord, phantom.boundTile.yCoord, phantom.boundTile.zCoord)));
                         else player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocalFormatted("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.connectedNoRange.desc", phantom.boundTile.xCoord, phantom.boundTile.yCoord, phantom.boundTile.zCoord)));
                     }
                     else player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.notConnected.desc")));
@@ -71,9 +71,7 @@ public class BlockPhantomface extends BlockContainerBase implements INameableIte
                     if(player.isSneaking()){
                         TileEntityPhantomPlacer phantom = (TileEntityPhantomPlacer)tile;
                         if(phantom.hasBoundPosition()){
-                            if(phantom.isBoundPositionInRange()){
-                                player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocalFormatted("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.connectedBlock.desc", phantom.boundPosition.posX, phantom.boundPosition.posY, phantom.boundPosition.posZ)));
-                            }
+                            if(phantom.isBoundPositionInRange()) player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocalFormatted("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.connectedBlock.desc", phantom.boundPosition.posX, phantom.boundPosition.posY, phantom.boundPosition.posZ)));
                             else player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocalFormatted("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.connectedNoRange.desc", phantom.boundPosition.posX, phantom.boundPosition.posY, phantom.boundPosition.posZ)));
                         }
                         else player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.notConnected.desc")));
@@ -92,8 +90,10 @@ public class BlockPhantomface extends BlockContainerBase implements INameableIte
                 return new TileEntityPhantomPlacer();
             case BREAKER:
                 return new TileEntityPhantomPlacer.TileEntityPhantomBreaker();
+            case LIQUIFACE:
+                return new TileEntityPhantomface.TileEntityPhantomLiquiface();
             default:
-                return new TileEntityPhantomface();
+                return new TileEntityPhantomface.TileEntityPhantomItemface();
         }
     }
 
@@ -110,7 +110,16 @@ public class BlockPhantomface extends BlockContainerBase implements INameableIte
 
     @Override
     public String getName(){
-        return this.type == PLACER ? "blockPhantomPlacer" : (this.type == BREAKER ? "blockPhantomBreaker" : "blockPhantomface");
+        switch(this.type){
+            case PLACER:
+                return "blockPhantomPlacer";
+            case BREAKER:
+                return "blockPhantomBreaker";
+            case LIQUIFACE:
+                return "blockPhantomLiquiface";
+            default:
+                return "blockPhantomface";
+        }
     }
 
     public static class TheItemBlock extends ItemBlock{

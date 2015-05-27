@@ -10,7 +10,6 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumRarity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemBucket;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
@@ -24,16 +23,12 @@ public class ItemBucketAA extends ItemBucket implements INameableItem{
     public ItemBucketAA(Block block, String unlocName){
         super(block);
         this.name = unlocName;
+        this.setContainerItem(Items.bucket);
     }
 
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.uncommon;
-    }
-
-    @Override
-    public Item getContainerItem(){
-        return Items.bucket;
     }
 
     @Override
