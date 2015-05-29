@@ -1,7 +1,11 @@
 package ellpeck.actuallyadditions.tile;
 
+import cofh.api.energy.IEnergyHandler;
+import cofh.api.energy.IEnergyProvider;
+import cofh.api.energy.IEnergyReceiver;
 import ellpeck.actuallyadditions.blocks.BlockPhantomface;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
+import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
@@ -125,6 +129,40 @@ public class TileEntityPhantomface extends TileEntityInventoryBase{
         }
 
         @Override
+        public void updateEntity(){
+            super.updateEntity();
+
+            if(!worldObj.isRemote){
+                if(this.isBoundTileInRage() && this.getHandler() != null){
+                    this.pushFluid(ForgeDirection.UP);
+                    this.pushFluid(ForgeDirection.DOWN);
+                    this.pushFluid(ForgeDirection.NORTH);
+                    this.pushFluid(ForgeDirection.EAST);
+                    this.pushFluid(ForgeDirection.SOUTH);
+                    this.pushFluid(ForgeDirection.WEST);
+                }
+            }
+        }
+
+        private void pushFluid(ForgeDirection side){
+            TileEntity tile = WorldUtil.getTileEntityFromSide(side, worldObj, xCoord, yCoord, zCoord);
+            if(tile != null && tile instanceof IFluidHandler){
+                for(FluidTankInfo myInfo : this.getTankInfo(side)){
+                    for(FluidTankInfo hisInfo : ((IFluidHandler)tile).getTankInfo(side.getOpposite())){
+                        if(myInfo != null && hisInfo != null && myInfo.fluid != null){
+                            if(((IFluidHandler)tile).canFill(side.getOpposite(), myInfo.fluid.getFluid()) && this.canDrain(side, myInfo.fluid.getFluid())){
+                                FluidStack receive = this.drain(side, Math.min(hisInfo.capacity-(hisInfo.fluid == null ? 0 : hisInfo.fluid.amount), myInfo.fluid.amount), false);
+                                int actualReceive = ((IFluidHandler)tile).fill(side.getOpposite(), receive, true);
+                                this.drain(side, new FluidStack(receive.getFluid(), actualReceive), true);
+                                worldObj.markBlockForUpdate(xCoord+side.offsetX, yCoord+side.offsetY, zCoord+side.offsetZ);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        @Override
         public boolean canConnectTo(TileEntity tile){
             return tile instanceof IFluidHandler;
         }
@@ -174,6 +212,105 @@ public class TileEntityPhantomface extends TileEntityInventoryBase{
         public FluidTankInfo[] getTankInfo(ForgeDirection from){
             if(this.isBoundTileInRage()) return this.getHandler().getTankInfo(from);
             return new FluidTankInfo[0];
+        }
+    }
+
+    public static class TileEntityPhantomEnergyface extends TileEntityPhantomface implements IEnergyHandler{
+
+        public TileEntityPhantomEnergyface(){
+            super("energyface");
+            this.type = BlockPhantomface.ENERGYFACE;
+        }
+
+        @Override
+        public void updateEntity(){
+            super.updateEntity();
+
+            if(!worldObj.isRemote){
+                if(this.isBoundTileInRage() && this.getProvider() != null){
+                    this.pushEnergy(ForgeDirection.UP);
+                    this.pushEnergy(ForgeDirection.DOWN);
+                    this.pushEnergy(ForgeDirection.NORTH);
+                    this.pushEnergy(ForgeDirection.EAST);
+                    this.pushEnergy(ForgeDirection.SOUTH);
+                    this.pushEnergy(ForgeDirection.WEST);
+                }
+            }
+        }
+
+        private void pushEnergy(ForgeDirection side){
+            TileEntity tile = WorldUtil.getTileEntityFromSide(side, worldObj, xCoord, yCoord, zCoord);
+            if(tile != null && tile instanceof IEnergyReceiver && this.getProvider().getEnergyStored(ForgeDirection.UNKNOWN) > 0){
+                if(((IEnergyReceiver)tile).canConnectEnergy(side.getOpposite()) && this.canConnectEnergy(side)){
+                    int receive = this.extractEnergy(side, Math.min(((IEnergyReceiver)tile).getMaxEnergyStored(ForgeDirection.UNKNOWN)-((IEnergyReceiver)tile).getEnergyStored(ForgeDirection.UNKNOWN), this.getEnergyStored(ForgeDirection.UNKNOWN)), true);
+                    int actualReceive = ((IEnergyReceiver)tile).receiveEnergy(side.getOpposite(), receive, false);
+                    this.extractEnergy(side, actualReceive, false);
+                    worldObj.markBlockForUpdate(xCoord+side.offsetX, yCoord+side.offsetY, zCoord+side.offsetZ);
+                }
+            }
+        }
+
+        @Override
+        public boolean canConnectTo(TileEntity tile){
+            return tile instanceof IEnergyProvider || tile instanceof IEnergyReceiver;
+        }
+
+        public IEnergyProvider getProvider(){
+            TileEntity tile = boundTile.getWorldObj().getTileEntity(boundTile.xCoord, boundTile.yCoord, boundTile.zCoord);
+            if(tile != null && tile instanceof IEnergyProvider){
+                return (IEnergyProvider)tile;
+            }
+            return null;
+        }
+
+        public IEnergyReceiver getReceiver(){
+            TileEntity tile = boundTile.getWorldObj().getTileEntity(boundTile.xCoord, boundTile.yCoord, boundTile.zCoord);
+            if(tile != null && tile instanceof IEnergyReceiver){
+                return (IEnergyReceiver)tile;
+            }
+            return null;
+        }
+
+        @Override
+        public boolean hasBoundTile(){
+            return super.hasBoundTile() && (this.boundTile instanceof IEnergyReceiver || this.boundTile instanceof IEnergyProvider);
+        }
+
+        @Override
+        public int receiveEnergy(ForgeDirection from, int maxReceive, boolean simulate){
+            return this.isBoundTileInRage() && this.getReceiver() != null ? this.getReceiver().receiveEnergy(from, maxReceive, simulate) : 0;
+        }
+
+        @Override
+        public int extractEnergy(ForgeDirection from, int maxExtract, boolean simulate){
+            return this.isBoundTileInRage() && this.getProvider() != null ? this.getProvider().extractEnergy(from, maxExtract, simulate) : 0;
+        }
+
+        @Override
+        public int getEnergyStored(ForgeDirection from){
+            if(this.isBoundTileInRage()){
+                if(this.getProvider() != null) return this.getProvider().getEnergyStored(from);
+                if(this.getReceiver() != null) return this.getReceiver().getEnergyStored(from);
+            }
+            return 0;
+        }
+
+        @Override
+        public int getMaxEnergyStored(ForgeDirection from){
+            if(this.isBoundTileInRage()){
+                if(this.getProvider() != null) return this.getProvider().getMaxEnergyStored(from);
+                if(this.getReceiver() != null) return this.getReceiver().getMaxEnergyStored(from);
+            }
+            return 0;
+        }
+
+        @Override
+        public boolean canConnectEnergy(ForgeDirection from){
+            if(this.isBoundTileInRage()){
+                if(this.getProvider() != null) return this.getProvider().canConnectEnergy(from);
+                if(this.getReceiver() != null) return this.getReceiver().canConnectEnergy(from);
+            }
+            return false;
         }
     }
 

@@ -138,7 +138,7 @@ public class TileEntityFermentingBarrel extends TileEntityInventoryBase implemen
 
     @Override
     public boolean canDrain(ForgeDirection from, Fluid fluid){
-        return fluid == InitBlocks.fluidOil;
+        return from != ForgeDirection.UP && fluid == InitBlocks.fluidOil;
     }
 
     @Override

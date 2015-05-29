@@ -159,7 +159,7 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IE
 
     @Override
     public boolean canDrain(ForgeDirection from, Fluid fluid){
-        return true;
+        return from != ForgeDirection.UP;
     }
 
     @Override

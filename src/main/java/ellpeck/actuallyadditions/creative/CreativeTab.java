@@ -27,6 +27,8 @@ public class CreativeTab extends CreativeTabs{
         this.list = list;
 
         this.addBlock(InitBlocks.blockPhantomface);
+        this.addBlock(InitBlocks.blockPhantomEnergyface);
+        this.addBlock(InitBlocks.blockPhantomLiquiface);
         this.addBlock(InitBlocks.blockPhantomPlacer);
         this.addBlock(InitBlocks.blockPhantomBreaker);
         this.addBlock(InitBlocks.blockInputter);

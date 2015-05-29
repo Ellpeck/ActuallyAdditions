@@ -55,6 +55,17 @@ tile.actuallyadditions.blockPhantomface.name=Phantomface
 tooltip.actuallyadditions.blockPhantomface.desc.1=Like a Hopper-Chain, only Wireless! Connect me with a Phantom Connector!
 tooltip.actuallyadditions.blockPhantomface.desc.2=Input things into me to input into connected Blocks!
 
+tile.actuallyadditions.blockPhantomEnergyface.name=Phantom Energyface
+tooltip.actuallyadditions.blockPhantomEnergyface.desc.1=Like a Conduit, only Wireless! Connect me with a Phantom Connector!
+tooltip.actuallyadditions.blockPhantomEnergyface.desc.2=Put RF through me!
+
+tile.actuallyadditions.blockPhantomLiquiface.name=Phantom Liquiface
+tooltip.actuallyadditions.blockPhantomLiquiface.desc.1=Like a Pipe, only Wireless! Connect me with a Phantom Connector!
+tooltip.actuallyadditions.blockPhantomLiquiface.desc.2=Put Fluids through me! Auto-Outputs too!
+tooltip.actuallyadditions.blockPhantomLiquiface.desc.3=Important: When having a linked Fluid Container that can input and output
+tooltip.actuallyadditions.blockPhantomLiquiface.desc.4=the same Fluid, set possible Pipes to Input/Output Only Mode,
+tooltip.actuallyadditions.blockPhantomLiquiface.desc.5=otherwise fluids will flow back and forward indefinitely!
+
 tile.actuallyadditions.blockPhantomPlacer.name=Phantom Placer
 tooltip.actuallyadditions.blockPhantomPlacer.desc.1=Places Blocks from a distance! Connect me with a Phantom Connector!
 tooltip.actuallyadditions.blockPhantomPlacer.desc.2=Sneak-Right-Click with an empty hand to see its Connections!
@@ -311,7 +322,7 @@ tooltip.actuallyadditions.itemFoodChocolateCake.desc=Looks delicious. With redbe
 tooltip.actuallyadditions.itemFoodNoodle.desc=Just one. Like... that's not much.
 tooltip.actuallyadditions.itemFoodSpaghetti.desc=The most generic food ever. So clichée.
 tooltip.actuallyadditions.itemFoodFrenchFry.desc=French. Fry.
-tooltip.actuallyadditions.itemFoodFrenchFries.desc=Much like French Fires, but actually taste good.
+tooltip.actuallyadditions.itemFoodFrenchFries.desc=Much like French Fires, not as hot though...
 tooltip.actuallyadditions.itemFoodFishNChips.desc=It's Fish. It's Chips. Or French Fries. Whatevs.
 tooltip.actuallyadditions.itemFoodCarrotJuice.desc=Carrots, but pressed!
 tooltip.actuallyadditions.itemFoodPumpkinStew.desc=Like Mushroom Stew or Rabbit Stew, but pumpykinny.
@@ -383,6 +394,8 @@ container.actuallyadditions.oilGenerator.name=Oil Generator
 container.actuallyadditions.phantomPlacer.name=Phantom Placer
 container.actuallyadditions.phantomBreaker.name=Phantom Breaker
 container.actuallyadditions.phantomface.name=Phantomface
+container.actuallyadditions.liquiface.name=Liquiface
+container.actuallyadditions.energyface.name=Energyface
 
 
 container.actuallyadditions.nei.crushing.name=Crusher

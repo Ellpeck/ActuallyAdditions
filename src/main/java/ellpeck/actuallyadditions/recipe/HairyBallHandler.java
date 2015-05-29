@@ -18,6 +18,9 @@ public class HairyBallHandler{
         addReturn(new ItemStack(Items.diamond), 2);
         addReturn(new ItemStack(Items.name_tag), 1);
         addReturn(new ItemStack(Items.fish), 80);
+        addReturn(new ItemStack(Items.fish, 1), 60);
+        addReturn(new ItemStack(Items.fish, 2), 10);
+        addReturn(new ItemStack(Items.fish, 3), 40);
         addReturn(new ItemStack(Items.feather), 60);
         addReturn(new ItemStack(Items.leather), 30);
         addReturn(new ItemStack(Items.dye), 70);

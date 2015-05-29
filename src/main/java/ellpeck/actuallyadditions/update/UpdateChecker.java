@@ -43,12 +43,12 @@ public class UpdateChecker{
                 if(update > client){
                     String notice1 = "info." + ModUtil.MOD_ID_LOWER + ".update.generic.desc";
                     String notice2 = "info." + ModUtil.MOD_ID_LOWER + ".update.versionComp.desc";
-                    String notice3 = "info." + ModUtil.MOD_ID_LOWER + ".update.download.desc";
-                    String notice4 = "info." + ModUtil.MOD_ID_LOWER + ".update.changelog.txt.desc";
+                    String notice3 = "info." + ModUtil.MOD_ID_LOWER + ".update.changelog.desc";
+                    String notice4 = "info." + ModUtil.MOD_ID_LOWER + ".update.download.desc";
                     player.addChatComponentMessage(IChatComponent.Serializer.func_150699_a(StatCollector.translateToLocal(notice1)));
                     player.addChatComponentMessage(IChatComponent.Serializer.func_150699_a(StatCollector.translateToLocalFormatted(notice2, ModUtil.VERSION, this.onlineVersion)));
-                    player.addChatComponentMessage(IChatComponent.Serializer.func_150699_a(StatCollector.translateToLocalFormatted(notice3, "http://minecraft.curseforge.com/mc-mods/228404-actually-additions/files")));
-                    player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocalFormatted(notice4, changelog)));
+                    player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocalFormatted(notice3, changelog)));
+                    player.addChatComponentMessage(IChatComponent.Serializer.func_150699_a(StatCollector.translateToLocalFormatted(notice4, "http://minecraft.curseforge.com/mc-mods/228404-actually-additions/files")));
                 }
 
             }

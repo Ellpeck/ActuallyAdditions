@@ -118,7 +118,7 @@ public class FoodCrafting{
 
         //Chocolate
         if(ConfigCrafting.CHOCOLATE.isEnabled())
-            GameRegistry.addRecipe(new ItemStack(InitItems.itemFoods, 1, TheFoods.CHOCOLATE.ordinal()),
+            GameRegistry.addRecipe(new ItemStack(InitItems.itemFoods, 3, TheFoods.CHOCOLATE.ordinal()),
                     "C C", "CMC", "C C",
                     'C', new ItemStack(Items.dye, 1, 3),
                     'M', new ItemStack(Items.milk_bucket));

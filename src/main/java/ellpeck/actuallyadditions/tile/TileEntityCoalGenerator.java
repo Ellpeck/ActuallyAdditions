@@ -1,7 +1,7 @@
 package ellpeck.actuallyadditions.tile;
 
 import cofh.api.energy.EnergyStorage;
-import cofh.api.energy.IEnergyReceiver;
+import cofh.api.energy.IEnergyProvider;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
@@ -11,7 +11,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraftforge.common.util.ForgeDirection;
 
-public class TileEntityCoalGenerator extends TileEntityInventoryBase implements IEnergyReceiver{
+public class TileEntityCoalGenerator extends TileEntityInventoryBase implements IEnergyProvider{
 
     public EnergyStorage storage = new EnergyStorage(60000, energyProducedPerTick+50);
 
@@ -96,8 +96,8 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
     }
 
     @Override
-    public int receiveEnergy(ForgeDirection from, int maxReceive, boolean simulate){
-        return this.storage.receiveEnergy(maxReceive, simulate);
+    public int extractEnergy(ForgeDirection from, int maxReceive, boolean simulate){
+        return this.storage.extractEnergy(maxReceive, simulate);
     }
 
     @Override

@@ -154,7 +154,7 @@ public class TileEntityOilGenerator extends TileEntityInventoryBase implements I
 
     @Override
     public boolean canFill(ForgeDirection from, Fluid fluid){
-        return fluid == InitBlocks.fluidOil;
+        return from != ForgeDirection.DOWN && fluid == InitBlocks.fluidOil;
     }
 
     @Override

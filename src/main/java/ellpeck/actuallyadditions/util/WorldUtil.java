@@ -35,7 +35,7 @@ public class WorldUtil{
 
     public static void pushEnergy(World world, int x, int y, int z, ForgeDirection side, EnergyStorage storage){
         TileEntity tile = getTileEntityFromSide(side, world, x, y, z);
-        if(tile != null && tile instanceof IEnergyReceiver){
+        if(tile != null && tile instanceof IEnergyReceiver && storage.getEnergyStored() > 0){
             if(((IEnergyReceiver)tile).canConnectEnergy(side.getOpposite())){
                 int receive = ((IEnergyReceiver)tile).receiveEnergy(side.getOpposite(), Math.min(storage.getMaxExtract(), storage.getEnergyStored()), false);
                 storage.extractEnergy(receive, false);

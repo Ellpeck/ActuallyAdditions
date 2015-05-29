@@ -46,15 +46,14 @@ public class BlockPlant extends BlockCrops implements INameableItem, IFactoryHar
     @Override
     public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune){
         ArrayList<ItemStack> ret = super.getDrops(world, x, y, z, metadata, fortune);
-        if (metadata >= 7){
-            for (int i = 0; i < 3 + fortune; ++i){
-                if (world.rand.nextInt(15) <= metadata){
-                    ret.add(new ItemStack(this.seedItem));
-                }
+        if(metadata >= 7){
+            for(int i = 0; i < 3; ++i){
+                if(world.rand.nextInt(15) <= metadata) ret.add(new ItemStack(this.seedItem));
             }
             if(this == InitBlocks.blockCanola) ret.add(new ItemStack(this.returnItem.getItem(), new Random().nextInt(3)+3, this.returnItem.getItemDamage()));
             else ret.add(this.returnItem.copy());
         }
+        else  ret.add(new ItemStack(this.seedItem));
 
         return ret;
     }
