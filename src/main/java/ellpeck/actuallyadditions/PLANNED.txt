@@ -70,10 +70,11 @@
     -On Activation, all blocks in the area get a Signal
 
 -Lava Factory
-    -2x3 Multi Block
+    -Bowl-Looking Multi Block
     -Requires Energy
-    -Produces Lava from Cobblestone
-    -Has Upgrade Slots
+    -Produces Lava
+    -Has a Controller in the Middle
+    -Places produced Lava Blocks on top of the Controller
 
 -Thermopile
     -Needs a hot and a cold fluid

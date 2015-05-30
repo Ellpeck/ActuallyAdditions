@@ -3,6 +3,7 @@ package ellpeck.actuallyadditions.inventory;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.blocks.InitBlocks;
+import ellpeck.actuallyadditions.inventory.slot.SlotOutput;
 import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.tile.TileEntityBase;
 import ellpeck.actuallyadditions.tile.TileEntityOilGenerator;
@@ -29,7 +30,7 @@ public class ContainerOilGenerator extends Container{
         this.generator = (TileEntityOilGenerator)tile;
 
         this.addSlotToContainer(new Slot(this.generator, 0, 98, 74));
-        this.addSlotToContainer(new Slot(this.generator, 1, 98, 43));
+        this.addSlotToContainer(new SlotOutput(this.generator, 1, 98, 43));
 
         for (int i = 0; i < 3; i++){
             for (int j = 0; j < 9; j++){

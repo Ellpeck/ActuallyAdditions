@@ -74,6 +74,12 @@ tile.actuallyadditions.blockPhantomBreaker.name=Phantom Breaker
 tooltip.actuallyadditions.blockPhantomBreaker.desc.1=Breaks Blocks from a distance! Connect me with a Phantom Connector!
 tooltip.actuallyadditions.blockPhantomBreaker.desc.2=Sneak-Right-Click with an empty hand to see its Connections!
 
+tile.actuallyadditions.blockFluidPlacer.name=Fluid Placer
+tooltip.actuallyadditions.blockFluidPlacer.desc=Places Fluids stored inside it
+
+tile.actuallyadditions.blockFluidCollector.name=Fluid Collector
+tooltip.actuallyadditions.blockFluidCollector.desc=Stores Fluids in front of it inside it
+
 item.actuallyadditions.itemPhantomConnector.name=Phantom Connector
 tooltip.actuallyadditions.itemPhantomConnector.desc.1=Connects a Phantom Face to any Inventory Block!
 tooltip.actuallyadditions.itemPhantomConnector.desc.2=Hold ALT to clear the stored TileEntity
@@ -396,7 +402,8 @@ container.actuallyadditions.phantomBreaker.name=Phantom Breaker
 container.actuallyadditions.phantomface.name=Phantomface
 container.actuallyadditions.liquiface.name=Liquiface
 container.actuallyadditions.energyface.name=Energyface
-
+container.actuallyadditions.fluidPlacer.name=Fluid Placer
+container.actuallyadditions.fluidCollector.name=Fluid Collector
 
 container.actuallyadditions.nei.crushing.name=Crusher
 container.actuallyadditions.nei.ballOfHair.name=Ball Of Hair Usage

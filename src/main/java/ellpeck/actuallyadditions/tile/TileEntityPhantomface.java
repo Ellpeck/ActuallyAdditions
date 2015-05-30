@@ -149,12 +149,14 @@ public class TileEntityPhantomface extends TileEntityInventoryBase{
             if(tile != null && tile instanceof IFluidHandler){
                 for(FluidTankInfo myInfo : this.getTankInfo(side)){
                     for(FluidTankInfo hisInfo : ((IFluidHandler)tile).getTankInfo(side.getOpposite())){
-                        if(myInfo != null && hisInfo != null && myInfo.fluid != null){
+                        if(myInfo != null && hisInfo != null && myInfo.fluid != null && myInfo.fluid.getFluid() != null){
                             if(((IFluidHandler)tile).canFill(side.getOpposite(), myInfo.fluid.getFluid()) && this.canDrain(side, myInfo.fluid.getFluid())){
                                 FluidStack receive = this.drain(side, Math.min(hisInfo.capacity-(hisInfo.fluid == null ? 0 : hisInfo.fluid.amount), myInfo.fluid.amount), false);
-                                int actualReceive = ((IFluidHandler)tile).fill(side.getOpposite(), receive, true);
-                                this.drain(side, new FluidStack(receive.getFluid(), actualReceive), true);
-                                worldObj.markBlockForUpdate(xCoord+side.offsetX, yCoord+side.offsetY, zCoord+side.offsetZ);
+                                if(receive != null){
+                                    int actualReceive = ((IFluidHandler)tile).fill(side.getOpposite(), receive, true);
+                                    this.drain(side, new FluidStack(receive.getFluid(), actualReceive), true);
+                                    worldObj.markBlockForUpdate(xCoord+side.offsetX, yCoord+side.offsetY, zCoord+side.offsetZ);
+                                }
                             }
                         }
                     }

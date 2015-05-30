@@ -2,7 +2,9 @@ package ellpeck.actuallyadditions.util;
 
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
+import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChunkCoordinates;
@@ -10,10 +12,8 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.util.ForgeDirection;
-import net.minecraftforge.fluids.FluidContainerRegistry;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidTank;
-import net.minecraftforge.fluids.IFluidHandler;
+import net.minecraftforge.fluids.*;
+import org.apache.logging.log4j.Level;
 
 public class WorldUtil{
 
@@ -55,26 +55,40 @@ public class WorldUtil{
         }
     }
 
-    public static boolean placeBlockAtSide(ForgeDirection side, World world, int x, int y, int z, ItemStack stack){
-        if(world instanceof WorldServer){
+    public static ItemStack placeBlockAtSide(ForgeDirection side, World world, int x, int y, int z, ItemStack stack){
+        if(world instanceof WorldServer && stack != null && stack.getItem() != null){
 
             //Fluids
             FluidStack fluid = FluidContainerRegistry.getFluidForFilledItem(stack);
             if(fluid != null && fluid.getFluid().getBlock() != null && fluid.getFluid().getBlock().canPlaceBlockAt(world, x+side.offsetX, y+side.offsetY, z+side.offsetZ)){
-                return world.setBlock(x+side.offsetX, y+side.offsetY, z+side.offsetZ, fluid.getFluid().getBlock());
+                Block block = world.getBlock(x+side.offsetX, y+side.offsetY, z+side.offsetZ);
+                if(!(block instanceof IFluidBlock) && block != Blocks.lava && block != Blocks.water && block != Blocks.flowing_lava && block != Blocks.flowing_water){
+                    if(world.setBlock(x+side.offsetX, y+side.offsetY, z+side.offsetZ, fluid.getFluid().getBlock())){
+                        return stack.getItem().getContainerItem(stack);
+                    }
+                }
             }
 
             //Plants
             if(stack.getItem() instanceof IPlantable){
                 if(((IPlantable)stack.getItem()).getPlant(world, x, y, z).canPlaceBlockAt(world, x+side.offsetX, y+side.offsetY, z+side.offsetZ)){
-                    return world.setBlock(x+side.offsetX, y+side.offsetY, z+side.offsetZ, ((IPlantable)stack.getItem()).getPlant(world, x, y, z));
+                    if(world.setBlock(x+side.offsetX, y+side.offsetY, z+side.offsetZ, ((IPlantable)stack.getItem()).getPlant(world, x, y, z))){
+                        stack.stackSize--;
+                        return stack;
+                    }
                 }
             }
 
-            //Blocks
-            return stack.tryPlaceItemIntoWorld(FakePlayerUtil.newFakePlayer(world), world,x, y, z, side == ForgeDirection.UNKNOWN ? 0 : side.ordinal(), 0, 0, 0);
+            try{
+                //Blocks
+                stack.tryPlaceItemIntoWorld(FakePlayerUtil.newFakePlayer(world), world, x, y, z, side == ForgeDirection.UNKNOWN ? 0 : side.ordinal(), 0, 0, 0);
+                return stack;
+            }
+            catch(Exception e){
+                ModUtil.AA_LOGGER.log(Level.ERROR, "Something that places Blocks at "+x+", "+y+", "+z+" in World "+world.provider.dimensionId+" threw an Exception! Don't let that happen again!");
+            }
         }
-        return false;
+        return stack;
     }
 
     public static boolean dropItemAtSide(ForgeDirection side, World world, int x, int y, int z, ItemStack stack){

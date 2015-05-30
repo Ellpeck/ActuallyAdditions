@@ -14,5 +14,6 @@ public class PacketHandler{
 
         theNetwork.registerMessage(PacketTileEntityFeeder.Handler.class, PacketTileEntityFeeder.class, 0, Side.CLIENT);
         theNetwork.registerMessage(PacketInputterButton.Handler.class, PacketInputterButton.class, 1, Side.SERVER);
+        theNetwork.registerMessage(PacketFluidCollectorToClient.Handler.class, PacketFluidCollectorToClient.class, 2, Side.CLIENT);
     }
 }

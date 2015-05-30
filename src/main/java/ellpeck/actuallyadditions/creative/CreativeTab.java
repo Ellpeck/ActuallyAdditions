@@ -48,6 +48,8 @@ public class CreativeTab extends CreativeTabs{
         this.addBlock(InitBlocks.blockBreaker);
         this.addBlock(InitBlocks.blockPlacer);
         this.addBlock(InitBlocks.blockDropper);
+        this.addBlock(InitBlocks.blockFluidPlacer);
+        this.addBlock(InitBlocks.blockFluidCollector);
 
         this.addBlock(InitBlocks.blockMisc);
         this.addBlock(InitBlocks.blockFeeder);
@@ -94,7 +96,7 @@ public class CreativeTab extends CreativeTabs{
 
     @Override
     public Item getTabIconItem(){
-        return Item.getItemFromBlock(InitBlocks.blockPhantomPlacer);
+        return Item.getItemFromBlock(InitBlocks.blockPhantomLiquiface);
     }
 
     @Override

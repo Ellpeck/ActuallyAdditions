@@ -70,10 +70,9 @@ public class TileEntityBreaker extends TileEntityInventoryBase{
                                 }
                             }
                             else if(this.isPlacer && worldObj.getBlock(coordsBlock.posX, coordsBlock.posY, coordsBlock.posZ).isReplaceable(worldObj, coordsBlock.posX, coordsBlock.posY, coordsBlock.posZ)){
-                                ItemStack removeFalse = removeFromInventory(this.slots, false);
-                                if(removeFalse != null && WorldUtil.placeBlockAtSide(sideToManipulate, worldObj, xCoord, yCoord, zCoord, removeFalse)){
-                                    removeFromInventory(this.slots, true);
-                                }
+                                int theSlot = testInventory(this.slots);
+                                this.setInventorySlotContents(theSlot, WorldUtil.placeBlockAtSide(sideToManipulate, worldObj, xCoord, yCoord, zCoord, this.slots[theSlot]));
+                                if(this.slots[0] != null && this.slots[0].stackSize <= 0) this.slots[0] = null;
                             }
                         }
                     }
@@ -112,18 +111,13 @@ public class TileEntityBreaker extends TileEntityInventoryBase{
         return working >= stacks.size();
     }
 
-    public static ItemStack removeFromInventory(ItemStack[] slots, boolean actuallyDo){
+    public static int testInventory(ItemStack[] slots){
         for(int i = 0; i < slots.length; i++){
             if(slots[i] != null){
-                ItemStack slot = slots[i].copy();
-                if(actuallyDo){
-                    slots[i].stackSize--;
-                    if(slots[i].stackSize <= 0) slots[i] = slots[i].getItem().getContainerItem(slots[i]);
-                }
-                return slot;
+                return i;
             }
         }
-        return null;
+        return 0;
     }
 
     @Override

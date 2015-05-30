@@ -73,10 +73,9 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase{
                             }
                             else{
                                 if(boundWorld.getBlock(boundPosition.posX, boundPosition.posY, boundPosition.posZ).isReplaceable(boundWorld, boundPosition.posX, boundPosition.posY, boundPosition.posZ)){
-                                    ItemStack removeFalse = TileEntityBreaker.removeFromInventory(this.slots, false);
-                                    if(removeFalse != null && WorldUtil.placeBlockAtSide(ForgeDirection.UNKNOWN, boundWorld, boundPosition.posX, boundPosition.posY, boundPosition.posZ, removeFalse)){
-                                        TileEntityBreaker.removeFromInventory(this.slots, true);
-                                    }
+                                    int theSlot = TileEntityBreaker.testInventory(this.slots);
+                                    this.setInventorySlotContents(theSlot, WorldUtil.placeBlockAtSide(ForgeDirection.UNKNOWN, boundWorld, boundPosition.posX, boundPosition.posY, boundPosition.posZ, this.slots[theSlot]));
+                                    if(this.slots[0] != null && this.slots[0].stackSize <= 0) this.slots[0] = null;
                                 }
                             }
                         }
@@ -140,7 +139,7 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase{
 
     @Override
     public boolean isItemValidForSlot(int i, ItemStack stack){
-        return true;
+        return !this.isBreaker;
     }
 
     @Override
@@ -150,6 +149,6 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase{
 
     @Override
     public boolean canExtractItem(int slot, ItemStack stack, int side){
-        return false;
+        return this.isBreaker;
     }
 }

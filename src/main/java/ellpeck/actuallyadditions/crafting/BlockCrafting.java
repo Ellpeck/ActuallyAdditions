@@ -60,11 +60,51 @@ public class BlockCrafting{
         //Phantomface
         if(ConfigCrafting.PHANTOMFACE.isEnabled())
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockPhantomface),
-                    "ECE", "EBE", "ESE",
+                    " C ", "EBE", " S ",
                     'E', Items.ender_eye,
                     'C', Blocks.chest,
                     'S', TheMiscItems.COIL_ADVANCED.getOredictName(),
                     'B', TheMiscBlocks.ENDERPEARL_BLOCK.getOredictName()));
+
+        //Phantom Placer
+        if(ConfigCrafting.PHANTOM_PLACER.isEnabled())
+            GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitBlocks.blockPhantomPlacer),
+                    ((INameableItem)InitBlocks.blockPlacer).getOredictName(),
+                    ((INameableItem)InitBlocks.blockPhantomface).getOredictName()));
+
+        //Phantom Breaker
+        if(ConfigCrafting.PHANTOM_BREAKER.isEnabled())
+            GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitBlocks.blockPhantomBreaker),
+                    ((INameableItem)InitBlocks.blockBreaker).getOredictName(),
+                    ((INameableItem)InitBlocks.blockPhantomface).getOredictName()));
+
+        //Phantom Energyface
+        if(ConfigCrafting.PHANTOM_ENERGYFACE.isEnabled())
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockPhantomEnergyface),
+                    " R ", "RFR", " R ",
+                    'R', "dustRedstone",
+                    'F', ((INameableItem)InitBlocks.blockPhantomface).getOredictName()));
+
+        //Phantom Liquiface
+        if(ConfigCrafting.PHANTOM_LIQUIFACE.isEnabled())
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockPhantomLiquiface),
+                    "RFR",
+                    'R', Items.bucket,
+                    'F', ((INameableItem)InitBlocks.blockPhantomface).getOredictName()));
+
+        //Liquid Placer
+        if(ConfigCrafting.LIQUID_PLACER.isEnabled())
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockFluidPlacer),
+                    "RFR",
+                    'R', Items.bucket,
+                    'F', ((INameableItem)InitBlocks.blockPlacer).getOredictName()));
+
+        //Liquid Breaker
+        if(ConfigCrafting.LIQUID_BREAKER.isEnabled())
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockFluidCollector),
+                    "RFR",
+                    'R', Items.bucket,
+                    'F', ((INameableItem)InitBlocks.blockBreaker).getOredictName()));
 
         //Oil Generator
         if(ConfigCrafting.OIL_GENERATOR.isEnabled())
@@ -233,7 +273,7 @@ public class BlockCrafting{
                     "CCC", "CRP", "CCC",
                     'C', "cobblestone",
                     'R', TheMiscItems.COIL.getOredictName(),
-                    'P', Items.diamond_pickaxe));
+                    'P', Items.iron_pickaxe));
 
         //Dropper
         if(ConfigCrafting.DROPPER.isEnabled())

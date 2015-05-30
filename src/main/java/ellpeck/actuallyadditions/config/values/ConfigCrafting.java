@@ -80,7 +80,14 @@ public enum ConfigCrafting{
     COAL_GENERATOR("Coal Generator", ConfigCategories.BLOCKS_CRAFTING),
     OIL_GENERATOR("Oil Generator", ConfigCategories.BLOCKS_CRAFTING),
     PHANTOMFACE("Phantomface", ConfigCategories.BLOCKS_CRAFTING),
-    PHANTOM_CONNECTOR("Phantom Connector", ConfigCategories.ITEMS_CRAFTING);
+    PHANTOM_CONNECTOR("Phantom Connector", ConfigCategories.ITEMS_CRAFTING),
+
+    PHANTOM_ENERGYFACE("Phantom Energyface", ConfigCategories.BLOCKS_CRAFTING),
+    PHANTOM_LIQUIFACE("Phantom Liquiface", ConfigCategories.BLOCKS_CRAFTING),
+    PHANTOM_PLACER("Phantom Placer", ConfigCategories.BLOCKS_CRAFTING),
+    PHANTOM_BREAKER("Phantom Breaker", ConfigCategories.BLOCKS_CRAFTING),
+    LIQUID_PLACER("Liquid Placer", ConfigCategories.BLOCKS_CRAFTING),
+    LIQUID_BREAKER("Liquid Collector", ConfigCategories.BLOCKS_CRAFTING);
 
     public final String name;
     public final String category;

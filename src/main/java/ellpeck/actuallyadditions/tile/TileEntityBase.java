@@ -36,6 +36,8 @@ public class TileEntityBase extends TileEntity{
         GameRegistry.registerTileEntity(TileEntityPhantomface.TileEntityPhantomEnergyface.class, ModUtil.MOD_ID_LOWER + ":tileEntityPhantomEnergyface");
         GameRegistry.registerTileEntity(TileEntityPhantomPlacer.class, ModUtil.MOD_ID_LOWER + ":tileEntityPhantomPlacer");
         GameRegistry.registerTileEntity(TileEntityPhantomPlacer.TileEntityPhantomBreaker.class, ModUtil.MOD_ID_LOWER + ":tileEntityPhantomBreaker");
+        GameRegistry.registerTileEntity(TileEntityFluidCollector.class, ModUtil.MOD_ID_LOWER + ":tileEntityFluidCollector");
+        GameRegistry.registerTileEntity(TileEntityFluidCollector.TileEntityFluidPlacer.class, ModUtil.MOD_ID_LOWER + ":tileEntityFluidPlacer");
     }
 
     @Override

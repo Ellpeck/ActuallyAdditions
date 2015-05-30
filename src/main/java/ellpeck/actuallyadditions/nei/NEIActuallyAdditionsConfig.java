@@ -2,7 +2,9 @@ package ellpeck.actuallyadditions.nei;
 
 import codechicken.nei.api.API;
 import codechicken.nei.api.IConfigureNEI;
+import codechicken.nei.recipe.DefaultOverlayHandler;
 import ellpeck.actuallyadditions.blocks.InitBlocks;
+import ellpeck.actuallyadditions.inventory.GuiCrafter;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.item.ItemStack;
@@ -12,6 +14,9 @@ public class NEIActuallyAdditionsConfig implements IConfigureNEI{
     @Override
     public void loadConfig(){
         Util.logInfo("Initializing Not Enough Items Plugin...");
+
+        API.registerGuiOverlay(GuiCrafter.class, "crafting");
+        API.registerGuiOverlayHandler(GuiCrafter.class, new DefaultOverlayHandler(), "crafting");
 
         CrusherRecipeHandler crusherRecipeHandler = new CrusherRecipeHandler();
         API.registerRecipeHandler(crusherRecipeHandler);

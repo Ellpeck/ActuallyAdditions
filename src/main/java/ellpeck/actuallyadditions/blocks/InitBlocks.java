@@ -51,6 +51,9 @@ public class InitBlocks{
     public static Block blockPhantomLiquiface;
     public static Block blockPhantomEnergyface;
 
+    public static Block blockFluidPlacer;
+    public static Block blockFluidCollector;
+
     public static void init(){
         Util.logInfo("Initializing Blocks...");
 
@@ -151,5 +154,11 @@ public class InitBlocks{
 
         blockDropper = new BlockDropper();
         BlockUtil.register(blockDropper, BlockDropper.TheItemBlock.class);
+
+        blockFluidPlacer = new BlockFluidCollector(true);
+        BlockUtil.register(blockFluidPlacer, BlockFluidCollector.TheItemBlock.class);
+
+        blockFluidCollector = new BlockFluidCollector(false);
+        BlockUtil.register(blockFluidCollector, BlockFluidCollector.TheItemBlock.class);
     }
 }
