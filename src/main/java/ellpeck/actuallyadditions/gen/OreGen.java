@@ -55,7 +55,7 @@ public class OreGen implements IWorldGenerator{
                 new WorldGenMinable(block, meta, maxVeinSize, blockIn).generate(world, random, posX, posY, posZ);
             }
         }
-        else ModUtil.AA_LOGGER.log(Level.FATAL, "Couldn't generate '" + block.getUnlocalizedName() + "' into the world because the Min Y coordinate is bigger than the Max! This is definitely a Config Error! Check the Files!");
+        else ModUtil.LOGGER.log(Level.FATAL, "Couldn't generate '" + block.getUnlocalizedName() + "' into the world because the Min Y coordinate is bigger than the Max! This is definitely a Config Error! Check the Files!");
     }
 
     public int getRandom(int base, int extra, Random rand){

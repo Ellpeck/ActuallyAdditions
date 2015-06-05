@@ -11,7 +11,7 @@ public class Util{
     public static final int WILDCARD = OreDictionary.WILDCARD_VALUE;
 
     public static void logInfo(String text){
-        ModUtil.AA_LOGGER.log(Level.INFO, text);
+        ModUtil.LOGGER.log(Level.INFO, text);
     }
 
     public static void registerEvent(Object o){

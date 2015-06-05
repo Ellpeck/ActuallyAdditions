@@ -67,7 +67,7 @@ public class GuiCanolaPress extends GuiContainer{
             this.func_146283_a(Collections.singletonList(text1), x, y);
         }
 
-        String text2 = this.press.tank.getFluidAmount() + "/" + this.press.tank.getCapacity() + " mB " +StatCollector.translateToLocal("fluid.canolaOil");
+        String text2 = this.press.tank.getFluidAmount() + "/" + this.press.tank.getCapacity() + " mB " +StatCollector.translateToLocal("fluid.canolaoil");
         if(x >= guiLeft+117 && y >= guiTop+6 && x <= guiLeft+132 && y <= guiTop+88){
             this.func_146283_a(Collections.singletonList(text2), x, y);
         }

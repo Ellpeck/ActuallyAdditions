@@ -66,13 +66,13 @@ public class GrinderRecipeRegistry{
                         }
                         else{
                             if(ConfigBoolValues.DO_CRUSHER_SPAM.isEnabled())
-                                ModUtil.AA_LOGGER.log(Level.INFO, "Couldn't register Crusher Recipe! An Item with OreDictionary Registry '" + inputWithDustPrefix + "' doesn't exist! It should correspond to '" + inputName + "'! This is not an Error, just a bit sad :(");
+                                ModUtil.LOGGER.log(Level.INFO, "Couldn't register Crusher Recipe! An Item with OreDictionary Registry '" + inputWithDustPrefix + "' doesn't exist! It should correspond to '" + inputName + "'! This is not an Error, just a bit sad :(");
                         }
 
                     }
                     else{
                         if(ConfigBoolValues.DO_CRUSHER_SPAM.isEnabled())
-                            ModUtil.AA_LOGGER.log(Level.WARN, "Couldn't register Crusher Recipe! Didn't find Items registered as '" + inputName + "'! This shouldn't happen as there is something registered as '" + inputName + "' that doesn't exist!");
+                            ModUtil.LOGGER.log(Level.WARN, "Couldn't register Crusher Recipe! Didn't find Items registered as '" + inputName + "'! This shouldn't happen as there is something registered as '" + inputName + "' that doesn't exist!");
                     }
                 }
             }

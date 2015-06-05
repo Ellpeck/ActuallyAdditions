@@ -3,6 +3,7 @@ package ellpeck.actuallyadditions.blocks;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.ActuallyAdditions;
+import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.inventory.GuiHandler;
 import ellpeck.actuallyadditions.tile.TileEntityPhantomPlacer;
 import ellpeck.actuallyadditions.tile.TileEntityPhantomface;
@@ -31,6 +32,7 @@ public class BlockPhantomface extends BlockContainerBase implements INameableIte
     public static final int ENERGYFACE = 4;
 
     public int type;
+    public int range;
 
     public BlockPhantomface(int type){
         super(Material.rock);
@@ -38,6 +40,9 @@ public class BlockPhantomface extends BlockContainerBase implements INameableIte
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(1.0F);
         this.setStepSound(soundTypeStone);
+
+        if(type == FACE || type == LIQUIFACE || type == ENERGYFACE) this.range = ConfigIntValues.PHANTOMFACE_RANGE.getValue();
+        else if(type == BREAKER || type == PLACER) this.range = ConfigIntValues.PHANTOM_PLACER_RANGE.getValue();
     }
 
     @Override
@@ -150,10 +155,13 @@ public class BlockPhantomface extends BlockContainerBase implements INameableIte
         @SideOnly(Side.CLIENT)
         public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld) {
             BlockUtil.addInformation(theBlock, list, 2, "");
-            if(KeyUtil.isShiftPressed() && ((BlockPhantomface)this.theBlock).type == LIQUIFACE){
-                list.add(StringUtil.ORANGE+StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".blockPhantomLiquiface.desc.3"));
-                list.add(StringUtil.ORANGE+StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".blockPhantomLiquiface.desc.4"));
-                list.add(StringUtil.ORANGE+StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".blockPhantomLiquiface.desc.5"));
+            if(KeyUtil.isShiftPressed()){
+                if(((BlockPhantomface)this.theBlock).type == LIQUIFACE){
+                    list.add(StringUtil.ORANGE+StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".blockPhantomLiquiface.desc.3"));
+                    list.add(StringUtil.ORANGE+StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".blockPhantomLiquiface.desc.4"));
+                    list.add(StringUtil.ORANGE+StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".blockPhantomLiquiface.desc.5"));
+                }
+                list.add(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".blockPhantomRange.desc") + ": " + ((BlockPhantomface)theBlock).range);
             }
         }
 

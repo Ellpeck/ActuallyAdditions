@@ -4,6 +4,7 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import ellpeck.actuallyadditions.blocks.InitBlocks;
 import ellpeck.actuallyadditions.config.values.ConfigBoolValues;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
+import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.world.World;
 import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
@@ -35,15 +36,20 @@ public class WorldDecorationEvent{
             }
         }
 
-        if(ConfigBoolValues.DO_CANOLA_GEN.isEnabled()){
-            for(int i = 0; i < ConfigIntValues.CANOLA_AMOUNT.getValue(); i++){
-                if(new Random().nextInt(50) == 0){
+        this.genPlantNormally(InitBlocks.blockCanola, ConfigIntValues.CANOLA_AMOUNT.getValue(), ConfigBoolValues.DO_CANOLA_GEN.isEnabled(), Material.grass, event);
+        this.genPlantNormally(InitBlocks.blockFlax, ConfigIntValues.FLAX_AMOUNT.getValue(), ConfigBoolValues.DO_FLAX_GEN.isEnabled(), Material.grass, event);
+    }
+
+    public void genPlantNormally(Block plant, int amount, boolean doIt, Material blockBelow, DecorateBiomeEvent event){
+        if(doIt){
+            for(int i = 0; i < amount; i++){
+                if(new Random().nextInt(100) == 0){
                     int genX = event.chunkX+event.rand.nextInt(16)+8;
                     int genZ = event.chunkZ+event.rand.nextInt(16)+8;
                     int genY = event.world.getTopSolidOrLiquidBlock(genX, genZ)-1;
 
-                    if(event.world.getBlock(genX, genY, genZ).getMaterial() == Material.grass){
-                    event.world.setBlock(genX, genY+1, genZ, InitBlocks.blockCanola, event.rand.nextInt(8), 2);
+                    if(event.world.getBlock(genX, genY, genZ).getMaterial() == blockBelow){
+                        event.world.setBlock(genX, genY+1, genZ, plant, event.rand.nextInt(8), 2);
                     }
                 }
             }

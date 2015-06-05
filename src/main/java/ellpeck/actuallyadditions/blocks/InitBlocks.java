@@ -33,6 +33,7 @@ public class InitBlocks{
 
     public static Block blockRice;
     public static Block blockCanola;
+    public static Block blockFlax;
 
     public static Fluid fluidCanolaOil;
     public static Block blockCanolaOil;
@@ -54,16 +55,25 @@ public class InitBlocks{
     public static Block blockFluidPlacer;
     public static Block blockFluidCollector;
 
+    public static Block blockLavaFactoryController;
+
     public static void init(){
         Util.logInfo("Initializing Blocks...");
 
-        fluidCanolaOil = new FluidAA("canolaOil").setDensity(1200).setViscosity(1500).setTemperature(300).setRarity(EnumRarity.uncommon);
+        blockLavaFactoryController = new BlockLavaFactoryController();
+        BlockUtil.register(blockLavaFactoryController, BlockLavaFactoryController.TheItemBlock.class);
+
+        fluidCanolaOil = new FluidAA("canolaoil").setDensity(1200).setViscosity(1500).setTemperature(300).setRarity(EnumRarity.uncommon);
         FluidRegistry.registerFluid(fluidCanolaOil);
+        fluidCanolaOil = FluidRegistry.getFluid(fluidCanolaOil.getName());
+
         blockCanolaOil = new BlockFluidFlowing(fluidCanolaOil, Material.water, "blockCanolaOil");
         BlockUtil.register(blockCanolaOil, BlockFluidFlowing.TheItemBlock.class, false);
 
         fluidOil = new FluidAA("oil").setDensity(1200).setViscosity(1500).setTemperature(300).setRarity(EnumRarity.uncommon);
         FluidRegistry.registerFluid(fluidOil);
+        fluidOil = FluidRegistry.getFluid(fluidOil.getName());
+
         blockOil = new BlockFluidFlowing(fluidOil, Material.water, "blockOil");
         BlockUtil.register(blockOil, BlockFluidFlowing.TheItemBlock.class, false);
 
@@ -94,15 +104,20 @@ public class InitBlocks{
         blockFermentingBarrel = new BlockFermentingBarrel();
         BlockUtil.register(blockFermentingBarrel, BlockFermentingBarrel.TheItemBlock.class);
 
-        blockRice = new BlockPlant("blockRice", 6);
+        blockRice = new BlockPlant("blockRice", 6, 1, 2);
         BlockUtil.register(blockRice, BlockPlant.TheItemBlock.class, false);
         FactoryRegistry.sendMessage("registerHarvestable", blockRice);
         FactoryRegistry.sendMessage("registerFertilizable", blockRice);
 
-        blockCanola = new BlockPlant("blockCanola", 4);
+        blockCanola = new BlockPlant("blockCanola", 4, 3, 3);
         BlockUtil.register(blockCanola, BlockPlant.TheItemBlock.class, false);
         FactoryRegistry.sendMessage("registerHarvestable", blockCanola);
         FactoryRegistry.sendMessage("registerFertilizable", blockCanola);
+
+        blockFlax = new BlockPlant("blockFlax", 6, 2, 4);
+        BlockUtil.register(blockFlax, BlockPlant.TheItemBlock.class);
+        FactoryRegistry.sendMessage("registerHarvestable", blockFlax);
+        FactoryRegistry.sendMessage("registerFertilizable", blockFlax);
 
         blockCompost = new BlockCompost();
         BlockUtil.register(blockCompost, BlockCompost.TheItemBlock.class);

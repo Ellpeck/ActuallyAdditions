@@ -6,7 +6,6 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.blocks.InitBlocks;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
-import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -48,7 +47,7 @@ public class TileEntityOilGenerator extends TileEntityInventoryBase implements I
                 }
             }
 
-            if(this.slots[0] != null && this.slots[0].getItem() == InitItems.itemBucketOil && (this.slots[1] == null || (this.slots[1].stackSize < this.slots[1].getMaxStackSize()))){
+            if(this.slots[0] != null && FluidContainerRegistry.containsFluid(this.slots[0], new FluidStack(InitBlocks.fluidOil, FluidContainerRegistry.BUCKET_VOLUME)) && (this.slots[1] == null || (this.slots[1].stackSize < this.slots[1].getMaxStackSize()))){
                 if(FluidContainerRegistry.BUCKET_VOLUME <= this.tank.getCapacity()-this.tank.getFluidAmount()){
                     if(this.slots[1] == null) this.slots[1] = new ItemStack(Items.bucket);
                     else this.slots[1].stackSize++;
@@ -103,7 +102,7 @@ public class TileEntityOilGenerator extends TileEntityInventoryBase implements I
 
     @Override
     public boolean isItemValidForSlot(int i, ItemStack stack){
-        return stack.getItem() == InitItems.itemBucketOil && i == 0;
+        return FluidContainerRegistry.containsFluid(this.slots[0], new FluidStack(InitBlocks.fluidOil, FluidContainerRegistry.BUCKET_VOLUME)) && i == 0;
     }
 
     @Override

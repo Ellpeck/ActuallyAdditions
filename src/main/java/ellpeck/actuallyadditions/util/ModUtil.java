@@ -11,6 +11,6 @@ public class ModUtil{
     public static final String NAME = "Actually Additions";
     public static final String MOD_ID_LOWER = MOD_ID.toLowerCase();
 
-    public static final Logger AA_LOGGER = LogManager.getLogger(MOD_ID);
+    public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
 
 }

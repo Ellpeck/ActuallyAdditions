@@ -26,7 +26,8 @@ public enum ConfigBoolValues{
     DO_WAILA_INFO("Waila Display Info", ConfigCategories.OTHER, true, "If the Shift Description should display in Waila too"),
 
     DO_RICE_GEN("Rice Gen", ConfigCategories.WORLD_GEN, true, "If Rice should generate in the World"),
-    DO_CANOLA_GEN("Canola Gen", ConfigCategories.WORLD_GEN, true, "If Canola should generate in the World");
+    DO_CANOLA_GEN("Canola Gen", ConfigCategories.WORLD_GEN, true, "If Canola should generate in the World"),
+    DO_FLAX_GEN("Flax Gen", ConfigCategories.WORLD_GEN, true, "If Flax should generate in the World");
 
     public final String name;
     public final String category;

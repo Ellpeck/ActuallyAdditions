@@ -113,7 +113,7 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IE
 
     @Override
     public boolean canExtractItem(int slot, ItemStack stack, int side){
-        return slot == 2 && stack.getItem() == InitItems.itemBucketCanolaOil;
+        return slot == 2 && FluidContainerRegistry.containsFluid(this.slots[0], new FluidStack(InitBlocks.fluidCanolaOil, FluidContainerRegistry.BUCKET_VOLUME));
     }
 
     @Override

@@ -1,14 +1,10 @@
 package ellpeck.actuallyadditions.tile;
 
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
-import ellpeck.actuallyadditions.util.FakePlayerUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockAir;
 import net.minecraft.block.BlockGrass;
 import net.minecraft.block.IGrowable;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemDye;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChunkCoordinates;
 
 import java.util.Random;
@@ -25,14 +21,14 @@ public class TileEntityGreenhouseGlass extends TileEntityBase{
             if(worldObj.canBlockSeeTheSky(xCoord, yCoord, zCoord) && worldObj.isDaytime()){
                 ChunkCoordinates blockToFert = this.blockToFertilize();
                 if(blockToFert != null){
-                    Random rand = new Random();
                     if(this.timeUntilNextFert > 0){
                         this.timeUntilNextFert--;
                         if(timeUntilNextFert <= 0){
-                            this.applyBonemealEffect(blockToFert);
+                            worldObj.getBlock(blockToFert.posX, blockToFert.posY, blockToFert.posZ).updateTick(worldObj, blockToFert.posX, blockToFert.posY, blockToFert.posZ, worldObj.rand);
+                            worldObj.playAuxSFX(2005, blockToFert.posX, blockToFert.posY, blockToFert.posZ, 0);
                         }
                     }
-                    else this.timeUntilNextFert = this.timeUntilNextFertToSet + rand.nextInt(this.timeUntilNextFertToSet/2);
+                    else this.timeUntilNextFert = this.timeUntilNextFertToSet+new Random().nextInt(this.timeUntilNextFertToSet);
                 }
             }
         }
@@ -51,7 +47,4 @@ public class TileEntityGreenhouseGlass extends TileEntityBase{
         return null;
     }
 
-    public boolean applyBonemealEffect(ChunkCoordinates coords){
-        return ItemDye.applyBonemeal(new ItemStack(Items.dye, 1, 15), worldObj, coords.posX, coords.posY, coords.posZ, FakePlayerUtil.newFakePlayer(worldObj));
-    }
 }

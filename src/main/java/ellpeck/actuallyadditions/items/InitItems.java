@@ -46,8 +46,11 @@ public class InitItems{
     public static Item itemHoeObsidian;
 
     public static Item itemHairyBall;
+
     public static Item itemRiceSeed;
     public static Item itemCanolaSeed;
+    public static Item itemFlaxSeed;
+
     public static Item itemResonantRice;
     public static Item itemBucketOil;
     public static Item itemBucketCanolaOil;
@@ -118,6 +121,10 @@ public class InitItems{
         itemCanolaSeed = new ItemSeed("itemCanolaSeed", InitBlocks.blockCanola, Blocks.grass, EnumPlantType.Plains, new ItemStack(itemMisc, 1, TheMiscItems.CANOLA.ordinal()));
         ItemUtil.register(itemCanolaSeed);
         FactoryRegistry.sendMessage("registerPlantable", itemCanolaSeed);
+
+        itemFlaxSeed = new ItemSeed("itemFlaxSeed", InitBlocks.blockFlax, Blocks.grass, EnumPlantType.Plains, new ItemStack(Items.string));
+        ItemUtil.register(itemFlaxSeed);
+        FactoryRegistry.sendMessage("registerPlantable", itemFlaxSeed);
 
         itemPickaxeEmerald = new ItemPickaxeAA(InitItemMaterials.toolMaterialEmerald, new ItemStack(Items.emerald), "itemPickaxeEmerald", EnumRarity.rare);
         itemAxeEmerald = new ItemAxeAA(InitItemMaterials.toolMaterialEmerald, new ItemStack(Items.emerald), "itemAxeEmerald", EnumRarity.rare);

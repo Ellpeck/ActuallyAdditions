@@ -81,7 +81,7 @@ public class UpdateChecker{
                 Util.logInfo("Update Check done!");
             }
             catch(Exception e){
-                ModUtil.AA_LOGGER.log(Level.ERROR, "Update Check failed!");
+                ModUtil.LOGGER.log(Level.ERROR, "Update Check failed!");
                 checkFailed = true;
                 e.printStackTrace();
             }

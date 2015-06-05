@@ -32,10 +32,14 @@ public class BlockPlant extends BlockCrops implements INameableItem, IFactoryHar
     private String name;
     public Item seedItem;
     public ItemStack returnItem;
+    private int minDropAmount;
+    private int addDropAmount;
 
-    public BlockPlant(String name, int stages){
+    public BlockPlant(String name, int stages, int minDropAmount, int addDropAmount){
         this.name = name;
         this.textures = new IIcon[stages];
+        this.minDropAmount = minDropAmount;
+        this.addDropAmount = addDropAmount;
     }
 
     @Override
@@ -48,12 +52,14 @@ public class BlockPlant extends BlockCrops implements INameableItem, IFactoryHar
         ArrayList<ItemStack> ret = super.getDrops(world, x, y, z, metadata, fortune);
         if(metadata >= 7){
             for(int i = 0; i < 3; ++i){
-                if(world.rand.nextInt(15) <= metadata) ret.add(new ItemStack(this.seedItem));
+                if(world.rand.nextInt(6) == 0) ret.add(new ItemStack(this.seedItem));
             }
-            if(this == InitBlocks.blockCanola) ret.add(new ItemStack(this.returnItem.getItem(), new Random().nextInt(3)+3, this.returnItem.getItemDamage()));
-            else ret.add(this.returnItem.copy());
+
+            ItemStack stack = this.returnItem.copy();
+            stack.stackSize = new Random().nextInt(addDropAmount)+minDropAmount;
+            ret.add(stack);
         }
-        else  ret.add(new ItemStack(this.seedItem));
+        else ret.add(new ItemStack(this.seedItem));
 
         return ret;
     }

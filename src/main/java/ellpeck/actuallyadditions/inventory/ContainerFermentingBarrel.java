@@ -4,7 +4,6 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.blocks.InitBlocks;
 import ellpeck.actuallyadditions.inventory.slot.SlotOutput;
-import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.tile.TileEntityBase;
 import ellpeck.actuallyadditions.tile.TileEntityFermentingBarrel;
 import invtweaks.api.container.InventoryContainer;
@@ -15,6 +14,7 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
 @InventoryContainer
@@ -95,7 +95,7 @@ public class ContainerFermentingBarrel extends Container{
 
             if(currentStack.getItem() != null){
                 if(slot <= hotbarEnd && slot >= inventoryStart){
-                    if(currentStack.getItem() == InitItems.itemBucketCanolaOil){
+                    if(FluidContainerRegistry.containsFluid(currentStack, new FluidStack(InitBlocks.fluidCanolaOil, FluidContainerRegistry.BUCKET_VOLUME))){
                         this.mergeItemStack(newStack, 0, 1, false);
                     }
                     if(currentStack.getItem() == Items.bucket){

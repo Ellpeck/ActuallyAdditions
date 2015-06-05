@@ -85,7 +85,7 @@ public class WorldUtil{
                 return stack;
             }
             catch(Exception e){
-                ModUtil.AA_LOGGER.log(Level.ERROR, "Something that places Blocks at "+x+", "+y+", "+z+" in World "+world.provider.dimensionId+" threw an Exception! Don't let that happen again!");
+                ModUtil.LOGGER.log(Level.ERROR, "Something that places Blocks at "+x+", "+y+", "+z+" in World "+world.provider.dimensionId+" threw an Exception! Don't let that happen again!");
             }
         }
         return stack;

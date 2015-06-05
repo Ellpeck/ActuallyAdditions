@@ -62,7 +62,7 @@ public class GuiFermentingBarrel extends GuiContainer{
     public void drawScreen(int x, int y, float f){
         super.drawScreen(x, y, f);
 
-        String text1 = this.press.canolaTank.getFluidAmount() + "/" + this.press.canolaTank.getCapacity() + " mB " +StatCollector.translateToLocal("fluid.canolaOil");
+        String text1 = this.press.canolaTank.getFluidAmount() + "/" + this.press.canolaTank.getCapacity() + " mB " +StatCollector.translateToLocal("fluid.canolaoil");
         if(x >= guiLeft+61 && y >= guiTop+6 && x <= guiLeft+76 && y <= guiTop+88){
             this.func_146283_a(Collections.singletonList(text1), x, y);
         }

@@ -159,7 +159,7 @@ public class TileEntityFluidCollector extends TileEntityInventoryBase implements
             }
 
             if(this.tank.getFluidAmount() > 0 && !this.isPlacer){
-                WorldUtil.pushFluid(worldObj, xCoord, yCoord, zCoord, ForgeDirection.DOWN, this.tank);
+                WorldUtil.pushFluid(worldObj, xCoord, yCoord, zCoord, ForgeDirection.getOrientation(worldObj.getBlockMetadata(xCoord, yCoord, zCoord)).getOpposite(), this.tank);
             }
 
             if(amountBefore != this.tank.getFluidAmount()){

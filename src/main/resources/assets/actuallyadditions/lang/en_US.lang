@@ -2,7 +2,7 @@ itemGroup.actuallyadditions=Actually Additions
 achievement.page.actuallyadditions=Actually Additions
 
 fluid.oil=Oil
-fluid.canolaOil=Canola Oil
+fluid.canolaoil=Canola Oil
 
 tile.actuallyadditions.blockCompost.name=Compost
 tile.actuallyadditions.blockMiscOreBlackQuartz.name=Black Quartz Ore
@@ -74,6 +74,14 @@ tile.actuallyadditions.blockPhantomBreaker.name=Phantom Breaker
 tooltip.actuallyadditions.blockPhantomBreaker.desc.1=Breaks Blocks from a distance! Connect me with a Phantom Connector!
 tooltip.actuallyadditions.blockPhantomBreaker.desc.2=Sneak-Right-Click with an empty hand to see its Connections!
 
+tile.actuallyadditions.blockLavaFactoryController.name=Lava Factory Controller
+tooltip.actuallyadditions.blockLavaFactoryController.desc.1=Place Lava Factory Casings around in the right way to produce Lava:
+tooltip.actuallyadditions.blockLavaFactoryController.desc.2=Go one block up above the Controller, that's where Lava is going to land
+tooltip.actuallyadditions.blockLavaFactoryController.desc.3=Place 4 Casings around that empty space so that it is encased
+
+tile.actuallyadditions.blockMiscLavaFactoryCase.name=Lava Factory Casing
+tooltip.actuallyadditions.blockMiscLavaFactoryCase.desc=Helps the Lava Factory Controller generate Lava
+
 tile.actuallyadditions.blockFluidPlacer.name=Fluid Placer
 tooltip.actuallyadditions.blockFluidPlacer.desc=Places Fluids stored inside it
 
@@ -142,6 +150,9 @@ tooltip.actuallyadditions.phantom.boundTo.desc=Bound to
 tooltip.actuallyadditions.phantom.connectedBlock.desc=Connected to Block at %s, %s, %s
 tooltip.actuallyadditions.phantom.connectedNoRange.desc=Connected to Block at %s, %s, %s but it is not in Range!
 tooltip.actuallyadditions.phantom.notConnected.desc=This isn't connected to anything!
+
+tooltip.actuallyadditions.factory.notPart.desc=The Controller isn't part of the right Multi-Block! Look at the Controller's Description!
+tooltip.actuallyadditions.factory.works.desc=This Lava Factory is complete and can produce Lava!
 
 item.actuallyadditions.itemMiscMashedFood.name=Mashed Food
 item.actuallyadditions.itemFertilizer.name=Fertilizer
@@ -241,6 +252,8 @@ tooltip.actuallyadditions.itemUpgradeSpeed.desc.2=Works in:
 tooltip.actuallyadditions.itemUpgradeSpeed.desc.3=-Double Furnace
 tooltip.actuallyadditions.itemUpgradeSpeed.desc.4=-Crusher
 tooltip.actuallyadditions.itemUpgradeSpeed.desc.5=-Double Crusher
+
+tooltip.actuallyadditions.blockPhantomRange.desc=Range
 
 tooltip.actuallyadditions.blockCompost.desc=Used to make Fertilizer with Mashed Food
 tooltip.actuallyadditions.blockMiscOreBlackQuartz.desc=The darkest form of Quartz.

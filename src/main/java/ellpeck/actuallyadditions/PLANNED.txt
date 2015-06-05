@@ -69,13 +69,6 @@
     -You can mark an area
     -On Activation, all blocks in the area get a Signal
 
--Lava Factory
-    -Bowl-Looking Multi Block
-    -Requires Energy
-    -Produces Lava
-    -Has a Controller in the Middle
-    -Places produced Lava Blocks on top of the Controller
-
 -Thermopile
     -Needs a hot and a cold fluid
     -Depending on the fluids, it generates more power
@@ -89,3 +82,8 @@
     -Ring of Suction: Sucks up Items in the area
     -Ring of Water Absorption: Removes Water around
     -Ring of Striptease (Or something like that): Attacker lose parts of their Armor
+
+-Coffee
+    -Coffee Machine
+    -Coffee Cup
+    -Bedrockium Coffee Cup

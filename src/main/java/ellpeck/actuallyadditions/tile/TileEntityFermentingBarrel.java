@@ -42,7 +42,7 @@ public class TileEntityFermentingBarrel extends TileEntityInventoryBase implemen
             }
             else this.currentProcessTime = 0;
 
-            if(this.slots[0] != null && this.slots[0].getItem() == InitItems.itemBucketCanolaOil && (this.slots[1] == null || (this.slots[1].stackSize < this.slots[1].getMaxStackSize()))){
+            if(this.slots[0] != null && FluidContainerRegistry.containsFluid(this.slots[0], new FluidStack(InitBlocks.fluidCanolaOil, FluidContainerRegistry.BUCKET_VOLUME)) && (this.slots[1] == null || (this.slots[1].stackSize < this.slots[1].getMaxStackSize()))){
                 if(FluidContainerRegistry.BUCKET_VOLUME <= this.canolaTank.getCapacity()-this.canolaTank.getFluidAmount()){
                     if(this.slots[1] == null) this.slots[1] = new ItemStack(Items.bucket);
                     else this.slots[1].stackSize++;
@@ -101,7 +101,7 @@ public class TileEntityFermentingBarrel extends TileEntityInventoryBase implemen
 
     @Override
     public boolean isItemValidForSlot(int i, ItemStack stack){
-        return (i == 0 && stack.getItem() == InitItems.itemBucketCanolaOil) || (i == 2 && stack.getItem() == Items.bucket);
+        return (i == 0 && FluidContainerRegistry.containsFluid(this.slots[0], new FluidStack(InitBlocks.fluidCanolaOil, FluidContainerRegistry.BUCKET_VOLUME))) || (i == 2 && stack.getItem() == Items.bucket);
     }
 
     @Override
@@ -111,7 +111,7 @@ public class TileEntityFermentingBarrel extends TileEntityInventoryBase implemen
 
     @Override
     public boolean canExtractItem(int slot, ItemStack stack, int side){
-        return (slot == 1 && stack.getItem() == Items.bucket) || (slot == 3 && stack.getItem() == InitItems.itemBucketOil);
+        return (slot == 1 && stack.getItem() == Items.bucket) || (slot == 3 && FluidContainerRegistry.containsFluid(this.slots[0], new FluidStack(InitBlocks.fluidOil, FluidContainerRegistry.BUCKET_VOLUME)));
     }
 
     @Override

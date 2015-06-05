@@ -43,7 +43,7 @@ public enum ConfigIntValues{
     HEAT_COLLECTOR_BLOCKS("Heat Collector: Blocks Needed", ConfigCategories.MACHINE_VALUES, 4, 1, 5, "How many Blocks are needed for the Heat Collector to power Machines above it"),
     HEAT_COLLECTOR_LAVA_CHANCE("Heat Collector: Random Chance", ConfigCategories.MACHINE_VALUES, 10000, 10, 100000, "The Chance of the Heat Collector destroying a Lava Block around (Default Value 2000 meaning a 1/2000 Chance!)"),
 
-    GLASS_TIME_NEEDED("Greenhouse Glass: Time", ConfigCategories.MACHINE_VALUES, 5000, 10, 1000000, "The Time Needed for the Greenhouse Glass to grow a Plant below it"),
+    GLASS_TIME_NEEDED("Greenhouse Glass: Time", ConfigCategories.MACHINE_VALUES, 300, 1, 10000, "Time Needed for the Greenhouse Glass to grow a Plant below it"),
 
     BREAKER_TIME_NEEDED("Breaker and Placer: Time Needed", ConfigCategories.MACHINE_VALUES, 15, 1, 10000, "The Time Needed for the Breaker and the Placer to place or break a Block"),
     DROPPER_TIME_NEEDED("Dropper: Time Needed", ConfigCategories.MACHINE_VALUES, 10, 1, 10000, "The Time Needed for the Dropper to drop an Item"),
@@ -51,7 +51,8 @@ public enum ConfigIntValues{
     CAT_DROP_CHANCE("Cat Drops: Chance", ConfigCategories.OTHER, 5000, 5, 10000000, "The 1 in X chance for a Hairy Ball to Drop from a Cat with X being this value"),
 
     RICE_AMOUNT("Rice Amount", ConfigCategories.WORLD_GEN, 15, 1, 100, "The Chance of Rice generating"),
-    CANOLA_AMOUNT("Canola Amount", ConfigCategories.WORLD_GEN, 2, 1, 50, "The Chance of Canola generating"),
+    CANOLA_AMOUNT("Canola Amount", ConfigCategories.WORLD_GEN, 10, 1, 50, "The Chance of Canola generating"),
+    FLAX_AMOUNT("Flax Amount", ConfigCategories.WORLD_GEN, 5, 1, 50, "The Chance of Flax generating"),
 
     GRINDER_ENERGY_USED("Energy Use: Crusher", ConfigCategories.MACHINE_VALUES, 40, 1, 500, "The Amount of Energy used by the Crusher per Tick"),
     GRINDER_DOUBLE_ENERGY_USED("Energy Use: Double Crusher", ConfigCategories.MACHINE_VALUES, 60, 1, 500, "The Amount of Energy used by the Double Crusher per Tick"),
@@ -75,7 +76,10 @@ public enum ConfigIntValues{
     OIL_GEN_BURN_TIME("Oil Generator: Burn Time", ConfigCategories.MACHINE_VALUES, 100, 1, 1000, "The Amount of Time Fuel keeps burning for"),
 
     PHANTOM_PLACER_TIME("Phantom Placer and Breaker: Time Needed", ConfigCategories.MACHINE_VALUES, 30, 1, 500, "The Amount of Time a Phantom Placer/Breaker needs"),
-    PHANTOM_PLACER_RANGE("Phantom Placer and Breaker: Range", ConfigCategories.MACHINE_VALUES, 3, 1, 100, "The Default Range of the Phantom Placer/Breaker");
+    PHANTOM_PLACER_RANGE("Phantom Placer and Breaker: Range", ConfigCategories.MACHINE_VALUES, 3, 1, 100, "The Default Range of the Phantom Placer/Breaker"),
+
+    LAVA_FACTORY_ENERGY_USED("Lava Factory: Energy Used", ConfigCategories.MACHINE_VALUES, 150000, 10, 3000000, "The amount of Energy used by the Lava Factory per Bucket of Lava produced"),
+    LAVA_FACTORY_TIME("Lava Factory: Production Time", ConfigCategories.MACHINE_VALUES, 200, 5, 10000, "The amount of time it takes for the Lava Factory to produce one Bucket");
 
     public final String name;
     public final String category;
