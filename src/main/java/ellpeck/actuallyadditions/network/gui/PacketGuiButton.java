@@ -1,33 +1,35 @@
-package ellpeck.actuallyadditions.network;
+package ellpeck.actuallyadditions.network.gui;
 
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
-import ellpeck.actuallyadditions.tile.TileEntityInputter;
 import io.netty.buffer.ByteBuf;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
 
-public class PacketInputterButton implements IMessage{
+public class PacketGuiButton implements IMessage{
 
     private int tileX;
     private int tileY;
     private int tileZ;
     private int worldID;
     private int buttonID;
+    private int playerID;
 
     @SuppressWarnings("unused")
-    public PacketInputterButton(){
+    public PacketGuiButton(){
 
     }
 
-    public PacketInputterButton(int x, int y, int z, World world, int buttonID){
+    public PacketGuiButton(int x, int y, int z, World world, int buttonID, EntityPlayer player){
         this.tileX = x;
         this.tileY = y;
         this.tileZ = z;
         this.worldID = world.provider.dimensionId;
         this.buttonID = buttonID;
+        this.playerID = player.getEntityId();
     }
 
     @Override
@@ -37,6 +39,7 @@ public class PacketInputterButton implements IMessage{
         this.tileZ = buf.readInt();
         this.worldID = buf.readInt();
         this.buttonID = buf.readInt();
+        this.playerID = buf.readInt();
     }
 
     @Override
@@ -46,18 +49,19 @@ public class PacketInputterButton implements IMessage{
         buf.writeInt(this.tileZ);
         buf.writeInt(this.worldID);
         buf.writeInt(this.buttonID);
+        buf.writeInt(this.playerID);
     }
 
-    public static class Handler implements IMessageHandler<PacketInputterButton, IMessage>{
+    public static class Handler implements IMessageHandler<PacketGuiButton, IMessage>{
 
         @Override
-        public IMessage onMessage(PacketInputterButton message, MessageContext ctx){
+        public IMessage onMessage(PacketGuiButton message, MessageContext ctx){
             World world = DimensionManager.getWorld(message.worldID);
             TileEntity tile = world.getTileEntity(message.tileX, message.tileY, message.tileZ);
 
-            if(tile instanceof TileEntityInputter){
-                TileEntityInputter inputter = (TileEntityInputter)tile;
-                inputter.onButtonPressed(message.buttonID);
+            if(tile instanceof IButtonReactor){
+                IButtonReactor reactor = (IButtonReactor)tile;
+                reactor.onButtonPressed(message.buttonID, (EntityPlayer)world.getEntityByID(message.playerID));
             }
 
             return null;

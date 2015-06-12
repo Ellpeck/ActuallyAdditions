@@ -39,15 +39,6 @@ public class TileEntityBreaker extends TileEntityInventoryBase{
     @SuppressWarnings("unchecked")
     public void updateEntity(){
         if(!worldObj.isRemote){
-
-            //TODO Remove after some Updating
-            if(this.isPlacer && this.getClass() != TileEntityPlacer.class){
-                ItemStack[] theSlots = this.slots.clone();
-                worldObj.removeTileEntity(xCoord, yCoord, zCoord);
-                worldObj.setTileEntity(xCoord, yCoord, zCoord, new TileEntityPlacer());
-                ((TileEntityPlacer)worldObj.getTileEntity(xCoord, yCoord, zCoord)).slots = theSlots.clone();
-            }
-
             if(!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)){
                 if(this.currentTime > 0){
                     this.currentTime--;

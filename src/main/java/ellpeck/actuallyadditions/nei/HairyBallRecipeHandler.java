@@ -19,7 +19,7 @@ import java.util.Collections;
 
 public class HairyBallRecipeHandler extends TemplateRecipeHandler{
 
-    public static final String NAME = "ballOfHair";
+    public static final String NAME = "actuallyadditions.ballOfHair";
 
     public HairyBallRecipeHandler(){
         super();
@@ -61,7 +61,7 @@ public class HairyBallRecipeHandler extends TemplateRecipeHandler{
 
     @Override
     public String getRecipeName(){
-        return StatCollector.translateToLocal("container." + ModUtil.MOD_ID_LOWER + ".nei." + NAME + ".name");
+        return StatCollector.translateToLocal("container.nei." + NAME + ".name");
     }
 
     @Override

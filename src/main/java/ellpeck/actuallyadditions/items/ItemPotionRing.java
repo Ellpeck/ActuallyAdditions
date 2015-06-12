@@ -3,7 +3,9 @@ package ellpeck.actuallyadditions.items;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.items.metalists.ThePotionRings;
-import ellpeck.actuallyadditions.util.*;
+import ellpeck.actuallyadditions.util.INameableItem;
+import ellpeck.actuallyadditions.util.ItemUtil;
+import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
@@ -40,7 +42,7 @@ public class ItemPotionRing extends Item implements INameableItem{
     public void onUpdate(ItemStack stack, World world, Entity player, int par4, boolean par5){
         super.onUpdate(stack, world, player, par4, par5);
 
-        if(!world.isRemote){
+        if(!world.isRemote && stack.getItemDamage() < allRings.length){
             if(player instanceof EntityPlayer){
                 EntityPlayer thePlayer = (EntityPlayer)player;
                 ItemStack equippedStack = ((EntityPlayer)player).getCurrentEquippedItem();
@@ -71,7 +73,7 @@ public class ItemPotionRing extends Item implements INameableItem{
 
     @Override
     public EnumRarity getRarity(ItemStack stack){
-        return allRings[stack.getItemDamage()].rarity;
+        return stack.getItemDamage() >= allRings.length ? EnumRarity.common : allRings[stack.getItemDamage()].rarity;
     }
 
     @SuppressWarnings("all")
@@ -84,20 +86,15 @@ public class ItemPotionRing extends Item implements INameableItem{
 
     @Override
     public String getUnlocalizedName(ItemStack stack){
-        return this.getUnlocalizedName() + allRings[stack.getItemDamage()].name;
+        return this.getUnlocalizedName() + (stack.getItemDamage() >= allRings.length ? " ERROR!" : allRings[stack.getItemDamage()].getName());
     }
 
     @Override
     @SuppressWarnings("unchecked")
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld){
-        ItemUtil.addInformation(this, list, 2, "");
-
-        if(KeyUtil.isShiftPressed()){
-            if(stack.getItemDamage() == ThePotionRings.SATURATION.ordinal()){
-                list.add(StringUtil.RED + StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + ".itemPotionRing.desc.off.1"));
-                list.add(StringUtil.RED + StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + ".itemPotionRing.desc.off.2"));
-            }
+        if(stack.getItemDamage() < allRings.length){
+            ItemUtil.addInformation(this, list, 2, "");
         }
     }
 
@@ -109,7 +106,7 @@ public class ItemPotionRing extends Item implements INameableItem{
     @Override
     @SideOnly(Side.CLIENT)
     public int getColorFromItemStack(ItemStack stack, int pass){
-        return allRings[stack.getItemDamage()].color;
+        return stack.getItemDamage() >= allRings.length ? 0 : allRings[stack.getItemDamage()].color;
     }
 
     @Override
@@ -121,8 +118,10 @@ public class ItemPotionRing extends Item implements INameableItem{
     @Override
     public String getItemStackDisplayName(ItemStack stack){
         String standardName = StatCollector.translateToLocal(this.getUnlocalizedName() + ".name");
-        String name = allRings[stack.getItemDamage()].getName();
-        String effect = StatCollector.translateToLocal("effect." + ModUtil.MOD_ID_LOWER + "." + name.substring(0, 1).toLowerCase() + name.substring(1) + ".name");
-        return standardName + " " + effect;
+        if(stack.getItemDamage() < allRings.length){
+            String effect = StatCollector.translateToLocal(allRings[stack.getItemDamage()].getName());
+            return standardName+" "+effect;
+        }
+        return standardName;
     }
 }

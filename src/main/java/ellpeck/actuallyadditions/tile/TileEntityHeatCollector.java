@@ -17,7 +17,7 @@ public class TileEntityHeatCollector extends TileEntityBase implements IEnergyPr
     private int randomChance = ConfigIntValues.HEAT_COLLECTOR_LAVA_CHANCE.getValue();
     private int blocksNeeded = ConfigIntValues.HEAT_COLLECTOR_BLOCKS.getValue();
 
-    public EnergyStorage storage = new EnergyStorage(30000, energyProducedPerTick+50);
+    public EnergyStorage storage = new EnergyStorage(30000);
 
     public static int energyProducedPerTick = ConfigIntValues.HEAT_COLLECTOR_ENERGY_PRODUCED.getValue();
 

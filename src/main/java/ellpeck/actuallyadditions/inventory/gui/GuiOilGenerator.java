@@ -1,9 +1,10 @@
-package ellpeck.actuallyadditions.inventory;
+package ellpeck.actuallyadditions.inventory.gui;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import ellpeck.actuallyadditions.inventory.ContainerOilGenerator;
 import ellpeck.actuallyadditions.tile.TileEntityBase;
-import ellpeck.actuallyadditions.tile.TileEntityCanolaPress;
+import ellpeck.actuallyadditions.tile.TileEntityOilGenerator;
 import ellpeck.actuallyadditions.util.AssetUtil;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -15,22 +16,22 @@ import org.lwjgl.opengl.GL11;
 import java.util.Collections;
 
 @SideOnly(Side.CLIENT)
-public class GuiCanolaPress extends GuiContainer{
+public class GuiOilGenerator extends GuiContainer{
 
-    private TileEntityCanolaPress press;
+    private TileEntityOilGenerator generator;
 
-    private static final ResourceLocation resLoc = AssetUtil.getGuiLocation("guiCanolaPress");
+    private static final ResourceLocation resLoc = AssetUtil.getGuiLocation("guiOilGenerator");
 
-    public GuiCanolaPress(InventoryPlayer inventory, TileEntityBase tile){
-        super(new ContainerCanolaPress(inventory, tile));
-        this.press = (TileEntityCanolaPress)tile;
+    public GuiOilGenerator(InventoryPlayer inventory, TileEntityBase tile){
+        super(new ContainerOilGenerator(inventory, tile));
+        this.generator = (TileEntityOilGenerator)tile;
         this.xSize = 176;
         this.ySize = 93+86;
     }
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y){
-        AssetUtil.displayNameString(this.fontRendererObj, xSize, -10, this.press.getInventoryName());
+        AssetUtil.displayNameString(this.fontRendererObj, xSize, -10, this.generator.getInventoryName());
     }
 
     @Override
@@ -43,31 +44,30 @@ public class GuiCanolaPress extends GuiContainer{
         this.mc.getTextureManager().bindTexture(resLoc);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 93);
 
-        if(this.press.getEnergyStored(ForgeDirection.UNKNOWN) > 0){
-            int i = this.press.getEnergyScaled(83);
-            drawTexturedModalRect(this.guiLeft + 43, this.guiTop+89-i, 176, 29, 16, i);
+        if(this.generator.getEnergyStored(ForgeDirection.UNKNOWN) > 0){
+            int i = this.generator.getEnergyScaled(83);
+            drawTexturedModalRect(this.guiLeft+43, this.guiTop+89-i, 176, 0, 16, i);
         }
 
-        if(this.press.tank.getFluidAmount() > 0){
-            int i = this.press.getTankScaled(83);
-            drawTexturedModalRect(this.guiLeft + 117, this.guiTop+89-i, 192, 29, 16, i);
+        if(this.generator.tank.getFluidAmount() > 0){
+            int i = this.generator.getTankScaled(83);
+            drawTexturedModalRect(this.guiLeft+117, this.guiTop+89-i, 192, 0, 16, i);
         }
 
-        if(this.press.currentProcessTime > 0){
-            int i = this.press.getProcessScaled(29);
-            drawTexturedModalRect(this.guiLeft + 83, this.guiTop+32, 176, 0, 12, i);
+        if(this.generator.currentBurnTime > 0){
+            int i = this.generator.getBurningScaled(13);
+            this.drawTexturedModalRect(guiLeft+72, guiTop+44+12-i, 176, 96-i, 14, i);
         }
     }
 
     @Override
     public void drawScreen(int x, int y, float f){
         super.drawScreen(x, y, f);
-        String text1 = this.press.getEnergyStored(ForgeDirection.UNKNOWN) + "/" + this.press.getMaxEnergyStored(ForgeDirection.UNKNOWN) + " RF";
+        String text1 = this.generator.getEnergyStored(ForgeDirection.UNKNOWN) + "/" + this.generator.getMaxEnergyStored(ForgeDirection.UNKNOWN) + " RF";
         if(x >= guiLeft+43 && y >= guiTop+6 && x <= guiLeft+58 && y <= guiTop+88){
             this.func_146283_a(Collections.singletonList(text1), x, y);
         }
-
-        String text2 = this.press.tank.getFluidAmount() + "/" + this.press.tank.getCapacity() + " mB " +StatCollector.translateToLocal("fluid.canolaoil");
+        String text2 = this.generator.tank.getFluidAmount() + "/" + this.generator.tank.getCapacity() + " mB " +StatCollector.translateToLocal("fluid.oil");
         if(x >= guiLeft+117 && y >= guiTop+6 && x <= guiLeft+132 && y <= guiTop+88){
             this.func_146283_a(Collections.singletonList(text2), x, y);
         }

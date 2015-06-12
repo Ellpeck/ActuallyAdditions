@@ -1,7 +1,8 @@
-package ellpeck.actuallyadditions.inventory;
+package ellpeck.actuallyadditions.inventory.gui;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import ellpeck.actuallyadditions.inventory.ContainerFurnaceDouble;
 import ellpeck.actuallyadditions.tile.TileEntityBase;
 import ellpeck.actuallyadditions.tile.TileEntityFurnaceDouble;
 import ellpeck.actuallyadditions.util.AssetUtil;

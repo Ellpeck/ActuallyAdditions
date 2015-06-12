@@ -1,12 +1,14 @@
 package ellpeck.actuallyadditions.blocks;
 
 import ellpeck.actuallyadditions.util.BlockUtil;
+import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.EnumRarity;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
+import org.apache.logging.log4j.Level;
 import powercrystals.minefactoryreloaded.api.FactoryRegistry;
 
 public class InitBlocks{
@@ -34,6 +36,7 @@ public class InitBlocks{
     public static Block blockRice;
     public static Block blockCanola;
     public static Block blockFlax;
+    public static Block blockCoffee;
 
     public static Fluid fluidCanolaOil;
     public static Block blockCanolaOil;
@@ -56,26 +59,15 @@ public class InitBlocks{
     public static Block blockFluidCollector;
 
     public static Block blockLavaFactoryController;
+    public static Block blockCoffeeMachine;
+
+    public static Block blockPhantomBooster;
 
     public static void init(){
         Util.logInfo("Initializing Blocks...");
 
         blockLavaFactoryController = new BlockLavaFactoryController();
         BlockUtil.register(blockLavaFactoryController, BlockLavaFactoryController.TheItemBlock.class);
-
-        fluidCanolaOil = new FluidAA("canolaoil").setDensity(1200).setViscosity(1500).setTemperature(300).setRarity(EnumRarity.uncommon);
-        FluidRegistry.registerFluid(fluidCanolaOil);
-        fluidCanolaOil = FluidRegistry.getFluid(fluidCanolaOil.getName());
-
-        blockCanolaOil = new BlockFluidFlowing(fluidCanolaOil, Material.water, "blockCanolaOil");
-        BlockUtil.register(blockCanolaOil, BlockFluidFlowing.TheItemBlock.class, false);
-
-        fluidOil = new FluidAA("oil").setDensity(1200).setViscosity(1500).setTemperature(300).setRarity(EnumRarity.uncommon);
-        FluidRegistry.registerFluid(fluidOil);
-        fluidOil = FluidRegistry.getFluid(fluidOil.getName());
-
-        blockOil = new BlockFluidFlowing(fluidOil, Material.water, "blockOil");
-        BlockUtil.register(blockOil, BlockFluidFlowing.TheItemBlock.class, false);
 
         blockCanolaPress = new BlockCanolaPress();
         BlockUtil.register(blockCanolaPress, BlockCanolaPress.TheItemBlock.class);
@@ -115,9 +107,14 @@ public class InitBlocks{
         FactoryRegistry.sendMessage("registerFertilizable", blockCanola);
 
         blockFlax = new BlockPlant("blockFlax", 6, 2, 4);
-        BlockUtil.register(blockFlax, BlockPlant.TheItemBlock.class);
+        BlockUtil.register(blockFlax, BlockPlant.TheItemBlock.class, false);
         FactoryRegistry.sendMessage("registerHarvestable", blockFlax);
         FactoryRegistry.sendMessage("registerFertilizable", blockFlax);
+
+        blockCoffee = new BlockPlant("blockCoffee", 6, 2, 2);
+        BlockUtil.register(blockCoffee, BlockPlant.TheItemBlock.class, false);
+        FactoryRegistry.sendMessage("registerHarvestable", blockCoffee);
+        FactoryRegistry.sendMessage("registerFertilizable", blockCoffee);
 
         blockCompost = new BlockCompost();
         BlockUtil.register(blockCompost, BlockCompost.TheItemBlock.class);
@@ -175,5 +172,57 @@ public class InitBlocks{
 
         blockFluidCollector = new BlockFluidCollector(false);
         BlockUtil.register(blockFluidCollector, BlockFluidCollector.TheItemBlock.class);
+
+        blockCoffeeMachine = new BlockCoffeeMachine();
+        BlockUtil.register(blockCoffeeMachine, BlockCoffeeMachine.TheItemBlock.class);
+
+        blockPhantomBooster = new BlockPhantomBooster();
+        BlockUtil.register(blockPhantomBooster, BlockPhantomBooster.TheItemBlock.class);
+
+        registerFluids();
+    }
+
+    public static void registerFluids(){
+        String canolaOil = "canolaoil";
+        if(!FluidRegistry.isFluidRegistered(canolaOil)){
+            fluidCanolaOil = new FluidAA(canolaOil).setDensity(1200).setViscosity(1500).setTemperature(300).setRarity(EnumRarity.uncommon);
+            FluidRegistry.registerFluid(fluidCanolaOil);
+        }
+        else{
+            errorAlreadyRegistered("Canola Oil Fluid");
+        }
+        fluidCanolaOil = FluidRegistry.getFluid(canolaOil);
+
+        if(fluidCanolaOil.getBlock() == null){
+            blockCanolaOil = new BlockFluidFlowing(fluidCanolaOil, Material.water, "blockCanolaOil");
+            BlockUtil.register(blockCanolaOil, BlockFluidFlowing.TheItemBlock.class, false);
+        }
+        else{
+            errorAlreadyRegistered("Canola Oil Block");
+        }
+        blockCanolaOil = fluidCanolaOil.getBlock();
+
+        String oil = "oil";
+        if(!FluidRegistry.isFluidRegistered(oil)){
+            fluidOil = new FluidAA(oil).setDensity(1200).setViscosity(1500).setTemperature(300).setRarity(EnumRarity.uncommon);
+            FluidRegistry.registerFluid(fluidOil);
+        }
+        else{
+            errorAlreadyRegistered("Oil Fluid");
+         }
+        fluidOil = FluidRegistry.getFluid(oil);
+
+        if(fluidOil.getBlock() == null){
+            blockOil = new BlockFluidFlowing(fluidOil, Material.water, "blockOil");
+            BlockUtil.register(blockOil, BlockFluidFlowing.TheItemBlock.class, false);
+        }
+        else{
+            errorAlreadyRegistered("Oil Block");
+        }
+        blockOil = fluidOil.getBlock();
+    }
+
+    public static void errorAlreadyRegistered(String str){
+        ModUtil.LOGGER.log(Level.WARN, str + " from Actually Additions is not getting used as it has already been registered by another Mod! Issues may (but shouldn't) occur!");
     }
 }

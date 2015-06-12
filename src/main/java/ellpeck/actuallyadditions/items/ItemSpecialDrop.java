@@ -17,9 +17,10 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
 import java.util.List;
-import java.util.Random;
 
 public class ItemSpecialDrop extends Item implements INameableItem{
+
+    public static final int SOLID_XP_AMOUNT = 8;
 
     public static final TheSpecialDrops[] allDrops = TheSpecialDrops.values();
     public IIcon[] textures = new IIcon[allDrops.length];
@@ -32,8 +33,14 @@ public class ItemSpecialDrop extends Item implements INameableItem{
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player){
         if(!world.isRemote){
             if(stack.getItemDamage() == TheSpecialDrops.SOLIDIFIED_EXPERIENCE.ordinal()){
-                world.spawnEntityInWorld(new EntityXPOrb(world, player.posX+0.5, player.posY+0.5, player.posZ+0.5, 5+new Random().nextInt(6)));
-                if(!player.capabilities.isCreativeMode) stack.stackSize--;
+                if(!player.isSneaking()){
+                    world.spawnEntityInWorld(new EntityXPOrb(world, player.posX+0.5, player.posY+0.5, player.posZ+0.5, SOLID_XP_AMOUNT));
+                    if(!player.capabilities.isCreativeMode) stack.stackSize--;
+                }
+                else{
+                    world.spawnEntityInWorld(new EntityXPOrb(world, player.posX+0.5, player.posY+0.5, player.posZ+0.5, SOLID_XP_AMOUNT*stack.stackSize));
+                    if(!player.capabilities.isCreativeMode) stack.stackSize = 0;
+                }
             }
         }
         return stack;
@@ -46,7 +53,7 @@ public class ItemSpecialDrop extends Item implements INameableItem{
 
     @Override
     public EnumRarity getRarity(ItemStack stack){
-        return allDrops[stack.getItemDamage()].rarity;
+        return stack.getItemDamage() >= allDrops.length ? EnumRarity.common : allDrops[stack.getItemDamage()].rarity;
     }
 
     @Override
@@ -69,19 +76,19 @@ public class ItemSpecialDrop extends Item implements INameableItem{
 
     @Override
     public String getUnlocalizedName(ItemStack stack){
-        return this.getUnlocalizedName() + allDrops[stack.getItemDamage()].name;
+        return this.getUnlocalizedName() + (stack.getItemDamage() >= allDrops.length ? " ERROR!" : allDrops[stack.getItemDamage()].getName());
     }
 
     @Override
     @SuppressWarnings("unchecked")
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld){
-        ItemUtil.addInformation(this, list, 1, allDrops[stack.getItemDamage()].getName());
+        if(stack.getItemDamage() < allDrops.length) ItemUtil.addInformation(this, list, stack.getItemDamage() == TheSpecialDrops.SOLIDIFIED_EXPERIENCE.ordinal() ? 2 : 1, allDrops[stack.getItemDamage()].getName());
     }
 
     @Override
     public IIcon getIconFromDamage(int par1){
-        return textures[par1];
+        return par1 >= textures.length ? null : textures[par1];
     }
 
     @Override

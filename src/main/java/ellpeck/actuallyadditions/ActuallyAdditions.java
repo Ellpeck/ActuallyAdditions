@@ -39,8 +39,8 @@ public class ActuallyAdditions{
     public void preInit(FMLPreInitializationEvent event){
         Util.logInfo("Starting PreInitialization Phase...");
 
-        PacketHandler.init();
         ConfigurationHandler.init(event.getSuggestedConfigurationFile());
+        PacketHandler.init();
         InitItemMaterials.init();
         InitBlocks.init();
         InitItems.init();

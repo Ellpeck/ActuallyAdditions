@@ -42,7 +42,7 @@ public class RenderSpecial{
         GL11.glRotatef(180F, 1.0F, 0.0F, 1.0F);
         GL11.glScalef(size, size, size);
 
-        if(!(time-(bobHeight/2) < lastTimeForBobbing)){
+        if(time-(bobHeight/2) >= lastTimeForBobbing){
             GL11.glTranslated(0, ((double)time-this.lastTimeForBobbing)/100, 0);
         }
         else{

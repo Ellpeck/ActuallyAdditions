@@ -13,7 +13,8 @@ public enum TheMiscBlocks implements INameableItem{
     STONE_CASING("StoneCasing", EnumRarity.uncommon, "blockCasingStone"),
     CHARCOAL_BLOCK("Charcoal", EnumRarity.common, "blockCharcoal"),
     ENDERPEARL_BLOCK("Enderpearl", EnumRarity.rare, "blockEnderpearl"),
-    LAVA_FACTORY_CASE("LavaFactoryCase", EnumRarity.uncommon, "blockLavaFactoryCase");
+    LAVA_FACTORY_CASE("LavaFactoryCase", EnumRarity.uncommon, "blockLavaFactoryCase"),
+    ENDER_CASING("EnderCasing", EnumRarity.epic, "blockEnderCasing");
 
     public final String name;
     public final String oredictName;

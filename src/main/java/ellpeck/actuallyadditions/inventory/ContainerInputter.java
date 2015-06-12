@@ -2,6 +2,7 @@ package ellpeck.actuallyadditions.inventory;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import ellpeck.actuallyadditions.inventory.gui.GuiInputter;
 import ellpeck.actuallyadditions.inventory.slot.SlotFilter;
 import ellpeck.actuallyadditions.tile.TileEntityBase;
 import ellpeck.actuallyadditions.tile.TileEntityInputter;
@@ -24,6 +25,8 @@ public class ContainerInputter extends Container{
     private int lastSlotToPull;
     private int lastPlaceToPutSlotAmount;
     private int lastPlaceToPullSlotAmount;
+    private int lastIsPullWhitelist;
+    private int lastIsPutWhitelist;
 
     private boolean isAdvanced;
 
@@ -35,22 +38,21 @@ public class ContainerInputter extends Container{
 
         if(isAdvanced){
             for(int i = 0; i < 2; i++){
-                this.addSlotToContainer(new SlotFilter(this.tileInputter, 1+i*6, 20+i*84, 6));
-                this.addSlotToContainer(new SlotFilter(this.tileInputter, 2+i*6, 38+i*84, 6));
-                this.addSlotToContainer(new SlotFilter(this.tileInputter, 3+i*6, 56+i*84, 6));
-                this.addSlotToContainer(new SlotFilter(this.tileInputter, 4+i*6, 20+i*84, 24));
-                this.addSlotToContainer(new SlotFilter(this.tileInputter, 5+i*6, 38+i*84, 24));
-                this.addSlotToContainer(new SlotFilter(this.tileInputter, 6+i*6, 56+i*84, 24));
+                for(int x = 0; x < 3; x++){
+                    for(int y = 0;y < 4; y++){
+                        this.addSlotToContainer(new SlotFilter(this.tileInputter, 1+y+x*4+i*12, 20+i*84+x*18, 6+y*18));
+                    }
+                }
             }
         }
 
         for(int i = 0; i < 3; i++){
             for (int j = 0; j < 9; j++){
-                this.addSlotToContainer(new Slot(inventory, j + i * 9 + 9, 8 + j * 18, 97 + i * 18 + (isAdvanced ? 12 : 0)));
+                this.addSlotToContainer(new Slot(inventory, j + i * 9 + 9, 8 + j * 18, 97 + i * 18 + (isAdvanced ? 12+GuiInputter.OFFSET_ADVANCED : 0)));
             }
         }
         for(int i = 0; i < 9; i++){
-            this.addSlotToContainer(new Slot(inventory, i, 8 + i * 18, 155 + (isAdvanced ? 12 : 0)));
+            this.addSlotToContainer(new Slot(inventory, i, 8 + i * 18, 155 + (isAdvanced ? 12+GuiInputter.OFFSET_ADVANCED : 0)));
         }
     }
 
@@ -63,6 +65,8 @@ public class ContainerInputter extends Container{
         iCraft.sendProgressBarUpdate(this, 3, this.tileInputter.slotToPull);
         iCraft.sendProgressBarUpdate(this, 4, this.tileInputter.placeToPullSlotAmount);
         iCraft.sendProgressBarUpdate(this, 5, this.tileInputter.placeToPutSlotAmount);
+        iCraft.sendProgressBarUpdate(this, 6, this.tileInputter.isPullWhitelist ? 1 : 0);
+        iCraft.sendProgressBarUpdate(this, 7, this.tileInputter.isPutWhitelist ? 1 : 0);
     }
 
     @Override
@@ -76,13 +80,18 @@ public class ContainerInputter extends Container{
             if(this.lastSlotToPull != this.tileInputter.slotToPull) iCraft.sendProgressBarUpdate(this, 3, this.tileInputter.slotToPull);
             if(this.lastPlaceToPullSlotAmount != this.tileInputter.placeToPullSlotAmount) iCraft.sendProgressBarUpdate(this, 4, this.tileInputter.placeToPullSlotAmount);
             if(this.lastPlaceToPutSlotAmount != this.tileInputter.placeToPutSlotAmount) iCraft.sendProgressBarUpdate(this, 5, this.tileInputter.placeToPutSlotAmount);
+            if(this.lastIsPullWhitelist != (this.tileInputter.isPullWhitelist ? 1 : 0)) iCraft.sendProgressBarUpdate(this, 6, this.tileInputter.isPullWhitelist ? 1 : 0);
+            if(this.lastIsPutWhitelist != (this.tileInputter.isPutWhitelist ? 1 : 0)) iCraft.sendProgressBarUpdate(this, 7, this.tileInputter.isPutWhitelist ? 1 : 0);
         }
+
         this.lastSideToPut = this.tileInputter.sideToPut;
         this.lastSlotToPut = this.tileInputter.slotToPut;
         this.lastSideToPull = this.tileInputter.sideToPull;
         this.lastSlotToPull = this.tileInputter.slotToPull;
         this.lastPlaceToPullSlotAmount = this.tileInputter.placeToPullSlotAmount;
         this.lastPlaceToPutSlotAmount = this.tileInputter.placeToPutSlotAmount;
+        this.lastIsPutWhitelist = this.tileInputter.isPutWhitelist ? 1 : 0;
+        this.lastIsPullWhitelist = this.tileInputter.isPullWhitelist ? 1 : 0;
 
     }
 
@@ -95,6 +104,8 @@ public class ContainerInputter extends Container{
         if(par1 == 3) this.tileInputter.slotToPull = par2;
         if(par1 == 4) this.tileInputter.placeToPullSlotAmount = par2;
         if(par1 == 5) this.tileInputter.placeToPutSlotAmount = par2;
+        if(par1 == 6) this.tileInputter.isPullWhitelist = par2 == 1;
+        if(par1 == 7) this.tileInputter.isPutWhitelist = par2 == 1;
     }
 
     @Override
@@ -104,7 +115,7 @@ public class ContainerInputter extends Container{
 
     @Override
     public ItemStack transferStackInSlot(EntityPlayer player, int slot){
-        final int inventoryStart = this.isAdvanced ? 13 : 1;
+        final int inventoryStart = this.isAdvanced ? 25 : 1;
         final int inventoryEnd = inventoryStart+26;
         final int hotbarStart = inventoryEnd+1;
         final int hotbarEnd = hotbarStart+8;

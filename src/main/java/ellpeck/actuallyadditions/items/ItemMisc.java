@@ -37,7 +37,7 @@ public class ItemMisc extends Item implements INameableItem{
 
     @Override
     public EnumRarity getRarity(ItemStack stack){
-        return allMiscItems[stack.getItemDamage()].rarity;
+        return stack.getItemDamage() >= allMiscItems.length ? EnumRarity.common : allMiscItems[stack.getItemDamage()].rarity;
     }
 
     @Override
@@ -55,19 +55,19 @@ public class ItemMisc extends Item implements INameableItem{
 
     @Override
     public String getUnlocalizedName(ItemStack stack){
-        return this.getUnlocalizedName() + allMiscItems[stack.getItemDamage()].name;
+        return this.getUnlocalizedName() + (stack.getItemDamage() >= allMiscItems.length ? " ERROR!" : allMiscItems[stack.getItemDamage()].getName());
     }
 
     @Override
     @SuppressWarnings("unchecked")
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld){
-        ItemUtil.addInformation(this, list, 1, allMiscItems[stack.getItemDamage()].getName());
+        if(stack.getItemDamage() < allMiscItems.length) ItemUtil.addInformation(this, list, 1, allMiscItems[stack.getItemDamage()].getName());
     }
 
     @Override
     public IIcon getIconFromDamage(int par1){
-        return textures[par1];
+        return par1 >= textures.length ? null : textures[par1];
     }
 
     @Override

@@ -14,7 +14,7 @@ public class TileEntityItemRepairer extends TileEntityInventoryBase implements I
     public static final int SLOT_INPUT = 0;
     public static final int SLOT_OUTPUT = 1;
 
-    public EnergyStorage storage = new EnergyStorage(300000, energyUsePerTick+100);
+    public EnergyStorage storage = new EnergyStorage(300000);
 
     private final int speedSlowdown = ConfigIntValues.REPAIRER_SPEED_SLOWDOWN.getValue();
 

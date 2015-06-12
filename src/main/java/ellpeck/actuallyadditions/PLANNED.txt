@@ -14,7 +14,6 @@
     -Attracts/Repulses Mobs
     -Has an aggressive and a friendly version
     -Maybe for Items
-    -Crafted with an Ender Casing
 
 -Void Bag
     -Sucks up picked up Items
@@ -83,7 +82,18 @@
     -Ring of Water Absorption: Removes Water around
     -Ring of Striptease (Or something like that): Attacker lose parts of their Armor
 
--Coffee
-    -Coffee Machine
-    -Coffee Cup
-    -Bedrockium Coffee Cup
+-Food Cannon
+    -Shoots Food Items
+    -Damage varies with Food
+
+-Furniture
+    -Can be put into a Crafting Table with a Banner to give it a pattern (1.8!)
+    -Parts of the furniture can have different types (eg. Wood, Stone etc.) -> Via Crafting or Tool?
+
+-Tinker's Concrete
+    -Customizable with Items in Concrete Mixer
+    -(eg. Redstone->Speed Glowstone->Light etc.)
+
+-XP Solidifier
+    -Block that creates Solidified Experience from Player's Levels
+    -Has a GUI with Buttons

@@ -39,24 +39,22 @@ public class ItemPhantomConnector extends Item implements INameableItem{
             if(tile != null){
                 //Passing to Face
                 if(tile instanceof TileEntityPhantomface){
-                    if(this.checkHasConnection(stack, player)){
-                        ChunkCoordinates coords = this.getStoredPosition(stack);
-                        TileEntity toStore = this.getStoredWorld(stack).getTileEntity(coords.posX, coords.posY, coords.posZ);
-                        if(toStore != null && ((TileEntityPhantomface)tile).canConnectTo(toStore)){
-                            ((TileEntityPhantomface)tile).boundTile = toStore;
-                            this.clearStorage(stack);
-                            player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.connected.desc")));
-                            return true;
-                        }
-                        else player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.notInventory.desc")));
+                    if(this.checkHasConnection(stack, player, tile)){
+                        ((TileEntityPhantomface)tile).boundPosition = this.getStoredPosition(stack);
+                        ((TileEntityPhantomface)tile).boundWorld = this.getStoredWorld(stack);
+                        TileEntityPhantomface.updateAround(tile);
+                        this.clearStorage(stack);
+                        player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.connected.desc")));
+                        return true;
                     }
                     return false;
                 }
                 //Passing to Placer
                 else if(tile instanceof TileEntityPhantomPlacer){
-                    if(this.checkHasConnection(stack, player)){
+                    if(this.checkHasConnection(stack, player, tile)){
                         ((TileEntityPhantomPlacer)tile).boundPosition = this.getStoredPosition(stack);
                         ((TileEntityPhantomPlacer)tile).boundWorld = this.getStoredWorld(stack);
+                        tile.markDirty();
                         this.clearStorage(stack);
                         player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.connected.desc")));
                         return true;
@@ -71,12 +69,20 @@ public class ItemPhantomConnector extends Item implements INameableItem{
         return true;
     }
 
-    public boolean checkHasConnection(ItemStack stack, EntityPlayer player){
+    public boolean checkHasConnection(ItemStack stack, EntityPlayer player, TileEntity tile){
         if(this.getStoredPosition(stack) != null && this.getStoredWorld(stack) != null){
             return true;
         }
         else{
-            player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + ".phantom.noBound.desc")));
+            if(tile instanceof TileEntityPhantomPlacer){
+                ((TileEntityPhantomPlacer)tile).boundWorld = null;
+                ((TileEntityPhantomPlacer)tile).boundPosition = null;
+            }
+            if(tile instanceof TileEntityPhantomface){
+                ((TileEntityPhantomface)tile).boundWorld = null;
+                ((TileEntityPhantomface)tile).boundPosition = null;
+            }
+            player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + ".phantom.unbound.desc")));
             return false;
         }
     }

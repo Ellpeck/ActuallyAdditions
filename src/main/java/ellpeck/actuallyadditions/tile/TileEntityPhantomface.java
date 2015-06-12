@@ -4,14 +4,17 @@ import cofh.api.energy.IEnergyHandler;
 import cofh.api.energy.IEnergyProvider;
 import cofh.api.energy.IEnergyReceiver;
 import ellpeck.actuallyadditions.blocks.BlockPhantomface;
+import ellpeck.actuallyadditions.blocks.InitBlocks;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.util.WorldUtil;
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -22,25 +25,43 @@ import net.minecraftforge.fluids.IFluidHandler;
 
 public class TileEntityPhantomface extends TileEntityInventoryBase{
 
-    public TileEntity boundTile;
+    public ChunkCoordinates boundPosition;
+    public World boundWorld;
 
     public int type;
 
-    public final int range = ConfigIntValues.PHANTOMFACE_RANGE.getValue();
+    public final int defaultRange = ConfigIntValues.PHANTOMFACE_RANGE.getValue();
+    public int range;
 
     public TileEntityPhantomface(String name){
         super(0, name);
     }
 
-    public boolean canConnectTo(TileEntity tile){
-        return false;
+    public static int upgradeRange(int defaultRange, World world, int x, int y, int z){
+        int newRange = defaultRange;
+        for(int i = 0; i < 3; i++){
+            Block block = world.getBlock(x, y+1+i, z);
+            if(block == InitBlocks.blockPhantomBooster) newRange = newRange*2;
+            else break;
+        }
+        return newRange;
+    }
+
+    public static void updateAround(TileEntity tile){
+        tile.getWorldObj().markBlockForUpdate(tile.xCoord+1, tile.yCoord, tile.zCoord);
+        tile.getWorldObj().markBlockForUpdate(tile.xCoord-1, tile.yCoord, tile.zCoord);
+        tile.getWorldObj().markBlockForUpdate(tile.xCoord, tile.yCoord+1, tile.zCoord);
+        tile.getWorldObj().markBlockForUpdate(tile.xCoord, tile.yCoord-1, tile.zCoord);
+        tile.getWorldObj().markBlockForUpdate(tile.xCoord, tile.yCoord, tile.zCoord+1);
+        tile.getWorldObj().markBlockForUpdate(tile.xCoord, tile.yCoord, tile.zCoord-1);
+        tile.markDirty();
     }
 
     public boolean isBoundTileInRage(){
         if(this.hasBoundTile()){
-            int xDif = this.boundTile.xCoord-this.xCoord;
-            int yDif = this.boundTile.yCoord-this.yCoord;
-            int zDif = this.boundTile.zCoord-this.zCoord;
+            int xDif = this.boundPosition.posX-this.xCoord;
+            int yDif = this.boundPosition.posY-this.yCoord;
+            int zDif = this.boundPosition.posZ-this.zCoord;
 
             if(xDif >= -this.range && xDif <= this.range){
                 if(yDif >= -this.range && yDif <= this.range){
@@ -54,34 +75,23 @@ public class TileEntityPhantomface extends TileEntityInventoryBase{
     @Override
     public void updateEntity(){
         if(!worldObj.isRemote){
+            this.range = upgradeRange(defaultRange, worldObj, xCoord, yCoord, zCoord);
 
-            //TODO Remove after some Updating
-            if(this.type == BlockPhantomface.FACE && this.getClass() != TileEntityPhantomItemface.class){
-                ItemStack[] theSlots = this.slots.clone();
-                worldObj.removeTileEntity(xCoord, yCoord, zCoord);
-                worldObj.setTileEntity(xCoord, yCoord, zCoord, new TileEntityPhantomItemface());
-                ((TileEntityPhantomItemface)worldObj.getTileEntity(xCoord, yCoord, zCoord)).slots = theSlots.clone();
-            }
-
-            if(!this.hasBoundTile()) this.boundTile = null;
-
-            if(this.tempX > 0 || this.tempY > 0 || this.tempZ > 0){
-                this.boundTile = tempWorld.getTileEntity(tempX, tempY, tempZ);
-                this.tempX = 0;
-                this.tempY = 0;
-                this.tempZ = 0;
-                this.tempWorld = null;
+            if(!this.hasBoundTile()){
+                this.boundPosition = null;
+                this.boundWorld = null;
             }
         }
     }
 
     public boolean hasBoundTile(){
-        if(this.boundTile != null){
-            if(this.xCoord == this.boundTile.xCoord && this.yCoord == this.boundTile.yCoord && this.zCoord == this.boundTile.zCoord && this.worldObj == this.boundTile.getWorldObj()){
-                this.boundTile = null;
+        if(this.boundPosition != null && this.boundWorld != null){
+            if(this.boundWorld.getTileEntity(boundPosition.posX, boundPosition.posY, boundPosition.posZ) instanceof TileEntityPhantomface || (this.xCoord == this.boundPosition.posX && this.yCoord == this.boundPosition.posY && this.zCoord == this.boundPosition.posZ && this.worldObj == this.boundWorld)){
+                this.boundPosition = null;
+                this.boundWorld = null;
                 return false;
             }
-            return boundTile.getWorldObj().getTileEntity(boundTile.xCoord, boundTile.yCoord, boundTile.zCoord) == boundTile && boundTile.getWorldObj() == this.worldObj;
+            return this.boundWorld == this.worldObj;
         }
         return false;
     }
@@ -90,25 +100,24 @@ public class TileEntityPhantomface extends TileEntityInventoryBase{
     public void writeToNBT(NBTTagCompound compound){
         super.writeToNBT(compound);
         if(this.hasBoundTile()){
-            compound.setInteger("XCoordOfTileStored", boundTile.xCoord);
-            compound.setInteger("YCoordOfTileStored", boundTile.yCoord);
-            compound.setInteger("ZCoordOfTileStored", boundTile.zCoord);
-            compound.setInteger("WorldOfTileStored", boundTile.getWorldObj().provider.dimensionId);
+            compound.setInteger("XCoordOfTileStored", boundPosition.posX);
+            compound.setInteger("YCoordOfTileStored", boundPosition.posY);
+            compound.setInteger("ZCoordOfTileStored", boundPosition.posZ);
+            compound.setInteger("WorldOfTileStored", boundWorld.provider.dimensionId);
         }
     }
-
-    public int tempX;
-    public int tempY;
-    public int tempZ;
-    public World tempWorld;
 
     @Override
     public void readFromNBT(NBTTagCompound compound){
         super.readFromNBT(compound);
-        this.tempX = compound.getInteger("XCoordOfTileStored");
-        this.tempY = compound.getInteger("YCoordOfTileStored");
-        this.tempZ = compound.getInteger("ZCoordOfTileStored");
-        this.tempWorld = DimensionManager.getWorld(compound.getInteger("WorldOfTileStored"));
+        int x = compound.getInteger("XCoordOfTileStored");
+        int y = compound.getInteger("YCoordOfTileStored");
+        int z = compound.getInteger("ZCoordOfTileStored");
+        if(x != 0 && y != 0 && z != 0){
+            this.boundPosition = new ChunkCoordinates(x, y, z);
+            this.boundWorld = DimensionManager.getWorld(compound.getInteger("WorldOfTileStored"));
+            this.markDirty();
+        }
     }
 
     @Override
@@ -133,7 +142,7 @@ public class TileEntityPhantomface extends TileEntityInventoryBase{
             super.updateEntity();
 
             if(!worldObj.isRemote){
-                if(this.isBoundTileInRage() && this.getHandler() != null){
+                if(worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord) && this.isBoundTileInRage() && this.getHandler() != null){
                     this.pushFluid(ForgeDirection.UP);
                     this.pushFluid(ForgeDirection.DOWN);
                     this.pushFluid(ForgeDirection.NORTH);
@@ -165,21 +174,16 @@ public class TileEntityPhantomface extends TileEntityInventoryBase{
         }
 
         @Override
-        public boolean canConnectTo(TileEntity tile){
-            return tile instanceof IFluidHandler;
+        public boolean isBoundTileInRage(){
+            return super.isBoundTileInRage() && this.boundWorld.getTileEntity(boundPosition.posX, boundPosition.posY, boundPosition.posZ) instanceof IFluidHandler;
         }
 
         public IFluidHandler getHandler(){
-            TileEntity tile = boundTile.getWorldObj().getTileEntity(boundTile.xCoord, boundTile.yCoord, boundTile.zCoord);
-            if(tile != null && tile instanceof IFluidHandler){
-                return (IFluidHandler)tile;
+            if(this.boundPosition != null && this.boundWorld != null){
+                TileEntity tile = boundWorld.getTileEntity(boundPosition.posX, boundPosition.posY, boundPosition.posZ);
+                if(tile instanceof IFluidHandler) return (IFluidHandler)tile;
             }
             return null;
-        }
-
-        @Override
-        public boolean hasBoundTile(){
-            return super.hasBoundTile() && this.boundTile instanceof IFluidHandler;
         }
 
         @Override
@@ -225,6 +229,11 @@ public class TileEntityPhantomface extends TileEntityInventoryBase{
         }
 
         @Override
+        public boolean isBoundTileInRage(){
+            return super.isBoundTileInRage() && (this.boundWorld.getTileEntity(boundPosition.posX, boundPosition.posY, boundPosition.posZ) instanceof IEnergyReceiver || this.boundWorld.getTileEntity(boundPosition.posX, boundPosition.posY, boundPosition.posZ) instanceof IEnergyProvider);
+        }
+
+        @Override
         public void updateEntity(){
             super.updateEntity();
 
@@ -252,30 +261,20 @@ public class TileEntityPhantomface extends TileEntityInventoryBase{
             }
         }
 
-        @Override
-        public boolean canConnectTo(TileEntity tile){
-            return tile instanceof IEnergyProvider || tile instanceof IEnergyReceiver;
-        }
-
         public IEnergyProvider getProvider(){
-            TileEntity tile = boundTile.getWorldObj().getTileEntity(boundTile.xCoord, boundTile.yCoord, boundTile.zCoord);
-            if(tile != null && tile instanceof IEnergyProvider){
-                return (IEnergyProvider)tile;
+            if(this.boundPosition != null && this.boundWorld != null){
+                TileEntity tile = boundWorld.getTileEntity(boundPosition.posX, boundPosition.posY, boundPosition.posZ);
+                if(tile instanceof IEnergyProvider) return (IEnergyProvider)tile;
             }
             return null;
         }
 
         public IEnergyReceiver getReceiver(){
-            TileEntity tile = boundTile.getWorldObj().getTileEntity(boundTile.xCoord, boundTile.yCoord, boundTile.zCoord);
-            if(tile != null && tile instanceof IEnergyReceiver){
-                return (IEnergyReceiver)tile;
+            if(this.boundPosition != null && this.boundWorld != null){
+                TileEntity tile = boundWorld.getTileEntity(boundPosition.posX, boundPosition.posY, boundPosition.posZ);
+                if(tile instanceof IEnergyReceiver) return (IEnergyReceiver)tile;
             }
             return null;
-        }
-
-        @Override
-        public boolean hasBoundTile(){
-            return super.hasBoundTile() && (this.boundTile instanceof IEnergyReceiver || this.boundTile instanceof IEnergyProvider);
         }
 
         @Override
@@ -323,22 +322,17 @@ public class TileEntityPhantomface extends TileEntityInventoryBase{
             this.type = BlockPhantomface.FACE;
         }
 
-        @Override
-        public boolean canConnectTo(TileEntity tile){
-            return tile instanceof IInventory;
-        }
-
-        @Override
-        public boolean hasBoundTile(){
-            return super.hasBoundTile() && this.boundTile instanceof IInventory;
-        }
-
         public IInventory getInventory(){
-            TileEntity tile = boundTile.getWorldObj().getTileEntity(boundTile.xCoord, boundTile.yCoord, boundTile.zCoord);
-            if(tile != null && tile instanceof IInventory){
-                return (IInventory)tile;
+            if(this.boundPosition != null && this.boundWorld != null){
+                TileEntity tile = boundWorld.getTileEntity(boundPosition.posX, boundPosition.posY, boundPosition.posZ);
+                if(tile instanceof IInventory) return (IInventory)tile;
             }
             return null;
+        }
+
+        @Override
+        public boolean isBoundTileInRage(){
+            return super.isBoundTileInRage() && this.boundWorld.getTileEntity(boundPosition.posX, boundPosition.posY, boundPosition.posZ) instanceof IInventory;
         }
 
         public ISidedInventory getSided(){

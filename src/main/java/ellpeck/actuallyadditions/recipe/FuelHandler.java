@@ -19,6 +19,12 @@ public class FuelHandler implements IFuelHandler{
 
     private static HashMap<Pair<Item, Integer>, Integer> fuelList = new HashMap<Pair<Item, Integer>, Integer>();
 
+    public static void setFuelValues(){
+        addFuel(InitItems.itemMisc, TheMiscItems.TINY_CHAR.ordinal(), 200);
+        addFuel(InitItems.itemMisc, TheMiscItems.TINY_COAL.ordinal(), 200);
+        addFuel(InitBlocks.blockMisc, TheMiscBlocks.CHARCOAL_BLOCK.ordinal(), 16000);
+    }
+
     public static void init(){
         Util.logInfo("Initializing Fuelstuffs...");
 
@@ -31,26 +37,12 @@ public class FuelHandler implements IFuelHandler{
         return getFuelValue(fuel);
     }
 
-    public static void setFuelValues(){
-        addFuel(InitItems.itemMisc, TheMiscItems.TINY_CHAR.ordinal(), 200);
-        addFuel(InitItems.itemMisc, TheMiscItems.TINY_COAL.ordinal(), 200);
-        addFuel(InitBlocks.blockMisc, TheMiscBlocks.CHARCOAL_BLOCK.ordinal(), 16000);
-    }
-
     private static void addFuel(Item item, int metadata, int value){
         fuelList.put(Pair.of(item, metadata), value);
     }
 
-    private static void addFuel(Item item, int value){
-        addFuel(item, 0, value);
-    }
-
     private static void addFuel(Block block, int metadata, int value){
         addFuel(Item.getItemFromBlock(block), metadata, value);
-    }
-
-    private static void addFuel(Block block, int value){
-        addFuel(Item.getItemFromBlock(block), 0, value);
     }
 
     private static int getFuelValue(ItemStack stack){

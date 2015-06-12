@@ -13,7 +13,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 public class TileEntityCoalGenerator extends TileEntityInventoryBase implements IEnergyProvider{
 
-    public EnergyStorage storage = new EnergyStorage(60000, energyProducedPerTick+50);
+    public EnergyStorage storage = new EnergyStorage(60000);
 
     public static int energyProducedPerTick = ConfigIntValues.COAL_GEN_ENERGY_PRODUCED.getValue();
 
@@ -34,10 +34,11 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
                 this.storage.receiveEnergy(energyProducedPerTick, false);
             }
 
-            if(energyProducedPerTick*100 <= this.getMaxEnergyStored(ForgeDirection.UNKNOWN)-this.getEnergyStored(ForgeDirection.UNKNOWN)){
-                if(this.currentBurnTime <= 0 && this.slots[0] != null && TileEntityFurnace.getItemBurnTime(this.slots[0]) > 0){
-                    this.maxBurnTime = TileEntityFurnace.getItemBurnTime(this.slots[0]);
-                    this.currentBurnTime = this.maxBurnTime;
+            if(this.currentBurnTime <= 0 && this.slots[0] != null && TileEntityFurnace.getItemBurnTime(this.slots[0]) > 0){
+                int burnTime = TileEntityFurnace.getItemBurnTime(this.slots[0]);
+                if(energyProducedPerTick*burnTime <= this.getMaxEnergyStored(ForgeDirection.UNKNOWN)-this.getEnergyStored(ForgeDirection.UNKNOWN)){
+                    this.maxBurnTime = burnTime;
+                    this.currentBurnTime = burnTime;
                     this.slots[0].stackSize--;
                     if(this.slots[0].stackSize == 0) this.slots[0] = this.slots[0].getItem().getContainerItem(this.slots[0]);
                 }

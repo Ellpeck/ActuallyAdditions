@@ -15,7 +15,7 @@ import net.minecraftforge.fluids.*;
 
 public class TileEntityOilGenerator extends TileEntityInventoryBase implements IEnergyProvider, IFluidHandler{
 
-    public EnergyStorage storage = new EnergyStorage(30000, energyProducedPerTick+50);
+    public EnergyStorage storage = new EnergyStorage(30000);
 
     public FluidTank tank = new FluidTank(2*FluidContainerRegistry.BUCKET_VOLUME);
 
@@ -40,7 +40,7 @@ public class TileEntityOilGenerator extends TileEntityInventoryBase implements I
                 this.storage.receiveEnergy(energyProducedPerTick, false);
             }
 
-            if(energyProducedPerTick*this.maxBurnTime/2 <= this.getMaxEnergyStored(ForgeDirection.UNKNOWN)-this.getEnergyStored(ForgeDirection.UNKNOWN)){
+            if(energyProducedPerTick*this.maxBurnTime <= this.getMaxEnergyStored(ForgeDirection.UNKNOWN)-this.getEnergyStored(ForgeDirection.UNKNOWN)){
                 if(this.currentBurnTime <= 0 && this.tank.getFluidAmount() >= this.fuelUsedPerBurnup){
                     this.currentBurnTime = this.maxBurnTime;
                     this.tank.drain(this.fuelUsedPerBurnup, true);
@@ -102,7 +102,7 @@ public class TileEntityOilGenerator extends TileEntityInventoryBase implements I
 
     @Override
     public boolean isItemValidForSlot(int i, ItemStack stack){
-        return FluidContainerRegistry.containsFluid(this.slots[0], new FluidStack(InitBlocks.fluidOil, FluidContainerRegistry.BUCKET_VOLUME)) && i == 0;
+        return FluidContainerRegistry.containsFluid(stack, new FluidStack(InitBlocks.fluidOil, FluidContainerRegistry.BUCKET_VOLUME)) && i == 0;
     }
 
     @Override

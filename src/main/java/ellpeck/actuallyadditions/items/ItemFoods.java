@@ -37,27 +37,27 @@ public class ItemFoods extends ItemFood implements INameableItem{
 
     @Override
     public EnumRarity getRarity(ItemStack stack){
-        return allFoods[stack.getItemDamage()].rarity;
+        return stack.getItemDamage() >= allFoods.length ? EnumRarity.common : allFoods[stack.getItemDamage()].rarity;
     }
 
     @Override
     public int func_150905_g(ItemStack stack){
-        return allFoods[stack.getItemDamage()].healAmount;
+        return stack.getItemDamage() >= allFoods.length ? 0 : allFoods[stack.getItemDamage()].healAmount;
     }
 
     @Override
     public float func_150906_h(ItemStack stack){
-        return allFoods[stack.getItemDamage()].saturation;
+        return stack.getItemDamage() >= allFoods.length ? 0 : allFoods[stack.getItemDamage()].saturation;
     }
 
     @Override
     public EnumAction getItemUseAction(ItemStack stack){
-        return allFoods[stack.getItemDamage()].getsDrunken ? EnumAction.drink : EnumAction.eat;
+        return stack.getItemDamage() >= allFoods.length ? EnumAction.eat : (allFoods[stack.getItemDamage()].getsDrunken ? EnumAction.drink : EnumAction.eat);
     }
 
     @Override
     public int getMaxItemUseDuration(ItemStack stack){
-        return allFoods[stack.getItemDamage()].useDuration;
+        return stack.getItemDamage() >= allFoods.length ? 0 : allFoods[stack.getItemDamage()].useDuration;
     }
 
     @Override
@@ -75,14 +75,14 @@ public class ItemFoods extends ItemFood implements INameableItem{
 
     @Override
     public String getUnlocalizedName(ItemStack stack){
-        return this.getUnlocalizedName() + allFoods[stack.getItemDamage()].getName();
+        return this.getUnlocalizedName() + (stack.getItemDamage() >= allFoods.length ? " ERROR!" : allFoods[stack.getItemDamage()].getName());
     }
 
     @Override
     public ItemStack onEaten(ItemStack stack, World world, EntityPlayer player){
         ItemStack stackToReturn = super.onEaten(stack, world, player);
-        ItemStack returnItem = allFoods[stack.getItemDamage()].returnItem;
-        if (returnItem != null){
+        ItemStack returnItem = stack.getItemDamage() >= allFoods.length ? null : allFoods[stack.getItemDamage()].returnItem;
+        if(returnItem != null){
             if(!player.inventory.addItemStackToInventory(returnItem.copy())){
                 if(!world.isRemote){
                     EntityItem entityItem = new EntityItem(player.worldObj, player.posX, player.posY, player.posZ, returnItem.copy());
@@ -98,17 +98,19 @@ public class ItemFoods extends ItemFood implements INameableItem{
     @SuppressWarnings("unchecked")
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld){
-        if(KeyUtil.isShiftPressed()){
-            list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + "." + this.getName() + allFoods[stack.getItemDamage()].getName() + ".desc"));
-            list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + ".hunger.desc") + ": " + allFoods[stack.getItemDamage()].healAmount);
-            list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + ".saturation.desc") + ": " + allFoods[stack.getItemDamage()].saturation);
+        if(stack.getItemDamage() < allFoods.length){
+            if(KeyUtil.isShiftPressed()){
+                list.add(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+"."+this.getName()+allFoods[stack.getItemDamage()].getName()+".desc"));
+                list.add(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".hunger.desc")+": "+allFoods[stack.getItemDamage()].healAmount);
+                list.add(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".saturation.desc")+": "+allFoods[stack.getItemDamage()].saturation);
+            }
+            else list.add(ItemUtil.shiftForInfo());
         }
-        else list.add(ItemUtil.shiftForInfo());
     }
 
     @Override
     public IIcon getIconFromDamage(int par1){
-        return textures[par1];
+        return par1 >= textures.length ? null : textures[par1];
     }
 
     @Override

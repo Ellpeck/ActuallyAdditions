@@ -2,6 +2,7 @@ package ellpeck.actuallyadditions.blocks.render;
 
 import ellpeck.actuallyadditions.tile.TileEntityCompost;
 import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.tileentity.TileEntity;
 
 public class ModelCompost extends ModelBaseAA{
 
@@ -43,15 +44,17 @@ public class ModelCompost extends ModelBaseAA{
         this.innerDone.addBox(0.0F, 0.0F, 0.0F, 12, 13, 12, 0.0F);
     }
 
-    public void renderExtra(float f, TileEntityCompost tile){
+    @Override
+    public void renderExtra(float f, TileEntity tile){
+        TileEntityCompost tileCompost = (TileEntityCompost)tile;
         int meta = tile.getWorldObj().getBlockMetadata(tile.xCoord, tile.yCoord, tile.zCoord);
-        if(meta > 0 && meta <= tile.amountNeededToConvert){
-            int heightToDisplay = meta*13/tile.amountNeededToConvert;
+        if(meta > 0 && meta <= tileCompost.amountNeededToConvert){
+            int heightToDisplay = meta*13/tileCompost.amountNeededToConvert;
             if(heightToDisplay > 13) heightToDisplay = 13;
 
             this.innerRawList[heightToDisplay-1].render(f);
         }
-        if(meta == tile.amountNeededToConvert+1){
+        if(meta == tileCompost.amountNeededToConvert+1){
             this.innerDone.render(f);
         }
     }

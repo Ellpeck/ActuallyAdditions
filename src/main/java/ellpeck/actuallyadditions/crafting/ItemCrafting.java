@@ -6,6 +6,7 @@ import ellpeck.actuallyadditions.blocks.metalists.TheMiscBlocks;
 import ellpeck.actuallyadditions.config.values.ConfigCrafting;
 import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.items.metalists.*;
+import ellpeck.actuallyadditions.util.INameableItem;
 import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -49,6 +50,59 @@ public class ItemCrafting{
                     " R ", "RIR", " R ",
                     'I', "ingotIron",
                     'R', "dustRedstone"));
+
+        //Cup
+        if(ConfigCrafting.CUP.isEnabled())
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.CUP.ordinal()),
+                    "S S", "SCS", "SSS",
+                    'S', "stone",
+                    'C', ((INameableItem)InitItems.itemCoffeeBean).getOredictName()));
+
+        //Paxels
+        if(ConfigCrafting.PAXELS.isEnabled()){
+            GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.woodenPaxel),
+                    new ItemStack(Items.wooden_axe),
+                    new ItemStack(Items.wooden_pickaxe),
+                    new ItemStack(Items.wooden_shovel),
+                    new ItemStack(Items.wooden_sword),
+                    new ItemStack(Items.wooden_hoe)));
+            GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.stonePaxel),
+                    new ItemStack(Items.stone_axe),
+                    new ItemStack(Items.stone_pickaxe),
+                    new ItemStack(Items.stone_shovel),
+                    new ItemStack(Items.stone_sword),
+                    new ItemStack(Items.stone_hoe)));
+            GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.ironPaxel),
+                    new ItemStack(Items.iron_axe),
+                    new ItemStack(Items.iron_pickaxe),
+                    new ItemStack(Items.iron_shovel),
+                    new ItemStack(Items.iron_sword),
+                    new ItemStack(Items.iron_hoe)));
+            GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.goldPaxel),
+                    new ItemStack(Items.golden_axe),
+                    new ItemStack(Items.golden_pickaxe),
+                    new ItemStack(Items.golden_shovel),
+                    new ItemStack(Items.golden_sword),
+                    new ItemStack(Items.golden_hoe)));
+            GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.diamondPaxel),
+                    new ItemStack(Items.diamond_axe),
+                    new ItemStack(Items.diamond_pickaxe),
+                    new ItemStack(Items.diamond_shovel),
+                    new ItemStack(Items.diamond_sword),
+                    new ItemStack(Items.diamond_hoe)));
+            GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.emeraldPaxel),
+                    new ItemStack(InitItems.itemAxeEmerald),
+                    new ItemStack(InitItems.itemPickaxeEmerald),
+                    new ItemStack(InitItems.itemSwordEmerald),
+                    new ItemStack(InitItems.itemShovelEmerald),
+                    new ItemStack(InitItems.itemHoeEmerald)));
+            GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.obsidianPaxel),
+                    new ItemStack(InitItems.itemAxeObsidian),
+                    new ItemStack(InitItems.itemPickaxeObsidian),
+                    new ItemStack(InitItems.itemSwordObsidian),
+                    new ItemStack(InitItems.itemShovelObsidian),
+                    new ItemStack(InitItems.itemHoeObsidian)));
+        }
 
         //Resonant Rice
         if(ConfigCrafting.RESONANT_RICE.isEnabled())
@@ -164,8 +218,6 @@ public class ItemCrafting{
         if(ConfigCrafting.RING_WATER_BREATHING.isEnabled()) addRingRecipeWithStack(ThePotionRings.WATER_BREATHING.craftingItem, ThePotionRings.WATER_BREATHING.ordinal());
         if(ConfigCrafting.RING_INVISIBILITY.isEnabled()) addRingRecipeWithStack(ThePotionRings.INVISIBILITY.craftingItem, ThePotionRings.INVISIBILITY.ordinal());
         if(ConfigCrafting.RING_NIGHT_VISION.isEnabled()) addRingRecipeWithStack(ThePotionRings.NIGHT_VISION.craftingItem, ThePotionRings.NIGHT_VISION.ordinal());
-        if(ConfigCrafting.RING_SATURATION.isEnabled()) addRingRecipeWithStack(ThePotionRings.SATURATION.craftingItem, ThePotionRings.SATURATION.ordinal());
-
     }
 
     public static void addRingRecipeWithStack(ItemStack mainStack, int meta){

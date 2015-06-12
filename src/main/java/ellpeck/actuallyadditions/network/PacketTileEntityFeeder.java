@@ -6,7 +6,7 @@ import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ellpeck.actuallyadditions.inventory.GuiFeeder;
+import ellpeck.actuallyadditions.inventory.gui.GuiFeeder;
 import ellpeck.actuallyadditions.tile.TileEntityFeeder;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;

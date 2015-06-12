@@ -50,12 +50,24 @@ public class InitItems{
     public static Item itemRiceSeed;
     public static Item itemCanolaSeed;
     public static Item itemFlaxSeed;
+    public static Item itemCoffeeSeed;
 
     public static Item itemResonantRice;
     public static Item itemBucketOil;
     public static Item itemBucketCanolaOil;
 
     public static Item itemPhantomConnector;
+
+    public static Item itemCoffeeBean;
+    public static Item itemCoffee;
+
+    public static Item woodenPaxel;
+    public static Item stonePaxel;
+    public static Item ironPaxel;
+    public static Item diamondPaxel;
+    public static Item goldPaxel;
+    public static Item emeraldPaxel;
+    public static Item obsidianPaxel;
 
     public static void init(){
         Util.logInfo("Initializing Items...");
@@ -114,6 +126,9 @@ public class InitItems{
         ItemUtil.register(itemHairyBall);
         HairyBallHandler.init();
 
+        itemCoffeeBean = new ItemCoffeeBean();
+        ItemUtil.register(itemCoffeeBean);
+
         itemRiceSeed = new ItemSeed("itemRiceSeed", InitBlocks.blockRice, Blocks.water, EnumPlantType.Water, new ItemStack(itemFoods, 1, TheFoods.RICE.ordinal()));
         ItemUtil.register(itemRiceSeed);
         FactoryRegistry.sendMessage("registerPlantable", itemRiceSeed);
@@ -125,6 +140,10 @@ public class InitItems{
         itemFlaxSeed = new ItemSeed("itemFlaxSeed", InitBlocks.blockFlax, Blocks.grass, EnumPlantType.Plains, new ItemStack(Items.string));
         ItemUtil.register(itemFlaxSeed);
         FactoryRegistry.sendMessage("registerPlantable", itemFlaxSeed);
+
+        itemCoffeeSeed = new ItemSeed("itemCoffeeSeed", InitBlocks.blockCoffee, Blocks.grass, EnumPlantType.Plains, new ItemStack(itemCoffeeBean));
+        ItemUtil.register(itemCoffeeSeed);
+        FactoryRegistry.sendMessage("registerPlantable", itemCoffeeSeed);
 
         itemPickaxeEmerald = new ItemPickaxeAA(InitItemMaterials.toolMaterialEmerald, new ItemStack(Items.emerald), "itemPickaxeEmerald", EnumRarity.rare);
         itemAxeEmerald = new ItemAxeAA(InitItemMaterials.toolMaterialEmerald, new ItemStack(Items.emerald), "itemAxeEmerald", EnumRarity.rare);
@@ -140,5 +159,16 @@ public class InitItems{
         itemHoeObsidian = new ItemHoeAA(InitItemMaterials.toolMaterialObsidian, new ItemStack(Blocks.obsidian), "itemHoeObsidian", EnumRarity.uncommon);
         ItemUtil.registerItems(new Item[]{itemPickaxeObsidian, itemAxeObsidian, itemShovelObsidian, itemSwordObsidian, itemHoeObsidian});
 
+        woodenPaxel = new ItemAllToolAA(Item.ToolMaterial.WOOD, new ItemStack(Blocks.planks), "woodenPaxel", EnumRarity.uncommon);
+        stonePaxel = new ItemAllToolAA(Item.ToolMaterial.STONE, new ItemStack(Blocks.stone), "stonePaxel", EnumRarity.uncommon);
+        ironPaxel = new ItemAllToolAA(Item.ToolMaterial.IRON, new ItemStack(Items.iron_ingot), "ironPaxel", EnumRarity.rare);
+        goldPaxel = new ItemAllToolAA(Item.ToolMaterial.GOLD, new ItemStack(Items.gold_ingot), "goldPaxel", EnumRarity.rare);
+        diamondPaxel = new ItemAllToolAA(Item.ToolMaterial.EMERALD, new ItemStack(Items.diamond), "diamondPaxel", EnumRarity.epic);
+        emeraldPaxel = new ItemAllToolAA(InitItemMaterials.toolMaterialEmerald, new ItemStack(Items.emerald), "emeraldPaxel", EnumRarity.epic);
+        obsidianPaxel = new ItemAllToolAA(InitItemMaterials.toolMaterialObsidian, new ItemStack(Blocks.obsidian), "obsidianPaxel", EnumRarity.epic);
+        ItemUtil.registerItems(new Item[]{woodenPaxel, stonePaxel, ironPaxel, goldPaxel, diamondPaxel, emeraldPaxel, obsidianPaxel});
+
+        itemCoffee = new ItemCoffee();
+        ItemUtil.register(itemCoffee);
     }
 }

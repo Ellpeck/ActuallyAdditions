@@ -38,6 +38,7 @@ public class WorldDecorationEvent{
 
         this.genPlantNormally(InitBlocks.blockCanola, ConfigIntValues.CANOLA_AMOUNT.getValue(), ConfigBoolValues.DO_CANOLA_GEN.isEnabled(), Material.grass, event);
         this.genPlantNormally(InitBlocks.blockFlax, ConfigIntValues.FLAX_AMOUNT.getValue(), ConfigBoolValues.DO_FLAX_GEN.isEnabled(), Material.grass, event);
+        this.genPlantNormally(InitBlocks.blockCoffee, ConfigIntValues.COFFEE_AMOUNT.getValue(), ConfigBoolValues.DO_COFFEE_GEN.isEnabled(), Material.grass, event);
     }
 
     public void genPlantNormally(Block plant, int amount, boolean doIt, Material blockBelow, DecorateBiomeEvent event){

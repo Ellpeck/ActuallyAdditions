@@ -3,14 +3,14 @@
   "modid": "ActuallyAdditions",
   "name": "Actually Additions",
   "description": "Actually Additions is a Mod that offers a bunch of things from Machines for Automation and tons of food to advanced Hopper Mechanisms and Effect Rings!",
-  "version": "0.0.5.3",
+  "version": "0.0.5.4",
   "mcversion": "1.7.10",
   "url": "https://github.com/Ellpeck/ActuallyAdditions",
   "updateUrl": "",
   "authorList": [
     "Ellpeck"
   ],
-  "credits": "xdqmhose, GlenthorLP, Paktosan, Lordhallo",
+  "credits": "xdqmhose, GlenthorLP, Lordhallo, canitzp",
   "logoFile": "assets/actuallyadditions/textures/logo.png",
   "screenshots": [
   ],

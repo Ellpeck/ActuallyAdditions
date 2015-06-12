@@ -39,6 +39,45 @@ public class BlockCrafting{
                     'R', "dustRedstone",
                     'S', "stickWood"));
 
+        //Ender Casing
+        if(ConfigCrafting.ENDER_CASING.isEnabled())
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.ENDER_CASING.ordinal()),
+                    "WSW", "SRS", "WSW",
+                    'W', TheMiscBlocks.ENDERPEARL_BLOCK.getOredictName(),
+                    'R', TheMiscBlocks.QUARTZ.getOredictName(),
+                    'S', Blocks.obsidian));
+
+        //Phantom Booster
+        if(ConfigCrafting.PHANTOM_BOOSTER.isEnabled())
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockPhantomBooster),
+                    "RDR", "DCD", "RDR",
+                    'R', "dustRedstone",
+                    'D', "gemDiamond",
+                    'C', TheMiscBlocks.ENDER_CASING.getOredictName()));
+
+        //Coffee Machine
+        if(ConfigCrafting.COFFEE_MACHINE.isEnabled())
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockCoffeeMachine),
+                    " C ", " S ", "A A",
+                    'C', ((INameableItem)InitItems.itemCoffeeBean).getOredictName(),
+                    'S', TheMiscBlocks.STONE_CASING.getOredictName(),
+                    'A', TheMiscItems.COIL.getOredictName()));
+
+        //Lava Factory
+        if(ConfigCrafting.LAVA_FACTORY.isEnabled()){
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockLavaFactoryController),
+                    " C ", "ISI", " L ",
+                    'C', TheMiscBlocks.STONE_CASING.getOredictName(),
+                    'S', TheMiscItems.COIL_ADVANCED.getOredictName(),
+                    'I', "blockIron",
+                    'L', Items.lava_bucket));
+
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockMisc, 4, TheMiscBlocks.LAVA_FACTORY_CASE.ordinal()),
+                    "ICI",
+                    'C', TheMiscBlocks.STONE_CASING.getOredictName(),
+                    'I', "blockIron"));
+        }
+
         //Canola Press
         if(ConfigCrafting.CANOLA_PRESS.isEnabled())
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockCanolaPress),
@@ -256,7 +295,7 @@ public class BlockCrafting{
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockGreenhouseGlass),
                     "GSG", "SDS", "GSG",
                     'G', "blockGlass",
-                    'D', "gemDiamond",
+                    'D', Blocks.obsidian,
                     'S', "treeSapling"));
 
         //Placer

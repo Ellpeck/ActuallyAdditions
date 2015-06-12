@@ -19,7 +19,7 @@ import java.util.Collections;
 
 public class CompostRecipeHandler extends TemplateRecipeHandler{
 
-    public static final String NAME = "compost";
+    public static final String NAME = "actuallyadditions.compost";
 
     public CompostRecipeHandler(){
         super();
@@ -60,7 +60,7 @@ public class CompostRecipeHandler extends TemplateRecipeHandler{
 
     @Override
     public String getRecipeName(){
-        return StatCollector.translateToLocal("container." + ModUtil.MOD_ID_LOWER + ".nei." + NAME + ".name");
+        return StatCollector.translateToLocal("container.nei." + NAME + ".name");
     }
 
     @Override

@@ -60,7 +60,6 @@ public enum ConfigCrafting{
     RING_WATER_BREATHING("Water Breathing Ring", ConfigCategories.POTION_RING_CRAFTING),
     RING_INVISIBILITY("Invisibility Ring", ConfigCategories.POTION_RING_CRAFTING),
     RING_NIGHT_VISION("Night Vision Ring", ConfigCategories.POTION_RING_CRAFTING),
-    RING_SATURATION("Saturation Ring", ConfigCategories.POTION_RING_CRAFTING, false),
 
     DOUGH("Dough", ConfigCategories.ITEMS_CRAFTING),
     PAPER_CONE("Paper Cone", ConfigCategories.ITEMS_CRAFTING),
@@ -87,7 +86,15 @@ public enum ConfigCrafting{
     PHANTOM_PLACER("Phantom Placer", ConfigCategories.BLOCKS_CRAFTING),
     PHANTOM_BREAKER("Phantom Breaker", ConfigCategories.BLOCKS_CRAFTING),
     LIQUID_PLACER("Liquid Placer", ConfigCategories.BLOCKS_CRAFTING),
-    LIQUID_BREAKER("Liquid Collector", ConfigCategories.BLOCKS_CRAFTING);
+    LIQUID_BREAKER("Liquid Collector", ConfigCategories.BLOCKS_CRAFTING),
+
+    CUP("Cup", ConfigCategories.ITEMS_CRAFTING),
+    PAXELS("Paxels", ConfigCategories.ITEMS_CRAFTING),
+
+    ENDER_CASING("Ender Casing", ConfigCategories.BLOCKS_CRAFTING),
+    PHANTOM_BOOSTER("Phantom Booster", ConfigCategories.BLOCKS_CRAFTING),
+    COFFEE_MACHINE("Coffee Machine", ConfigCategories.BLOCKS_CRAFTING),
+    LAVA_FACTORY("Lava Factory", ConfigCategories.BLOCKS_CRAFTING);
 
     public final String name;
     public final String category;

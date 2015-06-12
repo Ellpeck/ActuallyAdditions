@@ -41,17 +41,17 @@ public class ItemJams extends ItemFood implements INameableItem{
 
     @Override
     public EnumRarity getRarity(ItemStack stack){
-        return allJams[stack.getItemDamage()].rarity;
+        return stack.getItemDamage() >= allJams.length ? EnumRarity.common : allJams[stack.getItemDamage()].rarity;
     }
 
     @Override
     public int func_150905_g(ItemStack stack){
-        return allJams[stack.getItemDamage()].healAmount;
+        return stack.getItemDamage() >= allJams.length ? 0 : allJams[stack.getItemDamage()].healAmount;
     }
 
     @Override
     public float func_150906_h(ItemStack stack){
-        return allJams[stack.getItemDamage()].saturation;
+        return stack.getItemDamage() >= allJams.length ? 0 : allJams[stack.getItemDamage()].saturation;
     }
 
     @Override
@@ -69,20 +69,20 @@ public class ItemJams extends ItemFood implements INameableItem{
 
     @Override
     public String getUnlocalizedName(ItemStack stack){
-        return this.getUnlocalizedName() + allJams[stack.getItemDamage()].getName();
+        return this.getUnlocalizedName() + (stack.getItemDamage() >= allJams.length ? " ERROR!" : allJams[stack.getItemDamage()].getName());
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public int getColorFromItemStack(ItemStack stack, int pass){
-        return pass > 0 ? allJams[stack.getItemDamage()].color : super.getColorFromItemStack(stack, pass);
+        return pass > 0 ? (stack.getItemDamage() >= allJams.length ? 0 : allJams[stack.getItemDamage()].color) : super.getColorFromItemStack(stack, pass);
     }
 
     @Override
     public ItemStack onEaten(ItemStack stack, World world, EntityPlayer player){
         ItemStack stackToReturn = super.onEaten(stack, world, player);
 
-        if(!world.isRemote){
+        if(!world.isRemote && stack.getItemDamage() < allJams.length){
             PotionEffect firstEffectToGet = new PotionEffect(allJams[stack.getItemDamage()].firstEffectToGet, 200);
             player.addPotionEffect(firstEffectToGet);
 
@@ -103,14 +103,16 @@ public class ItemJams extends ItemFood implements INameableItem{
     @SuppressWarnings("unchecked")
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld){
-        if(KeyUtil.isShiftPressed()){
-            list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + "." + this.getName() + ".desc.1"));
-            list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + "." + this.getName() + allJams[stack.getItemDamage()].getName() + ".desc"));
-            list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + "." + this.getName() + ".desc.2"));
-            list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + ".hunger.desc") + ": " + allJams[stack.getItemDamage()].healAmount);
-            list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + ".saturation.desc") + ": " + allJams[stack.getItemDamage()].saturation);
+        if(stack.getItemDamage() < allJams.length){
+            if(KeyUtil.isShiftPressed()){
+                list.add(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+"."+this.getName()+".desc.1"));
+                list.add(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+"."+this.getName()+allJams[stack.getItemDamage()].getName()+".desc"));
+                list.add(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+"."+this.getName()+".desc.2"));
+                list.add(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".hunger.desc")+": "+allJams[stack.getItemDamage()].healAmount);
+                list.add(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".saturation.desc")+": "+allJams[stack.getItemDamage()].saturation);
+            }
+            else list.add(ItemUtil.shiftForInfo());
         }
-        else list.add(ItemUtil.shiftForInfo());
     }
 
     @Override

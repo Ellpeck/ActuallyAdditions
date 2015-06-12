@@ -1,9 +1,10 @@
-package ellpeck.actuallyadditions.inventory;
+package ellpeck.actuallyadditions.inventory.gui;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import ellpeck.actuallyadditions.inventory.ContainerBreaker;
 import ellpeck.actuallyadditions.tile.TileEntityBase;
-import ellpeck.actuallyadditions.tile.TileEntityDropper;
+import ellpeck.actuallyadditions.tile.TileEntityBreaker;
 import ellpeck.actuallyadditions.util.AssetUtil;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -11,22 +12,22 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
 @SideOnly(Side.CLIENT)
-public class GuiDropper extends GuiContainer{
+public class GuiBreaker extends GuiContainer{
 
-    private TileEntityDropper dropper;
+    private TileEntityBreaker breaker;
 
     private static final ResourceLocation resLoc = AssetUtil.getGuiLocation("guiBreaker");
 
-    public GuiDropper(InventoryPlayer inventory, TileEntityBase tile){
-        super(new ContainerDropper(inventory, tile));
-        this.dropper = (TileEntityDropper)tile;
+    public GuiBreaker(InventoryPlayer inventory, TileEntityBase tile){
+        super(new ContainerBreaker(inventory, tile));
+        this.breaker = (TileEntityBreaker)tile;
         this.xSize = 176;
         this.ySize = 93+86;
     }
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y){
-        AssetUtil.displayNameString(this.fontRendererObj, xSize, -10, this.dropper.getInventoryName());
+        AssetUtil.displayNameString(this.fontRendererObj, xSize, -10, this.breaker.getInventoryName());
     }
 
     @Override

@@ -4,7 +4,7 @@ import codechicken.nei.api.API;
 import codechicken.nei.api.IConfigureNEI;
 import codechicken.nei.recipe.DefaultOverlayHandler;
 import ellpeck.actuallyadditions.blocks.InitBlocks;
-import ellpeck.actuallyadditions.inventory.GuiCrafter;
+import ellpeck.actuallyadditions.inventory.gui.GuiCrafter;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.item.ItemStack;
@@ -30,9 +30,14 @@ public class NEIActuallyAdditionsConfig implements IConfigureNEI{
         API.registerRecipeHandler(compostRecipeHandler);
         API.registerUsageHandler(compostRecipeHandler);
 
+        CoffeeMachineRecipeHandler coffeeMachineRecipeHandler = new CoffeeMachineRecipeHandler();
+        API.registerRecipeHandler(coffeeMachineRecipeHandler);
+        API.registerUsageHandler(coffeeMachineRecipeHandler);
+
         API.hideItem(new ItemStack(InitBlocks.blockRice));
         API.hideItem(new ItemStack(InitBlocks.blockCanola));
         API.hideItem(new ItemStack(InitBlocks.blockFlax));
+        API.hideItem(new ItemStack(InitBlocks.blockCoffee));
     }
 
     @Override

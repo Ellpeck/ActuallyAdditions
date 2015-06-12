@@ -1,6 +1,5 @@
 package ellpeck.actuallyadditions.blocks.render;
 
-import ellpeck.actuallyadditions.tile.TileEntityCompost;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
@@ -9,7 +8,7 @@ import org.lwjgl.opengl.GL11;
 
 public class RenderTileEntity extends TileEntitySpecialRenderer{
 
-    ModelBaseAA theModel;
+    public ModelBaseAA theModel;
 
     public RenderTileEntity(ModelBaseAA model){
         this.theModel = model;
@@ -22,9 +21,16 @@ public class RenderTileEntity extends TileEntitySpecialRenderer{
         GL11.glRotatef(180F, 0.0F, 0.0F, 1.0F);
         GL11.glTranslatef(0.0F, -2.0F, 0.0F);
         this.bindTexture(new ResourceLocation(ModUtil.MOD_ID_LOWER, "textures/blocks/models/" + this.theModel.getName() + ".png"));
-        theModel.render(0.0625F);
 
-        if(tile instanceof TileEntityCompost && theModel instanceof ModelCompost) ((ModelCompost)theModel).renderExtra(0.0625F, (TileEntityCompost)tile);
+        if(theModel.doesRotate()){
+            int meta = tile.getWorldObj().getBlockMetadata(tile.xCoord, tile.yCoord, tile.zCoord);
+            if(meta == 0) GL11.glRotatef(180F, 0F, 1F, 0F);
+            if(meta == 1) GL11.glRotatef(90F, 0F, 1F, 0F);
+            if(meta == 3) GL11.glRotatef(270F, 0F, 1F, 0F);
+        }
+
+        theModel.render(0.0625F);
+        theModel.renderExtra(0.0625F, tile);
 
         GL11.glPopMatrix();
     }

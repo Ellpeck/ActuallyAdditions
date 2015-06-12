@@ -13,7 +13,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 public class TileEntityLavaFactoryController extends TileEntityBase implements IEnergyReceiver{
 
-    public EnergyStorage storage = new EnergyStorage(3000000, energyNeededToProduceLava*2);
+    public EnergyStorage storage = new EnergyStorage(3000000);
 
     public static int energyNeededToProduceLava = ConfigIntValues.LAVA_FACTORY_ENERGY_USED.getValue();
 

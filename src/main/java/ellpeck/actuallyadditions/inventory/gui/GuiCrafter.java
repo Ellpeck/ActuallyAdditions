@@ -1,7 +1,8 @@
-package ellpeck.actuallyadditions.inventory;
+package ellpeck.actuallyadditions.inventory.gui;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import ellpeck.actuallyadditions.inventory.ContainerCrafter;
 import ellpeck.actuallyadditions.util.AssetUtil;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.client.gui.inventory.GuiContainer;

@@ -17,7 +17,7 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
     public static final int SLOT_INPUT_2 = 2;
     public static final int SLOT_OUTPUT_2 = 3;
 
-    public EnergyStorage storage = new EnergyStorage(30000, energyUsePerTick+30);
+    public EnergyStorage storage = new EnergyStorage(30000);
 
     public static int energyUsePerTick = ConfigIntValues.FURNACE_ENERGY_USED.getValue();
 

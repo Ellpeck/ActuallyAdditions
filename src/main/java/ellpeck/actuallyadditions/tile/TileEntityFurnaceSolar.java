@@ -29,7 +29,7 @@ public class TileEntityFurnaceSolar extends TileEntityBase implements IEnergyPro
         return from != ForgeDirection.UP;
     }
 
-    public EnergyStorage storage = new EnergyStorage(30000, energyProducedPerTick+50);
+    public EnergyStorage storage = new EnergyStorage(30000);
 
     public static int energyProducedPerTick = ConfigIntValues.FURNACE_SOLAR_ENERGY_PRODUCED.getValue();
 

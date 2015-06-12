@@ -31,6 +31,8 @@ public class CreativeTab extends CreativeTabs{
         this.addBlock(InitBlocks.blockPhantomLiquiface);
         this.addBlock(InitBlocks.blockPhantomPlacer);
         this.addBlock(InitBlocks.blockPhantomBreaker);
+        this.addBlock(InitBlocks.blockPhantomBooster);
+        this.addBlock(InitBlocks.blockCoffeeMachine);
         this.addBlock(InitBlocks.blockInputter);
         this.addBlock(InitBlocks.blockInputterAdvanced);
 
@@ -63,6 +65,8 @@ public class CreativeTab extends CreativeTabs{
         this.addItem(InitItems.itemBucketCanolaOil);
         this.addItem(InitItems.itemBucketOil);
 
+        this.addItem(InitItems.itemCoffeeSeed);
+        this.addItem(InitItems.itemCoffeeBean);
         this.addItem(InitItems.itemRiceSeed);
         this.addItem(InitItems.itemCanolaSeed);
         this.addItem(InitItems.itemFlaxSeed);
@@ -70,6 +74,8 @@ public class CreativeTab extends CreativeTabs{
         this.addItem(InitItems.itemMisc);
         this.addItem(InitItems.itemResonantRice);
         this.addItem(InitItems.itemFertilizer);
+
+        this.addItem(InitItems.itemCoffee);
         this.addItem(InitItems.itemFoods);
         this.addItem(InitItems.itemKnife);
         this.addItem(InitItems.itemCrafterOnAStick);
@@ -77,6 +83,14 @@ public class CreativeTab extends CreativeTabs{
         this.addItem(InitItems.itemSpecialDrop);
         this.addItem(InitItems.itemLeafBlower);
         this.addItem(InitItems.itemLeafBlowerAdvanced);
+
+        this.addItem(InitItems.woodenPaxel);
+        this.addItem(InitItems.stonePaxel);
+        this.addItem(InitItems.ironPaxel);
+        this.addItem(InitItems.goldPaxel);
+        this.addItem(InitItems.diamondPaxel);
+        this.addItem(InitItems.emeraldPaxel);
+        this.addItem(InitItems.obsidianPaxel);
 
         this.addItem(InitItems.itemPickaxeEmerald);
         this.addItem(InitItems.itemSwordEmerald);

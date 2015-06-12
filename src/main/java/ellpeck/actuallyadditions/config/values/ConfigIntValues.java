@@ -52,7 +52,8 @@ public enum ConfigIntValues{
 
     RICE_AMOUNT("Rice Amount", ConfigCategories.WORLD_GEN, 15, 1, 100, "The Chance of Rice generating"),
     CANOLA_AMOUNT("Canola Amount", ConfigCategories.WORLD_GEN, 10, 1, 50, "The Chance of Canola generating"),
-    FLAX_AMOUNT("Flax Amount", ConfigCategories.WORLD_GEN, 5, 1, 50, "The Chance of Flax generating"),
+    FLAX_AMOUNT("Flax Amount", ConfigCategories.WORLD_GEN, 8, 1, 50, "The Chance of Flax generating"),
+    COFFEE_AMOUNT("Coffee Amount", ConfigCategories.WORLD_GEN, 4, 1, 50, "The Chance of Coffee generating"),
 
     GRINDER_ENERGY_USED("Energy Use: Crusher", ConfigCategories.MACHINE_VALUES, 40, 1, 500, "The Amount of Energy used by the Crusher per Tick"),
     GRINDER_DOUBLE_ENERGY_USED("Energy Use: Double Crusher", ConfigCategories.MACHINE_VALUES, 60, 1, 500, "The Amount of Energy used by the Double Crusher per Tick"),
@@ -79,7 +80,14 @@ public enum ConfigIntValues{
     PHANTOM_PLACER_RANGE("Phantom Placer and Breaker: Range", ConfigCategories.MACHINE_VALUES, 3, 1, 100, "The Default Range of the Phantom Placer/Breaker"),
 
     LAVA_FACTORY_ENERGY_USED("Lava Factory: Energy Used", ConfigCategories.MACHINE_VALUES, 150000, 10, 3000000, "The amount of Energy used by the Lava Factory per Bucket of Lava produced"),
-    LAVA_FACTORY_TIME("Lava Factory: Production Time", ConfigCategories.MACHINE_VALUES, 200, 5, 10000, "The amount of time it takes for the Lava Factory to produce one Bucket");
+    LAVA_FACTORY_TIME("Lava Factory: Production Time", ConfigCategories.MACHINE_VALUES, 200, 5, 10000, "The amount of time it takes for the Lava Factory to produce one Bucket"),
+
+    COFFEE_MACHINE_ENERGY_USED("Coffee Machine: Energy Used", ConfigCategories.MACHINE_VALUES, 150, 10, 3000, "The amount of Energy used by the Coffee Machine per Tick"),
+    COFFEE_CACHE_ADDED_PER_ITEM("Coffee Machine: Coffee added per Item", ConfigCategories.MACHINE_VALUES, 1, 1, 300, "The amount of Coffee added by one Coffee Item in the Coffee Machine"),
+    COFFEE_CACHE_USED_PER_ITEM("Coffee Machine: Coffee used per Item", ConfigCategories.MACHINE_VALUES, 10, 1, 300, "The amount of Coffee used to brew one Coffee in the Coffee Machine"),
+    COFFEE_MACHINE_TIME_USED("Coffee Machine: Time to Brew", ConfigCategories.MACHINE_VALUES, 500, 10, 10000, "The amount of time the Coffee Machine takes to brew a Coffee"),
+
+    COFFEE_DRINK_AMOUNT("Coffee: Drink Amount", ConfigCategories.OTHER, 4, 1, 100, "How often a Coffee can be drunk from");
 
     public final String name;
     public final String category;

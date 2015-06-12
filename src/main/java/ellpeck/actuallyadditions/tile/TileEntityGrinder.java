@@ -14,7 +14,7 @@ import java.util.Random;
 
 public class TileEntityGrinder extends TileEntityInventoryBase implements IEnergyReceiver{
 
-    public EnergyStorage storage = new EnergyStorage(60000, energyUsePerTick+20);
+    public EnergyStorage storage = new EnergyStorage(60000);
 
     @Override
     public int receiveEnergy(ForgeDirection from, int maxReceive, boolean simulate){
@@ -78,15 +78,6 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
     @SuppressWarnings("unchecked")
     public void updateEntity(){
         if(!worldObj.isRemote){
-
-            //TODO Remove after some Updating
-            if(this.isDouble && this.getClass() != TileEntityGrinderDouble.class){
-                ItemStack[] theSlots = this.slots.clone();
-                worldObj.removeTileEntity(xCoord, yCoord, zCoord);
-                worldObj.setTileEntity(xCoord, yCoord, zCoord, new TileEntityGrinderDouble());
-                ((TileEntityGrinderDouble)worldObj.getTileEntity(xCoord, yCoord, zCoord)).slots = theSlots.clone();
-            }
-
             boolean canCrushOnFirst = this.canCrushOn(SLOT_INPUT_1, SLOT_OUTPUT_1_1, SLOT_OUTPUT_1_2);
             boolean canCrushOnSecond = false;
             if(this.isDouble) canCrushOnSecond = this.canCrushOn(SLOT_INPUT_2, SLOT_OUTPUT_2_1, SLOT_OUTPUT_2_2);

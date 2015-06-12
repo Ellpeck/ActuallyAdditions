@@ -5,7 +5,7 @@ import codechicken.nei.NEIServerUtils;
 import codechicken.nei.PositionedStack;
 import codechicken.nei.recipe.RecipeInfo;
 import codechicken.nei.recipe.TemplateRecipeHandler;
-import ellpeck.actuallyadditions.inventory.GuiGrinder;
+import ellpeck.actuallyadditions.inventory.gui.GuiGrinder;
 import ellpeck.actuallyadditions.recipe.GrinderRecipes;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
@@ -21,7 +21,7 @@ import java.util.List;
 
 public class CrusherRecipeHandler extends TemplateRecipeHandler{
 
-    public static final String NAME = "crushing";
+    public static final String NAME = "actuallyadditions.crushing";
 
     public CrusherRecipeHandler(){
         super();
@@ -78,7 +78,7 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler{
 
     @Override
     public String getRecipeName(){
-        return StatCollector.translateToLocal("container." + ModUtil.MOD_ID_LOWER + ".nei." + NAME + ".name");
+        return StatCollector.translateToLocal("container.nei." + NAME + ".name");
     }
 
     @Override

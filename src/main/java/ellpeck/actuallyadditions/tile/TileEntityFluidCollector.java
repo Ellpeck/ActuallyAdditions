@@ -49,12 +49,12 @@ public class TileEntityFluidCollector extends TileEntityInventoryBase implements
 
     @Override
     public boolean canFill(ForgeDirection from, Fluid fluid){
-        return this.isPlacer && from != ForgeDirection.DOWN;
+        return this.isPlacer;
     }
 
     @Override
     public boolean canDrain(ForgeDirection from, Fluid fluid){
-        return !this.isPlacer && from != ForgeDirection.UP;
+        return !this.isPlacer;
     }
 
     @Override
