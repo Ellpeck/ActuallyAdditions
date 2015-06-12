@@ -120,7 +120,7 @@ public class GuiInputter extends GuiContainer{
         this.fontRendererObj.drawString(StatCollector.translateToLocal("info." + ModUtil.MOD_ID_LOWER + ".gui.put"), guiLeft + 107 + 3, guiTop + 32 + (isAdvanced ? 12+OFFSET_ADVANCED : 0), 4210752);
 
         this.fontRendererObj.drawString(sideString[tileInputter.sideToPull+1], guiLeft + 24 + 1, guiTop + 45 + 3 + (isAdvanced ? 12+36 : 0), 4210752);
-        this.fontRendererObj.drawString(StatCollector.translateToLocal("info." + ModUtil.MOD_ID_LOWER + ".gui.slot") + " " + (tileInputter.slotToPut == -1 ? StatCollector.translateToLocal("info." + ModUtil.MOD_ID_LOWER + ".gui.all") : tileInputter.slotToPull).toString(), guiLeft + 24 + 3, guiTop + 66 + 3 + (isAdvanced ? 12+OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_GRAY_TEXT);
+        this.fontRendererObj.drawString(StatCollector.translateToLocal("info." + ModUtil.MOD_ID_LOWER + ".gui.slot") + " " + (tileInputter.slotToPull == -1 ? StatCollector.translateToLocal("info." + ModUtil.MOD_ID_LOWER + ".gui.all") : tileInputter.slotToPull).toString(), guiLeft + 24 + 3, guiTop + 66 + 3 + (isAdvanced ? 12+OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_GRAY_TEXT);
 
         this.fontRendererObj.drawString(sideString[tileInputter.sideToPut+1], guiLeft + 109 + 1, guiTop + 45 + 3 + (isAdvanced ? 12+36 : 0), 4210752);
         this.fontRendererObj.drawString(StatCollector.translateToLocal("info." + ModUtil.MOD_ID_LOWER + ".gui.slot") + " " + (tileInputter.slotToPut == -1 ? StatCollector.translateToLocal("info." + ModUtil.MOD_ID_LOWER + ".gui.all") : tileInputter.slotToPut).toString(), guiLeft + 109 + 3, guiTop + 66 + 3 + (isAdvanced ? 12+OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_GRAY_TEXT);

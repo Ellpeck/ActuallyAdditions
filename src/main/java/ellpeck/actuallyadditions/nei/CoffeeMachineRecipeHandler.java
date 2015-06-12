@@ -41,7 +41,7 @@ public class CoffeeMachineRecipeHandler extends TemplateRecipeHandler{
         public CachedCoffee(ItemCoffee.Ingredient ingredient){
             this.cup = new PositionedStack(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.CUP.ordinal()), 45, 39);
             this.coffeeBeans = new PositionedStack(new ItemStack(InitItems.itemCoffeeBean), 2, 39);
-            this.ingredientStack = new PositionedStack(ingredient.ingredient, 90, 21);
+            this.ingredientStack = new PositionedStack(ingredient.ingredient.copy(), 90, 21);
             this.setupResult(ingredient);
             this.extraText = ingredient.getExtraText();
         }
@@ -112,7 +112,7 @@ public class CoffeeMachineRecipeHandler extends TemplateRecipeHandler{
 
         ArrayList<ItemCoffee.Ingredient> ingredients = ItemCoffee.ingredients;
         for(ItemCoffee.Ingredient ingr : ingredients){
-            if(NEIServerUtils.areStacksSameTypeCrafting(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.CUP.ordinal()), ingredient) || NEIServerUtils.areStacksSameTypeCrafting(new ItemStack(InitItems.itemCoffeeBean), ingredient) || NEIServerUtils.areStacksSameTypeCrafting(ingr.ingredient, ingredient)){
+            if(NEIServerUtils.areStacksSameTypeCrafting(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.CUP.ordinal()), ingredient) || NEIServerUtils.areStacksSameTypeCrafting(new ItemStack(InitItems.itemCoffeeBean), ingredient) || NEIServerUtils.areStacksSameTypeCrafting(ingr.ingredient.copy(), ingredient)){
                 CachedCoffee theRecipe = new CachedCoffee(ingr);
                 theRecipe.setIngredientPermutation(Collections.singletonList(theRecipe.ingredientStack), ingredient);
                 arecipes.add(theRecipe);

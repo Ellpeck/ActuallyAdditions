@@ -18,6 +18,7 @@ import ellpeck.actuallyadditions.gen.InitVillager;
 import ellpeck.actuallyadditions.gen.OreGen;
 import ellpeck.actuallyadditions.inventory.GuiHandler;
 import ellpeck.actuallyadditions.items.InitItems;
+import ellpeck.actuallyadditions.items.ItemCoffee;
 import ellpeck.actuallyadditions.material.InitItemMaterials;
 import ellpeck.actuallyadditions.network.PacketHandler;
 import ellpeck.actuallyadditions.proxy.IProxy;
@@ -74,6 +75,7 @@ public class ActuallyAdditions{
         Util.logInfo("Starting PostInitialization Phase...");
 
         GrinderCrafting.init();
+        ItemCoffee.initIngredients();
         proxy.postInit();
 
         Util.logInfo("PostInitialization Finished.");

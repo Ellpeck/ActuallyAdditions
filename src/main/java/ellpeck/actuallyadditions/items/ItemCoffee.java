@@ -29,8 +29,8 @@ public class ItemCoffee extends ItemFood implements INameableItem{
 
     public static ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
 
-    public void initIngredients(){
-        this.registerIngredient(new Ingredient(new ItemStack(Items.milk_bucket), null){
+    public static void initIngredients(){
+        registerIngredient(new Ingredient(new ItemStack(Items.milk_bucket), null){
             @Override
             public void effect(ItemStack stack){
                 PotionEffect[] effects = getEffectsFromStack(stack);
@@ -45,19 +45,20 @@ public class ItemCoffee extends ItemFood implements INameableItem{
                         ItemCoffee.addEffectToStack(stack, this);
                     }
                 }
+                this.effects = null;
             }
             @Override
             public String getExtraText(){
                 return StatCollector.translateToLocal("container.nei." + ModUtil.MOD_ID_LOWER + ".coffee.extra.milk");
             }
         });
-        this.registerIngredient(new Ingredient(new ItemStack(Items.sugar), new PotionEffect[]{new PotionEffect(Potion.moveSpeed.getId(), 30, 0)}));
-        this.registerIngredient(new Ingredient(new ItemStack(Items.magma_cream), new PotionEffect[]{new PotionEffect(Potion.fireResistance.getId(), 10, 0)}));
-        this.registerIngredient(new Ingredient(new ItemStack(Items.fish, 1, 3), new PotionEffect[]{new PotionEffect(Potion.waterBreathing.getId(), 15, 0)}));
-        this.registerIngredient(new Ingredient(new ItemStack(Items.golden_carrot), new PotionEffect[]{new PotionEffect(Potion.nightVision.getId(), 60, 0)}));
-        this.registerIngredient(new Ingredient(new ItemStack(Items.ghast_tear), new PotionEffect[]{new PotionEffect(Potion.regeneration.getId(), 10, 0)}));
-        this.registerIngredient(new Ingredient(new ItemStack(Items.blaze_powder), new PotionEffect[]{new PotionEffect(Potion.damageBoost.getId(), 15, 0)}));
-        this.registerIngredient(new Ingredient(new ItemStack(Items.fermented_spider_eye), new PotionEffect[]{new PotionEffect(Potion.invisibility.getId(), 25, 0)}));
+        registerIngredient(new Ingredient(new ItemStack(Items.sugar), new PotionEffect[]{new PotionEffect(Potion.moveSpeed.getId(), 30, 0)}));
+        registerIngredient(new Ingredient(new ItemStack(Items.magma_cream), new PotionEffect[]{new PotionEffect(Potion.fireResistance.getId(), 10, 0)}));
+        registerIngredient(new Ingredient(new ItemStack(Items.fish, 1, 3), new PotionEffect[]{new PotionEffect(Potion.waterBreathing.getId(), 15, 0)}));
+        registerIngredient(new Ingredient(new ItemStack(Items.golden_carrot), new PotionEffect[]{new PotionEffect(Potion.nightVision.getId(), 60, 0)}));
+        registerIngredient(new Ingredient(new ItemStack(Items.ghast_tear), new PotionEffect[]{new PotionEffect(Potion.regeneration.getId(), 10, 0)}));
+        registerIngredient(new Ingredient(new ItemStack(Items.blaze_powder), new PotionEffect[]{new PotionEffect(Potion.damageBoost.getId(), 15, 0)}));
+        registerIngredient(new Ingredient(new ItemStack(Items.fermented_spider_eye), new PotionEffect[]{new PotionEffect(Potion.invisibility.getId(), 25, 0)}));
     }
 
     public ItemCoffee(){
@@ -65,12 +66,11 @@ public class ItemCoffee extends ItemFood implements INameableItem{
         this.setMaxDamage(ConfigIntValues.COFFEE_DRINK_AMOUNT.getValue()-1);
         this.setAlwaysEdible();
         this.setMaxStackSize(1);
-        this.initIngredients();
     }
 
     public static Ingredient getIngredientFromStack(ItemStack stack){
         for(Ingredient ingredient : ingredients){
-            if(ingredient.ingredient.isItemEqual(stack)) return ingredient;
+            if(ingredient.ingredient.copy().isItemEqual(stack)) return ingredient;
         }
         return null;
     }
@@ -224,13 +224,13 @@ public class ItemCoffee extends ItemFood implements INameableItem{
         return "itemCoffee";
     }
 
-    public void registerIngredient(Ingredient ingredient){
+    public static void registerIngredient(Ingredient ingredient){
         ingredients.add(ingredient);
     }
 
     public static class Ingredient{
 
-        public ItemStack ingredient;
+        public final ItemStack ingredient;
         protected PotionEffect[] effects;
 
         public Ingredient(ItemStack ingredient, PotionEffect[] effects){

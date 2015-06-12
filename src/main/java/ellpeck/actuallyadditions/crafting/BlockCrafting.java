@@ -7,6 +7,7 @@ import ellpeck.actuallyadditions.config.values.ConfigCrafting;
 import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.items.metalists.TheMiscItems;
 import ellpeck.actuallyadditions.util.INameableItem;
+import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -159,7 +160,7 @@ public class BlockCrafting{
                     "CRC", "CBC", "CRC",
                     'C', "cobblestone",
                     'R', TheMiscBlocks.STONE_CASING.getOredictName(),
-                    'B', "coal"));
+                    'B', new ItemStack(Items.coal, 1, Util.WILDCARD)));
 
         //Enderpearl Block
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.ENDERPEARL_BLOCK.ordinal()),

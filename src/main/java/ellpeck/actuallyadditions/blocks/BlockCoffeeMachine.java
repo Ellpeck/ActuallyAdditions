@@ -129,6 +129,7 @@ public class BlockCoffeeMachine extends BlockContainerBase implements INameableI
         @SideOnly(Side.CLIENT)
         public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld) {
             BlockUtil.addInformation(theBlock, list, 5, "");
+            BlockUtil.addPowerUsageInfo(list, TileEntityCoffeeMachine.energyUsePerTick);
         }
 
         @Override
