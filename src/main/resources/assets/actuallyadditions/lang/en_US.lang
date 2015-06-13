@@ -456,8 +456,10 @@ container.nei.actuallyadditions.ballOfHair.name=Ball Of Hair Usage
 container.nei.actuallyadditions.compost.name=Compost
 
 container.nei.actuallyadditions.coffee.name=Coffee Machine
-container.nei.actuallyadditions.coffee.special=Special Feature:
-container.nei.actuallyadditions.coffee.extra.milk=+02:30, -1 Level
+container.nei.actuallyadditions.coffee.special=Special Feature
+container.nei.actuallyadditions.coffee.maxAmount=Max Amount
+container.nei.actuallyadditions.coffee.shift=[SHIFT]!
+container.nei.actuallyadditions.coffee.extra.milk=+01:00, -1 Level
 
 info.actuallyadditions.update.generic.desc=[{"text":"There is an "},{"text":"Update ","bold":"true"},{"text":"for ","bold":"false"},{"text":"Actually Additions ","color":"dark_green","bold":"true"},{"text":"available!","color":"none","bold":"false"}]
 info.actuallyadditions.update.versionComp.desc=[{"text":"You have Version "},{"text":"%s","color":"dark_red","italic":"false"},{"text":", the newest one is ","color":"none","italic":"false"},{"text":"%s","color":"dark_green","underlined":"false"},{"text":"!","color":"none","underlined":"false"}]

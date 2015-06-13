@@ -67,13 +67,14 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
                         this.brewTime = 0;
                         ItemStack output = new ItemStack(InitItems.itemCoffee);
                         for(int i = 3; i < this.slots.length; i++){
-                            if(this.slots[i] != null && ItemCoffee.getIngredientFromStack((this.slots[i])) != null){
+                            if(this.slots[i] != null){
                                 ItemCoffee.Ingredient ingredient = ItemCoffee.getIngredientFromStack(this.slots[i]);
                                 if(ingredient != null){
-                                    ingredient.effect(output);
+                                    if(ingredient.effect(output)){
+                                        this.slots[i].stackSize--;
+                                        if(this.slots[i].stackSize <= 0) this.slots[i] = this.slots[i].getItem().getContainerItem(this.slots[i]);
+                                    }
                                 }
-                                this.slots[i].stackSize--;
-                                if(this.slots[i].stackSize <= 0) this.slots[i] = this.slots[i].getItem().getContainerItem(this.slots[i]);
                             }
                         }
                         this.slots[SLOT_OUTPUT] = output.copy();

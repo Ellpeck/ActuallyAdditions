@@ -30,14 +30,14 @@ public class ItemCoffee extends ItemFood implements INameableItem{
     public static ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
 
     public static void initIngredients(){
-        registerIngredient(new Ingredient(new ItemStack(Items.milk_bucket), null){
+        registerIngredient(new Ingredient(new ItemStack(Items.milk_bucket), null, 0){
             @Override
-            public void effect(ItemStack stack){
+            public boolean effect(ItemStack stack){
                 PotionEffect[] effects = getEffectsFromStack(stack);
                 ArrayList<PotionEffect> effectsNew = new ArrayList<PotionEffect>();
                 if(effects != null && effects.length > 0){
                     for(PotionEffect effect : effects){
-                        if(effect.getAmplifier() > 0) effectsNew.add(new PotionEffect(effect.getPotionID(), effect.getDuration()+150, effect.getAmplifier()-1));
+                        if(effect.getAmplifier() > 0) effectsNew.add(new PotionEffect(effect.getPotionID(), effect.getDuration()+120, effect.getAmplifier()-1));
                     }
                     stack.setTagCompound(new NBTTagCompound());
                     if(effectsNew.size() > 0){
@@ -46,19 +46,20 @@ public class ItemCoffee extends ItemFood implements INameableItem{
                     }
                 }
                 this.effects = null;
+                return true;
             }
             @Override
             public String getExtraText(){
                 return StatCollector.translateToLocal("container.nei." + ModUtil.MOD_ID_LOWER + ".coffee.extra.milk");
             }
         });
-        registerIngredient(new Ingredient(new ItemStack(Items.sugar), new PotionEffect[]{new PotionEffect(Potion.moveSpeed.getId(), 30, 0)}));
-        registerIngredient(new Ingredient(new ItemStack(Items.magma_cream), new PotionEffect[]{new PotionEffect(Potion.fireResistance.getId(), 10, 0)}));
-        registerIngredient(new Ingredient(new ItemStack(Items.fish, 1, 3), new PotionEffect[]{new PotionEffect(Potion.waterBreathing.getId(), 15, 0)}));
-        registerIngredient(new Ingredient(new ItemStack(Items.golden_carrot), new PotionEffect[]{new PotionEffect(Potion.nightVision.getId(), 60, 0)}));
-        registerIngredient(new Ingredient(new ItemStack(Items.ghast_tear), new PotionEffect[]{new PotionEffect(Potion.regeneration.getId(), 10, 0)}));
-        registerIngredient(new Ingredient(new ItemStack(Items.blaze_powder), new PotionEffect[]{new PotionEffect(Potion.damageBoost.getId(), 15, 0)}));
-        registerIngredient(new Ingredient(new ItemStack(Items.fermented_spider_eye), new PotionEffect[]{new PotionEffect(Potion.invisibility.getId(), 25, 0)}));
+        registerIngredient(new Ingredient(new ItemStack(Items.sugar), new PotionEffect[]{new PotionEffect(Potion.moveSpeed.getId(), 30, 0)}, 4));
+        registerIngredient(new Ingredient(new ItemStack(Items.magma_cream), new PotionEffect[]{new PotionEffect(Potion.fireResistance.getId(), 20, 0)}, 1));
+        registerIngredient(new Ingredient(new ItemStack(Items.fish, 1, 3), new PotionEffect[]{new PotionEffect(Potion.waterBreathing.getId(), 10, 0)}, 1));
+        registerIngredient(new Ingredient(new ItemStack(Items.golden_carrot), new PotionEffect[]{new PotionEffect(Potion.nightVision.getId(), 30, 0)}, 1));
+        registerIngredient(new Ingredient(new ItemStack(Items.ghast_tear), new PotionEffect[]{new PotionEffect(Potion.regeneration.getId(), 5, 0)}, 3));
+        registerIngredient(new Ingredient(new ItemStack(Items.blaze_powder), new PotionEffect[]{new PotionEffect(Potion.damageBoost.getId(), 15, 0)}, 4));
+        registerIngredient(new Ingredient(new ItemStack(Items.fermented_spider_eye), new PotionEffect[]{new PotionEffect(Potion.invisibility.getId(), 25, 0)}, 1));
     }
 
     public ItemCoffee(){
@@ -104,16 +105,27 @@ public class ItemCoffee extends ItemFood implements INameableItem{
         stack.setTagCompound(tag);
     }
 
-    public static void addEffectToStack(ItemStack stack, Ingredient ingredient){
+    public static boolean addEffectToStack(ItemStack stack, Ingredient ingredient){
+        boolean worked = false;
         if(ingredient != null){
             PotionEffect[] effects = ingredient.getEffects();
             if(effects != null && effects.length > 0){
                 for(PotionEffect effect : effects){
-                    if(hasEffect(stack, effect)) addEffectProperties(stack, effect, false, true);
-                    else addEffectToStack(stack, effect);
+                    PotionEffect effectHas = getSameEffectFromStack(stack, effect);
+                    if(effectHas != null){
+                        if(effectHas.getAmplifier() < ingredient.maxAmplifier-1){
+                            addEffectProperties(stack, effect, false, true);
+                            worked = true;
+                        }
+                    }
+                    else{
+                        addEffectToStack(stack, effect);
+                        worked = true;
+                    }
                 }
             }
         }
+        return worked;
     }
 
     public static PotionEffect[] getEffectsFromStack(ItemStack stack){
@@ -133,14 +145,14 @@ public class ItemCoffee extends ItemFood implements INameableItem{
         return effects.size() > 0 ? effects.toArray(new PotionEffect[effects.size()]) : null;
     }
 
-    public static boolean hasEffect(ItemStack stack, PotionEffect effect){
+    public static PotionEffect getSameEffectFromStack(ItemStack stack, PotionEffect effect){
         PotionEffect[] effectsStack = getEffectsFromStack(stack);
         if(effectsStack != null && effectsStack.length > 0){
             for(PotionEffect effectStack : effectsStack){
-                if(effect.getPotionID() == effectStack.getPotionID()) return true;
+                if(effect.getPotionID() == effectStack.getPotionID()) return effectStack;
             }
         }
-        return false;
+        return null;
     }
 
     public static void applyPotionEffectsFromStack(ItemStack stack, EntityPlayer player){
@@ -233,10 +245,12 @@ public class ItemCoffee extends ItemFood implements INameableItem{
 
         public final ItemStack ingredient;
         protected PotionEffect[] effects;
+        public final int maxAmplifier;
 
-        public Ingredient(ItemStack ingredient, PotionEffect[] effects){
+        public Ingredient(ItemStack ingredient, PotionEffect[] effects, int maxAmplifier){
             this.ingredient = ingredient.copy();
             this.effects = effects;
+            this.maxAmplifier = maxAmplifier;
         }
 
         public String getExtraText(){
@@ -247,8 +261,8 @@ public class ItemCoffee extends ItemFood implements INameableItem{
             return this.effects;
         }
 
-        public void effect(ItemStack stack){
-            ItemCoffee.addEffectToStack(stack, this);
+        public boolean effect(ItemStack stack){
+            return ItemCoffee.addEffectToStack(stack, this);
         }
     }
 }

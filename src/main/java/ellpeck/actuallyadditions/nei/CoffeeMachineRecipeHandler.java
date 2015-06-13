@@ -37,6 +37,7 @@ public class CoffeeMachineRecipeHandler extends TemplateRecipeHandler{
         public PositionedStack result;
         public PositionedStack ingredientStack;
         public String extraText;
+        public int maxAmp;
 
         public CachedCoffee(ItemCoffee.Ingredient ingredient){
             this.cup = new PositionedStack(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.CUP.ordinal()), 45, 39);
@@ -44,6 +45,7 @@ public class CoffeeMachineRecipeHandler extends TemplateRecipeHandler{
             this.ingredientStack = new PositionedStack(ingredient.ingredient.copy(), 90, 21);
             this.setupResult(ingredient);
             this.extraText = ingredient.getExtraText();
+            this.maxAmp = ingredient.maxAmplifier;
         }
 
         public void setupResult(ItemCoffee.Ingredient ingredient){
@@ -139,10 +141,14 @@ public class CoffeeMachineRecipeHandler extends TemplateRecipeHandler{
 
         CachedCoffee cache = (CachedCoffee)this.arecipes.get(recipe);
         if(cache.extraText != null){
-            GuiDraw.drawString(StatCollector.translateToLocal("container.nei." + ModUtil.MOD_ID_LOWER + ".coffee.special"), 2, 6, StringUtil.DECIMAL_COLOR_GRAY_TEXT, false);
-            GuiDraw.drawString(cache.extraText, 2, 18, StringUtil.DECIMAL_COLOR_GRAY_TEXT, false);
+            GuiDraw.drawString(StatCollector.translateToLocal("container.nei." + ModUtil.MOD_ID_LOWER + ".coffee.special") + ":", 2, 4, StringUtil.DECIMAL_COLOR_GRAY_TEXT, false);
+            GuiDraw.drawString(cache.extraText, 2, 16, StringUtil.DECIMAL_COLOR_GRAY_TEXT, false);
         }
-        GuiDraw.drawString("[SHIFT]!", 1, 75, StringUtil.DECIMAL_COLOR_GRAY_TEXT, false);
+        GuiDraw.drawString(StatCollector.translateToLocal("container.nei." + ModUtil.MOD_ID_LOWER + ".coffee.shift"), 1, 75, StringUtil.DECIMAL_COLOR_GRAY_TEXT, false);
+
+        if(cache.maxAmp > 0){
+            GuiDraw.drawString(StatCollector.translateToLocal("container.nei." + ModUtil.MOD_ID_LOWER + ".coffee.maxAmount") + ": " + cache.maxAmp, 2, 28, StringUtil.DECIMAL_COLOR_GRAY_TEXT, false);
+        }
     }
 
     @Override
