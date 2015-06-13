@@ -15,7 +15,7 @@ import net.minecraftforge.fluids.*;
 
 public class TileEntityOilGenerator extends TileEntityInventoryBase implements IEnergyProvider, IFluidHandler{
 
-    public EnergyStorage storage = new EnergyStorage(30000);
+    public EnergyStorage storage = new EnergyStorage(50000);
 
     public FluidTank tank = new FluidTank(2*FluidContainerRegistry.BUCKET_VOLUME);
 
