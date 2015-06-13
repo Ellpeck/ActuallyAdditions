@@ -62,10 +62,11 @@ public class ItemCoffee extends ItemFood implements INameableItem{
     }
 
     public ItemCoffee(){
-        super(2, 2.0F, false);
+        super(8, 5.0F, false);
         this.setMaxDamage(ConfigIntValues.COFFEE_DRINK_AMOUNT.getValue()-1);
         this.setAlwaysEdible();
         this.setMaxStackSize(1);
+        this.setNoRepair();
     }
 
     public static Ingredient getIngredientFromStack(ItemStack stack){

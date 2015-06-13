@@ -41,7 +41,7 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
         if(!worldObj.isRemote){
             this.storeCoffee();
 
-            if(this.brewTime > 0){
+            if(this.brewTime > 0 || this.worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)){
                 this.brew();
             }
         }
@@ -59,39 +59,32 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
 
     public void brew(){
         if(!worldObj.isRemote){
-            if(this.slots[SLOT_INPUT] != null && this.slots[SLOT_INPUT].getItem() == InitItems.itemMisc && this.slots[SLOT_INPUT].getItemDamage() == TheMiscItems.CUP.ordinal() && this.slots[SLOT_OUTPUT] == null && this.storage.getEnergyStored() >= energyUsePerTick && this.coffeeCacheAmount >= this.coffeeCacheUsePerItem){
-                this.brewTime++;
-                if(this.brewTime >= this.maxBrewTime){
-                    this.brewTime = 0;
-                    ItemStack output = new ItemStack(InitItems.itemCoffee);
-                    while(getFirstAvailIngredient() > 0){
-                        int ingr = this.getFirstAvailIngredient();
-                        ItemCoffee.Ingredient ingredient = ItemCoffee.getIngredientFromStack(this.slots[ingr]);
-                        if(ingredient != null){
-                            ingredient.effect(output);
+            if(this.slots[SLOT_INPUT] != null && this.slots[SLOT_INPUT].getItem() == InitItems.itemMisc && this.slots[SLOT_INPUT].getItemDamage() == TheMiscItems.CUP.ordinal() && this.slots[SLOT_OUTPUT] == null && this.coffeeCacheAmount >= this.coffeeCacheUsePerItem){
+                if(this.storage.getEnergyStored() >= energyUsePerTick){
+                    this.brewTime++;
+                    this.storage.extractEnergy(energyUsePerTick, false);
+                    if(this.brewTime >= this.maxBrewTime){
+                        this.brewTime = 0;
+                        ItemStack output = new ItemStack(InitItems.itemCoffee);
+                        for(int i = 3; i < this.slots.length; i++){
+                            if(this.slots[i] != null && ItemCoffee.getIngredientFromStack((this.slots[i])) != null){
+                                ItemCoffee.Ingredient ingredient = ItemCoffee.getIngredientFromStack(this.slots[i]);
+                                if(ingredient != null){
+                                    ingredient.effect(output);
+                                }
+                                this.slots[i].stackSize--;
+                                if(this.slots[i].stackSize <= 0) this.slots[i] = this.slots[i].getItem().getContainerItem(this.slots[i]);
+                            }
                         }
-                        this.slots[ingr].stackSize--;
-                        if(this.slots[ingr].stackSize <= 0) this.slots[ingr] = this.slots[ingr].getItem().getContainerItem(this.slots[ingr]);
+                        this.slots[SLOT_OUTPUT] = output.copy();
+                        this.slots[SLOT_INPUT].stackSize--;
+                        if(this.slots[SLOT_INPUT].stackSize <= 0) this.slots[SLOT_INPUT] = null;
+                        this.coffeeCacheAmount -= this.coffeeCacheUsePerItem;
                     }
-                    this.slots[SLOT_OUTPUT] = output.copy();
-                    this.slots[SLOT_INPUT].stackSize--;
-                    if(this.slots[SLOT_INPUT].stackSize <= 0) this.slots[SLOT_INPUT] = null;
-                    this.coffeeCacheAmount -= this.coffeeCacheUsePerItem;
                 }
             }
             else this.brewTime = 0;
-
-            if(this.brewTime > 0) this.storage.extractEnergy(energyUsePerTick, false);
         }
-    }
-
-    public int getFirstAvailIngredient(){
-        for(int i = 3; i < this.slots.length; i++){
-            if(this.slots[i] != null && this.slots[i].stackSize == 1 && ItemCoffee.getIngredientFromStack((this.slots[i])) != null){
-                return i;
-            }
-        }
-        return 0;
     }
 
     @SideOnly(Side.CLIENT)
@@ -127,7 +120,7 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
 
     @Override
     public boolean isItemValidForSlot(int i, ItemStack stack){
-        return (i == SLOT_COFFEE_BEANS && stack.getItem() == InitItems.itemCoffeeBean) || (i == SLOT_INPUT && stack.getItem() == InitItems.itemMisc && stack.getItemDamage() == TheMiscItems.CUP.ordinal());
+        return (i >= 3 && ItemCoffee.getIngredientFromStack(stack) != null) || (i == SLOT_COFFEE_BEANS && stack.getItem() == InitItems.itemCoffeeBean) || (i == SLOT_INPUT && stack.getItem() == InitItems.itemMisc && stack.getItemDamage() == TheMiscItems.CUP.ordinal());
     }
 
     @Override

@@ -4,6 +4,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.inventory.slot.SlotOutput;
 import ellpeck.actuallyadditions.items.InitItems;
+import ellpeck.actuallyadditions.items.ItemCoffee;
 import ellpeck.actuallyadditions.items.metalists.TheMiscItems;
 import ellpeck.actuallyadditions.tile.TileEntityBase;
 import ellpeck.actuallyadditions.tile.TileEntityCoffeeMachine;
@@ -33,13 +34,7 @@ public class ContainerCoffeeMachine extends Container{
 
         for (int i = 0; i < 4; i++){
             for (int j = 0; j < 2; j++){
-                this.addSlotToContainer(new Slot(machine, j+i*2+3, 125+j*18, 6+i*18){
-                    @Override
-                    public int getSlotStackLimit(){
-                        return 1;
-                    }
-
-                });
+                this.addSlotToContainer(new Slot(machine, j+i*2+3, 125+j*18, 6+i*18));
             }
         }
 
@@ -110,6 +105,9 @@ public class ContainerCoffeeMachine extends Container{
                     }
                     if(currentStack.getItem() == InitItems.itemMisc && currentStack.getItemDamage() == TheMiscItems.CUP.ordinal()){
                         this.mergeItemStack(newStack, TileEntityCoffeeMachine.SLOT_INPUT, TileEntityCoffeeMachine.SLOT_INPUT+1, false);
+                    }
+                    if(ItemCoffee.getIngredientFromStack(newStack) != null){
+                        this.mergeItemStack(newStack, 3, 10, false);
                     }
                 }
 

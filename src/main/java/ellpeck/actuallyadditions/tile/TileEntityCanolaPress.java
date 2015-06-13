@@ -35,16 +35,19 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IE
     @SuppressWarnings("unchecked")
     public void updateEntity(){
         if(!worldObj.isRemote){
-            if(this.isCanola(0) && this.storage.getEnergyStored() >= energyUsedPerTick && this.mbProducedPerCanola <= this.tank.getCapacity()-this.tank.getFluidAmount()){
-                this.currentProcessTime++;
-                if(this.currentProcessTime >= this.maxTimeProcessing){
-                    this.currentProcessTime = 0;
+            if(this.isCanola(0) && this.mbProducedPerCanola <= this.tank.getCapacity()-this.tank.getFluidAmount()){
+                if(this.storage.getEnergyStored() >= energyUsedPerTick){
+                    this.currentProcessTime++;
+                    this.storage.extractEnergy(energyUsedPerTick, false);
+                    if(this.currentProcessTime >= this.maxTimeProcessing){
+                        this.currentProcessTime = 0;
 
-                    this.slots[0].stackSize--;
-                    if(this.slots[0].stackSize == 0) this.slots[0] = null;
+                        this.slots[0].stackSize--;
+                        if(this.slots[0].stackSize == 0) this.slots[0] = null;
 
-                    this.tank.fill(new FluidStack(InitBlocks.fluidCanolaOil, mbProducedPerCanola), true);
-                    this.markDirty();
+                        this.tank.fill(new FluidStack(InitBlocks.fluidCanolaOil, mbProducedPerCanola), true);
+                        this.markDirty();
+                    }
                 }
             }
             else this.currentProcessTime = 0;
@@ -57,8 +60,6 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IE
                     this.tank.drain(FluidContainerRegistry.BUCKET_VOLUME, true);
                 }
             }
-
-            if(this.currentProcessTime > 0) this.storage.extractEnergy(energyUsedPerTick, false);
 
             if(this.tank.getFluidAmount() > 0){
                 WorldUtil.pushFluid(worldObj, xCoord, yCoord, zCoord, ForgeDirection.DOWN, this.tank);

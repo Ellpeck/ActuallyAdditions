@@ -38,31 +38,30 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
             boolean canSmeltOnFirst = this.canSmeltOn(SLOT_INPUT_1, SLOT_OUTPUT_1);
             boolean canSmeltOnSecond = this.canSmeltOn(SLOT_INPUT_2, SLOT_OUTPUT_2);
 
-            if(this.storage.getEnergyStored() >= energyUsePerTick){
-                if(canSmeltOnFirst){
+
+            if(canSmeltOnFirst){
+                if(this.storage.getEnergyStored() >= energyUsePerTick){
                     this.firstSmeltTime++;
                     if(this.firstSmeltTime >= maxBurnTime){
                         this.finishBurning(SLOT_INPUT_1, SLOT_OUTPUT_1);
                         this.firstSmeltTime = 0;
                     }
                 }
-                else this.firstSmeltTime = 0;
+            }
+            else this.firstSmeltTime = 0;
 
-                if(canSmeltOnSecond){
+            if(canSmeltOnSecond){
+                if(this.storage.getEnergyStored() >= energyUsePerTick){
                     this.secondSmeltTime++;
                     if(this.secondSmeltTime >= maxBurnTime){
                         this.finishBurning(SLOT_INPUT_2, SLOT_OUTPUT_2);
                         this.secondSmeltTime = 0;
                     }
                 }
-                else this.secondSmeltTime = 0;
             }
-            else{
-                this.firstSmeltTime = 0;
-                this.secondSmeltTime = 0;
-            }
+            else this.secondSmeltTime = 0;
 
-            if(this.firstSmeltTime > 0 || this.secondSmeltTime > 0) this.storage.extractEnergy(energyUsePerTick, false);
+            if(this.storage.getEnergyStored() >= energyUsePerTick && this.firstSmeltTime > 0 || this.secondSmeltTime > 0) this.storage.extractEnergy(energyUsePerTick, false);
         }
 
     }

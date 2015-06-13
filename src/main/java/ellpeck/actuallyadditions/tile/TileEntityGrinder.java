@@ -82,33 +82,31 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
             boolean canCrushOnSecond = false;
             if(this.isDouble) canCrushOnSecond = this.canCrushOn(SLOT_INPUT_2, SLOT_OUTPUT_2_1, SLOT_OUTPUT_2_2);
 
-            if(this.storage.getEnergyStored() >= energyUsePerTick){
-                if(canCrushOnFirst){
+            if(canCrushOnFirst){
+                if(this.storage.getEnergyStored() >= energyUsePerTick){
                     this.firstCrushTime++;
                     if(this.firstCrushTime >= maxCrushTime){
                         this.finishCrushing(SLOT_INPUT_1, SLOT_OUTPUT_1_1, SLOT_OUTPUT_1_2);
                         this.firstCrushTime = 0;
                     }
                 }
-                else this.firstCrushTime = 0;
+            }
+            else this.firstCrushTime = 0;
 
-                if(this.isDouble){
-                    if(canCrushOnSecond){
+            if(this.isDouble){
+                if(canCrushOnSecond){
+                    if(this.storage.getEnergyStored() >= energyUsePerTick){
                         this.secondCrushTime++;
                         if(this.secondCrushTime >= maxCrushTime){
                             this.finishCrushing(SLOT_INPUT_2, SLOT_OUTPUT_2_1, SLOT_OUTPUT_2_2);
                             this.secondCrushTime = 0;
                         }
                     }
-                    else this.secondCrushTime = 0;
                 }
-            }
-            else{
-                this.firstCrushTime = 0;
-                this.secondCrushTime = 0;
+                else this.secondCrushTime = 0;
             }
 
-            if(this.firstCrushTime > 0 || this.secondCrushTime > 0) this.storage.extractEnergy(energyUsePerTick, false);
+            if(this.storage.getEnergyStored() >= energyUsePerTick && this.firstCrushTime > 0 || this.secondCrushTime > 0) this.storage.extractEnergy(energyUsePerTick, false);
         }
     }
 
