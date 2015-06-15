@@ -5,30 +5,34 @@ import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.util.INameableItem;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.item.EnumRarity;
-import net.minecraft.item.ItemFood;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 
-public class ItemCoffeeBean extends ItemFood implements INameableItem{
+public class ItemDrillUpgrade extends Item implements INameableItem{
 
-    public ItemCoffeeBean(){
-        super(1, 1F, false);
-        this.setMaxDamage(0);
+    public enum UpgradeType{
+        SPEED,
+        SPEED_II,
+        SPEED_III,
+        SILK_TOUCH, //Done
+        FORTUNE, //Done
+        FORTUNE_II, //Done
+        THREE_BY_THREE, //Done
+        FIVE_BY_FIVE, //Done
+        VEIN,
+        PLACER
+    }
+
+    public UpgradeType type;
+    public String unlocalizedName;
+
+    public ItemDrillUpgrade(UpgradeType type, String unlocName){
+        this.type = type;
+        this.unlocalizedName = unlocName;
     }
 
     @Override
-    public String getOredictName(){
-        return this.getName();
-    }
-
-    @Override
-    public EnumRarity getRarity(ItemStack stack){
-        return EnumRarity.rare;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
     public IIcon getIcon(ItemStack stack, int pass){
         return this.itemIcon;
     }
@@ -41,6 +45,11 @@ public class ItemCoffeeBean extends ItemFood implements INameableItem{
 
     @Override
     public String getName(){
-        return "itemCoffeeBeans";
+        return this.unlocalizedName;
+    }
+
+    @Override
+    public String getOredictName(){
+        return this.getName();
     }
 }

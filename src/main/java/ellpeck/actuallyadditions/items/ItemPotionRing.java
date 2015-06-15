@@ -4,7 +4,6 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.items.metalists.ThePotionRings;
 import ellpeck.actuallyadditions.util.INameableItem;
-import ellpeck.actuallyadditions.util.ItemUtil;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
@@ -87,15 +86,6 @@ public class ItemPotionRing extends Item implements INameableItem{
     @Override
     public String getUnlocalizedName(ItemStack stack){
         return this.getUnlocalizedName() + (stack.getItemDamage() >= allRings.length ? " ERROR!" : allRings[stack.getItemDamage()].getName());
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld){
-        if(stack.getItemDamage() < allRings.length){
-            ItemUtil.addInformation(this, list, 2, "");
-        }
     }
 
     @Override

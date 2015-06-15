@@ -4,7 +4,8 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.config.values.ConfigBoolValues;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
-import ellpeck.actuallyadditions.util.*;
+import ellpeck.actuallyadditions.util.INameableItem;
+import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.BlockLeavesBase;
@@ -17,11 +18,9 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.IIcon;
-import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ItemLeafBlower extends Item implements INameableItem{
 
@@ -99,18 +98,6 @@ public class ItemLeafBlower extends Item implements INameableItem{
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return this.isAdvanced ? EnumRarity.epic : EnumRarity.rare;
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld) {
-        if(KeyUtil.isShiftPressed()){
-            list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + "." + this.getName() + ".desc." + 1));
-            list.add(StringUtil.ITALIC + StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + ".itemLeafBlower.desc.2"));
-            list.add(StringUtil.ITALIC + StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + ".itemLeafBlower.desc.3"));
-        }
-        else list.add(ItemUtil.shiftForInfo());
     }
 
     @Override

@@ -134,7 +134,7 @@ tooltip.actuallyadditions.itemResonantRice.uncraftable.desc=Uncraftable because 
 tile.actuallyadditions.blockCanolaPress.name=Canola Press
 tooltip.actuallyadditions.blockCanolaPress.desc=Makes Canola Oil from Canola
 tile.actuallyadditions.blockFermentingBarrel.name=Fermenting Barrel
-tooltip.actuallyadditions.blockFermentingBarrel.desc=Ferments Canola Oil made in a Press to Canola
+tooltip.actuallyadditions.blockFermentingBarrel.desc=Ferments Canola Oil made in a Press to Oil
 
 tile.actuallyadditions.blockCanolaOil.name=Canola Oil
 tooltip.actuallyadditions.blockCanolaOil.desc=Oil made from Canola
@@ -264,7 +264,8 @@ item.actuallyadditions.itemDustQuartz.name=Crushed Quartz
 item.actuallyadditions.itemDustCoal.name=Crushed Coal
 item.actuallyadditions.itemDustQuartzBlack.name=Crushed Black Quartz
 
-tooltip.actuallyadditions.shiftForInfo.desc=Press Shift for Info
+tooltip.actuallyadditions.moreInfo.desc.1=Open the Actually Additions Manual
+tooltip.actuallyadditions.moreInfo.desc.2=with the Button in your Inventory!
 tooltip.actuallyadditions.hunger.desc=Fills
 tooltip.actuallyadditions.saturation.desc=Saturation
 tooltip.actuallyadditions.durability.desc=Durability
@@ -450,6 +451,7 @@ container.actuallyadditions.energyface.name=Energyface
 container.actuallyadditions.fluidPlacer.name=Fluid Placer
 container.actuallyadditions.fluidCollector.name=Fluid Collector
 container.actuallyadditions.coffeeMachine.name=Coffee Machine
+container.actuallyadditions.manual.name=Actually Additions Manual
 
 container.nei.actuallyadditions.crushing.name=Crusher
 container.nei.actuallyadditions.ballOfHair.name=Ball Of Hair Usage

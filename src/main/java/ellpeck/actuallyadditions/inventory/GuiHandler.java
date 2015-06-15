@@ -4,6 +4,8 @@ import cpw.mods.fml.common.network.IGuiHandler;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import ellpeck.actuallyadditions.ActuallyAdditions;
 import ellpeck.actuallyadditions.inventory.gui.*;
+import ellpeck.actuallyadditions.manual.ContainerManual;
+import ellpeck.actuallyadditions.manual.GuiManual;
 import ellpeck.actuallyadditions.tile.TileEntityBase;
 import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.entity.player.EntityPlayer;
@@ -14,7 +16,7 @@ public class GuiHandler implements IGuiHandler{
     @Override
     public Object getServerGuiElement(int id, EntityPlayer entityPlayer, World world, int x, int y, int z){
         TileEntityBase tile = null;
-        if(id != CRAFTER_ID){
+        if(id != CRAFTER_ID && id != DRILL_ID && id != MANUAL_ID){
             tile = (TileEntityBase)world.getTileEntity(x, y, z);
         }
         switch(id){
@@ -54,6 +56,8 @@ public class GuiHandler implements IGuiHandler{
                 return new ContainerFluidCollector(entityPlayer.inventory, tile);
             case COFFEE_MACHINE_ID:
                 return new ContainerCoffeeMachine(entityPlayer.inventory, tile);
+            case MANUAL_ID:
+                return new ContainerManual();
             default:
                 return null;
         }
@@ -62,7 +66,7 @@ public class GuiHandler implements IGuiHandler{
     @Override
     public Object getClientGuiElement(int id, EntityPlayer entityPlayer, World world, int x, int y, int z){
         TileEntityBase tile = null;
-        if(id != CRAFTER_ID){
+        if(id != CRAFTER_ID && id != DRILL_ID && id != MANUAL_ID){
             tile = (TileEntityBase)world.getTileEntity(x, y, z);
         }
         switch(id){
@@ -102,6 +106,8 @@ public class GuiHandler implements IGuiHandler{
                 return new GuiFluidCollector(entityPlayer.inventory, tile);
             case COFFEE_MACHINE_ID:
                 return new GuiCoffeeMachine(entityPlayer.inventory, tile, x, y, z, world);
+            case MANUAL_ID:
+                return new GuiManual();
             default:
                 return null;
         }
@@ -125,6 +131,8 @@ public class GuiHandler implements IGuiHandler{
     public static final int PHANTOM_PLACER_ID = 15;
     public static final int FLUID_COLLECTOR_ID = 16;
     public static final int COFFEE_MACHINE_ID = 17;
+    public static final int DRILL_ID = 18;
+    public static final int MANUAL_ID = 19;
 
     public static void init(){
         Util.logInfo("Initializing GuiHandler...");

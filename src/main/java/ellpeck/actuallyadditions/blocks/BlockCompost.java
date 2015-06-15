@@ -8,7 +8,6 @@ import ellpeck.actuallyadditions.items.ItemFertilizer;
 import ellpeck.actuallyadditions.items.ItemMisc;
 import ellpeck.actuallyadditions.items.metalists.TheMiscItems;
 import ellpeck.actuallyadditions.tile.TileEntityCompost;
-import ellpeck.actuallyadditions.util.BlockUtil;
 import ellpeck.actuallyadditions.util.INameableItem;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -147,13 +146,6 @@ public class BlockCompost extends BlockContainerBase implements INameableItem{
         @Override
         public String getUnlocalizedName(ItemStack stack){
             return this.getUnlocalizedName();
-        }
-
-        @Override
-        @SuppressWarnings("unchecked")
-        @SideOnly(Side.CLIENT)
-        public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld) {
-            BlockUtil.addInformation(theBlock, list, 1, "");
         }
 
         @Override

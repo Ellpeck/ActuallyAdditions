@@ -95,8 +95,7 @@ public class BlockFurnaceSolar extends BlockContainerBase implements INameableIt
         @Override
         @SuppressWarnings("unchecked")
         @SideOnly(Side.CLIENT)
-        public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld) {
-            BlockUtil.addInformation(theBlock, list, 1, "");
+        public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld){
             BlockUtil.addPowerProductionInfo(list, TileEntityFurnaceSolar.energyProducedPerTick);
         }
 

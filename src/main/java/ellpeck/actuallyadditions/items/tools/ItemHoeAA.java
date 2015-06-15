@@ -3,8 +3,6 @@ package ellpeck.actuallyadditions.items.tools;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.util.INameableItem;
-import ellpeck.actuallyadditions.util.ItemUtil;
-import ellpeck.actuallyadditions.util.KeyUtil;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
@@ -35,11 +33,7 @@ public class ItemHoeAA extends ItemHoe implements INameableItem{
     @SuppressWarnings("unchecked")
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld) {
-        if(KeyUtil.isShiftPressed()){
-            list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + "." + this.getName() + ".desc"));
-            list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + ".durability.desc") + ": " + (this.getMaxDamage()-this.getDamage(stack)) + "/" + this.getMaxDamage());
-        }
-        else list.add(ItemUtil.shiftForInfo());
+        list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + ".durability.desc") + ": " + (this.getMaxDamage()-this.getDamage(stack)) + "/" + this.getMaxDamage());
     }
 
     @Override

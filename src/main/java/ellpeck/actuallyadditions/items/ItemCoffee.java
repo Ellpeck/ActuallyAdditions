@@ -5,8 +5,6 @@ import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.items.metalists.TheMiscItems;
 import ellpeck.actuallyadditions.util.INameableItem;
-import ellpeck.actuallyadditions.util.ItemUtil;
-import ellpeck.actuallyadditions.util.KeyUtil;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
@@ -203,22 +201,17 @@ public class ItemCoffee extends ItemFood implements INameableItem{
     @SuppressWarnings("unchecked")
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld){
-        if(KeyUtil.isShiftPressed()){
-            list.add(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+"."+this.getName()+".desc.1"));
-            list.add(StatCollector.translateToLocalFormatted("tooltip."+ModUtil.MOD_ID_LOWER+"."+this.getName()+".desc.2", this.getMaxDamage()+1));
-            list.add(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".hunger.desc")+": "+this.func_150905_g(stack));
-            list.add(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".saturation.desc")+": "+this.func_150906_h(stack));
-            list.add("");
+        list.add(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".hunger.desc")+": "+this.func_150905_g(stack));
+        list.add(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".saturation.desc")+": "+this.func_150906_h(stack));
+        list.add("");
 
-            PotionEffect[] effects = getEffectsFromStack(stack);
-            if(effects != null && effects.length > 0){
-                for(PotionEffect effect : effects){
-                    list.add(StatCollector.translateToLocal(effect.getEffectName())+" "+(effect.getAmplifier()+1)+ " (" + Potion.getDurationString(new PotionEffect(0, effect.getDuration()*20, 0)) + ")");
-                }
+        PotionEffect[] effects = getEffectsFromStack(stack);
+        if(effects != null && effects.length > 0){
+            for(PotionEffect effect : effects){
+                list.add(StatCollector.translateToLocal(effect.getEffectName())+" "+(effect.getAmplifier()+1)+ " (" + Potion.getDurationString(new PotionEffect(0, effect.getDuration()*20, 0)) + ")");
             }
-            else list.add("No Effects");
         }
-        else list.add(ItemUtil.shiftForInfo());
+        else list.add("No Effects");
     }
 
     @Override

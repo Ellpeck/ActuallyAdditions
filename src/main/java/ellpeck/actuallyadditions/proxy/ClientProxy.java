@@ -22,15 +22,15 @@ public class ClientProxy implements IProxy{
     @Override
     public void preInit(){
         Util.logInfo("PreInitializing ClientProxy...");
+
+        if(ConfigBoolValues.DO_UPDATE_CHECK.isEnabled()){
+            new UpdateChecker().init();
+        }
     }
 
     @Override
     public void init(){
         Util.logInfo("Initializing ClientProxy...");
-
-        if(ConfigBoolValues.DO_UPDATE_CHECK.isEnabled()){
-            new UpdateChecker().init();
-        }
 
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCompost.class, new RenderTileEntity(new ModelCompost()));
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(InitBlocks.blockCompost), new RenderItems(new ModelCompost()));

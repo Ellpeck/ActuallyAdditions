@@ -156,9 +156,9 @@ public class GuiInputter extends GuiContainer{
         PacketHandler.theNetwork.sendToServer(new PacketGuiButton(x, y, z, world, button.id, Minecraft.getMinecraft().thePlayer));
     }
 
-    public class SmallerButton extends GuiButton{
+    public static class SmallerButton extends GuiButton{
 
-        private final ResourceLocation resLoc = AssetUtil.getGuiLocation("guiInputter");
+        public final ResourceLocation resLoc = AssetUtil.getGuiLocation("guiInputter");
 
         public SmallerButton(int id, int x, int y, String display){
             super(id, x, y, 16, 16, display);

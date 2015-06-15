@@ -4,7 +4,6 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.blocks.BlockPlant;
 import ellpeck.actuallyadditions.util.INameableItem;
-import ellpeck.actuallyadditions.util.ItemUtil;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -24,8 +23,6 @@ import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.event.ForgeEventFactory;
 import powercrystals.minefactoryreloaded.api.IFactoryPlantable;
 import powercrystals.minefactoryreloaded.api.ReplacementBlock;
-
-import java.util.List;
 
 public class ItemSeed extends ItemSeeds implements INameableItem, IFactoryPlantable{
 
@@ -87,12 +84,6 @@ public class ItemSeed extends ItemSeeds implements INameableItem, IFactoryPlanta
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.rare;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld) {
-        ItemUtil.addInformation(this, list, 1, "");
     }
 
     @Override

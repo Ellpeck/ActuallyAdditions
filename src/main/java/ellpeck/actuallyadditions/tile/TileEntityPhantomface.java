@@ -164,7 +164,6 @@ public class TileEntityPhantomface extends TileEntityInventoryBase{
                                 if(receive != null){
                                     int actualReceive = ((IFluidHandler)tile).fill(side.getOpposite(), receive, true);
                                     this.drain(side, new FluidStack(receive.getFluid(), actualReceive), true);
-                                    worldObj.markBlockForUpdate(xCoord+side.offsetX, yCoord+side.offsetY, zCoord+side.offsetZ);
                                 }
                             }
                         }
@@ -256,7 +255,6 @@ public class TileEntityPhantomface extends TileEntityInventoryBase{
                     int receive = this.extractEnergy(side, Math.min(((IEnergyReceiver)tile).getMaxEnergyStored(ForgeDirection.UNKNOWN)-((IEnergyReceiver)tile).getEnergyStored(ForgeDirection.UNKNOWN), this.getEnergyStored(ForgeDirection.UNKNOWN)), true);
                     int actualReceive = ((IEnergyReceiver)tile).receiveEnergy(side.getOpposite(), receive, false);
                     this.extractEnergy(side, actualReceive, false);
-                    worldObj.markBlockForUpdate(xCoord+side.offsetX, yCoord+side.offsetY, zCoord+side.offsetZ);
                 }
             }
         }

@@ -7,7 +7,8 @@ import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.inventory.GuiHandler;
 import ellpeck.actuallyadditions.tile.TileEntityPhantomPlacer;
 import ellpeck.actuallyadditions.tile.TileEntityPhantomface;
-import ellpeck.actuallyadditions.util.*;
+import ellpeck.actuallyadditions.util.INameableItem;
+import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -155,15 +156,8 @@ public class BlockPhantomface extends BlockContainerBase implements INameableIte
         @Override
         @SuppressWarnings("unchecked")
         @SideOnly(Side.CLIENT)
-        public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld) {
-            BlockUtil.addInformation(theBlock, list, 2, "");
-            if(KeyUtil.isShiftPressed()){
-                if(((BlockPhantomface)this.theBlock).type == LIQUIFACE){
-                    list.add(StringUtil.ORANGE+StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".blockPhantomLiquiface.desc.3"));
-                    list.add(StringUtil.ORANGE+StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".blockPhantomLiquiface.desc.4"));
-                }
-                list.add(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".blockPhantomRange.desc") + ": " + ((BlockPhantomface)theBlock).range);
-            }
+        public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld){
+            list.add(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".blockPhantomRange.desc") + ": " + ((BlockPhantomface)theBlock).range);
         }
 
         @Override
