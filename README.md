@@ -9,12 +9,12 @@ All Rights Reserved
 
 What that means? I can decide what I want to do with the License myself.
 
-
 ### YOU MAY
 - Fork and modify the Code
 - Submit Pull Requests
 - Copy Parts of the Code for other Projects
 - Make a Review/Spotlight of the Mod or use it in a Modpack
+- Make Let's Play (and similar) Videos containing my Mod
 
 
 ### YOU CAN NOT
@@ -26,3 +26,5 @@ What that means? I can decide what I want to do with the License myself.
 - Always credit me. Don't be a jerk and copy entire portions of the code and claim they're yours.
 - When it comes to the code, always link back to this Repository.
 - When it comes to the Mod, always link back to the the Forum Thread linked above.
+
+Note: The above License only applies for Code I wrote myself, any APIs used (such as the CoFH API, the InventoryTweaks API and the MineFactoryReloaded API) have their own License that is being respected in this Mod.
