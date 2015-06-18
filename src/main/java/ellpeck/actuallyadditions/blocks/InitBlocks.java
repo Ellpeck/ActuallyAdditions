@@ -1,5 +1,6 @@
 package ellpeck.actuallyadditions.blocks;
 
+import ellpeck.actuallyadditions.config.values.ConfigBoolValues;
 import ellpeck.actuallyadditions.util.BlockUtil;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.Util;
@@ -184,7 +185,7 @@ public class InitBlocks{
 
     public static void registerFluids(){
         String canolaOil = "canolaoil";
-        if(!FluidRegistry.isFluidRegistered(canolaOil)){
+        if(!FluidRegistry.isFluidRegistered(canolaOil) || ConfigBoolValues.PREVENT_CANOLA_OVERRIDE.isEnabled()){
             fluidCanolaOil = new FluidAA(canolaOil).setDensity(1200).setViscosity(1500).setTemperature(300).setRarity(EnumRarity.uncommon);
             FluidRegistry.registerFluid(fluidCanolaOil);
         }
@@ -193,7 +194,7 @@ public class InitBlocks{
         }
         fluidCanolaOil = FluidRegistry.getFluid(canolaOil);
 
-        if(fluidCanolaOil.getBlock() == null){
+        if(fluidCanolaOil.getBlock() == null || ConfigBoolValues.PREVENT_CANOLA_BLOCK_OVERRIDE.isEnabled()){
             blockCanolaOil = new BlockFluidFlowing(fluidCanolaOil, Material.water, "blockCanolaOil");
             BlockUtil.register(blockCanolaOil, BlockFluidFlowing.TheItemBlock.class, false);
         }
@@ -203,7 +204,7 @@ public class InitBlocks{
         blockCanolaOil = fluidCanolaOil.getBlock();
 
         String oil = "oil";
-        if(!FluidRegistry.isFluidRegistered(oil)){
+        if(!FluidRegistry.isFluidRegistered(oil) || ConfigBoolValues.PREVENT_OIL_OVERRIDE.isEnabled()){
             fluidOil = new FluidAA(oil).setDensity(1200).setViscosity(1500).setTemperature(300).setRarity(EnumRarity.uncommon);
             FluidRegistry.registerFluid(fluidOil);
         }
@@ -212,7 +213,7 @@ public class InitBlocks{
          }
         fluidOil = FluidRegistry.getFluid(oil);
 
-        if(fluidOil.getBlock() == null){
+        if(fluidOil.getBlock() == null || ConfigBoolValues.PREVENT_OIL_BLOCK_OVERRIDE.isEnabled()){
             blockOil = new BlockFluidFlowing(fluidOil, Material.water, "blockOil");
             BlockUtil.register(blockOil, BlockFluidFlowing.TheItemBlock.class, false);
         }
@@ -223,6 +224,6 @@ public class InitBlocks{
     }
 
     public static void errorAlreadyRegistered(String str){
-        ModUtil.LOGGER.log(Level.WARN, str + " from Actually Additions is not getting used as it has already been registered by another Mod! Issues may (but shouldn't) occur!");
+        ModUtil.LOGGER.log(Level.WARN, str + " from Actually Additions is not getting used as it has already been registered by another Mod! If this causes Issues (which it shouldn't!), you can turn this off in the Config File!");
     }
 }

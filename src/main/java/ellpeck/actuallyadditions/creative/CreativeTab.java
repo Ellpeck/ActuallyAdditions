@@ -61,7 +61,7 @@ public class CreativeTab extends CreativeTabs{
         addBlock(InitBlocks.blockCanolaPress);
         addBlock(InitBlocks.blockFermentingBarrel);
 
-        addItem(InitItems.itemDrill);
+        //addItem(InitItems.itemDrill);
         addItem(InitItems.itemPhantomConnector);
         addItem(InitItems.itemBucketCanolaOil);
         addItem(InitItems.itemBucketOil);

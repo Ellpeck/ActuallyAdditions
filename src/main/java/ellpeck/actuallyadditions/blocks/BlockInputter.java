@@ -5,8 +5,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.ActuallyAdditions;
 import ellpeck.actuallyadditions.inventory.GuiHandler;
 import ellpeck.actuallyadditions.tile.TileEntityInputter;
-import ellpeck.actuallyadditions.util.INameableItem;
-import ellpeck.actuallyadditions.util.ModUtil;
+import ellpeck.actuallyadditions.util.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -19,6 +18,7 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
+import java.util.List;
 import java.util.Random;
 
 public class BlockInputter extends BlockContainerBase implements INameableItem{
@@ -113,6 +113,20 @@ public class BlockInputter extends BlockContainerBase implements INameableItem{
         @Override
         public String getUnlocalizedName(ItemStack stack){
             return this.getUnlocalizedName();
+        }
+
+        @Override
+        @SuppressWarnings("unchecked")
+        @SideOnly(Side.CLIENT)
+        public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld) {
+            if(KeyUtil.isShiftPressed()){
+                list.add(StatCollector.translateToLocalFormatted("tooltip." + ModUtil.MOD_ID_LOWER + ".blockInputter.desc." + 1, StringUtil.OBFUSCATED, StringUtil.LIGHT_GRAY));
+                for(int i = 1; i < 6; i++){
+                    list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + ".blockInputter.desc." + (i + 1)));
+                }
+                if((((BlockInputter)theBlock).isAdvanced)) list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + "." + ((INameableItem)theBlock).getName() + ".desc"));
+            }
+            else list.add(ItemUtil.shiftForInfo());
         }
 
         @Override

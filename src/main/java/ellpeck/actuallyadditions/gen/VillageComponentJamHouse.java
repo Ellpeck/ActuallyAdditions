@@ -50,7 +50,7 @@ public class VillageComponentJamHouse extends StructureVillagePieces.House1{
         for (int i = 0; i < xSize; i++){
             for(int j = 0; j < zSize; j++){
                 this.clearCurrentPositionBlocksUpwards(world, j, ySize, i, sbb);
-                this.func_151554_b(world, Blocks.cobblestone, 0, j, -1, i, sbb);
+                this.func_151554_b(world, Blocks.cobblestone, 0, j, 0, i, sbb);
             }
         }
 

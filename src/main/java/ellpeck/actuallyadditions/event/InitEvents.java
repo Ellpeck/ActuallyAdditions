@@ -1,6 +1,5 @@
 package ellpeck.actuallyadditions.event;
 
-import ellpeck.actuallyadditions.manual.InventoryEvents;
 import ellpeck.actuallyadditions.util.Util;
 
 public class InitEvents{
@@ -16,8 +15,6 @@ public class InitEvents{
         Util.registerEvent(new EntityLivingEvent());
         Util.registerEvent(new WorldDecorationEvent());
         Util.registerEvent(new BucketFillEvent());
-        Util.registerEvent(new InventoryEvents.InitGuiEvent());
-        Util.registerEvent(new InventoryEvents.ButtonPressedEvent());
     }
 
 }

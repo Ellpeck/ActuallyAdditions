@@ -155,7 +155,7 @@ public class TileEntityPhantomface extends TileEntityInventoryBase{
 
         private void pushFluid(ForgeDirection side){
             TileEntity tile = WorldUtil.getTileEntityFromSide(side, worldObj, xCoord, yCoord, zCoord);
-            if(tile != null && tile instanceof IFluidHandler){
+            if(tile != null && tile instanceof IFluidHandler && this.getTankInfo(side) != null && this.getTankInfo(side).length > 0 && ((IFluidHandler)tile).getTankInfo(side.getOpposite()) != null && ((IFluidHandler)tile).getTankInfo(side.getOpposite()).length > 0){
                 for(FluidTankInfo myInfo : this.getTankInfo(side)){
                     for(FluidTankInfo hisInfo : ((IFluidHandler)tile).getTankInfo(side.getOpposite())){
                         if(myInfo != null && hisInfo != null && myInfo.fluid != null && myInfo.fluid.getFluid() != null){

@@ -3,11 +3,13 @@ package ellpeck.actuallyadditions.blocks;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.items.ItemSeed;
+import ellpeck.actuallyadditions.util.BlockUtil;
 import ellpeck.actuallyadditions.util.INameableItem;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockCrops;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
@@ -129,6 +131,13 @@ public class BlockPlant extends BlockCrops implements INameableItem, IFactoryHar
         @Override
         public String getUnlocalizedName(ItemStack stack){
             return this.getUnlocalizedName();
+        }
+
+        @Override
+        @SuppressWarnings("unchecked")
+        @SideOnly(Side.CLIENT)
+        public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld) {
+            BlockUtil.addInformation(theBlock, list, 1, "");
         }
 
         @Override

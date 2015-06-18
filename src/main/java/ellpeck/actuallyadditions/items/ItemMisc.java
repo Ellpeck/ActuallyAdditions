@@ -4,9 +4,11 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.items.metalists.TheMiscItems;
 import ellpeck.actuallyadditions.util.INameableItem;
+import ellpeck.actuallyadditions.util.ItemUtil;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -54,6 +56,13 @@ public class ItemMisc extends Item implements INameableItem{
     @Override
     public String getUnlocalizedName(ItemStack stack){
         return this.getUnlocalizedName() + (stack.getItemDamage() >= allMiscItems.length ? " ERROR!" : allMiscItems[stack.getItemDamage()].getName());
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    @SideOnly(Side.CLIENT)
+    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld){
+        if(stack.getItemDamage() < allMiscItems.length) ItemUtil.addInformation(this, list, 1, allMiscItems[stack.getItemDamage()].getName());
     }
 
     @Override

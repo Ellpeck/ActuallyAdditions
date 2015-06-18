@@ -2,7 +2,6 @@ package ellpeck.actuallyadditions.tile;
 
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockAir;
 import net.minecraft.block.BlockGrass;
 import net.minecraft.block.IGrowable;
 import net.minecraft.util.ChunkCoordinates;
@@ -37,7 +36,7 @@ public class TileEntityGreenhouseGlass extends TileEntityBase{
     public ChunkCoordinates blockToFertilize(){
         for(int i = yCoord-1; i > 0; i--){
             Block block = worldObj.getBlock(xCoord, i, zCoord);
-            if(block != null && !(block instanceof BlockAir)){
+            if(block != null && !(worldObj.isAirBlock(xCoord, i, zCoord))){
                 if(block instanceof IGrowable && !(block instanceof BlockGrass)){
                     return new ChunkCoordinates(xCoord, i, zCoord);
                 }

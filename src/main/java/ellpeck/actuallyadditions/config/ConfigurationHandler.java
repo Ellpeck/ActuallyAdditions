@@ -7,6 +7,8 @@ import java.io.File;
 
 public class ConfigurationHandler{
 
+    public static final String ISSUES_WARNING = " [THIS COULD CAUSE ISSUES, CHANGE AT YOUR OWN RISK!]";
+
     public static void init(File configFile){
         Util.logInfo("Grabbing Configurations...");
         Configuration config = new Configuration(configFile);

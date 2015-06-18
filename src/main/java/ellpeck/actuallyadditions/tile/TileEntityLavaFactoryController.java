@@ -2,11 +2,10 @@ package ellpeck.actuallyadditions.tile;
 
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
-import ellpeck.actuallyadditions.blocks.BlockMisc;
+import ellpeck.actuallyadditions.blocks.InitBlocks;
 import ellpeck.actuallyadditions.blocks.metalists.TheMiscBlocks;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockAir;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -24,9 +23,7 @@ public class TileEntityLavaFactoryController extends TileEntityBase implements I
     @SuppressWarnings("unchecked")
     public void updateEntity(){
         if(!worldObj.isRemote){
-            int isMulti = this.isMultiblock();
-
-            if(isMulti == HAS_AIR && this.storage.getEnergyStored() >= energyNeededToProduceLava){
+            if(this.storage.getEnergyStored() >= energyNeededToProduceLava && this.isMultiblock() == HAS_AIR){
                 this.currentWorkTime++;
                 if(this.currentWorkTime >= this.maxWorkTime){
                     this.currentWorkTime = 0;
@@ -49,12 +46,12 @@ public class TileEntityLavaFactoryController extends TileEntityBase implements I
         int metaWest = worldObj.getBlockMetadata(xCoord+ForgeDirection.WEST.offsetX, yCoord+1, zCoord+ForgeDirection.WEST.offsetZ);
         int metaNeeded = TheMiscBlocks.LAVA_FACTORY_CASE.ordinal();
 
-        if(blockNorth instanceof BlockMisc && blockEast instanceof BlockMisc && blockSouth instanceof BlockMisc && blockWest instanceof BlockMisc){
+        if(blockNorth == InitBlocks.blockMisc && blockEast == InitBlocks.blockMisc && blockSouth == InitBlocks.blockMisc && blockWest == InitBlocks.blockMisc){
             if(metaNorth == metaNeeded && metaEast == metaNeeded && metaSouth == metaNeeded && metaWest == metaNeeded){
                 if(worldObj.getBlock(xCoord, yCoord+1, zCoord) == Blocks.lava || worldObj.getBlock(xCoord, yCoord+1, zCoord) == Blocks.flowing_lava){
                     return HAS_LAVA;
                 }
-                if(worldObj.getBlock(xCoord, yCoord+1, zCoord) == null || worldObj.getBlock(xCoord, yCoord+1, zCoord) instanceof BlockAir){
+                if(worldObj.getBlock(xCoord, yCoord+1, zCoord) == null || worldObj.isAirBlock(xCoord, yCoord+1, zCoord)){
                     return HAS_AIR;
                 }
             }

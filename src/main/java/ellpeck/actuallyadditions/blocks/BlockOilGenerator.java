@@ -99,7 +99,8 @@ public class BlockOilGenerator extends BlockContainerBase implements INameableIt
         @Override
         @SuppressWarnings("unchecked")
         @SideOnly(Side.CLIENT)
-        public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld){
+        public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld) {
+            BlockUtil.addInformation(theBlock, list, 1, "");
             BlockUtil.addPowerProductionInfo(list, TileEntityOilGenerator.energyProducedPerTick);
         }
 

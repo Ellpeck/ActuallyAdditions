@@ -69,13 +69,13 @@ public class InitItems{
     public static Item emeraldPaxel;
     public static Item obsidianPaxel;
 
-    public static Item itemDrill;
+    //public static Item itemDrill;
 
     public static void init(){
         Util.logInfo("Initializing Items...");
 
-        itemDrill = new ItemDrill();
-        ItemUtil.register(itemDrill);
+        //itemDrill = new ItemDrill();
+        //ItemUtil.register(itemDrill);
 
         itemBucketOil = new ItemBucketAA(InitBlocks.blockOil, "itemBucketOil");
         ItemUtil.register(itemBucketOil);

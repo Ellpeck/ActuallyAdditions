@@ -4,10 +4,12 @@ import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.tile.TileEntityFishingNet;
+import ellpeck.actuallyadditions.util.BlockUtil;
 import ellpeck.actuallyadditions.util.INameableItem;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemBlock;
@@ -15,6 +17,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public class BlockFishingNet extends BlockContainerBase implements INameableItem{
 
@@ -86,6 +90,13 @@ public class BlockFishingNet extends BlockContainerBase implements INameableItem
         @Override
         public String getUnlocalizedName(ItemStack stack){
             return this.getUnlocalizedName();
+        }
+
+        @Override
+        @SuppressWarnings("unchecked")
+        @SideOnly(Side.CLIENT)
+        public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld) {
+            BlockUtil.addInformation(theBlock, list, 1, "");
         }
 
         @Override

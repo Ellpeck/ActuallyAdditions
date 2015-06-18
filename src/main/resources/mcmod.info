@@ -2,15 +2,13 @@
 {
   "modid": "ActuallyAdditions",
   "name": "Actually Additions",
-  "description": "Actually Additions is a Mod that offers a bunch of things from Machines for Automation and tons of food to advanced Hopper Mechanisms and Effect Rings!",
-  "version": "0.0.5.5",
-  "mcversion": "1.7.10",
-  "url": "https://github.com/Ellpeck/ActuallyAdditions",
+  "description": "Do you want Automation? Wireless Transport? Better Machines? A cup o' Coffee? Chests? Better Hoppers? Leaf Blowers? Faster Growth? Plants? Well, Actually Additions has all that and a lot more!",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "http://github.com/Ellpeck/ActuallyAdditions",
   "updateUrl": "",
-  "authorList": [
-    "Ellpeck"
-  ],
-  "credits": "xdqmhose, GlenthorLP, Lordhallo, canitzp",
+  "authorList": [ "Ellpeck" ],
+  "credits": "Author: Ellpeck; Thanks to: xdqmhose, GlenthorLP, Lordhallo, canitzp",
   "logoFile": "assets/actuallyadditions/textures/logo.png",
   "screenshots": [
   ],

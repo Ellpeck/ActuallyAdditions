@@ -4,6 +4,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.items.metalists.TheSpecialDrops;
 import ellpeck.actuallyadditions.util.INameableItem;
+import ellpeck.actuallyadditions.util.ItemUtil;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
@@ -76,6 +77,13 @@ public class ItemSpecialDrop extends Item implements INameableItem{
     @Override
     public String getUnlocalizedName(ItemStack stack){
         return this.getUnlocalizedName() + (stack.getItemDamage() >= allDrops.length ? " ERROR!" : allDrops[stack.getItemDamage()].getName());
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    @SideOnly(Side.CLIENT)
+    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld){
+        if(stack.getItemDamage() < allDrops.length) ItemUtil.addInformation(this, list, stack.getItemDamage() == TheSpecialDrops.SOLIDIFIED_EXPERIENCE.ordinal() ? 2 : 1, allDrops[stack.getItemDamage()].getName());
     }
 
     @Override

@@ -35,7 +35,7 @@ public class ItemCrafting{
                     'B', new ItemStack(Items.potionitem)));
         }
 
-       //Leaf Blower
+        //Leaf Blower
         if(ConfigCrafting.LEAF_BLOWER.isEnabled())
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemLeafBlower),
                     " F", "IP", "IC",

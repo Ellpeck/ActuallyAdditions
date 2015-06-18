@@ -18,6 +18,16 @@ public class BlockUtil{
     }
 
     @SuppressWarnings("unchecked")
+    public static void addInformation(Block block, List list, int lines, String extraName){
+        if(KeyUtil.isShiftPressed()){
+            for(int i = 0; i < lines; i++){
+                list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + "." + ((INameableItem)block).getName() + extraName + ".desc" + (lines > 1 ? "." +(i+1) : "")));
+            }
+        }
+        else list.add(ItemUtil.shiftForInfo());
+    }
+
+    @SuppressWarnings("unchecked")
     public static void addPowerUsageInfo(List list, int usage){
         if(KeyUtil.isShiftPressed()){
             list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + ".uses.desc") + " " + usage + " RF/t");
@@ -26,7 +36,9 @@ public class BlockUtil{
 
     @SuppressWarnings("unchecked")
     public static void addPowerProductionInfo(List list, int produce){
-        list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + ".produces.desc") + " " + produce + " RF/t");
+        if(KeyUtil.isShiftPressed()){
+            list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + ".produces.desc") + " " + produce + " RF/t");
+        }
     }
 
     public static final ArrayList<Block> wailaRegisterList = new ArrayList<Block>();

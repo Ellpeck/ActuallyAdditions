@@ -5,6 +5,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.tile.TileEntityPhantomPlacer;
 import ellpeck.actuallyadditions.tile.TileEntityPhantomface;
 import ellpeck.actuallyadditions.util.INameableItem;
+import ellpeck.actuallyadditions.util.ItemUtil;
 import ellpeck.actuallyadditions.util.KeyUtil;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -143,6 +144,7 @@ public class ItemPhantomConnector extends Item implements INameableItem{
     @SuppressWarnings("unchecked")
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld) {
+        ItemUtil.addInformation(this, list, 2, "");
         ChunkCoordinates coords = this.getStoredPosition(stack);
         World world = this.getStoredWorld(stack);
         if(coords != null && world != null){

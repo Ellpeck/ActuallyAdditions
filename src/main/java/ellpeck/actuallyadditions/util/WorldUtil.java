@@ -28,28 +28,7 @@ public class WorldUtil{
         return new ChunkCoordinates(x+side.offsetX, y+side.offsetY, z+side.offsetZ);
     }
 
-    public static void breakBlockAtSide(ForgeDirection side, World world, int x, int y, int z){
-        if(side == ForgeDirection.UNKNOWN){
-            world.setBlockToAir(x, y, z);
-            return;
-        }
-        ChunkCoordinates c = getCoordsFromSide(side, x, y, z);
-        if(c != null){
-            world.setBlockToAir(c.posX, c.posY, c.posZ);
-        }
-    }
-
-    public static void pushEnergy(World world, int x, int y, int z, ForgeDirection side, EnergyStorage storage){
-        TileEntity tile = getTileEntityFromSide(side, world, x, y, z);
-        if(tile != null && tile instanceof IEnergyReceiver && storage.getEnergyStored() > 0){
-            if(((IEnergyReceiver)tile).canConnectEnergy(side.getOpposite())){
-                int receive = ((IEnergyReceiver)tile).receiveEnergy(side.getOpposite(), Math.min(storage.getMaxExtract(), storage.getEnergyStored()), false);
-                storage.extractEnergy(receive, false);
-            }
-        }
-    }
-
-    public static MovingObjectPosition raytraceEntity(World world, Entity player, double range){
+    public static MovingObjectPosition raytraceBlocksFromEntity(World world, Entity player, double range){
         float f1 = player.prevRotationPitch+(player.rotationPitch-player.prevRotationPitch)*1.0F;
         float f2 = player.prevRotationYaw+(player.rotationYaw-player.prevRotationYaw)*1.0F;
         double d0 = player.prevPosX+(player.posX-player.prevPosX)*1.0D;
@@ -69,12 +48,35 @@ public class WorldUtil{
         return world.func_147447_a(vec3, vec31, false, true, false);
     }
 
+    public static void breakBlockAtSide(ForgeDirection side, World world, int x, int y, int z){
+        if(side == ForgeDirection.UNKNOWN){
+            world.setBlockToAir(x, y, z);
+            return;
+        }
+        ChunkCoordinates c = getCoordsFromSide(side, x, y, z);
+        if(c != null){
+            world.setBlockToAir(c.posX, c.posY, c.posZ);
+        }
+    }
+
+    public static void pushEnergy(World world, int x, int y, int z, ForgeDirection side, EnergyStorage storage){
+        TileEntity tile = getTileEntityFromSide(side, world, x, y, z);
+        if(tile != null && tile instanceof IEnergyReceiver && storage.getEnergyStored() > 0){
+            if(((IEnergyReceiver)tile).canConnectEnergy(side.getOpposite())){
+                int receive = ((IEnergyReceiver)tile).receiveEnergy(side.getOpposite(), Math.min(storage.getMaxExtract(), storage.getEnergyStored()), false);
+                storage.extractEnergy(receive, false);
+                world.markBlockForUpdate(x+side.offsetX, y+side.offsetY, z+side.offsetZ);
+            }
+        }
+    }
+
     public static void pushFluid(World world, int x, int y, int z, ForgeDirection side, FluidTank tank){
         TileEntity tile = getTileEntityFromSide(side, world, x, y, z);
         if(tile != null && tank.getFluid() != null && tile instanceof IFluidHandler){
             if(((IFluidHandler)tile).canFill(side.getOpposite(), tank.getFluid().getFluid())){
                 int receive = ((IFluidHandler)tile).fill(side.getOpposite(), tank.getFluid(), true);
                 tank.drain(receive, true);
+                world.markBlockForUpdate(x+side.offsetX, y+side.offsetY, z+side.offsetZ);
             }
         }
     }

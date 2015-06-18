@@ -8,10 +8,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.ActuallyAdditions;
 import ellpeck.actuallyadditions.inventory.GuiHandler;
 import ellpeck.actuallyadditions.items.tools.ItemAllToolAA;
-import ellpeck.actuallyadditions.util.INameableItem;
-import ellpeck.actuallyadditions.util.KeyUtil;
-import ellpeck.actuallyadditions.util.ModUtil;
-import ellpeck.actuallyadditions.util.WorldUtil;
+import ellpeck.actuallyadditions.util.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -48,14 +45,14 @@ public class ItemDrill extends ItemEnergyContainer implements INameableItem{
     }
 
     public ItemDrill(){
-        super(3000000);
+        super(500000);
         this.setMaxStackSize(1);
         this.setHasSubtypes(true);
     }
 
     public static float defaultEfficiency = 8.0F;
+    public static int energyUsePerBlockOrHit = 100;
 
-    public int energyUsePerBlockOrHit = 100;
     public float efficiency = defaultEfficiency;
 
     @Override
@@ -77,23 +74,29 @@ public class ItemDrill extends ItemEnergyContainer implements INameableItem{
 
     @Override
     public void onUpdate(ItemStack stack, World world, Entity entity, int par4, boolean par5){
-        boolean hasSilkTouch = this.hasEnchantment(stack, Enchantment.silkTouch) >= 0;
-        if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SILK_TOUCH)){
-            if(!hasSilkTouch){
-                //TODO Add more Energy Use as Variable Change (Like Efficiency!)
-                stack.addEnchantment(Enchantment.silkTouch, 1);
-            }
-        }
-        else if(hasSilkTouch) this.removeEnchantment(stack, Enchantment.silkTouch);
+        this.addEnchantFromUpgrade(Enchantment.silkTouch, ItemDrillUpgrade.UpgradeType.SILK_TOUCH, stack, 1);
+        this.addEnchantFromUpgrade(Enchantment.fortune, ItemDrillUpgrade.UpgradeType.FORTUNE, stack, this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FORTUNE_II) ? 3 : 1);
+    }
 
-        boolean hasFortune = this.hasEnchantment(stack, Enchantment.fortune) >= 0;
-        if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FORTUNE)){
-            if(!hasFortune){
-                //TODO Add more Energy Use as Variable Change (Like Efficiency!)
-                stack.addEnchantment(Enchantment.fortune, this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FORTUNE_II) ? 3 : 1);
+    public void addEnchantFromUpgrade(Enchantment enchantment, ItemDrillUpgrade.UpgradeType upgrade, ItemStack stack, int level){
+        boolean hasEnchant = this.hasEnchantment(stack, enchantment) >= 0;
+        if(this.getHasUpgrade(stack, upgrade)){
+            if(!hasEnchant){
+                stack.addEnchantment(enchantment, level);
             }
         }
-        else if(hasFortune) this.removeEnchantment(stack, Enchantment.fortune);
+        else if(hasEnchant) this.removeEnchantment(stack, enchantment);
+    }
+
+    public int getEnergyUsePerBlock(ItemStack stack){
+        int use = energyUsePerBlockOrHit;
+        ItemDrillUpgrade.UpgradeType[] types = ItemDrillUpgrade.UpgradeType.values();
+        for(ItemDrillUpgrade.UpgradeType type : types){
+            if(this.getHasUpgrade(stack, type)){
+                use += type.extraEnergy;
+            }
+        }
+        return use;
     }
 
     public void removeEnchantment(ItemStack stack, Enchantment ench){
@@ -132,8 +135,8 @@ public class ItemDrill extends ItemEnergyContainer implements INameableItem{
     }
 
     public boolean getHasUpgrade(ItemStack stack, ItemDrillUpgrade.UpgradeType upgrade){
-        if(upgrade == ItemDrillUpgrade.UpgradeType.SILK_TOUCH) return true;
         if(upgrade == ItemDrillUpgrade.UpgradeType.THREE_BY_THREE) return true;
+        if(upgrade == ItemDrillUpgrade.UpgradeType.FIVE_BY_FIVE) return true;
 
         NBTTagCompound compound = stack.getTagCompound();
         if(compound == null) return false;
@@ -224,7 +227,7 @@ public class ItemDrill extends ItemEnergyContainer implements INameableItem{
         int yRange = radius;
         int zRange = 0;
 
-        MovingObjectPosition pos = WorldUtil.raytraceEntity(world, entity, 4.5D);
+        MovingObjectPosition pos = WorldUtil.raytraceBlocksFromEntity(world, entity, 4.5D);
         if(pos != null){
             int side = pos.sideHit;
             if(side == 0 || side == 1){
@@ -239,11 +242,12 @@ public class ItemDrill extends ItemEnergyContainer implements INameableItem{
             for(int xPos = x-xRange; xPos <= x+xRange; xPos++){
                 for(int yPos = y-yRange; yPos <= y+yRange; yPos++){
                     for(int zPos = z-zRange; zPos <= z+zRange; zPos++){
-                        if(this.getEnergyStored(stack) >= this.energyUsePerBlockOrHit){
+                        int use = this.getEnergyUsePerBlock(stack);
+                        if(this.getEnergyStored(stack) >= use){
                             Block block = world.getBlock(xPos, yPos, zPos);
                             float hardness = block.getBlockHardness(world, xPos, yPos, zPos);
                             if(!(xPos == x && yPos == y && zPos == z) && hardness > -1.0F && this.canHarvestBlock(block, stack)){
-                                this.extractEnergy(stack, this.energyUsePerBlockOrHit, false);
+                                this.extractEnergy(stack, use, false);
 
                                 ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
                                 int meta = world.getBlockMetadata(xPos, yPos, zPos);
@@ -282,8 +286,9 @@ public class ItemDrill extends ItemEnergyContainer implements INameableItem{
 
     @Override
     public boolean onBlockDestroyed(ItemStack stack, World world, Block block, int x, int y, int z, EntityLivingBase living){
-        if(this.getEnergyStored(stack) >= this.energyUsePerBlockOrHit){
-            this.extractEnergy(stack, this.energyUsePerBlockOrHit, false);
+        int use = this.getEnergyUsePerBlock(stack);
+        if(this.getEnergyStored(stack) >= use){
+            this.extractEnergy(stack, use, false);
             if(!world.isRemote){
                 if(!living.isSneaking()){
                     if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.THREE_BY_THREE)){
@@ -300,15 +305,16 @@ public class ItemDrill extends ItemEnergyContainer implements INameableItem{
 
     @Override
     public float func_150893_a(ItemStack stack, Block block){
-        if(this.getEnergyStored(stack) < this.energyUsePerBlockOrHit) return 0.0F;
+        if(this.getEnergyStored(stack) < this.getEnergyUsePerBlock(stack)) return 0.0F;
         if(block.getMaterial() == Material.iron || block.getMaterial() == Material.anvil || block.getMaterial() == Material.rock || allSet.contains(block)) return efficiency;
         else return super.func_150893_a(stack, block);
     }
 
     @Override
     public boolean hitEntity(ItemStack stack, EntityLivingBase entity1, EntityLivingBase entity2){
-        if(this.getEnergyStored(stack) >= this.energyUsePerBlockOrHit){
-            this.extractEnergy(stack, this.energyUsePerBlockOrHit, false);
+        int use = this.getEnergyUsePerBlock(stack);
+        if(this.getEnergyStored(stack) >= use){
+            this.extractEnergy(stack, use, false);
         }
         return true;
     }
@@ -348,12 +354,13 @@ public class ItemDrill extends ItemEnergyContainer implements INameableItem{
         if(KeyUtil.isShiftPressed()){
             list.add(this.getEnergyStored(stack) + "/" + this.getMaxEnergyStored(stack) + " RF");
         }
+        else list.add(ItemUtil.shiftForInfo());
     }
 
     @Override
     public Multimap getAttributeModifiers(ItemStack stack){
         Multimap map = super.getAttributeModifiers(stack);
-        map.put(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(), new AttributeModifier(field_111210_e, "Tool modifier", this.getEnergyStored(stack) >= this.energyUsePerBlockOrHit ? 8.0F : 0.0F, 0));
+        map.put(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(), new AttributeModifier(field_111210_e, "Tool modifier", this.getEnergyStored(stack) >= energyUsePerBlockOrHit ? 8.0F : 0.0F, 0));
         return map;
     }
 

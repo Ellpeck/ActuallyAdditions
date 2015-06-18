@@ -11,7 +11,8 @@ public enum ConfigCategories{
     MOB_DROPS("mob drops"),
     WORLD_GEN("world gen"),
     POTION_RING_CRAFTING("ring crafting"),
-    OTHER("other");
+    OTHER("other"),
+    FLUIDS("fluids");
 
     public final String name;
 

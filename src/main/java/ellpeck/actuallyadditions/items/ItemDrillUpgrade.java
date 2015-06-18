@@ -12,16 +12,22 @@ import net.minecraft.util.IIcon;
 public class ItemDrillUpgrade extends Item implements INameableItem{
 
     public enum UpgradeType{
-        SPEED,
-        SPEED_II,
-        SPEED_III,
-        SILK_TOUCH, //Done
-        FORTUNE, //Done
-        FORTUNE_II, //Done
-        THREE_BY_THREE, //Done
-        FIVE_BY_FIVE, //Done
-        VEIN,
-        PLACER
+        SPEED(10),
+        SPEED_II(20),
+        SPEED_III(30),
+        SILK_TOUCH(20), //Done
+        FORTUNE(40), //Done
+        FORTUNE_II(60), //Done
+        THREE_BY_THREE(5), //Done
+        FIVE_BY_FIVE(5), //Done
+        VEIN(30),
+        PLACER(0);
+
+        public int extraEnergy;
+
+        UpgradeType(int extraEnergy){
+            this.extraEnergy = extraEnergy;
+        }
     }
 
     public UpgradeType type;
