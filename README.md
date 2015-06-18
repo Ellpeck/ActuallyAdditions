@@ -27,4 +27,7 @@ What that means? I can decide what I want to do with the License myself.
 - When it comes to the code, always link back to this Repository.
 - When it comes to the Mod, always link back to the the Forum Thread linked above.
 
-Note: The above License only applies for Code I wrote myself, any APIs used (such as the CoFH API, the InventoryTweaks API and the MineFactoryReloaded API) have their own License that is being respected in this Mod.
+### NOTES
+- The above License only applies for Code I wrote myself, any APIs used (such as the CoFH API, the InventoryTweaks API and the MineFactoryReloaded API) have their own License that is being respected.
+- Almost all of the Assets used in this Mod are made by Glenthor and are owned by me. You are not allowed to copy them for any other Project without my Permission.
+
