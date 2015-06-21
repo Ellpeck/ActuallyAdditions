@@ -77,7 +77,7 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase{
                                 if(boundWorld.getBlock(boundPosition.posX, boundPosition.posY, boundPosition.posZ).isReplaceable(boundWorld, boundPosition.posX, boundPosition.posY, boundPosition.posZ)){
                                     int theSlot = TileEntityBreaker.testInventory(this.slots);
                                     this.setInventorySlotContents(theSlot, WorldUtil.placeBlockAtSide(ForgeDirection.UNKNOWN, boundWorld, boundPosition.posX, boundPosition.posY, boundPosition.posZ, this.slots[theSlot]));
-                                    if(this.slots[0] != null && this.slots[0].stackSize <= 0) this.slots[0] = null;
+                                    if(this.slots[theSlot] != null && this.slots[theSlot].stackSize <= 0) this.slots[theSlot] = null;
                                 }
                             }
                         }

@@ -64,8 +64,17 @@ public class InitBlocks{
 
     public static Block blockPhantomBooster;
 
+    public static Block blockEnergizer;
+    public static Block blockEnervator;
+
     public static void init(){
         Util.logInfo("Initializing Blocks...");
+
+        blockEnergizer = new BlockEnergizer(true);
+        BlockUtil.register(blockEnergizer, BlockEnergizer.TheItemBlock.class);
+
+        blockEnervator = new BlockEnergizer(false);
+        BlockUtil.register(blockEnervator, BlockEnergizer.TheItemBlock.class);
 
         blockLavaFactoryController = new BlockLavaFactoryController();
         BlockUtil.register(blockLavaFactoryController, BlockLavaFactoryController.TheItemBlock.class);

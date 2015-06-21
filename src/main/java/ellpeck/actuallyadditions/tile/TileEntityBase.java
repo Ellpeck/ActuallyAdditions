@@ -57,6 +57,8 @@ public class TileEntityBase extends TileEntity{
         GameRegistry.registerTileEntity(TileEntityLavaFactoryController.class, ModUtil.MOD_ID_LOWER + ":tileEntityLavaFactoryController");
         GameRegistry.registerTileEntity(TileEntityCoffeeMachine.class, ModUtil.MOD_ID_LOWER + ":tileEntityCoffeeMachine");
         GameRegistry.registerTileEntity(TileEntityPhantomBooster.class, ModUtil.MOD_ID_LOWER + ":tileEntityPhantomBooster");
+        GameRegistry.registerTileEntity(TileEntityEnergizer.class, ModUtil.MOD_ID_LOWER + ":tileEntityEnergizer");
+        GameRegistry.registerTileEntity(TileEntityEnervator.class, ModUtil.MOD_ID_LOWER + ":tileEntityEnervator");
     }
 
     @Override

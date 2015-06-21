@@ -94,7 +94,18 @@ public enum ConfigCrafting{
     ENDER_CASING("Ender Casing", ConfigCategories.BLOCKS_CRAFTING),
     PHANTOM_BOOSTER("Phantom Booster", ConfigCategories.BLOCKS_CRAFTING),
     COFFEE_MACHINE("Coffee Machine", ConfigCategories.BLOCKS_CRAFTING),
-    LAVA_FACTORY("Lava Factory", ConfigCategories.BLOCKS_CRAFTING);
+    LAVA_FACTORY("Lava Factory", ConfigCategories.BLOCKS_CRAFTING),
+
+    DRILL("Drill", ConfigCategories.ITEMS_CRAFTING),
+    DRILL_SPEED("Drill Speed Upgrades", ConfigCategories.ITEMS_CRAFTING),
+    DRILL_FORTUNE("Drill Fortune Upgrades", ConfigCategories.ITEMS_CRAFTING),
+    DRILL_SIZE("Drill Size Upgrades", ConfigCategories.ITEMS_CRAFTING),
+    DRILL_PLACING("Drill Placing Upgrade", ConfigCategories.ITEMS_CRAFTING),
+    DRILL_SILK_TOUCH("Drill Silk Touch Upgrade", ConfigCategories.ITEMS_CRAFTING),
+    BATTERY("Battery", ConfigCategories.ITEMS_CRAFTING),
+
+    ENERGIZER("Energizer", ConfigCategories.BLOCKS_CRAFTING),
+    ENERVATOR("Enervator", ConfigCategories.BLOCKS_CRAFTING);
 
     public final String name;
     public final String category;

@@ -3,6 +3,7 @@ package ellpeck.actuallyadditions.blocks;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.ActuallyAdditions;
+import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.inventory.GuiHandler;
 import ellpeck.actuallyadditions.tile.TileEntityFurnaceDouble;
 import ellpeck.actuallyadditions.util.BlockUtil;
@@ -171,7 +172,7 @@ public class BlockFurnaceDouble extends BlockContainerBase implements INameableI
         @SideOnly(Side.CLIENT)
         public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld) {
             BlockUtil.addInformation(theBlock, list, 1, "");
-            BlockUtil.addPowerUsageInfo(list, TileEntityFurnaceDouble.energyUsePerTick);
+            BlockUtil.addPowerUsageInfo(list, ConfigIntValues.FURNACE_ENERGY_USED.getValue());
         }
 
         @Override

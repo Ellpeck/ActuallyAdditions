@@ -64,6 +64,22 @@ public class BlockCrafting{
                     'S', TheMiscBlocks.STONE_CASING.getOredictName(),
                     'A', TheMiscItems.COIL.getOredictName()));
 
+        //Energizer
+        if(ConfigCrafting.ENERGIZER.isEnabled())
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockEnergizer),
+                    "I I", "CAC", "I I",
+                    'I', "ingotIron",
+                    'C', TheMiscItems.COIL_ADVANCED.getOredictName(),
+                    'A', TheMiscBlocks.STONE_CASING.getOredictName()));
+
+        //Energizer
+        if(ConfigCrafting.ENERVATOR.isEnabled())
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockEnervator),
+                    " I ", "CAC", " I ",
+                    'I', "ingotIron",
+                    'C', TheMiscItems.COIL_ADVANCED.getOredictName(),
+                    'A', TheMiscBlocks.STONE_CASING.getOredictName()));
+
         //Lava Factory
         if(ConfigCrafting.LAVA_FACTORY.isEnabled()){
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockLavaFactoryController),

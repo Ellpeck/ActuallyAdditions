@@ -19,9 +19,9 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
 
     public EnergyStorage storage = new EnergyStorage(30000);
 
-    public static int energyUsePerTick = ConfigIntValues.FURNACE_ENERGY_USED.getValue();
+    public int energyUsePerTick = ConfigIntValues.FURNACE_ENERGY_USED.getValue();
 
-    public int maxBurnTime = this.getStandardSpeed();
+    public int maxBurnTime = ConfigIntValues.FURNACE_DOUBLE_SMELT_TIME.getValue();
 
     public int firstSmeltTime;
     public int secondSmeltTime;
@@ -34,6 +34,7 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
     @SuppressWarnings("unchecked")
     public void updateEntity(){
         if(!worldObj.isRemote){
+            boolean flag = this.firstSmeltTime > 0 || this.secondSmeltTime > 0;
 
             boolean canSmeltOnFirst = this.canSmeltOn(SLOT_INPUT_1, SLOT_OUTPUT_1);
             boolean canSmeltOnSecond = this.canSmeltOn(SLOT_INPUT_2, SLOT_OUTPUT_2);
@@ -62,6 +63,14 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
             else this.secondSmeltTime = 0;
 
             if(this.storage.getEnergyStored() >= energyUsePerTick && this.firstSmeltTime > 0 || this.secondSmeltTime > 0) this.storage.extractEnergy(energyUsePerTick, false);
+
+            if(flag != (this.firstSmeltTime > 0 || this.secondSmeltTime > 0)){
+                int meta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
+                if(meta > 3){
+                    if(!this.canSmeltOn(SLOT_INPUT_1, SLOT_OUTPUT_1) && !this.canSmeltOn(SLOT_INPUT_2, SLOT_OUTPUT_2)) worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, meta-4, 2);
+                }
+                else worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, meta+4, 2);
+            }
         }
 
     }
@@ -133,10 +142,6 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
     @Override
     public boolean canExtractItem(int slot, ItemStack stack, int side){
         return slot == SLOT_OUTPUT_1 || slot == SLOT_OUTPUT_2;
-    }
-
-    public int getStandardSpeed(){
-        return ConfigIntValues.FURNACE_DOUBLE_SMELT_TIME.getValue();
     }
 
     @Override

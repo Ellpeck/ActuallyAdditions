@@ -21,7 +21,6 @@ import powercrystals.minefactoryreloaded.api.HarvestType;
 import powercrystals.minefactoryreloaded.api.IFactoryFertilizable;
 import powercrystals.minefactoryreloaded.api.IFactoryHarvestable;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -31,7 +30,8 @@ public class BlockPlant extends BlockCrops implements INameableItem, IFactoryHar
     private IIcon[] textures;
     private String name;
     public Item seedItem;
-    public ItemStack returnItem;
+    public Item returnItem;
+    public int returnMeta;
     private int minDropAmount;
     private int addDropAmount;
 
@@ -48,25 +48,8 @@ public class BlockPlant extends BlockCrops implements INameableItem, IFactoryHar
     }
 
     @Override
-    public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune){
-        ArrayList<ItemStack> ret = super.getDrops(world, x, y, z, metadata, fortune);
-        if(metadata >= 7){
-            for(int i = 0; i < 3; ++i){
-                if(world.rand.nextInt(6) == 0) ret.add(new ItemStack(this.seedItem));
-            }
-
-            ItemStack stack = this.returnItem.copy();
-            stack.stackSize = new Random().nextInt(addDropAmount)+minDropAmount;
-            ret.add(stack);
-        }
-        else ret.add(new ItemStack(this.seedItem));
-
-        return ret;
-    }
-
-    @Override
-    public Item getItemDropped(int meta, Random rand, int i){
-        return null;
+    public int quantityDropped(int meta, int fortune, Random random){
+        return random.nextInt(addDropAmount)+minDropAmount;
     }
 
     @Override
@@ -90,8 +73,23 @@ public class BlockPlant extends BlockCrops implements INameableItem, IFactoryHar
     }
 
     @Override
+    public Item getItemDropped(int meta, Random rand, int par3){
+        return meta >= 7 ? this.func_149865_P() : this.func_149866_i();
+    }
+
+    @Override
     public Item func_149865_P(){
-        return this.returnItem.getItem();
+        return this.returnItem;
+    }
+
+    @Override
+    public int damageDropped(int meta){
+        return this.returnMeta;
+    }
+
+    @Override
+    public int getDamageValue(World world, int x, int y, int z){
+        return 0;
     }
 
     @Override

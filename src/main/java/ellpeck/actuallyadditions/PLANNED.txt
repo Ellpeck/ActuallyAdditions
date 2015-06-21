@@ -97,3 +97,15 @@
 -XP Solidifier
     -Block that creates Solidified Experience from Player's Levels
     -Has a GUI with Buttons
+
+-Alarm
+    -Gets triggered when Mobs are in the Area
+    -Configurable Range
+    -Configurable Mobs
+
+-Industrial Fertilizer
+    -Grows the whole Plant with one Click
+
+-Dog Bones
+    -Breed Dogs faster
+    -Makes them have Babies too

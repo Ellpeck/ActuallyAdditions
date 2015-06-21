@@ -28,6 +28,7 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
     @SuppressWarnings("unchecked")
     public void updateEntity(){
         if(!worldObj.isRemote){
+            boolean flag = this.currentBurnTime > 0;
 
             if(this.currentBurnTime > 0){
                 this.currentBurnTime--;
@@ -51,6 +52,15 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
                 WorldUtil.pushEnergy(worldObj, xCoord, yCoord, zCoord, ForgeDirection.EAST, storage);
                 WorldUtil.pushEnergy(worldObj, xCoord, yCoord, zCoord, ForgeDirection.SOUTH, storage);
                 WorldUtil.pushEnergy(worldObj, xCoord, yCoord, zCoord, ForgeDirection.WEST, storage);
+            }
+
+            if(flag != this.currentBurnTime > 0){
+                int meta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
+                if(meta == 1){
+                    if(!(this.currentBurnTime <= 0 && this.slots[0] != null && TileEntityFurnace.getItemBurnTime(this.slots[0]) > 0 && energyProducedPerTick*TileEntityFurnace.getItemBurnTime(this.slots[0]) <= this.getMaxEnergyStored(ForgeDirection.UNKNOWN)-this.getEnergyStored(ForgeDirection.UNKNOWN)))
+                        worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 0, 2);
+                }
+                else worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 1, 2);
             }
         }
     }

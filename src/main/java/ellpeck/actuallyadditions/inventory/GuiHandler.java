@@ -54,6 +54,12 @@ public class GuiHandler implements IGuiHandler{
                 return new ContainerFluidCollector(entityPlayer.inventory, tile);
             case COFFEE_MACHINE_ID:
                 return new ContainerCoffeeMachine(entityPlayer.inventory, tile);
+            case DRILL_ID:
+                return new ContainerDrill(entityPlayer.inventory);
+            case ENERGIZER_ID:
+                return new ContainerEnergizer(entityPlayer.inventory, tile);
+            case ENERVATOR_ID:
+                return new ContainerEnervator(entityPlayer.inventory, tile);
             default:
                 return null;
         }
@@ -102,6 +108,12 @@ public class GuiHandler implements IGuiHandler{
                 return new GuiFluidCollector(entityPlayer.inventory, tile);
             case COFFEE_MACHINE_ID:
                 return new GuiCoffeeMachine(entityPlayer.inventory, tile, x, y, z, world);
+            case DRILL_ID:
+                return new GuiDrill(entityPlayer.inventory);
+            case ENERGIZER_ID:
+                return new GuiEnergizer(entityPlayer.inventory, tile);
+            case ENERVATOR_ID:
+                return new GuiEnervator(entityPlayer.inventory, tile);
             default:
                 return null;
         }
@@ -126,6 +138,8 @@ public class GuiHandler implements IGuiHandler{
     public static final int FLUID_COLLECTOR_ID = 16;
     public static final int COFFEE_MACHINE_ID = 17;
     public static final int DRILL_ID = 18;
+    public static final int ENERGIZER_ID = 19;
+    public static final int ENERVATOR_ID = 20;
 
     public static void init(){
         Util.logInfo("Initializing GuiHandler...");

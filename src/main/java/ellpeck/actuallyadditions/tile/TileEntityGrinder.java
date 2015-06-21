@@ -41,7 +41,7 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
         public TileEntityGrinderDouble(){
             super(6, "grinderDouble");
             this.isDouble = true;
-            this.maxCrushTime = this.getStandardSpeed();
+            this.maxCrushTime = ConfigIntValues.GRINDER_DOUBLE_CRUSH_TIME.getValue();
             energyUsePerTick = ConfigIntValues.GRINDER_DOUBLE_ENERGY_USED.getValue();
         }
 
@@ -54,7 +54,7 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
     public static final int SLOT_OUTPUT_2_1 = 4;
     public static final int SLOT_OUTPUT_2_2 = 5;
 
-    public static int energyUsePerTick;
+    public int energyUsePerTick;
 
     public int maxCrushTime;
 
@@ -70,7 +70,7 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
     public TileEntityGrinder(){
         super(3, "grinder");
         this.isDouble = false;
-        this.maxCrushTime = this.getStandardSpeed();
+        this.maxCrushTime = ConfigIntValues.GRINDER_CRUSH_TIME.getValue();
         energyUsePerTick = ConfigIntValues.GRINDER_ENERGY_USED.getValue();
     }
 
@@ -78,6 +78,8 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
     @SuppressWarnings("unchecked")
     public void updateEntity(){
         if(!worldObj.isRemote){
+            boolean flag = this.firstCrushTime > 0 || this.secondCrushTime > 0;
+
             boolean canCrushOnFirst = this.canCrushOn(SLOT_INPUT_1, SLOT_OUTPUT_1_1, SLOT_OUTPUT_1_2);
             boolean canCrushOnSecond = false;
             if(this.isDouble) canCrushOnSecond = this.canCrushOn(SLOT_INPUT_2, SLOT_OUTPUT_2_1, SLOT_OUTPUT_2_2);
@@ -107,13 +109,21 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
             }
 
             if(this.storage.getEnergyStored() >= energyUsePerTick && this.firstCrushTime > 0 || this.secondCrushTime > 0) this.storage.extractEnergy(energyUsePerTick, false);
+
+            if(flag != (this.firstCrushTime > 0 || this.secondCrushTime > 0)){
+                int meta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
+                if(meta == 1){
+                    if(!this.canCrushOn(SLOT_INPUT_1, SLOT_OUTPUT_1_1, SLOT_OUTPUT_1_2) && (!this.isDouble || !this.canCrushOn(SLOT_INPUT_2, SLOT_OUTPUT_2_1, SLOT_OUTPUT_2_2))) worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 0, 2);
+                }
+                else worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 1, 2);
+            }
         }
     }
 
     public boolean canCrushOn(int theInput, int theFirstOutput, int theSecondOutput){
         if(this.slots[theInput] != null){
-            ItemStack outputOne = GrinderRecipes.instance().getOutput(this.slots[theInput], false);
-            ItemStack outputTwo = GrinderRecipes.instance().getOutput(this.slots[theInput], true);
+            ItemStack outputOne = GrinderRecipes.getOutput(this.slots[theInput], false);
+            ItemStack outputTwo = GrinderRecipes.getOutput(this.slots[theInput], true);
             if(this.slots[theInput] != null){
                 if(outputOne != null){
                     if((this.slots[theFirstOutput] == null || (this.slots[theFirstOutput].isItemEqual(outputOne) && this.slots[theFirstOutput].stackSize <= this.slots[theFirstOutput].getMaxStackSize()-outputOne.stackSize)) && (outputTwo == null || (this.slots[theSecondOutput] == null || (this.slots[theSecondOutput].isItemEqual(outputTwo) && this.slots[theSecondOutput].stackSize <= this.slots[theSecondOutput].getMaxStackSize()-outputTwo.stackSize)))){
@@ -126,12 +136,14 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
     }
 
     public void finishCrushing(int theInput, int theFirstOutput, int theSecondOutput){
-        ItemStack outputOnFirst = GrinderRecipes.instance().getOutput(this.slots[theInput], false);
-        if (this.slots[theFirstOutput] == null) this.slots[theFirstOutput] = outputOnFirst.copy();
-        else if(this.slots[theFirstOutput].getItem() == outputOnFirst.getItem()) this.slots[theFirstOutput].stackSize += outputOnFirst.stackSize;
+        ItemStack outputOnFirst = GrinderRecipes.getOutput(this.slots[theInput], false);
+        if(outputOnFirst != null){
+            if(this.slots[theFirstOutput] == null) this.slots[theFirstOutput] = outputOnFirst.copy();
+            else if(this.slots[theFirstOutput].getItem() == outputOnFirst.getItem()) this.slots[theFirstOutput].stackSize += outputOnFirst.stackSize;
+        }
 
-        int chance = GrinderRecipes.instance().getSecondChance(this.slots[theInput]);
-        ItemStack outputOnSecond = GrinderRecipes.instance().getOutput(this.slots[theInput], true);
+        int chance = GrinderRecipes.getSecondChance(this.slots[theInput]);
+        ItemStack outputOnSecond = GrinderRecipes.getOutput(this.slots[theInput], true);
         if(outputOnSecond != null){
             int rand = new Random().nextInt(100) + 1;
             if(rand <= chance){
@@ -177,7 +189,7 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
 
     @Override
     public boolean isItemValidForSlot(int i, ItemStack stack){
-        return (i == SLOT_INPUT_1 || i == SLOT_INPUT_2) && GrinderRecipes.instance().getOutput(stack, false) != null;
+        return (i == SLOT_INPUT_1 || i == SLOT_INPUT_2) && GrinderRecipes.getOutput(stack, false) != null;
     }
 
     @Override
@@ -188,9 +200,5 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
     @Override
     public boolean canExtractItem(int slot, ItemStack stack, int side){
         return slot == SLOT_OUTPUT_1_1 || slot == SLOT_OUTPUT_1_2 || slot == SLOT_OUTPUT_2_1 || slot == SLOT_OUTPUT_2_2;
-    }
-
-    public int getStandardSpeed(){
-        return this.isDouble ? ConfigIntValues.GRINDER_DOUBLE_CRUSH_TIME.getValue() : ConfigIntValues.GRINDER_CRUSH_TIME.getValue();
     }
 }

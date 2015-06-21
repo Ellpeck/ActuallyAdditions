@@ -84,7 +84,7 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler{
     @Override
     public void loadCraftingRecipes(String outputId, Object... results){
         if(outputId.equals(NAME) && getClass() == CrusherRecipeHandler.class){
-            ArrayList<GrinderRecipes.GrinderRecipe> recipes = GrinderRecipes.instance().recipes;
+            ArrayList<GrinderRecipes.GrinderRecipe> recipes = GrinderRecipes.recipes;
             for(GrinderRecipes.GrinderRecipe recipe : recipes){
                 arecipes.add(new CachedCrush(recipe.input, recipe.firstOutput, recipe.secondOutput, recipe.secondChance));
             }
@@ -94,7 +94,7 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler{
 
     @Override
     public void loadCraftingRecipes(ItemStack result){
-        ArrayList<GrinderRecipes.GrinderRecipe> recipes = GrinderRecipes.instance().recipes;
+        ArrayList<GrinderRecipes.GrinderRecipe> recipes = GrinderRecipes.recipes;
         for(GrinderRecipes.GrinderRecipe recipe : recipes){
             if(NEIServerUtils.areStacksSameType(recipe.firstOutput, result) || NEIServerUtils.areStacksSameType(recipe.secondOutput, result)) arecipes.add(new CachedCrush(recipe.input, recipe.firstOutput, recipe.secondOutput, recipe.secondChance));
         }
@@ -102,7 +102,7 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler{
 
     @Override
     public void loadUsageRecipes(ItemStack ingredient){
-        ArrayList<GrinderRecipes.GrinderRecipe> recipes = GrinderRecipes.instance().recipes;
+        ArrayList<GrinderRecipes.GrinderRecipe> recipes = GrinderRecipes.recipes;
         for(GrinderRecipes.GrinderRecipe recipe : recipes){
             if(NEIServerUtils.areStacksSameTypeCrafting(recipe.input, ingredient)){
                 CachedCrush theRecipe = new CachedCrush(recipe.input, recipe.firstOutput, recipe.secondOutput, recipe.secondChance);

@@ -10,14 +10,8 @@ import java.util.ArrayList;
 
 public class GrinderRecipeRegistry{
 
-    private static final GrinderRecipeRegistry instance = new GrinderRecipeRegistry();
-
-    public static GrinderRecipeRegistry instance(){
-        return instance;
-    }
-
-    public ArrayList<SearchCase> searchCases = new ArrayList<SearchCase>();
-    public ArrayList<String> exceptions = new ArrayList<String>();
+    public static ArrayList<SearchCase> searchCases = new ArrayList<SearchCase>();
+    public static ArrayList<String> exceptions = new ArrayList<String>();
 
     public static class SearchCase{
 
@@ -30,11 +24,11 @@ public class GrinderRecipeRegistry{
         }
     }
 
-    public void registerFinally(){
+    public static void registerFinally(){
         String[] names = OreDictionary.getOreNames();
         for(String inputName : names){
 
-            if(!this.exceptions.contains(inputName)){
+            if(!exceptions.contains(inputName)){
                 int resultAmount = 1;
                 String inputNameWithoutPrefix = null;
 
@@ -49,8 +43,8 @@ public class GrinderRecipeRegistry{
 
                 if(inputNameWithoutPrefix != null){
                     String inputWithDustPrefix = "dust" + inputNameWithoutPrefix;
-                    ArrayList<ItemStack> allOresOfInitialInputName = OreDictionary.getOres(inputName);
-                    ArrayList<ItemStack> allOresWithDustPrefix = OreDictionary.getOres(inputWithDustPrefix);
+                    ArrayList<ItemStack> allOresOfInitialInputName = (ArrayList<ItemStack>)OreDictionary.getOres(inputName, false);
+                    ArrayList<ItemStack> allOresWithDustPrefix = (ArrayList<ItemStack>)OreDictionary.getOres(inputWithDustPrefix, false);
                     if(allOresOfInitialInputName != null && allOresOfInitialInputName.size() > 0){
                         if(allOresWithDustPrefix != null && allOresWithDustPrefix.size() > 0){
                             for(ItemStack theInput : allOresOfInitialInputName){
@@ -58,8 +52,8 @@ public class GrinderRecipeRegistry{
                                     ItemStack input = theInput.copy();
                                     ItemStack output = theDust.copy();
                                     output.stackSize = resultAmount;
-                                    if(!GrinderRecipes.instance().hasRecipe(input, output)){
-                                        GrinderRecipes.instance().registerRecipe(input, output, null, 0);
+                                    if(!GrinderRecipes.hasRecipe(input, output)){
+                                        GrinderRecipes.registerRecipe(input, output, null, 0);
                                     }
                                 }
                             }

@@ -19,9 +19,21 @@ tile.actuallyadditions.blockFurnaceSolar.name=Solar Panel
 tile.actuallyadditions.blockHeatCollector.name=Heat Collector
 tile.actuallyadditions.blockItemRepairer.name=Item Repairer
 
+item.actuallyadditions.itemDrill.name=Drill
+tooltip.actuallyadditions.itemDrill.desc.1=Mines all the Blocks!
+tooltip.actuallyadditions.itemDrill.desc.2=Powered by RF! Charge in an Energizer! Discharge in an Enervator!
+tooltip.actuallyadditions.itemDrill.desc.3=Drill Upgrades can be applied through Sneak-Right-Clicking!
+
 tile.actuallyadditions.blockMiscWoodCasing.name=Wood Casing
 tile.actuallyadditions.blockMiscStoneCasing.name=Stone Casing
 tile.actuallyadditions.blockGreenhouseGlass.name=Greenhouse Glass
+
+tile.actuallyadditions.blockEnergizer.name=Energizer
+tooltip.actuallyadditions.blockEnergizer.desc.1=A "Charger", if you will
+tooltip.actuallyadditions.blockEnergizer.desc.2=Charges Items that can hold RF
+tile.actuallyadditions.blockEnervator.name=Enervator
+tooltip.actuallyadditions.blockEnervator.desc.1=A "Discharger", if you will
+tooltip.actuallyadditions.blockEnervator.desc.2=Discharges Items that can hold RF
 
 tile.actuallyadditions.blockRice.name=Rice Plant
 tooltip.actuallyadditions.blockRice.desc=It's growing... kind of..
@@ -42,6 +54,9 @@ tile.actuallyadditions.blockMiscCharcoal.name=Block of Charcoal
 tooltip.actuallyadditions.blockMiscCharcoal.desc=Crafted from Charcoal
 item.actuallyadditions.itemMiscRiceSlime.name=Rice Slimeball
 tooltip.actuallyadditions.itemMiscRiceSlime.desc=It's sticky... and smells kinda good...
+
+item.actuallyadditions.itemBattery.name=Battery
+tooltip.actuallyadditions.itemBattery.desc=Stores RF! Charge in an Energizer! Discharge in an Enervator!
 
 tile.actuallyadditions.blockCoalGenerator.name=Coal Generator
 tooltip.actuallyadditions.blockCoalGenerator.desc=Produces Energy from Coal and other flammable Materials
@@ -85,13 +100,13 @@ tile.actuallyadditions.blockFluidPlacer.name=Fluid Placer
 tooltip.actuallyadditions.blockFluidPlacer.desc=Places Fluids stored inside it
 
 tooltip.actuallyadditions.paxel.desc=It's an Axe, Shovel, Sword, Hoe and Pickaxe! Combined!
-item.actuallyadditions.woodenPaxel.name=Wooden Paxel
-item.actuallyadditions.stonePaxel.name=Stone Paxel
-item.actuallyadditions.ironPaxel.name=Iron Paxel
-item.actuallyadditions.goldPaxel.name=Golden Paxel
-item.actuallyadditions.diamondPaxel.name=Diamond Paxel
-item.actuallyadditions.emeraldPaxel.name=Emerald Paxel
-item.actuallyadditions.obsidianPaxel.name=Obsidian Paxel
+item.actuallyadditions.woodenPaxel.name=Wooden Paxelordoe
+item.actuallyadditions.stonePaxel.name=Stone Paxelordoe
+item.actuallyadditions.ironPaxel.name=Iron Paxelordoe
+item.actuallyadditions.goldPaxel.name=Golden Paxelordoe
+item.actuallyadditions.diamondPaxel.name=Diamond Paxelordoe
+item.actuallyadditions.emeraldPaxel.name=Emerald Paxelordoe
+item.actuallyadditions.obsidianPaxel.name=Obsidian Paxelordoe
 
 tile.actuallyadditions.blockFluidCollector.name=Fluid Collector
 tooltip.actuallyadditions.blockFluidCollector.desc=Stores Fluids in front of it inside it
@@ -168,6 +183,29 @@ tile.actuallyadditions.blockInputter.add.12.name=Energetic Solo Dancer
 tile.actuallyadditions.blockInputter.add.13.name=Efficient Sucking Dilettant
 tile.actuallyadditions.blockInputter.add.14.name=Extreme Sand Digger
 tile.actuallyadditions.blockInputter.add.15.name=MISSINGNO
+
+item.actuallyadditions.itemDrillUpgradeSpeed.name=Drill Speed I Augment
+item.actuallyadditions.itemDrillUpgradeSpeedII.name=Drill Speed II Augment
+item.actuallyadditions.itemDrillUpgradeSpeedIII.name=Drill Speed III Augment
+item.actuallyadditions.itemDrillUpgradeSilkTouch.name=Drill Silk Touch Augment
+item.actuallyadditions.itemDrillUpgradeFortune.name=Drill Fortune I Augment
+item.actuallyadditions.itemDrillUpgradeFortuneII.name=Drill Fortune II Augment
+item.actuallyadditions.itemDrillUpgradeBlockPlacing.name=Drill Block Placing Augment
+item.actuallyadditions.itemDrillUpgradeThreeByThree.name=Drill Three By Three Mining Augment
+item.actuallyadditions.itemDrillUpgradeFiveByFive.name=Drill Five By Five Mining Augment
+
+tooltip.actuallyadditions.itemDrillUpgradeSpeed.desc=Makes the Drill faster!
+tooltip.actuallyadditions.itemDrillUpgradeSpeedII.desc=Makes the Drill even faster! Requires Tier 1.
+tooltip.actuallyadditions.itemDrillUpgradeSpeedIII.desc=Insta-Mine! Requires Tier 1 and 2.
+tooltip.actuallyadditions.itemDrillUpgradeSilkTouch.desc=Makes the Drill silky.
+tooltip.actuallyadditions.itemDrillUpgradeFortune.desc=Gives the Drill Fortune I.
+tooltip.actuallyadditions.itemDrillUpgradeFortuneII.desc=Gives the Drill Fortune III! Requires Tier 1.
+tooltip.actuallyadditions.itemDrillUpgradeBlockPlacing.desc.1=Places Blocks from your Hotbar when Right-Clicking with the Drill!
+tooltip.actuallyadditions.itemDrillUpgradeBlockPlacing.desc.2=You can define the Slot on your Hotbar to place from!
+tooltip.actuallyadditions.itemDrillUpgradeBlockPlacing.desc.3=Sneak-Right-Click this Upgrade in the desired Slot to store it!
+tooltip.actuallyadditions.itemDrillUpgradeThreeByThree.desc=Lets you mine a 3x3 Area!
+tooltip.actuallyadditions.itemDrillUpgradeFiveByFive.desc=Lets you mine a 5x5 Area! Requires the 3x3 Upgrade.
+tooltip.actuallyadditions.itemDrillUpgrade.desc=Sneak-Right-Click the Drill to apply Upgrades!
 
 tile.actuallyadditions.blockMiscEnderCasing.name=Ender Casing
 tooltip.actuallyadditions.blockMiscEnderCasing.desc=Extremely sturdy casing, used for crafting
@@ -450,6 +488,9 @@ container.actuallyadditions.energyface.name=Energyface
 container.actuallyadditions.fluidPlacer.name=Fluid Placer
 container.actuallyadditions.fluidCollector.name=Fluid Collector
 container.actuallyadditions.coffeeMachine.name=Coffee Machine
+container.actuallyadditions.drill.name=Drill
+container.actuallyadditions.energizer.name=Energizer
+container.actuallyadditions.enervator.name=Enervator
 
 container.nei.actuallyadditions.crushing.name=Crusher
 container.nei.actuallyadditions.ballOfHair.name=Ball Of Hair Usage

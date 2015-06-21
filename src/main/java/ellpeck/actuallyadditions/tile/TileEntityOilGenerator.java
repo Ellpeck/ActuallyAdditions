@@ -34,6 +34,7 @@ public class TileEntityOilGenerator extends TileEntityInventoryBase implements I
     @SuppressWarnings("unchecked")
     public void updateEntity(){
         if(!worldObj.isRemote){
+            boolean flag = this.currentBurnTime > 0;
 
             if(this.currentBurnTime > 0){
                 this.currentBurnTime--;
@@ -63,6 +64,15 @@ public class TileEntityOilGenerator extends TileEntityInventoryBase implements I
                 WorldUtil.pushEnergy(worldObj, xCoord, yCoord, zCoord, ForgeDirection.EAST, storage);
                 WorldUtil.pushEnergy(worldObj, xCoord, yCoord, zCoord, ForgeDirection.SOUTH, storage);
                 WorldUtil.pushEnergy(worldObj, xCoord, yCoord, zCoord, ForgeDirection.WEST, storage);
+            }
+
+            if(flag != this.currentBurnTime > 0){
+                int meta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
+                if(meta == 1){
+                    if(!(energyProducedPerTick*this.maxBurnTime <= this.getMaxEnergyStored(ForgeDirection.UNKNOWN)-this.getEnergyStored(ForgeDirection.UNKNOWN) && FluidContainerRegistry.BUCKET_VOLUME <= this.tank.getCapacity()-this.tank.getFluidAmount()))
+                        worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 0, 2);
+                }
+                else worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 1, 2);
             }
         }
     }

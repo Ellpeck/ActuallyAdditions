@@ -6,29 +6,34 @@ import com.google.common.collect.Sets;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.ActuallyAdditions;
+import ellpeck.actuallyadditions.config.values.ConfigFloatValues;
+import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.inventory.GuiHandler;
 import ellpeck.actuallyadditions.items.tools.ItemAllToolAA;
-import ellpeck.actuallyadditions.util.*;
+import ellpeck.actuallyadditions.util.INameableItem;
+import ellpeck.actuallyadditions.util.ItemUtil;
+import ellpeck.actuallyadditions.util.KeyUtil;
+import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
+import org.apache.logging.log4j.Level;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -45,21 +50,50 @@ public class ItemDrill extends ItemEnergyContainer implements INameableItem{
     }
 
     public ItemDrill(){
-        super(500000);
+        super(500000, 5000);
         this.setMaxStackSize(1);
         this.setHasSubtypes(true);
     }
 
-    public static float defaultEfficiency = 8.0F;
-    public static int energyUsePerBlockOrHit = 100;
-
-    public float efficiency = defaultEfficiency;
+    public static float defaultEfficiency = ConfigFloatValues.DRILL_DAMAGE.getValue();
+    public static int energyUsePerBlockOrHit = ConfigIntValues.DRILL_ENERGY_USE.getValue();
 
     @Override
     public double getDurabilityForDisplay(ItemStack stack){
         double energyDif = getMaxEnergyStored(stack)-getEnergyStored(stack);
         double maxAmount = getMaxEnergyStored(stack);
         return energyDif/maxAmount;
+    }
+
+    @Override
+    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int hitSide, float hitX, float hitY, float hitZ){
+        ItemStack upgrade = this.getHasUpgradeAsStack(stack, ItemDrillUpgrade.UpgradeType.PLACER);
+        if(upgrade != null){
+            int slot = ItemDrillUpgrade.getSlotToPlaceFrom(upgrade);
+            if(slot >= 0 && slot < InventoryPlayer.getHotbarSize() && slot != player.inventory.currentItem){
+                ItemStack equip = player.inventory.getStackInSlot(slot);
+                if(equip != null){
+                    if(!world.isRemote){
+                        boolean placed = false;
+                        try{
+                            placed = equip.tryPlaceItemIntoWorld(player, world, x, y, z, hitSide, hitX, hitY, hitZ);
+                        }
+                        catch(Exception e){
+                            player.addChatComponentMessage(new ChatComponentText("Ouch! That really hurt! You must have done something wrong, don't do that again please!"));
+                            ModUtil.LOGGER.log(Level.ERROR, "Player "+player.getDisplayName()+" who should place a Block using a Drill at "+player.posX+", "+player.posY+", "+player.posZ+" in World "+world.provider.dimensionId+" threw an Exception! Don't let that happen again!");
+                        }
+
+                        if(placed){
+                            player.inventory.setInventorySlotContents(slot, equip.stackSize <= 0 ? null : equip.copy());
+                            player.inventoryContainer.detectAndSendChanges();
+                            return true;
+                        }
+                    }
+                    else return true;
+                }
+            }
+        }
+        return false;
     }
 
     @Override
@@ -72,55 +106,42 @@ public class ItemDrill extends ItemEnergyContainer implements INameableItem{
         this.setEnergy(stack, 0);
     }
 
-    @Override
-    public void onUpdate(ItemStack stack, World world, Entity entity, int par4, boolean par5){
-        this.addEnchantFromUpgrade(Enchantment.silkTouch, ItemDrillUpgrade.UpgradeType.SILK_TOUCH, stack, 1);
-        this.addEnchantFromUpgrade(Enchantment.fortune, ItemDrillUpgrade.UpgradeType.FORTUNE, stack, this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FORTUNE_II) ? 3 : 1);
-    }
-
-    public void addEnchantFromUpgrade(Enchantment enchantment, ItemDrillUpgrade.UpgradeType upgrade, ItemStack stack, int level){
-        boolean hasEnchant = this.hasEnchantment(stack, enchantment) >= 0;
-        if(this.getHasUpgrade(stack, upgrade)){
-            if(!hasEnchant){
-                stack.addEnchantment(enchantment, level);
+    public float getEfficiencyFromUpgrade(ItemStack stack){
+        float efficiency = defaultEfficiency;
+        if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SPEED)){
+            if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SPEED_II)){
+                if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SPEED_III)) efficiency += 37.0F;
+                else efficiency += 28.0F;
             }
+            else efficiency += 15.0F;
         }
-        else if(hasEnchant) this.removeEnchantment(stack, enchantment);
+        return efficiency;
     }
 
     public int getEnergyUsePerBlock(ItemStack stack){
         int use = energyUsePerBlockOrHit;
-        ItemDrillUpgrade.UpgradeType[] types = ItemDrillUpgrade.UpgradeType.values();
-        for(ItemDrillUpgrade.UpgradeType type : types){
-            if(this.getHasUpgrade(stack, type)){
-                use += type.extraEnergy;
+
+        if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SPEED)){
+            use += ConfigIntValues.DRILL_SPEED_EXTRA_USE.getValue();
+            if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SPEED_II)){
+                use += ConfigIntValues.DRILL_SPEED_II_EXTRA_USE.getValue();
+                if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SPEED_III)) use += ConfigIntValues.DRILL_SPEED_III_EXTRA_USE.getValue();
             }
         }
+
+        if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SILK_TOUCH)) use += ConfigIntValues.DRILL_SILK_EXTRA_USE.getValue();
+
+        if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FORTUNE)){
+            use += ConfigIntValues.DRILL_FORTUNE_EXTRA_USE.getValue();
+            if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FORTUNE_II)) use += ConfigIntValues.DRILL_FORTUNE_II_EXTRA_USE.getValue();
+        }
+
+        if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.THREE_BY_THREE)){
+            use += ConfigIntValues.DRILL_THREE_BY_THREE_EXTRA_USE.getValue();
+            if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FIVE_BY_FIVE)) use += ConfigIntValues.DRILL_FIVE_BY_FIVE_EXTRA_USE.getValue();
+        }
+
         return use;
-    }
-
-    public void removeEnchantment(ItemStack stack, Enchantment ench){
-        NBTTagList list = stack.getEnchantmentTagList();
-        if(list != null){
-            int hasEnchantment = this.hasEnchantment(stack, ench);
-            if(hasEnchantment >= 0){
-                list.removeTag(hasEnchantment);
-            }
-        }
-    }
-
-    public int hasEnchantment(ItemStack stack, Enchantment ench){
-        NBTTagList list = stack.getEnchantmentTagList();
-        if(list != null){
-            for(int i = 0; i < list.tagCount(); i++){
-                NBTTagCompound compound = list.getCompoundTagAt(i);
-                short id = compound.getShort("id");
-                if(id == ench.effectId){
-                    return i;
-                }
-            }
-        }
-        return -1;
     }
 
     @Override
@@ -135,21 +156,22 @@ public class ItemDrill extends ItemEnergyContainer implements INameableItem{
     }
 
     public boolean getHasUpgrade(ItemStack stack, ItemDrillUpgrade.UpgradeType upgrade){
-        if(upgrade == ItemDrillUpgrade.UpgradeType.THREE_BY_THREE) return true;
-        if(upgrade == ItemDrillUpgrade.UpgradeType.FIVE_BY_FIVE) return true;
+        return this.getHasUpgradeAsStack(stack, upgrade) != null;
+    }
 
+    public ItemStack getHasUpgradeAsStack(ItemStack stack, ItemDrillUpgrade.UpgradeType upgrade){
         NBTTagCompound compound = stack.getTagCompound();
-        if(compound == null) return false;
+        if(compound == null) return null;
 
         ItemStack[] slots = this.getSlotsFromNBT(stack);
         if(slots != null && slots.length > 0){
             for(ItemStack slotStack : slots){
                 if(slotStack != null && slotStack.getItem() instanceof ItemDrillUpgrade){
-                    if(((ItemDrillUpgrade)slotStack.getItem()).type == upgrade) return true;
+                    if(((ItemDrillUpgrade)slotStack.getItem()).type == upgrade) return slotStack;
                 }
             }
         }
-        return false;
+        return null;
     }
 
     @Override
@@ -222,12 +244,12 @@ public class ItemDrill extends ItemEnergyContainer implements INameableItem{
         return slots;
     }
 
-    public void breakBlocks(ItemStack stack, int radius, World world, int x, int y, int z, Entity entity){
+    public void breakBlocks(ItemStack stack, int radius, World world, int x, int y, int z, EntityPlayer player){
         int xRange = radius;
         int yRange = radius;
         int zRange = 0;
 
-        MovingObjectPosition pos = WorldUtil.raytraceBlocksFromEntity(world, entity, 4.5D);
+        MovingObjectPosition pos = this.getMovingObjectPositionFromPlayer(world, player, false);
         if(pos != null){
             int side = pos.sideHit;
             if(side == 0 || side == 1){
@@ -246,24 +268,29 @@ public class ItemDrill extends ItemEnergyContainer implements INameableItem{
                         if(this.getEnergyStored(stack) >= use){
                             Block block = world.getBlock(xPos, yPos, zPos);
                             float hardness = block.getBlockHardness(world, xPos, yPos, zPos);
-                            if(!(xPos == x && yPos == y && zPos == z) && hardness > -1.0F && this.canHarvestBlock(block, stack)){
+                            if(hardness > -1.0F && this.canHarvestBlock(block, stack)){
                                 this.extractEnergy(stack, use, false);
 
                                 ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
                                 int meta = world.getBlockMetadata(xPos, yPos, zPos);
 
-                                if(block.canSilkHarvest(world, (EntityPlayer)entity, xPos, yPos, zPos, meta) && EnchantmentHelper.getSilkTouchModifier((EntityPlayer)entity)){
+                                if(block.canSilkHarvest(world, player, xPos, yPos, zPos, meta) && this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SILK_TOUCH)){
                                     drops.add(new ItemStack(block, 1, meta));
                                 }
                                 else{
-                                    drops.addAll(block.getDrops(world, xPos, yPos, zPos, meta, EnchantmentHelper.getFortuneModifier((EntityPlayer)entity)));
-                                    block.dropXpOnBlockBreak(world, x, y, z, block.getExpDrop(world, meta, EnchantmentHelper.getFortuneModifier((EntityPlayer)entity)));
+                                    int fortune = this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FORTUNE) ? (this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FORTUNE_II) ? 3 : 1) : 0;
+                                    drops.addAll(block.getDrops(world, xPos, yPos, zPos, meta, fortune));
+                                    block.dropXpOnBlockBreak(world, x, y, z, block.getExpDrop(world, meta, fortune));
                                 }
 
-                                world.playAuxSFX(2001, xPos, yPos, zPos, Block.getIdFromBlock(block)+(meta << 12));
+                                if(!(x == xPos && y == yPos && z == zPos)){
+                                    world.playAuxSFX(2001, xPos, yPos, zPos, Block.getIdFromBlock(block)+(meta << 12));
+                                }
                                 world.setBlockToAir(xPos, yPos, zPos);
                                 for(ItemStack theDrop : drops){
-                                    world.spawnEntityInWorld(new EntityItem(world, xPos+0.5, yPos+0.5, zPos+0.5, theDrop));
+                                    EntityItem item = new EntityItem(world, xPos+0.5, yPos+0.5, zPos+0.5, theDrop);
+                                    item.delayBeforeCanPickup = 10;
+                                    world.spawnEntityInWorld(item);
                                 }
                             }
                         }
@@ -286,17 +313,18 @@ public class ItemDrill extends ItemEnergyContainer implements INameableItem{
 
     @Override
     public boolean onBlockDestroyed(ItemStack stack, World world, Block block, int x, int y, int z, EntityLivingBase living){
-        int use = this.getEnergyUsePerBlock(stack);
-        if(this.getEnergyStored(stack) >= use){
-            this.extractEnergy(stack, use, false);
-            if(!world.isRemote){
-                if(!living.isSneaking()){
-                    if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.THREE_BY_THREE)){
+        if(living instanceof EntityPlayer){
+            EntityPlayer player = (EntityPlayer)living;
+            int use = this.getEnergyUsePerBlock(stack);
+            if(this.getEnergyStored(stack) >= use){
+                if(!world.isRemote){
+                    if(!living.isSneaking() && this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.THREE_BY_THREE)){
                         if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FIVE_BY_FIVE)){
-                            this.breakBlocks(stack, 2, world, x, y, z, living);
+                            this.breakBlocks(stack, 2, world, x, y, z, player);
                         }
-                        else this.breakBlocks(stack, 1, world, x, y, z, living);
+                        else this.breakBlocks(stack, 1, world, x, y, z, player);
                     }
+                    else this.breakBlocks(stack, 0, world, x, y, z, player);
                 }
             }
         }
@@ -306,7 +334,7 @@ public class ItemDrill extends ItemEnergyContainer implements INameableItem{
     @Override
     public float func_150893_a(ItemStack stack, Block block){
         if(this.getEnergyStored(stack) < this.getEnergyUsePerBlock(stack)) return 0.0F;
-        if(block.getMaterial() == Material.iron || block.getMaterial() == Material.anvil || block.getMaterial() == Material.rock || allSet.contains(block)) return efficiency;
+        if(block.getMaterial() == Material.iron || block.getMaterial() == Material.anvil || block.getMaterial() == Material.rock || allSet.contains(block)) return this.getEfficiencyFromUpgrade(stack);
         else return super.func_150893_a(stack, block);
     }
 
@@ -326,7 +354,9 @@ public class ItemDrill extends ItemEnergyContainer implements INameableItem{
 
     @Override
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player){
-        if(!world.isRemote && player.isSneaking()) player.openGui(ActuallyAdditions.instance, GuiHandler.DRILL_ID, world, (int)player.posX, (int)player.posY, (int)player.posZ);
+        if(!world.isRemote && player.isSneaking()){
+            player.openGui(ActuallyAdditions.instance, GuiHandler.DRILL_ID, world, (int)player.posX, (int)player.posY, (int)player.posZ);
+        }
         return stack;
     }
 
@@ -350,11 +380,11 @@ public class ItemDrill extends ItemEnergyContainer implements INameableItem{
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld) {
+    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld){
+        ItemUtil.addInformation(this, list, 3, "");
         if(KeyUtil.isShiftPressed()){
             list.add(this.getEnergyStored(stack) + "/" + this.getMaxEnergyStored(stack) + " RF");
         }
-        else list.add(ItemUtil.shiftForInfo());
     }
 
     @Override

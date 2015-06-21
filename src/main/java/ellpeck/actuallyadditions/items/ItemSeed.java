@@ -34,7 +34,7 @@ public class ItemSeed extends ItemSeeds implements INameableItem, IFactoryPlanta
     public EnumPlantType type;
     public String name;
 
-    public ItemSeed(String name, Block plant, Block soilBlock, EnumPlantType type, ItemStack returnItem){
+    public ItemSeed(String name, Block plant, Block soilBlock, EnumPlantType type, Item returnItem, int returnMeta){
         super(plant, soilBlock);
         this.name = name;
         this.plant = plant;
@@ -42,6 +42,7 @@ public class ItemSeed extends ItemSeeds implements INameableItem, IFactoryPlanta
         this.type = type;
         ((BlockPlant)this.plant).seedItem = this;
         ((BlockPlant)this.plant).returnItem = returnItem;
+        ((BlockPlant)this.plant).returnMeta = returnMeta;
     }
 
     @Override

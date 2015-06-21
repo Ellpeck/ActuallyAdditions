@@ -55,7 +55,7 @@ public class JamVillagerTradeHandler implements VillagerRegistry.IVillageTradeHa
     }
 
     public void addWants(String oredictName, int minSize, int maxSize){
-        ArrayList<ItemStack> stacks = OreDictionary.getOres(oredictName);
+        ArrayList<ItemStack> stacks = (ArrayList<ItemStack>)OreDictionary.getOres(oredictName, false);
         trades.add(new Trade(stacks, minSize, maxSize));
     }
 

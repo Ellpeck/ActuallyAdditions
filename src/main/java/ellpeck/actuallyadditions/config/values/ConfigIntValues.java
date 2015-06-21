@@ -41,7 +41,7 @@ public enum ConfigIntValues{
 
     REPAIRER_SPEED_SLOWDOWN("Repairer: Speed Slowdown", ConfigCategories.MACHINE_VALUES, 2, 1, 100, "How much slower the Item Repairer repairs"),
     HEAT_COLLECTOR_BLOCKS("Heat Collector: Blocks Needed", ConfigCategories.MACHINE_VALUES, 4, 1, 5, "How many Blocks are needed for the Heat Collector to power Machines above it"),
-    HEAT_COLLECTOR_LAVA_CHANCE("Heat Collector: Random Chance", ConfigCategories.MACHINE_VALUES, 10000, 10, 100000, "The Chance of the Heat Collector destroying a Lava Block around (Default Value 2000 meaning a 1/2000 Chance!)"),
+    HEAT_COLLECTOR_LAVA_CHANCE("Heat Collector: Random Chance", ConfigCategories.MACHINE_VALUES, 15000, 10, 100000, "The Chance of the Heat Collector destroying a Lava Block around (Default Value 2000 meaning a 1/2000 Chance!)"),
 
     GLASS_TIME_NEEDED("Greenhouse Glass: Time", ConfigCategories.MACHINE_VALUES, 300, 1, 10000, "Time Needed for the Greenhouse Glass to grow a Plant below it"),
 
@@ -53,12 +53,12 @@ public enum ConfigIntValues{
     RICE_AMOUNT("Rice Amount", ConfigCategories.WORLD_GEN, 15, 1, 100, "The Chance of Rice generating"),
     CANOLA_AMOUNT("Canola Amount", ConfigCategories.WORLD_GEN, 10, 1, 50, "The Chance of Canola generating"),
     FLAX_AMOUNT("Flax Amount", ConfigCategories.WORLD_GEN, 8, 1, 50, "The Chance of Flax generating"),
-    COFFEE_AMOUNT("Coffee Amount", ConfigCategories.WORLD_GEN, 4, 1, 50, "The Chance of Coffee generating"),
+    COFFEE_AMOUNT("Coffee Amount", ConfigCategories.WORLD_GEN, 6, 1, 50, "The Chance of Coffee generating"),
 
     GRINDER_ENERGY_USED("Energy Use: Crusher", ConfigCategories.MACHINE_VALUES, 40, 1, 500, "The Amount of Energy used by the Crusher per Tick"),
     GRINDER_DOUBLE_ENERGY_USED("Energy Use: Double Crusher", ConfigCategories.MACHINE_VALUES, 60, 1, 500, "The Amount of Energy used by the Double Crusher per Tick"),
     FURNACE_SOLAR_ENERGY_PRODUCED("Energy Production: Furnace Solar", ConfigCategories.MACHINE_VALUES, 15, 1, 500, "The Amount of Energy produced by the Solar per Tick"),
-    HEAT_COLLECTOR_ENERGY_PRODUCED("Energy Production: Heat Collector", ConfigCategories.MACHINE_VALUES, 30, 1, 500, "The Amount of Energy produced by the Heat Collector per Tick"),
+    HEAT_COLLECTOR_ENERGY_PRODUCED("Energy Production: Heat Collectors", ConfigCategories.MACHINE_VALUES, 60, 1, 500, "The Amount of Energy produced by the Heat Collector per Tick"),
     REPAIRER_ENERGY_USED("Energy Use: Repairer", ConfigCategories.MACHINE_VALUES, 1250, 1, 5000, "The Amount of Energy used by the Repairer per Tick"),
     FURNACE_ENERGY_USED("Energy Use: Double Furnace", ConfigCategories.MACHINE_VALUES, 25, 1, 500, "The Amount of Energy used by the Double Furnace per Tick"),
 
@@ -87,7 +87,18 @@ public enum ConfigIntValues{
     COFFEE_CACHE_USED_PER_ITEM("Coffee Machine: Coffee used per Cup", ConfigCategories.MACHINE_VALUES, 10, 1, 300, "The amount of Coffee used to brew one Coffee in the Coffee Machine"),
     COFFEE_MACHINE_TIME_USED("Coffee Machine: Time to Brew", ConfigCategories.MACHINE_VALUES, 500, 10, 10000, "The amount of time the Coffee Machine takes to brew a Coffee"),
 
-    COFFEE_DRINK_AMOUNT("Coffee: Drink Amount", ConfigCategories.OTHER, 4, 1, 100, "How often a Coffee can be drunk from");
+    COFFEE_DRINK_AMOUNT("Coffee: Drink Amount", ConfigCategories.OTHER, 4, 1, 100, "How often a Coffee can be drunk from"),
+
+    DRILL_ENERGY_USE("Drill: Energy Use Per Block or Hit", ConfigCategories.DRILL_VALUES, 100, 5, 10000, "How much Energy the Drill uses per Block"),
+
+    DRILL_SPEED_EXTRA_USE("Speed Upgrade: Extra Energy Use", ConfigCategories.DRILL_VALUES, 50, 0, 10000, "How much extra Energy the Speed Upgrade uses"),
+    DRILL_SPEED_II_EXTRA_USE("Speed II Upgrade: Extra Energy Use", ConfigCategories.DRILL_VALUES, 75, 0, 10000, "How much extra Energy the Speed II Upgrade uses"),
+    DRILL_SPEED_III_EXTRA_USE("Speed III Upgrade: Extra Energy Use", ConfigCategories.DRILL_VALUES, 175, 0, 10000, "How much extra Energy the Speed III Upgrade uses"),
+    DRILL_SILK_EXTRA_USE("Silk Upgrade: Extra Energy Use", ConfigCategories.DRILL_VALUES, 30, 0, 10000, "How much extra Energy the Silk Upgrade uses"),
+    DRILL_FORTUNE_EXTRA_USE("Fortune Upgrade: Extra Energy Use", ConfigCategories.DRILL_VALUES, 40, 0, 10000, "How much extra Energy the Fortune Upgrade uses"),
+    DRILL_FORTUNE_II_EXTRA_USE("Fortune II Upgrade: Extra Energy Use", ConfigCategories.DRILL_VALUES, 60, 0, 10000, "How much extra Energy the Fortune II Upgrade uses"),
+    DRILL_THREE_BY_THREE_EXTRA_USE("3x3 Upgrade: Extra Energy Use", ConfigCategories.DRILL_VALUES, 10, 0, 10000, "How much extra Energy the 3x3 Upgrade uses"),
+    DRILL_FIVE_BY_FIVE_EXTRA_USE("5x5 Upgrade: Extra Energy Use", ConfigCategories.DRILL_VALUES, 30, 0, 10000, "How much extra Energy the 5x5 Upgrade uses");
 
     public final String name;
     public final String category;

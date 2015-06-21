@@ -4,7 +4,8 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.ActuallyAdditions;
 import ellpeck.actuallyadditions.inventory.GuiHandler;
-import ellpeck.actuallyadditions.tile.TileEntityCoalGenerator;
+import ellpeck.actuallyadditions.tile.TileEntityEnergizer;
+import ellpeck.actuallyadditions.tile.TileEntityEnervator;
 import ellpeck.actuallyadditions.util.BlockUtil;
 import ellpeck.actuallyadditions.util.INameableItem;
 import ellpeck.actuallyadditions.util.ModUtil;
@@ -20,30 +21,19 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
 import java.util.List;
-import java.util.Random;
 
-public class BlockCoalGenerator extends BlockContainerBase implements INameableItem{
+public class BlockEnergizer extends BlockContainerBase implements INameableItem{
 
     private IIcon topIcon;
+    private IIcon sideIcon;
+    private boolean isEnergizer;
 
-    public BlockCoalGenerator(){
+    public BlockEnergizer(boolean isEnergizer){
         super(Material.rock);
+        this.isEnergizer = isEnergizer;
         this.setHarvestLevel("pickaxe", 0);
-        this.setHardness(1.0F);
+        this.setHardness(2.0F);
         this.setStepSound(soundTypeStone);
-        this.setTickRandomly(true);
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void randomDisplayTick(World world, int x, int y, int z, Random rand){
-        int meta = world.getBlockMetadata(x, y, z);
-
-        if (meta == 1){
-            for(int i = 0; i < 5; i++){
-                world.spawnParticle("smoke", (double)x+0.5F, (double)y + 1.0F, (double)z+0.5F, 0.0D, 0.0D, 0.0D);
-            }
-        }
     }
 
     @Override
@@ -53,12 +43,12 @@ public class BlockCoalGenerator extends BlockContainerBase implements INameableI
 
     @Override
     public TileEntity createNewTileEntity(World world, int par2){
-        return new TileEntityCoalGenerator();
+        return this.isEnergizer ? new TileEntityEnergizer() : new TileEntityEnervator();
     }
 
     @Override
     public IIcon getIcon(int side, int meta){
-        return side <= 1 ? this.topIcon : this.blockIcon;
+        return side == 1 ? this.topIcon : (side == 0 ? this.blockIcon : this.sideIcon);
     }
 
     @Override
@@ -66,13 +56,20 @@ public class BlockCoalGenerator extends BlockContainerBase implements INameableI
     public void registerBlockIcons(IIconRegister iconReg){
         this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":" + this.getName());
         this.topIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":" + this.getName() + "Top");
+        this.sideIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":" + this.getName() + "Side");
     }
 
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9){
         if(!world.isRemote){
-            TileEntityCoalGenerator press = (TileEntityCoalGenerator)world.getTileEntity(x, y, z);
-            if (press != null) player.openGui(ActuallyAdditions.instance, GuiHandler.COAL_GENERATOR_ID, world, x, y, z);
+            if(this.isEnergizer){
+                TileEntityEnergizer energizer = (TileEntityEnergizer)world.getTileEntity(x, y, z);
+                if(energizer != null) player.openGui(ActuallyAdditions.instance, GuiHandler.ENERGIZER_ID, world, x, y, z);
+            }
+            else{
+                TileEntityEnervator energizer = (TileEntityEnervator)world.getTileEntity(x, y, z);
+                if(energizer != null) player.openGui(ActuallyAdditions.instance, GuiHandler.ENERVATOR_ID, world, x, y, z);
+            }
             return true;
         }
         return true;
@@ -86,7 +83,7 @@ public class BlockCoalGenerator extends BlockContainerBase implements INameableI
 
     @Override
     public String getName(){
-        return "blockCoalGenerator";
+        return this.isEnergizer ? "blockEnergizer" : "blockEnervator";
     }
 
     public static class TheItemBlock extends ItemBlock{
@@ -114,8 +111,7 @@ public class BlockCoalGenerator extends BlockContainerBase implements INameableI
         @SuppressWarnings("unchecked")
         @SideOnly(Side.CLIENT)
         public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld) {
-            BlockUtil.addInformation(theBlock, list, 1, "");
-            BlockUtil.addPowerProductionInfo(list, TileEntityCoalGenerator.energyProducedPerTick);
+            BlockUtil.addInformation(theBlock, list, 2, "");
         }
 
         @Override

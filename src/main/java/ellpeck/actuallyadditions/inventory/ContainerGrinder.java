@@ -104,7 +104,7 @@ public class ContainerGrinder extends Container{
 
             if(currentStack.getItem() != null){
                 if(slot <= hotbarEnd && slot >= inventoryStart){
-                    if(GrinderRecipes.instance().getOutput(currentStack, false) != null){
+                    if(GrinderRecipes.getOutput(currentStack, false) != null){
                         this.mergeItemStack(newStack, TileEntityGrinder.SLOT_INPUT_1, TileEntityGrinder.SLOT_INPUT_1+1, false);
                         if(this.isDouble) this.mergeItemStack(newStack, TileEntityGrinder.SLOT_INPUT_2, TileEntityGrinder.SLOT_INPUT_2+1, false);
                     }

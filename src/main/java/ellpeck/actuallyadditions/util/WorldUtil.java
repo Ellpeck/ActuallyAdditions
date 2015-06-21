@@ -3,17 +3,11 @@ package ellpeck.actuallyadditions.util;
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
 import net.minecraft.block.Block;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChunkCoordinates;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.IPlantable;
@@ -26,26 +20,6 @@ public class WorldUtil{
     public static ChunkCoordinates getCoordsFromSide(ForgeDirection side, int x, int y, int z){
         if(side == ForgeDirection.UNKNOWN) return null;
         return new ChunkCoordinates(x+side.offsetX, y+side.offsetY, z+side.offsetZ);
-    }
-
-    public static MovingObjectPosition raytraceBlocksFromEntity(World world, Entity player, double range){
-        float f1 = player.prevRotationPitch+(player.rotationPitch-player.prevRotationPitch)*1.0F;
-        float f2 = player.prevRotationYaw+(player.rotationYaw-player.prevRotationYaw)*1.0F;
-        double d0 = player.prevPosX+(player.posX-player.prevPosX)*1.0D;
-        double d1 = player.prevPosY+(player.posY-player.prevPosY)*1.0D;
-        if(!world.isRemote && player instanceof EntityPlayer) d1 += 1.62D;
-        double d2 = player.prevPosZ+(player.posZ-player.prevPosZ)*1.0D;
-        Vec3 vec3 = Vec3.createVectorHelper(d0, d1, d2);
-        float f3 = MathHelper.cos(-f2*0.017453292F-(float)Math.PI);
-        float f4 = MathHelper.sin(-f2*0.017453292F-(float)Math.PI);
-        float f5 = -MathHelper.cos(-f1*0.017453292F);
-        float f6 = MathHelper.sin(-f1*0.017453292F);
-        float f7 = f4*f5;
-        float f8 = f3*f5;
-        double d3 = range;
-        if(player instanceof EntityPlayerMP) d3 = ((EntityPlayerMP)player).theItemInWorldManager.getBlockReachDistance();
-        Vec3 vec31 = vec3.addVector((double)f7*d3, (double)f6*d3, (double)f8*d3);
-        return world.func_147447_a(vec3, vec31, false, true, false);
     }
 
     public static void breakBlockAtSide(ForgeDirection side, World world, int x, int y, int z){
@@ -65,7 +39,6 @@ public class WorldUtil{
             if(((IEnergyReceiver)tile).canConnectEnergy(side.getOpposite())){
                 int receive = ((IEnergyReceiver)tile).receiveEnergy(side.getOpposite(), Math.min(storage.getMaxExtract(), storage.getEnergyStored()), false);
                 storage.extractEnergy(receive, false);
-                world.markBlockForUpdate(x+side.offsetX, y+side.offsetY, z+side.offsetZ);
             }
         }
     }
@@ -76,7 +49,6 @@ public class WorldUtil{
             if(((IFluidHandler)tile).canFill(side.getOpposite(), tank.getFluid().getFluid())){
                 int receive = ((IFluidHandler)tile).fill(side.getOpposite(), tank.getFluid(), true);
                 tank.drain(receive, true);
-                world.markBlockForUpdate(x+side.offsetX, y+side.offsetY, z+side.offsetZ);
             }
         }
     }

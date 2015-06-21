@@ -26,89 +26,103 @@ public class CreativeTab extends CreativeTabs{
     public void displayAllReleventItems(List list){
         this.list = list;
 
-        addBlock(InitBlocks.blockPhantomface);
-        addBlock(InitBlocks.blockPhantomEnergyface);
-        addBlock(InitBlocks.blockPhantomLiquiface);
-        addBlock(InitBlocks.blockPhantomPlacer);
-        addBlock(InitBlocks.blockPhantomBreaker);
-        addBlock(InitBlocks.blockPhantomBooster);
-        addBlock(InitBlocks.blockCoffeeMachine);
-        addBlock(InitBlocks.blockInputter);
-        addBlock(InitBlocks.blockInputterAdvanced);
+        add(InitBlocks.blockPhantomface);
+        add(InitBlocks.blockPhantomEnergyface);
+        add(InitBlocks.blockPhantomLiquiface);
+        add(InitBlocks.blockPhantomPlacer);
+        add(InitBlocks.blockPhantomBreaker);
+        add(InitBlocks.blockPhantomBooster);
+        add(InitBlocks.blockCoffeeMachine);
+        add(InitBlocks.blockInputter);
+        add(InitBlocks.blockInputterAdvanced);
 
-        addBlock(InitBlocks.blockGreenhouseGlass);
-        addBlock(InitBlocks.blockGrinder);
-        addBlock(InitBlocks.blockGrinderDouble);
-        addBlock(InitBlocks.blockFurnaceDouble);
-        addBlock(InitBlocks.blockLavaFactoryController);
+        add(InitBlocks.blockGreenhouseGlass);
+        add(InitBlocks.blockGrinder);
+        add(InitBlocks.blockGrinderDouble);
+        add(InitBlocks.blockFurnaceDouble);
+        add(InitBlocks.blockLavaFactoryController);
 
-        addBlock(InitBlocks.blockFurnaceSolar);
-        addBlock(InitBlocks.blockHeatCollector);
-        addBlock(InitBlocks.blockCoalGenerator);
-        addBlock(InitBlocks.blockOilGenerator);
-        addBlock(InitBlocks.blockItemRepairer);
-        addBlock(InitBlocks.blockFishingNet);
-        addBlock(InitBlocks.blockBreaker);
-        addBlock(InitBlocks.blockPlacer);
-        addBlock(InitBlocks.blockDropper);
-        addBlock(InitBlocks.blockFluidPlacer);
-        addBlock(InitBlocks.blockFluidCollector);
+        add(InitBlocks.blockEnergizer);
+        add(InitBlocks.blockEnervator);
 
-        addBlock(InitBlocks.blockMisc);
-        addBlock(InitBlocks.blockFeeder);
-        addBlock(InitBlocks.blockCompost);
-        addBlock(InitBlocks.blockGiantChest);
-        addBlock(InitBlocks.blockCanolaPress);
-        addBlock(InitBlocks.blockFermentingBarrel);
+        add(InitBlocks.blockFurnaceSolar);
+        add(InitBlocks.blockHeatCollector);
+        add(InitBlocks.blockCoalGenerator);
+        add(InitBlocks.blockOilGenerator);
+        add(InitBlocks.blockItemRepairer);
+        add(InitBlocks.blockFishingNet);
+        add(InitBlocks.blockBreaker);
+        add(InitBlocks.blockPlacer);
+        add(InitBlocks.blockDropper);
+        add(InitBlocks.blockFluidPlacer);
+        add(InitBlocks.blockFluidCollector);
 
-        //addItem(InitItems.itemDrill);
-        addItem(InitItems.itemPhantomConnector);
-        addItem(InitItems.itemBucketCanolaOil);
-        addItem(InitItems.itemBucketOil);
+        add(InitBlocks.blockMisc);
+        add(InitBlocks.blockFeeder);
+        add(InitBlocks.blockCompost);
+        add(InitBlocks.blockGiantChest);
+        add(InitBlocks.blockCanolaPress);
+        add(InitBlocks.blockFermentingBarrel);
 
-        addItem(InitItems.itemCoffeeSeed);
-        addItem(InitItems.itemCoffeeBean);
-        addItem(InitItems.itemRiceSeed);
-        addItem(InitItems.itemCanolaSeed);
-        addItem(InitItems.itemFlaxSeed);
-        addItem(InitItems.itemHairyBall);
-        addItem(InitItems.itemMisc);
-        addItem(InitItems.itemResonantRice);
-        addItem(InitItems.itemFertilizer);
+        add(InitItems.itemDrill);
+        add(InitItems.itemDrillUpgradeSpeed);
+        add(InitItems.itemDrillUpgradeSpeedII);
+        add(InitItems.itemDrillUpgradeSpeedIII);
+        add(InitItems.itemDrillUpgradeSilkTouch);
+        add(InitItems.itemDrillUpgradeFortune);
+        add(InitItems.itemDrillUpgradeFortuneII);
+        add(InitItems.itemDrillUpgradeThreeByThree);
+        add(InitItems.itemDrillUpgradeFiveByFive);
+        add(InitItems.itemDrillUpgradeBlockPlacing);
+        add(InitItems.itemBattery);
+        
+        add(InitItems.itemPhantomConnector);
+        add(InitItems.itemBucketCanolaOil);
+        add(InitItems.itemBucketOil);
 
-        addItem(InitItems.itemCoffee);
-        addItem(InitItems.itemFoods);
-        addItem(InitItems.itemKnife);
-        addItem(InitItems.itemCrafterOnAStick);
-        addItem(InitItems.itemDust);
-        addItem(InitItems.itemSpecialDrop);
-        addItem(InitItems.itemLeafBlower);
-        addItem(InitItems.itemLeafBlowerAdvanced);
+        add(InitItems.itemCoffeeSeed);
+        add(InitItems.itemCoffeeBean);
+        add(InitItems.itemRiceSeed);
+        add(InitItems.itemCanolaSeed);
+        add(InitItems.itemFlaxSeed);
+        add(InitItems.itemHairyBall);
+        add(InitItems.itemMisc);
+        add(InitItems.itemResonantRice);
+        add(InitItems.itemFertilizer);
 
-        addItem(InitItems.woodenPaxel);
-        addItem(InitItems.stonePaxel);
-        addItem(InitItems.ironPaxel);
-        addItem(InitItems.goldPaxel);
-        addItem(InitItems.diamondPaxel);
-        addItem(InitItems.emeraldPaxel);
-        addItem(InitItems.obsidianPaxel);
+        add(InitItems.itemCoffee);
+        add(InitItems.itemFoods);
+        add(InitItems.itemKnife);
+        add(InitItems.itemCrafterOnAStick);
+        add(InitItems.itemDust);
+        add(InitItems.itemSpecialDrop);
+        add(InitItems.itemLeafBlower);
+        add(InitItems.itemLeafBlowerAdvanced);
 
-        addItem(InitItems.itemPickaxeEmerald);
-        addItem(InitItems.itemSwordEmerald);
-        addItem(InitItems.itemAxeEmerald);
-        addItem(InitItems.itemShovelEmerald);
-        addItem(InitItems.itemHoeEmerald);
+        add(InitItems.woodenPaxel);
+        add(InitItems.stonePaxel);
+        add(InitItems.ironPaxel);
+        add(InitItems.goldPaxel);
+        add(InitItems.diamondPaxel);
+        add(InitItems.emeraldPaxel);
+        add(InitItems.obsidianPaxel);
 
-        addItem(InitItems.itemPickaxeObsidian);
-        addItem(InitItems.itemSwordObsidian);
-        addItem(InitItems.itemAxeObsidian);
-        addItem(InitItems.itemShovelObsidian);
-        addItem(InitItems.itemHoeObsidian);
+        add(InitItems.itemPickaxeEmerald);
+        add(InitItems.itemSwordEmerald);
+        add(InitItems.itemAxeEmerald);
+        add(InitItems.itemShovelEmerald);
+        add(InitItems.itemHoeEmerald);
 
-        addItem(InitItems.itemPotionRing);
-        addItem(InitItems.itemPotionRingAdvanced);
+        add(InitItems.itemPickaxeObsidian);
+        add(InitItems.itemSwordObsidian);
+        add(InitItems.itemAxeObsidian);
+        add(InitItems.itemShovelObsidian);
+        add(InitItems.itemHoeObsidian);
 
-        addItem(InitItems.itemJams);
+        add(InitItems.itemPotionRing);
+        add(InitItems.itemPotionRingAdvanced);
+
+        add(InitItems.itemJams);
     }
 
     @Override
@@ -121,11 +135,11 @@ public class CreativeTab extends CreativeTabs{
         return new ItemStack(this.getTabIconItem());
     }
 
-    private void addItem(Item item){
+    private void add(Item item){
         item.getSubItems(item, instance, list);
     }
 
-    private void addBlock(Block block){
+    private void add(Block block){
         block.getSubBlocks(new ItemStack(block).getItem(), instance, list);
     }
 }

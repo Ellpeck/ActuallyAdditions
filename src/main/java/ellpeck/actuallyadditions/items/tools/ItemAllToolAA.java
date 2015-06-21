@@ -21,6 +21,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.UseHoeEvent;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -129,5 +130,14 @@ public class ItemAllToolAA extends ItemTool implements INameableItem{
     @Override
     public String getOredictName(){
         return oredictName;
+    }
+
+    @Override
+    public Set<String> getToolClasses(ItemStack stack){
+        HashSet<String> hashSet = new HashSet<String>();
+        hashSet.add("pickaxe");
+        hashSet.add("axe");
+        hashSet.add("shovel");
+        return hashSet;
     }
 }

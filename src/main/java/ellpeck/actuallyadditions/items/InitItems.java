@@ -69,13 +69,38 @@ public class InitItems{
     public static Item emeraldPaxel;
     public static Item obsidianPaxel;
 
-    //public static Item itemDrill;
+    public static Item itemDrill;
+    public static Item itemDrillUpgradeSpeed;
+    public static Item itemDrillUpgradeSpeedII;
+    public static Item itemDrillUpgradeSpeedIII;
+    public static Item itemDrillUpgradeSilkTouch;
+    public static Item itemDrillUpgradeFortune;
+    public static Item itemDrillUpgradeFortuneII;
+    public static Item itemDrillUpgradeThreeByThree;
+    public static Item itemDrillUpgradeFiveByFive;
+    public static Item itemDrillUpgradeBlockPlacing;
+
+    public static Item itemBattery;
 
     public static void init(){
         Util.logInfo("Initializing Items...");
 
-        //itemDrill = new ItemDrill();
-        //ItemUtil.register(itemDrill);
+        itemDrill = new ItemDrill();
+        ItemUtil.register(itemDrill);
+
+        itemBattery = new ItemBattery();
+        ItemUtil.register(itemBattery);
+
+        itemDrillUpgradeSpeed = new ItemDrillUpgrade(ItemDrillUpgrade.UpgradeType.SPEED, "itemDrillUpgradeSpeed");
+        itemDrillUpgradeSpeedII = new ItemDrillUpgrade(ItemDrillUpgrade.UpgradeType.SPEED_II, "itemDrillUpgradeSpeedII");
+        itemDrillUpgradeSpeedIII = new ItemDrillUpgrade(ItemDrillUpgrade.UpgradeType.SPEED_III, "itemDrillUpgradeSpeedIII");
+        itemDrillUpgradeSilkTouch = new ItemDrillUpgrade(ItemDrillUpgrade.UpgradeType.SILK_TOUCH, "itemDrillUpgradeSilkTouch");
+        itemDrillUpgradeFortune = new ItemDrillUpgrade(ItemDrillUpgrade.UpgradeType.FORTUNE, "itemDrillUpgradeFortune");
+        itemDrillUpgradeFortuneII = new ItemDrillUpgrade(ItemDrillUpgrade.UpgradeType.FORTUNE_II, "itemDrillUpgradeFortuneII");
+        itemDrillUpgradeThreeByThree = new ItemDrillUpgrade(ItemDrillUpgrade.UpgradeType.THREE_BY_THREE, "itemDrillUpgradeThreeByThree");
+        itemDrillUpgradeFiveByFive = new ItemDrillUpgrade(ItemDrillUpgrade.UpgradeType.FIVE_BY_FIVE, "itemDrillUpgradeFiveByFive");
+        itemDrillUpgradeBlockPlacing = new ItemDrillUpgrade(ItemDrillUpgrade.UpgradeType.PLACER, "itemDrillUpgradeBlockPlacing");
+        ItemUtil.registerItems(new Item[]{itemDrillUpgradeSpeed, itemDrillUpgradeSpeedII, itemDrillUpgradeSpeedIII, itemDrillUpgradeSilkTouch, itemDrillUpgradeFortune, itemDrillUpgradeFortuneII, itemDrillUpgradeThreeByThree, itemDrillUpgradeFiveByFive, itemDrillUpgradeBlockPlacing});
 
         itemBucketOil = new ItemBucketAA(InitBlocks.blockOil, "itemBucketOil");
         ItemUtil.register(itemBucketOil);
@@ -87,6 +112,9 @@ public class InitItems{
 
         itemFertilizer = new ItemFertilizer();
         ItemUtil.register(itemFertilizer);
+
+        itemCoffee = new ItemCoffee();
+        ItemUtil.register(itemCoffee);
 
         itemPhantomConnector = new ItemPhantomConnector();
         ItemUtil.register(itemPhantomConnector);
@@ -134,19 +162,19 @@ public class InitItems{
         itemCoffeeBean = new ItemCoffeeBean();
         ItemUtil.register(itemCoffeeBean);
 
-        itemRiceSeed = new ItemSeed("itemRiceSeed", InitBlocks.blockRice, Blocks.water, EnumPlantType.Water, new ItemStack(itemFoods, 1, TheFoods.RICE.ordinal()));
+        itemRiceSeed = new ItemSeed("itemRiceSeed", InitBlocks.blockRice, Blocks.water, EnumPlantType.Water, itemFoods, TheFoods.RICE.ordinal());
         ItemUtil.register(itemRiceSeed);
         FactoryRegistry.sendMessage("registerPlantable", itemRiceSeed);
 
-        itemCanolaSeed = new ItemSeed("itemCanolaSeed", InitBlocks.blockCanola, Blocks.grass, EnumPlantType.Plains, new ItemStack(itemMisc, 1, TheMiscItems.CANOLA.ordinal()));
+        itemCanolaSeed = new ItemSeed("itemCanolaSeed", InitBlocks.blockCanola, Blocks.grass, EnumPlantType.Plains, itemMisc, TheMiscItems.CANOLA.ordinal());
         ItemUtil.register(itemCanolaSeed);
         FactoryRegistry.sendMessage("registerPlantable", itemCanolaSeed);
 
-        itemFlaxSeed = new ItemSeed("itemFlaxSeed", InitBlocks.blockFlax, Blocks.grass, EnumPlantType.Plains, new ItemStack(Items.string));
+        itemFlaxSeed = new ItemSeed("itemFlaxSeed", InitBlocks.blockFlax, Blocks.grass, EnumPlantType.Plains, Items.string, 0);
         ItemUtil.register(itemFlaxSeed);
         FactoryRegistry.sendMessage("registerPlantable", itemFlaxSeed);
 
-        itemCoffeeSeed = new ItemSeed("itemCoffeeSeed", InitBlocks.blockCoffee, Blocks.grass, EnumPlantType.Plains, new ItemStack(itemCoffeeBean));
+        itemCoffeeSeed = new ItemSeed("itemCoffeeSeed", InitBlocks.blockCoffee, Blocks.grass, EnumPlantType.Plains, itemCoffeeBean, 0);
         ItemUtil.register(itemCoffeeSeed);
         FactoryRegistry.sendMessage("registerPlantable", itemCoffeeSeed);
 
@@ -172,8 +200,5 @@ public class InitItems{
         emeraldPaxel = new ItemAllToolAA(InitItemMaterials.toolMaterialEmerald, new ItemStack(Items.emerald), "emeraldPaxel", EnumRarity.epic);
         obsidianPaxel = new ItemAllToolAA(InitItemMaterials.toolMaterialObsidian, new ItemStack(Blocks.obsidian), "obsidianPaxel", EnumRarity.epic);
         ItemUtil.registerItems(new Item[]{woodenPaxel, stonePaxel, ironPaxel, goldPaxel, diamondPaxel, emeraldPaxel, obsidianPaxel});
-
-        itemCoffee = new ItemCoffee();
-        ItemUtil.register(itemCoffee);
     }
 }

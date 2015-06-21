@@ -8,11 +8,13 @@ import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.items.metalists.*;
 import ellpeck.actuallyadditions.util.INameableItem;
 import ellpeck.actuallyadditions.util.Util;
+import net.minecraft.block.IGrowable;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
@@ -42,6 +44,91 @@ public class ItemCrafting{
                     'F', new ItemStack(Items.flint),
                     'I', "ingotIron",
                     'P', new ItemStack(Blocks.piston),
+                    'C', TheMiscItems.COIL_ADVANCED.getOredictName()));
+
+        //Drill
+        if(ConfigCrafting.DRILL.isEnabled())
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemDrill),
+                    "DDD", "CRC", "III",
+                    'D', "gemDiamond",
+                    'C', TheMiscItems.COIL_ADVANCED.getOredictName(),
+                    'R', "dustRedstone",
+                    'I', "blockIron"));
+
+        //Drill Speed
+        if(ConfigCrafting.DRILL_SPEED.isEnabled()){
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemDrillUpgradeSpeed),
+                    "ISI", "SRS", "ISI",
+                    'I', "ingotIron",
+                    'S', Items.sugar,
+                    'R', "dustRedstone"));
+
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemDrillUpgradeSpeedII),
+                    "ISI", "SCS", "ISI",
+                    'I', "ingotIron",
+                    'S', Items.sugar,
+                    'C', Items.cake));
+
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemDrillUpgradeSpeedIII),
+                    "ISI", "SFS", "ISI",
+                    'I', "ingotIron",
+                    'S', Items.sugar,
+                    'F', "gemDiamond"));
+        }
+
+        //Drill Fortune
+        if(ConfigCrafting.DRILL_FORTUNE.isEnabled()){
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemDrillUpgradeFortune),
+                    "ISI", "SRS", "ISI",
+                    'I', Blocks.glowstone,
+                    'S', Items.redstone,
+                    'R', Blocks.diamond_block));
+
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemDrillUpgradeFortuneII),
+                    "ISI", "SRS", "ISI",
+                    'I', Blocks.glowstone,
+                    'S', Items.redstone,
+                    'R', TheMiscBlocks.ENDER_CASING.getOredictName()));
+        }
+
+        //Drill Size
+        if(ConfigCrafting.DRILL_SIZE.isEnabled()){
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemDrillUpgradeThreeByThree),
+                    "DID", "ICI", "DID",
+                    'I', "ingotIron",
+                    'D', "gemDiamond",
+                    'C', TheMiscItems.COIL.getOredictName()));
+
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemDrillUpgradeFiveByFive),
+                    "DID", "ICI", "DID",
+                    'I', "ingotIron",
+                    'D', "gemDiamond",
+                    'C', TheMiscItems.COIL_ADVANCED.getOredictName()));
+        }
+
+        //Drill Silk Touch
+        if(ConfigCrafting.DRILL_SILK_TOUCH.isEnabled())
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemDrillUpgradeSilkTouch),
+                    "DSD", "SCS", "DSD",
+                    'D', "gemEmerald",
+                    'S', "gemDiamond",
+                    'C', TheMiscItems.COIL_ADVANCED.getOredictName()));
+
+        //Drill Placing
+        if(ConfigCrafting.DRILL_PLACING.isEnabled())
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemDrillUpgradeBlockPlacing),
+                    "CEC", "RAR", "CEC",
+                    'C', "cobblestone",
+                    'E', Items.ender_pearl,
+                    'A', TheMiscItems.COIL.getOredictName(),
+                    'R', "ingotIron"));
+
+        //Battery
+        if(ConfigCrafting.BATTERY.isEnabled())
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemBattery),
+                    " R ", "ICI", "III",
+                    'R', "dustRedstone",
+                    'I', "ingotIron",
                     'C', TheMiscItems.COIL_ADVANCED.getOredictName()));
 
         //Coil
@@ -174,10 +261,6 @@ public class ItemCrafting{
         GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemCanolaSeed),
                 new ItemStack(InitItems.itemMisc, 1, TheMiscItems.CANOLA.ordinal()));
 
-        //Mashed Food
-        if(ConfigCrafting.MASHED_FOOD.isEnabled())
-            initMashedFoodRecipes();
-
         //Rings
         initPotionRingRecipes();
 
@@ -226,10 +309,12 @@ public class ItemCrafting{
     }
 
     public static void initMashedFoodRecipes(){
-        for(Object nextIterator : Item.itemRegistry){
-            if(nextIterator instanceof ItemFood){
-                ItemStack ingredient = new ItemStack((Item)nextIterator, 1, Util.WILDCARD);
-                GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemMisc, 12, TheMiscItems.MASHED_FOOD.ordinal()), ingredient, ingredient, ingredient, ingredient, new ItemStack(InitItems.itemKnife, 1, Util.WILDCARD));
+        if(ConfigCrafting.MASHED_FOOD.isEnabled()){
+            for(Object nextIterator : Item.itemRegistry){
+                if(nextIterator instanceof ItemFood || nextIterator instanceof IPlantable || nextIterator instanceof IGrowable){
+                    ItemStack ingredient = new ItemStack((Item)nextIterator, 1, Util.WILDCARD);
+                    GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemMisc, 8, TheMiscItems.MASHED_FOOD.ordinal()), ingredient, ingredient, ingredient, ingredient, new ItemStack(InitItems.itemKnife, 1, Util.WILDCARD));
+                }
             }
         }
     }

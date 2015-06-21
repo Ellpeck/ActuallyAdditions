@@ -12,7 +12,8 @@ public enum ConfigCategories{
     WORLD_GEN("world gen"),
     POTION_RING_CRAFTING("ring crafting"),
     OTHER("other"),
-    FLUIDS("fluids");
+    FLUIDS("fluids"),
+    DRILL_VALUES("drill values");
 
     public final String name;
 

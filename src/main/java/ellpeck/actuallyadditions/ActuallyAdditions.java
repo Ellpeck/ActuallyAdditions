@@ -13,6 +13,7 @@ import ellpeck.actuallyadditions.blocks.InitBlocks;
 import ellpeck.actuallyadditions.config.ConfigurationHandler;
 import ellpeck.actuallyadditions.crafting.GrinderCrafting;
 import ellpeck.actuallyadditions.crafting.InitCrafting;
+import ellpeck.actuallyadditions.crafting.ItemCrafting;
 import ellpeck.actuallyadditions.event.InitEvents;
 import ellpeck.actuallyadditions.gen.InitVillager;
 import ellpeck.actuallyadditions.gen.OreGen;
@@ -36,7 +37,7 @@ public class ActuallyAdditions{
     @SidedProxy(clientSide = "ellpeck.actuallyadditions.proxy.ClientProxy", serverSide = "ellpeck.actuallyadditions.proxy.ServerProxy")
     public static IProxy proxy;
 
-    @EventHandler()
+    @EventHandler
     public void preInit(FMLPreInitializationEvent event){
         Util.logInfo("Starting PreInitialization Phase...");
 
@@ -52,8 +53,7 @@ public class ActuallyAdditions{
         Util.logInfo("PreInitialization Finished.");
     }
 
-    @SuppressWarnings("unused")
-    @EventHandler()
+    @EventHandler
     public void init(FMLInitializationEvent event){
         Util.logInfo("Starting Initialization Phase...");
 
@@ -69,13 +69,13 @@ public class ActuallyAdditions{
         Util.logInfo("Initialization Finished.");
     }
 
-    @SuppressWarnings("unused")
-    @EventHandler()
+    @EventHandler
     public void postInit(FMLPostInitializationEvent event){
         Util.logInfo("Starting PostInitialization Phase...");
 
-        GrinderCrafting.init();
         ItemCoffee.initIngredients();
+        GrinderCrafting.init();
+        ItemCrafting.initMashedFoodRecipes();
         proxy.postInit();
 
         Util.logInfo("PostInitialization Finished.");
