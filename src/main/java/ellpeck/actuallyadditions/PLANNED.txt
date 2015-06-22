@@ -109,3 +109,7 @@
 -Dog Bones
     -Breed Dogs faster
     -Makes them have Babies too
+
+-Testificate Bucks
+    -Village House that has a Coffee Machine
+    -Villager who sells Coffee and Cookies

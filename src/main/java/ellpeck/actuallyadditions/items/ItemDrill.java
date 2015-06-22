@@ -70,23 +70,21 @@ public class ItemDrill extends ItemEnergyContainer implements INameableItem{
         ItemStack upgrade = this.getHasUpgradeAsStack(stack, ItemDrillUpgrade.UpgradeType.PLACER);
         if(upgrade != null){
             int slot = ItemDrillUpgrade.getSlotToPlaceFrom(upgrade);
-            if(slot >= 0 && slot < InventoryPlayer.getHotbarSize() && slot != player.inventory.currentItem){
-                ItemStack equip = player.inventory.getStackInSlot(slot);
-                if(equip != null){
+            if(slot >= 0 && slot < InventoryPlayer.getHotbarSize()){
+                ItemStack anEquip =player.inventory.getStackInSlot(slot);
+                if(anEquip != null && anEquip != stack){
+                    ItemStack equip = anEquip.copy();
                     if(!world.isRemote){
-                        boolean placed = false;
                         try{
-                            placed = equip.tryPlaceItemIntoWorld(player, world, x, y, z, hitSide, hitX, hitY, hitZ);
+                            if(equip.tryPlaceItemIntoWorld(player, world, x, y, z, hitSide, hitX, hitY, hitZ)){
+                                if(!player.capabilities.isCreativeMode) player.inventory.setInventorySlotContents(slot, equip.stackSize <= 0 ? null : equip.copy());
+                                player.inventoryContainer.detectAndSendChanges();
+                                return true;
+                            }
                         }
                         catch(Exception e){
                             player.addChatComponentMessage(new ChatComponentText("Ouch! That really hurt! You must have done something wrong, don't do that again please!"));
                             ModUtil.LOGGER.log(Level.ERROR, "Player "+player.getDisplayName()+" who should place a Block using a Drill at "+player.posX+", "+player.posY+", "+player.posZ+" in World "+world.provider.dimensionId+" threw an Exception! Don't let that happen again!");
-                        }
-
-                        if(placed){
-                            player.inventory.setInventorySlotContents(slot, equip.stackSize <= 0 ? null : equip.copy());
-                            player.inventoryContainer.detectAndSendChanges();
-                            return true;
                         }
                     }
                     else return true;
@@ -320,7 +318,7 @@ public class ItemDrill extends ItemEnergyContainer implements INameableItem{
                 if(!world.isRemote){
                     if(!living.isSneaking() && this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.THREE_BY_THREE)){
                         if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FIVE_BY_FIVE)){
-                            this.breakBlocks(stack, 2, world, x, y, z, player);
+                            this.breakBlocks(stack, 30, world, x, y, z, player);
                         }
                         else this.breakBlocks(stack, 1, world, x, y, z, player);
                     }
@@ -354,7 +352,7 @@ public class ItemDrill extends ItemEnergyContainer implements INameableItem{
 
     @Override
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player){
-        if(!world.isRemote && player.isSneaking()){
+        if(!world.isRemote && player.isSneaking() && stack == player.getCurrentEquippedItem()){
             player.openGui(ActuallyAdditions.instance, GuiHandler.DRILL_ID, world, (int)player.posX, (int)player.posY, (int)player.posZ);
         }
         return stack;

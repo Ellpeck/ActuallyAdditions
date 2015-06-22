@@ -12,7 +12,7 @@ What that means? I can decide what I want to do with the License myself.
 ### YOU MAY
 - Fork and modify the Code
 - Submit Pull Requests
-- Copy Parts of the Code for other Projects
+- Copy (SMALL!) Parts of the Code for other Projects
 - Make a Review/Spotlight of the Mod or use it in a Modpack
 - Make Let's Play (and similar) Videos containing my Mod
 
@@ -20,7 +20,7 @@ What that means? I can decide what I want to do with the License myself.
 ### YOU CAN NOT
 - Copy the entire Code or claim it is yours.
 - Reupload the Code or Mod to another website or claim you made it.
-
+- Copy entire Classes, Methods or other big Parts of Code.
 
 ### YOU HAVE TO
 - Always credit me. Don't be a jerk and copy entire portions of the code and claim they're yours.

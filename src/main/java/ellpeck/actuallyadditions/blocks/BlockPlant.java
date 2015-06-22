@@ -49,7 +49,7 @@ public class BlockPlant extends BlockCrops implements INameableItem, IFactoryHar
 
     @Override
     public int quantityDropped(int meta, int fortune, Random random){
-        return random.nextInt(addDropAmount)+minDropAmount;
+        return meta >= 7 ? super.quantityDropped(meta, fortune, random) : random.nextInt(addDropAmount)+minDropAmount;
     }
 
     @Override

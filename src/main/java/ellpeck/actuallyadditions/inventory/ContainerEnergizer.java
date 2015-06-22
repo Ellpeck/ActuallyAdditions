@@ -88,13 +88,11 @@ public class ContainerEnergizer extends Container{
             if(slot <= hotbarEnd && slot >= hotbarStart){
                 this.mergeItemStack(newStack, inventoryStart, inventoryEnd+1, false);
             }
-
             else if(slot <= inventoryEnd && slot >= inventoryStart){
                 this.mergeItemStack(newStack, hotbarStart, hotbarEnd+1, false);
             }
-
             else if(slot < inventoryStart){
-                    this.mergeItemStack(newStack, inventoryStart, hotbarEnd+1, false);
+                this.mergeItemStack(newStack, inventoryStart, hotbarEnd+1, false);
             }
 
             if(newStack.stackSize == 0) theSlot.putStack(null);

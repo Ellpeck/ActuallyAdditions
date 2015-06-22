@@ -19,16 +19,18 @@ public class TileEntityEnergizer extends TileEntityInventoryBase implements IEne
 
     @Override
     public void updateEntity(){
-        if(this.slots[0] != null && this.slots[0].getItem() instanceof IEnergyContainerItem && this.slots[1] == null){
-            if(this.storage.getEnergyStored() > 0){
-                int received = ((IEnergyContainerItem)this.slots[0].getItem()).receiveEnergy(this.slots[0], this.storage.getEnergyStored(), false);
-                this.storage.extractEnergy(received, false);
-            }
+        if(!worldObj.isRemote){
+            if(this.slots[0] != null && this.slots[0].getItem() instanceof IEnergyContainerItem && this.slots[1] == null){
+                if(this.storage.getEnergyStored() > 0){
+                    int received = ((IEnergyContainerItem)this.slots[0].getItem()).receiveEnergy(this.slots[0], this.storage.getEnergyStored(), false);
+                    this.storage.extractEnergy(received, false);
+                }
 
-            if(((IEnergyContainerItem)this.slots[0].getItem()).getEnergyStored(this.slots[0]) >= ((IEnergyContainerItem)this.slots[0].getItem()).getMaxEnergyStored(this.slots[0])){
-                this.slots[1] = this.slots[0].copy();
-                this.slots[0].stackSize--;
-                if(this.slots[0].stackSize <= 0) this.slots[0] = null;
+                if(((IEnergyContainerItem)this.slots[0].getItem()).getEnergyStored(this.slots[0]) >= ((IEnergyContainerItem)this.slots[0].getItem()).getMaxEnergyStored(this.slots[0])){
+                    this.slots[1] = this.slots[0].copy();
+                    this.slots[0].stackSize--;
+                    if(this.slots[0].stackSize <= 0) this.slots[0] = null;
+                }
             }
         }
     }

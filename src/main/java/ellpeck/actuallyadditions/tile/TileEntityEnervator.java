@@ -20,26 +20,28 @@ public class TileEntityEnervator extends TileEntityInventoryBase implements IEne
 
     @Override
     public void updateEntity(){
-        if(this.slots[0] != null && this.slots[0].getItem() instanceof IEnergyContainerItem && this.slots[1] == null){
-            if(((IEnergyContainerItem)this.slots[0].getItem()).getEnergyStored(this.slots[0]) > 0){
-                int toReceive = ((IEnergyContainerItem)this.slots[0].getItem()).extractEnergy(this.slots[0], this.storage.getMaxEnergyStored()-this.storage.getEnergyStored(), false);
-                this.storage.receiveEnergy(toReceive, false);
+        if(!worldObj.isRemote){
+            if(this.slots[0] != null && this.slots[0].getItem() instanceof IEnergyContainerItem && this.slots[1] == null){
+                if(((IEnergyContainerItem)this.slots[0].getItem()).getEnergyStored(this.slots[0]) > 0){
+                    int toReceive = ((IEnergyContainerItem)this.slots[0].getItem()).extractEnergy(this.slots[0], this.storage.getMaxEnergyStored()-this.storage.getEnergyStored(), false);
+                    this.storage.receiveEnergy(toReceive, false);
+                }
+
+                if(((IEnergyContainerItem)this.slots[0].getItem()).getEnergyStored(this.slots[0]) <= 0){
+                    this.slots[1] = this.slots[0].copy();
+                    this.slots[0].stackSize--;
+                    if(this.slots[0].stackSize <= 0) this.slots[0] = null;
+                }
             }
 
-            if(((IEnergyContainerItem)this.slots[0].getItem()).getEnergyStored(this.slots[0]) <= 0){
-                this.slots[1] = this.slots[0].copy();
-                this.slots[0].stackSize--;
-                if(this.slots[0].stackSize <= 0) this.slots[0] = null;
+            if(this.getEnergyStored(ForgeDirection.UNKNOWN) > 0){
+                WorldUtil.pushEnergy(worldObj, xCoord, yCoord, zCoord, ForgeDirection.UP, storage);
+                WorldUtil.pushEnergy(worldObj, xCoord, yCoord, zCoord, ForgeDirection.DOWN, storage);
+                WorldUtil.pushEnergy(worldObj, xCoord, yCoord, zCoord, ForgeDirection.NORTH, storage);
+                WorldUtil.pushEnergy(worldObj, xCoord, yCoord, zCoord, ForgeDirection.EAST, storage);
+                WorldUtil.pushEnergy(worldObj, xCoord, yCoord, zCoord, ForgeDirection.SOUTH, storage);
+                WorldUtil.pushEnergy(worldObj, xCoord, yCoord, zCoord, ForgeDirection.WEST, storage);
             }
-        }
-
-        if(this.getEnergyStored(ForgeDirection.UNKNOWN) > 0){
-            WorldUtil.pushEnergy(worldObj, xCoord, yCoord, zCoord, ForgeDirection.UP, storage);
-            WorldUtil.pushEnergy(worldObj, xCoord, yCoord, zCoord, ForgeDirection.DOWN, storage);
-            WorldUtil.pushEnergy(worldObj, xCoord, yCoord, zCoord, ForgeDirection.NORTH, storage);
-            WorldUtil.pushEnergy(worldObj, xCoord, yCoord, zCoord, ForgeDirection.EAST, storage);
-            WorldUtil.pushEnergy(worldObj, xCoord, yCoord, zCoord, ForgeDirection.SOUTH, storage);
-            WorldUtil.pushEnergy(worldObj, xCoord, yCoord, zCoord, ForgeDirection.WEST, storage);
         }
     }
 

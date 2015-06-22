@@ -219,7 +219,7 @@ public class InitBlocks{
         }
         else{
             errorAlreadyRegistered("Oil Fluid");
-         }
+        }
         fluidOil = FluidRegistry.getFluid(oil);
 
         if(fluidOil.getBlock() == null || ConfigBoolValues.PREVENT_OIL_BLOCK_OVERRIDE.isEnabled()){
