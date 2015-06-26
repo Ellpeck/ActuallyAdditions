@@ -1,6 +1,8 @@
-It's a Minecraft Mod!
+##It's a Minecraft Mod!
 
 For more information, visit the main Minecraft Forum Thread at http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/wip-mods/2374910-actually-additions-a-bunch-of-awesome-gadgets
+
+###If you want to see Information on how you can use my Mod and its InterModComms Feature in your own Mod, see the InterModCommsInfo.md File!
 
 
 LICENSE:
@@ -31,3 +33,4 @@ What that means? The License can be customized by me:
 ### NOTES
 - The above License only applies for Code I wrote myself, any APIs used (such as the CoFH API, the InventoryTweaks API and the MineFactoryReloaded API) have their own License that is being respected.
 - Almost all of the Assets used in this Mod are made by Glenthor and are owned by me. You are not allowed to copy them for any other Project without my Permission.
+
