@@ -3,8 +3,7 @@ It's a Minecraft Mod!
 For more information, visit the main Minecraft Forum Thread at http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/wip-mods/2374910-actually-additions-a-bunch-of-awesome-gadgets
 
 
-
-### LICENSE:
+##### LICENSE:
 All Rights Reserved
 
 What that means? I can decide what I want to do with the License myself.
@@ -30,4 +29,3 @@ What that means? I can decide what I want to do with the License myself.
 ### NOTES
 - The above License only applies for Code I wrote myself, any APIs used (such as the CoFH API, the InventoryTweaks API and the MineFactoryReloaded API) have their own License that is being respected.
 - Almost all of the Assets used in this Mod are made by Glenthor and are owned by me. You are not allowed to copy them for any other Project without my Permission.
-
