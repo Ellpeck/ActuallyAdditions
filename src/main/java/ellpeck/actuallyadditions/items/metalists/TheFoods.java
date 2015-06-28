@@ -23,7 +23,9 @@ public enum TheFoods implements INameableItem{
     BIG_COOKIE("BigCookie", 6, 1F, false, 20, EnumRarity.uncommon, "foodBigCookie"),
     HAMBURGER("Hamburger", 14, 6F, false, 40, EnumRarity.common, "foodHamburger"),
     PIZZA("Pizza", 20, 10F, false, 45, EnumRarity.uncommon, "foodPizza"),
-    BAGUETTE("Baguette", 7, 2F, false, 25, EnumRarity.common, "foodBaguette");
+    BAGUETTE("Baguette", 7, 2F, false, 25, EnumRarity.common, "foodBaguette"),
+    RICE("Rice", 2, 1F, false, 10, EnumRarity.uncommon, "foodRice"),
+    RICE_BREAD("RiceBread", 8, 3F, false, 25, EnumRarity.uncommon, "foodRiceBread");
 
     public static void setReturnItems(){
         SPAGHETTI.returnItem = new ItemStack(Items.bowl);

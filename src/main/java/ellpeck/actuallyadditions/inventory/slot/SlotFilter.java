@@ -13,4 +13,5 @@ public class SlotFilter extends Slot{
     public int getSlotStackLimit(){
         return 1;
     }
+
 }

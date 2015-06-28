@@ -13,7 +13,13 @@ public enum TheMiscItems implements INameableItem{
     QUARTZ("BlackQuartz", EnumRarity.epic, "gemQuartzBlack"),
     RING("Ring", EnumRarity.uncommon, "itemRing"),
     COIL("Coil", EnumRarity.common, "itemCoilBasic"),
-    COIL_ADVANCED("CoilAdvanced", EnumRarity.uncommon, "itemCoilAdvanced");
+    COIL_ADVANCED("CoilAdvanced", EnumRarity.uncommon, "itemCoilAdvanced"),
+    RICE_DOUGH("RiceDough", EnumRarity.uncommon, "itemRiceDough"),
+    TINY_COAL("TinyCoal", EnumRarity.common, "itemTinyCoal"),
+    TINY_CHAR("TinyCharcoal", EnumRarity.common, "itemTinyChar"),
+    RICE_SLIME("RiceSlime", EnumRarity.uncommon, "slimeball"),
+    CANOLA("Canola", EnumRarity.uncommon, "itemCanola"),
+    CUP("Cup", EnumRarity.uncommon, "itemCup");
 
     public final String name;
     public final String oredictName;

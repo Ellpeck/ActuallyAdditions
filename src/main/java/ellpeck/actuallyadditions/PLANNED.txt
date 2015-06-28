@@ -3,23 +3,23 @@
     -Doesn't use Levels
     -Needs Quartz and Diamond Blocks instead of Bookcases around
 
+-Chestie
+    -Follows you around
+    -Has an Inventory, a Crafting Table and a Furnace
+
 -Instant Teleport Device
     -Teleports Players to where they look (Much like the Bukkit Compass)
 
--Magnet
-    -Pulls Mobs and Items towards it
-    -Has a certain Redstone Output depending on Mob Amount
-    -Can be toggled On and Off
+-Ender Attractor / Repulsor
+    -Attracts/Repulses Mobs
+    -Has an aggressive and a friendly version
+    -Maybe for Items
 
 -Void Bag
     -Sucks up picked up Items
     -Has a Filter
     -Destroys excess Items (also determined by a Filter)
     -Gets emptied into Chest on Right-Click
-
--Rice
-    -Gets planted in the Water
-    -Used to make Rice Flour and Rice Bread
 
 -Auto-Crafting Item
     -Has a Recipe saved
@@ -57,7 +57,65 @@
 -File Jukebox
     -Plays Sound Files put into your Minecraft Folder
 
--RF Implementation
-    -Power Acceptor Block that powers Machines
-    -Machines still don't accept RF themselves!
-    -Solar Panel & Heat Collector produce RF
+-Pharmacy Plants
+    -Give you different effects
+
+-Multi-Block Ore Factory
+    -Fluids and things higher Multiplying Chance (x2, x3..)
+    -Speed Upgrades etc.
+
+-Advanced Redstone Transmitter
+    -You can mark an area
+    -On Activation, all blocks in the area get a Signal
+
+-Thermopile
+    -Needs a hot and a cold fluid
+    -Depending on the fluids, it generates more power
+
+-More Effect Rings
+    -Ring of Growth: Lets Plants grow, more Reach with Tier 2
+    -Ring of Thorns: Hurts Attackers when they hit you with a Projectile
+    -Ring of Water Walking
+    -Ring of Flight
+    -Ring of Aquadive: Fast underwater movement
+    -Ring of Suction: Sucks up Items in the area
+    -Ring of Water Absorption: Removes Water around
+    -Ring of Striptease (Or something like that): Attacker lose parts of their Armor
+
+-Food Cannon
+    -Shoots Food Items
+    -Damage varies with Food
+
+-Furniture
+    -Can be put into a Crafting Table with a Banner to give it a pattern (1.8!)
+    -Parts of the furniture can have different types (eg. Wood, Stone etc.) -> Via Crafting or Tool?
+
+-Tinker's Concrete
+    -Customizable with Items in Concrete Mixer
+    -(eg. Redstone->Speed Glowstone->Light etc.)
+
+-XP Solidifier
+    -Block that creates Solidified Experience from Player's Levels
+    -Has a GUI with Buttons
+
+-Alarm
+    -Gets triggered when Mobs are in the Area
+    -Configurable Range
+    -Configurable Mobs
+
+-Industrial Fertilizer
+    -Grows the whole Plant with one Click
+
+-Dog Bones
+    -Breed Dogs faster
+    -Makes them have Babies too
+
+-Testificate Bucks
+    -Village House that has a Coffee Machine
+    -Villager who sells Coffee and Cookies
+
+-Inventory Emitter
+    -Emits a Redstone Signal dependant on the Amount of a specified Item in it
+    -Items are configurable in the GUI
+
+-Enderman Teleport Stopper

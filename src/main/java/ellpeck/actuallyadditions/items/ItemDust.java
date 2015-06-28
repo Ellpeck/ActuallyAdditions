@@ -41,7 +41,7 @@ public class ItemDust extends Item implements INameableItem{
 
     @Override
     public EnumRarity getRarity(ItemStack stack){
-        return allDusts[stack.getItemDamage()].rarity;
+        return stack.getItemDamage() >= allDusts.length ? EnumRarity.common : allDusts[stack.getItemDamage()].rarity;
     }
 
     @SuppressWarnings("all")
@@ -54,14 +54,14 @@ public class ItemDust extends Item implements INameableItem{
 
     @Override
     public String getUnlocalizedName(ItemStack stack){
-        return this.getUnlocalizedName() + allDusts[stack.getItemDamage()].name;
+        return this.getUnlocalizedName() + (stack.getItemDamage() >= allDusts.length ? " ERROR!" : allDusts[stack.getItemDamage()].getName());
     }
 
     @Override
     @SuppressWarnings("unchecked")
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld){
-        ItemUtil.addInformation(this, list, 1, allDusts[stack.getItemDamage()].getName());
+        if(stack.getItemDamage() < allDusts.length) ItemUtil.addInformation(this, list, 1, allDusts[stack.getItemDamage()].getName());
     }
 
     @Override
@@ -72,7 +72,7 @@ public class ItemDust extends Item implements INameableItem{
     @Override
     @SideOnly(Side.CLIENT)
     public int getColorFromItemStack(ItemStack stack, int pass){
-        return allDusts[stack.getItemDamage()].color;
+        return stack.getItemDamage() >= allDusts.length ? 0 : allDusts[stack.getItemDamage()].color;
     }
 
     @Override

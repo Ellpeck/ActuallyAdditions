@@ -3,7 +3,6 @@ package ellpeck.actuallyadditions.tile;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockAir;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ChunkCoordinates;
@@ -54,18 +53,17 @@ public class TileEntityBreaker extends TileEntityInventoryBase{
                                 int meta = worldObj.getBlockMetadata(coordsBlock.posX, coordsBlock.posY, coordsBlock.posZ);
                                 drops.addAll(blockToBreak.getDrops(worldObj, coordsBlock.posX, coordsBlock.posY, coordsBlock.posZ, meta, 0));
 
-                                if(this.addToInventory(drops, false)){
+                                if(addToInventory(this.slots, drops, false)){
                                     worldObj.playAuxSFX(2001, coordsBlock.posX, coordsBlock.posY, coordsBlock.posZ, Block.getIdFromBlock(blockToBreak) + (meta << 12));
                                     WorldUtil.breakBlockAtSide(sideToManipulate, worldObj, xCoord, yCoord, zCoord);
-                                    this.addToInventory(drops, true);
+                                    addToInventory(this.slots, drops, true);
                                     this.markDirty();
                                 }
                             }
-                            else if(this.isPlacer && (worldObj.getBlock(coordsBlock.posX, coordsBlock.posY, coordsBlock.posZ).isReplaceable(worldObj, coordsBlock.posX, coordsBlock.posY, coordsBlock.posZ))){
-                                ItemStack removeFalse = this.removeFromInventory(false);
-                                if(removeFalse != null && Block.getBlockFromItem(removeFalse.getItem()) != blockToBreak && WorldUtil.placeBlockAtSide(sideToManipulate, worldObj, xCoord, yCoord, zCoord, removeFalse)){
-                                    this.removeFromInventory(true);
-                                }
+                            else if(this.isPlacer && worldObj.getBlock(coordsBlock.posX, coordsBlock.posY, coordsBlock.posZ).isReplaceable(worldObj, coordsBlock.posX, coordsBlock.posY, coordsBlock.posZ)){
+                                int theSlot = testInventory(this.slots);
+                                this.setInventorySlotContents(theSlot, WorldUtil.placeBlockAtSide(sideToManipulate, worldObj, xCoord, yCoord, zCoord, this.slots[theSlot]));
+                                if(this.slots[theSlot] != null && this.slots[theSlot].stackSize <= 0) this.slots[theSlot] = null;
                             }
                         }
                     }
@@ -87,15 +85,15 @@ public class TileEntityBreaker extends TileEntityInventoryBase{
         this.currentTime = compound.getInteger("CurrentTime");
     }
 
-    public boolean addToInventory(ArrayList<ItemStack> stacks, boolean actuallyDo){
+    public static boolean addToInventory(ItemStack[] slots, ArrayList<ItemStack> stacks, boolean actuallyDo){
         int working = 0;
         for(ItemStack stack : stacks){
-            for(int i = 0; i < this.slots.length; i++){
-                if(this.slots[i] == null || (this.slots[i].isItemEqual(stack) && this.slots[i].stackSize <= stack.getMaxStackSize()-stack.stackSize)){
+            for(int i = 0; i < slots.length; i++){
+                if(slots[i] == null || (slots[i].isItemEqual(stack) && slots[i].stackSize <= stack.getMaxStackSize()-stack.stackSize)){
                     working++;
                     if(actuallyDo){
-                        if(this.slots[i] == null) this.slots[i] = stack.copy();
-                        else this.slots[i].stackSize += stack.stackSize;
+                        if(slots[i] == null) slots[i] = stack.copy();
+                        else slots[i].stackSize += stack.stackSize;
                     }
                     break;
                 }
@@ -104,18 +102,13 @@ public class TileEntityBreaker extends TileEntityInventoryBase{
         return working >= stacks.size();
     }
 
-    public ItemStack removeFromInventory(boolean actuallyDo){
-        for(int i = 0; i < this.slots.length; i++){
-            if(this.slots[i] != null && !(Block.getBlockFromItem(this.slots[i].getItem()) instanceof BlockAir)){
-                ItemStack slot = this.slots[i].copy();
-                if(actuallyDo){
-                    this.slots[i].stackSize--;
-                    if(this.slots[i].stackSize <= 0) this.slots[i] = null;
-                }
-                return slot;
+    public static int testInventory(ItemStack[] slots){
+        for(int i = 0; i < slots.length; i++){
+            if(slots[i] != null){
+                return i;
             }
         }
-        return null;
+        return 0;
     }
 
     @Override

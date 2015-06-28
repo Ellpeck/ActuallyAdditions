@@ -2,6 +2,7 @@ package ellpeck.actuallyadditions.config.values;
 
 import ellpeck.actuallyadditions.config.ConfigCategories;
 import ellpeck.actuallyadditions.config.ConfigValues;
+import net.minecraftforge.fluids.FluidContainerRegistry;
 
 public enum ConfigIntValues{
 
@@ -12,14 +13,14 @@ public enum ConfigIntValues{
 
     BLACK_QUARTZ_BASE_AMOUNT("Black Quartz Amount", ConfigCategories.WORLD_GEN, 3, 1, 50, "How big a Black Quartz Vein is at least"),
     BLACK_QUARTZ_ADD_CHANCE("Black Quartz Additional Chance", ConfigCategories.WORLD_GEN, 3, 0, 50, "How much bigger than the Base Amount a Black Quartz Vein can get"),
-    BLACK_QUARTZ_CHANCE("Black Quartz Chance", ConfigCategories.WORLD_GEN, 25, 1, 150, "How often the Black Quartz tries to generate"),
+    BLACK_QUARTZ_CHANCE("Black Quartz Chance", ConfigCategories.WORLD_GEN, 5, 1, 150, "How often the Black Quartz tries to generate"),
     BLACK_QUARTZ_MIN_HEIGHT("Black Quartz Min Height", ConfigCategories.WORLD_GEN, 0, 0, 256, "How high the Black Quartz starts to generate"),
     BLACK_QUARTZ_MAX_HEIGHT("Black Quartz Max Height", ConfigCategories.WORLD_GEN, 25, 0, 256, "How high the Black Quartz stops to generate at"),
 
     COMPOST_AMOUNT("Compost: Amount Needed To Convert", ConfigCategories.MACHINE_VALUES, 10, 1, 64, "How many items are needed in the Compost to convert to Fertilizer"),
     COMPOST_TIME("Compost: Conversion Time Needed", ConfigCategories.MACHINE_VALUES, 1000, 30, 10000, "How long the Compost needs to convert to Fertilizer"),
 
-    FISHER_TIME("Fishing Net: Time Needed", ConfigCategories.MACHINE_VALUES, 2000, 50, 50000, "How long it takes on Average until the Fishing Net catches a Fish"),
+    FISHER_TIME("Fishing Net: Time Needed", ConfigCategories.MACHINE_VALUES, 15000, 50, 500000, "How long it takes on Average until the Fishing Net catches a Fish"),
 
     FEEDER_REACH("Feeder: Reach", ConfigCategories.MACHINE_VALUES, 5, 1, 20, "The Radius of Action of the Feeder"),
     FEEDER_TIME("Feeder: Time Needed", ConfigCategories.MACHINE_VALUES, 100, 50, 5000, "The time spent between feeding animals with the Feeder"),
@@ -35,18 +36,70 @@ public enum ConfigIntValues{
     OBSIDIAN_USES("Obsidian: Max Uses", ConfigCategories.TOOL_VALUES, 8000, 50, 20000, "How often Obsidian Tools can be used"),
     OBSIDIAN_ENCHANTABILITY("Obsidian: Enchantability", ConfigCategories.TOOL_VALUES, 15, 1, 30, "How enchantable an Obsidian Tool is"),
 
-    GRINDER_CRUSH_TIME("Crusher: Crush Time", ConfigCategories.MACHINE_VALUES, 200, 10, 1000, "How long the Crusher takes to crush an item"),
-    GRINDER_DOUBLE_CRUSH_TIME("Double Crusher: Crush Time", ConfigCategories.MACHINE_VALUES, 300, 10, 1000, "How long the Double Crusher takes to crush an item"),
-    FURNACE_DOUBLE_SMELT_TIME("Double Furnace: Smelt Time", ConfigCategories.MACHINE_VALUES, 300, 10, 1000, "How long the Double Furnace takes to crush an item"),
+    GRINDER_CRUSH_TIME("Crusher: Time", ConfigCategories.MACHINE_VALUES, 100, 10, 1000, "How long the Crusher takes to crush an item"),
+    GRINDER_DOUBLE_CRUSH_TIME("Double Crusher: Time", ConfigCategories.MACHINE_VALUES, 150, 10, 1000, "How long the Double Crusher takes to crush an item"),
+    FURNACE_DOUBLE_SMELT_TIME("Double Furnace: Time", ConfigCategories.MACHINE_VALUES, 80, 10, 1000, "How long the Double Furnace takes to crush an item"),
 
-    REPAIRER_SPEED_SLOWDOWN("Item Repairer: Speed Slowdown", ConfigCategories.MACHINE_VALUES, 2, 1, 100, "How much slower the Item Repairer repairs"),
+    REPAIRER_SPEED_SLOWDOWN("Repairer: Speed Slowdown", ConfigCategories.MACHINE_VALUES, 2, 1, 100, "How much slower the Item Repairer repairs"),
     HEAT_COLLECTOR_BLOCKS("Heat Collector: Blocks Needed", ConfigCategories.MACHINE_VALUES, 4, 1, 5, "How many Blocks are needed for the Heat Collector to power Machines above it"),
-    HEAT_COLLECTOR_LAVA_CHANCE("Heat Collector: Random Chance", ConfigCategories.MACHINE_VALUES, 10000, 10, 100000, "The Chance of the Heat Collector destroying a Lava Block around (Default Value 2000 meaning a 1/2000 Chance!)"),
+    HEAT_COLLECTOR_LAVA_CHANCE("Heat Collector: Random Chance", ConfigCategories.MACHINE_VALUES, 15000, 10, 100000, "The Chance of the Heat Collector destroying a Lava Block around (Default Value 2000 meaning a 1/2000 Chance!)"),
 
-    GLASS_TIME_NEEDED("Greenhouse Glass: Time Needed", ConfigCategories.MACHINE_VALUES, 1000, 10, 1000000, "The Time Needed for the Greenhouse Glass to grow a Plant below it"),
+    GLASS_TIME_NEEDED("Greenhouse Glass: Time", ConfigCategories.MACHINE_VALUES, 300, 1, 10000, "Time Needed for the Greenhouse Glass to grow a Plant below it"),
 
     BREAKER_TIME_NEEDED("Breaker and Placer: Time Needed", ConfigCategories.MACHINE_VALUES, 15, 1, 10000, "The Time Needed for the Breaker and the Placer to place or break a Block"),
-    DROPPER_TIME_NEEDED("Dropper: Time Needed", ConfigCategories.MACHINE_VALUES, 10, 1, 10000, "The Time Needed for the Dropper to drop an Item");
+    DROPPER_TIME_NEEDED("Dropper: Time Needed", ConfigCategories.MACHINE_VALUES, 10, 1, 10000, "The Time Needed for the Dropper to drop an Item"),
+
+    CAT_DROP_CHANCE("Cat Drops: Chance", ConfigCategories.OTHER, 5000, 5, 10000000, "The 1 in X chance for a Hairy Ball to Drop from a Cat with X being this value"),
+
+    RICE_AMOUNT("Rice Amount", ConfigCategories.WORLD_GEN, 15, 1, 100, "The Chance of Rice generating"),
+    CANOLA_AMOUNT("Canola Amount", ConfigCategories.WORLD_GEN, 10, 1, 50, "The Chance of Canola generating"),
+    FLAX_AMOUNT("Flax Amount", ConfigCategories.WORLD_GEN, 8, 1, 50, "The Chance of Flax generating"),
+    COFFEE_AMOUNT("Coffee Amount", ConfigCategories.WORLD_GEN, 6, 1, 50, "The Chance of Coffee generating"),
+
+    GRINDER_ENERGY_USED("Energy Use: Crusher", ConfigCategories.MACHINE_VALUES, 40, 1, 500, "The Amount of Energy used by the Crusher per Tick"),
+    GRINDER_DOUBLE_ENERGY_USED("Energy Use: Double Crusher", ConfigCategories.MACHINE_VALUES, 60, 1, 500, "The Amount of Energy used by the Double Crusher per Tick"),
+    FURNACE_SOLAR_ENERGY_PRODUCED("Energy Production: Furnace Solar", ConfigCategories.MACHINE_VALUES, 15, 1, 500, "The Amount of Energy produced by the Solar per Tick"),
+    HEAT_COLLECTOR_ENERGY_PRODUCED("Energy Production: Heat Collectors", ConfigCategories.MACHINE_VALUES, 60, 1, 500, "The Amount of Energy produced by the Heat Collector per Tick"),
+    REPAIRER_ENERGY_USED("Energy Use: Repairer", ConfigCategories.MACHINE_VALUES, 1250, 1, 5000, "The Amount of Energy used by the Repairer per Tick"),
+    FURNACE_ENERGY_USED("Energy Use: Double Furnace", ConfigCategories.MACHINE_VALUES, 25, 1, 500, "The Amount of Energy used by the Double Furnace per Tick"),
+
+    PRESS_PROCESSING_TIME("Canola Press: Processing Time", ConfigCategories.MACHINE_VALUES, 30, 1, 1000, "The Amount of time it takes to process one Canola"),
+    PRESS_MB_PRODUCED("Canola Press: mB Produced", ConfigCategories.MACHINE_VALUES, 100, 1, 5000, "The Amount of Canola Oil produced from one Canola"),
+    PRESS_ENERGY_USED("Energy Use: Canola Press", ConfigCategories.MACHINE_VALUES, 35, 10, 500, "The Amount of Energy used by the Canola Press per Tick"),
+
+    BARREL_MB_PRODUCED("Fermenting Barrel: mB Produced", ConfigCategories.MACHINE_VALUES, 50, 1, 3000, "The Amount of mB produced by the Barrel per cycle"),
+    BARREL_PROCESSING_TIME("Fermenting Barrel: Processing Time", ConfigCategories.MACHINE_VALUES, 100, 1, 5000, "The Amount of time it takes to process one Canola Oil to Oil"),
+    COAL_GEN_ENERGY_PRODUCED("Coal Generator: Energy Produced", ConfigCategories.MACHINE_VALUES, 30, 1, 500, "The Amount of Energy generated by the Coal Generator"),
+
+    PHANTOMFACE_RANGE("Phantomface: Default Range", ConfigCategories.MACHINE_VALUES, 16, 3, 100, "The Default Range of the Phantomface"),
+
+    OIL_GEN_ENERGY_PRODUCED("Oil Generator: Energy Produced", ConfigCategories.MACHINE_VALUES, 76, 1, 500, "The Amount of Energy generated by the Oil Generator"),
+    OIL_GEN_FUEL_USED("Oil Generator: Fuel Usage", ConfigCategories.MACHINE_VALUES, 50, 1, 300, "The Amount of Fuel used per Burnup in the Oil Generator"),
+    OIL_GEN_BURN_TIME("Oil Generator: Burn Time", ConfigCategories.MACHINE_VALUES, 100, 1, 1000, "The Amount of Time Fuel keeps burning for"),
+
+    PHANTOM_PLACER_TIME("Phantom Placer and Breaker: Time Needed", ConfigCategories.MACHINE_VALUES, 30, 1, 500, "The Amount of Time a Phantom Placer/Breaker needs"),
+    PHANTOM_PLACER_RANGE("Phantom Placer and Breaker: Range", ConfigCategories.MACHINE_VALUES, 3, 1, 100, "The Default Range of the Phantom Placer/Breaker"),
+
+    LAVA_FACTORY_ENERGY_USED("Lava Factory: Energy Used", ConfigCategories.MACHINE_VALUES, 150000, 10, 3000000, "The amount of Energy used by the Lava Factory per Bucket of Lava produced"),
+    LAVA_FACTORY_TIME("Lava Factory: Production Time", ConfigCategories.MACHINE_VALUES, 200, 5, 10000, "The amount of time it takes for the Lava Factory to produce one Bucket"),
+
+    COFFEE_MACHINE_ENERGY_USED("Coffee Machine: Energy Use", ConfigCategories.MACHINE_VALUES, 150, 10, 3000, "The amount of Energy used by the Coffee Machine per Tick"),
+    COFFEE_CACHE_ADDED_PER_ITEM("Coffee Machine: Coffee added per Cup", ConfigCategories.MACHINE_VALUES, 1, 1, 300, "The amount of Coffee added by one Coffee Item in the Coffee Machine"),
+    COFFEE_CACHE_USED_PER_ITEM("Coffee Machine: Coffee used per Cup", ConfigCategories.MACHINE_VALUES, 10, 1, 300, "The amount of Coffee used to brew one Coffee in the Coffee Machine"),
+    COFFEE_MACHINE_TIME_USED("Coffee Machine: Time to Brew", ConfigCategories.MACHINE_VALUES, 500, 10, 10000, "The amount of time the Coffee Machine takes to brew a Coffee"),
+    COFFEE_MACHINE_WATER_USED("Coffee Machine: Water Used per Cup", ConfigCategories.MACHINE_VALUES, 500, 1, 4*FluidContainerRegistry.BUCKET_VOLUME, "The amount of Water the Coffee Machine uses per Cup"),
+
+    COFFEE_DRINK_AMOUNT("Coffee: Drink Amount", ConfigCategories.OTHER, 4, 1, 100, "How often a Coffee can be drunk from"),
+    DRILL_ENERGY_USE("Drill: Energy Use Per Block or Hit", ConfigCategories.DRILL_VALUES, 100, 5, 10000, "How much Energy the Drill uses per Block"),
+
+    DRILL_SPEED_EXTRA_USE("Speed Upgrade: Extra Energy Use", ConfigCategories.DRILL_VALUES, 50, 0, 10000, "How much extra Energy the Speed Upgrade uses"),
+    DRILL_SPEED_II_EXTRA_USE("Speed II Upgrade: Extra Energy Use", ConfigCategories.DRILL_VALUES, 75, 0, 10000, "How much extra Energy the Speed II Upgrade uses"),
+    DRILL_SPEED_III_EXTRA_USE("Speed III Upgrade: Extra Energy Use", ConfigCategories.DRILL_VALUES, 175, 0, 10000, "How much extra Energy the Speed III Upgrade uses"),
+    DRILL_SILK_EXTRA_USE("Silk Upgrade: Extra Energy Use", ConfigCategories.DRILL_VALUES, 30, 0, 10000, "How much extra Energy the Silk Upgrade uses"),
+    DRILL_FORTUNE_EXTRA_USE("Fortune Upgrade: Extra Energy Use", ConfigCategories.DRILL_VALUES, 40, 0, 10000, "How much extra Energy the Fortune Upgrade uses"),
+    DRILL_FORTUNE_II_EXTRA_USE("Fortune II Upgrade: Extra Energy Use", ConfigCategories.DRILL_VALUES, 60, 0, 10000, "How much extra Energy the Fortune II Upgrade uses"),
+    DRILL_THREE_BY_THREE_EXTRA_USE("3x3 Upgrade: Extra Energy Use", ConfigCategories.DRILL_VALUES, 10, 0, 10000, "How much extra Energy the 3x3 Upgrade uses"),
+    DRILL_FIVE_BY_FIVE_EXTRA_USE("5x5 Upgrade: Extra Energy Use", ConfigCategories.DRILL_VALUES, 30, 0, 10000, "How much extra Energy the 5x5 Upgrade uses");
 
     public final String name;
     public final String category;
@@ -67,5 +120,4 @@ public enum ConfigIntValues{
     public int getValue(){
         return ConfigValues.intValues[this.ordinal()];
     }
-
 }

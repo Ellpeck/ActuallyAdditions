@@ -60,7 +60,6 @@ public enum ConfigCrafting{
     RING_WATER_BREATHING("Water Breathing Ring", ConfigCategories.POTION_RING_CRAFTING),
     RING_INVISIBILITY("Invisibility Ring", ConfigCategories.POTION_RING_CRAFTING),
     RING_NIGHT_VISION("Night Vision Ring", ConfigCategories.POTION_RING_CRAFTING),
-    RING_SATURATION("Saturation Ring", ConfigCategories.POTION_RING_CRAFTING, false),
 
     DOUGH("Dough", ConfigCategories.ITEMS_CRAFTING),
     PAPER_CONE("Paper Cone", ConfigCategories.ITEMS_CRAFTING),
@@ -68,7 +67,45 @@ public enum ConfigCrafting{
     KNIFE_BLADE("Knife Blade", ConfigCategories.ITEMS_CRAFTING),
 
     TOOL_EMERALD("Emerald Tools", ConfigCategories.ITEMS_CRAFTING),
-    TOOL_OBSIDIAN("Obsidian Tools", ConfigCategories.ITEMS_CRAFTING);
+    TOOL_OBSIDIAN("Obsidian Tools", ConfigCategories.ITEMS_CRAFTING),
+    RICE_BREAD("Rice Bread", ConfigCategories.FOOD_CRAFTING),
+    RICE_DOUGH("Rice Dough", ConfigCategories.FOOD_CRAFTING),
+
+    RICE_GADGETS("Rice Gadgets", ConfigCategories.ITEMS_CRAFTING),
+    RESONANT_RICE("Resonant Rice", ConfigCategories.ITEMS_CRAFTING),
+
+    CANOLA_PRESS("Canola Press", ConfigCategories.BLOCKS_CRAFTING),
+    FERMENTING_BARREL("Fermenting Barrel", ConfigCategories.BLOCKS_CRAFTING),
+    COAL_GENERATOR("Coal Generator", ConfigCategories.BLOCKS_CRAFTING),
+    OIL_GENERATOR("Oil Generator", ConfigCategories.BLOCKS_CRAFTING),
+    PHANTOMFACE("Phantomface", ConfigCategories.BLOCKS_CRAFTING),
+    PHANTOM_CONNECTOR("Phantom Connector", ConfigCategories.ITEMS_CRAFTING),
+
+    PHANTOM_ENERGYFACE("Phantom Energyface", ConfigCategories.BLOCKS_CRAFTING),
+    PHANTOM_LIQUIFACE("Phantom Liquiface", ConfigCategories.BLOCKS_CRAFTING),
+    PHANTOM_PLACER("Phantom Placer", ConfigCategories.BLOCKS_CRAFTING),
+    PHANTOM_BREAKER("Phantom Breaker", ConfigCategories.BLOCKS_CRAFTING),
+    LIQUID_PLACER("Liquid Placer", ConfigCategories.BLOCKS_CRAFTING),
+    LIQUID_BREAKER("Liquid Collector", ConfigCategories.BLOCKS_CRAFTING),
+
+    CUP("Cup", ConfigCategories.ITEMS_CRAFTING),
+    PAXELS("Paxels", ConfigCategories.ITEMS_CRAFTING),
+
+    ENDER_CASING("Ender Casing", ConfigCategories.BLOCKS_CRAFTING),
+    PHANTOM_BOOSTER("Phantom Booster", ConfigCategories.BLOCKS_CRAFTING),
+    COFFEE_MACHINE("Coffee Machine", ConfigCategories.BLOCKS_CRAFTING),
+    LAVA_FACTORY("Lava Factory", ConfigCategories.BLOCKS_CRAFTING),
+
+    DRILL("Drill", ConfigCategories.ITEMS_CRAFTING),
+    DRILL_SPEED("Drill Speed Upgrades", ConfigCategories.ITEMS_CRAFTING),
+    DRILL_FORTUNE("Drill Fortune Upgrades", ConfigCategories.ITEMS_CRAFTING),
+    DRILL_SIZE("Drill Size Upgrades", ConfigCategories.ITEMS_CRAFTING),
+    DRILL_PLACING("Drill Placing Upgrade", ConfigCategories.ITEMS_CRAFTING),
+    DRILL_SILK_TOUCH("Drill Silk Touch Upgrade", ConfigCategories.ITEMS_CRAFTING),
+    BATTERY("Battery", ConfigCategories.ITEMS_CRAFTING),
+
+    ENERGIZER("Energizer", ConfigCategories.BLOCKS_CRAFTING),
+    ENERVATOR("Enervator", ConfigCategories.BLOCKS_CRAFTING);
 
     public final String name;
     public final String category;
@@ -87,5 +124,4 @@ public enum ConfigCrafting{
     public boolean isEnabled(){
         return ConfigValues.craftingValues[this.ordinal()];
     }
-
 }

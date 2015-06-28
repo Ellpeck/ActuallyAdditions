@@ -18,15 +18,15 @@ public class JamVillagerTradeHandler implements VillagerRegistry.IVillageTradeHa
     private ArrayList<Trade> trades = new ArrayList<Trade>();
 
     public JamVillagerTradeHandler(){
-        this.addWants("ingotGold", 3, 2);
-        this.addWants("cropWheat", 10, 10);
-        this.addWants("dustRedstone", 15, 15);
-        this.addWants(new ItemStack(Items.bucket), 1, 4);
-        this.addWants(new ItemStack(Items.glass_bottle), 5, 5);
+        this.addWants("ingotGold", 5, 2);
+        this.addWants("cropWheat", 15, 10);
+        this.addWants("dustRedstone", 25, 15);
+        this.addWants(new ItemStack(Items.bucket), 5, 4);
+        this.addWants(new ItemStack(Items.glass_bottle), 12, 5);
         this.addWants(new ItemStack(Items.potionitem), 1, 0);
-        this.addWants("ingotIron", 5, 5);
-        this.addWants("gemDiamond", 1, 1);
-        this.addWants("dustGlowstone", 5, 10);
+        this.addWants("ingotIron", 10, 5);
+        this.addWants("gemDiamond", 1, 2);
+        this.addWants("dustGlowstone", 12, 10);
     }
 
     @Override
@@ -48,14 +48,14 @@ public class JamVillagerTradeHandler implements VillagerRegistry.IVillageTradeHa
                 if(wantsOne == wantsTwo) wantsTwo = null;
 
                 for(int k = 0; k < TheJams.values().length; k++){
-                    recipeList.add(new MerchantRecipe(wantsOne, wantsTwo, new ItemStack(InitItems.itemJams, rand.nextInt(5)+1, k)));
+                    recipeList.add(new MerchantRecipe(wantsOne, wantsTwo, new ItemStack(InitItems.itemJams, rand.nextInt(3)+1, k)));
                 }
             }
         }
     }
 
     public void addWants(String oredictName, int minSize, int maxSize){
-        ArrayList<ItemStack> stacks = OreDictionary.getOres(oredictName);
+        ArrayList<ItemStack> stacks = (ArrayList<ItemStack>)OreDictionary.getOres(oredictName, false);
         trades.add(new Trade(stacks, minSize, maxSize));
     }
 

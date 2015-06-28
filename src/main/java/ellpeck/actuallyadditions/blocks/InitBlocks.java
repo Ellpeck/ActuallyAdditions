@@ -1,13 +1,22 @@
 package ellpeck.actuallyadditions.blocks;
 
+import ellpeck.actuallyadditions.config.values.ConfigBoolValues;
 import ellpeck.actuallyadditions.util.BlockUtil;
+import ellpeck.actuallyadditions.util.CompatUtil;
+import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
+import net.minecraft.item.EnumRarity;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
+import org.apache.logging.log4j.Level;
 
 public class InitBlocks{
 
     public static Block blockCompost;
     public static Block blockMisc;
+    public static Block blockWildPlant;
     public static Block blockFeeder;
     public static Block blockGiantChest;
 
@@ -26,8 +35,113 @@ public class InitBlocks{
     public static Block blockPlacer;
     public static Block blockDropper;
 
+    public static Block blockRice;
+    public static Block blockCanola;
+    public static Block blockFlax;
+    public static Block blockCoffee;
+
+    public static Fluid fluidCanolaOil;
+    public static Block blockCanolaOil;
+    public static Fluid fluidOil;
+    public static Block blockOil;
+
+    public static Block blockCanolaPress;
+    public static Block blockFermentingBarrel;
+
+    public static Block blockCoalGenerator;
+    public static Block blockOilGenerator;
+
+    public static Block blockPhantomface;
+    public static Block blockPhantomPlacer;
+    public static Block blockPhantomBreaker;
+    public static Block blockPhantomLiquiface;
+    public static Block blockPhantomEnergyface;
+
+    public static Block blockFluidPlacer;
+    public static Block blockFluidCollector;
+
+    public static Block blockLavaFactoryController;
+    public static Block blockCoffeeMachine;
+
+    public static Block blockPhantomBooster;
+
+    public static Block blockEnergizer;
+    public static Block blockEnervator;
+
+    public static Block blockTestifiBucksGreenWall;
+    public static Block blockTestifiBucksWhiteWall;
+    public static Block blockTestifiBucksGreenStairs;
+    public static Block blockTestifiBucksWhiteStairs;
+    public static Block blockTestifiBucksGreenSlab;
+    public static Block blockTestifibucksWhiteSlab;
+
     public static void init(){
         Util.logInfo("Initializing Blocks...");
+
+        blockTestifiBucksGreenWall = new BlockGeneric("blockTestifiBucksGreenWall");
+        BlockUtil.register(blockTestifiBucksGreenWall, BlockGeneric.TheItemBlock.class);
+        blockTestifiBucksWhiteWall = new BlockGeneric("blockTestifiBucksWhiteWall");
+        BlockUtil.register(blockTestifiBucksWhiteWall, BlockGeneric.TheItemBlock.class);
+        blockTestifiBucksGreenStairs = new BlockStair(blockTestifiBucksGreenWall, "blockTestifiBucksGreenStairs");
+        BlockUtil.register(blockTestifiBucksGreenStairs, BlockStair.TheItemBlock.class);
+        blockTestifiBucksWhiteStairs = new BlockStair(blockTestifiBucksWhiteWall, "blockTestifiBucksWhiteStairs");
+        BlockUtil.register(blockTestifiBucksWhiteStairs, BlockStair.TheItemBlock.class);
+        blockTestifiBucksGreenSlab = new BlockSlabs("blockTestifiBucksGreenSlab", blockTestifiBucksGreenWall);
+        BlockUtil.register(blockTestifiBucksGreenSlab, BlockSlabs.TheItemBlock.class);
+        blockTestifibucksWhiteSlab = new BlockSlabs("blockTestifibucksWhiteSlab", blockTestifiBucksWhiteWall);
+        BlockUtil.register(blockTestifibucksWhiteSlab, BlockSlabs.TheItemBlock.class);
+
+        blockEnergizer = new BlockEnergizer(true);
+        BlockUtil.register(blockEnergizer, BlockEnergizer.TheItemBlock.class);
+
+        blockEnervator = new BlockEnergizer(false);
+        BlockUtil.register(blockEnervator, BlockEnergizer.TheItemBlock.class);
+
+        blockLavaFactoryController = new BlockLavaFactoryController();
+        BlockUtil.register(blockLavaFactoryController, BlockLavaFactoryController.TheItemBlock.class);
+
+        blockCanolaPress = new BlockCanolaPress();
+        BlockUtil.register(blockCanolaPress, BlockCanolaPress.TheItemBlock.class);
+
+        blockPhantomface = new BlockPhantomface(BlockPhantomface.FACE);
+        BlockUtil.register(blockPhantomface, BlockPhantomface.TheItemBlock.class);
+
+        blockPhantomPlacer = new BlockPhantomface(BlockPhantomface.PLACER);
+        BlockUtil.register(blockPhantomPlacer, BlockPhantomface.TheItemBlock.class);
+
+        blockPhantomLiquiface = new BlockPhantomface(BlockPhantomface.LIQUIFACE);
+        BlockUtil.register(blockPhantomLiquiface, BlockPhantomface.TheItemBlock.class);
+
+        blockPhantomEnergyface = new BlockPhantomface(BlockPhantomface.ENERGYFACE);
+        BlockUtil.register(blockPhantomEnergyface, BlockPhantomface.TheItemBlock.class);
+
+        blockPhantomBreaker = new BlockPhantomface(BlockPhantomface.BREAKER);
+        BlockUtil.register(blockPhantomBreaker, BlockPhantomface.TheItemBlock.class);
+
+        blockCoalGenerator = new BlockCoalGenerator();
+        BlockUtil.register(blockCoalGenerator, BlockCoalGenerator.TheItemBlock.class);
+
+        blockOilGenerator = new BlockOilGenerator();
+        BlockUtil.register(blockOilGenerator, BlockOilGenerator.TheItemBlock.class);
+
+        blockFermentingBarrel = new BlockFermentingBarrel();
+        BlockUtil.register(blockFermentingBarrel, BlockFermentingBarrel.TheItemBlock.class);
+
+        blockRice = new BlockPlant("blockRice", 6, 1, 2);
+        BlockUtil.register(blockRice, BlockPlant.TheItemBlock.class, false);
+        CompatUtil.registerMFRPlant(blockRice);
+
+        blockCanola = new BlockPlant("blockCanola", 4, 3, 3);
+        BlockUtil.register(blockCanola, BlockPlant.TheItemBlock.class, false);
+        CompatUtil.registerMFRPlant(blockCanola);
+
+        blockFlax = new BlockPlant("blockFlax", 6, 2, 4);
+        BlockUtil.register(blockFlax, BlockPlant.TheItemBlock.class, false);
+        CompatUtil.registerMFRPlant(blockFlax);
+
+        blockCoffee = new BlockPlant("blockCoffee", 6, 2, 2);
+        BlockUtil.register(blockCoffee, BlockPlant.TheItemBlock.class, false);
+        CompatUtil.registerMFRPlant(blockCoffee);
 
         blockCompost = new BlockCompost();
         BlockUtil.register(blockCompost, BlockCompost.TheItemBlock.class);
@@ -79,5 +193,70 @@ public class InitBlocks{
 
         blockDropper = new BlockDropper();
         BlockUtil.register(blockDropper, BlockDropper.TheItemBlock.class);
+
+        blockFluidPlacer = new BlockFluidCollector(true);
+        BlockUtil.register(blockFluidPlacer, BlockFluidCollector.TheItemBlock.class);
+
+        blockFluidCollector = new BlockFluidCollector(false);
+        BlockUtil.register(blockFluidCollector, BlockFluidCollector.TheItemBlock.class);
+
+        blockCoffeeMachine = new BlockCoffeeMachine();
+        BlockUtil.register(blockCoffeeMachine, BlockCoffeeMachine.TheItemBlock.class);
+
+        blockPhantomBooster = new BlockPhantomBooster();
+        BlockUtil.register(blockPhantomBooster, BlockPhantomBooster.TheItemBlock.class);
+
+        blockWildPlant = new BlockWildPlant();
+        BlockUtil.register(blockWildPlant, BlockWildPlant.TheItemBlock.class, false, BlockWildPlant.allWildPlants);
+
+        registerFluids();
+    }
+
+    public static void registerFluids(){
+        //Canola Fluid
+        String canolaOil = "canolaoil";
+        if(!FluidRegistry.isFluidRegistered(canolaOil) || ConfigBoolValues.PREVENT_CANOLA_OVERRIDE.isEnabled()){
+            fluidCanolaOil = new FluidAA(canolaOil).setDensity(1200).setViscosity(1500).setTemperature(300).setRarity(EnumRarity.uncommon);
+            FluidRegistry.registerFluid(fluidCanolaOil);
+        }
+        else{
+            errorAlreadyRegistered("Canola Oil Fluid");
+        }
+        fluidCanolaOil = FluidRegistry.getFluid(canolaOil);
+
+        //Canola Block
+        if(fluidCanolaOil.getBlock() == null || ConfigBoolValues.PREVENT_CANOLA_BLOCK_OVERRIDE.isEnabled()){
+            blockCanolaOil = new BlockFluidFlowing(fluidCanolaOil, Material.water, "blockCanolaOil");
+            BlockUtil.register(blockCanolaOil, BlockFluidFlowing.TheItemBlock.class, false);
+        }
+        else{
+            errorAlreadyRegistered("Canola Oil Block");
+        }
+        blockCanolaOil = fluidCanolaOil.getBlock();
+
+        //Oil Fluid
+        String oil = "oil";
+        if(!FluidRegistry.isFluidRegistered(oil) || ConfigBoolValues.PREVENT_OIL_OVERRIDE.isEnabled()){
+            fluidOil = new FluidAA(oil).setDensity(1200).setViscosity(1500).setTemperature(300).setRarity(EnumRarity.uncommon);
+            FluidRegistry.registerFluid(fluidOil);
+        }
+        else{
+            errorAlreadyRegistered("Oil Fluid");
+        }
+        fluidOil = FluidRegistry.getFluid(oil);
+
+        //Oil Block
+        if(fluidOil.getBlock() == null || ConfigBoolValues.PREVENT_OIL_BLOCK_OVERRIDE.isEnabled()){
+            blockOil = new BlockFluidFlowing(fluidOil, Material.water, "blockOil");
+            BlockUtil.register(blockOil, BlockFluidFlowing.TheItemBlock.class, false);
+        }
+        else{
+            errorAlreadyRegistered("Oil Block");
+        }
+        blockOil = fluidOil.getBlock();
+    }
+
+    public static void errorAlreadyRegistered(String str){
+        ModUtil.LOGGER.log(Level.WARN, str + " from Actually Additions is not getting used as it has already been registered by another Mod! If this causes Issues (which it shouldn't!), you can turn this off in the Config File!");
     }
 }

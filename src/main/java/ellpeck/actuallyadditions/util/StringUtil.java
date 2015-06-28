@@ -24,8 +24,6 @@ public class StringUtil{
     public static final String OBFUSCATED = (char)167 + "k";
     public static final String RESET = (char)167 + "r";
 
-    public static final String[] ROMAN_NUMERALS = new String[]{"", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"};
-
     public static final int DECIMAL_COLOR_WHITE = 16777215;
     public static final int DECIMAL_COLOR_GRAY_TEXT = 4210752;
 

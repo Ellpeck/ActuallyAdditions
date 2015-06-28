@@ -6,7 +6,7 @@ import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ellpeck.actuallyadditions.inventory.GuiFeeder;
+import ellpeck.actuallyadditions.inventory.gui.GuiFeeder;
 import ellpeck.actuallyadditions.tile.TileEntityFeeder;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
@@ -60,10 +60,12 @@ public class PacketTileEntityFeeder implements IMessage{
             if(tile instanceof TileEntityFeeder){
                 TileEntityFeeder tileFeeder = (TileEntityFeeder)tile;
                 tileFeeder.feedAnimal((EntityAnimal)world.getEntityByID(message.animalID));
-            }
 
-            if(Minecraft.getMinecraft().currentScreen instanceof GuiFeeder){
-                ((GuiFeeder)Minecraft.getMinecraft().currentScreen).loveCounter++;
+                if(Minecraft.getMinecraft().currentScreen instanceof GuiFeeder){
+                    if(((GuiFeeder)Minecraft.getMinecraft().currentScreen).tileFeeder == tileFeeder){
+                        ((GuiFeeder)Minecraft.getMinecraft().currentScreen).loveCounter++;
+                    }
+                }
             }
 
             return null;

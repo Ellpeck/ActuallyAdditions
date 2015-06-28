@@ -3,8 +3,8 @@ package ellpeck.actuallyadditions.inventory;
 import cpw.mods.fml.common.network.IGuiHandler;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import ellpeck.actuallyadditions.ActuallyAdditions;
+import ellpeck.actuallyadditions.inventory.gui.*;
 import ellpeck.actuallyadditions.tile.TileEntityBase;
-import ellpeck.actuallyadditions.tile.TileEntityGrinder;
 import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
@@ -13,39 +13,53 @@ public class GuiHandler implements IGuiHandler{
 
     @Override
     public Object getServerGuiElement(int id, EntityPlayer entityPlayer, World world, int x, int y, int z){
-        switch (id){
+        TileEntityBase tile = null;
+        if(id != CRAFTER_ID && id != DRILL_ID){
+            tile = (TileEntityBase)world.getTileEntity(x, y, z);
+        }
+        switch(id){
             case FEEDER_ID:
-                TileEntityBase tileFeeder = (TileEntityBase)world.getTileEntity(x, y, z);
-                return new ContainerFeeder(entityPlayer.inventory, tileFeeder);
+                return new ContainerFeeder(entityPlayer.inventory, tile);
             case GIANT_CHEST_ID:
-                TileEntityBase tileChest = (TileEntityBase)world.getTileEntity(x, y, z);
-                return new ContainerGiantChest(entityPlayer.inventory, tileChest);
+                return new ContainerGiantChest(entityPlayer.inventory, tile);
             case CRAFTER_ID:
                 return new ContainerCrafter(entityPlayer);
             case GRINDER_ID:
-                TileEntityBase tileGrinder = (TileEntityGrinder)world.getTileEntity(x, y, z);
-                return new ContainerGrinder(entityPlayer.inventory, tileGrinder, false);
+                return new ContainerGrinder(entityPlayer.inventory, tile, false);
             case GRINDER_DOUBLE_ID:
-                TileEntityBase tileGrinderDouble = (TileEntityGrinder)world.getTileEntity(x, y, z);
-                return new ContainerGrinder(entityPlayer.inventory, tileGrinderDouble, true);
+                return new ContainerGrinder(entityPlayer.inventory, tile, true);
             case FURNACE_DOUBLE_ID:
-                TileEntityBase tileFurnace = (TileEntityBase)world.getTileEntity(x, y, z);
-                return new ContainerFurnaceDouble(entityPlayer.inventory, tileFurnace);
+                return new ContainerFurnaceDouble(entityPlayer.inventory, tile);
             case INPUTTER_ID:
-                TileEntityBase tileInputter = (TileEntityBase)world.getTileEntity(x, y, z);
-                return new ContainerInputter(entityPlayer.inventory, tileInputter, false);
+                return new ContainerInputter(entityPlayer.inventory, tile, false);
             case INPUTTER_ADVANCED_ID:
-                TileEntityBase tileInputterAdvanced = (TileEntityBase)world.getTileEntity(x, y, z);
-                return new ContainerInputter(entityPlayer.inventory, tileInputterAdvanced, true);
+                return new ContainerInputter(entityPlayer.inventory, tile, true);
             case REPAIRER_ID:
-                TileEntityBase tileRepairer = (TileEntityBase)world.getTileEntity(x, y, z);
-                return new ContainerRepairer(entityPlayer.inventory, tileRepairer);
+                return new ContainerRepairer(entityPlayer.inventory, tile);
             case BREAKER_ID:
-                TileEntityBase tileBreaker = (TileEntityBase)world.getTileEntity(x, y, z);
-                return new ContainerBreaker(entityPlayer.inventory, tileBreaker);
+                return new ContainerBreaker(entityPlayer.inventory, tile);
             case DROPPER_ID:
-                TileEntityBase tileDropper = (TileEntityBase)world.getTileEntity(x, y, z);
-                return new ContainerDropper(entityPlayer.inventory, tileDropper);
+                return new ContainerDropper(entityPlayer.inventory, tile);
+            case CANOLA_PRESS_ID:
+                return new ContainerCanolaPress(entityPlayer.inventory, tile);
+            case FERMENTING_BARREL_ID:
+                return new ContainerFermentingBarrel(entityPlayer.inventory, tile);
+            case COAL_GENERATOR_ID:
+                return new ContainerCoalGenerator(entityPlayer.inventory, tile);
+            case OIL_GENERATOR_ID:
+                return new ContainerOilGenerator(entityPlayer.inventory, tile);
+            case PHANTOM_PLACER_ID:
+                return new ContainerPhantomPlacer(entityPlayer.inventory, tile);
+            case FLUID_COLLECTOR_ID:
+                return new ContainerFluidCollector(entityPlayer.inventory, tile);
+            case COFFEE_MACHINE_ID:
+                return new ContainerCoffeeMachine(entityPlayer.inventory, tile);
+            case DRILL_ID:
+                return new ContainerDrill(entityPlayer.inventory);
+            case ENERGIZER_ID:
+                return new ContainerEnergizer(entityPlayer.inventory, tile);
+            case ENERVATOR_ID:
+                return new ContainerEnervator(entityPlayer.inventory, tile);
             default:
                 return null;
         }
@@ -53,39 +67,53 @@ public class GuiHandler implements IGuiHandler{
 
     @Override
     public Object getClientGuiElement(int id, EntityPlayer entityPlayer, World world, int x, int y, int z){
-        switch (id){
+        TileEntityBase tile = null;
+        if(id != CRAFTER_ID && id != DRILL_ID){
+            tile = (TileEntityBase)world.getTileEntity(x, y, z);
+        }
+        switch(id){
             case FEEDER_ID:
-                TileEntityBase tileFeeder = (TileEntityBase)world.getTileEntity(x, y, z);
-                return new GuiFeeder(entityPlayer.inventory, tileFeeder);
+                return new GuiFeeder(entityPlayer.inventory, tile);
             case GIANT_CHEST_ID:
-                TileEntityBase tileChest = (TileEntityBase)world.getTileEntity(x, y, z);
-                return new GuiGiantChest(entityPlayer.inventory, tileChest);
+                return new GuiGiantChest(entityPlayer.inventory, tile);
             case CRAFTER_ID:
                 return new GuiCrafter(entityPlayer);
             case GRINDER_ID:
-                TileEntityBase tileGrinder = (TileEntityGrinder)world.getTileEntity(x, y, z);
-                return new GuiGrinder(entityPlayer.inventory, tileGrinder, false);
+                return new GuiGrinder(entityPlayer.inventory, tile, false);
             case GRINDER_DOUBLE_ID:
-                TileEntityBase tileGrinderDouble = (TileEntityGrinder)world.getTileEntity(x, y, z);
-                return new GuiGrinder(entityPlayer.inventory, tileGrinderDouble, true);
+                return new GuiGrinder(entityPlayer.inventory, tile, true);
             case FURNACE_DOUBLE_ID:
-                TileEntityBase tileFurnace = (TileEntityBase)world.getTileEntity(x, y, z);
-                return new GuiFurnaceDouble(entityPlayer.inventory, tileFurnace);
+                return new GuiFurnaceDouble(entityPlayer.inventory, tile);
             case INPUTTER_ID:
-                TileEntityBase tileInputter = (TileEntityBase)world.getTileEntity(x, y, z);
-                return new GuiInputter(entityPlayer.inventory, tileInputter, x, y, z, world, false);
+                return new GuiInputter(entityPlayer.inventory, tile, x, y, z, world, false);
             case INPUTTER_ADVANCED_ID:
-                TileEntityBase tileInputterAdvanced = (TileEntityBase)world.getTileEntity(x, y, z);
-                return new GuiInputter(entityPlayer.inventory, tileInputterAdvanced, x, y, z, world, true);
+                return new GuiInputter(entityPlayer.inventory, tile, x, y, z, world, true);
             case REPAIRER_ID:
-                TileEntityBase tileRepairer = (TileEntityBase)world.getTileEntity(x, y, z);
-                return new GuiRepairer(entityPlayer.inventory, tileRepairer);
+                return new GuiRepairer(entityPlayer.inventory, tile);
             case BREAKER_ID:
-                TileEntityBase tileBreaker = (TileEntityBase)world.getTileEntity(x, y, z);
-                return new GuiBreaker(entityPlayer.inventory, tileBreaker);
+                return new GuiBreaker(entityPlayer.inventory, tile);
             case DROPPER_ID:
-                TileEntityBase tileDropper = (TileEntityBase)world.getTileEntity(x, y, z);
-                return new GuiDropper(entityPlayer.inventory, tileDropper);
+                return new GuiDropper(entityPlayer.inventory, tile);
+            case CANOLA_PRESS_ID:
+                return new GuiCanolaPress(entityPlayer.inventory, tile);
+            case FERMENTING_BARREL_ID:
+                return new GuiFermentingBarrel(entityPlayer.inventory, tile);
+            case COAL_GENERATOR_ID:
+                return new GuiCoalGenerator(entityPlayer.inventory, tile);
+            case OIL_GENERATOR_ID:
+                return new GuiOilGenerator(entityPlayer.inventory, tile);
+            case PHANTOM_PLACER_ID:
+                return new GuiPhantomPlacer(entityPlayer.inventory, tile);
+            case FLUID_COLLECTOR_ID:
+                return new GuiFluidCollector(entityPlayer.inventory, tile);
+            case COFFEE_MACHINE_ID:
+                return new GuiCoffeeMachine(entityPlayer.inventory, tile, x, y, z, world);
+            case DRILL_ID:
+                return new GuiDrill(entityPlayer.inventory);
+            case ENERGIZER_ID:
+                return new GuiEnergizer(entityPlayer.inventory, tile);
+            case ENERVATOR_ID:
+                return new GuiEnervator(entityPlayer.inventory, tile);
             default:
                 return null;
         }
@@ -102,6 +130,16 @@ public class GuiHandler implements IGuiHandler{
     public static final int INPUTTER_ADVANCED_ID = 8;
     public static final int BREAKER_ID = 9;
     public static final int DROPPER_ID = 10;
+    public static final int CANOLA_PRESS_ID = 11;
+    public static final int FERMENTING_BARREL_ID = 12;
+    public static final int COAL_GENERATOR_ID = 13;
+    public static final int OIL_GENERATOR_ID = 14;
+    public static final int PHANTOM_PLACER_ID = 15;
+    public static final int FLUID_COLLECTOR_ID = 16;
+    public static final int COFFEE_MACHINE_ID = 17;
+    public static final int DRILL_ID = 18;
+    public static final int ENERGIZER_ID = 19;
+    public static final int ENERVATOR_ID = 20;
 
     public static void init(){
         Util.logInfo("Initializing GuiHandler...");

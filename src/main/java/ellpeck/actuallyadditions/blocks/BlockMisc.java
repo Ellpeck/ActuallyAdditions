@@ -45,7 +45,7 @@ public class BlockMisc extends Block implements INameableItem{
 
     @Override
     public IIcon getIcon(int side, int metadata){
-        return textures[metadata];
+        return metadata >= textures.length ? null : textures[metadata];
     }
 
     @Override
@@ -79,19 +79,19 @@ public class BlockMisc extends Block implements INameableItem{
 
         @Override
         public EnumRarity getRarity(ItemStack stack){
-            return allMiscBlocks[stack.getItemDamage()].rarity;
+            return stack.getItemDamage() >= allMiscBlocks.length ? EnumRarity.common : allMiscBlocks[stack.getItemDamage()].rarity;
         }
 
         @Override
         public String getUnlocalizedName(ItemStack stack){
-            return this.getUnlocalizedName() + allMiscBlocks[stack.getItemDamage()].getName();
+            return this.getUnlocalizedName() + (stack.getItemDamage() >= allMiscBlocks.length ? " ERROR!" : allMiscBlocks[stack.getItemDamage()].getName());
         }
 
         @Override
         @SuppressWarnings("unchecked")
         @SideOnly(Side.CLIENT)
         public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld) {
-            BlockUtil.addInformation(theBlock, list, 1, allMiscBlocks[stack.getItemDamage()].getName());
+            if(stack.getItemDamage() < allMiscBlocks.length) BlockUtil.addInformation(theBlock, list, 1, allMiscBlocks[stack.getItemDamage()].getName());
         }
 
         @Override

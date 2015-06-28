@@ -23,10 +23,10 @@ import java.util.List;
 public class BlockFurnaceSolar extends BlockContainerBase implements INameableItem{
 
     public BlockFurnaceSolar(){
-        super(Material.wood);
-        this.setHarvestLevel("axe", 0);
+        super(Material.rock);
+        this.setHarvestLevel("pickaxe", 0);
         this.setHardness(1.0F);
-        this.setStepSound(soundTypeWood);
+        this.setStepSound(soundTypeStone);
         this.setBlockBounds(0F, 0F, 0F, 1F, 3F/16F, 1F);
     }
 
@@ -97,6 +97,7 @@ public class BlockFurnaceSolar extends BlockContainerBase implements INameableIt
         @SideOnly(Side.CLIENT)
         public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld) {
             BlockUtil.addInformation(theBlock, list, 1, "");
+            BlockUtil.addPowerProductionInfo(list, TileEntityFurnaceSolar.energyProducedPerTick);
         }
 
         @Override

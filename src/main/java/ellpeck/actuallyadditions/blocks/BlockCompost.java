@@ -33,6 +33,8 @@ public class BlockCompost extends BlockContainerBase implements INameableItem{
         this.setHarvestLevel("axe", 0);
         this.setHardness(1.0F);
         this.setStepSound(soundTypeWood);
+
+        this.setBlockBoundsForItemRender();
     }
 
     @Override
@@ -46,12 +48,11 @@ public class BlockCompost extends BlockContainerBase implements INameableItem{
                 else tile.slots[0].stackSize++;
                 if(!player.capabilities.isCreativeMode) player.inventory.getCurrentItem().stackSize--;
             }
+
             //Add Fertilizer to player's inventory
             else if(tile.slots[0] != null && (stackPlayer == null || (stackPlayer.getItem() instanceof ItemFertilizer && stackPlayer.stackSize <= stackPlayer.getMaxStackSize() - tile.slots[0].stackSize)) && tile.slots[0].getItem() instanceof ItemFertilizer){
                 if(stackPlayer == null) player.inventory.setInventorySlotContents(player.inventory.currentItem, tile.slots[0].copy());
                 else player.getCurrentEquippedItem().stackSize+=tile.slots[0].stackSize;
-                //TODO Add again when readding Achievements
-                //player.addStat(InitAchievements.achievementCraftFertilizer, 1);
                 tile.slots[0] = null;
             }
         }

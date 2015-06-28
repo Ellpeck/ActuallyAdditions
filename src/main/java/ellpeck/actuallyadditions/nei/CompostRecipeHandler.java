@@ -1,0 +1,109 @@
+package ellpeck.actuallyadditions.nei;
+
+import codechicken.lib.gui.GuiDraw;
+import codechicken.nei.NEIServerUtils;
+import codechicken.nei.PositionedStack;
+import codechicken.nei.recipe.RecipeInfo;
+import codechicken.nei.recipe.TemplateRecipeHandler;
+import ellpeck.actuallyadditions.config.values.ConfigIntValues;
+import ellpeck.actuallyadditions.items.InitItems;
+import ellpeck.actuallyadditions.items.metalists.TheMiscItems;
+import ellpeck.actuallyadditions.util.ModUtil;
+import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.StatCollector;
+import org.lwjgl.opengl.GL11;
+
+import java.awt.*;
+import java.util.Collections;
+
+public class CompostRecipeHandler extends TemplateRecipeHandler{
+
+    public static final String NAME = "actuallyadditions.compost";
+
+    public CompostRecipeHandler(){
+        super();
+        RecipeInfo.setGuiOffset(this.getGuiClass(), 0, 0);
+    }
+
+    public class CachedCompostRecipe extends CachedRecipe{
+
+        public PositionedStack result;
+        public PositionedStack input;
+        public int chance;
+
+        public CachedCompostRecipe(ItemStack input, ItemStack result){
+            this.result = new PositionedStack(result, 67+32, 19);
+            this.input = new PositionedStack(input, 5+32, 19);
+        }
+
+        @Override
+        public PositionedStack getIngredient(){
+            return input;
+        }
+
+        @Override
+        public PositionedStack getResult(){
+            return result;
+        }
+    }
+
+    @Override
+    public int recipiesPerPage(){
+        return 2;
+    }
+
+    @Override
+    public Class<? extends GuiContainer> getGuiClass(){
+        return null;
+    }
+
+    @Override
+    public String getRecipeName(){
+        return StatCollector.translateToLocal("container.nei." + NAME + ".name");
+    }
+
+    @Override
+    public void loadTransferRects(){
+        transferRects.add(new RecipeTransferRect(new Rectangle(31+32, 18, 22, 16), NAME));
+    }
+
+    @Override
+    public void loadCraftingRecipes(String outputId, Object... results){
+        if(outputId.equals(NAME) && getClass() == CompostRecipeHandler.class){
+            arecipes.add(new CachedCompostRecipe(new ItemStack(InitItems.itemMisc, ConfigIntValues.COMPOST_AMOUNT.getValue(), TheMiscItems.MASHED_FOOD.ordinal()), new ItemStack(InitItems.itemFertilizer, ConfigIntValues.COMPOST_AMOUNT.getValue())));
+        }
+        else super.loadCraftingRecipes(outputId, results);
+    }
+
+    @Override
+    public void loadCraftingRecipes(ItemStack result){
+        if(NEIServerUtils.areStacksSameType(new ItemStack(InitItems.itemFertilizer), result)) arecipes.add(new CachedCompostRecipe(new ItemStack(InitItems.itemMisc, ConfigIntValues.COMPOST_AMOUNT.getValue(), TheMiscItems.MASHED_FOOD.ordinal()), new ItemStack(InitItems.itemFertilizer, ConfigIntValues.COMPOST_AMOUNT.getValue())));
+    }
+
+    @Override
+    public void loadUsageRecipes(ItemStack ingredient){
+        if(NEIServerUtils.areStacksSameTypeCrafting(new ItemStack(InitItems.itemMisc, ConfigIntValues.COMPOST_AMOUNT.getValue(), TheMiscItems.MASHED_FOOD.ordinal()), ingredient)){
+            CachedCompostRecipe theRecipe = new CachedCompostRecipe(new ItemStack(InitItems.itemMisc, ConfigIntValues.COMPOST_AMOUNT.getValue(), TheMiscItems.MASHED_FOOD.ordinal()), new ItemStack(InitItems.itemFertilizer, ConfigIntValues.COMPOST_AMOUNT.getValue()));
+            theRecipe.setIngredientPermutation(Collections.singletonList(theRecipe.input), ingredient);
+            arecipes.add(theRecipe);
+        }
+    }
+
+    @Override
+    public String getGuiTexture(){
+        return ModUtil.MOD_ID_LOWER + ":textures/gui/guiNEICompost.png";
+    }
+
+    @Override
+    public void drawBackground(int recipeIndex){
+        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+        GuiDraw.changeTexture(getGuiTexture());
+        GuiDraw.drawTexturedModalRect(32, 0, 0, 0, 96, 60);
+    }
+
+    @Override
+    public String getOverlayIdentifier(){
+        return NAME;
+    }
+}

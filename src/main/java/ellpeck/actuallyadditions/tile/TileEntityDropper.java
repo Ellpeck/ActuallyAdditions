@@ -11,7 +11,10 @@ public class TileEntityDropper extends TileEntityInventoryBase{
     private final int timeNeeded = ConfigIntValues.DROPPER_TIME_NEEDED.getValue();
     private int currentTime;
 
-    @SuppressWarnings("unused")
+    public TileEntityDropper(int slots, String name){
+        super(slots, name);
+    }
+
     public TileEntityDropper(){
         super(9, "dropper");
     }

@@ -13,8 +13,9 @@ public class RenderPlayerEventAA{
 
     private RenderSpecial ellpeckRender = new RenderSpecial(new ModelStandardBlock("Ellpeck"));
     private RenderSpecial hoseRender = new RenderSpecial(new ModelTorch());
-    private RenderSpecial paktoRender = new RenderSpecial(new ModelStandardBlock("Pakto"));
+    //private RenderSpecial paktoRender = new RenderSpecial(new ModelStandardBlock("Pakto"));
     private RenderSpecial glenRender = new RenderSpecial(new ModelStandardBlock("Glenthor"));
+    private RenderSpecial lordiRender = new RenderSpecial(new ModelStandardBlock("Lordi"));
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void RenderPlayerEvent(RenderPlayerEvent.Pre event){
@@ -26,10 +27,10 @@ public class RenderPlayerEventAA{
             }
 
             //Paktosan
-            if(event.entityPlayer.getUniqueID().equals(UUID.fromString("0bac71ad-9156-487e-9ade-9c5b57274b23"))){
+            /*if(event.entityPlayer.getUniqueID().equals(UUID.fromString("0bac71ad-9156-487e-9ade-9c5b57274b23"))){
                 paktoRender.render(event.entityPlayer, event.partialRenderTick, 0.3F, 1F);
                 return;
-            }
+            }*/
 
             //TwoOfEight
             if(event.entityPlayer.getUniqueID().equals(UUID.fromString("a57d2829-9711-4552-a7de-ee800802f643"))){
@@ -40,6 +41,12 @@ public class RenderPlayerEventAA{
             //dqmhose
             if(event.entityPlayer.getUniqueID().equals(UUID.fromString("cb7b293a-5031-484e-b5be-b4f2f4e92726"))){
                 hoseRender.render(event.entityPlayer, event.partialRenderTick, 0.5F, 1.3F);
+                return;
+            }
+
+            //Lordi
+            if(event.entityPlayer.getUniqueID().equals(UUID.fromString("990ecf6d-15dd-442c-b91b-323a6420c78e"))){
+                lordiRender.render(event.entityPlayer, event.partialRenderTick, 0.3F, 1F);
             }
         }
     }

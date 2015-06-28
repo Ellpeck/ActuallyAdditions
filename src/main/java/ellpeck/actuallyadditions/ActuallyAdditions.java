@@ -10,17 +10,22 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import ellpeck.actuallyadditions.achievement.InitAchievements;
 import ellpeck.actuallyadditions.blocks.InitBlocks;
+import ellpeck.actuallyadditions.communication.InterModCommunications;
 import ellpeck.actuallyadditions.config.ConfigurationHandler;
 import ellpeck.actuallyadditions.crafting.GrinderCrafting;
 import ellpeck.actuallyadditions.crafting.InitCrafting;
+import ellpeck.actuallyadditions.crafting.ItemCrafting;
 import ellpeck.actuallyadditions.event.InitEvents;
 import ellpeck.actuallyadditions.gen.InitVillager;
 import ellpeck.actuallyadditions.gen.OreGen;
 import ellpeck.actuallyadditions.inventory.GuiHandler;
 import ellpeck.actuallyadditions.items.InitItems;
+import ellpeck.actuallyadditions.items.ItemCoffee;
 import ellpeck.actuallyadditions.material.InitItemMaterials;
 import ellpeck.actuallyadditions.network.PacketHandler;
 import ellpeck.actuallyadditions.proxy.IProxy;
+import ellpeck.actuallyadditions.recipe.FuelHandler;
+import ellpeck.actuallyadditions.recipe.HairyBallHandler;
 import ellpeck.actuallyadditions.tile.TileEntityBase;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.Util;
@@ -34,23 +39,23 @@ public class ActuallyAdditions{
     @SidedProxy(clientSide = "ellpeck.actuallyadditions.proxy.ClientProxy", serverSide = "ellpeck.actuallyadditions.proxy.ServerProxy")
     public static IProxy proxy;
 
-    @EventHandler()
+    @EventHandler
     public void preInit(FMLPreInitializationEvent event){
         Util.logInfo("Starting PreInitialization Phase...");
 
-        PacketHandler.init();
         ConfigurationHandler.init(event.getSuggestedConfigurationFile());
+        PacketHandler.init();
         InitItemMaterials.init();
         InitBlocks.init();
         InitItems.init();
         InitVillager.init();
+        FuelHandler.init();
         proxy.preInit();
 
         Util.logInfo("PreInitialization Finished.");
     }
 
-    @SuppressWarnings("unused")
-    @EventHandler()
+    @EventHandler
     public void init(FMLInitializationEvent event){
         Util.logInfo("Starting Initialization Phase...");
 
@@ -66,14 +71,21 @@ public class ActuallyAdditions{
         Util.logInfo("Initialization Finished.");
     }
 
-    @SuppressWarnings("unused")
-    @EventHandler()
+    @EventHandler
     public void postInit(FMLPostInitializationEvent event){
         Util.logInfo("Starting PostInitialization Phase...");
 
+        ItemCoffee.initIngredients();
         GrinderCrafting.init();
+        ItemCrafting.initMashedFoodRecipes();
+        HairyBallHandler.init();
         proxy.postInit();
 
         Util.logInfo("PostInitialization Finished.");
+    }
+
+    @EventHandler
+    public void onIMCReceived(FMLInterModComms.IMCEvent event){
+        InterModCommunications.processIMC(event.getMessages());
     }
 }

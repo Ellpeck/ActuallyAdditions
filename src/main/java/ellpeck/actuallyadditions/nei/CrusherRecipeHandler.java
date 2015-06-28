@@ -1,33 +1,27 @@
 package ellpeck.actuallyadditions.nei;
 
 import codechicken.lib.gui.GuiDraw;
-import codechicken.nei.ItemList;
 import codechicken.nei.NEIServerUtils;
 import codechicken.nei.PositionedStack;
 import codechicken.nei.recipe.RecipeInfo;
 import codechicken.nei.recipe.TemplateRecipeHandler;
-import ellpeck.actuallyadditions.inventory.GuiGrinder;
-import ellpeck.actuallyadditions.recipe.GrinderRecipes;
+import ellpeck.actuallyadditions.inventory.gui.GuiGrinder;
+import ellpeck.actuallyadditions.recipe.GrinderRecipeManualRegistry;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.StatCollector;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class CrusherRecipeHandler extends TemplateRecipeHandler{
 
-    public static final String NAME = "crushing";
-    public static final String FUEL = "fuel";
-
-    public static ArrayList<Fuel> fuels;
+    public static final String NAME = "actuallyadditions.crushing";
 
     public CrusherRecipeHandler(){
         super();
@@ -60,14 +54,8 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler{
         }
 
         @Override
-        public PositionedStack getOtherStack(){
-            return fuels.get((cycleticks / 48) % fuels.size()).stack;
-        }
-
-        @Override
         public List<PositionedStack> getOtherStacks(){
             ArrayList<PositionedStack> list = new ArrayList<PositionedStack>();
-            list.add(this.getOtherStack());
             if(this.resultTwo != null) list.add(this.resultTwo);
             return list;
         }
@@ -78,20 +66,8 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler{
         return 1;
     }
 
-    public static class Fuel{
-
-        public Fuel(ItemStack in, int burnTime){
-            this.stack = new PositionedStack(in, 51, 21, false);
-            this.burnTime = burnTime;
-        }
-
-        public PositionedStack stack;
-        public int burnTime;
-    }
-
     @Override
     public void loadTransferRects(){
-        transferRects.add(new RecipeTransferRect(new Rectangle(51, 5, 14, 14), FUEL));
         transferRects.add(new RecipeTransferRect(new Rectangle(80, 40, 24, 22), NAME));
     }
 
@@ -102,20 +78,14 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler{
 
     @Override
     public String getRecipeName(){
-        return StatCollector.translateToLocal("container." + ModUtil.MOD_ID_LOWER + ".nei." + NAME + ".name");
-    }
-
-    @Override
-    public TemplateRecipeHandler newInstance(){
-        if (fuels == null || fuels.isEmpty()) findFuels();
-        return super.newInstance();
+        return StatCollector.translateToLocal("container.nei." + NAME + ".name");
     }
 
     @Override
     public void loadCraftingRecipes(String outputId, Object... results){
         if(outputId.equals(NAME) && getClass() == CrusherRecipeHandler.class){
-            ArrayList<GrinderRecipes.GrinderRecipe> recipes = GrinderRecipes.instance().recipes;
-            for(GrinderRecipes.GrinderRecipe recipe : recipes){
+            ArrayList<GrinderRecipeManualRegistry.GrinderRecipe> recipes = GrinderRecipeManualRegistry.recipes;
+            for(GrinderRecipeManualRegistry.GrinderRecipe recipe : recipes){
                 arecipes.add(new CachedCrush(recipe.input, recipe.firstOutput, recipe.secondOutput, recipe.secondChance));
             }
         }
@@ -124,22 +94,16 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler{
 
     @Override
     public void loadCraftingRecipes(ItemStack result){
-        ArrayList<GrinderRecipes.GrinderRecipe> recipes = GrinderRecipes.instance().recipes;
-        for(GrinderRecipes.GrinderRecipe recipe : recipes){
+        ArrayList<GrinderRecipeManualRegistry.GrinderRecipe> recipes = GrinderRecipeManualRegistry.recipes;
+        for(GrinderRecipeManualRegistry.GrinderRecipe recipe : recipes){
             if(NEIServerUtils.areStacksSameType(recipe.firstOutput, result) || NEIServerUtils.areStacksSameType(recipe.secondOutput, result)) arecipes.add(new CachedCrush(recipe.input, recipe.firstOutput, recipe.secondOutput, recipe.secondChance));
         }
     }
 
     @Override
-    public void loadUsageRecipes(String inputId, Object... ingredients){
-        if (inputId.equals(FUEL) && getClass() == CrusherRecipeHandler.class) loadCraftingRecipes(NAME);
-        else super.loadUsageRecipes(inputId, ingredients);
-    }
-
-    @Override
     public void loadUsageRecipes(ItemStack ingredient){
-        ArrayList<GrinderRecipes.GrinderRecipe> recipes = GrinderRecipes.instance().recipes;
-        for(GrinderRecipes.GrinderRecipe recipe : recipes){
+        ArrayList<GrinderRecipeManualRegistry.GrinderRecipe> recipes = GrinderRecipeManualRegistry.recipes;
+        for(GrinderRecipeManualRegistry.GrinderRecipe recipe : recipes){
             if(NEIServerUtils.areStacksSameTypeCrafting(recipe.input, ingredient)){
                 CachedCrush theRecipe = new CachedCrush(recipe.input, recipe.firstOutput, recipe.secondOutput, recipe.secondChance);
                 theRecipe.setIngredientPermutation(Collections.singletonList(theRecipe.ingredient), ingredient);
@@ -157,12 +121,11 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler{
     public void drawBackground(int recipeIndex){
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         GuiDraw.changeTexture(getGuiTexture());
-        GuiDraw.drawTexturedModalRect(49, 5, 49, 5, 66, 86);
+        GuiDraw.drawTexturedModalRect(60, 13, 60, 13, 56, 79);
     }
 
     @Override
     public void drawExtras(int recipe){
-        drawProgressBar(51, 5, 176, 44, 14, 14, 48, 7);
         drawProgressBar(80, 40, 176, 0, 24, 23, 48, 1);
 
         CachedCrush crush = (CachedCrush)this.arecipes.get(recipe);
@@ -170,28 +133,6 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler{
             int secondChance = crush.secondChance;
             String secondString = secondChance + "%";
             GuiDraw.drawString(secondString, 118, 73, StringUtil.DECIMAL_COLOR_GRAY_TEXT, false);
-        }
-    }
-
-    private static Set<Item> excludedFuels(){
-        Set<Item> theFuels = new HashSet<Item>();
-        theFuels.add(Item.getItemFromBlock(Blocks.brown_mushroom));
-        theFuels.add(Item.getItemFromBlock(Blocks.red_mushroom));
-        theFuels.add(Item.getItemFromBlock(Blocks.standing_sign));
-        theFuels.add(Item.getItemFromBlock(Blocks.wall_sign));
-        theFuels.add(Item.getItemFromBlock(Blocks.wooden_door));
-        theFuels.add(Item.getItemFromBlock(Blocks.trapped_chest));
-        return theFuels;
-    }
-
-    private static void findFuels(){
-        fuels = new ArrayList<Fuel>();
-        Set<Item> theFuels = excludedFuels();
-        for(ItemStack item : ItemList.items){
-            if(!theFuels.contains(item.getItem())){
-                int burnTime = TileEntityFurnace.getItemBurnTime(item);
-                if(burnTime > 0) fuels.add(new Fuel(item.copy(), burnTime));
-            }
         }
     }
 

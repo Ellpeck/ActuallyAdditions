@@ -28,18 +28,28 @@ public class ItemUtil{
     }
 
     public static void register(Item item){
-        item.setCreativeTab(CreativeTab.instance);
-        item.setUnlocalizedName(createUnlocalizedName(item));
-        GameRegistry.registerItem(item, ((INameableItem)item).getName());
-        if(!((INameableItem)item).getOredictName().isEmpty()) OreDictionary.registerOre(((INameableItem)item).getOredictName(), new ItemStack(item, 1, Util.WILDCARD));
+        register(item, true);
+    }
+
+    public static void register(Item item, boolean addTab){
+        register(item, addTab, null);
     }
 
     public static void register(Item item, Enum[] list){
-        item.setCreativeTab(CreativeTab.instance);
+        register(item, true, list);
+    }
+
+    public static void register(Item item, boolean addTab, Enum[] list){
+        if(addTab) item.setCreativeTab(CreativeTab.instance);
         item.setUnlocalizedName(createUnlocalizedName(item));
         GameRegistry.registerItem(item, ((INameableItem)item).getName());
-        for(Enum current : list){
-            if(!((INameableItem)current).getOredictName().isEmpty()) OreDictionary.registerOre(((INameableItem)current).getOredictName(), new ItemStack(item, 1, current.ordinal()));
+        if(list != null){
+            for(Enum current : list){
+                if(!((INameableItem)current).getOredictName().isEmpty()) OreDictionary.registerOre(((INameableItem)current).getOredictName(), new ItemStack(item, 1, current.ordinal()));
+            }
+        }
+        else{
+            if(!((INameableItem)item).getOredictName().isEmpty()) OreDictionary.registerOre(((INameableItem)item).getOredictName(), new ItemStack(item, 1, Util.WILDCARD));
         }
     }
 

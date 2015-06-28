@@ -21,12 +21,10 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 import java.util.List;
-import java.util.Random;
 
 public class BlockItemRepairer extends BlockContainerBase implements INameableItem{
 
     private IIcon topIcon;
-    private IIcon onIcon;
     private IIcon bottomIcon;
 
     public BlockItemRepairer(){
@@ -54,16 +52,9 @@ public class BlockItemRepairer extends BlockContainerBase implements INameableIt
 
     @Override
     public IIcon getIcon(int side, int meta){
-        if(side == 1 && meta != 1) return this.topIcon;
-        if(side == 1) return this.onIcon;
+        if(side == 1) return this.topIcon;
         if(side == 0) return this.bottomIcon;
         return this.blockIcon;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void randomDisplayTick(World world, int x, int y, int z, Random rand){
-
     }
 
     @Override
@@ -71,7 +62,6 @@ public class BlockItemRepairer extends BlockContainerBase implements INameableIt
     public void registerBlockIcons(IIconRegister iconReg){
         this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":" + this.getName());
         this.topIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":" + this.getName() + "Top");
-        this.onIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":" + this.getName() + "On");
         this.bottomIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":" + this.getName() + "Bottom");
     }
 
@@ -122,6 +112,7 @@ public class BlockItemRepairer extends BlockContainerBase implements INameableIt
         @SideOnly(Side.CLIENT)
         public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld) {
             BlockUtil.addInformation(theBlock, list, 1, "");
+            BlockUtil.addPowerUsageInfo(list, TileEntityItemRepairer.energyUsePerTick);
         }
 
         @Override
