@@ -117,3 +117,5 @@
 -Inventory Emitter
     -Emits a Redstone Signal dependant on the Amount of a specified Item in it
     -Items are configurable in the GUI
+
+-Enderman Teleport Stopper

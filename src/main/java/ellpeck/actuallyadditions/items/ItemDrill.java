@@ -332,7 +332,7 @@ public class ItemDrill extends ItemEnergyContainer implements INameableItem{
                 if(!world.isRemote){
                     if(!living.isSneaking() && this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.THREE_BY_THREE)){
                         if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FIVE_BY_FIVE)){
-                            this.breakBlocks(stack, 30, world, x, y, z, player);
+                            this.breakBlocks(stack, 2, world, x, y, z, player);
                         }
                         else this.breakBlocks(stack, 1, world, x, y, z, player);
                     }

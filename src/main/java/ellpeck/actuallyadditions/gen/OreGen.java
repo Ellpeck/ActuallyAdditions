@@ -11,6 +11,7 @@ import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldType;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.feature.WorldGenMinable;
 import org.apache.logging.log4j.Level;
@@ -21,13 +22,17 @@ public class OreGen implements IWorldGenerator{
 
     @Override
     public void generate(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider){
-        switch (world.provider.dimensionId){
+        if(world.provider.terrainType == WorldType.FLAT) return;
+
+        switch(world.provider.dimensionId){
             case -1:
                 generateNether(world, random, chunkX*16, chunkZ*16);
-            case 0:
-                generateSurface(world, random, chunkX*16, chunkZ*16);
+            //case 0:
+            //   generateSurface(world, random, chunkX*16, chunkZ*16);
             case 1:
                 generateEnd(world, random, chunkX*16, chunkZ*16);
+            default:
+                generateSurface(world, random, chunkX*16, chunkZ*16);
         }
     }
 
@@ -37,7 +42,9 @@ public class OreGen implements IWorldGenerator{
     }
 
     private void generateSurface(World world, Random random, int x, int z){
-        if(ConfigBoolValues.GENERATE_QUARTZ.isEnabled()) this.addOreSpawn(InitBlocks.blockMisc, TheMiscBlocks.ORE_QUARTZ.ordinal(), Blocks.stone, world, random, x, z, this.getRandom(ConfigIntValues.BLACK_QUARTZ_BASE_AMOUNT.getValue(), ConfigIntValues.BLACK_QUARTZ_ADD_CHANCE.getValue(), random), ConfigIntValues.BLACK_QUARTZ_CHANCE.getValue(), ConfigIntValues.BLACK_QUARTZ_MIN_HEIGHT.getValue(), ConfigIntValues.BLACK_QUARTZ_MAX_HEIGHT.getValue());
+        if(ConfigBoolValues.GENERATE_QUARTZ.isEnabled()){
+            this.addOreSpawn(InitBlocks.blockMisc, TheMiscBlocks.ORE_QUARTZ.ordinal(), Blocks.stone, world, random, x, z, this.getRandom(ConfigIntValues.BLACK_QUARTZ_BASE_AMOUNT.getValue(), ConfigIntValues.BLACK_QUARTZ_ADD_CHANCE.getValue(), random), ConfigIntValues.BLACK_QUARTZ_CHANCE.getValue(), ConfigIntValues.BLACK_QUARTZ_MIN_HEIGHT.getValue(), ConfigIntValues.BLACK_QUARTZ_MAX_HEIGHT.getValue());
+        }
     }
 
     @SuppressWarnings("unused")
@@ -64,6 +71,6 @@ public class OreGen implements IWorldGenerator{
 
     public static void init(){
         Util.logInfo("Registering World Generator...");
-        GameRegistry.registerWorldGenerator(new OreGen(), 0);
+        GameRegistry.registerWorldGenerator(new OreGen(), 10);
     }
 }
