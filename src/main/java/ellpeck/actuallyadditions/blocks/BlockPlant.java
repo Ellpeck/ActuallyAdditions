@@ -14,7 +14,9 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.EnumPlantType;
 
 import java.util.List;
 import java.util.Random;
@@ -34,6 +36,11 @@ public class BlockPlant extends BlockCrops implements INameableItem{
         this.textures = new IIcon[stages];
         this.minDropAmount = minDropAmount;
         this.addDropAmount = addDropAmount;
+    }
+
+    @Override
+    public EnumPlantType getPlantType(IBlockAccess world, int x, int y, int z){
+        return EnumPlantType.Crop;
     }
 
     @Override

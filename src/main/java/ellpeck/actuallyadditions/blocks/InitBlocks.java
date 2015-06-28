@@ -73,7 +73,10 @@ public class InitBlocks{
     public static Block blockTestifiBucksGreenStairs;
     public static Block blockTestifiBucksWhiteStairs;
     public static Block blockTestifiBucksGreenSlab;
-    public static Block blockTestifibucksWhiteSlab;
+    public static Block blockTestifiBucksWhiteSlab;
+
+    public static Block blockColoredLamp;
+    public static Block blockColoredLampOn;
 
     public static void init(){
         Util.logInfo("Initializing Blocks...");
@@ -88,8 +91,13 @@ public class InitBlocks{
         BlockUtil.register(blockTestifiBucksWhiteStairs, BlockStair.TheItemBlock.class);
         blockTestifiBucksGreenSlab = new BlockSlabs("blockTestifiBucksGreenSlab", blockTestifiBucksGreenWall);
         BlockUtil.register(blockTestifiBucksGreenSlab, BlockSlabs.TheItemBlock.class);
-        blockTestifibucksWhiteSlab = new BlockSlabs("blockTestifibucksWhiteSlab", blockTestifiBucksWhiteWall);
-        BlockUtil.register(blockTestifibucksWhiteSlab, BlockSlabs.TheItemBlock.class);
+        blockTestifiBucksWhiteSlab = new BlockSlabs("blockTestifiBucksWhiteSlab", blockTestifiBucksWhiteWall);
+        BlockUtil.register(blockTestifiBucksWhiteSlab, BlockSlabs.TheItemBlock.class);
+
+        blockColoredLamp = new BlockColoredLamp(false);
+        BlockUtil.register(blockColoredLamp, BlockColoredLamp.TheItemBlock.class, BlockColoredLamp.allLampTypes);
+        blockColoredLampOn = new BlockColoredLamp(true);
+        BlockUtil.register(blockColoredLampOn, BlockColoredLamp.TheItemBlock.class, false, BlockColoredLamp.allLampTypes);
 
         blockEnergizer = new BlockEnergizer(true);
         BlockUtil.register(blockEnergizer, BlockEnergizer.TheItemBlock.class);

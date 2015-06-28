@@ -40,7 +40,7 @@ public class ItemUtil{
     }
 
     public static void register(Item item, boolean addTab, Enum[] list){
-        if(addTab) item.setCreativeTab(CreativeTab.instance);
+        item.setCreativeTab(addTab ? CreativeTab.instance : null);
         item.setUnlocalizedName(createUnlocalizedName(item));
         GameRegistry.registerItem(item, ((INameableItem)item).getName());
         if(list != null){

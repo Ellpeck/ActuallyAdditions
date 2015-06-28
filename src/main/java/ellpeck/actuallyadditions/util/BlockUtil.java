@@ -44,7 +44,7 @@ public class BlockUtil{
     public static final ArrayList<Block> wailaRegisterList = new ArrayList<Block>();
 
     public static void register(Block block, Class<? extends ItemBlock> itemBlock, boolean addTab, Enum[] list){
-        if(addTab) block.setCreativeTab(CreativeTab.instance);
+        block.setCreativeTab(addTab ? CreativeTab.instance : null);
         block.setBlockName(createUnlocalizedName(block));
         GameRegistry.registerBlock(block, itemBlock, ((INameableItem)block).getName());
         if(list != null){

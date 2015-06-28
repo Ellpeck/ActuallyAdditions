@@ -7,8 +7,7 @@ import ellpeck.actuallyadditions.achievement.InitAchievements;
 public class PickupEvent{
 
     @SubscribeEvent
-    public void onCraftedEvent(PlayerEvent.ItemPickupEvent event){
+    public void onPickupEvent(PlayerEvent.ItemPickupEvent event){
         CraftEvent.checkAchievements(event.pickedUp.getEntityItem(), event, InitAchievements.PICKUP_ACH);
     }
-
 }

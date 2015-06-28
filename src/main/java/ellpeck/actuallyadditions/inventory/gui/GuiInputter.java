@@ -232,8 +232,7 @@ public class GuiInputter extends GuiContainer{
             this.setVariable(this.fieldPullStart, 2);
             this.setVariable(this.fieldPullEnd, 3);
         }
-        else
-            PacketHandler.theNetwork.sendToServer(new PacketGuiButton(x, y, z, world, button.id, Minecraft.getMinecraft().thePlayer));
+        else PacketHandler.theNetwork.sendToServer(new PacketGuiButton(x, y, z, world, button.id, Minecraft.getMinecraft().thePlayer));
     }
 
     public static class SmallerButton extends GuiButton{

@@ -61,6 +61,26 @@ tooltip.actuallyadditions.itemBattery.desc=Stores RF! Charge in an Energizer! Di
 tile.actuallyadditions.blockCoalGenerator.name=Coal Generator
 tooltip.actuallyadditions.blockCoalGenerator.desc=Produces Energy from Coal and other flammable Materials
 
+tooltip.actuallyadditions.blockColoredLamp.desc.1=Sneak-Right-Click to turn me on!
+tooltip.actuallyadditions.blockColoredLamp.desc.2=Right-Click me with a Dye to dye me!
+
+tile.actuallyadditions.blockColoredLampWhite.name=White Lamp
+tile.actuallyadditions.blockColoredLampOrange.name=Orange Lamp
+tile.actuallyadditions.blockColoredLampMagenta.name=Magenta Lamp
+tile.actuallyadditions.blockColoredLampYellow.name=Yellow Lamp
+tile.actuallyadditions.blockColoredLampLightBlue.name=Light Blue Lamp
+tile.actuallyadditions.blockColoredLampBlue.name=Blue Lamp
+tile.actuallyadditions.blockColoredLampGray.name=Gray Lamp
+tile.actuallyadditions.blockColoredLampLightGray.name=Light Gray Lamp
+tile.actuallyadditions.blockColoredLampGreen.name=Green Lamp
+tile.actuallyadditions.blockColoredLampBlack.name=Black Lamp
+tile.actuallyadditions.blockColoredLampBrown.name=Brown Lamp
+tile.actuallyadditions.blockColoredLampRed.name=Red Lamp
+tile.actuallyadditions.blockColoredLampLime.name=Lime Lamp
+tile.actuallyadditions.blockColoredLampPink.name=Pink Lamp
+tile.actuallyadditions.blockColoredLampCyan.name=Cyan Lamp
+tile.actuallyadditions.blockColoredLampPurple.name=Purple Lamp
+
 item.actuallyadditions.itemBucketCanolaOil.name=Canola Oil Bucket
 tooltip.actuallyadditions.itemBucketCanolaOil.desc=A Bucket filled with Canola Oil
 item.actuallyadditions.itemBucketOil.name=Oil Bucket
@@ -144,6 +164,20 @@ tooltip.actuallyadditions.blockWildRice.desc=Grows in the Wild... Gets you Rice 
 tooltip.actuallyadditions.blockWildCoffee.desc=Grows in the Wild... Gets you Coffee Seeds!
 tooltip.actuallyadditions.blockWildFlax.desc=Grows in the Wild... Gets you Flax Seeds!
 
+tile.actuallyadditions.blockTestifiBucksGreenWall.name=Green TestifiBucks Wall
+tile.actuallyadditions.blockTestifiBucksWhiteWall.name=White TestifiBucks Wall
+tile.actuallyadditions.blockTestifiBucksGreenStairs.name=Green TestifiBucks Stairs
+tile.actuallyadditions.blockTestifiBucksWhiteStairs.name=White TestifiBucks Stairs
+tile.actuallyadditions.blockTestifiBucksGreenSlab.name=Green TestifiBucks Slab
+tile.actuallyadditions.blockTestifiBucksWhiteSlab.name=White TestifiBucks Slab
+
+tooltip.actuallyadditions.blockTestifiBucksGreenWall.desc=A Green Wall used in a TestifiBucks
+tooltip.actuallyadditions.blockTestifiBucksWhiteWall.desc=A White Wall used in a TestifiBucks
+tooltip.actuallyadditions.blockTestifiBucksGreenStairs.desc=A Green Stair used in a TestifiBucks
+tooltip.actuallyadditions.blockTestifiBucksWhiteStairs.desc=A White Stair used in a TestifiBucks
+tooltip.actuallyadditions.blockTestifiBucksGreenSlab.desc=A Green Slab used in a TestifiBucks
+tooltip.actuallyadditions.blockTestifiBucksWhiteSlab.desc=A White Slab used in a TestifiBucks
+
 item.actuallyadditions.itemCanolaSeed.name=Canola Seeds
 tooltip.actuallyadditions.itemCanolaSeed.desc=Grows on Farmland! Makes Canola!
 item.actuallyadditions.itemMiscCanola.name=Canola
@@ -218,6 +252,8 @@ tooltip.actuallyadditions.itemDrillUpgrade.desc=Sneak-Right-Click the Drill to a
 
 tile.actuallyadditions.blockMiscEnderCasing.name=Ender Casing
 tooltip.actuallyadditions.blockMiscEnderCasing.desc=Extremely sturdy casing, used for crafting
+
+tooltip.actuallyadditions.onSuffix.desc=On
 
 tooltip.actuallyadditions.phantom.connected.desc=<Block connected!>
 tooltip.actuallyadditions.phantom.stored.desc=<Block stored to this Connector!>
