@@ -5,7 +5,7 @@ import ellpeck.actuallyadditions.items.metalists.TheFoods;
 import ellpeck.actuallyadditions.items.metalists.TheMiscItems;
 import ellpeck.actuallyadditions.items.tools.*;
 import ellpeck.actuallyadditions.material.InitItemMaterials;
-import ellpeck.actuallyadditions.recipe.HairyBallHandler;
+import ellpeck.actuallyadditions.util.CompatUtil;
 import ellpeck.actuallyadditions.util.ItemUtil;
 import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.init.Blocks;
@@ -13,9 +13,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.EnumPlantType;
 import net.minecraftforge.fluids.FluidContainerRegistry;
-import powercrystals.minefactoryreloaded.api.FactoryRegistry;
 
 public class InitItems{
 
@@ -157,26 +155,25 @@ public class InitItems{
 
         itemHairyBall = new ItemHairyBall();
         ItemUtil.register(itemHairyBall);
-        HairyBallHandler.init();
 
         itemCoffeeBean = new ItemCoffeeBean();
         ItemUtil.register(itemCoffeeBean);
 
-        itemRiceSeed = new ItemSeed("itemRiceSeed", InitBlocks.blockRice, Blocks.water, EnumPlantType.Water, itemFoods, TheFoods.RICE.ordinal());
+        itemRiceSeed = new ItemSeed("itemRiceSeed", InitBlocks.blockRice, itemFoods, TheFoods.RICE.ordinal());
         ItemUtil.register(itemRiceSeed);
-        FactoryRegistry.sendMessage("registerPlantable", itemRiceSeed);
+        CompatUtil.registerMFRSeed(itemRiceSeed);
 
-        itemCanolaSeed = new ItemSeed("itemCanolaSeed", InitBlocks.blockCanola, Blocks.grass, EnumPlantType.Plains, itemMisc, TheMiscItems.CANOLA.ordinal());
+        itemCanolaSeed = new ItemSeed("itemCanolaSeed", InitBlocks.blockCanola, itemMisc, TheMiscItems.CANOLA.ordinal());
         ItemUtil.register(itemCanolaSeed);
-        FactoryRegistry.sendMessage("registerPlantable", itemCanolaSeed);
+        CompatUtil.registerMFRSeed(itemCanolaSeed);
 
-        itemFlaxSeed = new ItemSeed("itemFlaxSeed", InitBlocks.blockFlax, Blocks.grass, EnumPlantType.Plains, Items.string, 0);
+        itemFlaxSeed = new ItemSeed("itemFlaxSeed", InitBlocks.blockFlax, Items.string, 0);
         ItemUtil.register(itemFlaxSeed);
-        FactoryRegistry.sendMessage("registerPlantable", itemFlaxSeed);
+        CompatUtil.registerMFRSeed(itemFlaxSeed);
 
-        itemCoffeeSeed = new ItemSeed("itemCoffeeSeed", InitBlocks.blockCoffee, Blocks.grass, EnumPlantType.Plains, itemCoffeeBean, 0);
+        itemCoffeeSeed = new ItemSeed("itemCoffeeSeed", InitBlocks.blockCoffee, itemCoffeeBean, 0);
         ItemUtil.register(itemCoffeeSeed);
-        FactoryRegistry.sendMessage("registerPlantable", itemCoffeeSeed);
+        CompatUtil.registerMFRSeed(itemCoffeeSeed);
 
         itemPickaxeEmerald = new ItemPickaxeAA(InitItemMaterials.toolMaterialEmerald, new ItemStack(Items.emerald), "itemPickaxeEmerald", EnumRarity.rare);
         itemAxeEmerald = new ItemAxeAA(InitItemMaterials.toolMaterialEmerald, new ItemStack(Items.emerald), "itemAxeEmerald", EnumRarity.rare);

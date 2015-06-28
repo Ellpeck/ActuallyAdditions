@@ -6,7 +6,7 @@ import codechicken.nei.PositionedStack;
 import codechicken.nei.recipe.RecipeInfo;
 import codechicken.nei.recipe.TemplateRecipeHandler;
 import ellpeck.actuallyadditions.inventory.gui.GuiGrinder;
-import ellpeck.actuallyadditions.recipe.GrinderRecipes;
+import ellpeck.actuallyadditions.recipe.GrinderRecipeManualRegistry;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -84,8 +84,8 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler{
     @Override
     public void loadCraftingRecipes(String outputId, Object... results){
         if(outputId.equals(NAME) && getClass() == CrusherRecipeHandler.class){
-            ArrayList<GrinderRecipes.GrinderRecipe> recipes = GrinderRecipes.recipes;
-            for(GrinderRecipes.GrinderRecipe recipe : recipes){
+            ArrayList<GrinderRecipeManualRegistry.GrinderRecipe> recipes = GrinderRecipeManualRegistry.recipes;
+            for(GrinderRecipeManualRegistry.GrinderRecipe recipe : recipes){
                 arecipes.add(new CachedCrush(recipe.input, recipe.firstOutput, recipe.secondOutput, recipe.secondChance));
             }
         }
@@ -94,16 +94,16 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler{
 
     @Override
     public void loadCraftingRecipes(ItemStack result){
-        ArrayList<GrinderRecipes.GrinderRecipe> recipes = GrinderRecipes.recipes;
-        for(GrinderRecipes.GrinderRecipe recipe : recipes){
+        ArrayList<GrinderRecipeManualRegistry.GrinderRecipe> recipes = GrinderRecipeManualRegistry.recipes;
+        for(GrinderRecipeManualRegistry.GrinderRecipe recipe : recipes){
             if(NEIServerUtils.areStacksSameType(recipe.firstOutput, result) || NEIServerUtils.areStacksSameType(recipe.secondOutput, result)) arecipes.add(new CachedCrush(recipe.input, recipe.firstOutput, recipe.secondOutput, recipe.secondChance));
         }
     }
 
     @Override
     public void loadUsageRecipes(ItemStack ingredient){
-        ArrayList<GrinderRecipes.GrinderRecipe> recipes = GrinderRecipes.recipes;
-        for(GrinderRecipes.GrinderRecipe recipe : recipes){
+        ArrayList<GrinderRecipeManualRegistry.GrinderRecipe> recipes = GrinderRecipeManualRegistry.recipes;
+        for(GrinderRecipeManualRegistry.GrinderRecipe recipe : recipes){
             if(NEIServerUtils.areStacksSameTypeCrafting(recipe.input, ingredient)){
                 CachedCrush theRecipe = new CachedCrush(recipe.input, recipe.firstOutput, recipe.secondOutput, recipe.secondChance);
                 theRecipe.setIngredientPermutation(Collections.singletonList(theRecipe.ingredient), ingredient);

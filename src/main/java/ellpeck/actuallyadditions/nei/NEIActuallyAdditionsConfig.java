@@ -38,6 +38,7 @@ public class NEIActuallyAdditionsConfig implements IConfigureNEI{
         API.hideItem(new ItemStack(InitBlocks.blockCanola));
         API.hideItem(new ItemStack(InitBlocks.blockFlax));
         API.hideItem(new ItemStack(InitBlocks.blockCoffee));
+        API.hideItem(new ItemStack(InitBlocks.blockWildPlant, 1, Util.WILDCARD));
     }
 
     @Override

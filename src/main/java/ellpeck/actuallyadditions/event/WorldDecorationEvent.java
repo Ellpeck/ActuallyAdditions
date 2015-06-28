@@ -2,11 +2,12 @@ package ellpeck.actuallyadditions.event;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import ellpeck.actuallyadditions.blocks.InitBlocks;
+import ellpeck.actuallyadditions.blocks.metalists.TheWildPlants;
 import ellpeck.actuallyadditions.config.values.ConfigBoolValues;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
+import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.world.World;
 import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
 
 import java.util.ArrayList;
@@ -24,11 +25,11 @@ public class WorldDecorationEvent{
                     int genY = event.world.getTopSolidOrLiquidBlock(genX, genZ);
 
                     if(event.world.getBlock(genX, genY, genZ).getMaterial() == Material.water){
-                        ArrayList<Material> blocksAroundBottom = this.getMaterialsAround(event.world, genX, genY, genZ);
-                        ArrayList<Material> blocksAroundTop = this.getMaterialsAround(event.world, genX, genY+1, genZ);
+                        ArrayList<Material> blocksAroundBottom = WorldUtil.getMaterialsAround(event.world, genX, genY, genZ);
+                        ArrayList<Material> blocksAroundTop = WorldUtil.getMaterialsAround(event.world, genX, genY+1, genZ);
                         if(blocksAroundBottom.contains(Material.grass) || blocksAroundBottom.contains(Material.ground) || blocksAroundBottom.contains(Material.rock) || blocksAroundBottom.contains(Material.sand)){
-                            if(!blocksAroundTop.contains(Material.water) && !blocksAroundTop.contains(Material.water) && !blocksAroundTop.contains(Material.water) && event.world.getBlock(genX, genY+1, genZ).getMaterial() == Material.air){
-                                event.world.setBlock(genX, genY+1, genZ, InitBlocks.blockRice, event.rand.nextInt(8), 2);
+                            if(!blocksAroundTop.contains(Material.water) && event.world.getBlock(genX, genY+1, genZ).getMaterial() == Material.air){
+                                event.world.setBlock(genX, genY+1, genZ, InitBlocks.blockWildPlant, TheWildPlants.RICE.ordinal(), 2);
                             }
                         }
                     }
@@ -36,12 +37,12 @@ public class WorldDecorationEvent{
             }
         }
 
-        this.genPlantNormally(InitBlocks.blockCanola, ConfigIntValues.CANOLA_AMOUNT.getValue(), ConfigBoolValues.DO_CANOLA_GEN.isEnabled(), Material.grass, event);
-        this.genPlantNormally(InitBlocks.blockFlax, ConfigIntValues.FLAX_AMOUNT.getValue(), ConfigBoolValues.DO_FLAX_GEN.isEnabled(), Material.grass, event);
-        this.genPlantNormally(InitBlocks.blockCoffee, ConfigIntValues.COFFEE_AMOUNT.getValue(), ConfigBoolValues.DO_COFFEE_GEN.isEnabled(), Material.grass, event);
+        this.genPlantNormally(InitBlocks.blockWildPlant, TheWildPlants.CANOLA.ordinal(), ConfigIntValues.CANOLA_AMOUNT.getValue(), ConfigBoolValues.DO_CANOLA_GEN.isEnabled(), Material.grass, event);
+        this.genPlantNormally(InitBlocks.blockWildPlant, TheWildPlants.FLAX.ordinal(), ConfigIntValues.FLAX_AMOUNT.getValue(), ConfigBoolValues.DO_FLAX_GEN.isEnabled(), Material.grass, event);
+        this.genPlantNormally(InitBlocks.blockWildPlant, TheWildPlants.COFFEE.ordinal(), ConfigIntValues.COFFEE_AMOUNT.getValue(), ConfigBoolValues.DO_COFFEE_GEN.isEnabled(), Material.grass, event);
     }
 
-    public void genPlantNormally(Block plant, int amount, boolean doIt, Material blockBelow, DecorateBiomeEvent event){
+    public void genPlantNormally(Block plant, int meta, int amount, boolean doIt, Material blockBelow, DecorateBiomeEvent event){
         if(doIt){
             for(int i = 0; i < amount; i++){
                 if(new Random().nextInt(100) == 0){
@@ -50,21 +51,11 @@ public class WorldDecorationEvent{
                     int genY = event.world.getTopSolidOrLiquidBlock(genX, genZ)-1;
 
                     if(event.world.getBlock(genX, genY, genZ).getMaterial() == blockBelow){
-                        event.world.setBlock(genX, genY+1, genZ, plant, event.rand.nextInt(8), 2);
+                        event.world.setBlock(genX, genY+1, genZ, plant, meta, 2);
                     }
                 }
             }
         }
-    }
-
-    public ArrayList<Material> getMaterialsAround(World world, int x, int y, int z){
-        ArrayList<Material> blocks = new ArrayList<Material>();
-        blocks.add(world.getBlock(x+1, y, z).getMaterial());
-        blocks.add(world.getBlock(x-1, y, z).getMaterial());
-        blocks.add(world.getBlock(x, y, z+1).getMaterial());
-        blocks.add(world.getBlock(x, y, z-1).getMaterial());
-
-        return blocks;
     }
 
 }

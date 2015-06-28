@@ -43,15 +43,24 @@ public class BlockUtil{
 
     public static final ArrayList<Block> wailaRegisterList = new ArrayList<Block>();
 
-    public static void register(Block block, Class<? extends ItemBlock> itemBlock, Enum[] list){
-        block.setCreativeTab(CreativeTab.instance);
+    public static void register(Block block, Class<? extends ItemBlock> itemBlock, boolean addTab, Enum[] list){
+        if(addTab) block.setCreativeTab(CreativeTab.instance);
         block.setBlockName(createUnlocalizedName(block));
         GameRegistry.registerBlock(block, itemBlock, ((INameableItem)block).getName());
-        for(Enum current : list){
-            if(!((INameableItem)current).getOredictName().isEmpty()) OreDictionary.registerOre(((INameableItem)current).getOredictName(), new ItemStack(block, 1, current.ordinal()));
+        if(list != null){
+            for(Enum current : list){
+                if(!((INameableItem)current).getOredictName().isEmpty()) OreDictionary.registerOre(((INameableItem)current).getOredictName(), new ItemStack(block, 1, current.ordinal()));
+            }
+        }
+        else{
+            if(!((INameableItem)block).getOredictName().isEmpty()) OreDictionary.registerOre(((INameableItem)block).getOredictName(), new ItemStack(block, 1, Util.WILDCARD));
         }
 
         wailaRegisterList.add(block);
+    }
+
+    public static void register(Block block, Class<? extends ItemBlock> itemBlock, Enum[] list){
+        register(block, itemBlock, true, list);
     }
 
     public static void register(Block block, Class<? extends ItemBlock> itemBlock){
@@ -59,11 +68,6 @@ public class BlockUtil{
     }
 
     public static void register(Block block, Class<? extends ItemBlock> itemBlock, boolean addTab){
-        if(addTab) block.setCreativeTab(CreativeTab.instance);
-        block.setBlockName(createUnlocalizedName(block));
-        GameRegistry.registerBlock(block, itemBlock, ((INameableItem)block).getName());
-        if(!((INameableItem)block).getOredictName().isEmpty()) OreDictionary.registerOre(((INameableItem)block).getOredictName(), new ItemStack(block, 1, Util.WILDCARD));
-
-        wailaRegisterList.add(block);
+        register(block, itemBlock, addTab, null);
     }
 }

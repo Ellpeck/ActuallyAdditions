@@ -2,6 +2,7 @@ package ellpeck.actuallyadditions.blocks;
 
 import ellpeck.actuallyadditions.config.values.ConfigBoolValues;
 import ellpeck.actuallyadditions.util.BlockUtil;
+import ellpeck.actuallyadditions.util.CompatUtil;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.block.Block;
@@ -10,12 +11,12 @@ import net.minecraft.item.EnumRarity;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import org.apache.logging.log4j.Level;
-import powercrystals.minefactoryreloaded.api.FactoryRegistry;
 
 public class InitBlocks{
 
     public static Block blockCompost;
     public static Block blockMisc;
+    public static Block blockWildPlant;
     public static Block blockFeeder;
     public static Block blockGiantChest;
 
@@ -67,8 +68,28 @@ public class InitBlocks{
     public static Block blockEnergizer;
     public static Block blockEnervator;
 
+    public static Block blockTestifiBucksGreenWall;
+    public static Block blockTestifiBucksWhiteWall;
+    public static Block blockTestifiBucksGreenStairs;
+    public static Block blockTestifiBucksWhiteStairs;
+    public static Block blockTestifiBucksGreenSlab;
+    public static Block blockTestifibucksWhiteSlab;
+
     public static void init(){
         Util.logInfo("Initializing Blocks...");
+
+        blockTestifiBucksGreenWall = new BlockGeneric("blockTestifiBucksGreenWall");
+        BlockUtil.register(blockTestifiBucksGreenWall, BlockGeneric.TheItemBlock.class);
+        blockTestifiBucksWhiteWall = new BlockGeneric("blockTestifiBucksWhiteWall");
+        BlockUtil.register(blockTestifiBucksWhiteWall, BlockGeneric.TheItemBlock.class);
+        blockTestifiBucksGreenStairs = new BlockStair(blockTestifiBucksGreenWall, "blockTestifiBucksGreenStairs");
+        BlockUtil.register(blockTestifiBucksGreenStairs, BlockStair.TheItemBlock.class);
+        blockTestifiBucksWhiteStairs = new BlockStair(blockTestifiBucksWhiteWall, "blockTestifiBucksWhiteStairs");
+        BlockUtil.register(blockTestifiBucksWhiteStairs, BlockStair.TheItemBlock.class);
+        blockTestifiBucksGreenSlab = new BlockSlabs("blockTestifiBucksGreenSlab", blockTestifiBucksGreenWall);
+        BlockUtil.register(blockTestifiBucksGreenSlab, BlockSlabs.TheItemBlock.class);
+        blockTestifibucksWhiteSlab = new BlockSlabs("blockTestifibucksWhiteSlab", blockTestifiBucksWhiteWall);
+        BlockUtil.register(blockTestifibucksWhiteSlab, BlockSlabs.TheItemBlock.class);
 
         blockEnergizer = new BlockEnergizer(true);
         BlockUtil.register(blockEnergizer, BlockEnergizer.TheItemBlock.class);
@@ -108,23 +129,19 @@ public class InitBlocks{
 
         blockRice = new BlockPlant("blockRice", 6, 1, 2);
         BlockUtil.register(blockRice, BlockPlant.TheItemBlock.class, false);
-        FactoryRegistry.sendMessage("registerHarvestable", blockRice);
-        FactoryRegistry.sendMessage("registerFertilizable", blockRice);
+        CompatUtil.registerMFRPlant(blockRice);
 
         blockCanola = new BlockPlant("blockCanola", 4, 3, 3);
         BlockUtil.register(blockCanola, BlockPlant.TheItemBlock.class, false);
-        FactoryRegistry.sendMessage("registerHarvestable", blockCanola);
-        FactoryRegistry.sendMessage("registerFertilizable", blockCanola);
+        CompatUtil.registerMFRPlant(blockCanola);
 
         blockFlax = new BlockPlant("blockFlax", 6, 2, 4);
         BlockUtil.register(blockFlax, BlockPlant.TheItemBlock.class, false);
-        FactoryRegistry.sendMessage("registerHarvestable", blockFlax);
-        FactoryRegistry.sendMessage("registerFertilizable", blockFlax);
+        CompatUtil.registerMFRPlant(blockFlax);
 
         blockCoffee = new BlockPlant("blockCoffee", 6, 2, 2);
         BlockUtil.register(blockCoffee, BlockPlant.TheItemBlock.class, false);
-        FactoryRegistry.sendMessage("registerHarvestable", blockCoffee);
-        FactoryRegistry.sendMessage("registerFertilizable", blockCoffee);
+        CompatUtil.registerMFRPlant(blockCoffee);
 
         blockCompost = new BlockCompost();
         BlockUtil.register(blockCompost, BlockCompost.TheItemBlock.class);
@@ -189,10 +206,14 @@ public class InitBlocks{
         blockPhantomBooster = new BlockPhantomBooster();
         BlockUtil.register(blockPhantomBooster, BlockPhantomBooster.TheItemBlock.class);
 
+        blockWildPlant = new BlockWildPlant();
+        BlockUtil.register(blockWildPlant, BlockWildPlant.TheItemBlock.class, false, BlockWildPlant.allWildPlants);
+
         registerFluids();
     }
 
     public static void registerFluids(){
+        //Canola Fluid
         String canolaOil = "canolaoil";
         if(!FluidRegistry.isFluidRegistered(canolaOil) || ConfigBoolValues.PREVENT_CANOLA_OVERRIDE.isEnabled()){
             fluidCanolaOil = new FluidAA(canolaOil).setDensity(1200).setViscosity(1500).setTemperature(300).setRarity(EnumRarity.uncommon);
@@ -203,6 +224,7 @@ public class InitBlocks{
         }
         fluidCanolaOil = FluidRegistry.getFluid(canolaOil);
 
+        //Canola Block
         if(fluidCanolaOil.getBlock() == null || ConfigBoolValues.PREVENT_CANOLA_BLOCK_OVERRIDE.isEnabled()){
             blockCanolaOil = new BlockFluidFlowing(fluidCanolaOil, Material.water, "blockCanolaOil");
             BlockUtil.register(blockCanolaOil, BlockFluidFlowing.TheItemBlock.class, false);
@@ -212,6 +234,7 @@ public class InitBlocks{
         }
         blockCanolaOil = fluidCanolaOil.getBlock();
 
+        //Oil Fluid
         String oil = "oil";
         if(!FluidRegistry.isFluidRegistered(oil) || ConfigBoolValues.PREVENT_OIL_OVERRIDE.isEnabled()){
             fluidOil = new FluidAA(oil).setDensity(1200).setViscosity(1500).setTemperature(300).setRarity(EnumRarity.uncommon);
@@ -222,6 +245,7 @@ public class InitBlocks{
         }
         fluidOil = FluidRegistry.getFluid(oil);
 
+        //Oil Block
         if(fluidOil.getBlock() == null || ConfigBoolValues.PREVENT_OIL_BLOCK_OVERRIDE.isEnabled()){
             blockOil = new BlockFluidFlowing(fluidOil, Material.water, "blockOil");
             BlockUtil.register(blockOil, BlockFluidFlowing.TheItemBlock.class, false);

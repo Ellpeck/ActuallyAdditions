@@ -5,7 +5,7 @@ import cofh.api.energy.IEnergyReceiver;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
-import ellpeck.actuallyadditions.recipe.GrinderRecipes;
+import ellpeck.actuallyadditions.recipe.GrinderRecipeManualRegistry;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -122,8 +122,8 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
 
     public boolean canCrushOn(int theInput, int theFirstOutput, int theSecondOutput){
         if(this.slots[theInput] != null){
-            ItemStack outputOne = GrinderRecipes.getOutput(this.slots[theInput], false);
-            ItemStack outputTwo = GrinderRecipes.getOutput(this.slots[theInput], true);
+            ItemStack outputOne = GrinderRecipeManualRegistry.getOutput(this.slots[theInput], false);
+            ItemStack outputTwo = GrinderRecipeManualRegistry.getOutput(this.slots[theInput], true);
             if(this.slots[theInput] != null){
                 if(outputOne != null){
                     if((this.slots[theFirstOutput] == null || (this.slots[theFirstOutput].isItemEqual(outputOne) && this.slots[theFirstOutput].stackSize <= this.slots[theFirstOutput].getMaxStackSize()-outputOne.stackSize)) && (outputTwo == null || (this.slots[theSecondOutput] == null || (this.slots[theSecondOutput].isItemEqual(outputTwo) && this.slots[theSecondOutput].stackSize <= this.slots[theSecondOutput].getMaxStackSize()-outputTwo.stackSize)))){
@@ -136,14 +136,14 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
     }
 
     public void finishCrushing(int theInput, int theFirstOutput, int theSecondOutput){
-        ItemStack outputOnFirst = GrinderRecipes.getOutput(this.slots[theInput], false);
+        ItemStack outputOnFirst = GrinderRecipeManualRegistry.getOutput(this.slots[theInput], false);
         if(outputOnFirst != null){
             if(this.slots[theFirstOutput] == null) this.slots[theFirstOutput] = outputOnFirst.copy();
             else if(this.slots[theFirstOutput].getItem() == outputOnFirst.getItem()) this.slots[theFirstOutput].stackSize += outputOnFirst.stackSize;
         }
 
-        int chance = GrinderRecipes.getSecondChance(this.slots[theInput]);
-        ItemStack outputOnSecond = GrinderRecipes.getOutput(this.slots[theInput], true);
+        int chance = GrinderRecipeManualRegistry.getSecondChance(this.slots[theInput]);
+        ItemStack outputOnSecond = GrinderRecipeManualRegistry.getOutput(this.slots[theInput], true);
         if(outputOnSecond != null){
             int rand = new Random().nextInt(100) + 1;
             if(rand <= chance){
@@ -189,7 +189,7 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
 
     @Override
     public boolean isItemValidForSlot(int i, ItemStack stack){
-        return (i == SLOT_INPUT_1 || i == SLOT_INPUT_2) && GrinderRecipes.getOutput(stack, false) != null;
+        return (i == SLOT_INPUT_1 || i == SLOT_INPUT_2) && GrinderRecipeManualRegistry.getOutput(stack, false) != null;
     }
 
     @Override

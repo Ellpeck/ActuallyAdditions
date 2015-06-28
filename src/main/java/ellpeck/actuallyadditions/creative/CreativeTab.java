@@ -31,10 +31,10 @@ public class CreativeTab extends CreativeTabs{
         add(InitBlocks.blockPhantomLiquiface);
         add(InitBlocks.blockPhantomPlacer);
         add(InitBlocks.blockPhantomBreaker);
-        add(InitBlocks.blockPhantomBooster);
-        add(InitBlocks.blockCoffeeMachine);
         add(InitBlocks.blockInputter);
         add(InitBlocks.blockInputterAdvanced);
+        add(InitBlocks.blockPhantomBooster);
+        add(InitBlocks.blockCoffeeMachine);
 
         add(InitBlocks.blockGreenhouseGlass);
         add(InitBlocks.blockGrinder);
@@ -63,6 +63,13 @@ public class CreativeTab extends CreativeTabs{
         add(InitBlocks.blockGiantChest);
         add(InitBlocks.blockCanolaPress);
         add(InitBlocks.blockFermentingBarrel);
+
+        add(InitBlocks.blockTestifiBucksGreenWall);
+        add(InitBlocks.blockTestifiBucksWhiteWall);
+        add(InitBlocks.blockTestifiBucksGreenStairs);
+        add(InitBlocks.blockTestifiBucksWhiteStairs);
+        add(InitBlocks.blockTestifiBucksGreenSlab);
+        add(InitBlocks.blockTestifibucksWhiteSlab);
 
         add(InitItems.itemDrill);
         add(InitItems.itemDrillUpgradeSpeed);
@@ -119,10 +126,10 @@ public class CreativeTab extends CreativeTabs{
         add(InitItems.itemShovelObsidian);
         add(InitItems.itemHoeObsidian);
 
+        add(InitItems.itemJams);
+
         add(InitItems.itemPotionRing);
         add(InitItems.itemPotionRingAdvanced);
-
-        add(InitItems.itemJams);
     }
 
     @Override

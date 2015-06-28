@@ -8,7 +8,7 @@ import org.apache.logging.log4j.Level;
 
 import java.util.ArrayList;
 
-public class GrinderRecipeRegistry{
+public class GrinderRecipeAutoRegistry{
 
     public static ArrayList<SearchCase> searchCases = new ArrayList<SearchCase>();
     public static ArrayList<String> exceptions = new ArrayList<String>();
@@ -52,8 +52,8 @@ public class GrinderRecipeRegistry{
                                     ItemStack input = theInput.copy();
                                     ItemStack output = theDust.copy();
                                     output.stackSize = resultAmount;
-                                    if(!GrinderRecipes.hasRecipe(input, output)){
-                                        GrinderRecipes.registerRecipe(input, output, null, 0);
+                                    if(!GrinderRecipeManualRegistry.hasRecipe(input, output)){
+                                        GrinderRecipeManualRegistry.registerRecipe(input, output, null, 0);
                                     }
                                 }
                             }

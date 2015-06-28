@@ -3,7 +3,7 @@ package ellpeck.actuallyadditions.inventory;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.inventory.slot.SlotOutput;
-import ellpeck.actuallyadditions.recipe.GrinderRecipes;
+import ellpeck.actuallyadditions.recipe.GrinderRecipeManualRegistry;
 import ellpeck.actuallyadditions.tile.TileEntityBase;
 import ellpeck.actuallyadditions.tile.TileEntityGrinder;
 import invtweaks.api.container.InventoryContainer;
@@ -104,7 +104,7 @@ public class ContainerGrinder extends Container{
 
             if(currentStack.getItem() != null){
                 if(slot <= hotbarEnd && slot >= inventoryStart){
-                    if(GrinderRecipes.getOutput(currentStack, false) != null){
+                    if(GrinderRecipeManualRegistry.getOutput(currentStack, false) != null){
                         this.mergeItemStack(newStack, TileEntityGrinder.SLOT_INPUT_1, TileEntityGrinder.SLOT_INPUT_1+1, false);
                         if(this.isDouble) this.mergeItemStack(newStack, TileEntityGrinder.SLOT_INPUT_2, TileEntityGrinder.SLOT_INPUT_2+1, false);
                     }

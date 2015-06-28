@@ -10,6 +10,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.gen.structure.StructureBoundingBox;
 import net.minecraft.world.gen.structure.StructureComponent;
 import net.minecraft.world.gen.structure.StructureVillagePieces;
+import net.minecraftforge.common.ChestGenHooks;
 
 import java.util.List;
 import java.util.Random;
@@ -49,8 +50,8 @@ public class VillageComponentJamHouse extends StructureVillagePieces.House1{
 
         for (int i = 0; i < xSize; i++){
             for(int j = 0; j < zSize; j++){
-                this.clearCurrentPositionBlocksUpwards(world, j, ySize, i, sbb);
-                this.func_151554_b(world, Blocks.cobblestone, 0, j, 0, i, sbb);
+                this.clearCurrentPositionBlocksUpwards(world, i, ySize, j, sbb);
+                this.func_151554_b(world, Blocks.cobblestone, 0, i, -1, j, sbb);
             }
         }
 
@@ -163,12 +164,9 @@ public class VillageComponentJamHouse extends StructureVillagePieces.House1{
 
         //Loot Chest
         this.placeBlockAtCurrentPosition(world, Blocks.chest, 0, 8, 1, 6, sbb);
-        int posX = this.getXWithOffset(8, 6);
-        int posY = this.getYWithOffset(1);
-        int posZ = this.getZWithOffset(8, 6);
-        TileEntity chest = world.getTileEntity(posX, posY, posZ);
+        TileEntity chest = world.getTileEntity(this.getXWithOffset(8, 6), this.getYWithOffset(1), this.getZWithOffset(8, 6));
         if(chest != null && chest instanceof TileEntityChest){
-            WeightedRandomChestContent.generateChestContents(rand, InitVillager.jamHouseChest.getItems(rand), (TileEntityChest)chest, InitVillager.jamHouseChest.getCount(rand));
+            WeightedRandomChestContent.generateChestContents(rand, ChestGenHooks.getItems(InitVillager.JAM_HOUSE_CHEST_NAME, rand), (TileEntityChest)chest, ChestGenHooks.getCount(InitVillager.JAM_HOUSE_CHEST_NAME, rand));
         }
 
         //Torches

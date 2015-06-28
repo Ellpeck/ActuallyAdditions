@@ -91,7 +91,7 @@ public class BlockMisc extends Block implements INameableItem{
         @SuppressWarnings("unchecked")
         @SideOnly(Side.CLIENT)
         public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld) {
-            BlockUtil.addInformation(theBlock, list, 1, allMiscBlocks[stack.getItemDamage()].getName());
+            if(stack.getItemDamage() < allMiscBlocks.length) BlockUtil.addInformation(theBlock, list, 1, allMiscBlocks[stack.getItemDamage()].getName());
         }
 
         @Override

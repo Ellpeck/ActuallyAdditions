@@ -2,6 +2,7 @@ package ellpeck.actuallyadditions.config.values;
 
 import ellpeck.actuallyadditions.config.ConfigCategories;
 import ellpeck.actuallyadditions.config.ConfigValues;
+import net.minecraftforge.fluids.FluidContainerRegistry;
 
 public enum ConfigIntValues{
 
@@ -86,9 +87,9 @@ public enum ConfigIntValues{
     COFFEE_CACHE_ADDED_PER_ITEM("Coffee Machine: Coffee added per Cup", ConfigCategories.MACHINE_VALUES, 1, 1, 300, "The amount of Coffee added by one Coffee Item in the Coffee Machine"),
     COFFEE_CACHE_USED_PER_ITEM("Coffee Machine: Coffee used per Cup", ConfigCategories.MACHINE_VALUES, 10, 1, 300, "The amount of Coffee used to brew one Coffee in the Coffee Machine"),
     COFFEE_MACHINE_TIME_USED("Coffee Machine: Time to Brew", ConfigCategories.MACHINE_VALUES, 500, 10, 10000, "The amount of time the Coffee Machine takes to brew a Coffee"),
+    COFFEE_MACHINE_WATER_USED("Coffee Machine: Water Used per Cup", ConfigCategories.MACHINE_VALUES, 500, 1, 4*FluidContainerRegistry.BUCKET_VOLUME, "The amount of Water the Coffee Machine uses per Cup"),
 
     COFFEE_DRINK_AMOUNT("Coffee: Drink Amount", ConfigCategories.OTHER, 4, 1, 100, "How often a Coffee can be drunk from"),
-
     DRILL_ENERGY_USE("Drill: Energy Use Per Block or Hit", ConfigCategories.DRILL_VALUES, 100, 5, 10000, "How much Energy the Drill uses per Block"),
 
     DRILL_SPEED_EXTRA_USE("Speed Upgrade: Extra Energy Use", ConfigCategories.DRILL_VALUES, 50, 0, 10000, "How much extra Energy the Speed Upgrade uses"),

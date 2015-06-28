@@ -17,6 +17,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.fluids.FluidRegistry;
 import org.lwjgl.opengl.GL11;
 
 import java.util.Collections;
@@ -49,7 +50,7 @@ public class GuiCoffeeMachine extends GuiContainer{
     public void initGui(){
         super.initGui();
 
-        GuiButton buttonOkay = new GuiButton(0, guiLeft+60, guiTop+11, 58, 20, "OK");
+        GuiButton buttonOkay = new GuiButton(0, guiLeft+60, guiTop+11, 58, 20, StatCollector.translateToLocal("info."+ModUtil.MOD_ID_LOWER+".gui.ok"));
         this.buttonList.add(buttonOkay);
     }
 
@@ -75,7 +76,11 @@ public class GuiCoffeeMachine extends GuiContainer{
 
         if(this.machine.getEnergyStored(ForgeDirection.UNKNOWN) > 0){
             int i = this.machine.getEnergyScaled(83);
-            drawTexturedModalRect(this.guiLeft+17, this.guiTop+89-i, 176, 0, 16, i);
+            drawTexturedModalRect(this.guiLeft+17, this.guiTop+89-i, 176, 0, 6, i);
+        }
+        if(this.machine.tank.getFluidAmount() > 0){
+            int i = this.machine.getWaterScaled(64);
+            drawTexturedModalRect(this.guiLeft+27, this.guiTop+70-i, 182, 0, 6, i);
         }
 
         if(this.machine.coffeeCacheAmount > 0){
@@ -97,8 +102,12 @@ public class GuiCoffeeMachine extends GuiContainer{
         super.drawScreen(x, y, f);
 
         String text1 = this.machine.getEnergyStored(ForgeDirection.UNKNOWN) + "/" + this.machine.getMaxEnergyStored(ForgeDirection.UNKNOWN) + " RF";
-        if(x >= guiLeft+16 && y >= guiTop+5 && x <= guiLeft+33 && y <= guiTop+89){
+        if(x >= guiLeft+16 && y >= guiTop+5 && x <= guiLeft+23 && y <= guiTop+89){
             this.func_146283_a(Collections.singletonList(text1), x, y);
+        }
+        String text3 = this.machine.tank.getFluidAmount() + "/" + this.machine.tank.getCapacity() + " mB "+StatCollector.translateToLocal(FluidRegistry.WATER.getUnlocalizedName());
+        if(x >= guiLeft+27 && y >= guiTop+5 && x <= guiLeft+33 && y <= guiTop+70){
+            this.func_146283_a(Collections.singletonList(text3), x, y);
         }
 
         String text2 = this.machine.coffeeCacheAmount + "/" + this.machine.coffeeCacheMaxAmount+" "+StatCollector.translateToLocal("info."+ModUtil.MOD_ID_LOWER+".gui.coffee");

@@ -3,6 +3,7 @@ package ellpeck.actuallyadditions.util;
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
 import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -14,6 +15,8 @@ import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.*;
 import org.apache.logging.log4j.Level;
+
+import java.util.ArrayList;
 
 public class WorldUtil{
 
@@ -121,6 +124,16 @@ public class WorldUtil{
             case 5: return ForgeDirection.WEST;
             default: return ForgeDirection.UNKNOWN;
         }
+    }
+
+    public static ArrayList<Material> getMaterialsAround(World world, int x, int y, int z){
+        ArrayList<Material> blocks = new ArrayList<Material>();
+        blocks.add(world.getBlock(x+1, y, z).getMaterial());
+        blocks.add(world.getBlock(x-1, y, z).getMaterial());
+        blocks.add(world.getBlock(x, y, z+1).getMaterial());
+        blocks.add(world.getBlock(x, y, z-1).getMaterial());
+
+        return blocks;
     }
 
 }

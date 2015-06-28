@@ -113,3 +113,7 @@
 -Testificate Bucks
     -Village House that has a Coffee Machine
     -Villager who sells Coffee and Cookies
+
+-Inventory Emitter
+    -Emits a Redstone Signal dependant on the Amount of a specified Item in it
+    -Items are configurable in the GUI

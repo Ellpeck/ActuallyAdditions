@@ -5,7 +5,7 @@ import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
 
-public class GrinderRecipes{
+public class GrinderRecipeManualRegistry{
 
     public static ArrayList<GrinderRecipe> recipes = new ArrayList<GrinderRecipe>();
 

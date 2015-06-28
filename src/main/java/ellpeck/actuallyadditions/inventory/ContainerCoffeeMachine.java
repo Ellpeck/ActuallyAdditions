@@ -15,6 +15,9 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.FluidContainerRegistry;
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
 
 @InventoryContainer
 public class ContainerCoffeeMachine extends Container{
@@ -24,6 +27,7 @@ public class ContainerCoffeeMachine extends Container{
     private int lastCoffeeAmount;
     private int lastEnergyAmount;
     private int lastBrewTime;
+    private int lastWaterAmount;
 
     public ContainerCoffeeMachine(InventoryPlayer inventory, TileEntityBase tile){
         this.machine = (TileEntityCoffeeMachine)tile;
@@ -37,6 +41,9 @@ public class ContainerCoffeeMachine extends Container{
                 this.addSlotToContainer(new Slot(machine, j+i*2+3, 125+j*18, 6+i*18));
             }
         }
+
+        this.addSlotToContainer(new Slot(machine, TileEntityCoffeeMachine.SLOT_WATER_INPUT, 26, 73));
+        this.addSlotToContainer(new SlotOutput(machine, TileEntityCoffeeMachine.SLOT_WATER_OUTPUT, 45, 73));
 
         for (int i = 0; i < 3; i++){
             for (int j = 0; j < 9; j++){
@@ -54,6 +61,7 @@ public class ContainerCoffeeMachine extends Container{
         iCraft.sendProgressBarUpdate(this, 0, this.machine.storage.getEnergyStored());
         iCraft.sendProgressBarUpdate(this, 1, this.machine.coffeeCacheAmount);
         iCraft.sendProgressBarUpdate(this, 2, this.machine.brewTime);
+        iCraft.sendProgressBarUpdate(this, 3, this.machine.tank.getFluidAmount());
 
     }
 
@@ -66,11 +74,13 @@ public class ContainerCoffeeMachine extends Container{
             if(this.lastEnergyAmount != this.machine.storage.getEnergyStored()) iCraft.sendProgressBarUpdate(this, 0, this.machine.storage.getEnergyStored());
             if(this.lastCoffeeAmount != this.machine.coffeeCacheAmount) iCraft.sendProgressBarUpdate(this, 1, this.machine.coffeeCacheAmount);
             if(this.lastBrewTime != this.machine.brewTime) iCraft.sendProgressBarUpdate(this, 2, this.machine.brewTime);
+            if(this.lastWaterAmount != this.machine.tank.getFluidAmount()) iCraft.sendProgressBarUpdate(this, 3, this.machine.tank.getFluidAmount());
         }
 
         this.lastEnergyAmount = this.machine.storage.getEnergyStored();
         this.lastCoffeeAmount = this.machine.coffeeCacheAmount;
         this.lastBrewTime = this.machine.brewTime;
+        this.lastWaterAmount = this.machine.tank.getFluidAmount();
     }
 
     @Override
@@ -79,6 +89,7 @@ public class ContainerCoffeeMachine extends Container{
         if(par1 == 0) this.machine.storage.setEnergyStored(par2);
         if(par1 == 1) this.machine.coffeeCacheAmount = par2;
         if(par1 == 2) this.machine.brewTime = par2;
+        if(par1 == 3) this.machine.tank.setFluid(new FluidStack(FluidRegistry.WATER, par2));
     }
 
     @Override
@@ -88,7 +99,7 @@ public class ContainerCoffeeMachine extends Container{
 
     @Override
     public ItemStack transferStackInSlot(EntityPlayer player, int slot){
-        final int inventoryStart = 11;
+        final int inventoryStart = 13;
         final int inventoryEnd = inventoryStart+26;
         final int hotbarStart = inventoryEnd+1;
         final int hotbarEnd = hotbarStart+8;
@@ -108,6 +119,9 @@ public class ContainerCoffeeMachine extends Container{
                     }
                     if(ItemCoffee.getIngredientFromStack(newStack) != null){
                         this.mergeItemStack(newStack, 3, 10, false);
+                    }
+                    if(FluidContainerRegistry.containsFluid(newStack, new FluidStack(FluidRegistry.WATER, FluidContainerRegistry.BUCKET_VOLUME))){
+                        this.mergeItemStack(newStack, TileEntityCoffeeMachine.SLOT_WATER_INPUT, TileEntityCoffeeMachine.SLOT_WATER_INPUT+1, false);
                     }
                 }
 

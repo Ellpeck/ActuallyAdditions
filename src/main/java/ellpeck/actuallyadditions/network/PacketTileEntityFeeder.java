@@ -60,10 +60,12 @@ public class PacketTileEntityFeeder implements IMessage{
             if(tile instanceof TileEntityFeeder){
                 TileEntityFeeder tileFeeder = (TileEntityFeeder)tile;
                 tileFeeder.feedAnimal((EntityAnimal)world.getEntityByID(message.animalID));
-            }
 
-            if(Minecraft.getMinecraft().currentScreen instanceof GuiFeeder){
-                ((GuiFeeder)Minecraft.getMinecraft().currentScreen).loveCounter++;
+                if(Minecraft.getMinecraft().currentScreen instanceof GuiFeeder){
+                    if(((GuiFeeder)Minecraft.getMinecraft().currentScreen).tileFeeder == tileFeeder){
+                        ((GuiFeeder)Minecraft.getMinecraft().currentScreen).loveCounter++;
+                    }
+                }
             }
 
             return null;

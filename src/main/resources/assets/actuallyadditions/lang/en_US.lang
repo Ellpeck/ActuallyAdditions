@@ -44,7 +44,7 @@ tooltip.actuallyadditions.itemMiscRiceDough.desc=It's Dough, but made from Rice
 item.actuallyadditions.itemFoodRiceBread.name=Rice Bread
 tooltip.actuallyadditions.itemFoodRiceBread.desc=It's like Bread, but ricey!
 item.actuallyadditions.itemRiceSeed.name=Rice Seeds
-tooltip.actuallyadditions.itemRiceSeed.desc=Grows on Water!
+tooltip.actuallyadditions.itemRiceSeed.desc=Grows on Farmland! Makes delicious Rice!
 
 item.actuallyadditions.itemMiscTinyCoal.name=Tiny Coal
 tooltip.actuallyadditions.itemMiscTinyCoal.desc=Crafted from Coal, smelts one Item
@@ -127,7 +127,7 @@ tooltip.actuallyadditions.itemCoffee.desc.1=Brewed in a Coffee Machine! See Effe
 tooltip.actuallyadditions.itemCoffee.desc.2=You can drink me %s times!
 
 item.actuallyadditions.itemCoffeeSeed.name=Coffee Seeds
-tooltip.actuallyadditions.itemCoffeeSeed.desc=Grows Coffee on Grass Blocks
+tooltip.actuallyadditions.itemCoffeeSeed.desc=Grows Coffee on Farmland
 
 tile.actuallyadditions.blockCoffee.name=Coffee Plant
 tooltip.actuallyadditions.blockCoffee.desc=Grows Coffee! Noms!
@@ -135,12 +135,21 @@ tooltip.actuallyadditions.blockCoffee.desc=Grows Coffee! Noms!
 item.actuallyadditions.itemCoffeeBeans.name=Coffee Beans
 tooltip.actuallyadditions.itemCoffeeBeans.desc=Used in a Coffee Machine... delicious!
 
+tile.actuallyadditions.blockWildCanola.name=Wild Canola
+tile.actuallyadditions.blockWildRice.name=Wild Rice
+tile.actuallyadditions.blockWildCoffee.name=Wild Coffee
+tile.actuallyadditions.blockWildFlax.name=Wild Flax
+tooltip.actuallyadditions.blockWildCanola.desc=Grows in the Wild... Gets you Canola Seeds!
+tooltip.actuallyadditions.blockWildRice.desc=Grows in the Wild... Gets you Rice Seeds!
+tooltip.actuallyadditions.blockWildCoffee.desc=Grows in the Wild... Gets you Coffee Seeds!
+tooltip.actuallyadditions.blockWildFlax.desc=Grows in the Wild... Gets you Flax Seeds!
+
 item.actuallyadditions.itemCanolaSeed.name=Canola Seeds
-tooltip.actuallyadditions.itemCanolaSeed.desc=Grows on Grass!
+tooltip.actuallyadditions.itemCanolaSeed.desc=Grows on Farmland! Makes Canola!
 item.actuallyadditions.itemMiscCanola.name=Canola
 tooltip.actuallyadditions.itemMiscCanola.desc=Used to make Oil in a Canola Press
 tile.actuallyadditions.blockCanola.name=Canola Plant
-tooltip.actuallyadditions.blockCanola.desc=It's growing... kind of..
+tooltip.actuallyadditions.blockCanola.desc=It's growing... making Canola.. slowly!
 
 item.actuallyadditions.itemResonantRice.name=Resonant Rice
 tooltip.actuallyadditions.itemResonantRice.desc=Don't know what it does... maybe if you right-click it?
@@ -182,17 +191,17 @@ tile.actuallyadditions.blockInputter.add.11.name=Extra-Long Solidifying Dissocia
 tile.actuallyadditions.blockInputter.add.12.name=Energetic Solo Dancer
 tile.actuallyadditions.blockInputter.add.13.name=Efficient Sucking Dilettant
 tile.actuallyadditions.blockInputter.add.14.name=Extreme Sand Digger
-tile.actuallyadditions.blockInputter.add.15.name=MISSINGNO
+tile.actuallyadditions.blockInputter.add.15.name=Ending Serious Daughter
 
-item.actuallyadditions.itemDrillUpgradeSpeed.name=Drill Speed I Augment
-item.actuallyadditions.itemDrillUpgradeSpeedII.name=Drill Speed II Augment
-item.actuallyadditions.itemDrillUpgradeSpeedIII.name=Drill Speed III Augment
+item.actuallyadditions.itemDrillUpgradeSpeed.name=Drill Speed Augment I
+item.actuallyadditions.itemDrillUpgradeSpeedII.name=Drill Speed Augment II
+item.actuallyadditions.itemDrillUpgradeSpeedIII.name=Drill Speed Augment III
 item.actuallyadditions.itemDrillUpgradeSilkTouch.name=Drill Silk Touch Augment
-item.actuallyadditions.itemDrillUpgradeFortune.name=Drill Fortune I Augment
-item.actuallyadditions.itemDrillUpgradeFortuneII.name=Drill Fortune II Augment
+item.actuallyadditions.itemDrillUpgradeFortune.name=Drill Fortune Augment I
+item.actuallyadditions.itemDrillUpgradeFortuneII.name=Drill Fortune Augment II (That gives you Fortune III as it says in the tooltip...)
 item.actuallyadditions.itemDrillUpgradeBlockPlacing.name=Drill Block Placing Augment
-item.actuallyadditions.itemDrillUpgradeThreeByThree.name=Drill Three By Three Mining Augment
-item.actuallyadditions.itemDrillUpgradeFiveByFive.name=Drill Five By Five Mining Augment
+item.actuallyadditions.itemDrillUpgradeThreeByThree.name=Drill Mining Augment I
+item.actuallyadditions.itemDrillUpgradeFiveByFive.name=Drill Mining Augment II
 
 tooltip.actuallyadditions.itemDrillUpgradeSpeed.desc=Makes the Drill faster!
 tooltip.actuallyadditions.itemDrillUpgradeSpeedII.desc=Makes the Drill even faster! Requires Tier 1.
@@ -350,8 +359,9 @@ tooltip.actuallyadditions.blockInputter.desc.2=Acts like a more advanced Hopper
 tooltip.actuallyadditions.blockInputter.desc.3=Turn me off with Redstone!
 tooltip.actuallyadditions.blockInputter.desc.4=Configurable:
 tooltip.actuallyadditions.blockInputter.desc.5=-Side to Output to and Input from
-tooltip.actuallyadditions.blockInputter.desc.6=-Slot in the other Inventory to Output to and Input from
-tooltip.actuallyadditions.blockInputterAdvanced.desc=Has an Input and Output Filter!
+tooltip.actuallyadditions.blockInputter.desc.6=-A Range of Slots in the other Inventory to Output to and Input from
+tooltip.actuallyadditions.blockInputter.desc.7=-> Just input the Minimum and Maximum Slots into the input Fields!
+tooltip.actuallyadditions.blockInputterAdvanced.desc=Has an Input and Output Filter! (White- and Blacklist!)
 tooltip.actuallyadditions.blockFishingNet.desc=Catches Fish automatically when placed above Water
 tooltip.actuallyadditions.blockFurnaceSolar.desc=Produces RF in Daylight
 tooltip.actuallyadditions.blockHeatCollector.desc.1=Produces RF
@@ -454,12 +464,12 @@ info.actuallyadditions.gui.east=East
 info.actuallyadditions.gui.south=South
 info.actuallyadditions.gui.west=West
 info.actuallyadditions.gui.all=All
-info.actuallyadditions.gui.slot=Slot
 info.actuallyadditions.gui.put=Put
 info.actuallyadditions.gui.pull=Pull
 info.actuallyadditions.gui.whitelist=Whitelist
 info.actuallyadditions.gui.blacklist=Blacklist
 info.actuallyadditions.gui.coffee=Coffee
+info.actuallyadditions.gui.ok=Ok
 
 tooltip.actuallyadditions.uses.desc=Uses
 tooltip.actuallyadditions.produces.desc=Produces

@@ -1,6 +1,7 @@
 package ellpeck.actuallyadditions.tile;
 
 import ellpeck.actuallyadditions.network.gui.IButtonReactor;
+import ellpeck.actuallyadditions.network.gui.INumberReactor;
 import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -9,7 +10,18 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 
-public class TileEntityInputter extends TileEntityInventoryBase implements IButtonReactor{
+public class TileEntityInputter extends TileEntityInventoryBase implements IButtonReactor, INumberReactor{
+
+    @Override
+    public void onNumberReceived(int text, int textID, EntityPlayer player){
+        if(text != -1){
+            if(textID == 0) this.slotToPutStart = text;
+            if(textID == 1) this.slotToPutEnd = text;
+            if(textID == 2) this.slotToPullStart = text;
+            if(textID == 3) this.slotToPullEnd = text;
+        }
+        this.markDirty();
+    }
 
     public static class TileEntityInputterAdvanced extends TileEntityInputter{
 
@@ -25,15 +37,20 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
 
     public static final int WHITELIST_PULL_BUTTON_ID = 87;
     public static final int WHITELIST_PUT_BUTTON_ID = 88;
+    public static final int OKAY_BUTTON_ID = 133;
 
     public int sideToPut = -1;
-    public int slotToPut = -1;
-    public int placeToPutSlotAmount;
+
+    public int slotToPutStart;
+    public int slotToPutEnd;
+
     public TileEntity placeToPut;
 
     public int sideToPull = -1;
-    public int slotToPull = -1;
-    public int placeToPullSlotAmount;
+
+    public int slotToPullStart;
+    public int slotToPullEnd;
+
     public TileEntity placeToPull;
 
     public boolean isAdvanced;
@@ -56,24 +73,27 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
             this.initVars();
 
             if(!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)){
-                if(!(this.sideToPull == this.sideToPut && this.slotToPull == this.slotToPut)){
-                    if(sideToPull != -1) this.pull();
-                    if(sideToPut != -1) this.put();
+                if(!(this.sideToPull == this.sideToPut && this.slotToPullStart == this.slotToPutStart && this.slotToPullEnd == this.slotToPutEnd)){
+                    if(sideToPull != -1 && this.placeToPull instanceof IInventory) this.pull();
+                    if(sideToPut != -1 && this.placeToPut instanceof IInventory) this.put();
                 }
             }
         }
     }
 
     public void pull(){
-        if(this.placeToPullSlotAmount > 0){
-            IInventory theInventory = (IInventory)placeToPull;
-            int theSlotToPull = this.slotToPull;
+        IInventory theInventory = (IInventory)placeToPull;
+        if(theInventory.getSizeInventory() > 0){
+            int theSlotToPull = this.slotToPullStart;
             int maxSize = theInventory.getInventoryStackLimit();
             ISidedInventory theSided = null;
             if(theInventory instanceof ISidedInventory) theSided = (ISidedInventory)theInventory;
+            boolean can = false;
 
             ItemStack theStack = null;
-            for(int i = (theSlotToPull != -1 ? theSlotToPull : 0); i < (theSlotToPull != -1 ? theSlotToPull+1 : placeToPullSlotAmount); i++){
+            for(int i = theSlotToPull; i < this.slotToPullEnd; i++){
+                if(i >= theInventory.getSizeInventory()) return;
+
                 ItemStack tempStack = theInventory.getStackInSlot(i);
                 if(tempStack != null){
                     if(tempStack.getMaxStackSize() < this.getInventoryStackLimit()) maxSize = tempStack.getMaxStackSize();
@@ -85,6 +105,7 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
                             if(theSided.canExtractItem(i, tempStack, j)){
                                 theStack = tempStack;
                                 theSlotToPull = i;
+                                can = true;
                                 break;
                             }
                         }
@@ -92,11 +113,12 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
                     else{
                         theStack = tempStack;
                         theSlotToPull = i;
-                        break;
+                        can = true;
                     }
                 }
+                if(can) break;
             }
-            if(theStack != null){
+            if(can){
                 if(this.slots[0] != null){
                     if(theStack.isItemEqual(this.slots[0])){
                         if(theStack.stackSize <= maxSize - this.slots[0].stackSize){
@@ -121,9 +143,9 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
     }
 
     public void put(){
-        if(this.placeToPutSlotAmount > 0){
-            IInventory theInventory = (IInventory)placeToPut;
-            int theSlotToPut = this.slotToPut;
+        IInventory theInventory = (IInventory)placeToPut;
+        if(theInventory.getSizeInventory() > 0){
+            int theSlotToPut = this.slotToPutStart;
             int maxSize = theInventory.getInventoryStackLimit();
             ISidedInventory theSided = null;
             if(theInventory instanceof ISidedInventory) theSided = (ISidedInventory)theInventory;
@@ -131,7 +153,9 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
 
             if(this.slots[0] != null){
                 ItemStack theStack = null;
-                for(int i = (theSlotToPut != -1 ? theSlotToPut : 0); i < (theSlotToPut != -1 ? theSlotToPut+1 : placeToPutSlotAmount); i++){
+                for(int i = theSlotToPut; i < this.slotToPutEnd; i++){
+                    if(i >= theInventory.getSizeInventory()) return;
+
                     ItemStack tempStack = theInventory.getStackInSlot(i);
                     if(tempStack != null){
                         if(tempStack.getMaxStackSize() < theInventory.getInventoryStackLimit()) maxSize = tempStack.getMaxStackSize();
@@ -152,9 +176,9 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
                             theStack = tempStack;
                             theSlotToPut = i;
                             can = true;
-                            break;
                         }
                     }
+                    if(can) break;
                 }
                 if(can){
                     if(theStack != null){
@@ -198,20 +222,11 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
         this.placeToPull = WorldUtil.getTileEntityFromSide(WorldUtil.getDirectionByRotatingSide(this.sideToPull), this.worldObj, this.xCoord, this.yCoord, this.zCoord);
         this.placeToPut = WorldUtil.getTileEntityFromSide(WorldUtil.getDirectionByRotatingSide(this.sideToPut), this.worldObj, this.xCoord, this.yCoord, this.zCoord);
 
-        if(this.placeToPull != null && this.placeToPull instanceof IInventory){
-            this.placeToPullSlotAmount = ((IInventory)this.placeToPull).getSizeInventory();
+        if(this.placeToPull instanceof IInventory){
+            if(this.slotToPullEnd <= 0) this.slotToPullEnd = ((IInventory)this.placeToPull).getSizeInventory();
         }
-        else{
-            this.placeToPullSlotAmount = 0;
-            this.slotToPull = -1;
-        }
-
-        if(this.placeToPut != null && this.placeToPut instanceof IInventory){
-            this.placeToPutSlotAmount = ((IInventory)this.placeToPut).getSizeInventory();
-        }
-        else{
-            this.placeToPutSlotAmount = 0;
-            this.slotToPut = -1;
+        if(this.placeToPut instanceof IInventory){
+            if(this.slotToPutEnd <= 0) this.slotToPutEnd = ((IInventory)this.placeToPut).getSizeInventory();
         }
     }
 
@@ -226,33 +241,38 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
             return;
         }
 
+        if(buttonID == 0 || buttonID == 1){
+            this.slotToPutStart = 0;
+            this.slotToPutEnd = 0;
+        }
+        if(buttonID == 2 || buttonID == 3){
+            this.slotToPullStart = 0;
+            this.slotToPullEnd = 0;
+        }
+
         if(buttonID == 0) this.sideToPut++;
         if(buttonID == 1) this.sideToPut--;
-        if(buttonID == 2) this.slotToPut++;
-        if(buttonID == 3) this.slotToPut--;
 
-        if(buttonID == 4) this.sideToPull++;
-        if(buttonID == 5) this.sideToPull--;
-        if(buttonID == 6) this.slotToPull++;
-        if(buttonID == 7) this.slotToPull--;
+        if(buttonID == 2) this.sideToPull++;
+        if(buttonID == 3) this.sideToPull--;
 
         if(this.sideToPut >= 6) this.sideToPut = -1;
         else if(this.sideToPut < -1) this.sideToPut = 5;
         else if(this.sideToPull >= 6) this.sideToPull = -1;
         else if(this.sideToPull < -1) this.sideToPull = 5;
-        else if(this.slotToPut >= this.placeToPutSlotAmount) this.slotToPut = -1;
-        else if(this.slotToPut < -1) this.slotToPut = this.placeToPutSlotAmount-1;
-        else if(this.slotToPull >= this.placeToPullSlotAmount) this.slotToPull = -1;
-        else if(this.slotToPull < -1) this.slotToPull = this.placeToPullSlotAmount-1;
+
+        this.markDirty();
     }
 
     @Override
     public void writeToNBT(NBTTagCompound compound){
         super.writeToNBT(compound);
         compound.setInteger("SideToPut", this.sideToPut);
-        compound.setInteger("SlotToPut", this.slotToPut);
+        compound.setInteger("SlotToPut", this.slotToPutStart);
+        compound.setInteger("SlotToPutEnd", this.slotToPutEnd);
         compound.setInteger("SideToPull", this.sideToPull);
-        compound.setInteger("SlotToPull", this.slotToPull);
+        compound.setInteger("SlotToPull", this.slotToPullStart);
+        compound.setInteger("SlotToPullEnd", this.slotToPullEnd);
         compound.setBoolean("PullWhitelist", this.isPullWhitelist);
         compound.setBoolean("PutWhitelist", this.isPutWhitelist);
     }
@@ -260,14 +280,16 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
     @Override
     public void readFromNBT(NBTTagCompound compound){
         this.sideToPut = compound.getInteger("SideToPut");
-        this.slotToPut = compound.getInteger("SlotToPut");
+        this.slotToPutStart = compound.getInteger("SlotToPut");
+        this.slotToPutEnd = compound.getInteger("SlotToPutEnd");
         this.sideToPull = compound.getInteger("SideToPull");
-        this.slotToPull = compound.getInteger("SlotToPull");
+        this.slotToPullStart = compound.getInteger("SlotToPull");
+        this.slotToPullEnd = compound.getInteger("SlotToPullEnd");
         this.isPullWhitelist = compound.getBoolean("PullWhitelist");
         this.isPutWhitelist = compound.getBoolean("PutWhitelist");
         super.readFromNBT(compound);
     }
-    
+
     @Override
     public boolean isItemValidForSlot(int i, ItemStack stack){
         return i == 0;

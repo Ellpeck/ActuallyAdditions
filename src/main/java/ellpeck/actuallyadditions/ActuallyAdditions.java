@@ -10,6 +10,7 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import ellpeck.actuallyadditions.achievement.InitAchievements;
 import ellpeck.actuallyadditions.blocks.InitBlocks;
+import ellpeck.actuallyadditions.communication.InterModCommunications;
 import ellpeck.actuallyadditions.config.ConfigurationHandler;
 import ellpeck.actuallyadditions.crafting.GrinderCrafting;
 import ellpeck.actuallyadditions.crafting.InitCrafting;
@@ -24,6 +25,7 @@ import ellpeck.actuallyadditions.material.InitItemMaterials;
 import ellpeck.actuallyadditions.network.PacketHandler;
 import ellpeck.actuallyadditions.proxy.IProxy;
 import ellpeck.actuallyadditions.recipe.FuelHandler;
+import ellpeck.actuallyadditions.recipe.HairyBallHandler;
 import ellpeck.actuallyadditions.tile.TileEntityBase;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.Util;
@@ -76,8 +78,14 @@ public class ActuallyAdditions{
         ItemCoffee.initIngredients();
         GrinderCrafting.init();
         ItemCrafting.initMashedFoodRecipes();
+        HairyBallHandler.init();
         proxy.postInit();
 
         Util.logInfo("PostInitialization Finished.");
+    }
+
+    @EventHandler
+    public void onIMCReceived(FMLInterModComms.IMCEvent event){
+        InterModCommunications.processIMC(event.getMessages());
     }
 }

@@ -19,7 +19,7 @@ import java.util.Arrays;
 public class GuiFeeder extends GuiContainer{
 
     private static final ResourceLocation resLoc = AssetUtil.getGuiLocation("guiFeeder");
-    private TileEntityFeeder tileFeeder;
+    public TileEntityFeeder tileFeeder;
 
     public int loveCounter;
 
