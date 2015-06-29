@@ -15,6 +15,7 @@ public class GrinderCrafting{
 
     public static void init(){
         Util.logInfo("Initializing Crusher Recipes...");
+        GrinderRecipeManualRegistry.recipes.clear();
 
         GrinderRecipeManualRegistry.registerRecipe(new ItemStack(Blocks.redstone_ore), new ItemStack(Items.redstone, 10));
         GrinderRecipeManualRegistry.registerRecipe(new ItemStack(Blocks.lapis_ore), new ItemStack(InitItems.itemDust, 12, TheDusts.LAPIS.ordinal()));

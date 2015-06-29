@@ -27,7 +27,7 @@ public class GrinderRecipeAutoRegistry{
     public static void registerFinally(){
         String[] names = OreDictionary.getOreNames();
         for(String inputName : names){
-
+            
             if(!exceptions.contains(inputName)){
                 int resultAmount = 1;
                 String inputNameWithoutPrefix = null;
