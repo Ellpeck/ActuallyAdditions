@@ -38,9 +38,11 @@ public enum TheColoredLampColors implements INameableItem{
     }
 
     public static TheColoredLampColors getColorFromDyeName(String color){
-        String actualName = color.substring(3);
-        for(int i = 0; i < values().length; i++){
-            if(values()[i].getName().equals(actualName)) return values()[i];
+        if(color.substring(0, 3).equals("dye")){
+            String actualName = color.substring(3);
+            for(int i = 0; i < values().length; i++){
+                if(values()[i].getName().equals(actualName)) return values()[i];
+            }
         }
         return null;
     }
