@@ -24,7 +24,7 @@ public enum TheFoods implements INameableItem{
     HAMBURGER("Hamburger", 14, 6F, false, 40, EnumRarity.common, "foodHamburger"),
     PIZZA("Pizza", 20, 10F, false, 45, EnumRarity.uncommon, "foodPizza"),
     BAGUETTE("Baguette", 7, 2F, false, 25, EnumRarity.common, "foodBaguette"),
-    RICE("Rice", 2, 1F, false, 10, EnumRarity.uncommon, "foodRice"),
+    RICE("Rice", 2, 1F, false, 10, EnumRarity.uncommon, "cropRice"),
     RICE_BREAD("RiceBread", 8, 3F, false, 25, EnumRarity.uncommon, "foodRiceBread");
 
     public static void setReturnItems(){

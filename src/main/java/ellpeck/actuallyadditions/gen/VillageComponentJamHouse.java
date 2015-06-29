@@ -17,9 +17,9 @@ import java.util.Random;
 
 public class VillageComponentJamHouse extends StructureVillagePieces.House1{
 
-    private static final int xSize = 10;
+    private static final int xSize = 11;
     private static final int ySize = 8;
-    private static final int zSize = 11;
+    private static final int zSize = 12;
 
     private int averageGroundLevel = -1;
 
@@ -34,7 +34,7 @@ public class VillageComponentJamHouse extends StructureVillagePieces.House1{
     }
 
     public static VillageComponentJamHouse buildComponent(List pieces, int p1, int p2, int p3, int p4){
-        StructureBoundingBox boundingBox = StructureBoundingBox.getComponentToAddBoundingBox(p1, p2, p3, 0, 0, 0, xSize+1, ySize+1, zSize+1, p4);
+        StructureBoundingBox boundingBox = StructureBoundingBox.getComponentToAddBoundingBox(p1, p2, p3, 0, 0, 0, xSize, ySize, zSize, p4);
         return canVillageGoDeeper(boundingBox) && StructureComponent.findIntersecting(pieces, boundingBox) == null ? new VillageComponentJamHouse(boundingBox, p4) : null;
     }
 
@@ -43,9 +43,10 @@ public class VillageComponentJamHouse extends StructureVillagePieces.House1{
         if(this.averageGroundLevel < 0){
             this.averageGroundLevel = this.getAverageGroundLevel(world, sbb);
             if(this.averageGroundLevel < 0) return true;
-            this.boundingBox.offset(0, this.averageGroundLevel-this.boundingBox.maxY+ySize, 0);
+            this.boundingBox.offset(0, this.averageGroundLevel-this.boundingBox.maxY+ySize-1, 0);
         }
 
+        this.fillWithBlocks(world, sbb, 0, 0, 0, xSize-1, ySize-1, zSize-1, Blocks.air);
         this.spawnActualHouse(world, rand, sbb);
 
         for (int i = 0; i < xSize; i++){

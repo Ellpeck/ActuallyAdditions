@@ -4,10 +4,7 @@ import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.SidedProxy;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLInterModComms;
-import cpw.mods.fml.common.event.FMLPostInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.event.*;
 import ellpeck.actuallyadditions.achievement.InitAchievements;
 import ellpeck.actuallyadditions.blocks.InitBlocks;
 import ellpeck.actuallyadditions.communication.InterModCommunications;
@@ -22,6 +19,8 @@ import ellpeck.actuallyadditions.inventory.GuiHandler;
 import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.items.ItemCoffee;
 import ellpeck.actuallyadditions.material.InitItemMaterials;
+import ellpeck.actuallyadditions.misc.DispenserHandlerEmptyBucket;
+import ellpeck.actuallyadditions.misc.DispenserHandlerFertilize;
 import ellpeck.actuallyadditions.network.PacketHandler;
 import ellpeck.actuallyadditions.proxy.IProxy;
 import ellpeck.actuallyadditions.recipe.FuelHandler;
@@ -29,6 +28,7 @@ import ellpeck.actuallyadditions.recipe.HairyBallHandler;
 import ellpeck.actuallyadditions.tile.TileEntityBase;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.Util;
+import net.minecraft.block.BlockDispenser;
 
 @Mod(modid = ModUtil.MOD_ID, name = ModUtil.NAME, version = ModUtil.VERSION)
 public class ActuallyAdditions{
@@ -87,5 +87,12 @@ public class ActuallyAdditions{
     @EventHandler
     public void onIMCReceived(FMLInterModComms.IMCEvent event){
         InterModCommunications.processIMC(event.getMessages());
+    }
+
+    @EventHandler
+    public void serverStarting(FMLServerStartingEvent event){
+        BlockDispenser.dispenseBehaviorRegistry.putObject(InitItems.itemBucketCanolaOil, new DispenserHandlerEmptyBucket());
+        BlockDispenser.dispenseBehaviorRegistry.putObject(InitItems.itemBucketOil, new DispenserHandlerEmptyBucket());
+        BlockDispenser.dispenseBehaviorRegistry.putObject(InitItems.itemFertilizer, new DispenserHandlerFertilize());
     }
 }

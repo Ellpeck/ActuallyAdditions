@@ -23,6 +23,9 @@ public class InitVillager{
         if(ConfigBoolValues.JAM_VILLAGER_EXISTS.isEnabled()){
             initJamVillagePart();
         }
+        if(ConfigBoolValues.CROP_FIELD_EXISTS.isEnabled()){
+            initCustomCropFieldPart();
+        }
     }
 
     private static void initJamVillagePart(){
@@ -32,7 +35,7 @@ public class InitVillager{
 
         ChestGenHooks jamHouseChest = ChestGenHooks.getInfo(JAM_HOUSE_CHEST_NAME);
         jamHouseChest.setMin(5);
-        jamHouseChest.setMax(20);
+        jamHouseChest.setMax(10);
         for(int i = 0; i < TheJams.values().length; i++){
             ChestGenHooks.addItem(JAM_HOUSE_CHEST_NAME, new WeightedRandomChestContent(new ItemStack(InitItems.itemJams, 1, i), 1, 1, 10));
         }
@@ -41,6 +44,11 @@ public class InitVillager{
 
         VillagerRegistry.instance().registerVillageCreationHandler(new VillageJamHouseHandler());
         MapGenStructureIO.func_143031_a(VillageComponentJamHouse.class, ModUtil.MOD_ID_LOWER+":jamHouseStructure");
+    }
+
+    private static void initCustomCropFieldPart(){
+        VillagerRegistry.instance().registerVillageCreationHandler(new VillageCustomCropFieldHandler());
+        MapGenStructureIO.func_143031_a(VillageComponentCustomCropField.class, ModUtil.MOD_ID_LOWER+":customCropFieldStructure");
     }
 
 }

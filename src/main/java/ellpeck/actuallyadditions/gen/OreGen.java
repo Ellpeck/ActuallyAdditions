@@ -10,8 +10,8 @@ import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldType;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.feature.WorldGenMinable;
 import org.apache.logging.log4j.Level;
@@ -22,8 +22,6 @@ public class OreGen implements IWorldGenerator{
 
     @Override
     public void generate(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider){
-        if(world.provider.terrainType == WorldType.FLAT) return;
-
         switch(world.provider.dimensionId){
             case -1:
                 generateNether(world, random, chunkX*16, chunkZ*16);
@@ -43,7 +41,7 @@ public class OreGen implements IWorldGenerator{
 
     private void generateSurface(World world, Random random, int x, int z){
         if(ConfigBoolValues.GENERATE_QUARTZ.isEnabled()){
-            this.addOreSpawn(InitBlocks.blockMisc, TheMiscBlocks.ORE_QUARTZ.ordinal(), Blocks.stone, world, random, x, z, this.getRandom(ConfigIntValues.BLACK_QUARTZ_BASE_AMOUNT.getValue(), ConfigIntValues.BLACK_QUARTZ_ADD_CHANCE.getValue(), random), ConfigIntValues.BLACK_QUARTZ_CHANCE.getValue(), ConfigIntValues.BLACK_QUARTZ_MIN_HEIGHT.getValue(), ConfigIntValues.BLACK_QUARTZ_MAX_HEIGHT.getValue());
+            this.addOreSpawn(InitBlocks.blockMisc, TheMiscBlocks.ORE_QUARTZ.ordinal(), Blocks.stone, world, random, x, z, MathHelper.getRandomIntegerInRange(random, ConfigIntValues.BLACK_QUARTZ_BASE_AMOUNT.getValue(), ConfigIntValues.BLACK_QUARTZ_ADD_CHANCE.getValue()), ConfigIntValues.BLACK_QUARTZ_CHANCE.getValue(), ConfigIntValues.BLACK_QUARTZ_MIN_HEIGHT.getValue(), ConfigIntValues.BLACK_QUARTZ_MAX_HEIGHT.getValue());
         }
     }
 
@@ -63,10 +61,6 @@ public class OreGen implements IWorldGenerator{
             }
         }
         else ModUtil.LOGGER.log(Level.FATAL, "Couldn't generate '" + block.getUnlocalizedName() + "' into the world because the Min Y coordinate is bigger than the Max! This is definitely a Config Error! Check the Files!");
-    }
-
-    public int getRandom(int base, int extra, Random rand){
-        return extra > 0 ? base+rand.nextInt(extra+1) : base;
     }
 
     public static void init(){

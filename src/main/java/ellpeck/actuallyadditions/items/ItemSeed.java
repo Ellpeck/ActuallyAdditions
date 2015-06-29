@@ -23,10 +23,12 @@ public class ItemSeed extends ItemSeeds implements INameableItem{
 
     public Block plant;
     public String name;
+    public String oredictName;
 
-    public ItemSeed(String name, Block plant, Item returnItem, int returnMeta){
+    public ItemSeed(String name, String oredictName, Block plant, Item returnItem, int returnMeta){
         super(plant, Blocks.farmland);
         this.name = name;
+        this.oredictName = oredictName;
         this.plant = plant;
         ((BlockPlant)this.plant).seedItem = this;
         ((BlockPlant)this.plant).returnItem = returnItem;
@@ -72,6 +74,6 @@ public class ItemSeed extends ItemSeeds implements INameableItem{
 
     @Override
     public String getOredictName(){
-        return this.getName();
+        return this.oredictName;
     }
 }

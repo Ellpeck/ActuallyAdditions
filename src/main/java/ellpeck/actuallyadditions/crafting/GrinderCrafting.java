@@ -26,7 +26,7 @@ public class GrinderCrafting{
         GrinderRecipeManualRegistry.registerRecipe(new ItemStack(Blocks.stone), new ItemStack(Blocks.cobblestone));
         GrinderRecipeManualRegistry.registerRecipe(new ItemStack(InitItems.itemFoods, 1, TheFoods.RICE.ordinal()), new ItemStack(Items.sugar, 2));
 
-        GrinderRecipeManualRegistry.registerRecipe("oreNickel", "dustNickel", "dustPlatinum", 30, 2);
+        GrinderRecipeManualRegistry.registerRecipe("oreNickel", "dustNickel", "dustPlatinum", 15, 2);
         GrinderRecipeManualRegistry.registerRecipe("oreIron", "dustIron", "dustGold", 20, 2);
 
         GrinderRecipeAutoRegistry.searchCases.add(new SearchCase("oreNether", 6));

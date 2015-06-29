@@ -159,19 +159,19 @@ public class InitItems{
         itemCoffeeBean = new ItemCoffeeBean();
         ItemUtil.register(itemCoffeeBean);
 
-        itemRiceSeed = new ItemSeed("itemRiceSeed", InitBlocks.blockRice, itemFoods, TheFoods.RICE.ordinal());
+        itemRiceSeed = new ItemSeed("itemRiceSeed", "seedRice", InitBlocks.blockRice, itemFoods, TheFoods.RICE.ordinal());
         ItemUtil.register(itemRiceSeed);
         CompatUtil.registerMFRSeed(itemRiceSeed);
 
-        itemCanolaSeed = new ItemSeed("itemCanolaSeed", InitBlocks.blockCanola, itemMisc, TheMiscItems.CANOLA.ordinal());
+        itemCanolaSeed = new ItemSeed("itemCanolaSeed", "seedCanola", InitBlocks.blockCanola, itemMisc, TheMiscItems.CANOLA.ordinal());
         ItemUtil.register(itemCanolaSeed);
         CompatUtil.registerMFRSeed(itemCanolaSeed);
 
-        itemFlaxSeed = new ItemSeed("itemFlaxSeed", InitBlocks.blockFlax, Items.string, 0);
+        itemFlaxSeed = new ItemSeed("itemFlaxSeed", "seedFlax", InitBlocks.blockFlax, Items.string, 0);
         ItemUtil.register(itemFlaxSeed);
         CompatUtil.registerMFRSeed(itemFlaxSeed);
 
-        itemCoffeeSeed = new ItemSeed("itemCoffeeSeed", InitBlocks.blockCoffee, itemCoffeeBean, 0);
+        itemCoffeeSeed = new ItemSeed("itemCoffeeSeed", "seedCoffeeBeans", InitBlocks.blockCoffee, itemCoffeeBean, 0);
         ItemUtil.register(itemCoffeeSeed);
         CompatUtil.registerMFRSeed(itemCoffeeSeed);
 

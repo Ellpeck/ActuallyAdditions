@@ -18,7 +18,7 @@ public enum TheMiscItems implements INameableItem{
     TINY_COAL("TinyCoal", EnumRarity.common, "itemTinyCoal"),
     TINY_CHAR("TinyCharcoal", EnumRarity.common, "itemTinyChar"),
     RICE_SLIME("RiceSlime", EnumRarity.uncommon, "slimeball"),
-    CANOLA("Canola", EnumRarity.uncommon, "itemCanola"),
+    CANOLA("Canola", EnumRarity.uncommon, "cropCanola"),
     CUP("Cup", EnumRarity.uncommon, "itemCup");
 
     public final String name;

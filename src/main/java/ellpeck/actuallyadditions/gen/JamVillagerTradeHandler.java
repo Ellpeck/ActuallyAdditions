@@ -6,6 +6,7 @@ import ellpeck.actuallyadditions.items.metalists.TheJams;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.MathHelper;
 import net.minecraft.village.MerchantRecipe;
 import net.minecraft.village.MerchantRecipeList;
 import net.minecraftforge.oredict.OreDictionary;
@@ -18,15 +19,15 @@ public class JamVillagerTradeHandler implements VillagerRegistry.IVillageTradeHa
     private ArrayList<Trade> trades = new ArrayList<Trade>();
 
     public JamVillagerTradeHandler(){
-        this.addWants("ingotGold", 5, 2);
-        this.addWants("cropWheat", 15, 10);
-        this.addWants("dustRedstone", 25, 15);
-        this.addWants(new ItemStack(Items.bucket), 5, 4);
-        this.addWants(new ItemStack(Items.glass_bottle), 12, 5);
-        this.addWants(new ItemStack(Items.potionitem), 1, 0);
-        this.addWants("ingotIron", 10, 5);
+        this.addWants("ingotGold", 5, 7);
+        this.addWants("cropWheat", 15, 25);
+        this.addWants("dustRedstone", 25, 40);
+        this.addWants(new ItemStack(Items.bucket), 5, 9);
+        this.addWants(new ItemStack(Items.glass_bottle), 12, 17);
+        this.addWants(new ItemStack(Items.potionitem), 1, 1);
+        this.addWants("ingotIron", 10, 15);
         this.addWants("gemDiamond", 1, 2);
-        this.addWants("dustGlowstone", 12, 10);
+        this.addWants("dustGlowstone", 12, 22);
     }
 
     @Override
@@ -37,12 +38,12 @@ public class JamVillagerTradeHandler implements VillagerRegistry.IVillageTradeHa
                 ItemStack wantsTwo = null;
                 ItemStack wantsOne = trades.get(i).wants.get(j);
 
-                wantsOne.stackSize = rand.nextInt(trades.get(i).extraStackSize) + trades.get(i).baseStackSize;
+                wantsOne.stackSize = MathHelper.getRandomIntegerInRange(rand, trades.get(i).minStackSize, trades.get(i).maxStackSize);
                 if(rand.nextInt(3) == 0){
                     int toGet = rand.nextInt(trades.size());
                     for(int k = 0; k < trades.get(toGet).wants.size(); k++){
                         wantsTwo = trades.get(toGet).wants.get(k);
-                        wantsTwo.stackSize = rand.nextInt(trades.get(k).extraStackSize) + trades.get(k).baseStackSize;
+                        wantsTwo.stackSize = MathHelper.getRandomIntegerInRange(rand, trades.get(k).minStackSize, trades.get(k).maxStackSize);
                     }
                 }
                 if(wantsOne == wantsTwo) wantsTwo = null;
@@ -66,19 +67,19 @@ public class JamVillagerTradeHandler implements VillagerRegistry.IVillageTradeHa
     public static class Trade{
 
         public final ArrayList<ItemStack> wants = new ArrayList<ItemStack>();
-        public final int baseStackSize;
-        public final int extraStackSize;
+        public final int minStackSize;
+        public final int maxStackSize;
 
         public Trade(ArrayList<ItemStack> wants, int minStackSize, int maxStackSize){
             this.wants.addAll(wants);
-            this.baseStackSize = minStackSize <= 0 ? 1 : minStackSize;
-            this.extraStackSize = maxStackSize <= 0 ? 1 : maxStackSize;
+            this.minStackSize = minStackSize <= 0 ? 1 : minStackSize;
+            this.maxStackSize = maxStackSize <= 0 ? 1 : maxStackSize;
         }
 
         public Trade(ItemStack want, int minStackSize, int maxStackSize){
             this.wants.add(want);
-            this.baseStackSize = minStackSize <= 0 ? 1 : minStackSize;
-            this.extraStackSize = maxStackSize <= 0 ? 1 : maxStackSize;
+            this.minStackSize = minStackSize <= 0 ? 1 : minStackSize;
+            this.maxStackSize = maxStackSize <= 0 ? 1 : maxStackSize;
         }
 
     }

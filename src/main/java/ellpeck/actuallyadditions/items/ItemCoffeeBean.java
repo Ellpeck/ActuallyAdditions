@@ -23,7 +23,7 @@ public class ItemCoffeeBean extends ItemFood implements INameableItem{
 
     @Override
     public String getOredictName(){
-        return this.getName();
+        return "cropCoffeeBeans";
     }
 
     @Override
