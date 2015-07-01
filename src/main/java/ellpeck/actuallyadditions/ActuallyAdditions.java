@@ -9,7 +9,7 @@ import ellpeck.actuallyadditions.achievement.InitAchievements;
 import ellpeck.actuallyadditions.blocks.InitBlocks;
 import ellpeck.actuallyadditions.communication.InterModCommunications;
 import ellpeck.actuallyadditions.config.ConfigurationHandler;
-import ellpeck.actuallyadditions.crafting.GrinderCrafting;
+import ellpeck.actuallyadditions.crafting.CrusherCrafting;
 import ellpeck.actuallyadditions.crafting.InitCrafting;
 import ellpeck.actuallyadditions.crafting.ItemCrafting;
 import ellpeck.actuallyadditions.event.InitEvents;
@@ -76,7 +76,7 @@ public class ActuallyAdditions{
         Util.logInfo("Starting PostInitialization Phase...");
 
         ItemCoffee.initIngredients();
-        GrinderCrafting.init();
+        CrusherCrafting.init();
         ItemCrafting.initMashedFoodRecipes();
         HairyBallHandler.init();
         proxy.postInit();

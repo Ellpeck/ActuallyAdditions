@@ -2,7 +2,7 @@ package ellpeck.actuallyadditions.communication;
 
 import cpw.mods.fml.common.event.FMLInterModComms;
 import ellpeck.actuallyadditions.items.ItemCoffee;
-import ellpeck.actuallyadditions.recipe.GrinderRecipeManualRegistry;
+import ellpeck.actuallyadditions.recipe.CrusherRecipeManualRegistry;
 import ellpeck.actuallyadditions.recipe.HairyBallHandler;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.Util;
@@ -26,7 +26,7 @@ public class InterModCommunications{
                     int secondChance = compound.getInteger("secondChance");
 
                     if(input != null && outputOne != null){
-                        GrinderRecipeManualRegistry.registerRecipe(input, outputOne, outputTwo, secondChance);
+                        CrusherRecipeManualRegistry.registerRecipe(input, outputOne, outputTwo, secondChance);
                         Util.logInfo("Crusher Recipe that was sent from Mod " + message.getSender() + " has been registered successfully: " + input.toString() + " -> " + outputOne.toString() + (outputTwo != null ? " + " + outputTwo.toString() + ", Second Chance: " + secondChance : ""));
                     }
                     else ModUtil.LOGGER.log(Level.ERROR, "Crusher Recipe that was sent from Mod " + message.getSender() + " could not be registered: It's missing an Input or an Output!");
