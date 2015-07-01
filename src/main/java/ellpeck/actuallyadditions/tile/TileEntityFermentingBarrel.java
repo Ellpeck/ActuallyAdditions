@@ -44,8 +44,12 @@ public class TileEntityFermentingBarrel extends TileEntityInventoryBase implemen
             WorldUtil.emptyBucket(canolaTank, slots, 0, 1, InitBlocks.fluidCanolaOil);
             WorldUtil.fillBucket(oilTank, slots, 2, 3);
 
-            if(this.oilTank.getFluidAmount() > 0){
+            if(this.oilTank.getFluidAmount() > 0 && !worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)){
                 WorldUtil.pushFluid(worldObj, xCoord, yCoord, zCoord, ForgeDirection.DOWN, this.oilTank);
+                WorldUtil.pushFluid(worldObj, xCoord, yCoord, zCoord, ForgeDirection.NORTH, this.oilTank);
+                WorldUtil.pushFluid(worldObj, xCoord, yCoord, zCoord, ForgeDirection.EAST, this.oilTank);
+                WorldUtil.pushFluid(worldObj, xCoord, yCoord, zCoord, ForgeDirection.SOUTH, this.oilTank);
+                WorldUtil.pushFluid(worldObj, xCoord, yCoord, zCoord, ForgeDirection.WEST, this.oilTank);
             }
         }
     }
@@ -95,7 +99,7 @@ public class TileEntityFermentingBarrel extends TileEntityInventoryBase implemen
 
     @Override
     public boolean canExtractItem(int slot, ItemStack stack, int side){
-        return (slot == 1 && stack.getItem() == Items.bucket) || (slot == 3 && FluidContainerRegistry.containsFluid(this.slots[0], new FluidStack(InitBlocks.fluidOil, FluidContainerRegistry.BUCKET_VOLUME)));
+        return (slot == 1 && stack.getItem() == Items.bucket) || (slot == 3 && FluidContainerRegistry.containsFluid(stack, new FluidStack(InitBlocks.fluidOil, FluidContainerRegistry.BUCKET_VOLUME)));
     }
 
     @Override

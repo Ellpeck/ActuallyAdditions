@@ -139,8 +139,12 @@ public class TileEntityFluidCollector extends TileEntityInventoryBase implements
             if(!this.isPlacer) WorldUtil.fillBucket(tank, slots, 0, 1);
             else WorldUtil.emptyBucket(tank, slots, 0, 1);
 
-            if(this.tank.getFluidAmount() > 0 && !this.isPlacer){
-                WorldUtil.pushFluid(worldObj, xCoord, yCoord, zCoord, ForgeDirection.getOrientation(worldObj.getBlockMetadata(xCoord, yCoord, zCoord)).getOpposite(), this.tank);
+            if(!this.isPlacer && this.tank.getFluidAmount() > 0 && !worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)){
+                WorldUtil.pushFluid(worldObj, xCoord, yCoord, zCoord, ForgeDirection.DOWN, this.tank);
+                WorldUtil.pushFluid(worldObj, xCoord, yCoord, zCoord, ForgeDirection.NORTH, this.tank);
+                WorldUtil.pushFluid(worldObj, xCoord, yCoord, zCoord, ForgeDirection.EAST, this.tank);
+                WorldUtil.pushFluid(worldObj, xCoord, yCoord, zCoord, ForgeDirection.SOUTH, this.tank);
+                WorldUtil.pushFluid(worldObj, xCoord, yCoord, zCoord, ForgeDirection.WEST, this.tank);
             }
 
             if(amountBefore != this.tank.getFluidAmount()){

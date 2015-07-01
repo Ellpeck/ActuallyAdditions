@@ -168,7 +168,7 @@ public class BlockCrafting{
                     "CRC", "CBC", "CRC",
                     'C', "cobblestone",
                     'R', TheMiscBlocks.STONE_CASING.getOredictName(),
-                    'B', InitItems.itemBucketOil));
+                    'B', TheMiscItems.CANOLA.getOredictName()));
 
         //Coal Generator
         if(ConfigCrafting.COAL_GENERATOR.isEnabled())
