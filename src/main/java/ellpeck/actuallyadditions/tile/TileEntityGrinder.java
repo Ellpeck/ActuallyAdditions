@@ -111,6 +111,7 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
             if(this.storage.getEnergyStored() >= energyUsePerTick && this.firstCrushTime > 0 || this.secondCrushTime > 0) this.storage.extractEnergy(energyUsePerTick, false);
 
             if(flag != (this.firstCrushTime > 0 || this.secondCrushTime > 0)){
+                this.markDirty();
                 int meta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
                 if(meta == 1){
                     if(!this.canCrushOn(SLOT_INPUT_1, SLOT_OUTPUT_1_1, SLOT_OUTPUT_1_2) && (!this.isDouble || !this.canCrushOn(SLOT_INPUT_2, SLOT_OUTPUT_2_1, SLOT_OUTPUT_2_2))) worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 0, 2);
@@ -174,7 +175,7 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
 
     @SideOnly(Side.CLIENT)
     public int getEnergyScaled(int i){
-        return this.getEnergyStored(ForgeDirection.UNKNOWN) * i / this.getMaxEnergyStored(ForgeDirection.UNKNOWN);
+        return this.storage.getEnergyStored() * i / this.storage.getMaxEnergyStored();
     }
 
     @SideOnly(Side.CLIENT)

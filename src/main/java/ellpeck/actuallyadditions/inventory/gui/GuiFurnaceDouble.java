@@ -59,7 +59,7 @@ public class GuiFurnaceDouble extends GuiContainer{
     @Override
     public void drawScreen(int x, int y, float f){
         super.drawScreen(x, y, f);
-        String text = this.tileFurnace.getEnergyStored(ForgeDirection.UNKNOWN) + "/" + this.tileFurnace.getMaxEnergyStored(ForgeDirection.UNKNOWN) + " RF";
+        String text = this.tileFurnace.storage.getEnergyStored() + "/" + this.tileFurnace.storage.getEnergyStored() + " RF";
         if(x >= guiLeft+28 && y >= guiTop+6 && x <= guiLeft+43 && y <= guiTop+88){
             this.func_146283_a(Collections.singletonList(text), x, y);
         }

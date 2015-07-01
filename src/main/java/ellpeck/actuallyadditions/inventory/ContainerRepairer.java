@@ -12,7 +12,6 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.util.ForgeDirection;
 
 @InventoryContainer
 public class ContainerRepairer extends Container{
@@ -40,7 +39,7 @@ public class ContainerRepairer extends Container{
     @Override
     public void addCraftingToCrafters(ICrafting iCraft){
         super.addCraftingToCrafters(iCraft);
-        iCraft.sendProgressBarUpdate(this, 0, this.tileRepairer.getEnergyStored(ForgeDirection.UNKNOWN));
+        iCraft.sendProgressBarUpdate(this, 0, this.tileRepairer.storage.getEnergyStored());
     }
 
     @Override
@@ -49,10 +48,10 @@ public class ContainerRepairer extends Container{
         for(Object crafter : this.crafters){
             ICrafting iCraft = (ICrafting)crafter;
 
-            if(this.lastEnergy != this.tileRepairer.getEnergyStored(ForgeDirection.UNKNOWN)) iCraft.sendProgressBarUpdate(this, 0, this.tileRepairer.getEnergyStored(ForgeDirection.UNKNOWN));
+            if(this.lastEnergy != this.tileRepairer.storage.getEnergyStored()) iCraft.sendProgressBarUpdate(this, 0, this.tileRepairer.storage.getEnergyStored());
         }
 
-        this.lastEnergy = this.tileRepairer.getEnergyStored(ForgeDirection.UNKNOWN);
+        this.lastEnergy = this.tileRepairer.storage.getEnergyStored();
     }
 
     @Override

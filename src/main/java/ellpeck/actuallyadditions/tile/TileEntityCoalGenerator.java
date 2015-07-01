@@ -55,6 +55,7 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
             }
 
             if(flag != this.currentBurnTime > 0){
+                this.markDirty();
                 int meta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
                 if(meta == 1){
                     if(!(this.currentBurnTime <= 0 && this.slots[0] != null && TileEntityFurnace.getItemBurnTime(this.slots[0]) > 0 && energyProducedPerTick*TileEntityFurnace.getItemBurnTime(this.slots[0]) <= this.getMaxEnergyStored(ForgeDirection.UNKNOWN)-this.getEnergyStored(ForgeDirection.UNKNOWN)))
@@ -67,7 +68,7 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
 
     @SideOnly(Side.CLIENT)
     public int getEnergyScaled(int i){
-        return this.getEnergyStored(ForgeDirection.UNKNOWN) * i / this.getMaxEnergyStored(ForgeDirection.UNKNOWN);
+        return this.storage.getEnergyStored() * i / this.storage.getMaxEnergyStored();
     }
 
     @SideOnly(Side.CLIENT)

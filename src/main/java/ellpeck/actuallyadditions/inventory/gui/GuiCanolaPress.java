@@ -63,7 +63,7 @@ public class GuiCanolaPress extends GuiContainer{
     @Override
     public void drawScreen(int x, int y, float f){
         super.drawScreen(x, y, f);
-        String text1 = this.press.getEnergyStored(ForgeDirection.UNKNOWN) + "/" + this.press.getMaxEnergyStored(ForgeDirection.UNKNOWN) + " RF";
+        String text1 = this.press.storage.getEnergyStored() + "/" + this.press.storage.getEnergyStored() + " RF";
         if(x >= guiLeft+43 && y >= guiTop+6 && x <= guiLeft+58 && y <= guiTop+88){
             this.func_146283_a(Collections.singletonList(text1), x, y);
         }

@@ -64,7 +64,7 @@ public class GuiGrinder extends GuiContainer{
     @Override
     public void drawScreen(int x, int y, float f){
         super.drawScreen(x, y, f);
-        String text = this.tileGrinder.getEnergyStored(ForgeDirection.UNKNOWN) + "/" + this.tileGrinder.getMaxEnergyStored(ForgeDirection.UNKNOWN) + " RF";
+        String text = this.tileGrinder.storage.getEnergyStored() + "/" + this.tileGrinder.storage.getEnergyStored() + " RF";
         if((this.isDouble && x >= guiLeft+14 && y >= guiTop+6 && x <= guiLeft+29 && y <= guiTop+88) || (!this.isDouble && x >= guiLeft+43 && y >= guiTop+6 && x <= guiLeft+58 && y <= guiTop+88)){
             this.func_146283_a(Collections.singletonList(text), x, y);
         }

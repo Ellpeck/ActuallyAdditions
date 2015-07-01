@@ -12,7 +12,6 @@ import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityFurnace;
-import net.minecraftforge.common.util.ForgeDirection;
 
 @InventoryContainer
 public class ContainerCoalGenerator extends Container{
@@ -46,7 +45,7 @@ public class ContainerCoalGenerator extends Container{
     @Override
     public void addCraftingToCrafters(ICrafting iCraft){
         super.addCraftingToCrafters(iCraft);
-        iCraft.sendProgressBarUpdate(this, 0, this.generator.getEnergyStored(ForgeDirection.UNKNOWN));
+        iCraft.sendProgressBarUpdate(this, 0, this.generator.storage.getEnergyStored());
         iCraft.sendProgressBarUpdate(this, 1, this.generator.currentBurnTime);
         iCraft.sendProgressBarUpdate(this, 2, this.generator.maxBurnTime);
     }
@@ -57,12 +56,12 @@ public class ContainerCoalGenerator extends Container{
         for(Object crafter : this.crafters){
             ICrafting iCraft = (ICrafting)crafter;
 
-            if(this.lastEnergyStored != this.generator.getEnergyStored(ForgeDirection.UNKNOWN)) iCraft.sendProgressBarUpdate(this, 0, this.generator.getEnergyStored(ForgeDirection.UNKNOWN));
+            if(this.lastEnergyStored != this.generator.storage.getEnergyStored()) iCraft.sendProgressBarUpdate(this, 0, this.generator.storage.getEnergyStored());
             if(this.lastBurnTime != this.generator.currentBurnTime) iCraft.sendProgressBarUpdate(this, 1, this.generator.currentBurnTime);
             if(this.lastMaxBurnTime != this.generator.maxBurnTime) iCraft.sendProgressBarUpdate(this, 2, this.generator.maxBurnTime);
         }
 
-        this.lastEnergyStored = this.generator.getEnergyStored(ForgeDirection.UNKNOWN);
+        this.lastEnergyStored = this.generator.storage.getEnergyStored();
         this.lastBurnTime = this.generator.currentBurnTime;
         this.lastMaxBurnTime = this.generator.maxBurnTime;
     }

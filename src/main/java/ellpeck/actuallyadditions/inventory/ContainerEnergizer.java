@@ -13,7 +13,6 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.util.ForgeDirection;
 
 @InventoryContainer
 public class ContainerEnergizer extends Container{
@@ -46,7 +45,7 @@ public class ContainerEnergizer extends Container{
     @Override
     public void addCraftingToCrafters(ICrafting iCraft){
         super.addCraftingToCrafters(iCraft);
-        iCraft.sendProgressBarUpdate(this, 0, this.energizer.getEnergyStored(ForgeDirection.UNKNOWN));
+        iCraft.sendProgressBarUpdate(this, 0, this.energizer.storage.getEnergyStored());
     }
 
     @Override
@@ -55,10 +54,10 @@ public class ContainerEnergizer extends Container{
         for(Object crafter : this.crafters){
             ICrafting iCraft = (ICrafting)crafter;
 
-            if(this.lastEnergyStored != this.energizer.getEnergyStored(ForgeDirection.UNKNOWN)) iCraft.sendProgressBarUpdate(this, 0, this.energizer.getEnergyStored(ForgeDirection.UNKNOWN));
+            if(this.lastEnergyStored != this.energizer.storage.getEnergyStored()) iCraft.sendProgressBarUpdate(this, 0, this.energizer.storage.getEnergyStored());
         }
 
-        this.lastEnergyStored = this.energizer.getEnergyStored(ForgeDirection.UNKNOWN);
+        this.lastEnergyStored = this.energizer.storage.getEnergyStored();
     }
 
     @Override

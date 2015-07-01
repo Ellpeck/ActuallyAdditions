@@ -59,6 +59,7 @@ public class TileEntityOilGenerator extends TileEntityInventoryBase implements I
             }
 
             if(flag != this.currentBurnTime > 0){
+                this.markDirty();
                 int meta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
                 if(meta == 1){
                     if(!(energyProducedPerTick*this.maxBurnTime <= this.getMaxEnergyStored(ForgeDirection.UNKNOWN)-this.getEnergyStored(ForgeDirection.UNKNOWN) && FluidContainerRegistry.BUCKET_VOLUME <= this.tank.getCapacity()-this.tank.getFluidAmount()))
@@ -71,7 +72,7 @@ public class TileEntityOilGenerator extends TileEntityInventoryBase implements I
 
     @SideOnly(Side.CLIENT)
     public int getEnergyScaled(int i){
-        return this.getEnergyStored(ForgeDirection.UNKNOWN) * i / this.getMaxEnergyStored(ForgeDirection.UNKNOWN);
+        return this.storage.getEnergyStored() * i / this.storage.getMaxEnergyStored();
     }
 
     @SideOnly(Side.CLIENT)

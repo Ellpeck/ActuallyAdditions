@@ -76,7 +76,7 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IE
 
     @SideOnly(Side.CLIENT)
     public int getEnergyScaled(int i){
-        return this.getEnergyStored(ForgeDirection.UNKNOWN) * i / this.getMaxEnergyStored(ForgeDirection.UNKNOWN);
+        return this.storage.getEnergyStored() * i / this.storage.getMaxEnergyStored();
     }
 
     @Override

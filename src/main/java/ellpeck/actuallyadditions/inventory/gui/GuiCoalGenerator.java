@@ -57,7 +57,7 @@ public class GuiCoalGenerator extends GuiContainer{
     @Override
     public void drawScreen(int x, int y, float f){
         super.drawScreen(x, y, f);
-        String text1 = this.generator.getEnergyStored(ForgeDirection.UNKNOWN) + "/" + this.generator.getMaxEnergyStored(ForgeDirection.UNKNOWN) + " RF";
+        String text1 = this.generator.storage.getEnergyStored() + "/" + this.generator.storage.getMaxEnergyStored() + " RF";
         if(x >= guiLeft+43 && y >= guiTop+6 && x <= guiLeft+58 && y <= guiTop+88){
             this.func_146283_a(Collections.singletonList(text1), x, y);
         }

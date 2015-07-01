@@ -13,7 +13,6 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -50,7 +49,7 @@ public class ContainerOilGenerator extends Container{
     @Override
     public void addCraftingToCrafters(ICrafting iCraft){
         super.addCraftingToCrafters(iCraft);
-        iCraft.sendProgressBarUpdate(this, 0, this.generator.getEnergyStored(ForgeDirection.UNKNOWN));
+        iCraft.sendProgressBarUpdate(this, 0, this.generator.storage.getEnergyStored());
         iCraft.sendProgressBarUpdate(this, 1, this.generator.currentBurnTime);
         iCraft.sendProgressBarUpdate(this, 2, this.generator.tank.getFluidAmount());
     }
@@ -61,12 +60,12 @@ public class ContainerOilGenerator extends Container{
         for(Object crafter : this.crafters){
             ICrafting iCraft = (ICrafting)crafter;
 
-            if(this.lastEnergyStored != this.generator.getEnergyStored(ForgeDirection.UNKNOWN)) iCraft.sendProgressBarUpdate(this, 0, this.generator.getEnergyStored(ForgeDirection.UNKNOWN));
+            if(this.lastEnergyStored != this.generator.storage.getEnergyStored()) iCraft.sendProgressBarUpdate(this, 0, this.generator.storage.getEnergyStored());
             if(this.lastBurnTime != this.generator.currentBurnTime) iCraft.sendProgressBarUpdate(this, 1, this.generator.currentBurnTime);
             if(this.lastTankAmount != this.generator.tank.getFluidAmount()) iCraft.sendProgressBarUpdate(this, 2, this.generator.tank.getFluidAmount());
         }
 
-        this.lastEnergyStored = this.generator.getEnergyStored(ForgeDirection.UNKNOWN);
+        this.lastEnergyStored = this.generator.storage.getEnergyStored();
         this.lastBurnTime = this.generator.currentBurnTime;
         this.lastTankAmount = this.generator.tank.getFluidAmount();
     }

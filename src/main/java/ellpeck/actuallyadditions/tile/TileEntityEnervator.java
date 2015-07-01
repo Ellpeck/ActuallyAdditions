@@ -79,7 +79,7 @@ public class TileEntityEnervator extends TileEntityInventoryBase implements IEne
 
     @SideOnly(Side.CLIENT)
     public int getEnergyScaled(int i){
-        return this.getEnergyStored(ForgeDirection.UNKNOWN) * i / this.getMaxEnergyStored(ForgeDirection.UNKNOWN);
+        return this.storage.getEnergyStored() * i / this.storage.getMaxEnergyStored();
     }
 
     @Override

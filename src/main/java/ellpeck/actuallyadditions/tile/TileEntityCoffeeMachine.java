@@ -109,7 +109,7 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
 
     @SideOnly(Side.CLIENT)
     public int getEnergyScaled(int i){
-        return this.getEnergyStored(ForgeDirection.UNKNOWN) * i / this.getMaxEnergyStored(ForgeDirection.UNKNOWN);
+        return this.storage.getEnergyStored() * i / this.storage.getMaxEnergyStored();
     }
 
     @SideOnly(Side.CLIENT)

@@ -65,6 +65,7 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
             if(this.storage.getEnergyStored() >= energyUsePerTick && this.firstSmeltTime > 0 || this.secondSmeltTime > 0) this.storage.extractEnergy(energyUsePerTick, false);
 
             if(flag != (this.firstSmeltTime > 0 || this.secondSmeltTime > 0)){
+                this.markDirty();
                 int meta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
                 if(meta > 3){
                     if(!this.canSmeltOn(SLOT_INPUT_1, SLOT_OUTPUT_1) && !this.canSmeltOn(SLOT_INPUT_2, SLOT_OUTPUT_2)) worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, meta-4, 2);
@@ -116,7 +117,7 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
 
     @SideOnly(Side.CLIENT)
     public int getEnergyScaled(int i){
-        return this.getEnergyStored(ForgeDirection.UNKNOWN) * i / this.getMaxEnergyStored(ForgeDirection.UNKNOWN);
+        return this.storage.getEnergyStored() * i / this.storage.getMaxEnergyStored();
     }
 
     @SideOnly(Side.CLIENT)

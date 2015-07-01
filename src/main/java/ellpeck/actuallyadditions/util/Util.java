@@ -18,8 +18,6 @@ public class Util{
     }
 
     public static void registerDispenserHandler(Item item, BehaviorDefaultDispenseItem handler){
-        if(BlockDispenser.dispenseBehaviorRegistry.getObject(item) == null){
-            BlockDispenser.dispenseBehaviorRegistry.putObject(item, handler);
-        }
+        BlockDispenser.dispenseBehaviorRegistry.putObject(item, handler);
     }
 }

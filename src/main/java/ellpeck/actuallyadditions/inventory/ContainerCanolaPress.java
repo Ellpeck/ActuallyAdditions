@@ -16,7 +16,6 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidStack;
 
 @InventoryContainer
@@ -53,7 +52,7 @@ public class ContainerCanolaPress extends Container{
     @Override
     public void addCraftingToCrafters(ICrafting iCraft){
         super.addCraftingToCrafters(iCraft);
-        iCraft.sendProgressBarUpdate(this, 0, this.press.getEnergyStored(ForgeDirection.UNKNOWN));
+        iCraft.sendProgressBarUpdate(this, 0, this.press.storage.getEnergyStored());
         iCraft.sendProgressBarUpdate(this, 1, this.press.tank.getFluidAmount());
         iCraft.sendProgressBarUpdate(this, 2, this.press.currentProcessTime);
     }
@@ -64,12 +63,12 @@ public class ContainerCanolaPress extends Container{
         for(Object crafter : this.crafters){
             ICrafting iCraft = (ICrafting)crafter;
 
-            if(this.lastEnergyStored != this.press.getEnergyStored(ForgeDirection.UNKNOWN)) iCraft.sendProgressBarUpdate(this, 0, this.press.getEnergyStored(ForgeDirection.UNKNOWN));
+            if(this.lastEnergyStored != this.press.storage.getEnergyStored()) iCraft.sendProgressBarUpdate(this, 0, this.press.storage.getEnergyStored());
             if(this.lastTankAmount != this.press.tank.getFluidAmount()) iCraft.sendProgressBarUpdate(this, 1, this.press.tank.getFluidAmount());
             if(this.lastProcessTime != this.press.currentProcessTime) iCraft.sendProgressBarUpdate(this, 2, this.press.currentProcessTime);
         }
 
-        this.lastEnergyStored = this.press.getEnergyStored(ForgeDirection.UNKNOWN);
+        this.lastEnergyStored = this.press.storage.getEnergyStored();
         this.lastTankAmount = this.press.tank.getFluidAmount();
         this.lastProcessTime = this.press.currentProcessTime;
     }

@@ -13,7 +13,6 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.util.ForgeDirection;
 
 @InventoryContainer
 public class ContainerGrinder extends Container{
@@ -54,8 +53,8 @@ public class ContainerGrinder extends Container{
         super.addCraftingToCrafters(iCraft);
         iCraft.sendProgressBarUpdate(this, 0, this.tileGrinder.firstCrushTime);
         iCraft.sendProgressBarUpdate(this, 1, this.tileGrinder.maxCrushTime);
-        if(this.isDouble) iCraft.sendProgressBarUpdate(this, 2, this.tileGrinder.secondCrushTime);
-        iCraft.sendProgressBarUpdate(this, 3, this.tileGrinder.getEnergyStored(ForgeDirection.UNKNOWN));
+        iCraft.sendProgressBarUpdate(this, 2, this.tileGrinder.storage.getEnergyStored());
+        if(this.isDouble) iCraft.sendProgressBarUpdate(this, 3, this.tileGrinder.secondCrushTime);
     }
 
     @Override
@@ -66,14 +65,14 @@ public class ContainerGrinder extends Container{
 
             if(this.lastFirstCrushTime != this.tileGrinder.firstCrushTime) iCraft.sendProgressBarUpdate(this, 0, this.tileGrinder.firstCrushTime);
             if(this.lastMaxCrushTime != this.tileGrinder.maxCrushTime) iCraft.sendProgressBarUpdate(this, 1, this.tileGrinder.maxCrushTime);
-            if(this.isDouble) if(this.lastSecondCrushTime != this.tileGrinder.secondCrushTime) iCraft.sendProgressBarUpdate(this, 2, this.tileGrinder.secondCrushTime);
-            if(this.lastEnergyStored != this.tileGrinder.getEnergyStored(ForgeDirection.UNKNOWN)) iCraft.sendProgressBarUpdate(this, 3, this.tileGrinder.getEnergyStored(ForgeDirection.UNKNOWN));
+            if(this.lastEnergyStored != this.tileGrinder.storage.getEnergyStored()) iCraft.sendProgressBarUpdate(this, 2, this.tileGrinder.storage.getEnergyStored());
+            if(this.isDouble) if(this.lastSecondCrushTime != this.tileGrinder.secondCrushTime) iCraft.sendProgressBarUpdate(this, 3, this.tileGrinder.secondCrushTime);
         }
 
         this.lastFirstCrushTime = this.tileGrinder.firstCrushTime;
         this.lastMaxCrushTime = this.tileGrinder.maxCrushTime;
+        this.lastEnergyStored = this.tileGrinder.storage.getEnergyStored();
         if(this.isDouble) this.lastSecondCrushTime = this.tileGrinder.secondCrushTime;
-        this.lastEnergyStored = this.tileGrinder.getEnergyStored(ForgeDirection.UNKNOWN);
     }
 
     @Override
@@ -81,8 +80,8 @@ public class ContainerGrinder extends Container{
     public void updateProgressBar(int par1, int par2){
         if(par1 == 0) this.tileGrinder.firstCrushTime = par2;
         if(par1 == 1) this.tileGrinder.maxCrushTime = par2;
-        if(this.isDouble && par1 == 2) this.tileGrinder.secondCrushTime = par2;
-        if(par1 == 3) this.tileGrinder.storage.setEnergyStored(par2);
+        if(par1 == 2) this.tileGrinder.storage.setEnergyStored(par2);
+        if(this.isDouble && par1 == 3) this.tileGrinder.secondCrushTime = par2;
     }
 
     @Override

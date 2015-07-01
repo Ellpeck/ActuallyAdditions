@@ -101,7 +101,7 @@ public class GuiCoffeeMachine extends GuiContainer{
     public void drawScreen(int x, int y, float f){
         super.drawScreen(x, y, f);
 
-        String text1 = this.machine.getEnergyStored(ForgeDirection.UNKNOWN) + "/" + this.machine.getMaxEnergyStored(ForgeDirection.UNKNOWN) + " RF";
+        String text1 = this.machine.storage.getEnergyStored() + "/" + this.machine.storage.getEnergyStored() + " RF";
         if(x >= guiLeft+16 && y >= guiTop+5 && x <= guiLeft+23 && y <= guiTop+89){
             this.func_146283_a(Collections.singletonList(text1), x, y);
         }
