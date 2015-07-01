@@ -9,7 +9,6 @@ import ellpeck.actuallyadditions.network.PacketHandler;
 import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ChunkCoordinates;
@@ -137,26 +136,8 @@ public class TileEntityFluidCollector extends TileEntityInventoryBase implements
                 else this.currentTime = this.timeNeeded;
             }
 
-            if(!this.isPlacer){
-                if(this.slots[0] != null && this.slots[0].getItem() == Items.bucket && this.slots[1] == null){
-                    if(this.tank.getFluidAmount() >= FluidContainerRegistry.BUCKET_VOLUME){
-                        this.slots[1] = FluidContainerRegistry.fillFluidContainer(this.tank.getFluid(), this.slots[0].copy());
-                        this.slots[0].stackSize--;
-                        if(this.slots[0].stackSize == 0) this.slots[0] = null;
-                        this.tank.drain(FluidContainerRegistry.BUCKET_VOLUME, true);
-                    }
-                }
-            }
-            else{
-                if(this.slots[0] != null && FluidContainerRegistry.isBucket(this.slots[0]) && !this.slots[0].isItemEqual(FluidContainerRegistry.EMPTY_BUCKET) && (this.slots[1] == null || this.slots[1].stackSize < this.slots[1].getMaxStackSize())){
-                    if(FluidContainerRegistry.BUCKET_VOLUME <= this.tank.getCapacity()-this.tank.getFluidAmount()){
-                        if(this.slots[1] == null) this.slots[1] = new ItemStack(Items.bucket);
-                        else this.slots[1].stackSize++;
-                        this.tank.fill(FluidContainerRegistry.getFluidForFilledItem(this.slots[0]), true);
-                        this.slots[0] = null;
-                    }
-                }
-            }
+            if(!this.isPlacer) WorldUtil.fillBucket(tank, slots, 0, 1);
+            else WorldUtil.emptyBucket(tank, slots, 0, 1);
 
             if(this.tank.getFluidAmount() > 0 && !this.isPlacer){
                 WorldUtil.pushFluid(worldObj, xCoord, yCoord, zCoord, ForgeDirection.getOrientation(worldObj.getBlockMetadata(xCoord, yCoord, zCoord)).getOpposite(), this.tank);
@@ -164,6 +145,7 @@ public class TileEntityFluidCollector extends TileEntityInventoryBase implements
 
             if(amountBefore != this.tank.getFluidAmount()){
                 this.sendPacket();
+                this.markDirty();
             }
         }
     }

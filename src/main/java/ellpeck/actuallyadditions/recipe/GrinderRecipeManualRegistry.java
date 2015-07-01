@@ -9,6 +9,10 @@ public class GrinderRecipeManualRegistry{
 
     public static ArrayList<GrinderRecipe> recipes = new ArrayList<GrinderRecipe>();
 
+    public static void clearRecipeList(){
+        recipes.clear();
+    }
+
     public static void registerRecipe(ItemStack input, ItemStack outputOne, ItemStack outputTwo, int secondChance){
         recipes.add(new GrinderRecipe(input, outputOne, outputTwo, secondChance));
     }

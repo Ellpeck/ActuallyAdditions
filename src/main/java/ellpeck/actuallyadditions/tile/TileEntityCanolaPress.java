@@ -52,14 +52,7 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IE
             }
             else this.currentProcessTime = 0;
 
-            if(this.slots[1] != null && this.slots[1].getItem() == Items.bucket && this.slots[2] == null){
-                if(this.tank.getFluidAmount() > 0 && this.tank.getFluid().getFluid() == InitBlocks.fluidCanolaOil && this.tank.getFluidAmount() >= FluidContainerRegistry.BUCKET_VOLUME){
-                    this.slots[2] = new ItemStack(InitItems.itemBucketCanolaOil);
-                    this.slots[1].stackSize--;
-                    if(this.slots[1].stackSize == 0) this.slots[1] = null;
-                    this.tank.drain(FluidContainerRegistry.BUCKET_VOLUME, true);
-                }
-            }
+            WorldUtil.fillBucket(tank, slots, 1, 2);
 
             if(this.tank.getFluidAmount() > 0){
                 WorldUtil.pushFluid(worldObj, xCoord, yCoord, zCoord, ForgeDirection.DOWN, this.tank);

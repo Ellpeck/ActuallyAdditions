@@ -4,7 +4,6 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.blocks.InitBlocks;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
-import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -42,23 +41,8 @@ public class TileEntityFermentingBarrel extends TileEntityInventoryBase implemen
             }
             else this.currentProcessTime = 0;
 
-            if(this.slots[0] != null && FluidContainerRegistry.containsFluid(this.slots[0], new FluidStack(InitBlocks.fluidCanolaOil, FluidContainerRegistry.BUCKET_VOLUME)) && (this.slots[1] == null || (this.slots[1].stackSize < this.slots[1].getMaxStackSize()))){
-                if(FluidContainerRegistry.BUCKET_VOLUME <= this.canolaTank.getCapacity()-this.canolaTank.getFluidAmount()){
-                    if(this.slots[1] == null) this.slots[1] = new ItemStack(Items.bucket);
-                    else this.slots[1].stackSize++;
-                    this.slots[0] = null;
-                    this.canolaTank.fill(new FluidStack(InitBlocks.fluidCanolaOil, FluidContainerRegistry.BUCKET_VOLUME), true);
-                }
-            }
-
-            if(this.slots[2] != null && this.slots[2].getItem() == Items.bucket && this.slots[3] == null){
-                if(this.oilTank.getFluidAmount() > 0 && this.oilTank.getFluid().getFluid() == InitBlocks.fluidOil && this.oilTank.getFluidAmount() >= FluidContainerRegistry.BUCKET_VOLUME){
-                    this.slots[3] = new ItemStack(InitItems.itemBucketOil);
-                    this.slots[2].stackSize--;
-                    if(this.slots[2].stackSize == 0) this.slots[2] = null;
-                    this.oilTank.drain(FluidContainerRegistry.BUCKET_VOLUME, true);
-                }
-            }
+            WorldUtil.emptyBucket(canolaTank, slots, 0, 1, InitBlocks.fluidCanolaOil);
+            WorldUtil.fillBucket(oilTank, slots, 2, 3);
 
             if(this.oilTank.getFluidAmount() > 0){
                 WorldUtil.pushFluid(worldObj, xCoord, yCoord, zCoord, ForgeDirection.DOWN, this.oilTank);

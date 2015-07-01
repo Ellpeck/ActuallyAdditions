@@ -7,7 +7,6 @@ import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.blocks.InitBlocks;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.util.WorldUtil;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -48,14 +47,7 @@ public class TileEntityOilGenerator extends TileEntityInventoryBase implements I
                 }
             }
 
-            if(this.slots[0] != null && FluidContainerRegistry.containsFluid(this.slots[0], new FluidStack(InitBlocks.fluidOil, FluidContainerRegistry.BUCKET_VOLUME)) && (this.slots[1] == null || (this.slots[1].stackSize < this.slots[1].getMaxStackSize()))){
-                if(FluidContainerRegistry.BUCKET_VOLUME <= this.tank.getCapacity()-this.tank.getFluidAmount()){
-                    if(this.slots[1] == null) this.slots[1] = new ItemStack(Items.bucket);
-                    else this.slots[1].stackSize++;
-                    this.slots[0] = null;
-                    this.tank.fill(new FluidStack(InitBlocks.fluidOil, FluidContainerRegistry.BUCKET_VOLUME), true);
-                }
-            }
+            WorldUtil.emptyBucket(tank, slots, 0, 1, InitBlocks.fluidOil);
 
             if(this.getEnergyStored(ForgeDirection.UNKNOWN) > 0){
                 WorldUtil.pushEnergy(worldObj, xCoord, yCoord, zCoord, ForgeDirection.UP, storage);

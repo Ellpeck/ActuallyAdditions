@@ -9,8 +9,8 @@ import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.items.ItemCoffee;
 import ellpeck.actuallyadditions.items.metalists.TheMiscItems;
 import ellpeck.actuallyadditions.network.gui.IButtonReactor;
+import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -62,14 +62,7 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
             }
         }
 
-        if(this.slots[SLOT_WATER_INPUT] != null && FluidContainerRegistry.containsFluid(this.slots[SLOT_WATER_INPUT], new FluidStack(FluidRegistry.WATER, FluidContainerRegistry.BUCKET_VOLUME)) && (this.slots[SLOT_WATER_OUTPUT] == null || (this.slots[SLOT_WATER_OUTPUT].stackSize < this.slots[SLOT_WATER_OUTPUT].getMaxStackSize()))){
-            if(FluidContainerRegistry.BUCKET_VOLUME <= this.tank.getCapacity()-this.tank.getFluidAmount()){
-                if(this.slots[SLOT_WATER_OUTPUT] == null) this.slots[SLOT_WATER_OUTPUT] = new ItemStack(Items.bucket);
-                else this.slots[SLOT_WATER_OUTPUT].stackSize++;
-                this.slots[SLOT_WATER_INPUT] = null;
-                this.tank.fill(new FluidStack(FluidRegistry.WATER, FluidContainerRegistry.BUCKET_VOLUME), true);
-            }
-        }
+        WorldUtil.emptyBucket(tank, slots, SLOT_WATER_INPUT, SLOT_WATER_OUTPUT, FluidRegistry.WATER);
     }
 
     public void brew(){

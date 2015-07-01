@@ -113,6 +113,44 @@ public class WorldUtil{
         }
         return null;
     }
+    
+    public static void fillBucket(FluidTank tank, ItemStack[] slots, int inputSlot, int outputSlot){
+        if(slots[inputSlot] != null && tank.getFluid() != null){
+            ItemStack filled = FluidContainerRegistry.fillFluidContainer(tank.getFluid(), slots[inputSlot].copy());
+            if(filled != null && FluidContainerRegistry.isEmptyContainer(slots[inputSlot]) && (slots[outputSlot] == null || (slots[outputSlot].isItemEqual(filled) && slots[outputSlot].stackSize < slots[outputSlot].getMaxStackSize()))){
+                int cap = FluidContainerRegistry.getContainerCapacity(tank.getFluid(), slots[inputSlot]);
+                if(cap > 0 && cap <= tank.getFluidAmount()){
+                    if(slots[outputSlot] == null) slots[outputSlot] = FluidContainerRegistry.fillFluidContainer(tank.getFluid(), slots[inputSlot].copy());
+                    else slots[outputSlot].stackSize++;
+
+                    if(slots[outputSlot] != null){
+                        tank.drain(cap, true);
+                        slots[inputSlot].stackSize--;
+                        if(slots[inputSlot].stackSize <= 0) slots[inputSlot] = null;
+                    }
+                }
+            }
+        }
+    }
+
+    public static void emptyBucket(FluidTank tank, ItemStack[] slots, int inputSlot, int outputSlot){
+        emptyBucket(tank, slots, inputSlot, outputSlot, null);
+    }
+
+    public static void emptyBucket(FluidTank tank, ItemStack[] slots, int inputSlot, int outputSlot, Fluid containedFluid){
+        if(slots[inputSlot] != null && FluidContainerRegistry.isFilledContainer(slots[inputSlot]) && (slots[outputSlot] == null || (slots[outputSlot].isItemEqual(FluidContainerRegistry.drainFluidContainer(slots[inputSlot].copy())) && slots[outputSlot].stackSize < slots[outputSlot].getMaxStackSize()))){
+            if(containedFluid == null || FluidContainerRegistry.containsFluid(slots[inputSlot], new FluidStack(containedFluid, 0))){
+                if((tank.getFluid() == null || FluidContainerRegistry.getFluidForFilledItem(slots[inputSlot]).isFluidEqual(tank.getFluid())) && tank.getCapacity()-tank.getFluidAmount() >= FluidContainerRegistry.getContainerCapacity(slots[inputSlot])){
+                    if(slots[outputSlot] == null) slots[outputSlot] = FluidContainerRegistry.drainFluidContainer(slots[inputSlot].copy());
+                    else slots[outputSlot].stackSize++;
+
+                    tank.fill(FluidContainerRegistry.getFluidForFilledItem(slots[inputSlot]), true);
+                    slots[inputSlot].stackSize--;
+                    if(slots[inputSlot].stackSize <= 0) slots[inputSlot] = null;
+                }
+            }
+        }
+    }
 
     public static ForgeDirection getDirectionByRotatingSide(int side){
         switch(side){
