@@ -1,7 +1,6 @@
 package ellpeck.actuallyadditions.config.values;
 
 import ellpeck.actuallyadditions.config.ConfigCategories;
-import ellpeck.actuallyadditions.config.ConfigValues;
 
 public enum ConfigCrafting{
 
@@ -111,6 +110,8 @@ public enum ConfigCrafting{
     public final String category;
     public final boolean defaultValue;
 
+    public boolean currentValue;
+
     ConfigCrafting(String name, ConfigCategories category){
         this(name, category, true);
     }
@@ -122,6 +123,6 @@ public enum ConfigCrafting{
     }
 
     public boolean isEnabled(){
-        return ConfigValues.craftingValues[this.ordinal()];
+        return this.currentValue;
     }
 }

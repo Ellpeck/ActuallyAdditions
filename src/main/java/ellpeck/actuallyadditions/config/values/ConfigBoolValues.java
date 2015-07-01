@@ -1,7 +1,6 @@
 package ellpeck.actuallyadditions.config.values;
 
 import ellpeck.actuallyadditions.config.ConfigCategories;
-import ellpeck.actuallyadditions.config.ConfigValues;
 import ellpeck.actuallyadditions.config.ConfigurationHandler;
 
 public enum ConfigBoolValues{
@@ -43,6 +42,8 @@ public enum ConfigBoolValues{
     public final boolean defaultValue;
     public final String desc;
 
+    public boolean currentValue;
+
     ConfigBoolValues(String name, ConfigCategories category, boolean defaultValue, String desc){
         this.name = name;
         this.category = category.name;
@@ -51,7 +52,7 @@ public enum ConfigBoolValues{
     }
 
     public boolean isEnabled(){
-        return ConfigValues.boolValues[this.ordinal()];
+        return this.currentValue;
     }
 
 }

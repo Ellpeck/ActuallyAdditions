@@ -1,7 +1,6 @@
 package ellpeck.actuallyadditions.config.values;
 
 import ellpeck.actuallyadditions.config.ConfigCategories;
-import ellpeck.actuallyadditions.config.ConfigValues;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 
 public enum ConfigIntValues{
@@ -108,6 +107,8 @@ public enum ConfigIntValues{
     public final int max;
     public final String desc;
 
+    public int currentValue;
+
     ConfigIntValues(String name, ConfigCategories category, int defaultValue, int min, int max, String desc){
         this.name = name;
         this.category = category.name;
@@ -118,6 +119,6 @@ public enum ConfigIntValues{
     }
 
     public int getValue(){
-        return ConfigValues.intValues[this.ordinal()];
+        return this.currentValue;
     }
 }

@@ -7,6 +7,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.ShapedOreRecipe;
+import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 public class ToolCrafting{
 
@@ -74,6 +75,52 @@ public class ToolCrafting{
                     "EE", " S", " S",
                     'E', new ItemStack(Blocks.obsidian),
                     'S', new ItemStack(Items.stick));
+        }
+
+        //Paxels
+        if(ConfigCrafting.PAXELS.isEnabled()){
+            GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.woodenPaxel),
+                    new ItemStack(Items.wooden_axe),
+                    new ItemStack(Items.wooden_pickaxe),
+                    new ItemStack(Items.wooden_shovel),
+                    new ItemStack(Items.wooden_sword),
+                    new ItemStack(Items.wooden_hoe)));
+            GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.stonePaxel),
+                    new ItemStack(Items.stone_axe),
+                    new ItemStack(Items.stone_pickaxe),
+                    new ItemStack(Items.stone_shovel),
+                    new ItemStack(Items.stone_sword),
+                    new ItemStack(Items.stone_hoe)));
+            GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.ironPaxel),
+                    new ItemStack(Items.iron_axe),
+                    new ItemStack(Items.iron_pickaxe),
+                    new ItemStack(Items.iron_shovel),
+                    new ItemStack(Items.iron_sword),
+                    new ItemStack(Items.iron_hoe)));
+            GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.goldPaxel),
+                    new ItemStack(Items.golden_axe),
+                    new ItemStack(Items.golden_pickaxe),
+                    new ItemStack(Items.golden_shovel),
+                    new ItemStack(Items.golden_sword),
+                    new ItemStack(Items.golden_hoe)));
+            GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.diamondPaxel),
+                    new ItemStack(Items.diamond_axe),
+                    new ItemStack(Items.diamond_pickaxe),
+                    new ItemStack(Items.diamond_shovel),
+                    new ItemStack(Items.diamond_sword),
+                    new ItemStack(Items.diamond_hoe)));
+            GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.emeraldPaxel),
+                    new ItemStack(InitItems.itemAxeEmerald),
+                    new ItemStack(InitItems.itemPickaxeEmerald),
+                    new ItemStack(InitItems.itemSwordEmerald),
+                    new ItemStack(InitItems.itemShovelEmerald),
+                    new ItemStack(InitItems.itemHoeEmerald)));
+            GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.obsidianPaxel),
+                    new ItemStack(InitItems.itemAxeObsidian),
+                    new ItemStack(InitItems.itemPickaxeObsidian),
+                    new ItemStack(InitItems.itemSwordObsidian),
+                    new ItemStack(InitItems.itemShovelObsidian),
+                    new ItemStack(InitItems.itemHoeObsidian)));
         }
     }
 

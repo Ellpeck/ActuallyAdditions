@@ -30,7 +30,7 @@ import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.block.BlockDispenser;
 
-@Mod(modid = ModUtil.MOD_ID, name = ModUtil.NAME, version = ModUtil.VERSION)
+@Mod(modid = ModUtil.MOD_ID, name = ModUtil.NAME, version = ModUtil.VERSION, canBeDeactivated = false)
 public class ActuallyAdditions{
 
     @Instance(ModUtil.MOD_ID)

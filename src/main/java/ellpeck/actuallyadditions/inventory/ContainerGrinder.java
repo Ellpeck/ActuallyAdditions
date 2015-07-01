@@ -18,7 +18,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 @InventoryContainer
 public class ContainerGrinder extends Container{
 
-    private TileEntityGrinder tileGrinder;
+    public TileEntityGrinder tileGrinder;
     private boolean isDouble;
 
     private int lastFirstCrushTime;

@@ -1,7 +1,6 @@
 package ellpeck.actuallyadditions.config.values;
 
 import ellpeck.actuallyadditions.config.ConfigCategories;
-import ellpeck.actuallyadditions.config.ConfigValues;
 
 public enum ConfigFloatValues{
 
@@ -20,6 +19,8 @@ public enum ConfigFloatValues{
     public final float max;
     public final String desc;
 
+    public float currentValue;
+
     ConfigFloatValues(String name, ConfigCategories category, float defaultValue, float min, float max, String desc){
         this.name = name;
         this.category = category.name;
@@ -30,7 +31,7 @@ public enum ConfigFloatValues{
     }
 
     public float getValue(){
-        return ConfigValues.floatValues[this.ordinal()];
+        return this.currentValue;
     }
 
 }
