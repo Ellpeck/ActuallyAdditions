@@ -54,12 +54,14 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IE
 
             WorldUtil.fillBucket(tank, slots, 1, 2);
 
-            if(this.tank.getFluidAmount() > 0 && !worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)){
+            if(this.tank.getFluidAmount() > 0){
                 WorldUtil.pushFluid(worldObj, xCoord, yCoord, zCoord, ForgeDirection.DOWN, this.tank);
-                WorldUtil.pushFluid(worldObj, xCoord, yCoord, zCoord, ForgeDirection.NORTH, this.tank);
-                WorldUtil.pushFluid(worldObj, xCoord, yCoord, zCoord, ForgeDirection.EAST, this.tank);
-                WorldUtil.pushFluid(worldObj, xCoord, yCoord, zCoord, ForgeDirection.SOUTH, this.tank);
-                WorldUtil.pushFluid(worldObj, xCoord, yCoord, zCoord, ForgeDirection.WEST, this.tank);
+                if(!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)){
+                    WorldUtil.pushFluid(worldObj, xCoord, yCoord, zCoord, ForgeDirection.NORTH, this.tank);
+                    WorldUtil.pushFluid(worldObj, xCoord, yCoord, zCoord, ForgeDirection.EAST, this.tank);
+                    WorldUtil.pushFluid(worldObj, xCoord, yCoord, zCoord, ForgeDirection.SOUTH, this.tank);
+                    WorldUtil.pushFluid(worldObj, xCoord, yCoord, zCoord, ForgeDirection.WEST, this.tank);
+                }
             }
         }
     }

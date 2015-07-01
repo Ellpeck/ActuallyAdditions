@@ -25,6 +25,7 @@ import java.util.Random;
 public class BlockCoalGenerator extends BlockContainerBase implements INameableItem{
 
     private IIcon topIcon;
+    private IIcon bottomIcon;
 
     public BlockCoalGenerator(){
         super(Material.rock);
@@ -58,7 +59,7 @@ public class BlockCoalGenerator extends BlockContainerBase implements INameableI
 
     @Override
     public IIcon getIcon(int side, int meta){
-        return side <= 1 ? this.topIcon : this.blockIcon;
+        return side <= 1 ? (side == 0 ? this.bottomIcon : this.topIcon) : this.blockIcon;
     }
 
     @Override
@@ -66,6 +67,7 @@ public class BlockCoalGenerator extends BlockContainerBase implements INameableI
     public void registerBlockIcons(IIconRegister iconReg){
         this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":" + this.getName());
         this.topIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":" + this.getName() + "Top");
+        this.bottomIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":" + this.getName() + "Bottom");
     }
 
     @Override
