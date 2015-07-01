@@ -16,9 +16,6 @@ public class CrusherCrafting{
     public static void init(){
         Util.logInfo("Initializing Crusher Recipes...");
 
-        CrusherRecipeManualRegistry.registerRecipe(new ItemStack(Items.bed), new ItemStack(Blocks.planks, 3), new ItemStack(Blocks.wool, 3), 100);
-        CrusherRecipeManualRegistry.registerRecipe(new ItemStack(Blocks.wool, 1, Util.WILDCARD), new ItemStack(Items.string, 4));
-
         CrusherRecipeManualRegistry.registerRecipe(new ItemStack(Blocks.redstone_ore), new ItemStack(Items.redstone, 10));
         CrusherRecipeManualRegistry.registerRecipe(new ItemStack(Blocks.lapis_ore), new ItemStack(InitItems.itemDust, 12, TheDusts.LAPIS.ordinal()));
         CrusherRecipeManualRegistry.registerRecipe(new ItemStack(Items.coal), new ItemStack(InitItems.itemDust, 1, TheDusts.COAL.ordinal()));

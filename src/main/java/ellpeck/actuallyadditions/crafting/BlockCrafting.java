@@ -37,7 +37,7 @@ public class BlockCrafting{
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.WOOD_CASING.ordinal()),
                     "WSW", "SRS", "WSW",
                     'W', "plankWood",
-                    'R', "dustRedstone",
+                    'R', "logWood",
                     'S', "stickWood"));
 
         //Ender Casing
@@ -190,7 +190,7 @@ public class BlockCrafting{
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.STONE_CASING.ordinal()),
                     "WSW", "SRS", "WSW",
                     'W', "cobblestone",
-                    'R', "dustRedstone",
+                    'R', TheMiscItems.QUARTZ.getOredictName(),
                     'S', "stickWood"));
 
         //Quartz Block

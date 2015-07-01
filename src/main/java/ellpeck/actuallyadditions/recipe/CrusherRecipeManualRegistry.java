@@ -5,7 +5,6 @@ import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
-import org.apache.logging.log4j.Level;
 
 import java.util.ArrayList;
 
@@ -26,7 +25,7 @@ public class CrusherRecipeManualRegistry{
     public static void registerRecipe(String input, String outputOne, String outputTwo, int secondChance, int outputOneAmount, int outputTwoAmount){
         ArrayList<ItemStack> inputStacks = (ArrayList<ItemStack>)OreDictionary.getOres(input, false);
         ArrayList<ItemStack> outputOneStacks = (ArrayList<ItemStack>)OreDictionary.getOres(outputOne, false);
-        ArrayList<ItemStack> outputTwoStacks = (ArrayList<ItemStack>)OreDictionary.getOres(outputTwo, false);
+        ArrayList<ItemStack> outputTwoStacks = outputTwo.length() <= 0 ? null : (ArrayList<ItemStack>)OreDictionary.getOres(outputTwo, false);
 
         if(inputStacks != null && !inputStacks.isEmpty()){
             for(ItemStack anInput : inputStacks){
@@ -47,13 +46,13 @@ public class CrusherRecipeManualRegistry{
                 }
                 else{
                     if(ConfigBoolValues.DO_CRUSHER_SPAM.isEnabled())
-                        ModUtil.LOGGER.log(Level.WARN, "Couldn't register Crusher Recipe! An Item with OreDictionary Registry '" + outputOne + "' doesn't exist! It should be the output of '" + input + "'!");
+                        ModUtil.LOGGER.warn("Couldn't register Crusher Recipe! An Item with OreDictionary Registry '" + outputOne + "' doesn't exist! It should be the output of '" + input + "'!");
                 }
             }
         }
         else{
             if(ConfigBoolValues.DO_CRUSHER_SPAM.isEnabled())
-                ModUtil.LOGGER.log(Level.WARN, "Couldn't register Crusher Recipe! Didn't find Items registered as '" + input + "'!");
+                ModUtil.LOGGER.warn("Couldn't register Crusher Recipe! Didn't find Items registered as '"+input+"'!");
         }
     }
 

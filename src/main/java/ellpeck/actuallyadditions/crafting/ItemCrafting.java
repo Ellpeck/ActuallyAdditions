@@ -132,11 +132,17 @@ public class ItemCrafting{
                     'I', "ingotIron",
                     'C', TheMiscItems.COIL_ADVANCED.getOredictName()));
 
+        //Quartz
+        if(ConfigCrafting.QUARTZ.isEnabled())
+            GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal()),
+                    new ItemStack(Items.coal),
+                    new ItemStack(Items.quartz)));
+
         //Coil
         if(ConfigCrafting.COIL.isEnabled())
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL.ordinal()),
                     " R ", "RIR", " R ",
-                    'I', "ingotIron",
+                    'I', TheMiscItems.QUARTZ.getOredictName(),
                     'R', "dustRedstone"));
 
         //Cup
