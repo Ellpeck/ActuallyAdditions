@@ -8,6 +8,6 @@ public class SmeltEvent{
 
     @SubscribeEvent
     public void onSmeltedEvent(PlayerEvent.ItemSmeltedEvent event){
-        CraftEvent.checkAchievements(event.smelting, event, InitAchievements.SMELTING_ACH);
+        CraftEvent.checkAchievements(event.smelting, event.player, InitAchievements.SMELTING_ACH);
     }
 }

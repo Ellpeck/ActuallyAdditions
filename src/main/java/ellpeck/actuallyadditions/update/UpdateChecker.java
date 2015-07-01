@@ -9,7 +9,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.util.StatCollector;
-import org.apache.logging.log4j.Level;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -24,7 +23,7 @@ public class UpdateChecker{
     public String changelog;
 
     public void init(){
-        Util.logInfo("Initializing Update Checker...");
+        ModUtil.LOGGER.info("Initializing Update Checker...");
         Util.registerEvent(this);
         new UpdateCheckThread();
     }
@@ -66,7 +65,7 @@ public class UpdateChecker{
 
         @Override
         public void run(){
-            Util.logInfo("Starting Update Check...");
+            ModUtil.LOGGER.info("Starting Update Check...");
             try{
                 URL newestURL = new URL("https://raw.githubusercontent.com/Ellpeck/ActuallyAdditions/master/update/newestVersion.txt");
                 BufferedReader newestReader = new BufferedReader(new InputStreamReader(newestURL.openStream()));
@@ -78,10 +77,10 @@ public class UpdateChecker{
                 changelog = changeReader.readLine();
                 changeReader.close();
 
-                Util.logInfo("Update Check done!");
+                ModUtil.LOGGER.info("Update Check done!");
             }
             catch(Exception e){
-                ModUtil.LOGGER.log(Level.ERROR, "Update Check failed!");
+                ModUtil.LOGGER.error("Update Check failed!");
                 checkFailed = true;
                 e.printStackTrace();
             }

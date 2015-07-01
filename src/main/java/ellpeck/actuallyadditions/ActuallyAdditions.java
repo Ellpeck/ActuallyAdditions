@@ -28,7 +28,6 @@ import ellpeck.actuallyadditions.recipe.HairyBallHandler;
 import ellpeck.actuallyadditions.tile.TileEntityBase;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.Util;
-import net.minecraft.block.BlockDispenser;
 
 @Mod(modid = ModUtil.MOD_ID, name = ModUtil.NAME, version = ModUtil.VERSION, canBeDeactivated = false)
 public class ActuallyAdditions{
@@ -41,7 +40,7 @@ public class ActuallyAdditions{
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event){
-        Util.logInfo("Starting PreInitialization Phase...");
+        ModUtil.LOGGER.info("Starting PreInitialization Phase...");
 
         ConfigurationHandler.init(event.getSuggestedConfigurationFile());
         PacketHandler.init();
@@ -52,12 +51,12 @@ public class ActuallyAdditions{
         FuelHandler.init();
         proxy.preInit();
 
-        Util.logInfo("PreInitialization Finished.");
+        ModUtil.LOGGER.info("PreInitialization Finished.");
     }
 
     @EventHandler
     public void init(FMLInitializationEvent event){
-        Util.logInfo("Starting Initialization Phase...");
+        ModUtil.LOGGER.info("Starting Initialization Phase...");
 
         InitAchievements.init();
         GuiHandler.init();
@@ -68,12 +67,12 @@ public class ActuallyAdditions{
         FMLInterModComms.sendMessage("Waila", "register", "ellpeck.actuallyadditions.waila.WailaDataProvider.register");
         proxy.init();
 
-        Util.logInfo("Initialization Finished.");
+        ModUtil.LOGGER.info("Initialization Finished.");
     }
 
     @EventHandler
     public void postInit(FMLPostInitializationEvent event){
-        Util.logInfo("Starting PostInitialization Phase...");
+        ModUtil.LOGGER.info("Starting PostInitialization Phase...");
 
         ItemCoffee.initIngredients();
         CrusherCrafting.init();
@@ -81,7 +80,7 @@ public class ActuallyAdditions{
         HairyBallHandler.init();
         proxy.postInit();
 
-        Util.logInfo("PostInitialization Finished.");
+        ModUtil.LOGGER.info("PostInitialization Finished.");
     }
 
     @EventHandler
@@ -92,9 +91,9 @@ public class ActuallyAdditions{
     @EventHandler
     public void serverStarting(FMLServerStartingEvent event){
 
-        BlockDispenser.dispenseBehaviorRegistry.putObject(InitItems.itemBucketCanolaOil, new DispenserHandlerEmptyBucket());
-        BlockDispenser.dispenseBehaviorRegistry.putObject(InitItems.itemBucketOil, new DispenserHandlerEmptyBucket());
-        BlockDispenser.dispenseBehaviorRegistry.putObject(InitItems.itemFertilizer, new DispenserHandlerFertilize());
+        Util.registerDispenserHandler(InitItems.itemBucketOil, new DispenserHandlerEmptyBucket());
+        Util.registerDispenserHandler(InitItems.itemBucketCanolaOil, new DispenserHandlerEmptyBucket());
+        Util.registerDispenserHandler(InitItems.itemFertilizer, new DispenserHandlerFertilize());
 
     }
 }

@@ -1,11 +1,12 @@
 package ellpeck.actuallyadditions.event;
 
+import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.Util;
 
 public class InitEvents{
 
     public static void init(){
-        Util.logInfo("Initializing Events...");
+        ModUtil.LOGGER.info("Initializing Events...");
 
         Util.registerEvent(new SmeltEvent());
         Util.registerEvent(new CraftEvent());

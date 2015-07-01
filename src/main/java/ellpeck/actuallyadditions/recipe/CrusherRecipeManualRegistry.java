@@ -25,7 +25,7 @@ public class CrusherRecipeManualRegistry{
     public static void registerRecipe(String input, String outputOne, String outputTwo, int secondChance, int outputOneAmount, int outputTwoAmount){
         ArrayList<ItemStack> inputStacks = (ArrayList<ItemStack>)OreDictionary.getOres(input, false);
         ArrayList<ItemStack> outputOneStacks = (ArrayList<ItemStack>)OreDictionary.getOres(outputOne, false);
-        ArrayList<ItemStack> outputTwoStacks = outputTwo.length() <= 0 ? null : (ArrayList<ItemStack>)OreDictionary.getOres(outputTwo, false);
+        ArrayList<ItemStack> outputTwoStacks = (outputTwo == null || outputTwo.isEmpty()) ? null : (ArrayList<ItemStack>)OreDictionary.getOres(outputTwo, false);
 
         if(inputStacks != null && !inputStacks.isEmpty()){
             for(ItemStack anInput : inputStacks){

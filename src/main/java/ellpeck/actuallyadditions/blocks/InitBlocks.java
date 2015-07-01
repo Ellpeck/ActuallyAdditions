@@ -4,7 +4,6 @@ import ellpeck.actuallyadditions.config.values.ConfigBoolValues;
 import ellpeck.actuallyadditions.util.BlockUtil;
 import ellpeck.actuallyadditions.util.CompatUtil;
 import ellpeck.actuallyadditions.util.ModUtil;
-import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.EnumRarity;
@@ -79,7 +78,7 @@ public class InitBlocks{
     public static Block blockColoredLampOn;
 
     public static void init(){
-        Util.logInfo("Initializing Blocks...");
+        ModUtil.LOGGER.info("Initializing Blocks...");
 
         blockTestifiBucksGreenWall = new BlockGeneric("blockTestifiBucksGreenWall");
         BlockUtil.register(blockTestifiBucksGreenWall, BlockGeneric.TheItemBlock.class);

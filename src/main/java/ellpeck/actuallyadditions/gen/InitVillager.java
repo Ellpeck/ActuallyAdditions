@@ -6,7 +6,6 @@ import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.items.metalists.TheJams;
 import ellpeck.actuallyadditions.util.ModUtil;
-import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.WeightedRandomChestContent;
@@ -18,7 +17,7 @@ public class InitVillager{
     public static final String JAM_HOUSE_CHEST_NAME = ModUtil.MOD_ID_LOWER+".jamHouseChest";
 
     public static void init(){
-        Util.logInfo("Initializing Village Addons...");
+        ModUtil.LOGGER.info("Initializing Village Addons...");
 
         if(ConfigBoolValues.JAM_VILLAGER_EXISTS.isEnabled()){
             initJamVillagePart();

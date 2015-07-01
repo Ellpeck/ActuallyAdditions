@@ -1,7 +1,6 @@
 package ellpeck.actuallyadditions.achievement;
 
 import ellpeck.actuallyadditions.util.ModUtil;
-import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.stats.Achievement;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.common.AchievementPage;
@@ -18,7 +17,7 @@ public class InitAchievements{
     public static ArrayList<Achievement> achievementList = new ArrayList<Achievement>();
 
     public static void init(){
-        Util.logInfo("Initializing Achievements...");
+        ModUtil.LOGGER.info("Initializing Achievements...");
 
         for(int i = 0; i < TheAchievements.values().length; i++){
             achievementList.add(TheAchievements.values()[i].ach);

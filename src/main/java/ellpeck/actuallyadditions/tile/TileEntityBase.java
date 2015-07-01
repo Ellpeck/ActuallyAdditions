@@ -2,7 +2,6 @@ package ellpeck.actuallyadditions.tile;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import ellpeck.actuallyadditions.util.ModUtil;
-import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.block.Block;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -26,7 +25,7 @@ public class TileEntityBase extends TileEntity{
     }
 
     public static void init(){
-        Util.logInfo("Registering TileEntities...");
+        ModUtil.LOGGER.info("Registering TileEntities...");
         GameRegistry.registerTileEntity(TileEntityCompost.class, ModUtil.MOD_ID_LOWER + ":tileEntityCompost");
         GameRegistry.registerTileEntity(TileEntityFeeder.class, ModUtil.MOD_ID_LOWER + ":tileEntityFeeder");
         GameRegistry.registerTileEntity(TileEntityGiantChest.class, ModUtil.MOD_ID_LOWER + ":tileEntityGiantChest");

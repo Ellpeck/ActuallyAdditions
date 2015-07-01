@@ -6,7 +6,7 @@ import ellpeck.actuallyadditions.blocks.InitBlocks;
 import ellpeck.actuallyadditions.blocks.metalists.TheMiscBlocks;
 import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.items.metalists.TheMiscItems;
-import ellpeck.actuallyadditions.util.Util;
+import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -26,7 +26,7 @@ public class FuelHandler implements IFuelHandler{
     }
 
     public static void init(){
-        Util.logInfo("Initializing Fuelstuffs...");
+        ModUtil.LOGGER.info("Initializing Fuelstuffs...");
 
         GameRegistry.registerFuelHandler(new FuelHandler());
         setFuelValues();

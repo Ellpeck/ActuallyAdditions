@@ -21,7 +21,7 @@ public class ClientProxy implements IProxy{
 
     @Override
     public void preInit(){
-        Util.logInfo("PreInitializing ClientProxy...");
+        ModUtil.LOGGER.info("PreInitializing ClientProxy...");
 
         if(ConfigBoolValues.DO_UPDATE_CHECK.isEnabled()){
             new UpdateChecker().init();
@@ -30,7 +30,7 @@ public class ClientProxy implements IProxy{
 
     @Override
     public void init(){
-        Util.logInfo("Initializing ClientProxy...");
+        ModUtil.LOGGER.info("Initializing ClientProxy...");
 
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCompost.class, new RenderTileEntity(new ModelCompost()));
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(InitBlocks.blockCompost), new RenderItems(new ModelCompost()));
@@ -54,6 +54,6 @@ public class ClientProxy implements IProxy{
 
     @Override
     public void postInit(){
-        Util.logInfo("PostInitializing ClientProxy...");
+        ModUtil.LOGGER.info("PostInitializing ClientProxy...");
     }
 }

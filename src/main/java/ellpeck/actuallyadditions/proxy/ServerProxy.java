@@ -1,22 +1,22 @@
 package ellpeck.actuallyadditions.proxy;
 
-import ellpeck.actuallyadditions.util.Util;
+import ellpeck.actuallyadditions.util.ModUtil;
 
 @SuppressWarnings("unused")
 public class ServerProxy implements IProxy{
 
     @Override
     public void preInit(){
-        Util.logInfo("PreInitializing ServerProxy...");
+        ModUtil.LOGGER.info("PreInitializing ServerProxy...");
     }
 
     @Override
     public void init(){
-        Util.logInfo("Initializing ServerProxy...");
+        ModUtil.LOGGER.info("Initializing ServerProxy...");
     }
 
     @Override
     public void postInit(){
-        Util.logInfo("PostInitializing ServerProxy...");
+        ModUtil.LOGGER.info("PostInitializing ServerProxy...");
     }
 }

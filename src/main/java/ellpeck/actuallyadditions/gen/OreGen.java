@@ -7,7 +7,6 @@ import ellpeck.actuallyadditions.blocks.metalists.TheMiscBlocks;
 import ellpeck.actuallyadditions.config.values.ConfigBoolValues;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.util.ModUtil;
-import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.MathHelper;
@@ -64,7 +63,7 @@ public class OreGen implements IWorldGenerator{
     }
 
     public static void init(){
-        Util.logInfo("Registering World Generator...");
+        ModUtil.LOGGER.info("Registering World Generator...");
         GameRegistry.registerWorldGenerator(new OreGen(), 10);
     }
 }

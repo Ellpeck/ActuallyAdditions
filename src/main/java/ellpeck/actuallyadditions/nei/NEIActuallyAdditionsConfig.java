@@ -13,7 +13,7 @@ public class NEIActuallyAdditionsConfig implements IConfigureNEI{
 
     @Override
     public void loadConfig(){
-        Util.logInfo("Initializing Not Enough Items Plugin...");
+        ModUtil.LOGGER.info("Initializing Not Enough Items Plugin...");
 
         API.registerGuiOverlay(GuiCrafter.class, "crafting");
         API.registerGuiOverlayHandler(GuiCrafter.class, new DefaultOverlayHandler(), "crafting");

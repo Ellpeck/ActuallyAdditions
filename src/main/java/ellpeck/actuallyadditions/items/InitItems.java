@@ -7,7 +7,7 @@ import ellpeck.actuallyadditions.items.tools.*;
 import ellpeck.actuallyadditions.material.InitItemMaterials;
 import ellpeck.actuallyadditions.util.CompatUtil;
 import ellpeck.actuallyadditions.util.ItemUtil;
-import ellpeck.actuallyadditions.util.Util;
+import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumRarity;
@@ -81,7 +81,7 @@ public class InitItems{
     public static Item itemBattery;
 
     public static void init(){
-        Util.logInfo("Initializing Items...");
+        ModUtil.LOGGER.info("Initializing Items...");
 
         itemDrill = new ItemDrill();
         ItemUtil.register(itemDrill);

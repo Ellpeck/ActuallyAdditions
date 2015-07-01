@@ -6,7 +6,7 @@ import ellpeck.actuallyadditions.items.metalists.TheFoods;
 import ellpeck.actuallyadditions.recipe.CrusherRecipeAutoRegistry;
 import ellpeck.actuallyadditions.recipe.CrusherRecipeAutoRegistry.SearchCase;
 import ellpeck.actuallyadditions.recipe.CrusherRecipeManualRegistry;
-import ellpeck.actuallyadditions.util.Util;
+import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -14,7 +14,7 @@ import net.minecraft.item.ItemStack;
 public class CrusherCrafting{
 
     public static void init(){
-        Util.logInfo("Initializing Crusher Recipes...");
+        ModUtil.LOGGER.info("Initializing Crusher Recipes...");
 
         CrusherRecipeManualRegistry.registerRecipe(new ItemStack(Blocks.redstone_ore), new ItemStack(Items.redstone, 10));
         CrusherRecipeManualRegistry.registerRecipe(new ItemStack(Blocks.lapis_ore), new ItemStack(InitItems.itemDust, 12, TheDusts.LAPIS.ordinal()));
@@ -30,6 +30,7 @@ public class CrusherCrafting{
         CrusherRecipeManualRegistry.registerRecipe("oreIron", "dustIron", "dustGold", 20, 2, 1);
 
         CrusherRecipeAutoRegistry.searchCases.add(new SearchCase("oreNether", 6));
+        CrusherRecipeAutoRegistry.searchCases.add(new SearchCase("orePoor", 4, "nugget"));
         CrusherRecipeAutoRegistry.searchCases.add(new SearchCase("denseore", 8));
         CrusherRecipeAutoRegistry.searchCases.add(new SearchCase("gem", 1));
         CrusherRecipeAutoRegistry.searchCases.add(new SearchCase("ingot", 1));

@@ -2,7 +2,7 @@ package ellpeck.actuallyadditions.waila;
 
 import ellpeck.actuallyadditions.config.values.ConfigBoolValues;
 import ellpeck.actuallyadditions.util.BlockUtil;
-import ellpeck.actuallyadditions.util.Util;
+import ellpeck.actuallyadditions.util.ModUtil;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import mcp.mobius.waila.api.IWailaDataProvider;
@@ -53,7 +53,7 @@ public class WailaDataProvider implements IWailaDataProvider{
     }
 
     public static void register(IWailaRegistrar registrar){
-        Util.logInfo("Initializing Waila Plugin...");
+        ModUtil.LOGGER.info("Initializing Waila Plugin...");
 
         WailaDataProvider provider = new WailaDataProvider();
         for(Block theBlock : BlockUtil.wailaRegisterList){

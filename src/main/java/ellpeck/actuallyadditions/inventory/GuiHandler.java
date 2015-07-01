@@ -5,7 +5,7 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 import ellpeck.actuallyadditions.ActuallyAdditions;
 import ellpeck.actuallyadditions.inventory.gui.*;
 import ellpeck.actuallyadditions.tile.TileEntityBase;
-import ellpeck.actuallyadditions.util.Util;
+import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 
@@ -142,7 +142,7 @@ public class GuiHandler implements IGuiHandler{
     public static final int ENERVATOR_ID = 20;
 
     public static void init(){
-        Util.logInfo("Initializing GuiHandler...");
+        ModUtil.LOGGER.info("Initializing GuiHandler...");
         NetworkRegistry.INSTANCE.registerGuiHandler(ActuallyAdditions.instance, new GuiHandler());
     }
 }

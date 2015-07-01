@@ -5,7 +5,6 @@ import ellpeck.actuallyadditions.items.ItemCoffee;
 import ellpeck.actuallyadditions.recipe.CrusherRecipeManualRegistry;
 import ellpeck.actuallyadditions.recipe.HairyBallHandler;
 import ellpeck.actuallyadditions.util.ModUtil;
-import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
@@ -27,7 +26,7 @@ public class InterModCommunications{
 
                     if(input != null && outputOne != null){
                         CrusherRecipeManualRegistry.registerRecipe(input, outputOne, outputTwo, secondChance);
-                        Util.logInfo("Crusher Recipe that was sent from Mod " + message.getSender() + " has been registered successfully: " + input.toString() + " -> " + outputOne.toString() + (outputTwo != null ? " + " + outputTwo.toString() + ", Second Chance: " + secondChance : ""));
+                        ModUtil.LOGGER.info("Crusher Recipe that was sent from Mod "+message.getSender()+" has been registered successfully: "+input.toString()+" -> "+outputOne.toString()+(outputTwo != null ? " + "+outputTwo.toString()+", Second Chance: "+secondChance : ""));
                     }
                     else ModUtil.LOGGER.log(Level.ERROR, "Crusher Recipe that was sent from Mod " + message.getSender() + " could not be registered: It's missing an Input or an Output!");
                 }
@@ -45,7 +44,7 @@ public class InterModCommunications{
                     if(input != null && potionID > 0 && duration > 0 && maxAmp > 0){
                         PotionEffect effect = new PotionEffect(potionID, duration, amplifier);
                         ItemCoffee.registerIngredient(new ItemCoffee.Ingredient(input, new PotionEffect[]{effect}, maxAmp));
-                        Util.logInfo("Coffee Machine Recipe that was sent from Mod " + message.getSender() + " has been registered successfully: " + input.toString() + " -> " + effect.toString());
+                        ModUtil.LOGGER.info("Coffee Machine Recipe that was sent from Mod "+message.getSender()+" has been registered successfully: "+input.toString()+" -> "+effect.toString());
                     }
                     else ModUtil.LOGGER.log(Level.ERROR, "Coffee Machine Recipe that was sent from Mod " + message.getSender() + " could not be registered: It's missing an Input, a Potion ID, a Duration or a max Amplifier!");
                 }
@@ -59,7 +58,7 @@ public class InterModCommunications{
 
                     if(output != null && chance > 0){
                         HairyBallHandler.addReturn(output, chance);
-                        Util.logInfo("Ball Of Hair Recipe that was sent from Mod " + message.getSender() + " has been registered successfully: " + output.toString() + ", Chance: " + chance);
+                        ModUtil.LOGGER.info("Ball Of Hair Recipe that was sent from Mod "+message.getSender()+" has been registered successfully: "+output.toString()+", Chance: "+chance);
                     }
                     else ModUtil.LOGGER.log(Level.ERROR, "Ball Of Hair Recipe that was sent from Mod " + message.getSender() + " could not be registered: It's missing an Output or a Chance!");
                 }
