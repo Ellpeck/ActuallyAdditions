@@ -1,6 +1,7 @@
 package ellpeck.actuallyadditions.crafting;
 
 import cpw.mods.fml.common.registry.GameRegistry;
+import ellpeck.actuallyadditions.blocks.BlockColoredLamp;
 import ellpeck.actuallyadditions.blocks.InitBlocks;
 import ellpeck.actuallyadditions.blocks.metalists.TheMiscBlocks;
 import ellpeck.actuallyadditions.config.values.ConfigCrafting;
@@ -338,6 +339,16 @@ public class BlockCrafting{
                     'C', "cobblestone",
                     'D', Blocks.dropper,
                     'R', TheMiscItems.COIL_ADVANCED.getOredictName()));
+
+        if(ConfigCrafting.LAMPS.isEnabled()){
+            for(int i = 0; i < BlockColoredLamp.allLampTypes.length; i++){
+                GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockColoredLamp, 6, i),
+                        "GGG", "DQD", "GGG",
+                        'G', "glowstone",
+                        'D', "dye"+BlockColoredLamp.allLampTypes[i].name,
+                        'Q', TheMiscItems.QUARTZ.getOredictName()));
+            }
+        }
 
     }
 

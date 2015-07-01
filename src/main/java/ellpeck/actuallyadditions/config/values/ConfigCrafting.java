@@ -106,7 +106,8 @@ public enum ConfigCrafting{
     ENERGIZER("Energizer", ConfigCategories.BLOCKS_CRAFTING),
     ENERVATOR("Enervator", ConfigCategories.BLOCKS_CRAFTING),
 
-    QUARTZ("Black Quartz in a Crafting Table (as a Backup if there's no Ores to be found anywhere)", ConfigCategories.ITEMS_CRAFTING);
+    QUARTZ("Black Quartz in a Crafting Table (as a Backup if there's no Ores to be found anywhere)", ConfigCategories.ITEMS_CRAFTING),
+    LAMPS("Lamps", ConfigCategories.BLOCKS_CRAFTING);
 
     public final String name;
     public final String category;
