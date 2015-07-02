@@ -1,8 +1,6 @@
 package ellpeck.actuallyadditions.inventory;
 
 import cofh.api.energy.IEnergyContainerItem;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.inventory.slot.SlotOutput;
 import ellpeck.actuallyadditions.tile.TileEntityBase;
 import ellpeck.actuallyadditions.tile.TileEntityEnergizer;
@@ -10,7 +8,6 @@ import invtweaks.api.container.InventoryContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
-import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
@@ -18,8 +15,6 @@ import net.minecraft.item.ItemStack;
 public class ContainerEnergizer extends Container{
 
     private TileEntityEnergizer energizer;
-
-    private int lastEnergyStored;
 
     public ContainerEnergizer(InventoryPlayer inventory, TileEntityBase tile){
         this.energizer = (TileEntityEnergizer)tile;
@@ -40,30 +35,6 @@ public class ContainerEnergizer extends Container{
     @Override
     public boolean canInteractWith(EntityPlayer player){
         return this.energizer.isUseableByPlayer(player);
-    }
-
-    @Override
-    public void addCraftingToCrafters(ICrafting iCraft){
-        super.addCraftingToCrafters(iCraft);
-        iCraft.sendProgressBarUpdate(this, 0, this.energizer.storage.getEnergyStored());
-    }
-
-    @Override
-    public void detectAndSendChanges(){
-        super.detectAndSendChanges();
-        for(Object crafter : this.crafters){
-            ICrafting iCraft = (ICrafting)crafter;
-
-            if(this.lastEnergyStored != this.energizer.storage.getEnergyStored()) iCraft.sendProgressBarUpdate(this, 0, this.energizer.storage.getEnergyStored());
-        }
-
-        this.lastEnergyStored = this.energizer.storage.getEnergyStored();
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void updateProgressBar(int par1, int par2){
-        if(par1 == 0) this.energizer.storage.setEnergyStored(par2);
     }
 
     @Override

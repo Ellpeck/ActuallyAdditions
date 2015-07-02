@@ -5,16 +5,19 @@ import cofh.api.energy.IEnergyReceiver;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
+import ellpeck.actuallyadditions.network.sync.IPacketSyncerToClient;
+import ellpeck.actuallyadditions.network.sync.PacketSyncerToClient;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 
-public class TileEntityItemRepairer extends TileEntityInventoryBase implements IEnergyReceiver{
+public class TileEntityItemRepairer extends TileEntityInventoryBase implements IEnergyReceiver, IPacketSyncerToClient{
 
     public static final int SLOT_INPUT = 0;
     public static final int SLOT_OUTPUT = 1;
 
     public EnergyStorage storage = new EnergyStorage(300000);
+    private int lastEnergy;
 
     private final int speedSlowdown = ConfigIntValues.REPAIRER_SPEED_SLOWDOWN.getValue();
 
@@ -48,6 +51,11 @@ public class TileEntityItemRepairer extends TileEntityInventoryBase implements I
                 }
             }
             else this.nextRepairTick = 0;
+
+            if(this.lastEnergy != this.storage.getEnergyStored()){
+                this.lastEnergy = this.storage.getEnergyStored();
+                this.sendUpdate();
+            }
         }
     }
 
@@ -115,5 +123,20 @@ public class TileEntityItemRepairer extends TileEntityInventoryBase implements I
     @Override
     public boolean canConnectEnergy(ForgeDirection from){
         return true;
+    }
+
+    @Override
+    public int[] getValues(){
+        return new int[]{this.storage.getEnergyStored()};
+    }
+
+    @Override
+    public void setValues(int[] values){
+        this.storage.setEnergyStored(values[0]);
+    }
+
+    @Override
+    public void sendUpdate(){
+        PacketSyncerToClient.sendPacket(this);
     }
 }

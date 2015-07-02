@@ -8,6 +8,8 @@ import ellpeck.actuallyadditions.blocks.InitBlocks;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.items.metalists.TheMiscItems;
+import ellpeck.actuallyadditions.network.sync.IPacketSyncerToClient;
+import ellpeck.actuallyadditions.network.sync.PacketSyncerToClient;
 import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -15,17 +17,20 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.*;
 
-public class TileEntityCanolaPress extends TileEntityInventoryBase implements IEnergyReceiver, IFluidHandler{
+public class TileEntityCanolaPress extends TileEntityInventoryBase implements IEnergyReceiver, IFluidHandler, IPacketSyncerToClient{
 
     public EnergyStorage storage = new EnergyStorage(40000);
+    private int lastEnergyStored;
 
     public FluidTank tank = new FluidTank(2*FluidContainerRegistry.BUCKET_VOLUME);
+    private int lastTankAmount;
 
     public static int energyUsedPerTick = ConfigIntValues.PRESS_ENERGY_USED.getValue();
     public int mbProducedPerCanola = ConfigIntValues.PRESS_MB_PRODUCED.getValue();
 
     public int maxTimeProcessing = ConfigIntValues.PRESS_PROCESSING_TIME.getValue();
     public int currentProcessTime;
+    private int lastProcessTime;
 
     public TileEntityCanolaPress(){
         super(3, "canolaPress");
@@ -62,6 +67,13 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IE
                     WorldUtil.pushFluid(worldObj, xCoord, yCoord, zCoord, ForgeDirection.SOUTH, this.tank);
                     WorldUtil.pushFluid(worldObj, xCoord, yCoord, zCoord, ForgeDirection.WEST, this.tank);
                 }
+            }
+
+            if(this.storage.getEnergyStored() != this.lastEnergyStored || this.tank.getFluidAmount() != this.lastTankAmount | this.currentProcessTime != this.lastProcessTime){
+                this.lastEnergyStored = this.storage.getEnergyStored();
+                this.lastProcessTime = this.currentProcessTime;
+                this.lastTankAmount = this.tank.getFluidAmount();
+                this.sendUpdate();
             }
         }
     }
@@ -165,5 +177,25 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IE
     @Override
     public FluidTankInfo[] getTankInfo(ForgeDirection from){
         return new FluidTankInfo[]{this.tank.getInfo()};
+    }
+
+    @Override
+    public int[] getValues(){
+        return new int[]{this.currentProcessTime, this.tank.getFluidAmount(), this.tank.getFluid() == null ? -1 : this.tank.getFluid().getFluidID(), this.storage.getEnergyStored()};
+    }
+
+    @Override
+    public void setValues(int[] values){
+        this.currentProcessTime = values[0];
+        if(values[2] != -1){
+            this.tank.setFluid(new FluidStack(FluidRegistry.getFluid(values[2]), values[1]));
+        }
+        else this.tank.setFluid(null);
+        this.storage.setEnergyStored(values[3]);
+    }
+
+    @Override
+    public void sendUpdate(){
+        PacketSyncerToClient.sendPacket(this);
     }
 }

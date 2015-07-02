@@ -1,7 +1,5 @@
 package ellpeck.actuallyadditions.inventory;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.inventory.slot.SlotOutput;
 import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.items.ItemCoffee;
@@ -12,7 +10,6 @@ import invtweaks.api.container.InventoryContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
-import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidContainerRegistry;
@@ -23,11 +20,6 @@ import net.minecraftforge.fluids.FluidStack;
 public class ContainerCoffeeMachine extends Container{
 
     private TileEntityCoffeeMachine machine;
-
-    private int lastCoffeeAmount;
-    private int lastEnergyAmount;
-    private int lastBrewTime;
-    private int lastWaterAmount;
 
     public ContainerCoffeeMachine(InventoryPlayer inventory, TileEntityBase tile){
         this.machine = (TileEntityCoffeeMachine)tile;
@@ -53,43 +45,6 @@ public class ContainerCoffeeMachine extends Container{
         for (int i = 0; i < 9; i++){
             this.addSlotToContainer(new Slot(inventory, i, 8 + i * 18, 155));
         }
-    }
-
-    @Override
-    public void addCraftingToCrafters(ICrafting iCraft){
-        super.addCraftingToCrafters(iCraft);
-        iCraft.sendProgressBarUpdate(this, 0, this.machine.storage.getEnergyStored());
-        iCraft.sendProgressBarUpdate(this, 1, this.machine.coffeeCacheAmount);
-        iCraft.sendProgressBarUpdate(this, 2, this.machine.brewTime);
-        iCraft.sendProgressBarUpdate(this, 3, this.machine.tank.getFluidAmount());
-
-    }
-
-    @Override
-    public void detectAndSendChanges(){
-        super.detectAndSendChanges();
-        for(Object crafter : this.crafters){
-            ICrafting iCraft = (ICrafting)crafter;
-
-            if(this.lastEnergyAmount != this.machine.storage.getEnergyStored()) iCraft.sendProgressBarUpdate(this, 0, this.machine.storage.getEnergyStored());
-            if(this.lastCoffeeAmount != this.machine.coffeeCacheAmount) iCraft.sendProgressBarUpdate(this, 1, this.machine.coffeeCacheAmount);
-            if(this.lastBrewTime != this.machine.brewTime) iCraft.sendProgressBarUpdate(this, 2, this.machine.brewTime);
-            if(this.lastWaterAmount != this.machine.tank.getFluidAmount()) iCraft.sendProgressBarUpdate(this, 3, this.machine.tank.getFluidAmount());
-        }
-
-        this.lastEnergyAmount = this.machine.storage.getEnergyStored();
-        this.lastCoffeeAmount = this.machine.coffeeCacheAmount;
-        this.lastBrewTime = this.machine.brewTime;
-        this.lastWaterAmount = this.machine.tank.getFluidAmount();
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void updateProgressBar(int par1, int par2){
-        if(par1 == 0) this.machine.storage.setEnergyStored(par2);
-        if(par1 == 1) this.machine.coffeeCacheAmount = par2;
-        if(par1 == 2) this.machine.brewTime = par2;
-        if(par1 == 3) this.machine.tank.setFluid(new FluidStack(FluidRegistry.WATER, par2));
     }
 
     @Override

@@ -4,6 +4,8 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.blocks.InitBlocks;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
+import ellpeck.actuallyadditions.network.sync.IPacketSyncerToClient;
+import ellpeck.actuallyadditions.network.sync.PacketSyncerToClient;
 import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -11,13 +13,16 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.*;
 
-public class TileEntityFermentingBarrel extends TileEntityInventoryBase implements IFluidHandler{
+public class TileEntityFermentingBarrel extends TileEntityInventoryBase implements IFluidHandler, IPacketSyncerToClient{
 
     public FluidTank canolaTank = new FluidTank(2*FluidContainerRegistry.BUCKET_VOLUME);
+    private int lastCanola;
     public FluidTank oilTank = new FluidTank(2*FluidContainerRegistry.BUCKET_VOLUME);
+    private int lastOil;
 
     public int currentProcessTime;
     public int maxTimeProcessing = ConfigIntValues.BARREL_PROCESSING_TIME.getValue();
+    private int lastProcessTime;
 
     public int mBProducedPerCycle = ConfigIntValues.BARREL_MB_PRODUCED.getValue();
 
@@ -52,6 +57,13 @@ public class TileEntityFermentingBarrel extends TileEntityInventoryBase implemen
                     WorldUtil.pushFluid(worldObj, xCoord, yCoord, zCoord, ForgeDirection.SOUTH, this.oilTank);
                     WorldUtil.pushFluid(worldObj, xCoord, yCoord, zCoord, ForgeDirection.WEST, this.oilTank);
                 }
+            }
+
+            if(this.canolaTank.getFluidAmount() != this.lastCanola || this.oilTank.getFluidAmount() != this.lastOil || this.currentProcessTime != this.lastProcessTime){
+                this.lastProcessTime = this.currentProcessTime;
+                this.lastCanola = this.canolaTank.getFluidAmount();
+                this.lastOil = this.oilTank.getFluidAmount();
+                this.sendUpdate();
             }
         }
     }
@@ -134,5 +146,28 @@ public class TileEntityFermentingBarrel extends TileEntityInventoryBase implemen
     @Override
     public FluidTankInfo[] getTankInfo(ForgeDirection from){
         return new FluidTankInfo[]{this.canolaTank.getInfo(), this.oilTank.getInfo()};
+    }
+
+    @Override
+    public int[] getValues(){
+        return new int[]{this.oilTank.getFluidAmount(), this.oilTank.getFluid() == null ? -1 : this.oilTank.getFluid().getFluidID(), this.canolaTank.getFluidAmount(), this.canolaTank.getFluid() == null ? -1 : this.canolaTank.getFluid().getFluidID(), this.currentProcessTime};
+    }
+
+    @Override
+    public void setValues(int[] values){
+        if(values[1] != -1){
+            this.oilTank.setFluid(new FluidStack(FluidRegistry.getFluid(values[1]), values[0]));
+        }
+        else this.oilTank.setFluid(null);
+        if(values[3] != -1){
+            this.canolaTank.setFluid(new FluidStack(FluidRegistry.getFluid(values[3]), values[2]));
+        }
+        else this.canolaTank.setFluid(null);
+        this.currentProcessTime = values[4];
+    }
+
+    @Override
+    public void sendUpdate(){
+        PacketSyncerToClient.sendPacket(this);
     }
 }

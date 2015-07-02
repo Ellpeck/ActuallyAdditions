@@ -2,6 +2,8 @@ package ellpeck.actuallyadditions.tile;
 
 import ellpeck.actuallyadditions.network.gui.IButtonReactor;
 import ellpeck.actuallyadditions.network.gui.INumberReactor;
+import ellpeck.actuallyadditions.network.sync.IPacketSyncerToClient;
+import ellpeck.actuallyadditions.network.sync.PacketSyncerToClient;
 import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -10,7 +12,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 
-public class TileEntityInputter extends TileEntityInventoryBase implements IButtonReactor, INumberReactor{
+public class TileEntityInputter extends TileEntityInventoryBase implements IButtonReactor, INumberReactor, IPacketSyncerToClient{
 
     @Override
     public void onNumberReceived(int text, int textID, EntityPlayer player){
@@ -21,6 +23,28 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
             if(textID == 3) this.slotToPullEnd = text;
         }
         this.markDirty();
+    }
+
+    @Override
+    public int[] getValues(){
+        return new int[]{sideToPut, sideToPull, slotToPutStart, slotToPutEnd, slotToPullStart, slotToPullEnd, this.isPutWhitelist ? 1 : 0, this.isPullWhitelist ? 1 : 0};
+    }
+
+    @Override
+    public void setValues(int[] values){
+        this.sideToPut = values[0];
+        this.sideToPull = values[1];
+        this.slotToPutStart = values[2];
+        this.slotToPutEnd = values[3];
+        this.slotToPullStart = values[4];
+        this.slotToPullEnd = values[5];
+        this.isPutWhitelist = values[6] == 1;
+        this.isPullWhitelist = values[7] == 1;
+    }
+
+    @Override
+    public void sendUpdate(){
+        PacketSyncerToClient.sendPacket(this);
     }
 
     public static class TileEntityInputterAdvanced extends TileEntityInputter{
@@ -40,23 +64,31 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
     public static final int OKAY_BUTTON_ID = 133;
 
     public int sideToPut = -1;
+    private int lastPutSide;
 
     public int slotToPutStart;
+    private int lastPutStart;
     public int slotToPutEnd;
+    private int lastPutEnd;
 
     public TileEntity placeToPut;
 
     public int sideToPull = -1;
+    private int lastPullSide;
 
     public int slotToPullStart;
+    private int lastPullStart;
     public int slotToPullEnd;
+    private int lastPullEnd;
 
     public TileEntity placeToPull;
 
     public boolean isAdvanced;
 
     public boolean isPullWhitelist = true;
+    private boolean lastPullWhite;
     public boolean isPutWhitelist = true;
+    private boolean lastPutWhite;
 
     public TileEntityInputter(int slots, String name){
         super(slots, name);
@@ -77,6 +109,18 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
                     if(sideToPull != -1 && this.placeToPull instanceof IInventory) this.pull();
                     if(sideToPut != -1 && this.placeToPut instanceof IInventory) this.put();
                 }
+            }
+
+            if(this.sideToPut != this.lastPutSide || this.sideToPull != this.lastPullSide || this.slotToPullStart != this.lastPullStart || this.slotToPullEnd != this.lastPullEnd || this.slotToPutStart != this.lastPutStart || this.slotToPutEnd != this.lastPutEnd || this.isPullWhitelist != lastPullWhite || this.isPutWhitelist != this.lastPutWhite){
+                this.lastPutSide = this.sideToPut;
+                this.lastPullSide = this.sideToPull;
+                this.lastPullStart = this.slotToPullStart;
+                this.lastPullEnd = this.slotToPullEnd;
+                this.lastPutStart = this.slotToPutStart;
+                this.lastPutEnd = this.slotToPutEnd;
+                this.lastPullWhite = this.isPullWhitelist;
+                this.lastPutWhite = this.isPutWhitelist;
+                this.sendUpdate();
             }
         }
     }

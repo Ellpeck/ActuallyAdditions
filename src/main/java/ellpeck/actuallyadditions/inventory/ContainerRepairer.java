@@ -1,7 +1,5 @@
 package ellpeck.actuallyadditions.inventory;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.inventory.slot.SlotOutput;
 import ellpeck.actuallyadditions.tile.TileEntityBase;
 import ellpeck.actuallyadditions.tile.TileEntityItemRepairer;
@@ -9,7 +7,6 @@ import invtweaks.api.container.InventoryContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
-import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
@@ -17,8 +14,6 @@ import net.minecraft.item.ItemStack;
 public class ContainerRepairer extends Container{
 
     private TileEntityItemRepairer tileRepairer;
-
-    private int lastEnergy;
 
     public ContainerRepairer(InventoryPlayer inventory, TileEntityBase tile){
         this.tileRepairer = (TileEntityItemRepairer)tile;
@@ -34,30 +29,6 @@ public class ContainerRepairer extends Container{
         for (int i = 0; i < 9; i++){
             this.addSlotToContainer(new Slot(inventory, i, 8 + i * 18, 155));
         }
-    }
-
-    @Override
-    public void addCraftingToCrafters(ICrafting iCraft){
-        super.addCraftingToCrafters(iCraft);
-        iCraft.sendProgressBarUpdate(this, 0, this.tileRepairer.storage.getEnergyStored());
-    }
-
-    @Override
-    public void detectAndSendChanges(){
-        super.detectAndSendChanges();
-        for(Object crafter : this.crafters){
-            ICrafting iCraft = (ICrafting)crafter;
-
-            if(this.lastEnergy != this.tileRepairer.storage.getEnergyStored()) iCraft.sendProgressBarUpdate(this, 0, this.tileRepairer.storage.getEnergyStored());
-        }
-
-        this.lastEnergy = this.tileRepairer.storage.getEnergyStored();
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void updateProgressBar(int par1, int par2){
-        if(par1 == 0) this.tileRepairer.storage.setEnergyStored(par2);
     }
 
     @Override

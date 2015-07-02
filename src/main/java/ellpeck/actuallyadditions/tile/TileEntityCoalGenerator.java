@@ -5,20 +5,25 @@ import cofh.api.energy.IEnergyProvider;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
+import ellpeck.actuallyadditions.network.sync.IPacketSyncerToClient;
+import ellpeck.actuallyadditions.network.sync.PacketSyncerToClient;
 import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraftforge.common.util.ForgeDirection;
 
-public class TileEntityCoalGenerator extends TileEntityInventoryBase implements IEnergyProvider{
+public class TileEntityCoalGenerator extends TileEntityInventoryBase implements IEnergyProvider, IPacketSyncerToClient{
 
     public EnergyStorage storage = new EnergyStorage(60000);
+    private int lastEnergy;
 
     public static int energyProducedPerTick = ConfigIntValues.COAL_GEN_ENERGY_PRODUCED.getValue();
 
     public int maxBurnTime;
+    private int lastBurnTime;
     public int currentBurnTime;
+    private int lastCurrentBurnTime;
 
     public TileEntityCoalGenerator(){
         super(1, "coalGenerator");
@@ -62,6 +67,13 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
                         worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 0, 2);
                 }
                 else worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 1, 2);
+            }
+
+            if(this.storage.getEnergyStored() != this.lastEnergy || this.currentBurnTime != this.lastCurrentBurnTime || this.lastBurnTime != this.maxBurnTime){
+                this.lastEnergy = this.storage.getEnergyStored();
+                this.lastCurrentBurnTime = this.currentBurnTime;
+                this.lastBurnTime = this.currentBurnTime;
+                this.sendUpdate();
             }
         }
     }
@@ -125,5 +137,22 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
     @Override
     public boolean canConnectEnergy(ForgeDirection from){
         return true;
+    }
+
+    @Override
+    public int[] getValues(){
+        return new int[]{this.storage.getEnergyStored(), this.currentBurnTime, this.maxBurnTime};
+    }
+
+    @Override
+    public void setValues(int[] values){
+        this.storage.setEnergyStored(values[0]);
+        this.currentBurnTime = values[1];
+        this.maxBurnTime = values[2];
+    }
+
+    @Override
+    public void sendUpdate(){
+        PacketSyncerToClient.sendPacket(this);
     }
 }

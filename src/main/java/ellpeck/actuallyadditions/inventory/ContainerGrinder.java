@@ -1,7 +1,5 @@
 package ellpeck.actuallyadditions.inventory;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.inventory.slot.SlotOutput;
 import ellpeck.actuallyadditions.recipe.CrusherRecipeManualRegistry;
 import ellpeck.actuallyadditions.tile.TileEntityBase;
@@ -10,7 +8,6 @@ import invtweaks.api.container.InventoryContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
-import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
@@ -19,11 +16,6 @@ public class ContainerGrinder extends Container{
 
     public TileEntityGrinder tileGrinder;
     private boolean isDouble;
-
-    private int lastFirstCrushTime;
-    private int lastSecondCrushTime;
-    private int lastMaxCrushTime;
-    private int lastEnergyStored;
 
     public ContainerGrinder(InventoryPlayer inventory, TileEntityBase tile, boolean isDouble){
         this.tileGrinder = (TileEntityGrinder)tile;
@@ -46,42 +38,6 @@ public class ContainerGrinder extends Container{
         for (int i = 0; i < 9; i++){
             this.addSlotToContainer(new Slot(inventory, i, 8 + i * 18, 155));
         }
-    }
-
-    @Override
-    public void addCraftingToCrafters(ICrafting iCraft){
-        super.addCraftingToCrafters(iCraft);
-        iCraft.sendProgressBarUpdate(this, 0, this.tileGrinder.firstCrushTime);
-        iCraft.sendProgressBarUpdate(this, 1, this.tileGrinder.maxCrushTime);
-        iCraft.sendProgressBarUpdate(this, 2, this.tileGrinder.storage.getEnergyStored());
-        if(this.isDouble) iCraft.sendProgressBarUpdate(this, 3, this.tileGrinder.secondCrushTime);
-    }
-
-    @Override
-    public void detectAndSendChanges(){
-        super.detectAndSendChanges();
-        for(Object crafter : this.crafters){
-            ICrafting iCraft = (ICrafting)crafter;
-
-            if(this.lastFirstCrushTime != this.tileGrinder.firstCrushTime) iCraft.sendProgressBarUpdate(this, 0, this.tileGrinder.firstCrushTime);
-            if(this.lastMaxCrushTime != this.tileGrinder.maxCrushTime) iCraft.sendProgressBarUpdate(this, 1, this.tileGrinder.maxCrushTime);
-            if(this.lastEnergyStored != this.tileGrinder.storage.getEnergyStored()) iCraft.sendProgressBarUpdate(this, 2, this.tileGrinder.storage.getEnergyStored());
-            if(this.isDouble) if(this.lastSecondCrushTime != this.tileGrinder.secondCrushTime) iCraft.sendProgressBarUpdate(this, 3, this.tileGrinder.secondCrushTime);
-        }
-
-        this.lastFirstCrushTime = this.tileGrinder.firstCrushTime;
-        this.lastMaxCrushTime = this.tileGrinder.maxCrushTime;
-        this.lastEnergyStored = this.tileGrinder.storage.getEnergyStored();
-        if(this.isDouble) this.lastSecondCrushTime = this.tileGrinder.secondCrushTime;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void updateProgressBar(int par1, int par2){
-        if(par1 == 0) this.tileGrinder.firstCrushTime = par2;
-        if(par1 == 1) this.tileGrinder.maxCrushTime = par2;
-        if(par1 == 2) this.tileGrinder.storage.setEnergyStored(par2);
-        if(this.isDouble && par1 == 3) this.tileGrinder.secondCrushTime = par2;
     }
 
     @Override

@@ -5,6 +5,8 @@ import cofh.api.energy.IEnergyReceiver;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
+import ellpeck.actuallyadditions.network.sync.IPacketSyncerToClient;
+import ellpeck.actuallyadditions.network.sync.PacketSyncerToClient;
 import ellpeck.actuallyadditions.recipe.CrusherRecipeManualRegistry;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -12,9 +14,10 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 import java.util.Random;
 
-public class TileEntityGrinder extends TileEntityInventoryBase implements IEnergyReceiver{
+public class TileEntityGrinder extends TileEntityInventoryBase implements IEnergyReceiver, IPacketSyncerToClient{
 
     public EnergyStorage storage = new EnergyStorage(60000);
+    private int lastEnergy;
 
     @Override
     public int receiveEnergy(ForgeDirection from, int maxReceive, boolean simulate){
@@ -34,6 +37,23 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
     @Override
     public boolean canConnectEnergy(ForgeDirection from){
         return true;
+    }
+
+    @Override
+    public int[] getValues(){
+        return new int[]{this.storage.getEnergyStored(), this.firstCrushTime, this.secondCrushTime};
+    }
+
+    @Override
+    public void setValues(int[] values){
+        this.storage.setEnergyStored(values[0]);
+        this.firstCrushTime = values[1];
+        this.secondCrushTime = values[2];
+    }
+
+    @Override
+    public void sendUpdate(){
+        PacketSyncerToClient.sendPacket(this);
     }
 
     public static class TileEntityGrinderDouble extends TileEntityGrinder{
@@ -59,7 +79,9 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
     public int maxCrushTime;
 
     public int firstCrushTime;
+    private int lastFirstCrush;
     public int secondCrushTime;
+    private int lastSecondCrush;
 
     public boolean isDouble;
 
@@ -117,6 +139,13 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
                     if(!this.canCrushOn(SLOT_INPUT_1, SLOT_OUTPUT_1_1, SLOT_OUTPUT_1_2) && (!this.isDouble || !this.canCrushOn(SLOT_INPUT_2, SLOT_OUTPUT_2_1, SLOT_OUTPUT_2_2))) worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 0, 2);
                 }
                 else worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 1, 2);
+            }
+
+            if(lastEnergy != this.storage.getEnergyStored() || this.lastFirstCrush != this.firstCrushTime || this.lastSecondCrush != this.secondCrushTime){
+                this.lastEnergy = this.storage.getEnergyStored();
+                this.lastFirstCrush = this.firstCrushTime;
+                this.lastSecondCrush = this.secondCrushTime;
+                this.sendUpdate();
             }
         }
     }

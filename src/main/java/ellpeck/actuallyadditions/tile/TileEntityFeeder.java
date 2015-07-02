@@ -1,11 +1,10 @@
 package ellpeck.actuallyadditions.tile;
 
-import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
-import ellpeck.actuallyadditions.network.PacketHandler;
-import ellpeck.actuallyadditions.network.PacketTileEntityFeeder;
+import ellpeck.actuallyadditions.network.sync.IPacketSyncerToClient;
+import ellpeck.actuallyadditions.network.sync.PacketSyncerToClient;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -14,7 +13,7 @@ import net.minecraft.util.AxisAlignedBB;
 import java.util.List;
 import java.util.Random;
 
-public class TileEntityFeeder extends TileEntityInventoryBase{
+public class TileEntityFeeder extends TileEntityInventoryBase implements IPacketSyncerToClient{
 
     public int reach = ConfigIntValues.FEEDER_REACH.getValue();
     public int timerGoal = ConfigIntValues.FEEDER_TIME.getValue();
@@ -22,6 +21,8 @@ public class TileEntityFeeder extends TileEntityInventoryBase{
 
     public int currentTimer;
     public int currentAnimalAmount;
+    private int lastAnimalAmount;
+    private int lastTimer;
 
     public TileEntityFeeder(){
         super(1, "feeder");
@@ -43,7 +44,6 @@ public class TileEntityFeeder extends TileEntityInventoryBase{
                                 EntityAnimal randomAnimal = animals.get(new Random().nextInt(this.currentAnimalAmount));
                                 if(!randomAnimal.isInLove() && randomAnimal.getGrowingAge() == 0 && randomAnimal.isBreedingItem(this.slots[0])){
 
-                                    PacketHandler.theNetwork.sendToAllAround(new PacketTileEntityFeeder(this, randomAnimal.getEntityId()), new NetworkRegistry.TargetPoint(this.worldObj.provider.dimensionId, this.xCoord, this.yCoord, this.zCoord, 80));
                                     this.feedAnimal(randomAnimal);
 
                                     this.slots[0].stackSize--;
@@ -61,6 +61,12 @@ public class TileEntityFeeder extends TileEntityInventoryBase{
 
             if(theFlag != this.currentTimer > 0){
                 this.markDirty();
+            }
+
+            if(this.lastAnimalAmount != this.currentAnimalAmount || this.lastTimer != this.currentTimer){
+                this.lastAnimalAmount = this.currentAnimalAmount;
+                this.lastTimer = this.currentTimer;
+                this.sendUpdate();
             }
         }
     }
@@ -106,5 +112,21 @@ public class TileEntityFeeder extends TileEntityInventoryBase{
     @Override
     public boolean canExtractItem(int slot, ItemStack stack, int side){
         return false;
+    }
+
+    @Override
+    public int[] getValues(){
+        return new int[]{this.currentAnimalAmount, this.currentTimer};
+    }
+
+    @Override
+    public void setValues(int[] values){
+        this.currentAnimalAmount = values[0];
+        this.currentTimer = values[1];
+    }
+
+    @Override
+    public void sendUpdate(){
+        PacketSyncerToClient.sendPacket(this);
     }
 }

@@ -1,7 +1,5 @@
 package ellpeck.actuallyadditions.inventory;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.inventory.gui.GuiInputter;
 import ellpeck.actuallyadditions.inventory.slot.SlotFilter;
 import ellpeck.actuallyadditions.tile.TileEntityBase;
@@ -10,7 +8,6 @@ import invtweaks.api.container.InventoryContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
-import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
@@ -18,16 +15,6 @@ import net.minecraft.item.ItemStack;
 public class ContainerInputter extends Container{
 
     private TileEntityInputter tileInputter;
-
-    private int lastSideToPut;
-    private int lastSideToPull;
-    private int lastIsPullWhitelist;
-    private int lastIsPutWhitelist;
-
-    private int lastSlotPutStart;
-    private int lastSlotPutEnd;
-    private int lastSlotPullStart;
-    private int lastSlotPullEnd;
 
     private boolean isAdvanced;
 
@@ -55,61 +42,6 @@ public class ContainerInputter extends Container{
         for(int i = 0; i < 9; i++){
             this.addSlotToContainer(new Slot(inventory, i, 8 + i * 18, 155 + (isAdvanced ? GuiInputter.OFFSET_ADVANCED : 0)));
         }
-    }
-
-    @Override
-    public void addCraftingToCrafters(ICrafting iCraft){
-        super.addCraftingToCrafters(iCraft);
-        iCraft.sendProgressBarUpdate(this, 0, this.tileInputter.sideToPut);
-        iCraft.sendProgressBarUpdate(this, 1, this.tileInputter.sideToPull);
-        iCraft.sendProgressBarUpdate(this, 2, this.tileInputter.isPullWhitelist ? 1 : 0);
-        iCraft.sendProgressBarUpdate(this, 3, this.tileInputter.isPutWhitelist ? 1 : 0);
-
-        iCraft.sendProgressBarUpdate(this, 4, this.tileInputter.slotToPutStart);
-        iCraft.sendProgressBarUpdate(this, 5, this.tileInputter.slotToPutEnd);
-        iCraft.sendProgressBarUpdate(this, 6, this.tileInputter.slotToPullStart);
-        iCraft.sendProgressBarUpdate(this, 7, this.tileInputter.slotToPullEnd);
-    }
-
-    @Override
-    public void detectAndSendChanges(){
-        super.detectAndSendChanges();
-        for(Object crafter : this.crafters){
-            ICrafting iCraft = (ICrafting)crafter;
-            if(this.lastSideToPut != this.tileInputter.sideToPut) iCraft.sendProgressBarUpdate(this, 0, this.tileInputter.sideToPut);
-            if(this.lastSideToPull != this.tileInputter.sideToPull) iCraft.sendProgressBarUpdate(this, 1, this.tileInputter.sideToPull);
-            if(this.lastIsPullWhitelist != (this.tileInputter.isPullWhitelist ? 1 : 0)) iCraft.sendProgressBarUpdate(this, 2, this.tileInputter.isPullWhitelist ? 1 : 0);
-            if(this.lastIsPutWhitelist != (this.tileInputter.isPutWhitelist ? 1 : 0)) iCraft.sendProgressBarUpdate(this, 3, this.tileInputter.isPutWhitelist ? 1 : 0);
-
-            if(this.lastSlotPutStart != this.tileInputter.slotToPutStart) iCraft.sendProgressBarUpdate(this, 4, this.tileInputter.slotToPutStart);
-            if(this.lastSlotPutEnd != this.tileInputter.slotToPutEnd) iCraft.sendProgressBarUpdate(this, 5, this.tileInputter.slotToPutEnd);
-            if(this.lastSlotPullStart != this.tileInputter.slotToPullStart) iCraft.sendProgressBarUpdate(this, 6, this.tileInputter.slotToPullStart);
-            if(this.lastSlotPullEnd != this.tileInputter.slotToPullEnd) iCraft.sendProgressBarUpdate(this, 7, this.tileInputter.slotToPullEnd);
-        }
-
-        this.lastSideToPut = this.tileInputter.sideToPut;
-        this.lastSideToPull = this.tileInputter.sideToPull;
-        this.lastIsPutWhitelist = this.tileInputter.isPutWhitelist ? 1 : 0;
-        this.lastIsPullWhitelist = this.tileInputter.isPullWhitelist ? 1 : 0;
-
-        this.lastSlotPutStart = this.tileInputter.slotToPutStart;
-        this.lastSlotPutEnd = this.tileInputter.slotToPutEnd;
-        this.lastSlotPullStart = this.tileInputter.slotToPullStart;
-        this.lastSlotPullEnd = this.tileInputter.slotToPullEnd;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void updateProgressBar(int par1, int par2){
-        if(par1 == 0) this.tileInputter.sideToPut = par2;
-        if(par1 == 1) this.tileInputter.sideToPull = par2;
-        if(par1 == 2) this.tileInputter.isPullWhitelist = par2 == 1;
-        if(par1 == 3) this.tileInputter.isPutWhitelist = par2 == 1;
-
-        if(par1 == 4) this.tileInputter.slotToPutStart = par2;
-        if(par1 == 5) this.tileInputter.slotToPutEnd = par2;
-        if(par1 == 6) this.tileInputter.slotToPullStart = par2;
-        if(par1 == 7) this.tileInputter.slotToPullEnd = par2;
     }
 
     @Override

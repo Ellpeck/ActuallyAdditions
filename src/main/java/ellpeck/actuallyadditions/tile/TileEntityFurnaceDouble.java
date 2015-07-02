@@ -5,12 +5,14 @@ import cofh.api.energy.IEnergyReceiver;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
+import ellpeck.actuallyadditions.network.sync.IPacketSyncerToClient;
+import ellpeck.actuallyadditions.network.sync.PacketSyncerToClient;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 
-public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements IEnergyReceiver{
+public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements IEnergyReceiver, IPacketSyncerToClient{
 
     public static final int SLOT_INPUT_1 = 0;
     public static final int SLOT_OUTPUT_1 = 1;
@@ -18,13 +20,17 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
     public static final int SLOT_OUTPUT_2 = 3;
 
     public EnergyStorage storage = new EnergyStorage(30000);
+    private int lastEnergy;
 
     public int energyUsePerTick = ConfigIntValues.FURNACE_ENERGY_USED.getValue();
 
     public int maxBurnTime = ConfigIntValues.FURNACE_DOUBLE_SMELT_TIME.getValue();
 
     public int firstSmeltTime;
+    private int lastFirstSmelt;
+
     public int secondSmeltTime;
+    private int lastSecondSmelt;
 
     public TileEntityFurnaceDouble(){
         super(4, "furnaceDouble");
@@ -72,8 +78,14 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
                 }
                 else worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, meta+4, 2);
             }
-        }
 
+            if(lastEnergy != this.storage.getEnergyStored() || this.lastFirstSmelt != this.firstSmeltTime || this.lastSecondSmelt != this.secondSmeltTime){
+                this.lastEnergy = this.storage.getEnergyStored();
+                this.lastFirstSmelt = this.firstSmeltTime;
+                this.lastSecondSmelt = this.secondSmeltTime;
+                this.sendUpdate();
+            }
+        }
     }
 
     public boolean canSmeltOn(int theInput, int theOutput){
@@ -163,5 +175,22 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
     @Override
     public boolean canConnectEnergy(ForgeDirection from){
         return true;
+    }
+
+    @Override
+    public int[] getValues(){
+        return new int[]{this.storage.getEnergyStored(), this.firstSmeltTime, this.secondSmeltTime};
+    }
+
+    @Override
+    public void setValues(int[] values){
+        this.storage.setEnergyStored(values[0]);
+        this.firstSmeltTime = values[1];
+        this.secondSmeltTime = values[2];
+    }
+
+    @Override
+    public void sendUpdate(){
+        PacketSyncerToClient.sendPacket(this);
     }
 }

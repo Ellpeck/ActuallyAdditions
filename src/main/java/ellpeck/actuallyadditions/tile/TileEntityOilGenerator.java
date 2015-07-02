@@ -6,17 +6,21 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.blocks.InitBlocks;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
+import ellpeck.actuallyadditions.network.sync.IPacketSyncerToClient;
+import ellpeck.actuallyadditions.network.sync.PacketSyncerToClient;
 import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.*;
 
-public class TileEntityOilGenerator extends TileEntityInventoryBase implements IEnergyProvider, IFluidHandler{
+public class TileEntityOilGenerator extends TileEntityInventoryBase implements IEnergyProvider, IFluidHandler, IPacketSyncerToClient{
 
     public EnergyStorage storage = new EnergyStorage(50000);
+    private int lastEnergy;
 
     public FluidTank tank = new FluidTank(2*FluidContainerRegistry.BUCKET_VOLUME);
+    private int lastTank;
 
     public static int energyProducedPerTick = ConfigIntValues.OIL_GEN_ENERGY_PRODUCED.getValue();
 
@@ -24,6 +28,7 @@ public class TileEntityOilGenerator extends TileEntityInventoryBase implements I
     public int maxBurnTime = ConfigIntValues.OIL_GEN_BURN_TIME.getValue();
 
     public int currentBurnTime;
+    private int lastBurnTime;
 
     public TileEntityOilGenerator(){
         super(2, "oilGenerator");
@@ -66,6 +71,13 @@ public class TileEntityOilGenerator extends TileEntityInventoryBase implements I
                         worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 0, 2);
                 }
                 else worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 1, 2);
+            }
+
+            if(this.storage.getEnergyStored() != this.lastEnergy || this.tank.getFluidAmount() != this.lastTank || this.lastBurnTime != this.currentBurnTime){
+                this.lastEnergy = this.storage.getEnergyStored();
+                this.lastTank = this.tank.getFluidAmount();
+                this.lastBurnTime = this.currentBurnTime;
+                this.sendUpdate();
             }
         }
     }
@@ -167,5 +179,25 @@ public class TileEntityOilGenerator extends TileEntityInventoryBase implements I
     @Override
     public FluidTankInfo[] getTankInfo(ForgeDirection from){
         return new FluidTankInfo[]{this.tank.getInfo()};
+    }
+
+    @Override
+    public int[] getValues(){
+        return new int[]{this.storage.getEnergyStored(), this.currentBurnTime, this.tank.getFluidAmount(), this.tank.getFluid() == null ? -1 : this.tank.getFluid().getFluidID()};
+    }
+
+    @Override
+    public void setValues(int[] values){
+        this.storage.setEnergyStored(values[0]);
+        this.currentBurnTime = values[1];
+        if(values[3] != -1){
+            this.tank.setFluid(new FluidStack(FluidRegistry.getFluid(values[3]), values[2]));
+        }
+        else this.tank.setFluid(null);
+    }
+
+    @Override
+    public void sendUpdate(){
+        PacketSyncerToClient.sendPacket(this);
     }
 }

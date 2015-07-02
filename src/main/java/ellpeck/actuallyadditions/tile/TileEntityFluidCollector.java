@@ -1,11 +1,10 @@
 package ellpeck.actuallyadditions.tile;
 
-import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
-import ellpeck.actuallyadditions.network.PacketFluidCollectorToClient;
-import ellpeck.actuallyadditions.network.PacketHandler;
+import ellpeck.actuallyadditions.network.sync.IPacketSyncerToClient;
+import ellpeck.actuallyadditions.network.sync.PacketSyncerToClient;
 import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
@@ -15,14 +14,14 @@ import net.minecraft.util.ChunkCoordinates;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.*;
 
-public class TileEntityFluidCollector extends TileEntityInventoryBase implements IFluidHandler{
+public class TileEntityFluidCollector extends TileEntityInventoryBase implements IFluidHandler, IPacketSyncerToClient{
 
     public FluidTank tank = new FluidTank(8*FluidContainerRegistry.BUCKET_VOLUME);
+    private int lastTankAmount;
 
     @Override
     public int fill(ForgeDirection from, FluidStack resource, boolean doFill){
         if(this.isPlacer){
-            this.sendPacket();
             return this.tank.fill(resource, doFill);
         }
         return 0;
@@ -31,7 +30,6 @@ public class TileEntityFluidCollector extends TileEntityInventoryBase implements
     @Override
     public FluidStack drain(ForgeDirection from, FluidStack resource, boolean doDrain){
         if(!this.isPlacer){
-            this.sendPacket();
             return this.tank.drain(resource.amount, doDrain);
         }
         return null;
@@ -40,7 +38,6 @@ public class TileEntityFluidCollector extends TileEntityInventoryBase implements
     @Override
     public FluidStack drain(ForgeDirection from, int maxDrain, boolean doDrain){
         if(!this.isPlacer){
-            this.sendPacket();
             return this.tank.drain(maxDrain, doDrain);
         }
         return null;
@@ -59,6 +56,25 @@ public class TileEntityFluidCollector extends TileEntityInventoryBase implements
     @Override
     public FluidTankInfo[] getTankInfo(ForgeDirection from){
         return new FluidTankInfo[]{this.tank.getInfo()};
+    }
+
+    @Override
+    public int[] getValues(){
+        return new int[]{this.tank.getFluidAmount(), this.tank.getFluid() == null ? -1 : this.tank.getFluid().getFluidID()};
+    }
+
+    @Override
+    public void setValues(int[] values){
+        if(values[1] != -1){
+            Fluid fluid = FluidRegistry.getFluid(values[1]);
+            this.tank.setFluid(new FluidStack(fluid, values[0]));
+        }
+        else this.tank.setFluid(null);
+    }
+
+    @Override
+    public void sendUpdate(){
+        PacketSyncerToClient.sendPacket(this);
     }
 
     public static class TileEntityFluidPlacer extends TileEntityFluidCollector{
@@ -88,8 +104,6 @@ public class TileEntityFluidCollector extends TileEntityInventoryBase implements
     @SuppressWarnings("unchecked")
     public void updateEntity(){
         if(!worldObj.isRemote){
-
-            int amountBefore = this.tank.getFluidAmount();
             if(!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)){
                 if(this.currentTime > 0){
                     this.currentTime--;
@@ -149,15 +163,11 @@ public class TileEntityFluidCollector extends TileEntityInventoryBase implements
                 }
             }
 
-            if(amountBefore != this.tank.getFluidAmount()){
-                this.sendPacket();
-                this.markDirty();
+            if(lastTankAmount != this.tank.getFluidAmount()){
+                lastTankAmount = this.tank.getFluidAmount();
+                this.sendUpdate();
             }
         }
-    }
-
-    public void sendPacket(){
-        PacketHandler.theNetwork.sendToAllAround(new PacketFluidCollectorToClient(this.tank.getFluid(), this), new NetworkRegistry.TargetPoint(this.worldObj.provider.dimensionId, this.xCoord, this.yCoord, this.zCoord, 120));
     }
 
     @SideOnly(Side.CLIENT)

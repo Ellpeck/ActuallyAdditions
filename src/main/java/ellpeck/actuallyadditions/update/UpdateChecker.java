@@ -33,17 +33,17 @@ public class UpdateChecker{
         if(doneChecking && event.phase == TickEvent.Phase.END && Minecraft.getMinecraft().thePlayer != null && !notified){
             EntityPlayer player = Minecraft.getMinecraft().thePlayer;
             if(checkFailed){
-                player.addChatComponentMessage(IChatComponent.Serializer.func_150699_a(StatCollector.translateToLocal("info." + ModUtil.MOD_ID_LOWER + ".update.failed.desc")));
+                player.addChatComponentMessage(IChatComponent.Serializer.func_150699_a(StatCollector.translateToLocal("info." + ModUtil.MOD_ID_LOWER + ".sendUpdate.failed.desc")));
             }
             else if(onlineVersion.length() > 0){
                 int update = Integer.parseInt(onlineVersion.replace("-", "").replace(".", ""));
                 int client = Integer.parseInt(ModUtil.VERSION.replace("-", "").replace(".", ""));
 
                 if(update > client){
-                    String notice1 = "info." + ModUtil.MOD_ID_LOWER + ".update.generic.desc";
-                    String notice2 = "info." + ModUtil.MOD_ID_LOWER + ".update.versionComp.desc";
-                    String notice3 = "info." + ModUtil.MOD_ID_LOWER + ".update.changelog.desc";
-                    String notice4 = "info." + ModUtil.MOD_ID_LOWER + ".update.download.desc";
+                    String notice1 = "info." + ModUtil.MOD_ID_LOWER + ".sendUpdate.generic.desc";
+                    String notice2 = "info." + ModUtil.MOD_ID_LOWER + ".sendUpdate.versionComp.desc";
+                    String notice3 = "info." + ModUtil.MOD_ID_LOWER + ".sendUpdate.changelog.desc";
+                    String notice4 = "info." + ModUtil.MOD_ID_LOWER + ".sendUpdate.download.desc";
                     player.addChatComponentMessage(IChatComponent.Serializer.func_150699_a(StatCollector.translateToLocal(notice1)));
                     player.addChatComponentMessage(IChatComponent.Serializer.func_150699_a(StatCollector.translateToLocalFormatted(notice2, ModUtil.VERSION, this.onlineVersion)));
                     player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocalFormatted(notice3, changelog)));
@@ -67,12 +67,12 @@ public class UpdateChecker{
         public void run(){
             ModUtil.LOGGER.info("Starting Update Check...");
             try{
-                URL newestURL = new URL("https://raw.githubusercontent.com/Ellpeck/ActuallyAdditions/master/update/newestVersion.txt");
+                URL newestURL = new URL("https://raw.githubusercontent.com/Ellpeck/ActuallyAdditions/master/sendUpdate/newestVersion.txt");
                 BufferedReader newestReader = new BufferedReader(new InputStreamReader(newestURL.openStream()));
                 onlineVersion = newestReader.readLine();
                 newestReader.close();
 
-                URL changeURL = new URL("https://raw.githubusercontent.com/Ellpeck/ActuallyAdditions/master/update/changelog.txt");
+                URL changeURL = new URL("https://raw.githubusercontent.com/Ellpeck/ActuallyAdditions/master/sendUpdate/changelog.txt");
                 BufferedReader changeReader = new BufferedReader(new InputStreamReader(changeURL.openStream()));
                 changelog = changeReader.readLine();
                 changeReader.close();

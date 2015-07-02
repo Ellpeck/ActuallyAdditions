@@ -5,13 +5,16 @@ import cofh.api.energy.IEnergyContainerItem;
 import cofh.api.energy.IEnergyReceiver;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import ellpeck.actuallyadditions.network.sync.IPacketSyncerToClient;
+import ellpeck.actuallyadditions.network.sync.PacketSyncerToClient;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 
-public class TileEntityEnergizer extends TileEntityInventoryBase implements IEnergyReceiver{
+public class TileEntityEnergizer extends TileEntityInventoryBase implements IEnergyReceiver, IPacketSyncerToClient{
 
     public EnergyStorage storage = new EnergyStorage(500000);
+    private int lastEnergy;
 
     public TileEntityEnergizer(){
         super(2, "energizer");
@@ -31,6 +34,11 @@ public class TileEntityEnergizer extends TileEntityInventoryBase implements IEne
                     this.slots[0].stackSize--;
                     if(this.slots[0].stackSize <= 0) this.slots[0] = null;
                 }
+            }
+
+            if(lastEnergy != this.storage.getEnergyStored()){
+                this.lastEnergy = this.storage.getEnergyStored();
+                this.sendUpdate();
             }
         }
     }
@@ -80,5 +88,20 @@ public class TileEntityEnergizer extends TileEntityInventoryBase implements IEne
     @Override
     public boolean canConnectEnergy(ForgeDirection from){
         return true;
+    }
+
+    @Override
+    public int[] getValues(){
+        return new int[]{this.storage.getEnergyStored()};
+    }
+
+    @Override
+    public void setValues(int[] values){
+        this.storage.setEnergyStored(values[0]);
+    }
+
+    @Override
+    public void sendUpdate(){
+        PacketSyncerToClient.sendPacket(this);
     }
 }

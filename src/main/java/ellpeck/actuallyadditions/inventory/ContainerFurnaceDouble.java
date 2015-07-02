@@ -1,7 +1,5 @@
 package ellpeck.actuallyadditions.inventory;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.inventory.slot.SlotOutput;
 import ellpeck.actuallyadditions.tile.TileEntityBase;
 import ellpeck.actuallyadditions.tile.TileEntityFurnaceDouble;
@@ -9,7 +7,6 @@ import invtweaks.api.container.InventoryContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
-import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
@@ -18,11 +15,6 @@ import net.minecraft.item.crafting.FurnaceRecipes;
 public class ContainerFurnaceDouble extends Container{
 
     private TileEntityFurnaceDouble tileFurnace;
-
-    private int lastEnergy;
-    private int lastFirstCrushTime;
-    private int lastSecondCrushTime;
-    private int lastBurnTime;
 
     public ContainerFurnaceDouble(InventoryPlayer inventory, TileEntityBase tile){
         this.tileFurnace = (TileEntityFurnaceDouble)tile;
@@ -40,42 +32,6 @@ public class ContainerFurnaceDouble extends Container{
         for (int i = 0; i < 9; i++){
             this.addSlotToContainer(new Slot(inventory, i, 8 + i * 18, 155));
         }
-    }
-
-    @Override
-    public void addCraftingToCrafters(ICrafting iCraft){
-        super.addCraftingToCrafters(iCraft);
-        iCraft.sendProgressBarUpdate(this, 0, this.tileFurnace.firstSmeltTime);
-        iCraft.sendProgressBarUpdate(this, 1, this.tileFurnace.secondSmeltTime);
-        iCraft.sendProgressBarUpdate(this, 2, this.tileFurnace.maxBurnTime);
-        iCraft.sendProgressBarUpdate(this, 3, this.tileFurnace.storage.getEnergyStored());
-    }
-
-    @Override
-    public void detectAndSendChanges(){
-        super.detectAndSendChanges();
-        for(Object crafter : this.crafters){
-            ICrafting iCraft = (ICrafting)crafter;
-
-            if(this.lastFirstCrushTime != this.tileFurnace.firstSmeltTime) iCraft.sendProgressBarUpdate(this, 0, this.tileFurnace.firstSmeltTime);
-            if(this.lastSecondCrushTime != this.tileFurnace.secondSmeltTime) iCraft.sendProgressBarUpdate(this, 1, this.tileFurnace.secondSmeltTime);
-            if(this.lastBurnTime != this.tileFurnace.maxBurnTime) iCraft.sendProgressBarUpdate(this, 2, this.tileFurnace.maxBurnTime);
-            if(this.lastEnergy != this.tileFurnace.storage.getEnergyStored()) iCraft.sendProgressBarUpdate(this, 3, this.tileFurnace.storage.getEnergyStored());
-        }
-
-        this.lastFirstCrushTime = this.tileFurnace.firstSmeltTime;
-        this.lastSecondCrushTime = this.tileFurnace.secondSmeltTime;
-        this.lastBurnTime = this.tileFurnace.maxBurnTime;
-        this.lastEnergy = this.tileFurnace.storage.getEnergyStored();
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void updateProgressBar(int par1, int par2){
-        if(par1 == 0) this.tileFurnace.firstSmeltTime = par2;
-        if(par1 == 1) this.tileFurnace.secondSmeltTime = par2;
-        if(par1 == 2) this.tileFurnace.maxBurnTime = par2;
-        if(par1 == 3) this.tileFurnace.storage.setEnergyStored(par2);
     }
 
     @Override

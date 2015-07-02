@@ -21,8 +21,6 @@ public class GuiFeeder extends GuiContainer{
     private static final ResourceLocation resLoc = AssetUtil.getGuiLocation("guiFeeder");
     public TileEntityFeeder tileFeeder;
 
-    public int loveCounter;
-
     public GuiFeeder(InventoryPlayer inventory, TileEntityBase tile){
         super(new ContainerFeeder(inventory, tile));
         this.tileFeeder = (TileEntityFeeder)tile;
@@ -51,14 +49,6 @@ public class GuiFeeder extends GuiContainer{
         if(this.tileFeeder.currentAnimalAmount >= 2 && this.tileFeeder.currentAnimalAmount < this.tileFeeder.animalThreshold) this.drawTexturedModalRect(guiLeft + 70, guiTop + 31, 192, 16, 8, 8);
 
         if(this.tileFeeder.currentAnimalAmount >= this.tileFeeder.animalThreshold) this.drawTexturedModalRect(guiLeft + 70, guiTop + 31, 192, 24, 8, 8);
-
-        if(this.loveCounter > 0){
-            this.loveCounter++;
-            if(this.loveCounter >= 15){
-                this.loveCounter = 0;
-            }
-            this.drawTexturedModalRect(guiLeft + 76, guiTop + 4, 176, 0, 25, 16);
-        }
     }
 
     @Override

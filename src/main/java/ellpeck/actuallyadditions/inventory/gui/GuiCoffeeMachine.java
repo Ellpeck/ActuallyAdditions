@@ -104,7 +104,7 @@ public class GuiCoffeeMachine extends GuiContainer{
         if(x >= guiLeft+16 && y >= guiTop+5 && x <= guiLeft+23 && y <= guiTop+89){
             this.func_146283_a(Collections.singletonList(text1), x, y);
         }
-        String text3 = this.machine.tank.getFluidAmount() + "/" + this.machine.tank.getCapacity() + " mB "+StatCollector.translateToLocal(FluidRegistry.WATER.getUnlocalizedName());
+        String text3 = this.machine.tank.getFluidAmount() + "/" + this.machine.tank.getCapacity() + " mB "+FluidRegistry.WATER.getLocalizedName(this.machine.tank.getFluid());
         if(x >= guiLeft+27 && y >= guiTop+5 && x <= guiLeft+33 && y <= guiTop+70){
             this.func_146283_a(Collections.singletonList(text3), x, y);
         }

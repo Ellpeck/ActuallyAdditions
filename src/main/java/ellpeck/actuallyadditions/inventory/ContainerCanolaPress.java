@@ -1,8 +1,5 @@
 package ellpeck.actuallyadditions.inventory;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import ellpeck.actuallyadditions.blocks.InitBlocks;
 import ellpeck.actuallyadditions.inventory.slot.SlotOutput;
 import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.items.metalists.TheMiscItems;
@@ -13,19 +10,13 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.Container;
-import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fluids.FluidStack;
 
 @InventoryContainer
 public class ContainerCanolaPress extends Container{
 
     private TileEntityCanolaPress press;
-
-    private int lastEnergyStored;
-    private int lastTankAmount;
-    private int lastProcessTime;
 
     public ContainerCanolaPress(InventoryPlayer inventory, TileEntityBase tile){
         this.press = (TileEntityCanolaPress)tile;
@@ -47,38 +38,6 @@ public class ContainerCanolaPress extends Container{
     @Override
     public boolean canInteractWith(EntityPlayer player){
         return this.press.isUseableByPlayer(player);
-    }
-
-    @Override
-    public void addCraftingToCrafters(ICrafting iCraft){
-        super.addCraftingToCrafters(iCraft);
-        iCraft.sendProgressBarUpdate(this, 0, this.press.storage.getEnergyStored());
-        iCraft.sendProgressBarUpdate(this, 1, this.press.tank.getFluidAmount());
-        iCraft.sendProgressBarUpdate(this, 2, this.press.currentProcessTime);
-    }
-
-    @Override
-    public void detectAndSendChanges(){
-        super.detectAndSendChanges();
-        for(Object crafter : this.crafters){
-            ICrafting iCraft = (ICrafting)crafter;
-
-            if(this.lastEnergyStored != this.press.storage.getEnergyStored()) iCraft.sendProgressBarUpdate(this, 0, this.press.storage.getEnergyStored());
-            if(this.lastTankAmount != this.press.tank.getFluidAmount()) iCraft.sendProgressBarUpdate(this, 1, this.press.tank.getFluidAmount());
-            if(this.lastProcessTime != this.press.currentProcessTime) iCraft.sendProgressBarUpdate(this, 2, this.press.currentProcessTime);
-        }
-
-        this.lastEnergyStored = this.press.storage.getEnergyStored();
-        this.lastTankAmount = this.press.tank.getFluidAmount();
-        this.lastProcessTime = this.press.currentProcessTime;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void updateProgressBar(int par1, int par2){
-        if(par1 == 0) this.press.storage.setEnergyStored(par2);
-        if(par1 == 1) this.press.tank.setFluid(new FluidStack(InitBlocks.fluidCanolaOil, par2));
-        if(par1 == 2) this.press.currentProcessTime = par2;
     }
 
     @Override

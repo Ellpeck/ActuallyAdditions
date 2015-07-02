@@ -1,7 +1,5 @@
 package ellpeck.actuallyadditions.inventory;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.blocks.InitBlocks;
 import ellpeck.actuallyadditions.inventory.slot.SlotOutput;
 import ellpeck.actuallyadditions.tile.TileEntityBase;
@@ -11,7 +9,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.Container;
-import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidContainerRegistry;
@@ -21,10 +18,6 @@ import net.minecraftforge.fluids.FluidStack;
 public class ContainerFermentingBarrel extends Container{
 
     private TileEntityFermentingBarrel barrel;
-
-    private int lastProcessTime;
-    private int lastCanolaTank;
-    private int lastOilTank;
 
     public ContainerFermentingBarrel(InventoryPlayer inventory, TileEntityBase tile){
         this.barrel = (TileEntityFermentingBarrel)tile;
@@ -47,38 +40,6 @@ public class ContainerFermentingBarrel extends Container{
     @Override
     public boolean canInteractWith(EntityPlayer player){
         return this.barrel.isUseableByPlayer(player);
-    }
-
-    @Override
-    public void addCraftingToCrafters(ICrafting iCraft){
-        super.addCraftingToCrafters(iCraft);
-        iCraft.sendProgressBarUpdate(this, 0, this.barrel.oilTank.getFluidAmount());
-        iCraft.sendProgressBarUpdate(this, 1, this.barrel.canolaTank.getFluidAmount());
-        iCraft.sendProgressBarUpdate(this, 2, this.barrel.currentProcessTime);
-    }
-
-    @Override
-    public void detectAndSendChanges(){
-        super.detectAndSendChanges();
-        for(Object crafter : this.crafters){
-            ICrafting iCraft = (ICrafting)crafter;
-
-            if(this.lastOilTank != this.barrel.oilTank.getFluidAmount()) iCraft.sendProgressBarUpdate(this, 0, this.barrel.oilTank.getFluidAmount());
-            if(this.lastCanolaTank != this.barrel.canolaTank.getFluidAmount()) iCraft.sendProgressBarUpdate(this, 1, this.barrel.canolaTank.getFluidAmount());
-            if(this.lastProcessTime != this.barrel.currentProcessTime) iCraft.sendProgressBarUpdate(this, 2, this.barrel.currentProcessTime);
-        }
-
-        this.lastOilTank = this.barrel.oilTank.getFluidAmount();
-        this.lastCanolaTank = this.barrel.canolaTank.getFluidAmount();
-        this.lastProcessTime = this.barrel.currentProcessTime;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void updateProgressBar(int par1, int par2){
-        if(par1 == 0) this.barrel.oilTank.setFluid(new FluidStack(InitBlocks.fluidOil, par2));
-        if(par1 == 1) this.barrel.canolaTank.setFluid(new FluidStack(InitBlocks.fluidCanolaOil, par2));
-        if(par1 == 2) this.barrel.currentProcessTime = par2;
     }
 
     @Override
