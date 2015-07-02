@@ -139,7 +139,7 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
 
             ItemStack theStack = null;
             for(int i = theSlotToPull; i < this.slotToPullEnd; i++){
-                if(i >= theInventory.getSizeInventory()) return;
+                if(i < 0 || i >= theInventory.getSizeInventory()) return;
 
                 ItemStack tempStack = theInventory.getStackInSlot(i);
                 if(tempStack != null){
@@ -201,7 +201,7 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
             if(this.slots[0] != null){
                 ItemStack theStack = null;
                 for(int i = theSlotToPut; i < this.slotToPutEnd; i++){
-                    if(i >= theInventory.getSizeInventory()) return;
+                    if(i < 0 || i >= theInventory.getSizeInventory()) return;
 
                     ItemStack tempStack = theInventory.getStackInSlot(i);
                     if(tempStack != null){

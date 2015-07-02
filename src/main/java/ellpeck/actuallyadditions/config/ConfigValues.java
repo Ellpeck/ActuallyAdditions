@@ -30,6 +30,6 @@ public class ConfigValues{
             currConf.currentValue = config.getBoolean(currConf.name, currConf.category, currConf.defaultValue, currConf.desc);
         }
 
-        crusherRecipeExceptions = config.getStringList("Crusher Recipe Exceptions", ConfigCategories.CRUSHER_RECIPES.name, new String[]{"ingotBrick", "ingotBrickNether"}, "The Ingots, Dusts and Ores blacklisted from being auto-registered by the Crusher. This list uses OreDictionary Names of the Inputs only.");
+        crusherRecipeExceptions = config.getStringList("Crusher Recipe Exceptions", ConfigCategories.CRUSHER_RECIPES.name, new String[]{"ingotBrick", "ingotBrickNether"}, "The Ingots, Dusts and Ores blacklisted from being auto-registered to be crushed by the Crusher. This list uses OreDictionary Names of the Inputs only.");
     }
 }

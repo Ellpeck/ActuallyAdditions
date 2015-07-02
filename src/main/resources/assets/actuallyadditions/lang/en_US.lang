@@ -554,6 +554,10 @@ info.actuallyadditions.update.download.desc=[{"text":"Download the newest Versio
 info.actuallyadditions.update.failed.desc=[{"text":"The Update Check for "},{"text":"Actually Additions ","color":"dark_green","bold":"true"},{"text":"failed! Check your Internet Connection and the Logs for more Info!","color":"none"}]
 info.actuallyadditions.update.changelog.desc=Updates: %s
 
+info.actuallyadditions.squidKilled.desc.1=You just killed a squid, am I right!?
+info.actuallyadditions.squidKilled.desc.2=YOU DIDN'T JUST DO THAT!
+info.actuallyadditions.squidKilled.desc.3=The thing you just did... someone's gonna be pissed about that!
+
 achievement.actuallyadditions.pickUpSolidXP=Square and yummy!
 achievement.actuallyadditions.pickUpSolidXP.desc=Pick up some Solidified Experience
 achievement.actuallyadditions.craftKnifeBlade=Sharp! So Sharp!

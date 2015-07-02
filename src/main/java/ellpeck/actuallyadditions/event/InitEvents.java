@@ -10,11 +10,12 @@ public class InitEvents{
 
         Util.registerEvent(new SmeltEvent());
         Util.registerEvent(new CraftEvent());
-        Util.registerEvent(new KilledEvent());
+        Util.registerEvent(new LivingDropEvent());
         Util.registerEvent(new PickupEvent());
         Util.registerEvent(new TooltipEvent());
         Util.registerEvent(new EntityLivingEvent());
         Util.registerEvent(new WorldDecorationEvent());
+        //Util.registerEvent(new LivingKillEvent());
         Util.registerEvent(new BucketFillEvent());
     }
 

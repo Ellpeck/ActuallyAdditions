@@ -9,7 +9,7 @@ import net.minecraftforge.event.entity.living.LivingDropsEvent;
 
 import java.util.Random;
 
-public class KilledEvent{
+public class LivingDropEvent{
 
     @SubscribeEvent
     public void onEntityDropEvent(LivingDropsEvent event){
@@ -23,6 +23,5 @@ public class KilledEvent{
                 }
             }
         }
-
     }
 }
