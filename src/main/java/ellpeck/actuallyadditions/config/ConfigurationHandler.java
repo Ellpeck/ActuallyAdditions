@@ -18,7 +18,7 @@ public class ConfigurationHandler{
             ConfigValues.defineConfigValues(config);
         }
         catch(Exception e){
-            e.printStackTrace();
+            ModUtil.LOGGER.error("Loading the Config File failed!", e);
         }
         finally{
             if(config.hasChanged()){

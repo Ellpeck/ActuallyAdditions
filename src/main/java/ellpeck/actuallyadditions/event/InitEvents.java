@@ -15,7 +15,6 @@ public class InitEvents{
         Util.registerEvent(new TooltipEvent());
         Util.registerEvent(new EntityLivingEvent());
         Util.registerEvent(new WorldDecorationEvent());
-        //Util.registerEvent(new LivingKillEvent());
         Util.registerEvent(new BucketFillEvent());
     }
 
