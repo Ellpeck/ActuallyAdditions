@@ -10,7 +10,6 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
-import net.minecraftforge.common.util.ForgeDirection;
 import org.lwjgl.opengl.GL11;
 
 import java.util.Collections;
@@ -44,7 +43,7 @@ public class GuiCanolaPress extends GuiContainer{
         this.mc.getTextureManager().bindTexture(resLoc);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 93);
 
-        if(this.press.getEnergyStored(ForgeDirection.UNKNOWN) > 0){
+        if(this.press.storage.getEnergyStored() > 0){
             int i = this.press.getEnergyScaled(83);
             drawTexturedModalRect(this.guiLeft + 43, this.guiTop+89-i, 176, 29, 16, i);
         }
@@ -63,7 +62,7 @@ public class GuiCanolaPress extends GuiContainer{
     @Override
     public void drawScreen(int x, int y, float f){
         super.drawScreen(x, y, f);
-        String text1 = this.press.storage.getEnergyStored() + "/" + this.press.storage.getEnergyStored() + " RF";
+        String text1 = this.press.storage.getEnergyStored() + "/" + this.press.storage.getMaxEnergyStored() + " RF";
         if(x >= guiLeft+43 && y >= guiTop+6 && x <= guiLeft+58 && y <= guiTop+88){
             this.func_146283_a(Collections.singletonList(text1), x, y);
         }

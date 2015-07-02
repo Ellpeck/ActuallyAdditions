@@ -9,7 +9,6 @@ import ellpeck.actuallyadditions.util.AssetUtil;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.util.ForgeDirection;
 import org.lwjgl.opengl.GL11;
 
 import java.util.Collections;
@@ -43,7 +42,7 @@ public class GuiEnergizer extends GuiContainer{
         this.mc.getTextureManager().bindTexture(resLoc);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 93);
 
-        if(this.energizer.getEnergyStored(ForgeDirection.UNKNOWN) > 0){
+        if(this.energizer.storage.getEnergyStored() > 0){
             int i = this.energizer.getEnergyScaled(83);
             drawTexturedModalRect(this.guiLeft+57, this.guiTop+89-i, 176, 0, 16, i);
         }
@@ -52,7 +51,7 @@ public class GuiEnergizer extends GuiContainer{
     @Override
     public void drawScreen(int x, int y, float f){
         super.drawScreen(x, y, f);
-        String text1 = this.energizer.storage.getEnergyStored() + "/" + this.energizer.storage.getEnergyStored() + " RF";
+        String text1 = this.energizer.storage.getEnergyStored() + "/" + this.energizer.storage.getMaxEnergyStored() + " RF";
         if(x >= guiLeft+57 && y >= guiTop+6 && x <= guiLeft+72 && y <= guiTop+88){
             this.func_146283_a(Collections.singletonList(text1), x, y);
         }

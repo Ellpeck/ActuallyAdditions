@@ -9,7 +9,6 @@ import ellpeck.actuallyadditions.util.AssetUtil;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.util.ForgeDirection;
 import org.lwjgl.opengl.GL11;
 
 import java.util.Collections;
@@ -43,7 +42,7 @@ public class GuiEnervator extends GuiContainer{
         this.mc.getTextureManager().bindTexture(resLoc);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 93);
 
-        if(this.enervator.getEnergyStored(ForgeDirection.UNKNOWN) > 0){
+        if(this.enervator.storage.getEnergyStored() > 0){
             int i = this.enervator.getEnergyScaled(83);
             drawTexturedModalRect(this.guiLeft+57, this.guiTop+89-i, 176, 0, 16, i);
         }

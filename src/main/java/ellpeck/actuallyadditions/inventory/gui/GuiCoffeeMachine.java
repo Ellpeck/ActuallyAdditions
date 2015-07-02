@@ -16,7 +16,6 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidRegistry;
 import org.lwjgl.opengl.GL11;
 
@@ -74,7 +73,7 @@ public class GuiCoffeeMachine extends GuiContainer{
         this.mc.getTextureManager().bindTexture(resLoc);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 93);
 
-        if(this.machine.getEnergyStored(ForgeDirection.UNKNOWN) > 0){
+        if(this.machine.storage.getEnergyStored() > 0){
             int i = this.machine.getEnergyScaled(83);
             drawTexturedModalRect(this.guiLeft+17, this.guiTop+89-i, 176, 0, 6, i);
         }
@@ -101,7 +100,7 @@ public class GuiCoffeeMachine extends GuiContainer{
     public void drawScreen(int x, int y, float f){
         super.drawScreen(x, y, f);
 
-        String text1 = this.machine.storage.getEnergyStored() + "/" + this.machine.storage.getEnergyStored() + " RF";
+        String text1 = this.machine.storage.getEnergyStored() + "/" + this.machine.storage.getMaxEnergyStored() + " RF";
         if(x >= guiLeft+16 && y >= guiTop+5 && x <= guiLeft+23 && y <= guiTop+89){
             this.func_146283_a(Collections.singletonList(text1), x, y);
         }

@@ -13,7 +13,6 @@ import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
-import net.minecraftforge.common.util.ForgeDirection;
 
 @InventoryContainer
 public class ContainerFurnaceDouble extends Container{
@@ -49,7 +48,7 @@ public class ContainerFurnaceDouble extends Container{
         iCraft.sendProgressBarUpdate(this, 0, this.tileFurnace.firstSmeltTime);
         iCraft.sendProgressBarUpdate(this, 1, this.tileFurnace.secondSmeltTime);
         iCraft.sendProgressBarUpdate(this, 2, this.tileFurnace.maxBurnTime);
-        iCraft.sendProgressBarUpdate(this, 3, this.tileFurnace.getEnergyStored(ForgeDirection.UNKNOWN));
+        iCraft.sendProgressBarUpdate(this, 3, this.tileFurnace.storage.getEnergyStored());
     }
 
     @Override
@@ -61,13 +60,13 @@ public class ContainerFurnaceDouble extends Container{
             if(this.lastFirstCrushTime != this.tileFurnace.firstSmeltTime) iCraft.sendProgressBarUpdate(this, 0, this.tileFurnace.firstSmeltTime);
             if(this.lastSecondCrushTime != this.tileFurnace.secondSmeltTime) iCraft.sendProgressBarUpdate(this, 1, this.tileFurnace.secondSmeltTime);
             if(this.lastBurnTime != this.tileFurnace.maxBurnTime) iCraft.sendProgressBarUpdate(this, 2, this.tileFurnace.maxBurnTime);
-            if(this.lastEnergy != this.tileFurnace.getEnergyStored(ForgeDirection.UNKNOWN)) iCraft.sendProgressBarUpdate(this, 3, this.tileFurnace.getEnergyStored(ForgeDirection.UNKNOWN));
+            if(this.lastEnergy != this.tileFurnace.storage.getEnergyStored()) iCraft.sendProgressBarUpdate(this, 3, this.tileFurnace.storage.getEnergyStored());
         }
 
         this.lastFirstCrushTime = this.tileFurnace.firstSmeltTime;
         this.lastSecondCrushTime = this.tileFurnace.secondSmeltTime;
         this.lastBurnTime = this.tileFurnace.maxBurnTime;
-        this.lastEnergy = this.tileFurnace.getEnergyStored(ForgeDirection.UNKNOWN);
+        this.lastEnergy = this.tileFurnace.storage.getEnergyStored();
     }
 
     @Override

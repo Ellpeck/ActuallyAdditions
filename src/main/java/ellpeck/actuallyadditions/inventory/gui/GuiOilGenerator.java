@@ -10,7 +10,6 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
-import net.minecraftforge.common.util.ForgeDirection;
 import org.lwjgl.opengl.GL11;
 
 import java.util.Collections;
@@ -44,7 +43,7 @@ public class GuiOilGenerator extends GuiContainer{
         this.mc.getTextureManager().bindTexture(resLoc);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 93);
 
-        if(this.generator.getEnergyStored(ForgeDirection.UNKNOWN) > 0){
+        if(this.generator.storage.getEnergyStored() > 0){
             int i = this.generator.getEnergyScaled(83);
             drawTexturedModalRect(this.guiLeft+43, this.guiTop+89-i, 176, 0, 16, i);
         }

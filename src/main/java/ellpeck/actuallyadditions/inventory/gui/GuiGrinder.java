@@ -9,7 +9,6 @@ import ellpeck.actuallyadditions.util.AssetUtil;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.util.ForgeDirection;
 import org.lwjgl.opengl.GL11;
 
 import java.util.Collections;
@@ -45,7 +44,7 @@ public class GuiGrinder extends GuiContainer{
         this.mc.getTextureManager().bindTexture(this.isDouble ? resLocDouble : resLoc);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 93);
 
-        if(this.tileGrinder.getEnergyStored(ForgeDirection.UNKNOWN) > 0){
+        if(this.tileGrinder.storage.getEnergyStored() > 0){
             int i = this.tileGrinder.getEnergyScaled(83);
             drawTexturedModalRect(this.guiLeft + (isDouble ? 14 : 43), this.guiTop+89-i, 176, (isDouble ? 44 : 23), 16, i);
         }
@@ -64,7 +63,7 @@ public class GuiGrinder extends GuiContainer{
     @Override
     public void drawScreen(int x, int y, float f){
         super.drawScreen(x, y, f);
-        String text = this.tileGrinder.storage.getEnergyStored() + "/" + this.tileGrinder.storage.getEnergyStored() + " RF";
+        String text = this.tileGrinder.storage.getEnergyStored() + "/" + this.tileGrinder.storage.getMaxEnergyStored() + " RF";
         if((this.isDouble && x >= guiLeft+14 && y >= guiTop+6 && x <= guiLeft+29 && y <= guiTop+88) || (!this.isDouble && x >= guiLeft+43 && y >= guiTop+6 && x <= guiLeft+58 && y <= guiTop+88)){
             this.func_146283_a(Collections.singletonList(text), x, y);
         }

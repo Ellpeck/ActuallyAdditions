@@ -9,7 +9,6 @@ import ellpeck.actuallyadditions.util.AssetUtil;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.util.ForgeDirection;
 import org.lwjgl.opengl.GL11;
 
 import java.util.Collections;
@@ -42,7 +41,7 @@ public class GuiFurnaceDouble extends GuiContainer{
         this.mc.getTextureManager().bindTexture(resLoc);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 93);
 
-        if(this.tileFurnace.getEnergyStored(ForgeDirection.UNKNOWN) > 0){
+        if(this.tileFurnace.storage.getEnergyStored() > 0){
             int i = this.tileFurnace.getEnergyScaled(83);
             drawTexturedModalRect(this.guiLeft+28, this.guiTop+89-i, 176, 44, 16, i);
         }
@@ -59,7 +58,7 @@ public class GuiFurnaceDouble extends GuiContainer{
     @Override
     public void drawScreen(int x, int y, float f){
         super.drawScreen(x, y, f);
-        String text = this.tileFurnace.storage.getEnergyStored() + "/" + this.tileFurnace.storage.getEnergyStored() + " RF";
+        String text = this.tileFurnace.storage.getEnergyStored() + "/" + this.tileFurnace.storage.getMaxEnergyStored() + " RF";
         if(x >= guiLeft+28 && y >= guiTop+6 && x <= guiLeft+43 && y <= guiTop+88){
             this.func_146283_a(Collections.singletonList(text), x, y);
         }
