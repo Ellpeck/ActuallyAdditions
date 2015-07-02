@@ -13,10 +13,12 @@ public class ConfigValues{
     public static ConfigFloatValues[] floatConfig = ConfigFloatValues.values();
     public static ConfigBoolValues[] boolConfig = ConfigBoolValues.values();
 
+    public static String[] crusherRecipeExceptions;
+
     public static void defineConfigValues(Configuration config){
 
         for(ConfigCrafting currConf : craftingConfig){
-            currConf.currentValue = config.getBoolean(currConf.name, currConf.category, currConf.defaultValue, "If the Crafting Recipe for the "+currConf.name+" is Enabled");
+            currConf.currentValue = config.getBoolean(currConf.name, currConf.category, currConf.defaultValue, "If the " + currConf.extraText + "Crafting Recipe for the "+currConf.name+" is Enabled");
         }
         for(ConfigIntValues currConf : intConfig){
             currConf.currentValue = config.getInt(currConf.name, currConf.category, currConf.defaultValue, currConf.min, currConf.max, currConf.desc);
@@ -27,5 +29,7 @@ public class ConfigValues{
         for(ConfigBoolValues currConf : boolConfig){
             currConf.currentValue = config.getBoolean(currConf.name, currConf.category, currConf.defaultValue, currConf.desc);
         }
+
+        crusherRecipeExceptions = config.getStringList("Crusher Recipe Exceptions", ConfigCategories.CRUSHER_RECIPES.name, new String[]{"ingotBrick", "ingotBrickNether"}, "The Ingots, Dusts and Ores blacklisted from being auto-registered by the Crusher. This list uses OreDictionary Names of the Inputs only.");
     }
 }

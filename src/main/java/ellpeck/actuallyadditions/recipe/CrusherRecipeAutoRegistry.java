@@ -1,5 +1,6 @@
 package ellpeck.actuallyadditions.recipe;
 
+import ellpeck.actuallyadditions.config.ConfigValues;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
@@ -7,7 +8,6 @@ import java.util.ArrayList;
 public class CrusherRecipeAutoRegistry{
 
     public static ArrayList<SearchCase> searchCases = new ArrayList<SearchCase>();
-    public static ArrayList<String> exceptions = new ArrayList<String>();
 
     public static class SearchCase{
 
@@ -26,11 +26,18 @@ public class CrusherRecipeAutoRegistry{
         }
     }
 
+    private static boolean hasException(String name){
+        for(String except : ConfigValues.crusherRecipeExceptions){
+            if(except.equals(name)) return true;
+        }
+        return false;
+    }
+
     public static void registerFinally(){
         String[] names = OreDictionary.getOreNames();
         for(String inputName : names){
             
-            if(!exceptions.contains(inputName)){
+            if(!hasException(inputName)){
                 int resultAmount = 1;
                 String inputNameWithoutPrefix = null;
                 String replacer = null;

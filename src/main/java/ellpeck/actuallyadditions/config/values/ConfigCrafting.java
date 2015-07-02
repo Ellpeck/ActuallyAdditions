@@ -107,11 +107,23 @@ public enum ConfigCrafting{
     ENERVATOR("Enervator", ConfigCategories.BLOCKS_CRAFTING),
 
     QUARTZ("Black Quartz in a Crafting Table (as a Backup if there's no Ores to be found anywhere)", ConfigCategories.ITEMS_CRAFTING),
-    LAMPS("Lamps", ConfigCategories.BLOCKS_CRAFTING);
+    LAMPS("Lamps", ConfigCategories.BLOCKS_CRAFTING),
+
+    REDSTONE("Redstone Ore -> Redstone", ConfigCategories.CRUSHER_RECIPES, "Crusher"),
+    LAPIS("Lapis Ore -> Lapis", ConfigCategories.CRUSHER_RECIPES, "Crusher"),
+    COAL("Coal -> Coal Dust", ConfigCategories.CRUSHER_RECIPES, "Crusher"),
+    COAL_BLOCKS("Coal Block -> Coal Dust", ConfigCategories.CRUSHER_RECIPES, "Crusher"),
+    COBBLESTONE("Cobblestone -> Sand", ConfigCategories.CRUSHER_RECIPES, "Crusher"),
+    GRAVEL("Gravel -> Flint", ConfigCategories.CRUSHER_RECIPES, "Crusher"),
+    STONE("Stone -> Cobblestone", ConfigCategories.CRUSHER_RECIPES, "Crusher"),
+    RICE_SUGAR("Rice -> Sugar", ConfigCategories.CRUSHER_RECIPES, "Crusher"),
+    NICKEL("Nickel Ore -> Nickel Dust + Platinum Dust", ConfigCategories.CRUSHER_RECIPES, "Crusher"),
+    IRON("Iron Ore -> Iron Dust + Gold Dust", ConfigCategories.CRUSHER_RECIPES, "Crusher");
 
     public final String name;
     public final String category;
     public final boolean defaultValue;
+    public final String extraText;
 
     public boolean currentValue;
 
@@ -119,10 +131,19 @@ public enum ConfigCrafting{
         this(name, category, true);
     }
 
-    ConfigCrafting(String name, ConfigCategories category, boolean defaultValue){
+    ConfigCrafting(String name, ConfigCategories category, String extraText){
+        this(name, category, extraText, true);
+    }
+
+    ConfigCrafting(String name, ConfigCategories category, String extraText, boolean defaultValue){
         this.name = name;
         this.category = category.name;
         this.defaultValue = defaultValue;
+        this.extraText = extraText + " ";
+    }
+
+    ConfigCrafting(String name, ConfigCategories category, boolean defaultValue){
+        this(name, category, "", defaultValue);
     }
 
     public boolean isEnabled(){

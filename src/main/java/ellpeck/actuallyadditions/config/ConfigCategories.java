@@ -13,7 +13,8 @@ public enum ConfigCategories{
     POTION_RING_CRAFTING("ring crafting"),
     OTHER("other"),
     FLUIDS("fluids"),
-    DRILL_VALUES("drill values");
+    DRILL_VALUES("drill values"),
+    CRUSHER_RECIPES("crusher recipes");
 
     public final String name;
 
