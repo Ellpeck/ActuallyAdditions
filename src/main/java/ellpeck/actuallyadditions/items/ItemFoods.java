@@ -30,10 +30,6 @@ public class ItemFoods extends ItemFood implements INameableItem{
         TheFoods.setReturnItems();
     }
 
-    private String getOredictName(){
-        return "";
-    }
-
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return stack.getItemDamage() >= allFoods.length ? EnumRarity.common : allFoods[stack.getItemDamage()].rarity;

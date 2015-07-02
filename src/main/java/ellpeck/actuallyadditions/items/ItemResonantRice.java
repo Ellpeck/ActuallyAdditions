@@ -54,8 +54,4 @@ public class ItemResonantRice extends Item implements INameableItem{
     public String getName(){
         return "itemResonantRice";
     }
-
-    private String getOredictName(){
-        return this.getName();
-    }
 }

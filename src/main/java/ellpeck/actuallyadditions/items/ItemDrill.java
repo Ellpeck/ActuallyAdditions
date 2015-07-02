@@ -318,10 +318,6 @@ public class ItemDrill extends ItemEnergyContainer implements INameableItem{
         return "itemDrill";
     }
 
-    private String getOredictName(){
-        return this.getName();
-    }
-
     @Override
     public boolean onBlockDestroyed(ItemStack stack, World world, Block block, int x, int y, int z, EntityLivingBase living){
         if(living instanceof EntityPlayer){

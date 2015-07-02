@@ -33,10 +33,6 @@ public class BlockLavaFactoryController extends BlockContainerBase implements IN
         this.setStepSound(soundTypeStone);
     }
 
-    private String getOredictName(){
-        return this.getName();
-    }
-
     @Override
     public TileEntity createNewTileEntity(World world, int par2){
         return new TileEntityLavaFactoryController();

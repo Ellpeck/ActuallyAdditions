@@ -56,8 +56,4 @@ public class ItemCrafterOnAStick extends Item implements INameableItem{
     public String getName(){
         return "itemCrafterOnAStick";
     }
-
-    private String getOredictName(){
-        return this.getName();
-    }
 }

@@ -31,10 +31,6 @@ public class BlockHeatCollector extends BlockContainerBase implements INameableI
         this.setStepSound(soundTypeStone);
     }
 
-    private String getOredictName(){
-        return this.getName();
-    }
-
     @Override
     public TileEntity createNewTileEntity(World world, int par2){
         return new TileEntityHeatCollector();

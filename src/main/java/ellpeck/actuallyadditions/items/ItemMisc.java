@@ -30,10 +30,6 @@ public class ItemMisc extends Item implements INameableItem{
         return "itemMisc";
     }
 
-    private String getOredictName(){
-        return "";
-    }
-
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return stack.getItemDamage() >= allMiscItems.length ? EnumRarity.common : allMiscItems[stack.getItemDamage()].rarity;

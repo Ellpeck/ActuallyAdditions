@@ -28,10 +28,6 @@ public class BlockStair extends BlockStairs implements INameableItem{
         return this.name;
     }
 
-    private String getOredictName(){
-        return this.getName();
-    }
-
     public static class TheItemBlock extends ItemBlock{
 
         private Block theBlock;

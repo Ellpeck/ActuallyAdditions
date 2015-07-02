@@ -47,10 +47,6 @@ public class BlockCoalGenerator extends BlockContainerBase implements INameableI
         }
     }
 
-    private String getOredictName(){
-        return this.getName();
-    }
-
     @Override
     public TileEntity createNewTileEntity(World world, int par2){
         return new TileEntityCoalGenerator();

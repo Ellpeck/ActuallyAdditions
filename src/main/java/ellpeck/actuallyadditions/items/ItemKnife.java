@@ -38,10 +38,6 @@ public class ItemKnife extends Item implements INameableItem{
         return false;
     }
 
-    private String getOredictName(){
-        return this.getName();
-    }
-
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.epic;

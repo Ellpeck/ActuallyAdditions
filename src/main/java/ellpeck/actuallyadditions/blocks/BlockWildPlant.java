@@ -70,10 +70,6 @@ public class BlockWildPlant extends BlockBush implements INameableItem{
         return meta >= allWildPlants.length ? null : ((BlockPlant)allWildPlants[meta].wildVersionOf).seedItem;
     }
 
-    private String getOredictName(){
-        return "";
-    }
-
     public static class TheItemBlock extends ItemBlock{
 
         private Block theBlock;

@@ -85,10 +85,6 @@ public class ItemBattery extends ItemEnergyContainer implements INameableItem{
         return "itemBattery";
     }
 
-    private String getOredictName(){
-        return this.getName();
-    }
-
     @Override
     @SuppressWarnings("unchecked")
     @SideOnly(Side.CLIENT)

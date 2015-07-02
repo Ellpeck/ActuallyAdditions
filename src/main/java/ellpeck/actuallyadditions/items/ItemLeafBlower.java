@@ -48,10 +48,6 @@ public class ItemLeafBlower extends Item implements INameableItem{
         }
     }
 
-    private String getOredictName(){
-        return this.getName();
-    }
-
     public void breakStuff(World world, int x, int y, int z){
         for(int reachX = -range; reachX < range+1; reachX++){
             for(int reachZ = -range; reachZ < range+1; reachZ++){

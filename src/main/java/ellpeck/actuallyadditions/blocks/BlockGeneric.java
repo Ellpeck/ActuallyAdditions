@@ -44,10 +44,6 @@ public class BlockGeneric extends Block implements INameableItem{
         this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":" + this.getName());
     }
 
-    private String getOredictName(){
-        return this.getName();
-    }
-
     public static class TheItemBlock extends ItemBlock{
 
         private Block theBlock;

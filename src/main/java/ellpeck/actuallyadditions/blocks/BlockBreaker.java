@@ -39,10 +39,6 @@ public class BlockBreaker extends BlockContainerBase implements INameableItem{
         this.setStepSound(soundTypeStone);
     }
 
-    private String getOredictName(){
-        return this.getName();
-    }
-
     @Override
     public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack stack){
         int rotation = BlockPistonBase.determineOrientation(world, x, y, z, player);

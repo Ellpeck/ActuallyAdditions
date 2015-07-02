@@ -174,10 +174,6 @@ public class ItemCoffee extends ItemFood implements INameableItem{
         return EnumAction.drink;
     }
 
-    private String getOredictName(){
-        return this.getName();
-    }
-
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.rare;

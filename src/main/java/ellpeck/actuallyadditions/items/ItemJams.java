@@ -34,10 +34,6 @@ public class ItemJams extends ItemFood implements INameableItem{
         this.setMaxDamage(0);
     }
 
-    private String getOredictName(){
-        return "";
-    }
-
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return stack.getItemDamage() >= allJams.length ? EnumRarity.common : allJams[stack.getItemDamage()].rarity;

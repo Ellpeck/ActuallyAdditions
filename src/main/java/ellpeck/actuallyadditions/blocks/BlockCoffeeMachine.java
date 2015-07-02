@@ -98,10 +98,6 @@ public class BlockCoffeeMachine extends BlockContainerBase implements INameableI
         return "blockCoffeeMachine";
     }
 
-    private String getOredictName(){
-        return this.getName();
-    }
-
     public static class TheItemBlock extends ItemBlock{
 
         private Block theBlock;

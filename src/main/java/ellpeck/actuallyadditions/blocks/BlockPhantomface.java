@@ -51,10 +51,6 @@ public class BlockPhantomface extends BlockContainerBase implements INameableIte
         super.breakBlock(world, x, y, z, block, par6);
     }
 
-    private String getOredictName(){
-        return this.getName();
-    }
-
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int hitSide, float hitX, float hitY, float hitZ){
         if(!world.isRemote){

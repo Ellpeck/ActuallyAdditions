@@ -96,10 +96,6 @@ public class BlockPlant extends BlockCrops implements INameableItem{
         return this.name;
     }
 
-    private String getOredictName(){
-        return this.getName();
-    }
-
     public static class TheItemBlock extends ItemBlock{
 
         private Block theBlock;

@@ -35,10 +35,6 @@ public class BlockItemRepairer extends BlockContainerBase implements INameableIt
         this.setTickRandomly(true);
     }
 
-    private String getOredictName(){
-        return this.getName();
-    }
-
     @Override
     public TileEntity createNewTileEntity(World world, int par2){
         return new TileEntityItemRepairer();

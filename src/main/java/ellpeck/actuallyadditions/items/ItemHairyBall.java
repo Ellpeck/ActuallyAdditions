@@ -67,8 +67,4 @@ public class ItemHairyBall extends Item implements INameableItem{
     public String getName(){
         return "itemHairyBall";
     }
-
-    private String getOredictName(){
-        return this.getName();
-    }
 }

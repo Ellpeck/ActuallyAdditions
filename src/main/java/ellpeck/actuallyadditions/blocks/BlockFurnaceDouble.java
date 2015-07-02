@@ -40,10 +40,6 @@ public class BlockFurnaceDouble extends BlockContainerBase implements INameableI
         this.setTickRandomly(true);
     }
 
-    private String getOredictName(){
-        return this.getName();
-    }
-
     @Override
     public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack stack){
         int rotation = MathHelper.floor_double((double)(player.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;

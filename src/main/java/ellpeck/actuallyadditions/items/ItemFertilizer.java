@@ -54,8 +54,4 @@ public class ItemFertilizer extends Item implements INameableItem{
     public String getName(){
         return "itemFertilizer";
     }
-
-    private String getOredictName(){
-        return this.getName();
-    }
 }

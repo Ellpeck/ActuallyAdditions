@@ -61,10 +61,6 @@ public class BlockMisc extends Block implements INameableItem{
         return "blockMisc";
     }
 
-    private String getOredictName(){
-        return "";
-    }
-
     public static class TheItemBlock extends ItemBlock{
 
         private Block theBlock;

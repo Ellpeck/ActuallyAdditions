@@ -93,10 +93,6 @@ public class BlockGrinder extends BlockContainerBase implements INameableItem{
         return true;
     }
 
-    private String getOredictName(){
-        return this.getName();
-    }
-
     @Override
     public void breakBlock(World world, int x, int y, int z, Block block, int par6){
         this.dropInventory(world, x, y, z);

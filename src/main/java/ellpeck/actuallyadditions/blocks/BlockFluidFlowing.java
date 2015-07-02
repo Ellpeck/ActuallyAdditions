@@ -62,10 +62,6 @@ public class BlockFluidFlowing extends BlockFluidClassic implements INameableIte
         return this.name;
     }
 
-    private String getOredictName(){
-        return this.getName();
-    }
-
     public static class TheItemBlock extends ItemBlock{
 
         private Block theBlock;

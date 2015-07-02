@@ -29,10 +29,6 @@ public class ItemDust extends Item implements INameableItem{
         return "itemDust";
     }
 
-    private String getOredictName(){
-        return "";
-    }
-
     @Override
     public int getMetadata(int damage){
         return damage;

@@ -21,10 +21,6 @@ public class ItemCoffeeBean extends ItemFood implements INameableItem{
         this.setMaxDamage(0);
     }
 
-    private String getOredictName(){
-        return "cropCoffeeBeans";
-    }
-
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.rare;

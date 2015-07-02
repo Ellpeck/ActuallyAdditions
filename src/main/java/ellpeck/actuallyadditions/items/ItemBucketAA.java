@@ -52,8 +52,4 @@ public class ItemBucketAA extends ItemBucket implements INameableItem{
     public String getName(){
         return this.name;
     }
-
-    private String getOredictName(){
-        return this.getName();
-    }
 }

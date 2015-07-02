@@ -30,10 +30,6 @@ public class BlockFurnaceSolar extends BlockContainerBase implements INameableIt
         this.setBlockBounds(0F, 0F, 0F, 1F, 3F/16F, 1F);
     }
 
-    private String getOredictName(){
-        return this.getName();
-    }
-
     @Override
     public TileEntity createNewTileEntity(World world, int par2){
         return new TileEntityFurnaceSolar();

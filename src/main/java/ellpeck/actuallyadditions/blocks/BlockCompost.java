@@ -123,10 +123,6 @@ public class BlockCompost extends BlockContainerBase implements INameableItem{
         return "blockCompost";
     }
 
-    private String getOredictName(){
-        return this.getName();
-    }
-
     public static class TheItemBlock extends ItemBlock{
 
         private Block theBlock;

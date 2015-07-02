@@ -36,10 +36,6 @@ public class BlockInputter extends BlockContainerBase implements INameableItem{
         this.isAdvanced = isAdvanced;
     }
 
-    private String getOredictName(){
-        return this.getName();
-    }
-
     @Override
     public TileEntity createNewTileEntity(World world, int par2){
         return this.isAdvanced ? new TileEntityInputter.TileEntityInputterAdvanced() : new TileEntityInputter();

@@ -32,10 +32,6 @@ public class ItemPotionRing extends Item implements INameableItem{
         this.isAdvanced = isAdvanced;
     }
 
-    private String getOredictName(){
-        return this.getName();
-    }
-
     @Override
     @SuppressWarnings("unchecked")
     public void onUpdate(ItemStack stack, World world, Entity player, int par4, boolean par5){

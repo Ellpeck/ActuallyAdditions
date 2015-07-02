@@ -56,10 +56,6 @@ public class ItemSpecialDrop extends Item implements INameableItem{
         return stack.getItemDamage() >= allDrops.length ? EnumRarity.common : allDrops[stack.getItemDamage()].rarity;
     }
 
-    private String getOredictName(){
-        return "";
-    }
-
     @Override
     public int getMetadata(int damage){
         return damage;

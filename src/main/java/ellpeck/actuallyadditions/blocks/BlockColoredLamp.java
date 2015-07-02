@@ -80,10 +80,6 @@ public class BlockColoredLamp extends Block implements INameableItem{
         return this.isOn ? "blockColoredLampOn" : "blockColoredLamp";
     }
 
-    private String getOredictName(){
-        return "";
-    }
-
     @Override
     public IIcon getIcon(int side, int meta){
         return meta >= allLampTypes.length ? null : textures[meta];

@@ -81,10 +81,6 @@ public class ItemDrillUpgrade extends Item implements INameableItem{
         return this.unlocalizedName;
     }
 
-    private String getOredictName(){
-        return this.getName();
-    }
-
     @Override
     @SuppressWarnings("unchecked")
     @SideOnly(Side.CLIENT)

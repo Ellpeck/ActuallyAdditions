@@ -47,10 +47,6 @@ public class BlockOilGenerator extends BlockContainerBase implements INameableIt
         }
     }
 
-    private String getOredictName(){
-        return this.getName();
-    }
-
     @Override
     public TileEntity createNewTileEntity(World world, int par2){
         return new TileEntityOilGenerator();

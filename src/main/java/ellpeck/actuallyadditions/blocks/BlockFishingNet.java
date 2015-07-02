@@ -30,10 +30,6 @@ public class BlockFishingNet extends BlockContainerBase implements INameableItem
         this.setBlockBounds(0F, 0F, 0F, 1F, 1F/16F, 1F);
     }
 
-    private String getOredictName(){
-        return this.getName();
-    }
-
     @Override
     public TileEntity createNewTileEntity(World world, int par2){
         return new TileEntityFishingNet();

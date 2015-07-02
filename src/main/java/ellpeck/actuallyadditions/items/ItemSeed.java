@@ -71,8 +71,4 @@ public class ItemSeed extends ItemSeeds implements INameableItem{
     public String getName(){
         return this.name;
     }
-
-    private String getOredictName(){
-        return this.oredictName;
-    }
 }

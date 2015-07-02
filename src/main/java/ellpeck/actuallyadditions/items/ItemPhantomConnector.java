@@ -172,10 +172,6 @@ public class ItemPhantomConnector extends Item implements INameableItem{
         return "itemPhantomConnector";
     }
 
-    private String getOredictName(){
-        return this.getName();
-    }
-
     @Override
     public boolean getShareTag(){
         return true;

@@ -30,10 +30,6 @@ public class BlockGreenhouseGlass extends BlockContainerBase implements INameabl
         this.setStepSound(soundTypeStone);
     }
 
-    private String getOredictName(){
-        return this.getName();
-    }
-
     @Override
     public boolean isOpaqueCube(){
         return false;

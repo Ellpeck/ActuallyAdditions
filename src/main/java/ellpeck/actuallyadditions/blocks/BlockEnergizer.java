@@ -36,10 +36,6 @@ public class BlockEnergizer extends BlockContainerBase implements INameableItem{
         this.setStepSound(soundTypeStone);
     }
 
-    private String getOredictName(){
-        return this.getName();
-    }
-
     @Override
     public TileEntity createNewTileEntity(World world, int par2){
         return this.isEnergizer ? new TileEntityEnergizer() : new TileEntityEnervator();
