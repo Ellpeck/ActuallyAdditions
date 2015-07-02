@@ -32,8 +32,7 @@ public class BlockPhantomBooster extends BlockContainerBase implements INameable
         this.setBlockBounds(3*f, 0F, 3*f, 1-3*f, 1F, 1-3*f);
     }
 
-    @Override
-    public String getOredictName(){
+    private String getOredictName(){
         return this.getName();
     }
 

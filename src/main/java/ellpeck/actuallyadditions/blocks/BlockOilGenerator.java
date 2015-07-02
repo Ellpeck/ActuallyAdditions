@@ -47,8 +47,7 @@ public class BlockOilGenerator extends BlockContainerBase implements INameableIt
         }
     }
 
-    @Override
-    public String getOredictName(){
+    private String getOredictName(){
         return this.getName();
     }
 

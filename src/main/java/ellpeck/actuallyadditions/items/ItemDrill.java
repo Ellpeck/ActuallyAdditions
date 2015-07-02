@@ -318,8 +318,7 @@ public class ItemDrill extends ItemEnergyContainer implements INameableItem{
         return "itemDrill";
     }
 
-    @Override
-    public String getOredictName(){
+    private String getOredictName(){
         return this.getName();
     }
 

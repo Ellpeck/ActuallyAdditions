@@ -70,8 +70,7 @@ public class BlockWildPlant extends BlockBush implements INameableItem{
         return meta >= allWildPlants.length ? null : ((BlockPlant)allWildPlants[meta].wildVersionOf).seedItem;
     }
 
-    @Override
-    public String getOredictName(){
+    private String getOredictName(){
         return "";
     }
 

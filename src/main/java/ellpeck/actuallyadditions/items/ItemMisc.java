@@ -30,8 +30,7 @@ public class ItemMisc extends Item implements INameableItem{
         return "itemMisc";
     }
 
-    @Override
-    public String getOredictName(){
+    private String getOredictName(){
         return "";
     }
 

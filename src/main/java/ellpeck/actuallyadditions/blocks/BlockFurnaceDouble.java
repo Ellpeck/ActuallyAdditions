@@ -40,8 +40,7 @@ public class BlockFurnaceDouble extends BlockContainerBase implements INameableI
         this.setTickRandomly(true);
     }
 
-    @Override
-    public String getOredictName(){
+    private String getOredictName(){
         return this.getName();
     }
 

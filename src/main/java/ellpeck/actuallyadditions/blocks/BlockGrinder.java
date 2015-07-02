@@ -93,8 +93,7 @@ public class BlockGrinder extends BlockContainerBase implements INameableItem{
         return true;
     }
 
-    @Override
-    public String getOredictName(){
+    private String getOredictName(){
         return this.getName();
     }
 

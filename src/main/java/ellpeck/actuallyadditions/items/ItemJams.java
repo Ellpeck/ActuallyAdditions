@@ -34,8 +34,7 @@ public class ItemJams extends ItemFood implements INameableItem{
         this.setMaxDamage(0);
     }
 
-    @Override
-    public String getOredictName(){
+    private String getOredictName(){
         return "";
     }
 

@@ -96,8 +96,7 @@ public class BlockPlant extends BlockCrops implements INameableItem{
         return this.name;
     }
 
-    @Override
-    public String getOredictName(){
+    private String getOredictName(){
         return this.getName();
     }
 

@@ -5,39 +5,32 @@ import net.minecraft.item.EnumRarity;
 
 public enum TheMiscItems implements INameableItem{
 
-    PAPER_CONE("PaperCone", EnumRarity.common, "itemPaperCone"),
-    MASHED_FOOD("MashedFood", EnumRarity.uncommon, "itemMashedFood"),
-    KNIFE_BLADE("KnifeBlade", EnumRarity.common, "itemKnifeBlade"),
-    KNIFE_HANDLE("KnifeHandle", EnumRarity.common, "itemKnifeHandle"),
-    DOUGH("Dough", EnumRarity.common, "itemDough"),
-    QUARTZ("BlackQuartz", EnumRarity.epic, "gemQuartzBlack"),
-    RING("Ring", EnumRarity.uncommon, "itemRing"),
-    COIL("Coil", EnumRarity.common, "itemCoilBasic"),
-    COIL_ADVANCED("CoilAdvanced", EnumRarity.uncommon, "itemCoilAdvanced"),
-    RICE_DOUGH("RiceDough", EnumRarity.uncommon, "itemRiceDough"),
-    TINY_COAL("TinyCoal", EnumRarity.common, "itemTinyCoal"),
-    TINY_CHAR("TinyCharcoal", EnumRarity.common, "itemTinyChar"),
-    RICE_SLIME("RiceSlime", EnumRarity.uncommon, "slimeball"),
-    CANOLA("Canola", EnumRarity.uncommon, "cropCanola"),
-    CUP("Cup", EnumRarity.uncommon, "itemCup");
+    PAPER_CONE("PaperCone", EnumRarity.common),
+    MASHED_FOOD("MashedFood", EnumRarity.uncommon),
+    KNIFE_BLADE("KnifeBlade", EnumRarity.common),
+    KNIFE_HANDLE("KnifeHandle", EnumRarity.common),
+    DOUGH("Dough", EnumRarity.common),
+    QUARTZ("BlackQuartz", EnumRarity.epic),
+    RING("Ring", EnumRarity.uncommon),
+    COIL("Coil", EnumRarity.common),
+    COIL_ADVANCED("CoilAdvanced", EnumRarity.uncommon),
+    RICE_DOUGH("RiceDough", EnumRarity.uncommon),
+    TINY_COAL("TinyCoal", EnumRarity.common),
+    TINY_CHAR("TinyCharcoal", EnumRarity.common),
+    RICE_SLIME("RiceSlime", EnumRarity.uncommon),
+    CANOLA("Canola", EnumRarity.uncommon),
+    CUP("Cup", EnumRarity.uncommon);
 
     public final String name;
-    public final String oredictName;
     public final EnumRarity rarity;
 
-    TheMiscItems(String name, EnumRarity rarity, String oredictName){
+    TheMiscItems(String name, EnumRarity rarity){
         this.name = name;
         this.rarity = rarity;
-        this.oredictName = oredictName;
     }
 
     @Override
     public String getName(){
         return this.name;
-    }
-
-    @Override
-    public String getOredictName(){
-        return this.oredictName;
     }
 }

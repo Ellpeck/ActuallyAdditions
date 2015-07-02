@@ -32,8 +32,7 @@ public class ItemPotionRing extends Item implements INameableItem{
         this.isAdvanced = isAdvanced;
     }
 
-    @Override
-    public String getOredictName(){
+    private String getOredictName(){
         return this.getName();
     }
 

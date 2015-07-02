@@ -80,8 +80,7 @@ public class BlockColoredLamp extends Block implements INameableItem{
         return this.isOn ? "blockColoredLampOn" : "blockColoredLamp";
     }
 
-    @Override
-    public String getOredictName(){
+    private String getOredictName(){
         return "";
     }
 

@@ -39,8 +39,7 @@ public class BlockFluidCollector extends BlockContainerBase implements INameable
         this.setStepSound(soundTypeStone);
     }
 
-    @Override
-    public String getOredictName(){
+    private String getOredictName(){
         return this.getName();
     }
 

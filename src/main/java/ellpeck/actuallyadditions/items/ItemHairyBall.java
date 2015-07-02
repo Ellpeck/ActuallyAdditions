@@ -68,8 +68,7 @@ public class ItemHairyBall extends Item implements INameableItem{
         return "itemHairyBall";
     }
 
-    @Override
-    public String getOredictName(){
+    private String getOredictName(){
         return this.getName();
     }
 }

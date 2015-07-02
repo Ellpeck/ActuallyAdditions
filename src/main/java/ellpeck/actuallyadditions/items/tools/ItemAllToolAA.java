@@ -127,8 +127,7 @@ public class ItemAllToolAA extends ItemTool implements INameableItem{
         return name;
     }
 
-    @Override
-    public String getOredictName(){
+    private String getOredictName(){
         return oredictName;
     }
 

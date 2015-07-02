@@ -94,9 +94,9 @@ public class InitBlocks{
         BlockUtil.register(blockTestifiBucksWhiteSlab, BlockSlabs.TheItemBlock.class);
 
         blockColoredLamp = new BlockColoredLamp(false);
-        BlockUtil.register(blockColoredLamp, BlockColoredLamp.TheItemBlock.class, BlockColoredLamp.allLampTypes);
+        BlockUtil.register(blockColoredLamp, BlockColoredLamp.TheItemBlock.class);
         blockColoredLampOn = new BlockColoredLamp(true);
-        BlockUtil.register(blockColoredLampOn, BlockColoredLamp.TheItemBlock.class, false, BlockColoredLamp.allLampTypes);
+        BlockUtil.register(blockColoredLampOn, BlockColoredLamp.TheItemBlock.class, false);
 
         blockEnergizer = new BlockEnergizer(true);
         BlockUtil.register(blockEnergizer, BlockEnergizer.TheItemBlock.class);
@@ -154,7 +154,7 @@ public class InitBlocks{
         BlockUtil.register(blockCompost, BlockCompost.TheItemBlock.class);
 
         blockMisc = new BlockMisc();
-        BlockUtil.register(blockMisc, BlockMisc.TheItemBlock.class, BlockMisc.allMiscBlocks);
+        BlockUtil.register(blockMisc, BlockMisc.TheItemBlock.class);
 
         blockFeeder = new BlockFeeder();
         BlockUtil.register(blockFeeder, BlockFeeder.TheItemBlock.class);
@@ -214,7 +214,7 @@ public class InitBlocks{
         BlockUtil.register(blockPhantomBooster, BlockPhantomBooster.TheItemBlock.class);
 
         blockWildPlant = new BlockWildPlant();
-        BlockUtil.register(blockWildPlant, BlockWildPlant.TheItemBlock.class, false, BlockWildPlant.allWildPlants);
+        BlockUtil.register(blockWildPlant, BlockWildPlant.TheItemBlock.class, false);
 
         registerFluids();
     }

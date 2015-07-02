@@ -36,8 +36,7 @@ public class BlockInputter extends BlockContainerBase implements INameableItem{
         this.isAdvanced = isAdvanced;
     }
 
-    @Override
-    public String getOredictName(){
+    private String getOredictName(){
         return this.getName();
     }
 

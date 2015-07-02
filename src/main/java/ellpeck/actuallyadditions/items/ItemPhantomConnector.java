@@ -172,8 +172,7 @@ public class ItemPhantomConnector extends Item implements INameableItem{
         return "itemPhantomConnector";
     }
 
-    @Override
-    public String getOredictName(){
+    private String getOredictName(){
         return this.getName();
     }
 

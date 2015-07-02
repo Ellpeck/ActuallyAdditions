@@ -81,8 +81,7 @@ public class ItemDrillUpgrade extends Item implements INameableItem{
         return this.unlocalizedName;
     }
 
-    @Override
-    public String getOredictName(){
+    private String getOredictName(){
         return this.getName();
     }
 

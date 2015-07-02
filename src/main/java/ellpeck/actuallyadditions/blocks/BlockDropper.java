@@ -36,8 +36,7 @@ public class BlockDropper extends BlockContainerBase implements INameableItem{
         this.setStepSound(soundTypeStone);
     }
 
-    @Override
-    public String getOredictName(){
+    private String getOredictName(){
         return this.getName();
     }
 

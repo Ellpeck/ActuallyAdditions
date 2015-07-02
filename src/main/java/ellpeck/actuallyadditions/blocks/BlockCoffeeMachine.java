@@ -98,8 +98,7 @@ public class BlockCoffeeMachine extends BlockContainerBase implements INameableI
         return "blockCoffeeMachine";
     }
 
-    @Override
-    public String getOredictName(){
+    private String getOredictName(){
         return this.getName();
     }
 

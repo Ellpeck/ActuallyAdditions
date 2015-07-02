@@ -174,8 +174,7 @@ public class ItemCoffee extends ItemFood implements INameableItem{
         return EnumAction.drink;
     }
 
-    @Override
-    public String getOredictName(){
+    private String getOredictName(){
         return this.getName();
     }
 

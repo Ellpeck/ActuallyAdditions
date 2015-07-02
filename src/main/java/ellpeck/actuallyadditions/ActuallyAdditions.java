@@ -22,6 +22,7 @@ import ellpeck.actuallyadditions.material.InitItemMaterials;
 import ellpeck.actuallyadditions.misc.DispenserHandlerEmptyBucket;
 import ellpeck.actuallyadditions.misc.DispenserHandlerFertilize;
 import ellpeck.actuallyadditions.network.PacketHandler;
+import ellpeck.actuallyadditions.ore.InitOreDict;
 import ellpeck.actuallyadditions.proxy.IProxy;
 import ellpeck.actuallyadditions.recipe.FuelHandler;
 import ellpeck.actuallyadditions.recipe.HairyBallHandler;
@@ -58,6 +59,7 @@ public class ActuallyAdditions{
     public void init(FMLInitializationEvent event){
         ModUtil.LOGGER.info("Starting Initialization Phase...");
 
+        InitOreDict.init();
         InitAchievements.init();
         GuiHandler.init();
         OreGen.init();

@@ -32,11 +32,6 @@ public enum TheColoredLampColors implements INameableItem{
         return name;
     }
 
-    @Override
-    public String getOredictName(){
-        return "blockColoredLamp" + this.getName();
-    }
-
     public static TheColoredLampColors getColorFromDyeName(String color){
         if(color.substring(0, 3).equals("dye")){
             String actualName = color.substring(3);

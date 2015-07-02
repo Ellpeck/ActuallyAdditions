@@ -72,8 +72,7 @@ public class ItemSeed extends ItemSeeds implements INameableItem{
         return this.name;
     }
 
-    @Override
-    public String getOredictName(){
+    private String getOredictName(){
         return this.oredictName;
     }
 }

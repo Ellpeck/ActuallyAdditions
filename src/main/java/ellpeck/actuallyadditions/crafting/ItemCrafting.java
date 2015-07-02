@@ -6,7 +6,6 @@ import ellpeck.actuallyadditions.blocks.metalists.TheMiscBlocks;
 import ellpeck.actuallyadditions.config.values.ConfigCrafting;
 import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.items.metalists.*;
-import ellpeck.actuallyadditions.util.INameableItem;
 import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.block.IGrowable;
 import net.minecraft.init.Blocks;
@@ -27,14 +26,14 @@ public class ItemCrafting{
         if(ConfigCrafting.RICE_GADGETS.isEnabled()){
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.paper, 3),
                     "RRR",
-                    'R', TheFoods.RICE.getOredictName()));
+                    'R', new ItemStack(InitItems.itemFoods, 1, TheFoods.RICE.ordinal())));
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemMisc, 4, TheMiscItems.RICE_SLIME.ordinal()),
                     " R ", "RBR", " R ",
-                    'R', TheMiscItems.RICE_DOUGH.getOredictName(),
+                    'R', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.RICE_DOUGH.ordinal()),
                     'B', Items.water_bucket));
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemMisc, 4, TheMiscItems.RICE_SLIME.ordinal()),
                     " R ", "RBR", " R ",
-                    'R', TheMiscItems.RICE_DOUGH.getOredictName(),
+                    'R', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.RICE_DOUGH.ordinal()),
                     'B', new ItemStack(Items.potionitem)));
         }
 
@@ -45,14 +44,14 @@ public class ItemCrafting{
                     'F', new ItemStack(Items.flint),
                     'I', "ingotIron",
                     'P', new ItemStack(Blocks.piston),
-                    'C', TheMiscItems.COIL_ADVANCED.getOredictName()));
+                    'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal())));
 
         //Drill
         if(ConfigCrafting.DRILL.isEnabled())
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemDrill),
                     "DDD", "CRC", "III",
                     'D', "gemDiamond",
-                    'C', TheMiscItems.COIL_ADVANCED.getOredictName(),
+                    'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal()),
                     'R', "dustRedstone",
                     'I', "blockIron"));
 
@@ -89,7 +88,7 @@ public class ItemCrafting{
                     "ISI", "SRS", "ISI",
                     'I', Blocks.glowstone,
                     'S', Items.redstone,
-                    'R', TheMiscBlocks.ENDER_CASING.getOredictName()));
+                    'R', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.ENDER_CASING.ordinal())));
         }
 
         //Drill Size
@@ -98,13 +97,13 @@ public class ItemCrafting{
                     "DID", "ICI", "DID",
                     'I', "ingotIron",
                     'D', "gemDiamond",
-                    'C', TheMiscItems.COIL.getOredictName()));
+                    'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL.ordinal())));
 
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemDrillUpgradeFiveByFive),
                     "DID", "ICI", "DID",
                     'I', "ingotIron",
                     'D', "gemDiamond",
-                    'C', TheMiscItems.COIL_ADVANCED.getOredictName()));
+                    'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal())));
         }
 
         //Drill Silk Touch
@@ -113,7 +112,7 @@ public class ItemCrafting{
                     "DSD", "SCS", "DSD",
                     'D', "gemEmerald",
                     'S', "gemDiamond",
-                    'C', TheMiscItems.COIL_ADVANCED.getOredictName()));
+                    'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal())));
 
         //Drill Placing
         if(ConfigCrafting.DRILL_PLACING.isEnabled())
@@ -121,7 +120,7 @@ public class ItemCrafting{
                     "CEC", "RAR", "CEC",
                     'C', "cobblestone",
                     'E', Items.ender_pearl,
-                    'A', TheMiscItems.COIL.getOredictName(),
+                    'A', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL.ordinal()),
                     'R', "ingotIron"));
 
         //Battery
@@ -130,7 +129,7 @@ public class ItemCrafting{
                     " R ", "ICI", "III",
                     'R', "dustRedstone",
                     'I', "ingotIron",
-                    'C', TheMiscItems.COIL_ADVANCED.getOredictName()));
+                    'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal())));
 
         //Quartz
         if(ConfigCrafting.QUARTZ.isEnabled())
@@ -142,7 +141,7 @@ public class ItemCrafting{
         if(ConfigCrafting.COIL.isEnabled())
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL.ordinal()),
                     " R ", "RIR", " R ",
-                    'I', TheMiscItems.QUARTZ.getOredictName(),
+                    'I', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal()),
                     'R', "dustRedstone"));
 
         //Cup
@@ -150,18 +149,18 @@ public class ItemCrafting{
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.CUP.ordinal()),
                     "S S", "SCS", "SSS",
                     'S', "stone",
-                    'C', ((INameableItem)InitItems.itemCoffeeBean).getOredictName()));
+                    'C', InitItems.itemCoffeeBean));
 
         //Resonant Rice
         if(ConfigCrafting.RESONANT_RICE.isEnabled() && !OreDictionary.getOres("nuggetEnderium", false).isEmpty())
             GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemResonantRice),
-                    TheFoods.RICE.getOredictName(), "nuggetEnderium", Items.gunpowder));
+                    new ItemStack(InitItems.itemFoods, 1, TheFoods.RICE.ordinal()), "nuggetEnderium", Items.gunpowder));
 
         //Advanced Coil
         if(ConfigCrafting.ADV_COIL.isEnabled())
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal()),
                     " G ", "GCG", " G ",
-                    'C', TheMiscItems.COIL.getOredictName(),
+                    'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL.ordinal()),
                     'G', "ingotGold"));
 
         //Ender Pearl
@@ -181,7 +180,7 @@ public class ItemCrafting{
                     'F', new ItemStack(Items.flint),
                     'D', "gemDiamond",
                     'P', new ItemStack(Blocks.piston),
-                    'C', TheMiscItems.COIL_ADVANCED.getOredictName()));
+                    'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal())));
 
         //Phantom Connector
         if(ConfigCrafting.PHANTOM_CONNECTOR.isEnabled())
@@ -198,8 +197,8 @@ public class ItemCrafting{
         //Knife
         if(ConfigCrafting.KNIFE.isEnabled())
             GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemKnife),
-                    TheMiscItems.KNIFE_BLADE.getOredictName(),
-                    TheMiscItems.KNIFE_HANDLE.getOredictName()));
+                    new ItemStack(InitItems.itemMisc, 1, TheMiscItems.KNIFE_BLADE.ordinal()),
+                    new ItemStack(InitItems.itemMisc, 1, TheMiscItems.KNIFE_BLADE.ordinal())));
 
         //Crafter on a Stick
         if(ConfigCrafting.STICK_CRAFTER.isEnabled())

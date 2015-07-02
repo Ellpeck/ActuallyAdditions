@@ -4,6 +4,4 @@ public interface INameableItem{
 
     String getName();
 
-    String getOredictName();
-
 }

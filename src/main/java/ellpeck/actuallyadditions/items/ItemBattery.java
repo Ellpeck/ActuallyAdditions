@@ -85,8 +85,7 @@ public class ItemBattery extends ItemEnergyContainer implements INameableItem{
         return "itemBattery";
     }
 
-    @Override
-    public String getOredictName(){
+    private String getOredictName(){
         return this.getName();
     }
 

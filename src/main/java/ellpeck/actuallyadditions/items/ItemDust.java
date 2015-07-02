@@ -29,8 +29,7 @@ public class ItemDust extends Item implements INameableItem{
         return "itemDust";
     }
 
-    @Override
-    public String getOredictName(){
+    private String getOredictName(){
         return "";
     }
 

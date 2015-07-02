@@ -3,9 +3,7 @@ package ellpeck.actuallyadditions.util;
 import cpw.mods.fml.common.registry.GameRegistry;
 import ellpeck.actuallyadditions.creative.CreativeTab;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
-import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.List;
 
@@ -32,25 +30,9 @@ public class ItemUtil{
     }
 
     public static void register(Item item, boolean addTab){
-        register(item, addTab, null);
-    }
-
-    public static void register(Item item, Enum[] list){
-        register(item, true, list);
-    }
-
-    public static void register(Item item, boolean addTab, Enum[] list){
         item.setCreativeTab(addTab ? CreativeTab.instance : null);
         item.setUnlocalizedName(createUnlocalizedName(item));
         GameRegistry.registerItem(item, ((INameableItem)item).getName());
-        if(list != null){
-            for(Enum current : list){
-                if(!((INameableItem)current).getOredictName().isEmpty()) OreDictionary.registerOre(((INameableItem)current).getOredictName(), new ItemStack(item, 1, current.ordinal()));
-            }
-        }
-        else{
-            if(!((INameableItem)item).getOredictName().isEmpty()) OreDictionary.registerOre(((INameableItem)item).getOredictName(), new ItemStack(item, 1, Util.WILDCARD));
-        }
     }
 
     public static String createUnlocalizedName(Item item){

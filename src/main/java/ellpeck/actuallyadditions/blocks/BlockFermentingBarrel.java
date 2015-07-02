@@ -32,8 +32,7 @@ public class BlockFermentingBarrel extends BlockContainerBase implements INameab
         this.setStepSound(soundTypeWood);
     }
 
-    @Override
-    public String getOredictName(){
+    private String getOredictName(){
         return this.getName();
     }
 

@@ -32,8 +32,7 @@ public class BlockCanolaPress extends BlockContainerBase implements INameableIte
         this.setStepSound(soundTypeStone);
     }
 
-    @Override
-    public String getOredictName(){
+    private String getOredictName(){
         return this.getName();
     }
 

@@ -22,7 +22,7 @@ public class MiscCrafting{
         //Rice Dough
         if(ConfigCrafting.RICE_DOUGH.isEnabled())
             GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemMisc, 2, TheMiscItems.RICE_DOUGH.ordinal()),
-                    TheFoods.RICE.getOredictName(), TheFoods.RICE.getOredictName()));
+                    new ItemStack(InitItems.itemFoods, 1, TheFoods.RICE.ordinal()), new ItemStack(InitItems.itemFoods, 1, TheFoods.RICE.ordinal())));
 
         //Paper Cone
         if(ConfigCrafting.PAPER_CONE.isEnabled())

@@ -32,8 +32,7 @@ public class BlockFeeder extends BlockContainerBase implements INameableItem{
         this.setStepSound(soundTypeStone);
     }
 
-    @Override
-    public String getOredictName(){
+    private String getOredictName(){
         return this.getName();
     }
 

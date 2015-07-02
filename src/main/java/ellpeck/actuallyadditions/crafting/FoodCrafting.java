@@ -5,7 +5,6 @@ import ellpeck.actuallyadditions.config.values.ConfigCrafting;
 import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.items.metalists.TheFoods;
 import ellpeck.actuallyadditions.items.metalists.TheMiscItems;
-import ellpeck.actuallyadditions.util.INameableItem;
 import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -17,7 +16,7 @@ public class FoodCrafting{
 
     public static void init(){
 
-        String knifeStack = ((INameableItem)InitItems.itemKnife).getOredictName();
+        ItemStack knifeStack = new ItemStack(InitItems.itemKnife);
 
         //Rice Bread
         if(ConfigCrafting.RICE_BREAD.isEnabled())
@@ -33,19 +32,19 @@ public class FoodCrafting{
         if(ConfigCrafting.PIZZA.isEnabled())
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemFoods, 1, TheFoods.PIZZA.ordinal()),
                     "HKH", "MCF", " D ",
-                    'D', TheMiscItems.DOUGH.getOredictName(),
+                    'D', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.DOUGH.ordinal()),
                     'M', new ItemStack(Blocks.brown_mushroom),
                     'C', "cropCarrot",
                     'F', new ItemStack(Items.cooked_fished, 1, Util.WILDCARD),
                     'K', knifeStack,
-                    'H', TheFoods.CHEESE.getOredictName()));
+                    'H', new ItemStack(InitItems.itemFoods, 1, TheFoods.CHEESE.ordinal())));
 
         //Hamburger
         if(ConfigCrafting.HAMBURGER.isEnabled())
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemFoods, 1, TheFoods.HAMBURGER.ordinal()),
                     "KT ", "CB ", " T ",
-                    'T', TheFoods.TOAST.getOredictName(),
-                    'C', TheFoods.CHEESE.getOredictName(),
+                    'T', new ItemStack(InitItems.itemFoods, 1, TheFoods.TOAST.ordinal()),
+                    'C', new ItemStack(InitItems.itemFoods, 1, TheFoods.CHEESE.ordinal()),
                     'K', knifeStack,
                     'B', new ItemStack(Items.cooked_beef)));
 
@@ -53,7 +52,7 @@ public class FoodCrafting{
         if(ConfigCrafting.BIG_COOKIE.isEnabled())
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemFoods, 1, TheFoods.BIG_COOKIE.ordinal()),
                     "DCD", "CDC", "DCD",
-                    'D', TheMiscItems.DOUGH.getOredictName(),
+                    'D', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.DOUGH.ordinal()),
                     'C', new ItemStack(Items.dye, 1, 3)));
 
         //Sub Sandwich
@@ -61,9 +60,9 @@ public class FoodCrafting{
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemFoods, 1, TheFoods.SUBMARINE_SANDWICH.ordinal()),
                     "KCP", "FB ", "PCP",
                     'P', new ItemStack(Items.paper),
-                    'C', TheFoods.CHEESE.getOredictName(),
+                    'C', new ItemStack(InitItems.itemFoods, 1, TheFoods.CHEESE.ordinal()),
                     'F', new ItemStack(Items.cooked_fished, 1, Util.WILDCARD),
-                    'B', TheFoods.BAGUETTE.getOredictName(),
+                    'B', new ItemStack(InitItems.itemFoods, 1, TheFoods.BAGUETTE.ordinal()),
                     'K', knifeStack));
 
         //French Fry
@@ -76,16 +75,16 @@ public class FoodCrafting{
         if(ConfigCrafting.FRENCH_FRIES.isEnabled())
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemFoods, 1, TheFoods.FRENCH_FRIES.ordinal()),
                     "FFF", " P ",
-                    'P', TheMiscItems.PAPER_CONE.getOredictName(),
-                    'F', TheFoods.FRENCH_FRY.getOredictName()));
+                    'P', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.PAPER_CONE.ordinal()),
+                    'F', new ItemStack(InitItems.itemFoods, 1, TheFoods.FRENCH_FRY.ordinal())));
 
         //Fish N Chips
         if(ConfigCrafting.FISH_N_CHIPS.isEnabled())
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemFoods, 1, TheFoods.FISH_N_CHIPS.ordinal()),
                     "FIF", " P ",
                     'I', new ItemStack(Items.cooked_fished, 1, Util.WILDCARD),
-                    'P', TheMiscItems.PAPER_CONE.getOredictName(),
-                    'F', TheFoods.FRENCH_FRY.getOredictName()));
+                    'P', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.PAPER_CONE.ordinal()),
+                    'F', new ItemStack(InitItems.itemFoods, 1, TheFoods.FRENCH_FRY.ordinal())));
 
         //Cheese
         if(ConfigCrafting.CHEESE.isEnabled())
@@ -108,7 +107,7 @@ public class FoodCrafting{
         if(ConfigCrafting.SPAGHETTI.isEnabled())
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemFoods, 1, TheFoods.SPAGHETTI.ordinal()),
                     "NNN", " B ",
-                    'N', TheFoods.NOODLE.getOredictName(),
+                    'N', new ItemStack(InitItems.itemFoods, 1, TheFoods.NOODLE.ordinal()),
                     'B', new ItemStack(Items.bowl)));
 
         //Noodle
@@ -129,7 +128,7 @@ public class FoodCrafting{
                     "MMM", "CCC", "EDS",
                     'M', new ItemStack(Items.milk_bucket),
                     'E', new ItemStack(Items.egg),
-                    'D', TheMiscItems.DOUGH.getOredictName(),
+                    'D', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.DOUGH.ordinal()),
                     'S', new ItemStack(Items.sugar),
                     'C', new ItemStack(Items.dye, 1, 3)));
 

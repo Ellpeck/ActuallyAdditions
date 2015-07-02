@@ -62,8 +62,7 @@ public class BlockFluidFlowing extends BlockFluidClassic implements INameableIte
         return this.name;
     }
 
-    @Override
-    public String getOredictName(){
+    private String getOredictName(){
         return this.getName();
     }
 

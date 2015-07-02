@@ -38,8 +38,7 @@ public class ItemKnife extends Item implements INameableItem{
         return false;
     }
 
-    @Override
-    public String getOredictName(){
+    private String getOredictName(){
         return this.getName();
     }
 

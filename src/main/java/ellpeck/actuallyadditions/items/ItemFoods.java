@@ -30,8 +30,7 @@ public class ItemFoods extends ItemFood implements INameableItem{
         TheFoods.setReturnItems();
     }
 
-    @Override
-    public String getOredictName(){
+    private String getOredictName(){
         return "";
     }
 

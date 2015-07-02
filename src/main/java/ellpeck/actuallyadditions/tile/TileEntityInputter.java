@@ -68,6 +68,7 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
 
     public int slotToPutStart;
     private int lastPutStart;
+
     public int slotToPutEnd;
     private int lastPutEnd;
 
@@ -78,6 +79,7 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
 
     public int slotToPullStart;
     private int lastPullStart;
+
     public int slotToPullEnd;
     private int lastPullEnd;
 
@@ -87,6 +89,7 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
 
     public boolean isPullWhitelist = true;
     private boolean lastPullWhite;
+
     public boolean isPutWhitelist = true;
     private boolean lastPutWhite;
 

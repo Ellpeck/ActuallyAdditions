@@ -48,8 +48,7 @@ public class ItemLeafBlower extends Item implements INameableItem{
         }
     }
 
-    @Override
-    public String getOredictName(){
+    private String getOredictName(){
         return this.getName();
     }
 

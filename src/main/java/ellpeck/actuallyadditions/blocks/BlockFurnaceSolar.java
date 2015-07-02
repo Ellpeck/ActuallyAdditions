@@ -30,8 +30,7 @@ public class BlockFurnaceSolar extends BlockContainerBase implements INameableIt
         this.setBlockBounds(0F, 0F, 0F, 1F, 3F/16F, 1F);
     }
 
-    @Override
-    public String getOredictName(){
+    private String getOredictName(){
         return this.getName();
     }
 

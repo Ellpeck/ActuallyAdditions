@@ -21,8 +21,7 @@ public class ItemCoffeeBean extends ItemFood implements INameableItem{
         this.setMaxDamage(0);
     }
 
-    @Override
-    public String getOredictName(){
+    private String getOredictName(){
         return "cropCoffeeBeans";
     }
 

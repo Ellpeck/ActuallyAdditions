@@ -68,8 +68,7 @@ public class ItemShovelAA extends ItemSpade implements INameableItem{
         return name;
     }
 
-    @Override
-    public String getOredictName(){
+    private String getOredictName(){
         return oredictName;
     }
 }

@@ -47,8 +47,7 @@ public class BlockCoalGenerator extends BlockContainerBase implements INameableI
         }
     }
 
-    @Override
-    public String getOredictName(){
+    private String getOredictName(){
         return this.getName();
     }
 

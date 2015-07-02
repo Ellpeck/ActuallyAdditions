@@ -35,8 +35,7 @@ public class BlockItemRepairer extends BlockContainerBase implements INameableIt
         this.setTickRandomly(true);
     }
 
-    @Override
-    public String getOredictName(){
+    private String getOredictName(){
         return this.getName();
     }
 

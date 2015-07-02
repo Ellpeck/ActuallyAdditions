@@ -68,8 +68,7 @@ public class ItemHoeAA extends ItemHoe implements INameableItem{
         return name;
     }
 
-    @Override
-    public String getOredictName(){
+    private String getOredictName(){
         return this.oredictName;
     }
 }

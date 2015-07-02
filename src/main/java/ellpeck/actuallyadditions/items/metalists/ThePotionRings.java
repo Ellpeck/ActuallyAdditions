@@ -58,9 +58,4 @@ public enum ThePotionRings implements INameableItem{
     public String getName(){
         return this.name;
     }
-
-    @Override
-    public String getOredictName(){
-        return "";
-    }
 }

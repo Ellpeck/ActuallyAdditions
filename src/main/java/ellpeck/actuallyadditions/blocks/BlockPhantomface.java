@@ -51,8 +51,7 @@ public class BlockPhantomface extends BlockContainerBase implements INameableIte
         super.breakBlock(world, x, y, z, block, par6);
     }
 
-    @Override
-    public String getOredictName(){
+    private String getOredictName(){
         return this.getName();
     }
 

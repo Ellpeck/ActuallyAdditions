@@ -68,8 +68,7 @@ public class ItemPickaxeAA extends ItemPickaxe implements INameableItem{
         return name;
     }
 
-    @Override
-    public String getOredictName(){
+    private String getOredictName(){
         return oredictName;
     }
 }

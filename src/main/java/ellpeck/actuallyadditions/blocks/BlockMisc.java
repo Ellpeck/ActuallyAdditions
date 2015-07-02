@@ -61,8 +61,7 @@ public class BlockMisc extends Block implements INameableItem{
         return "blockMisc";
     }
 
-    @Override
-    public String getOredictName(){
+    private String getOredictName(){
         return "";
     }
 

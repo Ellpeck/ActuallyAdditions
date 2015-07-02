@@ -33,8 +33,7 @@ public class BlockGiantChest extends BlockContainerBase implements INameableItem
         this.setStepSound(soundTypeWood);
     }
 
-    @Override
-    public String getOredictName(){
+    private String getOredictName(){
         return this.getName();
     }
 

@@ -121,13 +121,13 @@ public class InitItems{
         ItemUtil.register(itemResonantRice);
 
         itemMisc = new ItemMisc();
-        ItemUtil.register(itemMisc, ItemMisc.allMiscItems);
+        ItemUtil.register(itemMisc);
 
         itemFoods = new ItemFoods();
-        ItemUtil.register(itemFoods, ItemFoods.allFoods);
+        ItemUtil.register(itemFoods);
 
         itemJams = new ItemJams();
-        ItemUtil.register(itemJams, ItemJams.allJams);
+        ItemUtil.register(itemJams);
 
         itemKnife = new ItemKnife();
         ItemUtil.register(itemKnife);
@@ -136,10 +136,10 @@ public class InitItems{
         ItemUtil.register(itemCrafterOnAStick);
 
         itemDust = new ItemDust();
-        ItemUtil.register(itemDust, ItemDust.allDusts);
+        ItemUtil.register(itemDust);
 
         itemSpecialDrop = new ItemSpecialDrop();
-        ItemUtil.register(itemSpecialDrop, ItemSpecialDrop.allDrops);
+        ItemUtil.register(itemSpecialDrop);
 
         itemLeafBlower = new ItemLeafBlower(false);
         ItemUtil.register(itemLeafBlower);

@@ -4,9 +4,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import ellpeck.actuallyadditions.creative.CreativeTab;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
-import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,31 +41,15 @@ public class BlockUtil{
 
     public static final ArrayList<Block> wailaRegisterList = new ArrayList<Block>();
 
-    public static void register(Block block, Class<? extends ItemBlock> itemBlock, boolean addTab, Enum[] list){
+    public static void register(Block block, Class<? extends ItemBlock> itemBlock, boolean addTab){
         block.setCreativeTab(addTab ? CreativeTab.instance : null);
         block.setBlockName(createUnlocalizedName(block));
         GameRegistry.registerBlock(block, itemBlock, ((INameableItem)block).getName());
-        if(list != null){
-            for(Enum current : list){
-                if(!((INameableItem)current).getOredictName().isEmpty()) OreDictionary.registerOre(((INameableItem)current).getOredictName(), new ItemStack(block, 1, current.ordinal()));
-            }
-        }
-        else{
-            if(!((INameableItem)block).getOredictName().isEmpty()) OreDictionary.registerOre(((INameableItem)block).getOredictName(), new ItemStack(block, 1, Util.WILDCARD));
-        }
 
         wailaRegisterList.add(block);
     }
 
-    public static void register(Block block, Class<? extends ItemBlock> itemBlock, Enum[] list){
-        register(block, itemBlock, true, list);
-    }
-
     public static void register(Block block, Class<? extends ItemBlock> itemBlock){
         register(block, itemBlock, true);
-    }
-
-    public static void register(Block block, Class<? extends ItemBlock> itemBlock, boolean addTab){
-        register(block, itemBlock, addTab, null);
     }
 }
