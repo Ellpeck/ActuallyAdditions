@@ -138,9 +138,7 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
             boolean can = false;
 
             ItemStack theStack = null;
-            for(int i = Math.max(theSlotToPull, 0); i < this.slotToPullEnd; i++){
-                if(i >= theInventory.getSizeInventory()) return;
-
+            for(int i = Math.max(theSlotToPull, 0); i < Math.min(this.slotToPullEnd, theInventory.getSizeInventory()); i++){
                 ItemStack tempStack = theInventory.getStackInSlot(i);
                 if(tempStack != null){
                     if(tempStack.getMaxStackSize() < this.getInventoryStackLimit()) maxSize = tempStack.getMaxStackSize();
@@ -200,9 +198,7 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
 
             if(this.slots[0] != null){
                 ItemStack theStack = null;
-                for(int i = Math.max(theSlotToPut, 0); i < this.slotToPutEnd; i++){
-                    if(i >= theInventory.getSizeInventory()) return;
-
+                for(int i = Math.max(theSlotToPut, 0); i < Math.min(this.slotToPutEnd, theInventory.getSizeInventory()); i++){
                     ItemStack tempStack = theInventory.getStackInSlot(i);
                     if(tempStack != null){
                         if(tempStack.getMaxStackSize() < theInventory.getInventoryStackLimit()) maxSize = tempStack.getMaxStackSize();
