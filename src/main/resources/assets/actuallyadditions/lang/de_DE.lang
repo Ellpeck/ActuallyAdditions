@@ -1,6 +1,9 @@
 itemGroup.actuallyadditions=Actually Additions
 achievement.page.actuallyadditions=Actually Additions
 
+fluid.oil=Öl
+fluid.canolaoil=Rapsöl
+
 tile.actuallyadditions.blockCompost.name=Kompost
 tile.actuallyadditions.blockMiscOreBlackQuartz.name=Schwarzquartzerz
 tile.actuallyadditions.blockMiscBlackQuartz.name=Schwarzquartzblock
@@ -12,9 +15,161 @@ tile.actuallyadditions.blockGrinder.name=Zerkleinerer
 tile.actuallyadditions.blockGrinderDouble.name=Zerkleinerer Mk2
 tile.actuallyadditions.blockFurnaceDouble.name=Ofen Mk2
 tile.actuallyadditions.blockFishingNet.name=Fischernetz
-tile.actuallyadditions.blockFurnaceSolar.name=Solarplatte
+tile.actuallyadditions.blockFurnaceSolar.name=Solarpanel
 tile.actuallyadditions.blockHeatCollector.name=Wärmesammler
 tile.actuallyadditions.blockItemRepairer.name=Reperaturwerkbank
+
+item.actuallyadditions.itemDrill.name=Bohrer
+tooltip.actuallyadditions.itemDrill.desc.1=Baut alles ab!
+tooltip.actuallyadditions.itemDrill.desc.2=Braucht RF-Energie! Kann man im Lader laden! Kann man im Entlader entladen!
+tooltip.actuallyadditions.itemDrill.desc.3=Mit geducktem Rechtsklick kann man Upgrades hinzufügen!
+
+tile.actuallyadditions.blockMiscWoodCasing.name=Holzgehäuse
+tile.actuallyadditions.blockMiscStoneCasing.name=Steingehäuse
+tile.actuallyadditions.blockGreenhouseGlass.name=Gewächshausglas
+
+tile.actuallyadditions.blockEnergizer.name=Lader
+tooltip.actuallyadditions.blockEnergizer.desc.1=Kann Dinge laden,
+tooltip.actuallyadditions.blockEnergizer.desc.2=die RF enthalten
+tile.actuallyadditions.blockEnervator.name=Entlader
+tooltip.actuallyadditions.blockEnervator.desc.1=Kann Dinge entladen,
+tooltip.actuallyadditions.blockEnervator.desc.2=die RF enthalten
+
+tile.actuallyadditions.blockRice.name=Reispflanze
+tooltip.actuallyadditions.blockRice.desc=Sie wächst (ach wirklich?)
+item.actuallyadditions.itemFoodRice.name=Reis
+tooltip.actuallyadditions.itemFoodRice.desc=Damit kann man alles mögliche machen!
+item.actuallyadditions.itemMiscRiceDough.name=Reisteigling
+tooltip.actuallyadditions.itemMiscRiceDough.desc=Ein Teigling, aber aus Reis
+item.actuallyadditions.itemFoodRiceBread.name=Reisbrot
+tooltip.actuallyadditions.itemFoodRiceBread.desc=Brot, aber irgendwas ist anders...
+item.actuallyadditions.itemRiceSeed.name=Reissamen
+tooltip.actuallyadditions.itemRiceSeed.desc=Wächst auf bestelltem Felde
+
+item.actuallyadditions.itemMiscTinyCoal.name=Minikohle
+tooltip.actuallyadditions.itemMiscTinyCoal.desc=Aus Kohle gemacht. Schmilzt ein Item
+item.actuallyadditions.itemMiscTinyCharcoal.name=Miniholzkohle
+tooltip.actuallyadditions.itemMiscTinyCharcoal.desc=Aus Holzkohle gemacht. Schmilzt ein Item
+tile.actuallyadditions.blockMiscCharcoal.name=Holzkohleblock
+tooltip.actuallyadditions.blockMiscCharcoal.desc=Aus Holzkohle
+item.actuallyadditions.itemMiscRiceSlime.name=Reisball
+tooltip.actuallyadditions.itemMiscRiceSlime.desc=Klebrig. Omnomnom
+
+item.actuallyadditions.itemBattery.name=Batterie
+tooltip.actuallyadditions.itemBattery.desc=Mobiler RF-Speicher. Kann man im Lader laden und im Entlader entladen.
+
+tile.actuallyadditions.blockCoalGenerator.name=Kohlegenerator
+tooltip.actuallyadditions.blockCoalGenerator.desc=Aus Kohle und anderem Brennmaterial wird Energie
+
+item.actuallyadditions.itemBucketCanolaOil.name=Eimer mit Rapsöl
+tooltip.actuallyadditions.itemBucketCanolaOil.desc=Ein randvoller Eimer mit Rapsöl
+item.actuallyadditions.itemBucketOil.name=Eimer mit Öl
+tooltip.actuallyadditions.itemBucketOil.desc=Wird im Bioreaktor aus Rapsöl gewonnen
+
+tile.actuallyadditions.blockPhantomface.name=Phantomface
+tooltip.actuallyadditions.blockPhantomface.desc.1=Eine Trichterkette, aber drahtlos. Verbinde mich mit dem Phantomwerkzeug!
+tooltip.actuallyadditions.blockPhantomface.desc.2=Schmeiss was in mich, um es in den verbundenen Block zu schmeissen!
+
+tile.actuallyadditions.blockPhantomEnergyface.name=Phantom Energyface
+tooltip.actuallyadditions.blockPhantomEnergyface.desc.1=Wie ein Kabel, aber ohne Kabel. Verbinde mich mit dem Phantomwerkzeug!
+tooltip.actuallyadditions.blockPhantomEnergyface.desc.2=Befülle mich mit RF
+
+tile.actuallyadditions.blockPhantomLiquiface.name=Phantom Liquiface
+tooltip.actuallyadditions.blockPhantomLiquiface.desc.1=Wie ein Rohr, aber ohne Rohr. Verbinde mich mit dem Phantomwerkzeug!
+tooltip.actuallyadditions.blockPhantomLiquiface.desc.2=Befülle mich mit Flüssigkeit! Geb mir ein Redstone-Signal und ich leere automatisch!
+tooltip.actuallyadditions.blockPhantomLiquiface.desc.3=Achtung: Wenn die automatische Leerung benutzt wird, kann es dazu kommen,
+tooltip.actuallyadditions.blockPhantomLiquiface.desc.4=dass, eine Schleife entsteht!
+
+tile.actuallyadditions.blockPhantomPlacer.name=Phantom Placer
+tooltip.actuallyadditions.blockPhantomPlacer.desc.1=Kann aus der Ferne Blöcke platzieren. Verbinde mich mit dem Phantomwerkzeug!
+tooltip.actuallyadditions.blockPhantomPlacer.desc.2=Schleichender Rechtsklick, um die Beziehungen zu sehen!
+
+tile.actuallyadditions.blockPhantomBreaker.name=Phantom Breaker
+tooltip.actuallyadditions.blockPhantomBreaker.desc.1=Zerstört Blöcke aus der Ferne. Verbinde mich mit dem Phantomwerkzeug.
+tooltip.actuallyadditions.blockPhantomBreaker.desc.2=Schleichender Rechtsklick, um die Beziehungen zu sehen!
+
+tile.actuallyadditions.blockLavaFactoryController.name=Lavafabrik Kontrolleinheit
+tooltip.actuallyadditions.blockLavaFactoryController.desc.1=Wenn die Hülle richtig platziert wird, kann man Lava produzieren:
+tooltip.actuallyadditions.blockLavaFactoryController.desc.2=Über der Kontrolleinheit entsteht die Lava.
+tooltip.actuallyadditions.blockLavaFactoryController.desc.3=Platziere 4 Hüllen um diesen Bereich, damit die Lava nicht ausläuft
+
+tile.actuallyadditions.blockMiscLavaFactoryCase.name=Lavafabrik Hülle
+tooltip.actuallyadditions.blockMiscLavaFactoryCase.desc=Hülle der Lavafabrik
+
+tile.actuallyadditions.blockFluidPlacer.name=Ausguss
+tooltip.actuallyadditions.blockFluidPlacer.desc=Lässt Flüssigkeiten auslaufen
+
+tooltip.actuallyadditions.paxel.desc=Es ist eine Axt, eine Schaufel, eine Hacke und eine Spitzhacke! In einem!!
+item.actuallyadditions.woodenPaxel.name=Hölzerne Paxelordoe
+item.actuallyadditions.stonePaxel.name=Steinerne Paxelordoe
+item.actuallyadditions.ironPaxel.name=Eiserne Paxelordoe
+item.actuallyadditions.goldPaxel.name=Goldene Paxelordoe
+item.actuallyadditions.diamondPaxel.name=Diamantne Paxelordoe
+item.actuallyadditions.emeraldPaxel.name=Emeraldne? Paxelordoe
+item.actuallyadditions.obsidianPaxel.name=Obsidiadne? Paxelordoe
+
+tile.actuallyadditions.blockFluidCollector.name=Abfluss
+tooltip.actuallyadditions.blockFluidCollector.desc=Sammelt Flüssigkeiten vor sich
+
+tile.actuallyadditions.blockPhantomBooster.name=Phantom Booster
+tooltip.actuallyadditions.blockPhantomBooster.desc.1=Wenn man es über einer Phantom Maschine platziert, dann erweitert es dessen Reichweite
+tooltip.actuallyadditions.blockPhantomBooster.desc.2=(Maximal sind drei Booster möglich)
+
+item.actuallyadditions.itemPhantomConnector.name=Phantomwekzeug
+tooltip.actuallyadditions.itemPhantomConnector.desc.1=Verbindet eine Phantommaschine mit ihrem Ziel!
+tooltip.actuallyadditions.itemPhantomConnector.desc.2=ALT löscht den Speicher
+
+item.actuallyadditions.itemMiscCup.name=Leere Tasse
+tooltip.actuallyadditions.itemMiscCup.desc=Braucht man in der Kaffeemaschine!
+
+item.actuallyadditions.itemCoffee.name=Kaffeetasse
+tooltip.actuallyadditions.itemCoffee.desc.1=In einer Kaffeemaschine gefüllt! Effekte stehen unten!
+tooltip.actuallyadditions.itemCoffee.desc.2=Ich kann %s mal getrunken werden!
+
+item.actuallyadditions.itemCoffeeSeed.name=Kaffeesammen
+tooltip.actuallyadditions.itemCoffeeSeed.desc=Wächst auf bestelltem Feld
+
+tile.actuallyadditions.blockCoffee.name=Kaffeepflanze
+tooltip.actuallyadditions.blockCoffee.desc=An ihr wachsen Kaffeebohnen
+
+item.actuallyadditions.itemCoffeeBeans.name=Kaffeebohnen
+tooltip.actuallyadditions.itemCoffeeBeans.desc=Wird in Kaffeemaschine gefüllt
+
+tile.actuallyadditions.blockWildCanola.name=Wilder Raps
+tile.actuallyadditions.blockWildRice.name=Wilder Reis
+tile.actuallyadditions.blockWildCoffee.name=Wilder Kaffee
+tile.actuallyadditions.blockWildFlax.name=Wilder Flachs
+tooltip.actuallyadditions.blockWildCanola.desc=Wächst in der Wildnis... Bringt Rapssamen!
+tooltip.actuallyadditions.blockWildRice.desc=Wächst in der Wildnis... Gibt Reissamen!
+tooltip.actuallyadditions.blockWildCoffee.desc=Wächst in der Wildnis... Gibt Kaffeesamen!
+tooltip.actuallyadditions.blockWildFlax.desc=Wächst in der Wildnis... Gibt Flachssamen!
+
+item.actuallyadditions.itemCanolaSeed.name=Rapssamen
+tooltip.actuallyadditions.itemCanolaSeed.desc=Wächst auf bestelltem Feld! Produziert Raps!
+item.actuallyadditions.itemMiscCanola.name=Raps
+tooltip.actuallyadditions.itemMiscCanola.desc=In einer Rapspresse wird Rapsöl daraus
+tile.actuallyadditions.blockCanola.name=Rapspflanze
+tooltip.actuallyadditions.blockCanola.desc=Hier wächst Raps
+
+item.actuallyadditions.itemResonantRice.name=Resonant Rice
+tooltip.actuallyadditions.itemResonantRice.desc=Keine Ahnung, was der bringt. Vielleicht kann man damit einen Rechtsklick vollführen?
+tooltip.actuallyadditions.itemResonantRice.uncraftable.desc=Nicht kraftbar, weil kein Enderium verfügbar ist.
+
+tile.actuallyadditions.blockCanolaPress.name=Rapspresse
+tooltip.actuallyadditions.blockCanolaPress.desc=aus Raps wird hier Rapsöl produziert
+tile.actuallyadditions.blockFermentingBarrel.name=Bioreaktor
+tooltip.actuallyadditions.blockFermentingBarrel.desc=Hier wird aus Rapsöl normales Öl
+
+tile.actuallyadditions.blockCanolaOil.name=Rapsöl
+tooltip.actuallyadditions.blockCanolaOil.desc=Öl aus Raps
+tile.actuallyadditions.blockOil.name=Öl
+tooltip.actuallyadditions.blockOil.desc=Kann zur Energiegewinnung genutzt werden
+
+tile.actuallyadditions.blockMiscEnderpearl.name=Enderperlenblock
+tooltip.actuallyadditions.blockMiscEnderpearl.desc=Ein Block. Aus Perlen. NIchts Besonderes.
+
+tile.actuallyadditions.blockOilGenerator.name=Ölgenerator
+tooltip.actuallyadditions.blockOilGenerator.desc=Gewinnt aus Energie Öl
 
 item.actuallyadditions.itemMiscMashedFood.name=Brei
 item.actuallyadditions.itemFertilizer.name=Dünger
@@ -57,6 +212,57 @@ item.actuallyadditions.itemFoodCarrotJuice.name=Karottensaft
 item.actuallyadditions.itemFoodPumpkinStew.name=Kürbissuppe
 item.actuallyadditions.itemFoodCheese.name=Käse
 
+container.actuallyadditions.inputter.name=ESS
+container.actuallyadditions.inputterAdvanced.name=Erweiterter ESS
+container.actuallyadditions.grinder.name=Zerkleinerer
+container.actuallyadditions.grinderDouble.name=Zerkleinerer Mk 2
+container.actuallyadditions.furnaceDouble.name=ofen Mk 2
+container.actuallyadditions.feeder.name=Fütterungsanlage
+container.actuallyadditions.giantChest.name=Lagerkiste
+container.actuallyadditions.repairer.name=Reperaturwerkbank
+container.actuallyadditions.placer.name=Platzierer
+container.actuallyadditions.breaker.name=Zerstörer
+container.actuallyadditions.dropper.name=Genauer Spender
+container.actuallyadditions.crafting.name=Stockwerkbank
+container.actuallyadditions.canolaPress.name=Rapspresse
+container.actuallyadditions.fermentingBarrel.name=Bioreaktor
+container.actuallyadditions.coalGenerator.name=Kohlegenerator
+container.actuallyadditions.oilGenerator.name=Ölgenerator
+container.actuallyadditions.phantomPlacer.name=Phantom Placer
+container.actuallyadditions.phantomBreaker.name=Phantom Breaker
+container.actuallyadditions.phantomface.name=Phantomface
+container.actuallyadditions.liquiface.name=Liquiface
+container.actuallyadditions.energyface.name=Energyface
+container.actuallyadditions.fluidPlacer.name=Flüssigkeitsplatzierer
+container.actuallyadditions.fluidCollector.name=Flüssigkeitssammler
+container.actuallyadditions.coffeeMachine.name=Kaffeemaschine
+container.actuallyadditions.drill.name=Bohrer
+container.actuallyadditions.energizer.name=Lader
+container.actuallyadditions.enervator.name=Entlader
+
+container.nei.actuallyadditions.crushing.name=Zerkleinerer
+container.nei.actuallyadditions.ballOfHair.name=Nutzung Haarball
+container.nei.actuallyadditions.compost.name=Kompost
+
+container.nei.actuallyadditions.coffee.name=Kaffeemaschine
+container.nei.actuallyadditions.coffee.special=Besondere Funktion
+container.nei.actuallyadditions.coffee.maxAmount=Max Anzahl
+container.nei.actuallyadditions.coffee.shift=[SHIFT]!
+container.nei.actuallyadditions.coffee.extra.milk=+01:00, -1 Level
+
+info.actuallyadditions.update.generic.desc=[{"text":"There is an "},{"text":"Update ","bold":"true"},{"text":"for ","bold":"false"},{"text":"Actually Additions ","color":"dark_green","bold":"true"},{"text":"available!","color":"none","bold":"false"}]
+info.actuallyadditions.update.versionComp.desc=[{"text":"You have Version "},{"text":"%s","color":"dark_red","italic":"false"},{"text":", the newest one is ","color":"none","italic":"false"},{"text":"%s","color":"dark_green","underlined":"false"},{"text":"!","color":"none","underlined":"false"}]
+info.actuallyadditions.update.download.desc=[{"text":"Download the newest Version "},{"text":"here! (Click me!)","color":"dark_green","underlined":"true","clickEvent":{"action":"open_url","value":"%s"},"hoverEvent":{"action":"show_text","value":{"text":"","extra":[{"text":"Click here to open your Browser and download the newest Version!"}]}}}]
+info.actuallyadditions.update.failed.desc=[{"text":"The Update Check for "},{"text":"Actually Additions ","color":"dark_green","bold":"true"},{"text":"failed! Check your Internet Connection and the Logs for more Info!","color":"none"}]
+info.actuallyadditions.update.changelog.desc=Updates: %s
+
+tile.actuallyadditions.blockCoffeeMachine.name=Kaffeemaschine
+tooltip.actuallyadditions.blockCoffeeMachine.desc.1=Der Fantasie sind keine Grenzen gesetzt...
+tooltip.actuallyadditions.blockCoffeeMachine.desc.2=Einfach Tasse, Kaffeebohnen und Zutaten hinzufügen:
+tooltip.actuallyadditions.blockCoffeeMachine.desc.3=Verschiedene Zutaten sorgen für verschiedene Effekte
+tooltip.actuallyadditions.blockCoffeeMachine.desc.4=im Kaffee! Einfach im rechten Slot in der bevorzugten
+tooltip.actuallyadditions.blockCoffeeMachine.desc.5=Reihenfolge ablegen! HIPSTER KAFFEE FÜR ALLE!!!
+
 item.actuallyadditions.itemPotionRing.name=Ring der
 item.actuallyadditions.itemPotionRingAdvanced.name=Erweiterter Ring der
 
@@ -76,10 +282,33 @@ item.actuallyadditions.itemDustQuartz.name=Quartzstaub
 item.actuallyadditions.itemDustCoal.name=Kohlestaub
 item.actuallyadditions.itemDustQuartzBlack.name=Schwarzquartzstaub
 
+tooltip.actuallyadditions.oredictName.desc=OreDictionary Eintrag
+tooltip.actuallyadditions.noOredictNameAvail.desc=Hat keinen eintrag im OreDictionary
+
+tooltip.actuallyadditions.itemJam.desc.1=Eine leckere Marmelade, welche aus verschiedenen Dingen besteht
+tooltip.actuallyadditions.itemJam.desc.2=Hat interessante Effekte!
+tooltip.actuallyadditions.itemJamCuBaRa.desc=Johannisbeere, Banane und Himbeere
+tooltip.actuallyadditions.itemJamGraKiBa.desc=Traube, Kiwi und Banane
+tooltip.actuallyadditions.itemJamPlApLe.desc=Pflaume, Apfel und Zitrone
+tooltip.actuallyadditions.itemJamChApCi.desc=Kirsche, Apfel und Zimt
+tooltip.actuallyadditions.itemJamHoMeKi.desc=Honigmelone und Kiwi
+tooltip.actuallyadditions.itemJamPiCo.desc=Ananas und Kokosnuss
+
+tooltip.actuallyadditions.itemHairyBall.desc.1=Ein Haarball einer Katze...
+tooltip.actuallyadditions.itemHairyBall.desc.2=Vielleicht ist etwas nützliches darin...
+
+tooltip.actuallyadditions.itemUpgradeSpeed.desc.1=Erhöht die Geschwindigkeit
+tooltip.actuallyadditions.itemUpgradeSpeed.desc.2=folgender Maschinen
+tooltip.actuallyadditions.itemUpgradeSpeed.desc.3=-Ofen Mk 2
+tooltip.actuallyadditions.itemUpgradeSpeed.desc.4=-Zerkleinerer
+tooltip.actuallyadditions.itemUpgradeSpeed.desc.5=-Zerkleinerer Mk 2
+
 tooltip.actuallyadditions.shiftForInfo.desc=Drücke Shift für mehr Informationen
 tooltip.actuallyadditions.hunger.desc=Füllt
 tooltip.actuallyadditions.saturation.desc=Sättigung
 tooltip.actuallyadditions.durability.desc=Haltbarkeit
+
+tooltip.actuallyadditions.blockPhantomRange.desc=Reichweite
 
 tooltip.actuallyadditions.blockCompost.desc.1=Wird verwendet, um zusammen mit Brei Dünger herzustellen
 tooltip.actuallyadditions.blockCompost.desc.2=BETA INFO: Wird in Zukunft Kompost enthalten.
@@ -123,6 +352,7 @@ tooltip.actuallyadditions.itemPotionRing.desc.off.2=da es extrem mächtig ist. W
 tooltip.actuallyadditions.itemPotionRingAdvanced.desc.1=Fügt hohen Level des Trankeffekt hinzu.
 tooltip.actuallyadditions.itemPotionRingAdvanced.desc.2=Kann irgendwo liegen. Hauptsache im Inventar.
 
+item.actuallyadditions.itemHairyBall.name=Harrball
 tooltip.actuallyadditions.itemLeafBlower.desc.1=Grass? Blumen? Pah, wer braucht das schon!
 tooltip.actuallyadditions.itemLeafBlowerAdvanced.desc.1=Jetzt auch noch Blattwerk? I liebe es!
 tooltip.actuallyadditions.itemLeafBlower.desc.2=The Pants once said the Game needed that,
@@ -197,6 +427,22 @@ achievement.actuallyadditions.craftKnifeBlade=Fast so scharf wie die Fernseher.
 achievement.actuallyadditions.craftKnifeBlade.desc=Schärfe eine Messerklinge.
 achievement.actuallyadditions.craftKnife=Noch schärfer? Definitiv Phillips!
 achievement.actuallyadditions.craftKnife.desc=Baue ein Messer.
+achievement.actuallyadditions.pickUpSolidXP=Eckig und lecker!
+achievement.actuallyadditions.pickUpSolidXP.desc=Heb etwas harte Erfahrung auf
+achievement.actuallyadditions.craftKnifeBlade=Sharp! Phillips!
+achievement.actuallyadditions.craftKnifeBlade.desc=Baue eine Messerspitze
+achievement.actuallyadditions.craftKnife=Cutcutcutcutcutcutcutcutcutcutcut!
+achievement.actuallyadditions.craftKnife.desc=Bau ein Messer
+achievement.actuallyadditions.craftMashedFood=Munch munch munch!
+achievement.actuallyadditions.craftMashedFood.desc=Mache Brei
+achievement.actuallyadditions.craftWoodenCasing=Hart und robust!
+achievement.actuallyadditions.craftWoodenCasing.desc=Baue ein Holzgehäuse
+achievement.actuallyadditions.craftStoneCasing=Härter und robuster!
+achievement.actuallyadditions.craftStoneCasing.desc=Baue ein Steingehäuse
+achievement.actuallyadditions.craftBasicCoil=Überträgt Energie oder sowas in der Art?
+achievement.actuallyadditions.craftBasicCoil.desc=Baue eine einfache Spule
+achievement.actuallyadditions.craftAdvancedCoil=Überträgt vermutlich mehr Energie?
+achievement.actuallyadditions.craftAdvancedCoil.desc=Baue eine erweiterte Spule
 
 tile.actuallyadditions.blockInputter.name=ESS
 tile.actuallyadditions.blockInputter.add.0.name=Ellpeck's Super Sortierer
@@ -213,6 +459,9 @@ tile.actuallyadditions.blockInputter.add.10.name=Elektronischer Sachschwund Serv
 tile.actuallyadditions.blockInputter.add.11.name=Effizienter Slot Schubser
 tile.actuallyadditions.blockInputter.add.12.name=Elektronischer Slot Schieber
 
+tile.actuallyadditions.blockBreaker.name=Automatischer Zerstörer
+tile.actuallyadditions.blockPlacer.name=Automatischer Platzierer
+tile.actuallyadditions.blockDropper.name=Automatischer Präzisionsspender
 
 info.actuallyadditions.gui.animals=Tiere
 info.actuallyadditions.gui.enoughToBreed=Genug zur Fortpflanzung!
@@ -241,3 +490,53 @@ effect.actuallyadditions.waterBreathing.name=Kiemen
 effect.actuallyadditions.invisibility.name=Unsichtbarkeit
 effect.actuallyadditions.nightVision.name=Nachtsicht
 effect.actuallyadditions.saturation.name=Sättigung
+
+item.actuallyadditions.itemUpgradeSpeed.name=Geschwindigkeitsupgrade
+
+item.actuallyadditions.itemMiscCoil.name=Einfache Spule
+item.actuallyadditions.itemMiscCoilAdvanced.name=Komplexe Spule
+
+item.actuallyadditions.itemDrillUpgradeSpeed.name=Bohrer Geschwindigkeitsstufe I
+item.actuallyadditions.itemDrillUpgradeSpeedII.name=Bohrer Geschwindigkeitsstufe II
+item.actuallyadditions.itemDrillUpgradeSpeedIII.name=Bohrer Geschwindigkeitsstufe III
+item.actuallyadditions.itemDrillUpgradeSilkTouch.name=Bohrer Behutsamkeit
+item.actuallyadditions.itemDrillUpgradeFortune.name=Bohrer Glücksstufe I
+item.actuallyadditions.itemDrillUpgradeFortuneII.name=Bohrer Glücksstufe II (Glück Lv. IIV)
+item.actuallyadditions.itemDrillUpgradeBlockPlacing.name=Bohrer Platzierstufe I
+item.actuallyadditions.itemDrillUpgradeThreeByThree.name=Bohrer Bohrstufe I
+item.actuallyadditions.itemDrillUpgradeFiveByFive.name=Bohrer Bohrstufe II
+
+tooltip.actuallyadditions.itemDrillUpgradeSpeed.desc=Ein schnelleres Bohrerlebnis!
+tooltip.actuallyadditions.itemDrillUpgradeSpeedII.desc=Schneller! Immer schneller!! Braucht Geschw. I
+tooltip.actuallyadditions.itemDrillUpgradeSpeedIII.desc=Bohrgeschw. OVER 9000!!! Braucht Geschw. II
+tooltip.actuallyadditions.itemDrillUpgradeSilkTouch.desc=Vorsichtig... Ganz vorsichtig.
+tooltip.actuallyadditions.itemDrillUpgradeFortune.desc=Glücksberchi inside
+tooltip.actuallyadditions.itemDrillUpgradeFortuneII.desc=Glücksberchi 2 Duo Braucht ein Glücksberchi
+tooltip.actuallyadditions.itemDrillUpgradeBlockPlacing.desc.1=Platziert bein Rechtsklicken Blöcke aus dem Schnellzugriff.
+tooltip.actuallyadditions.itemDrillUpgradeBlockPlacing.desc.2=Der Platz ist definierbar.
+tooltip.actuallyadditions.itemDrillUpgradeBlockPlacing.desc.3=Der zu nutzende Sot kann mit einem schleichenden Rechtsklick gespeichert werden.
+tooltip.actuallyadditions.itemDrillUpgradeThreeByThree.desc=Zerstörung! 3x3
+tooltip.actuallyadditions.itemDrillUpgradeFiveByFive.desc=ZERSTÖRUNG!!! 5x5 Braucht 3x3
+tooltip.actuallyadditions.itemDrillUpgrade.desc=Mit einem schleichendem Rechtsklick mit dem Bohrer können Upgrades installiert werden.
+
+tile.actuallyadditions.blockMiscEnderCasing.name=Endgehäuse
+tooltip.actuallyadditions.blockMiscEnderCasing.desc=Unkaputtbar
+
+item.actuallyadditions.itemJamCuBaRa.name=CuBaRa-Marmelade
+item.actuallyadditions.itemJamGraKiBa.name=GraKiBa-Marmelade
+item.actuallyadditions.itemJamPlApLe.name=PlApLe-Marmelade
+item.actuallyadditions.itemJamChApCi.name=ChApCi-Marmelade
+item.actuallyadditions.itemJamHoMeKi.name=HoMeKi-Marmelade
+item.actuallyadditions.itemJamPiCo.name=PiCo-Marmelade
+
+tooltip.actuallyadditions.factory.notPart.desc=Die Kontrolleinheit ist fehlerhaft platziert. Prüfe die Beschreibung
+tooltip.actuallyadditions.factory.works.desc=Diese Fabrik ist vollständig und produziert Lava!
+
+tooltip.actuallyadditions.phantom.connected.desc=<Block gespeichert!>
+tooltip.actuallyadditions.phantom.stored.desc=<Block in diesem Werkzeug gespeichert!>
+tooltip.actuallyadditions.phantom.unbound.desc=Die Verbindung wurde gelöscht!
+tooltip.actuallyadditions.phantom.inWorld.desc=In Welt
+tooltip.actuallyadditions.phantom.boundTo.desc=Gebunden an
+tooltip.actuallyadditions.phantom.connectedBlock.desc=Verbunden mit dem Block an der Position %s, %s, %s
+tooltip.actuallyadditions.phantom.connectedNoRange.desc=Verbunden mit dem Block an der Position %s, %s, %s Dieser ist jedoch nicht in Reichweite, das falsche Inventar oder ungeladen!
+tooltip.actuallyadditions.phantom.notConnected.desc=Das ist mit nichts verbunden!
