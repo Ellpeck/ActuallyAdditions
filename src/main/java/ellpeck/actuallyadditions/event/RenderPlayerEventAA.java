@@ -19,7 +19,7 @@ public class RenderPlayerEventAA{
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void RenderPlayerEvent(RenderPlayerEvent.Pre event){
-        if(!event.entityPlayer.isInvisible()){
+        if(!event.entityPlayer.isInvisible() && !event.entityPlayer.getHideCape()){
             //Ellpeck
             if(event.entityPlayer.getUniqueID().equals(UUID.fromString("3f9f4a94-95e3-40fe-8895-e8e3e84d1468"))){
                 ellpeckRender.render(event.entityPlayer, event.partialRenderTick, 0.3F, 1F);

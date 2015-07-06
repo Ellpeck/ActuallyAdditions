@@ -21,14 +21,12 @@ public class ItemAxeAA extends ItemAxe implements INameableItem{
     private String name;
     private EnumRarity rarity;
     private ItemStack repairItem;
-    private String oredictName;
 
     public ItemAxeAA(ToolMaterial toolMat, ItemStack repairItem, String unlocalizedName, EnumRarity rarity){
         super(toolMat);
         this.name = unlocalizedName;
         this.rarity = rarity;
         this.repairItem = repairItem;
-        this.oredictName = name;
     }
 
     @Override
@@ -66,9 +64,5 @@ public class ItemAxeAA extends ItemAxe implements INameableItem{
     @Override
     public String getName(){
         return name;
-    }
-
-    private String getOredictName(){
-        return oredictName;
     }
 }
