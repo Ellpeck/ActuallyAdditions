@@ -25,7 +25,8 @@ public class BlockFurnaceSolar extends BlockContainerBase implements INameableIt
     public BlockFurnaceSolar(){
         super(Material.rock);
         this.setHarvestLevel("pickaxe", 0);
-        this.setHardness(1.0F);
+        this.setHardness(1.5F);
+        this.setResistance(10.0F);
         this.setStepSound(soundTypeStone);
         this.setBlockBounds(0F, 0F, 0F, 1F, 3F/16F, 1F);
     }

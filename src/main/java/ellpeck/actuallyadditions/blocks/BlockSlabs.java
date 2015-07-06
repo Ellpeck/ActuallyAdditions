@@ -26,6 +26,8 @@ public class BlockSlabs extends Block implements INameableItem{
 
     public BlockSlabs(String name, Block fullBlock){
         super(Material.rock);
+        this.setHardness(1.5F);
+        this.setResistance(10.0F);
         this.fullBlock = fullBlock;
         this.name = name;
     }

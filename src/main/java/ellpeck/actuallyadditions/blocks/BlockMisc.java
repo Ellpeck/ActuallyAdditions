@@ -27,6 +27,7 @@ public class BlockMisc extends Block implements INameableItem{
     public BlockMisc(){
         super(Material.rock);
         this.setHardness(1.5F);
+        this.setResistance(10.0F);
         this.setHarvestLevel("pickaxe", 1);
     }
 

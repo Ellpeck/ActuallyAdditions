@@ -36,7 +36,8 @@ public class BlockGrinder extends BlockContainerBase implements INameableItem{
         super(Material.rock);
         this.isDouble = isDouble;
         this.setHarvestLevel("pickaxe", 0);
-        this.setHardness(1.0F);
+        this.setHardness(1.5F);
+        this.setResistance(10.0F);
         this.setStepSound(soundTypeStone);
         this.setTickRandomly(true);
     }

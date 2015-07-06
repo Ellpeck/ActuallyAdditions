@@ -29,7 +29,8 @@ public class BlockLavaFactoryController extends BlockContainerBase implements IN
     public BlockLavaFactoryController(){
         super(Material.rock);
         this.setHarvestLevel("pickaxe", 0);
-        this.setHardness(1.0F);
+        this.setHardness(4.5F);
+        this.setResistance(20.0F);
         this.setStepSound(soundTypeStone);
     }
 

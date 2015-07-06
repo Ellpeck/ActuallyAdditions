@@ -33,6 +33,7 @@ public class BlockEnergizer extends BlockContainerBase implements INameableItem{
         this.isEnergizer = isEnergizer;
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(2.0F);
+        this.setResistance(10.0F);
         this.setStepSound(soundTypeStone);
     }
 

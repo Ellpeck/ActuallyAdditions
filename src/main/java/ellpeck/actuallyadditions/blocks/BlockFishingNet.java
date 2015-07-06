@@ -25,7 +25,8 @@ public class BlockFishingNet extends BlockContainerBase implements INameableItem
     public BlockFishingNet(){
         super(Material.wood);
         this.setHarvestLevel("axe", 0);
-        this.setHardness(1.0F);
+        this.setHardness(0.5F);
+        this.setResistance(3.0F);
         this.setStepSound(soundTypeWood);
         this.setBlockBounds(0F, 0F, 0F, 1F, 1F/16F, 1F);
     }

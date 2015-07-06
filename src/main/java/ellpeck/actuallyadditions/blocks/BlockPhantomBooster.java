@@ -25,7 +25,8 @@ public class BlockPhantomBooster extends BlockContainerBase implements INameable
     public BlockPhantomBooster(){
         super(Material.rock);
         this.setHarvestLevel("pickaxe", 0);
-        this.setHardness(1.0F);
+        this.setHardness(1.5F);
+        this.setResistance(10.0F);
         this.setStepSound(soundTypeStone);
 
         float f = 1F/16F;

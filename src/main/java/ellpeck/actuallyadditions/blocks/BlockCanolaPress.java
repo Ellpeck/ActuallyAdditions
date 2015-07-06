@@ -28,7 +28,8 @@ public class BlockCanolaPress extends BlockContainerBase implements INameableIte
     public BlockCanolaPress(){
         super(Material.rock);
         this.setHarvestLevel("pickaxe", 0);
-        this.setHardness(1.0F);
+        this.setHardness(1.5F);
+        this.setResistance(10.0F);
         this.setStepSound(soundTypeStone);
     }
 

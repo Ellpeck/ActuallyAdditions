@@ -36,6 +36,7 @@ public class BlockColoredLamp extends Block implements INameableItem{
         super(Material.redstoneLight);
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(0.5F);
+        this.setResistance(3.0F);
         this.isOn = isOn;
     }
 

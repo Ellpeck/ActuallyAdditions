@@ -27,7 +27,8 @@ public class BlockHeatCollector extends BlockContainerBase implements INameableI
     public BlockHeatCollector(){
         super(Material.rock);
         this.setHarvestLevel("pickaxe", 0);
-        this.setHardness(1.0F);
+        this.setHardness(2.5F);
+        this.setResistance(10.0F);
         this.setStepSound(soundTypeStone);
     }
 

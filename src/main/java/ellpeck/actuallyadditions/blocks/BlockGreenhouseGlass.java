@@ -26,7 +26,8 @@ public class BlockGreenhouseGlass extends BlockContainerBase implements INameabl
     public BlockGreenhouseGlass(){
         super(Material.rock);
         this.setHarvestLevel("pickaxe", 0);
-        this.setHardness(1.0F);
+        this.setHardness(0.5F);
+        this.setResistance(10.0F);
         this.setStepSound(soundTypeStone);
     }
 

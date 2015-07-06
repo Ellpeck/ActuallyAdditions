@@ -29,7 +29,8 @@ public class BlockGiantChest extends BlockContainerBase implements INameableItem
     public BlockGiantChest(){
         super(Material.wood);
         this.setHarvestLevel("axe", 0);
-        this.setHardness(1.0F);
+        this.setHardness(0.5F);
+        this.setResistance(15.0F);
         this.setStepSound(soundTypeWood);
     }
 

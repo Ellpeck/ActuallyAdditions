@@ -30,7 +30,8 @@ public class BlockItemRepairer extends BlockContainerBase implements INameableIt
     public BlockItemRepairer(){
         super(Material.rock);
         this.setHarvestLevel("pickaxe", 0);
-        this.setHardness(1.0F);
+        this.setHardness(20.0F);
+        this.setResistance(15.0F);
         this.setStepSound(soundTypeStone);
         this.setTickRandomly(true);
     }

@@ -30,7 +30,8 @@ public class BlockOilGenerator extends BlockContainerBase implements INameableIt
     public BlockOilGenerator(){
         super(Material.rock);
         this.setHarvestLevel("pickaxe", 0);
-        this.setHardness(1.0F);
+        this.setHardness(1.5F);
+        this.setResistance(10.0F);
         this.setStepSound(soundTypeStone);
         this.setTickRandomly(true);
     }

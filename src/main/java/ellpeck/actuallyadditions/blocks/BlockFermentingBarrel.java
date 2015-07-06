@@ -28,7 +28,8 @@ public class BlockFermentingBarrel extends BlockContainerBase implements INameab
     public BlockFermentingBarrel(){
         super(Material.wood);
         this.setHarvestLevel("axe", 0);
-        this.setHardness(1.0F);
+        this.setHardness(0.5F);
+        this.setResistance(5.0F);
         this.setStepSound(soundTypeWood);
     }
 

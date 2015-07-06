@@ -24,7 +24,8 @@ public class BlockGeneric extends Block implements INameableItem{
         super(Material.rock);
         this.name = name;
         this.setHarvestLevel("pickaxe", 0);
-        this.setHardness(1.0F);
+        this.setHardness(1.5F);
+        this.setResistance(10.0F);
         this.setStepSound(soundTypeStone);
     }
 

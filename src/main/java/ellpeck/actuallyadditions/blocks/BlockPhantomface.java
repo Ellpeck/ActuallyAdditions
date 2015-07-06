@@ -38,7 +38,8 @@ public class BlockPhantomface extends BlockContainerBase implements INameableIte
         super(Material.rock);
         this.type = type;
         this.setHarvestLevel("pickaxe", 0);
-        this.setHardness(1.0F);
+        this.setHardness(4.5F);
+        this.setResistance(10.0F);
         this.setStepSound(soundTypeStone);
 
         if(type == FACE || type == LIQUIFACE || type == ENERGYFACE) this.range = ConfigIntValues.PHANTOMFACE_RANGE.getValue();

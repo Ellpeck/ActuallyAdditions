@@ -28,7 +28,8 @@ public class BlockFeeder extends BlockContainerBase implements INameableItem{
     public BlockFeeder(){
         super(Material.rock);
         this.setHarvestLevel("pickaxe", 0);
-        this.setHardness(1.0F);
+        this.setHardness(0.5F);
+        this.setResistance(6.0F);
         this.setStepSound(soundTypeStone);
     }
 
