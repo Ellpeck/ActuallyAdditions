@@ -10,7 +10,7 @@ public class VillageCustomCropFieldHandler implements VillagerRegistry.IVillageC
 
     @Override
     public StructureVillagePieces.PieceWeight getVillagePieceWeight(Random random, int i){
-        return new StructureVillagePieces.PieceWeight(VillageComponentCustomCropField.class, 5, 2);
+        return new StructureVillagePieces.PieceWeight(VillageComponentCustomCropField.class, 5, 1);
     }
 
     @Override

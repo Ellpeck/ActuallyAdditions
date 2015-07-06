@@ -8,6 +8,7 @@ import ellpeck.actuallyadditions.util.INameableItem;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
@@ -56,6 +57,12 @@ public class BlockWildPlant extends BlockBush implements INameableItem{
     @Override
     public IIcon getIcon(int side, int metadata){
         return metadata >= allWildPlants.length ? null : allWildPlants[metadata].wildVersionOf.getIcon(0, 7);
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void registerBlockIcons(IIconRegister iconReg){
+
     }
 
     @Override

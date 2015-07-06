@@ -6,6 +6,7 @@ import ellpeck.actuallyadditions.util.BlockUtil;
 import ellpeck.actuallyadditions.util.INameableItem;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
@@ -69,6 +70,12 @@ public class BlockSlabs extends Block implements INameableItem{
     @SideOnly(Side.CLIENT)
     public IIcon getIcon(int side, int meta){
         return this.fullBlock.getIcon(0, 0);
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void registerBlockIcons(IIconRegister iconReg){
+
     }
 
     @Override

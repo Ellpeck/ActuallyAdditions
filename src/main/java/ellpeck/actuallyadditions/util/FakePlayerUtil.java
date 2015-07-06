@@ -9,12 +9,16 @@ import java.util.UUID;
 
 public class FakePlayerUtil{
 
-    public static final String fakeName = "EllpecksActuallyAdditionsFakePlayer";
-    public static GameProfile fakeProfile = new GameProfile(UUID.nameUUIDFromBytes(fakeName.getBytes()), fakeName);
+    private static final String fakeName = "EllpecksActuallyAdditionsFakePlayer";
+    private static GameProfile fakeProfile = new GameProfile(UUID.nameUUIDFromBytes(fakeName.getBytes()), fakeName);
+    private static FakePlayer theFakePlayer;
 
     public static FakePlayer newFakePlayer(World world){
         if(world instanceof WorldServer){
-            return new FakePlayer((WorldServer)world, fakeProfile);
+            if(theFakePlayer == null){
+                theFakePlayer = new FakePlayer((WorldServer)world, fakeProfile);
+            }
+            return theFakePlayer;
         }
         else return null;
     }

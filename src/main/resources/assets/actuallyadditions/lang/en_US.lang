@@ -316,8 +316,6 @@ item.actuallyadditions.itemFoodCarrotJuice.name=Carrot Juice
 item.actuallyadditions.itemFoodPumpkinStew.name=Pumpkin Stew
 item.actuallyadditions.itemFoodCheese.name=Cheese
 
-item.actuallyadditions.itemUpgradeSpeed.name=Speed Upgrade
-
 item.actuallyadditions.itemMiscCoil.name=Basic Coil
 item.actuallyadditions.itemMiscCoilAdvanced.name=Advanced Coil
 
@@ -366,12 +364,6 @@ tooltip.actuallyadditions.itemJamPiCo.desc=Pineapple and Coconut
 
 tooltip.actuallyadditions.itemHairyBall.desc.1=A Ball of Hair dropped from a Cat...
 tooltip.actuallyadditions.itemHairyBall.desc.2=Maybe you can get something from it by using it...
-
-tooltip.actuallyadditions.itemUpgradeSpeed.desc.1=Speeds up Machines when placed in their Upgrade Slot
-tooltip.actuallyadditions.itemUpgradeSpeed.desc.2=Works in:
-tooltip.actuallyadditions.itemUpgradeSpeed.desc.3=-Double Furnace
-tooltip.actuallyadditions.itemUpgradeSpeed.desc.4=-Crusher
-tooltip.actuallyadditions.itemUpgradeSpeed.desc.5=-Double Crusher
 
 tooltip.actuallyadditions.blockPhantomRange.desc=Range
 
