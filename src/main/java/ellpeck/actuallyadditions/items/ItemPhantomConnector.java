@@ -4,10 +4,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.tile.TileEntityPhantomPlacer;
 import ellpeck.actuallyadditions.tile.TileEntityPhantomface;
-import ellpeck.actuallyadditions.util.INameableItem;
-import ellpeck.actuallyadditions.util.ItemUtil;
-import ellpeck.actuallyadditions.util.KeyUtil;
-import ellpeck.actuallyadditions.util.ModUtil;
+import ellpeck.actuallyadditions.util.*;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -42,7 +39,7 @@ public class ItemPhantomConnector extends Item implements INameableItem{
                     if(this.checkHasConnection(stack, player, tile)){
                         ((TileEntityPhantomface)tile).boundPosition = this.getStoredPosition(stack);
                         ((TileEntityPhantomface)tile).boundWorld = this.getStoredWorld(stack);
-                        TileEntityPhantomface.updateAround(tile);
+                        WorldUtil.updateTileAndTilesAround(tile);
                         this.clearStorage(stack);
                         player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.connected.desc")));
                         return true;

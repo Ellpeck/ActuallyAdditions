@@ -47,16 +47,6 @@ public class TileEntityPhantomface extends TileEntityInventoryBase{
         return newRange;
     }
 
-    public static void updateAround(TileEntity tile){
-        tile.getWorldObj().markBlockForUpdate(tile.xCoord+1, tile.yCoord, tile.zCoord);
-        tile.getWorldObj().markBlockForUpdate(tile.xCoord-1, tile.yCoord, tile.zCoord);
-        tile.getWorldObj().markBlockForUpdate(tile.xCoord, tile.yCoord+1, tile.zCoord);
-        tile.getWorldObj().markBlockForUpdate(tile.xCoord, tile.yCoord-1, tile.zCoord);
-        tile.getWorldObj().markBlockForUpdate(tile.xCoord, tile.yCoord, tile.zCoord+1);
-        tile.getWorldObj().markBlockForUpdate(tile.xCoord, tile.yCoord, tile.zCoord-1);
-        tile.markDirty();
-    }
-
     public boolean isBoundTileInRage(){
         if(this.hasBoundTile()){
             int xDif = this.boundPosition.posX-this.xCoord;

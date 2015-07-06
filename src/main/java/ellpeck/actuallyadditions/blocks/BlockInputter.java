@@ -114,10 +114,11 @@ public class BlockInputter extends BlockContainerBase implements INameableItem{
         @SuppressWarnings("unchecked")
         @SideOnly(Side.CLIENT)
         public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld) {
+            list.add(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".blockInputter.desc.1"));
             if(KeyUtil.isShiftPressed()){
-                list.add(StatCollector.translateToLocalFormatted("tooltip." + ModUtil.MOD_ID_LOWER + ".blockInputter.desc." + 1, StringUtil.OBFUSCATED, StringUtil.LIGHT_GRAY));
-                for(int i = 1; i < 7; i++){
-                    list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + ".blockInputter.desc." + (i + 1)));
+                list.add(StatCollector.translateToLocalFormatted("tooltip."+ModUtil.MOD_ID_LOWER+".blockInputter.desc.2", StringUtil.OBFUSCATED, StringUtil.LIGHT_GRAY));
+                for(int i = 3; i <= 7; i++){
+                    list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + ".blockInputter.desc." + i));
                 }
                 if((((BlockInputter)theBlock).isAdvanced)) list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + "." + ((INameableItem)theBlock).getName() + ".desc"));
             }
