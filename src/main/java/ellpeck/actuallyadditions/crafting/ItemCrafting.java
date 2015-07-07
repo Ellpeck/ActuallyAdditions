@@ -58,9 +58,10 @@ public class ItemCrafting{
         //Tele Staff
         if(ConfigCrafting.TELE_STAFF.isEnabled())
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemTeleStaff),
-                    "  E", " S ", "S  ",
+                    "  E", " S ", "SB ",
                     'E', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.ENDERPEARL_BLOCK.ordinal()),
-                    'S', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.ENDER_CASING.ordinal())));
+                    'S', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.ENDER_CASING.ordinal()),
+                    'B', new ItemStack(InitItems.itemBattery)));
 
         //Drill Speed
         if(ConfigCrafting.DRILL_SPEED.isEnabled()){
