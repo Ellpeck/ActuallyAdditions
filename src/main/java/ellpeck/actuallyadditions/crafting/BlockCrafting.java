@@ -347,6 +347,11 @@ public class BlockCrafting{
                         'D', "dye"+BlockColoredLamp.allLampTypes[i].name,
                         'Q', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal())));
             }
+
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockLampPowerer, 4),
+                    "XXX", "XLX", "XXX",
+                    'X', "dustRedstone",
+                    'L', new ItemStack(InitBlocks.blockColoredLamp, 1, Util.WILDCARD)));
         }
 
     }
