@@ -37,7 +37,6 @@ public class ItemPhantomConnector extends Item implements INameableItem{
                 if(tile instanceof TileEntityPhantomface){
                     if(this.checkHasConnection(stack, player, tile)){
                         ((TileEntityPhantomface)tile).boundPosition = this.getStoredPosition(stack);
-                        WorldUtil.updateTileAndTilesAround(tile);
                         this.clearStorage(stack);
                         player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.connected.desc")));
                         return true;

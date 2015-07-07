@@ -32,6 +32,10 @@ public class TileEntityPhantomface extends TileEntityInventoryBase{
     public final int defaultRange = ConfigIntValues.PHANTOMFACE_RANGE.getValue();
     public int range;
 
+    private int rangeBefore;
+    private WorldPos boundPosBefore;
+    private Block boundBlockBefore;
+
     public TileEntityPhantomface(String name){
         super(0, name);
     }
@@ -54,7 +58,9 @@ public class TileEntityPhantomface extends TileEntityInventoryBase{
 
             if(xDif >= -this.range && xDif <= this.range){
                 if(yDif >= -this.range && yDif <= this.range){
-                    if(zDif >= -this.range && zDif <= this.range) return true;
+                    if(zDif >= -this.range && zDif <= this.range){
+                        return true;
+                    }
                 }
             }
         }
@@ -68,6 +74,14 @@ public class TileEntityPhantomface extends TileEntityInventoryBase{
 
             if(!this.hasBoundTile()){
                 this.boundPosition = null;
+            }
+
+            if((this.boundPosition != null && (this.boundBlockBefore != this.boundPosition.getBlock() || !this.boundPosition.isEqual(boundPosBefore))) || this.range != this.rangeBefore){
+                this.rangeBefore = this.range;
+                this.boundPosBefore = this.boundPosition;
+                this.boundBlockBefore = this.boundPosition == null ? null : this.boundPosition.getBlock();
+                System.out.println("Hi!");
+                WorldUtil.updateTileAndTilesAround(this);
             }
         }
     }
