@@ -30,7 +30,7 @@ public class BlockColoredLamp extends Block implements INameableItem{
 
     private IIcon[] textures = new IIcon[allLampTypes.length];
 
-    private boolean isOn;
+    public boolean isOn;
 
     public BlockColoredLamp(boolean isOn){
         super(Material.redstoneLight);

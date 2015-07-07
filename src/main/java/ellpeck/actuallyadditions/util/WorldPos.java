@@ -1,5 +1,7 @@
 package ellpeck.actuallyadditions.util;
 
+import net.minecraft.block.Block;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
 public class WorldPos{
@@ -30,5 +32,13 @@ public class WorldPos{
 
     public World getWorld(){
         return this.world;
+    }
+
+    public Block getBlock(){
+        return this.world != null ? this.world.getBlock(this.x, this.y, this.z) : null;
+    }
+
+    public TileEntity getTileEntity(){
+        return this.world != null ? this.world.getTileEntity(this.x, this.y, this.z) : null;
     }
 }

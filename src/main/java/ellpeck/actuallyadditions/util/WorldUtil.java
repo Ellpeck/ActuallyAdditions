@@ -19,9 +19,9 @@ import java.util.ArrayList;
 
 public class WorldUtil{
 
-    public static WorldPos getCoordsFromSide(ForgeDirection side, int x, int y, int z){
+    public static WorldPos getCoordsFromSide(ForgeDirection side, World world, int x, int y, int z){
         if(side == ForgeDirection.UNKNOWN) return null;
-        return new WorldPos(null, x+side.offsetX, y+side.offsetY, z+side.offsetZ);
+        return new WorldPos(world, x+side.offsetX, y+side.offsetY, z+side.offsetZ);
     }
 
     public static void breakBlockAtSide(ForgeDirection side, World world, int x, int y, int z){
@@ -29,7 +29,7 @@ public class WorldUtil{
             world.setBlockToAir(x, y, z);
             return;
         }
-        WorldPos c = getCoordsFromSide(side, x, y, z);
+        WorldPos c = getCoordsFromSide(side, world, x, y, z);
         if(c != null){
             world.setBlockToAir(c.getX(), c.getY(), c.getZ());
         }
@@ -103,7 +103,7 @@ public class WorldUtil{
 
     public static boolean dropItemAtSide(ForgeDirection side, World world, int x, int y, int z, ItemStack stack){
         if(side != ForgeDirection.UNKNOWN){
-            WorldPos coords = getCoordsFromSide(side, x, y, z);
+            WorldPos coords = getCoordsFromSide(side, world, x, y, z);
             if(coords != null){
                 EntityItem item = new EntityItem(world, coords.getX()+0.5, coords.getY()+0.5, coords.getZ()+0.5, stack);
                 item.motionX = 0;
@@ -116,7 +116,7 @@ public class WorldUtil{
     }
 
     public static TileEntity getTileEntityFromSide(ForgeDirection side, World world, int x, int y, int z){
-        WorldPos c = getCoordsFromSide(side, x, y, z);
+        WorldPos c = getCoordsFromSide(side, world, x, y, z);
         if(c != null){
             return world.getTileEntity(c.getX(), c.getY(), c.getZ());
         }

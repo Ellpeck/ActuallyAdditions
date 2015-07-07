@@ -70,7 +70,19 @@ public class BlockLampPowerer extends Block implements INameableItem{
 
     private void updateLamp(World world, int x, int y, int z){
         if(!world.isRemote){
-            WorldPos coords = WorldUtil.getCoordsFromSide(ForgeDirection.getOrientation(world.getBlockMetadata(x, y, z)), x, y, z);
+            WorldPos coords = WorldUtil.getCoordsFromSide(ForgeDirection.getOrientation(world.getBlockMetadata(x, y, z)), world, x, y, z);
+            if(coords != null && coords.getBlock() instanceof BlockColoredLamp){
+                if(world.isBlockIndirectlyGettingPowered(x, y, z)){
+                    if(!((BlockColoredLamp)coords.getBlock()).isOn){
+                        world.setBlock(coords.getX(), coords.getY(), coords.getZ(), InitBlocks.blockColoredLampOn, world.getBlockMetadata(coords.getX(), coords.getY(), coords.getZ()), 2);
+                    }
+                }
+                else{
+                    if(((BlockColoredLamp)coords.getBlock()).isOn){
+                        world.setBlock(coords.getX(), coords.getY(), coords.getZ(), InitBlocks.blockColoredLamp, world.getBlockMetadata(coords.getX(), coords.getY(), coords.getZ()), 2);
+                    }
+                }
+            }
         }
     }
 

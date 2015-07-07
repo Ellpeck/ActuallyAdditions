@@ -110,7 +110,7 @@ public class TileEntityFluidCollector extends TileEntityInventoryBase implements
                     if(this.currentTime <= 0){
                         ForgeDirection sideToManipulate = ForgeDirection.getOrientation(worldObj.getBlockMetadata(xCoord, yCoord, zCoord));
 
-                        WorldPos coordsBlock = WorldUtil.getCoordsFromSide(sideToManipulate, xCoord, yCoord, zCoord);
+                        WorldPos coordsBlock = WorldUtil.getCoordsFromSide(sideToManipulate, worldObj, xCoord, yCoord, zCoord);
                         if(coordsBlock != null){
                             Block blockToBreak = worldObj.getBlock(coordsBlock.getX(), coordsBlock.getY(), coordsBlock.getZ());
                             if(!this.isPlacer && blockToBreak != null && worldObj.getBlockMetadata(coordsBlock.getX(), coordsBlock.getY(), coordsBlock.getZ()) == 0){
