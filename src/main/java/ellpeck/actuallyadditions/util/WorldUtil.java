@@ -214,10 +214,20 @@ public class WorldUtil{
     }
 
     public static MovingObjectPosition getMovingObjectPosWithReachDistance(World world, EntityPlayer player, double distance){
-        float f1 = player.prevRotationPitch+(player.rotationPitch-player.prevRotationPitch)*1.0F;
-        float f2 = player.prevRotationYaw+(player.rotationYaw-player.prevRotationYaw)*1.0F;
-        Vec3 vec = Vec3.createVectorHelper(player.prevPosX+(player.posX-player.prevPosX)*(double)1.0F, player.prevPosY+(player.posY-player.prevPosY)*(double)1.0F+(double)(world.isRemote ? player.getEyeHeight()-player.getDefaultEyeHeight() : player.getEyeHeight()), player.prevPosZ+(player.posZ-player.prevPosZ)*(double)1.0F);
-        Vec3 vec1 = vec.addVector((double)MathHelper.sin(-f2*0.017453292F-(float)Math.PI)*-MathHelper.cos(-f1*0.017453292F)*distance, (double)MathHelper.sin(-f1*0.017453292F)*distance, (double)MathHelper.cos(-f2*0.017453292F-(float)Math.PI)*-MathHelper.cos(-f1*0.017453292F)*distance);
-        return world.func_147447_a(vec, vec1, false, true, false);
+        float f = 1.0F;
+        float f1 = player.prevRotationPitch+(player.rotationPitch-player.prevRotationPitch)*f;
+        float f2 = player.prevRotationYaw+(player.rotationYaw-player.prevRotationYaw)*f;
+        double d0 = player.prevPosX+(player.posX-player.prevPosX)*(double)f;
+        double d1 = player.prevPosY+(player.posY-player.prevPosY)*(double)f+(double)player.getEyeHeight();
+        double d2 = player.prevPosZ+(player.posZ-player.prevPosZ)*(double)f;
+        Vec3 vec3 = Vec3.createVectorHelper(d0, d1, d2);
+        float f3 = MathHelper.cos(-f2*0.017453292F-(float)Math.PI);
+        float f4 = MathHelper.sin(-f2*0.017453292F-(float)Math.PI);
+        float f5 = -MathHelper.cos(-f1*0.017453292F);
+        float f6 = MathHelper.sin(-f1*0.017453292F);
+        float f7 = f4*f5;
+        float f8 = f3*f5;
+        Vec3 vec31 = vec3.addVector((double)f7*distance, (double)f6*distance, (double)f8*distance);
+        return world.func_147447_a(vec3, vec31, false, true, false);
     }
 }

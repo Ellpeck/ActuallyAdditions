@@ -100,7 +100,7 @@ public enum ConfigIntValues{
     DRILL_THREE_BY_THREE_EXTRA_USE("3x3 Upgrade: Extra Energy Use", ConfigCategories.DRILL_VALUES, 10, 0, 10000, "How much extra Energy the 3x3 Upgrade uses"),
     DRILL_FIVE_BY_FIVE_EXTRA_USE("5x5 Upgrade: Extra Energy Use", ConfigCategories.DRILL_VALUES, 30, 0, 10000, "How much extra Energy the 5x5 Upgrade uses"),
 
-    TELE_STAFF_REACH("TeleStaff: Reach", ConfigCategories.MACHINE_VALUES, 150, 5, 500, "How far the TeleStaff can teleport you"),
+    TELE_STAFF_REACH("TeleStaff: Range", ConfigCategories.MACHINE_VALUES, 100, 5, 150, "How far the TeleStaff can teleport you"),
     TELE_STAFF_ENERGY_USE("TeleStaff: Energy Use per Block", ConfigCategories.MACHINE_VALUES, 200, 1, 5000, "How much energy the TeleStaff uses per Block you teleport");
 
     public final String name;

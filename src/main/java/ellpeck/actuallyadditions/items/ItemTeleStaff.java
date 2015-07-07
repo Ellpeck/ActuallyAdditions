@@ -18,7 +18,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 public class ItemTeleStaff extends ItemEnergy implements INameableItem{
 
-    private static final double reach = ConfigIntValues.TELE_STAFF_REACH.getValue();
+    private static final int reach = ConfigIntValues.TELE_STAFF_REACH.getValue();
     private static final int energyUsedPerBlock = ConfigIntValues.TELE_STAFF_ENERGY_USE.getValue();
 
     public ItemTeleStaff(){
@@ -48,7 +48,7 @@ public class ItemTeleStaff extends ItemEnergy implements INameableItem{
 
     @Override
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player){
-        MovingObjectPosition pos = WorldUtil.getMovingObjectPosWithReachDistance(world, player, reach);
+        MovingObjectPosition pos = WorldUtil.getMovingObjectPosWithReachDistance(world, player, (double)reach);
         if(pos != null){
             int side = pos.sideHit;
             if(side != -1){
