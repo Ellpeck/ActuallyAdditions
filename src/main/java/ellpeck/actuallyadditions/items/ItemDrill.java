@@ -3,7 +3,6 @@ package ellpeck.actuallyadditions.items;
 import cofh.api.energy.ItemEnergyContainer;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
-import cpw.mods.fml.relauncher.ReflectionHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.ActuallyAdditions;
@@ -19,10 +18,11 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.EnumRarity;
@@ -36,8 +36,6 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import org.apache.logging.log4j.Level;
 
-import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -268,29 +266,18 @@ public class ItemDrill extends ItemEnergyContainer implements INameableItem{
                         if(this.getEnergyStored(stack) >= use){
                             Block block = world.getBlock(xPos, yPos, zPos);
                             float hardness = block.getBlockHardness(world, xPos, yPos, zPos);
+                            int meta = world.getBlockMetadata(xPos, yPos, zPos);
                             if(hardness > -1.0F && ((x == xPos && y == yPos && z == zPos) || this.canHarvestBlock(block, stack))){
                                 this.extractEnergy(stack, use, false);
 
-                                ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-                                int meta = world.getBlockMetadata(xPos, yPos, zPos);
-
-                                if(block.canSilkHarvest(world, player, xPos, yPos, zPos, meta) && this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SILK_TOUCH)){
-                                    addSilkDrops(drops, block, meta, world, player);
-                                }
-                                else{
-                                    int fortune = this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FORTUNE) ? (this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FORTUNE_II) ? 3 : 1) : 0;
-                                    drops.addAll(block.getDrops(world, xPos, yPos, zPos, meta, fortune));
-                                    block.dropXpOnBlockBreak(world, x, y, z, block.getExpDrop(world, meta, fortune));
+                                block.harvestBlock(world, player, xPos, yPos, zPos, meta);
+                                if(!EnchantmentHelper.getSilkTouchModifier(player)){
+                                    block.dropXpOnBlockBreak(world, x, y, z, block.getExpDrop(world, meta, EnchantmentHelper.getFortuneModifier(player)));
                                 }
 
-                                if(!(x == xPos && y == yPos && z == zPos)){
-                                    world.playAuxSFX(2001, xPos, yPos, zPos, Block.getIdFromBlock(block)+(meta << 12));
-                                }
                                 world.setBlockToAir(xPos, yPos, zPos);
-                                for(ItemStack theDrop : drops){
-                                    EntityItem item = new EntityItem(world, xPos+0.5, yPos+0.5, zPos+0.5, theDrop);
-                                    item.delayBeforeCanPickup = 10;
-                                    world.spawnEntityInWorld(item);
+                                if(!(xPos == x && yPos == y && zPos == z)){
+                                    world.playAuxSFX(2001, xPos, yPos, zPos, Block.getIdFromBlock(block)+(meta << 12));
                                 }
                             }
                         }
@@ -298,18 +285,6 @@ public class ItemDrill extends ItemEnergyContainer implements INameableItem{
                     }
                 }
             }
-        }
-    }
-
-    public static void addSilkDrops(ArrayList<ItemStack> drops, Block block, int meta, World world, EntityPlayer player){
-        try{
-            Method method = ReflectionHelper.findMethod(Block.class, block, new String[]{"createStackedBlock"}, int.class);
-            ItemStack silkDrop = (ItemStack)method.invoke(block, meta);
-            if(silkDrop != null) drops.add(silkDrop);
-        }
-        catch(Exception e){
-            player.addChatComponentMessage(new ChatComponentText("Oh! That shouldn't have happened! Trying to get and use a private Method here might have bugged! Report this situation to the Mod Author ASAP!"));
-            ModUtil.LOGGER.log(Level.ERROR, "Player "+player.getDisplayName()+" who should break a Block using a Drill at "+player.posX+", "+player.posY+", "+player.posZ+" in World "+world.provider.dimensionId+" threw an Exception trying to get and use a private Method! Report this to the Mod Author ASAP!");
         }
     }
 
@@ -325,6 +300,11 @@ public class ItemDrill extends ItemEnergyContainer implements INameableItem{
             int use = this.getEnergyUsePerBlock(stack);
             if(this.getEnergyStored(stack) >= use){
                 if(!world.isRemote){
+                    if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SILK_TOUCH)) stack.addEnchantment(Enchantment.silkTouch, 1);
+                    else{
+                        if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FORTUNE)) stack.addEnchantment(Enchantment.fortune, this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FORTUNE_II) ? 3 : 1);
+                    }
+
                     if(!living.isSneaking() && this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.THREE_BY_THREE)){
                         if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FIVE_BY_FIVE)){
                             this.breakBlocks(stack, 2, world, x, y, z, player);
@@ -332,6 +312,16 @@ public class ItemDrill extends ItemEnergyContainer implements INameableItem{
                         else this.breakBlocks(stack, 1, world, x, y, z, player);
                     }
                     else this.breakBlocks(stack, 0, world, x, y, z, player);
+
+                    NBTTagList ench = stack.getEnchantmentTagList();
+                    if(ench != null){
+                        for(int i = 0; i < ench.tagCount(); i++){
+                            short id = ench.getCompoundTagAt(i).getShort("id");
+                            if(id == Enchantment.silkTouch.effectId || id == Enchantment.fortune.effectId){
+                                ench.removeTag(i);
+                            }
+                        }
+                    }
                 }
             }
         }

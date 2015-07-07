@@ -22,6 +22,7 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
 import java.util.List;
+import java.util.Random;
 
 public class BlockPhantomface extends BlockContainerBase implements INameableItem{
 
@@ -41,6 +42,7 @@ public class BlockPhantomface extends BlockContainerBase implements INameableIte
         this.setHardness(4.5F);
         this.setResistance(10.0F);
         this.setStepSound(soundTypeStone);
+        this.setTickRandomly(true);
 
         if(type == FACE || type == LIQUIFACE || type == ENERGYFACE) this.range = ConfigIntValues.PHANTOMFACE_RANGE.getValue();
         else if(type == BREAKER || type == PLACER) this.range = ConfigIntValues.PHANTOM_PLACER_RANGE.getValue();
@@ -124,6 +126,28 @@ public class BlockPhantomface extends BlockContainerBase implements INameableIte
                 return "blockPhantomEnergyface";
             default:
                 return "blockPhantomface";
+        }
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void randomDisplayTick(World world, int x, int y, int z, Random rand){
+        WorldPos boundPosition = null;
+        if(this.type == FACE || this.type == ENERGYFACE || this.type == LIQUIFACE) boundPosition = ((TileEntityPhantomface)world.getTileEntity(x, y, z)).boundPosition;
+        else if(this.type == PLACER || this.type == BREAKER) boundPosition = ((TileEntityPhantomPlacer)world.getTileEntity(x, y, z)).boundPosition;
+
+        if(boundPosition != null){
+            for(int l = 0; l < 3; l++){
+                double d1 = (double)((float)boundPosition.getY()+rand.nextFloat());
+                int i1 = rand.nextInt(2)*2-1;
+                int j1 = rand.nextInt(2)*2-1;
+                double d4 = ((double)rand.nextFloat()-0.5D)*0.125D;
+                double d2 = (double)boundPosition.getZ()+0.5D+0.25D*(double)j1;
+                double d5 = (double)(rand.nextFloat()*1.0F*(float)j1);
+                double d0 = (double)boundPosition.getX()+0.5D+0.25D*(double)i1;
+                double d3 = (double)(rand.nextFloat()*1.0F*(float)i1);
+                world.spawnParticle("portal", d0, d1, d2, d3, d4, d5);
+            }
         }
     }
 

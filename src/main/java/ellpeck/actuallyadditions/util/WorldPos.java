@@ -41,4 +41,12 @@ public class WorldPos{
     public TileEntity getTileEntity(){
         return this.world != null ? this.world.getTileEntity(this.x, this.y, this.z) : null;
     }
+
+    public boolean isEqual(WorldPos pos){
+        return pos != null && this.x == pos.getX() && this.y == pos.getY() && this.z == pos.getZ() && this.world == pos.getWorld();
+    }
+
+    public WorldPos copy(){
+        return new WorldPos(this.world, this.x, this.y, this.z);
+    }
 }

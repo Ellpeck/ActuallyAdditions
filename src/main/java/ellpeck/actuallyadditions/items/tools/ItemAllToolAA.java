@@ -2,10 +2,8 @@ package ellpeck.actuallyadditions.items.tools;
 
 import com.google.common.collect.Sets;
 import cpw.mods.fml.common.eventhandler.Event;
-import cpw.mods.fml.relauncher.ReflectionHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.util.INameableItem;
 import ellpeck.actuallyadditions.util.ItemUtil;
 import ellpeck.actuallyadditions.util.KeyUtil;
@@ -15,7 +13,9 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.*;
+import net.minecraft.item.EnumRarity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemTool;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
@@ -29,9 +29,9 @@ import java.util.Set;
 @SuppressWarnings("unchecked")
 public class ItemAllToolAA extends ItemTool implements INameableItem{
 
-    public static final Set axeSet = ReflectionHelper.getPrivateValue(ItemAxe.class, (ItemAxe)InitItems.itemAxeEmerald, 0);
-    public static final Set pickSet = ReflectionHelper.getPrivateValue(ItemPickaxe.class, (ItemPickaxe)InitItems.itemPickaxeEmerald, 0);
-    public static final Set shovelSet = ReflectionHelper.getPrivateValue(ItemSpade.class, (ItemSpade)InitItems.itemShovelEmerald, 0);
+    public static final Set axeSet = Sets.newHashSet(Blocks.planks, Blocks.bookshelf, Blocks.log, Blocks.log2, Blocks.chest, Blocks.pumpkin, Blocks.lit_pumpkin);
+    public static final Set pickSet = Sets.newHashSet(Blocks.cobblestone, Blocks.double_stone_slab, Blocks.stone_slab, Blocks.stone, Blocks.sandstone, Blocks.mossy_cobblestone, Blocks.iron_ore, Blocks.iron_block, Blocks.coal_ore, Blocks.gold_block, Blocks.gold_ore, Blocks.diamond_ore, Blocks.diamond_block, Blocks.ice, Blocks.netherrack, Blocks.lapis_ore, Blocks.lapis_block, Blocks.redstone_ore, Blocks.lit_redstone_ore, Blocks.rail, Blocks.detector_rail, Blocks.golden_rail, Blocks.activator_rail);
+    public static final Set shovelSet = Sets.newHashSet(Blocks.grass, Blocks.dirt, Blocks.sand, Blocks.gravel, Blocks.snow_layer, Blocks.snow, Blocks.clay, Blocks.farmland, Blocks.soul_sand, Blocks.mycelium);
 
     private static final Set allSet = Sets.newHashSet();
     static{

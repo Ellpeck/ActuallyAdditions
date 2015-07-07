@@ -70,7 +70,7 @@ public class PacketSyncerToClient implements IMessage{
 
     public static void sendPacket(TileEntity tile){
         if(tile instanceof IPacketSyncerToClient){
-            PacketHandler.theNetwork.sendToAllAround(new PacketSyncerToClient(tile, ((IPacketSyncerToClient)tile).getValues()), new NetworkRegistry.TargetPoint(tile.getWorldObj().provider.dimensionId, tile.xCoord, tile.yCoord, tile.zCoord, 64));
+            PacketHandler.theNetwork.sendToAllAround(new PacketSyncerToClient(tile, ((IPacketSyncerToClient)tile).getValues()), new NetworkRegistry.TargetPoint(tile.getWorldObj().provider.dimensionId, tile.xCoord, tile.yCoord, tile.zCoord, 128));
         }
     }
 }

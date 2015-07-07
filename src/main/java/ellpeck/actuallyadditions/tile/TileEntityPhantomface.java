@@ -6,6 +6,8 @@ import cofh.api.energy.IEnergyReceiver;
 import ellpeck.actuallyadditions.blocks.BlockPhantomface;
 import ellpeck.actuallyadditions.blocks.InitBlocks;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
+import ellpeck.actuallyadditions.network.sync.IPacketSyncerToClient;
+import ellpeck.actuallyadditions.network.sync.PacketSyncerToClient;
 import ellpeck.actuallyadditions.util.WorldPos;
 import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.block.Block;
@@ -23,9 +25,10 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
 
-public class TileEntityPhantomface extends TileEntityInventoryBase{
+public class TileEntityPhantomface extends TileEntityInventoryBase implements IPacketSyncerToClient{
 
     public WorldPos boundPosition;
+    private WorldPos lastBoundPos;
 
     public int type;
 
@@ -68,6 +71,11 @@ public class TileEntityPhantomface extends TileEntityInventoryBase{
 
             if(!this.hasBoundTile()){
                 this.boundPosition = null;
+            }
+
+            if(this.boundPosition != null && !this.boundPosition.isEqual(this.lastBoundPos)){
+                this.lastBoundPos = this.boundPosition.copy();
+                this.sendUpdate();
             }
         }
     }
@@ -115,6 +123,27 @@ public class TileEntityPhantomface extends TileEntityInventoryBase{
     @Override
     public boolean canExtractItem(int slot, ItemStack stack, int side){
         return false;
+    }
+
+    @Override
+    public int[] getValues(){
+        if(this.boundPosition != null){
+            return new int[]{this.boundPosition.getWorld().provider.dimensionId, this.boundPosition.getX(), this.boundPosition.getY(), this.boundPosition.getZ()};
+        }
+        return new int[0];
+    }
+
+    @Override
+    public void setValues(int[] values){
+        if(values.length > 0){
+            this.boundPosition = new WorldPos(DimensionManager.getWorld(values[0]), values[1], values[2], values[3]);
+        }
+        else this.boundPosition = null;
+    }
+
+    @Override
+    public void sendUpdate(){
+        PacketSyncerToClient.sendPacket(this);
     }
 
     public static class TileEntityPhantomLiquiface extends TileEntityPhantomface implements IFluidHandler{
