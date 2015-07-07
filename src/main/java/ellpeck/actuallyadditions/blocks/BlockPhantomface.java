@@ -86,9 +86,9 @@ public class BlockPhantomface extends BlockContainerBase implements INameableIte
                             else player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.connectedNoRange.desc")));
                         }
                         else player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.notConnected.desc")));
+                        player.addChatComponentMessage(new ChatComponentText(""));
                     }
                     else player.openGui(ActuallyAdditions.instance, GuiHandler.PHANTOM_PLACER_ID, world, x, y, z);
-                    player.addChatComponentMessage(new ChatComponentText(""));
                 }
             }
         }

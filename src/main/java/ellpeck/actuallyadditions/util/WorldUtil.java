@@ -214,14 +214,10 @@ public class WorldUtil{
     }
 
     public static MovingObjectPosition getMovingObjectPosWithReachDistance(World world, EntityPlayer player, double distance){
-        return getMovingObjectPosWithReachDistance(world, player, distance, false, true, false);
-    }
-
-    public static MovingObjectPosition getMovingObjectPosWithReachDistance(World world, EntityPlayer player, double distance, boolean arg1, boolean arg2, boolean arg3){
         float f1 = player.prevRotationPitch+(player.rotationPitch-player.prevRotationPitch)*1.0F;
         float f2 = player.prevRotationYaw+(player.rotationYaw-player.prevRotationYaw)*1.0F;
         Vec3 vec = Vec3.createVectorHelper(player.prevPosX+(player.posX-player.prevPosX)*(double)1.0F, player.prevPosY+(player.posY-player.prevPosY)*(double)1.0F+(double)(world.isRemote ? player.getEyeHeight()-player.getDefaultEyeHeight() : player.getEyeHeight()), player.prevPosZ+(player.posZ-player.prevPosZ)*(double)1.0F);
         Vec3 vec1 = vec.addVector((double)MathHelper.sin(-f2*0.017453292F-(float)Math.PI)*-MathHelper.cos(-f1*0.017453292F)*distance, (double)MathHelper.sin(-f1*0.017453292F)*distance, (double)MathHelper.cos(-f2*0.017453292F-(float)Math.PI)*-MathHelper.cos(-f1*0.017453292F)*distance);
-        return world.func_147447_a(vec, vec1, arg1, arg2, arg3);
+        return world.func_147447_a(vec, vec1, false, true, false);
     }
 }

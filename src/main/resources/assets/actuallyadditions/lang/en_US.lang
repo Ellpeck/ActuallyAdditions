@@ -281,6 +281,9 @@ item.actuallyadditions.itemMiscKnifeHandle.name=Knife Handle
 item.actuallyadditions.itemMiscBlackQuartz.name=Black Quartz
 item.actuallyadditions.itemMiscRing.name=Ring
 
+item.actuallyadditions.itemTeleStaff.name=Teleport Staff
+tooltip.actuallyadditions.itemTeleStaff.desc=Teleports you to where you're looking when you right-click.
+
 item.actuallyadditions.itemJamCuBaRa.name=CuBaRa-Jam
 item.actuallyadditions.itemJamGraKiBa.name=GraKiBa-Jam
 item.actuallyadditions.itemJamPlApLe.name=PlApLe-Jam

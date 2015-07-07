@@ -1,9 +1,11 @@
 package ellpeck.actuallyadditions.items;
 
+import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.util.INameableItem;
 import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
@@ -11,11 +13,16 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 public class ItemTeleStaff extends ItemEnergy implements INameableItem{
 
-    private static final double reach = 250D;
-    private static final int energyUsedPerBlock = 250;
+    private static final double reach = ConfigIntValues.TELE_STAFF_REACH.getValue();
+    private static final int energyUsedPerBlock = ConfigIntValues.TELE_STAFF_ENERGY_USE.getValue();
 
     public ItemTeleStaff(){
         super(1000000, 12000, 1);
+    }
+
+    @Override
+    public EnumRarity getRarity(ItemStack stack){
+        return EnumRarity.epic;
     }
 
     @Override
@@ -25,7 +32,7 @@ public class ItemTeleStaff extends ItemEnergy implements INameableItem{
 
     @Override
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player){
-        MovingObjectPosition pos = WorldUtil.getMovingObjectPosWithReachDistance(world, player, reach, false, true, false);
+        MovingObjectPosition pos = WorldUtil.getMovingObjectPosWithReachDistance(world, player, reach);
         if(pos != null){
             int side = pos.sideHit;
             if(side != -1){
@@ -39,7 +46,7 @@ public class ItemTeleStaff extends ItemEnergy implements INameableItem{
                         player.swingItem();
                         if(!world.isRemote){
                             ((EntityPlayerMP)player).playerNetServerHandler.setPlayerLocation(x, y, z, player.rotationYaw, player.rotationPitch);
-                            this.extractEnergy(stack, use, false);
+                            if(!player.capabilities.isCreativeMode) this.extractEnergy(stack, use, false);
                         }
                     }
                 }
