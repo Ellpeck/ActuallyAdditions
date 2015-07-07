@@ -80,8 +80,13 @@ public class InitItems{
 
     public static Item itemBattery;
 
+    public static Item itemTeleStaff;
+
     public static void init(){
         ModUtil.LOGGER.info("Initializing Items...");
+
+        itemTeleStaff = new ItemTeleStaff();
+        ItemUtil.register(itemTeleStaff);
 
         itemDrill = new ItemDrill();
         ItemUtil.register(itemDrill);

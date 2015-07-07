@@ -84,6 +84,7 @@ public class CreativeTab extends CreativeTabs{
         add(InitItems.itemDrillUpgradeFiveByFive);
         add(InitItems.itemDrillUpgradeBlockPlacing);
         add(InitItems.itemBattery);
+        add(InitItems.itemTeleStaff);
         
         add(InitItems.itemPhantomConnector);
         add(InitItems.itemBucketCanolaOil);

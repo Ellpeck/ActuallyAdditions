@@ -1,6 +1,5 @@
 package ellpeck.actuallyadditions.items;
 
-import cofh.api.energy.ItemEnergyContainer;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
 import cpw.mods.fml.relauncher.Side;
@@ -11,22 +10,20 @@ import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.inventory.GuiHandler;
 import ellpeck.actuallyadditions.items.tools.ItemAllToolAA;
 import ellpeck.actuallyadditions.util.INameableItem;
-import ellpeck.actuallyadditions.util.ItemUtil;
-import ellpeck.actuallyadditions.util.KeyUtil;
 import ellpeck.actuallyadditions.util.ModUtil;
+import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.EnumRarity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -37,11 +34,10 @@ import net.minecraft.world.World;
 import org.apache.logging.log4j.Level;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @SuppressWarnings("unchecked")
-public class ItemDrill extends ItemEnergyContainer implements INameableItem{
+public class ItemDrill extends ItemEnergy implements INameableItem{
 
     private static final Set allSet = Sets.newHashSet();
     static{
@@ -50,20 +46,11 @@ public class ItemDrill extends ItemEnergyContainer implements INameableItem{
     }
 
     public ItemDrill(){
-        super(500000, 5000);
-        this.setMaxStackSize(1);
-        this.setHasSubtypes(true);
+        super(500000, 5000, 3);
     }
 
     public static float defaultEfficiency = ConfigFloatValues.DRILL_DAMAGE.getValue();
     public static int energyUsePerBlockOrHit = ConfigIntValues.DRILL_ENERGY_USE.getValue();
-
-    @Override
-    public double getDurabilityForDisplay(ItemStack stack){
-        double energyDif = getMaxEnergyStored(stack)-getEnergyStored(stack);
-        double maxAmount = getMaxEnergyStored(stack);
-        return energyDif/maxAmount;
-    }
 
     @Override
     public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int hitSide, float hitX, float hitY, float hitZ){
@@ -92,16 +79,6 @@ public class ItemDrill extends ItemEnergyContainer implements INameableItem{
             }
         }
         return false;
-    }
-
-    @Override
-    public boolean showDurabilityBar(ItemStack itemStack){
-        return true;
-    }
-
-    @Override
-    public void onCreated(ItemStack stack, World world, EntityPlayer player){
-        this.setEnergy(stack, 0);
     }
 
     public float getEfficiencyFromUpgrade(ItemStack stack){
@@ -143,12 +120,6 @@ public class ItemDrill extends ItemEnergyContainer implements INameableItem{
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public boolean hasEffect(ItemStack stack, int pass){
-        return false;
-    }
-
-    @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.epic;
     }
@@ -183,13 +154,6 @@ public class ItemDrill extends ItemEnergyContainer implements INameableItem{
         this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":" + this.getName());
     }
 
-    public void setEnergy(ItemStack stack, int energy){
-        NBTTagCompound compound = stack.getTagCompound();
-        if(compound == null) compound = new NBTTagCompound();
-        compound.setInteger("Energy", energy);
-        stack.setTagCompound(compound);
-    }
-
     public void writeSlotsToNBT(ItemStack[] slots, ItemStack stack){
         NBTTagCompound compound = stack.getTagCompound();
         if(compound == null) compound = new NBTTagCompound();
@@ -208,18 +172,6 @@ public class ItemDrill extends ItemEnergyContainer implements INameableItem{
             compound.setTag("Items", tagList);
         }
         stack.setTagCompound(compound);
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void getSubItems(Item item, CreativeTabs tabs, List list){
-        ItemStack stackFull = new ItemStack(this);
-        this.setEnergy(stackFull, this.getMaxEnergyStored(stackFull));
-        list.add(stackFull);
-
-        ItemStack stackEmpty = new ItemStack(this);
-        this.setEnergy(stackEmpty, 0);
-        list.add(stackEmpty);
     }
 
     public ItemStack[] getSlotsFromNBT(ItemStack stack){
@@ -247,7 +199,8 @@ public class ItemDrill extends ItemEnergyContainer implements INameableItem{
         int yRange = radius;
         int zRange = 0;
 
-        MovingObjectPosition pos = this.getMovingObjectPositionFromPlayer(world, player, false);
+        MovingObjectPosition pos = WorldUtil.getMovingObjectPosWithReachDistance(world, player, ((EntityPlayerMP)player).theItemInWorldManager.getBlockReachDistance());
+
         if(pos != null){
             int side = pos.sideHit;
             if(side == 0 || side == 1){
@@ -376,23 +329,9 @@ public class ItemDrill extends ItemEnergyContainer implements INameableItem{
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld){
-        ItemUtil.addInformation(this, list, 3, "");
-        if(KeyUtil.isShiftPressed()){
-            list.add(this.getEnergyStored(stack) + "/" + this.getMaxEnergyStored(stack) + " RF");
-        }
-    }
-
-    @Override
     public Multimap getAttributeModifiers(ItemStack stack){
         Multimap map = super.getAttributeModifiers(stack);
         map.put(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(), new AttributeModifier(field_111210_e, "Tool modifier", this.getEnergyStored(stack) >= energyUsePerBlockOrHit ? 8.0F : 0.0F, 0));
         return map;
-    }
-
-    @Override
-    public boolean getShareTag(){
-        return true;
     }
 }

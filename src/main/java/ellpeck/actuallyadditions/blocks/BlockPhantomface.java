@@ -19,6 +19,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
+import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -58,28 +59,36 @@ public class BlockPhantomface extends BlockContainerBase implements INameableIte
             TileEntity tile = world.getTileEntity(x, y, z);
             if(tile != null){
                 if(tile instanceof TileEntityPhantomface){
+                    player.addChatComponentMessage(new ChatComponentText(""));
                     TileEntityPhantomface phantom = (TileEntityPhantomface)tile;
                     player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".blockPhantomRange.desc") + ": " + phantom.range));
                     if(phantom.hasBoundTile()){
-                        player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocalFormatted("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.blockInfo.desc", phantom.boundPosition.getBlock().getLocalizedName(), phantom.boundPosition.getX()-phantom.xCoord, phantom.boundPosition.getY()-phantom.yCoord, phantom.boundPosition.getZ()-phantom.zCoord)));
-                        if(phantom.isBoundTileInRage()) player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocalFormatted("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.connectedBlock.desc", phantom.boundPosition.getX(), phantom.boundPosition.getY(), phantom.boundPosition.getZ())));
-                        else player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocalFormatted("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.connectedNoRange.desc", phantom.boundPosition.getX(), phantom.boundPosition.getY(), phantom.boundPosition.getZ())));
+                        int distance = (int)Vec3.createVectorHelper(x, y, z).distanceTo(Vec3.createVectorHelper(phantom.boundPosition.getX(), phantom.boundPosition.getY(), phantom.boundPosition.getZ()));
+                        player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocalFormatted("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.blockInfo.desc", phantom.boundPosition.getBlock().getLocalizedName(), phantom.boundPosition.getX(), phantom.boundPosition.getY(), phantom.boundPosition.getZ(), distance)));
+
+                        if(phantom.isBoundTileInRage()) player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.connectedRange.desc")));
+                        else player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.connectedNoRange.desc")));
                     }
                     else player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.notConnected.desc")));
+                    player.addChatComponentMessage(new ChatComponentText(""));
                 }
 
                 else if(tile instanceof TileEntityPhantomPlacer){
                     if(player.isSneaking()){
+                        player.addChatComponentMessage(new ChatComponentText(""));
                         TileEntityPhantomPlacer phantom = (TileEntityPhantomPlacer)tile;
                         player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".blockPhantomRange.desc") + ": " + phantom.range));
                         if(phantom.hasBoundPosition()){
-                            player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocalFormatted("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.blockInfo.desc", phantom.boundPosition.getBlock().getLocalizedName(), phantom.boundPosition.getX()-phantom.xCoord, phantom.boundPosition.getY()-phantom.yCoord, phantom.boundPosition.getZ()-phantom.zCoord)));
-                            if(phantom.isBoundPositionInRange()) player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocalFormatted("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.connectedBlock.desc", phantom.boundPosition.getX(), phantom.boundPosition.getY(), phantom.boundPosition.getZ())));
-                            else player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocalFormatted("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.connectedNoRange.desc", phantom.boundPosition.getX(), phantom.boundPosition.getY(), phantom.boundPosition.getZ())));
+                            int distance = (int)Vec3.createVectorHelper(x, y, z).distanceTo(Vec3.createVectorHelper(phantom.boundPosition.getX(), phantom.boundPosition.getY(), phantom.boundPosition.getZ()));
+                            player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocalFormatted("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.blockInfo.desc", phantom.boundPosition.getBlock().getLocalizedName(), phantom.boundPosition.getX(), phantom.boundPosition.getY(), phantom.boundPosition.getZ(), distance)));
+
+                            if(phantom.isBoundPositionInRange()) player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.connectedRange.desc")));
+                            else player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.connectedNoRange.desc")));
                         }
                         else player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.notConnected.desc")));
                     }
                     else player.openGui(ActuallyAdditions.instance, GuiHandler.PHANTOM_PLACER_ID, world, x, y, z);
+                    player.addChatComponentMessage(new ChatComponentText(""));
                 }
             }
         }
