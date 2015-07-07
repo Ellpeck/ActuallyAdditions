@@ -148,7 +148,7 @@ public class BlockColoredLamp extends Block implements INameableItem{
         @SuppressWarnings("unchecked")
         @SideOnly(Side.CLIENT)
         public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld) {
-            BlockUtil.addInformation(InitBlocks.blockColoredLamp, list, 2, "");
+            BlockUtil.addInformation(InitBlocks.blockColoredLamp, list, 3, "");
         }
 
         @Override
