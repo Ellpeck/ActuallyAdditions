@@ -21,7 +21,7 @@ public class WorldUtil{
 
     public static WorldPos getCoordsFromSide(ForgeDirection side, int x, int y, int z){
         if(side == ForgeDirection.UNKNOWN) return null;
-        return new WorldPos(x+side.offsetX, y+side.offsetY, z+side.offsetZ);
+        return new WorldPos(null, x+side.offsetX, y+side.offsetY, z+side.offsetZ);
     }
 
     public static void breakBlockAtSide(ForgeDirection side, World world, int x, int y, int z){

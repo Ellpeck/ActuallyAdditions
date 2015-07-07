@@ -38,7 +38,7 @@ public class TileEntityGreenhouseGlass extends TileEntityBase{
             Block block = worldObj.getBlock(xCoord, i, zCoord);
             if(block != null && !(worldObj.isAirBlock(xCoord, i, zCoord))){
                 if(block instanceof IGrowable && !(block instanceof BlockGrass)){
-                    return new WorldPos(xCoord, i, zCoord);
+                    return new WorldPos(worldObj, xCoord, i, zCoord);
                 }
                 else return null;
             }

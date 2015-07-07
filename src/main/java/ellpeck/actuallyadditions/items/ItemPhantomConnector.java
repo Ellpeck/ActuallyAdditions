@@ -98,7 +98,7 @@ public class ItemPhantomConnector extends Item implements INameableItem{
             int z = tag.getInteger("ZCoordOfTileStored");
             World world = DimensionManager.getWorld(tag.getInteger("WorldOfTileStored"));
             if(x != 0 && y != 0 && z != 0 && world != null){
-                return new WorldPos(x, y, z);
+                return new WorldPos(world, x, y, z);
             }
         }
         return null;

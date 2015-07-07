@@ -16,10 +16,6 @@ public class WorldPos{
         this.z = z;
     }
 
-    public WorldPos(int x, int y, int z){
-        this(null, x, y, z);
-    }
-
     public int getX(){
         return this.x;
     }
