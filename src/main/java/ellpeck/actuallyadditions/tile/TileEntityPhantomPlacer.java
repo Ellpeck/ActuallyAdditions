@@ -73,7 +73,7 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase{
                             }
                             else{
                                 if(boundPosition.getWorld().getBlock(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ()).isReplaceable(boundPosition.getWorld(), boundPosition.getX(), boundPosition.getY(), boundPosition.getZ())){
-                                    int theSlot = WorldUtil.findFirstEmptySlot(this.slots);
+                                    int theSlot = WorldUtil.findFirstFilledSlot(this.slots);
                                     this.setInventorySlotContents(theSlot, WorldUtil.placeBlockAtSide(ForgeDirection.UNKNOWN, boundPosition.getWorld(), boundPosition.getX(), boundPosition.getY(), boundPosition.getZ(), this.slots[theSlot]));
                                     if(this.slots[theSlot] != null && this.slots[theSlot].stackSize <= 0) this.slots[theSlot] = null;
                                 }

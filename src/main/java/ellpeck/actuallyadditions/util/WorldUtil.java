@@ -200,7 +200,7 @@ public class WorldUtil{
         return working >= stacks.size();
     }
 
-    public static int findFirstEmptySlot(ItemStack[] slots){
+    public static int findFirstFilledSlot(ItemStack[] slots){
         for(int i = 0; i < slots.length; i++){
             if(slots[i] != null){
                 return i;

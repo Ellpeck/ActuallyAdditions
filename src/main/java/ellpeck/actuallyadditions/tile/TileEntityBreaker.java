@@ -61,7 +61,7 @@ public class TileEntityBreaker extends TileEntityInventoryBase{
                                 }
                             }
                             else if(this.isPlacer && worldObj.getBlock(coordsBlock.getX(), coordsBlock.getY(), coordsBlock.getZ()).isReplaceable(worldObj, coordsBlock.getX(), coordsBlock.getY(), coordsBlock.getZ())){
-                                int theSlot = WorldUtil.findFirstEmptySlot(this.slots);
+                                int theSlot = WorldUtil.findFirstFilledSlot(this.slots);
                                 this.setInventorySlotContents(theSlot, WorldUtil.placeBlockAtSide(sideToManipulate, worldObj, xCoord, yCoord, zCoord, this.slots[theSlot]));
                                 if(this.slots[theSlot] != null && this.slots[theSlot].stackSize <= 0) this.slots[theSlot] = null;
                             }
