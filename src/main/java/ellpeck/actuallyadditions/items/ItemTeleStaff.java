@@ -1,12 +1,17 @@
 package ellpeck.actuallyadditions.items;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.util.INameableItem;
+import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.WorldUtil;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.IIcon;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -17,7 +22,7 @@ public class ItemTeleStaff extends ItemEnergy implements INameableItem{
     private static final int energyUsedPerBlock = ConfigIntValues.TELE_STAFF_ENERGY_USE.getValue();
 
     public ItemTeleStaff(){
-        super(1000000, 12000, 1);
+        super(500000, 10000, 1);
     }
 
     @Override
@@ -28,6 +33,17 @@ public class ItemTeleStaff extends ItemEnergy implements INameableItem{
     @Override
     public String getName(){
         return "itemTeleStaff";
+    }
+
+    @Override
+    public IIcon getIcon(ItemStack stack, int pass){
+        return this.itemIcon;
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void registerIcons(IIconRegister iconReg){
+        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":" + this.getName());
     }
 
     @Override

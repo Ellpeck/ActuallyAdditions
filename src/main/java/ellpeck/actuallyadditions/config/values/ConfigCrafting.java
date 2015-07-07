@@ -118,7 +118,9 @@ public enum ConfigCrafting{
     STONE("Stone -> Cobblestone", ConfigCategories.CRUSHER_RECIPES, "Crusher"),
     RICE_SUGAR("Rice -> Sugar", ConfigCategories.CRUSHER_RECIPES, "Crusher"),
     NICKEL("Nickel Ore -> Nickel Dust + Platinum Dust", ConfigCategories.CRUSHER_RECIPES, "Crusher"),
-    IRON("Iron Ore -> Iron Dust + Gold Dust", ConfigCategories.CRUSHER_RECIPES, "Crusher");
+    IRON("Iron Ore -> Iron Dust + Gold Dust", ConfigCategories.CRUSHER_RECIPES, "Crusher"),
+
+    TELE_STAFF("Tele Staff", ConfigCategories.ITEMS_CRAFTING);
 
     public final String name;
     public final String category;

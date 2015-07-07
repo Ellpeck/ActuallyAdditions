@@ -55,6 +55,13 @@ public class ItemCrafting{
                     'R', "dustRedstone",
                     'I', "blockIron"));
 
+        //Tele Staff
+        if(ConfigCrafting.TELE_STAFF.isEnabled())
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemTeleStaff),
+                    "  E", " S ", "S  ",
+                    'E', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.ENDERPEARL_BLOCK.ordinal()),
+                    'S', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.ENDER_CASING.ordinal())));
+
         //Drill Speed
         if(ConfigCrafting.DRILL_SPEED.isEnabled()){
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemDrillUpgradeSpeed),
