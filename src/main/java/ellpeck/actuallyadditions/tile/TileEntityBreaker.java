@@ -53,15 +53,15 @@ public class TileEntityBreaker extends TileEntityInventoryBase{
                                 int meta = worldObj.getBlockMetadata(coordsBlock.getX(), coordsBlock.getY(), coordsBlock.getZ());
                                 drops.addAll(blockToBreak.getDrops(worldObj, coordsBlock.getX(), coordsBlock.getY(), coordsBlock.getZ(), meta, 0));
 
-                                if(addToInventory(this.slots, drops, false)){
+                                if(WorldUtil.addToInventory(this.slots, drops, false)){
                                     worldObj.playAuxSFX(2001, coordsBlock.getX(), coordsBlock.getY(), coordsBlock.getZ(), Block.getIdFromBlock(blockToBreak) + (meta << 12));
                                     WorldUtil.breakBlockAtSide(sideToManipulate, worldObj, xCoord, yCoord, zCoord);
-                                    addToInventory(this.slots, drops, true);
+                                    WorldUtil.addToInventory(this.slots, drops, true);
                                     this.markDirty();
                                 }
                             }
                             else if(this.isPlacer && worldObj.getBlock(coordsBlock.getX(), coordsBlock.getY(), coordsBlock.getZ()).isReplaceable(worldObj, coordsBlock.getX(), coordsBlock.getY(), coordsBlock.getZ())){
-                                int theSlot = testInventory(this.slots);
+                                int theSlot = WorldUtil.findFirstEmptySlot(this.slots);
                                 this.setInventorySlotContents(theSlot, WorldUtil.placeBlockAtSide(sideToManipulate, worldObj, xCoord, yCoord, zCoord, this.slots[theSlot]));
                                 if(this.slots[theSlot] != null && this.slots[theSlot].stackSize <= 0) this.slots[theSlot] = null;
                             }
@@ -83,32 +83,6 @@ public class TileEntityBreaker extends TileEntityInventoryBase{
     public void readFromNBT(NBTTagCompound compound){
         super.readFromNBT(compound);
         this.currentTime = compound.getInteger("CurrentTime");
-    }
-
-    public static boolean addToInventory(ItemStack[] slots, ArrayList<ItemStack> stacks, boolean actuallyDo){
-        int working = 0;
-        for(ItemStack stack : stacks){
-            for(int i = 0; i < slots.length; i++){
-                if(slots[i] == null || (slots[i].isItemEqual(stack) && slots[i].stackSize <= stack.getMaxStackSize()-stack.stackSize)){
-                    working++;
-                    if(actuallyDo){
-                        if(slots[i] == null) slots[i] = stack.copy();
-                        else slots[i].stackSize += stack.stackSize;
-                    }
-                    break;
-                }
-            }
-        }
-        return working >= stacks.size();
-    }
-
-    public static int testInventory(ItemStack[] slots){
-        for(int i = 0; i < slots.length; i++){
-            if(slots[i] != null){
-                return i;
-            }
-        }
-        return 0;
     }
 
     @Override

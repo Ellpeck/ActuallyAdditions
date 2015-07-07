@@ -21,6 +21,8 @@ public class RenderSpecial{
     }
 
     public void render(EntityPlayer player, float renderTick, float size, float offsetUp){
+        if(player.isInvisible() || player.getHideCape()) return;
+
         int bobHeight = 70;
         long theTime = Minecraft.getSystemTime();
         long time = theTime/50;

@@ -183,4 +183,29 @@ public class WorldUtil{
         return blocks;
     }
 
+    public static boolean addToInventory(ItemStack[] slots, ArrayList<ItemStack> stacks, boolean actuallyDo){
+        int working = 0;
+        for(ItemStack stack : stacks){
+            for(int i = 0; i < slots.length; i++){
+                if(slots[i] == null || (slots[i].isItemEqual(stack) && slots[i].stackSize <= stack.getMaxStackSize()-stack.stackSize)){
+                    working++;
+                    if(actuallyDo){
+                        if(slots[i] == null) slots[i] = stack.copy();
+                        else slots[i].stackSize += stack.stackSize;
+                    }
+                    break;
+                }
+            }
+        }
+        return working >= stacks.size();
+    }
+
+    public static int findFirstEmptySlot(ItemStack[] slots){
+        for(int i = 0; i < slots.length; i++){
+            if(slots[i] != null){
+                return i;
+            }
+        }
+        return 0;
+    }
 }

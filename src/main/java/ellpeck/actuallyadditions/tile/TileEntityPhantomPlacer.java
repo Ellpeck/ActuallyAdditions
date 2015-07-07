@@ -63,17 +63,17 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase{
                                     int meta = boundPosition.getWorld().getBlockMetadata(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ());
                                     drops.addAll(blockToBreak.getDrops(boundPosition.getWorld(), boundPosition.getX(), boundPosition.getY(), boundPosition.getZ(), meta, 0));
 
-                                    if(TileEntityBreaker.addToInventory(this.slots, drops, false)){
+                                    if(WorldUtil.addToInventory(this.slots, drops, false)){
                                         boundPosition.getWorld().playAuxSFX(2001, boundPosition.getX(), boundPosition.getY(), boundPosition.getZ(), Block.getIdFromBlock(blockToBreak)+(meta << 12));
                                         WorldUtil.breakBlockAtSide(ForgeDirection.UNKNOWN, boundPosition.getWorld(), boundPosition.getX(), boundPosition.getY(), boundPosition.getZ());
-                                        TileEntityBreaker.addToInventory(this.slots, drops, true);
+                                        WorldUtil.addToInventory(this.slots, drops, true);
                                         this.markDirty();
                                     }
                                 }
                             }
                             else{
                                 if(boundPosition.getWorld().getBlock(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ()).isReplaceable(boundPosition.getWorld(), boundPosition.getX(), boundPosition.getY(), boundPosition.getZ())){
-                                    int theSlot = TileEntityBreaker.testInventory(this.slots);
+                                    int theSlot = WorldUtil.findFirstEmptySlot(this.slots);
                                     this.setInventorySlotContents(theSlot, WorldUtil.placeBlockAtSide(ForgeDirection.UNKNOWN, boundPosition.getWorld(), boundPosition.getX(), boundPosition.getY(), boundPosition.getZ(), this.slots[theSlot]));
                                     if(this.slots[theSlot] != null && this.slots[theSlot].stackSize <= 0) this.slots[theSlot] = null;
                                 }
