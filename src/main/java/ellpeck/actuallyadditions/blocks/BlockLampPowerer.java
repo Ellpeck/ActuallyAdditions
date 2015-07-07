@@ -2,10 +2,7 @@ package ellpeck.actuallyadditions.blocks;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ellpeck.actuallyadditions.util.BlockUtil;
-import ellpeck.actuallyadditions.util.INameableItem;
-import ellpeck.actuallyadditions.util.ModUtil;
-import ellpeck.actuallyadditions.util.WorldUtil;
+import ellpeck.actuallyadditions.util.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockPistonBase;
 import net.minecraft.block.material.Material;
@@ -15,7 +12,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -74,7 +70,7 @@ public class BlockLampPowerer extends Block implements INameableItem{
 
     private void updateLamp(World world, int x, int y, int z){
         if(!world.isRemote){
-            ChunkCoordinates coords = WorldUtil.getCoordsFromSide(ForgeDirection.getOrientation(world.getBlockMetadata(x, y, z)), x, y, z);
+            WorldPos coords = WorldUtil.getCoordsFromSide(ForgeDirection.getOrientation(world.getBlockMetadata(x, y, z)), x, y, z);
         }
     }
 

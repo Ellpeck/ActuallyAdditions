@@ -15,7 +15,6 @@ import net.minecraft.item.EnumAction;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
@@ -54,18 +53,18 @@ public class ItemLeafBlower extends Item implements INameableItem{
                 for(int reachY = (this.isAdvanced ? -range : -rangeUp); reachY < (this.isAdvanced ? range+1 : rangeUp+1); reachY++){
                     Block block = world.getBlock(x+reachX, y+reachY, z+reachZ);
                     if(block != null && (block instanceof BlockBush || (this.isAdvanced && block instanceof BlockLeavesBase))){
-                        ChunkCoordinates theCoord = new ChunkCoordinates(x+reachX, y+reachY, z+reachZ);
-                        Block theBlock = world.getBlock(theCoord.posX, theCoord.posY, theCoord.posZ);
+                        WorldPos theCoord = new WorldPos(x+reachX, y+reachY, z+reachZ);
+                        Block theBlock = world.getBlock(theCoord.getX(), theCoord.getY(), theCoord.getZ());
                         ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-                        int meta = world.getBlockMetadata(theCoord.posX, theCoord.posY, theCoord.posZ);
-                        drops.addAll(theBlock.getDrops(world, theCoord.posX, theCoord.posY, theCoord.posZ, meta, 0));
+                        int meta = world.getBlockMetadata(theCoord.getX(), theCoord.getY(), theCoord.getZ());
+                        drops.addAll(theBlock.getDrops(world, theCoord.getX(), theCoord.getY(), theCoord.getZ(), meta, 0));
 
-                        world.setBlockToAir(theCoord.posX, theCoord.posY, theCoord.posZ);
-                        if(this.hasParticles) world.playAuxSFX(2001, theCoord.posX, theCoord.posY, theCoord.posZ, Block.getIdFromBlock(theBlock)+(meta << 12));
+                        world.setBlockToAir(theCoord.getX(), theCoord.getY(), theCoord.getZ());
+                        if(this.hasParticles) world.playAuxSFX(2001, theCoord.getX(), theCoord.getY(), theCoord.getZ(), Block.getIdFromBlock(theBlock)+(meta << 12));
 
                         if(this.doesDrop){
                             for(ItemStack theDrop : drops){
-                                world.spawnEntityInWorld(new EntityItem(world, theCoord.posX + 0.5, theCoord.posY + 0.5, theCoord.posZ + 0.5, theDrop));
+                                world.spawnEntityInWorld(new EntityItem(world, theCoord.getX() + 0.5, theCoord.getY() + 0.5, theCoord.getZ() + 0.5, theDrop));
                             }
                         }
                         return;

@@ -14,7 +14,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
@@ -38,7 +37,6 @@ public class ItemPhantomConnector extends Item implements INameableItem{
                 if(tile instanceof TileEntityPhantomface){
                     if(this.checkHasConnection(stack, player, tile)){
                         ((TileEntityPhantomface)tile).boundPosition = this.getStoredPosition(stack);
-                        ((TileEntityPhantomface)tile).boundWorld = this.getStoredWorld(stack);
                         WorldUtil.updateTileAndTilesAround(tile);
                         this.clearStorage(stack);
                         player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.connected.desc")));
@@ -50,7 +48,6 @@ public class ItemPhantomConnector extends Item implements INameableItem{
                 else if(tile instanceof TileEntityPhantomPlacer){
                     if(this.checkHasConnection(stack, player, tile)){
                         ((TileEntityPhantomPlacer)tile).boundPosition = this.getStoredPosition(stack);
-                        ((TileEntityPhantomPlacer)tile).boundWorld = this.getStoredWorld(stack);
                         tile.markDirty();
                         this.clearStorage(stack);
                         player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.connected.desc")));
@@ -67,16 +64,14 @@ public class ItemPhantomConnector extends Item implements INameableItem{
     }
 
     public boolean checkHasConnection(ItemStack stack, EntityPlayer player, TileEntity tile){
-        if(this.getStoredPosition(stack) != null && this.getStoredWorld(stack) != null){
+        if(this.getStoredPosition(stack) != null){
             return true;
         }
         else{
             if(tile instanceof TileEntityPhantomPlacer){
-                ((TileEntityPhantomPlacer)tile).boundWorld = null;
                 ((TileEntityPhantomPlacer)tile).boundPosition = null;
             }
             if(tile instanceof TileEntityPhantomface){
-                ((TileEntityPhantomface)tile).boundWorld = null;
                 ((TileEntityPhantomface)tile).boundPosition = null;
             }
             player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + ".phantom.unbound.desc")));
@@ -86,7 +81,7 @@ public class ItemPhantomConnector extends Item implements INameableItem{
 
     @Override
     public void onUpdate(ItemStack stack, World world, Entity entity, int par4, boolean par5){
-        if(this.getStoredPosition(stack) == null || this.getStoredWorld(stack) == null) this.clearStorage(stack);
+        if(this.getStoredPosition(stack) == null) this.clearStorage(stack);
     }
 
     @Override
@@ -95,23 +90,16 @@ public class ItemPhantomConnector extends Item implements INameableItem{
         return stack;
     }
 
-    public ChunkCoordinates getStoredPosition(ItemStack stack){
+    public WorldPos getStoredPosition(ItemStack stack){
         NBTTagCompound tag = stack.getTagCompound();
         if(tag != null){
             int x = tag.getInteger("XCoordOfTileStored");
             int y = tag.getInteger("YCoordOfTileStored");
             int z = tag.getInteger("ZCoordOfTileStored");
-
-            if(x == 0 && y == 0 && z == 0) return null;
-            return new ChunkCoordinates(x, y, z);
-        }
-        return null;
-    }
-
-    public World getStoredWorld(ItemStack stack){
-        NBTTagCompound tag = stack.getTagCompound();
-        if(tag != null){
-            return DimensionManager.getWorld(tag.getInteger("WorldOfTileStored"));
+            World world = DimensionManager.getWorld(tag.getInteger("WorldOfTileStored"));
+            if(x != 0 && y != 0 && z != 0 && world != null){
+                return new WorldPos(x, y, z);
+            }
         }
         return null;
     }
@@ -142,14 +130,16 @@ public class ItemPhantomConnector extends Item implements INameableItem{
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld) {
         ItemUtil.addInformation(this, list, 2, "");
-        ChunkCoordinates coords = this.getStoredPosition(stack);
-        World world = this.getStoredWorld(stack);
-        if(coords != null && world != null){
-            list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + ".phantom.boundTo.desc") + ":");
-            list.add("X: " + coords.posX);
-            list.add("Y: " + coords.posY);
-            list.add("Z: " + coords.posZ);
-            list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + ".phantom.inWorld.desc") + " " + world.provider.dimensionId);
+        WorldPos coords = this.getStoredPosition(stack);
+        if(coords != null){
+            World world = coords.getWorld();
+            if(world != null){
+                list.add(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.boundTo.desc")+":");
+                list.add("X: "+coords.getX());
+                list.add("Y: "+coords.getY());
+                list.add("Z: "+coords.getZ());
+                list.add(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.inWorld.desc")+" "+world.provider.dimensionId);
+            }
         }
     }
 

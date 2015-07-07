@@ -3,10 +3,10 @@ package ellpeck.actuallyadditions.tile;
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyProvider;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
+import ellpeck.actuallyadditions.util.WorldPos;
 import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.util.ChunkCoordinates;
 import net.minecraftforge.common.util.ForgeDirection;
 
 import java.util.ArrayList;
@@ -27,10 +27,10 @@ public class TileEntityHeatCollector extends TileEntityBase implements IEnergyPr
             ArrayList<Integer> blocksAround = new ArrayList<Integer>();
             if(energyProducedPerTick <= this.getMaxEnergyStored(ForgeDirection.UNKNOWN)-this.getEnergyStored(ForgeDirection.UNKNOWN)){
                 for(int i = 1; i <= 5; i++){
-                    ChunkCoordinates coords = WorldUtil.getCoordsFromSide(WorldUtil.getDirectionByRotatingSide(i), xCoord, yCoord, zCoord);
+                    WorldPos coords = WorldUtil.getCoordsFromSide(WorldUtil.getDirectionByRotatingSide(i), xCoord, yCoord, zCoord);
                     if(coords != null){
-                        Block block = worldObj.getBlock(coords.posX, coords.posY, coords.posZ);
-                        if(block != null && block.getMaterial() == Material.lava && worldObj.getBlockMetadata(coords.posX, coords.posY, coords.posZ) == 0){
+                        Block block = worldObj.getBlock(coords.getX(), coords.getY(), coords.getZ());
+                        if(block != null && block.getMaterial() == Material.lava && worldObj.getBlockMetadata(coords.getX(), coords.getY(), coords.getZ()) == 0){
                             blocksAround.add(i);
                         }
                     }

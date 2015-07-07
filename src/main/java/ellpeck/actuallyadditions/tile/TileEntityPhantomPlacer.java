@@ -1,11 +1,11 @@
 package ellpeck.actuallyadditions.tile;
 
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
+import ellpeck.actuallyadditions.util.WorldPos;
 import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -23,8 +23,7 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase{
 
     }
 
-    public ChunkCoordinates boundPosition;
-    public World boundWorld;
+    public WorldPos boundPosition;
 
     public int currentTime;
     public final int timeNeeded = ConfigIntValues.PHANTOM_PLACER_TIME.getValue();
@@ -50,7 +49,6 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase{
 
             if(!this.hasBoundPosition()){
                 this.boundPosition = null;
-                this.boundWorld = null;
             }
 
             if(this.isBoundPositionInRange()){
@@ -59,24 +57,24 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase{
                         this.currentTime--;
                         if(this.currentTime <= 0){
                             if(this.isBreaker){
-                                Block blockToBreak = boundWorld.getBlock(boundPosition.posX, boundPosition.posY, boundPosition.posZ);
-                                if(blockToBreak != null && blockToBreak.getBlockHardness(boundWorld, boundPosition.posX, boundPosition.posY, boundPosition.posZ) > -1.0F){
+                                Block blockToBreak = boundPosition.getWorld().getBlock(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ());
+                                if(blockToBreak != null && blockToBreak.getBlockHardness(boundPosition.getWorld(), boundPosition.getX(), boundPosition.getY(), boundPosition.getZ()) > -1.0F){
                                     ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-                                    int meta = boundWorld.getBlockMetadata(boundPosition.posX, boundPosition.posY, boundPosition.posZ);
-                                    drops.addAll(blockToBreak.getDrops(boundWorld, boundPosition.posX, boundPosition.posY, boundPosition.posZ, meta, 0));
+                                    int meta = boundPosition.getWorld().getBlockMetadata(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ());
+                                    drops.addAll(blockToBreak.getDrops(boundPosition.getWorld(), boundPosition.getX(), boundPosition.getY(), boundPosition.getZ(), meta, 0));
 
                                     if(TileEntityBreaker.addToInventory(this.slots, drops, false)){
-                                        boundWorld.playAuxSFX(2001, boundPosition.posX, boundPosition.posY, boundPosition.posZ, Block.getIdFromBlock(blockToBreak) + (meta << 12));
-                                        WorldUtil.breakBlockAtSide(ForgeDirection.UNKNOWN, boundWorld, boundPosition.posX, boundPosition.posY, boundPosition.posZ);
+                                        boundPosition.getWorld().playAuxSFX(2001, boundPosition.getX(), boundPosition.getY(), boundPosition.getZ(), Block.getIdFromBlock(blockToBreak)+(meta << 12));
+                                        WorldUtil.breakBlockAtSide(ForgeDirection.UNKNOWN, boundPosition.getWorld(), boundPosition.getX(), boundPosition.getY(), boundPosition.getZ());
                                         TileEntityBreaker.addToInventory(this.slots, drops, true);
                                         this.markDirty();
                                     }
                                 }
                             }
                             else{
-                                if(boundWorld.getBlock(boundPosition.posX, boundPosition.posY, boundPosition.posZ).isReplaceable(boundWorld, boundPosition.posX, boundPosition.posY, boundPosition.posZ)){
+                                if(boundPosition.getWorld().getBlock(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ()).isReplaceable(boundPosition.getWorld(), boundPosition.getX(), boundPosition.getY(), boundPosition.getZ())){
                                     int theSlot = TileEntityBreaker.testInventory(this.slots);
-                                    this.setInventorySlotContents(theSlot, WorldUtil.placeBlockAtSide(ForgeDirection.UNKNOWN, boundWorld, boundPosition.posX, boundPosition.posY, boundPosition.posZ, this.slots[theSlot]));
+                                    this.setInventorySlotContents(theSlot, WorldUtil.placeBlockAtSide(ForgeDirection.UNKNOWN, boundPosition.getWorld(), boundPosition.getX(), boundPosition.getY(), boundPosition.getZ(), this.slots[theSlot]));
                                     if(this.slots[theSlot] != null && this.slots[theSlot].stackSize <= 0) this.slots[theSlot] = null;
                                 }
                             }
@@ -90,9 +88,9 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase{
 
     public boolean isBoundPositionInRange(){
         if(this.hasBoundPosition()){
-            int xDif = this.boundPosition.posX-this.xCoord;
-            int yDif = this.boundPosition.posY-this.yCoord;
-            int zDif = this.boundPosition.posZ-this.zCoord;
+            int xDif = this.boundPosition.getX()-this.xCoord;
+            int yDif = this.boundPosition.getY()-this.yCoord;
+            int zDif = this.boundPosition.getZ()-this.zCoord;
 
             if(xDif >= -this.range && xDif <= this.range){
                 if(yDif >= -this.range && yDif <= this.range){
@@ -104,13 +102,12 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase{
     }
 
     public boolean hasBoundPosition(){
-        if(this.boundPosition != null && this.boundWorld != null){
-            if(this.xCoord == this.boundPosition.posX && this.yCoord == this.boundPosition.posY && this.zCoord == this.boundPosition.posZ && this.worldObj == this.boundWorld){
+        if(this.boundPosition != null && this.boundPosition.getWorld() != null){
+            if(this.xCoord == this.boundPosition.getX() && this.yCoord == this.boundPosition.getY() && this.zCoord == this.boundPosition.getZ() && this.worldObj == this.boundPosition.getWorld()){
                 this.boundPosition = null;
-                this.boundWorld = null;
                 return false;
             }
-            return this.boundWorld == this.worldObj;
+            return this.boundPosition.getWorld() == this.worldObj;
         }
         return false;
     }
@@ -120,10 +117,10 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase{
         super.writeToNBT(compound);
         compound.setInteger("Time", currentTime);
         if(this.hasBoundPosition()){
-            compound.setInteger("XCoordOfTileStored", boundPosition.posX);
-            compound.setInteger("YCoordOfTileStored", boundPosition.posY);
-            compound.setInteger("ZCoordOfTileStored", boundPosition.posZ);
-            compound.setInteger("WorldOfTileStored", boundWorld.provider.dimensionId);
+            compound.setInteger("XCoordOfTileStored", boundPosition.getX());
+            compound.setInteger("YCoordOfTileStored", boundPosition.getY());
+            compound.setInteger("ZCoordOfTileStored", boundPosition.getZ());
+            compound.setInteger("WorldOfTileStored", boundPosition.getWorld().provider.dimensionId);
         }
     }
 
@@ -133,9 +130,9 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase{
         int x = compound.getInteger("XCoordOfTileStored");
         int y = compound.getInteger("YCoordOfTileStored");
         int z = compound.getInteger("ZCoordOfTileStored");
-        if(x != 0 && y != 0 && z != 0){
-            this.boundPosition = new ChunkCoordinates(x, y, z);
-            this.boundWorld = DimensionManager.getWorld(compound.getInteger("WorldOfTileStored"));
+        World world = DimensionManager.getWorld(compound.getInteger("WorldOfTileStored"));
+        if(x != 0 && y != 0 && z != 0 && world != null){
+            this.boundPosition = new WorldPos(world, x, y, z);
             this.markDirty();
         }
     }
