@@ -94,7 +94,9 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase{
 
             if(xDif >= -this.range && xDif <= this.range){
                 if(yDif >= -this.range && yDif <= this.range){
-                    if(zDif >= -this.range && zDif <= this.range) return true;
+                    if(zDif >= -this.range && zDif <= this.range){
+                        return true;
+                    }
                 }
             }
         }

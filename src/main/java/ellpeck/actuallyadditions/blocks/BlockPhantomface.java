@@ -61,6 +61,7 @@ public class BlockPhantomface extends BlockContainerBase implements INameableIte
                     TileEntityPhantomface phantom = (TileEntityPhantomface)tile;
                     player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".blockPhantomRange.desc") + ": " + phantom.range));
                     if(phantom.hasBoundTile()){
+                        player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocalFormatted("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.blockInfo.desc", phantom.boundPosition.getBlock().getLocalizedName(), phantom.boundPosition.getX()-phantom.xCoord, phantom.boundPosition.getY()-phantom.yCoord, phantom.boundPosition.getZ()-phantom.zCoord)));
                         if(phantom.isBoundTileInRage()) player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocalFormatted("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.connectedBlock.desc", phantom.boundPosition.getX(), phantom.boundPosition.getY(), phantom.boundPosition.getZ())));
                         else player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocalFormatted("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.connectedNoRange.desc", phantom.boundPosition.getX(), phantom.boundPosition.getY(), phantom.boundPosition.getZ())));
                     }
@@ -72,6 +73,7 @@ public class BlockPhantomface extends BlockContainerBase implements INameableIte
                         TileEntityPhantomPlacer phantom = (TileEntityPhantomPlacer)tile;
                         player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".blockPhantomRange.desc") + ": " + phantom.range));
                         if(phantom.hasBoundPosition()){
+                            player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocalFormatted("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.blockInfo.desc", phantom.boundPosition.getBlock().getLocalizedName(), phantom.boundPosition.getX()-phantom.xCoord, phantom.boundPosition.getY()-phantom.yCoord, phantom.boundPosition.getZ()-phantom.zCoord)));
                             if(phantom.isBoundPositionInRange()) player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocalFormatted("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.connectedBlock.desc", phantom.boundPosition.getX(), phantom.boundPosition.getY(), phantom.boundPosition.getZ())));
                             else player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocalFormatted("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.connectedNoRange.desc", phantom.boundPosition.getX(), phantom.boundPosition.getY(), phantom.boundPosition.getZ())));
                         }
