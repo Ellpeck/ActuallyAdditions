@@ -7,10 +7,12 @@ import ellpeck.actuallyadditions.util.INameableItem;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
@@ -20,6 +22,7 @@ public class ItemTeleStaff extends ItemEnergy implements INameableItem{
 
     private static final int reach = ConfigIntValues.TELE_STAFF_REACH.getValue();
     private static final int energyUsedPerBlock = ConfigIntValues.TELE_STAFF_ENERGY_USE.getValue();
+    private static final int waitTime = ConfigIntValues.TELE_STAFF_WAIT_TIME.getValue();
 
     public ItemTeleStaff(){
         super(500000, 10000, 1);
@@ -47,27 +50,52 @@ public class ItemTeleStaff extends ItemEnergy implements INameableItem{
     }
 
     @Override
+    public void onUpdate(ItemStack stack, World world, Entity entity, int par4, boolean par5){
+        int time = this.getWaitTime(stack);
+        if(time > 0){
+            this.setWaitTime(stack, time-1);
+        }
+    }
+
+    private void setWaitTime(ItemStack stack, int time){
+        NBTTagCompound compound = stack.getTagCompound();
+        if(compound == null) compound = new NBTTagCompound();
+
+        compound.setInteger("waitTime", time);
+    }
+
+    private int getWaitTime(ItemStack stack){
+        NBTTagCompound compound = stack.getTagCompound();
+        if(compound == null) return 0;
+        else return compound.getInteger("waitTime");
+    }
+
+    @Override
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player){
-        MovingObjectPosition pos = WorldUtil.getMovingObjectPosWithReachDistance(world, player, (double)reach);
-        if(pos != null){
-            int side = pos.sideHit;
-            if(side != -1){
-                ForgeDirection forgeSide = ForgeDirection.getOrientation(side);
-                if(forgeSide != ForgeDirection.UNKNOWN){
-                    double x = pos.hitVec.xCoord-(side == 4 ? 0.5 : 0)+(side == 5 ? 0.5 : 0);
-                    double y = pos.hitVec.yCoord-(side == 0 ? 2.0 : 0)+(side == 1 ? 0.5 : 0);
-                    double z = pos.hitVec.zCoord-(side == 2 ? 0.5 : 0)+(side == 3 ? 0.5 : 0);
-                    int use = energyUsedPerBlock+(int)(energyUsedPerBlock*pos.hitVec.distanceTo(player.getPosition(1.0F)));
-                    if(this.getEnergyStored(stack) >= use){
-                        player.swingItem();
-                        if(!world.isRemote){
-                            ((EntityPlayerMP)player).playerNetServerHandler.setPlayerLocation(x, y, z, player.rotationYaw, player.rotationPitch);
-                            if(!player.capabilities.isCreativeMode) this.extractEnergy(stack, use, false);
+        if(!world.isRemote){
+            if(this.getWaitTime(stack) <= 0){
+                MovingObjectPosition pos = WorldUtil.getMovingObjectPosWithReachDistance(world, player, (double)reach);
+                if(pos != null){
+                    int side = pos.sideHit;
+                    if(side != -1){
+                        ForgeDirection forgeSide = ForgeDirection.getOrientation(side);
+                        if(forgeSide != ForgeDirection.UNKNOWN){
+                            double x = pos.hitVec.xCoord-(side == 4 ? 0.5 : 0)+(side == 5 ? 0.5 : 0);
+                            double y = pos.hitVec.yCoord-(side == 0 ? 2.0 : 0)+(side == 1 ? 0.5 : 0);
+                            double z = pos.hitVec.zCoord-(side == 2 ? 0.5 : 0)+(side == 3 ? 0.5 : 0);
+                            int use = energyUsedPerBlock+(int)(energyUsedPerBlock*pos.hitVec.distanceTo(player.getPosition(1.0F)));
+                            if(this.getEnergyStored(stack) >= use){
+                                ((EntityPlayerMP)player).playerNetServerHandler.setPlayerLocation(x, y, z, player.rotationYaw, player.rotationPitch);
+                                world.playSoundAtEntity(player, "mob.endermen.portal", 1.0F, 1.0F);
+                                if(!player.capabilities.isCreativeMode) this.extractEnergy(stack, use, false);
+                            }
                         }
                     }
                 }
+                this.setWaitTime(stack, waitTime);
             }
         }
+        player.swingItem();
         return stack;
     }
 }
