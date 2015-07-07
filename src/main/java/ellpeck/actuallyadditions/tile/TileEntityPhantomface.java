@@ -80,7 +80,6 @@ public class TileEntityPhantomface extends TileEntityInventoryBase{
                 this.rangeBefore = this.range;
                 this.boundPosBefore = this.boundPosition;
                 this.boundBlockBefore = this.boundPosition == null ? null : this.boundPosition.getBlock();
-                System.out.println("Hi!");
                 WorldUtil.updateTileAndTilesAround(this);
             }
         }
