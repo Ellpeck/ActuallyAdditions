@@ -63,7 +63,10 @@ tooltip.actuallyadditions.blockCoalGenerator.desc=Produces Energy from Coal and 
 
 tooltip.actuallyadditions.blockColoredLamp.desc.1=Sneak-Right-Click to turn me on!
 tooltip.actuallyadditions.blockColoredLamp.desc.2=Right-Click me with a Dye to dye me!
-tooltip.actuallyadditions.blockColoredLamp.desc.3=Use a Lamp Powerer to toggle me with Redstone!
+tooltip.actuallyadditions.blockColoredLamp.desc.3=Use a Lamp Controller to toggle me with Redstone!
+
+tile.actuallyadditions.blockLampPowerer.name=Lamp Controller
+tooltip.actuallyadditions.blockLampPowerer.desc=Place me facing towards a Lamp and power me with Redstone to turn it on!
 
 tile.actuallyadditions.blockColoredLampWhite.name=White Lamp
 tile.actuallyadditions.blockColoredLampOrange.name=Orange Lamp

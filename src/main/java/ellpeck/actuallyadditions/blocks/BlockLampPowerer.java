@@ -22,7 +22,6 @@ import java.util.List;
 public class BlockLampPowerer extends Block implements INameableItem{
 
     private IIcon frontIcon;
-    private IIcon topIcon;
 
     public BlockLampPowerer(){
         super(Material.rock);
@@ -45,7 +44,6 @@ public class BlockLampPowerer extends Block implements INameableItem{
 
     @Override
     public IIcon getIcon(int side, int meta){
-        if(side == 0 || side == 1) return this.topIcon;
         if(side == 3) return this.frontIcon;
         return this.blockIcon;
     }
@@ -53,7 +51,6 @@ public class BlockLampPowerer extends Block implements INameableItem{
     @Override
     public IIcon getIcon(IBlockAccess world, int x, int y, int z, int side){
         int meta = world.getBlockMetadata(x, y, z);
-        if(side != meta && (side == 0 || side == 1)) return this.topIcon;
         if(side == meta) return this.frontIcon;
         return this.blockIcon;
     }
@@ -91,7 +88,6 @@ public class BlockLampPowerer extends Block implements INameableItem{
     public void registerBlockIcons(IIconRegister iconReg){
         this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":" + this.getName());
         this.frontIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":" + this.getName() + "Front");
-        this.topIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":" + this.getName() + "Top");
     }
 
     public static class TheItemBlock extends ItemBlock{
