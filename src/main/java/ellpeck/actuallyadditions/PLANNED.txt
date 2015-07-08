@@ -7,9 +7,6 @@
     -Follows you around
     -Has an Inventory, a Crafting Table and a Furnace
 
--Instant Teleport Device
-    -Teleports Players to where they look (Much like the Bukkit Compass)
-
 -Ender Attractor / Repulsor
     -Attracts/Repulses Mobs
     -Has an aggressive and a friendly version

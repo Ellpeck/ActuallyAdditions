@@ -139,22 +139,20 @@ public class GuiInputter extends GuiContainer{
 
     @Override
     public void keyTyped(char theChar, int key){
-        if((!fieldPutStart.isFocused() && !fieldPutEnd.isFocused() && !fieldPullStart.isFocused() && !fieldPullEnd.isFocused())){
-            super.keyTyped(theChar, key);
-        }
-
         if(key == Keyboard.KEY_RETURN || key == Keyboard.KEY_NUMPADENTER){
             if(this.fieldPutStart.isFocused()) this.setVariable(this.fieldPutStart, 0);
             if(this.fieldPutEnd.isFocused()) this.setVariable(this.fieldPutEnd, 1);
             if(this.fieldPullStart.isFocused()) this.setVariable(this.fieldPullStart, 2);
             if(this.fieldPullEnd.isFocused()) this.setVariable(this.fieldPullEnd, 3);
         }
-
-        if(Character.isDigit(theChar) || key == Keyboard.KEY_BACK || key == Keyboard.KEY_DELETE || key == Keyboard.KEY_LEFT || key == Keyboard.KEY_RIGHT){
+        else if(Character.isDigit(theChar) || key == Keyboard.KEY_BACK || key == Keyboard.KEY_DELETE || key == Keyboard.KEY_LEFT || key == Keyboard.KEY_RIGHT){
             this.fieldPutStart.textboxKeyTyped(theChar, key);
             this.fieldPutEnd.textboxKeyTyped(theChar, key);
             this.fieldPullStart.textboxKeyTyped(theChar, key);
             this.fieldPullEnd.textboxKeyTyped(theChar, key);
+        }
+        else{
+            super.keyTyped(theChar, key);
         }
     }
 
