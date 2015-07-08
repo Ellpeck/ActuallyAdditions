@@ -222,14 +222,18 @@ public class ItemDrill extends ItemEnergy implements INameableItem{
                             if(hardness > -1.0F && ((x == xPos && y == yPos && z == zPos) || this.canHarvestBlock(block, stack))){
                                 this.extractEnergy(stack, use, false);
 
-                                block.harvestBlock(world, player, xPos, yPos, zPos, meta);
-                                if(!EnchantmentHelper.getSilkTouchModifier(player)){
-                                    block.dropXpOnBlockBreak(world, x, y, z, block.getExpDrop(world, meta, EnchantmentHelper.getFortuneModifier(player)));
-                                }
+                                block.onBlockHarvested(world, xPos, yPos, zPos, meta, player);
+                                if(block.removedByPlayer(world, player, xPos, yPos, zPos, true)){
+                                    block.onBlockDestroyedByPlayer(world, xPos, yPos, zPos, meta);
+                                    block.harvestBlock(world, player, xPos, yPos, zPos, meta);
 
-                                world.setBlockToAir(xPos, yPos, zPos);
-                                if(!(xPos == x && yPos == y && zPos == z)){
-                                    world.playAuxSFX(2001, xPos, yPos, zPos, Block.getIdFromBlock(block)+(meta << 12));
+                                    if(!EnchantmentHelper.getSilkTouchModifier(player)){
+                                        block.dropXpOnBlockBreak(world, xPos, yPos, zPos, block.getExpDrop(world, meta, EnchantmentHelper.getFortuneModifier(player)));
+                                    }
+
+                                    if(!(xPos == x && yPos == y && zPos == z)){
+                                        world.playAuxSFX(2001, xPos, yPos, zPos, Block.getIdFromBlock(block)+(meta << 12));
+                                    }
                                 }
                             }
                         }
