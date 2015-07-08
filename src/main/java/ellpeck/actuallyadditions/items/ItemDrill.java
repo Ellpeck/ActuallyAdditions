@@ -193,47 +193,47 @@ public class ItemDrill extends ItemEnergy implements INameableItem{
         return slots;
     }
 
-    public void breakBlocks(ItemStack stack, int radius, World world, int x, int y, int z, EntityPlayer player){
+    public boolean breakBlocks(ItemStack stack, int radius, World world, int x, int y, int z, EntityPlayer player){
         int xRange = radius;
         int yRange = radius;
         int zRange = 0;
 
         MovingObjectPosition pos = WorldUtil.getNearestBlockWithDefaultReachDistance(world, player);
+        if(pos == null) return false;
 
-        if(pos != null){
-            int side = pos.sideHit;
-            if(side == 0 || side == 1){
-                zRange = radius;
-                yRange = 0;
-            }
-            if(side == 4 || side == 5){
-                xRange = 0;
-                zRange = radius;
-            }
+        int side = pos.sideHit;
+        if(side == 0 || side == 1){
+            zRange = radius;
+            yRange = 0;
+        }
+        if(side == 4 || side == 5){
+            xRange = 0;
+            zRange = radius;
+        }
 
-            //Break Middle Block first
-            int use = this.getEnergyUsePerBlock(stack);
-            if(this.getEnergyStored(stack) >= use){
-                this.tryHarvestBlock(world, x, y, z, false, stack, player, use);
-            }
-            else return;
+        //Break Middle Block first
+        int use = this.getEnergyUsePerBlock(stack);
+        if(this.getEnergyStored(stack) >= use){
+            this.tryHarvestBlock(world, x, y, z, false, stack, player, use);
+        }
+        else return true;
 
-            //Break Blocks around
-            if(radius > 0){
-                for(int xPos = x-xRange; xPos <= x+xRange; xPos++){
-                    for(int yPos = y-yRange; yPos <= y+yRange; yPos++){
-                        for(int zPos = z-zRange; zPos <= z+zRange; zPos++){
-                            if(!(x == xPos && y == yPos && z == zPos)){
-                                if(this.getEnergyStored(stack) >= use){
-                                    this.tryHarvestBlock(world, xPos, yPos, zPos, true, stack, player, use);
-                                }
-                                else return;
+        //Break Blocks around
+        if(radius > 0){
+            for(int xPos = x-xRange; xPos <= x+xRange; xPos++){
+                for(int yPos = y-yRange; yPos <= y+yRange; yPos++){
+                    for(int zPos = z-zRange; zPos <= z+zRange; zPos++){
+                        if(!(x == xPos && y == yPos && z == zPos)){
+                            if(this.getEnergyStored(stack) >= use){
+                                this.tryHarvestBlock(world, xPos, yPos, zPos, true, stack, player, use);
                             }
+                            else return true;
                         }
                     }
                 }
             }
         }
+        return true;
     }
 
     private void tryHarvestBlock(World world, int xPos, int yPos, int zPos, boolean isExtra, ItemStack stack, EntityPlayer player, int use){
@@ -241,19 +241,24 @@ public class ItemDrill extends ItemEnergy implements INameableItem{
         float hardness = block.getBlockHardness(world, xPos, yPos, zPos);
         int meta = world.getBlockMetadata(xPos, yPos, zPos);
         if(hardness >= 0.0F && (!isExtra || (this.canHarvestBlock(block, stack) && !block.hasTileEntity(meta)))){
-            this.extractEnergy(stack, use, false);
+            if(!world.isRemote){
+                this.extractEnergy(stack, use, false);
 
-            block.onBlockHarvested(world, xPos, yPos, zPos, meta, player);
-            if(block.removedByPlayer(world, player, xPos, yPos, zPos, true)){
-                block.onBlockDestroyedByPlayer(world, xPos, yPos, zPos, meta);
-                block.harvestBlock(world, player, xPos, yPos, zPos, meta);
+                block.onBlockHarvested(world, xPos, yPos, zPos, meta, player);
+                if(block.removedByPlayer(world, player, xPos, yPos, zPos, true)){
+                    block.onBlockDestroyedByPlayer(world, xPos, yPos, zPos, meta);
+                    block.harvestBlock(world, player, xPos, yPos, zPos, meta);
 
-                if(!EnchantmentHelper.getSilkTouchModifier(player)){
-                    block.dropXpOnBlockBreak(world, xPos, yPos, zPos, block.getExpDrop(world, meta, EnchantmentHelper.getFortuneModifier(player)));
+                    if(!EnchantmentHelper.getSilkTouchModifier(player)){
+                        block.dropXpOnBlockBreak(world, xPos, yPos, zPos, block.getExpDrop(world, meta, EnchantmentHelper.getFortuneModifier(player)));
+                    }
                 }
+            }
+            else{
+                world.playAuxSFX(2001, xPos, yPos, zPos, Block.getIdFromBlock(block)+(meta << 12));
 
-                if(isExtra){
-                    world.playAuxSFX(2001, xPos, yPos, zPos, Block.getIdFromBlock(block)+(meta << 12));
+                if(block.removedByPlayer(world, player, xPos, yPos, zPos, true)){
+                    block.onBlockDestroyedByPlayer(world, xPos, yPos, zPos, meta);
                 }
             }
         }
@@ -265,38 +270,34 @@ public class ItemDrill extends ItemEnergy implements INameableItem{
     }
 
     @Override
-    public boolean onBlockDestroyed(ItemStack stack, World world, Block block, int x, int y, int z, EntityLivingBase living){
-        if(living instanceof EntityPlayer){
-            EntityPlayer player = (EntityPlayer)living;
-            int use = this.getEnergyUsePerBlock(stack);
-            if(this.getEnergyStored(stack) >= use){
-                if(!world.isRemote){
-                    if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SILK_TOUCH)) stack.addEnchantment(Enchantment.silkTouch, 1);
-                    else{
-                        if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FORTUNE)) stack.addEnchantment(Enchantment.fortune, this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FORTUNE_II) ? 3 : 1);
-                    }
+    public boolean onBlockStartBreak(ItemStack stack, int x, int y, int z, EntityPlayer player){
+        boolean toReturn = true;
+        int use = this.getEnergyUsePerBlock(stack);
+        if(this.getEnergyStored(stack) >= use){
+            if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SILK_TOUCH)) stack.addEnchantment(Enchantment.silkTouch, 1);
+            else{
+                if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FORTUNE)) stack.addEnchantment(Enchantment.fortune, this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FORTUNE_II) ? 3 : 1);
+            }
 
-                    if(!living.isSneaking() && this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.THREE_BY_THREE)){
-                        if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FIVE_BY_FIVE)){
-                            this.breakBlocks(stack, 2, world, x, y, z, player);
-                        }
-                        else this.breakBlocks(stack, 1, world, x, y, z, player);
-                    }
-                    else this.breakBlocks(stack, 0, world, x, y, z, player);
+            if(!player.isSneaking() && this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.THREE_BY_THREE)){
+                if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FIVE_BY_FIVE)){
+                    toReturn = this.breakBlocks(stack, 2, player.worldObj, x, y, z, player);
+                }
+                else toReturn = this.breakBlocks(stack, 1, player.worldObj, x, y, z, player);
+            }
+            else toReturn = this.breakBlocks(stack, 0, player.worldObj, x, y, z, player);
 
-                    NBTTagList ench = stack.getEnchantmentTagList();
-                    if(ench != null){
-                        for(int i = 0; i < ench.tagCount(); i++){
-                            short id = ench.getCompoundTagAt(i).getShort("id");
-                            if(id == Enchantment.silkTouch.effectId || id == Enchantment.fortune.effectId){
-                                ench.removeTag(i);
-                            }
-                        }
+            NBTTagList ench = stack.getEnchantmentTagList();
+            if(ench != null){
+                for(int i = 0; i < ench.tagCount(); i++){
+                    short id = ench.getCompoundTagAt(i).getShort("id");
+                    if(id == Enchantment.silkTouch.effectId || id == Enchantment.fortune.effectId){
+                        ench.removeTag(i);
                     }
                 }
             }
         }
-        return true;
+        return toReturn;
     }
 
     @Override

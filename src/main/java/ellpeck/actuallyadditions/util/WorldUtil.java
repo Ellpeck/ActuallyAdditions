@@ -227,7 +227,7 @@ public class WorldUtil{
         float f1 = player.prevRotationPitch+(player.rotationPitch-player.prevRotationPitch)*f;
         float f2 = player.prevRotationYaw+(player.rotationYaw-player.prevRotationYaw)*f;
         double d0 = player.prevPosX+(player.posX-player.prevPosX)*(double)f;
-        double d1 = player.prevPosY+(player.posY-player.prevPosY)*(double)f+(double)player.getEyeHeight();
+        double d1 = player.prevPosY+(player.posY-player.prevPosY)*(double)f+(double)(world.isRemote ? player.getEyeHeight()-player.getDefaultEyeHeight() : player.getEyeHeight());
         double d2 = player.prevPosZ+(player.posZ-player.prevPosZ)*(double)f;
         Vec3 vec3 = Vec3.createVectorHelper(d0, d1, d2);
         float f3 = MathHelper.cos(-f2*0.017453292F-(float)Math.PI);
