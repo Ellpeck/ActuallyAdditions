@@ -66,8 +66,7 @@ public class TileEntityFluidCollector extends TileEntityInventoryBase implements
     @Override
     public void setValues(int[] values){
         if(values[1] != -1){
-            Fluid fluid = FluidRegistry.getFluid(values[1]);
-            this.tank.setFluid(new FluidStack(fluid, values[0]));
+            this.tank.setFluid(new FluidStack(FluidRegistry.getFluid(values[1]), values[0]));
         }
         else this.tank.setFluid(null);
     }
@@ -113,7 +112,7 @@ public class TileEntityFluidCollector extends TileEntityInventoryBase implements
                         WorldPos coordsBlock = WorldUtil.getCoordsFromSide(sideToManipulate, worldObj, xCoord, yCoord, zCoord);
                         if(coordsBlock != null){
                             Block blockToBreak = worldObj.getBlock(coordsBlock.getX(), coordsBlock.getY(), coordsBlock.getZ());
-                            if(!this.isPlacer && blockToBreak != null && worldObj.getBlockMetadata(coordsBlock.getX(), coordsBlock.getY(), coordsBlock.getZ()) == 0){
+                            if(!this.isPlacer && blockToBreak != null && worldObj.getBlockMetadata(coordsBlock.getX(), coordsBlock.getY(), coordsBlock.getZ()) == 0 && FluidContainerRegistry.BUCKET_VOLUME <= this.tank.getCapacity()-this.tank.getFluidAmount()){
                                 if(blockToBreak instanceof IFluidBlock && ((IFluidBlock)blockToBreak).getFluid() != null){
                                     if(this.tank.fill(new FluidStack(((IFluidBlock)blockToBreak).getFluid(), FluidContainerRegistry.BUCKET_VOLUME), false) >= FluidContainerRegistry.BUCKET_VOLUME){
                                         this.tank.fill(new FluidStack(((IFluidBlock)blockToBreak).getFluid(), FluidContainerRegistry.BUCKET_VOLUME), true);
