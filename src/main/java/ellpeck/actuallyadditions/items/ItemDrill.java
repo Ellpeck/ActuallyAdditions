@@ -211,34 +211,49 @@ public class ItemDrill extends ItemEnergy implements INameableItem{
                 zRange = radius;
             }
 
-            for(int xPos = x-xRange; xPos <= x+xRange; xPos++){
-                for(int yPos = y-yRange; yPos <= y+yRange; yPos++){
-                    for(int zPos = z-zRange; zPos <= z+zRange; zPos++){
-                        int use = this.getEnergyUsePerBlock(stack);
-                        if(this.getEnergyStored(stack) >= use){
-                            Block block = world.getBlock(xPos, yPos, zPos);
-                            float hardness = block.getBlockHardness(world, xPos, yPos, zPos);
-                            int meta = world.getBlockMetadata(xPos, yPos, zPos);
-                            if(hardness > -1.0F && ((x == xPos && y == yPos && z == zPos) || this.canHarvestBlock(block, stack))){
-                                this.extractEnergy(stack, use, false);
+            //Break Middle Block first
+            int use = this.getEnergyUsePerBlock(stack);
+            if(this.getEnergyStored(stack) >= use){
+                this.tryHarvestBlock(world, x, y, z, false, stack, player, use);
+            }
+            else return;
 
-                                block.onBlockHarvested(world, xPos, yPos, zPos, meta, player);
-                                if(block.removedByPlayer(world, player, xPos, yPos, zPos, true)){
-                                    block.onBlockDestroyedByPlayer(world, xPos, yPos, zPos, meta);
-                                    block.harvestBlock(world, player, xPos, yPos, zPos, meta);
-
-                                    if(!EnchantmentHelper.getSilkTouchModifier(player)){
-                                        block.dropXpOnBlockBreak(world, xPos, yPos, zPos, block.getExpDrop(world, meta, EnchantmentHelper.getFortuneModifier(player)));
-                                    }
-
-                                    if(!(xPos == x && yPos == y && zPos == z)){
-                                        world.playAuxSFX(2001, xPos, yPos, zPos, Block.getIdFromBlock(block)+(meta << 12));
-                                    }
+            //Break Blocks around
+            if(radius > 0){
+                for(int xPos = x-xRange; xPos <= x+xRange; xPos++){
+                    for(int yPos = y-yRange; yPos <= y+yRange; yPos++){
+                        for(int zPos = z-zRange; zPos <= z+zRange; zPos++){
+                            if(!(x == xPos && y == yPos && z == zPos)){
+                                if(this.getEnergyStored(stack) >= use){
+                                    this.tryHarvestBlock(world, xPos, yPos, zPos, true, stack, player, use);
                                 }
+                                else return;
                             }
                         }
-                        else return;
                     }
+                }
+            }
+        }
+    }
+
+    private void tryHarvestBlock(World world, int xPos, int yPos, int zPos, boolean isExtra, ItemStack stack, EntityPlayer player, int use){
+        Block block = world.getBlock(xPos, yPos, zPos);
+        float hardness = block.getBlockHardness(world, xPos, yPos, zPos);
+        int meta = world.getBlockMetadata(xPos, yPos, zPos);
+        if(hardness >= 0.0F && (!isExtra || (this.canHarvestBlock(block, stack) && !block.hasTileEntity(meta)))){
+            this.extractEnergy(stack, use, false);
+
+            block.onBlockHarvested(world, xPos, yPos, zPos, meta, player);
+            if(block.removedByPlayer(world, player, xPos, yPos, zPos, true)){
+                block.onBlockDestroyedByPlayer(world, xPos, yPos, zPos, meta);
+                block.harvestBlock(world, player, xPos, yPos, zPos, meta);
+
+                if(!EnchantmentHelper.getSilkTouchModifier(player)){
+                    block.dropXpOnBlockBreak(world, xPos, yPos, zPos, block.getExpDrop(world, meta, EnchantmentHelper.getFortuneModifier(player)));
+                }
+
+                if(isExtra){
+                    world.playAuxSFX(2001, xPos, yPos, zPos, Block.getIdFromBlock(block)+(meta << 12));
                 }
             }
         }
