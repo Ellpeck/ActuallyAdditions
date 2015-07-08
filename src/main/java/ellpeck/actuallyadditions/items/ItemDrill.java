@@ -14,6 +14,7 @@ import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -21,11 +22,14 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.network.play.client.C07PacketPlayerDigging;
+import net.minecraft.network.play.server.S23PacketBlockChange;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MovingObjectPosition;
@@ -214,7 +218,7 @@ public class ItemDrill extends ItemEnergy implements INameableItem{
         //Break Middle Block first
         int use = this.getEnergyUsePerBlock(stack);
         if(this.getEnergyStored(stack) >= use){
-            this.tryHarvestBlock(world, x, y, z, false, stack, player, use);
+            if(!this.tryHarvestBlock(world, x, y, z, false, stack, player, use)) return false;
         }
         else return true;
 
@@ -225,7 +229,7 @@ public class ItemDrill extends ItemEnergy implements INameableItem{
                     for(int zPos = z-zRange; zPos <= z+zRange; zPos++){
                         if(!(x == xPos && y == yPos && z == zPos)){
                             if(this.getEnergyStored(stack) >= use){
-                                this.tryHarvestBlock(world, xPos, yPos, zPos, true, stack, player, use);
+                                if(!this.tryHarvestBlock(world, xPos, yPos, zPos, true, stack, player, use)) return false;
                             }
                             else return true;
                         }
@@ -236,7 +240,7 @@ public class ItemDrill extends ItemEnergy implements INameableItem{
         return true;
     }
 
-    private void tryHarvestBlock(World world, int xPos, int yPos, int zPos, boolean isExtra, ItemStack stack, EntityPlayer player, int use){
+    private boolean tryHarvestBlock(World world, int xPos, int yPos, int zPos, boolean isExtra, ItemStack stack, EntityPlayer player, int use){
         Block block = world.getBlock(xPos, yPos, zPos);
         float hardness = block.getBlockHardness(world, xPos, yPos, zPos);
         int meta = world.getBlockMetadata(xPos, yPos, zPos);
@@ -252,6 +256,13 @@ public class ItemDrill extends ItemEnergy implements INameableItem{
                     if(!EnchantmentHelper.getSilkTouchModifier(player)){
                         block.dropXpOnBlockBreak(world, xPos, yPos, zPos, block.getExpDrop(world, meta, EnchantmentHelper.getFortuneModifier(player)));
                     }
+
+                    if(player instanceof EntityPlayerMP){
+                        ((EntityPlayerMP)player).playerNetServerHandler.sendPacket(new S23PacketBlockChange(xPos, yPos, zPos, world));
+                    }
+                    //Should only happen when a severe weird bug occurs
+                    //In that case, the Block just gets broken normally
+                    else return false;
                 }
             }
             else{
@@ -260,8 +271,11 @@ public class ItemDrill extends ItemEnergy implements INameableItem{
                 if(block.removedByPlayer(world, player, xPos, yPos, zPos, true)){
                     block.onBlockDestroyedByPlayer(world, xPos, yPos, zPos, meta);
                 }
+
+                Minecraft.getMinecraft().getNetHandler().addToSendQueue(new C07PacketPlayerDigging(2, xPos, yPos, zPos, Minecraft.getMinecraft().objectMouseOver.sideHit));
             }
         }
+        return true;
     }
 
     @Override
