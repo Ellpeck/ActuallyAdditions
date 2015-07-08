@@ -6,6 +6,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -213,7 +214,15 @@ public class WorldUtil{
         return 0;
     }
 
-    public static MovingObjectPosition getMovingObjectPosWithReachDistance(World world, EntityPlayer player, double distance){
+    public static MovingObjectPosition getNearestPositionWithAir(World world, EntityPlayer player, int reach){
+        return getMovingObjectPosWithReachDistance(world, player, reach, false, false, true);
+    }
+
+    public static MovingObjectPosition getNearestBlockWithDefaultReachDistance(World world, EntityPlayer player){
+        return getMovingObjectPosWithReachDistance(world, player, player instanceof EntityPlayerMP ? ((EntityPlayerMP)player).theItemInWorldManager.getBlockReachDistance() : 5.0D, false, true, false);
+    }
+
+    private static MovingObjectPosition getMovingObjectPosWithReachDistance(World world, EntityPlayer player, double distance, boolean p1, boolean p2, boolean p3){
         float f = 1.0F;
         float f1 = player.prevRotationPitch+(player.rotationPitch-player.prevRotationPitch)*f;
         float f2 = player.prevRotationYaw+(player.rotationYaw-player.prevRotationYaw)*f;
@@ -228,6 +237,6 @@ public class WorldUtil{
         float f7 = f4*f5;
         float f8 = f3*f5;
         Vec3 vec31 = vec3.addVector((double)f7*distance, (double)f6*distance, (double)f8*distance);
-        return world.func_147447_a(vec3, vec31, false, true, false);
+        return world.func_147447_a(vec3, vec31, p1, p2, p3);
     }
 }

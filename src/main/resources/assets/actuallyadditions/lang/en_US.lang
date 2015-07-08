@@ -282,7 +282,8 @@ item.actuallyadditions.itemMiscBlackQuartz.name=Black Quartz
 item.actuallyadditions.itemMiscRing.name=Ring
 
 item.actuallyadditions.itemTeleStaff.name=Teleport Staff
-tooltip.actuallyadditions.itemTeleStaff.desc=Teleports you to where you're looking when you right-click.
+tooltip.actuallyadditions.itemTeleStaff.desc.1=Teleports you to where you're looking when you right-click.
+tooltip.actuallyadditions.itemTeleStaff.desc.2=Only works on Blocks or if you don't look upwards.
 
 item.actuallyadditions.itemJamCuBaRa.name=CuBaRa-Jam
 item.actuallyadditions.itemJamGraKiBa.name=GraKiBa-Jam

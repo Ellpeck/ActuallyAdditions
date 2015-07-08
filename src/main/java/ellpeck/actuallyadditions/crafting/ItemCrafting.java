@@ -61,7 +61,7 @@ public class ItemCrafting{
                     "  E", " S ", "SB ",
                     'E', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.ENDERPEARL_BLOCK.ordinal()),
                     'S', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.ENDER_CASING.ordinal()),
-                    'B', new ItemStack(InitItems.itemBattery)));
+                    'B', new ItemStack(InitItems.itemBattery, 1, Util.WILDCARD)));
 
         //Drill Speed
         if(ConfigCrafting.DRILL_SPEED.isEnabled()){

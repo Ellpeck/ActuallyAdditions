@@ -25,7 +25,7 @@ public class ItemTeleStaff extends ItemEnergy implements INameableItem{
     private static final int waitTime = ConfigIntValues.TELE_STAFF_WAIT_TIME.getValue();
 
     public ItemTeleStaff(){
-        super(500000, 10000, 1);
+        super(500000, 10000, 2);
     }
 
     @Override
@@ -74,8 +74,8 @@ public class ItemTeleStaff extends ItemEnergy implements INameableItem{
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player){
         if(!world.isRemote){
             if(this.getWaitTime(stack) <= 0){
-                MovingObjectPosition pos = WorldUtil.getMovingObjectPosWithReachDistance(world, player, (double)reach);
-                if(pos != null){
+                MovingObjectPosition pos = WorldUtil.getNearestPositionWithAir(world, player, reach);
+                if(pos != null && (pos.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK || player.rotationPitch >= -5)){
                     int side = pos.sideHit;
                     if(side != -1){
                         ForgeDirection forgeSide = ForgeDirection.getOrientation(side);
@@ -86,13 +86,16 @@ public class ItemTeleStaff extends ItemEnergy implements INameableItem{
                             int use = energyUsedPerBlock+(int)(energyUsedPerBlock*pos.hitVec.distanceTo(player.getPosition(1.0F)));
                             if(this.getEnergyStored(stack) >= use){
                                 ((EntityPlayerMP)player).playerNetServerHandler.setPlayerLocation(x, y, z, player.rotationYaw, player.rotationPitch);
+                                player.mountEntity(null);
                                 world.playSoundAtEntity(player, "mob.endermen.portal", 1.0F, 1.0F);
-                                if(!player.capabilities.isCreativeMode) this.extractEnergy(stack, use, false);
+                                if(!player.capabilities.isCreativeMode){
+                                    this.extractEnergy(stack, use, false);
+                                    this.setWaitTime(stack, waitTime);
+                                }
                             }
                         }
                     }
                 }
-                this.setWaitTime(stack, waitTime);
             }
         }
         player.swingItem();

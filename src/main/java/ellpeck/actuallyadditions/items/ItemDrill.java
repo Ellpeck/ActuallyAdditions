@@ -21,7 +21,6 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
@@ -199,7 +198,7 @@ public class ItemDrill extends ItemEnergy implements INameableItem{
         int yRange = radius;
         int zRange = 0;
 
-        MovingObjectPosition pos = WorldUtil.getMovingObjectPosWithReachDistance(world, player, ((EntityPlayerMP)player).theItemInWorldManager.getBlockReachDistance());
+        MovingObjectPosition pos = WorldUtil.getNearestBlockWithDefaultReachDistance(world, player);
 
         if(pos != null){
             int side = pos.sideHit;
