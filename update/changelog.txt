@@ -1,1 +1,1 @@
-Lamp Controller, Teleport Staff! \o/
+Changed TeleStaff's Behavior, fixed Drill not mining some Blocks correctly

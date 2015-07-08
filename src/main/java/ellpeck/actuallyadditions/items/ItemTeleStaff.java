@@ -15,6 +15,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
@@ -83,7 +84,7 @@ public class ItemTeleStaff extends ItemEnergy implements INameableItem{
                             double x = pos.hitVec.xCoord-(side == 4 ? 0.5 : 0)+(side == 5 ? 0.5 : 0);
                             double y = pos.hitVec.yCoord-(side == 0 ? 2.0 : 0)+(side == 1 ? 0.5 : 0);
                             double z = pos.hitVec.zCoord-(side == 2 ? 0.5 : 0)+(side == 3 ? 0.5 : 0);
-                            int use = energyUsedPerBlock+(int)(energyUsedPerBlock*pos.hitVec.distanceTo(player.getPosition(1.0F)));
+                            int use = energyUsedPerBlock+(int)(energyUsedPerBlock*pos.hitVec.distanceTo(Vec3.createVectorHelper(player.posX, player.posY+(player.getEyeHeight()-player.getDefaultEyeHeight()), player.posZ)));
                             if(this.getEnergyStored(stack) >= use){
                                 ((EntityPlayerMP)player).playerNetServerHandler.setPlayerLocation(x, y, z, player.rotationYaw, player.rotationPitch);
                                 player.mountEntity(null);
