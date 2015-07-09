@@ -14,7 +14,6 @@ import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -22,14 +21,11 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.network.play.client.C07PacketPlayerDigging;
-import net.minecraft.network.play.server.S23PacketBlockChange;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MovingObjectPosition;
@@ -197,93 +193,70 @@ public class ItemDrill extends ItemEnergy implements INameableItem{
         return slots;
     }
 
-    public boolean breakBlocks(ItemStack stack, int radius, World world, int x, int y, int z, EntityPlayer player){
+    public void breakBlocks(ItemStack stack, int radius, World world, int x, int y, int z, EntityPlayer player){
         int xRange = radius;
         int yRange = radius;
         int zRange = 0;
 
         MovingObjectPosition pos = WorldUtil.getNearestBlockWithDefaultReachDistance(world, player);
-        //Always prevent the Block from being broken on the Server, but always drop Breaking Particles
-        //on the Client (otherwise Tall Grass for example wouldn't drop particles for some reason),
-        //as this will only happen in very rare cases anyway
-        if(pos == null){
-            return !world.isRemote;
-        }
+        if(pos != null){
 
-        int side = pos.sideHit;
-        if(side == 0 || side == 1){
-            zRange = radius;
-            yRange = 0;
-        }
-        if(side == 4 || side == 5){
-            xRange = 0;
-            zRange = radius;
-        }
+            int side = pos.sideHit;
+            if(side == 0 || side == 1){
+                zRange = radius;
+                yRange = 0;
+            }
+            if(side == 4 || side == 5){
+                xRange = 0;
+                zRange = radius;
+            }
 
-        //Break Middle Block first
-        int use = this.getEnergyUsePerBlock(stack);
-        if(this.getEnergyStored(stack) >= use){
-            if(!this.tryHarvestBlock(world, x, y, z, false, stack, player, use)) return false;
-        }
-        else return true;
+            //Break Middle Block first
+            int use = this.getEnergyUsePerBlock(stack);
+            if(this.getEnergyStored(stack) >= use){
+                this.tryHarvestBlock(world, x, y, z, false, stack, player, use);
+            }
+            else return;
 
-        //Break Blocks around
-        if(radius > 0){
-            for(int xPos = x-xRange; xPos <= x+xRange; xPos++){
-                for(int yPos = y-yRange; yPos <= y+yRange; yPos++){
-                    for(int zPos = z-zRange; zPos <= z+zRange; zPos++){
-                        if(!(x == xPos && y == yPos && z == zPos)){
-                            if(this.getEnergyStored(stack) >= use){
-                                if(!this.tryHarvestBlock(world, xPos, yPos, zPos, true, stack, player, use)) return false;
+            //Break Blocks around
+            if(radius > 0){
+                for(int xPos = x-xRange; xPos <= x+xRange; xPos++){
+                    for(int yPos = y-yRange; yPos <= y+yRange; yPos++){
+                        for(int zPos = z-zRange; zPos <= z+zRange; zPos++){
+                            if(!(x == xPos && y == yPos && z == zPos)){
+                                if(this.getEnergyStored(stack) >= use){
+                                    this.tryHarvestBlock(world, xPos, yPos, zPos, true, stack, player, use);
+                                }
+                                else return;
                             }
-                            else return true;
                         }
                     }
                 }
             }
         }
-        return true;
     }
 
-    private boolean tryHarvestBlock(World world, int xPos, int yPos, int zPos, boolean isExtra, ItemStack stack, EntityPlayer player, int use){
+    private void tryHarvestBlock(World world, int xPos, int yPos, int zPos, boolean isExtra, ItemStack stack, EntityPlayer player, int use){
         Block block = world.getBlock(xPos, yPos, zPos);
         float hardness = block.getBlockHardness(world, xPos, yPos, zPos);
         int meta = world.getBlockMetadata(xPos, yPos, zPos);
         if(hardness >= 0.0F && (!isExtra || (this.canHarvestBlock(block, stack) && !block.hasTileEntity(meta)))){
-            if(!world.isRemote){
-                this.extractEnergy(stack, use, false);
+            this.extractEnergy(stack, use, false);
 
-                block.onBlockHarvested(world, xPos, yPos, zPos, meta, player);
-                if(block.removedByPlayer(world, player, xPos, yPos, zPos, true)){
-                    block.onBlockDestroyedByPlayer(world, xPos, yPos, zPos, meta);
-                    block.harvestBlock(world, player, xPos, yPos, zPos, meta);
+            block.onBlockHarvested(world, xPos, yPos, zPos, meta, player);
+            if(block.removedByPlayer(world, player, xPos, yPos, zPos, true)){
+                block.onBlockDestroyedByPlayer(world, xPos, yPos, zPos, meta);
+                block.harvestBlock(world, player, xPos, yPos, zPos, meta);
 
-                    if(!EnchantmentHelper.getSilkTouchModifier(player)){
-                        block.dropXpOnBlockBreak(world, xPos, yPos, zPos, block.getExpDrop(world, meta, EnchantmentHelper.getFortuneModifier(player)));
-                    }
-
-                    if(player instanceof EntityPlayerMP){
-                        ((EntityPlayerMP)player).playerNetServerHandler.sendPacket(new S23PacketBlockChange(xPos, yPos, zPos, world));
-                    }
-                    //Should only happen when a severe weird bug occurs
-                    //In that case, the Block just gets broken normally
-                    else return false;
+                if(!EnchantmentHelper.getSilkTouchModifier(player)){
+                    block.dropXpOnBlockBreak(world, xPos, yPos, zPos, block.getExpDrop(world, meta, EnchantmentHelper.getFortuneModifier(player)));
                 }
             }
-            else{
+
+            if(isExtra){
                 world.playAuxSFX(2001, xPos, yPos, zPos, Block.getIdFromBlock(block)+(meta << 12));
-
-                if(block.removedByPlayer(world, player, xPos, yPos, zPos, true)){
-                    block.onBlockDestroyedByPlayer(world, xPos, yPos, zPos, meta);
-                }
-
-                //When mining very fast, Client and Server might de-sync causing Ghost Blocks
-                //This sends a check to the Server and if the broken block results in a Ghost Block, it will reappear
-                //(Not all of the time, but very often, making Ghost Blocks much rarer than they usually are)
-                Minecraft.getMinecraft().getNetHandler().addToSendQueue(new C07PacketPlayerDigging(2, xPos, yPos, zPos, Minecraft.getMinecraft().objectMouseOver.sideHit));
             }
         }
-        return true;
     }
 
     @Override
@@ -292,34 +265,38 @@ public class ItemDrill extends ItemEnergy implements INameableItem{
     }
 
     @Override
-    public boolean onBlockStartBreak(ItemStack stack, int x, int y, int z, EntityPlayer player){
-        boolean toReturn = true;
-        int use = this.getEnergyUsePerBlock(stack);
-        if(this.getEnergyStored(stack) >= use){
-            if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SILK_TOUCH)) stack.addEnchantment(Enchantment.silkTouch, 1);
-            else{
-                if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FORTUNE)) stack.addEnchantment(Enchantment.fortune, this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FORTUNE_II) ? 3 : 1);
-            }
-
-            if(!player.isSneaking() && this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.THREE_BY_THREE)){
-                if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FIVE_BY_FIVE)){
-                    toReturn = this.breakBlocks(stack, 2, player.worldObj, x, y, z, player);
+    public boolean onBlockDestroyed(ItemStack stack, World world, Block block, int x, int y, int z, EntityLivingBase living){
+        if(!world.isRemote && living instanceof EntityPlayer){
+            EntityPlayer player = (EntityPlayer)living;
+            int use = this.getEnergyUsePerBlock(stack);
+            if(this.getEnergyStored(stack) >= use){
+                if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SILK_TOUCH))
+                    stack.addEnchantment(Enchantment.silkTouch, 1);
+                else{
+                    if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FORTUNE))
+                        stack.addEnchantment(Enchantment.fortune, this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FORTUNE_II) ? 3 : 1);
                 }
-                else toReturn = this.breakBlocks(stack, 1, player.worldObj, x, y, z, player);
-            }
-            else toReturn = this.breakBlocks(stack, 0, player.worldObj, x, y, z, player);
 
-            NBTTagList ench = stack.getEnchantmentTagList();
-            if(ench != null){
-                for(int i = 0; i < ench.tagCount(); i++){
-                    short id = ench.getCompoundTagAt(i).getShort("id");
-                    if(id == Enchantment.silkTouch.effectId || id == Enchantment.fortune.effectId){
-                        ench.removeTag(i);
+                if(!player.isSneaking() && this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.THREE_BY_THREE)){
+                    if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FIVE_BY_FIVE)){
+                        this.breakBlocks(stack, 2, world, x, y, z, player);
+                    }
+                    else this.breakBlocks(stack, 1, world, x, y, z, player);
+                }
+                else this.breakBlocks(stack, 0, world, x, y, z, player);
+
+                NBTTagList ench = stack.getEnchantmentTagList();
+                if(ench != null){
+                    for(int i = 0; i < ench.tagCount(); i++){
+                        short id = ench.getCompoundTagAt(i).getShort("id");
+                        if(id == Enchantment.silkTouch.effectId || id == Enchantment.fortune.effectId){
+                            ench.removeTag(i);
+                        }
                     }
                 }
             }
         }
-        return toReturn;
+        return true;
     }
 
     @Override
