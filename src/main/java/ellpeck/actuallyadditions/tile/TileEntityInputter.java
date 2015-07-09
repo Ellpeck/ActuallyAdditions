@@ -17,10 +17,15 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
     @Override
     public void onNumberReceived(int text, int textID, EntityPlayer player){
         if(text != -1){
-            if(textID == 0) this.slotToPutStart = text;
-            if(textID == 1) this.slotToPutEnd = text;
-            if(textID == 2) this.slotToPullStart = text;
-            if(textID == 3) this.slotToPullEnd = text;
+            if(this.placeToPut instanceof IInventory){
+                if(textID == 0) this.slotToPutStart = Math.max(Math.min(text, ((IInventory)this.placeToPut).getSizeInventory()-1), 0);
+                if(textID == 1) this.slotToPutEnd = Math.max(Math.min(text, ((IInventory)this.placeToPut).getSizeInventory()), 0);
+            }
+
+            if(this.placeToPull instanceof IInventory){
+                if(textID == 2) this.slotToPullStart =  Math.max(Math.min(text, ((IInventory)this.placeToPull).getSizeInventory()-1), 0);
+                if(textID == 3) this.slotToPullEnd = Math.max(Math.min(text, ((IInventory)this.placeToPull).getSizeInventory()), 0);
+            }
         }
         this.markDirty();
     }
