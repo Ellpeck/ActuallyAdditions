@@ -22,8 +22,10 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
+import scala.actors.threadpool.Arrays;
 
 import java.util.Collections;
+import java.util.regex.Pattern;
 
 @SideOnly(Side.CLIENT)
 public class GuiInputter extends GuiContainer{
@@ -204,6 +206,7 @@ public class GuiInputter extends GuiContainer{
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public void drawScreen(int x, int y, float f){
         super.drawScreen(x, y, f);
 
@@ -219,6 +222,24 @@ public class GuiInputter extends GuiContainer{
             if(x >= guiLeft+157 && y >= guiTop+16 && x <= guiLeft+172 && y <= guiTop+31){
                 this.func_146283_a(Collections.singletonList(text2), x, y);
             }
+        }
+
+        //Info Mode on!
+        if(x >= guiLeft+11 && y >= guiTop+65 && x <= guiLeft+11+31 && y <= guiTop+65+12){
+            String[] strings = StatCollector.translateToLocal("info."+ModUtil.MOD_ID_LOWER+".inputter.info.1").replace("%s", StatCollector.translateToLocal("info."+ModUtil.MOD_ID_LOWER+".gui.pull")).split(Pattern.quote("|"));
+            this.func_146283_a(Arrays.asList(strings), x, y);
+        }
+        if(x >= guiLeft+96 && y >= guiTop+65 && x <= guiLeft+96+31 && y <= guiTop+65+12){
+            String[] strings = StatCollector.translateToLocal("info."+ModUtil.MOD_ID_LOWER+".inputter.info.1").replace("%s", StatCollector.translateToLocal("info."+ModUtil.MOD_ID_LOWER+".gui.put")).split(Pattern.quote("|"));
+            this.func_146283_a(Arrays.asList(strings), x, y);
+        }
+        if(x >= guiLeft+48 && y >= guiTop+65 && x <= guiLeft+48+31 && y <= guiTop+65+12){
+            String[] strings = StatCollector.translateToLocal("info."+ModUtil.MOD_ID_LOWER+".inputter.info.2").replace("%s", StatCollector.translateToLocal("info."+ModUtil.MOD_ID_LOWER+".gui.pull")).split(Pattern.quote("|"));
+            this.func_146283_a(Arrays.asList(strings), x, y);
+        }
+        if(x >= guiLeft+133 && y >= guiTop+65 && x <= guiLeft+133+31 && y <= guiTop+65+12){
+            String[] strings = StatCollector.translateToLocal("info."+ModUtil.MOD_ID_LOWER+".inputter.info.2").replace("%s", StatCollector.translateToLocal("info."+ModUtil.MOD_ID_LOWER+".gui.put")).split(Pattern.quote("|"));
+            this.func_146283_a(Arrays.asList(strings), x, y);
         }
     }
 

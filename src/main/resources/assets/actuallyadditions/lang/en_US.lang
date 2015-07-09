@@ -250,8 +250,8 @@ tooltip.actuallyadditions.itemDrillUpgradeFortuneII.desc=Gives the Drill Fortune
 tooltip.actuallyadditions.itemDrillUpgradeBlockPlacing.desc.1=Places Blocks from your Hotbar when Right-Clicking with the Drill!
 tooltip.actuallyadditions.itemDrillUpgradeBlockPlacing.desc.2=You can define the Slot on your Hotbar to place from!
 tooltip.actuallyadditions.itemDrillUpgradeBlockPlacing.desc.3=Sneak-Right-Click this Upgrade in the desired Slot to store it!
-tooltip.actuallyadditions.itemDrillUpgradeThreeByThree.desc=Lets you mine a 3x3 Area!
-tooltip.actuallyadditions.itemDrillUpgradeFiveByFive.desc=Lets you mine a 5x5 Area! Requires the 3x3 Upgrade.
+tooltip.actuallyadditions.itemDrillUpgradeThreeByThree.desc=Lets you mine a 3x3 Area! Sneaking while mining will ignore the Augment.
+tooltip.actuallyadditions.itemDrillUpgradeFiveByFive.desc=Lets you mine a 5x5 Area! Sneaking while mining will ignore the Augment. Requires the 3x3 Upgrade.
 tooltip.actuallyadditions.itemDrillUpgrade.desc=Sneak-Right-Click the Drill to apply Upgrades!
 
 tile.actuallyadditions.blockMiscEnderCasing.name=Ender Casing
@@ -397,7 +397,7 @@ tooltip.actuallyadditions.blockInputter.desc.3=Turn me off with Redstone!
 tooltip.actuallyadditions.blockInputter.desc.4=Configurable:
 tooltip.actuallyadditions.blockInputter.desc.5=-Side to Output to and Input from
 tooltip.actuallyadditions.blockInputter.desc.6=-A Range of Slots in the other Inventory to Output to and Input from
-tooltip.actuallyadditions.blockInputter.desc.7=-> Just input the Minimum and Maximum Slots into the input Fields!
+tooltip.actuallyadditions.blockInputter.desc.7=-Hover over GUI Elements to find out what they mean!
 tooltip.actuallyadditions.blockInputterAdvanced.desc=Has an Input and Output Filter! (White- and Blacklist!)
 tooltip.actuallyadditions.blockFishingNet.desc=Catches Fish automatically when placed above Water
 tooltip.actuallyadditions.blockFurnaceSolar.desc=Produces RF in Daylight
@@ -554,6 +554,10 @@ info.actuallyadditions.update.versionComp.desc=[{"text":"You have Version "},{"t
 info.actuallyadditions.update.download.desc=[{"text":"Download the newest Version "},{"text":"here! (Click me!)","color":"dark_green","underlined":"true","clickEvent":{"action":"open_url","value":"%s"},"hoverEvent":{"action":"show_text","value":{"text":"","extra":[{"text":"Click here to open your Browser and download the newest Version!"}]}}}]
 info.actuallyadditions.update.failed.desc=[{"text":"The Update Check for "},{"text":"Actually Additions ","color":"dark_green","bold":"true"},{"text":"failed! Check your Internet Connection and the Logs for more Info!","color":"none"}]
 info.actuallyadditions.update.changelog.desc=Updates: %s
+
+#The "|" are places where the String splits into a new Line
+info.actuallyadditions.inputter.info.1=This is the first Slot in the |connected Inventory to %s at.
+info.actuallyadditions.inputter.info.2=This is the slot after the last Slot |in the connected Inventory to %s at. |What that means: If you, for example, write 2 in |the field to the left and 5 in this one, |it will %s from Slot 2, 3, and 4.
 
 achievement.actuallyadditions.pickUpSolidXP=Square and yummy!
 achievement.actuallyadditions.pickUpSolidXP.desc=Pick up some Solidified Experience
