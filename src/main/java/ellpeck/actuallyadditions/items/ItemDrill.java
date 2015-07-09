@@ -203,7 +203,12 @@ public class ItemDrill extends ItemEnergy implements INameableItem{
         int zRange = 0;
 
         MovingObjectPosition pos = WorldUtil.getNearestBlockWithDefaultReachDistance(world, player);
-        if(pos == null) return false;
+        //Always prevent the Block from being broken on the Server, but always drop Breaking Particles
+        //on the Client (otherwise Tall Grass for example wouldn't drop particles for some reason),
+        //as this will only happen in very rare cases anyway
+        if(pos == null){
+            return !world.isRemote;
+        }
 
         int side = pos.sideHit;
         if(side == 0 || side == 1){
@@ -272,6 +277,9 @@ public class ItemDrill extends ItemEnergy implements INameableItem{
                     block.onBlockDestroyedByPlayer(world, xPos, yPos, zPos, meta);
                 }
 
+                //When mining very fast, Client and Server might de-sync causing Ghost Blocks
+                //This sends a check to the Server and if the broken block results in a Ghost Block, it will reappear
+                //(Not all of the time, but very often, making Ghost Blocks much rarer than they usually are)
                 Minecraft.getMinecraft().getNetHandler().addToSendQueue(new C07PacketPlayerDigging(2, xPos, yPos, zPos, Minecraft.getMinecraft().objectMouseOver.sideHit));
             }
         }
