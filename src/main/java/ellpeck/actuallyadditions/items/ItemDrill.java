@@ -266,9 +266,9 @@ public class ItemDrill extends ItemEnergy implements INameableItem{
 
     @Override
     public boolean onBlockStartBreak(ItemStack stack, int x, int y, int z, EntityPlayer player){
-        if(!player.worldObj.isRemote){
-            int use = this.getEnergyUsePerBlock(stack);
-            if(this.getEnergyStored(stack) >= use){
+        int use = this.getEnergyUsePerBlock(stack);
+        if(this.getEnergyStored(stack) >= use){
+            if(!player.worldObj.isRemote){
                 if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SILK_TOUCH))
                     stack.addEnchantment(Enchantment.silkTouch, 1);
                 else{
@@ -293,10 +293,11 @@ public class ItemDrill extends ItemEnergy implements INameableItem{
                         }
                     }
                 }
+                return true;
             }
-            return true;
+            else return false;
         }
-        return false;
+        else return true;
     }
 
     @Override
