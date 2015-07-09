@@ -265,9 +265,8 @@ public class ItemDrill extends ItemEnergy implements INameableItem{
     }
 
     @Override
-    public boolean onBlockDestroyed(ItemStack stack, World world, Block block, int x, int y, int z, EntityLivingBase living){
-        if(!world.isRemote && living instanceof EntityPlayer){
-            EntityPlayer player = (EntityPlayer)living;
+    public boolean onBlockStartBreak(ItemStack stack, int x, int y, int z, EntityPlayer player){
+        if(!player.worldObj.isRemote){
             int use = this.getEnergyUsePerBlock(stack);
             if(this.getEnergyStored(stack) >= use){
                 if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SILK_TOUCH))
@@ -279,11 +278,11 @@ public class ItemDrill extends ItemEnergy implements INameableItem{
 
                 if(!player.isSneaking() && this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.THREE_BY_THREE)){
                     if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FIVE_BY_FIVE)){
-                        this.breakBlocks(stack, 2, world, x, y, z, player);
+                        this.breakBlocks(stack, 2, player.worldObj, x, y, z, player);
                     }
-                    else this.breakBlocks(stack, 1, world, x, y, z, player);
+                    else this.breakBlocks(stack, 1, player.worldObj, x, y, z, player);
                 }
-                else this.breakBlocks(stack, 0, world, x, y, z, player);
+                else this.breakBlocks(stack, 0, player.worldObj, x, y, z, player);
 
                 NBTTagList ench = stack.getEnchantmentTagList();
                 if(ench != null){
@@ -295,8 +294,9 @@ public class ItemDrill extends ItemEnergy implements INameableItem{
                     }
                 }
             }
+            return true;
         }
-        return true;
+        return false;
     }
 
     @Override
