@@ -1,1 +1,1 @@
-Changed TeleStaff's Behavior, fixed Drill not mining some Blocks correctly
+Added ESD descriptions, made the Drill work better
