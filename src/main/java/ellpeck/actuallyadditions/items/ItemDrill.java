@@ -89,9 +89,9 @@ public class ItemDrill extends ItemEnergy implements INameableItem{
         if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SPEED)){
             if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SPEED_II)){
                 if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SPEED_III)) efficiency += 37.0F;
-                else efficiency += 28.0F;
+                else efficiency += 25.0F;
             }
-            else efficiency += 15.0F;
+            else efficiency += 8.0F;
         }
         return efficiency;
     }
