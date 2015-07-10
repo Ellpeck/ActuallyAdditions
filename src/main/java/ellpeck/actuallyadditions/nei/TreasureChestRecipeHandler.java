@@ -120,10 +120,7 @@ public class TreasureChestRecipeHandler extends TemplateRecipeHandler{
     public void drawExtras(int rec){
         CachedTreasure recipe = (CachedTreasure)this.arecipes.get(rec);
         if(recipe.result != null){
-            int secondChance = recipe.chance;
-            String secondString = secondChance + "%";
-            //TODO
-            GuiDraw.drawString(recipe.minAmount + "-" + recipe.maxAmount + " Items at " + secondString, 65+10, 45, StringUtil.DECIMAL_COLOR_GRAY_TEXT, false);
+            GuiDraw.drawString(recipe.minAmount+"-"+recipe.maxAmount+" "+StatCollector.translateToLocal("container.nei."+ModUtil.MOD_ID_LOWER+".treasureChest.info")+" "+recipe.chance+"%", 65+10, 45, StringUtil.DECIMAL_COLOR_GRAY_TEXT, false);
         }
     }
 

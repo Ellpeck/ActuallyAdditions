@@ -211,8 +211,7 @@ public class ItemCoffee extends ItemFood implements INameableItem{
                     list.add(StatCollector.translateToLocal(effect.getEffectName())+" "+(effect.getAmplifier()+1)+ " (" + Potion.getDurationString(new PotionEffect(0, effect.getDuration()*20, 0)) + ")");
                 }
             }
-            //TODO
-            else list.add("No Effects");
+            else list.add(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".noEffects.desc"));
         }
         else list.add(ItemUtil.shiftForInfo());
     }

@@ -362,6 +362,7 @@ tooltip.actuallyadditions.shiftForInfo.desc=Press Shift for Info
 tooltip.actuallyadditions.hunger.desc=Fills
 tooltip.actuallyadditions.saturation.desc=Saturation
 tooltip.actuallyadditions.durability.desc=Durability
+tooltip.actuallyadditions.noEffects.desc=No Effects
 
 tooltip.actuallyadditions.oredictName.desc=OreDictionary Entries
 tooltip.actuallyadditions.noOredictNameAvail.desc=Has No OreDictionary Entries
@@ -546,7 +547,9 @@ container.actuallyadditions.enervator.name=Enervator
 container.nei.actuallyadditions.crushing.name=Crusher
 container.nei.actuallyadditions.ballOfHair.name=Ball Of Hair Usage
 container.nei.actuallyadditions.compost.name=Compost
+
 container.nei.actuallyadditions.treasureChest.name=Treasure Chest
+container.nei.actuallyadditions.treasureChest.info=Items at
 
 container.nei.actuallyadditions.coffee.name=Coffee Machine
 container.nei.actuallyadditions.coffee.special=Special Feature
@@ -560,7 +563,6 @@ info.actuallyadditions.update.download.desc=[{"text":"Download the newest Versio
 info.actuallyadditions.update.failed.desc=[{"text":"The Update Check for "},{"text":"Actually Additions ","color":"dark_green","bold":"true"},{"text":"failed! Check your Internet Connection and the Logs for more Info!","color":"none"}]
 info.actuallyadditions.update.changelog.desc=Updates: %s
 
-#The "|" are places where the String splits into a new Line
 info.actuallyadditions.inputter.info.1=This is the first Slot in the |connected Inventory to %s at.
 info.actuallyadditions.inputter.info.2=This is the slot after the last Slot |in the connected Inventory to %s at. |What that means: If you, for example, write 2 in |the field to the left and 5 in this one, |it will %s from Slot 2, 3, and 4.
 
