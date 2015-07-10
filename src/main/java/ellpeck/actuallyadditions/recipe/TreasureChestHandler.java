@@ -1,6 +1,9 @@
 package ellpeck.actuallyadditions.recipe;
 
 import ellpeck.actuallyadditions.blocks.InitBlocks;
+import ellpeck.actuallyadditions.items.InitItems;
+import ellpeck.actuallyadditions.items.metalists.TheJams;
+import ellpeck.actuallyadditions.items.metalists.TheSpecialDrops;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.WeightedRandom;
@@ -19,6 +22,31 @@ public class TreasureChestHandler{
         addReturn(new ItemStack(Items.ender_pearl), 10, 1, 2);
         addReturn(new ItemStack(Items.emerald), 3, 1, 1);
         addReturn(new ItemStack(Items.experience_bottle), 5, 3, 6);
+        addReturn(new ItemStack(InitItems.itemSpecialDrop, 1, TheSpecialDrops.SOLIDIFIED_EXPERIENCE.ordinal()), 15, 3, 6);
+        addReturn(new ItemStack(Items.record_11), 2, 1, 1);
+        addReturn(new ItemStack(Items.record_13), 2, 1, 1);
+        addReturn(new ItemStack(Items.record_blocks), 2, 1, 1);
+        addReturn(new ItemStack(Items.record_cat), 2, 1, 1);
+        addReturn(new ItemStack(Items.record_chirp), 2, 1, 1);
+        addReturn(new ItemStack(Items.record_far), 2, 1, 1);
+        addReturn(new ItemStack(Items.record_mall), 2, 1, 1);
+        addReturn(new ItemStack(Items.record_mellohi), 2, 1, 1);
+        addReturn(new ItemStack(Items.record_stal), 2, 1, 1);
+        addReturn(new ItemStack(Items.record_strad), 2, 1, 1);
+        addReturn(new ItemStack(Items.record_ward), 2, 1, 1);
+        addReturn(new ItemStack(Items.record_wait), 2, 1, 1);
+        addReturn(new ItemStack(Items.saddle), 5, 1, 1);
+        addReturn(new ItemStack(Items.name_tag), 20, 1, 2);
+        addReturn(new ItemStack(InitItems.itemJams, 1, TheJams.CU_BA_RA.ordinal()), 10, 1, 2);
+        addReturn(new ItemStack(InitItems.itemJams, 1, TheJams.GRA_KI_BA.ordinal()), 10, 1, 2);
+        addReturn(new ItemStack(InitItems.itemJams, 1, TheJams.PL_AP_LE.ordinal()), 10, 1, 2);
+        addReturn(new ItemStack(InitItems.itemJams, 1, TheJams.CH_AP_CI.ordinal()), 10, 1, 2);
+        addReturn(new ItemStack(InitItems.itemJams, 1, TheJams.HO_ME_KI.ordinal()), 10, 1, 2);
+        addReturn(new ItemStack(InitItems.itemJams, 1, TheJams.PI_CO.ordinal()), 10, 1, 2);
+        addReturn(new ItemStack(Items.fish), 80, 1, 3);
+        addReturn(new ItemStack(Items.fish, 1, 1), 60, 1, 3);
+        addReturn(new ItemStack(Items.fish, 1, 2), 10, 1, 1);
+        addReturn(new ItemStack(Items.fish, 1, 3), 40, 1, 2);
     }
 
     public static void addReturn(ItemStack stack, int chance, int minAmount, int maxAmount){

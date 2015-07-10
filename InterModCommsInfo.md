@@ -29,3 +29,11 @@ The two Brackets will have to get replaced with one of the parts of Information 
 - To the Compound, add an NBTTagCompound with the name "output" that contains the Input ItemStack saved to NBT (To do this, just use ItemStack.saveToNBT)
 - To the Compound, add an int with the name "chance" that contains the Chance of the Item appearing
 - Send the Message with "registerBallOfHairRecipe" as the [X] Argument, the Compound as the [Y] Argument.
+
+##### Treasure Chest Recipes
+- Create an NBTTagCompound
+- To the Compound, add an NBTTagCompound with the name "output" that contains the Input ItemStack saved to NBT (To do this, just use ItemStack.saveToNBT)
+- To the Compound, add an int with the name "chance" that contains the Chance of the Item appearing
+- To the Compound, add an int with the name "minAmount" that contains the minimum size of the ItemStack
+- To the Compound, add an int with the name "maxAmount" that contains the maximum size of the ItemStack
+- Send the Message with "registerTreasureChestRecipe" as the [X] Argument, the Compound as the [Y] Argument.

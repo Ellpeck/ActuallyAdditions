@@ -53,7 +53,6 @@ public class WorldDecorationEvent{
                     int genX = event.chunkX+event.rand.nextInt(16)+8;
                     int genZ = event.chunkZ+event.rand.nextInt(16)+8;
                     int genY = event.world.getTopSolidOrLiquidBlock(genX, genZ)-1;
-
                     if(event.world.getBlock(genX, genY, genZ).getMaterial() == blockBelow){
                         event.world.setBlock(genX, genY+1, genZ, plant, meta, 2);
                     }
