@@ -18,7 +18,7 @@ public class CraftEvent{
         for(int i = 0; i < TheAchievements.values().length; i++){
             TheAchievements ach = TheAchievements.values()[i];
             if(ach.type == type){
-                if(gotten.getItem() == ach.ach.theItemStack.getItem()){
+                if(gotten != null && ach.ach.theItemStack != null && gotten.getItem() == ach.ach.theItemStack.getItem()){
                     if(gotten.getItemDamage() == ach.ach.theItemStack.getItemDamage()){
                         player.addStat(ach.ach, 1);
                     }

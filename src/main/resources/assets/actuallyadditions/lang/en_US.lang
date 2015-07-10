@@ -568,17 +568,42 @@ info.actuallyadditions.inputter.info.2=This is the slot after the last Slot |in 
 
 achievement.actuallyadditions.pickUpSolidXP=Square and yummy!
 achievement.actuallyadditions.pickUpSolidXP.desc=Pick up some Solidified Experience
+
 achievement.actuallyadditions.craftKnifeBlade=Sharp! So Sharp!
 achievement.actuallyadditions.craftKnifeBlade.desc=Craft a Knife Blade
+
 achievement.actuallyadditions.craftKnife=Cutcutcutcutcutcutcutcutcutcutcut!
 achievement.actuallyadditions.craftKnife.desc=Craft a Knife
+
 achievement.actuallyadditions.craftMashedFood=Munch munch munch!
 achievement.actuallyadditions.craftMashedFood.desc=Craft some Mashed Food
+
 achievement.actuallyadditions.craftWoodenCasing=Hard and sturdy!
 achievement.actuallyadditions.craftWoodenCasing.desc=Craft a Wooden Casing
+
 achievement.actuallyadditions.craftStoneCasing=Harder and sturdier!
 achievement.actuallyadditions.craftStoneCasing.desc=Craft a Stone Casing
+
 achievement.actuallyadditions.craftBasicCoil=Transmits.. power.. or something?
 achievement.actuallyadditions.craftBasicCoil.desc=Craft a Basic Coil
+
 achievement.actuallyadditions.craftAdvancedCoil=Transmits... more power I guess.
 achievement.actuallyadditions.craftAdvancedCoil.desc=Craft an Advanced Coil
+
+achievement.actuallyadditions.craftESD=From there to there..
+achievement.actuallyadditions.craftESD.desc=Craft an ESD
+
+achievement.actuallyadditions.craftAdvancedESD=White and Black!
+achievement.actuallyadditions.craftAdvancedESD.desc=Craft an Advanced ESD
+
+achievement.actuallyadditions.craftPhantomface=Wooo... teleporting!
+achievement.actuallyadditions.craftPhantomface.desc=Craft a Phantomface
+
+achievement.actuallyadditions.craftPhantomLiquiface=Bubbles.. are awesome..
+achievement.actuallyadditions.craftPhantomLiquiface.desc=Craft a Phantom Liquiface
+
+achievement.actuallyadditions.craftPhantomEnergyface=Watch out! It's powered!
+achievement.actuallyadditions.craftPhantomEnergyface.desc=Craft a Phantom Energyface
+
+achievement.actuallyadditions.openTreasureChest=You almost drowned!!
+achievement.actuallyadditions.openTreasureChest.desc=Open a Treasure Chest underwater

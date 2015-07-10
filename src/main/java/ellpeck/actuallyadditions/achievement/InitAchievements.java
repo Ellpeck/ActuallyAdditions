@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 public class InitAchievements{
 
+    public static final int MISC_ACH = -1;
     public static final int CRAFTING_ACH = 0;
     public static final int SMELTING_ACH = 1;
     public static final int PICKUP_ACH = 2;

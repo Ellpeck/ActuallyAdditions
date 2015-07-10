@@ -31,7 +31,8 @@ public class ThreadUpdateChecker extends Thread{
             ModUtil.LOGGER.info("Update Check done!");
         }
         catch(Exception e){
-            this.checkFailed(e);
+            ModUtil.LOGGER.error("Update Check failed!", e);
+            UpdateChecker.checkFailed = true;
         }
 
         if(!UpdateChecker.checkFailed){
@@ -40,7 +41,8 @@ public class ThreadUpdateChecker extends Thread{
                 UpdateChecker.clientVersion = Integer.parseInt(ModUtil.VERSION.replace("-", "").replace(".", ""));
             }
             catch(Exception e){
-                this.checkFailed(e);
+                ModUtil.LOGGER.error("Comparing the newest and the current Version failed!", e);
+                UpdateChecker.checkFailed = true;
             }
 
             if(!UpdateChecker.checkFailed){
@@ -58,10 +60,5 @@ public class ThreadUpdateChecker extends Thread{
         }
 
         UpdateChecker.doneChecking = true;
-    }
-
-    private void checkFailed(Exception e){
-        UpdateChecker.checkFailed = true;
-        ModUtil.LOGGER.error("Update Check failed!", e);
     }
 }

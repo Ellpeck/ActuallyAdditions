@@ -2,6 +2,7 @@ package ellpeck.actuallyadditions.blocks;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import ellpeck.actuallyadditions.achievement.TheAchievements;
 import ellpeck.actuallyadditions.recipe.TreasureChestHandler;
 import ellpeck.actuallyadditions.util.BlockUtil;
 import ellpeck.actuallyadditions.util.INameableItem;
@@ -91,9 +92,15 @@ public class BlockTreasureChest extends Block implements INameableItem{
         if(!world.isRemote){
             world.playSoundAtEntity(player, "random.chestopen", 0.2F, new Random().nextFloat()*0.1F+0.9F);
             this.dropItems(world, x, y, z);
+            player.addStat(TheAchievements.OPEN_TREASURE_CHEST.ach, 1);
             world.setBlockToAir(x, y, z);
         }
         return true;
+    }
+
+    @Override
+    public void harvestBlock(World world, EntityPlayer player, int x, int y, int z, int meta){
+        player.addStat(TheAchievements.OPEN_TREASURE_CHEST.ach, 1);
     }
 
     @Override
