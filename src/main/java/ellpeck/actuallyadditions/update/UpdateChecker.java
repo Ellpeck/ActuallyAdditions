@@ -10,86 +10,48 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.util.StatCollector;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.URL;
-
 public class UpdateChecker{
 
-    public boolean doneChecking = false;
-    public boolean checkFailed = false;
-    public boolean notified = false;
-    public String onlineVersion;
-    public String changelog;
+    public static boolean doneChecking = false;
+    public static boolean checkFailed = false;
+    private static boolean notified = false;
+    public static String updateVersionS;
+    public static int updateVersion;
+    public static int clientVersion;
+    public static String changelog;
+
+    public static final String DOWNLOAD_LINK = "http://minecraft.curseforge.com/mc-mods/228404-actually-additions/files";
 
     public void init(){
         ModUtil.LOGGER.info("Initializing Update Checker...");
         Util.registerEvent(this);
-        new UpdateCheckThread();
+        new ThreadUpdateChecker();
     }
 
     @SubscribeEvent(receiveCanceled = true)
     public void onTick(TickEvent.ClientTickEvent event){
-        if(doneChecking && event.phase == TickEvent.Phase.END && Minecraft.getMinecraft().thePlayer != null && !notified){
+        if(!notified && doneChecking && event.phase == TickEvent.Phase.END && Minecraft.getMinecraft().thePlayer != null){
             EntityPlayer player = Minecraft.getMinecraft().thePlayer;
             if(checkFailed){
                 player.addChatComponentMessage(IChatComponent.Serializer.func_150699_a(StatCollector.translateToLocal("info." + ModUtil.MOD_ID_LOWER + ".update.failed.desc")));
             }
-            else if(onlineVersion.length() > 0){
-                try{
-                    int update = Integer.parseInt(onlineVersion.replace("-", "").replace(".", ""));
-                    int client = Integer.parseInt(ModUtil.VERSION.replace("-", "").replace(".", ""));
-
-                    if(update > client){
-                        String notice1 = "info."+ModUtil.MOD_ID_LOWER+".update.generic.desc";
-                        String notice2 = "info."+ModUtil.MOD_ID_LOWER+".update.versionComp.desc";
-                        String notice3 = "info."+ModUtil.MOD_ID_LOWER+".update.changelog.desc";
-                        String notice4 = "info."+ModUtil.MOD_ID_LOWER+".update.download.desc";
-                        player.addChatComponentMessage(new ChatComponentText(""));
-                        player.addChatComponentMessage(IChatComponent.Serializer.func_150699_a(StatCollector.translateToLocal(notice1)));
-                        player.addChatComponentMessage(IChatComponent.Serializer.func_150699_a(StatCollector.translateToLocalFormatted(notice2, ModUtil.VERSION, onlineVersion)));
-                        player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocalFormatted(notice3, changelog)));
-                        player.addChatComponentMessage(IChatComponent.Serializer.func_150699_a(StatCollector.translateToLocalFormatted(notice4, "http://minecraft.curseforge.com/mc-mods/228404-actually-additions/files")));
-                        player.addChatComponentMessage(new ChatComponentText(""));
-                    }
-                }
-                catch(Exception e){
-                    ModUtil.LOGGER.error("Sending the Update Check Information to the Chat failed!", e);
+            else{
+                if(updateVersion > clientVersion){
+                    String notice1 = "info."+ModUtil.MOD_ID_LOWER+".update.generic.desc";
+                    String notice2 = "info."+ModUtil.MOD_ID_LOWER+".update.versionComp.desc";
+                    String notice3 = "info."+ModUtil.MOD_ID_LOWER+".update.changelog.desc";
+                    String notice4 = "info."+ModUtil.MOD_ID_LOWER+".update.download.desc";
+                    player.addChatComponentMessage(new ChatComponentText(""));
+                    player.addChatComponentMessage(IChatComponent.Serializer.func_150699_a(StatCollector.translateToLocal(notice1)));
+                    player.addChatComponentMessage(IChatComponent.Serializer.func_150699_a(StatCollector.translateToLocalFormatted(notice2, ModUtil.VERSION, updateVersionS)));
+                    player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocalFormatted(notice3, changelog)));
+                    player.addChatComponentMessage(IChatComponent.Serializer.func_150699_a(StatCollector.translateToLocalFormatted(notice4, DOWNLOAD_LINK)));
+                    player.addChatComponentMessage(new ChatComponentText(""));
                 }
             }
             notified = true;
         }
     }
 
-    public class UpdateCheckThread extends Thread{
 
-        public UpdateCheckThread(){
-            this.setName(ModUtil.MOD_ID + " Update Checker");
-            this.setDaemon(true);
-            this.start();
-        }
-
-        @Override
-        public void run(){
-            ModUtil.LOGGER.info("Starting Update Check...");
-            try{
-                URL newestURL = new URL("https://raw.githubusercontent.com/Ellpeck/ActuallyAdditions/master/update/newestVersion.txt");
-                BufferedReader newestReader = new BufferedReader(new InputStreamReader(newestURL.openStream()));
-                onlineVersion = newestReader.readLine();
-                newestReader.close();
-
-                URL changeURL = new URL("https://raw.githubusercontent.com/Ellpeck/ActuallyAdditions/master/update/changelog.txt");
-                BufferedReader changeReader = new BufferedReader(new InputStreamReader(changeURL.openStream()));
-                changelog = changeReader.readLine();
-                changeReader.close();
-
-                ModUtil.LOGGER.info("Update Check done!");
-            }
-            catch(Exception e){
-                checkFailed = true;
-                ModUtil.LOGGER.error("Update Check failed!", e);
-            }
-            doneChecking = true;
-        }
-    }
 }

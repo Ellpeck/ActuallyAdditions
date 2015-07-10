@@ -59,7 +59,6 @@ public class BlockPhantomface extends BlockContainerBase implements INameableIte
             TileEntity tile = world.getTileEntity(x, y, z);
             if(tile != null){
                 if(tile instanceof TileEntityPhantomface){
-                    player.addChatComponentMessage(new ChatComponentText(""));
                     TileEntityPhantomface phantom = (TileEntityPhantomface)tile;
                     player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".blockPhantomRange.desc") + ": " + phantom.range));
                     if(phantom.hasBoundTile()){
@@ -70,12 +69,10 @@ public class BlockPhantomface extends BlockContainerBase implements INameableIte
                         else player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.connectedNoRange.desc")));
                     }
                     else player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.notConnected.desc")));
-                    player.addChatComponentMessage(new ChatComponentText(""));
                 }
 
                 else if(tile instanceof TileEntityPhantomPlacer){
                     if(player.isSneaking()){
-                        player.addChatComponentMessage(new ChatComponentText(""));
                         TileEntityPhantomPlacer phantom = (TileEntityPhantomPlacer)tile;
                         player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".blockPhantomRange.desc") + ": " + phantom.range));
                         if(phantom.hasBoundPosition()){
@@ -86,7 +83,6 @@ public class BlockPhantomface extends BlockContainerBase implements INameableIte
                             else player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.connectedNoRange.desc")));
                         }
                         else player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.notConnected.desc")));
-                        player.addChatComponentMessage(new ChatComponentText(""));
                     }
                     else player.openGui(ActuallyAdditions.instance, GuiHandler.PHANTOM_PLACER_ID, world, x, y, z);
                 }
