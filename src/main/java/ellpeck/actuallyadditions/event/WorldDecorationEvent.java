@@ -9,7 +9,7 @@ import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.world.biome.BiomeGenOcean;
 import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
 
 import java.util.ArrayList;
@@ -32,10 +32,12 @@ public class WorldDecorationEvent{
                     int genZ = event.chunkZ+event.rand.nextInt(16)+8;
                     int genY = event.world.getTopSolidOrLiquidBlock(genX, genZ);
 
-                    if(event.world.getBiomeGenForCoords(genX, genZ) == BiomeGenBase.deepOcean){
-                        if(event.world.getBlock(genX, genY, genZ).getMaterial() == Material.water){
-                            if(event.world.getBlock(genX, genY-1, genZ).getMaterial().isSolid()){
-                                event.world.setBlock(genX, genY, genZ, InitBlocks.blockTreasureChest, 0, 2);
+                    if(event.world.getBiomeGenForCoords(genX, genZ) instanceof BiomeGenOcean){
+                        if(genY >= ConfigIntValues.TREASURE_CHEST_MIN_HEIGHT.getValue() && genY <= ConfigIntValues.TREASURE_CHEST_MAX_HEIGHT.getValue()){
+                            if(event.world.getBlock(genX, genY, genZ).getMaterial() == Material.water){
+                                if(event.world.getBlock(genX, genY-1, genZ).getMaterial().isSolid()){
+                                    event.world.setBlock(genX, genY, genZ, InitBlocks.blockTreasureChest, 0, 2);
+                                }
                             }
                         }
                     }

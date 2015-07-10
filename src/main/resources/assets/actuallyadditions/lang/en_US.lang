@@ -194,7 +194,7 @@ tooltip.actuallyadditions.itemResonantRice.desc=Don't know what it does... maybe
 tooltip.actuallyadditions.itemResonantRice.uncraftable.desc=Uncraftable because there's no Mod installed that adds Enderium :(
 
 tile.actuallyadditions.blockTreasureChest.name=Treasure Chest
-tooltip.actuallyadditions.blockTreasureChest.desc.1=A Chest found on the Ground of Deep Ocean Biomes
+tooltip.actuallyadditions.blockTreasureChest.desc.1=A Chest found on the Ground of Ocean Biomes
 tooltip.actuallyadditions.blockTreasureChest.desc.2=Maybe you'll get something awesome when you Right-Click it?
 
 tile.actuallyadditions.blockCanolaPress.name=Canola Press
