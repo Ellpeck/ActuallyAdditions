@@ -4,6 +4,7 @@ import cpw.mods.fml.common.event.FMLInterModComms;
 import ellpeck.actuallyadditions.items.ItemCoffee;
 import ellpeck.actuallyadditions.recipe.CrusherRecipeManualRegistry;
 import ellpeck.actuallyadditions.recipe.HairyBallHandler;
+import ellpeck.actuallyadditions.recipe.TreasureChestHandler;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -61,6 +62,22 @@ public class InterModCommunications{
                         ModUtil.LOGGER.info("Ball Of Hair Recipe that was sent from Mod "+message.getSender()+" has been registered successfully: "+output.toString()+", Chance: "+chance);
                     }
                     else ModUtil.LOGGER.log(Level.ERROR, "Ball Of Hair Recipe that was sent from Mod " + message.getSender() + " could not be registered: It's missing an Output or a Chance!");
+                }
+            }
+
+            if(message.key.equalsIgnoreCase("registerTreasureChestRecipe")){
+                NBTTagCompound compound = message.getNBTValue();
+                if(compound != null){
+                    ItemStack output = ItemStack.loadItemStackFromNBT(compound.getCompoundTag("output"));
+                    int chance = compound.getInteger("chance");
+                    int minAmount = compound.getInteger("minAmount");
+                    int maxAmount = compound.getInteger("maxAmount");
+
+                    if(output != null && chance > 0 && minAmount > 0 && maxAmount >= minAmount){
+                        TreasureChestHandler.addReturn(output, chance, minAmount, maxAmount);
+                        ModUtil.LOGGER.info("Treasure Chest Recipe that was sent from Mod "+message.getSender()+" has been registered successfully: "+output.toString()+", Chance: "+chance+", Min Amount: "+minAmount+", Max Amount: "+maxAmount);
+                    }
+                    else ModUtil.LOGGER.log(Level.ERROR, "Treasure Chest Recipe that was sent from Mod " + message.getSender() + " could not be registered: It's missing an Output, a Chance or minimum and maximum Amounts!");
                 }
             }
         }

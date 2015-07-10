@@ -2,6 +2,7 @@ package ellpeck.actuallyadditions.event;
 
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.Util;
+import net.minecraftforge.common.MinecraftForge;
 
 public class InitEvents{
 
@@ -14,8 +15,8 @@ public class InitEvents{
         Util.registerEvent(new PickupEvent());
         Util.registerEvent(new TooltipEvent());
         Util.registerEvent(new EntityLivingEvent());
-        Util.registerEvent(new WorldDecorationEvent());
         Util.registerEvent(new BucketFillEvent());
+        MinecraftForge.TERRAIN_GEN_BUS.register(new WorldDecorationEvent());
     }
 
 }

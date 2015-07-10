@@ -26,6 +26,10 @@ public class NEIActuallyAdditionsConfig implements IConfigureNEI{
         API.registerRecipeHandler(ballRecipeHandler);
         API.registerUsageHandler(ballRecipeHandler);
 
+        TreasureChestRecipeHandler treasureRecipeHandler = new TreasureChestRecipeHandler();
+        API.registerRecipeHandler(treasureRecipeHandler);
+        API.registerUsageHandler(treasureRecipeHandler);
+
         CompostRecipeHandler compostRecipeHandler = new CompostRecipeHandler();
         API.registerRecipeHandler(compostRecipeHandler);
         API.registerUsageHandler(compostRecipeHandler);

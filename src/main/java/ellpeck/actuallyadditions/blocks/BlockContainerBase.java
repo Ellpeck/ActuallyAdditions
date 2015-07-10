@@ -25,10 +25,10 @@ public abstract class BlockContainerBase extends BlockContainer{
             if(tile instanceof TileEntityInventoryBase){
                 TileEntityInventoryBase tileEntity = (TileEntityInventoryBase)tile;
                 if(tileEntity.getSizeInventory() > 0){
+                    Random rand = new Random();
                     for(int i = 0; i < tileEntity.getSizeInventory(); i++){
                         ItemStack itemStack = tileEntity.getStackInSlot(i);
                         if(itemStack != null && itemStack.stackSize > 0){
-                            Random rand = new Random();
                             float dX = rand.nextFloat()*0.8F+0.1F;
                             float dY = rand.nextFloat()*0.8F+0.1F;
                             float dZ = rand.nextFloat()*0.8F+0.1F;

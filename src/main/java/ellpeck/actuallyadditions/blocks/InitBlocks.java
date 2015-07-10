@@ -78,6 +78,8 @@ public class InitBlocks{
     public static Block blockColoredLampOn;
     public static Block blockLampPowerer;
 
+    public static Block blockTreasureChest;
+
     public static void init(){
         ModUtil.LOGGER.info("Initializing Blocks...");
 
@@ -100,6 +102,9 @@ public class InitBlocks{
         BlockUtil.register(blockColoredLampOn, BlockColoredLamp.TheItemBlock.class, false);
         blockLampPowerer = new BlockLampPowerer();
         BlockUtil.register(blockLampPowerer, BlockLampPowerer.TheItemBlock.class);
+
+        blockTreasureChest = new BlockTreasureChest();
+        BlockUtil.register(blockTreasureChest, BlockTreasureChest.TheItemBlock.class);
 
         blockEnergizer = new BlockEnergizer(true);
         BlockUtil.register(blockEnergizer, BlockEnergizer.TheItemBlock.class);

@@ -54,6 +54,9 @@ public enum ConfigIntValues{
     CANOLA_AMOUNT("Canola Amount", ConfigCategories.WORLD_GEN, 10, 1, 50, "The Chance of Canola generating"),
     FLAX_AMOUNT("Flax Amount", ConfigCategories.WORLD_GEN, 8, 1, 50, "The Chance of Flax generating"),
     COFFEE_AMOUNT("Coffee Amount", ConfigCategories.WORLD_GEN, 6, 1, 50, "The Chance of Coffee generating"),
+    RICE_CHANCE("Rice Chance", ConfigCategories.WORLD_GEN, 50, 1, 3000, "The 1 in X chance for Rice to generate"),
+    NORMAL_PLANT_CHANCE("Plant Chance", ConfigCategories.WORLD_GEN, 400, 1, 3000, "The 1 in X chance for Flax, Coffee and Canola to generate"),
+    TREASURE_CHEST_CHANCE("Treasure Chest Chance", ConfigCategories.WORLD_GEN, 300, 1, 3000, "The 1 in X chance for a Treasure Chest to generate in a Deep Ocean"),
 
     GRINDER_ENERGY_USED("Energy Use: Crusher", ConfigCategories.MACHINE_VALUES, 40, 1, 500, "The Amount of Energy used by the Crusher per Tick"),
     GRINDER_DOUBLE_ENERGY_USED("Energy Use: Double Crusher", ConfigCategories.MACHINE_VALUES, 60, 1, 500, "The Amount of Energy used by the Double Crusher per Tick"),

@@ -5,7 +5,7 @@ import codechicken.nei.NEIServerUtils;
 import codechicken.nei.PositionedStack;
 import codechicken.nei.recipe.RecipeInfo;
 import codechicken.nei.recipe.TemplateRecipeHandler;
-import ellpeck.actuallyadditions.recipe.HairyBallHandler;
+import ellpeck.actuallyadditions.recipe.TreasureChestHandler;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -17,25 +17,29 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class HairyBallRecipeHandler extends TemplateRecipeHandler{
+public class TreasureChestRecipeHandler extends TemplateRecipeHandler{
 
-    public static final String NAME = "actuallyadditions.ballOfHair";
+    public static final String NAME = "actuallyadditions.treasureChest";
 
-    public HairyBallRecipeHandler(){
+    public TreasureChestRecipeHandler(){
         super();
         RecipeInfo.setGuiOffset(this.getGuiClass(), 0, 0);
     }
 
-    public class CachedBallRecipe extends CachedRecipe{
+    public class CachedTreasure extends CachedRecipe{
 
         public PositionedStack result;
         public PositionedStack input;
         public int chance;
+        public int minAmount;
+        public int maxAmount;
 
-        public CachedBallRecipe(ItemStack input, ItemStack result, int chance){
+        public CachedTreasure(ItemStack input, ItemStack result, int chance, int minAmount, int maxAmount){
             this.result = new PositionedStack(result, 67+32, 19);
             this.chance = chance;
             this.input = new PositionedStack(input, 5+32, 19);
+            this.minAmount = minAmount;
+            this.maxAmount = maxAmount;
         }
 
         @Override
@@ -71,10 +75,10 @@ public class HairyBallRecipeHandler extends TemplateRecipeHandler{
 
     @Override
     public void loadCraftingRecipes(String outputId, Object... results){
-        if(outputId.equals(NAME) && getClass() == HairyBallRecipeHandler.class){
-            ArrayList<HairyBallHandler.Return> recipes = HairyBallHandler.returns;
-            for(HairyBallHandler.Return recipe : recipes){
-                arecipes.add(new CachedBallRecipe(recipe.inputItem, recipe.returnItem, recipe.itemWeight));
+        if(outputId.equals(NAME) && getClass() == TreasureChestRecipeHandler.class){
+            ArrayList<TreasureChestHandler.Return> recipes = TreasureChestHandler.returns;
+            for(TreasureChestHandler.Return recipe : recipes){
+                arecipes.add(new CachedTreasure(recipe.input, recipe.returnItem, recipe.itemWeight, recipe.minAmount, recipe.maxAmount));
             }
         }
         else super.loadCraftingRecipes(outputId, results);
@@ -82,18 +86,18 @@ public class HairyBallRecipeHandler extends TemplateRecipeHandler{
 
     @Override
     public void loadCraftingRecipes(ItemStack result){
-        ArrayList<HairyBallHandler.Return> recipes = HairyBallHandler.returns;
-        for(HairyBallHandler.Return recipe : recipes){
-            if(NEIServerUtils.areStacksSameType(recipe.returnItem, result)) arecipes.add(new CachedBallRecipe(recipe.inputItem, recipe.returnItem, recipe.itemWeight));
+        ArrayList<TreasureChestHandler.Return> recipes = TreasureChestHandler.returns;
+        for(TreasureChestHandler.Return recipe : recipes){
+            if(NEIServerUtils.areStacksSameType(recipe.returnItem, result)) arecipes.add(new CachedTreasure(recipe.input, recipe.returnItem, recipe.itemWeight, recipe.minAmount, recipe.maxAmount));
         }
     }
 
     @Override
     public void loadUsageRecipes(ItemStack ingredient){
-        ArrayList<HairyBallHandler.Return> recipes = HairyBallHandler.returns;
-        for(HairyBallHandler.Return recipe : recipes){
-            if(NEIServerUtils.areStacksSameTypeCrafting(recipe.inputItem, ingredient)){
-                CachedBallRecipe theRecipe = new CachedBallRecipe(recipe.inputItem, recipe.returnItem, recipe.itemWeight);
+        ArrayList<TreasureChestHandler.Return> recipes = TreasureChestHandler.returns;
+        for(TreasureChestHandler.Return recipe : recipes){
+            if(NEIServerUtils.areStacksSameTypeCrafting(recipe.input, ingredient)){
+                CachedTreasure theRecipe = new CachedTreasure(recipe.input, recipe.returnItem, recipe.itemWeight, recipe.minAmount, recipe.maxAmount);
                 theRecipe.setIngredientPermutation(Collections.singletonList(theRecipe.input), ingredient);
                 arecipes.add(theRecipe);
             }
@@ -102,7 +106,7 @@ public class HairyBallRecipeHandler extends TemplateRecipeHandler{
 
     @Override
     public String getGuiTexture(){
-        return ModUtil.MOD_ID_LOWER + ":textures/gui/guiNEIHairyBall.png";
+        return ModUtil.MOD_ID_LOWER + ":textures/gui/guiNEITreasure.png";
     }
 
     @Override
@@ -114,11 +118,12 @@ public class HairyBallRecipeHandler extends TemplateRecipeHandler{
 
     @Override
     public void drawExtras(int rec){
-        CachedBallRecipe recipe = (CachedBallRecipe)this.arecipes.get(rec);
+        CachedTreasure recipe = (CachedTreasure)this.arecipes.get(rec);
         if(recipe.result != null){
             int secondChance = recipe.chance;
             String secondString = secondChance + "%";
-            GuiDraw.drawString(secondString, 65+32, 45, StringUtil.DECIMAL_COLOR_GRAY_TEXT, false);
+            //TODO
+            GuiDraw.drawString(recipe.minAmount + "-" + recipe.maxAmount + " Items at " + secondString, 65+10, 45, StringUtil.DECIMAL_COLOR_GRAY_TEXT, false);
         }
     }
 

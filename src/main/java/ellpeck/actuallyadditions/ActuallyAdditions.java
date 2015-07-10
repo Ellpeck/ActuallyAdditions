@@ -26,6 +26,7 @@ import ellpeck.actuallyadditions.ore.InitOreDict;
 import ellpeck.actuallyadditions.proxy.IProxy;
 import ellpeck.actuallyadditions.recipe.FuelHandler;
 import ellpeck.actuallyadditions.recipe.HairyBallHandler;
+import ellpeck.actuallyadditions.recipe.TreasureChestHandler;
 import ellpeck.actuallyadditions.tile.TileEntityBase;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.Util;
@@ -80,6 +81,7 @@ public class ActuallyAdditions{
         CrusherCrafting.init();
         ItemCrafting.initMashedFoodRecipes();
         HairyBallHandler.init();
+        TreasureChestHandler.init();
         proxy.postInit();
 
         ModUtil.LOGGER.info("PostInitialization Finished.");
