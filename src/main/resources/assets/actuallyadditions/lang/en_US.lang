@@ -563,8 +563,8 @@ info.actuallyadditions.update.download.desc=[{"text":"Download the newest Versio
 info.actuallyadditions.update.failed.desc=[{"text":"The Update Check for "},{"text":"Actually Additions ","color":"dark_green","bold":"true"},{"text":"failed! Check your Internet Connection and the Logs for more Info!","color":"none"}]
 info.actuallyadditions.update.changelog.desc=Updates: %s
 
-info.actuallyadditions.inputter.info.1=This is the first Slot in the |connected Inventory to %s at.
-info.actuallyadditions.inputter.info.2=This is the slot after the last Slot |in the connected Inventory to %s at. |What that means: If you, for example, write 2 in |the field to the left and 5 in this one, |it will %s from Slot 2, 3, and 4.
+info.actuallyadditions.inputter.info.1=This is the first Slot in the |connected Inventory to [p] at.
+info.actuallyadditions.inputter.info.2=This is the slot after the last Slot |in the connected Inventory to [p] at. |What that means: If you, for example, write 2 in |the field to the left and 5 in this one, |it will [p] at Slot 2, 3, and 4.
 
 achievement.actuallyadditions.pickUpSolidXP=Square and yummy!
 achievement.actuallyadditions.pickUpSolidXP.desc=Pick up some Solidified Experience

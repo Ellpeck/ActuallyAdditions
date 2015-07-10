@@ -42,6 +42,11 @@ public class BlockTreasureChest extends Block implements INameableItem{
     }
 
     @Override
+    public boolean canSilkHarvest(){
+        return false;
+    }
+
+    @Override
     public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack stack){
         int rotation = MathHelper.floor_double((double)(player.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
 
@@ -121,7 +126,13 @@ public class BlockTreasureChest extends Block implements INameableItem{
     @Override
     @SideOnly(Side.CLIENT)
     public void randomDisplayTick(World world, int x, int y, int z, Random rand){
-        //TODO Bubble Particles if in water
+        for(int i = 0; i < 2; i++){
+            for(float f = 0; f <= 3; f += 0.5){
+                float particleX = rand.nextFloat();
+                float particleZ = rand.nextFloat();
+                world.spawnParticle("bubble", (double)x+particleX, (double)y+f+1, (double)z+particleZ, 0.0D, 0.2D, 0.0D);
+            }
+        }
     }
 
     @Override
