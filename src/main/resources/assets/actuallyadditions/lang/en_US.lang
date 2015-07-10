@@ -193,6 +193,10 @@ item.actuallyadditions.itemResonantRice.name=Resonant Rice
 tooltip.actuallyadditions.itemResonantRice.desc=Don't know what it does... maybe if you right-click it?
 tooltip.actuallyadditions.itemResonantRice.uncraftable.desc=Uncraftable because there's no Mod installed that adds Enderium :(
 
+tile.actuallyadditions.blockTreasureChest.name=Treasure Chest
+tooltip.actuallyadditions.blockTreasureChest.desc.1=A Chest found on the Ground of Deep Ocean Biomes
+tooltip.actuallyadditions.blockTreasureChest.desc.2=Maybe you'll get something awesome when you Right-Click it?
+
 tile.actuallyadditions.blockCanolaPress.name=Canola Press
 tooltip.actuallyadditions.blockCanolaPress.desc=Makes Canola Oil from Canola
 tile.actuallyadditions.blockFermentingBarrel.name=Fermenting Barrel
@@ -542,6 +546,7 @@ container.actuallyadditions.enervator.name=Enervator
 container.nei.actuallyadditions.crushing.name=Crusher
 container.nei.actuallyadditions.ballOfHair.name=Ball Of Hair Usage
 container.nei.actuallyadditions.compost.name=Compost
+container.nei.actuallyadditions.treasureChest.name=Treasure Chest
 
 container.nei.actuallyadditions.coffee.name=Coffee Machine
 container.nei.actuallyadditions.coffee.special=Special Feature

@@ -72,6 +72,7 @@ public class CreativeTab extends CreativeTabs{
         add(InitBlocks.blockTestifiBucksWhiteSlab);
         add(InitBlocks.blockColoredLamp);
         add(InitBlocks.blockLampPowerer);
+        add(InitBlocks.blockTreasureChest);
 
         add(InitItems.itemDrill);
         add(InitItems.itemDrillUpgradeSpeed);
