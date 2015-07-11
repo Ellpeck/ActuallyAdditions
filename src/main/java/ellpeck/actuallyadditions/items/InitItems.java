@@ -93,19 +93,8 @@ public class InitItems{
 
     public static Item itemTeleStaff;
 
-    public static Item itemScubaHelm;
-    public static Item itemScubaChest;
-    public static Item itemScubaPants;
-    public static Item itemScubaBoots;
-
     public static void init(){
         ModUtil.LOGGER.info("Initializing Items...");
-
-        itemScubaHelm = new ItemScubaArmor("itemScubaHelm", 0);
-        itemScubaChest = new ItemScubaArmor("itemScubaChest", 1);
-        itemScubaPants = new ItemScubaArmor("itemScubaPants", 2);
-        itemScubaBoots = new ItemScubaArmor("itemScubaBoots", 3);
-        ItemUtil.registerItems(new Item[]{itemScubaHelm, itemScubaChest, itemScubaPants, itemScubaBoots});
 
         itemHelmEmerald = new ItemArmorAA("itemHelmEmerald", InitArmorMaterials.armorMaterialEmerald, 0, new ItemStack(Items.emerald), "armorEmerald");
         itemChestEmerald = new ItemArmorAA("itemChestEmerald", InitArmorMaterials.armorMaterialEmerald, 1, new ItemStack(Items.emerald), "armorEmerald");

@@ -103,6 +103,7 @@ public class ItemJams extends ItemFood implements INameableItem{
                 list.add(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+"."+this.getName()+".desc.1"));
                 list.add(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+"."+this.getName()+allJams[stack.getItemDamage()].getName()+".desc"));
                 list.add(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+"."+this.getName()+".desc.2"));
+                list.add(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+"."+this.getName()+".desc.3"));
                 list.add(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".hunger.desc")+": "+allJams[stack.getItemDamage()].healAmount);
                 list.add(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".saturation.desc")+": "+allJams[stack.getItemDamage()].saturation);
             }

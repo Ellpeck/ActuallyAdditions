@@ -140,11 +140,6 @@ public class CreativeTab extends CreativeTabs{
         add(InitItems.itemPantsObsidian);
         add(InitItems.itemBootsObsidian);
 
-        add(InitItems.itemScubaHelm);
-        add(InitItems.itemScubaChest);
-        add(InitItems.itemScubaPants);
-        add(InitItems.itemScubaBoots);
-
         add(InitItems.itemJams);
 
         add(InitItems.itemPotionRing);
