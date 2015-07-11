@@ -57,9 +57,9 @@ public class GuiHandler implements IGuiHandler{
             case DRILL_ID:
                 return new ContainerDrill(entityPlayer.inventory);
             case ENERGIZER_ID:
-                return new ContainerEnergizer(entityPlayer.inventory, tile);
+                return new ContainerEnergizer(entityPlayer, tile);
             case ENERVATOR_ID:
-                return new ContainerEnervator(entityPlayer.inventory, tile);
+                return new ContainerEnervator(entityPlayer, tile);
             default:
                 return null;
         }
@@ -111,9 +111,9 @@ public class GuiHandler implements IGuiHandler{
             case DRILL_ID:
                 return new GuiDrill(entityPlayer.inventory);
             case ENERGIZER_ID:
-                return new GuiEnergizer(entityPlayer.inventory, tile);
+                return new GuiEnergizer(entityPlayer, tile);
             case ENERVATOR_ID:
-                return new GuiEnervator(entityPlayer.inventory, tile);
+                return new GuiEnervator(entityPlayer, tile);
             default:
                 return null;
         }

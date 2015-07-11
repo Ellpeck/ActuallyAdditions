@@ -1,6 +1,8 @@
 package ellpeck.actuallyadditions.inventory;
 
 import cofh.api.energy.IEnergyContainerItem;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.inventory.slot.SlotOutput;
 import ellpeck.actuallyadditions.tile.TileEntityBase;
 import ellpeck.actuallyadditions.tile.TileEntityEnervator;
@@ -9,15 +11,18 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
+import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.IIcon;
 
 @InventoryContainer
 public class ContainerEnervator extends Container{
 
     private TileEntityEnervator enervator;
 
-    public ContainerEnervator(InventoryPlayer inventory, TileEntityBase tile){
+    public ContainerEnervator(EntityPlayer player, TileEntityBase tile){
         this.enervator = (TileEntityEnervator)tile;
+        InventoryPlayer inventory = player.inventory;
 
         this.addSlotToContainer(new Slot(this.enervator, 0, 76, 73));
         this.addSlotToContainer(new SlotOutput(this.enervator, 1, 76, 42));
@@ -30,6 +35,25 @@ public class ContainerEnervator extends Container{
         for (int i = 0; i < 9; i++){
             this.addSlotToContainer(new Slot(inventory, i, 8 + i * 18, 155));
         }
+        final EntityPlayer finalPlayer = player;
+        for(int i = 0; i < 4; ++i){
+            final int finalI = i;
+            this.addSlotToContainer(new Slot(inventory, inventory.getSizeInventory()-1-i, 102, 19+i*18){
+                @Override
+                public int getSlotStackLimit(){
+                    return 1;
+                }
+                @Override
+                public boolean isItemValid(ItemStack stack){
+                    return stack != null && stack.getItem().isValidArmor(stack, finalI, finalPlayer);
+                }
+                @Override
+                @SideOnly(Side.CLIENT)
+                public IIcon getBackgroundIconIndex(){
+                    return ItemArmor.func_94602_b(finalI);
+                }
+            });
+        }
     }
 
     @Override
@@ -37,6 +61,7 @@ public class ContainerEnervator extends Container{
         return this.enervator.isUseableByPlayer(player);
     }
 
+    //TODO Armor Shift-Clicking
     @Override
     public ItemStack transferStackInSlot(EntityPlayer player, int slot){
         final int inventoryStart = 2;

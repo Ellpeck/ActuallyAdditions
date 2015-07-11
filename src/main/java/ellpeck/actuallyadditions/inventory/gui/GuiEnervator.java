@@ -7,7 +7,7 @@ import ellpeck.actuallyadditions.tile.TileEntityBase;
 import ellpeck.actuallyadditions.tile.TileEntityEnervator;
 import ellpeck.actuallyadditions.util.AssetUtil;
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
@@ -20,7 +20,7 @@ public class GuiEnervator extends GuiContainer{
 
     private static final ResourceLocation resLoc = AssetUtil.getGuiLocation("guiEnergizer");
 
-    public GuiEnervator(InventoryPlayer inventory, TileEntityBase tile){
+    public GuiEnervator(EntityPlayer inventory, TileEntityBase tile){
         super(new ContainerEnervator(inventory, tile));
         this.enervator = (TileEntityEnervator)tile;
         this.xSize = 176;
