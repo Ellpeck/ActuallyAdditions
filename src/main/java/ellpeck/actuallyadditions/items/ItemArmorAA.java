@@ -42,7 +42,7 @@ public class ItemArmorAA extends ItemArmor implements INameableItem{
     @Override
     @SuppressWarnings("unchecked")
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld) {
+    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld){
         ItemUtil.addInformation(this, list, 1, "");
     }
 
