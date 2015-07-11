@@ -14,7 +14,8 @@ public enum ConfigCategories{
     OTHER("other"),
     FLUIDS("fluids"),
     DRILL_VALUES("drill values"),
-    CRUSHER_RECIPES("crusher recipes");
+    CRUSHER_RECIPES("crusher recipes"),
+    ARMOR_VALUES("armor values");
 
     public final String name;
 

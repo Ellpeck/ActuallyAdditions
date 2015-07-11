@@ -63,6 +63,8 @@ public class ItemTeleStaff extends ItemEnergy implements INameableItem{
         if(compound == null) compound = new NBTTagCompound();
 
         compound.setInteger("waitTime", time);
+
+        stack.setTagCompound(compound);
     }
 
     private int getWaitTime(ItemStack stack){

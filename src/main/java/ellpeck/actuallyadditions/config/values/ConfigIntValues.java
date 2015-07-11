@@ -35,6 +35,13 @@ public enum ConfigIntValues{
     OBSIDIAN_USES("Obsidian: Max Uses", ConfigCategories.TOOL_VALUES, 8000, 50, 20000, "How often Obsidian Tools can be used"),
     OBSIDIAN_ENCHANTABILITY("Obsidian: Enchantability", ConfigCategories.TOOL_VALUES, 15, 1, 30, "How enchantable an Obsidian Tool is"),
 
+    SCUBA_DURABILITY("Scuba Armor: Durability", ConfigCategories.ARMOR_VALUES, 450, 10, 2000, "The Durability of Scuba Armor"),
+    SCUBA_HEAD_DAMAGE("Scuba Helmets: Damage Reduction", ConfigCategories.ARMOR_VALUES, 2, 0, 10, "The Damage Reduction of Scuba Helmets"),
+    SCUBA_CHEST_DAMAGE("Scuba Chests: Damage Reduction", ConfigCategories.ARMOR_VALUES, 5, 0, 10, "The Damage Reduction of Scuba Chests"),
+    SCUBA_LEGS_DAMAGE("Scuba Legs: Damage Reduction", ConfigCategories.ARMOR_VALUES, 4, 0, 10, "The Damage Reduction of Scuba Legs"),
+    SCUBA_BOOTS_DAMAGE("Scuba Boots: Damage Reduction", ConfigCategories.ARMOR_VALUES, 1, 0, 10, "The Damage Reduction of Scuba Boots"),
+    SCUBA_ENCHANTABILITY("Scuba Armor: Enchantability", ConfigCategories.ARMOR_VALUES, 15, 1, 100, "The Enchantability of Scuba Armor"),
+
     GRINDER_CRUSH_TIME("Crusher: Time", ConfigCategories.MACHINE_VALUES, 100, 10, 1000, "How long the Crusher takes to crush an item"),
     GRINDER_DOUBLE_CRUSH_TIME("Double Crusher: Time", ConfigCategories.MACHINE_VALUES, 150, 10, 1000, "How long the Double Crusher takes to crush an item"),
     FURNACE_DOUBLE_SMELT_TIME("Double Furnace: Time", ConfigCategories.MACHINE_VALUES, 80, 10, 1000, "How long the Double Furnace takes to crush an item"),

@@ -18,7 +18,8 @@ import ellpeck.actuallyadditions.gen.OreGen;
 import ellpeck.actuallyadditions.inventory.GuiHandler;
 import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.items.ItemCoffee;
-import ellpeck.actuallyadditions.material.InitItemMaterials;
+import ellpeck.actuallyadditions.material.InitArmorMaterials;
+import ellpeck.actuallyadditions.material.InitToolMaterials;
 import ellpeck.actuallyadditions.misc.DispenserHandlerEmptyBucket;
 import ellpeck.actuallyadditions.misc.DispenserHandlerFertilize;
 import ellpeck.actuallyadditions.network.PacketHandler;
@@ -46,7 +47,8 @@ public class ActuallyAdditions{
 
         ConfigurationHandler.init(event.getSuggestedConfigurationFile());
         PacketHandler.init();
-        InitItemMaterials.init();
+        InitToolMaterials.init();
+        InitArmorMaterials.init();
         InitBlocks.init();
         InitItems.init();
         InitVillager.init();
