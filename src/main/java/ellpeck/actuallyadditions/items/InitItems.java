@@ -4,6 +4,7 @@ import ellpeck.actuallyadditions.blocks.InitBlocks;
 import ellpeck.actuallyadditions.items.metalists.TheFoods;
 import ellpeck.actuallyadditions.items.metalists.TheMiscItems;
 import ellpeck.actuallyadditions.items.tools.*;
+import ellpeck.actuallyadditions.material.InitArmorMaterials;
 import ellpeck.actuallyadditions.material.InitToolMaterials;
 import ellpeck.actuallyadditions.util.CompatUtil;
 import ellpeck.actuallyadditions.util.ItemUtil;
@@ -36,12 +37,22 @@ public class InitItems{
     public static Item itemShovelEmerald;
     public static Item itemSwordEmerald;
     public static Item itemHoeEmerald;
+    
+    public static Item itemHelmEmerald;
+    public static Item itemChestEmerald;
+    public static Item itemPantsEmerald;
+    public static Item itemBootsEmerald;
 
     public static Item itemPickaxeObsidian;
     public static Item itemAxeObsidian;
     public static Item itemShovelObsidian;
     public static Item itemSwordObsidian;
     public static Item itemHoeObsidian;
+
+    public static Item itemHelmObsidian;
+    public static Item itemChestObsidian;
+    public static Item itemPantsObsidian;
+    public static Item itemBootsObsidian;
 
     public static Item itemHairyBall;
 
@@ -95,6 +106,18 @@ public class InitItems{
         itemScubaPants = new ItemScubaArmor("itemScubaPants", 2);
         itemScubaBoots = new ItemScubaArmor("itemScubaBoots", 3);
         ItemUtil.registerItems(new Item[]{itemScubaHelm, itemScubaChest, itemScubaPants, itemScubaBoots});
+
+        itemHelmEmerald = new ItemArmorAA("itemHelmEmerald", InitArmorMaterials.armorMaterialEmerald, 0, new ItemStack(Items.emerald), "armorEmerald");
+        itemChestEmerald = new ItemArmorAA("itemChestEmerald", InitArmorMaterials.armorMaterialEmerald, 1, new ItemStack(Items.emerald), "armorEmerald");
+        itemPantsEmerald = new ItemArmorAA("itemPantsEmerald", InitArmorMaterials.armorMaterialEmerald, 2, new ItemStack(Items.emerald), "armorEmerald");
+        itemBootsEmerald = new ItemArmorAA("itemBootsEmerald", InitArmorMaterials.armorMaterialEmerald, 3, new ItemStack(Items.emerald), "armorEmerald");
+        ItemUtil.registerItems(new Item[]{itemHelmEmerald, itemChestEmerald, itemPantsEmerald, itemBootsEmerald});
+
+        itemHelmObsidian = new ItemArmorAA("itemHelmObsidian", InitArmorMaterials.armorMaterialObsidian, 0, new ItemStack(Blocks.obsidian), "armorObsidian");
+        itemChestObsidian = new ItemArmorAA("itemChestObsidian", InitArmorMaterials.armorMaterialObsidian, 1, new ItemStack(Blocks.obsidian), "armorObsidian");
+        itemPantsObsidian = new ItemArmorAA("itemPantsObsidian", InitArmorMaterials.armorMaterialObsidian, 2, new ItemStack(Blocks.obsidian), "armorObsidian");
+        itemBootsObsidian = new ItemArmorAA("itemBootsObsidian", InitArmorMaterials.armorMaterialObsidian, 3, new ItemStack(Blocks.obsidian), "armorObsidian");
+        ItemUtil.registerItems(new Item[]{itemHelmObsidian, itemChestObsidian, itemPantsObsidian, itemBootsObsidian});
 
         itemTeleStaff = new ItemTeleStaff();
         ItemUtil.register(itemTeleStaff);

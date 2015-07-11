@@ -123,12 +123,27 @@ public class CreativeTab extends CreativeTabs{
         add(InitItems.itemAxeEmerald);
         add(InitItems.itemShovelEmerald);
         add(InitItems.itemHoeEmerald);
+        
+        add(InitItems.itemHelmEmerald);
+        add(InitItems.itemChestEmerald);
+        add(InitItems.itemPantsEmerald);
+        add(InitItems.itemBootsEmerald);
 
         add(InitItems.itemPickaxeObsidian);
         add(InitItems.itemSwordObsidian);
         add(InitItems.itemAxeObsidian);
         add(InitItems.itemShovelObsidian);
         add(InitItems.itemHoeObsidian);
+
+        add(InitItems.itemHelmObsidian);
+        add(InitItems.itemChestObsidian);
+        add(InitItems.itemPantsObsidian);
+        add(InitItems.itemBootsObsidian);
+
+        add(InitItems.itemScubaHelm);
+        add(InitItems.itemScubaChest);
+        add(InitItems.itemScubaPants);
+        add(InitItems.itemScubaBoots);
 
         add(InitItems.itemJams);
 

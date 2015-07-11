@@ -35,12 +35,26 @@ public enum ConfigIntValues{
     OBSIDIAN_USES("Obsidian: Max Uses", ConfigCategories.TOOL_VALUES, 8000, 50, 20000, "How often Obsidian Tools can be used"),
     OBSIDIAN_ENCHANTABILITY("Obsidian: Enchantability", ConfigCategories.TOOL_VALUES, 15, 1, 30, "How enchantable an Obsidian Tool is"),
 
-    SCUBA_DURABILITY("Scuba Armor: Durability", ConfigCategories.ARMOR_VALUES, 450, 10, 2000, "The Durability of Scuba Armor"),
+    SCUBA_DURABILITY("Scuba Armor: Durability", ConfigCategories.ARMOR_VALUES, 450, 10, 10000, "The Durability of Scuba Armor"),
     SCUBA_HEAD_DAMAGE("Scuba Helmets: Damage Reduction", ConfigCategories.ARMOR_VALUES, 2, 0, 10, "The Damage Reduction of Scuba Helmets"),
     SCUBA_CHEST_DAMAGE("Scuba Chests: Damage Reduction", ConfigCategories.ARMOR_VALUES, 5, 0, 10, "The Damage Reduction of Scuba Chests"),
     SCUBA_LEGS_DAMAGE("Scuba Legs: Damage Reduction", ConfigCategories.ARMOR_VALUES, 4, 0, 10, "The Damage Reduction of Scuba Legs"),
     SCUBA_BOOTS_DAMAGE("Scuba Boots: Damage Reduction", ConfigCategories.ARMOR_VALUES, 1, 0, 10, "The Damage Reduction of Scuba Boots"),
-    SCUBA_ENCHANTABILITY("Scuba Armor: Enchantability", ConfigCategories.ARMOR_VALUES, 15, 1, 100, "The Enchantability of Scuba Armor"),
+    SCUBA_ENCHANTABILITY("Scuba Armor: Enchantability", ConfigCategories.ARMOR_VALUES, 15, 1, 30, "The Enchantability of Scuba Armor"),
+
+    EMERALD_ARMOR_DURABILITY("Emerald Armor: Durability", ConfigCategories.ARMOR_VALUES, 1500, 10, 10000, "The Durability of Emerald Armor"),
+    EMERALD_ARMOR_HEAD_DAMAGE("Emerald Helmets: Damage Reduction", ConfigCategories.ARMOR_VALUES, 5, 0, 10, "The Damage Reduction of Emerald Helmets"),
+    EMERALD_ARMOR_CHEST_DAMAGE("Emerald Chests: Damage Reduction", ConfigCategories.ARMOR_VALUES, 9, 0, 10, "The Damage Reduction of Emerald Chests"),
+    EMERALD_ARMOR_LEGS_DAMAGE("Emerald Legs: Damage Reduction", ConfigCategories.ARMOR_VALUES, 8, 0, 10, "The Damage Reduction of Emerald Legs"),
+    EMERALD_ARMOR_BOOTS_DAMAGE("Emerald Boots: Damage Reduction", ConfigCategories.ARMOR_VALUES, 5, 0, 10, "The Damage Reduction of Emerald Boots"),
+    EMERALD_ARMOR_ENCHANTABILITY("Emerald Armor: Enchantability", ConfigCategories.ARMOR_VALUES, 15, 1, 30, "The Enchantability of Emerald Armor"),
+    
+    OBSIDIAN_ARMOR_DURABILITY("Obsidian Armor: Durability", ConfigCategories.ARMOR_VALUES, 7000, 10, 10000, "The Durability of Obsidian Armor"),
+    OBSIDIAN_ARMOR_HEAD_DAMAGE("Obsidian Helmets: Damage Reduction", ConfigCategories.ARMOR_VALUES, 3, 0, 10, "The Damage Reduction of Obsidian Helmets"),
+    OBSIDIAN_ARMOR_CHEST_DAMAGE("Obsidian Chests: Damage Reduction", ConfigCategories.ARMOR_VALUES, 4, 0, 10, "The Damage Reduction of Obsidian Chests"),
+    OBSIDIAN_ARMOR_LEGS_DAMAGE("Obsidian Legs: Damage Reduction", ConfigCategories.ARMOR_VALUES, 3, 0, 10, "The Damage Reduction of Obsidian Legs"),
+    OBSIDIAN_ARMOR_BOOTS_DAMAGE("Obsidian Boots: Damage Reduction", ConfigCategories.ARMOR_VALUES, 1, 0, 10, "The Damage Reduction of Obsidian Boots"),
+    OBSIDIAN_ARMOR_ENCHANTABILITY("Obsidian Armor: Enchantability", ConfigCategories.ARMOR_VALUES, 10, 1, 30, "The Enchantability of Obsidian Armor"),
 
     GRINDER_CRUSH_TIME("Crusher: Time", ConfigCategories.MACHINE_VALUES, 100, 10, 1000, "How long the Crusher takes to crush an item"),
     GRINDER_DOUBLE_CRUSH_TIME("Double Crusher: Time", ConfigCategories.MACHINE_VALUES, 150, 10, 1000, "How long the Double Crusher takes to crush an item"),
