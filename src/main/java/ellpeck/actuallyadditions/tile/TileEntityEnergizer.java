@@ -67,7 +67,6 @@ public class TileEntityEnergizer extends TileEntityInventoryBase implements IEne
 
     @Override
     public boolean canExtractItem(int slot, ItemStack stack, int side){
-        System.out.println(stack.getItem() instanceof IEnergyContainerItem);
         return slot == 1;
     }
 
