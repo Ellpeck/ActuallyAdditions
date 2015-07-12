@@ -16,6 +16,7 @@ import ellpeck.actuallyadditions.event.InitEvents;
 import ellpeck.actuallyadditions.gen.InitVillager;
 import ellpeck.actuallyadditions.gen.OreGen;
 import ellpeck.actuallyadditions.inventory.GuiHandler;
+import ellpeck.actuallyadditions.items.InitForeignPaxels;
 import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.items.ItemCoffee;
 import ellpeck.actuallyadditions.material.InitArmorMaterials;
@@ -84,6 +85,7 @@ public class ActuallyAdditions{
         ItemCrafting.initMashedFoodRecipes();
         HairyBallHandler.init();
         TreasureChestHandler.init();
+        InitForeignPaxels.init();
         proxy.postInit();
 
         ModUtil.LOGGER.info("PostInitialization Finished.");

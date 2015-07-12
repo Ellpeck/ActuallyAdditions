@@ -9,6 +9,7 @@ import ellpeck.actuallyadditions.items.metalists.TheMiscItems;
 import ellpeck.actuallyadditions.items.metalists.TheSpecialDrops;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -19,6 +20,10 @@ public class InitOreDict{
     public static void init(){
         ModUtil.LOGGER.info("Initializing OreDictionary Entries...");
 
+        //Vanilla Ores
+        addOre(Blocks.obsidian, "obsidian");
+
+        //My Ores
         addOre(InitItems.itemDust, TheDusts.IRON.ordinal(), "dustIron");
         addOre(InitItems.itemDust, TheDusts.GOLD.ordinal(), "dustGold");
         addOre(InitItems.itemDust, TheDusts.DIAMOND.ordinal(), "dustDiamond");

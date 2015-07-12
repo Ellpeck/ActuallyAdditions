@@ -21,6 +21,7 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.UseHoeEvent;
+import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.HashSet;
 import java.util.List;
@@ -42,9 +43,9 @@ public class ItemAllToolAA extends ItemTool implements INameableItem{
 
     private String name;
     private EnumRarity rarity;
-    private ItemStack repairItem;
+    private String repairItem;
 
-    public ItemAllToolAA(ToolMaterial toolMat, ItemStack repairItem, String unlocalizedName, EnumRarity rarity){
+    public ItemAllToolAA(ToolMaterial toolMat, String repairItem, String unlocalizedName, EnumRarity rarity){
         super(5.0F, toolMat, allSet);
 
         this.repairItem = repairItem;
@@ -102,7 +103,11 @@ public class ItemAllToolAA extends ItemTool implements INameableItem{
 
     @Override
     public boolean getIsRepairable(ItemStack itemToRepair, ItemStack stack){
-        return stack.getItem() == repairItem.getItem();
+        int[] idsStack = OreDictionary.getOreIDs(stack);
+        for(int id : idsStack){
+            if(OreDictionary.getOreName(id).equals(repairItem)) return true;
+        }
+        return false;
     }
 
     @Override

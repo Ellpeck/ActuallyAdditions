@@ -90,6 +90,7 @@ public enum ConfigCrafting{
     CUP("Cup", ConfigCategories.ITEMS_CRAFTING),
     PAXELS("Paxels", ConfigCategories.ITEMS_CRAFTING),
 
+
     ENDER_CASING("Ender Casing", ConfigCategories.BLOCKS_CRAFTING),
     PHANTOM_BOOSTER("Phantom Booster", ConfigCategories.BLOCKS_CRAFTING),
     COFFEE_MACHINE("Coffee Machine", ConfigCategories.BLOCKS_CRAFTING),

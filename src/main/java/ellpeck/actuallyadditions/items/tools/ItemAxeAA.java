@@ -13,6 +13,7 @@ import net.minecraft.item.ItemAxe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
+import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.List;
 
@@ -20,9 +21,9 @@ public class ItemAxeAA extends ItemAxe implements INameableItem{
 
     private String name;
     private EnumRarity rarity;
-    private ItemStack repairItem;
+    private String repairItem;
 
-    public ItemAxeAA(ToolMaterial toolMat, ItemStack repairItem, String unlocalizedName, EnumRarity rarity){
+    public ItemAxeAA(ToolMaterial toolMat, String repairItem, String unlocalizedName, EnumRarity rarity){
         super(toolMat);
         this.name = unlocalizedName;
         this.rarity = rarity;
@@ -42,7 +43,11 @@ public class ItemAxeAA extends ItemAxe implements INameableItem{
 
     @Override
     public boolean getIsRepairable(ItemStack itemToRepair, ItemStack stack){
-        return stack.getItem() == repairItem.getItem();
+        int[] idsStack = OreDictionary.getOreIDs(stack);
+        for(int id : idsStack){
+            if(OreDictionary.getOreName(id).equals(repairItem)) return true;
+        }
+        return false;
     }
 
     @Override

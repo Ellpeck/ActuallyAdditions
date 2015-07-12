@@ -13,6 +13,7 @@ import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
+import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.List;
 
@@ -21,9 +22,9 @@ public class ItemPickaxeAA extends ItemPickaxe implements INameableItem{
     private String name;
     private String oredictName;
     private EnumRarity rarity;
-    private ItemStack repairItem;
+    private String repairItem;
 
-    public ItemPickaxeAA(ToolMaterial toolMat, ItemStack repairItem, String unlocalizedName, EnumRarity rarity){
+    public ItemPickaxeAA(ToolMaterial toolMat, String repairItem, String unlocalizedName, EnumRarity rarity){
         super(toolMat);
         this.name = unlocalizedName;
         this.rarity = rarity;
@@ -44,7 +45,11 @@ public class ItemPickaxeAA extends ItemPickaxe implements INameableItem{
 
     @Override
     public boolean getIsRepairable(ItemStack itemToRepair, ItemStack stack){
-        return stack.getItem() == repairItem.getItem();
+        int[] idsStack = OreDictionary.getOreIDs(stack);
+        for(int id : idsStack){
+            if(OreDictionary.getOreName(id).equals(repairItem)) return true;
+        }
+        return false;
     }
 
     @Override
@@ -66,9 +71,5 @@ public class ItemPickaxeAA extends ItemPickaxe implements INameableItem{
     @Override
     public String getName(){
         return name;
-    }
-
-    private String getOredictName(){
-        return oredictName;
     }
 }

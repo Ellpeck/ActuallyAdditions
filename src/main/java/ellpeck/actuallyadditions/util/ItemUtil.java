@@ -19,6 +19,13 @@ public class ItemUtil{
         else list.add(shiftForInfo());
     }
 
+    public static Item getItemFromName(String name){
+        if(Item.itemRegistry.containsKey(name)){
+            return (Item)Item.itemRegistry.getObject(name);
+        }
+        return null;
+    }
+
     public static void registerItems(Item[] items){
         for(Item item : items){
             register(item);

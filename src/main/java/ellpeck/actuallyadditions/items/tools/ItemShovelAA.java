@@ -13,6 +13,7 @@ import net.minecraft.item.ItemSpade;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
+import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.List;
 
@@ -21,9 +22,9 @@ public class ItemShovelAA extends ItemSpade implements INameableItem{
     private String name;
     private String oredictName;
     private EnumRarity rarity;
-    private ItemStack repairItem;
+    private String repairItem;
 
-    public ItemShovelAA(ToolMaterial toolMat, ItemStack repairItem, String unlocalizedName, EnumRarity rarity){
+    public ItemShovelAA(ToolMaterial toolMat, String repairItem, String unlocalizedName, EnumRarity rarity){
         super(toolMat);
         this.name = unlocalizedName;
         this.rarity = rarity;
@@ -44,7 +45,11 @@ public class ItemShovelAA extends ItemSpade implements INameableItem{
 
     @Override
     public boolean getIsRepairable(ItemStack itemToRepair, ItemStack stack){
-        return stack.getItem() == repairItem.getItem();
+        int[] idsStack = OreDictionary.getOreIDs(stack);
+        for(int id : idsStack){
+            if(OreDictionary.getOreName(id).equals(repairItem)) return true;
+        }
+        return false;
     }
 
     @Override

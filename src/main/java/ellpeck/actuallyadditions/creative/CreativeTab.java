@@ -3,6 +3,7 @@ package ellpeck.actuallyadditions.creative;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.blocks.InitBlocks;
+import ellpeck.actuallyadditions.items.InitForeignPaxels;
 import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.block.Block;
@@ -117,6 +118,7 @@ public class CreativeTab extends CreativeTabs{
         add(InitItems.diamondPaxel);
         add(InitItems.emeraldPaxel);
         add(InitItems.obsidianPaxel);
+        InitForeignPaxels.addToCreativeTab(this.list);
 
         add(InitItems.itemPickaxeEmerald);
         add(InitItems.itemSwordEmerald);
@@ -157,10 +159,10 @@ public class CreativeTab extends CreativeTabs{
     }
 
     private void add(Item item){
-        item.getSubItems(item, instance, list);
+        item.getSubItems(item, instance, this.list);
     }
 
     private void add(Block block){
-        block.getSubBlocks(new ItemStack(block).getItem(), instance, list);
+        block.getSubBlocks(new ItemStack(block).getItem(), instance, this.list);
     }
 }

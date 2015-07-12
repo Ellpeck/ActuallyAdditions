@@ -203,27 +203,27 @@ public class InitItems{
         ItemUtil.register(itemCoffeeSeed);
         CompatUtil.registerMFRSeed(itemCoffeeSeed);
 
-        itemPickaxeEmerald = new ItemPickaxeAA(InitToolMaterials.toolMaterialEmerald, new ItemStack(Items.emerald), "itemPickaxeEmerald", EnumRarity.rare);
-        itemAxeEmerald = new ItemAxeAA(InitToolMaterials.toolMaterialEmerald, new ItemStack(Items.emerald), "itemAxeEmerald", EnumRarity.rare);
-        itemShovelEmerald = new ItemShovelAA(InitToolMaterials.toolMaterialEmerald, new ItemStack(Items.emerald), "itemShovelEmerald", EnumRarity.rare);
-        itemSwordEmerald = new ItemSwordAA(InitToolMaterials.toolMaterialEmerald, new ItemStack(Items.emerald), "itemSwordEmerald", EnumRarity.rare);
-        itemHoeEmerald = new ItemHoeAA(InitToolMaterials.toolMaterialEmerald, new ItemStack(Items.emerald), "itemHoeEmerald", EnumRarity.rare);
+        itemPickaxeEmerald = new ItemPickaxeAA(InitToolMaterials.toolMaterialEmerald, "gemEmerald", "itemPickaxeEmerald", EnumRarity.rare);
+        itemAxeEmerald = new ItemAxeAA(InitToolMaterials.toolMaterialEmerald, "gemEmerald", "itemAxeEmerald", EnumRarity.rare);
+        itemShovelEmerald = new ItemShovelAA(InitToolMaterials.toolMaterialEmerald, "gemEmerald", "itemShovelEmerald", EnumRarity.rare);
+        itemSwordEmerald = new ItemSwordAA(InitToolMaterials.toolMaterialEmerald, "gemEmerald", "itemSwordEmerald", EnumRarity.rare);
+        itemHoeEmerald = new ItemHoeAA(InitToolMaterials.toolMaterialEmerald, "gemEmerald", "itemHoeEmerald", EnumRarity.rare);
         ItemUtil.registerItems(new Item[]{itemPickaxeEmerald, itemAxeEmerald, itemShovelEmerald, itemSwordEmerald, itemHoeEmerald});
 
-        itemPickaxeObsidian = new ItemPickaxeAA(InitToolMaterials.toolMaterialObsidian, new ItemStack(Blocks.obsidian), "itemPickaxeObsidian", EnumRarity.uncommon);
-        itemAxeObsidian = new ItemAxeAA(InitToolMaterials.toolMaterialObsidian, new ItemStack(Blocks.obsidian), "itemAxeObsidian", EnumRarity.uncommon);
-        itemShovelObsidian = new ItemShovelAA(InitToolMaterials.toolMaterialObsidian, new ItemStack(Blocks.obsidian), "itemShovelObsidian", EnumRarity.uncommon);
-        itemSwordObsidian = new ItemSwordAA(InitToolMaterials.toolMaterialObsidian, new ItemStack(Blocks.obsidian), "itemSwordObsidian", EnumRarity.uncommon);
-        itemHoeObsidian = new ItemHoeAA(InitToolMaterials.toolMaterialObsidian, new ItemStack(Blocks.obsidian), "itemHoeObsidian", EnumRarity.uncommon);
+        itemPickaxeObsidian = new ItemPickaxeAA(InitToolMaterials.toolMaterialObsidian, "obsidian", "itemPickaxeObsidian", EnumRarity.uncommon);
+        itemAxeObsidian = new ItemAxeAA(InitToolMaterials.toolMaterialObsidian, "obsidian", "itemAxeObsidian", EnumRarity.uncommon);
+        itemShovelObsidian = new ItemShovelAA(InitToolMaterials.toolMaterialObsidian, "obsidian", "itemShovelObsidian", EnumRarity.uncommon);
+        itemSwordObsidian = new ItemSwordAA(InitToolMaterials.toolMaterialObsidian, "obsidian", "itemSwordObsidian", EnumRarity.uncommon);
+        itemHoeObsidian = new ItemHoeAA(InitToolMaterials.toolMaterialObsidian, "obsidian", "itemHoeObsidian", EnumRarity.uncommon);
         ItemUtil.registerItems(new Item[]{itemPickaxeObsidian, itemAxeObsidian, itemShovelObsidian, itemSwordObsidian, itemHoeObsidian});
 
-        woodenPaxel = new ItemAllToolAA(Item.ToolMaterial.WOOD, new ItemStack(Blocks.planks), "woodenPaxel", EnumRarity.uncommon);
-        stonePaxel = new ItemAllToolAA(Item.ToolMaterial.STONE, new ItemStack(Blocks.stone), "stonePaxel", EnumRarity.uncommon);
-        ironPaxel = new ItemAllToolAA(Item.ToolMaterial.IRON, new ItemStack(Items.iron_ingot), "ironPaxel", EnumRarity.rare);
-        goldPaxel = new ItemAllToolAA(Item.ToolMaterial.GOLD, new ItemStack(Items.gold_ingot), "goldPaxel", EnumRarity.rare);
-        diamondPaxel = new ItemAllToolAA(Item.ToolMaterial.EMERALD, new ItemStack(Items.diamond), "diamondPaxel", EnumRarity.epic);
-        emeraldPaxel = new ItemAllToolAA(InitToolMaterials.toolMaterialEmerald, new ItemStack(Items.emerald), "emeraldPaxel", EnumRarity.epic);
-        obsidianPaxel = new ItemAllToolAA(InitToolMaterials.toolMaterialObsidian, new ItemStack(Blocks.obsidian), "obsidianPaxel", EnumRarity.epic);
+        woodenPaxel = new ItemAllToolAA(Item.ToolMaterial.WOOD, "plankWood", "woodenPaxel", EnumRarity.uncommon);
+        stonePaxel = new ItemAllToolAA(Item.ToolMaterial.STONE, "stone", "stonePaxel", EnumRarity.uncommon);
+        ironPaxel = new ItemAllToolAA(Item.ToolMaterial.IRON, "ingotIron", "ironPaxel", EnumRarity.rare);
+        goldPaxel = new ItemAllToolAA(Item.ToolMaterial.GOLD, "ingotGold", "goldPaxel", EnumRarity.rare);
+        diamondPaxel = new ItemAllToolAA(Item.ToolMaterial.EMERALD, "gemDiamond", "diamondPaxel", EnumRarity.epic);
+        emeraldPaxel = new ItemAllToolAA(InitToolMaterials.toolMaterialEmerald, "gemEmerald", "emeraldPaxel", EnumRarity.epic);
+        obsidianPaxel = new ItemAllToolAA(InitToolMaterials.toolMaterialObsidian, "obsidian", "obsidianPaxel", EnumRarity.epic);
         ItemUtil.registerItems(new Item[]{woodenPaxel, stonePaxel, ironPaxel, goldPaxel, diamondPaxel, emeraldPaxel, obsidianPaxel});
     }
 }
