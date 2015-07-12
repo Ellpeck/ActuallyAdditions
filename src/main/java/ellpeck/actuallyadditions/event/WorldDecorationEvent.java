@@ -13,7 +13,6 @@ import net.minecraft.world.biome.BiomeGenOcean;
 import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public class WorldDecorationEvent{
 
@@ -27,7 +26,7 @@ public class WorldDecorationEvent{
 
             //Generate Treasure Chests
             if(ConfigBoolValues.DO_TREASURE_CHEST_GEN.isEnabled()){
-                if(new Random().nextInt(ConfigIntValues.TREASURE_CHEST_CHANCE.getValue()) == 0){
+                if(event.rand.nextInt(ConfigIntValues.TREASURE_CHEST_CHANCE.getValue()) == 0){
                     int genX = event.chunkX+event.rand.nextInt(16)+8;
                     int genZ = event.chunkZ+event.rand.nextInt(16)+8;
                     int genY = event.world.getTopSolidOrLiquidBlock(genX, genZ);
@@ -36,7 +35,7 @@ public class WorldDecorationEvent{
                         if(genY >= ConfigIntValues.TREASURE_CHEST_MIN_HEIGHT.getValue() && genY <= ConfigIntValues.TREASURE_CHEST_MAX_HEIGHT.getValue()){
                             if(event.world.getBlock(genX, genY, genZ).getMaterial() == Material.water){
                                 if(event.world.getBlock(genX, genY-1, genZ).getMaterial().isSolid()){
-                                    event.world.setBlock(genX, genY, genZ, InitBlocks.blockTreasureChest, 0, 2);
+                                    event.world.setBlock(genX, genY, genZ, InitBlocks.blockTreasureChest, event.rand.nextInt(4), 2);
                                 }
                             }
                         }
@@ -49,7 +48,7 @@ public class WorldDecorationEvent{
     private void genPlantNormally(Block plant, int meta, int amount, boolean doIt, Material blockBelow, DecorateBiomeEvent event){
         if(doIt){
             for(int i = 0; i < amount; i++){
-                if(new Random().nextInt(ConfigIntValues.NORMAL_PLANT_CHANCE.getValue()) == 0){
+                if(event.rand.nextInt(ConfigIntValues.NORMAL_PLANT_CHANCE.getValue()) == 0){
                     int genX = event.chunkX+event.rand.nextInt(16)+8;
                     int genZ = event.chunkZ+event.rand.nextInt(16)+8;
                     int genY = event.world.getTopSolidOrLiquidBlock(genX, genZ)-1;
@@ -65,7 +64,7 @@ public class WorldDecorationEvent{
     private void generateRice(DecorateBiomeEvent event){
         if(ConfigBoolValues.DO_RICE_GEN.isEnabled()){
             for(int i = 0; i < ConfigIntValues.RICE_AMOUNT.getValue(); i++){
-                if(new Random().nextInt(ConfigIntValues.RICE_CHANCE.getValue()) == 0){
+                if(event.rand.nextInt(ConfigIntValues.RICE_CHANCE.getValue()) == 0){
                     int genX = event.chunkX+event.rand.nextInt(16)+8;
                     int genZ = event.chunkZ+event.rand.nextInt(16)+8;
                     int genY = event.world.getTopSolidOrLiquidBlock(genX, genZ);

@@ -36,8 +36,8 @@ public class BlockTreasureChest extends Block implements INameableItem{
     public BlockTreasureChest(){
         super(Material.wood);
         this.setHarvestLevel("axe", 0);
-        this.setHardness(2.0F);
-        this.setResistance(10.0F);
+        this.setHardness(300.0F);
+        this.setResistance(50.0F);
         this.setStepSound(soundTypeWood);
         this.setTickRandomly(true);
     }
@@ -97,17 +97,6 @@ public class BlockTreasureChest extends Block implements INameableItem{
             world.setBlockToAir(x, y, z);
         }
         return true;
-    }
-
-    @Override
-    public void harvestBlock(World world, EntityPlayer player, int x, int y, int z, int meta){
-        player.addStat(TheAchievements.OPEN_TREASURE_CHEST.ach, 1);
-    }
-
-    @Override
-    public void breakBlock(World world, int x, int y, int z, Block block, int par6){
-        this.dropItems(world, x, y, z);
-        super.breakBlock(world, x, y, z, block, par6);
     }
 
     private void dropItems(World world, int x, int y, int z){
