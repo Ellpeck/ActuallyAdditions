@@ -123,14 +123,32 @@ tooltip.actuallyadditions.blockMiscLavaFactoryCase.desc=Helps the Lava Factory C
 tile.actuallyadditions.blockFluidPlacer.name=Fluid Placer
 tooltip.actuallyadditions.blockFluidPlacer.desc=Places Fluids stored inside it
 
-tooltip.actuallyadditions.paxel.desc=It's an Axe, Shovel, Sword, Hoe and Pickaxe! Combined!
-item.actuallyadditions.woodenPaxel.name=Wooden Paxelordoe
-item.actuallyadditions.stonePaxel.name=Stone Paxelordoe
-item.actuallyadditions.ironPaxel.name=Iron Paxelordoe
-item.actuallyadditions.goldPaxel.name=Golden Paxelordoe
-item.actuallyadditions.diamondPaxel.name=Diamond Paxelordoe
-item.actuallyadditions.emeraldPaxel.name=Emerald Paxelordoe
-item.actuallyadditions.obsidianPaxel.name=Obsidian Paxelordoe
+tooltip.actuallyadditions.paxel.desc.1=It's an All-In-One-Tool!
+tooltip.actuallyadditions.paxel.desc.2=Pickaxe, Axe, Shovel, Sword AND Hoe! In One Tool!
+item.actuallyadditions.woodenPaxel.name=Wooden AIOT
+item.actuallyadditions.stonePaxel.name=Stone AIOT
+item.actuallyadditions.ironPaxel.name=Iron AIOT
+item.actuallyadditions.goldPaxel.name=Golden AIOT
+item.actuallyadditions.diamondPaxel.name=Diamond AIOT
+item.actuallyadditions.emeraldPaxel.name=Emerald AIOT
+item.actuallyadditions.obsidianPaxel.name=Obsidian AIOT
+
+item.actuallyadditions.paxelTFCopper.name=TF Copper AIOT
+item.actuallyadditions.paxelTFTin.name=TF Tin AIOT
+item.actuallyadditions.paxelTFLead.name=TF Lead AIOT
+item.actuallyadditions.paxelTFSilver.name=TF Silver AIOT
+item.actuallyadditions.paxelTFElectrum.name=TF Electrum AIOT
+item.actuallyadditions.paxelTFNickel.name=TF Ferrous AIOT
+item.actuallyadditions.paxelTFBronze.name=TF Bronze AIOT
+item.actuallyadditions.paxelTFPlatinum.name=TF Shiny AIOT
+item.actuallyadditions.paxelTFInvar.name=TF Invar AIOT
+
+item.actuallyadditions.paxelMTObsidian.name=MT Obsidian AIOT
+item.actuallyadditions.paxelMTGlowstone.name=MT Glowstone AIOT
+item.actuallyadditions.paxelMTLapisLazuli.name=MT Lapis Lazuli AIOT
+item.actuallyadditions.paxelMTOsmium.name=MT Osmium AIOT
+item.actuallyadditions.paxelMTBronze.name=MT Bronze AIOT
+item.actuallyadditions.paxelMTSteel.name=MT Steel AIOT
 
 tile.actuallyadditions.blockFluidCollector.name=Fluid Collector
 tooltip.actuallyadditions.blockFluidCollector.desc=Stores Fluids in front of it inside it

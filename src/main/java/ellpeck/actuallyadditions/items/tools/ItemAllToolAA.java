@@ -46,7 +46,7 @@ public class ItemAllToolAA extends ItemTool implements INameableItem{
     private String repairItem;
 
     public ItemAllToolAA(ToolMaterial toolMat, String repairItem, String unlocalizedName, EnumRarity rarity){
-        super(5.0F, toolMat, allSet);
+        super(4.0F, toolMat, allSet);
 
         this.repairItem = repairItem;
         this.name = unlocalizedName;
@@ -70,7 +70,8 @@ public class ItemAllToolAA extends ItemTool implements INameableItem{
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld) {
         if(KeyUtil.isShiftPressed()){
-            list.add(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".paxel.desc"));
+            list.add(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".paxel.desc.1"));
+            list.add(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".paxel.desc.2"));
             list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + ".durability.desc") + ": " + (this.getMaxDamage()-this.getDamage(stack)) + "/" + this.getMaxDamage());
         }
         else list.add(ItemUtil.shiftForInfo());
