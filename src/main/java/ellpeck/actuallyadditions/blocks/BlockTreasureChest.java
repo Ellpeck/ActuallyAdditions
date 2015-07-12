@@ -30,7 +30,7 @@ import java.util.Random;
 public class BlockTreasureChest extends Block implements INameableItem{
 
     private IIcon topIcon;
-    private IIcon onIcon;
+    private IIcon bottomIcon;
     private IIcon frontIcon;
 
     public BlockTreasureChest(){
@@ -65,6 +65,7 @@ public class BlockTreasureChest extends Block implements INameableItem{
     @Override
     public IIcon getIcon(int side, int meta){
         if(side == 1) return this.topIcon;
+        if(side == 0) return this.bottomIcon;
         if(side == 3) return this.frontIcon;
         return this.blockIcon;
     }
@@ -73,8 +74,8 @@ public class BlockTreasureChest extends Block implements INameableItem{
     public IIcon getIcon(IBlockAccess world, int x, int y, int z, int side){
         int meta = world.getBlockMetadata(x, y, z);
         if(side == 1) return this.topIcon;
-        if(side == meta+2 && meta <= 3) return this.frontIcon;
-        else if(side == meta-2 && meta > 3) return this.onIcon;
+        if(side == meta+2) return this.frontIcon;
+        if(side == 0) return this.bottomIcon;
         return this.blockIcon;
     }
 
@@ -83,7 +84,7 @@ public class BlockTreasureChest extends Block implements INameableItem{
     public void registerBlockIcons(IIconRegister iconReg){
         this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":" + this.getName());
         this.topIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":" + this.getName() + "Top");
-        this.onIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":" + this.getName() + "On");
+        this.bottomIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":" + this.getName() + "Bottom");
         this.frontIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":" + this.getName() + "Front");
     }
 
