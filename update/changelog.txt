@@ -1,1 +1,1 @@
-Added ESD descriptions, made the Drill work better
+Added Obsidian and Emerald Armor, Treasure Chests, fixed lots of big bugs
