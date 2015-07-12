@@ -495,6 +495,24 @@ tooltip.actuallyadditions.itemDustQuartz.desc=Quartz! Crushed in the Crusher!
 tooltip.actuallyadditions.itemDustCoal.desc=Coal! Crushed in the Crusher!
 tooltip.actuallyadditions.itemDustQuartzBlack.desc=Black Quartz! Crushed in the Crusher!
 
+item.actuallyadditions.itemHelmObsidian.name=Obsidian Helm
+tooltip.actuallyadditions.itemHelmObsidian.desc=It feels a bit heavy..
+item.actuallyadditions.itemChestObsidian.name=Obsidian Chestplate
+tooltip.actuallyadditions.itemChestObsidian.desc=It seems to be pretty hard.
+item.actuallyadditions.itemPantsObsidian.name=Obsidian Pants
+tooltip.actuallyadditions.itemPantsObsidian.desc="Pants" is "Hose" in German!
+item.actuallyadditions.itemBootsObsidian.name=Obsidian Boots
+tooltip.actuallyadditions.itemBootsObsidian.desc=I hope they fit good.. I hate it when boots don't fit..
+
+item.actuallyadditions.itemHelmEmerald.name=Emerald Helm
+tooltip.actuallyadditions.itemHelmEmerald.desc=I like the color.. it's so SHINY!
+item.actuallyadditions.itemChestEmerald.name=Emerald Chestplate
+tooltip.actuallyadditions.itemChestEmerald.desc=That color.. it's... soooo... awesoooome °___°
+item.actuallyadditions.itemPantsEmerald.name=Emerald Pants
+tooltip.actuallyadditions.itemPantsEmerald.desc="Pants" is "Hose" in German!
+item.actuallyadditions.itemBootsEmerald.name=Emerald Boots
+tooltip.actuallyadditions.itemBootsEmerald.desc=I hope they fit good.. I hate it when boots don't fit..
+
 info.actuallyadditions.gui.animals=Animals
 info.actuallyadditions.gui.enoughToBreed=Enough to breed!
 info.actuallyadditions.gui.tooMany=Too many to breed!

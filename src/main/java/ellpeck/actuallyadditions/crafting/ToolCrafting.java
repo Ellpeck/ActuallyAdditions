@@ -43,6 +43,26 @@ public class ToolCrafting{
                     "EE", " S", " S",
                     'E', "gemEmerald",
                     'S', new ItemStack(Items.stick)));
+            
+            //Helm
+            GameRegistry.addRecipe(new ItemStack(InitItems.itemHelmEmerald),
+                    "OOO", "O O",
+                    'O', new ItemStack(Items.emerald));
+
+            //Chest
+            GameRegistry.addRecipe(new ItemStack(InitItems.itemChestEmerald),
+                    "O O", "OOO", "OOO",
+                    'O', new ItemStack(Items.emerald));
+
+            //Legs
+            GameRegistry.addRecipe(new ItemStack(InitItems.itemPantsEmerald),
+                    "OOO", "O O", "O O",
+                    'O', new ItemStack(Items.emerald));
+
+            //Boots
+            GameRegistry.addRecipe(new ItemStack(InitItems.itemBootsEmerald),
+                    "O O", "O O",
+                    'O', new ItemStack(Items.emerald));
         }
 
         if(ConfigCrafting.TOOL_OBSIDIAN.isEnabled()){
@@ -75,6 +95,26 @@ public class ToolCrafting{
                     "EE", " S", " S",
                     'E', new ItemStack(Blocks.obsidian),
                     'S', new ItemStack(Items.stick));
+
+            //Helm
+            GameRegistry.addRecipe(new ItemStack(InitItems.itemHelmObsidian),
+                    "OOO", "O O",
+                    'O', new ItemStack(Blocks.obsidian));
+
+            //Chest
+            GameRegistry.addRecipe(new ItemStack(InitItems.itemChestObsidian),
+                    "O O", "OOO", "OOO",
+                    'O', new ItemStack(Blocks.obsidian));
+
+            //Legs
+            GameRegistry.addRecipe(new ItemStack(InitItems.itemPantsObsidian),
+                    "OOO", "O O", "O O",
+                    'O', new ItemStack(Blocks.obsidian));
+
+            //Boots
+            GameRegistry.addRecipe(new ItemStack(InitItems.itemBootsObsidian),
+                    "O O", "O O",
+                    'O', new ItemStack(Blocks.obsidian));
         }
 
         //Paxels
