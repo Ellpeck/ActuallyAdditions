@@ -22,8 +22,8 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
-import scala.actors.threadpool.Arrays;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.regex.Pattern;
 
