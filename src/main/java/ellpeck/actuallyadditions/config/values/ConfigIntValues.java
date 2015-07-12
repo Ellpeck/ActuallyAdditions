@@ -10,11 +10,11 @@ public enum ConfigIntValues{
     LEAF_BLOWER_RANGE_SIDES("Leaf Blower: Side Range", ConfigCategories.TOOL_VALUES, 5, 1, 25, "The Leaf Blower's Range to the Sides"),
     LEAF_BLOWER_RANGE_UP("Leaf Blower: Range Up", ConfigCategories.TOOL_VALUES, 1, 1, 10, "The Leaf Blower's Range Up"),
 
-    BLACK_QUARTZ_BASE_AMOUNT("Black Quartz Amount", ConfigCategories.WORLD_GEN, 3, 1, 50, "How big a Black Quartz Vein is at least"),
-    BLACK_QUARTZ_ADD_CHANCE("Black Quartz Additional Chance", ConfigCategories.WORLD_GEN, 3, 0, 50, "How much bigger than the Base Amount a Black Quartz Vein can get"),
-    BLACK_QUARTZ_CHANCE("Black Quartz Chance", ConfigCategories.WORLD_GEN, 5, 1, 150, "How often the Black Quartz tries to generate"),
-    BLACK_QUARTZ_MIN_HEIGHT("Black Quartz Min Height", ConfigCategories.WORLD_GEN, 0, 0, 256, "How high the Black Quartz starts to generate"),
-    BLACK_QUARTZ_MAX_HEIGHT("Black Quartz Max Height", ConfigCategories.WORLD_GEN, 25, 0, 256, "How high the Black Quartz stops to generate at"),
+    BLACK_QUARTZ_BASE_AMOUNT("Black Quartz: Amount", ConfigCategories.WORLD_GEN, 5, 1, 50, "How big a Black Quartz Vein is at least"),
+    BLACK_QUARTZ_ADD_CHANCE("Black Quartz: Additional Chance", ConfigCategories.WORLD_GEN, 3, 0, 50, "How much bigger than the Base Amount a Black Quartz Vein can get"),
+    BLACK_QUARTZ_CHANCE("Black Quartz: Chance", ConfigCategories.WORLD_GEN, 10, 1, 150, "How often the Black Quartz tries to generate"),
+    BLACK_QUARTZ_MIN_HEIGHT("Black Quartz: Min Height", ConfigCategories.WORLD_GEN, 0, 0, 256, "How high the Black Quartz starts to generate"),
+    BLACK_QUARTZ_MAX_HEIGHT("Black Quartz: Max Height", ConfigCategories.WORLD_GEN, 45, 0, 256, "How high the Black Quartz stops to generate at"),
 
     COMPOST_AMOUNT("Compost: Amount Needed To Convert", ConfigCategories.MACHINE_VALUES, 10, 1, 64, "How many items are needed in the Compost to convert to Fertilizer"),
     COMPOST_TIME("Compost: Conversion Time Needed", ConfigCategories.MACHINE_VALUES, 1000, 30, 10000, "How long the Compost needs to convert to Fertilizer"),
