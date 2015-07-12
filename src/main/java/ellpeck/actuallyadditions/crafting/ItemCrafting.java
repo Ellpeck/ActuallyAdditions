@@ -206,7 +206,7 @@ public class ItemCrafting{
         if(ConfigCrafting.KNIFE.isEnabled())
             GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemKnife),
                     new ItemStack(InitItems.itemMisc, 1, TheMiscItems.KNIFE_BLADE.ordinal()),
-                    new ItemStack(InitItems.itemMisc, 1, TheMiscItems.KNIFE_BLADE.ordinal())));
+                    new ItemStack(InitItems.itemMisc, 1, TheMiscItems.KNIFE_HANDLE.ordinal())));
 
         //Crafter on a Stick
         if(ConfigCrafting.STICK_CRAFTER.isEnabled())
