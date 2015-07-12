@@ -91,8 +91,13 @@ public class TileEntityEnervator extends TileEntityInventoryBase implements IEne
     }
 
     @Override
+    public boolean isItemValidForSlot(int i, ItemStack stack){
+        return i == 0 && stack.getItem() instanceof IEnergyContainerItem;
+    }
+
+    @Override
     public boolean canInsertItem(int slot, ItemStack stack, int side){
-        return slot == 0 && stack.getItem() instanceof IEnergyContainerItem;
+        return this.isItemValidForSlot(slot, stack);
     }
 
     @Override
