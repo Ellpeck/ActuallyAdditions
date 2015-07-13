@@ -60,6 +60,8 @@ public class GuiHandler implements IGuiHandler{
                 return new ContainerEnergizer(entityPlayer, tile);
             case ENERVATOR_ID:
                 return new ContainerEnervator(entityPlayer, tile);
+            case XP_SOLIDIFIER_ID:
+                return new ContainerXPSolidifier(entityPlayer.inventory, tile);
             default:
                 return null;
         }
@@ -114,6 +116,8 @@ public class GuiHandler implements IGuiHandler{
                 return new GuiEnergizer(entityPlayer, tile);
             case ENERVATOR_ID:
                 return new GuiEnervator(entityPlayer, tile);
+            case XP_SOLIDIFIER_ID:
+                return new GuiXPSolidifier(entityPlayer.inventory, tile, x, y, z, world);
             default:
                 return null;
         }
@@ -140,6 +144,7 @@ public class GuiHandler implements IGuiHandler{
     public static final int DRILL_ID = 18;
     public static final int ENERGIZER_ID = 19;
     public static final int ENERVATOR_ID = 20;
+    public static final int XP_SOLIDIFIER_ID = 21;
 
     public static void init(){
         ModUtil.LOGGER.info("Initializing GuiHandler...");

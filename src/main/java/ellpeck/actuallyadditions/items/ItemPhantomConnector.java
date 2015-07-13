@@ -4,7 +4,10 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.tile.TileEntityPhantomPlacer;
 import ellpeck.actuallyadditions.tile.TileEntityPhantomface;
-import ellpeck.actuallyadditions.util.*;
+import ellpeck.actuallyadditions.util.INameableItem;
+import ellpeck.actuallyadditions.util.ItemUtil;
+import ellpeck.actuallyadditions.util.ModUtil;
+import ellpeck.actuallyadditions.util.WorldPos;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -83,12 +86,6 @@ public class ItemPhantomConnector extends Item implements INameableItem{
         if(this.getStoredPosition(stack) == null) this.clearStorage(stack);
     }
 
-    @Override
-    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player){
-        if(KeyUtil.isAltPressed()) this.clearStorage(stack);
-        return stack;
-    }
-
     public WorldPos getStoredPosition(ItemStack stack){
         NBTTagCompound tag = stack.getTagCompound();
         if(tag != null){
@@ -128,7 +125,7 @@ public class ItemPhantomConnector extends Item implements INameableItem{
     @SuppressWarnings("unchecked")
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld) {
-        ItemUtil.addInformation(this, list, 2, "");
+        ItemUtil.addInformation(this, list, 1, "");
         WorldPos coords = this.getStoredPosition(stack);
         if(coords != null){
             World world = coords.getWorld();

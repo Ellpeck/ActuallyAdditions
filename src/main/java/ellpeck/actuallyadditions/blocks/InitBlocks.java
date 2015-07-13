@@ -80,8 +80,13 @@ public class InitBlocks{
 
     public static Block blockTreasureChest;
 
+    public static Block blockXPSolidifier;
+
     public static void init(){
         ModUtil.LOGGER.info("Initializing Blocks...");
+
+        blockXPSolidifier = new BlockXPSolidifier();
+        BlockUtil.register(blockXPSolidifier, BlockXPSolidifier.TheItemBlock.class);
 
         blockTestifiBucksGreenWall = new BlockGeneric("blockTestifiBucksGreenWall");
         BlockUtil.register(blockTestifiBucksGreenWall, BlockGeneric.TheItemBlock.class);

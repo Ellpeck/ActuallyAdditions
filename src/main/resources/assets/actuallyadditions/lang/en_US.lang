@@ -158,8 +158,7 @@ tooltip.actuallyadditions.blockPhantomBooster.desc.1=When placed above a Phantom
 tooltip.actuallyadditions.blockPhantomBooster.desc.2=(Max Amount above one Phantom Machine: 3)
 
 item.actuallyadditions.itemPhantomConnector.name=Phantom Connector
-tooltip.actuallyadditions.itemPhantomConnector.desc.1=Connects a Phantom Face to any Inventory Block!
-tooltip.actuallyadditions.itemPhantomConnector.desc.2=Hold ALT to clear the stored TileEntity
+tooltip.actuallyadditions.itemPhantomConnector.desc=Connects a Phantom Inventory to any Inventory Block!
 
 item.actuallyadditions.itemMiscCup.name=Empty Cup
 tooltip.actuallyadditions.itemMiscCup.desc=Used to make Coffee in a Coffee Machine!
