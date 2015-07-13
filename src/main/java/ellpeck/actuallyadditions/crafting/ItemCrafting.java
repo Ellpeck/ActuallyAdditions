@@ -3,6 +3,7 @@ package ellpeck.actuallyadditions.crafting;
 import cpw.mods.fml.common.registry.GameRegistry;
 import ellpeck.actuallyadditions.blocks.InitBlocks;
 import ellpeck.actuallyadditions.blocks.metalists.TheMiscBlocks;
+import ellpeck.actuallyadditions.config.ConfigValues;
 import ellpeck.actuallyadditions.config.values.ConfigCrafting;
 import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.items.metalists.*;
@@ -17,6 +18,8 @@ import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
+
+import java.util.Arrays;
 
 public class ItemCrafting{
 
@@ -280,8 +283,10 @@ public class ItemCrafting{
         if(ConfigCrafting.MASHED_FOOD.isEnabled()){
             for(Object nextIterator : Item.itemRegistry){
                 if(nextIterator instanceof ItemFood || nextIterator instanceof IPlantable || nextIterator instanceof IGrowable){
-                    ItemStack ingredient = new ItemStack((Item)nextIterator, 1, Util.WILDCARD);
-                    GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemMisc, 8, TheMiscItems.MASHED_FOOD.ordinal()), ingredient, ingredient, ingredient, ingredient, new ItemStack(InitItems.itemKnife, 1, Util.WILDCARD));
+                    if(!Arrays.asList(ConfigValues.mashedFoodCraftingExceptions).contains(Item.itemRegistry.getNameForObject(nextIterator))){
+                        ItemStack ingredient = new ItemStack((Item)nextIterator, 1, Util.WILDCARD);
+                        GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemMisc, 8, TheMiscItems.MASHED_FOOD.ordinal()), ingredient, ingredient, ingredient, ingredient, new ItemStack(InitItems.itemKnife, 1, Util.WILDCARD));
+                    }
                 }
             }
         }
