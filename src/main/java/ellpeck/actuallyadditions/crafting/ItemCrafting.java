@@ -19,8 +19,6 @@ import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
-import java.util.Arrays;
-
 public class ItemCrafting{
 
     public static void init(){
@@ -281,14 +279,21 @@ public class ItemCrafting{
 
     public static void initMashedFoodRecipes(){
         if(ConfigCrafting.MASHED_FOOD.isEnabled()){
-            for(Object nextIterator : Item.itemRegistry){
-                if(nextIterator instanceof ItemFood || nextIterator instanceof IPlantable || nextIterator instanceof IGrowable){
-                    if(!Arrays.asList(ConfigValues.mashedFoodCraftingExceptions).contains(Item.itemRegistry.getNameForObject(nextIterator))){
-                        ItemStack ingredient = new ItemStack((Item)nextIterator, 1, Util.WILDCARD);
+            for(Object item : Item.itemRegistry){
+                if(item instanceof ItemFood || item instanceof IPlantable || item instanceof IGrowable){
+                    if(!isBlacklisted(item)){
+                        ItemStack ingredient = new ItemStack((Item)item, 1, Util.WILDCARD);
                         GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemMisc, 8, TheMiscItems.MASHED_FOOD.ordinal()), ingredient, ingredient, ingredient, ingredient, new ItemStack(InitItems.itemKnife, 1, Util.WILDCARD));
                     }
                 }
             }
         }
+    }
+
+    private static boolean isBlacklisted(Object item){
+        for(String except : ConfigValues.mashedFoodCraftingExceptions){
+            if(Item.itemRegistry.getNameForObject(item).equals(except)) return true;
+        }
+        return false;
     }
 }

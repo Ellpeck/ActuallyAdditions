@@ -32,6 +32,6 @@ public class ConfigValues{
         }
 
         crusherRecipeExceptions = config.getStringList("Crusher Recipe Exceptions", ConfigCategories.CRUSHER_RECIPES.name, new String[]{"ingotBrick", "ingotBrickNether"}, "The Ingots, Dusts and Ores blacklisted from being auto-registered to be crushed by the Crusher. This list uses OreDictionary Names of the Inputs only.");
-        mashedFoodCraftingExceptions = config.getStringList("Mashed Food Crafting Exceptions", ConfigCategories.ITEMS_CRAFTING.name, new String[]{"ActuallyAdditions:itemCoffee"}, "The ItemFood, IGrowable and IPlantable Items that can't be used to craft Mashed Food. These are the actual Item Names, the ones you use, for example, when using the /give Command. Always ModName:ItemName, for example 'Minecraft:stone' or 'ActuallyAdditions:itemHoeObsidian'.");
+        mashedFoodCraftingExceptions = config.getStringList("Mashed Food Crafting Exceptions", ConfigCategories.ITEMS_CRAFTING.name, new String[]{"ActuallyAdditions:itemCoffee"}, "The ItemFood, IGrowable and IPlantable Items that can not be used to craft Mashed Food. These are the actual registered Item Names, the ones you use, for example, when using the /give Command.");
     }
 }
