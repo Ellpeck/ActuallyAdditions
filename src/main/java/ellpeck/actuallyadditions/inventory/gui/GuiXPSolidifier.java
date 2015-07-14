@@ -8,6 +8,7 @@ import ellpeck.actuallyadditions.network.gui.PacketGuiButton;
 import ellpeck.actuallyadditions.tile.TileEntityBase;
 import ellpeck.actuallyadditions.tile.TileEntityXPSolidifier;
 import ellpeck.actuallyadditions.util.AssetUtil;
+import ellpeck.actuallyadditions.util.StringUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -52,7 +53,7 @@ public class GuiXPSolidifier extends GuiContainer{
         GuiButton buttonForty = new GuiInputter.SmallerButton(5, guiLeft+99, guiTop+61, "40");
         GuiButton buttonFifty = new GuiInputter.SmallerButton(6, guiLeft+62, guiTop+78, "50");
         GuiButton buttonSixtyFour = new GuiInputter.SmallerButton(7, guiLeft+80, guiTop+78, "64");
-        GuiButton buttonThousandTwentyEight = new GuiInputter.SmallerButton(8, guiLeft+99, guiTop+78, "128");
+        GuiButton buttonThousandTwentyEight = new GuiInputter.SmallerButton(8, guiLeft+99, guiTop+78, "All");
 
         this.buttonList.add(buttonOne);
         this.buttonList.add(buttonFive);
@@ -84,6 +85,8 @@ public class GuiXPSolidifier extends GuiContainer{
 
         this.mc.getTextureManager().bindTexture(resLoc);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 93);
+
+        this.drawCenteredString(this.fontRendererObj, Integer.toString(this.solidifier.amount), guiLeft+88, guiTop+30, StringUtil.DECIMAL_COLOR_WHITE);
     }
 
     @Override

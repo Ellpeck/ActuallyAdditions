@@ -384,6 +384,10 @@ tooltip.actuallyadditions.noEffects.desc=No Effects
 tooltip.actuallyadditions.oredictName.desc=OreDictionary Entries
 tooltip.actuallyadditions.noOredictNameAvail.desc=Has No OreDictionary Entries
 
+tile.actuallyadditions.blockXPSolidifier.name=Experience Solidifier
+tooltip.actuallyadditions.blockXPSolidifier.desc.1=Turns a Player's Experience into Solidified Experience!
+tooltip.actuallyadditions.blockXPSolidifier.desc.2=Has a big internal Buffer!
+
 tooltip.actuallyadditions.itemJam.desc.1=A delicious Jam consisting of
 tooltip.actuallyadditions.itemJam.desc.2=Also gives you some Effects!
 tooltip.actuallyadditions.itemJam.desc.3=Can be found in Villages and Treasure Chests!
@@ -579,6 +583,7 @@ container.actuallyadditions.coffeeMachine.name=Coffee Machine
 container.actuallyadditions.drill.name=Drill
 container.actuallyadditions.energizer.name=Energizer
 container.actuallyadditions.enervator.name=Enervator
+container.actuallyadditions.xpSolidifier.name=Experience Solidifier
 
 container.nei.actuallyadditions.crushing.name=Crusher
 container.nei.actuallyadditions.ballOfHair.name=Ball Of Hair Usage

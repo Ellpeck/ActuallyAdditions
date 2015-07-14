@@ -4,6 +4,8 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.ActuallyAdditions;
 import ellpeck.actuallyadditions.inventory.GuiHandler;
+import ellpeck.actuallyadditions.items.InitItems;
+import ellpeck.actuallyadditions.items.metalists.TheSpecialDrops;
 import ellpeck.actuallyadditions.tile.TileEntityXPSolidifier;
 import ellpeck.actuallyadditions.util.BlockUtil;
 import ellpeck.actuallyadditions.util.INameableItem;
@@ -12,6 +14,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemBlock;
@@ -97,9 +100,32 @@ public class BlockXPSolidifier extends BlockContainerBase implements INameableIt
     @Override
     public void breakBlock(World world, int x, int y, int z, Block block, int par6){
         this.dropInventory(world, x, y, z);
+        TileEntity tile = world.getTileEntity(x, y, z);
+        if(tile instanceof TileEntityXPSolidifier){
+            TileEntityXPSolidifier solidifier = (TileEntityXPSolidifier)tile;
+            int stacks = solidifier.amount/64;
+            int rest = solidifier.amount % 64;
+            for(int i = 0; i < stacks; i++){
+                this.spawnItem(world, x, y, z, new ItemStack(InitItems.itemSpecialDrop, 64, TheSpecialDrops.SOLIDIFIED_EXPERIENCE.ordinal()));
+            }
+            this.spawnItem(world, x, y, z, new ItemStack(InitItems.itemSpecialDrop, rest, TheSpecialDrops.SOLIDIFIED_EXPERIENCE.ordinal()));
+            solidifier.amount = 0;
+        }
+
         super.breakBlock(world, x, y, z, block, par6);
     }
 
+    private void spawnItem(World world, int x, int y, int z, ItemStack stack){
+        float dX = world.rand.nextFloat()*0.8F+0.1F;
+        float dY = world.rand.nextFloat()*0.8F+0.1F;
+        float dZ = world.rand.nextFloat()*0.8F+0.1F;
+        EntityItem entityItem = new EntityItem(world, x+dX, y+dY, z+dZ, stack);
+        float factor = 0.05F;
+        entityItem.motionX = world.rand.nextGaussian()*factor;
+        entityItem.motionY = world.rand.nextGaussian()*factor+0.2F;
+        entityItem.motionZ = world.rand.nextGaussian()*factor;
+        world.spawnEntityInWorld(entityItem);
+    }
     @Override
     public String getName(){
         return "blockXPSolidifier";
@@ -130,7 +156,7 @@ public class BlockXPSolidifier extends BlockContainerBase implements INameableIt
         @SuppressWarnings("unchecked")
         @SideOnly(Side.CLIENT)
         public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld) {
-            BlockUtil.addInformation(theBlock, list, 1, "");
+            BlockUtil.addInformation(theBlock, list, 2, "");
         }
 
         @Override

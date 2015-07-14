@@ -5,18 +5,55 @@ import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.items.ItemSpecialDrop;
 import ellpeck.actuallyadditions.items.metalists.TheSpecialDrops;
 import ellpeck.actuallyadditions.network.gui.IButtonReactor;
+import ellpeck.actuallyadditions.network.sync.IPacketSyncerToClient;
+import ellpeck.actuallyadditions.network.sync.PacketSyncerToClient;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 
-public class TileEntityXPSolidifier extends TileEntityInventoryBase implements IButtonReactor{
+public class TileEntityXPSolidifier extends TileEntityInventoryBase implements IButtonReactor, IPacketSyncerToClient{
+
+    public short amount;
+    private short lastAmount;
 
     public TileEntityXPSolidifier(){
-        super(6, "xpSolidifier");
+        super(1, "xpSolidifier");
     }
 
     @Override
-    public boolean canUpdate(){
-        return false;
+    public void updateEntity(){
+        if(!worldObj.isRemote){
+            if(this.amount > 0){
+                if(this.slots[0] == null){
+                    int toSet = this.amount > 64 ? 64 : this.amount;
+                    this.slots[0] = new ItemStack(InitItems.itemSpecialDrop, toSet, TheSpecialDrops.SOLIDIFIED_EXPERIENCE.ordinal());
+                    this.amount -= toSet;
+                }
+                else if(this.slots[0].stackSize < 64){
+                    int needed = 64-this.slots[0].stackSize;
+                    int toAdd = this.amount > needed ? needed : this.amount;
+                    this.slots[0].stackSize += toAdd;
+                    this.amount -= toAdd;
+                }
+            }
+
+            if(this.lastAmount != this.amount){
+                this.lastAmount = this.amount;
+                this.sendUpdate();
+            }
+        }
+    }
+
+    @Override
+    public void writeToNBT(NBTTagCompound compound){
+        super.writeToNBT(compound);
+        compound.setShort("Amount", this.amount);
+    }
+
+    @Override
+    public void readFromNBT(NBTTagCompound compound){
+        super.readFromNBT(compound);
+        this.amount = compound.getShort("Amount");
     }
 
     @Override
@@ -34,26 +71,19 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
         return true;
     }
 
-    private int getFirstAvailSlot(ItemStack stack){
-        for(int i = 0; i < this.slots.length; i++){
-            if(this.slots[i] == null || (this.slots[i].isItemEqual(stack) && this.slots[i].stackSize+stack.stackSize <= this.slots[i].getMaxStackSize())) return i;
-        }
-        return -1;
-    }
-
-    private int[] buttonAmounts = new int[]{1, 5, 10, 20, 30, 40, 50, 64, 128};
+    private int[] buttonAmounts = new int[]{1, 5, 10, 20, 30, 40, 50, 64, -999};
 
     @Override
     public void onButtonPressed(int buttonID, EntityPlayer player){
-        if(buttonID < buttonAmounts.length){
-            for(int i = 0; i < buttonAmounts[buttonID]; i++){
-                int slot = this.getFirstAvailSlot(new ItemStack(InitItems.itemSpecialDrop, 1, TheSpecialDrops.SOLIDIFIED_EXPERIENCE.ordinal()));
-                if(slot >= 0 && this.getPlayerXP(player) >= ItemSpecialDrop.SOLID_XP_AMOUNT){
-                    this.addPlayerXP(player, -ItemSpecialDrop.SOLID_XP_AMOUNT);
-
-                    if(this.slots[slot] == null) this.slots[slot] = new ItemStack(InitItems.itemSpecialDrop, 1, TheSpecialDrops.SOLIDIFIED_EXPERIENCE.ordinal());
-                    else this.slots[slot].stackSize++;
+        if(buttonID < this.buttonAmounts.length){
+            if(buttonAmounts[buttonID] != -999){
+                if(this.amount < Short.MAX_VALUE-this.buttonAmounts[buttonID] && this.getPlayerXP(player) >= ItemSpecialDrop.SOLID_XP_AMOUNT*this.buttonAmounts[buttonID]){
+                    this.addPlayerXP(player, -(ItemSpecialDrop.SOLID_XP_AMOUNT*this.buttonAmounts[buttonID]));
+                    this.amount += this.buttonAmounts[buttonID];
                 }
+            }
+            else{
+
             }
         }
     }
@@ -83,5 +113,20 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
             else return (int)(3.5*Math.pow(level, 2)-151.5*level+2220);
         }
         return 0;
+    }
+
+    @Override
+    public int[] getValues(){
+        return new int[]{this.amount};
+    }
+
+    @Override
+    public void setValues(int[] values){
+        this.amount = (short)values[0];
+    }
+
+    @Override
+    public void sendUpdate(){
+        PacketSyncerToClient.sendPacket(this);
     }
 }
