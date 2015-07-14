@@ -76,14 +76,18 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
     @Override
     public void onButtonPressed(int buttonID, EntityPlayer player){
         if(buttonID < this.buttonAmounts.length){
-            if(buttonAmounts[buttonID] != -999){
+            if(this.buttonAmounts[buttonID] != -999){
                 if(this.amount < Short.MAX_VALUE-this.buttonAmounts[buttonID] && this.getPlayerXP(player) >= ItemSpecialDrop.SOLID_XP_AMOUNT*this.buttonAmounts[buttonID]){
                     this.addPlayerXP(player, -(ItemSpecialDrop.SOLID_XP_AMOUNT*this.buttonAmounts[buttonID]));
                     this.amount += this.buttonAmounts[buttonID];
                 }
             }
             else{
-
+                int xp = this.getPlayerXP(player)/ItemSpecialDrop.SOLID_XP_AMOUNT;
+                if(this.amount < Short.MAX_VALUE-xp){
+                    this.addPlayerXP(player, -(xp*ItemSpecialDrop.SOLID_XP_AMOUNT));
+                    this.amount += xp;
+                }
             }
         }
     }

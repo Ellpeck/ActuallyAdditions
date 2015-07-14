@@ -53,7 +53,7 @@ public class GuiXPSolidifier extends GuiContainer{
         GuiButton buttonForty = new GuiInputter.SmallerButton(5, guiLeft+99, guiTop+61, "40");
         GuiButton buttonFifty = new GuiInputter.SmallerButton(6, guiLeft+62, guiTop+78, "50");
         GuiButton buttonSixtyFour = new GuiInputter.SmallerButton(7, guiLeft+80, guiTop+78, "64");
-        GuiButton buttonThousandTwentyEight = new GuiInputter.SmallerButton(8, guiLeft+99, guiTop+78, "All");
+        GuiButton buttonAll = new GuiInputter.SmallerButton(8, guiLeft+99, guiTop+78, "All");
 
         this.buttonList.add(buttonOne);
         this.buttonList.add(buttonFive);
@@ -63,7 +63,7 @@ public class GuiXPSolidifier extends GuiContainer{
         this.buttonList.add(buttonForty);
         this.buttonList.add(buttonFifty);
         this.buttonList.add(buttonSixtyFour);
-        this.buttonList.add(buttonThousandTwentyEight);
+        this.buttonList.add(buttonAll);
     }
 
     @Override
