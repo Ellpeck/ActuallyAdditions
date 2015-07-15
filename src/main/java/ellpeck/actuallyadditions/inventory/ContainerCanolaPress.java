@@ -1,5 +1,6 @@
 package ellpeck.actuallyadditions.inventory;
 
+import ellpeck.actuallyadditions.blocks.InitBlocks;
 import ellpeck.actuallyadditions.inventory.slot.SlotOutput;
 import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.items.metalists.TheMiscItems;
@@ -8,10 +9,11 @@ import ellpeck.actuallyadditions.tile.TileEntityCanolaPress;
 import invtweaks.api.container.InventoryContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.FluidContainerRegistry;
+import net.minecraftforge.fluids.FluidStack;
 
 @InventoryContainer
 public class ContainerCanolaPress extends Container{
@@ -48,33 +50,33 @@ public class ContainerCanolaPress extends Container{
         final int hotbarEnd = hotbarStart+8;
 
         Slot theSlot = (Slot)this.inventorySlots.get(slot);
-        if(theSlot.getHasStack()){
-            ItemStack currentStack = theSlot.getStack();
-            ItemStack newStack = currentStack.copy();
 
-            if(slot <= hotbarEnd && slot >= inventoryStart){
-                if(currentStack.getItem() == InitItems.itemMisc && currentStack.getItemDamage() == TheMiscItems.CANOLA.ordinal()){
-                    this.mergeItemStack(newStack, 0, 1, false);
+        if (theSlot != null && theSlot.getHasStack()){
+            ItemStack newStack = theSlot.getStack();
+            ItemStack currentStack = newStack.copy();
+
+            //Other Slots in Inventory excluded
+            if(slot >= inventoryStart){
+                //Shift from Inventory
+                if(newStack.getItem() == InitItems.itemMisc && newStack.getItemDamage() == TheMiscItems.CANOLA.ordinal()){
+                    if(!this.mergeItemStack(newStack, 0, 1, false)) return null;
                 }
-                if(currentStack.getItem() == Items.bucket){
-                    this.mergeItemStack(newStack, 1, 2, false);
+                else if(FluidContainerRegistry.getContainerCapacity(new FluidStack(InitBlocks.fluidCanolaOil, 1), newStack) > 0){
+                    if(!this.mergeItemStack(newStack, 1, 2, false)) return null;
                 }
-            }
+                //
 
-            if(slot <= hotbarEnd && slot >= hotbarStart){
-                this.mergeItemStack(newStack, inventoryStart, inventoryEnd+1, false);
+                else if(slot >= inventoryStart && slot <= inventoryEnd){
+                    if(!this.mergeItemStack(newStack, hotbarStart, hotbarEnd+1, false)) return null;
+                }
+                else if(slot >= inventoryEnd+1 && slot < hotbarEnd+1 && !this.mergeItemStack(newStack, inventoryStart, inventoryEnd+1, false)) return null;
             }
-            else if(slot <= inventoryEnd && slot >= inventoryStart){
-                this.mergeItemStack(newStack, hotbarStart, hotbarEnd+1, false);
-            }
+            else if(!this.mergeItemStack(newStack, inventoryStart, inventoryEnd+1, false)) return null;
 
-            else if(slot < inventoryStart){
-                    this.mergeItemStack(newStack, inventoryStart, hotbarEnd+1, false);
-            }
-
-            if(newStack.stackSize == 0) theSlot.putStack(null);
+            if (newStack.stackSize == 0) theSlot.putStack(null);
             else theSlot.onSlotChanged();
-            if(newStack.stackSize == currentStack.stackSize) return null;
+
+            if (newStack.stackSize == currentStack.stackSize) return null;
             theSlot.onPickupFromSlot(player, newStack);
 
             return currentStack;

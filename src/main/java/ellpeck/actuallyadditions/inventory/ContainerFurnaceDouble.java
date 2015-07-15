@@ -1,6 +1,7 @@
 package ellpeck.actuallyadditions.inventory;
 
 import ellpeck.actuallyadditions.inventory.slot.SlotOutput;
+import ellpeck.actuallyadditions.recipe.CrusherRecipeManualRegistry;
 import ellpeck.actuallyadditions.tile.TileEntityBase;
 import ellpeck.actuallyadditions.tile.TileEntityFurnaceDouble;
 import invtweaks.api.container.InventoryContainer;
@@ -9,7 +10,6 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.FurnaceRecipes;
 
 @InventoryContainer
 public class ContainerFurnaceDouble extends Container{
@@ -47,37 +47,40 @@ public class ContainerFurnaceDouble extends Container{
         final int hotbarEnd = hotbarStart+8;
 
         Slot theSlot = (Slot)this.inventorySlots.get(slot);
-        if(theSlot.getHasStack()){
-            ItemStack currentStack = theSlot.getStack();
-            ItemStack newStack = currentStack.copy();
 
-            if(currentStack.getItem() != null){
-                if(slot <= hotbarEnd && slot >= inventoryStart){
-                    if(FurnaceRecipes.smelting().getSmeltingResult(currentStack) != null){
-                        this.mergeItemStack(newStack, TileEntityFurnaceDouble.SLOT_INPUT_1, TileEntityFurnaceDouble.SLOT_INPUT_1+1, false);
-                        this.mergeItemStack(newStack, TileEntityFurnaceDouble.SLOT_INPUT_2, TileEntityFurnaceDouble.SLOT_INPUT_2+2, false);
+        if (theSlot != null && theSlot.getHasStack()){
+            ItemStack newStack = theSlot.getStack();
+            ItemStack currentStack = newStack.copy();
+
+            //Slots in Inventory to shift from
+            if(slot == TileEntityFurnaceDouble.SLOT_OUTPUT_1 || slot == TileEntityFurnaceDouble.SLOT_OUTPUT_2){
+                if(!this.mergeItemStack(newStack, inventoryStart, hotbarEnd+1, true)) return null;
+                theSlot.onSlotChange(newStack, currentStack);
+            }
+            //Other Slots in Inventory excluded
+            else if(slot >= inventoryStart){
+                //Shift from Inventory
+                if(CrusherRecipeManualRegistry.getOutput(newStack, false) != null){
+                    if(!this.mergeItemStack(newStack, TileEntityFurnaceDouble.SLOT_INPUT_1, TileEntityFurnaceDouble.SLOT_INPUT_1+1, false)){
+                        if(!this.mergeItemStack(newStack, TileEntityFurnaceDouble.SLOT_INPUT_2, TileEntityFurnaceDouble.SLOT_INPUT_2+1, false)) return null;
                     }
                 }
+                //
 
-                if(slot <= hotbarEnd && slot >= hotbarStart){
-                    this.mergeItemStack(newStack, inventoryStart, inventoryEnd+1, false);
+                else if(slot >= inventoryStart && slot <= inventoryEnd){
+                    if(!this.mergeItemStack(newStack, hotbarStart, hotbarEnd+1, false)) return null;
                 }
-
-                else if(slot <= inventoryEnd && slot >= inventoryStart){
-                    this.mergeItemStack(newStack, hotbarStart, hotbarEnd+1, false);
-                }
-
-                else if(slot < inventoryStart){
-                    this.mergeItemStack(newStack, inventoryStart, hotbarEnd+1, false);
-                }
-
-                if(newStack.stackSize == 0) theSlot.putStack(null);
-                else theSlot.onSlotChanged();
-                if(newStack.stackSize == currentStack.stackSize) return null;
-                theSlot.onPickupFromSlot(player, newStack);
-
-                return currentStack;
+                else if(slot >= inventoryEnd+1 && slot < hotbarEnd+1 && !this.mergeItemStack(newStack, inventoryStart, inventoryEnd+1, false)) return null;
             }
+            else if(!this.mergeItemStack(newStack, inventoryStart, inventoryEnd+1, false)) return null;
+
+            if (newStack.stackSize == 0) theSlot.putStack(null);
+            else theSlot.onSlotChanged();
+
+            if (newStack.stackSize == currentStack.stackSize) return null;
+            theSlot.onPickupFromSlot(player, newStack);
+
+            return currentStack;
         }
         return null;
     }

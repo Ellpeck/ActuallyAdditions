@@ -35,40 +35,38 @@ public class ContainerFeeder extends Container{
 
     @Override
     public ItemStack transferStackInSlot(EntityPlayer player, int slot){
-        final int inventoryStart = 1;
+        final int inventoryStart = 9;
         final int inventoryEnd = inventoryStart+26;
         final int hotbarStart = inventoryEnd+1;
         final int hotbarEnd = hotbarStart+8;
 
         Slot theSlot = (Slot)this.inventorySlots.get(slot);
-        if(theSlot.getHasStack()){
-            ItemStack currentStack = theSlot.getStack();
-            ItemStack newStack = currentStack.copy();
 
-            if(currentStack.getItem() != null){
-                if(slot <= hotbarEnd && slot >= inventoryStart){
-                    this.mergeItemStack(newStack, 0, 1, false);
+        if (theSlot != null && theSlot.getHasStack()){
+            ItemStack newStack = theSlot.getStack();
+            ItemStack currentStack = newStack.copy();
+
+            //Other Slots in Inventory excluded
+            if(slot >= inventoryStart){
+                //Shift from Inventory
+                if(!this.mergeItemStack(newStack, 0, 1, false)){
+                    //
+                    if(slot >= inventoryStart && slot <= inventoryEnd){
+                        if(!this.mergeItemStack(newStack, hotbarStart, hotbarEnd+1, false)) return null;
+                    }
+                    else if(slot >= inventoryEnd+1 && slot < hotbarEnd+1 && !this.mergeItemStack(newStack, inventoryStart, inventoryEnd+1, false))
+                        return null;
                 }
-
-                if(slot <= hotbarEnd && slot >= hotbarStart){
-                    this.mergeItemStack(newStack, inventoryStart, inventoryEnd+1, false);
-                }
-
-                else if(slot <= inventoryEnd && slot >= inventoryStart){
-                    this.mergeItemStack(newStack, hotbarStart, hotbarEnd+1, false);
-                }
-
-                else if(slot < inventoryStart){
-                    this.mergeItemStack(newStack, inventoryStart, hotbarEnd+1, false);
-                }
-
-                if(newStack.stackSize == 0) theSlot.putStack(null);
-                else theSlot.onSlotChanged();
-                if(newStack.stackSize == currentStack.stackSize) return null;
-                theSlot.onPickupFromSlot(player, newStack);
-
-                return currentStack;
             }
+            else if(!this.mergeItemStack(newStack, inventoryStart, inventoryEnd+1, false)) return null;
+
+            if (newStack.stackSize == 0) theSlot.putStack(null);
+            else theSlot.onSlotChanged();
+
+            if (newStack.stackSize == currentStack.stackSize) return null;
+            theSlot.onPickupFromSlot(player, newStack);
+
+            return currentStack;
         }
         return null;
     }

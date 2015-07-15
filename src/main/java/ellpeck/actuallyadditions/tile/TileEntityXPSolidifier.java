@@ -77,18 +77,10 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
     public void onButtonPressed(int buttonID, EntityPlayer player){
         if(buttonID < this.buttonAmounts.length){
             if(this.getPlayerXP(player) > 0){
-                if(this.buttonAmounts[buttonID] != -999){
-                    if(this.amount < Short.MAX_VALUE-this.buttonAmounts[buttonID] && this.getPlayerXP(player) >= ItemSpecialDrop.SOLID_XP_AMOUNT*this.buttonAmounts[buttonID]){
-                        this.addPlayerXP(player, -(ItemSpecialDrop.SOLID_XP_AMOUNT*this.buttonAmounts[buttonID]));
-                        if(!worldObj.isRemote) this.amount += this.buttonAmounts[buttonID];
-                    }
-                }
-                else{
-                    int xp = this.getPlayerXP(player)/ItemSpecialDrop.SOLID_XP_AMOUNT;
-                    if(this.amount < Short.MAX_VALUE-xp){
-                        this.addPlayerXP(player, -(xp*ItemSpecialDrop.SOLID_XP_AMOUNT));
-                        if(!worldObj.isRemote) this.amount += xp;
-                    }
+                int xp = this.buttonAmounts[buttonID] == -999 ? this.getPlayerXP(player)/ItemSpecialDrop.SOLID_XP_AMOUNT : this.buttonAmounts[buttonID];
+                if(this.amount < Short.MAX_VALUE-xp && this.getPlayerXP(player) >= ItemSpecialDrop.SOLID_XP_AMOUNT*xp){
+                    this.addPlayerXP(player, -(ItemSpecialDrop.SOLID_XP_AMOUNT*xp));
+                    if(!worldObj.isRemote) this.amount += xp;
                 }
             }
         }
