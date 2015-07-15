@@ -69,6 +69,7 @@ public class GuiXPSolidifier extends GuiContainer{
     @Override
     public void actionPerformed(GuiButton button){
         PacketHandler.theNetwork.sendToServer(new PacketGuiButton(x, y, z, world, button.id, Minecraft.getMinecraft().thePlayer));
+        this.solidifier.onButtonPressed(button.id, Minecraft.getMinecraft().thePlayer);
     }
 
     @Override

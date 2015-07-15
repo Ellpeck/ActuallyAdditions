@@ -76,17 +76,19 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
     @Override
     public void onButtonPressed(int buttonID, EntityPlayer player){
         if(buttonID < this.buttonAmounts.length){
-            if(this.buttonAmounts[buttonID] != -999){
-                if(this.amount < Short.MAX_VALUE-this.buttonAmounts[buttonID] && this.getPlayerXP(player) >= ItemSpecialDrop.SOLID_XP_AMOUNT*this.buttonAmounts[buttonID]){
-                    this.addPlayerXP(player, -(ItemSpecialDrop.SOLID_XP_AMOUNT*this.buttonAmounts[buttonID]));
-                    this.amount += this.buttonAmounts[buttonID];
+            if(this.getPlayerXP(player) > 0){
+                if(this.buttonAmounts[buttonID] != -999){
+                    if(this.amount < Short.MAX_VALUE-this.buttonAmounts[buttonID] && this.getPlayerXP(player) >= ItemSpecialDrop.SOLID_XP_AMOUNT*this.buttonAmounts[buttonID]){
+                        this.addPlayerXP(player, -(ItemSpecialDrop.SOLID_XP_AMOUNT*this.buttonAmounts[buttonID]));
+                        if(!worldObj.isRemote) this.amount += this.buttonAmounts[buttonID];
+                    }
                 }
-            }
-            else{
-                int xp = this.getPlayerXP(player)/ItemSpecialDrop.SOLID_XP_AMOUNT;
-                if(this.amount < Short.MAX_VALUE-xp){
-                    this.addPlayerXP(player, -(xp*ItemSpecialDrop.SOLID_XP_AMOUNT));
-                    this.amount += xp;
+                else{
+                    int xp = this.getPlayerXP(player)/ItemSpecialDrop.SOLID_XP_AMOUNT;
+                    if(this.amount < Short.MAX_VALUE-xp){
+                        this.addPlayerXP(player, -(xp*ItemSpecialDrop.SOLID_XP_AMOUNT));
+                        if(!worldObj.isRemote) this.amount += xp;
+                    }
                 }
             }
         }
@@ -111,7 +113,7 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
     }
 
     private int getExperienceForLevel(int level){
-        if(level != 0){
+        if(level > 0){
             if(level > 0 && level < 16) return level*17;
             else if(level > 15 && level < 31) return (int)(1.5*Math.pow(level, 2)-29.5*level+360);
             else return (int)(3.5*Math.pow(level, 2)-151.5*level+2220);
