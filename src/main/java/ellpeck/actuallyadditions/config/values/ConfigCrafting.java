@@ -113,6 +113,7 @@ public enum ConfigCrafting{
     REDSTONE("Redstone Ore -> Redstone", ConfigCategories.CRUSHER_RECIPES, "Crusher"),
     LAPIS("Lapis Ore -> Lapis", ConfigCategories.CRUSHER_RECIPES, "Crusher"),
     COAL("Coal -> Coal Dust", ConfigCategories.CRUSHER_RECIPES, "Crusher"),
+    COAL_ORE("Coal Ore -> Coal", ConfigCategories.CRUSHER_RECIPES, "Crusher"),
     COAL_BLOCKS("Coal Block -> Coal Dust", ConfigCategories.CRUSHER_RECIPES, "Crusher"),
     COBBLESTONE("Cobblestone -> Sand", ConfigCategories.CRUSHER_RECIPES, "Crusher"),
     GRAVEL("Gravel -> Flint", ConfigCategories.CRUSHER_RECIPES, "Crusher"),
