@@ -1,14 +1,12 @@
 package ellpeck.actuallyadditions.items;
 
 import com.google.common.collect.Multimap;
-import com.google.common.collect.Sets;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.ActuallyAdditions;
 import ellpeck.actuallyadditions.config.values.ConfigFloatValues;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.inventory.GuiHandler;
-import ellpeck.actuallyadditions.items.tools.ItemAllToolAA;
 import ellpeck.actuallyadditions.util.INameableItem;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.WorldUtil;
@@ -22,6 +20,7 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -37,12 +36,6 @@ import java.util.Set;
 
 @SuppressWarnings("unchecked")
 public class ItemDrill extends ItemEnergy implements INameableItem{
-
-    private static final Set allSet = Sets.newHashSet();
-    static{
-        allSet.addAll(ItemAllToolAA.pickSet);
-        allSet.addAll(ItemAllToolAA.shovelSet);
-    }
 
     public ItemDrill(){
         super(500000, 5000, 3);
@@ -211,6 +204,8 @@ public class ItemDrill extends ItemEnergy implements INameableItem{
                 zRange = radius;
             }
 
+            float mainHardness = world.getBlock(x, y, z).getBlockHardness(world, x, y, z);
+
             //Break Middle Block first
             int use = this.getEnergyUsePerBlock(stack);
             if(this.getEnergyStored(stack) >= use){
@@ -225,7 +220,10 @@ public class ItemDrill extends ItemEnergy implements INameableItem{
                         for(int zPos = z-zRange; zPos <= z+zRange; zPos++){
                             if(!(x == xPos && y == yPos && z == zPos)){
                                 if(this.getEnergyStored(stack) >= use){
-                                    this.tryHarvestBlock(world, xPos, yPos, zPos, true, stack, player, use);
+                                    //Only break Blocks that are (about) as hard or softer
+                                    if(world.getBlock(xPos, yPos, zPos).getBlockHardness(world, xPos, yPos, zPos) <= mainHardness+5.0F){
+                                        this.tryHarvestBlock(world, xPos, yPos, zPos, true, stack, player, use);
+                                    }
                                 }
                                 else return;
                             }
@@ -246,10 +244,12 @@ public class ItemDrill extends ItemEnergy implements INameableItem{
             block.onBlockHarvested(world, xPos, yPos, zPos, meta, player);
             if(block.removedByPlayer(world, player, xPos, yPos, zPos, true)){
                 block.onBlockDestroyedByPlayer(world, xPos, yPos, zPos, meta);
-                block.harvestBlock(world, player, xPos, yPos, zPos, meta);
 
-                if(!EnchantmentHelper.getSilkTouchModifier(player)){
-                    block.dropXpOnBlockBreak(world, xPos, yPos, zPos, block.getExpDrop(world, meta, EnchantmentHelper.getFortuneModifier(player)));
+                if(!player.capabilities.isCreativeMode){
+                    block.harvestBlock(world, player, xPos, yPos, zPos, meta);
+                    if(!EnchantmentHelper.getSilkTouchModifier(player)){
+                        block.dropXpOnBlockBreak(world, xPos, yPos, zPos, block.getExpDrop(world, meta, EnchantmentHelper.getFortuneModifier(player)));
+                    }
                 }
             }
 
@@ -301,13 +301,6 @@ public class ItemDrill extends ItemEnergy implements INameableItem{
     }
 
     @Override
-    public float func_150893_a(ItemStack stack, Block block){
-        if(this.getEnergyStored(stack) < this.getEnergyUsePerBlock(stack)) return 0.0F;
-        if(block.getMaterial() == Material.iron || block.getMaterial() == Material.anvil || block.getMaterial() == Material.rock || allSet.contains(block)) return this.getEfficiencyFromUpgrade(stack);
-        else return super.func_150893_a(stack, block);
-    }
-
-    @Override
     public boolean hitEntity(ItemStack stack, EntityLivingBase entity1, EntityLivingBase entity2){
         int use = this.getEnergyUsePerBlock(stack);
         if(this.getEnergyStored(stack) >= use){
@@ -317,8 +310,13 @@ public class ItemDrill extends ItemEnergy implements INameableItem{
     }
 
     @Override
+    public float getDigSpeed(ItemStack stack, Block block, int meta){
+        return this.getEnergyStored(stack) >= this.getEnergyUsePerBlock(stack) ? (this.getToolClasses(stack).contains(block.getHarvestTool(meta)) ? this.getEfficiencyFromUpgrade(stack) : 1.0F) : 0.0F;
+    }
+
+    @Override
     public boolean canHarvestBlock(Block block, ItemStack stack){
-        return this.func_150893_a(stack, block) > super.func_150893_a(stack, block);
+        return this.getEnergyStored(stack) >= this.getEnergyUsePerBlock(stack) && (block.getMaterial().isToolNotRequired() || (block == Blocks.snow_layer || block == Blocks.snow || (block == Blocks.obsidian ? ToolMaterial.EMERALD.getHarvestLevel() == 3 : (block != Blocks.diamond_block && block != Blocks.diamond_ore ? (block != Blocks.emerald_ore && block != Blocks.emerald_block ? (block != Blocks.gold_block && block != Blocks.gold_ore ? (block != Blocks.iron_block && block != Blocks.iron_ore ? (block != Blocks.lapis_block && block != Blocks.lapis_ore ? (block != Blocks.redstone_ore && block != Blocks.lit_redstone_ore ? (block.getMaterial() == Material.rock || (block.getMaterial() == Material.iron || block.getMaterial() == Material.anvil)) : ToolMaterial.EMERALD.getHarvestLevel() >= 2) : ToolMaterial.EMERALD.getHarvestLevel() >= 1) : ToolMaterial.EMERALD.getHarvestLevel() >= 1) : ToolMaterial.EMERALD.getHarvestLevel() >= 2) : ToolMaterial.EMERALD.getHarvestLevel() >= 2) : ToolMaterial.EMERALD.getHarvestLevel() >= 2))));
     }
 
     @Override
@@ -336,15 +334,10 @@ public class ItemDrill extends ItemEnergy implements INameableItem{
 
     @Override
     public Set<String> getToolClasses(ItemStack stack){
-        HashSet<String> hashSet = new HashSet<String>();
+        HashSet<String> hashSet = new HashSet<>();
         hashSet.add("pickaxe");
         hashSet.add("shovel");
         return hashSet;
-    }
-
-    @Override
-    public float getDigSpeed(ItemStack stack, Block block, int meta){
-        return this.func_150893_a(stack, block);
     }
 
     @Override
