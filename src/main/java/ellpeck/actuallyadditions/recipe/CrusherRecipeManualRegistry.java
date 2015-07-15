@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class CrusherRecipeManualRegistry{
 
-    public static ArrayList<CrusherRecipe> recipes = new ArrayList<CrusherRecipe>();
+    public static ArrayList<CrusherRecipe> recipes = new ArrayList<>();
 
     public static void registerRecipe(ItemStack input, ItemStack outputOne, ItemStack outputTwo, int secondChance){
         if(!hasRecipe(input, outputOne)){

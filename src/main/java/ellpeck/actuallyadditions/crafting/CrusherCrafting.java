@@ -2,7 +2,6 @@ package ellpeck.actuallyadditions.crafting;
 
 import ellpeck.actuallyadditions.config.values.ConfigCrafting;
 import ellpeck.actuallyadditions.items.InitItems;
-import ellpeck.actuallyadditions.items.metalists.TheDusts;
 import ellpeck.actuallyadditions.items.metalists.TheFoods;
 import ellpeck.actuallyadditions.recipe.CrusherRecipeAutoRegistry;
 import ellpeck.actuallyadditions.recipe.CrusherRecipeAutoRegistry.SearchCase;
@@ -18,9 +17,9 @@ public class CrusherCrafting{
         ModUtil.LOGGER.info("Initializing Crusher Recipes...");
 
         if(ConfigCrafting.REDSTONE.isEnabled()) CrusherRecipeManualRegistry.registerRecipe(new ItemStack(Blocks.redstone_ore), new ItemStack(Items.redstone, 10));
-        if(ConfigCrafting.LAPIS.isEnabled()) CrusherRecipeManualRegistry.registerRecipe(new ItemStack(Blocks.lapis_ore), new ItemStack(InitItems.itemDust, 12, TheDusts.LAPIS.ordinal()));
-        if(ConfigCrafting.COAL.isEnabled()) CrusherRecipeManualRegistry.registerRecipe(new ItemStack(Items.coal), new ItemStack(InitItems.itemDust, 1, TheDusts.COAL.ordinal()));
-        if(ConfigCrafting.COAL_BLOCKS.isEnabled()) CrusherRecipeManualRegistry.registerRecipe(new ItemStack(Blocks.coal_block), new ItemStack(InitItems.itemDust, 9, TheDusts.COAL.ordinal()));
+        if(ConfigCrafting.LAPIS.isEnabled()) CrusherRecipeManualRegistry.registerRecipe(new ItemStack(Blocks.lapis_ore), new ItemStack(Items.dye, 12, 4));
+        if(ConfigCrafting.COAL.isEnabled()) CrusherRecipeManualRegistry.registerRecipe(new ItemStack(Items.coal), new ItemStack(Items.coal));
+        if(ConfigCrafting.COAL_BLOCKS.isEnabled()) CrusherRecipeManualRegistry.registerRecipe(new ItemStack(Blocks.coal_block), new ItemStack(Items.coal, 9));
 
         if(ConfigCrafting.COBBLESTONE.isEnabled()) CrusherRecipeManualRegistry.registerRecipe(new ItemStack(Blocks.cobblestone), new ItemStack(Blocks.sand));
         if(ConfigCrafting.GRAVEL.isEnabled()) CrusherRecipeManualRegistry.registerRecipe(new ItemStack(Blocks.gravel), new ItemStack(Items.flint));
