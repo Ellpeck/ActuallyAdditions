@@ -91,10 +91,6 @@
     -Customizable with Items in Concrete Mixer
     -(eg. Redstone->Speed Glowstone->Light etc.)
 
--XP Solidifier
-    -Block that creates Solidified Experience from Player's Levels
-    -Has a GUI with Buttons
-
 -Alarm
     -Gets triggered when Mobs are in the Area
     -Configurable Range
