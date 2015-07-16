@@ -42,12 +42,12 @@ public class BlockXPSolidifier extends BlockContainerBase implements INameableIt
 
     @Override
     public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack stack){
-        int rotation = MathHelper.floor_double((double)(player.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
+        int rotation = MathHelper.floor_double((double)(player.rotationYaw*4.0F/360.0F)+0.5D) & 3;
 
-        if (rotation == 0) world.setBlockMetadataWithNotify(x, y, z, 0, 2);
-        if (rotation == 1) world.setBlockMetadataWithNotify(x, y, z, 3, 2);
-        if (rotation == 2) world.setBlockMetadataWithNotify(x, y, z, 1, 2);
-        if (rotation == 3) world.setBlockMetadataWithNotify(x, y, z, 2, 2);
+        if(rotation == 0) world.setBlockMetadataWithNotify(x, y, z, 0, 2);
+        if(rotation == 1) world.setBlockMetadataWithNotify(x, y, z, 3, 2);
+        if(rotation == 2) world.setBlockMetadataWithNotify(x, y, z, 1, 2);
+        if(rotation == 3) world.setBlockMetadataWithNotify(x, y, z, 2, 2);
     }
 
     @Override
@@ -57,7 +57,7 @@ public class BlockXPSolidifier extends BlockContainerBase implements INameableIt
 
     @Override
     public IIcon getIcon(int side, int meta){
-        if(side == 1) return this.topIcon;
+        if(side == 1 || side == 0) return this.topIcon;
         if(side == 3) return this.frontIcon;
         return this.blockIcon;
     }
@@ -65,7 +65,7 @@ public class BlockXPSolidifier extends BlockContainerBase implements INameableIt
     @Override
     public IIcon getIcon(IBlockAccess world, int x, int y, int z, int side){
         int meta = world.getBlockMetadata(x, y, z);
-        if(side == 1) return this.topIcon;
+        if(side == 1 || side == 0) return this.topIcon;
         if(side == meta+2) return this.frontIcon;
         return this.blockIcon;
     }
@@ -73,16 +73,17 @@ public class BlockXPSolidifier extends BlockContainerBase implements INameableIt
     @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconReg){
-        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":" + this.getName());
-        this.topIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":" + this.getName() + "Top");
-        this.frontIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":" + this.getName() + "Front");
+        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
+        this.topIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Top");
+        this.frontIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Front");
     }
 
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9){
         if(!world.isRemote){
             TileEntityXPSolidifier solidifier = (TileEntityXPSolidifier)world.getTileEntity(x, y, z);
-            if (solidifier != null) player.openGui(ActuallyAdditions.instance, GuiHandler.XP_SOLIDIFIER_ID, world, x, y, z);
+            if(solidifier != null)
+                player.openGui(ActuallyAdditions.instance, GuiHandler.XP_SOLIDIFIER_ID, world, x, y, z);
             return true;
         }
         return true;
@@ -94,13 +95,15 @@ public class BlockXPSolidifier extends BlockContainerBase implements INameableIt
         TileEntity tile = world.getTileEntity(x, y, z);
         if(tile instanceof TileEntityXPSolidifier){
             TileEntityXPSolidifier solidifier = (TileEntityXPSolidifier)tile;
-            int stacks = solidifier.amount/64;
-            int rest = solidifier.amount % 64;
-            for(int i = 0; i < stacks; i++){
-                this.spawnItem(world, x, y, z, new ItemStack(InitItems.itemSpecialDrop, 64, TheSpecialDrops.SOLIDIFIED_EXPERIENCE.ordinal()));
+            if(solidifier.amount > 0){
+                int stacks = solidifier.amount/64;
+                int rest = solidifier.amount%64;
+                for(int i = 0; i < stacks; i++){
+                    this.spawnItem(world, x, y, z, new ItemStack(InitItems.itemSpecialDrop, 64, TheSpecialDrops.SOLIDIFIED_EXPERIENCE.ordinal()));
+                }
+                this.spawnItem(world, x, y, z, new ItemStack(InitItems.itemSpecialDrop, rest, TheSpecialDrops.SOLIDIFIED_EXPERIENCE.ordinal()));
+                solidifier.amount = 0;
             }
-            this.spawnItem(world, x, y, z, new ItemStack(InitItems.itemSpecialDrop, rest, TheSpecialDrops.SOLIDIFIED_EXPERIENCE.ordinal()));
-            solidifier.amount = 0;
         }
 
         super.breakBlock(world, x, y, z, block, par6);
@@ -117,6 +120,7 @@ public class BlockXPSolidifier extends BlockContainerBase implements INameableIt
         entityItem.motionZ = world.rand.nextGaussian()*factor;
         world.spawnEntityInWorld(entityItem);
     }
+
     @Override
     public String getName(){
         return "blockXPSolidifier";
@@ -146,7 +150,7 @@ public class BlockXPSolidifier extends BlockContainerBase implements INameableIt
         @Override
         @SuppressWarnings("unchecked")
         @SideOnly(Side.CLIENT)
-        public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld) {
+        public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld){
             BlockUtil.addInformation(theBlock, list, 2, "");
         }
 
