@@ -90,6 +90,10 @@ public class InitItems{
     public static Item itemDrillUpgradeBlockPlacing;
 
     public static Item itemBattery;
+    public static Item itemBatteryDouble;
+    public static Item itemBatteryTriple;
+    public static Item itemBatteryQuadruple;
+    public static Item itemBatteryQuintuple;
 
     public static Item itemTeleStaff;
 
@@ -114,8 +118,12 @@ public class InitItems{
         itemDrill = new ItemDrill();
         ItemUtil.register(itemDrill);
 
-        itemBattery = new ItemBattery();
-        ItemUtil.register(itemBattery);
+        itemBattery = new ItemBattery("itemBattery", 1000000, 5000);
+        itemBatteryDouble = new ItemBattery("itemBatteryDouble", 2000000, 10000);
+        itemBatteryTriple = new ItemBattery("itemBatteryTriple", 3000000, 15000);
+        itemBatteryQuadruple = new ItemBattery("itemBatteryQuadruple", 4000000, 20000);
+        itemBatteryQuintuple = new ItemBattery("itemBatteryQuintuple", 5000000, 25000);
+        ItemUtil.registerItems(new Item[]{itemBattery, itemBatteryDouble, itemBatteryTriple, itemBatteryQuadruple, itemBatteryQuintuple});
 
         itemDrillUpgradeSpeed = new ItemDrillUpgrade(ItemDrillUpgrade.UpgradeType.SPEED, "itemDrillUpgradeSpeed");
         itemDrillUpgradeSpeedII = new ItemDrillUpgrade(ItemDrillUpgrade.UpgradeType.SPEED_II, "itemDrillUpgradeSpeedII");

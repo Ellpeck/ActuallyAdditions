@@ -1,5 +1,6 @@
 package ellpeck.actuallyadditions.inventory;
 
+import cofh.api.energy.IEnergyContainerItem;
 import ellpeck.actuallyadditions.inventory.slot.SlotImmovable;
 import ellpeck.actuallyadditions.items.ItemDrill;
 import ellpeck.actuallyadditions.items.ItemDrillUpgrade;
@@ -26,7 +27,7 @@ public class ContainerDrill extends Container{
             this.addSlotToContainer(new Slot(drillInventory, i, 44+i*18, 19){
                 @Override
                 public boolean isItemValid(ItemStack stack){
-                    return stack.getItem() instanceof ItemDrillUpgrade;
+                    return stack.getItem() instanceof ItemDrillUpgrade || stack.getItem() instanceof IEnergyContainerItem;
                 }
             });
         }
@@ -86,7 +87,7 @@ public class ContainerDrill extends Container{
             //Other Slots in Inventory excluded
             if(slot >= inventoryStart){
                 //Shift from Inventory
-                if(newStack.getItem() instanceof ItemDrillUpgrade){
+                if(newStack.getItem() instanceof ItemDrillUpgrade || newStack.getItem() instanceof IEnergyContainerItem){
                     if(!this.mergeItemStack(newStack, 0, 5, false)) return null;
                 }
                 //

@@ -23,6 +23,7 @@ item.actuallyadditions.itemDrill.name=Drill
 tooltip.actuallyadditions.itemDrill.desc.1=Mines all the Blocks!
 tooltip.actuallyadditions.itemDrill.desc.2=Powered by RF! Charge in an Energizer! Discharge in an Enervator!
 tooltip.actuallyadditions.itemDrill.desc.3=Drill Upgrades can be applied through Sneak-Right-Clicking!
+tooltip.actuallyadditions.itemDrill.desc.4=Put in a filled Battery to make me recharge automatically!
 
 tile.actuallyadditions.blockMiscWoodCasing.name=Wood Casing
 tile.actuallyadditions.blockMiscStoneCasing.name=Stone Casing

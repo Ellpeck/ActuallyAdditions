@@ -1,5 +1,6 @@
 package ellpeck.actuallyadditions.items;
 
+import cofh.api.energy.IEnergyContainerItem;
 import com.google.common.collect.Multimap;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -15,6 +16,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -38,7 +40,7 @@ import java.util.Set;
 public class ItemDrill extends ItemEnergy implements INameableItem{
 
     public ItemDrill(){
-        super(500000, 5000, 3);
+        super(500000, 5000, 4);
     }
 
     public static float defaultEfficiency = ConfigFloatValues.DRILL_DAMAGE.getValue();
@@ -71,6 +73,26 @@ public class ItemDrill extends ItemEnergy implements INameableItem{
             }
         }
         return false;
+    }
+
+    public void onUpdate(ItemStack stack, World world, Entity entity, int par4, boolean par5){
+        NBTTagCompound compound = stack.getTagCompound();
+        if(compound == null) return;
+
+        ItemStack[] slots = this.getSlotsFromNBT(stack);
+        if(slots != null && slots.length > 0){
+            for(ItemStack slotStack : slots){
+                if(slotStack != null && slotStack.getItem() instanceof IEnergyContainerItem){
+                    if(this.getEnergyStored(stack) < this.getMaxEnergyStored(stack)){
+                        int energy = ((IEnergyContainerItem)slotStack.getItem()).getEnergyStored(slotStack);
+                        if(energy > 0){
+                            int received = ((IEnergyContainerItem)stack.getItem()).receiveEnergy(stack, energy, false);
+                            ((IEnergyContainerItem)slotStack.getItem()).extractEnergy(slotStack, received, false);
+                        }
+                    }
+                }
+            }
+        }
     }
 
     public float getEfficiencyFromUpgrade(ItemStack stack){

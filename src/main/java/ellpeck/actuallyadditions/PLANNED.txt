@@ -77,7 +77,7 @@
     -Ring of Aquadive: Fast underwater movement
     -Ring of Suction: Sucks up Items in the area
     -Ring of Water Absorption: Removes Water around
-    -Ring of Striptease (Or something like that): Attacker lose parts of their Armor
+    -Ring of Unarmoring: Attacker lose parts of their Armor
 
 -Food Cannon
     -Shoots Food Items

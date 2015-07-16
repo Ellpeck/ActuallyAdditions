@@ -11,9 +11,12 @@ import net.minecraft.util.IIcon;
 
 public class ItemBattery extends ItemEnergy implements INameableItem{
 
-    public ItemBattery(){
-        super(1000000, 10000, 1);
+    private String name;
+
+    public ItemBattery(String name, int capacity, int transfer){
+        super(capacity, transfer, 1);
         this.setMaxStackSize(1);
+        this.name = name;
     }
 
     @Override
@@ -34,6 +37,6 @@ public class ItemBattery extends ItemEnergy implements INameableItem{
 
     @Override
     public String getName(){
-        return "itemBattery";
+        return name;
     }
 }
