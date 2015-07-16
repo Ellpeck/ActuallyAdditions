@@ -76,9 +76,6 @@ public class ItemDrill extends ItemEnergy implements INameableItem{
     }
 
     public void onUpdate(ItemStack stack, World world, Entity entity, int par4, boolean par5){
-        NBTTagCompound compound = stack.getTagCompound();
-        if(compound == null) return;
-
         ItemStack[] slots = this.getSlotsFromNBT(stack);
         if(slots != null && slots.length > 0){
             for(ItemStack slotStack : slots){
@@ -86,8 +83,10 @@ public class ItemDrill extends ItemEnergy implements INameableItem{
                     if(this.getEnergyStored(stack) < this.getMaxEnergyStored(stack)){
                         int energy = ((IEnergyContainerItem)slotStack.getItem()).getEnergyStored(slotStack);
                         if(energy > 0){
-                            int received = ((IEnergyContainerItem)stack.getItem()).receiveEnergy(stack, energy, false);
-                            ((IEnergyContainerItem)slotStack.getItem()).extractEnergy(slotStack, received, false);
+                            int toReceive = ((IEnergyContainerItem)stack.getItem()).receiveEnergy(stack, energy, true);
+                            int actualReceive = ((IEnergyContainerItem)slotStack.getItem()).extractEnergy(slotStack, toReceive, false);
+                            ((IEnergyContainerItem)stack.getItem()).receiveEnergy(stack, actualReceive, false);
+
                         }
                     }
                 }
