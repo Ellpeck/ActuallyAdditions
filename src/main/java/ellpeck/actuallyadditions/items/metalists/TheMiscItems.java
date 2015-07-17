@@ -19,7 +19,8 @@ public enum TheMiscItems implements INameableItem{
     TINY_CHAR("TinyCharcoal", EnumRarity.common),
     RICE_SLIME("RiceSlime", EnumRarity.uncommon),
     CANOLA("Canola", EnumRarity.uncommon),
-    CUP("Cup", EnumRarity.uncommon);
+    CUP("Cup", EnumRarity.uncommon),
+    BAT_WING("BatWing", EnumRarity.rare);
 
     public final String name;
     public final EnumRarity rarity;

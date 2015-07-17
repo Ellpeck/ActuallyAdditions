@@ -48,6 +48,7 @@ public class EntityLivingEvent{
                     //Allow the Player to fly when he has Wings equipped every tick
                     //It appears to be reset somewhere if you don't update it every tick
                     //but I haven't found the place where it gets reset which is slightly odd
+                    //Maybe I just haven't searched enough or I am really stupid :D
                     player.capabilities.allowFlying = true;
                 }
                 else{

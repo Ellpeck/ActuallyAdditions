@@ -33,7 +33,7 @@ import ellpeck.actuallyadditions.tile.TileEntityBase;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.Util;
 
-@Mod(modid = ModUtil.MOD_ID, name = ModUtil.NAME, version = ModUtil.VERSION, canBeDeactivated = false)
+@Mod(modid = ModUtil.MOD_ID, name = ModUtil.NAME, version = ModUtil.VERSION, canBeDeactivated = false, guiFactory = "ellpeck.actuallyadditions.config.GuiFactory")
 public class ActuallyAdditions{
 
     @Instance(ModUtil.MOD_ID)
@@ -46,7 +46,7 @@ public class ActuallyAdditions{
     public void preInit(FMLPreInitializationEvent event){
         ModUtil.LOGGER.info("Starting PreInitialization Phase...");
 
-        ConfigurationHandler.init(event.getSuggestedConfigurationFile());
+        new ConfigurationHandler(event.getSuggestedConfigurationFile());
         PacketHandler.init();
         InitToolMaterials.init();
         InitArmorMaterials.init();

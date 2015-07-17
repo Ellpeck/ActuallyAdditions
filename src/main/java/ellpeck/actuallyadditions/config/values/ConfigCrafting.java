@@ -107,7 +107,7 @@ public enum ConfigCrafting{
     ENERGIZER("Energizer", ConfigCategories.BLOCKS_CRAFTING),
     ENERVATOR("Enervator", ConfigCategories.BLOCKS_CRAFTING),
 
-    QUARTZ("Black Quartz in a Crafting Table (as a Backup if there's no Ores to be found anywhere)", ConfigCategories.ITEMS_CRAFTING),
+    QUARTZ("Black Quartz in a Crafting Table", ConfigCategories.ITEMS_CRAFTING),
     LAMPS("Lamps", ConfigCategories.BLOCKS_CRAFTING),
 
     REDSTONE("Redstone Ore -> Redstone", ConfigCategories.CRUSHER_RECIPES, "Crusher"),
@@ -143,7 +143,7 @@ public enum ConfigCrafting{
         this.name = name;
         this.category = category.name;
         this.defaultValue = defaultValue;
-        this.extraText = extraText + " ";
+        this.extraText = extraText.length() > 0 ? extraText + " " : "";
     }
 
     ConfigCrafting(String name, ConfigCategories category, boolean defaultValue){
