@@ -140,6 +140,46 @@ public class ItemCrafting{
                     'I', "ingotIron",
                     'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal())));
 
+        //Double Battery
+        if(ConfigCrafting.DOUBLE_BATTERY.isEnabled())
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemBatteryDouble),
+                    " R ", "ICI", "III",
+                    'R', new ItemStack(InitItems.itemBattery),
+                    'I', "ingotIron",
+                    'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal())));
+
+        //Triple Battery
+        if(ConfigCrafting.TRIPLE_BATTERY.isEnabled())
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemBatteryTriple),
+                    " R ", "ICI", "III",
+                    'R', new ItemStack(InitItems.itemBatteryDouble),
+                    'I', "ingotIron",
+                    'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal())));
+
+        //Quadruple Battery
+        if(ConfigCrafting.QUADRUPLE_BATTERY.isEnabled())
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemBatteryQuadruple),
+                    " R ", "ICI", "III",
+                    'R', new ItemStack(InitItems.itemBatteryTriple),
+                    'I', "ingotIron",
+                    'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal())));
+
+        //Quintuple Battery
+        if(ConfigCrafting.QUINTUPLE_BATTERY.isEnabled())
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemBatteryQuintuple),
+                    " R ", "ICI", "III",
+                    'R', new ItemStack(InitItems.itemBatteryQuadruple),
+                    'I', "ingotIron",
+                    'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal())));
+
+        //Bat Wings
+        if(ConfigCrafting.BAT_WINGS.isEnabled())
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemWingsOfTheBats),
+                    "WNW", "WDW", "WNW",
+                    'W', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.BAT_WING.ordinal()),
+                    'D', "blockDiamond",
+                    'N', new ItemStack(Items.nether_star)));
+
         //Quartz
         if(ConfigCrafting.QUARTZ.isEnabled())
             GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal()),

@@ -5,6 +5,7 @@ import ellpeck.actuallyadditions.config.ConfigCategories;
 public enum ConfigCrafting{
 
     COMPOST("Compost", ConfigCategories.BLOCKS_CRAFTING),
+    XP_SOLIDIFIER("Experience Solidifier", ConfigCategories.BLOCKS_CRAFTING),
     WOOD_CASING("Wood Casing", ConfigCategories.BLOCKS_CRAFTING),
     STONE_CASING("Stone Casing", ConfigCategories.BLOCKS_CRAFTING),
     FISHING_NET("Fishing Net", ConfigCategories.BLOCKS_CRAFTING),
@@ -103,6 +104,11 @@ public enum ConfigCrafting{
     DRILL_PLACING("Drill Placing Upgrade", ConfigCategories.ITEMS_CRAFTING),
     DRILL_SILK_TOUCH("Drill Silk Touch Upgrade", ConfigCategories.ITEMS_CRAFTING),
     BATTERY("Battery", ConfigCategories.ITEMS_CRAFTING),
+    DOUBLE_BATTERY("Double Battery", ConfigCategories.ITEMS_CRAFTING),
+    TRIPLE_BATTERY("Triple Battery", ConfigCategories.ITEMS_CRAFTING),
+    QUADRUPLE_BATTERY("Quadruple Battery", ConfigCategories.ITEMS_CRAFTING),
+    QUINTUPLE_BATTERY("Quintuple Battery", ConfigCategories.ITEMS_CRAFTING),
+    BAT_WINGS("Wings Of The Bats", ConfigCategories.ITEMS_CRAFTING),
 
     ENERGIZER("Energizer", ConfigCategories.BLOCKS_CRAFTING),
     ENERVATOR("Enervator", ConfigCategories.BLOCKS_CRAFTING),
