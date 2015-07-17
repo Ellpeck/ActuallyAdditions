@@ -112,3 +112,10 @@
     -Items are configurable in the GUI
 
 -Enderman Teleport Stopper
+
+-Placable Buckets
+    -Buckets can be placed as Bucket Blocks
+
+-Milking Machine
+
+-Shearing Machine

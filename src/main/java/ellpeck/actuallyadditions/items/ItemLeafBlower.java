@@ -41,29 +41,43 @@ public class ItemLeafBlower extends Item implements INameableItem{
     public void onUsingTick(ItemStack stack, EntityPlayer player, int time){
         if(!player.worldObj.isRemote){
             if(time <= getMaxItemUseDuration(stack) && time % 2 == 0){
+                //Breaks the Blocks
                 this.breakStuff(player.worldObj, (int)player.posX, (int)player.posY, (int)player.posZ);
+                //Plays a Minecart sounds (It really sounds like a Leaf Blower!)
                 if(this.hasSound) player.worldObj.playSoundAtEntity(player, "minecart.base", 0.3F, 0.001F);
             }
         }
     }
 
+    /**
+     * Breaks (harvests) Grass and Leaves around
+     * @param world The World
+     * @param x The X Position of the Player
+     * @param y The Y Position of the Player
+     * @param z The Z Position of the Player
+     */
     public void breakStuff(World world, int x, int y, int z){
         for(int reachX = -range; reachX < range+1; reachX++){
             for(int reachZ = -range; reachZ < range+1; reachZ++){
                 for(int reachY = (this.isAdvanced ? -range : -rangeUp); reachY < (this.isAdvanced ? range+1 : rangeUp+1); reachY++){
+                    //The current Block to break
                     Block block = world.getBlock(x+reachX, y+reachY, z+reachZ);
                     if(block != null && (block instanceof BlockBush || (this.isAdvanced && block instanceof BlockLeavesBase))){
                         WorldPos theCoord = new WorldPos(world, x+reachX, y+reachY, z+reachZ);
                         Block theBlock = world.getBlock(theCoord.getX(), theCoord.getY(), theCoord.getZ());
                         ArrayList<ItemStack> drops = new ArrayList<>();
                         int meta = world.getBlockMetadata(theCoord.getX(), theCoord.getY(), theCoord.getZ());
+                        //Gets all of the Drops the Block should have
                         drops.addAll(theBlock.getDrops(world, theCoord.getX(), theCoord.getY(), theCoord.getZ(), meta, 0));
 
+                        //Deletes the Block
                         world.setBlockToAir(theCoord.getX(), theCoord.getY(), theCoord.getZ());
+                        //Plays the Breaking Sound
                         if(this.hasParticles) world.playAuxSFX(2001, theCoord.getX(), theCoord.getY(), theCoord.getZ(), Block.getIdFromBlock(theBlock)+(meta << 12));
 
                         if(this.doesDrop){
                             for(ItemStack theDrop : drops){
+                                //Drops the Items into the World
                                 world.spawnEntityInWorld(new EntityItem(world, theCoord.getX() + 0.5, theCoord.getY() + 0.5, theCoord.getZ() + 0.5, theDrop));
                             }
                         }
@@ -76,7 +90,8 @@ public class ItemLeafBlower extends Item implements INameableItem{
 
     @Override
     public int getMaxItemUseDuration(ItemStack stack){
-        return 1000000;
+        //Cuz you won't hold it for that long right-clicking anyways
+        return Integer.MAX_VALUE;
     }
 
     @Override
