@@ -30,7 +30,8 @@ public class UpdateChecker{
 
     @SubscribeEvent(receiveCanceled = true)
     public void onTick(TickEvent.ClientTickEvent event){
-        if(!notified && doneChecking && event.phase == TickEvent.Phase.END && Minecraft.getMinecraft().thePlayer != null){
+        //Don't notify directly to prevent the Message getting lost in Spam on World Joining
+        if(Minecraft.getSystemTime() % 300 == 0 && !notified && doneChecking && Minecraft.getMinecraft().thePlayer != null){
             EntityPlayer player = Minecraft.getMinecraft().thePlayer;
             if(checkFailed){
                 player.addChatComponentMessage(IChatComponent.Serializer.func_150699_a(StatCollector.translateToLocal("info." + ModUtil.MOD_ID_LOWER + ".update.failed.desc")));

@@ -56,7 +56,11 @@ tooltip.actuallyadditions.blockMiscCharcoal.desc=Crafted from Charcoal
 item.actuallyadditions.itemMiscRiceSlime.name=Rice Slimeball
 tooltip.actuallyadditions.itemMiscRiceSlime.desc=It's sticky... and smells kinda good...
 
-item.actuallyadditions.itemBattery.name=Battery
+item.actuallyadditions.itemBattery.name=Single Battery
+item.actuallyadditions.itemBatteryDouble.name=Double Battery
+item.actuallyadditions.itemBatteryTriple.name=Triple Battery
+item.actuallyadditions.itemBatteryQuadruple.name=Quadruple Battery
+item.actuallyadditions.itemBatteryQuintuple.name=Quintuple Battery
 tooltip.actuallyadditions.itemBattery.desc=Stores RF! Charge in an Energizer! Discharge in an Enervator!
 
 tile.actuallyadditions.blockCoalGenerator.name=Coal Generator
