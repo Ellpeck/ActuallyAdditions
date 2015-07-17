@@ -1,1 +1,1 @@
-Added Obsidian and Emerald Armor, Treasure Chests, fixed lots of big bugs
+Added Thermal Foundation and Mekanism Material Paxels, fixed an RF API Bug
