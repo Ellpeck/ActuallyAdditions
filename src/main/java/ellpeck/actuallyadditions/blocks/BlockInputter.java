@@ -57,7 +57,7 @@ public class BlockInputter extends BlockContainerBase implements INameableItem{
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9){
         if(!world.isRemote){
             TileEntityInputter inputter = (TileEntityInputter)world.getTileEntity(x, y, z);
-            if (inputter != null) player.openGui(ActuallyAdditions.instance, this.isAdvanced ? GuiHandler.INPUTTER_ADVANCED_ID : GuiHandler.INPUTTER_ID, world, x, y, z);
+            if (inputter != null) player.openGui(ActuallyAdditions.instance, this.isAdvanced ? GuiHandler.GuiTypes.INPUTTER_ADVANCED.ordinal() : GuiHandler.GuiTypes.INPUTTER.ordinal(), world, x, y, z);
             return true;
         }
         return true;

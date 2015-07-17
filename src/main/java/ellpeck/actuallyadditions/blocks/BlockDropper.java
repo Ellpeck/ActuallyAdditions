@@ -75,7 +75,7 @@ public class BlockDropper extends BlockContainerBase implements INameableItem{
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9){
         if(!world.isRemote){
             TileEntityDropper dropper = (TileEntityDropper)world.getTileEntity(x, y, z);
-            if (dropper != null) player.openGui(ActuallyAdditions.instance, GuiHandler.DROPPER_ID, world, x, y, z);
+            if (dropper != null) player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.DROPPER.ordinal(), world, x, y, z);
             return true;
         }
         return true;

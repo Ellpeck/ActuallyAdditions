@@ -70,7 +70,7 @@ public class BlockCoalGenerator extends BlockContainerBase implements INameableI
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9){
         if(!world.isRemote){
             TileEntityCoalGenerator press = (TileEntityCoalGenerator)world.getTileEntity(x, y, z);
-            if (press != null) player.openGui(ActuallyAdditions.instance, GuiHandler.COAL_GENERATOR_ID, world, x, y, z);
+            if (press != null) player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.COAL_GENERATOR.ordinal(), world, x, y, z);
             return true;
         }
         return true;

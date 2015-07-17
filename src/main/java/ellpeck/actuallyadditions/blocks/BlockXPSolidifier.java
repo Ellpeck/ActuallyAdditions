@@ -83,7 +83,7 @@ public class BlockXPSolidifier extends BlockContainerBase implements INameableIt
         if(!world.isRemote){
             TileEntityXPSolidifier solidifier = (TileEntityXPSolidifier)world.getTileEntity(x, y, z);
             if(solidifier != null)
-                player.openGui(ActuallyAdditions.instance, GuiHandler.XP_SOLIDIFIER_ID, world, x, y, z);
+                player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.XP_SOLIDIFIER.ordinal(), world, x, y, z);
             return true;
         }
         return true;

@@ -54,7 +54,7 @@ public class BlockCanolaPress extends BlockContainerBase implements INameableIte
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9){
         if(!world.isRemote){
             TileEntityCanolaPress press = (TileEntityCanolaPress)world.getTileEntity(x, y, z);
-            if (press != null) player.openGui(ActuallyAdditions.instance, GuiHandler.CANOLA_PRESS_ID, world, x, y, z);
+            if (press != null) player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.CANOLA_PRESS.ordinal(), world, x, y, z);
             return true;
         }
         return true;

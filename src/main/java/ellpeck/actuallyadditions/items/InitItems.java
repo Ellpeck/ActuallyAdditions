@@ -96,8 +96,9 @@ public class InitItems{
     public static Item itemBatteryQuintuple;
 
     public static Item itemTeleStaff;
-
     public static Item itemWingsOfTheBats;
+
+    public static Item itemPicturePlacer;
 
     public static void init(){
         ModUtil.LOGGER.info("Initializing Items...");
@@ -116,6 +117,9 @@ public class InitItems{
 
         itemTeleStaff = new ItemTeleStaff();
         ItemUtil.register(itemTeleStaff);
+
+        itemPicturePlacer = new ItemPicturePlacer();
+        ItemUtil.register(itemPicturePlacer);
 
         itemWingsOfTheBats = new ItemWingsOfTheBats();
         ItemUtil.register(itemWingsOfTheBats);

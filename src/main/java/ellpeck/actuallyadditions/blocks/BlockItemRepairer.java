@@ -65,7 +65,7 @@ public class BlockItemRepairer extends BlockContainerBase implements INameableIt
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9){
         if(!world.isRemote){
             TileEntityItemRepairer repairer = (TileEntityItemRepairer)world.getTileEntity(x, y, z);
-            if (repairer != null) player.openGui(ActuallyAdditions.instance, GuiHandler.REPAIRER_ID, world, x, y, z);
+            if (repairer != null) player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.REPAIRER.ordinal(), world, x, y, z);
             return true;
         }
         return true;

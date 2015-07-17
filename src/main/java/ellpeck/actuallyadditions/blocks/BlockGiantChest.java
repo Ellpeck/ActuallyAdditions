@@ -56,7 +56,7 @@ public class BlockGiantChest extends BlockContainerBase implements INameableItem
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9){
         if(!world.isRemote){
             TileEntityGiantChest chest = (TileEntityGiantChest)world.getTileEntity(x, y, z);
-            if (chest != null) player.openGui(ActuallyAdditions.instance, GuiHandler.GIANT_CHEST_ID, world, x, y, z);
+            if (chest != null) player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.GIANT_CHEST.ordinal(), world, x, y, z);
             return true;
         }
         return true;

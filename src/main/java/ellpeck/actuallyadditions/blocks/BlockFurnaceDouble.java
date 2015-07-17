@@ -90,7 +90,7 @@ public class BlockFurnaceDouble extends BlockContainerBase implements INameableI
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9){
         if(!world.isRemote){
             TileEntityFurnaceDouble furnace = (TileEntityFurnaceDouble)world.getTileEntity(x, y, z);
-            if (furnace != null) player.openGui(ActuallyAdditions.instance, GuiHandler.FURNACE_DOUBLE_ID, world, x, y, z);
+            if (furnace != null) player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.FURNACE_DOUBLE.ordinal(), world, x, y, z);
             return true;
         }
         return true;

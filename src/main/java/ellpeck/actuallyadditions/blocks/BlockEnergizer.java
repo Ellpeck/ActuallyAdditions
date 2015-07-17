@@ -60,11 +60,11 @@ public class BlockEnergizer extends BlockContainerBase implements INameableItem{
         if(!world.isRemote){
             if(this.isEnergizer){
                 TileEntityEnergizer energizer = (TileEntityEnergizer)world.getTileEntity(x, y, z);
-                if(energizer != null) player.openGui(ActuallyAdditions.instance, GuiHandler.ENERGIZER_ID, world, x, y, z);
+                if(energizer != null) player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.ENERGIZER.ordinal(), world, x, y, z);
             }
             else{
                 TileEntityEnervator energizer = (TileEntityEnervator)world.getTileEntity(x, y, z);
-                if(energizer != null) player.openGui(ActuallyAdditions.instance, GuiHandler.ENERVATOR_ID, world, x, y, z);
+                if(energizer != null) player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.ENERVATOR.ordinal(), world, x, y, z);
             }
             return true;
         }

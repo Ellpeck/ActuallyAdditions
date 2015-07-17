@@ -43,7 +43,7 @@ public class ItemCrafterOnAStick extends Item implements INameableItem{
 
     @Override
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player){
-        if(!world.isRemote) player.openGui(ActuallyAdditions.instance, GuiHandler.CRAFTER_ID, world, (int)player.posX, (int)player.posY, (int)player.posZ);
+        if(!world.isRemote) player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.CRAFTER.ordinal(), world, (int)player.posX, (int)player.posY, (int)player.posZ);
         return stack;
     }
 

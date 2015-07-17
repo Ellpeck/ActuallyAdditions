@@ -78,7 +78,7 @@ public class BlockBreaker extends BlockContainerBase implements INameableItem{
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9){
         if(!world.isRemote){
             TileEntityBreaker breaker = (TileEntityBreaker)world.getTileEntity(x, y, z);
-            if (breaker != null) player.openGui(ActuallyAdditions.instance, GuiHandler.BREAKER_ID, world, x, y, z);
+            if (breaker != null) player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.BREAKER.ordinal(), world, x, y, z);
             return true;
         }
         return true;

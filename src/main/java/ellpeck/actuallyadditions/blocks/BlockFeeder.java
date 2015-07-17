@@ -54,7 +54,7 @@ public class BlockFeeder extends BlockContainerBase implements INameableItem{
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9){
         if(!world.isRemote){
             TileEntityFeeder feeder = (TileEntityFeeder)world.getTileEntity(x, y, z);
-            if (feeder != null) player.openGui(ActuallyAdditions.instance, GuiHandler.FEEDER_ID, world, x, y, z);
+            if (feeder != null) player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.FEEDER.ordinal(), world, x, y, z);
             return true;
         }
         return true;

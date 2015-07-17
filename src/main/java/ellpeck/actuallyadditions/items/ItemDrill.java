@@ -441,7 +441,7 @@ public class ItemDrill extends ItemEnergy implements INameableItem{
     @Override
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player){
         if(!world.isRemote && player.isSneaking() && stack == player.getCurrentEquippedItem()){
-            player.openGui(ActuallyAdditions.instance, GuiHandler.DRILL_ID, world, (int)player.posX, (int)player.posY, (int)player.posZ);
+            player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.DRILL.ordinal(), world, (int)player.posX, (int)player.posY, (int)player.posZ);
         }
         return stack;
     }

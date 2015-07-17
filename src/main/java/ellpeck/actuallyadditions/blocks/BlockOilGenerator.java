@@ -70,7 +70,7 @@ public class BlockOilGenerator extends BlockContainerBase implements INameableIt
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9){
         if(!world.isRemote){
             TileEntityOilGenerator generator = (TileEntityOilGenerator)world.getTileEntity(x, y, z);
-            if (generator != null) player.openGui(ActuallyAdditions.instance, GuiHandler.OIL_GENERATOR_ID, world, x, y, z);
+            if (generator != null) player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.OIL_GENERATOR.ordinal(), world, x, y, z);
             return true;
         }
         return true;
