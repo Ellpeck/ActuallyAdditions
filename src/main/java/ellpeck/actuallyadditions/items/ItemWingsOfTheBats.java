@@ -22,15 +22,19 @@ public class ItemWingsOfTheBats extends Item implements INameableItem{
      * Used so that Flight from other Mods' Items doesn't get broken when
      * these Wings aren't worn
      *
-     * Saves Remote Players specially to make Damage Display not bug
-     * when taking off the Wings
-     * (Because Client and Server LivingUpdateEvent get called kind of irregularly
-     * and not both at the same time (That's at least what I worked out when testing :D))
+     * Saves Remote Players separately to make de-synced Event Calling
+     * not bug out Capabilities when taking off the Wings
      */
     public static ArrayList<String> wingedPlayers = new ArrayList<>();
 
-    public ItemWingsOfTheBats(){
+    public static final float FLY_SPEED = 0.125F;
+    public static final float STANDARD_FLY_SPEED = 0.05F;
+
+    public boolean isHastily;
+
+    public ItemWingsOfTheBats(boolean isHastily){
         this.setMaxStackSize(1);
+        this.isHastily = isHastily;
     }
 
     /**
@@ -68,7 +72,7 @@ public class ItemWingsOfTheBats extends Item implements INameableItem{
 
     @Override
     public EnumRarity getRarity(ItemStack stack){
-        return EnumRarity.epic;
+        return this.isHastily ? EnumRarity.epic : EnumRarity.rare;
     }
 
     @Override
@@ -91,21 +95,21 @@ public class ItemWingsOfTheBats extends Item implements INameableItem{
 
     @Override
     public String getName(){
-        return "itemWingsOfTheBats";
+        return this.isHastily ? "itemWingOfTheBatsHastily" : "itemWingsOfTheBats";
     }
 
     /**
      * Checks if the Player has Wings in its Inventory
      *
      * @param player The Player
-     * @return If the Player has Wings
+     * @return The Wings
      */
-    public static boolean hasWingItem(EntityPlayer player){
+    public static ItemStack getWingItem(EntityPlayer player){
         for(int i = 0; i < player.inventory.getSizeInventory(); i++){
             if(player.inventory.getStackInSlot(i) != null && player.inventory.getStackInSlot(i).getItem() instanceof ItemWingsOfTheBats){
-                return true;
+                return player.inventory.getStackInSlot(i);
             }
         }
-        return false;
+        return null;
     }
 }
