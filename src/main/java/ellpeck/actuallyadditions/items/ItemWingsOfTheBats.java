@@ -27,14 +27,8 @@ public class ItemWingsOfTheBats extends Item implements INameableItem{
      */
     public static ArrayList<String> wingedPlayers = new ArrayList<>();
 
-    public static final float FLY_SPEED = 0.125F;
-    public static final float STANDARD_FLY_SPEED = 0.05F;
-
-    public boolean isHastily;
-
-    public ItemWingsOfTheBats(boolean isHastily){
+    public ItemWingsOfTheBats(){
         this.setMaxStackSize(1);
-        this.isHastily = isHastily;
     }
 
     /**
@@ -72,7 +66,7 @@ public class ItemWingsOfTheBats extends Item implements INameableItem{
 
     @Override
     public EnumRarity getRarity(ItemStack stack){
-        return this.isHastily ? EnumRarity.epic : EnumRarity.rare;
+        return EnumRarity.epic;
     }
 
     @Override
@@ -95,7 +89,7 @@ public class ItemWingsOfTheBats extends Item implements INameableItem{
 
     @Override
     public String getName(){
-        return this.isHastily ? "itemWingOfTheBatsHastily" : "itemWingsOfTheBats";
+        return "itemWingsOfTheBats";
     }
 
     /**

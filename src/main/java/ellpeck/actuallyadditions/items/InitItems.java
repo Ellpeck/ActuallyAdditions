@@ -97,7 +97,6 @@ public class InitItems{
 
     public static Item itemTeleStaff;
     public static Item itemWingsOfTheBats;
-    public static Item itemWingsOfTheBatsHastily;
 
     public static void init(){
         ModUtil.LOGGER.info("Initializing Items...");
@@ -117,10 +116,8 @@ public class InitItems{
         itemTeleStaff = new ItemTeleStaff();
         ItemUtil.register(itemTeleStaff);
 
-        itemWingsOfTheBats = new ItemWingsOfTheBats(false);
+        itemWingsOfTheBats = new ItemWingsOfTheBats();
         ItemUtil.register(itemWingsOfTheBats);
-        itemWingsOfTheBatsHastily = new ItemWingsOfTheBats(true);
-        ItemUtil.register(itemWingsOfTheBatsHastily);
 
         itemDrill = new ItemDrill();
         ItemUtil.register(itemDrill);
