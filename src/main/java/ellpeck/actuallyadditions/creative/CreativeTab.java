@@ -36,6 +36,7 @@ public class CreativeTab extends CreativeTabs{
         add(InitBlocks.blockInputterAdvanced);
         add(InitBlocks.blockPhantomBooster);
         add(InitBlocks.blockCoffeeMachine);
+        add(InitBlocks.blockXPSolidifier);
 
         add(InitBlocks.blockGreenhouseGlass);
         add(InitBlocks.blockGrinder);
@@ -86,11 +87,17 @@ public class CreativeTab extends CreativeTabs{
         add(InitItems.itemDrillUpgradeFiveByFive);
         add(InitItems.itemDrillUpgradeBlockPlacing);
         add(InitItems.itemBattery);
+        add(InitItems.itemBatteryDouble);
+        add(InitItems.itemBatteryTriple);
+        add(InitItems.itemBatteryQuadruple);
+        add(InitItems.itemBatteryQuintuple);
         add(InitItems.itemTeleStaff);
         
         add(InitItems.itemPhantomConnector);
         add(InitItems.itemBucketCanolaOil);
         add(InitItems.itemBucketOil);
+
+        add(InitItems.itemWingsOfTheBats);
 
         add(InitItems.itemCoffeeSeed);
         add(InitItems.itemCoffeeBean);

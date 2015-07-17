@@ -124,6 +124,12 @@ tooltip.actuallyadditions.blockMiscLavaFactoryCase.desc=Helps the Lava Factory C
 tile.actuallyadditions.blockFluidPlacer.name=Fluid Placer
 tooltip.actuallyadditions.blockFluidPlacer.desc=Places Fluids stored inside it
 
+item.actuallyadditions.itemWingsOfTheBats.name=Wings Of The Bats
+tooltip.actuallyadditions.itemWingsOfTheBats.desc=Give you the ability to fly when they're in your Inventory..
+
+item.actuallyadditions.itemMiscBatWing.name=Bat's Wing
+tooltip.actuallyadditions.itemMiscBatWing.desc=A Wing dropped from a bat.. might be useful..
+
 tooltip.actuallyadditions.paxel.desc.1=It's an All-In-One-Tool!
 tooltip.actuallyadditions.paxel.desc.2=Pickaxe, Axe, Shovel, Sword AND Hoe! In One Tool!
 item.actuallyadditions.woodenPaxel.name=Wooden AIOT

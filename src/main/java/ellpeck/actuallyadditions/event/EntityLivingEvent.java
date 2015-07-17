@@ -33,8 +33,7 @@ public class EntityLivingEvent{
         //Wings allowing Flight
         if(event.entityLiving instanceof EntityPlayer){
             EntityPlayer player = (EntityPlayer)event.entityLiving;
-            ItemStack wings = ItemWingsOfTheBats.getWingItem(player);
-            boolean wingsEquipped = wings != null;
+            boolean wingsEquipped = ItemWingsOfTheBats.getWingItem(player) != null;
 
             //If Player isn't (really) winged
             if(!ItemWingsOfTheBats.isPlayerWinged(player)){
