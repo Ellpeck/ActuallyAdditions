@@ -55,7 +55,7 @@ public class ItemLeafBlower extends Item implements INameableItem{
                     if(block != null && (block instanceof BlockBush || (this.isAdvanced && block instanceof BlockLeavesBase))){
                         WorldPos theCoord = new WorldPos(world, x+reachX, y+reachY, z+reachZ);
                         Block theBlock = world.getBlock(theCoord.getX(), theCoord.getY(), theCoord.getZ());
-                        ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
+                        ArrayList<ItemStack> drops = new ArrayList<>();
                         int meta = world.getBlockMetadata(theCoord.getX(), theCoord.getY(), theCoord.getZ());
                         drops.addAll(theBlock.getDrops(world, theCoord.getX(), theCoord.getY(), theCoord.getZ(), meta, 0));
 

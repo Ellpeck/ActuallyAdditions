@@ -70,6 +70,7 @@ public enum ConfigIntValues{
     DROPPER_TIME_NEEDED("Dropper: Time Needed", ConfigCategories.MACHINE_VALUES, 10, 1, 10000, "The Time Needed for the Dropper to drop an Item"),
 
     CAT_DROP_CHANCE("Cat Drops: Chance", ConfigCategories.OTHER, 5000, 5, 10000000, "The 1 in X chance for a Hairy Ball to Drop from a Cat with X being this value"),
+    SPIDER_DROP_CHANCE("Cobweb Drop from Spider: Chance", ConfigCategories.MOB_DROPS, 300, 1, 1000000000, "The 1 in X chance for a Cobweb to drop from a Spider"),
 
     RICE_AMOUNT("Rice Amount", ConfigCategories.WORLD_GEN, 15, 1, 100, "The Chance of Rice generating"),
     CANOLA_AMOUNT("Canola Amount", ConfigCategories.WORLD_GEN, 10, 1, 50, "The Chance of Canola generating"),
