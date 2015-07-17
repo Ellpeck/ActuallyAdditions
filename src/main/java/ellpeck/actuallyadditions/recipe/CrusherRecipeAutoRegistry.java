@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class CrusherRecipeAutoRegistry{
 
-    public static ArrayList<SearchCase> searchCases = new ArrayList<>();
+    public static ArrayList<SearchCase> searchCases = new ArrayList<SearchCase>();
 
     public static class SearchCase{
 

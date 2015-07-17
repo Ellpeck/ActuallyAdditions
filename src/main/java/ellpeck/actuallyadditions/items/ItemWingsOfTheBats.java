@@ -25,7 +25,7 @@ public class ItemWingsOfTheBats extends Item implements INameableItem{
      * Saves Remote Players separately to make de-synced Event Calling
      * not bug out Capabilities when taking off the Wings
      */
-    public static ArrayList<String> wingedPlayers = new ArrayList<>();
+    public static ArrayList<String> wingedPlayers = new ArrayList<String>();
 
     public ItemWingsOfTheBats(){
         this.setMaxStackSize(1);

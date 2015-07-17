@@ -1,1 +1,1 @@
-Added Thermal Foundation and Mekanism Material Paxels, fixed an RF API Bug
+Wings Of The Bats that allow you to fly, XP Solidifier, Drills can now hold Batteries to automatically charge themselves up

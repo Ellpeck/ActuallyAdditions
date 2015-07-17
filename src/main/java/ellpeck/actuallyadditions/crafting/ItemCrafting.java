@@ -177,8 +177,8 @@ public class ItemCrafting{
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemWingsOfTheBats),
                     "WNW", "WDW", "WNW",
                     'W', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.BAT_WING.ordinal()),
-                    'D', "blockDiamond",
-                    'N', new ItemStack(Items.nether_star)));
+                    'N', "blockDiamond",
+                    'D', new ItemStack(Items.nether_star)));
 
         //Quartz
         if(ConfigCrafting.QUARTZ.isEnabled())

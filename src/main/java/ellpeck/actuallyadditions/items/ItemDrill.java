@@ -453,7 +453,7 @@ public class ItemDrill extends ItemEnergy implements INameableItem{
 
     @Override
     public Set<String> getToolClasses(ItemStack stack){
-        HashSet<String> hashSet = new HashSet<>();
+        HashSet<String> hashSet = new HashSet<String>();
         hashSet.add("pickaxe");
         hashSet.add("shovel");
         return hashSet;

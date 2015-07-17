@@ -129,7 +129,7 @@ public class ItemCoffee extends ItemFood implements INameableItem{
     }
 
     public static PotionEffect[] getEffectsFromStack(ItemStack stack){
-        ArrayList<PotionEffect> effects = new ArrayList<>();
+        ArrayList<PotionEffect> effects = new ArrayList<PotionEffect>();
         NBTTagCompound tag = stack.getTagCompound();
         if(tag != null){
             int counter = tag.getInteger("Counter");

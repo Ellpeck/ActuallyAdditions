@@ -123,7 +123,7 @@ public class ItemAllToolAA extends ItemTool implements INameableItem{
 
     @Override
     public Set<String> getToolClasses(ItemStack stack){
-        HashSet<String> hashSet = new HashSet<>();
+        HashSet<String> hashSet = new HashSet<String>();
         hashSet.add("pickaxe");
         hashSet.add("axe");
         hashSet.add("shovel");
