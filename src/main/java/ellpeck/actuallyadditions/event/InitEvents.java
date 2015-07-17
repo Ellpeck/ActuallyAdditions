@@ -16,6 +16,7 @@ public class InitEvents{
         Util.registerEvent(new TooltipEvent());
         Util.registerEvent(new EntityLivingEvent());
         Util.registerEvent(new BucketFillEvent());
+        Util.registerEvent(new LogoutEvent());
         MinecraftForge.TERRAIN_GEN_BUS.register(new WorldDecorationEvent());
     }
 
