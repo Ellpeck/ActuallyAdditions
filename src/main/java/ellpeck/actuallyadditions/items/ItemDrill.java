@@ -340,7 +340,7 @@ public class ItemDrill extends ItemEnergy implements INameableItem{
         Block block = world.getBlock(xPos, yPos, zPos);
         float hardness = block.getBlockHardness(world, xPos, yPos, zPos);
         int meta = world.getBlockMetadata(xPos, yPos, zPos);
-        if(hardness >= 0.0F && (!isExtra || (this.canHarvestBlock(block, stack) && !block.hasTileEntity(meta)))){
+        if(hardness >= 0.0F && (this.canHarvestBlock(block, stack) && (!isExtra || !block.hasTileEntity(meta)))){
             this.extractEnergy(stack, use, false);
 
             if(!world.isRemote){
