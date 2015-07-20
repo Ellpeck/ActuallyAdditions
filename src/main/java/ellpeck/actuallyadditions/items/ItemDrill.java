@@ -272,55 +272,55 @@ public class ItemDrill extends ItemEnergy implements INameableItem{
      * @param z The Z Coord of the main Block to break
      * @param player The Player who breaks the Blocks
      */
-    public void breakBlocks(ItemStack stack, int radius, World world, int x, int y, int z, EntityPlayer player){
+    public boolean breakBlocks(ItemStack stack, int radius, World world, int x, int y, int z, EntityPlayer player){
         int xRange = radius;
         int yRange = radius;
         int zRange = 0;
 
         //Block hit
         MovingObjectPosition pos = WorldUtil.getNearestBlockWithDefaultReachDistance(world, player);
-        if(pos != null){
+        if(pos == null) return false;
 
-            //Corrects Blocks to hit depending on Side of original Block hit
-            int side = pos.sideHit;
-            if(side == 0 || side == 1){
-                zRange = radius;
-                yRange = 0;
-            }
-            if(side == 4 || side == 5){
-                xRange = 0;
-                zRange = radius;
-            }
+        //Corrects Blocks to hit depending on Side of original Block hit
+        int side = pos.sideHit;
+        if(side == 0 || side == 1){
+            zRange = radius;
+            yRange = 0;
+        }
+        if(side == 4 || side == 5){
+            xRange = 0;
+            zRange = radius;
+        }
 
-            //Not defined later because main Block is getting broken below
-            float mainHardness = world.getBlock(x, y, z).getBlockHardness(world, x, y, z);
+        //Not defined later because main Block is getting broken below
+        float mainHardness = world.getBlock(x, y, z).getBlockHardness(world, x, y, z);
 
-            //Break Middle Block first
-            int use = this.getEnergyUsePerBlock(stack);
-            if(this.getEnergyStored(stack) >= use){
-                this.tryHarvestBlock(world, x, y, z, false, stack, player, use);
-            }
-            else return;
+        //Break Middle Block first
+        int use = this.getEnergyUsePerBlock(stack);
+        if(this.getEnergyStored(stack) >= use){
+            if(!this.tryHarvestBlock(world, x, y, z, false, stack, player, use)) return false;
+        }
+        else return false;
 
-            //Break Blocks around
-            if(radius > 0){
-                for(int xPos = x-xRange; xPos <= x+xRange; xPos++){
-                    for(int yPos = y-yRange; yPos <= y+yRange; yPos++){
-                        for(int zPos = z-zRange; zPos <= z+zRange; zPos++){
-                            if(!(x == xPos && y == yPos && z == zPos)){
-                                if(this.getEnergyStored(stack) >= use){
-                                    //Only break Blocks around that are (about) as hard or softer
-                                    if(world.getBlock(xPos, yPos, zPos).getBlockHardness(world, xPos, yPos, zPos) <= mainHardness+5.0F){
-                                        this.tryHarvestBlock(world, xPos, yPos, zPos, true, stack, player, use);
-                                    }
+        //Break Blocks around
+        if(radius > 0){
+            for(int xPos = x-xRange; xPos <= x+xRange; xPos++){
+                for(int yPos = y-yRange; yPos <= y+yRange; yPos++){
+                    for(int zPos = z-zRange; zPos <= z+zRange; zPos++){
+                        if(!(x == xPos && y == yPos && z == zPos)){
+                            if(this.getEnergyStored(stack) >= use){
+                                //Only break Blocks around that are (about) as hard or softer
+                                if(world.getBlock(xPos, yPos, zPos).getBlockHardness(world, xPos, yPos, zPos) <= mainHardness+5.0F){
+                                    this.tryHarvestBlock(world, xPos, yPos, zPos, true, stack, player, use);
                                 }
-                                else return;
                             }
+                            else return false;
                         }
                     }
                 }
             }
         }
+        return true;
     }
 
     /**
@@ -336,11 +336,12 @@ public class ItemDrill extends ItemEnergy implements INameableItem{
      * @param player The Player breaking the Blocks
      * @param use The Energy that should be extracted per Block
      */
-    private void tryHarvestBlock(World world, int xPos, int yPos, int zPos, boolean isExtra, ItemStack stack, EntityPlayer player, int use){
+    private boolean tryHarvestBlock(World world, int xPos, int yPos, int zPos, boolean isExtra, ItemStack stack, EntityPlayer player, int use){
         Block block = world.getBlock(xPos, yPos, zPos);
         float hardness = block.getBlockHardness(world, xPos, yPos, zPos);
         int meta = world.getBlockMetadata(xPos, yPos, zPos);
-        if(hardness >= 0.0F && (this.canHarvestBlock(block, stack) && (!isExtra || !block.hasTileEntity(meta)))){
+        boolean canHarvest = this.canHarvestBlock(block, stack) && (!isExtra || this.getDigSpeed(stack, block, meta) > 1.0F);
+        if(hardness >= 0.0F && (!isExtra || (canHarvest && !block.hasTileEntity(meta)))){
             this.extractEnergy(stack, use, false);
 
             if(!world.isRemote){
@@ -352,14 +353,18 @@ public class ItemDrill extends ItemEnergy implements INameableItem{
                 world.playAuxSFX(2001, xPos, yPos, zPos, Block.getIdFromBlock(block)+(meta << 12));
             }
 
+            //If the Block was actually "removed", meaning it will drop an Item
+            boolean removed = block.removedByPlayer(world, player, xPos, yPos, zPos, canHarvest);
             //Actually removes the Block from the World
-            if(block.removedByPlayer(world, player, xPos, yPos, zPos, true)){
+            if(removed){
                 //Before the Block is destroyed, special cases
                 block.onBlockDestroyedByPlayer(world, xPos, yPos, zPos, meta);
 
                 if(!world.isRemote && !player.capabilities.isCreativeMode){
                     //Actually drops the Block's Items etc.
-                    block.harvestBlock(world, player, xPos, yPos, zPos, meta);
+                    if(canHarvest){
+                        block.harvestBlock(world, player, xPos, yPos, zPos, meta);
+                    }
                     //Only drop XP when no Silk Touch is applied
                     if(!EnchantmentHelper.getSilkTouchModifier(player)){
                         //Drop XP depending on Fortune Level
@@ -376,7 +381,9 @@ public class ItemDrill extends ItemEnergy implements INameableItem{
                 //Check the Server if a Block that changed on the Client really changed, if not, revert the change
                 Minecraft.getMinecraft().getNetHandler().addToSendQueue(new C07PacketPlayerDigging(2, xPos, yPos, zPos, Minecraft.getMinecraft().objectMouseOver.sideHit));
             }
+            return removed;
         }
+        return false;
     }
 
     @Override
@@ -386,6 +393,7 @@ public class ItemDrill extends ItemEnergy implements INameableItem{
 
     @Override
     public boolean onBlockStartBreak(ItemStack stack, int x, int y, int z, EntityPlayer player){
+        boolean toReturn = true;
         int use = this.getEnergyUsePerBlock(stack);
         if(this.getEnergyStored(stack) >= use){
             //Enchants the Drill depending on the Upgrades it has
@@ -399,11 +407,11 @@ public class ItemDrill extends ItemEnergy implements INameableItem{
             //Breaks the Blocks
             if(!player.isSneaking() && this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.THREE_BY_THREE)){
                 if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FIVE_BY_FIVE)){
-                    this.breakBlocks(stack, 2, player.worldObj, x, y, z, player);
+                    toReturn = this.breakBlocks(stack, 2, player.worldObj, x, y, z, player);
                 }
-                else this.breakBlocks(stack, 1, player.worldObj, x, y, z, player);
+                else toReturn = this.breakBlocks(stack, 1, player.worldObj, x, y, z, player);
             }
-            else this.breakBlocks(stack, 0, player.worldObj, x, y, z, player);
+            else toReturn = this.breakBlocks(stack, 0, player.worldObj, x, y, z, player);
 
             //Removes Enchantments added above
             NBTTagList ench = stack.getEnchantmentTagList();
@@ -416,7 +424,7 @@ public class ItemDrill extends ItemEnergy implements INameableItem{
                 }
             }
         }
-        return true;
+        return toReturn;
     }
 
     @Override
