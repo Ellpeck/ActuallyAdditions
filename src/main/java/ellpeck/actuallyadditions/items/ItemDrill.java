@@ -438,7 +438,7 @@ public class ItemDrill extends ItemEnergy implements INameableItem{
 
     @Override
     public float getDigSpeed(ItemStack stack, Block block, int meta){
-        return this.getEnergyStored(stack) >= this.getEnergyUsePerBlock(stack) ? (this.getToolClasses(stack).contains(block.getHarvestTool(meta)) ? this.getEfficiencyFromUpgrade(stack) : 1.0F) : 0.0F;
+        return this.getEnergyStored(stack) >= this.getEnergyUsePerBlock(stack) ? (block.getHarvestTool(meta) == null || block.getHarvestTool(meta).isEmpty() || this.getToolClasses(stack).contains(block.getHarvestTool(meta)) ? this.getEfficiencyFromUpgrade(stack) : 1.0F) : 0.0F;
     }
 
     @Override
