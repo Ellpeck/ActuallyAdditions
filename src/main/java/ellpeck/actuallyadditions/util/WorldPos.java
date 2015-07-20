@@ -1,6 +1,8 @@
 package ellpeck.actuallyadditions.util;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
+import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
@@ -40,6 +42,18 @@ public class WorldPos{
 
     public TileEntity getTileEntity(){
         return this.world != null ? this.world.getTileEntity(this.x, this.y, this.z) : null;
+    }
+
+    public Material getMaterial(){
+        return this.world != null ? this.world.getBlock(this.x, this.y, this.z).getMaterial() : null;
+    }
+
+    public Item getItemBlock(){
+        return this.world != null ? Item.getItemFromBlock(this.world.getBlock(this.x, this.y, this.z)) : null;
+    }
+
+    public int getMetadata(){
+        return this.world != null ? this.world.getBlockMetadata(this.x, this.y, this.z) : 0;
     }
 
     public boolean isEqual(WorldPos pos){

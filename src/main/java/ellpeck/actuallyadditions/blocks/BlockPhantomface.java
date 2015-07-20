@@ -63,7 +63,7 @@ public class BlockPhantomface extends BlockContainerBase implements INameableIte
                     player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".blockPhantomRange.desc") + ": " + phantom.range));
                     if(phantom.hasBoundTile()){
                         int distance = (int)Vec3.createVectorHelper(x, y, z).distanceTo(Vec3.createVectorHelper(phantom.boundPosition.getX(), phantom.boundPosition.getY(), phantom.boundPosition.getZ()));
-                        player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocalFormatted("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.blockInfo.desc", phantom.boundPosition.getBlock().getLocalizedName(), phantom.boundPosition.getX(), phantom.boundPosition.getY(), phantom.boundPosition.getZ(), distance)));
+                        player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocalFormatted("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.blockInfo.desc", phantom.boundPosition.getItemBlock().getItemStackDisplayName(new ItemStack(phantom.boundPosition.getBlock(), 1, phantom.boundPosition.getMetadata())), phantom.boundPosition.getX(), phantom.boundPosition.getY(), phantom.boundPosition.getZ(), distance)));
 
                         if(phantom.isBoundTileInRage()) player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.connectedRange.desc")));
                         else player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.connectedNoRange.desc")));
@@ -77,7 +77,7 @@ public class BlockPhantomface extends BlockContainerBase implements INameableIte
                         player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".blockPhantomRange.desc") + ": " + phantom.range));
                         if(phantom.hasBoundPosition()){
                             int distance = (int)Vec3.createVectorHelper(x, y, z).distanceTo(Vec3.createVectorHelper(phantom.boundPosition.getX(), phantom.boundPosition.getY(), phantom.boundPosition.getZ()));
-                            player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocalFormatted("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.blockInfo.desc", phantom.boundPosition.getBlock().getLocalizedName(), phantom.boundPosition.getX(), phantom.boundPosition.getY(), phantom.boundPosition.getZ(), distance)));
+                            player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocalFormatted("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.blockInfo.desc", phantom.boundPosition.getItemBlock().getItemStackDisplayName(new ItemStack(phantom.boundPosition.getBlock(), 1, phantom.boundPosition.getMetadata())), phantom.boundPosition.getX(), phantom.boundPosition.getY(), phantom.boundPosition.getZ(), distance)));
 
                             if(phantom.isBoundPositionInRange()) player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.connectedRange.desc")));
                             else player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.connectedNoRange.desc")));
