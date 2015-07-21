@@ -119,3 +119,12 @@
 -Milking Machine
 
 -Shearing Machine
+
+-Sunken City Biome
+    -Normal Houses, but destroyed
+    -With Loot Chests
+
+-Weeping Angel-like Statues
+    -Only move when you don't look
+    -Teleport you away
+
