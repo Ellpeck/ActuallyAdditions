@@ -387,7 +387,7 @@ item.actuallyadditions.itemDustCoal.name=Crushed Coal
 item.actuallyadditions.itemDustQuartzBlack.name=Crushed Black Quartz
 
 tooltip.actuallyadditions.shiftForInfo.desc=Press Shift for Info
-tooltip.actuallyadditions.hunger.desc=Fills
+tooltip.actuallyadditions.hunger.desc=Hunger Points
 tooltip.actuallyadditions.saturation.desc=Saturation
 tooltip.actuallyadditions.durability.desc=Durability
 tooltip.actuallyadditions.noEffects.desc=No Effects
