@@ -28,9 +28,11 @@ public class MultiBlockHelper{
 
         //Setting Min and Max Boundaries of the MultiBlock
 
-        //Horizontal X+
-        for(int i = blockX; i < blockX+block.getSizeHor(); i++){
+        //Horizontal X+                                 +1/-1 to prevent bigger MultiBlocks from working too
+        for(int i = blockX; i < blockX+block.getSizeHor()+1; i++){
             if(!containsBlock(block.getNeededBlocks(), blockWorld.getBlock(i, blockY, blockZ))){
+                //TODO To Fix the two MultiBlocks next to each other issue, try to take away the -1, check for more Blocks
+                //TODO That could fail the thing and then, later, remove one Block and check if the size is correct still
                 maxX = i-1;
                 break;
             }
@@ -38,7 +40,7 @@ public class MultiBlockHelper{
         }
 
         //Horizontal X-
-        for(int i = blockX; i >= blockX-block.getSizeHor(); i--){
+        for(int i = blockX; i >= blockX-block.getSizeHor()-1; i--){
             if(!containsBlock(block.getNeededBlocks(), blockWorld.getBlock(i, blockY, blockZ))){
                 minX = i+1;
                 break;
@@ -47,7 +49,7 @@ public class MultiBlockHelper{
         }
 
         //Horizontal Z+
-        for(int i = blockZ; i < blockZ+block.getSizeHor(); i++){
+        for(int i = blockZ; i < blockZ+block.getSizeHor()+1; i++){
             if(!containsBlock(block.getNeededBlocks(), blockWorld.getBlock(blockX, blockY, i))){
                 maxZ = i-1;
                 break;
@@ -56,7 +58,7 @@ public class MultiBlockHelper{
         }
 
         //Horizontal Z-
-        for(int i = blockZ; i >= blockZ-block.getSizeHor(); i--){
+        for(int i = blockZ; i >= blockZ-block.getSizeHor()-1; i--){
             if(!containsBlock(block.getNeededBlocks(), blockWorld.getBlock(blockX, blockY, i))){
                 minZ = i+1;
                 break;
@@ -65,7 +67,7 @@ public class MultiBlockHelper{
         }
 
         //Horizontal Y+
-        for(int i = blockY; i < blockY+block.getSizeVer(); i++){
+        for(int i = blockY; i < blockY+block.getSizeVer()+1; i++){
             if(!containsBlock(block.getNeededBlocks(), blockWorld.getBlock(blockX, i, blockZ))){
                 maxY = i-1;
                 break;
@@ -74,7 +76,7 @@ public class MultiBlockHelper{
         }
 
         //Horizontal Y-
-        for(int i = blockY; i >= blockY-block.getSizeVer(); i--){
+        for(int i = blockY; i >= blockY-block.getSizeVer()-1; i--){
             if(!containsBlock(block.getNeededBlocks(), blockWorld.getBlock(blockX, i, blockZ))){
                 minY = i+1;
                 break;
@@ -89,7 +91,8 @@ public class MultiBlockHelper{
         for(int x = minX; x <= maxX; x++){
             for(int y = minY; y <= maxY; y++){
                 for(int z = minZ; z <= maxZ; z++){
-                    if(containsBlock(block.getNeededBlocks(), blockWorld.getBlock(x, y, z)) && maxX+1-minX >= block.getSizeHor() && maxZ+1-minZ >= block.getSizeHor() && maxY+1-minY >= block.getSizeVer()){
+                                                                                            //Needs to be the exact size, not too small
+                    if(containsBlock(block.getNeededBlocks(), blockWorld.getBlock(x, y, z)) && maxX+1-minX == block.getSizeHor() && maxZ+1-minZ == block.getSizeHor() && maxY+1-minY == block.getSizeVer()){
                         //Add the Block to the List to return
                         blocks.add(new WorldPos(blockWorld, x, y, z));
                         //Set the Block to MultiBlock-"State"
