@@ -82,8 +82,6 @@ public class InitBlocks{
 
     public static Block blockXPSolidifier;
 
-    public static Block blockOreFactory;
-
     public static void init(){
         ModUtil.LOGGER.info("Initializing Blocks...");
 
@@ -102,9 +100,6 @@ public class InitBlocks{
         BlockUtil.register(blockTestifiBucksGreenSlab, BlockSlabs.TheItemBlock.class);
         blockTestifiBucksWhiteSlab = new BlockSlabs("blockTestifiBucksWhiteSlab", blockTestifiBucksWhiteWall);
         BlockUtil.register(blockTestifiBucksWhiteSlab, BlockSlabs.TheItemBlock.class);
-
-        blockOreFactory = new BlockOreFactory();
-        BlockUtil.register(blockOreFactory, BlockOreFactory.TheItemBlock.class);
 
         blockColoredLamp = new BlockColoredLamp(false);
         BlockUtil.register(blockColoredLamp, BlockColoredLamp.TheItemBlock.class);
