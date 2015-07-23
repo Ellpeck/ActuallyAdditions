@@ -42,20 +42,22 @@ public class GuiFeeder extends GuiContainer{
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 70);
 
         if(this.tileFeeder.currentTimer > 0){
-            int i = this.tileFeeder.getCurrentTimerToScale(22);
-            this.drawTexturedModalRect(guiLeft + 80, guiTop + 42 - i, 176, 16 + 22 - i, 16, 22);
+            int i = this.tileFeeder.getCurrentTimerToScale(20);
+            this.drawTexturedModalRect(guiLeft+85, guiTop+42-i, 181, 19+19-i, 6, 20);
         }
 
-        if(this.tileFeeder.currentAnimalAmount >= 2 && this.tileFeeder.currentAnimalAmount < this.tileFeeder.animalThreshold) this.drawTexturedModalRect(guiLeft + 70, guiTop + 31, 192, 16, 8, 8);
+        if(this.tileFeeder.currentAnimalAmount >= 2 && this.tileFeeder.currentAnimalAmount < this.tileFeeder.animalThreshold)
+            this.drawTexturedModalRect(guiLeft+70, guiTop+31, 192, 16, 8, 8);
 
-        if(this.tileFeeder.currentAnimalAmount >= this.tileFeeder.animalThreshold) this.drawTexturedModalRect(guiLeft + 70, guiTop + 31, 192, 24, 8, 8);
+        if(this.tileFeeder.currentAnimalAmount >= this.tileFeeder.animalThreshold)
+            this.drawTexturedModalRect(guiLeft+70, guiTop+31, 192, 24, 8, 8);
     }
 
     @Override
     public void drawScreen(int x, int y, float f){
         super.drawScreen(x, y, f);
         if(x >= guiLeft+69 && y >= guiTop+30 && x <= guiLeft+69+10 && y <= guiTop+30+10){
-            String[] array = new String[]{(this.tileFeeder.currentAnimalAmount + " " + StatCollector.translateToLocal("info." + ModUtil.MOD_ID_LOWER + ".gui.animals")), ((this.tileFeeder.currentAnimalAmount >= 2 && this.tileFeeder.currentAnimalAmount < this.tileFeeder.animalThreshold) ? StatCollector.translateToLocal("info." + ModUtil.MOD_ID_LOWER + ".gui.enoughToBreed") : (this.tileFeeder.currentAnimalAmount >= this.tileFeeder.animalThreshold ? StatCollector.translateToLocal("info." + ModUtil.MOD_ID_LOWER + ".gui.tooMany") : StatCollector.translateToLocal("info." + ModUtil.MOD_ID_LOWER + ".gui.notEnough")))};
+            String[] array = new String[]{(this.tileFeeder.currentAnimalAmount+" "+StatCollector.translateToLocal("info."+ModUtil.MOD_ID_LOWER+".gui.animals")), ((this.tileFeeder.currentAnimalAmount >= 2 && this.tileFeeder.currentAnimalAmount < this.tileFeeder.animalThreshold) ? StatCollector.translateToLocal("info."+ModUtil.MOD_ID_LOWER+".gui.enoughToBreed") : (this.tileFeeder.currentAnimalAmount >= this.tileFeeder.animalThreshold ? StatCollector.translateToLocal("info."+ModUtil.MOD_ID_LOWER+".gui.tooMany") : StatCollector.translateToLocal("info."+ModUtil.MOD_ID_LOWER+".gui.notEnough")))};
             this.func_146283_a(Arrays.asList(array), x, y);
         }
     }
