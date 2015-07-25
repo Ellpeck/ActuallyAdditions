@@ -127,6 +127,17 @@ public class CreativeTab extends CreativeTabs{
         add(InitItems.obsidianPaxel);
         InitForeignPaxels.addToCreativeTab(this.list);
 
+        add(InitItems.itemPickaxeQuartz);
+        add(InitItems.itemSwordQuartz);
+        add(InitItems.itemAxeQuartz);
+        add(InitItems.itemShovelQuartz);
+        add(InitItems.itemHoeQuartz);
+
+        add(InitItems.itemHelmQuartz);
+        add(InitItems.itemChestQuartz);
+        add(InitItems.itemPantsQuartz);
+        add(InitItems.itemBootsQuartz);
+
         add(InitItems.itemPickaxeEmerald);
         add(InitItems.itemSwordEmerald);
         add(InitItems.itemAxeEmerald);

@@ -10,6 +10,9 @@ public enum ConfigFloatValues{
     OBSIDIAN_SPEED("Obsidian: Efficiency", ConfigCategories.TOOL_VALUES, 4.0F, 1.0F, 20.0F, "How fast Obsidian Tools are"),
     OBSIDIAN_MAX_DAMAGE("Obsidian: Damage", ConfigCategories.TOOL_VALUES, 2.0F, 0.1F, 50.0F, "How much damage an Obsidian Tool deals"),
 
+    QUARTZ_SPEED("Quartz: Efficiency", ConfigCategories.TOOL_VALUES, 6.5F, 1.0F, 20.0F, "How fast Quartz Tools are"),
+    QUARTZ_MAX_DAMAGE("Quartz: Damage", ConfigCategories.TOOL_VALUES, 2.0F, 0.1F, 50.0F, "How much damage an Quartz Tool deals"),
+
     DRILL_DAMAGE("Drill: Default Damage", ConfigCategories.DRILL_VALUES, 8.0F, 1.0F, 30.0F, "How much Damage the Drill does to an Entity");
 
     public final String name;

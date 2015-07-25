@@ -49,10 +49,21 @@ public class InitItems{
     public static Item itemSwordObsidian;
     public static Item itemHoeObsidian;
 
+    public static Item itemPickaxeQuartz;
+    public static Item itemAxeQuartz;
+    public static Item itemShovelQuartz;
+    public static Item itemSwordQuartz;
+    public static Item itemHoeQuartz;
+
     public static Item itemHelmObsidian;
     public static Item itemChestObsidian;
     public static Item itemPantsObsidian;
     public static Item itemBootsObsidian;
+
+    public static Item itemHelmQuartz;
+    public static Item itemChestQuartz;
+    public static Item itemPantsQuartz;
+    public static Item itemBootsQuartz;
 
     public static Item itemHairyBall;
 
@@ -112,6 +123,12 @@ public class InitItems{
         itemPantsObsidian = new ItemArmorAA("itemPantsObsidian", InitArmorMaterials.armorMaterialObsidian, 2, new ItemStack(Blocks.obsidian), "armorObsidian");
         itemBootsObsidian = new ItemArmorAA("itemBootsObsidian", InitArmorMaterials.armorMaterialObsidian, 3, new ItemStack(Blocks.obsidian), "armorObsidian");
         ItemUtil.registerItems(new Item[]{itemHelmObsidian, itemChestObsidian, itemPantsObsidian, itemBootsObsidian});
+
+        itemHelmQuartz = new ItemArmorAA("itemHelmQuartz", InitArmorMaterials.armorMaterialQuartz, 0, new ItemStack(Blocks.obsidian), "armorQuartz");
+        itemChestQuartz = new ItemArmorAA("itemChestQuartz", InitArmorMaterials.armorMaterialQuartz, 1, new ItemStack(Blocks.obsidian), "armorQuartz");
+        itemPantsQuartz = new ItemArmorAA("itemPantsQuartz", InitArmorMaterials.armorMaterialQuartz, 2, new ItemStack(Blocks.obsidian), "armorQuartz");
+        itemBootsQuartz = new ItemArmorAA("itemBootsQuartz", InitArmorMaterials.armorMaterialQuartz, 3, new ItemStack(Blocks.obsidian), "armorQuartz");
+        ItemUtil.registerItems(new Item[]{itemHelmQuartz, itemChestQuartz, itemPantsQuartz, itemBootsQuartz});
 
         itemTeleStaff = new ItemTeleStaff();
         ItemUtil.register(itemTeleStaff);
@@ -215,11 +232,11 @@ public class InitItems{
         ItemUtil.register(itemCoffeeSeed);
         CompatUtil.registerMFRSeed(itemCoffeeSeed);
 
-        itemPickaxeEmerald = new ItemPickaxeAA(InitToolMaterials.toolMaterialEmerald, "gemEmerald", "itemPickaxeEmerald", EnumRarity.rare);
-        itemAxeEmerald = new ItemAxeAA(InitToolMaterials.toolMaterialEmerald, "gemEmerald", "itemAxeEmerald", EnumRarity.rare);
-        itemShovelEmerald = new ItemShovelAA(InitToolMaterials.toolMaterialEmerald, "gemEmerald", "itemShovelEmerald", EnumRarity.rare);
-        itemSwordEmerald = new ItemSwordAA(InitToolMaterials.toolMaterialEmerald, "gemEmerald", "itemSwordEmerald", EnumRarity.rare);
-        itemHoeEmerald = new ItemHoeAA(InitToolMaterials.toolMaterialEmerald, "gemEmerald", "itemHoeEmerald", EnumRarity.rare);
+        itemPickaxeEmerald = new ItemPickaxeAA(InitToolMaterials.toolMaterialEmerald, "gemEmerald", "itemPickaxeEmerald", EnumRarity.epic);
+        itemAxeEmerald = new ItemAxeAA(InitToolMaterials.toolMaterialEmerald, "gemEmerald", "itemAxeEmerald", EnumRarity.epic);
+        itemShovelEmerald = new ItemShovelAA(InitToolMaterials.toolMaterialEmerald, "gemEmerald", "itemShovelEmerald", EnumRarity.epic);
+        itemSwordEmerald = new ItemSwordAA(InitToolMaterials.toolMaterialEmerald, "gemEmerald", "itemSwordEmerald", EnumRarity.epic);
+        itemHoeEmerald = new ItemHoeAA(InitToolMaterials.toolMaterialEmerald, "gemEmerald", "itemHoeEmerald", EnumRarity.epic);
         ItemUtil.registerItems(new Item[]{itemPickaxeEmerald, itemAxeEmerald, itemShovelEmerald, itemSwordEmerald, itemHoeEmerald});
 
         itemPickaxeObsidian = new ItemPickaxeAA(InitToolMaterials.toolMaterialObsidian, "obsidian", "itemPickaxeObsidian", EnumRarity.uncommon);
@@ -228,6 +245,13 @@ public class InitItems{
         itemSwordObsidian = new ItemSwordAA(InitToolMaterials.toolMaterialObsidian, "obsidian", "itemSwordObsidian", EnumRarity.uncommon);
         itemHoeObsidian = new ItemHoeAA(InitToolMaterials.toolMaterialObsidian, "obsidian", "itemHoeObsidian", EnumRarity.uncommon);
         ItemUtil.registerItems(new Item[]{itemPickaxeObsidian, itemAxeObsidian, itemShovelObsidian, itemSwordObsidian, itemHoeObsidian});
+
+        itemPickaxeQuartz = new ItemPickaxeAA(InitToolMaterials.toolMaterialQuartz, "Quartz", "itemPickaxeQuartz", EnumRarity.rare);
+        itemAxeQuartz = new ItemAxeAA(InitToolMaterials.toolMaterialQuartz, "Quartz", "itemAxeQuartz", EnumRarity.rare);
+        itemShovelQuartz = new ItemShovelAA(InitToolMaterials.toolMaterialQuartz, "Quartz", "itemShovelQuartz", EnumRarity.rare);
+        itemSwordQuartz = new ItemSwordAA(InitToolMaterials.toolMaterialQuartz, "Quartz", "itemSwordQuartz", EnumRarity.rare);
+        itemHoeQuartz = new ItemHoeAA(InitToolMaterials.toolMaterialQuartz, "Quartz", "itemHoeQuartz", EnumRarity.rare);
+        ItemUtil.registerItems(new Item[]{itemPickaxeQuartz, itemAxeQuartz, itemShovelQuartz, itemSwordQuartz, itemHoeQuartz});
 
         woodenPaxel = new ItemAllToolAA(Item.ToolMaterial.WOOD, "plankWood", "woodenPaxel", EnumRarity.uncommon);
         stonePaxel = new ItemAllToolAA(Item.ToolMaterial.STONE, "stone", "stonePaxel", EnumRarity.uncommon);
