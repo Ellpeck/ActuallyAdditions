@@ -124,10 +124,10 @@ public class InitItems{
         itemBootsObsidian = new ItemArmorAA("itemBootsObsidian", InitArmorMaterials.armorMaterialObsidian, 3, new ItemStack(Blocks.obsidian), "armorObsidian");
         ItemUtil.registerItems(new Item[]{itemHelmObsidian, itemChestObsidian, itemPantsObsidian, itemBootsObsidian});
 
-        itemHelmQuartz = new ItemArmorAA("itemHelmQuartz", InitArmorMaterials.armorMaterialQuartz, 0, new ItemStack(Blocks.obsidian), "armorQuartz");
-        itemChestQuartz = new ItemArmorAA("itemChestQuartz", InitArmorMaterials.armorMaterialQuartz, 1, new ItemStack(Blocks.obsidian), "armorQuartz");
-        itemPantsQuartz = new ItemArmorAA("itemPantsQuartz", InitArmorMaterials.armorMaterialQuartz, 2, new ItemStack(Blocks.obsidian), "armorQuartz");
-        itemBootsQuartz = new ItemArmorAA("itemBootsQuartz", InitArmorMaterials.armorMaterialQuartz, 3, new ItemStack(Blocks.obsidian), "armorQuartz");
+        itemHelmQuartz = new ItemArmorAA("itemHelmQuartz", InitArmorMaterials.armorMaterialQuartz, 0, new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal()), "armorQuartz");
+        itemChestQuartz = new ItemArmorAA("itemChestQuartz", InitArmorMaterials.armorMaterialQuartz, 1, new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal()), "armorQuartz");
+        itemPantsQuartz = new ItemArmorAA("itemPantsQuartz", InitArmorMaterials.armorMaterialQuartz, 2, new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal()), "armorQuartz");
+        itemBootsQuartz = new ItemArmorAA("itemBootsQuartz", InitArmorMaterials.armorMaterialQuartz, 3, new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal()), "armorQuartz");
         ItemUtil.registerItems(new Item[]{itemHelmQuartz, itemChestQuartz, itemPantsQuartz, itemBootsQuartz});
 
         itemTeleStaff = new ItemTeleStaff();
@@ -246,11 +246,11 @@ public class InitItems{
         itemHoeObsidian = new ItemHoeAA(InitToolMaterials.toolMaterialObsidian, "obsidian", "itemHoeObsidian", EnumRarity.uncommon);
         ItemUtil.registerItems(new Item[]{itemPickaxeObsidian, itemAxeObsidian, itemShovelObsidian, itemSwordObsidian, itemHoeObsidian});
 
-        itemPickaxeQuartz = new ItemPickaxeAA(InitToolMaterials.toolMaterialQuartz, "Quartz", "itemPickaxeQuartz", EnumRarity.rare);
-        itemAxeQuartz = new ItemAxeAA(InitToolMaterials.toolMaterialQuartz, "Quartz", "itemAxeQuartz", EnumRarity.rare);
-        itemShovelQuartz = new ItemShovelAA(InitToolMaterials.toolMaterialQuartz, "Quartz", "itemShovelQuartz", EnumRarity.rare);
-        itemSwordQuartz = new ItemSwordAA(InitToolMaterials.toolMaterialQuartz, "Quartz", "itemSwordQuartz", EnumRarity.rare);
-        itemHoeQuartz = new ItemHoeAA(InitToolMaterials.toolMaterialQuartz, "Quartz", "itemHoeQuartz", EnumRarity.rare);
+        itemPickaxeQuartz = new ItemPickaxeAA(InitToolMaterials.toolMaterialQuartz, "gemQuartzBlack", "itemPickaxeQuartz", EnumRarity.rare);
+        itemAxeQuartz = new ItemAxeAA(InitToolMaterials.toolMaterialQuartz, "gemQuartzBlack", "itemAxeQuartz", EnumRarity.rare);
+        itemShovelQuartz = new ItemShovelAA(InitToolMaterials.toolMaterialQuartz, "gemQuartzBlack", "itemShovelQuartz", EnumRarity.rare);
+        itemSwordQuartz = new ItemSwordAA(InitToolMaterials.toolMaterialQuartz, "gemQuartzBlack", "itemSwordQuartz", EnumRarity.rare);
+        itemHoeQuartz = new ItemHoeAA(InitToolMaterials.toolMaterialQuartz, "gemQuartzBlack", "itemHoeQuartz", EnumRarity.rare);
         ItemUtil.registerItems(new Item[]{itemPickaxeQuartz, itemAxeQuartz, itemShovelQuartz, itemSwordQuartz, itemHoeQuartz});
 
         woodenPaxel = new ItemAllToolAA(Item.ToolMaterial.WOOD, "plankWood", "woodenPaxel", EnumRarity.uncommon);
