@@ -92,6 +92,9 @@ public class CreativeTab extends CreativeTabs{
         add(InitItems.itemBatteryQuadruple);
         add(InitItems.itemBatteryQuintuple);
         add(InitItems.itemTeleStaff);
+
+        add(InitItems.itemGrowthRing);
+        add(InitItems.itemMagnetRing);
         
         add(InitItems.itemPhantomConnector);
         add(InitItems.itemBucketCanolaOil);
