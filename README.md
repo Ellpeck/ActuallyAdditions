@@ -12,14 +12,15 @@ LICENSE:
 
 ##### All Rights Reserved
 
-What that means? The License can be customized by me:
+The things listed below are special cases and exceptions from the above. They have to be respected in addition to the above.
+Everything that is not listed below applies to the above.
 
 ### YOU MAY
 - Fork and modify the Code
 - Submit Pull Requests
 - Copy (SMALL!) Parts of the Code for other Projects
 - Make a Review/Spotlight of the Mod or use it in a Modpack
-- Make Let's Play (and similar) Videos containing my Mod
+- Make Let's Play (and similar) Videos containing the Mod
 
 
 ### YOU CAN NOT
@@ -36,3 +37,4 @@ What that means? The License can be customized by me:
 - The above License only applies for Code I wrote myself, any APIs used (such as the CoFH API and the InventoryTweaks API) have their own License that is being respected.
 - Almost all of the Assets used in this Mod are made by Glenthor and are owned by me. You are not allowed to copy them for any other Project without my Permission.
 
+© 2015 Ellpeck
