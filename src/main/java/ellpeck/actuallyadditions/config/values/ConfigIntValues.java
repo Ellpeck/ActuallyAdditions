@@ -134,7 +134,15 @@ public enum ConfigIntValues{
 
     TELE_STAFF_REACH("TeleStaff: Range", ConfigCategories.MACHINE_VALUES, 100, 5, 200, "How far the TeleStaff can teleport you"),
     TELE_STAFF_ENERGY_USE("TeleStaff: Energy Use per Block", ConfigCategories.MACHINE_VALUES, 200, 1, 5000, "How much energy the TeleStaff uses per Block you teleport"),
-    TELE_STAFF_WAIT_TIME("TeleStaff: Wait Time", ConfigCategories.MACHINE_VALUES, 30, 0, 500, "The time the TeleStaff takes between Teleports");
+    TELE_STAFF_WAIT_TIME("TeleStaff: Wait Time", ConfigCategories.MACHINE_VALUES, 30, 0, 500, "The time the TeleStaff takes between Teleports"),
+
+    GROWTH_RING_RANGE("Growth Ring: Range", ConfigCategories.MACHINE_VALUES, 5, 1, 30, "The Range the Growth Ring has"),
+    GROWTH_RING_COOLDOWN("Growth Ring: Cooldown Time", ConfigCategories.MACHINE_VALUES, 30, 0, 1000, "The Time between Growth Bursts"),
+    GROWTH_RING_ENERGY_USE("Growth Ring: Energy Used", ConfigCategories.MACHINE_VALUES, 550, 10, 6000, "The Amount of Energy used per Tick"),
+    GROWTH_RING_GROWTH_PER_CYCLE("Growth Ring: Growth Ticks per Cycle", ConfigCategories.MACHINE_VALUES, 45, 1, 200, "The Amount of plants that get ticked per cycle"),
+
+    MAGNET_RING_RANGE("Magnet Ring: Range", ConfigCategories.MACHINE_VALUES, 5, 3, 30, "The Range of the Magnet Ring"),
+    MAGNET_RING_ENERGY_USE("Magnet Ring: Energy Used", ConfigCategories.MACHINE_VALUES, 30, 0, 500, "The Amount of Energy the Magnet Ring uses per tick");
 
     public final String name;
     public final String category;

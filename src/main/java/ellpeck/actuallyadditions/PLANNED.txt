@@ -73,7 +73,6 @@
     -Ring of Thorns: Hurts Attackers when they hit you with a Projectile
     -Ring of Water Walking
     -Ring of Aquadive: Fast underwater movement
-    -Ring of Suction: Sucks up Items in the area
     -Ring of Water Absorption: Removes Water around
     -Ring of Unarmoring: Attacker lose parts of their Armor
 

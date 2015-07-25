@@ -2,6 +2,7 @@ package ellpeck.actuallyadditions.items;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.util.INameableItem;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.WorldPos;
@@ -23,12 +24,12 @@ import java.util.Random;
 
 public class ItemGrowthRing extends ItemEnergy implements INameableItem{
 
-    private static final int RANGE = 5;
-    private static final int ENERGY_USED_PER_TICK = 500;
+    private static final int RANGE = ConfigIntValues.GROWTH_RING_RANGE.getValue();
+    private static final int ENERGY_USED_PER_TICK = ConfigIntValues.GROWTH_RING_ENERGY_USE.getValue();
     //The waiting time per growth cycle
-    private static final int WAIT_TIME = 30;
+    private static final int WAIT_TIME = ConfigIntValues.GROWTH_RING_COOLDOWN.getValue();
     //The amount of Growth Ticks given to random plants around
-    private static final int GROWTH_TICKS_PER_CYCLE = 50;
+    private static final int GROWTH_TICKS_PER_CYCLE = ConfigIntValues.GROWTH_RING_GROWTH_PER_CYCLE.getValue();
 
     public ItemGrowthRing(){
         super(1000000, 5000, 2);
@@ -83,7 +84,9 @@ public class ItemGrowthRing extends ItemEnergy implements INameableItem{
             else stack.stackTagCompound.setInteger("WaitTime", waitTime+1);
 
             //Use Energy every tick
-            this.extractEnergy(stack, ENERGY_USED_PER_TICK, false);
+            if(!player.capabilities.isCreativeMode){
+                this.extractEnergy(stack, ENERGY_USED_PER_TICK, false);
+            }
         }
     }
 

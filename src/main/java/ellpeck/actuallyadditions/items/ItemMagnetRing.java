@@ -2,6 +2,7 @@ package ellpeck.actuallyadditions.items;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.util.INameableItem;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -19,8 +20,8 @@ import java.util.ArrayList;
 
 public class ItemMagnetRing extends ItemEnergy implements INameableItem{
 
-    private static final int RANGE = 8;
-    private static final int ENERGY_USED_PER_TICK = 3;
+    private static final int RANGE = ConfigIntValues.MAGNET_RING_RANGE.getValue();
+    private static final int ENERGY_USED_PER_TICK = ConfigIntValues.MAGNET_RING_ENERGY_USE.getValue();
 
     public ItemMagnetRing(){
         super(3000000, 5000, 1);
@@ -50,7 +51,9 @@ public class ItemMagnetRing extends ItemEnergy implements INameableItem{
             }
 
             //Use Energy per tick
-            this.extractEnergy(stack, ENERGY_USED_PER_TICK, false);
+            if(!((EntityPlayer)entity).capabilities.isCreativeMode){
+                this.extractEnergy(stack, ENERGY_USED_PER_TICK, false);
+            }
         }
     }
 
