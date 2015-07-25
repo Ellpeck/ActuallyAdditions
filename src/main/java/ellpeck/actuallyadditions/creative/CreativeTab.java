@@ -125,7 +125,7 @@ public class CreativeTab extends CreativeTabs{
         add(InitItems.diamondPaxel);
         add(InitItems.emeraldPaxel);
         add(InitItems.obsidianPaxel);
-        InitForeignPaxels.addToCreativeTab(this.list);
+        InitForeignPaxels.addToCreativeTab();
 
         add(InitItems.itemPickaxeQuartz);
         add(InitItems.itemSwordQuartz);
@@ -176,11 +176,11 @@ public class CreativeTab extends CreativeTabs{
         return new ItemStack(this.getTabIconItem());
     }
 
-    private void add(Item item){
+    public void add(Item item){
         item.getSubItems(item, instance, this.list);
     }
 
-    private void add(Block block){
+    public void add(Block block){
         block.getSubBlocks(new ItemStack(block).getItem(), instance, this.list);
     }
 }

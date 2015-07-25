@@ -108,8 +108,13 @@ public class InitItems{
     public static Item itemTeleStaff;
     public static Item itemWingsOfTheBats;
 
+    public static Item itemGrowthRing;
+
     public static void init(){
         ModUtil.LOGGER.info("Initializing Items...");
+
+        itemGrowthRing = new ItemGrowthRing();
+        ItemUtil.register(itemGrowthRing);
 
         itemHelmEmerald = new ItemArmorAA("itemHelmEmerald", InitArmorMaterials.armorMaterialEmerald, 0, "gemEmerald", "armorEmerald");
         itemChestEmerald = new ItemArmorAA("itemChestEmerald", InitArmorMaterials.armorMaterialEmerald, 1, "gemEmerald", "armorEmerald");

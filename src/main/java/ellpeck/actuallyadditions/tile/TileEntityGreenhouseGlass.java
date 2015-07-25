@@ -5,6 +5,7 @@ import ellpeck.actuallyadditions.util.WorldPos;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockGrass;
 import net.minecraft.block.IGrowable;
+import net.minecraftforge.common.IPlantable;
 
 import java.util.Random;
 
@@ -23,8 +24,12 @@ public class TileEntityGreenhouseGlass extends TileEntityBase{
                     if(this.timeUntilNextFert > 0){
                         this.timeUntilNextFert--;
                         if(timeUntilNextFert <= 0){
+                            int metaBefore = blockToFert.getMetadata();
                             worldObj.getBlock(blockToFert.getX(), blockToFert.getY(), blockToFert.getZ()).updateTick(worldObj, blockToFert.getX(), blockToFert.getY(), blockToFert.getZ(), worldObj.rand);
-                            worldObj.playAuxSFX(2005, blockToFert.getX(), blockToFert.getY(), blockToFert.getZ(), 0);
+
+                            if(blockToFert.getMetadata() != metaBefore){
+                                worldObj.playAuxSFX(2005, blockToFert.getX(), blockToFert.getY(), blockToFert.getZ(), 0);
+                            }
                         }
                     }
                     else this.timeUntilNextFert = this.timeUntilNextFertToSet+new Random().nextInt(this.timeUntilNextFertToSet);
@@ -37,7 +42,7 @@ public class TileEntityGreenhouseGlass extends TileEntityBase{
         for(int i = yCoord-1; i > 0; i--){
             Block block = worldObj.getBlock(xCoord, i, zCoord);
             if(block != null && !(worldObj.isAirBlock(xCoord, i, zCoord))){
-                if(block instanceof IGrowable && !(block instanceof BlockGrass)){
+                if((block instanceof IGrowable || block instanceof IPlantable) && !(block instanceof BlockGrass)){
                     return new WorldPos(worldObj, xCoord, i, zCoord);
                 }
                 else return null;

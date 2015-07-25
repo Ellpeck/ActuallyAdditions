@@ -13,8 +13,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemTool;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
-import java.util.List;
-
 public class InitForeignPaxels{
 
     private static final String THERMAL_FOUNDATION = "ThermalFoundation";
@@ -83,15 +81,15 @@ public class InitForeignPaxels{
         }
     }
 
-    public static void addToCreativeTab(List list){
+    public static void addToCreativeTab(){
         for(Item item : tfPaxels){
             if(item != null){
-                item.getSubItems(item, CreativeTab.instance, list);
+                CreativeTab.instance.add(item);
             }
         }
         for(Item item : mtPaxels){
             if(item != null){
-                item.getSubItems(item, CreativeTab.instance, list);
+                CreativeTab.instance.add(item);
             }
         }
     }

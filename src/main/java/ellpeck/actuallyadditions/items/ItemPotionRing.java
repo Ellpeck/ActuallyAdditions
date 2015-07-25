@@ -45,7 +45,7 @@ public class ItemPotionRing extends Item implements INameableItem{
                 ThePotionRings effect = ThePotionRings.values()[stack.getItemDamage()];
                 if(!effect.needsWaitBeforeActivating || !thePlayer.isPotionActive(effect.effectID)){
                     if(!((ItemPotionRing)stack.getItem()).isAdvanced){
-                        if(equippedStack != null && stack.isItemEqual(equippedStack)){
+                        if(equippedStack != null && stack == equippedStack){
                             thePlayer.addPotionEffect(new PotionEffect(effect.effectID, effect.activeTime, effect.normalAmplifier, true));
                         }
                     }
