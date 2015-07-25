@@ -12,16 +12,17 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
+import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.List;
 
 public class ItemArmorAA extends ItemArmor implements INameableItem{
 
-    private ItemStack repairItem;
+    private String repairItem;
     private String name;
     private String[] textures;
 
-    public ItemArmorAA(String name, ArmorMaterial material, int type, ItemStack repairItem, String textureBase){
+    public ItemArmorAA(String name, ArmorMaterial material, int type, String repairItem, String textureBase){
         super(material, 0, type);
         this.repairItem = repairItem;
         this.name = name;
@@ -59,7 +60,11 @@ public class ItemArmorAA extends ItemArmor implements INameableItem{
 
     @Override
     public boolean getIsRepairable(ItemStack itemToRepair, ItemStack stack){
-        return this.repairItem != null && stack.getItem() == this.repairItem.getItem();
+        int[] idsStack = OreDictionary.getOreIDs(stack);
+        for(int id : idsStack){
+            if(OreDictionary.getOreName(id).equals(repairItem)) return true;
+        }
+        return false;
     }
 
     @Override
