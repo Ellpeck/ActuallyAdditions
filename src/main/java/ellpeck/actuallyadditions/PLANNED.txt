@@ -73,7 +73,6 @@
     -Ring of Growth: Lets Plants grow, more Reach with Tier 2
     -Ring of Thorns: Hurts Attackers when they hit you with a Projectile
     -Ring of Water Walking
-    -Ring of Flight
     -Ring of Aquadive: Fast underwater movement
     -Ring of Suction: Sucks up Items in the area
     -Ring of Water Absorption: Removes Water around

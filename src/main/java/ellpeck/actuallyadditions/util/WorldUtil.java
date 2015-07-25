@@ -50,6 +50,26 @@ public class WorldUtil{
         }
     }
 
+    /**
+     * Checks if a given Block with a given Meta is present in given Positions
+     * @param positions The Positions, an array of {xCoord, yCoord, zCoord} arrays containing RELATIVE Positions
+     * @param block The Block
+     * @param meta The Meta
+     * @param world The World
+     * @param x The Start X Coord
+     * @param y The Start Y Coord
+     * @param z The Start Z Coord
+     * @return Is every block present?
+     */
+    public static boolean hasBlocksInPlacesGiven(int[][] positions, Block block, int meta, World world, int x, int y, int z){
+        for(int[] xYZ : positions){
+            if(!(world.getBlock(x+xYZ[0], y+xYZ[1], z+xYZ[2]) == block && world.getBlockMetadata(x+xYZ[0], y+xYZ[1], z+xYZ[2]) == meta)){
+                return false;
+            }
+        }
+        return true;
+    }
+
     public static void updateTileAndTilesAround(TileEntity tile){
         tile.getWorldObj().markBlockForUpdate(tile.xCoord+1, tile.yCoord, tile.zCoord);
         tile.getWorldObj().markBlockForUpdate(tile.xCoord-1, tile.yCoord, tile.zCoord);

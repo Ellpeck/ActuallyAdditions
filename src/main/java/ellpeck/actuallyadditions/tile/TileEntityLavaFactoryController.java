@@ -5,7 +5,7 @@ import cofh.api.energy.IEnergyReceiver;
 import ellpeck.actuallyadditions.blocks.InitBlocks;
 import ellpeck.actuallyadditions.blocks.metalists.TheMiscBlocks;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
-import net.minecraft.block.Block;
+import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -18,6 +18,9 @@ public class TileEntityLavaFactoryController extends TileEntityBase implements I
 
     private final int maxWorkTime = ConfigIntValues.LAVA_FACTORY_TIME.getValue();
     private int currentWorkTime;
+
+    //The Positions the Case Blocks should be in for the Factory to work
+    private static final int[][] CASE_POSITIONS = {{-1, 1, 0}, {1, 1, 0}, {0, 1, -1}, {0, 1, 1}};
 
     @Override
     @SuppressWarnings("unchecked")
@@ -36,24 +39,12 @@ public class TileEntityLavaFactoryController extends TileEntityBase implements I
     }
 
     public int isMultiblock(){
-        Block blockNorth = worldObj.getBlock(xCoord+ForgeDirection.NORTH.offsetX, yCoord+1, zCoord+ForgeDirection.NORTH.offsetZ);
-        Block blockEast = worldObj.getBlock(xCoord+ForgeDirection.EAST.offsetX, yCoord+1, zCoord+ForgeDirection.EAST.offsetZ);
-        Block blockSouth = worldObj.getBlock(xCoord+ForgeDirection.SOUTH.offsetX, yCoord+1, zCoord+ForgeDirection.SOUTH.offsetZ);
-        Block blockWest = worldObj.getBlock(xCoord+ForgeDirection.WEST.offsetX, yCoord+1, zCoord+ForgeDirection.WEST.offsetZ);
-        int metaNorth = worldObj.getBlockMetadata(xCoord+ForgeDirection.NORTH.offsetX, yCoord+1, zCoord+ForgeDirection.NORTH.offsetZ);
-        int metaEast = worldObj.getBlockMetadata(xCoord+ForgeDirection.EAST.offsetX, yCoord+1, zCoord+ForgeDirection.EAST.offsetZ);
-        int metaSouth = worldObj.getBlockMetadata(xCoord+ForgeDirection.SOUTH.offsetX, yCoord+1, zCoord+ForgeDirection.SOUTH.offsetZ);
-        int metaWest = worldObj.getBlockMetadata(xCoord+ForgeDirection.WEST.offsetX, yCoord+1, zCoord+ForgeDirection.WEST.offsetZ);
-        int metaNeeded = TheMiscBlocks.LAVA_FACTORY_CASE.ordinal();
-
-        if(blockNorth == InitBlocks.blockMisc && blockEast == InitBlocks.blockMisc && blockSouth == InitBlocks.blockMisc && blockWest == InitBlocks.blockMisc){
-            if(metaNorth == metaNeeded && metaEast == metaNeeded && metaSouth == metaNeeded && metaWest == metaNeeded){
-                if(worldObj.getBlock(xCoord, yCoord+1, zCoord) == Blocks.lava || worldObj.getBlock(xCoord, yCoord+1, zCoord) == Blocks.flowing_lava){
-                    return HAS_LAVA;
-                }
-                if(worldObj.getBlock(xCoord, yCoord+1, zCoord) == null || worldObj.isAirBlock(xCoord, yCoord+1, zCoord)){
-                    return HAS_AIR;
-                }
+        if(WorldUtil.hasBlocksInPlacesGiven(CASE_POSITIONS, InitBlocks.blockMisc, TheMiscBlocks.LAVA_FACTORY_CASE.ordinal(), worldObj, xCoord, yCoord, zCoord)){
+            if(worldObj.getBlock(xCoord, yCoord+1, zCoord) == Blocks.lava || worldObj.getBlock(xCoord, yCoord+1, zCoord) == Blocks.flowing_lava){
+                return HAS_LAVA;
+            }
+            if(worldObj.getBlock(xCoord, yCoord+1, zCoord) == null || worldObj.isAirBlock(xCoord, yCoord+1, zCoord)){
+                return HAS_AIR;
             }
         }
         return NOT_MULTI;
