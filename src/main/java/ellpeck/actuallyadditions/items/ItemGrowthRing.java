@@ -24,7 +24,7 @@ import java.util.Random;
 public class ItemGrowthRing extends ItemEnergy implements INameableItem{
 
     private static final int RANGE = 5;
-    private static final int ENERGY_USED_PER_TICK = 800;
+    private static final int ENERGY_USED_PER_TICK = 500;
     //The waiting time per growth cycle
     private static final int WAIT_TIME = 30;
     //The amount of Growth Ticks given to random plants around
@@ -37,6 +37,7 @@ public class ItemGrowthRing extends ItemEnergy implements INameableItem{
     @Override
     public void onUpdate(ItemStack stack, World world, Entity entity, int par4, boolean par5){
         if(!(entity instanceof EntityPlayer) || world.isRemote) return;
+
         EntityPlayer player = (EntityPlayer)entity;
         ItemStack equipped = player.getCurrentEquippedItem();
 

@@ -109,12 +109,16 @@ public class InitItems{
     public static Item itemWingsOfTheBats;
 
     public static Item itemGrowthRing;
+    public static Item itemMagnetRing;
 
     public static void init(){
         ModUtil.LOGGER.info("Initializing Items...");
 
         itemGrowthRing = new ItemGrowthRing();
         ItemUtil.register(itemGrowthRing);
+
+        itemMagnetRing = new ItemMagnetRing();
+        ItemUtil.register(itemMagnetRing);
 
         itemHelmEmerald = new ItemArmorAA("itemHelmEmerald", InitArmorMaterials.armorMaterialEmerald, 0, "gemEmerald", "armorEmerald");
         itemChestEmerald = new ItemArmorAA("itemChestEmerald", InitArmorMaterials.armorMaterialEmerald, 1, "gemEmerald", "armorEmerald");
