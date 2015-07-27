@@ -194,10 +194,10 @@ public class WorldUtil{
     }
 
     /**
-     * Horizontal Directions in Order:
+     * Vertical Directions in Order:
      * Up, Down
      */
-    public static final ForgeDirection[] HORIZONTAL_DIRECTIONS_ORDER = new ForgeDirection[]{ForgeDirection.UP, ForgeDirection.DOWN};
+    public static final ForgeDirection[] VERTICAL_DIRECTIONS_ORDER = new ForgeDirection[]{ForgeDirection.UP, ForgeDirection.DOWN};
     /**
      * Cardinal Directions in Order:
      * North, East, South, West
@@ -205,11 +205,11 @@ public class WorldUtil{
     public static final ForgeDirection[] CARDINAL_DIRECTIONS_ORDER = new ForgeDirection[]{ForgeDirection.NORTH, ForgeDirection.EAST, ForgeDirection.SOUTH, ForgeDirection.WEST};
 
     public static ForgeDirection getDirectionBySidesInOrder(int side){
-        if(side >= 0 && side < HORIZONTAL_DIRECTIONS_ORDER.length+CARDINAL_DIRECTIONS_ORDER.length){
-            if(side < HORIZONTAL_DIRECTIONS_ORDER.length){
-                return HORIZONTAL_DIRECTIONS_ORDER[side];
+        if(side >= 0 && side < VERTICAL_DIRECTIONS_ORDER.length+CARDINAL_DIRECTIONS_ORDER.length){
+            if(side < VERTICAL_DIRECTIONS_ORDER.length){
+                return VERTICAL_DIRECTIONS_ORDER[side];
             }
-            else return CARDINAL_DIRECTIONS_ORDER[side-HORIZONTAL_DIRECTIONS_ORDER.length];
+            else return CARDINAL_DIRECTIONS_ORDER[side-VERTICAL_DIRECTIONS_ORDER.length];
         }
         return ForgeDirection.UNKNOWN;
     }
