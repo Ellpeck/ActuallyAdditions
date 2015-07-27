@@ -4,11 +4,15 @@ import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.Minecraft;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.play.client.C07PacketPlayerDigging;
+import net.minecraft.network.play.server.S23PacketBlockChange;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
@@ -52,13 +56,14 @@ public class WorldUtil{
 
     /**
      * Checks if a given Block with a given Meta is present in given Positions
+     *
      * @param positions The Positions, an array of {xCoord, yCoord, zCoord} arrays containing RELATIVE Positions
-     * @param block The Block
-     * @param meta The Meta
-     * @param world The World
-     * @param x The Start X Coord
-     * @param y The Start Y Coord
-     * @param z The Start Z Coord
+     * @param block     The Block
+     * @param meta      The Meta
+     * @param world     The World
+     * @param x         The Start X Coord
+     * @param y         The Start Y Coord
+     * @param z         The Start Z Coord
      * @return Is every block present?
      */
     public static boolean hasBlocksInPlacesGiven(int[][] positions, Block block, int meta, World world, int x, int y, int z){
@@ -147,14 +152,15 @@ public class WorldUtil{
         }
         return null;
     }
-    
+
     public static void fillBucket(FluidTank tank, ItemStack[] slots, int inputSlot, int outputSlot){
         if(slots[inputSlot] != null && tank.getFluid() != null){
             ItemStack filled = FluidContainerRegistry.fillFluidContainer(tank.getFluid(), slots[inputSlot].copy());
             if(filled != null && FluidContainerRegistry.isEmptyContainer(slots[inputSlot]) && (slots[outputSlot] == null || (slots[outputSlot].isItemEqual(filled) && slots[outputSlot].stackSize < slots[outputSlot].getMaxStackSize()))){
                 int cap = FluidContainerRegistry.getContainerCapacity(tank.getFluid(), slots[inputSlot]);
                 if(cap > 0 && cap <= tank.getFluidAmount()){
-                    if(slots[outputSlot] == null) slots[outputSlot] = FluidContainerRegistry.fillFluidContainer(tank.getFluid(), slots[inputSlot].copy());
+                    if(slots[outputSlot] == null)
+                        slots[outputSlot] = FluidContainerRegistry.fillFluidContainer(tank.getFluid(), slots[inputSlot].copy());
                     else slots[outputSlot].stackSize++;
 
                     if(slots[outputSlot] != null){
@@ -175,7 +181,8 @@ public class WorldUtil{
         if(slots[inputSlot] != null && FluidContainerRegistry.isFilledContainer(slots[inputSlot]) && (slots[outputSlot] == null || (slots[outputSlot].isItemEqual(FluidContainerRegistry.drainFluidContainer(slots[inputSlot].copy())) && slots[outputSlot].stackSize < slots[outputSlot].getMaxStackSize()))){
             if(containedFluid == null || FluidContainerRegistry.containsFluid(slots[inputSlot], new FluidStack(containedFluid, 0))){
                 if((tank.getFluid() == null || FluidContainerRegistry.getFluidForFilledItem(slots[inputSlot]).isFluidEqual(tank.getFluid())) && tank.getCapacity()-tank.getFluidAmount() >= FluidContainerRegistry.getContainerCapacity(slots[inputSlot])){
-                    if(slots[outputSlot] == null) slots[outputSlot] = FluidContainerRegistry.drainFluidContainer(slots[inputSlot].copy());
+                    if(slots[outputSlot] == null)
+                        slots[outputSlot] = FluidContainerRegistry.drainFluidContainer(slots[inputSlot].copy());
                     else slots[outputSlot].stackSize++;
 
                     tank.fill(FluidContainerRegistry.getFluidForFilledItem(slots[inputSlot]), true);
@@ -188,13 +195,20 @@ public class WorldUtil{
 
     public static ForgeDirection getDirectionByRotatingSide(int side){
         switch(side){
-            case 0: return ForgeDirection.UP;
-            case 1: return ForgeDirection.DOWN;
-            case 2: return ForgeDirection.NORTH;
-            case 3: return ForgeDirection.EAST;
-            case 4: return ForgeDirection.SOUTH;
-            case 5: return ForgeDirection.WEST;
-            default: return ForgeDirection.UNKNOWN;
+            case 0:
+                return ForgeDirection.UP;
+            case 1:
+                return ForgeDirection.DOWN;
+            case 2:
+                return ForgeDirection.NORTH;
+            case 3:
+                return ForgeDirection.EAST;
+            case 4:
+                return ForgeDirection.SOUTH;
+            case 5:
+                return ForgeDirection.WEST;
+            default:
+                return ForgeDirection.UNKNOWN;
         }
     }
 
@@ -258,5 +272,61 @@ public class WorldUtil{
         float f8 = f3*f5;
         Vec3 vec31 = vec3.addVector((double)f7*distance, (double)f6*distance, (double)f8*distance);
         return world.func_147447_a(vec3, vec31, p1, p2, p3);
+    }
+
+    /**
+     * Harvests a Block by a Player
+     *
+     * @param world  The World
+     * @param xPos   The X Coordinate
+     * @param yPos   The Y Coordinate
+     * @param zPos   The Z Coordinate
+     * @param player The Player
+     * @return If the Block could be harvested normally (so that it drops an item)
+     */
+    public static boolean playerHarvestBlock(World world, int xPos, int yPos, int zPos, EntityPlayer player){
+        Block block = world.getBlock(xPos, yPos, zPos);
+        int meta = world.getBlockMetadata(xPos, yPos, zPos);
+        //If the Block can be harvested or not
+        boolean canHarvest = block.canHarvestBlock(player, meta) && player.getCurrentEquippedItem() != null && player.getCurrentEquippedItem().getItem().canHarvestBlock(block, player.getCurrentEquippedItem());
+
+        if(!world.isRemote){
+            //Server-Side only, special cases
+            block.onBlockHarvested(world, xPos, yPos, zPos, meta, player);
+        }
+        else{
+            //Shows the Harvest Particles and plays the Block's Sound
+            world.playAuxSFX(2001, xPos, yPos, zPos, Block.getIdFromBlock(block)+(meta << 12));
+        }
+
+        //If the Block was actually "removed", meaning it will drop an Item
+        boolean removed = block.removedByPlayer(world, player, xPos, yPos, zPos, canHarvest);
+        //Actually removes the Block from the World
+        if(removed){
+            //Before the Block is destroyed, special cases
+            block.onBlockDestroyedByPlayer(world, xPos, yPos, zPos, meta);
+
+            if(!world.isRemote && !player.capabilities.isCreativeMode){
+                //Actually drops the Block's Items etc.
+                if(canHarvest){
+                    block.harvestBlock(world, player, xPos, yPos, zPos, meta);
+                }
+                //Only drop XP when no Silk Touch is applied
+                if(!EnchantmentHelper.getSilkTouchModifier(player)){
+                    //Drop XP depending on Fortune Level
+                    block.dropXpOnBlockBreak(world, xPos, yPos, zPos, block.getExpDrop(world, meta, EnchantmentHelper.getFortuneModifier(player)));
+                }
+            }
+        }
+
+        if(!world.isRemote){
+            //Update the Client of a Block Change
+            ((EntityPlayerMP)player).playerNetServerHandler.sendPacket(new S23PacketBlockChange(xPos, yPos, zPos, world));
+        }
+        else{
+            //Check the Server if a Block that changed on the Client really changed, if not, revert the change
+            Minecraft.getMinecraft().getNetHandler().addToSendQueue(new C07PacketPlayerDigging(2, xPos, yPos, zPos, Minecraft.getMinecraft().objectMouseOver.sideHit));
+        }
+        return removed;
     }
 }

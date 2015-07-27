@@ -13,24 +13,19 @@ import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.network.play.client.C07PacketPlayerDigging;
-import net.minecraft.network.play.server.S23PacketBlockChange;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MovingObjectPosition;
@@ -343,45 +338,8 @@ public class ItemDrill extends ItemEnergy implements INameableItem{
         boolean canHarvest = this.canHarvestBlock(block, stack) && (!isExtra || this.getDigSpeed(stack, block, meta) > 1.0F);
         if(hardness >= 0.0F && (!isExtra || (canHarvest && !block.hasTileEntity(meta)))){
             this.extractEnergy(stack, use, false);
-
-            if(!world.isRemote){
-                //Server-Side only, special cases
-                block.onBlockHarvested(world, xPos, yPos, zPos, meta, player);
-            }
-            else{
-                //Shows the Harvest Particles and plays the Block's Sound
-                world.playAuxSFX(2001, xPos, yPos, zPos, Block.getIdFromBlock(block)+(meta << 12));
-            }
-
-            //If the Block was actually "removed", meaning it will drop an Item
-            boolean removed = block.removedByPlayer(world, player, xPos, yPos, zPos, canHarvest);
-            //Actually removes the Block from the World
-            if(removed){
-                //Before the Block is destroyed, special cases
-                block.onBlockDestroyedByPlayer(world, xPos, yPos, zPos, meta);
-
-                if(!world.isRemote && !player.capabilities.isCreativeMode){
-                    //Actually drops the Block's Items etc.
-                    if(canHarvest){
-                        block.harvestBlock(world, player, xPos, yPos, zPos, meta);
-                    }
-                    //Only drop XP when no Silk Touch is applied
-                    if(!EnchantmentHelper.getSilkTouchModifier(player)){
-                        //Drop XP depending on Fortune Level
-                        block.dropXpOnBlockBreak(world, xPos, yPos, zPos, block.getExpDrop(world, meta, EnchantmentHelper.getFortuneModifier(player)));
-                    }
-                }
-            }
-
-            if(!world.isRemote){
-                //Update the Client of a Block Change
-                ((EntityPlayerMP)player).playerNetServerHandler.sendPacket(new S23PacketBlockChange(xPos, yPos, zPos, world));
-            }
-            else{
-                //Check the Server if a Block that changed on the Client really changed, if not, revert the change
-                Minecraft.getMinecraft().getNetHandler().addToSendQueue(new C07PacketPlayerDigging(2, xPos, yPos, zPos, Minecraft.getMinecraft().objectMouseOver.sideHit));
-            }
-            return removed;
+            //Break the Block
+            return WorldUtil.playerHarvestBlock(world, xPos, yPos, zPos, player);
         }
         return false;
     }

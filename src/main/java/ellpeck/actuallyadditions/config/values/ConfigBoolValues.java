@@ -5,8 +5,6 @@ import ellpeck.actuallyadditions.config.ConfigurationHandler;
 
 public enum ConfigBoolValues{
 
-    LEAF_BLOWER_ITEMS("Leaf Blower: Drops Items", ConfigCategories.TOOL_VALUES, true, "If the Leaf Blower lets destroyed Blocks' Drops drop"),
-    LEAF_BLOWER_PARTICLES("Leaf Blower: Particles", ConfigCategories.TOOL_VALUES, true, "If the Leaf Blower lets destroyed Blocks have particles when getting destroyed"),
     LEAF_BLOWER_SOUND("Leaf Blower: Sound", ConfigCategories.TOOL_VALUES, true, "If the Leaf Blower makes Sounds"),
 
     JAM_VILLAGER_EXISTS("Jam Villager: Existence", ConfigCategories.WORLD_GEN, true, "If the Jam Villager and his House exist"),

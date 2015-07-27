@@ -26,8 +26,6 @@ public class ItemLeafBlower extends Item implements INameableItem{
 
     public final int range = ConfigIntValues.LEAF_BLOWER_RANGE_SIDES.getValue();
     public final int rangeUp = ConfigIntValues.LEAF_BLOWER_RANGE_UP.getValue();
-    public final boolean doesDrop = ConfigBoolValues.LEAF_BLOWER_ITEMS.isEnabled();
-    public final boolean hasParticles = ConfigBoolValues.LEAF_BLOWER_PARTICLES.isEnabled();
     public final boolean hasSound = ConfigBoolValues.LEAF_BLOWER_SOUND.isEnabled();
 
     private final boolean isAdvanced;
@@ -73,14 +71,13 @@ public class ItemLeafBlower extends Item implements INameableItem{
                         //Deletes the Block
                         world.setBlockToAir(theCoord.getX(), theCoord.getY(), theCoord.getZ());
                         //Plays the Breaking Sound
-                        if(this.hasParticles) world.playAuxSFX(2001, theCoord.getX(), theCoord.getY(), theCoord.getZ(), Block.getIdFromBlock(theBlock)+(meta << 12));
+                        world.playAuxSFX(2001, theCoord.getX(), theCoord.getY(), theCoord.getZ(), Block.getIdFromBlock(theBlock)+(meta << 12));
 
-                        if(this.doesDrop){
-                            for(ItemStack theDrop : drops){
-                                //Drops the Items into the World
-                                world.spawnEntityInWorld(new EntityItem(world, theCoord.getX() + 0.5, theCoord.getY() + 0.5, theCoord.getZ() + 0.5, theDrop));
-                            }
+                        for(ItemStack theDrop : drops){
+                            //Drops the Items into the World
+                            world.spawnEntityInWorld(new EntityItem(world, theCoord.getX() + 0.5, theCoord.getY() + 0.5, theCoord.getZ() + 0.5, theDrop));
                         }
+
                         return;
                     }
                 }
