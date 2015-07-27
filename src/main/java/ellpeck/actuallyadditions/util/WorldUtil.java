@@ -193,23 +193,25 @@ public class WorldUtil{
         }
     }
 
-    public static ForgeDirection getDirectionByRotatingSide(int side){
-        switch(side){
-            case 0:
-                return ForgeDirection.UP;
-            case 1:
-                return ForgeDirection.DOWN;
-            case 2:
-                return ForgeDirection.NORTH;
-            case 3:
-                return ForgeDirection.EAST;
-            case 4:
-                return ForgeDirection.SOUTH;
-            case 5:
-                return ForgeDirection.WEST;
-            default:
-                return ForgeDirection.UNKNOWN;
+    /**
+     * Horizontal Directions in Order:
+     * Up, Down
+     */
+    public static final ForgeDirection[] HORIZONTAL_DIRECTIONS_ORDER = new ForgeDirection[]{ForgeDirection.UP, ForgeDirection.DOWN};
+    /**
+     * Cardinal Directions in Order:
+     * North, East, South, West
+     */
+    public static final ForgeDirection[] CARDINAL_DIRECTIONS_ORDER = new ForgeDirection[]{ForgeDirection.NORTH, ForgeDirection.EAST, ForgeDirection.SOUTH, ForgeDirection.WEST};
+
+    public static ForgeDirection getDirectionBySidesInOrder(int side){
+        if(side >= 0 && side < HORIZONTAL_DIRECTIONS_ORDER.length+CARDINAL_DIRECTIONS_ORDER.length){
+            if(side < HORIZONTAL_DIRECTIONS_ORDER.length){
+                return HORIZONTAL_DIRECTIONS_ORDER[side];
+            }
+            else return CARDINAL_DIRECTIONS_ORDER[side-HORIZONTAL_DIRECTIONS_ORDER.length];
         }
+        return ForgeDirection.UNKNOWN;
     }
 
     public static ArrayList<Material> getMaterialsAround(World world, int x, int y, int z){

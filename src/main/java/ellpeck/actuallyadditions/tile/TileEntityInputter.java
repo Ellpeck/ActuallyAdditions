@@ -309,8 +309,8 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
     public void initVars(){
 
         //Gets the Place to put and Pull
-        this.placeToPull = WorldUtil.getTileEntityFromSide(WorldUtil.getDirectionByRotatingSide(this.sideToPull), this.worldObj, this.xCoord, this.yCoord, this.zCoord);
-        this.placeToPut = WorldUtil.getTileEntityFromSide(WorldUtil.getDirectionByRotatingSide(this.sideToPut), this.worldObj, this.xCoord, this.yCoord, this.zCoord);
+        this.placeToPull = WorldUtil.getTileEntityFromSide(WorldUtil.getDirectionBySidesInOrder(this.sideToPull), this.worldObj, this.xCoord, this.yCoord, this.zCoord);
+        this.placeToPut = WorldUtil.getTileEntityFromSide(WorldUtil.getDirectionBySidesInOrder(this.sideToPut), this.worldObj, this.xCoord, this.yCoord, this.zCoord);
 
         //Resets the Variables
         if(this.placeToPull instanceof IInventory){

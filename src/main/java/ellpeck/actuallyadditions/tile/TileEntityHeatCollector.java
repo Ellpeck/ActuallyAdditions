@@ -27,7 +27,7 @@ public class TileEntityHeatCollector extends TileEntityBase implements IEnergyPr
             ArrayList<Integer> blocksAround = new ArrayList<Integer>();
             if(energyProducedPerTick <= this.getMaxEnergyStored(ForgeDirection.UNKNOWN)-this.getEnergyStored(ForgeDirection.UNKNOWN)){
                 for(int i = 1; i <= 5; i++){
-                    WorldPos coords = WorldUtil.getCoordsFromSide(WorldUtil.getDirectionByRotatingSide(i), worldObj, xCoord, yCoord, zCoord);
+                    WorldPos coords = WorldUtil.getCoordsFromSide(WorldUtil.getDirectionBySidesInOrder(i), worldObj, xCoord, yCoord, zCoord);
                     if(coords != null){
                         Block block = worldObj.getBlock(coords.getX(), coords.getY(), coords.getZ());
                         if(block != null && block.getMaterial() == Material.lava && worldObj.getBlockMetadata(coords.getX(), coords.getY(), coords.getZ()) == 0){
@@ -43,7 +43,7 @@ public class TileEntityHeatCollector extends TileEntityBase implements IEnergyPr
                     Random rand = new Random();
                     if(rand.nextInt(randomChance) == 0){
                         int randomSide = blocksAround.get(rand.nextInt(blocksAround.size()));
-                        WorldUtil.breakBlockAtSide(WorldUtil.getDirectionByRotatingSide(randomSide), worldObj, xCoord, yCoord, zCoord);
+                        WorldUtil.breakBlockAtSide(WorldUtil.getDirectionBySidesInOrder(randomSide), worldObj, xCoord, yCoord, zCoord);
                     }
                 }
                 if(this.getEnergyStored(ForgeDirection.UNKNOWN) > 0){
