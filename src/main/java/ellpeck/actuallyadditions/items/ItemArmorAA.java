@@ -4,6 +4,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.util.INameableItem;
 import ellpeck.actuallyadditions.util.ItemUtil;
+import ellpeck.actuallyadditions.util.KeyUtil;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
@@ -12,6 +13,7 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.StatCollector;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.List;
@@ -28,6 +30,9 @@ public class ItemArmorAA extends ItemArmor implements INameableItem{
         this.name = name;
         String texture = ModUtil.MOD_ID_LOWER+":textures/armor/"+textureBase;
         textures = new String[]{texture+"1.png", texture+"2.png"};
+
+        //Fixes vanilla's weird durability handling
+        this.setMaxDamage(material.getDurability(type)/10);
     }
 
     @Override
@@ -44,7 +49,11 @@ public class ItemArmorAA extends ItemArmor implements INameableItem{
     @SuppressWarnings("unchecked")
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld){
-        ItemUtil.addInformation(this, list, 1, "");
+        if(KeyUtil.isShiftPressed()){
+            list.add(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+"."+this.getName()+".desc"));
+            list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + ".durability.desc") + ": " + (this.getMaxDamage()-this.getDamage(stack)) + "/" + this.getMaxDamage());
+        }
+        else list.add(ItemUtil.shiftForInfo());
     }
 
     @Override
