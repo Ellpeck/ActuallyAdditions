@@ -1,7 +1,6 @@
 package ellpeck.actuallyadditions.inventory;
 
 import ellpeck.actuallyadditions.inventory.slot.SlotOutput;
-import ellpeck.actuallyadditions.recipe.CrusherRecipeManualRegistry;
 import ellpeck.actuallyadditions.tile.TileEntityBase;
 import ellpeck.actuallyadditions.tile.TileEntityFurnaceDouble;
 import invtweaks.api.container.InventoryContainer;
@@ -10,6 +9,7 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.FurnaceRecipes;
 
 @InventoryContainer
 public class ContainerFurnaceDouble extends Container{
@@ -60,7 +60,7 @@ public class ContainerFurnaceDouble extends Container{
             //Other Slots in Inventory excluded
             else if(slot >= inventoryStart){
                 //Shift from Inventory
-                if(CrusherRecipeManualRegistry.getOutput(newStack, false) != null){
+                if(FurnaceRecipes.smelting().getSmeltingResult(newStack) != null){
                     if(!this.mergeItemStack(newStack, TileEntityFurnaceDouble.SLOT_INPUT_1, TileEntityFurnaceDouble.SLOT_INPUT_1+1, false)){
                         if(!this.mergeItemStack(newStack, TileEntityFurnaceDouble.SLOT_INPUT_2, TileEntityFurnaceDouble.SLOT_INPUT_2+1, false)) return null;
                     }

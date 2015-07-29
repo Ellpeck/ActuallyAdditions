@@ -15,7 +15,7 @@ import net.minecraft.world.World;
 
 public class ItemWaterRemovalRing extends ItemEnergy implements INameableItem{
 
-    private static final int RANGE = 2;
+    private static final int RANGE = 3;
     private static final int ENERGY_USED_PER_BLOCK = 30;
 
     public ItemWaterRemovalRing(){
