@@ -22,12 +22,12 @@ public class ContainerInputter extends Container{
         this.tileInputter = (TileEntityInputter)tile;
         this.isAdvanced = isAdvanced;
 
-        this.addSlotToContainer(new Slot(this.tileInputter, 0, 80, 21 + (isAdvanced ? 12 : 0)));
+        this.addSlotToContainer(new Slot(this.tileInputter, 0, 80, 21+(isAdvanced ? 12 : 0)));
 
         if(isAdvanced){
             for(int i = 0; i < 2; i++){
                 for(int x = 0; x < 3; x++){
-                    for(int y = 0;y < 4; y++){
+                    for(int y = 0; y < 4; y++){
                         this.addSlotToContainer(new SlotFilter(this.tileInputter, 1+y+x*4+i*12, 20+i*84+x*18, 6+y*18));
                     }
                 }
@@ -35,18 +35,27 @@ public class ContainerInputter extends Container{
         }
 
         for(int i = 0; i < 3; i++){
-            for (int j = 0; j < 9; j++){
-                this.addSlotToContainer(new Slot(inventory, j + i * 9 + 9, 8 + j * 18, 97 + i * 18 + (isAdvanced ? GuiInputter.OFFSET_ADVANCED : 0)));
+            for(int j = 0; j < 9; j++){
+                this.addSlotToContainer(new Slot(inventory, j+i*9+9, 8+j*18, 97+i*18+(isAdvanced ? GuiInputter.OFFSET_ADVANCED : 0)));
             }
         }
         for(int i = 0; i < 9; i++){
-            this.addSlotToContainer(new Slot(inventory, i, 8 + i * 18, 155 + (isAdvanced ? GuiInputter.OFFSET_ADVANCED : 0)));
+            this.addSlotToContainer(new Slot(inventory, i, 8+i*18, 155+(isAdvanced ? GuiInputter.OFFSET_ADVANCED : 0)));
         }
     }
 
     @Override
     public boolean canInteractWith(EntityPlayer player){
         return this.tileInputter.isUseableByPlayer(player);
+    }
+
+    @Override
+    public ItemStack slotClick(int par1, int par2, int par3, EntityPlayer player){
+        if(par1 >= 0 && par1 < this.inventorySlots.size() && this.getSlot(par1) instanceof SlotFilter){
+            //Calls the Filter's SlotClick function
+            return ((SlotFilter)getSlot(par1)).slotClick(player, par2);
+        }
+        else return super.slotClick(par1, par2, par3, player);
     }
 
     @Override
@@ -58,7 +67,7 @@ public class ContainerInputter extends Container{
 
         Slot theSlot = (Slot)this.inventorySlots.get(slot);
 
-        if (theSlot != null && theSlot.getHasStack()){
+        if(theSlot != null && theSlot.getHasStack()){
             ItemStack newStack = theSlot.getStack();
             ItemStack currentStack = newStack.copy();
 
@@ -76,10 +85,10 @@ public class ContainerInputter extends Container{
             }
             else if(!this.mergeItemStack(newStack, inventoryStart, hotbarEnd+1, false)) return null;
 
-            if (newStack.stackSize == 0) theSlot.putStack(null);
+            if(newStack.stackSize == 0) theSlot.putStack(null);
             else theSlot.onSlotChanged();
 
-            if (newStack.stackSize == currentStack.stackSize) return null;
+            if(newStack.stackSize == currentStack.stackSize) return null;
             theSlot.onPickupFromSlot(player, newStack);
 
             return currentStack;

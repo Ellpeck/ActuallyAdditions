@@ -1,17 +1,46 @@
 package ellpeck.actuallyadditions.inventory.slot;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
+import net.minecraft.item.ItemStack;
 
 public class SlotFilter extends Slot{
 
-    public SlotFilter(IInventory inventory, int id, int x, int y){
-        super(inventory, id, x, y);
+    public SlotFilter(IInventory inv, int slot, int x, int y){
+        super(inv, slot, x, y);
+    }
+
+    /**
+     * Gets called when the Filter Slot is clicked
+     * Needs to be called in slotClick() in the Container!
+     * @param player The player
+     * @param button The button pressed (1 is right mouse button!)
+     * @return Nothing, as the Item didn't really get "transferred"
+     */
+    public ItemStack slotClick(EntityPlayer player, int button){
+        ItemStack heldStack = player.inventory.getItemStack();
+
+        //Delete the stack in the inventory
+        if(this.getStack() != null && heldStack == null){
+            this.putStack(null);
+        }
+        //Put the current Item as a filter
+        else{
+            if(heldStack != null){
+                ItemStack stack = heldStack.copy();
+                stack.stackSize = 1;
+                this.putStack(stack);
+            }
+        }
+
+        return null;
     }
 
     @Override
-    public int getSlotStackLimit(){
-        return 1;
+    public void putStack(ItemStack stack){
+        ItemStack theStack = (stack != null ? stack.copy() : null);
+        super.putStack(theStack);
     }
 
 }
