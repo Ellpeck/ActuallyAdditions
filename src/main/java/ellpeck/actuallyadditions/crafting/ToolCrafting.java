@@ -161,6 +161,12 @@ public class ToolCrafting{
                     new ItemStack(InitItems.itemSwordObsidian),
                     new ItemStack(InitItems.itemShovelObsidian),
                     new ItemStack(InitItems.itemHoeObsidian)));
+            GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.quartzPaxel),
+                    new ItemStack(InitItems.itemAxeQuartz),
+                    new ItemStack(InitItems.itemPickaxeQuartz),
+                    new ItemStack(InitItems.itemSwordQuartz),
+                    new ItemStack(InitItems.itemShovelQuartz),
+                    new ItemStack(InitItems.itemHoeQuartz)));
         }
     }
 

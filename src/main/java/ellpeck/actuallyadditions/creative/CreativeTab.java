@@ -95,6 +95,7 @@ public class CreativeTab extends CreativeTabs{
 
         add(InitItems.itemGrowthRing);
         add(InitItems.itemMagnetRing);
+        add(InitItems.itemWaterRemovalRing);
         
         add(InitItems.itemPhantomConnector);
         add(InitItems.itemBucketCanolaOil);
@@ -128,6 +129,7 @@ public class CreativeTab extends CreativeTabs{
         add(InitItems.diamondPaxel);
         add(InitItems.emeraldPaxel);
         add(InitItems.obsidianPaxel);
+        add(InitItems.quartzPaxel);
         InitForeignPaxels.addToCreativeTab();
 
         add(InitItems.itemPickaxeQuartz);

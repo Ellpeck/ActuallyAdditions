@@ -87,6 +87,7 @@ public class InitItems{
     public static Item goldPaxel;
     public static Item emeraldPaxel;
     public static Item obsidianPaxel;
+    public static Item quartzPaxel;
 
     public static Item itemDrill;
     public static Item itemDrillUpgradeSpeed;
@@ -272,6 +273,7 @@ public class InitItems{
         diamondPaxel = new ItemAllToolAA(Item.ToolMaterial.EMERALD, "gemDiamond", "diamondPaxel", EnumRarity.epic);
         emeraldPaxel = new ItemAllToolAA(InitToolMaterials.toolMaterialEmerald, "gemEmerald", "emeraldPaxel", EnumRarity.epic);
         obsidianPaxel = new ItemAllToolAA(InitToolMaterials.toolMaterialObsidian, "obsidian", "obsidianPaxel", EnumRarity.epic);
-        ItemUtil.registerItems(new Item[]{woodenPaxel, stonePaxel, ironPaxel, goldPaxel, diamondPaxel, emeraldPaxel, obsidianPaxel});
+        quartzPaxel = new ItemAllToolAA(InitToolMaterials.toolMaterialQuartz, "gemQuartzBlack", "quartzPaxel", EnumRarity.rare);
+        ItemUtil.registerItems(new Item[]{woodenPaxel, stonePaxel, ironPaxel, goldPaxel, diamondPaxel, emeraldPaxel, obsidianPaxel, quartzPaxel});
     }
 }
