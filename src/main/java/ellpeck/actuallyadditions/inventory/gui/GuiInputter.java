@@ -224,20 +224,21 @@ public class GuiInputter extends GuiContainer{
             }
         }
 
+        int newTopOffset = this.guiTop+(this.isAdvanced ? OFFSET_ADVANCED : 0);
         //Info Mode on!
-        if(x >= guiLeft+11 && y >= guiTop+65 && x <= guiLeft+11+31 && y <= guiTop+65+12){
+        if(x >= guiLeft+11 && y >= newTopOffset+65 && x <= guiLeft+11+31 && y <= newTopOffset+65+12){
             String[] strings = StatCollector.translateToLocalFormatted("info."+ModUtil.MOD_ID_LOWER+".inputter.info.1").replace("[p]", StatCollector.translateToLocal("info."+ModUtil.MOD_ID_LOWER+".gui.pull")).split(Pattern.quote("|"));
             this.func_146283_a(Arrays.asList(strings), x, y);
         }
-        if(x >= guiLeft+96 && y >= guiTop+65 && x <= guiLeft+96+31 && y <= guiTop+65+12){
+        if(x >= guiLeft+96 && y >= newTopOffset+65 && x <= guiLeft+96+31 && y <= newTopOffset+65+12){
             String[] strings = StatCollector.translateToLocalFormatted("info."+ModUtil.MOD_ID_LOWER+".inputter.info.1").replace("[p]", StatCollector.translateToLocal("info."+ModUtil.MOD_ID_LOWER+".gui.put")).split(Pattern.quote("|"));
             this.func_146283_a(Arrays.asList(strings), x, y);
         }
-        if(x >= guiLeft+48 && y >= guiTop+65 && x <= guiLeft+48+31 && y <= guiTop+65+12){
+        if(x >= guiLeft+48 && y >= newTopOffset+65 && x <= guiLeft+48+31 && y <= newTopOffset+65+12){
             String[] strings = StatCollector.translateToLocalFormatted("info."+ModUtil.MOD_ID_LOWER+".inputter.info.2").replace("[p]", StatCollector.translateToLocal("info."+ModUtil.MOD_ID_LOWER+".gui.pull")).split(Pattern.quote("|"));
             this.func_146283_a(Arrays.asList(strings), x, y);
         }
-        if(x >= guiLeft+133 && y >= guiTop+65 && x <= guiLeft+133+31 && y <= guiTop+65+12){
+        if(x >= guiLeft+133 && y >= newTopOffset+65 && x <= guiLeft+133+31 && y <= newTopOffset+65+12){
             String[] strings = StatCollector.translateToLocalFormatted("info."+ModUtil.MOD_ID_LOWER+".inputter.info.2").replace("[p]", StatCollector.translateToLocal("info."+ModUtil.MOD_ID_LOWER+".gui.put")).split(Pattern.quote("|"));
             this.func_146283_a(Arrays.asList(strings), x, y);
         }
