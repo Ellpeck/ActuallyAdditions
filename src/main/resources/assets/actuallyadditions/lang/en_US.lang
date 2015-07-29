@@ -597,6 +597,7 @@ container.actuallyadditions.enervator.name=Enervator
 container.actuallyadditions.xpSolidifier.name=Experience Solidifier
 
 container.nei.actuallyadditions.crushing.name=Crusher
+container.nei.actuallyadditions.crushingDouble.name=Double Crusher
 container.nei.actuallyadditions.ballOfHair.name=Ball Of Hair Usage
 container.nei.actuallyadditions.compost.name=Compost
 

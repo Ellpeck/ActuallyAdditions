@@ -27,7 +27,7 @@ public class CoffeeMachineRecipeHandler extends TemplateRecipeHandler{
 
     public CoffeeMachineRecipeHandler(){
         super();
-        RecipeInfo.setGuiOffset(this.getGuiClass(), 32, 3);
+        RecipeInfo.setGuiOffset(this.getGuiClass(), 35, 3);
     }
 
     public class CachedCoffee extends CachedRecipe{
@@ -76,8 +76,8 @@ public class CoffeeMachineRecipeHandler extends TemplateRecipeHandler{
 
     @Override
     public void loadTransferRects(){
-        transferRects.add(new RecipeTransferRect(new Rectangle(21, 39, 22, 16), NAME));
-        transferRects.add(new RecipeTransferRect(new Rectangle(67, 42, 22, 10), NAME));
+        transferRects.add(new RecipeTransferRect(new Rectangle(20, 39, 20, 16), NAME));
+        transferRects.add(new RecipeTransferRect(new Rectangle(64, 42, 23, 10), NAME));
     }
 
     @Override
@@ -136,7 +136,7 @@ public class CoffeeMachineRecipeHandler extends TemplateRecipeHandler{
 
     @Override
     public void drawExtras(int recipe){
-        drawProgressBar(21, 39, 126, 0, 21, 16, 48, 0);
+        drawProgressBar(20, 39, 126, 0, 21, 16, 48, 0);
         drawProgressBar(63, 42, 125, 16, 24, 12, 48, 2);
 
         CachedCoffee cache = (CachedCoffee)this.arecipes.get(recipe);

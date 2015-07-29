@@ -22,6 +22,10 @@ public class NEIActuallyAdditionsConfig implements IConfigureNEI{
         API.registerRecipeHandler(crusherRecipeHandler);
         API.registerUsageHandler(crusherRecipeHandler);
 
+        CrusherRecipeHandler.CrusherDoubleRecipeHandler crusherDoubleRecipeHandler = new CrusherRecipeHandler.CrusherDoubleRecipeHandler();
+        API.registerRecipeHandler(crusherDoubleRecipeHandler);
+        API.registerUsageHandler(crusherDoubleRecipeHandler);
+
         HairyBallRecipeHandler ballRecipeHandler = new HairyBallRecipeHandler();
         API.registerRecipeHandler(ballRecipeHandler);
         API.registerUsageHandler(ballRecipeHandler);

@@ -21,10 +21,21 @@ import java.util.List;
 
 public class CrusherRecipeHandler extends TemplateRecipeHandler{
 
-    public static final String NAME = "actuallyadditions.crushing";
+    public static class CrusherDoubleRecipeHandler extends CrusherRecipeHandler{
+
+        @Override
+        public Class<? extends GuiContainer> getGuiClass(){
+            return GuiGrinder.GuiGrinderDouble.class;
+        }
+
+        @Override
+        public void loadTransferRects(){
+            transferRects.add(new RecipeTransferRect(new Rectangle(51, 40, 24, 22), this.getName()));
+            transferRects.add(new RecipeTransferRect(new Rectangle(101, 40, 24, 22), this.getName()));
+        }
+    }
 
     public CrusherRecipeHandler(){
-        super();
         RecipeInfo.setGuiOffset(this.getGuiClass(), 0, 0);
     }
 
@@ -45,7 +56,7 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler{
 
         @Override
         public List<PositionedStack> getIngredients(){
-            return getCycledIngredients(cycleticks / 48, Collections.singletonList(ingredient));
+            return getCycledIngredients(cycleticks/48, Collections.singletonList(ingredient));
         }
 
         @Override
@@ -68,7 +79,7 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler{
 
     @Override
     public void loadTransferRects(){
-        transferRects.add(new RecipeTransferRect(new Rectangle(80, 40, 24, 22), NAME));
+        transferRects.add(new RecipeTransferRect(new Rectangle(80, 40, 24, 22), this.getName()));
     }
 
     @Override
@@ -78,12 +89,12 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler{
 
     @Override
     public String getRecipeName(){
-        return StatCollector.translateToLocal("container.nei." + NAME + ".name");
+        return StatCollector.translateToLocal("container.nei."+this.getName()+".name");
     }
 
     @Override
     public void loadCraftingRecipes(String outputId, Object... results){
-        if(outputId.equals(NAME) && getClass() == CrusherRecipeHandler.class){
+        if(outputId.equals(this.getName()) && (getClass() == CrusherRecipeHandler.class || getClass() == CrusherDoubleRecipeHandler.class)){
             ArrayList<CrusherRecipeManualRegistry.CrusherRecipe> recipes = CrusherRecipeManualRegistry.recipes;
             for(CrusherRecipeManualRegistry.CrusherRecipe recipe : recipes){
                 arecipes.add(new CachedCrush(recipe.input, recipe.firstOutput, recipe.secondOutput, recipe.secondChance));
@@ -96,7 +107,8 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler{
     public void loadCraftingRecipes(ItemStack result){
         ArrayList<CrusherRecipeManualRegistry.CrusherRecipe> recipes = CrusherRecipeManualRegistry.recipes;
         for(CrusherRecipeManualRegistry.CrusherRecipe recipe : recipes){
-            if(NEIServerUtils.areStacksSameType(recipe.firstOutput, result) || NEIServerUtils.areStacksSameType(recipe.secondOutput, result)) arecipes.add(new CachedCrush(recipe.input, recipe.firstOutput, recipe.secondOutput, recipe.secondChance));
+            if(NEIServerUtils.areStacksSameType(recipe.firstOutput, result) || NEIServerUtils.areStacksSameType(recipe.secondOutput, result))
+                arecipes.add(new CachedCrush(recipe.input, recipe.firstOutput, recipe.secondOutput, recipe.secondChance));
         }
     }
 
@@ -114,7 +126,7 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler{
 
     @Override
     public String getGuiTexture(){
-        return ModUtil.MOD_ID_LOWER + ":textures/gui/guiGrinder.png";
+        return ModUtil.MOD_ID_LOWER+":textures/gui/guiGrinder.png";
     }
 
     @Override
@@ -131,13 +143,17 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler{
         CachedCrush crush = (CachedCrush)this.arecipes.get(recipe);
         if(crush.resultTwo != null){
             int secondChance = crush.secondChance;
-            String secondString = secondChance + "%";
+            String secondString = secondChance+"%";
             GuiDraw.drawString(secondString, 118, 73, StringUtil.DECIMAL_COLOR_GRAY_TEXT, false);
         }
     }
 
     @Override
     public String getOverlayIdentifier(){
-        return NAME;
+        return this.getName();
+    }
+
+    protected String getName(){
+        return "actuallyadditions."+(this instanceof CrusherDoubleRecipeHandler ? "crushingDouble" : "crushing");
     }
 }

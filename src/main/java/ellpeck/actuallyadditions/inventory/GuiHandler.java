@@ -81,9 +81,9 @@ public class GuiHandler implements IGuiHandler{
             case CRAFTER:
                 return new GuiCrafter(entityPlayer);
             case GRINDER:
-                return new GuiGrinder(entityPlayer.inventory, tile, false);
+                return new GuiGrinder(entityPlayer.inventory, tile);
             case GRINDER_DOUBLE:
-                return new GuiGrinder(entityPlayer.inventory, tile, true);
+                return new GuiGrinder.GuiGrinderDouble(entityPlayer.inventory, tile);
             case FURNACE_DOUBLE:
                 return new GuiFurnaceDouble(entityPlayer.inventory, tile);
             case INPUTTER:

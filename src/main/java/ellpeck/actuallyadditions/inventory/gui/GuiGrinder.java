@@ -16,12 +16,22 @@ import java.util.Collections;
 @SideOnly(Side.CLIENT)
 public class GuiGrinder extends GuiContainer{
 
+    public static class GuiGrinderDouble extends GuiGrinder{
+        public GuiGrinderDouble(InventoryPlayer inventory, TileEntityBase tile){
+            super(inventory, tile, true);
+        }
+    }
+
     private static final ResourceLocation resLoc = AssetUtil.getGuiLocation("guiGrinder");
     private static final ResourceLocation resLocDouble = AssetUtil.getGuiLocation("guiGrinderDouble");
     private TileEntityGrinder tileGrinder;
     private boolean isDouble;
 
-    public GuiGrinder(InventoryPlayer inventory, TileEntityBase tile, boolean isDouble){
+    public GuiGrinder(InventoryPlayer inventoryPlayer, TileEntityBase tile){
+        this(inventoryPlayer, tile, false);
+    }
+
+    private GuiGrinder(InventoryPlayer inventory, TileEntityBase tile, boolean isDouble){
         super(new ContainerGrinder(inventory, tile, isDouble));
         this.tileGrinder = (TileEntityGrinder)tile;
         this.isDouble = isDouble;
