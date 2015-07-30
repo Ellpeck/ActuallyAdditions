@@ -21,10 +21,11 @@ public class ContainerOreMagnet extends Container{
     public ContainerOreMagnet(InventoryPlayer inventory, TileEntityBase tile){
         this.magnet = (TileEntityOreMagnet)tile;
 
-        this.addSlotToContainer(new Slot(this.magnet, 0, 98, 74));
-        this.addSlotToContainer(new SlotOutput(this.magnet, 1, 98, 43));
+        this.addSlotToContainer(new Slot(this.magnet, TileEntityOreMagnet.SLOT_OIL_INPUT, 98, 74));
+        this.addSlotToContainer(new SlotOutput(this.magnet, TileEntityOreMagnet.SLOT_OIL_OUTPUT, 98, 43));
 
-        this.addSlotToContainer(new SlotOutput(this.magnet, 2, 71, 43));
+        //TODO Change away from SlotOutput when implementing upgrades
+        this.addSlotToContainer(new SlotOutput(this.magnet, TileEntityOreMagnet.SLOT_UPGRADE, 71, 43));
 
         for (int i = 0; i < 3; i++){
             for (int j = 0; j < 9; j++){
@@ -43,7 +44,7 @@ public class ContainerOreMagnet extends Container{
 
     @Override
     public ItemStack transferStackInSlot(EntityPlayer player, int slot){
-        final int inventoryStart = 2;
+        final int inventoryStart = 3;
         final int inventoryEnd = inventoryStart+26;
         final int hotbarStart = inventoryEnd+1;
         final int hotbarEnd = hotbarStart+8;
@@ -57,9 +58,8 @@ public class ContainerOreMagnet extends Container{
             //Other Slots in Inventory excluded
             if(slot >= inventoryStart){
                 //Shift from Inventory
-                //TODO
                 if(FluidContainerRegistry.containsFluid(newStack, new FluidStack(InitBlocks.fluidOil, 1))){
-                    if(!this.mergeItemStack(newStack, 0, 1, false)) return null;
+                    if(!this.mergeItemStack(newStack, TileEntityOreMagnet.SLOT_OIL_INPUT, TileEntityOreMagnet.SLOT_OIL_INPUT+1, false)) return null;
                 }
                 //
 

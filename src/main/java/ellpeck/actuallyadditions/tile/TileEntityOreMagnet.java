@@ -7,6 +7,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.blocks.InitBlocks;
 import ellpeck.actuallyadditions.network.sync.IPacketSyncerToClient;
 import ellpeck.actuallyadditions.network.sync.PacketSyncerToClient;
+import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -17,12 +18,23 @@ import net.minecraftforge.oredict.OreDictionary;
 
 public class TileEntityOreMagnet extends TileEntityInventoryBase implements IEnergyReceiver, IFluidHandler, IPacketSyncerToClient{
 
-    public EnergyStorage storage = new EnergyStorage(40000);
-    public FluidTank tank = new FluidTank(8*FluidContainerRegistry.BUCKET_VOLUME);
+    public static final int SLOT_OIL_INPUT = 0;
+    public static final int SLOT_OIL_OUTPUT = 1;
+    @SuppressWarnings("unused")
+    public static final int SLOT_UPGRADE = 2;
+
+    public EnergyStorage storage = new EnergyStorage(2000000);
+    private int lastEnergy;
+
+    public FluidTank tank = new FluidTank(16*FluidContainerRegistry.BUCKET_VOLUME);
+    private int lastTankAmount;
+
     private int currentWorkTimer;
 
-    private static final int MAX_WORK_TIMER = 30;
-    private static final int RANGE = 5;
+    private int maxWorkTimer = 15;
+    private int range = 10;
+    private int oilUsePerTick = 50;
+    private int energyUsePerTick = 400;
 
     public TileEntityOreMagnet(){
         super(3, "oreMagnet");
@@ -33,54 +45,77 @@ public class TileEntityOreMagnet extends TileEntityInventoryBase implements IEne
     public void updateEntity(){
         if(!worldObj.isRemote){
 
-            if(this.currentWorkTimer > 0){
-                currentWorkTimer--;
+            if(this.storage.getEnergyStored() >= this.energyUsePerTick && this.tank.getFluid() != null && this.tank.getFluid().getFluid() == InitBlocks.fluidOil && this.tank.getFluidAmount() >= this.oilUsePerTick && !worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)){
+                if(this.currentWorkTimer > 0){
+                    currentWorkTimer--;
 
-                if(currentWorkTimer <= 0){
-                    int x = MathHelper.getRandomIntegerInRange(worldObj.rand, -RANGE, RANGE);
-                    int z = MathHelper.getRandomIntegerInRange(worldObj.rand, -RANGE, RANGE);
-                    //Can the block at the top be replaced?
-                    for(int toPlaceY = 0; toPlaceY < 5; toPlaceY++){
-                        if(worldObj.isAirBlock(xCoord+x, yCoord+toPlaceY, zCoord+z) || worldObj.getBlock(xCoord+x, yCoord+toPlaceY, zCoord+z).isReplaceable(worldObj, xCoord+x, yCoord+toPlaceY, zCoord+z)){
-                            //Find the first available block
-                            for(int y = this.yCoord-1; y > 0; y--){
-                                Block block = worldObj.getBlock(xCoord+x, y, zCoord+z);
-                                int meta = worldObj.getBlockMetadata(xCoord+x, y, zCoord+z);
+                    if(currentWorkTimer <= 0){
+                        int x = MathHelper.getRandomIntegerInRange(worldObj.rand, -range, range);
+                        int z = MathHelper.getRandomIntegerInRange(worldObj.rand, -range, range);
+                        //Can the block at the top be replaced?
+                        for(int toPlaceY = 0; toPlaceY < 5; toPlaceY++){
+                            if(worldObj.isAirBlock(xCoord+x, yCoord+toPlaceY, zCoord+z) || worldObj.getBlock(xCoord+x, yCoord+toPlaceY, zCoord+z).isReplaceable(worldObj, xCoord+x, yCoord+toPlaceY, zCoord+z)){
+                                //Find the first available block
+                                for(int y = this.yCoord-1; y > 0; y--){
+                                    Block block = worldObj.getBlock(xCoord+x, y, zCoord+z);
+                                    int meta = worldObj.getBlockMetadata(xCoord+x, y, zCoord+z);
 
-                                int[] oreIDs = OreDictionary.getOreIDs(new ItemStack(block, 1, meta));
-                                for(int ID : oreIDs){
-                                    String oreName = OreDictionary.getOreName(ID);
-                                    //Is the block an ore according to the OreDictionary?
-                                    if(oreName.substring(0, 3).equals("ore")){
-                                        //Remove the Block
-                                        worldObj.setBlockToAir(xCoord+x, y, zCoord+z);
-                                        worldObj.playAuxSFX(2001, xCoord+x, y, zCoord+z, Block.getIdFromBlock(block)+(meta << 12));
+                                    int[] oreIDs = OreDictionary.getOreIDs(new ItemStack(block, 1, meta));
+                                    for(int ID : oreIDs){
+                                        String oreName = OreDictionary.getOreName(ID);
+                                        //Is the block an ore according to the OreDictionary?
+                                        if(oreName.substring(0, 3).equals("ore")){
+                                            //Remove the Block
+                                            worldObj.setBlockToAir(xCoord+x, y, zCoord+z);
+                                            worldObj.playAuxSFX(2001, xCoord+x, y, zCoord+z, Block.getIdFromBlock(block)+(meta << 12));
 
-                                        //Set the Block at the Top again
-                                        worldObj.setBlock(xCoord+x, yCoord+toPlaceY, zCoord+z, block, meta, 2);
-                                        worldObj.playSoundEffect((double)xCoord+x+0.5D, (double)yCoord+toPlaceY+0.5D, (double)zCoord+z+0.5D, block.stepSound.func_150496_b(), (block.stepSound.getVolume()+1.0F)/2.0F, block.stepSound.getPitch()*0.8F);
+                                            //Set the Block at the Top again
+                                            worldObj.setBlock(xCoord+x, yCoord+toPlaceY, zCoord+z, block, meta, 2);
+                                            worldObj.playSoundEffect((double)xCoord+x+0.5D, (double)yCoord+toPlaceY+0.5D, (double)zCoord+z+0.5D, block.stepSound.func_150496_b(), (block.stepSound.getVolume()+1.0F)/2.0F, block.stepSound.getPitch()*0.8F);
 
-                                        return;
+                                            //Extract oil
+                                            this.tank.drain(this.oilUsePerTick, true);
+                                            return;
+                                        }
                                     }
                                 }
                             }
                         }
                     }
                 }
+                else this.currentWorkTimer = maxWorkTimer+MathHelper.getRandomIntegerInRange(worldObj.rand, 0, maxWorkTimer);
+
+                //Extract energy
+                this.storage.extractEnergy(this.energyUsePerTick, false);
             }
-            else this.currentWorkTimer = MathHelper.getRandomIntegerInRange(worldObj.rand, MAX_WORK_TIMER, MAX_WORK_TIMER*5);
+
+            //Update Clients
+            if(this.lastEnergy != this.storage.getEnergyStored() || this.lastTankAmount != this.tank.getFluidAmount()){
+                this.lastEnergy = this.storage.getEnergyStored();
+                this.lastTankAmount = this.tank.getFluidAmount();
+                this.sendUpdate();
+            }
+
+            //Empty Oil Bucket
+            WorldUtil.emptyBucket(this.tank, this.slots, SLOT_OIL_INPUT, SLOT_OIL_OUTPUT);
         }
     }
 
     @SideOnly(Side.CLIENT)
     public int getEnergyScaled(int i){
-        return this.storage.getEnergyStored()*i/this.storage.getMaxEnergyStored();
+        return this.storage.getEnergyStored() * i / this.storage.getMaxEnergyStored();
+    }
+
+    @SideOnly(Side.CLIENT)
+    public int getTankScaled(int i){
+        return this.tank.getFluidAmount() * i / this.tank.getCapacity();
     }
 
     @Override
     public void writeToNBT(NBTTagCompound compound){
         this.storage.writeToNBT(compound);
         this.tank.writeToNBT(compound);
+        compound.setInteger("CurrentWorkTimer", this.currentWorkTimer);
         super.writeToNBT(compound);
     }
 
@@ -88,13 +123,13 @@ public class TileEntityOreMagnet extends TileEntityInventoryBase implements IEne
     public void readFromNBT(NBTTagCompound compound){
         this.storage.readFromNBT(compound);
         this.tank.readFromNBT(compound);
+        this.currentWorkTimer = compound.getInteger("CurrentWorkTimer");
         super.readFromNBT(compound);
     }
 
     @Override
     public boolean isItemValidForSlot(int i, ItemStack stack){
-        return false;
-        //TODO
+        return FluidContainerRegistry.containsFluid(stack, new FluidStack(InitBlocks.fluidOil, 1)) && i == SLOT_OIL_INPUT;
     }
 
     @Override
@@ -104,8 +139,7 @@ public class TileEntityOreMagnet extends TileEntityInventoryBase implements IEne
 
     @Override
     public boolean canExtractItem(int slot, ItemStack stack, int side){
-        return false;
-        //TODO
+        return slot == SLOT_OIL_OUTPUT;
     }
 
     @Override
@@ -161,13 +195,16 @@ public class TileEntityOreMagnet extends TileEntityInventoryBase implements IEne
 
     @Override
     public int[] getValues(){
-        //TODO
-        return new int[0];
+        return new int[]{this.storage.getEnergyStored(), this.tank.getFluidAmount(), this.tank.getFluid() == null ? -1 : this.tank.getFluid().getFluidID()};
     }
 
     @Override
     public void setValues(int[] values){
-        //TODO
+        this.storage.setEnergyStored(values[0]);
+        if(values[2] != -1){
+            this.tank.setFluid(new FluidStack(FluidRegistry.getFluid(values[2]), values[1]));
+        }
+        else this.tank.setFluid(null);
     }
 
     @Override
