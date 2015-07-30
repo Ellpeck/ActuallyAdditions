@@ -62,6 +62,8 @@ public class GuiHandler implements IGuiHandler{
                 return new ContainerEnervator(entityPlayer, tile);
             case XP_SOLIDIFIER:
                 return new ContainerXPSolidifier(entityPlayer.inventory, tile);
+            case ORE_MAGNET:
+                return new ContainerOreMagnet(entityPlayer.inventory, tile);
             default:
                 return null;
         }
@@ -118,6 +120,8 @@ public class GuiHandler implements IGuiHandler{
                 return new GuiEnervator(entityPlayer, tile);
             case XP_SOLIDIFIER:
                 return new GuiXPSolidifier(entityPlayer.inventory, tile, x, y, z, world);
+            case ORE_MAGNET:
+                return new GuiOreMagnet(entityPlayer.inventory, tile);
             default:
                 return null;
         }
@@ -145,7 +149,8 @@ public class GuiHandler implements IGuiHandler{
         DRILL,
         ENERGIZER,
         ENERVATOR,
-        XP_SOLIDIFIER
+        XP_SOLIDIFIER,
+        ORE_MAGNET
     }
 
     public static void init(){

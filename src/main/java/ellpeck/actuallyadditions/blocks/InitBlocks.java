@@ -79,11 +79,14 @@ public class InitBlocks{
     public static Block blockLampPowerer;
 
     public static Block blockTreasureChest;
-
     public static Block blockXPSolidifier;
+    public static Block blockOreMagnet;
 
     public static void init(){
         ModUtil.LOGGER.info("Initializing Blocks...");
+
+        blockOreMagnet = new BlockOreMagnet();
+        BlockUtil.register(blockOreMagnet, BlockOreMagnet.TheItemBlock.class);
 
         blockXPSolidifier = new BlockXPSolidifier();
         BlockUtil.register(blockXPSolidifier, BlockXPSolidifier.TheItemBlock.class);
