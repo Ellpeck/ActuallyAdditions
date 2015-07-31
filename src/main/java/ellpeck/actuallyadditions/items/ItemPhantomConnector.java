@@ -131,7 +131,9 @@ public class ItemPhantomConnector extends Item implements INameableItem{
             World world = coords.getWorld();
             if(world != null){
                 list.add(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.boundTo.desc")+":");
-                list.add(coords.getItemBlock().getItemStackDisplayName(new ItemStack(coords.getBlock(), 1, coords.getMetadata())));
+                Item item = coords.getItemBlock();
+                String name = item == null ? "Absolutely Nothing" : item.getItemStackDisplayName(new ItemStack(coords.getBlock(), 1, coords.getMetadata()));
+                list.add(name);
                 list.add("X: "+coords.getX());
                 list.add("Y: "+coords.getY());
                 list.add("Z: "+coords.getZ());
