@@ -387,13 +387,18 @@ item.actuallyadditions.itemDustCoal.name=Crushed Coal
 item.actuallyadditions.itemDustQuartzBlack.name=Crushed Black Quartz
 
 tooltip.actuallyadditions.shiftForInfo.desc=Press Shift for Info
+tooltip.actuallyadditions.ctrlForMoreInfo.desc=<CTRL for Advanced Info>
+tooltip.actuallyadditions.extraInfo.desc=Advanced Info
 tooltip.actuallyadditions.hunger.desc=Hunger Points
 tooltip.actuallyadditions.saturation.desc=Saturation
 tooltip.actuallyadditions.durability.desc=Durability
 tooltip.actuallyadditions.noEffects.desc=No Effects
 
 tooltip.actuallyadditions.oredictName.desc=OreDictionary Entries
-tooltip.actuallyadditions.noOredictNameAvail.desc=Has No OreDictionary Entries
+tooltip.actuallyadditions.noOredictNameAvail.desc=None
+tooltip.actuallyadditions.codeName.desc=Code Name
+tooltip.actuallyadditions.baseUnlocName.desc=Item's Unlocalized Name
+tooltip.actuallyadditions.unlocName.desc=Meta's Unlocalized Name
 
 tile.actuallyadditions.blockXPSolidifier.name=Experience Solidifier
 tooltip.actuallyadditions.blockXPSolidifier.desc.1=Turns a Player's Experience into Solidified Experience!

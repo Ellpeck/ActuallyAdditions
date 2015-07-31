@@ -41,7 +41,10 @@ public enum ConfigBoolValues{
     PREVENT_OIL_OVERRIDE("Oil Fluid Override", ConfigCategories.FLUIDS, false, "If not registering Oil Fluids from Actually Additions if other Oil is already registered should be prevented"+ConfigurationHandler.ISSUES_WARNING),
     PREVENT_CANOLA_OVERRIDE("Canola Oil Fluid Override", ConfigCategories.FLUIDS, false, "If not registering Canola Oil Fluids from Actually Additions if other Canola Oil is already registered should be prevented"+ConfigurationHandler.ISSUES_WARNING),
     PREVENT_OIL_BLOCK_OVERRIDE("Oil Block Override", ConfigCategories.FLUIDS, false, "If not registering Oil Blocks from Actually Additions if other Oil is already registered should be prevented"+ConfigurationHandler.ISSUES_WARNING),
-    PREVENT_CANOLA_BLOCK_OVERRIDE("Canola Oil Block Override", ConfigCategories.FLUIDS, false, "If not registering Canola Oil Blocks from Actually Additions if other Canola Oil is already registered should be prevented"+ConfigurationHandler.ISSUES_WARNING);
+    PREVENT_CANOLA_BLOCK_OVERRIDE("Canola Oil Block Override", ConfigCategories.FLUIDS, false, "If not registering Canola Oil Blocks from Actually Additions if other Canola Oil is already registered should be prevented"+ConfigurationHandler.ISSUES_WARNING),
+
+    CTRL_EXTRA_INFO("Advanced Info", ConfigCategories.OTHER, true, "Show Advanced Item Info when holding Control on every Item"),
+    CTRL_INFO_FOR_EXTRA_INFO("Advanced Info Tooltips", ConfigCategories.OTHER, true, "Show the 'Press Control for more Info'-Text on Item Tooltips");
 
     public final String name;
     public final String category;

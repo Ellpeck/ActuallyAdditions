@@ -24,7 +24,6 @@ public class ContainerOreMagnet extends Container{
         this.addSlotToContainer(new Slot(this.magnet, TileEntityOreMagnet.SLOT_OIL_INPUT, 98, 74));
         this.addSlotToContainer(new SlotOutput(this.magnet, TileEntityOreMagnet.SLOT_OIL_OUTPUT, 98, 43));
 
-        //TODO Change away from SlotOutput when implementing upgrades
         this.addSlotToContainer(new SlotOutput(this.magnet, TileEntityOreMagnet.SLOT_UPGRADE, 71, 43));
 
         for (int i = 0; i < 3; i++){
