@@ -13,7 +13,6 @@ import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.StatCollector;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
@@ -87,7 +86,7 @@ public class CoffeeMachineRecipeHandler extends TemplateRecipeHandler{
 
     @Override
     public String getRecipeName(){
-        return StatCollector.translateToLocal("container.nei." + NAME + ".name");
+        return StringUtil.localize("container.nei."+NAME+".name");
     }
 
     @Override
@@ -141,13 +140,13 @@ public class CoffeeMachineRecipeHandler extends TemplateRecipeHandler{
 
         CachedCoffee cache = (CachedCoffee)this.arecipes.get(recipe);
         if(cache.extraText != null){
-            GuiDraw.drawString(StatCollector.translateToLocal("container.nei." + ModUtil.MOD_ID_LOWER + ".coffee.special") + ":", 2, 4, StringUtil.DECIMAL_COLOR_GRAY_TEXT, false);
+            GuiDraw.drawString(StringUtil.localize("container.nei."+ModUtil.MOD_ID_LOWER+".coffee.special") + ":", 2, 4, StringUtil.DECIMAL_COLOR_GRAY_TEXT, false);
             GuiDraw.drawString(cache.extraText, 2, 16, StringUtil.DECIMAL_COLOR_GRAY_TEXT, false);
         }
-        GuiDraw.drawString(StatCollector.translateToLocal("container.nei." + ModUtil.MOD_ID_LOWER + ".coffee.shift"), 1, 75, StringUtil.DECIMAL_COLOR_GRAY_TEXT, false);
+        GuiDraw.drawString(StringUtil.localize("container.nei."+ModUtil.MOD_ID_LOWER+".coffee.shift"), 1, 75, StringUtil.DECIMAL_COLOR_GRAY_TEXT, false);
 
         if(cache.maxAmp > 0){
-            GuiDraw.drawString(StatCollector.translateToLocal("container.nei." + ModUtil.MOD_ID_LOWER + ".coffee.maxAmount") + ": " + cache.maxAmp, 2, 28, StringUtil.DECIMAL_COLOR_GRAY_TEXT, false);
+            GuiDraw.drawString(StringUtil.localize("container.nei."+ModUtil.MOD_ID_LOWER+".coffee.maxAmount") + ": " + cache.maxAmp, 2, 28, StringUtil.DECIMAL_COLOR_GRAY_TEXT, false);
         }
     }
 

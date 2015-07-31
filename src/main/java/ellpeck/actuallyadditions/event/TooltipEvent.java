@@ -7,7 +7,6 @@ import ellpeck.actuallyadditions.util.KeyUtil;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
 import net.minecraft.item.Item;
-import net.minecraft.util.StatCollector;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -16,45 +15,45 @@ public class TooltipEvent{
     private static final String TEXT_PRE = StringUtil.GRAY+"     ";
     private static final String HEADER_PRE = StringUtil.LIGHT_GRAY+"  -";
 
-    @SubscribeEvent(priority = EventPriority.LOWEST)
+    @SubscribeEvent(priority = EventPriority.LOW)
     public void onTooltipEvent(ItemTooltipEvent event){
         if(event.itemStack.getItem() != null){
             if(KeyUtil.isControlPressed()){
                 if(ConfigBoolValues.CTRL_EXTRA_INFO.isEnabled()){
-                    event.toolTip.add(StringUtil.GRAY+StringUtil.ITALIC+StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".extraInfo.desc")+":");
+                    event.toolTip.add(StringUtil.GRAY+StringUtil.ITALIC+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".extraInfo.desc")+":");
 
                     //OreDict Names
                     int[] oreIDs = OreDictionary.getOreIDs(event.itemStack);
-                    event.toolTip.add(HEADER_PRE+StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".oredictName.desc")+":");
+                    event.toolTip.add(HEADER_PRE+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".oredictName.desc")+":");
                     if(oreIDs.length > 0){
                         for(int oreID : oreIDs){
                             event.toolTip.add(TEXT_PRE+OreDictionary.getOreName(oreID));
                         }
                     }
                     else{
-                        event.toolTip.add(TEXT_PRE+StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".noOredictNameAvail.desc"));
+                        event.toolTip.add(TEXT_PRE+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".noOredictNameAvail.desc"));
                     }
 
                     //Code Name
-                    event.toolTip.add(HEADER_PRE+StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".codeName.desc")+":");
+                    event.toolTip.add(HEADER_PRE+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".codeName.desc")+":");
                     event.toolTip.add(TEXT_PRE+Item.itemRegistry.getNameForObject(event.itemStack.getItem()));
 
                     //Base Item's Unlocalized Name
                     String baseName = event.itemStack.getItem().getUnlocalizedName();
-                    event.toolTip.add(HEADER_PRE+StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".baseUnlocName.desc")+":");
+                    event.toolTip.add(HEADER_PRE+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".baseUnlocName.desc")+":");
                     event.toolTip.add(TEXT_PRE+baseName);
 
                     //Unlocalized Name
                     String metaName = event.itemStack.getItem().getUnlocalizedName(event.itemStack);
                     if(!metaName.equals(baseName)){
-                        event.toolTip.add(HEADER_PRE+StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".unlocName.desc")+":");
+                        event.toolTip.add(HEADER_PRE+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".unlocName.desc")+":");
                         event.toolTip.add(TEXT_PRE+metaName);
                     }
                 }
             }
             else{
                 if(ConfigBoolValues.CTRL_INFO_FOR_EXTRA_INFO.isEnabled()){
-                    event.toolTip.add(StringUtil.GRAY+StringUtil.ITALIC+StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".ctrlForMoreInfo.desc"));
+                    event.toolTip.add(StringUtil.GRAY+StringUtil.ITALIC+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".ctrlForMoreInfo.desc"));
                 }
             }
         }

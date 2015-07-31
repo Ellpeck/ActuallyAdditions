@@ -3,12 +3,12 @@ package ellpeck.actuallyadditions.update;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
 import ellpeck.actuallyadditions.util.ModUtil;
+import ellpeck.actuallyadditions.util.StringUtil;
 import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IChatComponent;
-import net.minecraft.util.StatCollector;
 
 public class UpdateChecker{
 
@@ -34,7 +34,7 @@ public class UpdateChecker{
         if(Minecraft.getSystemTime() % 200 == 0 && !notified && doneChecking && Minecraft.getMinecraft().thePlayer != null){
             EntityPlayer player = Minecraft.getMinecraft().thePlayer;
             if(checkFailed){
-                player.addChatComponentMessage(IChatComponent.Serializer.func_150699_a(StatCollector.translateToLocal("info." + ModUtil.MOD_ID_LOWER + ".update.failed.desc")));
+                player.addChatComponentMessage(IChatComponent.Serializer.func_150699_a(StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".update.failed.desc")));
             }
             else{
                 if(updateVersion > clientVersion){
@@ -43,10 +43,10 @@ public class UpdateChecker{
                     String notice3 = "info."+ModUtil.MOD_ID_LOWER+".update.changelog.desc";
                     String notice4 = "info."+ModUtil.MOD_ID_LOWER+".update.download.desc";
                     player.addChatComponentMessage(new ChatComponentText(""));
-                    player.addChatComponentMessage(IChatComponent.Serializer.func_150699_a(StatCollector.translateToLocal(notice1)));
-                    player.addChatComponentMessage(IChatComponent.Serializer.func_150699_a(StatCollector.translateToLocalFormatted(notice2, ModUtil.VERSION, updateVersionS)));
-                    player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocalFormatted(notice3, changelog)));
-                    player.addChatComponentMessage(IChatComponent.Serializer.func_150699_a(StatCollector.translateToLocalFormatted(notice4, DOWNLOAD_LINK)));
+                    player.addChatComponentMessage(IChatComponent.Serializer.func_150699_a(StringUtil.localize(notice1)));
+                    player.addChatComponentMessage(IChatComponent.Serializer.func_150699_a(StringUtil.localizeFormatted(notice2, ModUtil.VERSION, updateVersionS)));
+                    player.addChatComponentMessage(new ChatComponentText(StringUtil.localizeFormatted(notice3, changelog)));
+                    player.addChatComponentMessage(IChatComponent.Serializer.func_150699_a(StringUtil.localizeFormatted(notice4, DOWNLOAD_LINK)));
                     player.addChatComponentMessage(new ChatComponentText(""));
                 }
             }

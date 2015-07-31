@@ -15,7 +15,6 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
-import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -103,7 +102,7 @@ public class BlockInputter extends BlockContainerBase implements INameableItem{
                 this.toPick = rand.nextInt(NAME_FLAVOUR_AMOUNTS)+1;
             }
 
-            return StatCollector.translateToLocal(this.getUnlocalizedName() + ".name") + " (" + StatCollector.translateToLocal("tile." + ModUtil.MOD_ID_LOWER + ".blockInputter.add." + this.toPick + ".name") + ")";
+            return StringUtil.localize(this.getUnlocalizedName()+".name") + " (" + StringUtil.localize("tile."+ModUtil.MOD_ID_LOWER+".blockInputter.add."+this.toPick+".name") + ")";
         }
 
         @Override
@@ -115,13 +114,13 @@ public class BlockInputter extends BlockContainerBase implements INameableItem{
         @SuppressWarnings("unchecked")
         @SideOnly(Side.CLIENT)
         public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld) {
-            list.add(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".blockInputter.desc.1"));
+            list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".blockInputter.desc.1"));
             if(KeyUtil.isShiftPressed()){
-                list.add(StatCollector.translateToLocalFormatted("tooltip."+ModUtil.MOD_ID_LOWER+".blockInputter.desc.2", StringUtil.OBFUSCATED, StringUtil.LIGHT_GRAY));
+                list.add(StringUtil.localizeFormatted("tooltip."+ModUtil.MOD_ID_LOWER+".blockInputter.desc.2", StringUtil.OBFUSCATED, StringUtil.LIGHT_GRAY));
                 for(int i = 3; i <= 7; i++){
-                    list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + ".blockInputter.desc." + i));
+                    list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".blockInputter.desc."+i));
                 }
-                if((((BlockInputter)theBlock).isAdvanced)) list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + "." + ((INameableItem)theBlock).getName() + ".desc"));
+                if((((BlockInputter)theBlock).isAdvanced)) list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+"."+((INameableItem)theBlock).getName()+".desc"));
             }
             else list.add(ItemUtil.shiftForInfo());
         }

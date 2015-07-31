@@ -3,7 +3,6 @@ package ellpeck.actuallyadditions.util;
 import cpw.mods.fml.common.registry.GameRegistry;
 import ellpeck.actuallyadditions.creative.CreativeTab;
 import net.minecraft.item.Item;
-import net.minecraft.util.StatCollector;
 
 import java.util.List;
 
@@ -13,7 +12,7 @@ public class ItemUtil{
     public static void addInformation(Item item, List list, int lines, String extraName){
         if(KeyUtil.isShiftPressed()){
             for(int i = 0; i < lines; i++){
-                list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + "." + ((INameableItem)item).getName() + extraName + ".desc" + (lines > 1 ? "." +(i+1) : "")));
+                list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+"."+((INameableItem)item).getName()+extraName+".desc"+(lines > 1 ? "."+(i+1) : "")));
             }
         }
         else list.add(shiftForInfo());
@@ -47,6 +46,6 @@ public class ItemUtil{
     }
 
     public static String shiftForInfo(){
-        return StringUtil.GREEN + StringUtil.ITALIC + StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + ".shiftForInfo.desc");
+        return StringUtil.GREEN + StringUtil.ITALIC + StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".shiftForInfo.desc");
     }
 }

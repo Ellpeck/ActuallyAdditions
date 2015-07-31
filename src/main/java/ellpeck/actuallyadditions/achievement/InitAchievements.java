@@ -1,8 +1,8 @@
 package ellpeck.actuallyadditions.achievement;
 
 import ellpeck.actuallyadditions.util.ModUtil;
+import ellpeck.actuallyadditions.util.StringUtil;
 import net.minecraft.stats.Achievement;
-import net.minecraft.util.StatCollector;
 import net.minecraftforge.common.AchievementPage;
 
 import java.util.ArrayList;
@@ -24,7 +24,7 @@ public class InitAchievements{
             achievementList.add(TheAchievements.values()[i].ach);
         }
 
-        theAchievementPage = new AchievementPage(StatCollector.translateToLocal("achievement.page." + ModUtil.MOD_ID_LOWER), achievementList.toArray(new Achievement[achievementList.size()]));
+        theAchievementPage = new AchievementPage(StringUtil.localize("achievement.page."+ModUtil.MOD_ID_LOWER), achievementList.toArray(new Achievement[achievementList.size()]));
         AchievementPage.registerAchievementPage(theAchievementPage);
     }
 

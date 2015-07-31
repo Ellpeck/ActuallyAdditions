@@ -4,7 +4,6 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import ellpeck.actuallyadditions.creative.CreativeTab;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
-import net.minecraft.util.StatCollector;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +18,7 @@ public class BlockUtil{
     public static void addInformation(Block block, List list, int lines, String extraName){
         if(KeyUtil.isShiftPressed()){
             for(int i = 0; i < lines; i++){
-                list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + "." + ((INameableItem)block).getName() + extraName + ".desc" + (lines > 1 ? "." +(i+1) : "")));
+                list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+"."+((INameableItem)block).getName()+extraName+".desc"+(lines > 1 ? "."+(i+1) : "")));
             }
         }
         else list.add(ItemUtil.shiftForInfo());
@@ -28,14 +27,14 @@ public class BlockUtil{
     @SuppressWarnings("unchecked")
     public static void addPowerUsageInfo(List list, int usage){
         if(KeyUtil.isShiftPressed()){
-            list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + ".uses.desc") + " " + usage + " RF/t");
+            list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".uses.desc") + " " + usage + " RF/t");
         }
     }
 
     @SuppressWarnings("unchecked")
     public static void addPowerProductionInfo(List list, int produce){
         if(KeyUtil.isShiftPressed()){
-            list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + ".produces.desc") + " " + produce + " RF/t");
+            list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".produces.desc") + " " + produce + " RF/t");
         }
     }
 

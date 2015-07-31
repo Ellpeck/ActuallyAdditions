@@ -6,6 +6,7 @@ import ellpeck.actuallyadditions.blocks.metalists.TheColoredLampColors;
 import ellpeck.actuallyadditions.util.BlockUtil;
 import ellpeck.actuallyadditions.util.INameableItem;
 import ellpeck.actuallyadditions.util.ModUtil;
+import ellpeck.actuallyadditions.util.StringUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -16,7 +17,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
-import net.minecraft.util.StatCollector;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
@@ -159,7 +159,7 @@ public class BlockColoredLamp extends Block implements INameableItem{
         @Override
         public String getItemStackDisplayName(ItemStack stack){
             if(stack.getItemDamage() >= allLampTypes.length) return null;
-            return StatCollector.translateToLocal(this.getUnlocalizedName(stack) + ".name") + (((BlockColoredLamp)this.theBlock).isOn ? " (" + StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + ".onSuffix.desc") + ")" : "");
+            return StringUtil.localize(this.getUnlocalizedName(stack)+".name") + (((BlockColoredLamp)this.theBlock).isOn ? " (" + StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".onSuffix.desc") + ")" : "");
         }
     }
 }

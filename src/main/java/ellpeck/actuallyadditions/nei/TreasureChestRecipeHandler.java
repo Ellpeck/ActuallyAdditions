@@ -10,7 +10,6 @@ import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.StatCollector;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
@@ -65,7 +64,7 @@ public class TreasureChestRecipeHandler extends TemplateRecipeHandler{
 
     @Override
     public String getRecipeName(){
-        return StatCollector.translateToLocal("container.nei." + NAME + ".name");
+        return StringUtil.localize("container.nei."+NAME+".name");
     }
 
     @Override
@@ -120,7 +119,7 @@ public class TreasureChestRecipeHandler extends TemplateRecipeHandler{
     public void drawExtras(int rec){
         CachedTreasure recipe = (CachedTreasure)this.arecipes.get(rec);
         if(recipe.result != null){
-            GuiDraw.drawString(recipe.minAmount+"-"+recipe.maxAmount+" "+StatCollector.translateToLocal("container.nei."+ModUtil.MOD_ID_LOWER+".treasureChest.info")+" "+recipe.chance+"%", 65+10, 45, StringUtil.DECIMAL_COLOR_GRAY_TEXT, false);
+            GuiDraw.drawString(recipe.minAmount+"-"+recipe.maxAmount+" "+StringUtil.localize("container.nei."+ModUtil.MOD_ID_LOWER+".treasureChest.info")+" "+recipe.chance+"%", 65+10, 45, StringUtil.DECIMAL_COLOR_GRAY_TEXT, false);
         }
     }
 

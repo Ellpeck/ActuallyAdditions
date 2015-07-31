@@ -6,10 +6,10 @@ import ellpeck.actuallyadditions.inventory.ContainerOreMagnet;
 import ellpeck.actuallyadditions.tile.TileEntityBase;
 import ellpeck.actuallyadditions.tile.TileEntityOreMagnet;
 import ellpeck.actuallyadditions.util.AssetUtil;
+import ellpeck.actuallyadditions.util.StringUtil;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.StatCollector;
 import org.lwjgl.opengl.GL11;
 
 import java.util.Arrays;
@@ -62,7 +62,7 @@ public class GuiOreMagnet extends GuiContainer{
         if(x >= guiLeft+43 && y >= guiTop+6 && x <= guiLeft+58 && y <= guiTop+88){
             this.func_146283_a(Collections.singletonList(text1), x, y);
         }
-        String text2 = this.magnet.tank.getFluidAmount() + "/" + this.magnet.tank.getCapacity() + " mB " +StatCollector.translateToLocal("fluid.oil");
+        String text2 = this.magnet.tank.getFluidAmount() + "/" + this.magnet.tank.getCapacity() + " mB " +StringUtil.localize("fluid.oil");
         if(x >= guiLeft+117 && y >= guiTop+6 && x <= guiLeft+132 && y <= guiTop+88){
             this.func_146283_a(Collections.singletonList(text2), x, y);
         }

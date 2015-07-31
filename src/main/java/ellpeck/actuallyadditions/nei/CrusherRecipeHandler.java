@@ -11,7 +11,6 @@ import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.StatCollector;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
@@ -89,7 +88,7 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler{
 
     @Override
     public String getRecipeName(){
-        return StatCollector.translateToLocal("container.nei."+this.getName()+".name");
+        return StringUtil.localize("container.nei."+this.getName()+".name");
     }
 
     @Override

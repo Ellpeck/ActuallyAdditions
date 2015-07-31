@@ -6,10 +6,10 @@ import ellpeck.actuallyadditions.inventory.ContainerCanolaPress;
 import ellpeck.actuallyadditions.tile.TileEntityBase;
 import ellpeck.actuallyadditions.tile.TileEntityCanolaPress;
 import ellpeck.actuallyadditions.util.AssetUtil;
+import ellpeck.actuallyadditions.util.StringUtil;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.StatCollector;
 import org.lwjgl.opengl.GL11;
 
 import java.util.Collections;
@@ -67,7 +67,7 @@ public class GuiCanolaPress extends GuiContainer{
             this.func_146283_a(Collections.singletonList(text1), x, y);
         }
 
-        String text2 = this.press.tank.getFluidAmount() + "/" + this.press.tank.getCapacity() + " mB " +StatCollector.translateToLocal("fluid.canolaoil");
+        String text2 = this.press.tank.getFluidAmount() + "/" + this.press.tank.getCapacity() + " mB " +StringUtil.localize("fluid.canolaoil");
         if(x >= guiLeft+117 && y >= guiTop+6 && x <= guiLeft+132 && y <= guiTop+88){
             this.func_146283_a(Collections.singletonList(text2), x, y);
         }

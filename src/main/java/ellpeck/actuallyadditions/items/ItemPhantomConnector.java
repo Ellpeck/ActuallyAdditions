@@ -4,10 +4,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.tile.TileEntityPhantomPlacer;
 import ellpeck.actuallyadditions.tile.TileEntityPhantomface;
-import ellpeck.actuallyadditions.util.INameableItem;
-import ellpeck.actuallyadditions.util.ItemUtil;
-import ellpeck.actuallyadditions.util.ModUtil;
-import ellpeck.actuallyadditions.util.WorldPos;
+import ellpeck.actuallyadditions.util.*;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -18,7 +15,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IIcon;
-import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
 
@@ -41,7 +37,7 @@ public class ItemPhantomConnector extends Item implements INameableItem{
                     if(this.checkHasConnection(stack, player, tile)){
                         ((TileEntityPhantomface)tile).boundPosition = this.getStoredPosition(stack);
                         this.clearStorage(stack);
-                        player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.connected.desc")));
+                        player.addChatComponentMessage(new ChatComponentText(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.connected.desc")));
                         return true;
                     }
                     return false;
@@ -52,7 +48,7 @@ public class ItemPhantomConnector extends Item implements INameableItem{
                         ((TileEntityPhantomPlacer)tile).boundPosition = this.getStoredPosition(stack);
                         tile.markDirty();
                         this.clearStorage(stack);
-                        player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.connected.desc")));
+                        player.addChatComponentMessage(new ChatComponentText(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.connected.desc")));
                         return true;
                     }
                     return false;
@@ -60,7 +56,7 @@ public class ItemPhantomConnector extends Item implements INameableItem{
             }
             //Storing Connections
             this.storeConnection(stack, x, y, z, world);
-            player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + ".phantom.stored.desc")));
+            player.addChatComponentMessage(new ChatComponentText(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.stored.desc")));
         }
         return true;
     }
@@ -76,7 +72,7 @@ public class ItemPhantomConnector extends Item implements INameableItem{
             if(tile instanceof TileEntityPhantomface){
                 ((TileEntityPhantomface)tile).boundPosition = null;
             }
-            player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + ".phantom.unbound.desc")));
+            player.addChatComponentMessage(new ChatComponentText(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.unbound.desc")));
             return false;
         }
     }
@@ -130,14 +126,14 @@ public class ItemPhantomConnector extends Item implements INameableItem{
         if(coords != null){
             World world = coords.getWorld();
             if(world != null){
-                list.add(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.boundTo.desc")+":");
+                list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.boundTo.desc")+":");
                 Item item = coords.getItemBlock();
                 String name = item == null ? "Absolutely Nothing" : item.getItemStackDisplayName(new ItemStack(coords.getBlock(), 1, coords.getMetadata()));
                 list.add(name);
                 list.add("X: "+coords.getX());
                 list.add("Y: "+coords.getY());
                 list.add("Z: "+coords.getZ());
-                list.add(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.inWorld.desc")+" "+world.provider.dimensionId);
+                list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.inWorld.desc")+" "+world.provider.dimensionId);
             }
         }
     }

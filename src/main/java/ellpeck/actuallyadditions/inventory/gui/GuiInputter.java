@@ -18,7 +18,6 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
@@ -54,13 +53,13 @@ public class GuiInputter extends GuiContainer{
     public static final int OFFSET_ADVANCED = 12+36;
 
     public static final String[] sideString = new String[]{
-            StatCollector.translateToLocal("info."+ModUtil.MOD_ID_LOWER+".gui.disabled"),
-            StatCollector.translateToLocal("info."+ModUtil.MOD_ID_LOWER+".gui.up"),
-            StatCollector.translateToLocal("info."+ModUtil.MOD_ID_LOWER+".gui.down"),
-            StatCollector.translateToLocal("info."+ModUtil.MOD_ID_LOWER+".gui.north"),
-            StatCollector.translateToLocal("info."+ModUtil.MOD_ID_LOWER+".gui.east"),
-            StatCollector.translateToLocal("info."+ModUtil.MOD_ID_LOWER+".gui.south"),
-            StatCollector.translateToLocal("info."+ModUtil.MOD_ID_LOWER+".gui.west")};
+            StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.disabled"),
+            StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.up"),
+            StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.down"),
+            StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.north"),
+            StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.east"),
+            StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.south"),
+            StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.west")};
 
     public GuiInputter(InventoryPlayer inventory, TileEntityBase tile, int x, int y, int z, World world, boolean isAdvanced){
         super(new ContainerInputter(inventory, tile, isAdvanced));
@@ -188,8 +187,8 @@ public class GuiInputter extends GuiContainer{
         this.mc.getTextureManager().bindTexture(this.isAdvanced ? resLocAdvanced : resLoc);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 93+(isAdvanced ? OFFSET_ADVANCED : 0));
 
-        this.fontRendererObj.drawString(StatCollector.translateToLocal("info."+ModUtil.MOD_ID_LOWER+".gui.pull"), guiLeft+22+3, guiTop+32+(isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_GRAY_TEXT);
-        this.fontRendererObj.drawString(StatCollector.translateToLocal("info."+ModUtil.MOD_ID_LOWER+".gui.put"), guiLeft+107+3, guiTop+32+(isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_GRAY_TEXT);
+        this.fontRendererObj.drawString(StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.pull"), guiLeft+22+3, guiTop+32+(isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_GRAY_TEXT);
+        this.fontRendererObj.drawString(StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.put"), guiLeft+107+3, guiTop+32+(isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_GRAY_TEXT);
 
         this.fontRendererObj.drawString(sideString[tileInputter.sideToPull+1], guiLeft+24+1, guiTop+45+3+(isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_GRAY_TEXT);
         this.fontRendererObj.drawString(sideString[tileInputter.sideToPut+1], guiLeft+109+1, guiTop+45+3+(isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_GRAY_TEXT);
@@ -214,11 +213,11 @@ public class GuiInputter extends GuiContainer{
         this.whitelistPut.displayString = this.tileInputter.isPutWhitelist ? "O" : "X";
 
         if(this.isAdvanced){
-            String text1 = this.tileInputter.isPullWhitelist ? StatCollector.translateToLocal("info."+ModUtil.MOD_ID_LOWER+".gui.whitelist") : StatCollector.translateToLocal("info."+ModUtil.MOD_ID_LOWER+".gui.blacklist");
+            String text1 = this.tileInputter.isPullWhitelist ? StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.whitelist") : StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.blacklist");
             if(x >= guiLeft+3 && y >= guiTop+16 && x <= guiLeft+18 && y <= guiTop+31){
                 this.func_146283_a(Collections.singletonList(text1), x, y);
             }
-            String text2 = this.tileInputter.isPutWhitelist ? StatCollector.translateToLocal("info."+ModUtil.MOD_ID_LOWER+".gui.whitelist") : StatCollector.translateToLocal("info."+ModUtil.MOD_ID_LOWER+".gui.blacklist");
+            String text2 = this.tileInputter.isPutWhitelist ? StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.whitelist") : StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.blacklist");
             if(x >= guiLeft+157 && y >= guiTop+16 && x <= guiLeft+172 && y <= guiTop+31){
                 this.func_146283_a(Collections.singletonList(text2), x, y);
             }
@@ -227,19 +226,19 @@ public class GuiInputter extends GuiContainer{
         int newTopOffset = this.guiTop+(this.isAdvanced ? OFFSET_ADVANCED : 0);
         //Info Mode on!
         if(x >= guiLeft+11 && y >= newTopOffset+65 && x <= guiLeft+11+31 && y <= newTopOffset+65+12){
-            String[] strings = StatCollector.translateToLocalFormatted("info."+ModUtil.MOD_ID_LOWER+".inputter.info.1").replace("[p]", StatCollector.translateToLocal("info."+ModUtil.MOD_ID_LOWER+".gui.pull")).split(Pattern.quote("|"));
+            String[] strings = StringUtil.localizeFormatted("info."+ModUtil.MOD_ID_LOWER+".inputter.info.1").replace("[p]", StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.pull")).split(Pattern.quote("|"));
             this.func_146283_a(Arrays.asList(strings), x, y);
         }
         if(x >= guiLeft+96 && y >= newTopOffset+65 && x <= guiLeft+96+31 && y <= newTopOffset+65+12){
-            String[] strings = StatCollector.translateToLocalFormatted("info."+ModUtil.MOD_ID_LOWER+".inputter.info.1").replace("[p]", StatCollector.translateToLocal("info."+ModUtil.MOD_ID_LOWER+".gui.put")).split(Pattern.quote("|"));
+            String[] strings = StringUtil.localizeFormatted("info."+ModUtil.MOD_ID_LOWER+".inputter.info.1").replace("[p]", StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.put")).split(Pattern.quote("|"));
             this.func_146283_a(Arrays.asList(strings), x, y);
         }
         if(x >= guiLeft+48 && y >= newTopOffset+65 && x <= guiLeft+48+31 && y <= newTopOffset+65+12){
-            String[] strings = StatCollector.translateToLocalFormatted("info."+ModUtil.MOD_ID_LOWER+".inputter.info.2").replace("[p]", StatCollector.translateToLocal("info."+ModUtil.MOD_ID_LOWER+".gui.pull")).split(Pattern.quote("|"));
+            String[] strings = StringUtil.localizeFormatted("info."+ModUtil.MOD_ID_LOWER+".inputter.info.2").replace("[p]", StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.pull")).split(Pattern.quote("|"));
             this.func_146283_a(Arrays.asList(strings), x, y);
         }
         if(x >= guiLeft+133 && y >= newTopOffset+65 && x <= guiLeft+133+31 && y <= newTopOffset+65+12){
-            String[] strings = StatCollector.translateToLocalFormatted("info."+ModUtil.MOD_ID_LOWER+".inputter.info.2").replace("[p]", StatCollector.translateToLocal("info."+ModUtil.MOD_ID_LOWER+".gui.put")).split(Pattern.quote("|"));
+            String[] strings = StringUtil.localizeFormatted("info."+ModUtil.MOD_ID_LOWER+".inputter.info.2").replace("[p]", StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.put")).split(Pattern.quote("|"));
             this.func_146283_a(Arrays.asList(strings), x, y);
         }
     }

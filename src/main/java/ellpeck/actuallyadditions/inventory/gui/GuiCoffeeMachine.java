@@ -9,12 +9,12 @@ import ellpeck.actuallyadditions.tile.TileEntityBase;
 import ellpeck.actuallyadditions.tile.TileEntityCoffeeMachine;
 import ellpeck.actuallyadditions.util.AssetUtil;
 import ellpeck.actuallyadditions.util.ModUtil;
+import ellpeck.actuallyadditions.util.StringUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidRegistry;
 import org.lwjgl.opengl.GL11;
@@ -49,7 +49,7 @@ public class GuiCoffeeMachine extends GuiContainer{
     public void initGui(){
         super.initGui();
 
-        GuiButton buttonOkay = new GuiButton(0, guiLeft+60, guiTop+11, 58, 20, StatCollector.translateToLocal("info."+ModUtil.MOD_ID_LOWER+".gui.ok"));
+        GuiButton buttonOkay = new GuiButton(0, guiLeft+60, guiTop+11, 58, 20, StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.ok"));
         this.buttonList.add(buttonOkay);
     }
 
@@ -109,7 +109,7 @@ public class GuiCoffeeMachine extends GuiContainer{
             this.func_146283_a(Collections.singletonList(text3), x, y);
         }
 
-        String text2 = this.machine.coffeeCacheAmount + "/" + this.machine.coffeeCacheMaxAmount+" "+StatCollector.translateToLocal("info."+ModUtil.MOD_ID_LOWER+".gui.coffee");
+        String text2 = this.machine.coffeeCacheAmount + "/" + this.machine.coffeeCacheMaxAmount+" "+StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.coffee");
         if(x >= guiLeft+40 && y >= guiTop+25 && x <= guiLeft+49 && y <= guiTop+56){
             this.func_146283_a(Collections.singletonList(text2), x, y);
         }

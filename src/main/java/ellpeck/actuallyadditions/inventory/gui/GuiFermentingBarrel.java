@@ -6,10 +6,10 @@ import ellpeck.actuallyadditions.inventory.ContainerFermentingBarrel;
 import ellpeck.actuallyadditions.tile.TileEntityBase;
 import ellpeck.actuallyadditions.tile.TileEntityFermentingBarrel;
 import ellpeck.actuallyadditions.util.AssetUtil;
+import ellpeck.actuallyadditions.util.StringUtil;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.StatCollector;
 import org.lwjgl.opengl.GL11;
 
 import java.util.Collections;
@@ -63,12 +63,12 @@ public class GuiFermentingBarrel extends GuiContainer{
     public void drawScreen(int x, int y, float f){
         super.drawScreen(x, y, f);
 
-        String text1 = this.press.canolaTank.getFluidAmount() + "/" + this.press.canolaTank.getCapacity() + " mB " +StatCollector.translateToLocal("fluid.canolaoil");
+        String text1 = this.press.canolaTank.getFluidAmount() + "/" + this.press.canolaTank.getCapacity() + " mB " +StringUtil.localize("fluid.canolaoil");
         if(x >= guiLeft+61 && y >= guiTop+6 && x <= guiLeft+76 && y <= guiTop+88){
             this.func_146283_a(Collections.singletonList(text1), x, y);
         }
 
-        String text2 = this.press.oilTank.getFluidAmount() + "/" + this.press.oilTank.getCapacity() + " mB " +StatCollector.translateToLocal("fluid.oil");
+        String text2 = this.press.oilTank.getFluidAmount() + "/" + this.press.oilTank.getCapacity() + " mB " +StringUtil.localize("fluid.oil");
         if(x >= guiLeft+99 && y >= guiTop+6 && x <= guiLeft+114 && y <= guiTop+88){
             this.func_146283_a(Collections.singletonList(text2), x, y);
         }

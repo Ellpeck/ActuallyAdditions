@@ -16,7 +16,6 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
-import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
@@ -112,9 +111,9 @@ public class ItemLeafBlower extends Item implements INameableItem{
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld) {
         if(KeyUtil.isShiftPressed()){
-            list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + "." + this.getName() + ".desc." + 1));
-            list.add(StringUtil.ITALIC + StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + ".itemLeafBlower.desc.2"));
-            list.add(StringUtil.ITALIC + StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + ".itemLeafBlower.desc.3"));
+            list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+"."+this.getName()+".desc."+1));
+            list.add(StringUtil.ITALIC + StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".itemLeafBlower.desc.2"));
+            list.add(StringUtil.ITALIC + StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".itemLeafBlower.desc.3"));
         }
         else list.add(ItemUtil.shiftForInfo());
     }

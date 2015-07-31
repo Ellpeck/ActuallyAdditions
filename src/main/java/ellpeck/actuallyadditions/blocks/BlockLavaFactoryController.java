@@ -3,10 +3,7 @@ package ellpeck.actuallyadditions.blocks;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.tile.TileEntityLavaFactoryController;
-import ellpeck.actuallyadditions.util.BlockUtil;
-import ellpeck.actuallyadditions.util.INameableItem;
-import ellpeck.actuallyadditions.util.KeyUtil;
-import ellpeck.actuallyadditions.util.ModUtil;
+import ellpeck.actuallyadditions.util.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -17,7 +14,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IIcon;
-import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -58,10 +54,10 @@ public class BlockLavaFactoryController extends BlockContainerBase implements IN
             if(factory != null){
                 int state = factory.isMultiblock();
                 if(state == TileEntityLavaFactoryController.NOT_MULTI){
-                    player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".factory.notPart.desc")));
+                    player.addChatComponentMessage(new ChatComponentText(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".factory.notPart.desc")));
                 }
                 if(state == TileEntityLavaFactoryController.HAS_AIR || state == TileEntityLavaFactoryController.HAS_LAVA){
-                    player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".factory.works.desc")));
+                    player.addChatComponentMessage(new ChatComponentText(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".factory.works.desc")));
                 }
                 player.addChatComponentMessage(new ChatComponentText(factory.storage.getEnergyStored() + "/" + factory.storage.getMaxEnergyStored() + " RF"));
             }
@@ -102,7 +98,7 @@ public class BlockLavaFactoryController extends BlockContainerBase implements IN
         public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld) {
             BlockUtil.addInformation(theBlock, list, 3, "");
             if(KeyUtil.isShiftPressed()){
-                list.add(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".uses.desc") + " " + TileEntityLavaFactoryController.energyNeededToProduceLava + " RF/B");
+                list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".uses.desc") + " " + TileEntityLavaFactoryController.energyNeededToProduceLava + " RF/B");
             }
         }
 

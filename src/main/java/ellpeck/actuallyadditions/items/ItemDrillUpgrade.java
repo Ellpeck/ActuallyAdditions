@@ -2,17 +2,13 @@ package ellpeck.actuallyadditions.items;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ellpeck.actuallyadditions.util.INameableItem;
-import ellpeck.actuallyadditions.util.ItemUtil;
-import ellpeck.actuallyadditions.util.KeyUtil;
-import ellpeck.actuallyadditions.util.ModUtil;
+import ellpeck.actuallyadditions.util.*;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.IIcon;
-import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -87,11 +83,11 @@ public class ItemDrillUpgrade extends Item implements INameableItem{
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld){
         ItemUtil.addInformation(this, list, this.type == UpgradeType.PLACER ? 3 : 1, "");
         if(KeyUtil.isShiftPressed()){
-            list.add(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".itemDrillUpgrade.desc"));
+            list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".itemDrillUpgrade.desc"));
             if(this.type == UpgradeType.PLACER){
                 int slot = getSlotToPlaceFrom(stack);
                 if(slot >= 0){
-                    list.add(StatCollector.translateToLocal("info."+ModUtil.MOD_ID_LOWER+".gui.slot")+": "+(slot+1));
+                    list.add(StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.slot")+": "+(slot+1));
                 }
             }
         }

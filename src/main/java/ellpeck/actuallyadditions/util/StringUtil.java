@@ -1,5 +1,7 @@
 package ellpeck.actuallyadditions.util;
 
+import net.minecraft.util.StatCollector;
+
 public class StringUtil{
 
     public static final String BLACK = (char)167 + "0";
@@ -27,4 +29,17 @@ public class StringUtil{
     public static final int DECIMAL_COLOR_WHITE = 16777215;
     public static final int DECIMAL_COLOR_GRAY_TEXT = 4210752;
 
+    /**
+     * Localizes a given String via StatCollector
+     */
+    public static String localize(String text){
+        return StatCollector.translateToLocal(text);
+    }
+
+    /**
+     * Localizes a given formatted String with the given Replacements
+     */
+    public static String localizeFormatted(String text, Object ... replace){
+        return StatCollector.translateToLocalFormatted(text, replace);
+    }
 }

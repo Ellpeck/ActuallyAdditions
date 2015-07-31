@@ -2,7 +2,6 @@ package ellpeck.actuallyadditions.util;
 
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.StatCollector;
 
 public class AssetUtil{
 
@@ -13,7 +12,7 @@ public class AssetUtil{
     }
 
     public static void displayNameString(FontRenderer font, int xSize, int yPositionOfMachineText, String machineName){
-        String localMachineName = StatCollector.translateToLocal(machineName + ".name");
+        String localMachineName = StringUtil.localize(machineName+".name");
         font.drawString(localMachineName, xSize/2 - font.getStringWidth(localMachineName)/2, yPositionOfMachineText, StringUtil.DECIMAL_COLOR_WHITE);
     }
 }

@@ -4,10 +4,7 @@ import com.google.common.collect.Sets;
 import cpw.mods.fml.common.eventhandler.Event;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ellpeck.actuallyadditions.util.INameableItem;
-import ellpeck.actuallyadditions.util.ItemUtil;
-import ellpeck.actuallyadditions.util.KeyUtil;
-import ellpeck.actuallyadditions.util.ModUtil;
+import ellpeck.actuallyadditions.util.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -17,7 +14,6 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
 import net.minecraft.util.IIcon;
-import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.UseHoeEvent;
@@ -59,9 +55,9 @@ public class ItemAllToolAA extends ItemTool implements INameableItem{
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld) {
         if(KeyUtil.isShiftPressed()){
-            list.add(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".paxel.desc.1"));
-            list.add(StatCollector.translateToLocal("tooltip."+ModUtil.MOD_ID_LOWER+".paxel.desc.2"));
-            list.add(StatCollector.translateToLocal("tooltip." + ModUtil.MOD_ID_LOWER + ".durability.desc") + ": " + (this.getMaxDamage()-this.getDamage(stack)) + "/" + this.getMaxDamage());
+            list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".paxel.desc.1"));
+            list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".paxel.desc.2"));
+            list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".durability.desc") + ": " + (this.getMaxDamage()-this.getDamage(stack)) + "/" + this.getMaxDamage());
         }
         else list.add(ItemUtil.shiftForInfo());
     }

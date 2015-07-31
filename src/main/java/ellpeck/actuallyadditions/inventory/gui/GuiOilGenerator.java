@@ -6,10 +6,10 @@ import ellpeck.actuallyadditions.inventory.ContainerOilGenerator;
 import ellpeck.actuallyadditions.tile.TileEntityBase;
 import ellpeck.actuallyadditions.tile.TileEntityOilGenerator;
 import ellpeck.actuallyadditions.util.AssetUtil;
+import ellpeck.actuallyadditions.util.StringUtil;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.StatCollector;
 import org.lwjgl.opengl.GL11;
 
 import java.util.Collections;
@@ -66,7 +66,7 @@ public class GuiOilGenerator extends GuiContainer{
         if(x >= guiLeft+43 && y >= guiTop+6 && x <= guiLeft+58 && y <= guiTop+88){
             this.func_146283_a(Collections.singletonList(text1), x, y);
         }
-        String text2 = this.generator.tank.getFluidAmount() + "/" + this.generator.tank.getCapacity() + " mB " +StatCollector.translateToLocal("fluid.oil");
+        String text2 = this.generator.tank.getFluidAmount() + "/" + this.generator.tank.getCapacity() + " mB " +StringUtil.localize("fluid.oil");
         if(x >= guiLeft+117 && y >= guiTop+6 && x <= guiLeft+132 && y <= guiTop+88){
             this.func_146283_a(Collections.singletonList(text2), x, y);
         }

@@ -6,6 +6,7 @@ import ellpeck.actuallyadditions.items.metalists.ThePotionRings;
 import ellpeck.actuallyadditions.util.INameableItem;
 import ellpeck.actuallyadditions.util.ItemUtil;
 import ellpeck.actuallyadditions.util.ModUtil;
+import ellpeck.actuallyadditions.util.StringUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
@@ -15,7 +16,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.IIcon;
-import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -112,9 +112,9 @@ public class ItemPotionRing extends Item implements INameableItem{
 
     @Override
     public String getItemStackDisplayName(ItemStack stack){
-        String standardName = StatCollector.translateToLocal(this.getUnlocalizedName() + ".name");
+        String standardName = StringUtil.localize(this.getUnlocalizedName()+".name");
         if(stack.getItemDamage() < allRings.length){
-            String effect = StatCollector.translateToLocal(allRings[stack.getItemDamage()].getName());
+            String effect = StringUtil.localize(allRings[stack.getItemDamage()].getName());
             return standardName+" "+effect;
         }
         return standardName;
