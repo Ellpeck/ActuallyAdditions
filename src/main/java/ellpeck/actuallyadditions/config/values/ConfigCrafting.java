@@ -128,7 +128,8 @@ public enum ConfigCrafting{
     NICKEL("Nickel Ore -> Nickel Dust + Platinum Dust", ConfigCategories.CRUSHER_RECIPES, "Crusher"),
     IRON("Iron Ore -> Iron Dust + Gold Dust", ConfigCategories.CRUSHER_RECIPES, "Crusher"),
 
-    TELE_STAFF("Tele Staff", ConfigCategories.ITEMS_CRAFTING);
+    TELE_STAFF("Tele Staff", ConfigCategories.ITEMS_CRAFTING),
+    CASING("Casing", ConfigCategories.BLOCKS_CRAFTING);
 
     public final String name;
     public final String category;

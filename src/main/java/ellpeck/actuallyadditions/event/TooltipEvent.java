@@ -1,6 +1,5 @@
 package ellpeck.actuallyadditions.event;
 
-import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import ellpeck.actuallyadditions.config.values.ConfigBoolValues;
 import ellpeck.actuallyadditions.util.KeyUtil;
@@ -15,7 +14,7 @@ public class TooltipEvent{
     private static final String TEXT_PRE = StringUtil.GRAY+"     ";
     private static final String HEADER_PRE = StringUtil.LIGHT_GRAY+"  -";
 
-    @SubscribeEvent(priority = EventPriority.LOW)
+    @SubscribeEvent
     public void onTooltipEvent(ItemTooltipEvent event){
         if(event.itemStack.getItem() != null){
             if(KeyUtil.isControlPressed()){

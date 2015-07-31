@@ -5,8 +5,10 @@ import cofh.api.energy.IEnergyReceiver;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.blocks.InitBlocks;
+import ellpeck.actuallyadditions.blocks.metalists.TheMiscBlocks;
 import ellpeck.actuallyadditions.network.sync.IPacketSyncerToClient;
 import ellpeck.actuallyadditions.network.sync.PacketSyncerToClient;
+import ellpeck.actuallyadditions.util.WorldPos;
 import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
@@ -15,6 +17,8 @@ import net.minecraft.util.MathHelper;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.*;
 import net.minecraftforge.oredict.OreDictionary;
+
+import java.util.ArrayList;
 
 public class TileEntityOreMagnet extends TileEntityInventoryBase implements IEnergyReceiver, IFluidHandler, IPacketSyncerToClient{
 
@@ -33,8 +37,8 @@ public class TileEntityOreMagnet extends TileEntityInventoryBase implements IEne
 
     private int maxWorkTimer = 15;
     private int range = 10;
-    private int oilUsePerTick = 50;
-    private int energyUsePerTick = 400;
+    public static int oilUsePerTick = 50;
+    public static int energyUsePerTick = 400;
 
     public TileEntityOreMagnet(){
         super(3, "oreMagnet");
@@ -45,38 +49,59 @@ public class TileEntityOreMagnet extends TileEntityInventoryBase implements IEne
     public void updateEntity(){
         if(!worldObj.isRemote){
 
-            if(this.storage.getEnergyStored() >= this.energyUsePerTick && this.tank.getFluid() != null && this.tank.getFluid().getFluid() == InitBlocks.fluidOil && this.tank.getFluidAmount() >= this.oilUsePerTick && !worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)){
+            if(this.storage.getEnergyStored() >= energyUsePerTick && this.tank.getFluid() != null && this.tank.getFluid().getFluid() == InitBlocks.fluidOil && this.tank.getFluidAmount() >= oilUsePerTick && !worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)){
                 if(this.currentWorkTimer > 0){
                     currentWorkTimer--;
 
                     if(currentWorkTimer <= 0){
-                        int x = MathHelper.getRandomIntegerInRange(worldObj.rand, -range, range);
-                        int z = MathHelper.getRandomIntegerInRange(worldObj.rand, -range, range);
-                        //Can the block at the top be replaced?
-                        for(int toPlaceY = 0; toPlaceY < 5; toPlaceY++){
-                            if(worldObj.isAirBlock(xCoord+x, yCoord+toPlaceY, zCoord+z) || worldObj.getBlock(xCoord+x, yCoord+toPlaceY, zCoord+z).isReplaceable(worldObj, xCoord+x, yCoord+toPlaceY, zCoord+z)){
-                                //Find the first available block
-                                for(int y = this.yCoord-1; y > 0; y--){
-                                    Block block = worldObj.getBlock(xCoord+x, y, zCoord+z);
-                                    int meta = worldObj.getBlockMetadata(xCoord+x, y, zCoord+z);
+                        //The possible positions where ores can be mined up in RELATIVE COORDINATES!!
+                        ArrayList<WorldPos> possiblePlacingPositions = new ArrayList<WorldPos>();
 
-                                    int[] oreIDs = OreDictionary.getOreIDs(new ItemStack(block, 1, meta));
-                                    for(int ID : oreIDs){
-                                        String oreName = OreDictionary.getOreName(ID);
-                                        //Is the block an ore according to the OreDictionary?
-                                        if(oreName.substring(0, 3).equals("ore")){
-                                            //Remove the Block
-                                            worldObj.setBlockToAir(xCoord+x, y, zCoord+z);
-                                            worldObj.playAuxSFX(2001, xCoord+x, y, zCoord+z, Block.getIdFromBlock(block)+(meta << 12));
-
-                                            //Set the Block at the Top again
-                                            worldObj.setBlock(xCoord+x, yCoord+toPlaceY, zCoord+z, block, meta, 2);
-                                            worldObj.playSoundEffect((double)xCoord+x+0.5D, (double)yCoord+toPlaceY+0.5D, (double)zCoord+z+0.5D, block.stepSound.func_150496_b(), (block.stepSound.getVolume()+1.0F)/2.0F, block.stepSound.getPitch()*0.8F);
-
-                                            //Extract oil
-                                            this.tank.drain(this.oilUsePerTick, true);
-                                            return;
+                        for(int x = -range; x <= range; x++){
+                            for(int z = -range; z <= range; z++){
+                                //Check if there is a casing below the Block to mine
+                                if(WorldUtil.hasBlocksInPlacesGiven(new int[][]{{x, -1, z}}, InitBlocks.blockMisc, TheMiscBlocks.LAVA_FACTORY_CASE.ordinal(), worldObj, xCoord, yCoord, zCoord)){
+                                    //Can the block at the top be replaced?
+                                    for(int toPlaceY = 0; toPlaceY < 5; toPlaceY++){
+                                        Block block = worldObj.getBlock(xCoord+x, yCoord+toPlaceY, zCoord+z);
+                                        //Check if the Block is okay to be replaced
+                                        if(block.isAir(worldObj, xCoord+x, yCoord+toPlaceY, zCoord+z) || block.isReplaceable(worldObj, xCoord+x, yCoord+toPlaceY, zCoord+z)){
+                                            //Add it to the possible positions
+                                            possiblePlacingPositions.add(new WorldPos(worldObj, x, toPlaceY, z));
+                                            //Only add the lowest Block, you don't want to make random floating towers, duh!
+                                            break;
                                         }
+                                    }
+                                }
+                            }
+                        }
+
+                        if(!possiblePlacingPositions.isEmpty()){
+                            //Get a random placing Position
+                            WorldPos randomPlacingPos = possiblePlacingPositions.get(worldObj.rand.nextInt(possiblePlacingPositions.size()));
+                            int x = randomPlacingPos.getX();
+                            int z = randomPlacingPos.getZ();
+                            int toPlaceY = randomPlacingPos.getY();
+                            //Find the first available block
+                            for(int y = this.yCoord-1; y > 0; y--){
+                                Block block = worldObj.getBlock(xCoord+x, y, zCoord+z);
+                                int meta = worldObj.getBlockMetadata(xCoord+x, y, zCoord+z);
+                                int[] oreIDs = OreDictionary.getOreIDs(new ItemStack(block, 1, meta));
+                                for(int ID : oreIDs){
+                                    String oreName = OreDictionary.getOreName(ID);
+                                    //Is the block an ore according to the OreDictionary?
+                                    if(oreName.substring(0, 3).equals("ore")){
+                                        //Remove the Block
+                                        worldObj.setBlockToAir(xCoord+x, y, zCoord+z);
+                                        worldObj.playAuxSFX(2001, xCoord+x, y, zCoord+z, Block.getIdFromBlock(block)+(meta << 12));
+
+                                        //Set the Block at the Top again
+                                        worldObj.setBlock(xCoord+x, yCoord+toPlaceY, zCoord+z, block, meta, 2);
+                                        worldObj.playSoundEffect((double)xCoord+x+0.5D, (double)yCoord+toPlaceY+0.5D, (double)zCoord+z+0.5D, block.stepSound.func_150496_b(), (block.stepSound.getVolume()+1.0F)/2.0F, block.stepSound.getPitch()*0.8F);
+
+                                        //Extract oil
+                                        this.tank.drain(oilUsePerTick, true);
+                                        return;
                                     }
                                 }
                             }
@@ -86,7 +111,7 @@ public class TileEntityOreMagnet extends TileEntityInventoryBase implements IEne
                 else this.currentWorkTimer = maxWorkTimer+MathHelper.getRandomIntegerInRange(worldObj.rand, 0, maxWorkTimer);
 
                 //Extract energy
-                this.storage.extractEnergy(this.energyUsePerTick, false);
+                this.storage.extractEnergy(energyUsePerTick, false);
             }
 
             //Update Clients

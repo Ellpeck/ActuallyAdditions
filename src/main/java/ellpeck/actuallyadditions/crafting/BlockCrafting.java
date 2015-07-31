@@ -90,7 +90,7 @@ public class BlockCrafting{
                     'A', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.STONE_CASING.ordinal())));
 
         //Lava Factory
-        if(ConfigCrafting.LAVA_FACTORY.isEnabled()){
+        if(ConfigCrafting.LAVA_FACTORY.isEnabled())
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockLavaFactoryController),
                     " C ", "ISI", " L ",
                     'C', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.STONE_CASING.ordinal()),
@@ -98,11 +98,12 @@ public class BlockCrafting{
                     'I', "blockIron",
                     'L', Items.lava_bucket));
 
-            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockMisc, 4, TheMiscBlocks.LAVA_FACTORY_CASE.ordinal()),
+        //Casing
+        if(ConfigCrafting.CASING.isEnabled())
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockMisc, 16, TheMiscBlocks.LAVA_FACTORY_CASE.ordinal()),
                     "ICI",
                     'C', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.STONE_CASING.ordinal()),
                     'I', "blockIron"));
-        }
 
         //Canola Press
         if(ConfigCrafting.CANOLA_PRESS.isEnabled())

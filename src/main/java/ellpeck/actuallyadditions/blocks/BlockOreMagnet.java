@@ -5,9 +5,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.ActuallyAdditions;
 import ellpeck.actuallyadditions.inventory.GuiHandler;
 import ellpeck.actuallyadditions.tile.TileEntityOreMagnet;
-import ellpeck.actuallyadditions.util.BlockUtil;
-import ellpeck.actuallyadditions.util.INameableItem;
-import ellpeck.actuallyadditions.util.ModUtil;
+import ellpeck.actuallyadditions.util.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -44,14 +42,15 @@ public class BlockOreMagnet extends BlockContainerBase implements INameableItem{
     @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconReg){
-        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":" + this.getName());
+        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
     }
 
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9){
         if(!world.isRemote){
             TileEntityOreMagnet magnet = (TileEntityOreMagnet)world.getTileEntity(x, y, z);
-            if (magnet != null) player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.ORE_MAGNET.ordinal(), world, x, y, z);
+            if(magnet != null)
+                player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.ORE_MAGNET.ordinal(), world, x, y, z);
             return true;
         }
         return true;
@@ -92,9 +91,12 @@ public class BlockOreMagnet extends BlockContainerBase implements INameableItem{
         @Override
         @SuppressWarnings("unchecked")
         @SideOnly(Side.CLIENT)
-        public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld) {
+        public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld){
             BlockUtil.addInformation(theBlock, list, 1, "");
-            //TODO Energy stuffs
+            BlockUtil.addPowerUsageInfo(list, TileEntityOreMagnet.energyUsePerTick);
+            if(KeyUtil.isShiftPressed()){
+                list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".uses.desc")+" "+TileEntityOreMagnet.oilUsePerTick+" mB/t");
+            }
         }
 
         @Override

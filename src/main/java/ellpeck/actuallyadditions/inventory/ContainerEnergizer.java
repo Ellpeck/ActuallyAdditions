@@ -61,7 +61,6 @@ public class ContainerEnergizer extends Container{
         return this.energizer.isUseableByPlayer(player);
     }
 
-    //TODO Armor Shift-Clicking
     @Override
     public ItemStack transferStackInSlot(EntityPlayer player, int slot){
         final int inventoryStart = 2;

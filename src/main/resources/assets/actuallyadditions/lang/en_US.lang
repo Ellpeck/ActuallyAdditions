@@ -118,12 +118,12 @@ tooltip.actuallyadditions.blockPhantomBreaker.desc.1=Breaks Blocks from a distan
 tooltip.actuallyadditions.blockPhantomBreaker.desc.2=Sneak-Right-Click with an empty hand to see its Connections!
 
 tile.actuallyadditions.blockLavaFactoryController.name=Lava Factory Controller
-tooltip.actuallyadditions.blockLavaFactoryController.desc.1=Place Lava Factory Casings around in the right way to produce Lava:
+tooltip.actuallyadditions.blockLavaFactoryController.desc.1=Place Casings around in the right way to produce Lava:
 tooltip.actuallyadditions.blockLavaFactoryController.desc.2=Go one block up above the Controller, that's where Lava is going to land
 tooltip.actuallyadditions.blockLavaFactoryController.desc.3=Place 4 Casings around that empty space so that it is encased
 
-tile.actuallyadditions.blockMiscLavaFactoryCase.name=Lava Factory Casing
-tooltip.actuallyadditions.blockMiscLavaFactoryCase.desc=Helps the Lava Factory Controller generate Lava
+tile.actuallyadditions.blockMiscLavaFactoryCase.name=Casing
+tooltip.actuallyadditions.blockMiscLavaFactoryCase.desc=A Casing for the Lava Factory and more.
 
 tile.actuallyadditions.blockFluidPlacer.name=Fluid Placer
 tooltip.actuallyadditions.blockFluidPlacer.desc=Places Fluids stored inside it
