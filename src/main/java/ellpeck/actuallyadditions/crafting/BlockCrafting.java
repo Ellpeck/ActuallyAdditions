@@ -100,7 +100,7 @@ public class BlockCrafting{
 
         //Casing
         if(ConfigCrafting.CASING.isEnabled())
-            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockMisc, 16, TheMiscBlocks.LAVA_FACTORY_CASE.ordinal()),
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockMisc, 8, TheMiscBlocks.LAVA_FACTORY_CASE.ordinal()),
                     "ICI",
                     'C', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.STONE_CASING.ordinal()),
                     'I', "blockIron"));

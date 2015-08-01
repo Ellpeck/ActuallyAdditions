@@ -57,8 +57,8 @@ public class TileEntityOreMagnet extends TileEntityInventoryBase implements IEne
                         //The possible positions where ores can be mined up in RELATIVE COORDINATES!!
                         ArrayList<WorldPos> possiblePlacingPositions = new ArrayList<WorldPos>();
 
-                        for(int x = -range; x <= range; x++){
-                            for(int z = -range; z <= range; z++){
+                        for(int x = -range/2; x <= range/2; x++){
+                            for(int z = -range/2; z <= range/2; z++){
                                 //Check if there is a casing below the Block to mine
                                 if(WorldUtil.hasBlocksInPlacesGiven(new int[][]{{x, -1, z}}, InitBlocks.blockMisc, TheMiscBlocks.LAVA_FACTORY_CASE.ordinal(), worldObj, xCoord, yCoord, zCoord)){
                                     //Can the block at the top be replaced?

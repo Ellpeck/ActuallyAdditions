@@ -16,6 +16,7 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
 
@@ -53,9 +54,9 @@ public class ItemGrowthRing extends ItemEnergy implements INameableItem{
                 for(int x = -RANGE; x < RANGE+1; x++){
                     for(int z = -RANGE; z < RANGE+1; z++){
                         for(int y = -RANGE; y < RANGE+1; y++){
-                            int theX = (int)player.posX+x;
-                            int theY = (int)player.posY+y;
-                            int theZ = (int)player.posZ+z;
+                            int theX = MathHelper.floor_double(player.posX+x);
+                            int theY = MathHelper.floor_double(player.posY+y);
+                            int theZ = MathHelper.floor_double(player.posZ+z);
                             Block theBlock = world.getBlock(theX, theY, theZ);
                             if((theBlock instanceof IGrowable || theBlock instanceof IPlantable) && !(theBlock instanceof BlockGrass)){
                                 blocks.add(new WorldPos(world, theX, theY, theZ));

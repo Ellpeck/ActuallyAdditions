@@ -16,6 +16,7 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
@@ -39,7 +40,7 @@ public class ItemLeafBlower extends Item implements INameableItem{
         if(!player.worldObj.isRemote){
             if(time <= getMaxItemUseDuration(stack) && time % 2 == 0){
                 //Breaks the Blocks
-                this.breakStuff(player.worldObj, (int)player.posX, (int)player.posY, (int)player.posZ);
+                this.breakStuff(player.worldObj, MathHelper.floor_double(player.posX), MathHelper.floor_double(player.posY), MathHelper.floor_double(player.posZ));
                 //Plays a Minecart sounds (It really sounds like a Leaf Blower!)
                 if(this.hasSound) player.worldObj.playSoundAtEntity(player, "minecart.base", 0.3F, 0.001F);
             }
