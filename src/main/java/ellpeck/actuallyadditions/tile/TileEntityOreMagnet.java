@@ -6,6 +6,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.blocks.InitBlocks;
 import ellpeck.actuallyadditions.blocks.metalists.TheMiscBlocks;
+import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.network.sync.IPacketSyncerToClient;
 import ellpeck.actuallyadditions.network.sync.PacketSyncerToClient;
 import ellpeck.actuallyadditions.util.WorldPos;
@@ -35,10 +36,10 @@ public class TileEntityOreMagnet extends TileEntityInventoryBase implements IEne
 
     private int currentWorkTimer;
 
-    private int maxWorkTimer = 10;
-    private int range = 10;
-    public static int oilUsePerTick = 50;
-    public static int energyUsePerTick = 400;
+    private int maxWorkTimer = ConfigIntValues.ORE_MAGNET_MAX_TIMER.getValue();
+    private int range = ConfigIntValues.ORE_MAGNET_RANGE.getValue();
+    public static int oilUsePerTick = ConfigIntValues.ORE_MAGNET_OIL_USE.getValue();
+    public static int energyUsePerTick = ConfigIntValues.ORE_MAGNET_ENERGY_USE.getValue();
 
     public TileEntityOreMagnet(){
         super(3, "oreMagnet");
@@ -83,10 +84,10 @@ public class TileEntityOreMagnet extends TileEntityInventoryBase implements IEne
                             int z = randomPlacingPos.getZ();
                             int toPlaceY = randomPlacingPos.getY();
                             //Find the first available block
-                            for(int y = this.yCoord-1; y > 0; y--){
+                            for(int y = this.yCoord-2; y > 0; y--){
                                 Block block = worldObj.getBlock(xCoord+x, y, zCoord+z);
                                 int meta = worldObj.getBlockMetadata(xCoord+x, y, zCoord+z);
-                                if(!block.hasTileEntity(meta) && block.getBlockHardness(worldObj, xCoord+x, y, zCoord+z) >= 0.0F && (block.getMaterial().isToolNotRequired() || (block.getHarvestTool(meta).equals("pickaxe") && block.getHarvestLevel(meta) <= 3))){
+                                if(block != null && !block.isAir(worldObj, xCoord+x, y, zCoord+z) && !block.hasTileEntity(meta) && block.getBlockHardness(worldObj, xCoord+x, y, zCoord+z) >= 0.0F && ((block.getMaterial() != null && block.getMaterial().isToolNotRequired()) || (block.getHarvestTool(meta) == null || (block.getHarvestTool(meta).equals("pickaxe") && block.getHarvestLevel(meta) <= 3)))){
                                     int[] oreIDs = OreDictionary.getOreIDs(new ItemStack(block, 1, meta));
                                     for(int ID : oreIDs){
                                         String oreName = OreDictionary.getOreName(ID);

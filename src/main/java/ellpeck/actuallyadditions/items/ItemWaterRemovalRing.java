@@ -21,7 +21,7 @@ public class ItemWaterRemovalRing extends ItemEnergy implements INameableItem{
     private static final int ENERGY_USED_PER_BLOCK = ConfigIntValues.WATER_RING_ENERGY_USE.getValue();
 
     public ItemWaterRemovalRing(){
-        super(1000000, 5000, 2);
+        super(1000000, 5000, 1);
     }
 
     @Override

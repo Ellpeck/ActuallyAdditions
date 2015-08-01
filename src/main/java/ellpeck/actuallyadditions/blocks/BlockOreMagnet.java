@@ -92,10 +92,10 @@ public class BlockOreMagnet extends BlockContainerBase implements INameableItem{
         @SuppressWarnings("unchecked")
         @SideOnly(Side.CLIENT)
         public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld){
-            BlockUtil.addInformation(theBlock, list, 1, "");
+            BlockUtil.addInformation(theBlock, list, 3, "");
             BlockUtil.addPowerUsageInfo(list, TileEntityOreMagnet.energyUsePerTick);
             if(KeyUtil.isShiftPressed()){
-                list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".uses.desc")+" "+TileEntityOreMagnet.oilUsePerTick+" mB/t");
+                list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".uses.desc")+" "+TileEntityOreMagnet.oilUsePerTick+" mB "+StringUtil.localize(InitBlocks.fluidOil.getUnlocalizedName())+"/"+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".block.desc"));
             }
         }
 

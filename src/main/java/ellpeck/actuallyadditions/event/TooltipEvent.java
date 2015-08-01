@@ -39,12 +39,14 @@ public class TooltipEvent{
 
                     //Base Item's Unlocalized Name
                     String baseName = event.itemStack.getItem().getUnlocalizedName();
-                    event.toolTip.add(HEADER_PRE+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".baseUnlocName.desc")+":");
-                    event.toolTip.add(TEXT_PRE+baseName);
+                    if(baseName != null){
+                        event.toolTip.add(HEADER_PRE+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".baseUnlocName.desc")+":");
+                        event.toolTip.add(TEXT_PRE+baseName);
+                    }
 
                     //Unlocalized Name
                     String metaName = event.itemStack.getItem().getUnlocalizedName(event.itemStack);
-                    if(!metaName.equals(baseName)){
+                    if(metaName != null && baseName != null && !metaName.equals(baseName)){
                         event.toolTip.add(HEADER_PRE+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".unlocName.desc")+":");
                         event.toolTip.add(TEXT_PRE+metaName);
                     }

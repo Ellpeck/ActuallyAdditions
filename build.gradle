@@ -18,7 +18,7 @@ buildscript {
 apply plugin: 'forge'
 apply plugin: 'maven'
 
-version = "1.7.10-0.0.7.6"
+version = "1.7.10-0.0.8.0"
 group = "ellpeck.actuallyadditions"
 archivesBaseName = "ActuallyAdditions"
 

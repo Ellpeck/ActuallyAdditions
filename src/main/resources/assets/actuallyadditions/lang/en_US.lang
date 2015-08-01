@@ -4,6 +4,8 @@ achievement.page.actuallyadditions=Actually Additions
 fluid.oil=Oil
 fluid.canolaoil=Canola Oil
 
+tooltip.actuallyadditions.block.desc=Block
+
 tile.actuallyadditions.blockCompost.name=Compost
 tile.actuallyadditions.blockMiscOreBlackQuartz.name=Black Quartz Ore
 tile.actuallyadditions.blockMiscBlackQuartz.name=Block of Black Quartz
@@ -89,6 +91,18 @@ tile.actuallyadditions.blockColoredLampLime.name=Lime Lamp
 tile.actuallyadditions.blockColoredLampPink.name=Pink Lamp
 tile.actuallyadditions.blockColoredLampCyan.name=Cyan Lamp
 tile.actuallyadditions.blockColoredLampPurple.name=Purple Lamp
+
+item.actuallyadditions.itemGrowthRing.name=Ring of Growth
+tooltip.actuallyadditions.itemGrowthRing.desc=Lets Plants around you grow when held in hand
+item.actuallyadditions.itemWaterRemovalRing.name=Ring of Liquid Banning
+tooltip.actuallyadditions.itemWaterRemovalRing.desc=Removes Water & Lava Blocks around you when held in hand
+item.actuallyadditions.itemSuctionRing.name=Ring of Magnetism
+tooltip.actuallyadditions.itemSuctionRing.desc=Sucks in Items in the area when in Inventory
+
+tile.actuallyadditions.blockOreMagnet.name=Magnetic Miner
+tooltip.actuallyadditions.blockOreMagnet.desc.1=Pulls underground Ore Blocks to the Surface
+tooltip.actuallyadditions.blockOreMagnet.desc.2=Places where Ores should be mined have to have a
+tooltip.actuallyadditions.blockOreMagnet.desc.3=Casing Block one block lower than the Miner.
 
 item.actuallyadditions.itemBucketCanolaOil.name=Canola Oil Bucket
 tooltip.actuallyadditions.itemBucketCanolaOil.desc=A Bucket filled with Canola Oil

@@ -33,7 +33,7 @@ public class ItemGrowthRing extends ItemEnergy implements INameableItem{
     private static final int GROWTH_TICKS_PER_CYCLE = ConfigIntValues.GROWTH_RING_GROWTH_PER_CYCLE.getValue();
 
     public ItemGrowthRing(){
-        super(1000000, 5000, 2);
+        super(1000000, 5000, 1);
     }
 
     @Override
