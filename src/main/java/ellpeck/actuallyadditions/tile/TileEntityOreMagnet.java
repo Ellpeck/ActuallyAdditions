@@ -35,7 +35,7 @@ public class TileEntityOreMagnet extends TileEntityInventoryBase implements IEne
 
     private int currentWorkTimer;
 
-    private int maxWorkTimer = 15;
+    private int maxWorkTimer = 10;
     private int range = 10;
     public static int oilUsePerTick = 50;
     public static int energyUsePerTick = 400;
@@ -86,22 +86,24 @@ public class TileEntityOreMagnet extends TileEntityInventoryBase implements IEne
                             for(int y = this.yCoord-1; y > 0; y--){
                                 Block block = worldObj.getBlock(xCoord+x, y, zCoord+z);
                                 int meta = worldObj.getBlockMetadata(xCoord+x, y, zCoord+z);
-                                int[] oreIDs = OreDictionary.getOreIDs(new ItemStack(block, 1, meta));
-                                for(int ID : oreIDs){
-                                    String oreName = OreDictionary.getOreName(ID);
-                                    //Is the block an ore according to the OreDictionary?
-                                    if(oreName.substring(0, 3).equals("ore")){
-                                        //Remove the Block
-                                        worldObj.setBlockToAir(xCoord+x, y, zCoord+z);
-                                        worldObj.playAuxSFX(2001, xCoord+x, y, zCoord+z, Block.getIdFromBlock(block)+(meta << 12));
+                                if(!block.hasTileEntity(meta) && block.getBlockHardness(worldObj, xCoord+x, y, zCoord+z) >= 0.0F && (block.getMaterial().isToolNotRequired() || (block.getHarvestTool(meta).equals("pickaxe") && block.getHarvestLevel(meta) <= 3))){
+                                    int[] oreIDs = OreDictionary.getOreIDs(new ItemStack(block, 1, meta));
+                                    for(int ID : oreIDs){
+                                        String oreName = OreDictionary.getOreName(ID);
+                                        //Is the block an ore according to the OreDictionary?
+                                        if(oreName.substring(0, 3).equals("ore")){
+                                            //Remove the Block
+                                            worldObj.setBlockToAir(xCoord+x, y, zCoord+z);
+                                            worldObj.playAuxSFX(2001, xCoord+x, y, zCoord+z, Block.getIdFromBlock(block)+(meta << 12));
 
-                                        //Set the Block at the Top again
-                                        worldObj.setBlock(xCoord+x, yCoord+toPlaceY, zCoord+z, block, meta, 2);
-                                        worldObj.playSoundEffect((double)xCoord+x+0.5D, (double)yCoord+toPlaceY+0.5D, (double)zCoord+z+0.5D, block.stepSound.func_150496_b(), (block.stepSound.getVolume()+1.0F)/2.0F, block.stepSound.getPitch()*0.8F);
+                                            //Set the Block at the Top again
+                                            worldObj.setBlock(xCoord+x, yCoord+toPlaceY, zCoord+z, block, meta, 2);
+                                            worldObj.playSoundEffect((double)xCoord+x+0.5D, (double)yCoord+toPlaceY+0.5D, (double)zCoord+z+0.5D, block.stepSound.func_150496_b(), (block.stepSound.getVolume()+1.0F)/2.0F, block.stepSound.getPitch()*0.8F);
 
-                                        //Extract oil
-                                        this.tank.drain(oilUsePerTick, true);
-                                        return;
+                                            //Extract oil
+                                            this.tank.drain(oilUsePerTick, true);
+                                            return;
+                                        }
                                     }
                                 }
                             }
@@ -189,7 +191,7 @@ public class TileEntityOreMagnet extends TileEntityInventoryBase implements IEne
 
     @Override
     public int fill(ForgeDirection from, FluidStack resource, boolean doFill){
-        if(resource.getFluid() == InitBlocks.fluidOil) return this.tank.fill(resource, doFill);
+        if(this.canFill(from, resource.getFluid())) return this.tank.fill(resource, doFill);
         return 0;
     }
 

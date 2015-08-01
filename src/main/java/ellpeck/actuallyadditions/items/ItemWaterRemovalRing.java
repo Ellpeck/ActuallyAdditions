@@ -2,6 +2,7 @@ package ellpeck.actuallyadditions.items;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.util.INameableItem;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -15,8 +16,8 @@ import net.minecraft.world.World;
 
 public class ItemWaterRemovalRing extends ItemEnergy implements INameableItem{
 
-    private static final int RANGE = 3;
-    private static final int ENERGY_USED_PER_BLOCK = 30;
+    private static final int RANGE = ConfigIntValues.WATER_RING_RANGE.getValue();
+    private static final int ENERGY_USED_PER_BLOCK = ConfigIntValues.WATER_RING_ENERGY_USE.getValue();
 
     public ItemWaterRemovalRing(){
         super(1000000, 5000, 2);
