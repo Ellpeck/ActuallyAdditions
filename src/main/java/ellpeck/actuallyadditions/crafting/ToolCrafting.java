@@ -3,6 +3,7 @@ package ellpeck.actuallyadditions.crafting;
 import cpw.mods.fml.common.registry.GameRegistry;
 import ellpeck.actuallyadditions.config.values.ConfigCrafting;
 import ellpeck.actuallyadditions.items.InitItems;
+import ellpeck.actuallyadditions.items.metalists.TheMiscItems;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -63,6 +64,58 @@ public class ToolCrafting{
             GameRegistry.addRecipe(new ItemStack(InitItems.itemBootsEmerald),
                     "O O", "O O",
                     'O', new ItemStack(Items.emerald));
+        }
+
+        if(ConfigCrafting.TOOL_QUARTZ.isEnabled()){
+            //Pickaxe
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemPickaxeQuartz),
+                    "EEE", " S ", " S ",
+                    'E', "gemQuartzBlack",
+                    'S', new ItemStack(Items.stick)));
+
+            //Sword
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemSwordQuartz),
+                    "E", "E", "S",
+                    'E', "gemQuartzBlack",
+                    'S', new ItemStack(Items.stick)));
+
+            //Axe
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemAxeQuartz),
+                    "EE", "ES", " S",
+                    'E', "gemQuartzBlack",
+                    'S', new ItemStack(Items.stick)));
+
+            //Shovel
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemShovelQuartz),
+                    "E", "S", "S",
+                    'E', "gemQuartzBlack",
+                    'S', new ItemStack(Items.stick)));
+
+            //Hoe
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemHoeQuartz),
+                    "EE", " S", " S",
+                    'E', "gemQuartzBlack",
+                    'S', new ItemStack(Items.stick)));
+
+            //Helm
+            GameRegistry.addRecipe(new ItemStack(InitItems.itemHelmQuartz),
+                    "OOO", "O O",
+                    'O', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal()));
+
+            //Chest
+            GameRegistry.addRecipe(new ItemStack(InitItems.itemChestQuartz),
+                    "O O", "OOO", "OOO",
+                    'O', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal()));
+
+            //Legs
+            GameRegistry.addRecipe(new ItemStack(InitItems.itemPantsQuartz),
+                    "OOO", "O O", "O O",
+                    'O', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal()));
+
+            //Boots
+            GameRegistry.addRecipe(new ItemStack(InitItems.itemBootsQuartz),
+                    "O O", "O O",
+                    'O', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal()));
         }
 
         if(ConfigCrafting.TOOL_OBSIDIAN.isEnabled()){

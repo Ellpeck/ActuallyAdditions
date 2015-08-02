@@ -147,10 +147,10 @@ public enum ConfigIntValues{
     WATER_RING_RANGE("Water Ring: Range", ConfigCategories.MACHINE_VALUES, 3, 1, 10, "The Range of the Water Ring"),
     WATER_RING_ENERGY_USE("Magnet Ring: Energy Used", ConfigCategories.MACHINE_VALUES, 30, 0, 500, "The Amount of Energy the Water Ring uses per Block"),
 
-    ORE_MAGNET_MAX_TIMER("Ore Magnet: Max Timer", ConfigCategories.MACHINE_VALUES, 15, 1, 2000, "The approximate Time it takes for the Ore Magnet to search for a new block to mine"),
+    ORE_MAGNET_MAX_TIMER("Ore Magnet: Max Timer", ConfigCategories.MACHINE_VALUES, 20, 1, 2000, "The approximate Time it takes for the Ore Magnet to search for a new block to mine"),
     ORE_MAGNET_RANGE("Ore Magnet: Range", ConfigCategories.MACHINE_VALUES, 10, 1, 60, "The range of the Ore Magnet"),
-    ORE_MAGNET_OIL_USE("Ore Magnet: Oil Use", ConfigCategories.MACHINE_VALUES, 50, 0, 5000, "The amount of oil the Ore Magnet uses every Block"),
-    ORE_MAGNET_ENERGY_USE("Ore Magnet: Energy USe", ConfigCategories.MACHINE_VALUES, 500, 10, 10000, "The amount of Energy the Ore Magnet uses every tick");
+    ORE_MAGNET_OIL_USE("Ore Magnet: Oil Use", ConfigCategories.MACHINE_VALUES, 30, 0, 5000, "The amount of oil the Ore Magnet uses every Block"),
+    ORE_MAGNET_ENERGY_USE("Ore Magnet: Energy USe", ConfigCategories.MACHINE_VALUES, 250, 10, 10000, "The amount of Energy the Ore Magnet uses every tick");
 
     public final String name;
     public final String category;

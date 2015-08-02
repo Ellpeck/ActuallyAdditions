@@ -148,6 +148,31 @@ public class ItemCrafting{
                     'I', "ingotIron",
                     'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal())));
 
+        //Magnet Ring
+        if(ConfigCrafting.MAGNET_RING.isEnabled())
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemMagnetRing),
+                    "RIB", "IOI", "BIR",
+                    'R', "dustRedstone",
+                    'I', "ingotIron",
+                    'B', new ItemStack(Items.dye, 1, 4),
+                    'O', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.RING.ordinal())));
+
+        //Growth Ring
+        if(ConfigCrafting.GROWTH_RING.isEnabled())
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemGrowthRing),
+                    "SIS", "IOI", "SIS",
+                    'S', new ItemStack(Items.wheat_seeds),
+                    'I', "ingotIron",
+                    'O', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.RING.ordinal())));
+
+        //Water Ring
+        if(ConfigCrafting.WATER_RING.isEnabled())
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemWaterRemovalRing),
+                    "BIB", "IOI", "BIB",
+                    'B', new ItemStack(Items.water_bucket),
+                    'I', "ingotIron",
+                    'O', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.RING.ordinal())));
+
         //Triple Battery
         if(ConfigCrafting.TRIPLE_BATTERY.isEnabled())
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemBatteryTriple),

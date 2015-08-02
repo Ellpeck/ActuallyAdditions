@@ -68,6 +68,7 @@ public enum ConfigCrafting{
 
     TOOL_EMERALD("Emerald Tools", ConfigCategories.ITEMS_CRAFTING),
     TOOL_OBSIDIAN("Obsidian Tools", ConfigCategories.ITEMS_CRAFTING),
+    TOOL_QUARTZ("Obsidian Tools", ConfigCategories.ITEMS_CRAFTING),
     RICE_BREAD("Rice Bread", ConfigCategories.FOOD_CRAFTING),
     RICE_DOUGH("Rice Dough", ConfigCategories.FOOD_CRAFTING),
 
@@ -129,7 +130,12 @@ public enum ConfigCrafting{
     IRON("Iron Ore -> Iron Dust + Gold Dust", ConfigCategories.CRUSHER_RECIPES, "Crusher"),
 
     TELE_STAFF("Tele Staff", ConfigCategories.ITEMS_CRAFTING),
-    CASING("Casing", ConfigCategories.BLOCKS_CRAFTING);
+    CASING("Casing", ConfigCategories.BLOCKS_CRAFTING),
+    ORE_MAGNET("Ore Magnet", ConfigCategories.BLOCKS_CRAFTING),
+
+    MAGNET_RING("Magnet Ring", ConfigCategories.ITEMS_CRAFTING),
+    WATER_RING("Water Ring", ConfigCategories.ITEMS_CRAFTING),
+    GROWTH_RING("Growth Ring", ConfigCategories.ITEMS_CRAFTING);
 
     public final String name;
     public final String category;

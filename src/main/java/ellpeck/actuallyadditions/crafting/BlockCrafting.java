@@ -114,6 +114,15 @@ public class BlockCrafting{
                     'R', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal()),
                     'D', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.CANOLA.ordinal())));
 
+        //Ore Magnet
+        if(ConfigCrafting.ORE_MAGNET.isEnabled())
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockOreMagnet),
+                    "SSS", "CBC", "ISI",
+                    'S', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.LAVA_FACTORY_CASE.ordinal()),
+                    'C', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.STONE_CASING.ordinal()),
+                    'B', new ItemStack(InitItems.itemBatteryDouble),
+                    'I', new ItemStack(Blocks.iron_block)));
+
         //Fermenting Barrel
         if(ConfigCrafting.FERMENTING_BARREL.isEnabled())
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockFermentingBarrel),
