@@ -407,7 +407,7 @@ item.actuallyadditions.itemDustCoal.name=Crushed Coal
 item.actuallyadditions.itemDustQuartzBlack.name=Crushed Black Quartz
 
 tooltip.actuallyadditions.shiftForInfo.desc=Press Shift for Info
-tooltip.actuallyadditions.ctrlForMoreInfo.desc=<CTRL for Advanced Info>
+tooltip.actuallyadditions.ctrlForMoreInfo.desc=Press CTRL for Advanced Info
 tooltip.actuallyadditions.extraInfo.desc=Advanced Info
 tooltip.actuallyadditions.hunger.desc=Hunger Points
 tooltip.actuallyadditions.saturation.desc=Saturation
@@ -634,6 +634,7 @@ container.actuallyadditions.drill.name=Drill
 container.actuallyadditions.energizer.name=Energizer
 container.actuallyadditions.enervator.name=Enervator
 container.actuallyadditions.xpSolidifier.name=Experience Solidifier
+container.actuallyadditions.oreMagnet.name=Magnetic Miner
 
 container.nei.actuallyadditions.crushing.name=Crusher
 container.nei.actuallyadditions.crushingDouble.name=Double Crusher

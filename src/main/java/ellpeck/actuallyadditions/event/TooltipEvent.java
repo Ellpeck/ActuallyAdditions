@@ -17,8 +17,8 @@ public class TooltipEvent{
     @SubscribeEvent
     public void onTooltipEvent(ItemTooltipEvent event){
         if(event.itemStack.getItem() != null){
-            if(KeyUtil.isControlPressed()){
-                if(ConfigBoolValues.CTRL_EXTRA_INFO.isEnabled()){
+            if(ConfigBoolValues.CTRL_EXTRA_INFO.isEnabled()){
+                if(KeyUtil.isControlPressed()){
                     event.toolTip.add(StringUtil.GRAY+StringUtil.ITALIC+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".extraInfo.desc")+":");
 
                     //OreDict Names
@@ -51,10 +51,10 @@ public class TooltipEvent{
                         event.toolTip.add(TEXT_PRE+metaName);
                     }
                 }
-            }
-            else{
-                if(ConfigBoolValues.CTRL_INFO_FOR_EXTRA_INFO.isEnabled()){
-                    event.toolTip.add(StringUtil.GRAY+StringUtil.ITALIC+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".ctrlForMoreInfo.desc"));
+                else{
+                    if(ConfigBoolValues.CTRL_INFO_FOR_EXTRA_INFO.isEnabled()){
+                        event.toolTip.add(StringUtil.GRAY+StringUtil.ITALIC+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".ctrlForMoreInfo.desc"));
+                    }
                 }
             }
         }
