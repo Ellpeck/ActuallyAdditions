@@ -92,7 +92,7 @@ public class BlockCrafting{
         //Lava Factory
         if(ConfigCrafting.LAVA_FACTORY.isEnabled())
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockLavaFactoryController),
-                    " C ", "ISI", " L ",
+                    "SCS", "ISI", "LLL",
                     'C', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.STONE_CASING.ordinal()),
                     'S', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal()),
                     'I', "blockIron",
@@ -100,7 +100,7 @@ public class BlockCrafting{
 
         //Casing
         if(ConfigCrafting.CASING.isEnabled())
-            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockMisc, 8, TheMiscBlocks.LAVA_FACTORY_CASE.ordinal()),
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockMisc, 32, TheMiscBlocks.LAVA_FACTORY_CASE.ordinal()),
                     "ICI",
                     'C', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.STONE_CASING.ordinal()),
                     'I', "blockIron"));

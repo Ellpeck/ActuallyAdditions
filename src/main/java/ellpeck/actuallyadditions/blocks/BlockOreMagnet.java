@@ -21,6 +21,9 @@ import java.util.List;
 
 public class BlockOreMagnet extends BlockContainerBase implements INameableItem{
 
+    private IIcon topIcon;
+    private IIcon bottomIcon;
+
     public BlockOreMagnet(){
         super(Material.rock);
         this.setHarvestLevel("pickaxe", 0);
@@ -36,13 +39,15 @@ public class BlockOreMagnet extends BlockContainerBase implements INameableItem{
 
     @Override
     public IIcon getIcon(int side, int meta){
-        return this.blockIcon;
+        return (side == 1 ? this.topIcon : (side == 0 ? this.bottomIcon : this.blockIcon));
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconReg){
         this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
+        this.topIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Top");
+        this.bottomIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Bottom");
     }
 
     @Override
