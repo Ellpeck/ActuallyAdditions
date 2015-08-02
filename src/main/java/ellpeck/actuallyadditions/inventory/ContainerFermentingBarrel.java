@@ -43,7 +43,7 @@ public class ContainerFermentingBarrel extends Container{
 
     @Override
     public ItemStack transferStackInSlot(EntityPlayer player, int slot){
-        final int inventoryStart = 3;
+        final int inventoryStart = 4;
         final int inventoryEnd = inventoryStart+26;
         final int hotbarStart = inventoryEnd+1;
         final int hotbarEnd = hotbarStart+8;
@@ -57,11 +57,11 @@ public class ContainerFermentingBarrel extends Container{
             //Other Slots in Inventory excluded
             if(slot >= inventoryStart){
                 //Shift from Inventory
-                if(FluidContainerRegistry.getContainerCapacity(new FluidStack(InitBlocks.fluidOil, 1), newStack) > 0){
-                    if(!this.mergeItemStack(newStack, 3, 4, false)) return null;
+                if(FluidContainerRegistry.containsFluid(newStack, new FluidStack(InitBlocks.fluidCanolaOil, 1))){
+                    if(!this.mergeItemStack(newStack, 0, 1, false)) return null;
                 }
-                else if(FluidContainerRegistry.containsFluid(newStack, new FluidStack(InitBlocks.fluidCanolaOil, 1))){
-                    if(!this.mergeItemStack(newStack, 1, 2, false)) return null;
+                else if(FluidContainerRegistry.getContainerCapacity(new FluidStack(InitBlocks.fluidOil, 1), newStack) > 0){
+                    if(!this.mergeItemStack(newStack, 2, 3, false)) return null;
                 }
                 //
 
