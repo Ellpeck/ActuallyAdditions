@@ -6,6 +6,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.blocks.InitBlocks;
 import ellpeck.actuallyadditions.blocks.metalists.TheMiscBlocks;
+import ellpeck.actuallyadditions.config.ConfigValues;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.network.sync.IPacketSyncerToClient;
 import ellpeck.actuallyadditions.network.sync.PacketSyncerToClient;
@@ -92,7 +93,7 @@ public class TileEntityOreMagnet extends TileEntityInventoryBase implements IEne
                                     for(int ID : oreIDs){
                                         String oreName = OreDictionary.getOreName(ID);
                                         //Is the block an ore according to the OreDictionary?
-                                        if(oreName.substring(0, 3).equals("ore")){
+                                        if(oreName.substring(0, 3).equals("ore") && !this.hasException(oreName)){
                                             //Remove the Block
                                             worldObj.setBlockToAir(xCoord+x, y, zCoord+z);
                                             worldObj.playAuxSFX(2001, xCoord+x, y, zCoord+z, Block.getIdFromBlock(block)+(meta << 12));
@@ -127,6 +128,13 @@ public class TileEntityOreMagnet extends TileEntityInventoryBase implements IEne
             //Empty Oil Bucket
             WorldUtil.emptyBucket(this.tank, this.slots, SLOT_OIL_INPUT, SLOT_OIL_OUTPUT);
         }
+    }
+
+    private boolean hasException(String name){
+        for(String except : ConfigValues.oreMagnetExceptions){
+            if(except.equals(name)) return true;
+        }
+        return false;
     }
 
     @SideOnly(Side.CLIENT)

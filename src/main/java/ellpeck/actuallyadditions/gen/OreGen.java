@@ -11,6 +11,7 @@ import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldType;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.feature.WorldGenMinable;
 import org.apache.logging.log4j.Level;
@@ -21,6 +22,8 @@ public class OreGen implements IWorldGenerator{
 
     @Override
     public void generate(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider){
+        if(world.provider.terrainType == WorldType.FLAT) return;
+
         switch(world.provider.dimensionId){
             case -1:
                 generateNether(world, random, chunkX*16, chunkZ*16);
