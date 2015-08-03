@@ -32,8 +32,8 @@ import ellpeck.actuallyadditions.recipe.TreasureChestHandler;
 import ellpeck.actuallyadditions.tile.TileEntityBase;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.Util;
-
-@Mod(modid = ModUtil.MOD_ID, name = ModUtil.NAME, version = ModUtil.VERSION, canBeDeactivated = false, guiFactory = "ellpeck.actuallyadditions.config.GuiFactory")
+//                                                                           So that BuildCraft Oil always gets used
+@Mod(modid = ModUtil.MOD_ID, name = ModUtil.NAME, version = ModUtil.VERSION, dependencies = "after:BuildCraft|Energy", canBeDeactivated = false, guiFactory = "ellpeck.actuallyadditions.config.GuiFactory")
 public class ActuallyAdditions{
 
     @Instance(ModUtil.MOD_ID)

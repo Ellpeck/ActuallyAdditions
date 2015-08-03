@@ -278,8 +278,7 @@ public class ItemCrafting{
         if(ConfigCrafting.STICK_CRAFTER.isEnabled())
             GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemCrafterOnAStick),
                     new ItemStack(Blocks.crafting_table),
-                    new ItemStack(Items.sign),
-                    "slimeball"));
+                    new ItemStack(Items.sign)));
 
         //Tiny Coal
         GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemMisc, 8, TheMiscItems.TINY_COAL.ordinal()),
