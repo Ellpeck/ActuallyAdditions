@@ -124,3 +124,6 @@
     -Only move when you don't look
     -Teleport you away
 
+-ESD Change
+    -Have a Button in the ESD that toggles if its slot is getting used or if the Items are just moved directly
+    -Makes it so that if you have multiple Items to be moved, one can't get stuck in the slot blocking the others
