@@ -22,8 +22,8 @@ import net.minecraft.world.World;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.regex.Pattern;
 
 @SideOnly(Side.CLIENT)
@@ -213,13 +213,20 @@ public class GuiInputter extends GuiContainer{
         this.whitelistPut.displayString = this.tileInputter.isPutWhitelist ? "O" : "X";
 
         if(this.isAdvanced){
+            String[] strings = StringUtil.localizeFormatted("info."+ModUtil.MOD_ID_LOWER+".inputter.whitelistInfo").split(Pattern.quote("|"));
             String text1 = this.tileInputter.isPullWhitelist ? StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.whitelist") : StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.blacklist");
             if(x >= guiLeft+3 && y >= guiTop+16 && x <= guiLeft+18 && y <= guiTop+31){
-                this.func_146283_a(Collections.singletonList(text1), x, y);
+                ArrayList list = new ArrayList();
+                list.add(StringUtil.BOLD+text1);
+                list.addAll(Arrays.asList(strings));
+                this.func_146283_a(list, x, y);
             }
             String text2 = this.tileInputter.isPutWhitelist ? StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.whitelist") : StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.blacklist");
             if(x >= guiLeft+157 && y >= guiTop+16 && x <= guiLeft+172 && y <= guiTop+31){
-                this.func_146283_a(Collections.singletonList(text2), x, y);
+                ArrayList list = new ArrayList();
+                list.add(StringUtil.BOLD+text2);
+                list.addAll(Arrays.asList(strings));
+                this.func_146283_a(list, x, y);
             }
         }
 
