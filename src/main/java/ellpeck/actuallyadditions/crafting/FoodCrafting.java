@@ -16,7 +16,7 @@ public class FoodCrafting{
 
     public static void init(){
 
-        ItemStack knifeStack = new ItemStack(InitItems.itemKnife);
+        ItemStack knifeStack = new ItemStack(InitItems.itemKnife, 1, Util.WILDCARD);
 
         //Rice Bread
         if(ConfigCrafting.RICE_BREAD.isEnabled())
