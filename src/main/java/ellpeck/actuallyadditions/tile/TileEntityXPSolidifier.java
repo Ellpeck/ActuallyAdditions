@@ -86,10 +86,22 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
         }
     }
 
+    /**
+     * Gets the Player's XP
+     * (Excerpted from OpenBlocks' XP system with permission, thanks guys!)
+     * @param player The Player
+     * @return The XP
+     */
     private int getPlayerXP(EntityPlayer player){
         return (int)(this.getExperienceForLevel(player.experienceLevel)+(player.experience*player.xpBarCap()));
     }
 
+    /**
+     * Adds (or removes, if negative) a certain amount of XP from a player
+     * (Excerpted from OpenBlocks' XP system with permission, thanks guys!)
+     * @param player The Player
+     * @param amount The Amount
+     */
     private void addPlayerXP(EntityPlayer player, int amount){
         int experience = getPlayerXP(player)+amount;
         player.experienceTotal = experience;
@@ -104,6 +116,12 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
         player.experience = (float)(experience-expForLevel)/(float)player.xpBarCap();
     }
 
+    /**
+     * Gets the amount of experience a certain level contains
+     * (Excerpted from OpenBlocks' XP system with permission, thanks guys!)
+     * @param level The Level in question
+     * @return The total XP the level has
+     */
     private int getExperienceForLevel(int level){
         if(level > 0){
             if(level > 0 && level < 16) return level*17;
