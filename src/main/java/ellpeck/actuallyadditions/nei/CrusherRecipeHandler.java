@@ -32,6 +32,24 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler{
             transferRects.add(new RecipeTransferRect(new Rectangle(51, 40, 24, 22), this.getName()));
             transferRects.add(new RecipeTransferRect(new Rectangle(101, 40, 24, 22), this.getName()));
         }
+
+        @Override
+        public String getGuiTexture(){
+            return ModUtil.MOD_ID_LOWER+":textures/gui/guiGrinderDouble.png";
+        }
+
+        @Override
+        public void drawBackground(int recipeIndex){
+            GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+            GuiDraw.changeTexture(getGuiTexture());
+            GuiDraw.drawTexturedModalRect(33, 20, 33, 20, 110, 70);
+        }
+
+        @Override
+        public void drawExtras(int recipe){
+            drawProgressBar(51, 40, 176, 0, 24, 23, 48, 1);
+            this.drawChanceString(66, 93, recipe);
+        }
     }
 
     public CrusherRecipeHandler(){
@@ -45,11 +63,12 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler{
         public PositionedStack resultTwo;
         public int secondChance;
 
-        public CachedCrush(ItemStack in, ItemStack resultOne, ItemStack resultTwo, int secondChance){
+        public CachedCrush(ItemStack in, ItemStack resultOne, ItemStack resultTwo, int secondChance, CrusherRecipeHandler handler){
+            boolean isDouble = handler instanceof CrusherDoubleRecipeHandler;
             in.stackSize = 1;
-            this.ingredient = new PositionedStack(in, 80, 21);
-            this.resultOne = new PositionedStack(resultOne, 66, 69);
-            if(resultTwo != null) this.resultTwo = new PositionedStack(resultTwo, 94, 69);
+            this.ingredient = new PositionedStack(in, isDouble ? 51 : 80, 21);
+            this.resultOne = new PositionedStack(resultOne, isDouble ? 38 : 66, 69);
+            if(resultTwo != null) this.resultTwo = new PositionedStack(resultTwo, isDouble ? 63 : 94, 69);
             this.secondChance = secondChance;
         }
 
@@ -96,7 +115,7 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler{
         if(outputId.equals(this.getName()) && (getClass() == CrusherRecipeHandler.class || getClass() == CrusherDoubleRecipeHandler.class)){
             ArrayList<CrusherRecipeManualRegistry.CrusherRecipe> recipes = CrusherRecipeManualRegistry.recipes;
             for(CrusherRecipeManualRegistry.CrusherRecipe recipe : recipes){
-                arecipes.add(new CachedCrush(recipe.input, recipe.firstOutput, recipe.secondOutput, recipe.secondChance));
+                arecipes.add(new CachedCrush(recipe.input, recipe.firstOutput, recipe.secondOutput, recipe.secondChance, this));
             }
         }
         else super.loadCraftingRecipes(outputId, results);
@@ -107,7 +126,7 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler{
         ArrayList<CrusherRecipeManualRegistry.CrusherRecipe> recipes = CrusherRecipeManualRegistry.recipes;
         for(CrusherRecipeManualRegistry.CrusherRecipe recipe : recipes){
             if(NEIServerUtils.areStacksSameType(recipe.firstOutput, result) || NEIServerUtils.areStacksSameType(recipe.secondOutput, result))
-                arecipes.add(new CachedCrush(recipe.input, recipe.firstOutput, recipe.secondOutput, recipe.secondChance));
+                arecipes.add(new CachedCrush(recipe.input, recipe.firstOutput, recipe.secondOutput, recipe.secondChance, this));
         }
     }
 
@@ -116,7 +135,7 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler{
         ArrayList<CrusherRecipeManualRegistry.CrusherRecipe> recipes = CrusherRecipeManualRegistry.recipes;
         for(CrusherRecipeManualRegistry.CrusherRecipe recipe : recipes){
             if(NEIServerUtils.areStacksSameTypeCrafting(recipe.input, ingredient)){
-                CachedCrush theRecipe = new CachedCrush(recipe.input, recipe.firstOutput, recipe.secondOutput, recipe.secondChance);
+                CachedCrush theRecipe = new CachedCrush(recipe.input, recipe.firstOutput, recipe.secondOutput, recipe.secondChance, this);
                 theRecipe.setIngredientPermutation(Collections.singletonList(theRecipe.ingredient), ingredient);
                 arecipes.add(theRecipe);
             }
@@ -138,13 +157,7 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler{
     @Override
     public void drawExtras(int recipe){
         drawProgressBar(80, 40, 176, 0, 24, 23, 48, 1);
-
-        CachedCrush crush = (CachedCrush)this.arecipes.get(recipe);
-        if(crush.resultTwo != null){
-            int secondChance = crush.secondChance;
-            String secondString = secondChance+"%";
-            GuiDraw.drawString(secondString, 118, 73, StringUtil.DECIMAL_COLOR_GRAY_TEXT, false);
-        }
+        this.drawChanceString(118, 73, recipe);
     }
 
     @Override
@@ -154,5 +167,14 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler{
 
     protected String getName(){
         return "actuallyadditions."+(this instanceof CrusherDoubleRecipeHandler ? "crushingDouble" : "crushing");
+    }
+
+    protected void drawChanceString(int x, int y, int recipe){
+        CachedCrush crush = (CachedCrush)this.arecipes.get(recipe);
+        if(crush.resultTwo != null){
+            int secondChance = crush.secondChance;
+            String secondString = secondChance+"%";
+            GuiDraw.drawString(secondString, x, y, StringUtil.DECIMAL_COLOR_GRAY_TEXT, false);
+        }
     }
 }
