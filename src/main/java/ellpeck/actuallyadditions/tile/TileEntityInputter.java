@@ -169,7 +169,7 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
                     //Deal with ISided
                     if(theSided != null){
                         //Check if Item can be inserted from any Side (Because Sidedness gets ignored!)
-                        for(int j = 0; j < 5; j++){
+                        for(int j = 0; j <= 5; j++){
                             if(theSided.canExtractItem(i, tempStack, j)){
                                 theStack = tempStack;
                                 theSlotToPull = i;
@@ -242,7 +242,7 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
                     }
                     if(theInventory.isItemValidForSlot(i, this.slots[0]) && (tempStack == null || (tempStack.isItemEqual(this.slots[0]) && tempStack.stackSize < maxSize)) && this.checkBothFilters(this.slots[0])){
                         if(theSided != null){
-                            for(int j = 0; j < 5; j++){
+                            for(int j = 0; j <= 5; j++){
                                 if(theSided.canInsertItem(i, this.slots[0], j)){
                                     theStack = tempStack;
                                     theSlotToPut = i;
