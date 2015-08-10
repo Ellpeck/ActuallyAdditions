@@ -261,14 +261,17 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
                 }
                 if(can){
                     if(theStack != null){
-                        if(theStack.isItemEqual(this.slots[0])){
-                            if(this.slots[0].stackSize <= maxSize - theStack.stackSize){
-                                theStack.stackSize += this.slots[0].stackSize;
+                        ItemStack copiedStack = theStack.copy();
+                        if(copiedStack.isItemEqual(this.slots[0])){
+                            if(this.slots[0].stackSize <= maxSize - copiedStack.stackSize){
+                                copiedStack.stackSize += this.slots[0].stackSize;
                                 this.slots[0] = null;
+                                theInventory.setInventorySlotContents(theSlotToPut, copiedStack);
                             }
-                            else if(this.slots[0].stackSize > maxSize - theStack.stackSize){
-                                this.decrStackSize(0, maxSize - theStack.stackSize);
-                                theStack.stackSize = maxSize;
+                            else if(this.slots[0].stackSize > maxSize - copiedStack.stackSize){
+                                this.decrStackSize(0, maxSize - copiedStack.stackSize);
+                                copiedStack.stackSize = maxSize;
+                                theInventory.setInventorySlotContents(theSlotToPut, copiedStack);
                             }
                         }
                     }
