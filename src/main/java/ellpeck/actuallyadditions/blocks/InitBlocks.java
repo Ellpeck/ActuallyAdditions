@@ -55,6 +55,7 @@ public class InitBlocks{
     public static Block blockPhantomBreaker;
     public static Block blockPhantomLiquiface;
     public static Block blockPhantomEnergyface;
+    public static Block blockPhantomPlayerface;
 
     public static Block blockFluidPlacer;
     public static Block blockFluidCollector;
@@ -126,20 +127,23 @@ public class InitBlocks{
         blockCanolaPress = new BlockCanolaPress();
         BlockUtil.register(blockCanolaPress, BlockCanolaPress.TheItemBlock.class);
 
-        blockPhantomface = new BlockPhantom(BlockPhantom.FACE);
+        blockPhantomface = new BlockPhantom(BlockPhantom.Type.FACE);
         BlockUtil.register(blockPhantomface, BlockPhantom.TheItemBlock.class);
 
-        blockPhantomPlacer = new BlockPhantom(BlockPhantom.PLACER);
+        blockPhantomPlacer = new BlockPhantom(BlockPhantom.Type.PLACER);
         BlockUtil.register(blockPhantomPlacer, BlockPhantom.TheItemBlock.class);
 
-        blockPhantomLiquiface = new BlockPhantom(BlockPhantom.LIQUIFACE);
+        blockPhantomLiquiface = new BlockPhantom(BlockPhantom.Type.LIQUIFACE);
         BlockUtil.register(blockPhantomLiquiface, BlockPhantom.TheItemBlock.class);
 
-        blockPhantomEnergyface = new BlockPhantom(BlockPhantom.ENERGYFACE);
+        blockPhantomEnergyface = new BlockPhantom(BlockPhantom.Type.ENERGYFACE);
         BlockUtil.register(blockPhantomEnergyface, BlockPhantom.TheItemBlock.class);
 
-        blockPhantomBreaker = new BlockPhantom(BlockPhantom.BREAKER);
+        blockPhantomBreaker = new BlockPhantom(BlockPhantom.Type.BREAKER);
         BlockUtil.register(blockPhantomBreaker, BlockPhantom.TheItemBlock.class);
+
+        blockPhantomPlayerface = new BlockPhantom(BlockPhantom.Type.PLAYERFACE);
+        BlockUtil.register(blockPhantomPlayerface, BlockPhantom.TheItemBlock.class);
 
         blockCoalGenerator = new BlockCoalGenerator();
         BlockUtil.register(blockCoalGenerator, BlockCoalGenerator.TheItemBlock.class);

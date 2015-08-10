@@ -27,7 +27,7 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
 
     public WorldPos boundPosition;
 
-    public int type;
+    public BlockPhantom.Type type;
 
     public final int defaultRange = ConfigIntValues.PHANTOMFACE_RANGE.getValue();
     public int range;
@@ -151,7 +151,7 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
 
         public TileEntityPhantomLiquiface(){
             super("liquiface");
-            this.type = BlockPhantom.LIQUIFACE;
+            this.type = BlockPhantom.Type.LIQUIFACE;
         }
 
         @Override
@@ -241,7 +241,7 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
 
         public TileEntityPhantomEnergyface(){
             super("energyface");
-            this.type = BlockPhantom.ENERGYFACE;
+            this.type = BlockPhantom.Type.ENERGYFACE;
         }
 
         @Override
@@ -334,7 +334,7 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
 
         public TileEntityPhantomItemface(){
             super("phantomface");
-            this.type = BlockPhantom.FACE;
+            this.type = BlockPhantom.Type.FACE;
         }
 
         public IInventory getInventory(){

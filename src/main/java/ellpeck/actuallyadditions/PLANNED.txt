@@ -123,3 +123,10 @@
 -Weeping Angel-like Statues
     -Only move when you don't look
     -Teleport you away
+
+-ME Phantomface
+
+-Redstone Phantomface
+
+-Player Phantomface
+    -Boosters make it work across dimensions

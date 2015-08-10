@@ -6,6 +6,7 @@ import ellpeck.actuallyadditions.ActuallyAdditions;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.tile.IPhantomTile;
 import ellpeck.actuallyadditions.tile.TileEntityPhantomPlacer;
+import ellpeck.actuallyadditions.tile.TileEntityPhantomPlayerface;
 import ellpeck.actuallyadditions.tile.TileEntityPhantomface;
 import ellpeck.actuallyadditions.util.*;
 import net.minecraft.block.Block;
@@ -26,16 +27,19 @@ import java.util.List;
 
 public class BlockPhantom extends BlockContainerBase implements INameableItem{
 
-    public static final int FACE = 0;
-    public static final int PLACER = 1;
-    public static final int BREAKER = 2;
-    public static final int LIQUIFACE = 3;
-    public static final int ENERGYFACE = 4;
+    public enum Type{
+        FACE,
+        PLACER,
+        BREAKER,
+        LIQUIFACE,
+        ENERGYFACE,
+        PLAYERFACE
+    }
 
-    public int type;
+    public Type type;
     public int range;
 
-    public BlockPhantom(int type){
+    public BlockPhantom(Type type){
         super(Material.rock);
         this.type = type;
         this.setHarvestLevel("pickaxe", 0);
@@ -43,17 +47,17 @@ public class BlockPhantom extends BlockContainerBase implements INameableItem{
         this.setResistance(10.0F);
         this.setStepSound(soundTypeStone);
 
-        if(type == FACE || type == LIQUIFACE || type == ENERGYFACE){
+        if(type == Type.FACE || type == Type.LIQUIFACE || type == Type.ENERGYFACE){
             this.range = ConfigIntValues.PHANTOMFACE_RANGE.getValue();
         }
-        else if(type == BREAKER || type == PLACER){
+        else if(type == Type.BREAKER || type == Type.PLACER){
             this.range = ConfigIntValues.PHANTOM_PLACER_RANGE.getValue();
         }
     }
 
     @Override
     public void breakBlock(World world, int x, int y, int z, Block block, int par6){
-        if(this.type == PLACER || this.type == BREAKER) this.dropInventory(world, x, y, z);
+        if(this.type == Type.PLACER || this.type == Type.BREAKER) this.dropInventory(world, x, y, z);
         super.breakBlock(world, x, y, z, block, par6);
     }
 
@@ -62,7 +66,13 @@ public class BlockPhantom extends BlockContainerBase implements INameableItem{
         if(!world.isRemote){
             TileEntity tile = world.getTileEntity(x, y, z);
             if(tile != null){
-                if(tile instanceof IPhantomTile){
+                if(tile instanceof TileEntityPhantomPlayerface){
+                    TileEntityPhantomPlayerface phantom = (TileEntityPhantomPlayerface)tile;
+                    if(player.isSneaking()){
+                        phantom.boundPlayerUUID = player.getUniqueID().toString();
+                    }
+                }
+                else if(tile instanceof IPhantomTile){
                     IPhantomTile phantom = (IPhantomTile)tile;
                     if(player.isSneaking() || phantom.getGuiID() == -1){
                         player.addChatComponentMessage(new ChatComponentText(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".blockPhantomRange.desc") + ": " + phantom.getRange()));
@@ -95,6 +105,8 @@ public class BlockPhantom extends BlockContainerBase implements INameableItem{
                 return new TileEntityPhantomface.TileEntityPhantomLiquiface();
             case ENERGYFACE:
                 return new TileEntityPhantomface.TileEntityPhantomEnergyface();
+            case PLAYERFACE:
+                return new TileEntityPhantomPlayerface();
             default:
                 return new TileEntityPhantomface.TileEntityPhantomItemface();
         }
@@ -122,6 +134,8 @@ public class BlockPhantom extends BlockContainerBase implements INameableItem{
                 return "blockPhantomLiquiface";
             case ENERGYFACE:
                 return "blockPhantomEnergyface";
+            case PLAYERFACE:
+                return "blockPhantomPlayerface";
             default:
                 return "blockPhantomface";
         }
@@ -154,7 +168,7 @@ public class BlockPhantom extends BlockContainerBase implements INameableItem{
         public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld) {
             BlockUtil.addInformation(theBlock, list, 2, "");
             if(KeyUtil.isShiftPressed()){
-                if(((BlockPhantom)this.theBlock).type == LIQUIFACE){
+                if(((BlockPhantom)this.theBlock).type == Type.LIQUIFACE){
                     list.add(StringUtil.ORANGE+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".blockPhantomLiquiface.desc.3"));
                     list.add(StringUtil.ORANGE+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".blockPhantomLiquiface.desc.4"));
                 }
