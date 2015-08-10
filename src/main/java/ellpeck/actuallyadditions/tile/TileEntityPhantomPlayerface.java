@@ -1,11 +1,13 @@
 package ellpeck.actuallyadditions.tile;
 
+import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 
 import java.util.List;
+import java.util.Objects;
 
 public class TileEntityPhantomPlayerface extends TileEntityInventoryBase{
 
@@ -18,8 +20,9 @@ public class TileEntityPhantomPlayerface extends TileEntityInventoryBase{
 
     @Override
     public void updateEntity(){
-        if(!this.boundPlayerBefore.equals(this.boundPlayerUUID)){
+        if(!Objects.equals(this.boundPlayerUUID, this.boundPlayerBefore)){
             this.boundPlayerBefore = this.boundPlayerUUID;
+            WorldUtil.updateTileAndTilesAround(this);
         }
     }
 
@@ -28,7 +31,7 @@ public class TileEntityPhantomPlayerface extends TileEntityInventoryBase{
         if(!worldObj.isRemote && this.boundPlayerUUID != null){
             List<EntityPlayer> list = MinecraftServer.getServer().getConfigurationManager().playerEntityList;
             for(EntityPlayer player : list){
-                if(!player.getUniqueID().toString().equals(this.boundPlayerUUID)){
+                if(player.getUniqueID().toString().equals(this.boundPlayerUUID)){
                     return player.inventory;
                 }
             }

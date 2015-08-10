@@ -59,7 +59,7 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
                 this.boundPosition = null;
             }
 
-            if((this.boundPosition != null && (this.boundBlockBefore != this.boundPosition.getBlock() || !this.boundPosition.isEqual(boundPosBefore))) || this.range != this.rangeBefore){
+            if(this.boundPosition != this.boundPosBefore || (this.boundPosition != null && this.boundPosition.getBlock() != this.boundBlockBefore) || this.rangeBefore != this.range){
                 this.rangeBefore = this.range;
                 this.boundPosBefore = this.boundPosition;
                 this.boundBlockBefore = this.boundPosition == null ? null : this.boundPosition.getBlock();

@@ -70,6 +70,7 @@ public class BlockPhantom extends BlockContainerBase implements INameableItem{
                     TileEntityPhantomPlayerface phantom = (TileEntityPhantomPlayerface)tile;
                     if(player.isSneaking()){
                         phantom.boundPlayerUUID = player.getUniqueID().toString();
+                        player.addChatComponentMessage(new ChatComponentText("Bound to "+player.getDisplayName()));
                     }
                 }
                 else if(tile instanceof IPhantomTile){
