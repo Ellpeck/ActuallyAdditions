@@ -1,6 +1,7 @@
 package ellpeck.actuallyadditions.tile;
 
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
+import ellpeck.actuallyadditions.inventory.GuiHandler;
 import ellpeck.actuallyadditions.util.WorldPos;
 import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.block.Block;
@@ -12,7 +13,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 import java.util.ArrayList;
 
-public class TileEntityPhantomPlacer extends TileEntityInventoryBase{
+public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements IPhantomTile{
 
     public static class TileEntityPhantomBreaker extends TileEntityPhantomPlacer{
 
@@ -51,7 +52,7 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase{
                 this.boundPosition = null;
             }
 
-            if(this.isBoundPositionInRange()){
+            if(this.isBoundThingInRange()){
                 if(!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)){
                     if(this.currentTime > 0){
                         this.currentTime--;
@@ -86,7 +87,20 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase{
         }
     }
 
-    public boolean isBoundPositionInRange(){
+    @Override
+    public boolean hasBoundPosition(){
+        if(this.boundPosition != null && this.boundPosition.getWorld() != null){
+            if(this.boundPosition.getWorld().getTileEntity(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ()) instanceof IPhantomTile || (this.xCoord == this.boundPosition.getX() && this.yCoord == this.boundPosition.getY() && this.zCoord == this.boundPosition.getZ() && this.worldObj == this.boundPosition.getWorld())){
+                this.boundPosition = null;
+                return false;
+            }
+            return this.boundPosition.getWorld() == this.worldObj;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean isBoundThingInRange(){
         if(this.hasBoundPosition()){
             int xDif = this.boundPosition.getX()-this.xCoord;
             int yDif = this.boundPosition.getY()-this.yCoord;
@@ -103,15 +117,19 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase{
         return false;
     }
 
-    public boolean hasBoundPosition(){
-        if(this.boundPosition != null && this.boundPosition.getWorld() != null){
-            if(this.xCoord == this.boundPosition.getX() && this.yCoord == this.boundPosition.getY() && this.zCoord == this.boundPosition.getZ() && this.worldObj == this.boundPosition.getWorld()){
-                this.boundPosition = null;
-                return false;
-            }
-            return this.boundPosition.getWorld() == this.worldObj;
-        }
-        return false;
+    @Override
+    public WorldPos getBoundPosition(){
+        return this.boundPosition;
+    }
+
+    @Override
+    public int getGuiID(){
+        return GuiHandler.GuiTypes.PHANTOM_PLACER.ordinal();
+    }
+
+    @Override
+    public int getRange(){
+        return this.range;
     }
 
     @Override

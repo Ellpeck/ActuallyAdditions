@@ -4,7 +4,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.ActuallyAdditions;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
-import ellpeck.actuallyadditions.inventory.GuiHandler;
+import ellpeck.actuallyadditions.tile.IPhantomTile;
 import ellpeck.actuallyadditions.tile.TileEntityPhantomPlacer;
 import ellpeck.actuallyadditions.tile.TileEntityPhantomface;
 import ellpeck.actuallyadditions.util.*;
@@ -24,7 +24,7 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class BlockPhantomface extends BlockContainerBase implements INameableItem{
+public class BlockPhantom extends BlockContainerBase implements INameableItem{
 
     public static final int FACE = 0;
     public static final int PLACER = 1;
@@ -35,7 +35,7 @@ public class BlockPhantomface extends BlockContainerBase implements INameableIte
     public int type;
     public int range;
 
-    public BlockPhantomface(int type){
+    public BlockPhantom(int type){
         super(Material.rock);
         this.type = type;
         this.setHarvestLevel("pickaxe", 0);
@@ -43,8 +43,12 @@ public class BlockPhantomface extends BlockContainerBase implements INameableIte
         this.setResistance(10.0F);
         this.setStepSound(soundTypeStone);
 
-        if(type == FACE || type == LIQUIFACE || type == ENERGYFACE) this.range = ConfigIntValues.PHANTOMFACE_RANGE.getValue();
-        else if(type == BREAKER || type == PLACER) this.range = ConfigIntValues.PHANTOM_PLACER_RANGE.getValue();
+        if(type == FACE || type == LIQUIFACE || type == ENERGYFACE){
+            this.range = ConfigIntValues.PHANTOMFACE_RANGE.getValue();
+        }
+        else if(type == BREAKER || type == PLACER){
+            this.range = ConfigIntValues.PHANTOM_PLACER_RANGE.getValue();
+        }
     }
 
     @Override
@@ -58,37 +62,22 @@ public class BlockPhantomface extends BlockContainerBase implements INameableIte
         if(!world.isRemote){
             TileEntity tile = world.getTileEntity(x, y, z);
             if(tile != null){
-                if(tile instanceof TileEntityPhantomface){
-                    TileEntityPhantomface phantom = (TileEntityPhantomface)tile;
-                    player.addChatComponentMessage(new ChatComponentText(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".blockPhantomRange.desc") + ": " + phantom.range));
-                    if(phantom.hasBoundTile()){
-                        int distance = (int)Vec3.createVectorHelper(x, y, z).distanceTo(Vec3.createVectorHelper(phantom.boundPosition.getX(), phantom.boundPosition.getY(), phantom.boundPosition.getZ()));
-                        Item item = phantom.boundPosition.getItemBlock();
-                        String name = item == null ? "Absolutely Nothing" : item.getItemStackDisplayName(new ItemStack(phantom.boundPosition.getBlock(), 1, phantom.boundPosition.getMetadata()));
-                        player.addChatComponentMessage(new ChatComponentText(StringUtil.localizeFormatted("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.blockInfo.desc", name, phantom.boundPosition.getX(), phantom.boundPosition.getY(), phantom.boundPosition.getZ(), distance)));
-
-                        if(phantom.isBoundTileInRage()) player.addChatComponentMessage(new ChatComponentText(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.connectedRange.desc")));
-                        else player.addChatComponentMessage(new ChatComponentText(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.connectedNoRange.desc")));
-                    }
-                    else player.addChatComponentMessage(new ChatComponentText(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.notConnected.desc")));
-                }
-
-                else if(tile instanceof TileEntityPhantomPlacer){
-                    if(player.isSneaking()){
-                        TileEntityPhantomPlacer phantom = (TileEntityPhantomPlacer)tile;
-                        player.addChatComponentMessage(new ChatComponentText(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".blockPhantomRange.desc") + ": " + phantom.range));
+                if(tile instanceof IPhantomTile){
+                    IPhantomTile phantom = (IPhantomTile)tile;
+                    if(player.isSneaking() || phantom.getGuiID() == -1){
+                        player.addChatComponentMessage(new ChatComponentText(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".blockPhantomRange.desc") + ": " + phantom.getRange()));
                         if(phantom.hasBoundPosition()){
-                            int distance = (int)Vec3.createVectorHelper(x, y, z).distanceTo(Vec3.createVectorHelper(phantom.boundPosition.getX(), phantom.boundPosition.getY(), phantom.boundPosition.getZ()));
-                            Item item = phantom.boundPosition.getItemBlock();
-                            String name = item == null ? "Absolutely Nothing" : item.getItemStackDisplayName(new ItemStack(phantom.boundPosition.getBlock(), 1, phantom.boundPosition.getMetadata()));
-                            player.addChatComponentMessage(new ChatComponentText(StringUtil.localizeFormatted("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.blockInfo.desc", name, phantom.boundPosition.getX(), phantom.boundPosition.getY(), phantom.boundPosition.getZ(), distance)));
+                            int distance = (int)Vec3.createVectorHelper(x, y, z).distanceTo(Vec3.createVectorHelper(phantom.getBoundPosition().getX(), phantom.getBoundPosition().getY(), phantom.getBoundPosition().getZ()));
+                            Item item = phantom.getBoundPosition().getItemBlock();
+                            String name = item == null ? "Absolutely Nothing" : item.getItemStackDisplayName(new ItemStack(phantom.getBoundPosition().getBlock(), 1, phantom.getBoundPosition().getMetadata()));
+                            player.addChatComponentMessage(new ChatComponentText(StringUtil.localizeFormatted("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.blockInfo.desc", name, phantom.getBoundPosition().getX(), phantom.getBoundPosition().getY(), phantom.getBoundPosition().getZ(), distance)));
 
-                            if(phantom.isBoundPositionInRange()) player.addChatComponentMessage(new ChatComponentText(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.connectedRange.desc")));
+                            if(phantom.isBoundThingInRange()) player.addChatComponentMessage(new ChatComponentText(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.connectedRange.desc")));
                             else player.addChatComponentMessage(new ChatComponentText(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.connectedNoRange.desc")));
                         }
                         else player.addChatComponentMessage(new ChatComponentText(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.notConnected.desc")));
                     }
-                    else player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.PHANTOM_PLACER.ordinal(), world, x, y, z);
+                    else player.openGui(ActuallyAdditions.instance, phantom.getGuiID(), world, x, y, z);
                 }
             }
         }
@@ -165,11 +154,11 @@ public class BlockPhantomface extends BlockContainerBase implements INameableIte
         public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld) {
             BlockUtil.addInformation(theBlock, list, 2, "");
             if(KeyUtil.isShiftPressed()){
-                if(((BlockPhantomface)this.theBlock).type == LIQUIFACE){
+                if(((BlockPhantom)this.theBlock).type == LIQUIFACE){
                     list.add(StringUtil.ORANGE+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".blockPhantomLiquiface.desc.3"));
                     list.add(StringUtil.ORANGE+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".blockPhantomLiquiface.desc.4"));
                 }
-                list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".blockPhantomRange.desc") + ": " + ((BlockPhantomface)theBlock).range);
+                list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".blockPhantomRange.desc") + ": " + ((BlockPhantom)theBlock).range);
             }
         }
 

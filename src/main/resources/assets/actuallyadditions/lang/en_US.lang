@@ -314,7 +314,7 @@ tooltip.actuallyadditions.phantom.boundTo.desc=Bound to
 tooltip.actuallyadditions.phantom.connectedRange.desc=The Connection is fine and working.
 tooltip.actuallyadditions.phantom.connectedNoRange.desc=The Connection is obstructed: It is either not in Range, not in loaded Chunks or not the right type of Block for this Phantom Device.
 tooltip.actuallyadditions.phantom.notConnected.desc=This isn't connected to anything!
-tooltip.actuallyadditions.phantom.blockInfo.desc=The connected Block is a %s at %s, %s, %s that is %s Blocks away.
+tooltip.actuallyadditions.phantom.blockInfo.desc=The connected Block is %s at %s, %s, %s that is %s Blocks away.
 
 tooltip.actuallyadditions.factory.notPart.desc=The Controller isn't part of the right Multi-Block! Look at the Controller's Description!
 tooltip.actuallyadditions.factory.works.desc=This Lava Factory is complete and can produce Lava!

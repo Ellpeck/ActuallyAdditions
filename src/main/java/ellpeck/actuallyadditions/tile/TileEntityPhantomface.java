@@ -3,7 +3,7 @@ package ellpeck.actuallyadditions.tile;
 import cofh.api.energy.IEnergyHandler;
 import cofh.api.energy.IEnergyProvider;
 import cofh.api.energy.IEnergyReceiver;
-import ellpeck.actuallyadditions.blocks.BlockPhantomface;
+import ellpeck.actuallyadditions.blocks.BlockPhantom;
 import ellpeck.actuallyadditions.blocks.InitBlocks;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.util.WorldPos;
@@ -23,7 +23,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
 
-public class TileEntityPhantomface extends TileEntityInventoryBase{
+public class TileEntityPhantomface extends TileEntityInventoryBase implements IPhantomTile{
 
     public WorldPos boundPosition;
 
@@ -50,29 +50,12 @@ public class TileEntityPhantomface extends TileEntityInventoryBase{
         return newRange;
     }
 
-    public boolean isBoundTileInRage(){
-        if(this.hasBoundTile()){
-            int xDif = this.boundPosition.getX()-this.xCoord;
-            int yDif = this.boundPosition.getY()-this.yCoord;
-            int zDif = this.boundPosition.getZ()-this.zCoord;
-
-            if(xDif >= -this.range && xDif <= this.range){
-                if(yDif >= -this.range && yDif <= this.range){
-                    if(zDif >= -this.range && zDif <= this.range){
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
-    }
-
     @Override
     public void updateEntity(){
         if(!worldObj.isRemote){
             this.range = upgradeRange(defaultRange, worldObj, xCoord, yCoord, zCoord);
 
-            if(!this.hasBoundTile()){
+            if(!this.hasBoundPosition()){
                 this.boundPosition = null;
             }
 
@@ -85,21 +68,10 @@ public class TileEntityPhantomface extends TileEntityInventoryBase{
         }
     }
 
-    public boolean hasBoundTile(){
-        if(this.boundPosition != null && this.boundPosition.getWorld() != null){
-            if(this.boundPosition.getWorld().getTileEntity(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ()) instanceof TileEntityPhantomface || (this.xCoord == this.boundPosition.getX() && this.yCoord == this.boundPosition.getY() && this.zCoord == this.boundPosition.getZ() && this.worldObj == this.boundPosition.getWorld())){
-                this.boundPosition = null;
-                return false;
-            }
-            return this.boundPosition.getWorld() == this.worldObj;
-        }
-        return false;
-    }
-
     @Override
     public void writeToNBT(NBTTagCompound compound){
         super.writeToNBT(compound);
-        if(this.hasBoundTile()){
+        if(this.hasBoundPosition()){
             compound.setInteger("XCoordOfTileStored", boundPosition.getX());
             compound.setInteger("YCoordOfTileStored", boundPosition.getY());
             compound.setInteger("ZCoordOfTileStored", boundPosition.getZ());
@@ -130,11 +102,56 @@ public class TileEntityPhantomface extends TileEntityInventoryBase{
         return false;
     }
 
+    @Override
+    public boolean hasBoundPosition(){
+        if(this.boundPosition != null && this.boundPosition.getWorld() != null){
+            if(this.boundPosition.getWorld().getTileEntity(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ()) instanceof IPhantomTile || (this.xCoord == this.boundPosition.getX() && this.yCoord == this.boundPosition.getY() && this.zCoord == this.boundPosition.getZ() && this.worldObj == this.boundPosition.getWorld())){
+                this.boundPosition = null;
+                return false;
+            }
+            return this.boundPosition.getWorld() == this.worldObj;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean isBoundThingInRange(){
+        if(this.hasBoundPosition()){
+            int xDif = this.boundPosition.getX()-this.xCoord;
+            int yDif = this.boundPosition.getY()-this.yCoord;
+            int zDif = this.boundPosition.getZ()-this.zCoord;
+
+            if(xDif >= -this.range && xDif <= this.range){
+                if(yDif >= -this.range && yDif <= this.range){
+                    if(zDif >= -this.range && zDif <= this.range){
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public WorldPos getBoundPosition(){
+        return this.boundPosition;
+    }
+
+    @Override
+    public int getGuiID(){
+        return -1;
+    }
+
+    @Override
+    public int getRange(){
+        return this.range;
+    }
+
     public static class TileEntityPhantomLiquiface extends TileEntityPhantomface implements IFluidHandler{
 
         public TileEntityPhantomLiquiface(){
             super("liquiface");
-            this.type = BlockPhantomface.LIQUIFACE;
+            this.type = BlockPhantom.LIQUIFACE;
         }
 
         @Override
@@ -142,7 +159,7 @@ public class TileEntityPhantomface extends TileEntityInventoryBase{
             super.updateEntity();
 
             if(!worldObj.isRemote){
-                if(worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord) && this.isBoundTileInRage() && this.getHandler() != null){
+                if(worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord) && this.isBoundThingInRange() && this.getHandler() != null){
                     this.pushFluid(ForgeDirection.UP);
                     this.pushFluid(ForgeDirection.DOWN);
                     this.pushFluid(ForgeDirection.NORTH);
@@ -173,8 +190,8 @@ public class TileEntityPhantomface extends TileEntityInventoryBase{
         }
 
         @Override
-        public boolean isBoundTileInRage(){
-            return super.isBoundTileInRage() && this.boundPosition.getWorld().getTileEntity(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ()) instanceof IFluidHandler;
+        public boolean isBoundThingInRange(){
+            return super.isBoundThingInRange() && this.boundPosition.getWorld().getTileEntity(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ()) instanceof IFluidHandler;
         }
 
         public IFluidHandler getHandler(){
@@ -187,35 +204,35 @@ public class TileEntityPhantomface extends TileEntityInventoryBase{
 
         @Override
         public int fill(ForgeDirection from, FluidStack resource, boolean doFill){
-            if(this.isBoundTileInRage()) return this.getHandler().fill(from, resource, doFill);
+            if(this.isBoundThingInRange()) return this.getHandler().fill(from, resource, doFill);
             return 0;
         }
 
         @Override
         public FluidStack drain(ForgeDirection from, FluidStack resource, boolean doDrain){
-            if(this.isBoundTileInRage()) return this.getHandler().drain(from, resource, doDrain);
+            if(this.isBoundThingInRange()) return this.getHandler().drain(from, resource, doDrain);
             return null;
         }
 
         @Override
         public FluidStack drain(ForgeDirection from, int maxDrain, boolean doDrain){
-            if(this.isBoundTileInRage()) return this.getHandler().drain(from, maxDrain, doDrain);
+            if(this.isBoundThingInRange()) return this.getHandler().drain(from, maxDrain, doDrain);
             return null;
         }
 
         @Override
         public boolean canFill(ForgeDirection from, Fluid fluid){
-            return this.isBoundTileInRage() && this.getHandler().canFill(from, fluid);
+            return this.isBoundThingInRange() && this.getHandler().canFill(from, fluid);
         }
 
         @Override
         public boolean canDrain(ForgeDirection from, Fluid fluid){
-            return this.isBoundTileInRage() && this.getHandler().canDrain(from, fluid);
+            return this.isBoundThingInRange() && this.getHandler().canDrain(from, fluid);
         }
 
         @Override
         public FluidTankInfo[] getTankInfo(ForgeDirection from){
-            if(this.isBoundTileInRage()) return this.getHandler().getTankInfo(from);
+            if(this.isBoundThingInRange()) return this.getHandler().getTankInfo(from);
             return new FluidTankInfo[0];
         }
     }
@@ -224,12 +241,12 @@ public class TileEntityPhantomface extends TileEntityInventoryBase{
 
         public TileEntityPhantomEnergyface(){
             super("energyface");
-            this.type = BlockPhantomface.ENERGYFACE;
+            this.type = BlockPhantom.ENERGYFACE;
         }
 
         @Override
-        public boolean isBoundTileInRage(){
-            return super.isBoundTileInRage() && (this.boundPosition.getWorld().getTileEntity(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ()) instanceof IEnergyReceiver || this.boundPosition.getWorld().getTileEntity(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ()) instanceof IEnergyProvider);
+        public boolean isBoundThingInRange(){
+            return super.isBoundThingInRange() && (this.boundPosition.getWorld().getTileEntity(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ()) instanceof IEnergyReceiver || this.boundPosition.getWorld().getTileEntity(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ()) instanceof IEnergyProvider);
         }
 
         @Override
@@ -237,7 +254,7 @@ public class TileEntityPhantomface extends TileEntityInventoryBase{
             super.updateEntity();
 
             if(!worldObj.isRemote){
-                if(this.isBoundTileInRage() && this.getProvider() != null){
+                if(this.isBoundThingInRange() && this.getProvider() != null){
                     this.pushEnergy(ForgeDirection.UP);
                     this.pushEnergy(ForgeDirection.DOWN);
                     this.pushEnergy(ForgeDirection.NORTH);
@@ -277,17 +294,17 @@ public class TileEntityPhantomface extends TileEntityInventoryBase{
 
         @Override
         public int receiveEnergy(ForgeDirection from, int maxReceive, boolean simulate){
-            return this.isBoundTileInRage() && this.getReceiver() != null ? this.getReceiver().receiveEnergy(from, maxReceive, simulate) : 0;
+            return this.isBoundThingInRange() && this.getReceiver() != null ? this.getReceiver().receiveEnergy(from, maxReceive, simulate) : 0;
         }
 
         @Override
         public int extractEnergy(ForgeDirection from, int maxExtract, boolean simulate){
-            return this.isBoundTileInRage() && this.getProvider() != null ? this.getProvider().extractEnergy(from, maxExtract, simulate) : 0;
+            return this.isBoundThingInRange() && this.getProvider() != null ? this.getProvider().extractEnergy(from, maxExtract, simulate) : 0;
         }
 
         @Override
         public int getEnergyStored(ForgeDirection from){
-            if(this.isBoundTileInRage()){
+            if(this.isBoundThingInRange()){
                 if(this.getProvider() != null) return this.getProvider().getEnergyStored(from);
                 if(this.getReceiver() != null) return this.getReceiver().getEnergyStored(from);
             }
@@ -296,7 +313,7 @@ public class TileEntityPhantomface extends TileEntityInventoryBase{
 
         @Override
         public int getMaxEnergyStored(ForgeDirection from){
-            if(this.isBoundTileInRage()){
+            if(this.isBoundThingInRange()){
                 if(this.getProvider() != null) return this.getProvider().getMaxEnergyStored(from);
                 if(this.getReceiver() != null) return this.getReceiver().getMaxEnergyStored(from);
             }
@@ -305,7 +322,7 @@ public class TileEntityPhantomface extends TileEntityInventoryBase{
 
         @Override
         public boolean canConnectEnergy(ForgeDirection from){
-            if(this.isBoundTileInRage()){
+            if(this.isBoundThingInRange()){
                 if(this.getProvider() != null) return this.getProvider().canConnectEnergy(from);
                 if(this.getReceiver() != null) return this.getReceiver().canConnectEnergy(from);
             }
@@ -317,7 +334,7 @@ public class TileEntityPhantomface extends TileEntityInventoryBase{
 
         public TileEntityPhantomItemface(){
             super("phantomface");
-            this.type = BlockPhantomface.FACE;
+            this.type = BlockPhantom.FACE;
         }
 
         public IInventory getInventory(){
@@ -329,8 +346,8 @@ public class TileEntityPhantomface extends TileEntityInventoryBase{
         }
 
         @Override
-        public boolean isBoundTileInRage(){
-            return super.isBoundTileInRage() && this.boundPosition.getWorld().getTileEntity(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ()) instanceof IInventory;
+        public boolean isBoundThingInRange(){
+            return super.isBoundThingInRange() && this.boundPosition.getWorld().getTileEntity(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ()) instanceof IInventory;
         }
 
         public ISidedInventory getSided(){
@@ -339,7 +356,7 @@ public class TileEntityPhantomface extends TileEntityInventoryBase{
 
         @Override
         public int getInventoryStackLimit(){
-            return this.isBoundTileInRage() ? this.getInventory().getInventoryStackLimit() : 0;
+            return this.isBoundThingInRange() ? this.getInventory().getInventoryStackLimit() : 0;
         }
 
         @Override
@@ -349,33 +366,33 @@ public class TileEntityPhantomface extends TileEntityInventoryBase{
 
         @Override
         public boolean isItemValidForSlot(int i, ItemStack stack){
-            return this.isBoundTileInRage() && this.getInventory().isItemValidForSlot(i, stack);
+            return this.isBoundThingInRange() && this.getInventory().isItemValidForSlot(i, stack);
         }
 
         @Override
         public ItemStack getStackInSlotOnClosing(int i){
-            return this.isBoundTileInRage() ? this.getInventory().getStackInSlotOnClosing(i) : null;
+            return this.isBoundThingInRange() ? this.getInventory().getStackInSlotOnClosing(i) : null;
         }
 
         @Override
         public void setInventorySlotContents(int i, ItemStack stack){
-            if(this.isBoundTileInRage()) this.getInventory().setInventorySlotContents(i, stack);
+            if(this.isBoundThingInRange()) this.getInventory().setInventorySlotContents(i, stack);
             this.markDirty();
         }
 
         @Override
         public int getSizeInventory(){
-            return this.isBoundTileInRage() ? this.getInventory().getSizeInventory() : 0;
+            return this.isBoundThingInRange() ? this.getInventory().getSizeInventory() : 0;
         }
 
         @Override
         public ItemStack getStackInSlot(int i){
-            return this.isBoundTileInRage() ? this.getInventory().getStackInSlot(i) : null;
+            return this.isBoundThingInRange() ? this.getInventory().getStackInSlot(i) : null;
         }
 
         @Override
         public ItemStack decrStackSize(int i, int j){
-            return this.isBoundTileInRage() ? this.getInventory().decrStackSize(i, j) : null;
+            return this.isBoundThingInRange() ? this.getInventory().decrStackSize(i, j) : null;
         }
 
         @Override
@@ -385,7 +402,7 @@ public class TileEntityPhantomface extends TileEntityInventoryBase{
 
         @Override
         public int[] getAccessibleSlotsFromSide(int side){
-            if(this.isBoundTileInRage()){
+            if(this.isBoundThingInRange()){
                 if(this.getSided() != null){
                     return this.getSided().getAccessibleSlotsFromSide(side);
                 }
@@ -402,12 +419,12 @@ public class TileEntityPhantomface extends TileEntityInventoryBase{
 
         @Override
         public boolean canInsertItem(int slot, ItemStack stack, int side){
-            return this.isBoundTileInRage() && (this.getSided() == null || this.getSided().canInsertItem(slot, stack, side));
+            return this.isBoundThingInRange() && (this.getSided() == null || this.getSided().canInsertItem(slot, stack, side));
         }
 
         @Override
         public boolean canExtractItem(int slot, ItemStack stack, int side){
-            return this.isBoundTileInRage() && (this.getSided() == null || this.getSided().canExtractItem(slot, stack, side));
+            return this.isBoundThingInRange() && (this.getSided() == null || this.getSided().canExtractItem(slot, stack, side));
         }
 
     }
