@@ -9,7 +9,6 @@ import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.util.WorldPos;
 import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.block.Block;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
@@ -357,11 +356,6 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
         @Override
         public int getInventoryStackLimit(){
             return this.isBoundThingInRange() ? this.getInventory().getInventoryStackLimit() : 0;
-        }
-
-        @Override
-        public boolean isUseableByPlayer(EntityPlayer player){
-            return false;
         }
 
         @Override
