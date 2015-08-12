@@ -6,7 +6,6 @@ import ellpeck.actuallyadditions.ActuallyAdditions;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.tile.IPhantomTile;
 import ellpeck.actuallyadditions.tile.TileEntityPhantomPlacer;
-import ellpeck.actuallyadditions.tile.TileEntityPhantomPlayerface;
 import ellpeck.actuallyadditions.tile.TileEntityPhantomface;
 import ellpeck.actuallyadditions.util.*;
 import net.minecraft.block.Block;
@@ -32,8 +31,7 @@ public class BlockPhantom extends BlockContainerBase implements INameableItem{
         PLACER,
         BREAKER,
         LIQUIFACE,
-        ENERGYFACE,
-        PLAYERFACE
+        ENERGYFACE
     }
 
     public Type type;
@@ -66,14 +64,7 @@ public class BlockPhantom extends BlockContainerBase implements INameableItem{
         if(!world.isRemote){
             TileEntity tile = world.getTileEntity(x, y, z);
             if(tile != null){
-                if(tile instanceof TileEntityPhantomPlayerface){
-                    TileEntityPhantomPlayerface phantom = (TileEntityPhantomPlayerface)tile;
-                    if(player.isSneaking()){
-                        phantom.boundPlayerUUID = player.getUniqueID().toString();
-                        player.addChatComponentMessage(new ChatComponentText("Bound to "+player.getDisplayName()));
-                    }
-                }
-                else if(tile instanceof IPhantomTile){
+                if(tile instanceof IPhantomTile){
                     IPhantomTile phantom = (IPhantomTile)tile;
                     if(player.isSneaking() || phantom.getGuiID() == -1){
                         player.addChatComponentMessage(new ChatComponentText(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".blockPhantomRange.desc") + ": " + phantom.getRange()));
@@ -106,8 +97,6 @@ public class BlockPhantom extends BlockContainerBase implements INameableItem{
                 return new TileEntityPhantomface.TileEntityPhantomLiquiface();
             case ENERGYFACE:
                 return new TileEntityPhantomface.TileEntityPhantomEnergyface();
-            case PLAYERFACE:
-                return new TileEntityPhantomPlayerface();
             default:
                 return new TileEntityPhantomface.TileEntityPhantomItemface();
         }
@@ -135,8 +124,6 @@ public class BlockPhantom extends BlockContainerBase implements INameableItem{
                 return "blockPhantomLiquiface";
             case ENERGYFACE:
                 return "blockPhantomEnergyface";
-            case PLAYERFACE:
-                return "blockPhantomPlayerface";
             default:
                 return "blockPhantomface";
         }
