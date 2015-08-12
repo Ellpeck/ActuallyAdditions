@@ -81,7 +81,7 @@ public class ItemPotionRing extends Item implements INameableItem{
 
     @Override
     public String getUnlocalizedName(ItemStack stack){
-        return this.getUnlocalizedName() + (stack.getItemDamage() >= allRings.length ? " ERROR!" : allRings[stack.getItemDamage()].getName());
+        return this.getUnlocalizedName() + (stack.getItemDamage() >= allRings.length ? " ERROR!" : allRings[stack.getItemDamage()].getName().substring("potion".length()));
     }
 
     @Override

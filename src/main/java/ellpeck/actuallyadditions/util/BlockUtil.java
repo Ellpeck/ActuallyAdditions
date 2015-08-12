@@ -38,7 +38,7 @@ public class BlockUtil{
         }
     }
 
-    public static final ArrayList<Block> wailaRegisterList = new ArrayList<Block>();
+    public static ArrayList<Block> wailaRegisterList = new ArrayList<Block>();
 
     public static void register(Block block, Class<? extends ItemBlock> itemBlock, boolean addTab){
         block.setCreativeTab(addTab ? CreativeTab.instance : null);
