@@ -96,7 +96,7 @@ item.actuallyadditions.itemGrowthRing.name=Ring of Growth
 tooltip.actuallyadditions.itemGrowthRing.desc=Lets Plants around you grow when held in hand
 item.actuallyadditions.itemWaterRemovalRing.name=Ring of Liquid Banning
 tooltip.actuallyadditions.itemWaterRemovalRing.desc=Removes Water & Lava Blocks around you when held in hand
-item.actuallyadditions.itemSuctionRing.name=Ring of Magnetism
+item.actuallyadditions.itemSuctionRing.name=Ring of Magnetizing
 tooltip.actuallyadditions.itemSuctionRing.desc=Sucks in Items in the area when in Inventory
 
 tile.actuallyadditions.blockOreMagnet.name=Magnetic Miner
