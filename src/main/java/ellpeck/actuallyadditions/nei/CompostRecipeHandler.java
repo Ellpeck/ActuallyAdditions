@@ -92,7 +92,7 @@ public class CompostRecipeHandler extends TemplateRecipeHandler{
 
     @Override
     public String getGuiTexture(){
-        return ModUtil.MOD_ID_LOWER + ":textures/gui/GuiNEISimple.png";
+        return ModUtil.MOD_ID_LOWER + ":textures/gui/guiNEISimple.png";
     }
 
     @Override
