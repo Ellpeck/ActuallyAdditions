@@ -56,57 +56,7 @@ public class TileEntityOreMagnet extends TileEntityInventoryBase implements IEne
                     currentWorkTimer--;
 
                     if(currentWorkTimer <= 0){
-                        //The possible positions where ores can be mined up in RELATIVE COORDINATES!!
-                        ArrayList<WorldPos> possiblePlacingPositions = new ArrayList<WorldPos>();
-
-                        for(int x = -range/2; x <= range/2; x++){
-                            for(int z = -range/2; z <= range/2; z++){
-                                //Check if there is a casing below the Block to mine
-                                if(WorldUtil.hasBlocksInPlacesGiven(new int[][]{{x, -1, z}}, InitBlocks.blockMisc, TheMiscBlocks.LAVA_FACTORY_CASE.ordinal(), worldObj, xCoord, yCoord, zCoord)){
-                                    //Can the block at the top be replaced?
-                                    for(int toPlaceY = 0; toPlaceY < 5; toPlaceY++){
-                                        Block block = worldObj.getBlock(xCoord+x, yCoord+toPlaceY, zCoord+z);
-                                        //Check if the Block is okay to be replaced
-                                        if(block.isAir(worldObj, xCoord+x, yCoord+toPlaceY, zCoord+z) || block.isReplaceable(worldObj, xCoord+x, yCoord+toPlaceY, zCoord+z)){
-                                            //Add it to the possible positions
-                                            possiblePlacingPositions.add(new WorldPos(worldObj, x, toPlaceY, z));
-                                            //Only add the lowest Block, you don't want to make random floating towers, duh!
-                                            break;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-
-                        if(!possiblePlacingPositions.isEmpty()){
-                            //Get a random placing Position
-                            WorldPos randomPlacingPos = possiblePlacingPositions.get(worldObj.rand.nextInt(possiblePlacingPositions.size()));
-                            int x = randomPlacingPos.getX();
-                            int z = randomPlacingPos.getZ();
-                            int toPlaceY = randomPlacingPos.getY();
-                            //Find the first available block
-                            for(int y = this.yCoord-2; y > 0; y--){
-                                Block block = worldObj.getBlock(xCoord+x, y, zCoord+z);
-                                int meta = worldObj.getBlockMetadata(xCoord+x, y, zCoord+z);
-                                if(block != null && !block.isAir(worldObj, xCoord+x, y, zCoord+z) && !block.hasTileEntity(meta) && block.getBlockHardness(worldObj, xCoord+x, y, zCoord+z) >= 0.0F && ((block.getMaterial() != null && block.getMaterial().isToolNotRequired()) || (block.getHarvestTool(meta) == null || (block.getHarvestTool(meta).equals("pickaxe") && block.getHarvestLevel(meta) <= 3)))){
-                                    //Check Whitelist
-                                    if(this.hasExtraWhitelist(block)){
-                                        this.removeBlock(x, y, z, block, meta, toPlaceY);
-                                        return;
-                                    }
-                                    //Check Ores
-                                    int[] oreIDs = OreDictionary.getOreIDs(new ItemStack(block, 1, meta));
-                                    for(int ID : oreIDs){
-                                        String oreName = OreDictionary.getOreName(ID);
-                                        //Is the block an ore according to the OreDictionary?
-                                        if(oreName.substring(0, 3).equals("ore") && !this.hasException(oreName)){
-                                            this.removeBlock(x, y, z, block, meta, toPlaceY);
-                                            return;
-                                        }
-                                    }
-                                }
-                            }
-                        }
+                        this.mine();
                     }
                 }
                 else this.currentWorkTimer = maxWorkTimer+MathHelper.getRandomIntegerInRange(worldObj.rand, 0, maxWorkTimer);
@@ -124,6 +74,60 @@ public class TileEntityOreMagnet extends TileEntityInventoryBase implements IEne
 
             //Empty Oil Bucket
             WorldUtil.emptyBucket(this.tank, this.slots, SLOT_OIL_INPUT, SLOT_OIL_OUTPUT);
+        }
+    }
+
+    private void mine(){
+        //The possible positions where ores can be mined up in RELATIVE COORDINATES!!
+        ArrayList<WorldPos> possiblePlacingPositions = new ArrayList<WorldPos>();
+
+        for(int x = -range/2; x <= range/2; x++){
+            for(int z = -range/2; z <= range/2; z++){
+                //Check if there is a casing below the Block to mine
+                if(WorldUtil.hasBlocksInPlacesGiven(new int[][]{{x, -1, z}}, InitBlocks.blockMisc, TheMiscBlocks.LAVA_FACTORY_CASE.ordinal(), worldObj, xCoord, yCoord, zCoord)){
+                    //Can the block at the top be replaced?
+                    for(int toPlaceY = 0; toPlaceY < 5; toPlaceY++){
+                        Block block = worldObj.getBlock(xCoord+x, yCoord+toPlaceY, zCoord+z);
+                        //Check if the Block is okay to be replaced
+                        if(block.isAir(worldObj, xCoord+x, yCoord+toPlaceY, zCoord+z) || block.isReplaceable(worldObj, xCoord+x, yCoord+toPlaceY, zCoord+z)){
+                            //Add it to the possible positions
+                            possiblePlacingPositions.add(new WorldPos(worldObj, x, toPlaceY, z));
+                            //Only add the lowest Block, you don't want to make random floating towers, duh!
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        if(!possiblePlacingPositions.isEmpty()){
+            //Get a random placing Position
+            WorldPos randomPlacingPos = possiblePlacingPositions.get(worldObj.rand.nextInt(possiblePlacingPositions.size()));
+            int x = randomPlacingPos.getX();
+            int z = randomPlacingPos.getZ();
+            int toPlaceY = randomPlacingPos.getY();
+            //Find the first available block
+            for(int y = this.yCoord-2; y > 0; y--){
+                Block block = worldObj.getBlock(xCoord+x, y, zCoord+z);
+                int meta = worldObj.getBlockMetadata(xCoord+x, y, zCoord+z);
+                if(block != null && !block.isAir(worldObj, xCoord+x, y, zCoord+z) && !block.hasTileEntity(meta) && block.getBlockHardness(worldObj, xCoord+x, y, zCoord+z) >= 0.0F && ((block.getMaterial() != null && block.getMaterial().isToolNotRequired()) || (block.getHarvestTool(meta) == null || (block.getHarvestTool(meta).equals("pickaxe") && block.getHarvestLevel(meta) <= 3)))){
+                    //Check Whitelist
+                    if(this.hasExtraWhitelist(block)){
+                        this.removeBlock(x, y, z, block, meta, toPlaceY);
+                        return;
+                    }
+                    //Check Ores
+                    int[] oreIDs = OreDictionary.getOreIDs(new ItemStack(block, 1, meta));
+                    for(int ID : oreIDs){
+                        String oreName = OreDictionary.getOreName(ID);
+                        //Is the block an ore according to the OreDictionary?
+                        if(oreName.substring(0, 3).equals("ore") && !this.hasException(oreName)){
+                            this.removeBlock(x, y, z, block, meta, toPlaceY);
+                            return;
+                        }
+                    }
+                }
+            }
         }
     }
 
