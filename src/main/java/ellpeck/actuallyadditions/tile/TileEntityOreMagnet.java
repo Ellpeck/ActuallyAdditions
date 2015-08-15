@@ -37,11 +37,6 @@ public class TileEntityOreMagnet extends TileEntityInventoryBase implements IEne
 
     private int currentWorkTimer;
 
-    private int maxWorkTimer = ConfigIntValues.ORE_MAGNET_MAX_TIMER.getValue();
-    private int range = ConfigIntValues.ORE_MAGNET_RANGE.getValue();
-    public static int oilUsePerTick = ConfigIntValues.ORE_MAGNET_OIL_USE.getValue();
-    public static int energyUsePerTick = ConfigIntValues.ORE_MAGNET_ENERGY_USE.getValue();
-
     public TileEntityOreMagnet(){
         super(3, "oreMagnet");
     }
@@ -51,7 +46,7 @@ public class TileEntityOreMagnet extends TileEntityInventoryBase implements IEne
     public void updateEntity(){
         if(!worldObj.isRemote){
 
-            if(this.storage.getEnergyStored() >= energyUsePerTick && this.tank.getFluid() != null && this.tank.getFluid().getFluid() == InitBlocks.fluidOil && this.tank.getFluidAmount() >= oilUsePerTick && !worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)){
+            if(this.storage.getEnergyStored() >= ConfigIntValues.ORE_MAGNET_ENERGY_USE.getValue() && this.tank.getFluid() != null && this.tank.getFluid().getFluid() == InitBlocks.fluidOil && this.tank.getFluidAmount() >= ConfigIntValues.ORE_MAGNET_OIL_USE.getValue() && !worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)){
                 if(this.currentWorkTimer > 0){
                     currentWorkTimer--;
 
@@ -59,10 +54,10 @@ public class TileEntityOreMagnet extends TileEntityInventoryBase implements IEne
                         this.mine();
                     }
                 }
-                else this.currentWorkTimer = maxWorkTimer+MathHelper.getRandomIntegerInRange(worldObj.rand, 0, maxWorkTimer);
+                else this.currentWorkTimer = ConfigIntValues.ORE_MAGNET_MAX_TIMER.getValue()+MathHelper.getRandomIntegerInRange(worldObj.rand, 0, ConfigIntValues.ORE_MAGNET_MAX_TIMER.getValue());
 
                 //Extract energy
-                this.storage.extractEnergy(energyUsePerTick, false);
+                this.storage.extractEnergy(ConfigIntValues.ORE_MAGNET_ENERGY_USE.getValue(), false);
             }
 
             //Update Clients
@@ -81,8 +76,8 @@ public class TileEntityOreMagnet extends TileEntityInventoryBase implements IEne
         //The possible positions where ores can be mined up in RELATIVE COORDINATES!!
         ArrayList<WorldPos> possiblePlacingPositions = new ArrayList<WorldPos>();
 
-        for(int x = -range/2; x <= range/2; x++){
-            for(int z = -range/2; z <= range/2; z++){
+        for(int x = -ConfigIntValues.ORE_MAGNET_RANGE.getValue()/2; x <= ConfigIntValues.ORE_MAGNET_RANGE.getValue()/2; x++){
+            for(int z = -ConfigIntValues.ORE_MAGNET_RANGE.getValue()/2; z <= ConfigIntValues.ORE_MAGNET_RANGE.getValue()/2; z++){
                 //Check if there is a casing below the Block to mine
                 if(WorldUtil.hasBlocksInPlacesGiven(new int[][]{{x, -1, z}}, InitBlocks.blockMisc, TheMiscBlocks.LAVA_FACTORY_CASE.ordinal(), worldObj, xCoord, yCoord, zCoord)){
                     //Can the block at the top be replaced?
@@ -141,7 +136,7 @@ public class TileEntityOreMagnet extends TileEntityInventoryBase implements IEne
         worldObj.playSoundEffect((double)xCoord+x+0.5D, (double)yCoord+toPlaceY+0.5D, (double)zCoord+z+0.5D, block.stepSound.func_150496_b(), (block.stepSound.getVolume()+1.0F)/2.0F, block.stepSound.getPitch()*0.8F);
 
         //Extract oil
-        this.tank.drain(oilUsePerTick, true);
+        this.tank.drain(ConfigIntValues.ORE_MAGNET_OIL_USE.getValue(), true);
     }
 
     private boolean hasException(String name){

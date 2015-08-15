@@ -3,6 +3,7 @@ package ellpeck.actuallyadditions.blocks;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.ActuallyAdditions;
+import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.inventory.GuiHandler;
 import ellpeck.actuallyadditions.tile.TileEntityOilGenerator;
 import ellpeck.actuallyadditions.util.BlockUtil;
@@ -113,7 +114,7 @@ public class BlockOilGenerator extends BlockContainerBase implements INameableIt
         @SideOnly(Side.CLIENT)
         public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld) {
             BlockUtil.addInformation(theBlock, list, 1, "");
-            BlockUtil.addPowerProductionInfo(list, TileEntityOilGenerator.energyProducedPerTick);
+            BlockUtil.addPowerProductionInfo(list, ConfigIntValues.OIL_GEN_ENERGY_PRODUCED.getValue());
         }
 
         @Override

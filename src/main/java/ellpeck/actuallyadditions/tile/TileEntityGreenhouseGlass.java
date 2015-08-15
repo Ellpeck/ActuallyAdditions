@@ -11,8 +11,6 @@ import java.util.Random;
 
 public class TileEntityGreenhouseGlass extends TileEntityBase{
 
-    private int timeUntilNextFertToSet = ConfigIntValues.GLASS_TIME_NEEDED.getValue();
-
     private int timeUntilNextFert;
 
     @Override
@@ -32,7 +30,7 @@ public class TileEntityGreenhouseGlass extends TileEntityBase{
                             }
                         }
                     }
-                    else this.timeUntilNextFert = this.timeUntilNextFertToSet+new Random().nextInt(this.timeUntilNextFertToSet);
+                    else this.timeUntilNextFert = ConfigIntValues.GLASS_TIME_NEEDED.getValue()+new Random().nextInt(ConfigIntValues.GLASS_TIME_NEEDED.getValue());
                 }
             }
         }

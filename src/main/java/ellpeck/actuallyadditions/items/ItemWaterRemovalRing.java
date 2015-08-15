@@ -17,9 +17,6 @@ import net.minecraft.world.World;
 
 public class ItemWaterRemovalRing extends ItemEnergy implements INameableItem{
 
-    private static final int RANGE = ConfigIntValues.WATER_RING_RANGE.getValue();
-    private static final int ENERGY_USED_PER_BLOCK = ConfigIntValues.WATER_RING_ENERGY_USE.getValue();
-
     public ItemWaterRemovalRing(){
         super(1000000, 5000, 1);
     }
@@ -31,22 +28,22 @@ public class ItemWaterRemovalRing extends ItemEnergy implements INameableItem{
         EntityPlayer player = (EntityPlayer)entity;
         ItemStack equipped = player.getCurrentEquippedItem();
 
-        if(equipped != null && equipped == stack && this.getEnergyStored(stack) >= ENERGY_USED_PER_BLOCK){
+        if(equipped != null && equipped == stack && this.getEnergyStored(stack) >= ConfigIntValues.WATER_RING_ENERGY_USE.getValue()){
 
             //Setting everything to air
-            for(int x = -RANGE; x < RANGE+1; x++){
-                for(int z = -RANGE; z < RANGE+1; z++){
-                    for(int y = -RANGE; y < RANGE+1; y++){
+            for(int x = -ConfigIntValues.WATER_RING_RANGE.getValue(); x < ConfigIntValues.WATER_RING_RANGE.getValue()+1; x++){
+                for(int z = -ConfigIntValues.WATER_RING_RANGE.getValue(); z < ConfigIntValues.WATER_RING_RANGE.getValue()+1; z++){
+                    for(int y = -ConfigIntValues.WATER_RING_RANGE.getValue(); y < ConfigIntValues.WATER_RING_RANGE.getValue()+1; y++){
                         int theX = MathHelper.floor_double(player.posX+x);
                         int theY = MathHelper.floor_double(player.posY+y);
                         int theZ = MathHelper.floor_double(player.posZ+z);
-                        if(this.getEnergyStored(stack) >= ENERGY_USED_PER_BLOCK){
+                        if(this.getEnergyStored(stack) >= ConfigIntValues.WATER_RING_ENERGY_USE.getValue()){
                             //Remove Water
                             if(world.getBlock(theX, theY, theZ) == Blocks.water || world.getBlock(theX, theY, theZ) == Blocks.flowing_water){
                                 world.setBlockToAir(theX, theY, theZ);
 
                                 if(!player.capabilities.isCreativeMode){
-                                    this.extractEnergy(stack, ENERGY_USED_PER_BLOCK, false);
+                                    this.extractEnergy(stack, ConfigIntValues.WATER_RING_ENERGY_USE.getValue(), false);
                                 }
                             }
                             //Remove Lava
@@ -54,7 +51,7 @@ public class ItemWaterRemovalRing extends ItemEnergy implements INameableItem{
                                 world.setBlockToAir(theX, theY, theZ);
 
                                 if(!player.capabilities.isCreativeMode){
-                                    this.extractEnergy(stack, ENERGY_USED_PER_BLOCK*2, false);
+                                    this.extractEnergy(stack, ConfigIntValues.WATER_RING_ENERGY_USE.getValue()*2, false);
                                 }
                             }
                         }

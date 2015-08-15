@@ -3,6 +3,7 @@ package ellpeck.actuallyadditions.blocks;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.ActuallyAdditions;
+import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.inventory.GuiHandler;
 import ellpeck.actuallyadditions.tile.TileEntityCoalGenerator;
 import ellpeck.actuallyadditions.util.BlockUtil;
@@ -113,7 +114,7 @@ public class BlockCoalGenerator extends BlockContainerBase implements INameableI
         @SideOnly(Side.CLIENT)
         public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld) {
             BlockUtil.addInformation(theBlock, list, 1, "");
-            BlockUtil.addPowerProductionInfo(list, TileEntityCoalGenerator.energyProducedPerTick);
+            BlockUtil.addPowerProductionInfo(list, ConfigIntValues.COAL_GEN_ENERGY_PRODUCED.getValue());
         }
 
         @Override

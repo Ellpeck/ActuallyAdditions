@@ -87,7 +87,6 @@ public class TileEntityFluidCollector extends TileEntityInventoryBase implements
 
     public boolean isPlacer;
 
-    private final int timeNeeded = ConfigIntValues.BREAKER_TIME_NEEDED.getValue();
     private int currentTime;
 
     public TileEntityFluidCollector(int slots, String name){
@@ -146,7 +145,7 @@ public class TileEntityFluidCollector extends TileEntityInventoryBase implements
                         }
                     }
                 }
-                else this.currentTime = this.timeNeeded;
+                else this.currentTime = ConfigIntValues.BREAKER_TIME_NEEDED.getValue();
             }
 
             if(!this.isPlacer) WorldUtil.fillBucket(tank, slots, 0, 1);

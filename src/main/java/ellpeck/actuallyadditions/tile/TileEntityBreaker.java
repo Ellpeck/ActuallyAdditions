@@ -23,7 +23,6 @@ public class TileEntityBreaker extends TileEntityInventoryBase{
 
     public boolean isPlacer;
 
-    private final int timeNeeded = ConfigIntValues.BREAKER_TIME_NEEDED.getValue();
     private int currentTime;
 
     public TileEntityBreaker(int slots, String name){
@@ -68,7 +67,7 @@ public class TileEntityBreaker extends TileEntityInventoryBase{
                         }
                     }
                 }
-                else this.currentTime = this.timeNeeded;
+                else this.currentTime = ConfigIntValues.BREAKER_TIME_NEEDED.getValue();
             }
         }
     }

@@ -42,9 +42,6 @@ public class ItemDrill extends ItemEnergy implements INameableItem{
         super(500000, 5000, 4);
     }
 
-    public static float defaultEfficiency = ConfigFloatValues.DRILL_DAMAGE.getValue();
-    public static int energyUsePerBlockOrHit = ConfigIntValues.DRILL_ENERGY_USE.getValue();
-
     @Override
     //Places Blocks if the Placing Upgrade is installed
     public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int hitSide, float hitX, float hitY, float hitZ){
@@ -108,7 +105,7 @@ public class ItemDrill extends ItemEnergy implements INameableItem{
      * @return The Mining Speed depending on the Speed Upgrades
      */
     public float getEfficiencyFromUpgrade(ItemStack stack){
-        float efficiency = defaultEfficiency;
+        float efficiency = ConfigFloatValues.DRILL_DAMAGE.getValue();
         if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SPEED)){
             if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SPEED_II)){
                 if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SPEED_III)) efficiency += 37.0F;
@@ -125,7 +122,7 @@ public class ItemDrill extends ItemEnergy implements INameableItem{
      * @return The Energy use per Block
      */
     public int getEnergyUsePerBlock(ItemStack stack){
-        int use = energyUsePerBlockOrHit;
+        int use = ConfigIntValues.DRILL_ENERGY_USE.getValue();
 
         //Speed
         if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SPEED)){
@@ -428,7 +425,7 @@ public class ItemDrill extends ItemEnergy implements INameableItem{
     @Override
     public Multimap getAttributeModifiers(ItemStack stack){
         Multimap map = super.getAttributeModifiers(stack);
-        map.put(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(), new AttributeModifier(field_111210_e, "Tool modifier", this.getEnergyStored(stack) >= energyUsePerBlockOrHit ? 8.0F : 0.0F, 0));
+        map.put(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(), new AttributeModifier(field_111210_e, "Tool modifier", this.getEnergyStored(stack) >= ConfigIntValues.DRILL_ENERGY_USE.getValue() ? 8.0F : 0.0F, 0));
         return map;
     }
 }

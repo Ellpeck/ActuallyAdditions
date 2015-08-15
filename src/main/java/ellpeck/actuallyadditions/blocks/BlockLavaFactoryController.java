@@ -2,6 +2,7 @@ package ellpeck.actuallyadditions.blocks;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.tile.TileEntityLavaFactoryController;
 import ellpeck.actuallyadditions.util.*;
 import net.minecraft.block.Block;
@@ -98,7 +99,7 @@ public class BlockLavaFactoryController extends BlockContainerBase implements IN
         public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld) {
             BlockUtil.addInformation(theBlock, list, 3, "");
             if(KeyUtil.isShiftPressed()){
-                list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".uses.desc") + " " + TileEntityLavaFactoryController.energyNeededToProduceLava + " RF/B");
+                list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".uses.desc") + " " +ConfigIntValues.LAVA_FACTORY_ENERGY_USED.getValue()+ " RF/B");
             }
         }
 

@@ -20,9 +20,6 @@ import java.util.ArrayList;
 
 public class ItemMagnetRing extends ItemEnergy implements INameableItem{
 
-    private static final int RANGE = ConfigIntValues.MAGNET_RING_RANGE.getValue();
-    private static final int ENERGY_USED_PER_TICK = ConfigIntValues.MAGNET_RING_ENERGY_USE.getValue();
-
     public ItemMagnetRing(){
         super(3000000, 5000, 1);
     }
@@ -30,9 +27,9 @@ public class ItemMagnetRing extends ItemEnergy implements INameableItem{
     @SuppressWarnings("unchecked")
     @Override
     public void onUpdate(ItemStack stack, World world, Entity entity, int par4, boolean par5){
-        if(this.getEnergyStored(stack) >= ENERGY_USED_PER_TICK){
+        if(this.getEnergyStored(stack) >= ConfigIntValues.MAGNET_RING_ENERGY_USE.getValue()){
             //Get all the Items in the area
-            ArrayList<EntityItem> items = (ArrayList<EntityItem>)world.getEntitiesWithinAABB(EntityItem.class, AxisAlignedBB.getBoundingBox(entity.posX-RANGE, entity.posY-RANGE, entity.posZ-RANGE, entity.posX+RANGE, entity.posY+RANGE, entity.posZ+RANGE));
+            ArrayList<EntityItem> items = (ArrayList<EntityItem>)world.getEntitiesWithinAABB(EntityItem.class, AxisAlignedBB.getBoundingBox(entity.posX-ConfigIntValues.MAGNET_RING_RANGE.getValue(), entity.posY-ConfigIntValues.MAGNET_RING_RANGE.getValue(), entity.posZ-ConfigIntValues.MAGNET_RING_RANGE.getValue(), entity.posX+ConfigIntValues.MAGNET_RING_RANGE.getValue(), entity.posY+ConfigIntValues.MAGNET_RING_RANGE.getValue(), entity.posZ+ConfigIntValues.MAGNET_RING_RANGE.getValue()));
             if(!items.isEmpty()){
                 for(EntityItem item : items){
                     //If the Item is near enough to get picked up
@@ -52,7 +49,7 @@ public class ItemMagnetRing extends ItemEnergy implements INameableItem{
 
             //Use Energy per tick
             if(!((EntityPlayer)entity).capabilities.isCreativeMode){
-                this.extractEnergy(stack, ENERGY_USED_PER_TICK, false);
+                this.extractEnergy(stack, ConfigIntValues.MAGNET_RING_ENERGY_USE.getValue(), false);
             }
         }
     }

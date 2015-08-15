@@ -15,8 +15,6 @@ import java.util.Random;
 
 public class TileEntityFishingNet extends TileEntityBase{
 
-    public int timeUntilNextDropToSet = ConfigIntValues.FISHER_TIME.getValue();
-
     public int timeUntilNextDrop;
 
     @Override
@@ -40,7 +38,7 @@ public class TileEntityFishingNet extends TileEntityBase{
                             }
                         }
                     }
-                    else this.timeUntilNextDrop = this.timeUntilNextDropToSet + rand.nextInt(this.timeUntilNextDropToSet / 2);
+                    else this.timeUntilNextDrop = ConfigIntValues.FISHER_TIME.getValue() + rand.nextInt(ConfigIntValues.FISHER_TIME.getValue() / 2);
                 }
             }
         }

@@ -31,14 +31,12 @@ public class TileEntityFurnaceSolar extends TileEntityBase implements IEnergyPro
 
     public EnergyStorage storage = new EnergyStorage(30000);
 
-    public static int energyProducedPerTick = ConfigIntValues.FURNACE_SOLAR_ENERGY_PRODUCED.getValue();
-
     @Override
     public void updateEntity(){
         if(!worldObj.isRemote){
             if(worldObj.canBlockSeeTheSky(xCoord, yCoord, zCoord) && worldObj.isDaytime()){
-                if(energyProducedPerTick <= this.getMaxEnergyStored(ForgeDirection.UNKNOWN)-this.getEnergyStored(ForgeDirection.UNKNOWN)){
-                    this.storage.receiveEnergy(energyProducedPerTick, false);
+                if(ConfigIntValues.FURNACE_SOLAR_ENERGY_PRODUCED.getValue() <= this.getMaxEnergyStored(ForgeDirection.UNKNOWN)-this.getEnergyStored(ForgeDirection.UNKNOWN)){
+                    this.storage.receiveEnergy(ConfigIntValues.FURNACE_SOLAR_ENERGY_PRODUCED.getValue(), false);
                     this.markDirty();
                 }
             }

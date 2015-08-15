@@ -3,6 +3,7 @@ package ellpeck.actuallyadditions.blocks;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.ActuallyAdditions;
+import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.inventory.GuiHandler;
 import ellpeck.actuallyadditions.tile.TileEntityOreMagnet;
 import ellpeck.actuallyadditions.util.*;
@@ -98,9 +99,9 @@ public class BlockOreMagnet extends BlockContainerBase implements INameableItem{
         @SideOnly(Side.CLIENT)
         public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld){
             BlockUtil.addInformation(theBlock, list, 3, "");
-            BlockUtil.addPowerUsageInfo(list, TileEntityOreMagnet.energyUsePerTick);
+            BlockUtil.addPowerUsageInfo(list, ConfigIntValues.ORE_MAGNET_ENERGY_USE.getValue());
             if(KeyUtil.isShiftPressed()){
-                list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".uses.desc")+" "+TileEntityOreMagnet.oilUsePerTick+" mB "+StringUtil.localize(InitBlocks.fluidOil.getUnlocalizedName())+"/"+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".block.desc"));
+                list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".uses.desc")+" "+ConfigIntValues.ORE_MAGNET_OIL_USE.getValue()+" mB "+StringUtil.localize(InitBlocks.fluidOil.getUnlocalizedName())+"/"+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".block.desc"));
             }
         }
 

@@ -24,10 +24,6 @@ import java.util.List;
 
 public class ItemLeafBlower extends Item implements INameableItem{
 
-    public final int range = ConfigIntValues.LEAF_BLOWER_RANGE_SIDES.getValue();
-    public final int rangeUp = ConfigIntValues.LEAF_BLOWER_RANGE_UP.getValue();
-    public final boolean hasSound = ConfigBoolValues.LEAF_BLOWER_SOUND.isEnabled();
-
     private final boolean isAdvanced;
 
     public ItemLeafBlower(boolean isAdvanced){
@@ -42,7 +38,7 @@ public class ItemLeafBlower extends Item implements INameableItem{
                 //Breaks the Blocks
                 this.breakStuff(player.worldObj, MathHelper.floor_double(player.posX), MathHelper.floor_double(player.posY), MathHelper.floor_double(player.posZ));
                 //Plays a Minecart sounds (It really sounds like a Leaf Blower!)
-                if(this.hasSound) player.worldObj.playSoundAtEntity(player, "minecart.base", 0.3F, 0.001F);
+                if(ConfigBoolValues.LEAF_BLOWER_SOUND.isEnabled()) player.worldObj.playSoundAtEntity(player, "minecart.base", 0.3F, 0.001F);
             }
         }
     }
@@ -55,9 +51,9 @@ public class ItemLeafBlower extends Item implements INameableItem{
      * @param z The Z Position of the Player
      */
     public void breakStuff(World world, int x, int y, int z){
-        for(int reachX = -range; reachX < range+1; reachX++){
-            for(int reachZ = -range; reachZ < range+1; reachZ++){
-                for(int reachY = (this.isAdvanced ? -range : -rangeUp); reachY < (this.isAdvanced ? range+1 : rangeUp+1); reachY++){
+        for(int reachX = -ConfigIntValues.LEAF_BLOWER_RANGE_SIDES.getValue(); reachX < ConfigIntValues.LEAF_BLOWER_RANGE_SIDES.getValue()+1; reachX++){
+            for(int reachZ = -ConfigIntValues.LEAF_BLOWER_RANGE_SIDES.getValue(); reachZ < ConfigIntValues.LEAF_BLOWER_RANGE_SIDES.getValue()+1; reachZ++){
+                for(int reachY = (this.isAdvanced ? -ConfigIntValues.LEAF_BLOWER_RANGE_SIDES.getValue() : -ConfigIntValues.LEAF_BLOWER_RANGE_UP.getValue()); reachY < (this.isAdvanced ? ConfigIntValues.LEAF_BLOWER_RANGE_SIDES.getValue()+1 : ConfigIntValues.LEAF_BLOWER_RANGE_UP.getValue()+1); reachY++){
                     //The current Block to break
                     Block block = world.getBlock(x+reachX, y+reachY, z+reachZ);
                     if(block != null && (block instanceof BlockBush || (this.isAdvanced && block instanceof BlockLeavesBase))){

@@ -31,16 +31,12 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
     public FluidTank tank = new FluidTank(4*FluidContainerRegistry.BUCKET_VOLUME);
     private int lastTank;
 
-    public static int energyUsePerTick = ConfigIntValues.COFFEE_MACHINE_ENERGY_USED.getValue();
     public final int waterUsedPerCoffee = 500;
 
     public final int coffeeCacheMaxAmount = 300;
-    public final int coffeeCacheAddPerItem = ConfigIntValues.COFFEE_CACHE_ADDED_PER_ITEM.getValue();
-    public final int coffeeCacheUsePerItem = ConfigIntValues.COFFEE_CACHE_USED_PER_ITEM.getValue();
     public int coffeeCacheAmount;
     private int lastCoffeeAmount;
 
-    public final int maxBrewTime = ConfigIntValues.COFFEE_MACHINE_TIME_USED.getValue();
     public int brewTime;
     private int lastBrewTime;
 
@@ -69,10 +65,10 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
 
     public void storeCoffee(){
         if(this.slots[SLOT_COFFEE_BEANS] != null && this.slots[SLOT_COFFEE_BEANS].getItem() == InitItems.itemCoffeeBean){
-            if(this.coffeeCacheAddPerItem <= this.coffeeCacheMaxAmount-this.coffeeCacheAmount){
+            if(ConfigIntValues.COFFEE_CACHE_ADDED_PER_ITEM.getValue() <= this.coffeeCacheMaxAmount-this.coffeeCacheAmount){
                 this.slots[SLOT_COFFEE_BEANS].stackSize--;
                 if(this.slots[SLOT_COFFEE_BEANS].stackSize <= 0) this.slots[SLOT_COFFEE_BEANS] = null;
-                this.coffeeCacheAmount += this.coffeeCacheAddPerItem;
+                this.coffeeCacheAmount += ConfigIntValues.COFFEE_CACHE_ADDED_PER_ITEM.getValue();
             }
         }
 
@@ -81,11 +77,11 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
 
     public void brew(){
         if(!worldObj.isRemote){
-            if(this.slots[SLOT_INPUT] != null && this.slots[SLOT_INPUT].getItem() == InitItems.itemMisc && this.slots[SLOT_INPUT].getItemDamage() == TheMiscItems.CUP.ordinal() && this.slots[SLOT_OUTPUT] == null && this.coffeeCacheAmount >= this.coffeeCacheUsePerItem && this.tank.getFluid() != null && this.tank.getFluid().getFluid() == FluidRegistry.WATER && this.tank.getFluidAmount() >= this.waterUsedPerCoffee){
-                if(this.storage.getEnergyStored() >= energyUsePerTick){
+            if(this.slots[SLOT_INPUT] != null && this.slots[SLOT_INPUT].getItem() == InitItems.itemMisc && this.slots[SLOT_INPUT].getItemDamage() == TheMiscItems.CUP.ordinal() && this.slots[SLOT_OUTPUT] == null && this.coffeeCacheAmount >= ConfigIntValues.COFFEE_CACHE_USED_PER_ITEM.getValue() && this.tank.getFluid() != null && this.tank.getFluid().getFluid() == FluidRegistry.WATER && this.tank.getFluidAmount() >= this.waterUsedPerCoffee){
+                if(this.storage.getEnergyStored() >= ConfigIntValues.COFFEE_MACHINE_ENERGY_USED.getValue()){
                     this.brewTime++;
-                    this.storage.extractEnergy(energyUsePerTick, false);
-                    if(this.brewTime >= this.maxBrewTime){
+                    this.storage.extractEnergy(ConfigIntValues.COFFEE_MACHINE_ENERGY_USED.getValue(), false);
+                    if(this.brewTime >= ConfigIntValues.COFFEE_MACHINE_TIME_USED.getValue()){
                         this.brewTime = 0;
                         ItemStack output = new ItemStack(InitItems.itemCoffee);
                         for(int i = 3; i < this.slots.length-2; i++){
@@ -102,7 +98,7 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
                         this.slots[SLOT_OUTPUT] = output.copy();
                         this.slots[SLOT_INPUT].stackSize--;
                         if(this.slots[SLOT_INPUT].stackSize <= 0) this.slots[SLOT_INPUT] = null;
-                        this.coffeeCacheAmount -= this.coffeeCacheUsePerItem;
+                        this.coffeeCacheAmount -= ConfigIntValues.COFFEE_CACHE_USED_PER_ITEM.getValue();
                         this.tank.drain(this.waterUsedPerCoffee, true);
                     }
                 }
@@ -128,7 +124,7 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
 
     @SideOnly(Side.CLIENT)
     public int getBrewScaled(int i){
-        return this.brewTime * i / this.maxBrewTime;
+        return this.brewTime * i / ConfigIntValues.COFFEE_MACHINE_TIME_USED.getValue();
     }
 
     @Override

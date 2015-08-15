@@ -22,11 +22,6 @@ public class TileEntityOilGenerator extends TileEntityInventoryBase implements I
     public FluidTank tank = new FluidTank(2*FluidContainerRegistry.BUCKET_VOLUME);
     private int lastTank;
 
-    public static int energyProducedPerTick = ConfigIntValues.OIL_GEN_ENERGY_PRODUCED.getValue();
-
-    public int fuelUsedPerBurnup = ConfigIntValues.OIL_GEN_FUEL_USED.getValue();
-    public int maxBurnTime = ConfigIntValues.OIL_GEN_BURN_TIME.getValue();
-
     public int currentBurnTime;
     private int lastBurnTime;
 
@@ -42,13 +37,13 @@ public class TileEntityOilGenerator extends TileEntityInventoryBase implements I
 
             if(this.currentBurnTime > 0){
                 this.currentBurnTime--;
-                this.storage.receiveEnergy(energyProducedPerTick, false);
+                this.storage.receiveEnergy(ConfigIntValues.OIL_GEN_ENERGY_PRODUCED.getValue(), false);
             }
 
-            if(energyProducedPerTick*this.maxBurnTime <= this.getMaxEnergyStored(ForgeDirection.UNKNOWN)-this.getEnergyStored(ForgeDirection.UNKNOWN)){
-                if(this.currentBurnTime <= 0 && this.tank.getFluidAmount() >= this.fuelUsedPerBurnup){
-                    this.currentBurnTime = this.maxBurnTime;
-                    this.tank.drain(this.fuelUsedPerBurnup, true);
+            if(ConfigIntValues.OIL_GEN_ENERGY_PRODUCED.getValue()*ConfigIntValues.OIL_GEN_BURN_TIME.getValue() <= this.getMaxEnergyStored(ForgeDirection.UNKNOWN)-this.getEnergyStored(ForgeDirection.UNKNOWN)){
+                if(this.currentBurnTime <= 0 && this.tank.getFluidAmount() >= ConfigIntValues.OIL_GEN_FUEL_USED.getValue()){
+                    this.currentBurnTime = ConfigIntValues.OIL_GEN_BURN_TIME.getValue();
+                    this.tank.drain(ConfigIntValues.OIL_GEN_FUEL_USED.getValue(), true);
                 }
             }
 
@@ -67,7 +62,7 @@ public class TileEntityOilGenerator extends TileEntityInventoryBase implements I
                 this.markDirty();
                 int meta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
                 if(meta == 1){
-                    if(!(energyProducedPerTick*this.maxBurnTime <= this.getMaxEnergyStored(ForgeDirection.UNKNOWN)-this.getEnergyStored(ForgeDirection.UNKNOWN) && FluidContainerRegistry.BUCKET_VOLUME <= this.tank.getCapacity()-this.tank.getFluidAmount()))
+                    if(!(ConfigIntValues.OIL_GEN_ENERGY_PRODUCED.getValue()*ConfigIntValues.OIL_GEN_BURN_TIME.getValue() <= this.getMaxEnergyStored(ForgeDirection.UNKNOWN)-this.getEnergyStored(ForgeDirection.UNKNOWN) && FluidContainerRegistry.BUCKET_VOLUME <= this.tank.getCapacity()-this.tank.getFluidAmount()))
                         worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 0, 2);
                 }
                 else worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 1, 2);
@@ -94,13 +89,12 @@ public class TileEntityOilGenerator extends TileEntityInventoryBase implements I
 
     @SideOnly(Side.CLIENT)
     public int getBurningScaled(int i){
-        return this.currentBurnTime * i / this.maxBurnTime;
+        return this.currentBurnTime * i / ConfigIntValues.OIL_GEN_BURN_TIME.getValue();
     }
 
     @Override
     public void writeToNBT(NBTTagCompound compound){
         compound.setInteger("BurnTime", this.currentBurnTime);
-        compound.setInteger("MaxBurnTime", this.maxBurnTime);
         this.storage.writeToNBT(compound);
         this.tank.writeToNBT(compound);
         super.writeToNBT(compound);
@@ -109,7 +103,6 @@ public class TileEntityOilGenerator extends TileEntityInventoryBase implements I
     @Override
     public void readFromNBT(NBTTagCompound compound){
         this.currentBurnTime = compound.getInteger("BurnTime");
-        this.maxBurnTime = compound.getInteger("MaxBurnTime");
         this.storage.readFromNBT(compound);
         this.tank.readFromNBT(compound);
         super.readFromNBT(compound);

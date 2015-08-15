@@ -21,10 +21,7 @@ public class TileEntityFermentingBarrel extends TileEntityInventoryBase implemen
     private int lastOil;
 
     public int currentProcessTime;
-    public int maxTimeProcessing = ConfigIntValues.BARREL_PROCESSING_TIME.getValue();
     private int lastProcessTime;
-
-    public int mBProducedPerCycle = ConfigIntValues.BARREL_MB_PRODUCED.getValue();
 
     public TileEntityFermentingBarrel(){
         super(4, "fermentingBarrel");
@@ -34,13 +31,13 @@ public class TileEntityFermentingBarrel extends TileEntityInventoryBase implemen
     @SuppressWarnings("unchecked")
     public void updateEntity(){
         if(!worldObj.isRemote){
-            if(this.canolaTank.getFluidAmount() >= this.mBProducedPerCycle && this.mBProducedPerCycle <= this.oilTank.getCapacity()-this.oilTank.getFluidAmount()){
+            if(this.canolaTank.getFluidAmount() >= ConfigIntValues.BARREL_MB_PRODUCED.getValue() && ConfigIntValues.BARREL_MB_PRODUCED.getValue() <= this.oilTank.getCapacity()-this.oilTank.getFluidAmount()){
                 this.currentProcessTime++;
-                if(this.currentProcessTime >= this.maxTimeProcessing){
+                if(this.currentProcessTime >= ConfigIntValues.BARREL_PROCESSING_TIME.getValue()){
                     this.currentProcessTime = 0;
 
-                    this.oilTank.fill(new FluidStack(InitBlocks.fluidOil, mBProducedPerCycle), true);
-                    this.canolaTank.drain(mBProducedPerCycle, true);
+                    this.oilTank.fill(new FluidStack(InitBlocks.fluidOil, ConfigIntValues.BARREL_MB_PRODUCED.getValue()), true);
+                    this.canolaTank.drain(ConfigIntValues.BARREL_MB_PRODUCED.getValue(), true);
                     this.markDirty();
                 }
             }
@@ -80,7 +77,7 @@ public class TileEntityFermentingBarrel extends TileEntityInventoryBase implemen
 
     @SideOnly(Side.CLIENT)
     public int getProcessScaled(int i){
-        return this.currentProcessTime * i / this.maxTimeProcessing;
+        return this.currentProcessTime * i / ConfigIntValues.BARREL_PROCESSING_TIME.getValue();
     }
 
     @Override

@@ -19,10 +19,6 @@ public class TileEntityItemRepairer extends TileEntityInventoryBase implements I
     public EnergyStorage storage = new EnergyStorage(300000);
     private int lastEnergy;
 
-    private final int speedSlowdown = ConfigIntValues.REPAIRER_SPEED_SLOWDOWN.getValue();
-
-    public static int energyUsePerTick = ConfigIntValues.REPAIRER_ENERGY_USED.getValue();
-
     public int nextRepairTick;
 
     public TileEntityItemRepairer(){
@@ -40,10 +36,10 @@ public class TileEntityItemRepairer extends TileEntityInventoryBase implements I
                     this.nextRepairTick = 0;
                 }
                 else{
-                    if(this.storage.getEnergyStored() >= energyUsePerTick){
+                    if(this.storage.getEnergyStored() >= ConfigIntValues.REPAIRER_ENERGY_USED.getValue()){
                         this.nextRepairTick++;
-                        this.storage.extractEnergy(energyUsePerTick, false);
-                        if(this.nextRepairTick >= this.speedSlowdown){
+                        this.storage.extractEnergy(ConfigIntValues.REPAIRER_ENERGY_USED.getValue(), false);
+                        if(this.nextRepairTick >= ConfigIntValues.REPAIRER_SPEED_SLOWDOWN.getValue()){
                             this.nextRepairTick = 0;
                             this.slots[SLOT_INPUT].setItemDamage(this.slots[SLOT_INPUT].getItemDamage() - 1);
                         }

@@ -28,7 +28,6 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
 
     public BlockPhantom.Type type;
 
-    public final int defaultRange = ConfigIntValues.PHANTOMFACE_RANGE.getValue();
     public int range;
 
     private int rangeBefore;
@@ -52,7 +51,7 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
     @Override
     public void updateEntity(){
         if(!worldObj.isRemote){
-            this.range = upgradeRange(defaultRange, worldObj, xCoord, yCoord, zCoord);
+            this.range = upgradeRange(ConfigIntValues.PHANTOMFACE_RANGE.getValue(), worldObj, xCoord, yCoord, zCoord);
 
             if(!this.hasBoundPosition()){
                 this.boundPosition = null;

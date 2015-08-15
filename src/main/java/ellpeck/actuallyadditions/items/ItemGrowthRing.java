@@ -25,13 +25,6 @@ import java.util.Random;
 
 public class ItemGrowthRing extends ItemEnergy implements INameableItem{
 
-    private static final int RANGE = ConfigIntValues.GROWTH_RING_RANGE.getValue();
-    private static final int ENERGY_USED_PER_TICK = ConfigIntValues.GROWTH_RING_ENERGY_USE.getValue();
-    //The waiting time per growth cycle
-    private static final int WAIT_TIME = ConfigIntValues.GROWTH_RING_COOLDOWN.getValue();
-    //The amount of Growth Ticks given to random plants around
-    private static final int GROWTH_TICKS_PER_CYCLE = ConfigIntValues.GROWTH_RING_GROWTH_PER_CYCLE.getValue();
-
     public ItemGrowthRing(){
         super(1000000, 5000, 1);
     }
@@ -43,17 +36,17 @@ public class ItemGrowthRing extends ItemEnergy implements INameableItem{
         EntityPlayer player = (EntityPlayer)entity;
         ItemStack equipped = player.getCurrentEquippedItem();
 
-        if(equipped != null && equipped == stack && this.getEnergyStored(stack) >= ENERGY_USED_PER_TICK){
+        if(equipped != null && equipped == stack && this.getEnergyStored(stack) >= ConfigIntValues.GROWTH_RING_ENERGY_USE.getValue()){
             ArrayList<WorldPos> blocks = new ArrayList<WorldPos>();
 
             if(stack.stackTagCompound == null) stack.setTagCompound(new NBTTagCompound());
             int waitTime = stack.stackTagCompound.getInteger("WaitTime");
 
             //Adding all possible Blocks
-            if(waitTime >= WAIT_TIME){
-                for(int x = -RANGE; x < RANGE+1; x++){
-                    for(int z = -RANGE; z < RANGE+1; z++){
-                        for(int y = -RANGE; y < RANGE+1; y++){
+            if(waitTime >= ConfigIntValues.GROWTH_RING_COOLDOWN.getValue()){
+                for(int x = -ConfigIntValues.GROWTH_RING_RANGE.getValue(); x < ConfigIntValues.GROWTH_RING_RANGE.getValue()+1; x++){
+                    for(int z = -ConfigIntValues.GROWTH_RING_RANGE.getValue(); z < ConfigIntValues.GROWTH_RING_RANGE.getValue()+1; z++){
+                        for(int y = -ConfigIntValues.GROWTH_RING_RANGE.getValue(); y < ConfigIntValues.GROWTH_RING_RANGE.getValue()+1; y++){
                             int theX = MathHelper.floor_double(player.posX+x);
                             int theY = MathHelper.floor_double(player.posY+y);
                             int theZ = MathHelper.floor_double(player.posZ+z);
@@ -67,7 +60,7 @@ public class ItemGrowthRing extends ItemEnergy implements INameableItem{
 
                 //Fertilizing the Blocks
                 if(!blocks.isEmpty()){
-                    for(int i = 0; i < GROWTH_TICKS_PER_CYCLE; i++){
+                    for(int i = 0; i < ConfigIntValues.GROWTH_RING_GROWTH_PER_CYCLE.getValue(); i++){
                         WorldPos pos = blocks.get(new Random().nextInt(blocks.size()));
 
                         int metaBefore = pos.getMetadata();
@@ -86,7 +79,7 @@ public class ItemGrowthRing extends ItemEnergy implements INameableItem{
 
             //Use Energy every tick
             if(!player.capabilities.isCreativeMode){
-                this.extractEnergy(stack, ENERGY_USED_PER_TICK, false);
+                this.extractEnergy(stack, ConfigIntValues.GROWTH_RING_ENERGY_USE.getValue(), false);
             }
         }
     }

@@ -2,6 +2,7 @@ package ellpeck.actuallyadditions.blocks;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.tile.TileEntityHeatCollector;
 import ellpeck.actuallyadditions.util.BlockUtil;
 import ellpeck.actuallyadditions.util.INameableItem;
@@ -81,7 +82,7 @@ public class BlockHeatCollector extends BlockContainerBase implements INameableI
         @SideOnly(Side.CLIENT)
         public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld) {
             BlockUtil.addInformation(theBlock, list, 3, "");
-            BlockUtil.addPowerProductionInfo(list, TileEntityHeatCollector.energyProducedPerTick);
+            BlockUtil.addPowerProductionInfo(list, ConfigIntValues.HEAT_COLLECTOR_ENERGY_PRODUCED.getValue());
         }
 
         @Override

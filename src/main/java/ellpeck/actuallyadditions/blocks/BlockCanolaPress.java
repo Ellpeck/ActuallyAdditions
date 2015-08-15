@@ -3,6 +3,7 @@ package ellpeck.actuallyadditions.blocks;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.ActuallyAdditions;
+import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.inventory.GuiHandler;
 import ellpeck.actuallyadditions.tile.TileEntityCanolaPress;
 import ellpeck.actuallyadditions.util.BlockUtil;
@@ -97,7 +98,7 @@ public class BlockCanolaPress extends BlockContainerBase implements INameableIte
         @SideOnly(Side.CLIENT)
         public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld) {
             BlockUtil.addInformation(theBlock, list, 1, "");
-            BlockUtil.addPowerUsageInfo(list, TileEntityCanolaPress.energyUsedPerTick);
+            BlockUtil.addPowerUsageInfo(list, ConfigIntValues.PRESS_ENERGY_USED.getValue());
         }
 
         @Override

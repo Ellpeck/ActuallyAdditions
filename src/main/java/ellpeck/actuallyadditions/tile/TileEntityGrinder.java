@@ -61,8 +61,6 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
         public TileEntityGrinderDouble(){
             super(6, "grinderDouble");
             this.isDouble = true;
-            this.maxCrushTime = ConfigIntValues.GRINDER_DOUBLE_CRUSH_TIME.getValue();
-            energyUsePerTick = ConfigIntValues.GRINDER_DOUBLE_ENERGY_USED.getValue();
         }
 
     }
@@ -73,10 +71,6 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
     public static final int SLOT_INPUT_2 = 3;
     public static final int SLOT_OUTPUT_2_1 = 4;
     public static final int SLOT_OUTPUT_2_2 = 5;
-
-    public int energyUsePerTick;
-
-    public int maxCrushTime;
 
     public int firstCrushTime;
     private int lastFirstCrush;
@@ -92,8 +86,14 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
     public TileEntityGrinder(){
         super(3, "grinder");
         this.isDouble = false;
-        this.maxCrushTime = ConfigIntValues.GRINDER_CRUSH_TIME.getValue();
-        energyUsePerTick = ConfigIntValues.GRINDER_ENERGY_USED.getValue();
+    }
+
+    private int getMaxCrushTime(){
+        return this.isDouble ? ConfigIntValues.GRINDER_DOUBLE_CRUSH_TIME.getValue() : ConfigIntValues.GRINDER_CRUSH_TIME.getValue();
+    }
+
+    private int getEnergyUse(){
+        return this.isDouble ? ConfigIntValues.GRINDER_DOUBLE_ENERGY_USED.getValue() : ConfigIntValues.GRINDER_ENERGY_USED.getValue();
     }
 
     @Override
@@ -107,9 +107,9 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
             if(this.isDouble) canCrushOnSecond = this.canCrushOn(SLOT_INPUT_2, SLOT_OUTPUT_2_1, SLOT_OUTPUT_2_2);
 
             if(canCrushOnFirst){
-                if(this.storage.getEnergyStored() >= energyUsePerTick){
+                if(this.storage.getEnergyStored() >= getEnergyUse()){
                     this.firstCrushTime++;
-                    if(this.firstCrushTime >= maxCrushTime){
+                    if(this.firstCrushTime >= getMaxCrushTime()){
                         this.finishCrushing(SLOT_INPUT_1, SLOT_OUTPUT_1_1, SLOT_OUTPUT_1_2);
                         this.firstCrushTime = 0;
                     }
@@ -119,9 +119,9 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
 
             if(this.isDouble){
                 if(canCrushOnSecond){
-                    if(this.storage.getEnergyStored() >= energyUsePerTick){
+                    if(this.storage.getEnergyStored() >= getEnergyUse()){
                         this.secondCrushTime++;
-                        if(this.secondCrushTime >= maxCrushTime){
+                        if(this.secondCrushTime >= getMaxCrushTime()){
                             this.finishCrushing(SLOT_INPUT_2, SLOT_OUTPUT_2_1, SLOT_OUTPUT_2_2);
                             this.secondCrushTime = 0;
                         }
@@ -130,7 +130,7 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
                 else this.secondCrushTime = 0;
             }
 
-            if(this.storage.getEnergyStored() >= energyUsePerTick && this.firstCrushTime > 0 || this.secondCrushTime > 0) this.storage.extractEnergy(energyUsePerTick, false);
+            if(this.storage.getEnergyStored() >= getEnergyUse() && this.firstCrushTime > 0 || this.secondCrushTime > 0) this.storage.extractEnergy(getEnergyUse(), false);
 
             if(flag != (this.firstCrushTime > 0 || this.secondCrushTime > 0)){
                 this.markDirty();
@@ -209,12 +209,12 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
 
     @SideOnly(Side.CLIENT)
     public int getFirstTimeToScale(int i){
-        return this.firstCrushTime * i / this.maxCrushTime;
+        return this.firstCrushTime * i / this.getMaxCrushTime();
     }
 
     @SideOnly(Side.CLIENT)
     public int getSecondTimeToScale(int i){
-        return this.secondCrushTime * i / this.maxCrushTime;
+        return this.secondCrushTime * i / this.getMaxCrushTime();
     }
 
     @Override

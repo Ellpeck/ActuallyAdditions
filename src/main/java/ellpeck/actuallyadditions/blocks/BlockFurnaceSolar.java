@@ -3,6 +3,7 @@ package ellpeck.actuallyadditions.blocks;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.tile.TileEntityFurnaceSolar;
 import ellpeck.actuallyadditions.util.BlockUtil;
 import ellpeck.actuallyadditions.util.INameableItem;
@@ -93,7 +94,7 @@ public class BlockFurnaceSolar extends BlockContainerBase implements INameableIt
         @SideOnly(Side.CLIENT)
         public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld) {
             BlockUtil.addInformation(theBlock, list, 1, "");
-            BlockUtil.addPowerProductionInfo(list, TileEntityFurnaceSolar.energyProducedPerTick);
+            BlockUtil.addPowerProductionInfo(list, ConfigIntValues.FURNACE_SOLAR_ENERGY_PRODUCED.getValue());
         }
 
         @Override

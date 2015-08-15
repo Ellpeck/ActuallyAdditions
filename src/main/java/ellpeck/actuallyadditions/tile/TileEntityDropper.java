@@ -8,12 +8,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 public class TileEntityDropper extends TileEntityInventoryBase{
 
-    private final int timeNeeded = ConfigIntValues.DROPPER_TIME_NEEDED.getValue();
     private int currentTime;
-
-    public TileEntityDropper(int slots, String name){
-        super(slots, name);
-    }
 
     public TileEntityDropper(){
         super(9, "dropper");
@@ -34,7 +29,7 @@ public class TileEntityDropper extends TileEntityInventoryBase{
                         }
                     }
                 }
-                else this.currentTime = this.timeNeeded;
+                else this.currentTime = ConfigIntValues.DROPPER_TIME_NEEDED.getValue();
             }
         }
     }

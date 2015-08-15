@@ -14,18 +14,13 @@ import java.util.Random;
 
 public class TileEntityHeatCollector extends TileEntityBase implements IEnergyProvider{
 
-    private int randomChance = ConfigIntValues.HEAT_COLLECTOR_LAVA_CHANCE.getValue();
-    private int blocksNeeded = ConfigIntValues.HEAT_COLLECTOR_BLOCKS.getValue();
-
     public EnergyStorage storage = new EnergyStorage(30000);
-
-    public static int energyProducedPerTick = ConfigIntValues.HEAT_COLLECTOR_ENERGY_PRODUCED.getValue();
 
     @Override
     public void updateEntity(){
         if(!worldObj.isRemote){
             ArrayList<Integer> blocksAround = new ArrayList<Integer>();
-            if(energyProducedPerTick <= this.getMaxEnergyStored(ForgeDirection.UNKNOWN)-this.getEnergyStored(ForgeDirection.UNKNOWN)){
+            if(ConfigIntValues.HEAT_COLLECTOR_ENERGY_PRODUCED.getValue() <= this.getMaxEnergyStored(ForgeDirection.UNKNOWN)-this.getEnergyStored(ForgeDirection.UNKNOWN)){
                 for(int i = 1; i <= 5; i++){
                     WorldPos coords = WorldUtil.getCoordsFromSide(WorldUtil.getDirectionBySidesInOrder(i), worldObj, xCoord, yCoord, zCoord);
                     if(coords != null){
@@ -36,12 +31,12 @@ public class TileEntityHeatCollector extends TileEntityBase implements IEnergyPr
                     }
                 }
 
-                if(blocksAround.size() >= blocksNeeded){
-                    this.storage.receiveEnergy(energyProducedPerTick, false);
+                if(blocksAround.size() >= ConfigIntValues.HEAT_COLLECTOR_BLOCKS.getValue()){
+                    this.storage.receiveEnergy(ConfigIntValues.HEAT_COLLECTOR_ENERGY_PRODUCED.getValue(), false);
                     this.markDirty();
 
                     Random rand = new Random();
-                    if(rand.nextInt(randomChance) == 0){
+                    if(rand.nextInt(ConfigIntValues.HEAT_COLLECTOR_LAVA_CHANCE.getValue()) == 0){
                         int randomSide = blocksAround.get(rand.nextInt(blocksAround.size()));
                         WorldUtil.breakBlockAtSide(WorldUtil.getDirectionBySidesInOrder(randomSide), worldObj, xCoord, yCoord, zCoord);
                     }

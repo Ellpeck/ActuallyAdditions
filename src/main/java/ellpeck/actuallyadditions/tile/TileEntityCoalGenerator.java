@@ -18,8 +18,6 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
     public EnergyStorage storage = new EnergyStorage(60000);
     private int lastEnergy;
 
-    public static int energyProducedPerTick = ConfigIntValues.COAL_GEN_ENERGY_PRODUCED.getValue();
-
     public int maxBurnTime;
     private int lastBurnTime;
     public int currentBurnTime;
@@ -37,12 +35,12 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
 
             if(this.currentBurnTime > 0){
                 this.currentBurnTime--;
-                this.storage.receiveEnergy(energyProducedPerTick, false);
+                this.storage.receiveEnergy(ConfigIntValues.COAL_GEN_ENERGY_PRODUCED.getValue(), false);
             }
 
             if(this.currentBurnTime <= 0 && this.slots[0] != null && TileEntityFurnace.getItemBurnTime(this.slots[0]) > 0){
                 int burnTime = TileEntityFurnace.getItemBurnTime(this.slots[0]);
-                if(energyProducedPerTick*burnTime <= this.getMaxEnergyStored(ForgeDirection.UNKNOWN)-this.getEnergyStored(ForgeDirection.UNKNOWN)){
+                if(ConfigIntValues.COAL_GEN_ENERGY_PRODUCED.getValue()*burnTime <= this.getMaxEnergyStored(ForgeDirection.UNKNOWN)-this.getEnergyStored(ForgeDirection.UNKNOWN)){
                     this.maxBurnTime = burnTime;
                     this.currentBurnTime = burnTime;
                     this.slots[0].stackSize--;
@@ -63,7 +61,7 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
                 this.markDirty();
                 int meta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
                 if(meta == 1){
-                    if(!(this.currentBurnTime <= 0 && this.slots[0] != null && TileEntityFurnace.getItemBurnTime(this.slots[0]) > 0 && energyProducedPerTick*TileEntityFurnace.getItemBurnTime(this.slots[0]) <= this.getMaxEnergyStored(ForgeDirection.UNKNOWN)-this.getEnergyStored(ForgeDirection.UNKNOWN)))
+                    if(!(this.currentBurnTime <= 0 && this.slots[0] != null && TileEntityFurnace.getItemBurnTime(this.slots[0]) > 0 && ConfigIntValues.COAL_GEN_ENERGY_PRODUCED.getValue()*TileEntityFurnace.getItemBurnTime(this.slots[0]) <= this.getMaxEnergyStored(ForgeDirection.UNKNOWN)-this.getEnergyStored(ForgeDirection.UNKNOWN)))
                         worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 0, 2);
                 }
                 else worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 1, 2);

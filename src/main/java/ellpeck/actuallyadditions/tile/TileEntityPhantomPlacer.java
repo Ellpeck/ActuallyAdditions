@@ -27,9 +27,6 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
     public WorldPos boundPosition;
 
     public int currentTime;
-    public final int timeNeeded = ConfigIntValues.PHANTOM_PLACER_TIME.getValue();
-
-    public final int defaultRange = ConfigIntValues.PHANTOM_PLACER_RANGE.getValue();
     public int range;
 
     public boolean isBreaker;
@@ -46,7 +43,7 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
     @Override
     public void updateEntity(){
         if(!worldObj.isRemote){
-            this.range = TileEntityPhantomface.upgradeRange(defaultRange, worldObj, xCoord, yCoord, zCoord);
+            this.range = TileEntityPhantomface.upgradeRange(ConfigIntValues.PHANTOM_PLACER_RANGE.getValue(), worldObj, xCoord, yCoord, zCoord);
 
             if(!this.hasBoundPosition()){
                 this.boundPosition = null;
@@ -81,7 +78,7 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
                             }
                         }
                     }
-                    else this.currentTime = this.timeNeeded;
+                    else this.currentTime = ConfigIntValues.PHANTOM_PLACER_TIME.getValue();
                 }
             }
         }

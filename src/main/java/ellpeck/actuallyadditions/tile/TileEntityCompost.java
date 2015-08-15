@@ -10,9 +10,6 @@ import net.minecraft.nbt.NBTTagCompound;
 
 public class TileEntityCompost extends TileEntityInventoryBase{
 
-    public final int amountNeededToConvert = ConfigIntValues.COMPOST_AMOUNT.getValue();
-    public final int conversionTimeNeeded = ConfigIntValues.COMPOST_TIME.getValue();
-
     public int conversionTime;
 
     public TileEntityCompost(){
@@ -32,10 +29,10 @@ public class TileEntityCompost extends TileEntityInventoryBase{
             }
 
             boolean theFlag = this.conversionTime > 0;
-            if(this.slots[0] != null && !(this.slots[0].getItem() instanceof ItemFertilizer) && this.slots[0].stackSize >= this.amountNeededToConvert){
+            if(this.slots[0] != null && !(this.slots[0].getItem() instanceof ItemFertilizer) && this.slots[0].stackSize >= ConfigIntValues.COMPOST_AMOUNT.getValue()){
                 this.conversionTime++;
-                if(this.conversionTime >= this.conversionTimeNeeded){
-                    this.slots[0] = new ItemStack(InitItems.itemFertilizer, this.amountNeededToConvert);
+                if(this.conversionTime >= ConfigIntValues.COMPOST_TIME.getValue()){
+                    this.slots[0] = new ItemStack(InitItems.itemFertilizer, ConfigIntValues.COMPOST_AMOUNT.getValue());
                     this.conversionTime = 0;
                 }
             }
@@ -47,7 +44,7 @@ public class TileEntityCompost extends TileEntityInventoryBase{
 
     @Override
     public int getInventoryStackLimit(){
-        return this.amountNeededToConvert;
+        return ConfigIntValues.COMPOST_AMOUNT.getValue();
     }
 
     @Override

@@ -15,10 +15,6 @@ import java.util.Random;
 
 public class TileEntityFeeder extends TileEntityInventoryBase implements IPacketSyncerToClient{
 
-    public int reach = ConfigIntValues.FEEDER_REACH.getValue();
-    public int timerGoal = ConfigIntValues.FEEDER_TIME.getValue();
-    public int animalThreshold = ConfigIntValues.FEEDER_THRESHOLD.getValue();
-
     public int currentTimer;
     public int currentAnimalAmount;
     private int lastAnimalAmount;
@@ -33,12 +29,12 @@ public class TileEntityFeeder extends TileEntityInventoryBase implements IPacket
     public void updateEntity(){
         if(!worldObj.isRemote){
             boolean theFlag = this.currentTimer > 0;
-            List<EntityAnimal> animals = worldObj.getEntitiesWithinAABB(EntityAnimal.class, AxisAlignedBB.getBoundingBox(this.xCoord - reach, this.yCoord - reach, this.zCoord - reach, this.xCoord + reach, this.yCoord + reach, this.zCoord + reach));
+            List<EntityAnimal> animals = worldObj.getEntitiesWithinAABB(EntityAnimal.class, AxisAlignedBB.getBoundingBox(this.xCoord - ConfigIntValues.FEEDER_REACH.getValue(), this.yCoord - ConfigIntValues.FEEDER_REACH.getValue(), this.zCoord - ConfigIntValues.FEEDER_REACH.getValue(), this.xCoord + ConfigIntValues.FEEDER_REACH.getValue(), this.yCoord + ConfigIntValues.FEEDER_REACH.getValue(), this.zCoord + ConfigIntValues.FEEDER_REACH.getValue()));
             if(animals != null){
                 this.currentAnimalAmount = animals.size();
                 if(this.currentAnimalAmount >= 2){
-                    if(this.currentAnimalAmount < this.animalThreshold){
-                        if(this.currentTimer >= this.timerGoal){
+                    if(this.currentAnimalAmount < ConfigIntValues.FEEDER_THRESHOLD.getValue()){
+                        if(this.currentTimer >= ConfigIntValues.FEEDER_TIME.getValue()){
                             this.currentTimer = 0;
                             if(this.slots[0] != null){
                                 EntityAnimal randomAnimal = animals.get(new Random().nextInt(this.currentAnimalAmount));
@@ -84,7 +80,7 @@ public class TileEntityFeeder extends TileEntityInventoryBase implements IPacket
 
     @SideOnly(Side.CLIENT)
     public int getCurrentTimerToScale(int i){
-        return this.currentTimer * i / this.timerGoal;
+        return this.currentTimer * i / ConfigIntValues.FEEDER_TIME.getValue();
     }
 
     @Override

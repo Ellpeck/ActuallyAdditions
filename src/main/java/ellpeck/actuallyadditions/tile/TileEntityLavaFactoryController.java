@@ -14,9 +14,6 @@ public class TileEntityLavaFactoryController extends TileEntityBase implements I
 
     public EnergyStorage storage = new EnergyStorage(3000000);
 
-    public static int energyNeededToProduceLava = ConfigIntValues.LAVA_FACTORY_ENERGY_USED.getValue();
-
-    private final int maxWorkTime = ConfigIntValues.LAVA_FACTORY_TIME.getValue();
     private int currentWorkTime;
 
     //The Positions the Case Blocks should be in for the Factory to work
@@ -26,12 +23,12 @@ public class TileEntityLavaFactoryController extends TileEntityBase implements I
     @SuppressWarnings("unchecked")
     public void updateEntity(){
         if(!worldObj.isRemote){
-            if(this.storage.getEnergyStored() >= energyNeededToProduceLava && this.isMultiblock() == HAS_AIR){
+            if(this.storage.getEnergyStored() >= ConfigIntValues.LAVA_FACTORY_ENERGY_USED.getValue() && this.isMultiblock() == HAS_AIR){
                 this.currentWorkTime++;
-                if(this.currentWorkTime >= this.maxWorkTime){
+                if(this.currentWorkTime >= ConfigIntValues.LAVA_FACTORY_TIME.getValue()){
                     this.currentWorkTime = 0;
                     worldObj.setBlock(xCoord, yCoord+1, zCoord, Blocks.lava);
-                    this.storage.extractEnergy(energyNeededToProduceLava, false);
+                    this.storage.extractEnergy(ConfigIntValues.LAVA_FACTORY_ENERGY_USED.getValue(), false);
                 }
             }
             else this.currentWorkTime = 0;
