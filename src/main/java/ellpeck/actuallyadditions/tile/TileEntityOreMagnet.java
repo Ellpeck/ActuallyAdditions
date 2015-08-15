@@ -73,7 +73,7 @@ public class TileEntityOreMagnet extends TileEntityInventoryBase implements IEne
             }
 
             //Empty Oil Bucket
-            WorldUtil.emptyBucket(this.tank, this.slots, SLOT_OIL_INPUT, SLOT_OIL_OUTPUT);
+            WorldUtil.emptyBucket(this.tank, this.slots, SLOT_OIL_INPUT, SLOT_OIL_OUTPUT, InitBlocks.fluidOil);
         }
     }
 
