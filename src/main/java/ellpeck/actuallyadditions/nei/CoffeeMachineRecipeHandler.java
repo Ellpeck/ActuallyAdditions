@@ -5,6 +5,7 @@ import codechicken.nei.NEIServerUtils;
 import codechicken.nei.PositionedStack;
 import codechicken.nei.recipe.RecipeInfo;
 import codechicken.nei.recipe.TemplateRecipeHandler;
+import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.inventory.gui.GuiCoffeeMachine;
 import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.items.ItemCoffee;
@@ -40,7 +41,7 @@ public class CoffeeMachineRecipeHandler extends TemplateRecipeHandler{
 
         public CachedCoffee(ItemCoffee.Ingredient ingredient){
             this.cup = new PositionedStack(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.CUP.ordinal()), 45, 39);
-            this.coffeeBeans = new PositionedStack(new ItemStack(InitItems.itemCoffeeBean), 2, 39);
+            this.coffeeBeans = new PositionedStack(new ItemStack(InitItems.itemCoffeeBean, ConfigIntValues.COFFEE_CACHE_USED_PER_ITEM.getValue()), 2, 39);
             this.ingredientStack = new PositionedStack(ingredient.ingredient.copy(), 90, 21);
             this.setupResult(ingredient);
             this.extraText = ingredient.getExtraText();
