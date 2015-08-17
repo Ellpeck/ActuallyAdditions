@@ -419,6 +419,7 @@ tooltip.actuallyadditions.noOredictNameAvail.desc=None
 tooltip.actuallyadditions.codeName.desc=Code Name
 tooltip.actuallyadditions.baseUnlocName.desc=Item's Unlocalized Name
 tooltip.actuallyadditions.unlocName.desc=Meta's Unlocalized Name
+tooltip.actuallyadditions.disablingInfo.desc=If you don't want this Information |to appear, disable it in the |Actually Additions Config!
 
 tile.actuallyadditions.blockXPSolidifier.name=Experience Solidifier
 tooltip.actuallyadditions.blockXPSolidifier.desc.1=Turns a Player's Experience into Solidified Experience!

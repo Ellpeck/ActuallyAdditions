@@ -9,6 +9,8 @@ import net.minecraft.item.Item;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.oredict.OreDictionary;
 
+import java.util.regex.Pattern;
+
 public class TooltipEvent{
 
     private static final String TEXT_PRE = StringUtil.GRAY+"     ";
@@ -49,6 +51,11 @@ public class TooltipEvent{
                     if(metaName != null && baseName != null && !metaName.equals(baseName)){
                         event.toolTip.add(HEADER_PRE+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".unlocName.desc")+":");
                         event.toolTip.add(TEXT_PRE+metaName);
+                    }
+
+                    //Disabling Info
+                    for(String str : StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".disablingInfo.desc").split(Pattern.quote("|"))){
+                        event.toolTip.add(StringUtil.ITALIC+str);
                     }
                 }
                 else{
