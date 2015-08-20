@@ -1,10 +1,13 @@
 package ellpeck.actuallyadditions.items;
 
+import com.google.common.collect.Multimap;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.util.*;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
@@ -70,5 +73,13 @@ public class ItemKnife extends Item implements INameableItem{
     @Override
     public String getName(){
         return "itemKnife";
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public Multimap getAttributeModifiers(ItemStack stack){
+        Multimap map = super.getAttributeModifiers(stack);
+        map.put(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(), new AttributeModifier(field_111210_e, "Knife Modifier", 3, 0));
+        return map;
     }
 }
