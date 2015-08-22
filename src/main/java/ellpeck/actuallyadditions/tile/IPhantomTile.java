@@ -28,4 +28,6 @@ public interface IPhantomTile{
      * @return The range the tile currently has
      */
     int getRange();
+
+    void setBoundPosition(WorldPos pos);
 }

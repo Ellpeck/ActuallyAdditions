@@ -130,6 +130,11 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
     }
 
     @Override
+    public void setBoundPosition(WorldPos pos){
+        this.boundPosition = pos == null ? null : pos.copy();
+    }
+
+    @Override
     public void writeToNBT(NBTTagCompound compound){
         super.writeToNBT(compound);
         compound.setInteger("Time", currentTime);

@@ -145,6 +145,11 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
         return this.range;
     }
 
+    @Override
+    public void setBoundPosition(WorldPos pos){
+        this.boundPosition = pos == null ? null : pos.copy();
+    }
+
     public static class TileEntityPhantomLiquiface extends TileEntityPhantomface implements IFluidHandler{
 
         public TileEntityPhantomLiquiface(){

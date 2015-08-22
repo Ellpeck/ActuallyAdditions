@@ -2,8 +2,7 @@ package ellpeck.actuallyadditions.items;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ellpeck.actuallyadditions.tile.TileEntityPhantomPlacer;
-import ellpeck.actuallyadditions.tile.TileEntityPhantomface;
+import ellpeck.actuallyadditions.tile.IPhantomTile;
 import ellpeck.actuallyadditions.util.*;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
@@ -32,21 +31,10 @@ public class ItemPhantomConnector extends Item implements INameableItem{
             //Passing Data to Phantoms
             TileEntity tile = world.getTileEntity(x, y, z);
             if(tile != null){
-                //Passing to Face
-                if(tile instanceof TileEntityPhantomface){
+                //Passing to Phantom
+                if(tile instanceof IPhantomTile){
                     if(this.checkHasConnection(stack, player, tile)){
-                        ((TileEntityPhantomface)tile).boundPosition = this.getStoredPosition(stack);
-                        this.clearStorage(stack);
-                        player.addChatComponentMessage(new ChatComponentText(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.connected.desc")));
-                        return true;
-                    }
-                    return false;
-                }
-                //Passing to Placer
-                else if(tile instanceof TileEntityPhantomPlacer){
-                    if(this.checkHasConnection(stack, player, tile)){
-                        ((TileEntityPhantomPlacer)tile).boundPosition = this.getStoredPosition(stack);
-                        tile.markDirty();
+                        ((IPhantomTile)tile).setBoundPosition(this.getStoredPosition(stack));
                         this.clearStorage(stack);
                         player.addChatComponentMessage(new ChatComponentText(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.connected.desc")));
                         return true;
@@ -66,11 +54,8 @@ public class ItemPhantomConnector extends Item implements INameableItem{
             return true;
         }
         else{
-            if(tile instanceof TileEntityPhantomPlacer){
-                ((TileEntityPhantomPlacer)tile).boundPosition = null;
-            }
-            if(tile instanceof TileEntityPhantomface){
-                ((TileEntityPhantomface)tile).boundPosition = null;
+            if(tile instanceof IPhantomTile){
+                ((IPhantomTile)tile).setBoundPosition(null);
             }
             player.addChatComponentMessage(new ChatComponentText(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.unbound.desc")));
             return false;
