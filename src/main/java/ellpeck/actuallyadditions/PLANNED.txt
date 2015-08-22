@@ -130,3 +130,12 @@
 
 -Player Phantomface
     -Boosters make it work across dimensions
+
+-Crafting Table for Overrides
+    -When multiple Items have the same crafting recipe, you can switch through and pick what you want
+
+-Crafting Crate
+    -Storage Crate with Crafting Table inside
+
+-Crafting Viewer
+    -Crafting Table that shows you every recipe you can craft with all of the Items in your Inventory
