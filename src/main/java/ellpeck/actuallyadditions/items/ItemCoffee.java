@@ -1,5 +1,6 @@
 package ellpeck.actuallyadditions.items;
 
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
@@ -8,10 +9,7 @@ import ellpeck.actuallyadditions.util.*;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
-import net.minecraft.item.EnumAction;
-import net.minecraft.item.EnumRarity;
-import net.minecraft.item.ItemFood;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.*;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
@@ -26,29 +24,15 @@ public class ItemCoffee extends ItemFood implements INameableItem{
     public static ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
 
     public static void initIngredients(){
-        registerIngredient(new Ingredient(new ItemStack(Items.milk_bucket), null, 0){
-            @Override
-            public boolean effect(ItemStack stack){
-                PotionEffect[] effects = getEffectsFromStack(stack);
-                ArrayList<PotionEffect> effectsNew = new ArrayList<PotionEffect>();
-                if(effects != null && effects.length > 0){
-                    for(PotionEffect effect : effects){
-                        if(effect.getAmplifier() > 0) effectsNew.add(new PotionEffect(effect.getPotionID(), effect.getDuration()+120, effect.getAmplifier()-1));
-                    }
-                    stack.setTagCompound(new NBTTagCompound());
-                    if(effectsNew.size() > 0){
-                        this.effects = effectsNew.toArray(new PotionEffect[effectsNew.size()]);
-                        ItemCoffee.addEffectToStack(stack, this);
-                    }
-                }
-                this.effects = null;
-                return true;
+        registerIngredient(new MilkIngredient(new ItemStack(Items.milk_bucket)));
+        //Pam's Soy Milk (For Jemx because he's lactose intolerant. YER HAPPY NAO!?)
+        if(Loader.isModLoaded("harvestcraft")){
+            Item item = ItemUtil.getItemFromName("harvestcraft:soymilkItem");
+            if(item != null){
+                registerIngredient(new MilkIngredient(new ItemStack(item)));
             }
-            @Override
-            public String getExtraText(){
-                return StringUtil.localize("container.nei."+ModUtil.MOD_ID_LOWER+".coffee.extra.milk");
-            }
-        });
+        }
+
         registerIngredient(new Ingredient(new ItemStack(Items.sugar), new PotionEffect[]{new PotionEffect(Potion.moveSpeed.getId(), 30, 0)}, 4));
         registerIngredient(new Ingredient(new ItemStack(Items.magma_cream), new PotionEffect[]{new PotionEffect(Potion.fireResistance.getId(), 20, 0)}, 1));
         registerIngredient(new Ingredient(new ItemStack(Items.fish, 1, 3), new PotionEffect[]{new PotionEffect(Potion.waterBreathing.getId(), 10, 0)}, 1));
@@ -255,5 +239,36 @@ public class ItemCoffee extends ItemFood implements INameableItem{
         public boolean effect(ItemStack stack){
             return ItemCoffee.addEffectToStack(stack, this);
         }
+    }
+
+    private static class MilkIngredient extends Ingredient{
+
+        public MilkIngredient(ItemStack ingredient){
+            super(ingredient, null, 0);
+        }
+
+        @Override
+        public boolean effect(ItemStack stack){
+            PotionEffect[] effects = getEffectsFromStack(stack);
+            ArrayList<PotionEffect> effectsNew = new ArrayList<PotionEffect>();
+            if(effects != null && effects.length > 0){
+                for(PotionEffect effect : effects){
+                    if(effect.getAmplifier() > 0) effectsNew.add(new PotionEffect(effect.getPotionID(), effect.getDuration()+120, effect.getAmplifier()-1));
+                }
+                stack.setTagCompound(new NBTTagCompound());
+                if(effectsNew.size() > 0){
+                    this.effects = effectsNew.toArray(new PotionEffect[effectsNew.size()]);
+                    ItemCoffee.addEffectToStack(stack, this);
+                }
+            }
+            this.effects = null;
+            return true;
+        }
+
+        @Override
+        public String getExtraText(){
+            return StringUtil.localize("container.nei."+ModUtil.MOD_ID_LOWER+".coffee.extra.milk");
+        }
+
     }
 }
