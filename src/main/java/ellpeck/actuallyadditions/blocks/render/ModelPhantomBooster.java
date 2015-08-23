@@ -140,6 +140,11 @@ public class ModelPhantomBooster extends ModelBaseAA{
         return "modelPhantomBooster";
     }
 
+    @Override
+    public boolean doesRotate(){
+        return true;
+    }
+
     private void setRotation(ModelRenderer model, float x, float y, float z){
         model.rotateAngleX = x;
         model.rotateAngleY = y;

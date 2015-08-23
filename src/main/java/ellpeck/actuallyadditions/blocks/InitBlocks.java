@@ -82,8 +82,13 @@ public class InitBlocks{
     public static Block blockXPSolidifier;
     public static Block blockOreMagnet;
 
+    public static Block blockSmileyCloud;
+
     public static void init(){
         ModUtil.LOGGER.info("Initializing Blocks...");
+
+        blockSmileyCloud = new BlockSmileyCloud();
+        BlockUtil.register(blockSmileyCloud, BlockSmileyCloud.TheItemBlock.class);
 
         blockOreMagnet = new BlockOreMagnet();
         BlockUtil.register(blockOreMagnet, BlockOreMagnet.TheItemBlock.class);

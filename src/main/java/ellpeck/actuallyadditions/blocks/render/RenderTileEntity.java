@@ -9,17 +9,17 @@ import org.lwjgl.opengl.GL11;
 public class RenderTileEntity extends TileEntitySpecialRenderer{
 
     public ModelBaseAA theModel;
-    private ResourceLocation resLoc;
+    protected ResourceLocation resLoc;
 
     public RenderTileEntity(ModelBaseAA model){
         this.theModel = model;
-        this.resLoc = new ResourceLocation(ModUtil.MOD_ID_LOWER, "textures/blocks/models/" + this.theModel.getName() + ".png");
+        this.resLoc = new ResourceLocation(ModUtil.MOD_ID_LOWER, "textures/blocks/models/"+this.theModel.getName()+".png");
     }
 
     @Override
     public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float par5){
         GL11.glPushMatrix();
-        GL11.glTranslatef((float)x + 0.5F, (float)y - 0.5F, (float)z + 0.5F);
+        GL11.glTranslatef((float)x+0.5F, (float)y-0.5F, (float)z+0.5F);
         GL11.glRotatef(180F, 0.0F, 0.0F, 1.0F);
         GL11.glTranslatef(0.0F, -2.0F, 0.0F);
         this.bindTexture(resLoc);

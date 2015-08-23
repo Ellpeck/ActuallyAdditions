@@ -603,6 +603,7 @@ info.actuallyadditions.gui.whitelist=Whitelist
 info.actuallyadditions.gui.blacklist=Blacklist
 info.actuallyadditions.gui.coffee=Coffee
 info.actuallyadditions.gui.ok=Ok
+info.actuallyadditions.gui.the=the
 
 tooltip.actuallyadditions.uses.desc=Uses
 tooltip.actuallyadditions.produces.desc=Produces
@@ -636,6 +637,7 @@ container.actuallyadditions.energizer.name=Energizer
 container.actuallyadditions.enervator.name=Enervator
 container.actuallyadditions.xpSolidifier.name=Experience Solidifier
 container.actuallyadditions.oreMagnet.name=Magnetic Miner
+container.actuallyadditions.cloud.name=Smiley Cloud
 
 container.nei.actuallyadditions.crushing.name=Crusher
 container.nei.actuallyadditions.crushingDouble.name=Double Crusher
