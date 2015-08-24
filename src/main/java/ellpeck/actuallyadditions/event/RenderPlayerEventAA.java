@@ -40,7 +40,7 @@ public class RenderPlayerEventAA{
         //dqmhose
         if(event.entityPlayer.getUniqueID().equals(UUID.fromString("cb7b293a-5031-484e-b5be-b4f2f4e92726"))){
             hoseRender.render(event.entityPlayer, event.partialRenderTick, 0.5F, 1.3F);
-            //return;
+            return;
         }
 
 

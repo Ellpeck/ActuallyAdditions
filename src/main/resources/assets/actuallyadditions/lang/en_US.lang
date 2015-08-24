@@ -567,6 +567,9 @@ tooltip.actuallyadditions.itemPantsObsidian.desc="Pants" is "Hose" in German!
 item.actuallyadditions.itemBootsObsidian.name=Obsidian Boots
 tooltip.actuallyadditions.itemBootsObsidian.desc=I hope they fit good.. I hate it when boots don't fit..
 
+tile.actuallyadditions.blockSmileyCloud.name=Smiley Cloud
+tooltip.actuallyadditions.blockSmileyCloud.desc=It smiles! Give it a name by right-clicking.
+
 item.actuallyadditions.itemHelmEmerald.name=Emerald Helm
 tooltip.actuallyadditions.itemHelmEmerald.desc=I like the color.. it's so SHINY!
 item.actuallyadditions.itemChestEmerald.name=Emerald Chestplate

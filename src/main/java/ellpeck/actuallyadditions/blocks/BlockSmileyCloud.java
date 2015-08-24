@@ -4,13 +4,10 @@ import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.ActuallyAdditions;
-import ellpeck.actuallyadditions.gadget.cloud.ISmileyCloudEasterEgg;
-import ellpeck.actuallyadditions.gadget.cloud.SmileyCloudEasterEggs;
 import ellpeck.actuallyadditions.inventory.GuiHandler;
 import ellpeck.actuallyadditions.tile.TileEntitySmileyCloud;
 import ellpeck.actuallyadditions.util.BlockUtil;
 import ellpeck.actuallyadditions.util.INameableItem;
-import ellpeck.actuallyadditions.util.StringUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -58,30 +55,13 @@ public class BlockSmileyCloud extends BlockContainerBase implements INameableIte
 
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int f6, float f7, float f8, float f9){
-        TileEntity tile = world.getTileEntity(x, y, z);
-        if(tile instanceof TileEntitySmileyCloud){
-            TileEntitySmileyCloud cloud = (TileEntitySmileyCloud)tile;
-
-            if(player.isSneaking()){
-                if(!world.isRemote){
-                    player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.CLOUD.ordinal(), world, x, y, z);
-                }
-                return true;
-            }
-            else{
-                for(ISmileyCloudEasterEgg egg : SmileyCloudEasterEggs.cloudStuff){
-                    for(String triggerName : egg.getTriggerNames()){
-                        if(StringUtil.equalsToLowerCase(triggerName, cloud.name)){
-                            if(egg.hasSpecialRightClick()){
-                                egg.specialRightClick(world, x, y, z, world.getBlock(x, y, z), world.getBlockMetadata(x, y, z));
-                                return true;
-                            }
-                        }
-                    }
-                }
+        if(!world.isRemote){
+            TileEntity tile = world.getTileEntity(x, y, z);
+            if(tile instanceof TileEntitySmileyCloud){
+                player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.CLOUD.ordinal(), world, x, y, z);
             }
         }
-        return false;
+        return true;
     }
 
     @Override

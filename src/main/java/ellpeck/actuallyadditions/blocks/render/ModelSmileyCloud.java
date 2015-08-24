@@ -1,7 +1,5 @@
 package ellpeck.actuallyadditions.blocks.render;
 
-import ellpeck.actuallyadditions.gadget.cloud.ISmileyCloudEasterEgg;
-import ellpeck.actuallyadditions.gadget.cloud.SmileyCloudEasterEggs;
 import net.minecraft.client.model.ModelRenderer;
 
 public class ModelSmileyCloud extends ModelBaseAA{
@@ -128,10 +126,6 @@ public class ModelSmileyCloud extends ModelBaseAA{
         s16.setTextureSize(64, 64);
         s16.mirror = true;
         setRotation(s16, 0F, 0F, 0F);
-
-        for(ISmileyCloudEasterEgg cloud : SmileyCloudEasterEggs.cloudStuff){
-            cloud.registerExtraRendering(this);
-        }
     }
 
     @Override
