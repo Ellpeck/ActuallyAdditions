@@ -1,6 +1,16 @@
 package ellpeck.actuallyadditions.util;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.renderer.ItemRenderer;
+import net.minecraft.client.renderer.RenderBlocks;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.texture.TextureMap;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
 
 public class AssetUtil{
@@ -14,5 +24,22 @@ public class AssetUtil{
     public static void displayNameString(FontRenderer font, int xSize, int yPositionOfMachineText, String machineName){
         String localMachineName = StringUtil.localize(machineName+".name");
         font.drawString(localMachineName, xSize/2 - font.getStringWidth(localMachineName)/2, yPositionOfMachineText, StringUtil.DECIMAL_COLOR_WHITE);
+    }
+
+    @SideOnly(Side.CLIENT)
+    public static void renderItem(ItemStack stack, int renderPass){
+        IIcon icon = stack.getItem().getIcon(stack, renderPass);
+        float f = icon.getMinU();
+        float f1 = icon.getMaxU();
+        float f2 = icon.getMinV();
+        float f3 = icon.getMaxV();
+        Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.locationItemsTexture);
+        ItemRenderer.renderItemIn2D(Tessellator.instance, f1, f2, f, f3, icon.getIconWidth(), icon.getIconHeight(), 1F/16F);
+    }
+
+    @SideOnly(Side.CLIENT)
+    public static void renderBlock(Block block, int meta){
+        Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.locationBlocksTexture);
+        RenderBlocks.getInstance().renderBlockAsItem(block, meta, 1F);
     }
 }

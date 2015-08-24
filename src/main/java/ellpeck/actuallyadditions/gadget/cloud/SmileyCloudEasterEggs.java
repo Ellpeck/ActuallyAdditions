@@ -1,7 +1,9 @@
 package ellpeck.actuallyadditions.gadget.cloud;
 
-import ellpeck.actuallyadditions.blocks.render.ModelBaseAA;
-import net.minecraft.client.model.ModelRenderer;
+import ellpeck.actuallyadditions.util.AssetUtil;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
+import org.lwjgl.opengl.GL11;
 
 import java.util.ArrayList;
 
@@ -12,31 +14,18 @@ public class SmileyCloudEasterEggs{
     static{
         //Glenthor
         register(new SmileyCloudEasterEgg(){
-
-            public ModelRenderer s9;
-
             @Override
-            public String getTriggerName(){
-                return "Glenthor";
+            public String[] getTriggerNames(){
+                return new String[]{"glenthor"};
             }
-
             @Override
             public void renderExtra(float f){
-                s9.render(f);
-            }
-
-            @Override
-            public boolean shouldRenderOriginal(){
-                return false;
-            }
-
-            @Override
-            public void registerExtraRendering(ModelBaseAA model){
-                s9 = new ModelRenderer(model, 0, 31);
-                s9.addBox(0F, 0F, 0F, 1, 6, 6);
-                s9.setRotationPoint(7F, 16F, -2F);
-                s9.setTextureSize(64, 64);
-                s9.mirror = true;
+                GL11.glTranslatef(f*8F, f*24F, f*-4F);
+                GL11.glRotatef(180F, 0F, 0F, 1F);
+                GL11.glRotatef(85F, 0F, 1F, 0F);
+                GL11.glRotatef(70F, 0F, 0F, 1F);
+                GL11.glScalef(0.75F, 0.75F, 0.75F);
+                AssetUtil.renderItem(new ItemStack(Items.dye, 1, 2), 0);
             }
         });
     }

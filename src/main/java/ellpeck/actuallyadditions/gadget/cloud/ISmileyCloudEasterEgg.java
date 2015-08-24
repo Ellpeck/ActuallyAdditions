@@ -42,7 +42,7 @@ public interface ISmileyCloudEasterEgg{
     /**
      * The name the cloud has to have for this effect to occur
      */
-    String getTriggerName();
+    String[] getTriggerNames();
 
     ResourceLocation getResLoc();
 }

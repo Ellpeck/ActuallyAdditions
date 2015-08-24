@@ -2,6 +2,8 @@ package ellpeck.actuallyadditions.util;
 
 import net.minecraft.util.StatCollector;
 
+import java.util.Objects;
+
 public class StringUtil{
 
     public static final String BLACK = (char)167 + "0";
@@ -41,5 +43,14 @@ public class StringUtil{
      */
     public static String localizeFormatted(String text, Object ... replace){
         return StatCollector.translateToLocalFormatted(text, replace);
+    }
+
+    public static String toLowerCase(String string){
+        if(string == null) return null;
+        else return string.toLowerCase();
+    }
+
+    public static boolean equalsToLowerCase(String one, String two){
+        return Objects.equals(toLowerCase(one), toLowerCase(two));
     }
 }

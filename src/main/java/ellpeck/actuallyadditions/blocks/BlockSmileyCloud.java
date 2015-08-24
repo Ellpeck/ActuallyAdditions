@@ -10,6 +10,7 @@ import ellpeck.actuallyadditions.inventory.GuiHandler;
 import ellpeck.actuallyadditions.tile.TileEntitySmileyCloud;
 import ellpeck.actuallyadditions.util.BlockUtil;
 import ellpeck.actuallyadditions.util.INameableItem;
+import ellpeck.actuallyadditions.util.StringUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -22,10 +23,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 import java.util.List;
-import java.util.Objects;
 
 public class BlockSmileyCloud extends BlockContainerBase implements INameableItem{
 
@@ -34,6 +35,25 @@ public class BlockSmileyCloud extends BlockContainerBase implements INameableIte
         this.setHardness(0.5F);
         this.setResistance(5.0F);
         this.setStepSound(soundTypeWood);
+    }
+
+    @Override
+    public void setBlockBoundsBasedOnState(IBlockAccess world, int x, int y, int z){
+        int meta = world.getBlockMetadata(x, y, z);
+        float f = 0.0625F;
+
+        if(meta == 0){
+            this.setBlockBounds(0F, 0F, 0F, 1F, 1F-f*4F, 1F-f*3F);
+        }
+        if(meta == 1){
+            this.setBlockBounds(0F, 0F, 0F, 1F-f*3F, 1F-f*4F, 1F);
+        }
+        if(meta == 2){
+            this.setBlockBounds(0F, 0F, f*3F, 1F, 1F-f*4F, 1F);
+        }
+        if(meta == 3){
+            this.setBlockBounds(f*3F, 0F, 0F, 1F, 1F-f*4F, 1F);
+        }
     }
 
     @Override
@@ -50,10 +70,12 @@ public class BlockSmileyCloud extends BlockContainerBase implements INameableIte
             }
             else{
                 for(ISmileyCloudEasterEgg egg : SmileyCloudEasterEggs.cloudStuff){
-                    if(Objects.equals(egg.getTriggerName(), cloud.name)){
-                        if(egg.hasSpecialRightClick()){
-                            egg.specialRightClick(world, x, y, z, world.getBlock(x, y, z), world.getBlockMetadata(x, y, z));
-                            return true;
+                    for(String triggerName : egg.getTriggerNames()){
+                        if(StringUtil.equalsToLowerCase(triggerName, cloud.name)){
+                            if(egg.hasSpecialRightClick()){
+                                egg.specialRightClick(world, x, y, z, world.getBlock(x, y, z), world.getBlockMetadata(x, y, z));
+                                return true;
+                            }
                         }
                     }
                 }
