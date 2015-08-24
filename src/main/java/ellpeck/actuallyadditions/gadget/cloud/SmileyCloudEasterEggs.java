@@ -110,7 +110,7 @@ public class SmileyCloudEasterEggs{
             @Override
             public void renderExtra(float f){
                 renderHoldingItem(false, new ItemStack(Items.wooden_sword));
-                renderHeadBlock(Blocks.chest, 10, 70F);
+                renderHeadBlock(Blocks.chest, 0, 70F);
             }
         });
         //Lari

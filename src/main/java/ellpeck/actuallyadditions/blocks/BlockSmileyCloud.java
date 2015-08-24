@@ -31,7 +31,7 @@ public class BlockSmileyCloud extends BlockContainerBase implements INameableIte
         super(Material.cloth);
         this.setHardness(0.5F);
         this.setResistance(5.0F);
-        this.setStepSound(soundTypeWood);
+        this.setStepSound(soundTypeCloth);
     }
 
     @Override

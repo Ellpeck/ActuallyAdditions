@@ -87,7 +87,7 @@ public class RenderSmileyCloud extends RenderTileEntity{
                     GL11.glEnable(GL11.GL_TEXTURE_2D);
                     GL11.glDepthMask(true);
 
-                    Minecraft.getMinecraft().fontRenderer.drawString(theCloud.name, -Minecraft.getMinecraft().fontRenderer.getStringWidth(theCloud.name)/2, 0, 0xFFFFFF);
+                    Minecraft.getMinecraft().fontRenderer.drawString(theCloud.name, -Minecraft.getMinecraft().fontRenderer.getStringWidth(theCloud.name)/2, 0, StringUtil.DECIMAL_COLOR_WHITE);
 
                     GL11.glEnable(GL11.GL_LIGHTING);
                     GL11.glDisable(GL11.GL_BLEND);
