@@ -138,6 +138,54 @@ public class SmileyCloudEasterEggs{
                 renderHeadBlock(Blocks.wool, 14, 18F);
             }
         });
+        //Bande
+        register(new ISmileyCloudEasterEgg(){
+            @Override
+            public String[] getTriggerNames(){
+                return new String[]{"bande", "bandelenth"};
+            }
+            @Override
+            public void renderExtra(float f){
+                renderHoldingItem(false, new ItemStack(Items.diamond_pickaxe));
+                renderHeadBlock(Blocks.wool, 4, 18F);
+            }
+        });
+        //Wolle
+        register(new ISmileyCloudEasterEgg(){
+            @Override
+            public String[] getTriggerNames(){
+                return new String[]{"wolle", "wuitoi"};
+            }
+            @Override
+            public void renderExtra(float f){
+                renderHoldingItem(false, new ItemStack(Items.string));
+                renderHeadBlock(Blocks.wool, 0, 18F);
+            }
+        });
+        //Pakto
+        register(new ISmileyCloudEasterEgg(){
+            @Override
+            public String[] getTriggerNames(){
+                return new String[]{"pakto", "paktosan", "paktosanlp"};
+            }
+            @Override
+            public void renderExtra(float f){
+                renderHoldingItem(false, new ItemStack(Items.dye, 1, 9));
+                renderHeadBlock(InitBlocks.blockColoredLampOn, 6, 18F);
+            }
+        });
+        //Honka
+        register(new ISmileyCloudEasterEgg(){
+            @Override
+            public String[] getTriggerNames(){
+                return new String[]{"honka", "honkalonka", "lonka", "lonki"};
+            }
+            @Override
+            public void renderExtra(float f){
+                renderHoldingItem(false, new ItemStack(InitItems.itemLeafBlowerAdvanced, 1, 9));
+                renderHeadBlock(Blocks.hay_block, 0, 74F);
+            }
+        });
     }
 
     private static void register(ISmileyCloudEasterEgg egg){

@@ -11,6 +11,8 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.tileentity.TileEntity;
 import org.lwjgl.opengl.GL11;
 
+import java.util.Random;
+
 public class RenderSmileyCloud extends RenderTileEntity{
 
     public RenderSmileyCloud(ModelBaseAA model){
@@ -24,9 +26,25 @@ public class RenderSmileyCloud extends RenderTileEntity{
 
         GL11.glPushMatrix();
         {
+            if(theCloud.flyHeight == 0) theCloud.flyHeight = new Random().nextInt(30)+30;
+            int bobHeight = theCloud.flyHeight;
+            long theTime = Minecraft.getSystemTime();
+            long time = theTime/50;
+
+            if(time-bobHeight >= theCloud.lastFlyHeight){
+                theCloud.lastFlyHeight = time;
+            }
+
+            if(time-(bobHeight/2) >= theCloud.lastFlyHeight){
+                GL11.glTranslated(0, ((double)time-theCloud.lastFlyHeight)/300, 0);
+            }
+            else{
+                GL11.glTranslated(0, -((double)time-theCloud.lastFlyHeight)/300+(double)bobHeight/300, 0);
+            }
+
             GL11.glTranslatef((float)x+0.5F, (float)y-0.5F, (float)z+0.5F);
             GL11.glRotatef(180F, 0.0F, 0.0F, 1.0F);
-            GL11.glTranslatef(0.0F, -2.0F, 0.0F);
+            GL11.glTranslatef(0.0F, -2F, 0.0F);
 
             GL11.glPushMatrix();
             {

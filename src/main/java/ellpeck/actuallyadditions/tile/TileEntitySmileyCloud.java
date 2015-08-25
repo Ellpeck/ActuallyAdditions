@@ -1,5 +1,7 @@
 package ellpeck.actuallyadditions.tile;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.network.gui.IStringReactor;
 import ellpeck.actuallyadditions.network.sync.IPacketSyncerToClient;
 import ellpeck.actuallyadditions.network.sync.PacketSyncerToClient;
@@ -12,6 +14,11 @@ public class TileEntitySmileyCloud extends TileEntityBase implements IPacketSync
 
     public String name;
     private String nameBefore;
+
+    @SideOnly(Side.CLIENT)
+    public double lastFlyHeight;
+    @SideOnly(Side.CLIENT)
+    public int flyHeight;
 
     @Override
     public void updateEntity(){

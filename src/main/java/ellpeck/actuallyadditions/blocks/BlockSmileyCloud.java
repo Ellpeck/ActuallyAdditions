@@ -40,16 +40,16 @@ public class BlockSmileyCloud extends BlockContainerBase implements INameableIte
         float f = 0.0625F;
 
         if(meta == 0){
-            this.setBlockBounds(0F, 0F, 0F, 1F, 1F-f*4F, 1F-f*3F);
+            this.setBlockBounds(0F, 0F, 0F, 1F, 1F, 1F-f*3F);
         }
         if(meta == 1){
-            this.setBlockBounds(0F, 0F, 0F, 1F-f*3F, 1F-f*4F, 1F);
+            this.setBlockBounds(0F, 0F, 0F, 1F-f*3F, 1F, 1F);
         }
         if(meta == 2){
-            this.setBlockBounds(0F, 0F, f*3F, 1F, 1F-f*4F, 1F);
+            this.setBlockBounds(0F, 0F, f*3F, 1F, 1F, 1F);
         }
         if(meta == 3){
-            this.setBlockBounds(f*3F, 0F, 0F, 1F, 1F-f*4F, 1F);
+            this.setBlockBounds(f*3F, 0F, 0F, 1F, 1F, 1F);
         }
     }
 
