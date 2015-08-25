@@ -1,8 +1,8 @@
 package ellpeck.actuallyadditions.blocks;
 
-import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import ellpeck.actuallyadditions.proxy.ClientProxy;
 import ellpeck.actuallyadditions.tile.TileEntityPhantomBooster;
 import ellpeck.actuallyadditions.util.BlockUtil;
 import ellpeck.actuallyadditions.util.INameableItem;
@@ -45,7 +45,7 @@ public class BlockPhantomBooster extends BlockContainerBase implements INameable
 
     @Override
     public int getRenderType(){
-        return RenderingRegistry.getNextAvailableRenderId();
+        return ClientProxy.PHANTOM_BOOSTER_RENDER_ID;
     }
 
     @Override
