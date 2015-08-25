@@ -1,11 +1,11 @@
 package ellpeck.actuallyadditions.blocks;
 
-import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.ActuallyAdditions;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.inventory.GuiHandler;
+import ellpeck.actuallyadditions.proxy.ClientProxy;
 import ellpeck.actuallyadditions.tile.TileEntityCoffeeMachine;
 import ellpeck.actuallyadditions.util.BlockUtil;
 import ellpeck.actuallyadditions.util.INameableItem;
@@ -81,7 +81,7 @@ public class BlockCoffeeMachine extends BlockContainerBase implements INameableI
 
     @Override
     public int getRenderType(){
-        return RenderingRegistry.getNextAvailableRenderId();
+        return ClientProxy.COFFEE_MACHINE_RENDER_ID;
     }
 
     @Override

@@ -2,6 +2,7 @@ package ellpeck.actuallyadditions.proxy;
 
 
 import cpw.mods.fml.client.registry.ClientRegistry;
+import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.registry.VillagerRegistry;
 import ellpeck.actuallyadditions.blocks.InitBlocks;
 import ellpeck.actuallyadditions.blocks.render.*;
@@ -19,6 +20,13 @@ import net.minecraftforge.client.MinecraftForgeClient;
 @SuppressWarnings("unused")
 public class ClientProxy implements IProxy{
 
+    public static int COMPOST_RENDER_ID;
+    public static int FISHING_NET_RENDER_ID;
+    public static int FURNACE_SOLAR_RENDER_ID;
+    public static int COFFEE_MACHINE_RENDER_ID;
+    public static int PHANTOM_BOOSTER_RENDER_ID;
+    public static int SMILEY_CLOUD_RENDER_ID;
+
     @Override
     public void preInit(){
         ModUtil.LOGGER.info("PreInitializing ClientProxy...");
@@ -31,6 +39,13 @@ public class ClientProxy implements IProxy{
     @Override
     public void init(){
         ModUtil.LOGGER.info("Initializing ClientProxy...");
+
+        COMPOST_RENDER_ID = RenderingRegistry.getNextAvailableRenderId();
+        FISHING_NET_RENDER_ID = RenderingRegistry.getNextAvailableRenderId();
+        FURNACE_SOLAR_RENDER_ID = RenderingRegistry.getNextAvailableRenderId();
+        COFFEE_MACHINE_RENDER_ID = RenderingRegistry.getNextAvailableRenderId();
+        PHANTOM_BOOSTER_RENDER_ID = RenderingRegistry.getNextAvailableRenderId();
+        SMILEY_CLOUD_RENDER_ID = RenderingRegistry.getNextAvailableRenderId();
 
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCompost.class, new RenderTileEntity(new ModelCompost()));
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(InitBlocks.blockCompost), new RenderItems(new ModelCompost()));

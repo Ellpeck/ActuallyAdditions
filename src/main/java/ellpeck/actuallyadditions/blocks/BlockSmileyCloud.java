@@ -1,10 +1,10 @@
 package ellpeck.actuallyadditions.blocks;
 
-import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.ActuallyAdditions;
 import ellpeck.actuallyadditions.inventory.GuiHandler;
+import ellpeck.actuallyadditions.proxy.ClientProxy;
 import ellpeck.actuallyadditions.tile.TileEntitySmileyCloud;
 import ellpeck.actuallyadditions.util.BlockUtil;
 import ellpeck.actuallyadditions.util.INameableItem;
@@ -97,7 +97,7 @@ public class BlockSmileyCloud extends BlockContainerBase implements INameableIte
 
     @Override
     public int getRenderType(){
-        return RenderingRegistry.getNextAvailableRenderId();
+        return ClientProxy.SMILEY_CLOUD_RENDER_ID;
     }
 
     @Override

@@ -2,6 +2,7 @@ package ellpeck.actuallyadditions.gadget.cloud;
 
 import ellpeck.actuallyadditions.blocks.InitBlocks;
 import ellpeck.actuallyadditions.items.InitItems;
+import ellpeck.actuallyadditions.items.metalists.TheFoods;
 import ellpeck.actuallyadditions.util.AssetUtil;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
@@ -184,6 +185,30 @@ public class SmileyCloudEasterEggs{
             public void renderExtra(float f){
                 renderHoldingItem(false, new ItemStack(InitItems.itemLeafBlowerAdvanced, 1, 9));
                 renderHeadBlock(Blocks.hay_block, 0, 74F);
+            }
+        });
+        //Acid
+        register(new ISmileyCloudEasterEgg(){
+            @Override
+            public String[] getTriggerNames(){
+                return new String[]{"acid", "acid_blues", "acidblues"};
+            }
+            @Override
+            public void renderExtra(float f){
+                renderHoldingItem(false, new ItemStack(InitItems.itemFoods, 1, TheFoods.PIZZA.ordinal()));
+                renderHeadBlock(Blocks.bookshelf, 0, 27F);
+            }
+        });
+        //Jasin
+        register(new ISmileyCloudEasterEgg(){
+            @Override
+            public String[] getTriggerNames(){
+                return new String[]{"jasin", "jasindow"};
+            }
+            @Override
+            public void renderExtra(float f){
+                renderHoldingItem(false, new ItemStack(Items.written_book));
+                renderHeadBlock(Blocks.web, 0, 56F);
             }
         });
     }
