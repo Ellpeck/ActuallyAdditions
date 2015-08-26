@@ -19,6 +19,13 @@ public class BlockCrafting{
 
     public static void init(){
 
+        //Smiley Cloud
+        if(ConfigCrafting.CLOUD.isEnabled())
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockSmileyCloud),
+                    " W ", "WXW", " W ",
+                    'W', new ItemStack(Blocks.wool, 1, Util.WILDCARD),
+                    'X', new ItemStack(InitItems.itemSpecialDrop, 1, TheSpecialDrops.SOLIDIFIED_EXPERIENCE.ordinal())));
+
         //Compost
         if(ConfigCrafting.COMPOST.isEnabled())
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockCompost),

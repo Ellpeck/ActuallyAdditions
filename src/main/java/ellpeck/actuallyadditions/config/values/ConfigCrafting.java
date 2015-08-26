@@ -5,6 +5,7 @@ import ellpeck.actuallyadditions.config.ConfigCategories;
 public enum ConfigCrafting{
 
     COMPOST("Compost", ConfigCategories.BLOCKS_CRAFTING),
+    CLOUD("Smiley Cloud", ConfigCategories.BLOCKS_CRAFTING),
     XP_SOLIDIFIER("Experience Solidifier", ConfigCategories.BLOCKS_CRAFTING),
     WOOD_CASING("Wood Casing", ConfigCategories.BLOCKS_CRAFTING),
     STONE_CASING("Stone Casing", ConfigCategories.BLOCKS_CRAFTING),
