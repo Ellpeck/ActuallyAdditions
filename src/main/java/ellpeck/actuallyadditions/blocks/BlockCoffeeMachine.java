@@ -5,8 +5,8 @@ import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.ActuallyAdditions;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.inventory.GuiHandler;
-import ellpeck.actuallyadditions.proxy.ClientProxy;
 import ellpeck.actuallyadditions.tile.TileEntityCoffeeMachine;
+import ellpeck.actuallyadditions.util.AssetUtil;
 import ellpeck.actuallyadditions.util.BlockUtil;
 import ellpeck.actuallyadditions.util.INameableItem;
 import net.minecraft.block.Block;
@@ -81,7 +81,7 @@ public class BlockCoffeeMachine extends BlockContainerBase implements INameableI
 
     @Override
     public int getRenderType(){
-        return ClientProxy.COFFEE_MACHINE_RENDER_ID;
+        return AssetUtil.COFFEE_MACHINE_RENDER_ID;
     }
 
     @Override

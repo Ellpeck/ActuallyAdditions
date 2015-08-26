@@ -15,6 +15,13 @@ import net.minecraft.util.ResourceLocation;
 
 public class AssetUtil{
 
+    public static int COMPOST_RENDER_ID;
+    public static int FISHING_NET_RENDER_ID;
+    public static int FURNACE_SOLAR_RENDER_ID;
+    public static int COFFEE_MACHINE_RENDER_ID;
+    public static int PHANTOM_BOOSTER_RENDER_ID;
+    public static int SMILEY_CLOUD_RENDER_ID;
+
     public static final ResourceLocation GUI_INVENTORY_LOCATION = getGuiLocation("guiInventory");
 
     public static ResourceLocation getGuiLocation(String file){

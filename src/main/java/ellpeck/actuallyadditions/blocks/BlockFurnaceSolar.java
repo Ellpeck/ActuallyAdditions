@@ -3,8 +3,8 @@ package ellpeck.actuallyadditions.blocks;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
-import ellpeck.actuallyadditions.proxy.ClientProxy;
 import ellpeck.actuallyadditions.tile.TileEntityFurnaceSolar;
+import ellpeck.actuallyadditions.util.AssetUtil;
 import ellpeck.actuallyadditions.util.BlockUtil;
 import ellpeck.actuallyadditions.util.INameableItem;
 import net.minecraft.block.Block;
@@ -60,7 +60,7 @@ public class BlockFurnaceSolar extends BlockContainerBase implements INameableIt
 
     @Override
     public int getRenderType(){
-        return ClientProxy.FURNACE_SOLAR_RENDER_ID;
+        return AssetUtil.FURNACE_SOLAR_RENDER_ID;
     }
 
     @Override

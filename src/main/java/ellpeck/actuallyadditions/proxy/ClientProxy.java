@@ -11,6 +11,7 @@ import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.event.RenderPlayerEventAA;
 import ellpeck.actuallyadditions.tile.*;
 import ellpeck.actuallyadditions.update.UpdateChecker;
+import ellpeck.actuallyadditions.util.AssetUtil;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.item.Item;
@@ -19,13 +20,6 @@ import net.minecraftforge.client.MinecraftForgeClient;
 
 @SuppressWarnings("unused")
 public class ClientProxy implements IProxy{
-
-    public static int COMPOST_RENDER_ID;
-    public static int FISHING_NET_RENDER_ID;
-    public static int FURNACE_SOLAR_RENDER_ID;
-    public static int COFFEE_MACHINE_RENDER_ID;
-    public static int PHANTOM_BOOSTER_RENDER_ID;
-    public static int SMILEY_CLOUD_RENDER_ID;
 
     @Override
     public void preInit(){
@@ -40,12 +34,12 @@ public class ClientProxy implements IProxy{
     public void init(){
         ModUtil.LOGGER.info("Initializing ClientProxy...");
 
-        COMPOST_RENDER_ID = RenderingRegistry.getNextAvailableRenderId();
-        FISHING_NET_RENDER_ID = RenderingRegistry.getNextAvailableRenderId();
-        FURNACE_SOLAR_RENDER_ID = RenderingRegistry.getNextAvailableRenderId();
-        COFFEE_MACHINE_RENDER_ID = RenderingRegistry.getNextAvailableRenderId();
-        PHANTOM_BOOSTER_RENDER_ID = RenderingRegistry.getNextAvailableRenderId();
-        SMILEY_CLOUD_RENDER_ID = RenderingRegistry.getNextAvailableRenderId();
+        AssetUtil.COMPOST_RENDER_ID = RenderingRegistry.getNextAvailableRenderId();
+        AssetUtil.FISHING_NET_RENDER_ID = RenderingRegistry.getNextAvailableRenderId();
+        AssetUtil.FURNACE_SOLAR_RENDER_ID = RenderingRegistry.getNextAvailableRenderId();
+        AssetUtil.COFFEE_MACHINE_RENDER_ID = RenderingRegistry.getNextAvailableRenderId();
+        AssetUtil.PHANTOM_BOOSTER_RENDER_ID = RenderingRegistry.getNextAvailableRenderId();
+        AssetUtil.SMILEY_CLOUD_RENDER_ID = RenderingRegistry.getNextAvailableRenderId();
 
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCompost.class, new RenderTileEntity(new ModelCompost()));
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(InitBlocks.blockCompost), new RenderItems(new ModelCompost()));

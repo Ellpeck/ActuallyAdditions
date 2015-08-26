@@ -2,8 +2,8 @@ package ellpeck.actuallyadditions.blocks;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ellpeck.actuallyadditions.proxy.ClientProxy;
 import ellpeck.actuallyadditions.tile.TileEntityFishingNet;
+import ellpeck.actuallyadditions.util.AssetUtil;
 import ellpeck.actuallyadditions.util.BlockUtil;
 import ellpeck.actuallyadditions.util.INameableItem;
 import net.minecraft.block.Block;
@@ -59,7 +59,7 @@ public class BlockFishingNet extends BlockContainerBase implements INameableItem
 
     @Override
     public int getRenderType(){
-        return ClientProxy.FISHING_NET_RENDER_ID;
+        return AssetUtil.FISHING_NET_RENDER_ID;
     }
 
     @Override
