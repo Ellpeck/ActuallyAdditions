@@ -26,6 +26,7 @@ public class TileEntitySmileyCloud extends TileEntityBase implements IPacketSync
             if(!Objects.equals(this.name, this.nameBefore)){
                 this.nameBefore = this.name;
                 this.sendUpdate();
+                this.markDirty();
             }
         }
     }
