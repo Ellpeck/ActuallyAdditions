@@ -59,7 +59,7 @@ public class ContainerGrinder extends Container{
             ItemStack currentStack = newStack.copy();
 
             //Slots in Inventory to shift from
-            if(slot == TileEntityGrinder.SLOT_OUTPUT_1_1 || slot == TileEntityGrinder.SLOT_OUTPUT_1_2 || slot == TileEntityGrinder.SLOT_OUTPUT_2_1 || slot == TileEntityGrinder.SLOT_OUTPUT_2_2){
+            if(slot == TileEntityGrinder.SLOT_OUTPUT_1_1 || slot == TileEntityGrinder.SLOT_OUTPUT_1_2 || (this.isDouble && (slot == TileEntityGrinder.SLOT_OUTPUT_2_1 || slot == TileEntityGrinder.SLOT_OUTPUT_2_2))){
                 if(!this.mergeItemStack(newStack, inventoryStart, hotbarEnd+1, true)) return null;
                 theSlot.onSlotChange(newStack, currentStack);
             }
@@ -68,9 +68,10 @@ public class ContainerGrinder extends Container{
                 //Shift from Inventory
                 if(CrusherRecipeManualRegistry.getOutput(newStack, false) != null){
                     if(!this.mergeItemStack(newStack, TileEntityGrinder.SLOT_INPUT_1, TileEntityGrinder.SLOT_INPUT_1+1, false)){
-                        if(this.tileGrinder.isDouble){
+                        if(this.isDouble){
                             if(!this.mergeItemStack(newStack, TileEntityGrinder.SLOT_INPUT_2, TileEntityGrinder.SLOT_INPUT_2+1, false)) return null;
                         }
+                        else return null;
                     }
                 }
                 //

@@ -47,14 +47,14 @@ public class ContainerPhantomPlacer extends Container{
 
         Slot theSlot = (Slot)this.inventorySlots.get(slot);
 
-        if (theSlot != null && theSlot.getHasStack()){
+        if(theSlot != null && theSlot.getHasStack()){
             ItemStack newStack = theSlot.getStack();
             ItemStack currentStack = newStack.copy();
 
             //Other Slots in Inventory excluded
             if(slot >= inventoryStart){
                 //Shift from Inventory
-                if(!this.mergeItemStack(newStack, 0, 10, false)){
+                if(!this.mergeItemStack(newStack, 0, 9, false)){
                     //
                     if(slot >= inventoryStart && slot <= inventoryEnd){
                         if(!this.mergeItemStack(newStack, hotbarStart, hotbarEnd+1, false)) return null;
@@ -65,10 +65,10 @@ public class ContainerPhantomPlacer extends Container{
             }
             else if(!this.mergeItemStack(newStack, inventoryStart, hotbarEnd+1, false)) return null;
 
-            if (newStack.stackSize == 0) theSlot.putStack(null);
+            if(newStack.stackSize == 0) theSlot.putStack(null);
             else theSlot.onSlotChanged();
 
-            if (newStack.stackSize == currentStack.stackSize) return null;
+            if(newStack.stackSize == currentStack.stackSize) return null;
             theSlot.onPickupFromSlot(player, newStack);
 
             return currentStack;

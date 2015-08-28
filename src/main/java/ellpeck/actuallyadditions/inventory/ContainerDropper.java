@@ -54,7 +54,7 @@ public class ContainerDropper extends Container{
             //Other Slots in Inventory excluded
             if(slot >= inventoryStart){
                 //Shift from Inventory
-                if(!this.mergeItemStack(newStack, 0, 10, false)){
+                if(!this.mergeItemStack(newStack, 0, 9, false)){
                     //
                     if(slot >= inventoryStart && slot <= inventoryEnd){
                         if(!this.mergeItemStack(newStack, hotbarStart, hotbarEnd+1, false)) return null;
