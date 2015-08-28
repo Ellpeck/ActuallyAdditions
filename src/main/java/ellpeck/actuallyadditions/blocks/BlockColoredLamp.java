@@ -3,7 +3,6 @@ package ellpeck.actuallyadditions.blocks;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.blocks.metalists.TheColoredLampColors;
-import ellpeck.actuallyadditions.util.BlockUtil;
 import ellpeck.actuallyadditions.util.INameableItem;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
@@ -142,13 +141,6 @@ public class BlockColoredLamp extends Block implements INameableItem{
         @Override
         public String getUnlocalizedName(ItemStack stack){
             return InitBlocks.blockColoredLamp.getUnlocalizedName() + allLampTypes[stack.getItemDamage()].getName();
-        }
-
-        @Override
-        @SuppressWarnings("unchecked")
-        @SideOnly(Side.CLIENT)
-        public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld) {
-            BlockUtil.addInformation(InitBlocks.blockColoredLamp, list, 3, "");
         }
 
         @Override

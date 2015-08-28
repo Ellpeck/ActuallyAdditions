@@ -28,6 +28,11 @@ public class PageText implements IBookletPage{
     }
 
     @Override
+    public void renderPre(GuiBooklet gui, int mouseX, int mouseY){
+
+    }
+
+    @Override
     public void render(GuiBooklet gui, int mouseX, int mouseY){
         gui.unicodeRenderer.drawSplitString(gui.currentPage.getText(), gui.guiLeft+14, gui.guiTop+11, 115, 0);
     }

@@ -3,7 +3,10 @@ package ellpeck.actuallyadditions.items;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.tile.IPhantomTile;
-import ellpeck.actuallyadditions.util.*;
+import ellpeck.actuallyadditions.util.INameableItem;
+import ellpeck.actuallyadditions.util.ModUtil;
+import ellpeck.actuallyadditions.util.StringUtil;
+import ellpeck.actuallyadditions.util.WorldPos;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -16,8 +19,6 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
-
-import java.util.List;
 
 public class ItemPhantomConnector extends Item implements INameableItem{
 
@@ -100,27 +101,6 @@ public class ItemPhantomConnector extends Item implements INameableItem{
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.epic;
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld) {
-        ItemUtil.addInformation(this, list, 1, "");
-        WorldPos coords = this.getStoredPosition(stack);
-        if(coords != null){
-            World world = coords.getWorld();
-            if(world != null){
-                list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.boundTo.desc")+":");
-                Item item = coords.getItemBlock();
-                String name = item == null ? "Absolutely Nothing" : item.getItemStackDisplayName(new ItemStack(coords.getBlock(), 1, coords.getMetadata()));
-                list.add(name);
-                list.add("X: "+coords.getX());
-                list.add("Y: "+coords.getY());
-                list.add("Z: "+coords.getZ());
-                list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.inWorld.desc")+" "+world.provider.dimensionId);
-            }
-        }
     }
 
     @Override

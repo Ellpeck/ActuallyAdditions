@@ -5,7 +5,10 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.items.metalists.TheMiscItems;
-import ellpeck.actuallyadditions.util.*;
+import ellpeck.actuallyadditions.util.INameableItem;
+import ellpeck.actuallyadditions.util.ItemUtil;
+import ellpeck.actuallyadditions.util.ModUtil;
+import ellpeck.actuallyadditions.util.StringUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -17,7 +20,6 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ItemCoffee extends ItemFood implements INameableItem{
 
@@ -172,28 +174,6 @@ public class ItemCoffee extends ItemFood implements INameableItem{
         theStack.setItemDamage(theStack.getItemDamage()+1);
         if(theStack.getMaxDamage()-theStack.getItemDamage() < 0) return new ItemStack(InitItems.itemMisc, 1, TheMiscItems.CUP.ordinal());
         else return theStack;
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld){
-        if(KeyUtil.isShiftPressed()){
-            list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+"."+this.getName()+".desc.1"));
-            list.add(StringUtil.localizeFormatted("tooltip."+ModUtil.MOD_ID_LOWER+"."+this.getName()+".desc.2", this.getMaxDamage()+1));
-            list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".hunger.desc")+": "+this.func_150905_g(stack));
-            list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".saturation.desc")+": "+this.func_150906_h(stack));
-            list.add("");
-
-            PotionEffect[] effects = getEffectsFromStack(stack);
-            if(effects != null && effects.length > 0){
-                for(PotionEffect effect : effects){
-                    list.add(StringUtil.localize(effect.getEffectName())+" "+(effect.getAmplifier()+1)+ " (" + Potion.getDurationString(new PotionEffect(0, effect.getDuration()*20, 0)) + ")");
-                }
-            }
-            else list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".noEffects.desc"));
-        }
-        else list.add(ItemUtil.shiftForInfo());
     }
 
     @Override

@@ -4,11 +4,9 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.blocks.BlockPlant;
 import ellpeck.actuallyadditions.util.INameableItem;
-import ellpeck.actuallyadditions.util.ItemUtil;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
@@ -16,8 +14,6 @@ import net.minecraft.item.ItemSeeds;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
-
-import java.util.List;
 
 public class ItemSeed extends ItemSeeds implements INameableItem{
 
@@ -38,12 +34,6 @@ public class ItemSeed extends ItemSeeds implements INameableItem{
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.rare;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld) {
-        ItemUtil.addInformation(this, list, 1, "");
     }
 
     @Override

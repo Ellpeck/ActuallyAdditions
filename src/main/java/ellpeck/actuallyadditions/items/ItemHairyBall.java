@@ -4,7 +4,6 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.recipe.HairyBallHandler;
 import ellpeck.actuallyadditions.util.INameableItem;
-import ellpeck.actuallyadditions.util.ItemUtil;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.item.EntityItem;
@@ -16,7 +15,6 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.WeightedRandom;
 import net.minecraft.world.World;
 
-import java.util.List;
 import java.util.Random;
 
 public class ItemHairyBall extends Item implements INameableItem{
@@ -43,13 +41,6 @@ public class ItemHairyBall extends Item implements INameableItem{
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.epic;
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld) {
-        ItemUtil.addInformation(this, list, 2, "");
     }
 
     @Override

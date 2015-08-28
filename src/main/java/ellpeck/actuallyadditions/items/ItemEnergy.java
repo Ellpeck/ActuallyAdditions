@@ -3,8 +3,6 @@ package ellpeck.actuallyadditions.items;
 import cofh.api.energy.ItemEnergyContainer;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ellpeck.actuallyadditions.util.ItemUtil;
-import ellpeck.actuallyadditions.util.KeyUtil;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -71,15 +69,5 @@ public abstract class ItemEnergy extends ItemEnergyContainer{
         if(compound == null) compound = new NBTTagCompound();
         compound.setInteger("Energy", energy);
         stack.setTagCompound(compound);
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld){
-        ItemUtil.addInformation(this, list, this.infoLines, "");
-        if(KeyUtil.isShiftPressed()){
-            list.add(this.getEnergyStored(stack) + "/" + this.getMaxEnergyStored(stack) + " RF");
-        }
     }
 }

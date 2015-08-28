@@ -60,8 +60,8 @@ public class GuiBooklet extends GuiScreen{
             this.buttonList.add(new IndexButton(this.unicodeRenderer, CHAPTER_BUTTONS_START+i, guiLeft+13, guiTop+15+(i*11), 120, 10, ""));
         }
 
-        this.buttonList.add(new TexturedButton(BUTTON_ACHIEVEMENTS_ID, this.guiLeft+138, this.guiTop, 0, 0, 8, 8));
-        this.buttonList.add(new TexturedButton(BUTTON_CONFIG_ID, this.guiLeft+138, this.guiTop+10, 0, 0, 8, 8));
+        this.buttonList.add(new TexturedButton(BUTTON_ACHIEVEMENTS_ID, this.guiLeft+138, this.guiTop, 205, 0, 8, 8));
+        this.buttonList.add(new TexturedButton(BUTTON_CONFIG_ID, this.guiLeft+138, this.guiTop+10, 197, 0, 8, 8));
 
         this.currentPage = null;
         this.currentChapter = null;
@@ -94,19 +94,24 @@ public class GuiBooklet extends GuiScreen{
         else
             this.drawCenteredString(this.fontRendererObj, StringUtil.localize("itemGroup."+ModUtil.MOD_ID_LOWER), this.guiLeft+this.xSize/2, this.guiTop-8, StringUtil.DECIMAL_COLOR_WHITE);
 
-        super.drawScreen(x, y, f);
-
         if(this.currentIndexEntry != null && this.currentChapter != null && this.currentPage != null){
-            this.currentPage.render(this, x, y);
+            this.drawCenteredString(this.unicodeRenderer, this.currentPage.getID()+"/"+this.currentChapter.pages.length, this.guiLeft+this.xSize/2, this.guiTop+172, StringUtil.DECIMAL_COLOR_WHITE);
+            this.currentPage.renderPre(this, x, y);
         }
 
+        super.drawScreen(x, y, f);
+
         //Achievements Hover Text
-        if(x >= this.guiLeft+138 && x <= this.guiLeft+138+8 && y >= this.guiTop && y <= this.guiTop+8){
+        if(x >= this.guiLeft+138 && x <= this.guiLeft+138+7 && y >= this.guiTop && y <= this.guiTop+7){
             this.func_146283_a(Collections.singletonList("Show Achievements"), x, y);
         }
         //Config Hover Text
-        if(x >= this.guiLeft+138 && x <= this.guiLeft+138+8 && y >= this.guiTop+10 && y <= this.guiTop+10+8){
+        if(x >= this.guiLeft+138 && x <= this.guiLeft+138+7 && y >= this.guiTop+10 && y <= this.guiTop+10+7){
             this.func_146283_a(Collections.singletonList("Show Config"), x, y);
+        }
+
+        if(this.currentIndexEntry != null && this.currentChapter != null && this.currentPage != null){
+            this.currentPage.render(this, x, y);
         }
     }
 

@@ -2,16 +2,14 @@ package ellpeck.actuallyadditions.items.tools;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ellpeck.actuallyadditions.util.*;
+import ellpeck.actuallyadditions.util.INameableItem;
+import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.util.IIcon;
 import net.minecraftforge.oredict.OreDictionary;
-
-import java.util.List;
 
 public class ItemSwordAA extends ItemSword implements INameableItem{
 
@@ -26,17 +24,6 @@ public class ItemSwordAA extends ItemSword implements INameableItem{
         this.rarity = rarity;
         this.repairItem = repairItem;
         this.oredictName = name;
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld) {
-        if(KeyUtil.isShiftPressed()){
-            list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+"."+this.getName()+".desc"));
-            list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".durability.desc") + ": " + (this.getMaxDamage()-this.getDamage(stack)) + "/" + this.getMaxDamage());
-        }
-        else list.add(ItemUtil.shiftForInfo());
     }
 
     @Override

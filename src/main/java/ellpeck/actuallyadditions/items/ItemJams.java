@@ -3,7 +3,8 @@ package ellpeck.actuallyadditions.items;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.items.metalists.TheJams;
-import ellpeck.actuallyadditions.util.*;
+import ellpeck.actuallyadditions.util.INameableItem;
+import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.item.EntityItem;
@@ -88,23 +89,6 @@ public class ItemJams extends ItemFood implements INameableItem{
             }
         }
         return stackToReturn;
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld){
-        if(stack.getItemDamage() < allJams.length){
-            if(KeyUtil.isShiftPressed()){
-                list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+"."+this.getName()+".desc.1"));
-                list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+"."+this.getName()+allJams[stack.getItemDamage()].getName()+".desc"));
-                list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+"."+this.getName()+".desc.2"));
-                list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+"."+this.getName()+".desc.3"));
-                list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".hunger.desc")+": "+allJams[stack.getItemDamage()].healAmount);
-                list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".saturation.desc")+": "+allJams[stack.getItemDamage()].saturation);
-            }
-            else list.add(ItemUtil.shiftForInfo());
-        }
     }
 
     @Override

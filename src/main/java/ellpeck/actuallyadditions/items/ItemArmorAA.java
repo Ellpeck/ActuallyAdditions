@@ -2,17 +2,15 @@ package ellpeck.actuallyadditions.items;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ellpeck.actuallyadditions.util.*;
+import ellpeck.actuallyadditions.util.INameableItem;
+import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraftforge.oredict.OreDictionary;
-
-import java.util.List;
 
 public class ItemArmorAA extends ItemArmor implements INameableItem{
 
@@ -39,17 +37,6 @@ public class ItemArmorAA extends ItemArmor implements INameableItem{
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.rare;
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld){
-        if(KeyUtil.isShiftPressed()){
-            list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+"."+this.getName()+".desc"));
-            list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".durability.desc") + ": " + (this.getMaxDamage()-this.getDamage(stack)) + "/" + this.getMaxDamage());
-        }
-        else list.add(ItemUtil.shiftForInfo());
     }
 
     @Override

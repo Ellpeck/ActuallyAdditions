@@ -6,7 +6,6 @@ import ellpeck.actuallyadditions.ActuallyAdditions;
 import ellpeck.actuallyadditions.inventory.GuiHandler;
 import ellpeck.actuallyadditions.tile.TileEntitySmileyCloud;
 import ellpeck.actuallyadditions.util.AssetUtil;
-import ellpeck.actuallyadditions.util.BlockUtil;
 import ellpeck.actuallyadditions.util.INameableItem;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -22,8 +21,6 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-
-import java.util.List;
 
 public class BlockSmileyCloud extends BlockContainerBase implements INameableItem{
 
@@ -135,13 +132,6 @@ public class BlockSmileyCloud extends BlockContainerBase implements INameableIte
         @Override
         public String getUnlocalizedName(ItemStack stack){
             return this.getUnlocalizedName();
-        }
-
-        @Override
-        @SuppressWarnings("unchecked")
-        @SideOnly(Side.CLIENT)
-        public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld) {
-            BlockUtil.addInformation(theBlock, list, 1, "");
         }
 
         @Override

@@ -3,7 +3,6 @@ package ellpeck.actuallyadditions.items;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.util.INameableItem;
-import ellpeck.actuallyadditions.util.ItemUtil;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,7 +12,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ItemWingsOfTheBats extends Item implements INameableItem{
 
@@ -69,13 +67,6 @@ public class ItemWingsOfTheBats extends Item implements INameableItem{
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.epic;
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld){
-        ItemUtil.addInformation(this, list, 1, "");
     }
 
     @Override

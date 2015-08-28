@@ -4,19 +4,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import ellpeck.actuallyadditions.creative.CreativeTab;
 import net.minecraft.item.Item;
 
-import java.util.List;
-
 public class ItemUtil{
-
-    @SuppressWarnings("unchecked")
-    public static void addInformation(Item item, List list, int lines, String extraName){
-        if(KeyUtil.isShiftPressed()){
-            for(int i = 0; i < lines; i++){
-                list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+"."+((INameableItem)item).getName()+extraName+".desc"+(lines > 1 ? "."+(i+1) : "")));
-            }
-        }
-        else list.add(shiftForInfo());
-    }
 
     public static Item getItemFromName(String name){
         if(Item.itemRegistry.containsKey(name)){
@@ -45,7 +33,4 @@ public class ItemUtil{
         return ModUtil.MOD_ID_LOWER + "." + ((INameableItem)item).getName();
     }
 
-    public static String shiftForInfo(){
-        return StringUtil.GREEN + StringUtil.ITALIC + StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".shiftForInfo.desc");
-    }
 }

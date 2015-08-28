@@ -4,7 +4,8 @@ import com.google.common.collect.Sets;
 import cpw.mods.fml.common.eventhandler.Event;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ellpeck.actuallyadditions.util.*;
+import ellpeck.actuallyadditions.util.INameableItem;
+import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -20,7 +21,6 @@ import net.minecraftforge.event.entity.player.UseHoeEvent;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @SuppressWarnings("unchecked")
@@ -48,18 +48,6 @@ public class ItemAllToolAA extends ItemTool implements INameableItem{
     @Override
     public boolean canHarvestBlock(Block block, ItemStack stack){
         return block.getMaterial().isToolNotRequired() || (block == Blocks.snow_layer || block == Blocks.snow || (block == Blocks.obsidian ? this.toolMaterial.getHarvestLevel() == 3 : (block != Blocks.diamond_block && block != Blocks.diamond_ore ? (block != Blocks.emerald_ore && block != Blocks.emerald_block ? (block != Blocks.gold_block && block != Blocks.gold_ore ? (block != Blocks.iron_block && block != Blocks.iron_ore ? (block != Blocks.lapis_block && block != Blocks.lapis_ore ? (block != Blocks.redstone_ore && block != Blocks.lit_redstone_ore ? (block.getMaterial() == Material.rock || (block.getMaterial() == Material.iron || block.getMaterial() == Material.anvil)) : this.toolMaterial.getHarvestLevel() >= 2) : this.toolMaterial.getHarvestLevel() >= 1) : this.toolMaterial.getHarvestLevel() >= 1) : this.toolMaterial.getHarvestLevel() >= 2) : this.toolMaterial.getHarvestLevel() >= 2) : this.toolMaterial.getHarvestLevel() >= 2)));
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld) {
-        if(KeyUtil.isShiftPressed()){
-            list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".paxel.desc.1"));
-            list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".paxel.desc.2"));
-            list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".durability.desc") + ": " + (this.getMaxDamage()-this.getDamage(stack)) + "/" + this.getMaxDamage());
-        }
-        else list.add(ItemUtil.shiftForInfo());
     }
 
     @Override

@@ -5,7 +5,6 @@ import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.ActuallyAdditions;
 import ellpeck.actuallyadditions.inventory.GuiHandler;
 import ellpeck.actuallyadditions.tile.TileEntityFeeder;
-import ellpeck.actuallyadditions.util.BlockUtil;
 import ellpeck.actuallyadditions.util.INameableItem;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.block.Block;
@@ -18,8 +17,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
-
-import java.util.List;
 
 public class BlockFeeder extends BlockContainerBase implements INameableItem{
 
@@ -90,13 +87,6 @@ public class BlockFeeder extends BlockContainerBase implements INameableItem{
         @Override
         public String getUnlocalizedName(ItemStack stack){
             return this.getUnlocalizedName();
-        }
-
-        @Override
-        @SuppressWarnings("unchecked")
-        @SideOnly(Side.CLIENT)
-        public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld) {
-            BlockUtil.addInformation(theBlock, list, 1, "");
         }
 
         @Override

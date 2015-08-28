@@ -25,7 +25,7 @@ public class Util{
         BlockDispenser.dispenseBehaviorRegistry.putObject(item, handler);
     }
 
-    public static IRecipe latestIRecipe(){
+    public static IRecipe lastIRecipe(){
         List list = CraftingManager.getInstance().getRecipeList();
         Object recipe = list.get(list.size()-1);
         return recipe instanceof IRecipe ? (IRecipe)recipe : null;

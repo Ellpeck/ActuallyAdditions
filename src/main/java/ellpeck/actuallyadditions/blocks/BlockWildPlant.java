@@ -3,14 +3,12 @@ package ellpeck.actuallyadditions.blocks;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.blocks.metalists.TheWildPlants;
-import ellpeck.actuallyadditions.util.BlockUtil;
 import ellpeck.actuallyadditions.util.INameableItem;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
@@ -96,13 +94,6 @@ public class BlockWildPlant extends BlockBush implements INameableItem{
         @Override
         public String getUnlocalizedName(ItemStack stack){
             return this.getUnlocalizedName() + (stack.getItemDamage() >= allWildPlants.length ? " ERROR!" : allWildPlants[stack.getItemDamage()].getName());
-        }
-
-        @Override
-        @SuppressWarnings("unchecked")
-        @SideOnly(Side.CLIENT)
-        public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld) {
-            if(stack.getItemDamage() < allWildPlants.length) BlockUtil.addInformation(theBlock, list, 1, allWildPlants[stack.getItemDamage()].getName());
         }
 
         @Override

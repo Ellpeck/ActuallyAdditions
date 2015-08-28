@@ -4,7 +4,6 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.achievement.TheAchievements;
 import ellpeck.actuallyadditions.recipe.TreasureChestHandler;
-import ellpeck.actuallyadditions.util.BlockUtil;
 import ellpeck.actuallyadditions.util.INameableItem;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.block.Block;
@@ -24,7 +23,6 @@ import net.minecraft.util.WeightedRandom;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-import java.util.List;
 import java.util.Random;
 
 public class BlockTreasureChest extends Block implements INameableItem{
@@ -156,13 +154,6 @@ public class BlockTreasureChest extends Block implements INameableItem{
         @Override
         public String getUnlocalizedName(ItemStack stack){
             return this.getUnlocalizedName();
-        }
-
-        @Override
-        @SuppressWarnings("unchecked")
-        @SideOnly(Side.CLIENT)
-        public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld){
-            BlockUtil.addInformation(theBlock, list, 2, "");
         }
 
         @Override
