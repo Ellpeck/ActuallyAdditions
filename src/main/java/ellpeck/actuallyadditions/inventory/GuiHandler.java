@@ -4,7 +4,7 @@ import cpw.mods.fml.common.network.IGuiHandler;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import ellpeck.actuallyadditions.ActuallyAdditions;
 import ellpeck.actuallyadditions.inventory.gui.*;
-import ellpeck.actuallyadditions.inventory.gui.lexicon.GuiBooklet;
+import ellpeck.actuallyadditions.inventory.gui.booklet.GuiBooklet;
 import ellpeck.actuallyadditions.tile.TileEntityBase;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.entity.player.EntityPlayer;

@@ -245,6 +245,8 @@ tooltip.actuallyadditions.codeName.desc=Code Name
 tooltip.actuallyadditions.baseUnlocName.desc=Item's Unlocalized Name
 tooltip.actuallyadditions.unlocName.desc=Meta's Unlocalized Name
 tooltip.actuallyadditions.disablingInfo.desc=If you don't want this Information |to appear, disable it in the |Actually Additions Config!
+tooltip.actuallyadditions.ctrlForMoreInfo.desc=Press CTRL for Advanced Info
+tooltip.actuallyadditions.extraInfo.desc=Advanced Info
 tile.actuallyadditions.blockXPSolidifier.name=Experience Solidifier
 tooltip.actuallyadditions.blockPhantomRange.desc=Range
 tile.actuallyadditions.blockFlax.name=Flax Plant
@@ -359,3 +361,46 @@ achievement.actuallyadditions.craftPhantomEnergyface=Watch out! It's powered!
 achievement.actuallyadditions.craftPhantomEnergyface.desc=Craft a Phantom Energyface
 achievement.actuallyadditions.openTreasureChest=You almost drowned!!
 achievement.actuallyadditions.openTreasureChest.desc=Open a Treasure Chest underwater
+
+booklet.actuallyadditions.indexEntry.misc.name=Miscellaneous
+booklet.actuallyadditions.indexEntry.functionalNoRF.name=Functional Blocks (No RF use)
+
+booklet.actuallyadditions.chapter.foods.name=Food
+booklet.actuallyadditions.chapter.foods.text.1=A Pizza is round, delicious and tastes of tomatoes, cheese and deliciousness. Yum!
+booklet.actuallyadditions.chapter.foods.text.2=Rice Bread is made in a furnace from rice dough, which can be made from rice. It tastes of a combination of rice and bread. Because that's what it is, I guess.
+booklet.actuallyadditions.chapter.foods.text.3=It's hammy, and it's burgr'y, and it makes you want to sing, it's a Haaaaaaamuuuuurgeeeeeer *cough* It's from a german city: Hamburg! ...You learn something new every day.
+booklet.actuallyadditions.chapter.foods.text.4=Reminds me of something. Hmmm... Subway?
+booklet.actuallyadditions.chapter.foods.text.5=Reminds me of something. Hmmm... Wubsay?
+booklet.actuallyadditions.chapter.foods.text.6=A pity it isn't waving a white flaaaaaaaaa.. flake. Of corn. A white cornflake.
+booklet.actuallyadditions.chapter.foods.text.7=Or chips, if you're not american!
+booklet.actuallyadditions.chapter.foods.text.8=It's a paper container filled with fries and fish. What more could you want?
+booklet.actuallyadditions.chapter.foods.text.9=Someone might reeeeally like this.
+booklet.actuallyadditions.chapter.foods.text.10=I somehow have a weird song stuck in my head where someone just repeatedly goes "Pumpkin pumpkin pumpkin blur, pumpkin blur, pumpkin blur"...
+booklet.actuallyadditions.chapter.foods.text.11=It's like Tomato Juice, only that you don't always get it on a plane.
+booklet.actuallyadditions.chapter.foods.text.12=It's a bowl with 3 noodles in it. It must be a really big bowl, I guess.
+booklet.actuallyadditions.chapter.foods.text.13=THERE are those noodles! I've been searching for them for ages!
+booklet.actuallyadditions.chapter.foods.text.14=Lari likes.
+booklet.actuallyadditions.chapter.foods.text.15=It's chocolate cake. Who wouldn't like it!?
+booklet.actuallyadditions.chapter.foods.text.16=It's Toast. What more could I say?
+booklet.actuallyadditions.chapter.foods.text.17=Dough gets cooked into Baguette in a Furnace and can then join the french fries on their mission to achieve something or another.
+
+booklet.actuallyadditions.chapter.cloud.name=Smiley Cloud
+booklet.actuallyadditions.chapter.cloud.text.1=A Smiley Cloud is a neat little block that you can put down in the world. When in place, it will hover around across the ground, though staying on the block you placed it in. When right-clicking the cloud, it will open a GUI that enables you to change its name, and thus, its appearance if you do it right. On the next page, you can find some examples you can try out.
+booklet.actuallyadditions.chapter.cloud.text.2=The Crafting Recipe is shown above. If you want to know what certain name changes do, try naming a cloud "Ellpeck", "Glenthor" or "AcidBlues".
+
+booklet.actuallyadditions.chapter.phantomfaces.name=Phantomfaces
+booklet.actuallyadditions.chapter.phantomfaces.text.1=A Phantomface is a block that you can connect to any inventory by using a Phantom Connector. When connected, the phantomface will act as if it was the corresponding inventory, accepting Items from pipes and hoppers and having items be able to get pulled out of the face (the same applies for energyfaces with RF and liquifaces with fluids.) a Phantomfaces has a default range of 15 blocks that can be enlarged with Phantom Boosters.
+booklet.actuallyadditions.chapter.phantomfaces.text.2=The normal Phantomface can connect to inventories like chests and furnaces, transfering Items into and out of them.
+booklet.actuallyadditions.chapter.phantomfaces.text.3=The Phantom Liquiface can connect to tanks and such, allowing all types of liquids to be pumped through. Giving it a Redstone Signal will cause it to auto-output.
+booklet.actuallyadditions.chapter.phantomfaces.text.4=The Phantom Energyface can connect to things like generators and crushers, allowing for RF to flow through them into and out of machines.
+
+booklet.actuallyadditions.chapter.phantomBreaker.name=Phantom Breakers & Placers
+booklet.actuallyadditions.chapter.phantomBreaker.text.1=Phantom Breakers and Placers have very similar mechanics to Phantomfaces: They can be connected to Blocks via Phantom Connectors and interact with the environment. Phantom Breakers and Placers only have a range of 3 blocks, however, in which they can destroy and place blocks in connected places. Shift-right-clicking will supply you with information about the connection, right-clicking normally will open its interface.
+booklet.actuallyadditions.chapter.phantomBreaker.text.2=The Phantom Placer places Blocks that you supply it with.
+booklet.actuallyadditions.chapter.phantomBreaker.text.3=The Phantom Placer breaks blocks and stores them in its internal inventory.
+
+booklet.actuallyadditions.chapter.breaker.name=(Fluid) Placers & Breakers
+booklet.actuallyadditions.chapter.breaker.text.1=The Breaker breaks Blocks in front of it and stores them in its internal inventory. That's it.
+booklet.actuallyadditions.chapter.breaker.text.2=The Placer places Blocks that it has stored in its internal inventory in the world. Amazing.
+booklet.actuallyadditions.chapter.breaker.text.3=The Fluid Placer places liquids that you supply it with, if they have a block, in the world.
+booklet.actuallyadditions.chapter.breaker.text.4=The Fluid Collector collects liquids in front of it and stores them in its tank.

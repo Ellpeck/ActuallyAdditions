@@ -1,4 +1,4 @@
-package ellpeck.actuallyadditions.inventory.gui.lexicon;
+package ellpeck.actuallyadditions.inventory.gui.booklet;
 
 public interface IBookletPage{
 

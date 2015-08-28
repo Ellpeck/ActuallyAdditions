@@ -1,4 +1,4 @@
-package ellpeck.actuallyadditions.inventory.gui.lexicon;
+package ellpeck.actuallyadditions.inventory.gui.booklet;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -164,7 +164,7 @@ public class GuiBooklet extends GuiScreen{
             int actualButton = button.id-CHAPTER_BUTTONS_START;
             if(this.currentIndexEntry != null){
                 if(this.currentChapter == null){
-                    if(actualButton < InitBooklet.entries.size()){
+                    if(actualButton < this.currentIndexEntry.chapters.size()){
                         this.openChapter(currentIndexEntry.chapters.get(actualButton));
                     }
                 }

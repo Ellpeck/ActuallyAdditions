@@ -1,5 +1,6 @@
-package ellpeck.actuallyadditions.inventory.gui.lexicon;
+package ellpeck.actuallyadditions.inventory.gui.booklet;
 
+import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
@@ -42,7 +43,9 @@ public class PageFurnace extends PageText{
                     int xShow = gui.guiLeft+37+1+x*40;
                     int yShow = gui.guiTop+20+20;
                     if(!tooltip){
+                        RenderHelper.disableStandardItemLighting();
                         RenderItem.getInstance().renderItemAndEffectIntoGUI(gui.unicodeRenderer, gui.mc.getTextureManager(), stack, xShow, yShow);
+                        RenderHelper.enableStandardItemLighting();
                     }
                     else{
                         if(mouseX >= xShow && mouseX <= xShow+16 && mouseY >= yShow && mouseY <= yShow+16){

@@ -1,4 +1,4 @@
-package ellpeck.actuallyadditions.inventory.gui.lexicon;
+package ellpeck.actuallyadditions.inventory.gui.booklet;
 
 import cpw.mods.fml.relauncher.ReflectionHelper;
 import ellpeck.actuallyadditions.achievement.InitAchievements;

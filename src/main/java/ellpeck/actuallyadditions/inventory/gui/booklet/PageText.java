@@ -1,4 +1,4 @@
-package ellpeck.actuallyadditions.inventory.gui.lexicon;
+package ellpeck.actuallyadditions.inventory.gui.booklet;
 
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
@@ -24,7 +24,7 @@ public class PageText implements IBookletPage{
 
     @Override
     public String getText(){
-        return StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".chapter."+this.chapter.getUnlocalizedName()+".text."+this.id+".name");
+        return StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".chapter."+this.chapter.getUnlocalizedName()+".text."+this.id);
     }
 
     @Override

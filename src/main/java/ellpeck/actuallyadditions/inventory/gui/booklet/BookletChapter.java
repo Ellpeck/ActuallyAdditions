@@ -1,4 +1,4 @@
-package ellpeck.actuallyadditions.inventory.gui.lexicon;
+package ellpeck.actuallyadditions.inventory.gui.booklet;
 
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
@@ -8,6 +8,7 @@ public class BookletChapter{
     public final IBookletPage[] pages;
     private final String unlocalizedName;
     public final BookletIndexEntry entry;
+    public int openPage;
 
     public BookletChapter(String unlocalizedName, BookletIndexEntry entry, IBookletPage... pages){
         this.pages = pages.clone();

@@ -13,7 +13,7 @@ import java.util.List;
 public class GuiConfiguration extends GuiConfig{
 
     public GuiConfiguration(GuiScreen parentScreen){
-        super(parentScreen, getConfigElements(), ModUtil.MOD_ID, true, true, ModUtil.NAME);
+        super(parentScreen, getConfigElements(), ModUtil.MOD_ID, false, false, ModUtil.NAME);
     }
 
     private static List<IConfigElement> getConfigElements(){

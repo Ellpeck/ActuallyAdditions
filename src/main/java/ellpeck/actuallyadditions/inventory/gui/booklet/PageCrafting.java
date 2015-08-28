@@ -1,7 +1,8 @@
-package ellpeck.actuallyadditions.inventory.gui.lexicon;
+package ellpeck.actuallyadditions.inventory.gui.booklet;
 
 import cpw.mods.fml.relauncher.ReflectionHelper;
 import ellpeck.actuallyadditions.util.Util;
+import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -77,8 +78,9 @@ public class PageCrafting extends PageText{
 
             int xShowOutput = gui.guiLeft+28+82;
             int yShowOutput = gui.guiTop+23+20;
+            RenderHelper.disableStandardItemLighting();
             RenderItem.getInstance().renderItemAndEffectIntoGUI(gui.unicodeRenderer, gui.mc.getTextureManager(), recipe.getRecipeOutput(), xShowOutput, yShowOutput);
-
+            RenderHelper.enableStandardItemLighting();
             for(int i = 0; i < 2; i++){
                 boolean tooltip = i == 1;
                 for(int x = 0; x < width; x++){
@@ -89,7 +91,9 @@ public class PageCrafting extends PageText{
                             int yShow = gui.guiTop+23+y*21;
                             if(!tooltip){
                                 if(stack.getItemDamage() == Util.WILDCARD) stack.setItemDamage(0);
+                                RenderHelper.disableStandardItemLighting();
                                 RenderItem.getInstance().renderItemAndEffectIntoGUI(gui.unicodeRenderer, gui.mc.getTextureManager(), stack, xShow, yShow);
+                                RenderHelper.enableStandardItemLighting();
                             }
                             else{
                                 if(mouseX >= xShow && mouseX <= xShow+16 && mouseY >= yShow && mouseY <= yShow+16){
@@ -100,7 +104,6 @@ public class PageCrafting extends PageText{
                     }
                 }
             }
-
             if(mouseX >= xShowOutput && mouseX <= xShowOutput+16 && mouseY >= yShowOutput && mouseY <= yShowOutput+16){
                 gui.renderToolTip(recipe.getRecipeOutput(), mouseX, mouseY);
             }
