@@ -75,6 +75,10 @@ public class PageCrafting extends PageText{
                 }
             }
 
+            int xShowOutput = gui.guiLeft+28+82;
+            int yShowOutput = gui.guiTop+23+20;
+            RenderItem.getInstance().renderItemAndEffectIntoGUI(gui.unicodeRenderer, gui.mc.getTextureManager(), recipe.getRecipeOutput(), xShowOutput, yShowOutput);
+
             for(int i = 0; i < 2; i++){
                 boolean tooltip = i == 1;
                 for(int x = 0; x < width; x++){
@@ -97,10 +101,7 @@ public class PageCrafting extends PageText{
                 }
             }
 
-            int xShow = gui.guiLeft+28+82;
-            int yShow = gui.guiTop+23+20;
-            RenderItem.getInstance().renderItemAndEffectIntoGUI(gui.unicodeRenderer, gui.mc.getTextureManager(), recipe.getRecipeOutput(), xShow, yShow);
-            if(mouseX >= xShow && mouseX <= xShow+16 && mouseY >= yShow && mouseY <= yShow+16){
+            if(mouseX >= xShowOutput && mouseX <= xShowOutput+16 && mouseY >= yShowOutput && mouseY <= yShowOutput+16){
                 gui.renderToolTip(recipe.getRecipeOutput(), mouseX, mouseY);
             }
         }

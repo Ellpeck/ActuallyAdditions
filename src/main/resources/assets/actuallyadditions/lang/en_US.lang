@@ -20,61 +20,28 @@ tile.actuallyadditions.blockFishingNet.name=Fishing Net
 tile.actuallyadditions.blockFurnaceSolar.name=Solar Panel
 tile.actuallyadditions.blockHeatCollector.name=Heat Collector
 tile.actuallyadditions.blockItemRepairer.name=Item Repairer
-
 item.actuallyadditions.itemDrill.name=Drill
-tooltip.actuallyadditions.itemDrill.desc.1=Mines all the Blocks!
-tooltip.actuallyadditions.itemDrill.desc.2=Powered by RF! Charge in an Energizer! Discharge in an Enervator!
-tooltip.actuallyadditions.itemDrill.desc.3=Drill Upgrades can be applied through Sneak-Right-Clicking!
-tooltip.actuallyadditions.itemDrill.desc.4=Put a filled Battery into the Upgrade Slots to make the Drill recharge automatically!
-
 tile.actuallyadditions.blockMiscWoodCasing.name=Wood Casing
 tile.actuallyadditions.blockMiscStoneCasing.name=Stone Casing
 tile.actuallyadditions.blockGreenhouseGlass.name=Greenhouse Glass
-
 tile.actuallyadditions.blockEnergizer.name=Energizer
-tooltip.actuallyadditions.blockEnergizer.desc.1=A "Charger", if you will
-tooltip.actuallyadditions.blockEnergizer.desc.2=Charges Items that can hold RF
 tile.actuallyadditions.blockEnervator.name=Enervator
-tooltip.actuallyadditions.blockEnervator.desc.1=A "Discharger", if you will
-tooltip.actuallyadditions.blockEnervator.desc.2=Discharges Items that can hold RF
-
 tile.actuallyadditions.blockRice.name=Rice Plant
-tooltip.actuallyadditions.blockRice.desc=It's growing... kind of..
 item.actuallyadditions.itemFoodRice.name=Rice
-tooltip.actuallyadditions.itemFoodRice.desc=Used to make all kinds of useful stuff!
 item.actuallyadditions.itemMiscRiceDough.name=Rice Dough
-tooltip.actuallyadditions.itemMiscRiceDough.desc=It's Dough, but made from Rice
 item.actuallyadditions.itemFoodRiceBread.name=Rice Bread
-tooltip.actuallyadditions.itemFoodRiceBread.desc=It's like Bread, but ricey!
 item.actuallyadditions.itemRiceSeed.name=Rice Seeds
-tooltip.actuallyadditions.itemRiceSeed.desc=Grows on Farmland! Makes delicious Rice!
-
 item.actuallyadditions.itemMiscTinyCoal.name=Tiny Coal
-tooltip.actuallyadditions.itemMiscTinyCoal.desc=Crafted from Coal, smelts one Item
 item.actuallyadditions.itemMiscTinyCharcoal.name=Tiny Charcoal
-tooltip.actuallyadditions.itemMiscTinyCharcoal.desc=Crafted from Charcoal, smelts one Item
 tile.actuallyadditions.blockMiscCharcoal.name=Block of Charcoal
-tooltip.actuallyadditions.blockMiscCharcoal.desc=Crafted from Charcoal
 item.actuallyadditions.itemMiscRiceSlime.name=Rice Slimeball
-tooltip.actuallyadditions.itemMiscRiceSlime.desc=It's sticky... and smells kinda good...
-
 item.actuallyadditions.itemBattery.name=Single Battery
 item.actuallyadditions.itemBatteryDouble.name=Double Battery
 item.actuallyadditions.itemBatteryTriple.name=Triple Battery
 item.actuallyadditions.itemBatteryQuadruple.name=Quadruple Battery
 item.actuallyadditions.itemBatteryQuintuple.name=Quintuple Battery
-tooltip.actuallyadditions.itemBattery.desc=Stores RF! Charge in an Energizer! Discharge in an Enervator!
-
 tile.actuallyadditions.blockCoalGenerator.name=Coal Generator
-tooltip.actuallyadditions.blockCoalGenerator.desc=Produces Energy from Coal and other flammable Materials
-
-tooltip.actuallyadditions.blockColoredLamp.desc.1=Sneak-Right-Click to turn me on!
-tooltip.actuallyadditions.blockColoredLamp.desc.2=Right-Click me with a Dye to dye me!
-tooltip.actuallyadditions.blockColoredLamp.desc.3=Use a Lamp Controller to toggle me with Redstone!
-
 tile.actuallyadditions.blockLampPowerer.name=Lamp Controller
-tooltip.actuallyadditions.blockLampPowerer.desc=Place me facing towards a Lamp and power me with Redstone to turn it on!
-
 tile.actuallyadditions.blockColoredLampWhite.name=White Lamp
 tile.actuallyadditions.blockColoredLampOrange.name=Orange Lamp
 tile.actuallyadditions.blockColoredLampMagenta.name=Magenta Lamp
@@ -91,65 +58,22 @@ tile.actuallyadditions.blockColoredLampLime.name=Lime Lamp
 tile.actuallyadditions.blockColoredLampPink.name=Pink Lamp
 tile.actuallyadditions.blockColoredLampCyan.name=Cyan Lamp
 tile.actuallyadditions.blockColoredLampPurple.name=Purple Lamp
-
 item.actuallyadditions.itemGrowthRing.name=Ring of Growth
-tooltip.actuallyadditions.itemGrowthRing.desc=Lets Plants around you grow when held in hand
 item.actuallyadditions.itemWaterRemovalRing.name=Ring of Liquid Banning
-tooltip.actuallyadditions.itemWaterRemovalRing.desc=Removes Water & Lava Blocks around you when held in hand
 item.actuallyadditions.itemSuctionRing.name=Ring of Magnetizing
-tooltip.actuallyadditions.itemSuctionRing.desc=Sucks in Items in the area when in Inventory
-
 tile.actuallyadditions.blockOreMagnet.name=Magnetic Miner
-tooltip.actuallyadditions.blockOreMagnet.desc.1=Pulls underground Ore Blocks to the Surface
-tooltip.actuallyadditions.blockOreMagnet.desc.2=Places where Ores should be mined have to have a
-tooltip.actuallyadditions.blockOreMagnet.desc.3=Casing Block one block lower than the Miner.
-
 item.actuallyadditions.itemBucketCanolaOil.name=Canola Oil Bucket
-tooltip.actuallyadditions.itemBucketCanolaOil.desc=A Bucket filled with Canola Oil
 item.actuallyadditions.itemBucketOil.name=Oil Bucket
-tooltip.actuallyadditions.itemBucketOil.desc=Made in a Fermenting Barrel from Canola Oil
-
 tile.actuallyadditions.blockPhantomface.name=Phantomface
-tooltip.actuallyadditions.blockPhantomface.desc.1=Like a Hopper-Chain, only Wireless! Connect me with a Phantom Connector!
-tooltip.actuallyadditions.blockPhantomface.desc.2=Input things into me to input into connected Blocks!
-
 tile.actuallyadditions.blockPhantomEnergyface.name=Phantom Energyface
-tooltip.actuallyadditions.blockPhantomEnergyface.desc.1=Like a Conduit, only Wireless! Connect me with a Phantom Connector!
-tooltip.actuallyadditions.blockPhantomEnergyface.desc.2=Put RF through me!
-
 tile.actuallyadditions.blockPhantomLiquiface.name=Phantom Liquiface
-tooltip.actuallyadditions.blockPhantomLiquiface.desc.1=Like a Pipe, only Wireless! Connect me with a Phantom Connector!
-tooltip.actuallyadditions.blockPhantomLiquiface.desc.2=Put Fluids through me! Apply Redstone Power to Auto-Output!
-tooltip.actuallyadditions.blockPhantomLiquiface.desc.3=Important: Watch out when setting the Liquiface to Auto-Output! Doing that
-tooltip.actuallyadditions.blockPhantomLiquiface.desc.4=could produce Fluids flowing back and forward indefinitely in some cases!
-
 tile.actuallyadditions.blockPhantomPlacer.name=Phantom Placer
-tooltip.actuallyadditions.blockPhantomPlacer.desc.1=Places Blocks from a distance! Connect me with a Phantom Connector!
-tooltip.actuallyadditions.blockPhantomPlacer.desc.2=Sneak-Right-Click with an empty hand to see its Connections!
-
 tile.actuallyadditions.blockPhantomBreaker.name=Phantom Breaker
-tooltip.actuallyadditions.blockPhantomBreaker.desc.1=Breaks Blocks from a distance! Connect me with a Phantom Connector!
-tooltip.actuallyadditions.blockPhantomBreaker.desc.2=Sneak-Right-Click with an empty hand to see its Connections!
-
 tile.actuallyadditions.blockLavaFactoryController.name=Lava Factory Controller
-tooltip.actuallyadditions.blockLavaFactoryController.desc.1=Place Casings around in the right way to produce Lava:
-tooltip.actuallyadditions.blockLavaFactoryController.desc.2=Go one block up above the Controller, that's where Lava is going to land
-tooltip.actuallyadditions.blockLavaFactoryController.desc.3=Place 4 Casings around that empty space so that it is encased
-
 tile.actuallyadditions.blockMiscLavaFactoryCase.name=Casing
-tooltip.actuallyadditions.blockMiscLavaFactoryCase.desc=A Casing for the Lava Factory and more.
-
 tile.actuallyadditions.blockFluidPlacer.name=Fluid Placer
-tooltip.actuallyadditions.blockFluidPlacer.desc=Places Fluids stored inside it
-
 item.actuallyadditions.itemWingsOfTheBats.name=Wings Of The Bats
-tooltip.actuallyadditions.itemWingsOfTheBats.desc=Give you the ability to fly when they're in your Inventory..
-
 item.actuallyadditions.itemMiscBatWing.name=Bat's Wing
-tooltip.actuallyadditions.itemMiscBatWing.desc=A Wing dropped from a bat.. might be useful..
-
-tooltip.actuallyadditions.paxel.desc.1=It's an All-In-One-Tool!
-tooltip.actuallyadditions.paxel.desc.2=Pickaxe, Axe, Shovel, Sword AND Hoe! In One Tool!
 item.actuallyadditions.woodenPaxel.name=Wooden AIOT
 item.actuallyadditions.stonePaxel.name=Stone AIOT
 item.actuallyadditions.ironPaxel.name=Iron AIOT
@@ -158,7 +82,6 @@ item.actuallyadditions.diamondPaxel.name=Diamond AIOT
 item.actuallyadditions.emeraldPaxel.name=Emerald AIOT
 item.actuallyadditions.obsidianPaxel.name=Obsidian AIOT
 item.actuallyadditions.quartzPaxel.name=Black Quartz AIOT
-
 item.actuallyadditions.paxelTFCopper.name=TF Copper AIOT
 item.actuallyadditions.paxelTFTin.name=TF Tin AIOT
 item.actuallyadditions.paxelTFLead.name=TF Lead AIOT
@@ -168,98 +91,44 @@ item.actuallyadditions.paxelTFNickel.name=TF Ferrous AIOT
 item.actuallyadditions.paxelTFBronze.name=TF Bronze AIOT
 item.actuallyadditions.paxelTFPlatinum.name=TF Shiny AIOT
 item.actuallyadditions.paxelTFInvar.name=TF Invar AIOT
-
 item.actuallyadditions.paxelMTObsidian.name=MT Obsidian AIOT
 item.actuallyadditions.paxelMTGlowstone.name=MT Glowstone AIOT
 item.actuallyadditions.paxelMTLapisLazuli.name=MT Lapis Lazuli AIOT
 item.actuallyadditions.paxelMTOsmium.name=MT Osmium AIOT
 item.actuallyadditions.paxelMTBronze.name=MT Bronze AIOT
 item.actuallyadditions.paxelMTSteel.name=MT Steel AIOT
-
 tile.actuallyadditions.blockFluidCollector.name=Fluid Collector
-tooltip.actuallyadditions.blockFluidCollector.desc=Stores Fluids in front of it inside it
-
 tile.actuallyadditions.blockPhantomBooster.name=Phantom Booster
-tooltip.actuallyadditions.blockPhantomBooster.desc.1=When placed above a Phantom Machine, it doubles its Range
-tooltip.actuallyadditions.blockPhantomBooster.desc.2=(Max Amount above one Phantom Machine: 3)
-
 item.actuallyadditions.itemPhantomConnector.name=Phantom Connector
-tooltip.actuallyadditions.itemPhantomConnector.desc=Connects a Phantom Inventory to any Inventory Block!
-
 item.actuallyadditions.itemMiscCup.name=Empty Cup
-tooltip.actuallyadditions.itemMiscCup.desc=Used to make Coffee in a Coffee Machine!
-
 item.actuallyadditions.itemCoffee.name=Cup with Coffee
-tooltip.actuallyadditions.itemCoffee.desc.1=Brewed in a Coffee Machine! See Effects below!
-tooltip.actuallyadditions.itemCoffee.desc.2=You can drink me %s times!
-
 item.actuallyadditions.itemCoffeeSeed.name=Coffee Seeds
-tooltip.actuallyadditions.itemCoffeeSeed.desc=Grows Coffee on Farmland
-
 tile.actuallyadditions.blockCoffee.name=Coffee Plant
-tooltip.actuallyadditions.blockCoffee.desc=Grows Coffee! Noms!
-
 item.actuallyadditions.itemCoffeeBeans.name=Coffee Beans
-tooltip.actuallyadditions.itemCoffeeBeans.desc=Used in a Coffee Machine... delicious!
-
 tile.actuallyadditions.blockWildCanola.name=Wild Canola
 tile.actuallyadditions.blockWildRice.name=Wild Rice
 tile.actuallyadditions.blockWildCoffee.name=Wild Coffee
 tile.actuallyadditions.blockWildFlax.name=Wild Flax
-tooltip.actuallyadditions.blockWildCanola.desc=Grows in the Wild... Gets you Canola Seeds!
-tooltip.actuallyadditions.blockWildRice.desc=Grows in the Wild... Gets you Rice Seeds!
-tooltip.actuallyadditions.blockWildCoffee.desc=Grows in the Wild... Gets you Coffee Seeds!
-tooltip.actuallyadditions.blockWildFlax.desc=Grows in the Wild... Gets you Flax Seeds!
-
 tile.actuallyadditions.blockTestifiBucksGreenWall.name=Green TestifiBucks Wall
 tile.actuallyadditions.blockTestifiBucksWhiteWall.name=White TestifiBucks Wall
 tile.actuallyadditions.blockTestifiBucksGreenStairs.name=Green TestifiBucks Stairs
 tile.actuallyadditions.blockTestifiBucksWhiteStairs.name=White TestifiBucks Stairs
 tile.actuallyadditions.blockTestifiBucksGreenSlab.name=Green TestifiBucks Slab
 tile.actuallyadditions.blockTestifiBucksWhiteSlab.name=White TestifiBucks Slab
-
-tooltip.actuallyadditions.blockTestifiBucksGreenWall.desc=A Green Wall used in a TestifiBucks
-tooltip.actuallyadditions.blockTestifiBucksWhiteWall.desc=A White Wall used in a TestifiBucks
-tooltip.actuallyadditions.blockTestifiBucksGreenStairs.desc=A Green Stair used in a TestifiBucks
-tooltip.actuallyadditions.blockTestifiBucksWhiteStairs.desc=A White Stair used in a TestifiBucks
-tooltip.actuallyadditions.blockTestifiBucksGreenSlab.desc=A Green Slab used in a TestifiBucks
-tooltip.actuallyadditions.blockTestifiBucksWhiteSlab.desc=A White Slab used in a TestifiBucks
-
 item.actuallyadditions.itemCanolaSeed.name=Canola Seeds
-tooltip.actuallyadditions.itemCanolaSeed.desc=Grows on Farmland! Makes Canola!
 item.actuallyadditions.itemMiscCanola.name=Canola
-tooltip.actuallyadditions.itemMiscCanola.desc=Used to make Oil in a Canola Press
 tile.actuallyadditions.blockCanola.name=Canola Plant
-tooltip.actuallyadditions.blockCanola.desc=It's growing... making Canola.. slowly!
-
 item.actuallyadditions.itemResonantRice.name=Resonant Rice
-tooltip.actuallyadditions.itemResonantRice.desc=Don't know what it does... maybe if you right-click it?
-tooltip.actuallyadditions.itemResonantRice.uncraftable.desc=Uncraftable because there's no Mod installed that adds Enderium :(
-
 tile.actuallyadditions.blockTreasureChest.name=Treasure Chest
-tooltip.actuallyadditions.blockTreasureChest.desc.1=A Chest found on the Ground of Ocean Biomes
-tooltip.actuallyadditions.blockTreasureChest.desc.2=Maybe you'll get something awesome when you Right-Click it?
-
 tile.actuallyadditions.blockCanolaPress.name=Canola Press
-tooltip.actuallyadditions.blockCanolaPress.desc=Makes Canola Oil from Canola
 tile.actuallyadditions.blockFermentingBarrel.name=Fermenting Barrel
-tooltip.actuallyadditions.blockFermentingBarrel.desc=Ferments Canola Oil made in a Press to Canola
-
 tile.actuallyadditions.blockCanolaOil.name=Canola Oil
-tooltip.actuallyadditions.blockCanolaOil.desc=Oil made from Canola
 tile.actuallyadditions.blockOil.name=Oil
-tooltip.actuallyadditions.blockOil.desc=Can be used to power Machines
-
 tile.actuallyadditions.blockMiscEnderpearl.name=Block of Enderpearl
-tooltip.actuallyadditions.blockMiscEnderpearl.desc=It's a Block. Made of Pearls. Wow.
-
 tile.actuallyadditions.blockOilGenerator.name=Oil Generator
-tooltip.actuallyadditions.blockOilGenerator.desc=Generates Power from Oil
-
 tile.actuallyadditions.blockBreaker.name=Auto-Breaker
 tile.actuallyadditions.blockPlacer.name=Auto-Placer
 tile.actuallyadditions.blockDropper.name=Automatic Precision Dropper
-
 tile.actuallyadditions.blockInputter.name=ESD
 tile.actuallyadditions.blockInputterAdvanced.name=Advanced ESD
 tile.actuallyadditions.blockInputter.add.1.name=Ellpeck's Slot Device
@@ -277,7 +146,6 @@ tile.actuallyadditions.blockInputter.add.12.name=Energetic Solo Dancer
 tile.actuallyadditions.blockInputter.add.13.name=Efficient Sucking Dilettant
 tile.actuallyadditions.blockInputter.add.14.name=Extreme Sand Digger
 tile.actuallyadditions.blockInputter.add.15.name=Ending Serious Daughter
-
 item.actuallyadditions.itemDrillUpgradeSpeed.name=Drill Speed Augment I
 item.actuallyadditions.itemDrillUpgradeSpeedII.name=Drill Speed Augment II
 item.actuallyadditions.itemDrillUpgradeSpeedIII.name=Drill Speed Augment III
@@ -287,25 +155,9 @@ item.actuallyadditions.itemDrillUpgradeFortuneII.name=Drill Fortune Augment II (
 item.actuallyadditions.itemDrillUpgradeBlockPlacing.name=Drill Block Placing Augment
 item.actuallyadditions.itemDrillUpgradeThreeByThree.name=Drill Mining Augment I
 item.actuallyadditions.itemDrillUpgradeFiveByFive.name=Drill Mining Augment II
-
-tooltip.actuallyadditions.itemDrillUpgradeSpeed.desc=Makes the Drill faster!
-tooltip.actuallyadditions.itemDrillUpgradeSpeedII.desc=Makes the Drill even faster! Requires Tier 1.
-tooltip.actuallyadditions.itemDrillUpgradeSpeedIII.desc=Insta-Mine! Requires Tier 1 and 2.
-tooltip.actuallyadditions.itemDrillUpgradeSilkTouch.desc=Makes the Drill silky.
-tooltip.actuallyadditions.itemDrillUpgradeFortune.desc=Gives the Drill Fortune I.
-tooltip.actuallyadditions.itemDrillUpgradeFortuneII.desc=Gives the Drill Fortune III! Requires Tier 1.
-tooltip.actuallyadditions.itemDrillUpgradeBlockPlacing.desc.1=Places Blocks from your Hotbar when Right-Clicking with the Drill!
-tooltip.actuallyadditions.itemDrillUpgradeBlockPlacing.desc.2=You can define the Slot on your Hotbar to place from!
-tooltip.actuallyadditions.itemDrillUpgradeBlockPlacing.desc.3=Sneak-Right-Click this Upgrade in the desired Slot to store it!
-tooltip.actuallyadditions.itemDrillUpgradeThreeByThree.desc=Lets you mine a 3x3 Area! Sneaking while mining will ignore the Augment.
-tooltip.actuallyadditions.itemDrillUpgradeFiveByFive.desc=Lets you mine a 5x5 Area! Sneaking while mining will ignore the Augment. Requires the 3x3 Upgrade.
-tooltip.actuallyadditions.itemDrillUpgrade.desc=Sneak-Right-Click the Drill to apply Upgrades!
-
 tile.actuallyadditions.blockMiscEnderCasing.name=Ender Casing
-tooltip.actuallyadditions.blockMiscEnderCasing.desc=Extremely sturdy casing, used for crafting
 
 tooltip.actuallyadditions.onSuffix.desc=On
-
 tooltip.actuallyadditions.phantom.connected.desc=<Block connected!>
 tooltip.actuallyadditions.phantom.stored.desc=<Block stored to this Connector!>
 tooltip.actuallyadditions.phantom.unbound.desc=The Connection was cleared!
@@ -315,10 +167,8 @@ tooltip.actuallyadditions.phantom.connectedRange.desc=The Connection is fine and
 tooltip.actuallyadditions.phantom.connectedNoRange.desc=The Connection is obstructed: It is either not in Range, not in loaded Chunks or not the right type of Block for this Phantom Device.
 tooltip.actuallyadditions.phantom.notConnected.desc=This isn't connected to anything!
 tooltip.actuallyadditions.phantom.blockInfo.desc=The connected Block is %s at %s, %s, %s that is %s Blocks away.
-
 tooltip.actuallyadditions.factory.notPart.desc=The Controller isn't part of the right Multi-Block! Look at the Controller's Description!
 tooltip.actuallyadditions.factory.works.desc=This Lava Factory is complete and can produce Lava!
-
 item.actuallyadditions.itemMiscMashedFood.name=Mashed Food
 item.actuallyadditions.itemFertilizer.name=Fertilizer
 item.actuallyadditions.itemMiscDough.name=Dough
@@ -327,18 +177,13 @@ item.actuallyadditions.itemMiscKnifeBlade.name=Knife Blade
 item.actuallyadditions.itemMiscKnifeHandle.name=Knife Handle
 item.actuallyadditions.itemMiscBlackQuartz.name=Black Quartz
 item.actuallyadditions.itemMiscRing.name=Ring
-
 item.actuallyadditions.itemTeleStaff.name=Teleport Staff
-tooltip.actuallyadditions.itemTeleStaff.desc.1=Teleports you to where you're looking when you right-click.
-tooltip.actuallyadditions.itemTeleStaff.desc.2=Only works on Blocks or if you don't look upwards.
-
 item.actuallyadditions.itemJamCuBaRa.name=CuBaRa-Jam
 item.actuallyadditions.itemJamGraKiBa.name=GraKiBa-Jam
 item.actuallyadditions.itemJamPlApLe.name=PlApLe-Jam
 item.actuallyadditions.itemJamChApCi.name=ChApCi-Jam
 item.actuallyadditions.itemJamHoMeKi.name=HoMeKi-Jam
 item.actuallyadditions.itemJamPiCo.name=PiCo-Jam
-
 item.actuallyadditions.itemHairyBall.name=Ball of Hair
 item.actuallyadditions.itemLeafBlower.name=Leaf Blower
 item.actuallyadditions.itemLeafBlowerAdvanced.name=Advanced Leaf Blower
@@ -359,7 +204,6 @@ item.actuallyadditions.itemShovelObsidian.name=Obsidian Shovel
 item.actuallyadditions.itemHoeObsidian.name=Obsidian Hoe
 item.actuallyadditions.itemSwordObsidian.name=Obsidian Sword
 item.actuallyadditions.itemCrafterOnAStick.name=Crafting Table On A Stick
-
 item.actuallyadditions.itemFoodBaguette.name=Baguette
 item.actuallyadditions.itemFoodPizza.name=Pizza
 item.actuallyadditions.itemFoodHamburger.name=Hamburger
@@ -376,27 +220,17 @@ item.actuallyadditions.itemFoodFishNChips.name=Fish 'N' Chips
 item.actuallyadditions.itemFoodCarrotJuice.name=Carrot Juice
 item.actuallyadditions.itemFoodPumpkinStew.name=Pumpkin Stew
 item.actuallyadditions.itemFoodCheese.name=Cheese
-
 item.actuallyadditions.itemMiscCoil.name=Basic Coil
 item.actuallyadditions.itemMiscCoilAdvanced.name=Advanced Coil
-
 item.actuallyadditions.itemPotionRing.name=Ring of
 item.actuallyadditions.itemPotionRingAdvanced.name=Advanced Ring of
-
 item.actuallyadditions.itemSpecialUnknownSubstance.name=Unknown Substance
 item.actuallyadditions.itemSpecialSolidifiedExperience.name=Solidified Experience
 item.actuallyadditions.itemSpecialBloodFragment.name=Blood Fragment
 item.actuallyadditions.itemSpecialHeartPart.name=Part of a Heart
 item.actuallyadditions.itemSpecialPearlShard.name=Ender Pearl Shard
 item.actuallyadditions.itemSpecialEmeraldShard.name=Emerald Shard
-
 tile.actuallyadditions.blockCoffeeMachine.name=Coffee Machine
-tooltip.actuallyadditions.blockCoffeeMachine.desc.1=Makes endless different Coffee Combinations!
-tooltip.actuallyadditions.blockCoffeeMachine.desc.2=Just add Coffee Beans and a Cup and the Ingredients:
-tooltip.actuallyadditions.blockCoffeeMachine.desc.3=There's a lot of ingredients that add different Effects
-tooltip.actuallyadditions.blockCoffeeMachine.desc.4=to the Coffee! Just put them into the slots on the right
-tooltip.actuallyadditions.blockCoffeeMachine.desc.5=in the desired Order! It'll be your CUSTOM COFFEE!
-
 item.actuallyadditions.itemDustIron.name=Crushed Iron
 item.actuallyadditions.itemDustGold.name=Crushed Gold
 item.actuallyadditions.itemDustDiamond.name=Crushed Diamond
@@ -405,189 +239,29 @@ item.actuallyadditions.itemDustEmerald.name=Crushed Emerald
 item.actuallyadditions.itemDustQuartz.name=Crushed Quartz
 item.actuallyadditions.itemDustCoal.name=Crushed Coal
 item.actuallyadditions.itemDustQuartzBlack.name=Crushed Black Quartz
-
-tooltip.actuallyadditions.shiftForInfo.desc=Press Shift for Info
-tooltip.actuallyadditions.ctrlForMoreInfo.desc=Press CTRL for Advanced Info
-tooltip.actuallyadditions.extraInfo.desc=Advanced Info
-tooltip.actuallyadditions.hunger.desc=Hunger Points
-tooltip.actuallyadditions.saturation.desc=Saturation
-tooltip.actuallyadditions.durability.desc=Durability
-tooltip.actuallyadditions.noEffects.desc=No Effects
-
 tooltip.actuallyadditions.oredictName.desc=OreDictionary Entries
 tooltip.actuallyadditions.noOredictNameAvail.desc=None
 tooltip.actuallyadditions.codeName.desc=Code Name
 tooltip.actuallyadditions.baseUnlocName.desc=Item's Unlocalized Name
 tooltip.actuallyadditions.unlocName.desc=Meta's Unlocalized Name
 tooltip.actuallyadditions.disablingInfo.desc=If you don't want this Information |to appear, disable it in the |Actually Additions Config!
-
 tile.actuallyadditions.blockXPSolidifier.name=Experience Solidifier
-tooltip.actuallyadditions.blockXPSolidifier.desc.1=Turns a Player's Experience into Solidified Experience!
-tooltip.actuallyadditions.blockXPSolidifier.desc.2=Has a big internal Buffer!
-
-tooltip.actuallyadditions.itemJam.desc.1=A delicious Jam consisting of
-tooltip.actuallyadditions.itemJam.desc.2=Also gives you some Effects!
-tooltip.actuallyadditions.itemJam.desc.3=Can be found in Villages and Treasure Chests!
-tooltip.actuallyadditions.itemJamCuBaRa.desc=Currant, Banana and Raspberry
-tooltip.actuallyadditions.itemJamGraKiBa.desc=Grape, Kiwi and Banana
-tooltip.actuallyadditions.itemJamPlApLe.desc=Plum, Apple and Lemon
-tooltip.actuallyadditions.itemJamChApCi.desc=Cherry, Apple and Cinnamon
-tooltip.actuallyadditions.itemJamHoMeKi.desc=Honeydew Melon and Kiwi
-tooltip.actuallyadditions.itemJamPiCo.desc=Pineapple and Coconut
-
-tooltip.actuallyadditions.itemHairyBall.desc.1=A Ball of Hair dropped from a (LIVING!) Cat...
-tooltip.actuallyadditions.itemHairyBall.desc.2=Maybe you can get something from it by using it...
-
 tooltip.actuallyadditions.blockPhantomRange.desc=Range
-
-tooltip.actuallyadditions.blockCompost.desc=Used to make Fertilizer with Mashed Food
-tooltip.actuallyadditions.blockMiscOreBlackQuartz.desc=The darkest form of Quartz.
-tooltip.actuallyadditions.blockMiscBlackQuartz.desc=Black, eerie Quartz! Nice for decorating.
-tooltip.actuallyadditions.blockMiscBlackQuartzChiseled.desc=Black, eerie chiseled Quartz! Nice for decorating.
-tooltip.actuallyadditions.blockMiscBlackQuartzPillar.desc=Kind of a pillar. Not really, though. It's fake! Fake I say!
-tooltip.actuallyadditions.blockFeeder.desc=Feeds Animals on its own!
-tooltip.actuallyadditions.blockGiantChest.desc=Stores a whole lot of stuff. Bigger than a Double Chest!
-tooltip.actuallyadditions.blockGrinder.desc.1=Crushes Ores into Dusts!
-tooltip.actuallyadditions.blockGrinder.desc.2=You get two Dusts per Ore and Extras!
-tooltip.actuallyadditions.blockGrinder.desc.3=To crush two ores simultaneously,
-tooltip.actuallyadditions.blockGrinder.desc.4=build the Double Crusher!
-tooltip.actuallyadditions.blockGrinderDouble.desc.1=Crushes Ores into Dusts!
-tooltip.actuallyadditions.blockGrinderDouble.desc.2=You get two Dusts per Ore and Extras!
-tooltip.actuallyadditions.blockGrinderDouble.desc.3=Can crush two Ores simultaneously!
-tooltip.actuallyadditions.blockFurnaceDouble.desc=Smelts two things simultaneously!
-tooltip.actuallyadditions.blockInputter.desc.2=Its real name is %sObfuscated%s!
-tooltip.actuallyadditions.blockInputter.desc.1=You could call it an extremely advanced Hopper!
-tooltip.actuallyadditions.blockInputter.desc.3=Turn me off with Redstone!
-tooltip.actuallyadditions.blockInputter.desc.4=Configurable:
-tooltip.actuallyadditions.blockInputter.desc.5=-Side to Output to and Input from
-tooltip.actuallyadditions.blockInputter.desc.6=-A Range of Slots in the other Inventory to Output to and Input from
-tooltip.actuallyadditions.blockInputter.desc.7=-Hover over GUI Elements to find out what they mean!
-tooltip.actuallyadditions.blockInputterAdvanced.desc=Has an Input and Output Filter! (White- and Blacklist!)
-tooltip.actuallyadditions.blockFishingNet.desc=Catches Fish (and Items!) automatically when placed above Water
-tooltip.actuallyadditions.blockFurnaceSolar.desc=Produces RF in Daylight
-tooltip.actuallyadditions.blockHeatCollector.desc.1=Produces RF
-tooltip.actuallyadditions.blockHeatCollector.desc.2=Needs a bunch of Lava around it
-tooltip.actuallyadditions.blockHeatCollector.desc.3=Occasionally steals the Lava. Watch out!
-tooltip.actuallyadditions.blockItemRepairer.desc=Repairs Tools and Armor automatically
-
 tile.actuallyadditions.blockFlax.name=Flax Plant
-tooltip.actuallyadditions.blockFlax.desc=Gives you String when grown! Yay!
 item.actuallyadditions.itemFlaxSeed.name=Flax Seeds
-tooltip.actuallyadditions.itemFlaxSeed.desc=Grows Plants that give you String!
-
-tooltip.actuallyadditions.blockBreaker.desc=Breaks Blocks and stores them in its internal Inventory
-tooltip.actuallyadditions.blockPlacer.desc=Places Blocks stored in its internal Inventory
-tooltip.actuallyadditions.blockDropper.desc=Drops Items automatically (Without spewing them all over the Place!)
-
-tooltip.actuallyadditions.itemMiscMashedFood.desc=Used to make Fertilizer
-tooltip.actuallyadditions.itemFertilizer.desc=Om nom nom. Don't eat it. Made in a Compost.
-tooltip.actuallyadditions.itemMiscDough.desc=Used to make things that involve dough.
-tooltip.actuallyadditions.itemMiscPaperCone.desc=Used to store foodstuffs!
-tooltip.actuallyadditions.itemMiscKnifeBlade.desc=Sharp like a tooth! A whale's tooth!
-tooltip.actuallyadditions.itemMiscKnifeHandle.desc=Fits comfortably in your hand.
-tooltip.actuallyadditions.itemMiscBlackQuartz.desc=Used for crafting essential components!
-tooltip.actuallyadditions.itemMiscRing.desc=Used for crafting Effect Rings
-
-tooltip.actuallyadditions.blockMiscWoodCasing.desc=Not so sturdy Casing, used for Crafting
-tooltip.actuallyadditions.blockMiscStoneCasing.desc=Pretty sturdy Casing, used for Crafting
-tooltip.actuallyadditions.blockGreenhouseGlass.desc=Lets Crops below it grow faster when it is Daytime
-tooltip.actuallyadditions.blockCrafter.desc=Automatically crafts Items without needing any form of Power
-
-tooltip.actuallyadditions.itemPotionRing.desc.1=Gives Potion Effect of Level 1
-tooltip.actuallyadditions.itemPotionRing.desc.2=Needs to be held in Hand
-
-tooltip.actuallyadditions.itemMiscCoil.desc=Lower Tier Coil, used for Crafting
-tooltip.actuallyadditions.itemMiscCoilAdvanced.desc=Higher Tier Coil, used for Crafting
-
-tooltip.actuallyadditions.itemPotionRingAdvanced.desc.1=Gives Potion Effect of a High Level
-tooltip.actuallyadditions.itemPotionRingAdvanced.desc.2=Can be anywhere in the Inventory
-
-tooltip.actuallyadditions.itemLeafBlower.desc.1=Destroys Grass and Flowers around you
-tooltip.actuallyadditions.itemLeafBlowerAdvanced.desc.1=Destroys Grass, Flowers and Leaves around you
-tooltip.actuallyadditions.itemLeafBlower.desc.2=The Pants once said the Game needed that,
-tooltip.actuallyadditions.itemLeafBlower.desc.3=Then the Honka came, said it again.
-tooltip.actuallyadditions.itemKnife.desc=Cuts things! Only food though, don't think of stuff...
-tooltip.actuallyadditions.itemPickaxeEmerald.desc=Mines Stone.
-tooltip.actuallyadditions.itemAxeEmerald.desc=Mines Wood.
-tooltip.actuallyadditions.itemShovelEmerald.desc=Mines Dirt.
-tooltip.actuallyadditions.itemHoeEmerald.desc=Mines... uhm... yea.
-tooltip.actuallyadditions.itemSwordEmerald.desc=Mines... mobs?
-tooltip.actuallyadditions.itemPickaxeQuartz.desc=Mines Stone.
-tooltip.actuallyadditions.itemAxeQuartz.desc=Mines Wood.
-tooltip.actuallyadditions.itemShovelQuartz.desc=Mines Dirt.
-tooltip.actuallyadditions.itemHoeQuartz.desc=Mines... uhm... yea.
-tooltip.actuallyadditions.itemSwordQuartz.desc=Mines... mobs?
-tooltip.actuallyadditions.itemPickaxeObsidian.desc=Mines Stone. Slooooowly.
-tooltip.actuallyadditions.itemAxeObsidian.desc=Mines Wood. Slooooowly.
-tooltip.actuallyadditions.itemShovelObsidian.desc=Mines Dirt. Slooooowly.
-tooltip.actuallyadditions.itemHoeObsidian.desc=Mines... uhm... yea.
-tooltip.actuallyadditions.itemSwordObsidian.desc=Mines... mobs?
-tooltip.actuallyadditions.itemCrafterOnAStick.desc=A Crafting Table you can carry around!
-
-tooltip.actuallyadditions.itemFoodBaguette.desc=It's french. It's noms.
-tooltip.actuallyadditions.itemFoodPizza.desc=Who doesn't like it?
-tooltip.actuallyadditions.itemFoodHamburger.desc=It's from a german city!
-tooltip.actuallyadditions.itemFoodBigCookie.desc=Do you know? The Subway Thing?
-tooltip.actuallyadditions.itemFoodSubmarineSandwich.desc=Just like Subway used to make! ...still does, right?
-tooltip.actuallyadditions.itemFoodToast.desc="GHOSTS! GHOSTS! TOASTS!"
-tooltip.actuallyadditions.itemFoodChocolate.desc=Lari likes.
-tooltip.actuallyadditions.itemFoodChocolateCake.desc=Looks delicious. With redberries. Or something.
-tooltip.actuallyadditions.itemFoodNoodle.desc=Just one. Like... that's not much.
-tooltip.actuallyadditions.itemFoodSpaghetti.desc=The most generic food ever. So clichée.
-tooltip.actuallyadditions.itemFoodFrenchFry.desc=French. Fry.
-tooltip.actuallyadditions.itemFoodFrenchFries.desc=Much like French Fires, not as hot though...
-tooltip.actuallyadditions.itemFoodFishNChips.desc=It's Fish. It's Chips. Or French Fries. Whatevs.
-tooltip.actuallyadditions.itemFoodCarrotJuice.desc=Carrots, but pressed!
-tooltip.actuallyadditions.itemFoodPumpkinStew.desc=Like Mushroom Stew or Rabbit Stew, but pumpykinny.
-tooltip.actuallyadditions.itemFoodCheese.desc=Cheese.
-
-tooltip.actuallyadditions.itemSpecialUnknownSubstance.desc=Dropped by Skeletons. BETA INFO: Useless as of yet.
-tooltip.actuallyadditions.itemSpecialSolidifiedExperience.desc.1=Dropped by everyone. Right-Click to get XP.
-tooltip.actuallyadditions.itemSpecialSolidifiedExperience.desc.2=Sneak-Right-Click to consume the whole Stack.
-tooltip.actuallyadditions.itemSpecialBloodFragment.desc=Dropped by everyone. BETA INFO: Useless as of yet.
-tooltip.actuallyadditions.itemSpecialHeartPart.desc=Dropped by everyone. BETA INFO: Useless as of yet.
-tooltip.actuallyadditions.itemSpecialPearlShard.desc=Dropped by Endermen. 3x3 Crafting to an Ender Pearl
-tooltip.actuallyadditions.itemSpecialEmeraldShard.desc=Dropped by Creepers. 3x3 Crafting to an Emerald
-
-tooltip.actuallyadditions.itemDustIron.desc=Iron! Crushed in the Crusher!
-tooltip.actuallyadditions.itemDustGold.desc=Gold! Crushed in the Crusher!
-tooltip.actuallyadditions.itemDustDiamond.desc=Diamond! Crushed in the Crusher!
-tooltip.actuallyadditions.itemDustLapis.desc=Lapis! Crushed in the Crusher!
-tooltip.actuallyadditions.itemDustEmerald.desc=Emerald! Crushed in the Crusher!
-tooltip.actuallyadditions.itemDustQuartz.desc=Quartz! Crushed in the Crusher!
-tooltip.actuallyadditions.itemDustCoal.desc=Coal! Crushed in the Crusher!
-tooltip.actuallyadditions.itemDustQuartzBlack.desc=Black Quartz! Crushed in the Crusher!
-
 item.actuallyadditions.itemHelmObsidian.name=Obsidian Helm
-tooltip.actuallyadditions.itemHelmObsidian.desc=It feels a bit heavy..
 item.actuallyadditions.itemChestObsidian.name=Obsidian Chestplate
-tooltip.actuallyadditions.itemChestObsidian.desc=It seems to be pretty hard.
 item.actuallyadditions.itemPantsObsidian.name=Obsidian Pants
-tooltip.actuallyadditions.itemPantsObsidian.desc="Pants" is "Hose" in German!
 item.actuallyadditions.itemBootsObsidian.name=Obsidian Boots
-tooltip.actuallyadditions.itemBootsObsidian.desc=I hope they fit good.. I hate it when boots don't fit..
-
 tile.actuallyadditions.blockSmileyCloud.name=Smiley Cloud
-tooltip.actuallyadditions.blockSmileyCloud.desc=It smiles! Give it a name by right-clicking.
-
 item.actuallyadditions.itemHelmEmerald.name=Emerald Helm
-tooltip.actuallyadditions.itemHelmEmerald.desc=I like the color.. it's so SHINY!
 item.actuallyadditions.itemChestEmerald.name=Emerald Chestplate
-tooltip.actuallyadditions.itemChestEmerald.desc=That color.. it's... soooo... awesoooome °___°
 item.actuallyadditions.itemPantsEmerald.name=Emerald Pants
-tooltip.actuallyadditions.itemPantsEmerald.desc="Pants" is "Hose" in German!
 item.actuallyadditions.itemBootsEmerald.name=Emerald Boots
-tooltip.actuallyadditions.itemBootsEmerald.desc=I hope they fit good.. I hate it when boots don't fit..
-
 item.actuallyadditions.itemHelmQuartz.name=Black Quartz Helm
-tooltip.actuallyadditions.itemHelmQuartz.desc=Dark like the night!
 item.actuallyadditions.itemChestQuartz.name=Black Quartz Chestplate
-tooltip.actuallyadditions.itemChestQuartz.desc=So dark! It's night time!
 item.actuallyadditions.itemPantsQuartz.name=Black Quartz Pants
-tooltip.actuallyadditions.itemPantsQuartz.desc="Pants" is "Hose" in German!
 item.actuallyadditions.itemBootsQuartz.name=Black Quartz Boots
-tooltip.actuallyadditions.itemBootsQuartz.desc=I hope they fit good.. I hate it when boots don't fit..
-
 info.actuallyadditions.gui.animals=Animals
 info.actuallyadditions.gui.enoughToBreed=Enough to breed!
 info.actuallyadditions.gui.tooMany=Too many to breed!
@@ -607,10 +281,6 @@ info.actuallyadditions.gui.blacklist=Blacklist
 info.actuallyadditions.gui.coffee=Coffee
 info.actuallyadditions.gui.ok=Ok
 info.actuallyadditions.gui.the=the
-
-tooltip.actuallyadditions.uses.desc=Uses
-tooltip.actuallyadditions.produces.desc=Produces
-
 container.actuallyadditions.inputter.name=ESD
 container.actuallyadditions.inputterAdvanced.name=Advanced ESD
 container.actuallyadditions.grinder.name=Crusher
@@ -641,70 +311,51 @@ container.actuallyadditions.enervator.name=Enervator
 container.actuallyadditions.xpSolidifier.name=Experience Solidifier
 container.actuallyadditions.oreMagnet.name=Magnetic Miner
 container.actuallyadditions.cloud.name=Smiley Cloud
-
 container.nei.actuallyadditions.crushing.name=Crusher
 container.nei.actuallyadditions.crushingDouble.name=Double Crusher
 container.nei.actuallyadditions.ballOfHair.name=Ball Of Hair Usage
 container.nei.actuallyadditions.compost.name=Compost
 container.nei.actuallyadditions.furnaceDouble.name=Double Furnace
-
 container.nei.actuallyadditions.treasureChest.name=Treasure Chest
 container.nei.actuallyadditions.treasureChest.info=Items at
-
 container.nei.actuallyadditions.coffee.name=Coffee Machine
 container.nei.actuallyadditions.coffee.special=Special Feature
 container.nei.actuallyadditions.coffee.maxAmount=Max Amount
 container.nei.actuallyadditions.coffee.shift=[SHIFT]!
 container.nei.actuallyadditions.coffee.extra.milk=+01:00, -1 Level
-
 info.actuallyadditions.update.generic.desc=[{"text":"There is an "},{"text":"Update ","bold":"true"},{"text":"for ","bold":"false"},{"text":"Actually Additions ","color":"dark_green","bold":"true"},{"text":"available!","color":"none","bold":"false"}]
 info.actuallyadditions.update.versionComp.desc=[{"text":"You have Version "},{"text":"%s","color":"dark_red","italic":"false"},{"text":", the newest one is ","color":"none","italic":"false"},{"text":"%s","color":"dark_green","underlined":"false"},{"text":"!","color":"none","underlined":"false"}]
 info.actuallyadditions.update.download.desc=[{"text":"Download the newest Version "},{"text":"here! (Click me!)","color":"dark_green","underlined":"true","clickEvent":{"action":"open_url","value":"%s"},"hoverEvent":{"action":"show_text","value":{"text":"","extra":[{"text":"Click here to open your Browser and download the newest Version!"}]}}}]
 info.actuallyadditions.update.failed.desc=[{"text":"The Update Check for "},{"text":"Actually Additions ","color":"dark_green","bold":"true"},{"text":"failed! Check your Internet Connection and the Logs for more Info!","color":"none"}]
 info.actuallyadditions.update.changelog.desc=Updates: %s
-
 info.actuallyadditions.inputter.info.1=This is the first Slot in the |connected Inventory to [p] at.
 info.actuallyadditions.inputter.info.2=This is the slot after the last Slot |in the connected Inventory to [p] at. |What that means: If you, for example, write 2 in |the field to the left and 5 in this one, |it will [p] at Slot 2, 3, and 4.
 info.actuallyadditions.inputter.whitelistInfo=This applies for this part |of the white-/blacklist. |The other side applies as well, |so you can have some Items |whitelisted and some blacklisted. |Note that, if you have an empty blacklist |or an item whitelisted on at least one |side, it will always go through.
-
 achievement.actuallyadditions.pickUpSolidXP=Square and yummy!
 achievement.actuallyadditions.pickUpSolidXP.desc=Pick up some Solidified Experience
-
 achievement.actuallyadditions.craftKnifeBlade=Sharp! So Sharp!
 achievement.actuallyadditions.craftKnifeBlade.desc=Craft a Knife Blade
-
 achievement.actuallyadditions.craftKnife=Cutcutcutcutcutcutcutcutcutcutcut!
 achievement.actuallyadditions.craftKnife.desc=Craft a Knife
-
 achievement.actuallyadditions.craftMashedFood=Munch munch munch!
 achievement.actuallyadditions.craftMashedFood.desc=Craft some Mashed Food
-
 achievement.actuallyadditions.craftWoodenCasing=Hard and sturdy!
 achievement.actuallyadditions.craftWoodenCasing.desc=Craft a Wooden Casing
-
 achievement.actuallyadditions.craftStoneCasing=Harder and sturdier!
 achievement.actuallyadditions.craftStoneCasing.desc=Craft a Stone Casing
-
 achievement.actuallyadditions.craftBasicCoil=Transmits.. power.. or something?
 achievement.actuallyadditions.craftBasicCoil.desc=Craft a Basic Coil
-
 achievement.actuallyadditions.craftAdvancedCoil=Transmits... more power I guess.
 achievement.actuallyadditions.craftAdvancedCoil.desc=Craft an Advanced Coil
-
 achievement.actuallyadditions.craftESD=From there to there..
 achievement.actuallyadditions.craftESD.desc=Craft an ESD
-
 achievement.actuallyadditions.craftAdvancedESD=White and Black!
 achievement.actuallyadditions.craftAdvancedESD.desc=Craft an Advanced ESD
-
 achievement.actuallyadditions.craftPhantomface=Wooo... teleporting!
 achievement.actuallyadditions.craftPhantomface.desc=Craft a Phantomface
-
 achievement.actuallyadditions.craftPhantomLiquiface=Bubbles.. are awesome..
 achievement.actuallyadditions.craftPhantomLiquiface.desc=Craft a Phantom Liquiface
-
 achievement.actuallyadditions.craftPhantomEnergyface=Watch out! It's powered!
 achievement.actuallyadditions.craftPhantomEnergyface.desc=Craft a Phantom Energyface
-
 achievement.actuallyadditions.openTreasureChest=You almost drowned!!
 achievement.actuallyadditions.openTreasureChest.desc=Open a Treasure Chest underwater
