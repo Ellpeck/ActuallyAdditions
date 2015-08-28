@@ -4,6 +4,7 @@ import cpw.mods.fml.common.network.IGuiHandler;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import ellpeck.actuallyadditions.ActuallyAdditions;
 import ellpeck.actuallyadditions.inventory.gui.*;
+import ellpeck.actuallyadditions.inventory.gui.lexicon.GuiBooklet;
 import ellpeck.actuallyadditions.tile.TileEntityBase;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.entity.player.EntityPlayer;
@@ -126,6 +127,8 @@ public class GuiHandler implements IGuiHandler{
                 return new GuiOreMagnet(entityPlayer.inventory, tile);
             case CLOUD:
                 return new GuiSmileyCloud(tile, x, y, z, world);
+            case BOOK:
+                return new GuiBooklet();
             default:
                 return null;
         }
@@ -155,7 +158,8 @@ public class GuiHandler implements IGuiHandler{
         ENERVATOR,
         XP_SOLIDIFIER,
         ORE_MAGNET,
-        CLOUD
+        CLOUD,
+        BOOK
     }
 
     public static void init(){

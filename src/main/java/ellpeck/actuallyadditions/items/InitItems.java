@@ -17,6 +17,8 @@ import net.minecraftforge.fluids.FluidContainerRegistry;
 
 public class InitItems{
 
+    public static Item itemLexicon;
+
     public static Item itemFertilizer;
     public static Item itemMisc;
     public static Item itemFoods;
@@ -115,6 +117,9 @@ public class InitItems{
 
     public static void init(){
         ModUtil.LOGGER.info("Initializing Items...");
+
+        itemLexicon = new ItemBooklet();
+        ItemUtil.register(itemLexicon);
 
         itemGrowthRing = new ItemGrowthRing();
         ItemUtil.register(itemGrowthRing);

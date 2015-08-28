@@ -27,6 +27,7 @@ public class CreativeTab extends CreativeTabs{
     public void displayAllReleventItems(List list){
         this.list = list;
 
+        add(InitItems.itemLexicon);
         add(InitBlocks.blockSmileyCloud);
 
         add(InitBlocks.blockPhantomface);

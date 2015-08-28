@@ -9,10 +9,13 @@ import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 public class FoodCrafting{
+
+    public static IRecipe recipePizza;
 
     public static void init(){
 
@@ -29,7 +32,7 @@ public class FoodCrafting{
                     TheMiscItems.DOUGH.ordinal()), new ItemStack(InitItems.itemFoods, 1, TheFoods.BAGUETTE.ordinal()), 1F);
 
         //Pizza
-        if(ConfigCrafting.PIZZA.isEnabled())
+        if(ConfigCrafting.PIZZA.isEnabled()){
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemFoods, 1, TheFoods.PIZZA.ordinal()),
                     "HKH", "MCF", " D ",
                     'D', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.DOUGH.ordinal()),
@@ -38,6 +41,8 @@ public class FoodCrafting{
                     'F', new ItemStack(Items.cooked_fished, 1, Util.WILDCARD),
                     'K', knifeStack,
                     'H', new ItemStack(InitItems.itemFoods, 1, TheFoods.CHEESE.ordinal())));
+            recipePizza = Util.latestIRecipe();
+        }
 
         //Hamburger
         if(ConfigCrafting.HAMBURGER.isEnabled())

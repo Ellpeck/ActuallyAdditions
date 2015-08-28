@@ -14,6 +14,8 @@ public class InitAchievements{
     public static final int SMELTING_ACH = 1;
     public static final int PICKUP_ACH = 2;
 
+    public static int pageNumber;
+
     public static AchievementPage theAchievementPage;
     public static ArrayList<Achievement> achievementList = new ArrayList<Achievement>();
 
@@ -25,6 +27,7 @@ public class InitAchievements{
         }
 
         theAchievementPage = new AchievementPage(StringUtil.localize("achievement.page."+ModUtil.MOD_ID_LOWER), achievementList.toArray(new Achievement[achievementList.size()]));
+        pageNumber = AchievementPage.getAchievementPages().size();
         AchievementPage.registerAchievementPage(theAchievementPage);
     }
 
