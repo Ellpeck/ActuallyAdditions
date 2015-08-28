@@ -39,7 +39,7 @@ public class MiscCrafting{
         //Knife Blade
         if(ConfigCrafting.KNIFE_BLADE.isEnabled())
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.KNIFE_BLADE.ordinal()),
-                    "K", "F",
+                    "K", "K", "F",
                     'K', "ingotIron",
                     'F', new ItemStack(Items.flint)));
     }

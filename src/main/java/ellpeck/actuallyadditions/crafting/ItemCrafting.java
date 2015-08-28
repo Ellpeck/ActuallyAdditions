@@ -26,7 +26,7 @@ public class ItemCrafting{
         //Rice Stuff
         if(ConfigCrafting.RICE_GADGETS.isEnabled()){
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.paper, 3),
-                    "RRR",
+                    "R  ", " R ", "  R",
                     'R', new ItemStack(InitItems.itemFoods, 1, TheFoods.RICE.ordinal())));
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemMisc, 4, TheMiscItems.RICE_SLIME.ordinal()),
                     " R ", "RBR", " R ",
