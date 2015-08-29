@@ -1,13 +1,3 @@
-/*
- * This file ("ChestContainer.java") is part of the Actually Additions Mod for Minecraft.
- * It is created and owned by Ellpeck and distributed
- * under the Actually Additions License to be found at
- * http://github.com/Ellpeck/ActuallyAdditions/blob/master/README.md
- * View the source code at https://github.com/Ellpeck/ActuallyAdditions
- *
- * © 2015 Ellpeck
- */
-
 package invtweaks.api.container;
 
 import java.lang.annotation.ElementType;
@@ -36,13 +26,13 @@ public @interface ChestContainer {
     // Signature int func()
     @Retention(RetentionPolicy.RUNTIME)
     @Target(ElementType.METHOD)
-    @interface RowSizeCallback {
+    public @interface RowSizeCallback {
     }
 
     // Annotation for method to get size of a chest row if it is not a fixed size for this container class
     // Signature int func()
     @Retention(RetentionPolicy.RUNTIME)
     @Target(ElementType.METHOD)
-    @interface IsLargeCallback {
+    public @interface IsLargeCallback {
     }
 }

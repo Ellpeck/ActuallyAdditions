@@ -1,14 +1,4 @@
 /*
- * This file ("IItemTree.java") is part of the Actually Additions Mod for Minecraft.
- * It is created and owned by Ellpeck and distributed
- * under the Actually Additions License to be found at
- * http://github.com/Ellpeck/ActuallyAdditions/blob/master/README.md
- * View the source code at https://github.com/Ellpeck/ActuallyAdditions
- *
- * © 2015 Ellpeck
- */
-
-/*
  * Copyright (c) 2013 Andrew Crocker
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -37,7 +27,7 @@ import java.util.List;
 import java.util.Random;
 
 public interface IItemTree {
-    void registerOre(String category, String name, String oreName, int order);
+    public void registerOre(String category, String name, String oreName, int order);
 
     boolean matches(List<IItemTreeItem> items, String keyword);
 
@@ -46,8 +36,6 @@ public interface IItemTree {
     Collection<IItemTreeCategory> getAllCategories();
 
     IItemTreeCategory getRootCategory();
-
-    void setRootCategory(IItemTreeCategory category);
 
     IItemTreeCategory getCategory(String keyword);
 
@@ -62,6 +50,8 @@ public interface IItemTree {
     boolean containsItem(String name);
 
     boolean containsCategory(String name);
+
+    void setRootCategory(IItemTreeCategory category);
 
     IItemTreeCategory addCategory(String parentCategory, String newCategory) throws NullPointerException;
 

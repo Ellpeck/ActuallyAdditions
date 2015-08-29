@@ -1,14 +1,4 @@
 /*
- * This file ("SortingMethod.java") is part of the Actually Additions Mod for Minecraft.
- * It is created and owned by Ellpeck and distributed
- * under the Actually Additions License to be found at
- * http://github.com/Ellpeck/ActuallyAdditions/blob/master/README.md
- * View the source code at https://github.com/Ellpeck/ActuallyAdditions
- *
- * © 2015 Ellpeck
- */
-
-/*
  * Copyright (c) 2013 Andrew Crocker
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -33,28 +23,22 @@
 package invtweaks.api;
 
 public enum SortingMethod {
-    /**
-     * Standard 'r' sorting for generic inventories
-     */
+    /** Standard 'r' sorting for generic inventories */
     DEFAULT,
-    /**
-     * Sort method creating vertical columns of items.
+    /** Sort method creating vertical columns of items.
      * Used for chests only, requires container to have a valid row size for correct results.
      */
     VERTICAL,
-    /**
-     * Sort method creating horizontal rows of items.
+    /** Sort method creating horizontal rows of items.
      * Used for chests only, requires container to have a valid row size for correct results.
      */
     HORIZONTAL,
-    /**
-     * Sort method for player inventory.
+    /** Sort method for player inventory.
      * Applies to extra player-specified sorting rules for the main inventory.
      * Will always operate on main inventory.
      */
     INVENTORY,
-    /**
-     * Attempts to even the number of items in each stack of the same type of item, without moving full stacks.
+    /** Attempts to even the number of items in each stack of the same type of item, without moving full stacks.
      * Used in crafting grid sorting.
      */
     EVEN_STACKS,
