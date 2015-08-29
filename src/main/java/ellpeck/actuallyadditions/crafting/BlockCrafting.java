@@ -38,6 +38,13 @@ public class BlockCrafting{
     public static IRecipe recipePlacer;
     public static IRecipe recipeLiquidPlacer;
     public static IRecipe recipeLiquidCollector;
+    public static IRecipe recipeCase;
+    public static IRecipe recipeStoneCase;
+    public static IRecipe recipeEnderCase;
+    public static IRecipe recipeEnderPearlBlock;
+    public static IRecipe recipeESD;
+    public static IRecipe recipeAdvancedESD;
+    public static IRecipe recipePhantomBooster;
 
     public static void init(){
 
@@ -81,6 +88,7 @@ public class BlockCrafting{
                     'W', "plankWood",
                     'R', "logWood",
                     'S', "stickWood"));
+            recipeCase = Util.lastIRecipe();
         }
 
         //Ender Casing
@@ -90,6 +98,7 @@ public class BlockCrafting{
                     'W', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.ENDERPEARL_BLOCK.ordinal()),
                     'R', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.QUARTZ.ordinal()),
                     'S', Blocks.obsidian));
+            recipeEnderCase = Util.lastIRecipe();
         }
 
         //Phantom Booster
@@ -99,6 +108,7 @@ public class BlockCrafting{
                     'R', "dustRedstone",
                     'D', "gemDiamond",
                     'C', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.ENDER_CASING.ordinal())));
+            recipePhantomBooster = Util.lastIRecipe();
         }
 
         //Coffee Machine
@@ -261,6 +271,7 @@ public class BlockCrafting{
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.ENDERPEARL_BLOCK.ordinal()),
                 "EE", "EE",
                 'E', Items.ender_pearl));
+        recipeEnderPearlBlock = Util.lastIRecipe();
         GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Items.ender_pearl, 4),
                 new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.ENDERPEARL_BLOCK.ordinal())));
 
@@ -271,6 +282,7 @@ public class BlockCrafting{
                     'W', "cobblestone",
                     'R', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal()),
                     'S', "stickWood"));
+            recipeStoneCase = Util.lastIRecipe();
         }
 
         //Quartz Block
@@ -336,12 +348,14 @@ public class BlockCrafting{
                     'W', "plankWood",
                     'C', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.WOOD_CASING.ordinal()),
                     'H', new ItemStack(Blocks.hopper)));
+            recipeESD = Util.lastIRecipe();
 
             GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitBlocks.blockInputterAdvanced),
                     InitBlocks.blockInputter,
                     new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal()),
                     new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal()),
                     "dustRedstone"));
+            recipeAdvancedESD = Util.lastIRecipe();
         }
 
         //Crusher

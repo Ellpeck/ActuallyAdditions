@@ -25,33 +25,38 @@ public class MiscCrafting{
     public static void init(){
 
         //Dough
-        if(ConfigCrafting.DOUGH.isEnabled())
+        if(ConfigCrafting.DOUGH.isEnabled()){
             GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemMisc, 2, TheMiscItems.DOUGH.ordinal()),
                     "cropWheat", "cropWheat"));
+        }
 
         //Rice Dough
-        if(ConfigCrafting.RICE_DOUGH.isEnabled())
+        if(ConfigCrafting.RICE_DOUGH.isEnabled()){
             GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemMisc, 2, TheMiscItems.RICE_DOUGH.ordinal()),
                     new ItemStack(InitItems.itemFoods, 1, TheFoods.RICE.ordinal()), new ItemStack(InitItems.itemFoods, 1, TheFoods.RICE.ordinal()), new ItemStack(InitItems.itemFoods, 1, TheFoods.RICE.ordinal())));
+        }
 
         //Paper Cone
-        if(ConfigCrafting.PAPER_CONE.isEnabled())
+        if(ConfigCrafting.PAPER_CONE.isEnabled()){
             GameRegistry.addRecipe(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.PAPER_CONE.ordinal()),
                     "P P", " P ",
                     'P', new ItemStack(Items.paper));
+        }
 
         //Knife Handle
-        if(ConfigCrafting.KNIFE_HANDLE.isEnabled())
+        if(ConfigCrafting.KNIFE_HANDLE.isEnabled()){
             GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.KNIFE_HANDLE.ordinal()),
                     "stickWood",
                     new ItemStack(Items.leather)));
+        }
 
         //Knife Blade
-        if(ConfigCrafting.KNIFE_BLADE.isEnabled())
+        if(ConfigCrafting.KNIFE_BLADE.isEnabled()){
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.KNIFE_BLADE.ordinal()),
                     "K", "K", "F",
                     'K', "ingotIron",
                     'F', new ItemStack(Items.flint)));
+        }
     }
 
 }

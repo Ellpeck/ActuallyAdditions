@@ -11,18 +11,11 @@
 package ellpeck.actuallyadditions.booklet.page;
 
 import ellpeck.actuallyadditions.booklet.GuiBooklet;
-import ellpeck.actuallyadditions.util.ModUtil;
-import ellpeck.actuallyadditions.util.StringUtil;
 
 public class PageText extends BookletPage{
 
     public PageText(int id){
         super(id);
-    }
-
-    @Override
-    public String getText(){
-        return StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".chapter."+this.chapter.getUnlocalizedName()+".text."+this.id);
     }
 
     @Override

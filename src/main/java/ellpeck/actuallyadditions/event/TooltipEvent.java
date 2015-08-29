@@ -16,6 +16,7 @@ import ellpeck.actuallyadditions.util.KeyUtil;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
 import net.minecraft.item.Item;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -23,15 +24,15 @@ import java.util.regex.Pattern;
 
 public class TooltipEvent{
 
-    private static final String TEXT_PRE = StringUtil.GRAY+"     ";
-    private static final String HEADER_PRE = StringUtil.LIGHT_GRAY+"  -";
+    private static final String TEXT_PRE = EnumChatFormatting.DARK_GRAY+"     ";
+    private static final String HEADER_PRE = EnumChatFormatting.GRAY+"  -";
 
     @SubscribeEvent
     public void onTooltipEvent(ItemTooltipEvent event){
         if(event.itemStack.getItem() != null){
             if(ConfigBoolValues.CTRL_EXTRA_INFO.isEnabled()){
                 if(KeyUtil.isControlPressed()){
-                    event.toolTip.add(StringUtil.GRAY+StringUtil.ITALIC+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".extraInfo.desc")+":");
+                    event.toolTip.add(EnumChatFormatting.DARK_GRAY+""+EnumChatFormatting.ITALIC+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".extraInfo.desc")+":");
 
                     //OreDict Names
                     int[] oreIDs = OreDictionary.getOreIDs(event.itemStack);
@@ -65,12 +66,12 @@ public class TooltipEvent{
 
                     //Disabling Info
                     for(String str : StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".disablingInfo.desc").split(Pattern.quote("|"))){
-                        event.toolTip.add(StringUtil.ITALIC+str);
+                        event.toolTip.add(EnumChatFormatting.ITALIC+str);
                     }
                 }
                 else{
                     if(ConfigBoolValues.CTRL_INFO_FOR_EXTRA_INFO.isEnabled()){
-                        event.toolTip.add(StringUtil.GRAY+StringUtil.ITALIC+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".ctrlForMoreInfo.desc"));
+                        event.toolTip.add(EnumChatFormatting.DARK_GRAY+""+EnumChatFormatting.ITALIC+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".ctrlForMoreInfo.desc"));
                     }
                 }
             }

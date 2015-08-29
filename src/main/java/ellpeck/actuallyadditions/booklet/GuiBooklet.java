@@ -24,6 +24,7 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
@@ -56,6 +57,8 @@ public class GuiBooklet extends GuiScreen{
     private static final int BUTTON_BACK_ID = 1;
     private static final int BUTTON_RETURN_ID = 2;
     private static final int CHAPTER_BUTTONS_START = 3;
+
+    private static final int BUTTONS_PER_PAGE = 15;
 
     public GuiBooklet(){
         this.xSize = 146;
@@ -114,7 +117,7 @@ public class GuiBooklet extends GuiScreen{
         this.buttonList.add(new TexturedButton(BUTTON_BACK_ID, this.guiLeft-18, this.guiTop+this.ySize+2, 146, 0, 18, 10));
         this.buttonList.add(new TexturedButton(BUTTON_RETURN_ID, this.guiLeft+this.xSize/2-7, this.guiTop+this.ySize+2, 182, 0, 15, 10));
 
-        for(int i = 0; i < 12; i++){
+        for(int i = 0; i < BUTTONS_PER_PAGE; i++){
             this.buttonList.add(new IndexButton(this.unicodeRenderer, CHAPTER_BUTTONS_START+i, guiLeft+13, guiTop+15+(i*11), 120, 10, ""));
         }
 
@@ -259,7 +262,7 @@ public class GuiBooklet extends GuiScreen{
             if(this.currentIndexEntry != null){
                 if(this.currentChapter == null){
                     if(actualButton < this.currentIndexEntry.chapters.size()){
-                        BookletChapter chap = currentIndexEntry.chapters.get(actualButton+(12*this.pageOpenInIndex-12));
+                        BookletChapter chap = currentIndexEntry.chapters.get(actualButton+(BUTTONS_PER_PAGE*this.pageOpenInIndex-BUTTONS_PER_PAGE));
                         this.openChapter(chap, chap.pages[0]);
                     }
                 }
@@ -296,7 +299,7 @@ public class GuiBooklet extends GuiScreen{
         this.currentChapter = null;
 
         this.currentIndexEntry = entry;
-        this.indexPageAmount = entry == null ? 1 : entry.chapters.size()/12+1;
+        this.indexPageAmount = entry == null ? 1 : entry.chapters.size()/BUTTONS_PER_PAGE+1;
         this.pageOpenInIndex = entry == null ? 1 : (this.indexPageAmount <= page ? this.indexPageAmount : page);
 
         this.getButton(BUTTON_RETURN_ID).visible = entry != null;
@@ -306,17 +309,17 @@ public class GuiBooklet extends GuiScreen{
         for(int i = 0; i < 12; i++){
             GuiButton button = this.getButton(CHAPTER_BUTTONS_START+i);
             if(entry == null){
-                boolean entryExists = InitBooklet.entries.size() > i+(12*this.pageOpenInIndex-12);
+                boolean entryExists = InitBooklet.entries.size() > i+(BUTTONS_PER_PAGE*this.pageOpenInIndex-BUTTONS_PER_PAGE);
                 button.visible = entryExists;
                 if(entryExists){
-                    button.displayString = InitBooklet.entries.get(i+(12*this.pageOpenInIndex-12)).getLocalizedName();
+                    button.displayString = InitBooklet.entries.get(i+(BUTTONS_PER_PAGE*this.pageOpenInIndex-BUTTONS_PER_PAGE)).getLocalizedName();
                 }
             }
             else{
-                boolean entryExists = entry.chapters.size() > i+(12*this.pageOpenInIndex-12);
+                boolean entryExists = entry.chapters.size() > i+(BUTTONS_PER_PAGE*this.pageOpenInIndex-BUTTONS_PER_PAGE);
                 button.visible = entryExists;
                 if(entryExists){
-                    button.displayString = entry.chapters.get(i+(12*this.pageOpenInIndex-12)).getLocalizedName();
+                    button.displayString = entry.chapters.get(i+(BUTTONS_PER_PAGE*this.pageOpenInIndex-BUTTONS_PER_PAGE)).getLocalizedName();
                 }
             }
         }
@@ -333,9 +336,9 @@ public class GuiBooklet extends GuiScreen{
         this.currentPage = page != null && this.hasPage(chapter, page) ? page : chapter.pages[0];
 
         this.getButton(BUTTON_FORWARD_ID).visible = this.getNextPage(chapter, this.currentPage) != null;
-        this.getButton(BUTTON_BACK_ID).visible = false;
+        this.getButton(BUTTON_BACK_ID).visible = this.getPrevPage(chapter, this.currentPage) != null;
 
-        for(int i = 0; i < 12; i++){
+        for(int i = 0; i < BUTTONS_PER_PAGE; i++){
             GuiButton button = this.getButton(CHAPTER_BUTTONS_START+i);
             button.visible = false;
         }
@@ -373,7 +376,7 @@ public class GuiBooklet extends GuiScreen{
                     color = 38144;
                 }
 
-                this.renderer.drawString((this.field_146123_n ? StringUtil.UNDERLINE : "")+this.displayString, this.xPosition, this.yPosition+(this.height-8)/2, color);
+                this.renderer.drawString((this.field_146123_n ? EnumChatFormatting.UNDERLINE : "")+this.displayString, this.xPosition, this.yPosition+(this.height-8)/2, color);
             }
         }
     }

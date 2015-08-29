@@ -13,8 +13,13 @@ package ellpeck.actuallyadditions.booklet.page;
 import ellpeck.actuallyadditions.booklet.BookletChapter;
 import ellpeck.actuallyadditions.booklet.GuiBooklet;
 import ellpeck.actuallyadditions.booklet.InitBooklet;
+import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.ResourceLocation;
 import org.lwjgl.input.Mouse;
 
 import java.util.List;
@@ -45,7 +50,7 @@ public class BookletPage implements IBookletPage{
 
     @Override
     public String getText(){
-        return null;
+        return StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".chapter."+this.chapter.getUnlocalizedName()+".text."+this.id).replaceAll("<imp>", EnumChatFormatting.DARK_GREEN+"").replaceAll("<item>", EnumChatFormatting.BLUE+"").replaceAll("<r>", EnumChatFormatting.BLACK+"");
     }
 
     @Override
@@ -72,17 +77,18 @@ public class BookletPage implements IBookletPage{
                 list.set(k, stack.getRarity().rarityColor+(String)list.get(k));
             }
             else{
-                list.set(k, StringUtil.GRAY+list.get(k));
+                list.set(k, EnumChatFormatting.GRAY+(String)list.get(k));
             }
         }
 
         if(checkAndTransfer){
             for(IBookletPage page : InitBooklet.pagesWithItemStackData){
                 if(page.getItemStackForPage() != null && page.getItemStackForPage().isItemEqual(stack)){
-                    list.add(StringUtil.ORANGE+"Click to see Recipe!");
+                    list.add(EnumChatFormatting.GOLD+"Click to see Recipe!");
 
                     if(Mouse.isButtonDown(0)){
                         gui.openChapter(page.getChapter(), page);
+                        Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.func_147674_a(new ResourceLocation("gui.button.press"), 1.0F));
                     }
                     break;
                 }

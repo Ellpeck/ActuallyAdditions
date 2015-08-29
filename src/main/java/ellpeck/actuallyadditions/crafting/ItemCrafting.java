@@ -33,8 +33,17 @@ import net.minecraftforge.oredict.ShapelessOreRecipe;
 public class ItemCrafting{
 
     public static IRecipe recipePhantomConnector;
+    public static IRecipe recipeCoil;
+    public static IRecipe recipeCoilAdvanced;
+
 
     public static void init(){
+
+        //Booklet
+        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemLexicon), new ItemStack(InitItems.itemCanolaSeed), new ItemStack(Items.paper)));
+        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemLexicon), new ItemStack(InitItems.itemCoffeeSeed), new ItemStack(Items.paper)));
+        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemLexicon), new ItemStack(InitItems.itemRiceSeed), new ItemStack(Items.paper)));
+        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemLexicon), new ItemStack(InitItems.itemFlaxSeed), new ItemStack(Items.paper)));
 
         //Rice Stuff
         if(ConfigCrafting.RICE_GADGETS.isEnabled()){
@@ -245,6 +254,7 @@ public class ItemCrafting{
                     " R ", "RIR", " R ",
                     'I', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal()),
                     'R', "dustRedstone"));
+            recipeCoil = Util.lastIRecipe();
         }
 
         //Cup
@@ -267,6 +277,7 @@ public class ItemCrafting{
                     " G ", "GCG", " G ",
                     'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL.ordinal()),
                     'G', "ingotGold"));
+            recipeCoilAdvanced = Util.lastIRecipe();
         }
 
         //Ender Pearl

@@ -23,6 +23,7 @@ import ellpeck.actuallyadditions.util.StringUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import org.lwjgl.input.Keyboard;
@@ -55,7 +56,7 @@ public class GuiSmileyCloud extends GuiContainer{
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y){
-        String name = cloud.name == null || cloud.name.isEmpty() ? "" : StringUtil.ORANGE+cloud.name+StringUtil.RESET+" "+StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.the")+" ";
+        String name = cloud.name == null || cloud.name.isEmpty() ? "" : EnumChatFormatting.GOLD+cloud.name+EnumChatFormatting.RESET+" "+StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.the")+" ";
         String localizedName = name+StringUtil.localize("container."+ModUtil.MOD_ID_LOWER+".cloud.name");
         this.fontRendererObj.drawString(localizedName, xSize/2-this.fontRendererObj.getStringWidth(localizedName)/2, -10, StringUtil.DECIMAL_COLOR_WHITE);
     }

@@ -27,6 +27,7 @@ import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import org.lwjgl.input.Keyboard;
@@ -227,14 +228,14 @@ public class GuiInputter extends GuiContainer{
             String text1 = this.tileInputter.isPullWhitelist ? StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.whitelist") : StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.blacklist");
             if(x >= guiLeft+3 && y >= guiTop+16 && x <= guiLeft+18 && y <= guiTop+31){
                 ArrayList list = new ArrayList();
-                list.add(StringUtil.BOLD+text1);
+                list.add(EnumChatFormatting.BOLD+text1);
                 list.addAll(Arrays.asList(strings));
                 this.func_146283_a(list, x, y);
             }
             String text2 = this.tileInputter.isPutWhitelist ? StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.whitelist") : StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.blacklist");
             if(x >= guiLeft+157 && y >= guiTop+16 && x <= guiLeft+172 && y <= guiTop+31){
                 ArrayList list = new ArrayList();
-                list.add(StringUtil.BOLD+text2);
+                list.add(EnumChatFormatting.BOLD+text2);
                 list.addAll(Arrays.asList(strings));
                 this.func_146283_a(list, x, y);
             }
