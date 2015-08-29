@@ -26,6 +26,12 @@ public class PageFurnace extends PageText{
     public PageFurnace(int id, ItemStack result){
         super(id);
         this.result = result;
+        InitBooklet.pagesWithItemStackData.add(this);
+    }
+
+    @Override
+    public ItemStack getItemStackForPage(){
+        return this.result;
     }
 
     @Override
@@ -61,7 +67,7 @@ public class PageFurnace extends PageText{
                     }
                     else{
                         if(mouseX >= xShow && mouseX <= xShow+16 && mouseY >= yShow && mouseY <= yShow+16){
-                            gui.renderToolTip(stack, mouseX, mouseY);
+                            this.renderTooltipAndTransfer(gui, stack, mouseX, mouseY, x == 0);
                         }
                     }
                 }

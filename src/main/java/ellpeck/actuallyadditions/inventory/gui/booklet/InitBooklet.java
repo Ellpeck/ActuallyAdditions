@@ -22,6 +22,7 @@ import java.util.ArrayList;
 public class InitBooklet{
 
     public static ArrayList<BookletIndexEntry> entries = new ArrayList<BookletIndexEntry>();
+    public static ArrayList<IBookletPage> pagesWithItemStackData = new ArrayList<IBookletPage>();
 
     public static BookletIndexEntry entryFunctionalNonRF = new BookletIndexEntry("functionalNoRF");
     public static BookletIndexEntry entryMisc = new BookletIndexEntry("misc");

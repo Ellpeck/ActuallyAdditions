@@ -24,6 +24,7 @@ public class PageCrusherRecipe extends PageText{
     public PageCrusherRecipe(int id, ItemStack input){
         super(id);
         this.input = input;
+        InitBooklet.pagesWithItemStackData.add(this);
     }
 
     @Override
@@ -32,6 +33,11 @@ public class PageCrusherRecipe extends PageText{
             gui.mc.getTextureManager().bindTexture(GuiBooklet.resLoc);
             gui.drawTexturedModalRect(gui.guiLeft+37, gui.guiTop+20, 60, 180, 60, 60);
         }
+    }
+
+    @Override
+    public ItemStack getItemStackForPage(){
+        return CrusherRecipeManualRegistry.getOutput(this.input, false);
     }
 
     @SuppressWarnings("unchecked")
@@ -66,7 +72,7 @@ public class PageCrusherRecipe extends PageText{
                         }
                         else{
                             if(mouseX >= xShow && mouseX <= xShow+16 && mouseY >= yShow && mouseY <= yShow+16){
-                                gui.renderToolTip(stack, mouseX, mouseY);
+                                this.renderTooltipAndTransfer(gui, stack, mouseX, mouseY, j == 0);
                             }
                         }
                     }

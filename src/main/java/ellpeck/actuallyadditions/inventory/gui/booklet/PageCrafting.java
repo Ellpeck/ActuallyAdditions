@@ -32,6 +32,12 @@ public class PageCrafting extends PageText{
     public PageCrafting(int id, IRecipe recipe){
         super(id);
         this.recipe = recipe;
+        InitBooklet.pagesWithItemStackData.add(this);
+    }
+
+    @Override
+    public ItemStack getItemStackForPage(){
+        return this.recipe == null ? null : this.recipe.getRecipeOutput();
     }
 
     @Override
@@ -109,7 +115,7 @@ public class PageCrafting extends PageText{
                             }
                             else{
                                 if(mouseX >= xShow && mouseX <= xShow+16 && mouseY >= yShow && mouseY <= yShow+16){
-                                    gui.renderToolTip(stack, mouseX, mouseY);
+                                    this.renderTooltipAndTransfer(gui, stack, mouseX, mouseY, true);
                                 }
                             }
                         }

@@ -28,6 +28,7 @@ import org.lwjgl.opengl.GL11;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 @SideOnly(Side.CLIENT)
 public class GuiBooklet extends GuiScreen{
@@ -72,7 +73,7 @@ public class GuiBooklet extends GuiScreen{
         if(key != 1 && this.searchField.isFocused()){
             this.searchField.textboxKeyTyped(theChar, key);
 
-            if(this.currentIndexEntry == InitBooklet.allAndSearch){
+            if(this.currentIndexEntry instanceof BookletEntryAllSearch){
                 BookletEntryAllSearch currentEntry = (BookletEntryAllSearch)this.currentIndexEntry;
                 if(this.searchField.getText() != null && !this.searchField.getText().isEmpty()){
                     currentEntry.chapters.clear();
@@ -122,7 +123,6 @@ public class GuiBooklet extends GuiScreen{
         this.searchField = new GuiTextField(this.unicodeRenderer, guiLeft+148, guiTop+162, 66, 10);
         this.searchField.setMaxStringLength(30);
         this.searchField.setEnableBackgroundDrawing(false);
-        this.searchField.setVisible(false);
 
         this.currentPage = null;
         this.currentChapter = null;
@@ -140,13 +140,17 @@ public class GuiBooklet extends GuiScreen{
         super.renderToolTip(stack, x, y);
     }
 
+    public void drawHoveringText(List list, int x, int y){
+        super.func_146283_a(list, x, y);
+    }
+
     @Override
     public void drawScreen(int x, int y, float f){
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(resLoc);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
 
-        if(this.currentIndexEntry == InitBooklet.allAndSearch && this.currentChapter == null){
+        if(this.currentIndexEntry instanceof BookletEntryAllSearch && this.currentChapter == null){
             this.drawTexturedModalRect(this.guiLeft+146, this.guiTop+160, 146, 80, 70, 14);
         }
 
@@ -254,7 +258,8 @@ public class GuiBooklet extends GuiScreen{
             if(this.currentIndexEntry != null){
                 if(this.currentChapter == null){
                     if(actualButton < this.currentIndexEntry.chapters.size()){
-                        this.openChapter(currentIndexEntry.chapters.get(actualButton+(12*this.pageOpenInIndex-12)));
+                        BookletChapter chap = currentIndexEntry.chapters.get(actualButton+(12*this.pageOpenInIndex-12));
+                        this.openChapter(chap, chap.pages[0]);
                     }
                 }
             }
@@ -278,10 +283,10 @@ public class GuiBooklet extends GuiScreen{
     @SuppressWarnings("unchecked")
     private void openIndexEntry(BookletIndexEntry entry, int page, boolean resetTextField){
         if(resetTextField){
-            this.searchField.setVisible(entry == InitBooklet.allAndSearch);
-            this.searchField.setFocused(entry == InitBooklet.allAndSearch);
+            this.searchField.setVisible(entry instanceof BookletEntryAllSearch);
+            this.searchField.setFocused(entry instanceof BookletEntryAllSearch);
             this.searchField.setText("");
-            if(entry == InitBooklet.allAndSearch){
+            if(entry instanceof BookletEntryAllSearch){
                 entry.chapters = (ArrayList<BookletChapter>)((BookletEntryAllSearch)entry).allChapters.clone();
             }
         }
@@ -316,7 +321,7 @@ public class GuiBooklet extends GuiScreen{
         }
     }
 
-    private void openChapter(BookletChapter chapter){
+    public void openChapter(BookletChapter chapter, IBookletPage page){
         if(chapter == null) return;
 
         this.searchField.setVisible(false);
@@ -324,15 +329,24 @@ public class GuiBooklet extends GuiScreen{
         this.searchField.setText("");
 
         this.currentChapter = chapter;
-        this.currentPage = currentChapter.pages[0];
+        this.currentPage = page != null && this.hasPage(chapter, page) ? page : chapter.pages[0];
 
-        this.getButton(BUTTON_FORWARD_ID).visible = this.getNextPage(chapter, currentPage) != null;
+        this.getButton(BUTTON_FORWARD_ID).visible = this.getNextPage(chapter, this.currentPage) != null;
         this.getButton(BUTTON_BACK_ID).visible = false;
 
         for(int i = 0; i < 12; i++){
             GuiButton button = this.getButton(CHAPTER_BUTTONS_START+i);
             button.visible = false;
         }
+    }
+
+    private boolean hasPage(BookletChapter chapter, IBookletPage page){
+        for(IBookletPage aPage : chapter.pages){
+            if(aPage == page){
+                return true;
+            }
+        }
+        return false;
     }
 
     private static class IndexButton extends GuiButton{

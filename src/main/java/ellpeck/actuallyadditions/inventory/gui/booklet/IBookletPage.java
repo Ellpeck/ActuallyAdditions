@@ -10,15 +10,21 @@
 
 package ellpeck.actuallyadditions.inventory.gui.booklet;
 
+import net.minecraft.item.ItemStack;
+
 public interface IBookletPage{
 
     int getID();
 
     void setChapter(BookletChapter chapter);
 
+    BookletChapter getChapter();
+
     String getText();
 
     void renderPre(GuiBooklet gui, int mouseX, int mouseY);
 
     void render(GuiBooklet gui, int mouseX, int mouseY);
+
+    ItemStack getItemStackForPage();
 }
