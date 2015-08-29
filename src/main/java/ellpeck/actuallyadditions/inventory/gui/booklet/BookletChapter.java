@@ -14,6 +14,7 @@ public class BookletChapter{
 
         this.unlocalizedName = unlocalizedName;
         entry.addChapter(this);
+        InitBooklet.allAndSearch.addChapter(this);
         this.entry = entry;
 
         for(IBookletPage page : this.pages){

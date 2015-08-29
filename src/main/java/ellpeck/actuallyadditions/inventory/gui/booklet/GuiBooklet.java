@@ -178,7 +178,7 @@ public class GuiBooklet extends GuiScreen{
         }
         else if(button.id == BUTTON_RETURN_ID){
             if(this.currentChapter != null){
-                this.openIndexEntry(this.currentChapter.entry, this.pageOpenInIndex);
+                this.openIndexEntry(this.currentIndexEntry, this.pageOpenInIndex);
             }
             else{
                 this.openIndexEntry(null, 1);

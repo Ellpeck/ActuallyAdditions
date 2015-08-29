@@ -364,21 +364,24 @@ achievement.actuallyadditions.openTreasureChest.desc=Open a Treasure Chest under
 
 booklet.actuallyadditions.indexEntry.misc.name=Miscellaneous
 booklet.actuallyadditions.indexEntry.functionalNoRF.name=Functional Blocks (No RF use)
+booklet.actuallyadditions.indexEntry.allAndSearch.name=All Items (Search not implemented)
+
+booklet.actuallyadditions.recipeDisabled=The crafting recipe for this item is disabled in the Config File! If you're on a server, ask the server author to enable it in the config. If you're on a client, press the 'Open Config'-Button on the top right and enable the recipe!
 
 booklet.actuallyadditions.chapter.foods.name=Food
 booklet.actuallyadditions.chapter.foods.text.1=A Pizza is round, delicious and tastes of tomatoes, cheese and deliciousness. Yum!
 booklet.actuallyadditions.chapter.foods.text.2=Rice Bread is made in a furnace from rice dough, which can be made from rice. It tastes of a combination of rice and bread. Because that's what it is, I guess.
-booklet.actuallyadditions.chapter.foods.text.3=It's hammy, and it's burgr'y, and it makes you want to sing, it's a Haaaaaaamuuuuurgeeeeeer *cough* It's from a german city: Hamburg! ...You learn something new every day.
-booklet.actuallyadditions.chapter.foods.text.4=Reminds me of something. Hmmm... Subway?
-booklet.actuallyadditions.chapter.foods.text.5=Reminds me of something. Hmmm... Wubsay?
-booklet.actuallyadditions.chapter.foods.text.6=A pity it isn't waving a white flaaaaaaaaa.. flake. Of corn. A white cornflake.
+booklet.actuallyadditions.chapter.foods.text.3=It's two slices of bread with a piece of meat, cheese and some salad between it. Could have originated in Hamburg, Germany.
+booklet.actuallyadditions.chapter.foods.text.4=It's like a normal cookie, but more chocolate-y and bigger.
+booklet.actuallyadditions.chapter.foods.text.5=It's a baguette cut open, containing cheese, salad, fish and some other goodies, wrapped in paper.
+booklet.actuallyadditions.chapter.foods.text.6=Some people call it "French Stick". We just call it "Baguette".
 booklet.actuallyadditions.chapter.foods.text.7=Or chips, if you're not american!
 booklet.actuallyadditions.chapter.foods.text.8=It's a paper container filled with fries and fish. What more could you want?
-booklet.actuallyadditions.chapter.foods.text.9=Someone might reeeeally like this.
+booklet.actuallyadditions.chapter.foods.text.9=Someone might really like this.
 booklet.actuallyadditions.chapter.foods.text.10=I somehow have a weird song stuck in my head where someone just repeatedly goes "Pumpkin pumpkin pumpkin blur, pumpkin blur, pumpkin blur"...
 booklet.actuallyadditions.chapter.foods.text.11=It's like Tomato Juice, only that you don't always get it on a plane.
 booklet.actuallyadditions.chapter.foods.text.12=It's a bowl with 3 noodles in it. It must be a really big bowl, I guess.
-booklet.actuallyadditions.chapter.foods.text.13=THERE are those noodles! I've been searching for them for ages!
+booklet.actuallyadditions.chapter.foods.text.13=It's just a paper container filled with noodles. Like you get in your local supermarket. If you have one local.
 booklet.actuallyadditions.chapter.foods.text.14=Lari likes.
 booklet.actuallyadditions.chapter.foods.text.15=It's chocolate cake. Who wouldn't like it!?
 booklet.actuallyadditions.chapter.foods.text.16=It's Toast. What more could I say?

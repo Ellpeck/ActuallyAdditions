@@ -14,6 +14,8 @@ public class GuiHandler implements IGuiHandler{
 
     @Override
     public Object getServerGuiElement(int id, EntityPlayer entityPlayer, World world, int x, int y, int z){
+        if(id == GuiTypes.BOOK.ordinal()) return null;
+
         TileEntityBase tile = null;
         if(id != GuiTypes.CRAFTER.ordinal() && id != GuiTypes.DRILL.ordinal()){
             tile = (TileEntityBase)world.getTileEntity(x, y, z);

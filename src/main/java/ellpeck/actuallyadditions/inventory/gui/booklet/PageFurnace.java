@@ -1,5 +1,7 @@
 package ellpeck.actuallyadditions.inventory.gui.booklet;
 
+import ellpeck.actuallyadditions.util.ModUtil;
+import ellpeck.actuallyadditions.util.StringUtil;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.item.ItemStack;
@@ -29,7 +31,7 @@ public class PageFurnace extends PageText{
     public void render(GuiBooklet gui, int mouseX, int mouseY){
         ItemStack input = this.getInputForOutput(this.result);
         if(input == null){
-            gui.unicodeRenderer.drawSplitString("The crafting recipe for this item is disabled in the Config File! If you're on a server, ask the server author to enable it in the config. If you're on a client, press the 'Open Config'-Button on the top right and enable the recipe!", gui.guiLeft+14, gui.guiTop+15, 115, 0);
+            gui.unicodeRenderer.drawSplitString(StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".recipeDisabled"), gui.guiLeft+14, gui.guiTop+15, 115, 0);
         }
 
         gui.unicodeRenderer.drawSplitString(gui.currentPage.getText(), gui.guiLeft+14, gui.guiTop+112, 115, 0);
