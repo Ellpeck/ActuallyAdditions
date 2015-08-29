@@ -8,10 +8,10 @@ public class BookletChapter{
     public final IBookletPage[] pages;
     private final String unlocalizedName;
     public final BookletIndexEntry entry;
-    public int openPage;
 
     public BookletChapter(String unlocalizedName, BookletIndexEntry entry, IBookletPage... pages){
         this.pages = pages.clone();
+
         this.unlocalizedName = unlocalizedName;
         entry.addChapter(this);
         this.entry = entry;

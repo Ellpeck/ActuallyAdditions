@@ -31,6 +31,8 @@ public class GuiBooklet extends GuiScreen{
     public IBookletPage currentPage;
     public BookletChapter currentChapter;
     public BookletIndexEntry currentIndexEntry;
+    public int pageOpenInIndex;
+    public int indexPageAmount;
 
     private static final int BUTTON_ACHIEVEMENTS_ID = -2;
     private static final int BUTTON_CONFIG_ID = -1;
@@ -66,7 +68,7 @@ public class GuiBooklet extends GuiScreen{
         this.currentPage = null;
         this.currentChapter = null;
         this.currentIndexEntry = null;
-        this.openIndexEntry(null);
+        this.openIndexEntry(null, 1);
     }
 
     private GuiButton getButton(int id){
@@ -88,15 +90,22 @@ public class GuiBooklet extends GuiScreen{
             if(this.currentChapter == null){
                 this.drawCenteredString(this.fontRendererObj, this.currentIndexEntry.getLocalizedName(), this.guiLeft+this.xSize/2, this.guiTop-8, StringUtil.DECIMAL_COLOR_WHITE);
             }
-            else
+            else{
                 this.drawCenteredString(this.fontRendererObj, this.currentChapter.getLocalizedName(), this.guiLeft+this.xSize/2, this.guiTop-8, StringUtil.DECIMAL_COLOR_WHITE);
+            }
         }
-        else
+        else{
             this.drawCenteredString(this.fontRendererObj, StringUtil.localize("itemGroup."+ModUtil.MOD_ID_LOWER), this.guiLeft+this.xSize/2, this.guiTop-8, StringUtil.DECIMAL_COLOR_WHITE);
+        }
 
-        if(this.currentIndexEntry != null && this.currentChapter != null && this.currentPage != null){
-            this.drawCenteredString(this.unicodeRenderer, this.currentPage.getID()+"/"+this.currentChapter.pages.length, this.guiLeft+this.xSize/2, this.guiTop+172, StringUtil.DECIMAL_COLOR_WHITE);
-            this.currentPage.renderPre(this, x, y);
+        if(this.currentIndexEntry != null){
+            if(this.currentChapter != null && this.currentPage != null){
+                this.drawCenteredString(this.unicodeRenderer, this.currentPage.getID()+"/"+this.currentChapter.pages.length, this.guiLeft+this.xSize/2, this.guiTop+172, StringUtil.DECIMAL_COLOR_WHITE);
+                this.currentPage.renderPre(this, x, y);
+            }
+            else{
+                this.drawCenteredString(this.unicodeRenderer, this.pageOpenInIndex+"/"+this.indexPageAmount, this.guiLeft+this.xSize/2, this.guiTop+172, StringUtil.DECIMAL_COLOR_WHITE);
+            }
         }
 
         super.drawScreen(x, y, f);
@@ -146,60 +155,86 @@ public class GuiBooklet extends GuiScreen{
             mc.displayGuiScreen(new GuiAAAchievements(this, mc.thePlayer.getStatFileWriter()));
         }
         else if(button.id == BUTTON_FORWARD_ID){
-            IBookletPage page = this.getNextPage(this.currentChapter, this.currentPage);
-            if(page != null) this.currentPage = page;
+            if(this.currentIndexEntry != null){
+                if(this.currentPage != null){
+                    IBookletPage page = this.getNextPage(this.currentChapter, this.currentPage);
+                    if(page != null) this.currentPage = page;
+                }
+                else{
+                    this.openIndexEntry(this.currentIndexEntry, this.pageOpenInIndex+1);
+                }
+            }
         }
         else if(button.id == BUTTON_BACK_ID){
-            IBookletPage page = this.getPrevPage(this.currentChapter, this.currentPage);
-            if(page != null) this.currentPage = page;
+            if(this.currentIndexEntry != null){
+                if(this.currentPage != null){
+                    IBookletPage page = this.getPrevPage(this.currentChapter, this.currentPage);
+                    if(page != null) this.currentPage = page;
+                }
+                else{
+                    this.openIndexEntry(this.currentIndexEntry, this.pageOpenInIndex-1);
+                }
+            }
         }
         else if(button.id == BUTTON_RETURN_ID){
             if(this.currentChapter != null){
-                this.openIndexEntry(this.currentChapter.entry);
-                this.currentChapter = null;
+                this.openIndexEntry(this.currentChapter.entry, this.pageOpenInIndex);
             }
-            else this.openIndexEntry(null);
+            else{
+                this.openIndexEntry(null, 1);
+            }
         }
         else if(button.id >= CHAPTER_BUTTONS_START){
             int actualButton = button.id-CHAPTER_BUTTONS_START;
             if(this.currentIndexEntry != null){
                 if(this.currentChapter == null){
                     if(actualButton < this.currentIndexEntry.chapters.size()){
-                        this.openChapter(currentIndexEntry.chapters.get(actualButton));
+                        this.openChapter(currentIndexEntry.chapters.get(actualButton+(12*this.pageOpenInIndex-12)));
                     }
                 }
             }
             else{
                 if(actualButton < InitBooklet.entries.size()){
-                    this.openIndexEntry(InitBooklet.entries.get(actualButton));
+                    this.openIndexEntry(InitBooklet.entries.get(actualButton), 1);
                 }
             }
         }
 
         if(button.id == BUTTON_FORWARD_ID || button.id == BUTTON_BACK_ID){
-            this.getButton(BUTTON_FORWARD_ID).visible = this.getNextPage(this.currentChapter, this.currentPage) != null;
-            this.getButton(BUTTON_BACK_ID).visible = this.getPrevPage(this.currentChapter, this.currentPage) != null;
+            if(this.currentChapter != null && this.currentIndexEntry != null){
+                if(this.currentPage != null){
+                    this.getButton(BUTTON_FORWARD_ID).visible = this.getNextPage(this.currentChapter, this.currentPage) != null;
+                    this.getButton(BUTTON_BACK_ID).visible = this.getPrevPage(this.currentChapter, this.currentPage) != null;
+                }
+            }
         }
     }
 
-    private void openIndexEntry(BookletIndexEntry entry){
+    private void openIndexEntry(BookletIndexEntry entry, int page){
+        this.currentPage = null;
+        this.currentChapter = null;
+
         this.currentIndexEntry = entry;
+        this.indexPageAmount = entry == null ? 1 : entry.chapters.size()/12+1;
+        this.pageOpenInIndex = entry == null ? 1 : (this.indexPageAmount <= page ? this.indexPageAmount : page);
 
         this.getButton(BUTTON_RETURN_ID).visible = entry != null;
-        this.getButton(BUTTON_FORWARD_ID).visible = false;
-        this.getButton(BUTTON_BACK_ID).visible = false;
+        this.getButton(BUTTON_FORWARD_ID).visible = this.pageOpenInIndex < this.indexPageAmount;
+        this.getButton(BUTTON_BACK_ID).visible = this.pageOpenInIndex > 1;
 
         for(int i = 0; i < 12; i++){
             GuiButton button = this.getButton(CHAPTER_BUTTONS_START+i);
             if(entry == null){
-                boolean entryExists = InitBooklet.entries.size() > i;
+                boolean entryExists = InitBooklet.entries.size() > i+(12*this.pageOpenInIndex-12);
                 button.visible = entryExists;
-                if(entryExists) button.displayString = InitBooklet.entries.get(i).getLocalizedName();
+                if(entryExists){
+                    button.displayString = InitBooklet.entries.get(i+(12*this.pageOpenInIndex-12)).getLocalizedName();
+                }
             }
             else{
-                boolean entryExists = entry.chapters.size() > i;
+                boolean entryExists = entry.chapters.size() > i+(12*this.pageOpenInIndex-12);
                 button.visible = entryExists;
-                if(entryExists) button.displayString = entry.chapters.get(i).getLocalizedName();
+                if(entryExists) button.displayString = entry.chapters.get(i+(12*this.pageOpenInIndex-12)).getLocalizedName();
             }
         }
     }
