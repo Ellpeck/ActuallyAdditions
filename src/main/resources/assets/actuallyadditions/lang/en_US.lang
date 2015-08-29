@@ -364,7 +364,7 @@ achievement.actuallyadditions.openTreasureChest.desc=Open a Treasure Chest under
 
 booklet.actuallyadditions.indexEntry.misc.name=Miscellaneous
 booklet.actuallyadditions.indexEntry.functionalNoRF.name=Functional Blocks (No RF use)
-booklet.actuallyadditions.indexEntry.allAndSearch.name=All Items (Search not implemented)
+booklet.actuallyadditions.indexEntry.allAndSearch.name=All Items and Search
 
 booklet.actuallyadditions.recipeDisabled=The crafting recipe for this item is disabled in the Config File! If you're on a server, ask the server author to enable it in the config. If you're on a client, press the 'Open Config'-Button on the top right and enable the recipe!
 
@@ -396,11 +396,13 @@ booklet.actuallyadditions.chapter.phantomfaces.text.1=A Phantomface is a block t
 booklet.actuallyadditions.chapter.phantomfaces.text.2=The normal Phantomface can connect to inventories like chests and furnaces, transfering Items into and out of them.
 booklet.actuallyadditions.chapter.phantomfaces.text.3=The Phantom Liquiface can connect to tanks and such, allowing all types of liquids to be pumped through. Giving it a Redstone Signal will cause it to auto-output.
 booklet.actuallyadditions.chapter.phantomfaces.text.4=The Phantom Energyface can connect to things like generators and crushers, allowing for RF to flow through them into and out of machines.
+booklet.actuallyadditions.chapter.phantomfaces.text.5=Shift-Right-Click this onto any inventory and then on the Phantom Device to connect the two.
 
 booklet.actuallyadditions.chapter.phantomBreaker.name=Phantom Breakers & Placers
 booklet.actuallyadditions.chapter.phantomBreaker.text.1=Phantom Breakers and Placers have very similar mechanics to Phantomfaces: They can be connected to Blocks via Phantom Connectors and interact with the environment. Phantom Breakers and Placers only have a range of 3 blocks, however, in which they can destroy and place blocks in connected places. Shift-right-clicking will supply you with information about the connection, right-clicking normally will open its interface.
 booklet.actuallyadditions.chapter.phantomBreaker.text.2=The Phantom Placer places Blocks that you supply it with.
 booklet.actuallyadditions.chapter.phantomBreaker.text.3=The Phantom Placer breaks blocks and stores them in its internal inventory.
+booklet.actuallyadditions.chapter.phantomBreaker.text.4=Shift-Right-Click this onto any inventory and then on the Phantom Device to connect the two.
 
 booklet.actuallyadditions.chapter.breaker.name=(Fluid) Placers & Breakers
 booklet.actuallyadditions.chapter.breaker.text.1=The Breaker breaks Blocks in front of it and stores them in its internal inventory. That's it.
