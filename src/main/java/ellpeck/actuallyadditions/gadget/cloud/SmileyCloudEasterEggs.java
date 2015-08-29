@@ -13,6 +13,7 @@ package ellpeck.actuallyadditions.gadget.cloud;
 import ellpeck.actuallyadditions.blocks.InitBlocks;
 import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.items.metalists.TheFoods;
+import ellpeck.actuallyadditions.items.metalists.TheMiscItems;
 import ellpeck.actuallyadditions.util.AssetUtil;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
@@ -219,6 +220,19 @@ public class SmileyCloudEasterEggs{
             public void renderExtra(float f){
                 renderHoldingItem(false, new ItemStack(Items.written_book));
                 renderHeadBlock(Blocks.web, 0, 56F);
+            }
+        });
+        //Lordi
+        register(new ISmileyCloudEasterEgg(){
+            @Override
+            public String[] getTriggerNames(){
+                return new String[]{"lordi", "lordhallo"};
+            }
+            @Override
+            public void renderExtra(float f){
+                renderHoldingItem(true, new ItemStack(Items.paper));
+                renderHoldingItem(false, new ItemStack(InitItems.itemMisc, 1, TheMiscItems.RING.ordinal()));
+                renderHeadBlock(Blocks.quartz_block, 0, 17F);
             }
         });
     }
