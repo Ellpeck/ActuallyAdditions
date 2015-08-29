@@ -8,8 +8,9 @@
  * © 2015 Ellpeck
  */
 
-package ellpeck.actuallyadditions.inventory.gui.booklet;
+package ellpeck.actuallyadditions.booklet;
 
+import ellpeck.actuallyadditions.booklet.page.IBookletPage;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
 

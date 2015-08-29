@@ -8,7 +8,7 @@
  * © 2015 Ellpeck
  */
 
-package ellpeck.actuallyadditions.inventory.gui.booklet;
+package ellpeck.actuallyadditions.booklet;
 
 import cpw.mods.fml.relauncher.ReflectionHelper;
 import ellpeck.actuallyadditions.achievement.InitAchievements;

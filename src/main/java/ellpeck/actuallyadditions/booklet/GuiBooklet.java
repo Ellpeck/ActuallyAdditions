@@ -8,10 +8,11 @@
  * © 2015 Ellpeck
  */
 
-package ellpeck.actuallyadditions.inventory.gui.booklet;
+package ellpeck.actuallyadditions.booklet;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import ellpeck.actuallyadditions.booklet.page.IBookletPage;
 import ellpeck.actuallyadditions.config.GuiConfiguration;
 import ellpeck.actuallyadditions.util.AssetUtil;
 import ellpeck.actuallyadditions.util.ModUtil;
