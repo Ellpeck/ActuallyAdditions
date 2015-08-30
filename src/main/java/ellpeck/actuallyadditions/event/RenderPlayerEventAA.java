@@ -21,11 +21,12 @@ import java.util.UUID;
 
 public class RenderPlayerEventAA{
 
-    private RenderSpecial ellpeckRender = new RenderSpecial(InitBlocks.blockPhantomLiquiface, 0);
-    private RenderSpecial hoseRender = new RenderSpecial(Blocks.torch, 0);
-    private RenderSpecial paktoRender = new RenderSpecial(Blocks.wool, 6);
-    private RenderSpecial glenRender = new RenderSpecial(InitBlocks.blockHeatCollector, 0);
-    private RenderSpecial lordiRender = new RenderSpecial(InitBlocks.blockBreaker, 0);
+    private static RenderSpecial ellpeckRender = new RenderSpecial(InitBlocks.blockPhantomLiquiface, 0);
+    private static RenderSpecial hoseRender = new RenderSpecial(Blocks.torch, 0);
+    private static RenderSpecial paktoRender = new RenderSpecial(Blocks.wool, 6);
+    private static RenderSpecial glenRender = new RenderSpecial(InitBlocks.blockHeatCollector, 0);
+    private static RenderSpecial lordiRender = new RenderSpecial(InitBlocks.blockBreaker, 0);
+    public static RenderSpecial lariRender = new RenderSpecial(null, 0);
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void RenderPlayerEvent(RenderPlayerEvent.Specials.Pre event){
@@ -48,6 +49,10 @@ public class RenderPlayerEventAA{
         //Lordi
         else if(event.entityPlayer.getUniqueID().equals(UUID.fromString("990ecf6d-15dd-442c-b91b-323a6420c78e"))){
             lordiRender.render(event.entityPlayer, 0.3F, 0);
+        }
+        //Lari
+        else if(event.entityPlayer.getUniqueID().equals(UUID.fromString("ac275e30-c468-42af-b5d4-b26c1c705b70"))){
+            lariRender.render(event.entityPlayer, 0.15F, -0.125F);
         }
     }
 }
