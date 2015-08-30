@@ -306,7 +306,7 @@ public class GuiBooklet extends GuiScreen{
         this.getButton(BUTTON_FORWARD_ID).visible = this.pageOpenInIndex < this.indexPageAmount;
         this.getButton(BUTTON_BACK_ID).visible = this.pageOpenInIndex > 1;
 
-        for(int i = 0; i < 12; i++){
+        for(int i = 0; i < BUTTONS_PER_PAGE; i++){
             GuiButton button = this.getButton(CHAPTER_BUTTONS_START+i);
             if(entry == null){
                 boolean entryExists = InitBooklet.entries.size() > i+(BUTTONS_PER_PAGE*this.pageOpenInIndex-BUTTONS_PER_PAGE);

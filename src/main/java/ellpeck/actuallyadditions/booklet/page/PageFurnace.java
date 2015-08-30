@@ -52,7 +52,10 @@ public class PageFurnace extends BookletPage{
             gui.unicodeRenderer.drawSplitString(StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".recipeDisabled"), gui.guiLeft+14, gui.guiTop+15, 115, 0);
         }
 
-        gui.unicodeRenderer.drawSplitString(gui.currentPage.getText(), gui.guiLeft+14, gui.guiTop+112, 115, 0);
+        String text = gui.currentPage.getText();
+        if(text != null && !text.isEmpty() && !text.contains("booklet.")){
+            gui.unicodeRenderer.drawSplitString(text.replace("<n>", "\n"), gui.guiLeft+14, gui.guiTop+100, 115, 0);
+        }
 
         if(input != null){
             for(int i = 0; i < 2; i++){

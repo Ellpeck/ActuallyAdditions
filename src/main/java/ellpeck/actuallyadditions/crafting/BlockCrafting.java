@@ -45,6 +45,7 @@ public class BlockCrafting{
     public static IRecipe recipeESD;
     public static IRecipe recipeAdvancedESD;
     public static IRecipe recipePhantomBooster;
+    public static IRecipe recipeCoffeeMachine;
 
     public static void init(){
 
@@ -118,6 +119,7 @@ public class BlockCrafting{
                     'C', InitItems.itemCoffeeBean,
                     'S', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.STONE_CASING.ordinal()),
                     'A', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL.ordinal())));
+            recipeCoffeeMachine = Util.lastIRecipe();
         }
 
         //Energizer

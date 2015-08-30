@@ -20,6 +20,9 @@ public class PageText extends BookletPage{
 
     @Override
     public void render(GuiBooklet gui, int mouseX, int mouseY){
-        gui.unicodeRenderer.drawSplitString(gui.currentPage.getText(), gui.guiLeft+14, gui.guiTop+11, 115, 0);
+        String text = gui.currentPage.getText();
+        if(text != null && !text.isEmpty() && !text.contains("booklet.")){
+            gui.unicodeRenderer.drawSplitString(text.replace("<n>", "\n"), gui.guiLeft+14, gui.guiTop+11, 115, 0);
+        }
     }
 }
