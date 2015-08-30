@@ -64,7 +64,7 @@ public class ActuallyAdditions{
         InitItems.init();
         InitVillager.init();
         FuelHandler.init();
-        proxy.preInit();
+        proxy.preInit(event);
 
         ModUtil.LOGGER.info("PreInitialization Finished.");
     }
@@ -81,7 +81,7 @@ public class ActuallyAdditions{
         InitEvents.init();
         InitCrafting.init();
         FMLInterModComms.sendMessage("Waila", "register", "ellpeck.actuallyadditions.waila.WailaDataProvider.register");
-        proxy.init();
+        proxy.init(event);
 
         ModUtil.LOGGER.info("Initialization Finished.");
     }
@@ -96,7 +96,7 @@ public class ActuallyAdditions{
         HairyBallHandler.init();
         TreasureChestHandler.init();
         InitForeignPaxels.init();
-        proxy.postInit();
+        proxy.postInit(event);
 
         ModUtil.LOGGER.info("PostInitialization Finished.");
     }

@@ -15,6 +15,7 @@ import ellpeck.actuallyadditions.booklet.InitBooklet;
 import ellpeck.actuallyadditions.recipe.CrusherRecipeManualRegistry;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
+import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.item.ItemStack;
 
 public class PageCrusherRecipe extends BookletPage{
@@ -29,7 +30,7 @@ public class PageCrusherRecipe extends BookletPage{
 
     @Override
     public void renderPre(GuiBooklet gui, int mouseX, int mouseY){
-        if(recipe.firstOutput != null){
+        if(recipe != null){
             gui.mc.getTextureManager().bindTexture(GuiBooklet.resLoc);
             gui.drawTexturedModalRect(gui.guiLeft+37, gui.guiTop+20, 60, 180, 60, 60);
         }
@@ -37,13 +38,13 @@ public class PageCrusherRecipe extends BookletPage{
 
     @Override
     public ItemStack getItemStackForPage(){
-        return recipe.firstOutput;
+        return this.recipe == null ? null : this.recipe.firstOutput;
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public void render(GuiBooklet gui, int mouseX, int mouseY){
-        if(recipe.firstOutput == null){
+        if(recipe == null){
             gui.unicodeRenderer.drawSplitString(StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".recipeDisabled"), gui.guiLeft+14, gui.guiTop+15, 115, 0);
         }
 
@@ -62,6 +63,8 @@ public class PageCrusherRecipe extends BookletPage{
                     ItemStack stack = (j == 0 ? this.recipe.input : (j == 1 ? recipe.firstOutput : (j == 2 ? recipe.secondOutput : null)));
 
                     if(stack != null){
+                        if(stack.getItemDamage() == Util.WILDCARD) stack.setItemDamage(0);
+
                         boolean tooltip = i == 1;
 
                         int xShow = gui.guiLeft+37+(j == 0 ? 0 : (j == 1 ? 42 : (j == 2 ? 43 : 0)));

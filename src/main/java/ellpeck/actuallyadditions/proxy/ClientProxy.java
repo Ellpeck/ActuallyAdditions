@@ -13,6 +13,9 @@ package ellpeck.actuallyadditions.proxy;
 
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
+import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.event.FMLPostInitializationEvent;
+import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.VillagerRegistry;
 import ellpeck.actuallyadditions.blocks.InitBlocks;
 import ellpeck.actuallyadditions.blocks.render.*;
@@ -23,25 +26,31 @@ import ellpeck.actuallyadditions.tile.*;
 import ellpeck.actuallyadditions.update.UpdateChecker;
 import ellpeck.actuallyadditions.util.AssetUtil;
 import ellpeck.actuallyadditions.util.ModUtil;
+import ellpeck.actuallyadditions.util.PersistantVariables;
 import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.MinecraftForgeClient;
 
+import java.io.File;
+
 @SuppressWarnings("unused")
 public class ClientProxy implements IProxy{
 
     @Override
-    public void preInit(){
+    public void preInit(FMLPreInitializationEvent event){
         ModUtil.LOGGER.info("PreInitializing ClientProxy...");
 
         if(ConfigBoolValues.DO_UPDATE_CHECK.isEnabled()){
             new UpdateChecker().init();
         }
+
+        PersistantVariables.setTheFile(new File(event.getModConfigurationDirectory().getParent(), ModUtil.MOD_ID+"Data.dat"));
+
     }
 
     @Override
-    public void init(){
+    public void init(FMLInitializationEvent event){
         ModUtil.LOGGER.info("Initializing ClientProxy...");
 
         AssetUtil.COMPOST_RENDER_ID = RenderingRegistry.getNextAvailableRenderId();
@@ -75,7 +84,7 @@ public class ClientProxy implements IProxy{
     }
 
     @Override
-    public void postInit(){
+    public void postInit(FMLPostInitializationEvent event){
         ModUtil.LOGGER.info("PostInitializing ClientProxy...");
     }
 }

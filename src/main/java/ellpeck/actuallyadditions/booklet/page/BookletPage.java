@@ -33,6 +33,8 @@ public class BookletPage implements IBookletPage{
     protected int id;
     protected BookletChapter chapter;
 
+    private boolean mouseWasDown;
+
     public BookletPage(int id){
         this.id = id;
     }
@@ -88,12 +90,17 @@ public class BookletPage implements IBookletPage{
         if(checkAndTransfer){
             for(IBookletPage page : InitBooklet.pagesWithItemStackData){
                 if(page.getItemStackForPage() != null && page.getItemStackForPage().isItemEqual(stack)){
-                    list.add(EnumChatFormatting.GOLD+"Click to see Recipe!");
+                    list.add(EnumChatFormatting.GOLD+StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".clickToSeeRecipe"));
 
-                    if(Mouse.isButtonDown(0)){
-                        gui.openChapter(page.getChapter(), page);
-                        Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.func_147674_a(new ResourceLocation("gui.button.press"), 1.0F));
+                    boolean isDown = Mouse.isButtonDown(0);
+                    if(!this.mouseWasDown){
+                        if(isDown){
+                            gui.openChapter(page.getChapter(), page);
+                            Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.func_147674_a(new ResourceLocation("gui.button.press"), 1.0F));
+                        }
                     }
+                    this.mouseWasDown = isDown;
+
                     break;
                 }
             }

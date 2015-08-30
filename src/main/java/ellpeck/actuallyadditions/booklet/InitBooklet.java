@@ -28,12 +28,16 @@ public class InitBooklet{
     public static ArrayList<BookletIndexEntry> entries = new ArrayList<BookletIndexEntry>();
     public static ArrayList<IBookletPage> pagesWithItemStackData = new ArrayList<IBookletPage>();
 
+    public static BookletChapter chapterIntro;
+
     public static BookletIndexEntry entryFunctionalNonRF = new BookletIndexEntry("functionalNoRF");
     public static BookletIndexEntry entryFunctionalRF = new BookletIndexEntry("functionalRF");
     public static BookletIndexEntry entryMisc = new BookletIndexEntry("misc");
     public static BookletIndexEntry allAndSearch = new BookletEntryAllSearch("allAndSearch");
 
     static{
+        chapterIntro = new BookletChapter("intro", entryMisc, new PageText(1), new PageText(2), new PageCrafting(3, ItemCrafting.recipeBook));
+
         new BookletChapter("breaker", entryFunctionalNonRF, new PageCrafting(1, BlockCrafting.recipeBreaker), new PageCrafting(2, BlockCrafting.recipePlacer), new PageCrafting(3, BlockCrafting.recipeLiquidPlacer), new PageCrafting(4, BlockCrafting.recipeLiquidCollector));
         new BookletChapter("phantomfaces", entryFunctionalNonRF, new PageText(1), new PageCrafting(2, BlockCrafting.recipePhantomface), new PageCrafting(3, BlockCrafting.recipeLiquiface), new PageCrafting(4, BlockCrafting.recipeEnergyface), new PageCrafting(5, ItemCrafting.recipePhantomConnector), new PageCrafting(6, BlockCrafting.recipePhantomBooster));
         new BookletChapter("phantomBreaker", entryFunctionalNonRF, new PageText(1), new PageCrafting(2, BlockCrafting.recipePhantomPlacer), new PageCrafting(3, BlockCrafting.recipePhantomBreaker));
@@ -41,6 +45,7 @@ public class InitBooklet{
 
         new BookletChapter("coffeeMachine", entryFunctionalRF, new PageText(1), new PageText(2), new PageText(3), new PageCrafting(4, BlockCrafting.recipeCoffeeMachine));
         new BookletChapterCrusher("crusher", entryFunctionalRF, new PageText(1), new PageCrafting(2, BlockCrafting.recipeCrusher), new PageCrafting(3, BlockCrafting.recipeDoubleCrusher));
+        new BookletChapterFurnace("furnaceDouble", entryFunctionalRF, new PageCrafting(1, BlockCrafting.recipeFurnace));
 
         new BookletChapter("craftingIngs", entryMisc, new PageText(1), new PageCrafting(2, ItemCrafting.recipeCoil), new PageCrafting(3, ItemCrafting.recipeCoilAdvanced), new PageCrafting(4, BlockCrafting.recipeCase), new PageCrafting(5, BlockCrafting.recipeStoneCase), new PageCrafting(6, BlockCrafting.recipeEnderPearlBlock), new PageCrafting(7, BlockCrafting.recipeEnderCase));
         new BookletChapter("cloud", entryMisc, new PageText(1), new PageCrafting(2, BlockCrafting.recipeSmileyCloud));

@@ -35,15 +35,13 @@ public class ItemCrafting{
     public static IRecipe recipePhantomConnector;
     public static IRecipe recipeCoil;
     public static IRecipe recipeCoilAdvanced;
-
+    public static IRecipe recipeBook;
 
     public static void init(){
 
         //Booklet
         GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemLexicon), new ItemStack(InitItems.itemCanolaSeed), new ItemStack(Items.paper)));
-        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemLexicon), new ItemStack(InitItems.itemCoffeeSeed), new ItemStack(Items.paper)));
-        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemLexicon), new ItemStack(InitItems.itemRiceSeed), new ItemStack(Items.paper)));
-        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemLexicon), new ItemStack(InitItems.itemFlaxSeed), new ItemStack(Items.paper)));
+        recipeBook = Util.lastIRecipe();
 
         //Rice Stuff
         if(ConfigCrafting.RICE_GADGETS.isEnabled()){

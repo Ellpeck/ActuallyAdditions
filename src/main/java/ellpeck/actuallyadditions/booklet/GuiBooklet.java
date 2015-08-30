@@ -16,6 +16,7 @@ import ellpeck.actuallyadditions.booklet.page.IBookletPage;
 import ellpeck.actuallyadditions.config.GuiConfiguration;
 import ellpeck.actuallyadditions.util.AssetUtil;
 import ellpeck.actuallyadditions.util.ModUtil;
+import ellpeck.actuallyadditions.util.PersistantVariables;
 import ellpeck.actuallyadditions.util.StringUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -23,6 +24,7 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.renderer.OpenGlHelper;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.ResourceLocation;
@@ -64,9 +66,12 @@ public class GuiBooklet extends GuiScreen{
 
     private static final int BUTTONS_PER_PAGE = 15;
 
-    public GuiBooklet(){
+    private EntityPlayer player;
+
+    public GuiBooklet(EntityPlayer player){
         this.xSize = 146;
         this.ySize = 180;
+        this.player = player;
     }
 
     @Override
@@ -104,6 +109,11 @@ public class GuiBooklet extends GuiScreen{
     }
 
     @Override
+    public void onGuiClosed(){
+        PersistantVariables.saveBookPage(this.currentIndexEntry, this.currentChapter, this.currentPage, this.pageOpenInIndex);
+    }
+
+    @Override
     protected void mouseClicked(int par1, int par2, int par3){
         this.searchField.mouseClicked(par1, par2, par3);
         super.mouseClicked(par1, par2, par3);
@@ -138,7 +148,15 @@ public class GuiBooklet extends GuiScreen{
         this.currentChapter = null;
         this.currentIndexEntry = null;
 
-        this.openIndexEntry(null, 1, true);
+        if(!PersistantVariables.getBoolean("BookAlreadyOpened")){
+            this.openIndexEntry(InitBooklet.chapterIntro.entry, 1, true);
+            this.openChapter(InitBooklet.chapterIntro, null);
+
+            PersistantVariables.setBoolean("BookAlreadyOpened", true);
+        }
+        else{
+            PersistantVariables.openLastBookPage(this);
+        }
     }
 
     private GuiButton getButton(int id){
@@ -284,7 +302,7 @@ public class GuiBooklet extends GuiScreen{
             }
         }
         else if(button.id == BUTTON_RETURN_ID){
-            if(this.currentChapter != null){
+            if(this.currentChapter != null && this.currentChapter != InitBooklet.chapterIntro){
                 this.openIndexEntry(this.currentIndexEntry, this.pageOpenInIndex, true);
             }
             else{
@@ -319,7 +337,7 @@ public class GuiBooklet extends GuiScreen{
     }
 
     @SuppressWarnings("unchecked")
-    private void openIndexEntry(BookletIndexEntry entry, int page, boolean resetTextField){
+    public void openIndexEntry(BookletIndexEntry entry, int page, boolean resetTextField){
         if(resetTextField){
             this.searchField.setVisible(entry instanceof BookletEntryAllSearch);
             this.searchField.setFocused(entry instanceof BookletEntryAllSearch);

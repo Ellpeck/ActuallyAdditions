@@ -48,6 +48,7 @@ public class BlockCrafting{
     public static IRecipe recipeCoffeeMachine;
     public static IRecipe recipeCrusher;
     public static IRecipe recipeDoubleCrusher;
+    public static IRecipe recipeFurnace;
 
     public static void init(){
 
@@ -395,6 +396,7 @@ public class BlockCrafting{
                     'R', new ItemStack(Blocks.furnace),
                     'F', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.STONE_CASING.ordinal()),
                     'P', "ingotBrick"));
+            recipeFurnace = Util.lastIRecipe();
         }
 
         //Feeder

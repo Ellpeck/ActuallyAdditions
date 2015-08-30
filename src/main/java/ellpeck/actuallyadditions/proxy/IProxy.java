@@ -10,11 +10,15 @@
 
 package ellpeck.actuallyadditions.proxy;
 
+import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.event.FMLPostInitializationEvent;
+import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+
 public interface IProxy{
 
-    void preInit();
+    void preInit(FMLPreInitializationEvent event);
 
-    void init();
+    void init(FMLInitializationEvent event);
 
-    void postInit();
+    void postInit(FMLPostInitializationEvent event);
 }

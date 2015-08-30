@@ -14,6 +14,7 @@ import ellpeck.actuallyadditions.booklet.GuiBooklet;
 import ellpeck.actuallyadditions.booklet.InitBooklet;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
+import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 
@@ -22,11 +23,16 @@ import java.util.Map;
 public class PageFurnace extends BookletPage{
 
     private final ItemStack result;
+    private final ItemStack input;
 
-    public PageFurnace(int id, ItemStack result){
+    public PageFurnace(int id, ItemStack input, ItemStack result){
         super(id);
         this.result = result;
+        this.input = input;
         InitBooklet.pagesWithItemStackData.add(this);
+    }
+    public PageFurnace(int id, ItemStack result){
+        this(id, null, result);
     }
 
     @Override
@@ -36,7 +42,7 @@ public class PageFurnace extends BookletPage{
 
     @Override
     public void renderPre(GuiBooklet gui, int mouseX, int mouseY){
-        if(this.getInputForOutput(this.result) != null){
+        if(this.input != null || this.getInputForOutput(this.result) != null){
             gui.mc.getTextureManager().bindTexture(GuiBooklet.resLoc);
             gui.drawTexturedModalRect(gui.guiLeft+37, gui.guiTop+20, 0, 180, 60, 60);
         }
@@ -45,7 +51,7 @@ public class PageFurnace extends BookletPage{
     @SuppressWarnings("unchecked")
     @Override
     public void render(GuiBooklet gui, int mouseX, int mouseY){
-        ItemStack input = this.getInputForOutput(this.result);
+        ItemStack input = this.input != null ? this.input : this.getInputForOutput(this.result);
         if(input == null){
             gui.unicodeRenderer.drawSplitString(StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".recipeDisabled"), gui.guiLeft+14, gui.guiTop+15, 115, 0);
         }
@@ -59,6 +65,7 @@ public class PageFurnace extends BookletPage{
             for(int i = 0; i < 2; i++){
                 for(int x = 0; x < 2; x++){
                     ItemStack stack = x == 0 ? input : this.result;
+                    if(stack.getItemDamage() == Util.WILDCARD) stack.setItemDamage(0);
                     boolean tooltip = i == 1;
 
                     int xShow = gui.guiLeft+37+1+x*40;
