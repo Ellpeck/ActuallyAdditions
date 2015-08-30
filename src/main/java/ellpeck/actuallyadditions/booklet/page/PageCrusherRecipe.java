@@ -54,7 +54,7 @@ public class PageCrusherRecipe extends BookletPage{
         }
 
         if(recipe.secondChance > 0){
-            gui.unicodeRenderer.drawString(recipe.secondChance+"%", gui.guiLeft+37+62, gui.guiTop+20+35, 0);
+            gui.unicodeRenderer.drawString(recipe.secondChance+"%", gui.guiLeft+37+62, gui.guiTop+20+33, 0);
         }
 
         if(recipe.firstOutput != null){
@@ -67,8 +67,8 @@ public class PageCrusherRecipe extends BookletPage{
 
                         boolean tooltip = i == 1;
 
-                        int xShow = gui.guiLeft+37+(j == 0 ? 0 : (j == 1 ? 42 : (j == 2 ? 43 : 0)));
-                        int yShow = gui.guiTop+20+(j == 0 ? 18 : (j == 1 ? 12 : (j == 2 ? 30 : 0)));
+                        int xShow = gui.guiLeft+37+(j == 0 ? 1 : (j == 1 ? 43 : (j == 2 ? 43 : 0)));
+                        int yShow = gui.guiTop+20+(j == 0 ? 21 : (j == 1 ? 11 : (j == 2 ? 29 : 0)));
                         if(!tooltip){
                             this.renderItem(gui, stack, xShow, yShow);
                         }

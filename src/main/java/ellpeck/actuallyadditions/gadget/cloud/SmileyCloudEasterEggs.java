@@ -235,6 +235,18 @@ public class SmileyCloudEasterEggs{
                 renderHeadBlock(Blocks.quartz_block, 0, 17F);
             }
         });
+        //FreakyNinja
+        register(new ISmileyCloudEasterEgg(){
+            @Override
+            public String[] getTriggerNames(){
+                return new String[]{"freakyninja", "ninja", "tl"};
+            }
+            @Override
+            public void renderExtra(float f){
+                renderHoldingItem(false, new ItemStack(Items.diamond_sword));
+                renderHeadBlock(Blocks.diamond_block, 0, 26F);
+            }
+        });
     }
 
     private static void register(ISmileyCloudEasterEgg egg){

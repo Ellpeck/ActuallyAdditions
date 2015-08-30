@@ -68,8 +68,8 @@ public class PageFurnace extends BookletPage{
                     if(stack.getItemDamage() == Util.WILDCARD) stack.setItemDamage(0);
                     boolean tooltip = i == 1;
 
-                    int xShow = gui.guiLeft+37+1+x*40;
-                    int yShow = gui.guiTop+20+20;
+                    int xShow = gui.guiLeft+37+1+x*42;
+                    int yShow = gui.guiTop+20+21;
                     if(!tooltip){
                         this.renderItem(gui, stack, xShow, yShow);
                     }

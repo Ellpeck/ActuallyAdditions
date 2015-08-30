@@ -97,8 +97,8 @@ public class PageCrafting extends BookletPage{
                 }
             }
 
-            int xShowOutput = gui.guiLeft+28+82;
-            int yShowOutput = gui.guiTop+23+20;
+            int xShowOutput = gui.guiLeft+27+82;
+            int yShowOutput = gui.guiTop+20+22;
             this.renderItem(gui, recipe.getRecipeOutput(), xShowOutput, yShowOutput);
             for(int i = 0; i < 2; i++){
                 boolean tooltip = i == 1;
@@ -107,8 +107,8 @@ public class PageCrafting extends BookletPage{
                         ItemStack stack = stacks[y*width+x];
                         if(stack != null){
                             if(stack.getItemDamage() == Util.WILDCARD) stack.setItemDamage(0);
-                            int xShow = gui.guiLeft+28+x*21;
-                            int yShow = gui.guiTop+23+y*21;
+                            int xShow = gui.guiLeft+27+4+x*18;
+                            int yShow = gui.guiTop+20+4+y*18;
                             if(!tooltip){
                                 this.renderItem(gui, stack, xShow, yShow);
                             }
