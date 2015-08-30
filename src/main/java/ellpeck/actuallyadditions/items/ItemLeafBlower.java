@@ -19,7 +19,6 @@ import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.WorldPos;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
-import net.minecraft.block.BlockLeavesBase;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -67,7 +66,7 @@ public class ItemLeafBlower extends Item implements INameableItem{
                 for(int reachY = (this.isAdvanced ? -ConfigIntValues.LEAF_BLOWER_RANGE_SIDES.getValue() : -ConfigIntValues.LEAF_BLOWER_RANGE_UP.getValue()); reachY < (this.isAdvanced ? ConfigIntValues.LEAF_BLOWER_RANGE_SIDES.getValue()+1 : ConfigIntValues.LEAF_BLOWER_RANGE_UP.getValue()+1); reachY++){
                     //The current Block to break
                     Block block = world.getBlock(x+reachX, y+reachY, z+reachZ);
-                    if(block != null && (block instanceof BlockBush || (this.isAdvanced && block instanceof BlockLeavesBase))){
+                    if(block != null && (block instanceof BlockBush || (this.isAdvanced && block.isLeaves(world, x+reachX, y+reachY, z+reachZ)))){
                         WorldPos theCoord = new WorldPos(world, x+reachX, y+reachY, z+reachZ);
                         Block theBlock = world.getBlock(theCoord.getX(), theCoord.getY(), theCoord.getZ());
                         ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
