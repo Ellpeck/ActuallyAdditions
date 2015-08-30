@@ -46,6 +46,8 @@ public class BlockCrafting{
     public static IRecipe recipeAdvancedESD;
     public static IRecipe recipePhantomBooster;
     public static IRecipe recipeCoffeeMachine;
+    public static IRecipe recipeCrusher;
+    public static IRecipe recipeDoubleCrusher;
 
     public static void init(){
 
@@ -369,6 +371,7 @@ public class BlockCrafting{
                     'Q', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.STONE_CASING.ordinal()),
                     'P', new ItemStack(Blocks.piston),
                     'F', new ItemStack(Items.flint)));
+            recipeCrusher = Util.lastIRecipe();
         }
 
         //Double Crusher
@@ -380,6 +383,7 @@ public class BlockCrafting{
                     'R', InitBlocks.blockGrinder,
                     'F', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.STONE_CASING.ordinal()),
                     'P', new ItemStack(Blocks.piston)));
+            recipeDoubleCrusher = Util.lastIRecipe();
         }
 
         //Double Furnace

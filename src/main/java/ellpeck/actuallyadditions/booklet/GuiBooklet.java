@@ -28,6 +28,8 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
+import java.awt.*;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -51,6 +53,8 @@ public class GuiBooklet extends GuiScreen{
 
     private GuiTextField searchField;
 
+    private static final int BUTTON_TWITTER_ID = -4;
+    private static final int BUTTON_FORUM_ID = -3;
     private static final int BUTTON_ACHIEVEMENTS_ID = -2;
     private static final int BUTTON_CONFIG_ID = -1;
     private static final int BUTTON_FORWARD_ID = 0;
@@ -123,6 +127,8 @@ public class GuiBooklet extends GuiScreen{
 
         this.buttonList.add(new TexturedButton(BUTTON_ACHIEVEMENTS_ID, this.guiLeft+138, this.guiTop, 205, 0, 8, 8));
         this.buttonList.add(new TexturedButton(BUTTON_CONFIG_ID, this.guiLeft+138, this.guiTop+10, 197, 0, 8, 8));
+        this.buttonList.add(new TexturedButton(BUTTON_TWITTER_ID, this.guiLeft, this.guiTop, 213, 0, 8, 8));
+        this.buttonList.add(new TexturedButton(BUTTON_FORUM_ID, this.guiLeft, this.guiTop+10, 221, 0, 8, 8));
 
         this.searchField = new GuiTextField(this.unicodeRenderer, guiLeft+148, guiTop+162, 66, 10);
         this.searchField.setMaxStringLength(30);
@@ -191,6 +197,14 @@ public class GuiBooklet extends GuiScreen{
         if(x >= this.guiLeft+138 && x <= this.guiLeft+138+7 && y >= this.guiTop+10 && y <= this.guiTop+10+7){
             this.func_146283_a(Collections.singletonList("Show Config"), x, y);
         }
+        //Twitter Hover Text
+        if(x >= this.guiLeft && x <= this.guiLeft+7 && y >= this.guiTop && y <= this.guiTop+7){
+            this.func_146283_a(Collections.singletonList("Open @ActAddMod on Twitter in Browser"), x, y);
+        }
+        //Forum Hover Text
+        if(x >= this.guiLeft && x <= this.guiLeft+7 && y >= this.guiTop+10 && y <= this.guiTop+10+7){
+            this.func_146283_a(Collections.singletonList("Open Minecraft Forum Post in Browser"), x, y);
+        }
 
         if(this.currentIndexEntry != null && this.currentChapter != null && this.currentPage != null){
             this.currentPage.render(this, x, y);
@@ -221,7 +235,27 @@ public class GuiBooklet extends GuiScreen{
 
     @Override
     public void actionPerformed(GuiButton button){
-        if(button.id == BUTTON_CONFIG_ID){
+        if(button.id == BUTTON_TWITTER_ID){
+            try{
+                if(Desktop.isDesktopSupported()){
+                    Desktop.getDesktop().browse(new URI("https://twitter.com/ActAddMod"));
+                }
+            }
+            catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+        else if(button.id == BUTTON_FORUM_ID){
+            try{
+                if(Desktop.isDesktopSupported()){
+                    Desktop.getDesktop().browse(new URI("http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/wip-mods/2374910-actually-additions-a-bunch-of-awesome-gadgets"));
+                }
+            }
+            catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+        else if(button.id == BUTTON_CONFIG_ID){
             mc.displayGuiScreen(new GuiConfiguration(this));
         }
         else if(button.id == BUTTON_ACHIEVEMENTS_ID){

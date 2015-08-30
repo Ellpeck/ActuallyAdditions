@@ -14,8 +14,6 @@ import ellpeck.actuallyadditions.booklet.GuiBooklet;
 import ellpeck.actuallyadditions.booklet.InitBooklet;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
-import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 
@@ -66,9 +64,7 @@ public class PageFurnace extends BookletPage{
                     int xShow = gui.guiLeft+37+1+x*40;
                     int yShow = gui.guiTop+20+20;
                     if(!tooltip){
-                        RenderHelper.disableStandardItemLighting();
-                        RenderItem.getInstance().renderItemAndEffectIntoGUI(gui.unicodeRenderer, gui.mc.getTextureManager(), stack, xShow, yShow);
-                        RenderHelper.enableStandardItemLighting();
+                        this.renderItem(gui, stack, xShow, yShow);
                     }
                     else{
                         if(mouseX >= xShow && mouseX <= xShow+16 && mouseY >= yShow && mouseY <= yShow+16){

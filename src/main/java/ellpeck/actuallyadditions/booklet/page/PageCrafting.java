@@ -16,8 +16,6 @@ import ellpeck.actuallyadditions.booklet.InitBooklet;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
 import ellpeck.actuallyadditions.util.Util;
-import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.ShapedRecipes;
@@ -101,9 +99,7 @@ public class PageCrafting extends BookletPage{
 
             int xShowOutput = gui.guiLeft+28+82;
             int yShowOutput = gui.guiTop+23+20;
-            RenderHelper.disableStandardItemLighting();
-            RenderItem.getInstance().renderItemAndEffectIntoGUI(gui.unicodeRenderer, gui.mc.getTextureManager(), recipe.getRecipeOutput(), xShowOutput, yShowOutput);
-            RenderHelper.enableStandardItemLighting();
+            this.renderItem(gui, recipe.getRecipeOutput(), xShowOutput, yShowOutput);
             for(int i = 0; i < 2; i++){
                 boolean tooltip = i == 1;
                 for(int x = 0; x < width; x++){
@@ -114,9 +110,7 @@ public class PageCrafting extends BookletPage{
                             int yShow = gui.guiTop+23+y*21;
                             if(!tooltip){
                                 if(stack.getItemDamage() == Util.WILDCARD) stack.setItemDamage(0);
-                                RenderHelper.disableStandardItemLighting();
-                                RenderItem.getInstance().renderItemAndEffectIntoGUI(gui.unicodeRenderer, gui.mc.getTextureManager(), stack, xShow, yShow);
-                                RenderHelper.enableStandardItemLighting();
+                                this.renderItem(gui, stack, xShow, yShow);
                             }
                             else{
                                 if(mouseX >= xShow && mouseX <= xShow+16 && mouseY >= yShow && mouseY <= yShow+16){

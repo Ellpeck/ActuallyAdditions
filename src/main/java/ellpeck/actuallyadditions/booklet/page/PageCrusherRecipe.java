@@ -15,23 +15,21 @@ import ellpeck.actuallyadditions.booklet.InitBooklet;
 import ellpeck.actuallyadditions.recipe.CrusherRecipeManualRegistry;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
-import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.item.ItemStack;
 
 public class PageCrusherRecipe extends BookletPage{
 
-    public ItemStack input;
+    public CrusherRecipeManualRegistry.CrusherRecipe recipe;
 
-    public PageCrusherRecipe(int id, ItemStack input){
+    public PageCrusherRecipe(int id, CrusherRecipeManualRegistry.CrusherRecipe recipe){
         super(id);
-        this.input = input;
+        this.recipe = recipe;
         InitBooklet.pagesWithItemStackData.add(this);
     }
 
     @Override
     public void renderPre(GuiBooklet gui, int mouseX, int mouseY){
-        if(CrusherRecipeManualRegistry.getOutput(this.input, false) != null){
+        if(recipe.firstOutput != null){
             gui.mc.getTextureManager().bindTexture(GuiBooklet.resLoc);
             gui.drawTexturedModalRect(gui.guiLeft+37, gui.guiTop+20, 60, 180, 60, 60);
         }
@@ -39,14 +37,13 @@ public class PageCrusherRecipe extends BookletPage{
 
     @Override
     public ItemStack getItemStackForPage(){
-        return CrusherRecipeManualRegistry.getOutput(this.input, false);
+        return recipe.firstOutput;
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public void render(GuiBooklet gui, int mouseX, int mouseY){
-        ItemStack output = CrusherRecipeManualRegistry.getOutput(this.input, false);
-        if(output == null){
+        if(recipe.firstOutput == null){
             gui.unicodeRenderer.drawSplitString(StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".recipeDisabled"), gui.guiLeft+14, gui.guiTop+15, 115, 0);
         }
 
@@ -55,15 +52,14 @@ public class PageCrusherRecipe extends BookletPage{
             gui.unicodeRenderer.drawSplitString(text.replace("<n>", "\n"), gui.guiLeft+14, gui.guiTop+100, 115, 0);
         }
 
-        int secondChance = CrusherRecipeManualRegistry.getSecondChance(this.input);
-        if(secondChance > 0){
-            gui.unicodeRenderer.drawString(secondChance+"%", gui.guiLeft+37+62, gui.guiTop+20+35, 0);
+        if(recipe.secondChance > 0){
+            gui.unicodeRenderer.drawString(recipe.secondChance+"%", gui.guiLeft+37+62, gui.guiTop+20+35, 0);
         }
 
-        if(output != null){
+        if(recipe.firstOutput != null){
             for(int i = 0; i < 2; i++){
                 for(int j = 0; j < 3; j++){
-                    ItemStack stack = (j == 0 ? this.input : (j == 1 ? output : (j == 2 ? CrusherRecipeManualRegistry.getOutput(this.input, true) : null)));
+                    ItemStack stack = (j == 0 ? this.recipe.input : (j == 1 ? recipe.firstOutput : (j == 2 ? recipe.secondOutput : null)));
 
                     if(stack != null){
                         boolean tooltip = i == 1;
@@ -71,9 +67,7 @@ public class PageCrusherRecipe extends BookletPage{
                         int xShow = gui.guiLeft+37+(j == 0 ? 0 : (j == 1 ? 42 : (j == 2 ? 43 : 0)));
                         int yShow = gui.guiTop+20+(j == 0 ? 18 : (j == 1 ? 12 : (j == 2 ? 30 : 0)));
                         if(!tooltip){
-                            RenderHelper.disableStandardItemLighting();
-                            RenderItem.getInstance().renderItemAndEffectIntoGUI(gui.unicodeRenderer, gui.mc.getTextureManager(), stack, xShow, yShow);
-                            RenderHelper.enableStandardItemLighting();
+                            this.renderItem(gui, stack, xShow, yShow);
                         }
                         else{
                             if(mouseX >= xShow && mouseX <= xShow+16 && mouseY >= yShow && mouseY <= yShow+16){
