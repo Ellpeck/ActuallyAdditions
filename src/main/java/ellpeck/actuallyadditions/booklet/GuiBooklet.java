@@ -14,10 +14,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.booklet.page.IBookletPage;
 import ellpeck.actuallyadditions.config.GuiConfiguration;
-import ellpeck.actuallyadditions.util.AssetUtil;
-import ellpeck.actuallyadditions.util.ModUtil;
-import ellpeck.actuallyadditions.util.PersistantVariables;
-import ellpeck.actuallyadditions.util.StringUtil;
+import ellpeck.actuallyadditions.util.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
@@ -177,7 +174,7 @@ public class GuiBooklet extends GuiScreen{
     public void drawScreen(int x, int y, float f){
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(resLoc);
-        this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
+        this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, this.isGimmicky() ? 256 : this.xSize, this.isGimmicky() ? 256 : this.ySize);
 
         if(this.currentIndexEntry instanceof BookletEntryAllSearch && this.currentChapter == null){
             this.drawTexturedModalRect(this.guiLeft+146, this.guiTop+160, 146, 80, 70, 14);
@@ -202,6 +199,18 @@ public class GuiBooklet extends GuiScreen{
             }
             else{
                 this.drawCenteredString(this.unicodeRenderer, this.pageOpenInIndex+"/"+this.indexPageAmount, this.guiLeft+this.xSize/2, this.guiTop+172, StringUtil.DECIMAL_COLOR_WHITE);
+            }
+        }
+
+        if(this.isGimmicky()){
+            this.unicodeRenderer.drawSplitString("This book looks a lot like the one from Botania, doesn't it? Well, I think it does, too, and I'm kind of annoyed by it to be honest. Wasn't really meant to be that way. I guess I just kind of had the design of the Botania Book in mind when designing this. Well. The Code is made by me, at least. So that's something. Also: How did you find this gimmick? :P -Peck", this.guiLeft-80-3, this.guiTop+25, 80, StringUtil.DECIMAL_COLOR_WHITE);
+
+            String strg = "Click this! I need followaz #Pathetic #DontTakeSeriously ->";
+            this.unicodeRenderer.drawString(strg, this.guiLeft-this.unicodeRenderer.getStringWidth(strg)-3, this.guiTop, StringUtil.DECIMAL_COLOR_WHITE);
+
+            if(this.currentChapter == InitBooklet.chapterIntro && this.currentPage == InitBooklet.chapterIntro.pages[1]){
+                strg = "Hey Hose, I kind of hate you a bit for that Ellopecko thing. (Not really! It's fun and games and stuff! :D)";
+                this.unicodeRenderer.drawString(strg, this.guiLeft+this.xSize/2-this.unicodeRenderer.getStringWidth(strg)/2, this.guiTop-20, StringUtil.DECIMAL_COLOR_WHITE);
             }
         }
 
@@ -230,6 +239,10 @@ public class GuiBooklet extends GuiScreen{
         }
 
         if(this.mouseClicked) this.mouseClicked = false;
+    }
+
+    private boolean isGimmicky(){
+        return KeyUtil.isControlPressed() && KeyUtil.isShiftPressed() && KeyUtil.isAltPressed();
     }
 
     private IBookletPage getNextPage(BookletChapter chapter, IBookletPage currentPage){
