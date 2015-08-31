@@ -364,6 +364,11 @@ achievement.actuallyadditions.openTreasureChest.desc=Open a Treasure Chest under
 
 item.actuallyadditions.itemBooklet.name=Actually Additions Information Manual
 
+booklet.actuallyadditions.shapelessRecipe=Shapeless Recipe
+booklet.actuallyadditions.shapedRecipe=Shaped Recipe
+booklet.actuallyadditions.shapelessOreRecipe=Shapeless OreDictionary Recipe
+booklet.actuallyadditions.shapedOreRecipe=Shaped OreDictionary Recipe
+
 booklet.actuallyadditions.indexEntry.misc.name=Miscellaneous
 booklet.actuallyadditions.indexEntry.functionalNoRF.name=Functional Blocks (No RF use)
 booklet.actuallyadditions.indexEntry.allAndSearch.name=All Items and Search

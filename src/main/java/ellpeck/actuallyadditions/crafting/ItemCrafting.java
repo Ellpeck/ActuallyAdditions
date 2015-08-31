@@ -36,6 +36,9 @@ public class ItemCrafting{
     public static IRecipe recipeCoil;
     public static IRecipe recipeCoilAdvanced;
     public static IRecipe recipeBook;
+    public static IRecipe recipeTinyCoal;
+    public static IRecipe recipeTinyChar;
+    public static IRecipe recipeMashedFood;
 
     public static void init(){
 
@@ -329,8 +332,10 @@ public class ItemCrafting{
         //Tiny Coal
         GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemMisc, 8, TheMiscItems.TINY_COAL.ordinal()),
                 new ItemStack(Items.coal));
+        recipeTinyCoal = Util.lastIRecipe();
         GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemMisc, 8, TheMiscItems.TINY_CHAR.ordinal()),
                 new ItemStack(Items.coal, 1, 1));
+        recipeTinyChar = Util.lastIRecipe();
 
         //Rice Seeds
         GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemRiceSeed),
@@ -414,6 +419,9 @@ public class ItemCrafting{
                     if(!isBlacklisted(item)){
                         ItemStack ingredient = new ItemStack((Item)item, 1, Util.WILDCARD);
                         GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemMisc, 8, TheMiscItems.MASHED_FOOD.ordinal()), ingredient, ingredient, ingredient, ingredient, new ItemStack(InitItems.itemKnife, 1, Util.WILDCARD));
+                        if(recipeMashedFood == null){
+                            recipeMashedFood = Util.lastIRecipe();
+                        }
                     }
                 }
             }

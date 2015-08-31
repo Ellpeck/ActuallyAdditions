@@ -65,6 +65,9 @@ public class BlockCrafting{
     public static IRecipe recipeQuartzBlock;
     public static IRecipe recipeQuartzChiseled;
     public static IRecipe recipeQuartzPillar;
+    public static IRecipe recipeBlockChar;
+    public static IRecipe recipeFeeder;
+    public static IRecipe recipeCompost;
 
     public static void init(){
 
@@ -83,6 +86,7 @@ public class BlockCrafting{
                     "W W", "W W", "WCW",
                     'W', "plankWood",
                     'C', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.WOOD_CASING.ordinal())));
+            recipeCompost = Util.lastIRecipe();
         }
 
         //XP Solidifier
@@ -99,6 +103,7 @@ public class BlockCrafting{
         GameRegistry.addRecipe(new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.CHARCOAL_BLOCK.ordinal()),
                 "CCC", "CCC", "CCC",
                 'C', new ItemStack(Items.coal, 1, 1));
+        recipeBlockChar = Util.lastIRecipe();
         GameRegistry.addShapelessRecipe(new ItemStack(Items.coal, 9, 1),
                 new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.CHARCOAL_BLOCK.ordinal()));
 
@@ -438,6 +443,7 @@ public class BlockCrafting{
                     'D', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL.ordinal()),
                     'C', new ItemStack(Items.golden_carrot),
                     'H', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.WOOD_CASING.ordinal())));
+            recipeFeeder = Util.lastIRecipe();
         }
 
         //Giant Chest
