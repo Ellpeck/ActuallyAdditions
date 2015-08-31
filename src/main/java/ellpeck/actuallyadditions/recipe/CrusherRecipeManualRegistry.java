@@ -23,7 +23,7 @@ public class CrusherRecipeManualRegistry{
     public static ArrayList<CrusherRecipe> recipes = new ArrayList<CrusherRecipe>();
 
     public static void registerRecipe(ItemStack input, ItemStack outputOne, ItemStack outputTwo, int secondChance){
-        if(!hasRecipe(input, outputOne)){
+        if(!hasRecipe(input, outputOne, outputTwo)){
             recipes.add(new CrusherRecipe(input, outputOne, outputTwo, secondChance));
         }
     }
@@ -43,7 +43,7 @@ public class CrusherRecipeManualRegistry{
                 if(outputOneStacks != null && !outputOneStacks.isEmpty()){
                     for(ItemStack anOutputOne : outputOneStacks){
                         ItemStack theOutputOne = anOutputOne.copy();
-                        theOutputOne.stackSize =  outputOneAmount;
+                        theOutputOne.stackSize = outputOneAmount;
                         if(outputTwoStacks != null && !outputTwoStacks.isEmpty()){
                             for(ItemStack anOutputTwo : outputTwoStacks){
                                 ItemStack theOutputTwo = anOutputTwo.copy();
@@ -51,18 +51,22 @@ public class CrusherRecipeManualRegistry{
                                 registerRecipe(theInput, theOutputOne, theOutputTwo, secondChance);
                             }
                         }
-                        else registerRecipe(theInput, theOutputOne, null, 0);
+                        else{
+                            registerRecipe(theInput, theOutputOne, null, 0);
+                        }
                     }
                 }
                 else{
-                    if(ConfigBoolValues.DO_CRUSHER_SPAM.isEnabled())
-                        ModUtil.LOGGER.warn("Couldn't register Crusher Recipe! An Item with OreDictionary Registry '" + outputOne + "' doesn't exist! It should be the output of '" + input + "'!");
+                    if(ConfigBoolValues.DO_CRUSHER_SPAM.isEnabled()){
+                        ModUtil.LOGGER.warn("Couldn't register Crusher Recipe! An Item with OreDictionary Registry '"+outputOne+"' doesn't exist! It should be the output of '"+input+"'!");
+                    }
                 }
             }
         }
         else{
-            if(ConfigBoolValues.DO_CRUSHER_SPAM.isEnabled())
+            if(ConfigBoolValues.DO_CRUSHER_SPAM.isEnabled()){
                 ModUtil.LOGGER.warn("Couldn't register Crusher Recipe! Didn't find Items registered as '"+input+"'!");
+            }
         }
     }
 
@@ -79,9 +83,13 @@ public class CrusherRecipeManualRegistry{
         return null;
     }
 
-    public static boolean hasRecipe(ItemStack input, ItemStack outputOne){
+    public static boolean hasRecipe(ItemStack input, ItemStack outputOne, ItemStack outputTwo){
         for(CrusherRecipe recipe : recipes){
-            if(recipe.input.isItemEqual(input) && recipe.firstOutput.isItemEqual(outputOne) || (recipe.input.getItem() == input.getItem() && recipe.firstOutput.getItem() == outputOne.getItem() && recipe.input.getItemDamage() == Util.WILDCARD)) return true;
+            if(outputTwo == null || (recipe.secondOutput != null && recipe.secondOutput.isItemEqual(outputTwo))){
+                if(recipe.input.isItemEqual(input) && recipe.firstOutput.isItemEqual(outputOne) || (recipe.input.getItem() == input.getItem() && recipe.firstOutput.getItem() == outputOne.getItem() && recipe.input.getItemDamage() == Util.WILDCARD)){
+                    return true;
+                }
+            }
         }
         return false;
     }
