@@ -247,6 +247,19 @@ public class SmileyCloudEasterEggs{
                 renderHeadBlock(Blocks.diamond_block, 0, 26F);
             }
         });
+        //NihonTiger
+        register(new ISmileyCloudEasterEgg(){
+            @Override
+            public String[] getTriggerNames(){
+                return new String[]{"nihon", "nihontiger", "tiger"};
+            }
+            @Override
+            public void renderExtra(float f){
+                renderHoldingItem(false, new ItemStack(Items.stone_pickaxe));
+                renderHoldingItem(true, new ItemStack(Items.poisonous_potato));
+                renderHeadBlock(Blocks.gravel, 0, 47F);
+            }
+        });
     }
 
     private static void register(ISmileyCloudEasterEgg egg){

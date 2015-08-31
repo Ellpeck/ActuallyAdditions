@@ -374,7 +374,7 @@ booklet.actuallyadditions.clickToSeeRecipe=Click to see more Information
 
 booklet.actuallyadditions.chapter.foods.name=Food
 booklet.actuallyadditions.chapter.cloud.name=Smiley Cloud
-booklet.actuallyadditions.chapter.cloud.text.1=A <item>Smiley Cloud<r> is a neat little block that you can put down in the world. When in place, it will hover around across the ground, though staying on the block you placed it in. When right-clicking the cloud, it will open a GUI that enables you to change its name, and thus, its appearance if you do it right. On the next page, you can find some examples you can try out.
+booklet.actuallyadditions.chapter.cloud.text.1=A <item>Smiley Cloud<r> is a neat little block that you can put down in the world. When in place, it will hover around across the ground, though staying on the block you placed it in. When right-clicking the cloud, it will open a GUI that enables you to change its name, and thus, its appearance if you do it right. On the next page, you can find some examples you can try out. <n><n><i>This seems so familiar... Tiny Potato?
 booklet.actuallyadditions.chapter.cloud.text.2=The Crafting Recipe is shown above. If you want to know what certain name changes do, try naming a cloud <imp>"Ellpeck"<r>, <imp>"Glenthor"<r> or <imp>"AcidBlues"<r>.
 
 booklet.actuallyadditions.chapter.phantomfaces.name=Phantomfaces
