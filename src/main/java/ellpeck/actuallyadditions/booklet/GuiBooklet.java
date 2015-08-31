@@ -63,7 +63,7 @@ public class GuiBooklet extends GuiScreen{
     private static final int BUTTON_RETURN_ID = 2;
     private static final int CHAPTER_BUTTONS_START = 3;
 
-    private static final int BUTTONS_PER_PAGE = 15;
+    private static final int BUTTONS_PER_PAGE = 13;
 
     private boolean mouseClicked;
 
@@ -133,7 +133,7 @@ public class GuiBooklet extends GuiScreen{
         this.buttonList.add(new TexturedButton(BUTTON_RETURN_ID, this.guiLeft+this.xSize/2-7, this.guiTop+this.ySize+2, 182, 0, 15, 10));
 
         for(int i = 0; i < BUTTONS_PER_PAGE; i++){
-            this.buttonList.add(new IndexButton(this.unicodeRenderer, CHAPTER_BUTTONS_START+i, guiLeft+13, guiTop+15+(i*11), 120, 10, ""));
+            this.buttonList.add(new IndexButton(this.unicodeRenderer, CHAPTER_BUTTONS_START+i, guiLeft+15, guiTop+10+(i*12), 120, 10, ""));
         }
 
         this.buttonList.add(new TexturedButton(BUTTON_ACHIEVEMENTS_ID, this.guiLeft+138, this.guiTop, 205, 0, 8, 8));

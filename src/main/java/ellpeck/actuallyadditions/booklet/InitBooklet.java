@@ -19,6 +19,7 @@ import ellpeck.actuallyadditions.crafting.FoodCrafting;
 import ellpeck.actuallyadditions.crafting.ItemCrafting;
 import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.items.metalists.TheFoods;
+import ellpeck.actuallyadditions.items.metalists.TheSpecialDrops;
 import net.minecraft.item.ItemStack;
 
 import java.util.ArrayList;
@@ -42,10 +43,15 @@ public class InitBooklet{
         new BookletChapter("phantomfaces", entryFunctionalNonRF, new PageText(1), new PageCrafting(2, BlockCrafting.recipePhantomface), new PageCrafting(3, BlockCrafting.recipeLiquiface), new PageCrafting(4, BlockCrafting.recipeEnergyface), new PageCrafting(5, ItemCrafting.recipePhantomConnector), new PageCrafting(6, BlockCrafting.recipePhantomBooster));
         new BookletChapter("phantomBreaker", entryFunctionalNonRF, new PageText(1), new PageCrafting(2, BlockCrafting.recipePhantomPlacer), new PageCrafting(3, BlockCrafting.recipePhantomBreaker));
         new BookletChapter("esd", entryFunctionalNonRF, new PageText(1), new PageCrafting(2, BlockCrafting.recipeESD), new PageCrafting(3, BlockCrafting.recipeAdvancedESD));
+        new BookletChapter("xpSolidifier", entryFunctionalNonRF, new PageText(1).setStack(new ItemStack(InitItems.itemSpecialDrop, 1, TheSpecialDrops.SOLIDIFIED_EXPERIENCE.ordinal())), new PageCrafting(2, BlockCrafting.recipeSolidifier));
+        new BookletChapter("greenhouseGlass", entryFunctionalNonRF, new PageText(1), new PageCrafting(2, BlockCrafting.recipeGlass));
 
         new BookletChapter("coffeeMachine", entryFunctionalRF, new PageText(1), new PageText(2), new PageText(3), new PageCrafting(4, BlockCrafting.recipeCoffeeMachine));
         new BookletChapterCrusher("crusher", entryFunctionalRF, new PageText(1), new PageCrafting(2, BlockCrafting.recipeCrusher), new PageCrafting(3, BlockCrafting.recipeDoubleCrusher));
         new BookletChapterFurnace("furnaceDouble", entryFunctionalRF, new PageCrafting(1, BlockCrafting.recipeFurnace));
+        new BookletChapter("miner", entryFunctionalRF, new PageText(1), new PageCrafting(2, BlockCrafting.recipeMiner), new PageCrafting(3, BlockCrafting.recipeCasing));
+        new BookletChapter("lavaFactory", entryFunctionalRF, new PageText(1), new PageCrafting(2, BlockCrafting.recipeLavaFactory));
+        new BookletChapter("energizer", entryFunctionalRF, new PageCrafting(1, BlockCrafting.recipeEnergizer), new PageCrafting(2, BlockCrafting.recipeEnervator));
 
         new BookletChapter("craftingIngs", entryMisc, new PageText(1), new PageCrafting(2, ItemCrafting.recipeCoil), new PageCrafting(3, ItemCrafting.recipeCoilAdvanced), new PageCrafting(4, BlockCrafting.recipeCase), new PageCrafting(5, BlockCrafting.recipeStoneCase), new PageCrafting(6, BlockCrafting.recipeEnderPearlBlock), new PageCrafting(7, BlockCrafting.recipeEnderCase));
         new BookletChapter("cloud", entryMisc, new PageText(1), new PageCrafting(2, BlockCrafting.recipeSmileyCloud));

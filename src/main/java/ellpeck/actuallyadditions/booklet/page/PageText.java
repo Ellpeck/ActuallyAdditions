@@ -11,18 +11,35 @@
 package ellpeck.actuallyadditions.booklet.page;
 
 import ellpeck.actuallyadditions.booklet.GuiBooklet;
+import ellpeck.actuallyadditions.booklet.InitBooklet;
+import net.minecraft.item.ItemStack;
 
 public class PageText extends BookletPage{
+
+    private ItemStack stack;
 
     public PageText(int id){
         super(id);
     }
 
+    public PageText setStack(ItemStack stack){
+        if(!InitBooklet.pagesWithItemStackData.contains(this)){
+            InitBooklet.pagesWithItemStackData.add(this);
+        }
+        this.stack = stack;
+        return this;
+    }
+
     @Override
-    public void render(GuiBooklet gui, int mouseX, int mouseY, boolean mouseClick){
+    public ItemStack getItemStackForPage(){
+        return this.stack;
+    }
+
+    @Override
+    public void renderPre(GuiBooklet gui, int mouseX, int mouseY, boolean mouseClick){
         String text = gui.currentPage.getText();
         if(text != null && !text.isEmpty() && !text.contains("booklet.")){
-            gui.unicodeRenderer.drawSplitString(text.replace("<n>", "\n"), gui.guiLeft+14, gui.guiTop+11, 115, 0);
+            gui.unicodeRenderer.drawSplitString(text, gui.guiLeft+14, gui.guiTop+11, 115, 0);
         }
     }
 }

@@ -58,7 +58,7 @@ public class PageFurnace extends BookletPage{
 
         String text = gui.currentPage.getText();
         if(text != null && !text.isEmpty() && !text.contains("booklet.")){
-            gui.unicodeRenderer.drawSplitString(text.replace("<n>", "\n"), gui.guiLeft+14, gui.guiTop+100, 115, 0);
+            gui.unicodeRenderer.drawSplitString(text, gui.guiLeft+14, gui.guiTop+100, 115, 0);
         }
 
         if(input != null){

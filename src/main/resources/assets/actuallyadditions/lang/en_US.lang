@@ -370,7 +370,7 @@ booklet.actuallyadditions.indexEntry.allAndSearch.name=All Items and Search
 booklet.actuallyadditions.indexEntry.functionalRF.name=Functional Blocks (Use RF)
 
 booklet.actuallyadditions.recipeDisabled=The crafting recipe for this item is disabled in the Config File! If you're on a server, ask the server author to enable it in the config. If you're on a client, press the 'Open Config'-Button on the top right and enable the recipe!
-booklet.actuallyadditions.clickToSeeRecipe=Click to see Recipe
+booklet.actuallyadditions.clickToSeeRecipe=Click to see more Information
 
 booklet.actuallyadditions.chapter.foods.name=Food
 booklet.actuallyadditions.chapter.cloud.name=Smiley Cloud
@@ -420,3 +420,29 @@ booklet.actuallyadditions.chapter.crusher.text.1=The <item>Crusher<r> is a machi
 
 booklet.actuallyadditions.chapter.furnaceDouble.name=Double Furnace
 booklet.actuallyadditions.chapter.furnaceDouble.text.1=The <item>Double Furnace<r> is a block that works exactly <imp>like a furnace<r>, but it can smelt <imp>two items at a time<r> and uses <imp>RF<r> to work. <n>See all of the recipes on the following pages.
+
+booklet.actuallyadditions.chapter.xpSolidifier.name=Experience Solidifier
+booklet.actuallyadditions.chapter.xpSolidifier.text.1=The <item>Experience Solidifier<r> can be used to turn your Experience into <item>Solidified Experience<r>-Items that can then either be <imp>stored<r> or used again by right-clicking to get the XP you spent for them back. <item>Solidified Experience<r> also gets dropped from mobs sometimes!<n><imp>An easy way to store your XP!<r>
+booklet.actuallyadditions.chapter.xpSolidifier.text.2=Block of knowledge
+
+booklet.actuallyadditions.chapter.miner.name=Magnetic Miner
+booklet.actuallyadditions.chapter.miner.text.1=The <item>Magnetic Miner<r> is a block that automatically <imp>digs ores out of the ground<r>, supplied a bit of <imp>RF<r> and some <imp>Oil<r>, and places them on top of <item>Casing Blocks<r> that you need to put down <imp>one block below it<r> in the area in places where you want ores to be mined. The ores you get will then be <imp>stacked up on top of the casings<r>.
+booklet.actuallyadditions.chapter.miner.text.2=Magnet Ore
+booklet.actuallyadditions.chapter.miner.text.3=These blocks need to be placed <imp>one block lower than the miner is<r> around it where ores should be stacked up.
+
+booklet.actuallyadditions.chapter.greenhouseGlass.name=Greenhouse Glass
+booklet.actuallyadditions.chapter.greenhouseGlass.text.1=<item>Greenhouse Glass<r> can be used to <imp>make the growth of plants a lot faster<r>. When placed above a plant, it, and this is tech talk right here, ticks the plant much more often, causing it to grow much faster. It doesn't have a set range on the vertical axis, so you could place the glass really high above the plants to grow.<n>The Item version of this is the <item>Ring Of Growth<r>.
+booklet.actuallyadditions.chapter.greenhouseGlass.text.2=Growing Glass.
+
+booklet.actuallyadditions.chapter.lavaFactory.name=Lava Factory
+booklet.actuallyadditions.chapter.lavaFactory.text.1=The <item>Lava Factory<r> is a block that automatically generates lava if supplied with enough <imp>RF<r>. Before it can do that, however, you need to place <item>Casing Blocks<r> (their entries can be found on the Magnetic Miner page!) around it in a certain way: Go <imp>one block up above the controller<r>. That block is where the lava is going to appear. Around that block, place <imp>4 Casing Blocks<r>. You can check if you did it right by right-clicking the <item>Lava Factory<r>.
+booklet.actuallyadditions.chapter.lavaFactory.text.2=Mister Lava, Lava! <n>..sorry.
+
+booklet.actuallyadditions.chapter.energizer.name=Energizers and Enervators
+booklet.actuallyadditions.chapter.energizer.text.1=The <item>Energizer<r> will charge up Items that can hold <imp>RF<r>.
+booklet.actuallyadditions.chapter.energizer.text.2=The <item>Enervator<r> will enervate, meaning discharge, Items that can hold <imp>RF<r>.
+
+booklet.actuallyadditions.chapter.intro.name=An Introduction to ActAdd
+booklet.actuallyadditions.chapter.intro.text.1=<i>This book, written years ago, found by the player, used to help understand the wonders of this world, finally opened, finally looked at, full of glory, full of grace, will be used to help the player along on their journey through <imp>Actually Additions<r><i>. <n>What is <imp>Actually Additions<r><i>, you may ask. <n><imp>Actually Additions<r><i> adds blocks, items, and features to make the player's experience easier, automate the world and properly do what you've always wanted to do.
+booklet.actuallyadditions.chapter.intro.text.2=<i>This book, written by <imp>Ellpeck<r><i>, the author of everything <imp>Actually Additions<r><i> contains, often called Ellopecko, Peck or Ellpack, is easy to navigate. It has an <imp>index page<r><i> at the front from which you can choose <imp>criteria pages<r><i>. These criteria pages contain a list of every item which is part of the criteria, and clicking on that will show <imp>precise information and the crafting recipe<r><i> of the item. The page you were on previously will stay open between sessions, too! <n><rs>Go check it out!
+booklet.actuallyadditions.chapter.intro.text.3=If you, for some reason, want to craft this book again, just take a <item>piece of paper<r> and a <item>canola seed<r> which you can find randomly generated and craft them together!

@@ -49,6 +49,13 @@ public class BlockCrafting{
     public static IRecipe recipeCrusher;
     public static IRecipe recipeDoubleCrusher;
     public static IRecipe recipeFurnace;
+    public static IRecipe recipeSolidifier;
+    public static IRecipe recipeMiner;
+    public static IRecipe recipeCasing;
+    public static IRecipe recipeGlass;
+    public static IRecipe recipeLavaFactory;
+    public static IRecipe recipeEnergizer;
+    public static IRecipe recipeEnervator;
 
     public static void init(){
 
@@ -76,6 +83,7 @@ public class BlockCrafting{
                     'X', new ItemStack(InitItems.itemSpecialDrop, 1, TheSpecialDrops.SOLIDIFIED_EXPERIENCE.ordinal()),
                     'D', "blockDiamond",
                     'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal())));
+            recipeSolidifier = Util.lastIRecipe();
         }
 
         //Charcoal Block
@@ -132,15 +140,17 @@ public class BlockCrafting{
                     'I', "ingotIron",
                     'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal()),
                     'A', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.STONE_CASING.ordinal())));
+            recipeEnergizer = Util.lastIRecipe();
         }
 
-        //Energizer
+        //Enervator
         if(ConfigCrafting.ENERVATOR.isEnabled()){
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockEnervator),
                     " I ", "CAC", " I ",
                     'I', "ingotIron",
                     'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal()),
                     'A', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.STONE_CASING.ordinal())));
+            recipeEnervator = Util.lastIRecipe();
         }
 
         //Lava Factory
@@ -151,6 +161,7 @@ public class BlockCrafting{
                     'S', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal()),
                     'I', "blockIron",
                     'L', Items.lava_bucket));
+            recipeLavaFactory = Util.lastIRecipe();
         }
 
         //Casing
@@ -159,6 +170,7 @@ public class BlockCrafting{
                     "ICI",
                     'C', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.STONE_CASING.ordinal()),
                     'I', "blockIron"));
+            recipeCasing = Util.lastIRecipe();
         }
 
         //Canola Press
@@ -179,6 +191,7 @@ public class BlockCrafting{
                     'C', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.STONE_CASING.ordinal()),
                     'B', new ItemStack(InitItems.itemBatteryDouble),
                     'I', new ItemStack(Blocks.iron_block)));
+            recipeMiner = Util.lastIRecipe();
         }
 
         //Fermenting Barrel
@@ -425,6 +438,7 @@ public class BlockCrafting{
                     'G', "blockGlass",
                     'D', Blocks.obsidian,
                     'S', "treeSapling"));
+            recipeGlass = Util.lastIRecipe();
         }
 
         //Placer
