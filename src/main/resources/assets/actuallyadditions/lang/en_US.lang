@@ -368,6 +368,7 @@ booklet.actuallyadditions.indexEntry.misc.name=Miscellaneous
 booklet.actuallyadditions.indexEntry.functionalNoRF.name=Functional Blocks (No RF use)
 booklet.actuallyadditions.indexEntry.allAndSearch.name=All Items and Search
 booklet.actuallyadditions.indexEntry.functionalRF.name=Functional Blocks (Use RF)
+booklet.actuallyadditions.indexEntry.generatingRF.name=Generating Blocks (Make RF)
 
 booklet.actuallyadditions.recipeDisabled=The crafting recipe for this item is disabled in the Config File! If you're on a server, ask the server author to enable it in the config. If you're on a client, press the 'Open Config'-Button on the top right and enable the recipe!
 booklet.actuallyadditions.clickToSeeRecipe=Click to see more Information
@@ -446,3 +447,25 @@ booklet.actuallyadditions.chapter.intro.name=An Introduction to ActAdd
 booklet.actuallyadditions.chapter.intro.text.1=<i>This book, written years ago, found by the player, used to help understand the wonders of this world, finally opened, finally looked at, full of glory, full of grace, will be used to help the player along on their journey through <imp>Actually Additions<r><i>. <n>What is <imp>Actually Additions<r><i>, you may ask. <n><imp>Actually Additions<r><i> adds blocks, items, and features to make the player's experience easier, automate the world and properly do what you've always wanted to do.
 booklet.actuallyadditions.chapter.intro.text.2=<i>This book, written by <imp>Ellpeck<r><i>, the author of everything <imp>Actually Additions<r><i> contains, often called Ellopecko, Peck or Ellpack, is easy to navigate. It has an <imp>index page<r><i> at the front from which you can choose <imp>criteria pages<r><i>. These criteria pages contain a list of every item which is part of the criteria, and clicking on that will show <imp>precise information and the crafting recipe<r><i> of the item. The page you were on previously will stay open between sessions, too! <n><rs>Go check it out!
 booklet.actuallyadditions.chapter.intro.text.3=If you, for some reason, want to craft this book again, just take a <item>piece of paper<r> and a <item>canola seed<r> which you can find randomly generated and craft them together!
+
+booklet.actuallyadditions.chapter.quartz.name=Black Quartz!
+booklet.actuallyadditions.chapter.quartz.text.1=<item>Black Quartz<r> is a semi-common ore that can be found underground. It can be used to make decor blocks, but it is also necessary to make <imp>important crafting ingredients<r> (found in the Crafting Ingredients page!).
+booklet.actuallyadditions.chapter.quartz.text.2=<item>Black Quartz<r> as an item is used to make lots of important crafting materials in the mod. It can also be, if you can't find the ore, made with one <item>Nether Quartz<r> and one <item>Coal<r>. This recipe isn't that cheap though, so you're <imp>better off just going caving<r>.
+
+booklet.actuallyadditions.chapter.fishingNet.name=Fishing Net
+booklet.actuallyadditions.chapter.fishingNet.text.1=When placing the <item>Fishing Net<r> above a puddle, a lake, or a sea of water, it will start caching <item>Fish<r> and <imp>other stuff you get from fishing<r> on its own over quite a long period of time. To store the stuff it catches, because it doesn't have an inventory, you can just place any inventory on top of it that can collect items from the bottom, and it will automatically input them into there. If you don't do this, it'll just spew out all of the items which is lovely too.
+
+booklet.actuallyadditions.chapter.repairer.name=Item Repairer
+booklet.actuallyadditions.chapter.repairer.text.1=The <item>Item Repairer<r> is used to repair tools and armor which you could usually repair in an anvil. It uses <imp>RF<r>, a lot of it, actually, to repair the item <imp>without needing any added materials<r>!
+
+booklet.actuallyadditions.chapter.coalGen.name=Coal Generator
+booklet.actuallyadditions.chapter.coalGen.text.1=This is pretty self-explanatory: You fill the <item>Coal Generator<r> up with <item>Coal<r>, and it will generate RF.
+
+booklet.actuallyadditions.chapter.oilGen.name=Oil Generator
+booklet.actuallyadditions.chapter.oilGen.text.1=The <item>Oil Generator<r> uses buckets of <imp>Oil<r> to generate much bigger amounts of <imp>RF<r> than the <item>Coal Generator<r> does.
+
+booklet.actuallyadditions.chapter.solarPanel.name=Solar Panel
+booklet.actuallyadditions.chapter.solarPanel.text.1=The <item>Solar Panel<r> is a block that is used to generate <imp>RF<r> through the power of the sun! Just plop it down under a <imp>free sky<r> and watch it generate RF slowly just by sitting there. <n>It will obviously not work at night. <imp>Obviously.
+
+booklet.actuallyadditions.chapter.heatCollector.name=Heat Collector
+booklet.actuallyadditions.chapter.heatCollector.text.1=The <item>Heat Collector<r> is one of the more complicated methods of generating <imp>RF<r> in <imp>Actually Additions<r>. It needs to have a couple of lava blocks around it to generate <imp>RF<r> in the first place, but it will sometimes absorb some of the lava, having to have it replaced before it can continue working again. <n>This could be a good combination with the Lava Factory. Maybe.

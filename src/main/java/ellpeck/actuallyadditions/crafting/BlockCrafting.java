@@ -56,6 +56,15 @@ public class BlockCrafting{
     public static IRecipe recipeLavaFactory;
     public static IRecipe recipeEnergizer;
     public static IRecipe recipeEnervator;
+    public static IRecipe recipeSolar;
+    public static IRecipe recipeHeatCollector;
+    public static IRecipe recipeCoalGen;
+    public static IRecipe recipeOilGen;
+    public static IRecipe recipeRepairer;
+    public static IRecipe recipeFisher;
+    public static IRecipe recipeQuartzBlock;
+    public static IRecipe recipeQuartzChiseled;
+    public static IRecipe recipeQuartzPillar;
 
     public static void init(){
 
@@ -274,6 +283,7 @@ public class BlockCrafting{
                     'C', "cobblestone",
                     'R', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.STONE_CASING.ordinal()),
                     'B', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.CANOLA.ordinal())));
+            recipeOilGen = Util.lastIRecipe();
         }
 
         //Coal Generator
@@ -283,6 +293,7 @@ public class BlockCrafting{
                     'C', "cobblestone",
                     'R', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.STONE_CASING.ordinal()),
                     'B', new ItemStack(Items.coal, 1, Util.WILDCARD)));
+            recipeCoalGen = Util.lastIRecipe();
         }
 
         //Enderpearl Block
@@ -307,6 +318,7 @@ public class BlockCrafting{
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.QUARTZ.ordinal()),
                 "QQ", "QQ",
                 'Q', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal())));
+        recipeQuartzBlock = Util.lastIRecipe();
 
         //Fishing Net
         if(ConfigCrafting.FISHING_NET.isEnabled()){
@@ -314,6 +326,7 @@ public class BlockCrafting{
                     "SSS", "SDS", "SSS",
                     'D', "gemDiamond",
                     'S', Items.string));
+            recipeFisher = Util.lastIRecipe();
         }
 
         //Repairer
@@ -324,6 +337,7 @@ public class BlockCrafting{
                     'I', "ingotIron",
                     'O', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL.ordinal()),
                     'C', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.ENDER_CASING.ordinal())));
+            recipeRepairer = Util.lastIRecipe();
         }
 
         //Solar Panel
@@ -335,6 +349,7 @@ public class BlockCrafting{
                     'Q', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.STONE_CASING.ordinal()),
                     'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal()),
                     'B', new ItemStack(Blocks.iron_bars)));
+            recipeSolar = Util.lastIRecipe();
         }
 
         //Heat Collector
@@ -347,17 +362,20 @@ public class BlockCrafting{
                     'L', new ItemStack(Items.lava_bucket),
                     'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal()),
                     'B', new ItemStack(Blocks.iron_bars)));
+            recipeHeatCollector = Util.lastIRecipe();
         }
 
         //Quartz Pillar
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.QUARTZ_PILLAR.ordinal()),
                 "Q", "Q",
                 'Q', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal())));
+        recipeQuartzPillar = Util.lastIRecipe();
 
         //Chiseled Quartz
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockMisc, 2, TheMiscBlocks.QUARTZ_CHISELED.ordinal()),
                 "Q", "Q",
                 'Q', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.QUARTZ.ordinal())));
+        recipeQuartzChiseled = Util.lastIRecipe();
 
         //Inputter
         if(ConfigCrafting.INPUTTER.isEnabled()){
