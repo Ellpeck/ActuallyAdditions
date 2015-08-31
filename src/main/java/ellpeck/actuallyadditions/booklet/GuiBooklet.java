@@ -24,7 +24,6 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.renderer.OpenGlHelper;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.ResourceLocation;
@@ -66,12 +65,11 @@ public class GuiBooklet extends GuiScreen{
 
     private static final int BUTTONS_PER_PAGE = 15;
 
-    private EntityPlayer player;
+    private boolean mouseClicked;
 
-    public GuiBooklet(EntityPlayer player){
+    public GuiBooklet(){
         this.xSize = 146;
         this.ySize = 180;
-        this.player = player;
     }
 
     @Override
@@ -116,6 +114,9 @@ public class GuiBooklet extends GuiScreen{
     @Override
     protected void mouseClicked(int par1, int par2, int par3){
         this.searchField.mouseClicked(par1, par2, par3);
+        if(par3 == 0){
+            this.mouseClicked = true;
+        }
         super.mouseClicked(par1, par2, par3);
     }
 
@@ -197,7 +198,7 @@ public class GuiBooklet extends GuiScreen{
         if(this.currentIndexEntry != null){
             if(this.currentChapter != null && this.currentPage != null){
                 this.drawCenteredString(this.unicodeRenderer, this.currentPage.getID()+"/"+this.currentChapter.pages.length, this.guiLeft+this.xSize/2, this.guiTop+172, StringUtil.DECIMAL_COLOR_WHITE);
-                this.currentPage.renderPre(this, x, y);
+                this.currentPage.renderPre(this, x, y, this.mouseClicked);
             }
             else{
                 this.drawCenteredString(this.unicodeRenderer, this.pageOpenInIndex+"/"+this.indexPageAmount, this.guiLeft+this.xSize/2, this.guiTop+172, StringUtil.DECIMAL_COLOR_WHITE);
@@ -225,8 +226,10 @@ public class GuiBooklet extends GuiScreen{
         }
 
         if(this.currentIndexEntry != null && this.currentChapter != null && this.currentPage != null){
-            this.currentPage.render(this, x, y);
+            this.currentPage.render(this, x, y, this.mouseClicked);
         }
+
+        if(this.mouseClicked) this.mouseClicked = false;
     }
 
     private IBookletPage getNextPage(BookletChapter chapter, IBookletPage currentPage){

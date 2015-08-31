@@ -22,7 +22,6 @@ import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.ResourceLocation;
-import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
@@ -32,8 +31,6 @@ public class BookletPage implements IBookletPage{
 
     protected int id;
     protected BookletChapter chapter;
-
-    private boolean mouseWasDown;
 
     public BookletPage(int id){
         this.id = id;
@@ -60,12 +57,12 @@ public class BookletPage implements IBookletPage{
     }
 
     @Override
-    public void renderPre(GuiBooklet gui, int mouseX, int mouseY){
+    public void renderPre(GuiBooklet gui, int mouseX, int mouseY, boolean mouseClick){
 
     }
 
     @Override
-    public void render(GuiBooklet gui, int mouseX, int mouseY){
+    public void render(GuiBooklet gui, int mouseX, int mouseY, boolean mouseClick){
 
     }
 
@@ -75,7 +72,7 @@ public class BookletPage implements IBookletPage{
     }
 
     @SuppressWarnings("unchecked")
-    protected void renderTooltipAndTransfer(GuiBooklet gui, ItemStack stack, int x, int y, boolean checkAndTransfer){
+    protected void renderTooltipAndTransfer(GuiBooklet gui, ItemStack stack, int x, int y, boolean checkAndTransfer, boolean mouseClick){
         List list = stack.getTooltip(gui.mc.thePlayer, gui.mc.gameSettings.advancedItemTooltips);
 
         for(int k = 0; k < list.size(); ++k){
@@ -92,14 +89,10 @@ public class BookletPage implements IBookletPage{
                 if(page.getItemStackForPage() != null && page.getItemStackForPage().isItemEqual(stack)){
                     list.add(EnumChatFormatting.GOLD+StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".clickToSeeRecipe"));
 
-                    boolean isDown = Mouse.isButtonDown(0);
-                    if(!this.mouseWasDown){
-                        if(isDown){
-                            gui.openChapter(page.getChapter(), page);
-                            Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.func_147674_a(new ResourceLocation("gui.button.press"), 1.0F));
-                        }
+                    if(mouseClick){
+                        gui.openChapter(page.getChapter(), page);
+                        Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.func_147674_a(new ResourceLocation("gui.button.press"), 1.0F));
                     }
-                    this.mouseWasDown = isDown;
 
                     break;
                 }

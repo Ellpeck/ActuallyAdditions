@@ -29,7 +29,7 @@ public class PageCrusherRecipe extends BookletPage{
     }
 
     @Override
-    public void renderPre(GuiBooklet gui, int mouseX, int mouseY){
+    public void renderPre(GuiBooklet gui, int mouseX, int mouseY, boolean mouseClick){
         if(recipe != null){
             gui.mc.getTextureManager().bindTexture(GuiBooklet.resLoc);
             gui.drawTexturedModalRect(gui.guiLeft+37, gui.guiTop+20, 60, 180, 60, 60);
@@ -43,7 +43,7 @@ public class PageCrusherRecipe extends BookletPage{
 
     @SuppressWarnings("unchecked")
     @Override
-    public void render(GuiBooklet gui, int mouseX, int mouseY){
+    public void render(GuiBooklet gui, int mouseX, int mouseY, boolean mouseClick){
         if(recipe == null){
             gui.unicodeRenderer.drawSplitString(StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".recipeDisabled"), gui.guiLeft+14, gui.guiTop+15, 115, 0);
         }
@@ -74,7 +74,7 @@ public class PageCrusherRecipe extends BookletPage{
                         }
                         else{
                             if(mouseX >= xShow && mouseX <= xShow+16 && mouseY >= yShow && mouseY <= yShow+16){
-                                this.renderTooltipAndTransfer(gui, stack, mouseX, mouseY, j == 0);
+                                this.renderTooltipAndTransfer(gui, stack, mouseX, mouseY, j == 0, mouseClick);
                             }
                         }
                     }

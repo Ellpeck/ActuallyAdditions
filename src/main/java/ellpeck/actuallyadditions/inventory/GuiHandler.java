@@ -140,7 +140,7 @@ public class GuiHandler implements IGuiHandler{
             case CLOUD:
                 return new GuiSmileyCloud(tile, x, y, z, world);
             case BOOK:
-                return new GuiBooklet(entityPlayer);
+                return new GuiBooklet();
             default:
                 return null;
         }
