@@ -114,7 +114,7 @@ public class GuiBooklet extends GuiScreen{
     @Override
     protected void mouseClicked(int par1, int par2, int par3){
         this.searchField.mouseClicked(par1, par2, par3);
-        if(par3 == 0){
+        if(par3 == 0 && this.currentChapter != null){
             this.mouseClicked = true;
         }
         super.mouseClicked(par1, par2, par3);
