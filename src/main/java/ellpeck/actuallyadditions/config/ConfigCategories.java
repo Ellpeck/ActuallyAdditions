@@ -12,24 +12,25 @@ package ellpeck.actuallyadditions.config;
 
 public enum ConfigCategories{
 
-    FOOD_CRAFTING("food crafting"),
-    MISC_CRAFTING("misc crafting"),
-    BLOCKS_CRAFTING("block crafting"),
-    ITEMS_CRAFTING("item crafting"),
-    TOOL_VALUES("tool values"),
-    MACHINE_VALUES("machine values"),
-    MOB_DROPS("mob drops"),
-    WORLD_GEN("world gen"),
-    POTION_RING_CRAFTING("ring crafting"),
-    OTHER("other"),
-    FLUIDS("fluids"),
-    DRILL_VALUES("drill values"),
-    CRUSHER_RECIPES("crusher recipes"),
-    ARMOR_VALUES("armor values");
+    FOOD_CRAFTING("food crafting", "Crafting Recipes for Food Items"),
+    BLOCKS_CRAFTING("block crafting", "Crafting Recipes for Blocks"),
+    ITEMS_CRAFTING("item crafting", "Crafting Recipes for Items"),
+    TOOL_VALUES("tool values", "Values for Tools"),
+    MACHINE_VALUES("machine values", "Values for Machines"),
+    MOB_DROPS("mob drops", "Everything regarding Item drops from mobs"),
+    WORLD_GEN("world gen", "Everything regarding World Generation"),
+    POTION_RING_CRAFTING("ring crafting", "Crafting Recipes for Rings"),
+    OTHER("other", "Everything else"),
+    FLUIDS("fluids", "Everything regarding fluids"),
+    DRILL_VALUES("drill values", "Properties of Drills and their Upgrades"),
+    CRUSHER_RECIPES("crusher recipes", "Recipes for the Crusher"),
+    ARMOR_VALUES("armor values", "Values for Armor");
 
     public final String name;
+    public final String comment;
 
-    ConfigCategories(String name){
-        this.name = name;
+    ConfigCategories(String name, String comment){
+        this.name = name.toLowerCase();
+        this.comment = comment;
     }
 }

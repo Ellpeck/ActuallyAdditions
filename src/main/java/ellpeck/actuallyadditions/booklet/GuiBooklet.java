@@ -170,6 +170,7 @@ public class GuiBooklet extends GuiScreen{
         super.func_146283_a(list, x, y);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void drawScreen(int x, int y, float f){
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -217,25 +218,31 @@ public class GuiBooklet extends GuiScreen{
         super.drawScreen(x, y, f);
         this.searchField.drawTextBox();
 
+        if(this.currentIndexEntry != null && this.currentChapter != null && this.currentPage != null){
+            this.currentPage.render(this, x, y, this.mouseClicked);
+        }
+
         //Achievements Hover Text
         if(x >= this.guiLeft+138 && x <= this.guiLeft+138+7 && y >= this.guiTop && y <= this.guiTop+7){
-            this.func_146283_a(Collections.singletonList("Show Achievements"), x, y);
+            this.func_146283_a(Collections.singletonList(EnumChatFormatting.GOLD+"Show Achievements"), x, y);
         }
         //Config Hover Text
         if(x >= this.guiLeft+138 && x <= this.guiLeft+138+7 && y >= this.guiTop+10 && y <= this.guiTop+10+7){
-            this.func_146283_a(Collections.singletonList("Show Config"), x, y);
+            ArrayList list = new ArrayList();
+            list.add(EnumChatFormatting.GOLD+"Show Configuration GUI");
+            list.add(EnumChatFormatting.ITALIC+"It is highly recommended that you restart");
+            list.add(EnumChatFormatting.ITALIC+"your game after changing anything as");
+            list.add(EnumChatFormatting.ITALIC+"that prevents possible bugs occuring!");
+            this.func_146283_a(list, x, y);
+
         }
         //Twitter Hover Text
         if(x >= this.guiLeft && x <= this.guiLeft+7 && y >= this.guiTop && y <= this.guiTop+7){
-            this.func_146283_a(Collections.singletonList("Open @ActAddMod on Twitter in Browser"), x, y);
+            this.func_146283_a(Collections.singletonList(EnumChatFormatting.GOLD+"Open @ActAddMod on Twitter in Browser"), x, y);
         }
         //Forum Hover Text
         if(x >= this.guiLeft && x <= this.guiLeft+7 && y >= this.guiTop+10 && y <= this.guiTop+10+7){
-            this.func_146283_a(Collections.singletonList("Open Minecraft Forum Post in Browser"), x, y);
-        }
-
-        if(this.currentIndexEntry != null && this.currentChapter != null && this.currentPage != null){
-            this.currentPage.render(this, x, y, this.mouseClicked);
+            this.func_146283_a(Collections.singletonList(EnumChatFormatting.GOLD+"Open Minecraft Forum Post in Browser"), x, y);
         }
 
         if(this.mouseClicked) this.mouseClicked = false;

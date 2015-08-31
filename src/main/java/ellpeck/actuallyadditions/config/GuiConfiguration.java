@@ -29,7 +29,9 @@ public class GuiConfiguration extends GuiConfig{
     private static List<IConfigElement> getConfigElements(){
         List<IConfigElement> list = new ArrayList<IConfigElement>();
         for(int i = 0; i < ConfigCategories.values().length; i++){
-            list.add(new ConfigElement<ConfigCategory>(ConfigurationHandler.config.getCategory(ConfigCategories.values()[i].name.toLowerCase())));
+            ConfigCategories cat = ConfigCategories.values()[i];
+            ConfigurationHandler.config.setCategoryComment(cat.name, cat.comment);
+            list.add(new ConfigElement<ConfigCategory>(ConfigurationHandler.config.getCategory(cat.name)));
         }
         return list;
     }

@@ -47,6 +47,10 @@ public class PageCrusherRecipe extends BookletPage{
         if(recipe == null){
             gui.unicodeRenderer.drawSplitString(StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".recipeDisabled"), gui.guiLeft+14, gui.guiTop+15, 115, 0);
         }
+        else{
+            String strg = "Crusher Recipe";
+            gui.unicodeRenderer.drawString(strg, gui.guiLeft+gui.xSize/2-gui.unicodeRenderer.getStringWidth(strg)/2, gui.guiTop+10, 0);
+        }
 
         String text = gui.currentPage.getText();
         if(text != null && !text.isEmpty() && !text.contains("booklet.")){
