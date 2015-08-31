@@ -30,5 +30,6 @@ public class PacketHandler{
         theNetwork.registerMessage(PacketSyncerToClient.Handler.class, PacketSyncerToClient.class, 1, Side.CLIENT);
         theNetwork.registerMessage(PacketGuiNumber.Handler.class, PacketGuiNumber.class, 2, Side.SERVER);
         theNetwork.registerMessage(PacketGuiString.Handler.class, PacketGuiString.class, 3, Side.SERVER);
+        theNetwork.registerMessage(PacketGiveBook.Handler.class, PacketGiveBook.class, 4, Side.SERVER);
     }
 }
