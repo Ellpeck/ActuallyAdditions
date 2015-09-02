@@ -14,6 +14,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.booklet.page.IBookletPage;
 import ellpeck.actuallyadditions.config.GuiConfiguration;
+import ellpeck.actuallyadditions.update.UpdateChecker;
 import ellpeck.actuallyadditions.util.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -51,16 +52,18 @@ public class GuiBooklet extends GuiScreen{
 
     private GuiTextField searchField;
 
-    private static final int BUTTON_TWITTER_ID = -4;
-    private static final int BUTTON_FORUM_ID = -3;
-    private static final int BUTTON_ACHIEVEMENTS_ID = -2;
-    private static final int BUTTON_CONFIG_ID = -1;
     private static final int BUTTON_FORWARD_ID = 0;
     private static final int BUTTON_BACK_ID = 1;
     private static final int BUTTON_RETURN_ID = 2;
     private static final int CHAPTER_BUTTONS_START = 3;
-
     private static final int BUTTONS_PER_PAGE = 13;
+
+    private static final int BUTTON_UPDATE_ID = CHAPTER_BUTTONS_START+BUTTONS_PER_PAGE;
+    private static final int BUTTON_TWITTER_ID = BUTTON_UPDATE_ID+1;
+    private static final int BUTTON_FORUM_ID = BUTTON_TWITTER_ID+1;
+    private static final int BUTTON_ACHIEVEMENTS_ID = BUTTON_FORUM_ID+1;
+    private static final int BUTTON_CONFIG_ID = BUTTON_ACHIEVEMENTS_ID+1;
+    private int cursorCounter;
 
     private boolean mouseClicked;
 
@@ -73,6 +76,16 @@ public class GuiBooklet extends GuiScreen{
     public void updateScreen(){
         super.updateScreen();
         this.searchField.updateCursorCounter();
+
+        boolean buttonThere = UpdateChecker.doneChecking && UpdateChecker.updateVersion > UpdateChecker.clientVersion;
+        this.getButton(BUTTON_UPDATE_ID).visible = buttonThere;
+        if(buttonThere){
+            this.cursorCounter++;
+            if(this.cursorCounter%8 == 0){
+                TexturedButton button = (TexturedButton)this.getButton(BUTTON_UPDATE_ID);
+                button.setTexturePos(245, button.texturePosY == 0 ? 22 : 0);
+            }
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -125,18 +138,21 @@ public class GuiBooklet extends GuiScreen{
 
         this.unicodeRenderer = new FontRenderer(this.mc.gameSettings, new ResourceLocation("textures/font/ascii.png"), this.mc.renderEngine, true);
 
-        this.buttonList.add(new TexturedButton(BUTTON_FORWARD_ID, this.guiLeft+this.xSize, this.guiTop+this.ySize+2, 164, 0, 18, 10));
-        this.buttonList.add(new TexturedButton(BUTTON_BACK_ID, this.guiLeft-18, this.guiTop+this.ySize+2, 146, 0, 18, 10));
-        this.buttonList.add(new TexturedButton(BUTTON_RETURN_ID, this.guiLeft+this.xSize/2-7, this.guiTop+this.ySize+2, 182, 0, 15, 10));
+        this.addButton(new TexturedButton(BUTTON_FORWARD_ID, this.guiLeft+this.xSize, this.guiTop+this.ySize+2, 164, 0, 18, 10));
+        this.addButton(new TexturedButton(BUTTON_BACK_ID, this.guiLeft-18, this.guiTop+this.ySize+2, 146, 0, 18, 10));
+        this.addButton(new TexturedButton(BUTTON_RETURN_ID, this.guiLeft+this.xSize/2-7, this.guiTop+this.ySize+2, 182, 0, 15, 10));
 
         for(int i = 0; i < BUTTONS_PER_PAGE; i++){
-            this.buttonList.add(new IndexButton(this.unicodeRenderer, CHAPTER_BUTTONS_START+i, guiLeft+15, guiTop+10+(i*12), 110, 10, ""));
+            this.addButton(new IndexButton(this.unicodeRenderer, CHAPTER_BUTTONS_START+i, guiLeft+15, guiTop+10+(i*12), 110, 10, ""));
         }
 
-        this.buttonList.add(new TexturedButton(BUTTON_ACHIEVEMENTS_ID, this.guiLeft+138, this.guiTop, 205, 0, 8, 8));
-        this.buttonList.add(new TexturedButton(BUTTON_CONFIG_ID, this.guiLeft+138, this.guiTop+10, 197, 0, 8, 8));
-        this.buttonList.add(new TexturedButton(BUTTON_TWITTER_ID, this.guiLeft, this.guiTop, 213, 0, 8, 8));
-        this.buttonList.add(new TexturedButton(BUTTON_FORUM_ID, this.guiLeft, this.guiTop+10, 221, 0, 8, 8));
+        this.addButton(new TexturedButton(BUTTON_UPDATE_ID, this.guiLeft-11, this.guiTop-11, 245, 0, 11, 11));
+        this.getButton(BUTTON_UPDATE_ID).visible = UpdateChecker.doneChecking && UpdateChecker.updateVersion > UpdateChecker.clientVersion;
+
+        this.addButton(new TexturedButton(BUTTON_TWITTER_ID, this.guiLeft, this.guiTop, 213, 0, 8, 8));
+        this.addButton(new TexturedButton(BUTTON_FORUM_ID, this.guiLeft, this.guiTop+10, 221, 0, 8, 8));
+        this.addButton(new TexturedButton(BUTTON_ACHIEVEMENTS_ID, this.guiLeft+138, this.guiTop, 205, 0, 8, 8));
+        this.addButton(new TexturedButton(BUTTON_CONFIG_ID, this.guiLeft+138, this.guiTop+10, 197, 0, 8, 8));
 
         this.searchField = new GuiTextField(this.unicodeRenderer, guiLeft+148, guiTop+162, 66, 10);
         this.searchField.setMaxStringLength(30);
@@ -154,6 +170,16 @@ public class GuiBooklet extends GuiScreen{
         }
         else{
             PersistantVariables.openLastBookPage(this);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    private void addButton(GuiButton button){
+        if(this.buttonList.size() > button.id){
+            this.buttonList.set(button.id, button);
+        }
+        else{
+            this.buttonList.add(button.id, button);
         }
     }
 
@@ -244,6 +270,16 @@ public class GuiBooklet extends GuiScreen{
         if(x >= this.guiLeft && x <= this.guiLeft+7 && y >= this.guiTop+10 && y <= this.guiTop+10+7){
             this.func_146283_a(Collections.singletonList(EnumChatFormatting.GOLD+"Open Minecraft Forum Post in Browser"), x, y);
         }
+        //Update Checker Hover Text
+        if(x >= this.guiLeft-11 && x <= this.guiLeft-11+10 && y >= this.guiTop-11 && y <= this.guiTop-11+10){
+            if(UpdateChecker.doneChecking && UpdateChecker.updateVersion > UpdateChecker.clientVersion){
+                ArrayList list = new ArrayList();
+                list.add(EnumChatFormatting.GOLD+"There is an Update available!");
+                list.add(EnumChatFormatting.ITALIC+"You have: "+ModUtil.VERSION+", Newest: "+UpdateChecker.updateVersionS);
+                list.add("Click this button to visit the download page!");
+                this.func_146283_a(list, x, y);
+            }
+        }
 
         if(this.mouseClicked) this.mouseClicked = false;
     }
@@ -276,14 +312,26 @@ public class GuiBooklet extends GuiScreen{
 
     @Override
     public void actionPerformed(GuiButton button){
-        if(button.id == BUTTON_TWITTER_ID){
+        if(button.id == BUTTON_UPDATE_ID){
+            if(UpdateChecker.doneChecking && UpdateChecker.updateVersion > UpdateChecker.clientVersion){
+                try{
+                    if(Desktop.isDesktopSupported()){
+                        Desktop.getDesktop().browse(new URI(UpdateChecker.DOWNLOAD_LINK));
+                    }
+                }
+                catch(Exception e){
+                    ModUtil.LOGGER.error("Something bad happened when trying to open a URL!", e);
+                }
+            }
+        }
+        else if(button.id == BUTTON_TWITTER_ID){
             try{
                 if(Desktop.isDesktopSupported()){
-                    Desktop.getDesktop().browse(new URI("https://twitter.com/ActAddMod"));
+                    Desktop.getDesktop().browse(new URI("http://twitter.com/ActAddMod"));
                 }
             }
             catch(Exception e){
-                e.printStackTrace();
+                ModUtil.LOGGER.error("Something bad happened when trying to open a URL!", e);
             }
         }
         else if(button.id == BUTTON_FORUM_ID){
@@ -293,7 +341,7 @@ public class GuiBooklet extends GuiScreen{
                 }
             }
             catch(Exception e){
-                e.printStackTrace();
+                ModUtil.LOGGER.error("Something bad happened when trying to open a URL!", e);
             }
         }
         else if(button.id == BUTTON_CONFIG_ID){
@@ -458,13 +506,18 @@ public class GuiBooklet extends GuiScreen{
 
     private static class TexturedButton extends GuiButton{
 
-        private int texturePosX;
-        private int texturePosY;
+        public int texturePosX;
+        public int texturePosY;
 
         public TexturedButton(int id, int x, int y, int texturePosX, int texturePosY, int width, int height){
             super(id, x, y, width, height, "");
             this.texturePosX = texturePosX;
             this.texturePosY = texturePosY;
+        }
+
+        public void setTexturePos(int x, int y){
+            this.texturePosX = x;
+            this.texturePosY = y;
         }
 
         @Override
@@ -474,6 +527,7 @@ public class GuiBooklet extends GuiScreen{
                 GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
                 this.field_146123_n = x >= this.xPosition && y >= this.yPosition && x < this.xPosition+this.width && y < this.yPosition+this.height;
                 int k = this.getHoverState(this.field_146123_n);
+                if(k == 0) k = 1;
                 GL11.glEnable(GL11.GL_BLEND);
                 OpenGlHelper.glBlendFunc(770, 771, 1, 0);
                 GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);

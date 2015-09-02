@@ -23,7 +23,7 @@ import ellpeck.actuallyadditions.config.values.ConfigBoolValues;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.event.RenderPlayerEventAA;
 import ellpeck.actuallyadditions.tile.*;
-import ellpeck.actuallyadditions.update.UpdateChecker;
+import ellpeck.actuallyadditions.update.UpdateCheckerClientNotifier;
 import ellpeck.actuallyadditions.util.AssetUtil;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.PersistantVariables;
@@ -41,10 +41,6 @@ public class ClientProxy implements IProxy{
     public void preInit(FMLPreInitializationEvent event){
         ModUtil.LOGGER.info("PreInitializing ClientProxy...");
 
-        if(ConfigBoolValues.DO_UPDATE_CHECK.isEnabled()){
-            new UpdateChecker().init();
-        }
-
         PersistantVariables.setTheFile(new File(event.getModConfigurationDirectory().getParent(), ModUtil.MOD_ID+"Data.dat"));
 
     }
@@ -52,6 +48,10 @@ public class ClientProxy implements IProxy{
     @Override
     public void init(FMLInitializationEvent event){
         ModUtil.LOGGER.info("Initializing ClientProxy...");
+
+        if(ConfigBoolValues.DO_UPDATE_CHECK.isEnabled()){
+            Util.registerEvent(new UpdateCheckerClientNotifier());
+        }
 
         AssetUtil.COMPOST_RENDER_ID = RenderingRegistry.getNextAvailableRenderId();
         AssetUtil.FISHING_NET_RENDER_ID = RenderingRegistry.getNextAvailableRenderId();

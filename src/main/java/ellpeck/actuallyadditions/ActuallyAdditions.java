@@ -40,6 +40,7 @@ import ellpeck.actuallyadditions.recipe.FuelHandler;
 import ellpeck.actuallyadditions.recipe.HairyBallHandler;
 import ellpeck.actuallyadditions.recipe.TreasureChestHandler;
 import ellpeck.actuallyadditions.tile.TileEntityBase;
+import ellpeck.actuallyadditions.update.UpdateChecker;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.Util;
 //                                                                           So that BuildCraft Oil always gets used
@@ -64,6 +65,7 @@ public class ActuallyAdditions{
         InitItems.init();
         InitVillager.init();
         FuelHandler.init();
+        new UpdateChecker().init();
         proxy.preInit(event);
 
         ModUtil.LOGGER.info("PreInitialization Finished.");
