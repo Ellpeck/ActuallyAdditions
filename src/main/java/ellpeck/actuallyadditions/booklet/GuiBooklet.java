@@ -56,7 +56,7 @@ public class GuiBooklet extends GuiScreen{
     private static final int BUTTON_BACK_ID = 1;
     private static final int BUTTON_RETURN_ID = 2;
     private static final int CHAPTER_BUTTONS_START = 3;
-    private static final int BUTTONS_PER_PAGE = 13;
+    public static final int BUTTONS_PER_PAGE = 13;
 
     private static final int BUTTON_UPDATE_ID = CHAPTER_BUTTONS_START+BUTTONS_PER_PAGE;
     private static final int BUTTON_TWITTER_ID = BUTTON_UPDATE_ID+1;
@@ -423,7 +423,7 @@ public class GuiBooklet extends GuiScreen{
 
         this.currentIndexEntry = entry;
         this.indexPageAmount = entry == null ? 1 : entry.chapters.size()/BUTTONS_PER_PAGE+1;
-        this.pageOpenInIndex = entry == null ? 1 : (this.indexPageAmount <= page ? this.indexPageAmount : page);
+        this.pageOpenInIndex = entry == null ? 1 : (this.indexPageAmount <= page || page <= 0 ? this.indexPageAmount : page);
 
         this.getButton(BUTTON_RETURN_ID).visible = entry != null;
         this.getButton(BUTTON_FORWARD_ID).visible = this.pageOpenInIndex < this.indexPageAmount;
