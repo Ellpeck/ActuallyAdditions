@@ -58,6 +58,7 @@ public class InitBooklet{
         new BookletChapter("fishingNet", entryFunctionalNonRF, new PageText(1), new PageCrafting(2, BlockCrafting.recipeFisher));
         new BookletChapter("feeder", entryFunctionalNonRF, new PageText(1), new PageCrafting(2, BlockCrafting.recipeFeeder));
         new BookletChapter("compost", entryFunctionalNonRF, new PageText(1).setStack(new ItemStack(InitItems.itemFertilizer)), new PageCrafting(2, BlockCrafting.recipeCompost), new PageCrafting(3, ItemCrafting.recipeMashedFood));
+        new BookletChapter("crate", entryFunctionalNonRF, new PageCrafting(1, BlockCrafting.recipeCrate));
 
         new BookletChapter("coffeeMachine", entryFunctionalRF, new PageText(1), new PageText(2), new PageText(3), new PageCrafting(4, BlockCrafting.recipeCoffeeMachine));
         new BookletChapterCrusher("crusher", entryFunctionalRF, new PageText(1), new PageCrafting(2, BlockCrafting.recipeCrusher), new PageCrafting(3, BlockCrafting.recipeDoubleCrusher));
@@ -68,8 +69,8 @@ public class InitBooklet{
         new BookletChapter("repairer", entryFunctionalRF, new PageText(1), new PageCrafting(2, BlockCrafting.recipeRepairer));
 
         new BookletChapter("coalGen", entryGeneratingRF, new PageCrafting(1, BlockCrafting.recipeCoalGen));
-        new BookletChapter("oilGen", entryGeneratingRF, new PageCrafting(1, BlockCrafting.recipeOilGen));
         new BookletChapter("solarPanel", entryGeneratingRF, new PageText(1), new PageCrafting(2, BlockCrafting.recipeSolar));
         new BookletChapter("heatCollector", entryGeneratingRF, new PageText(1), new PageCrafting(2, BlockCrafting.recipeHeatCollector));
+        new BookletChapter("canola", entryGeneratingRF, new PageText(1), new PageText(2).setStack(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.CANOLA.ordinal())), new PageCrafting(3, BlockCrafting.recipeCanolaPress), new PageCrafting(4, BlockCrafting.recipeFermentingBarrel), new PageCrafting(5, BlockCrafting.recipeOilGen));
     }
 }

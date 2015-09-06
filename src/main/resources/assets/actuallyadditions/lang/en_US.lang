@@ -466,9 +466,6 @@ booklet.actuallyadditions.chapter.repairer.text.1=The <item>Item Repairer<r> is 
 booklet.actuallyadditions.chapter.coalGen.name=Coal Generator
 booklet.actuallyadditions.chapter.coalGen.text.1=This is pretty self-explanatory: You fill the <item>Coal Generator<r> up with <item>Coal<r>, and it will generate RF.
 
-booklet.actuallyadditions.chapter.oilGen.name=Oil Generator
-booklet.actuallyadditions.chapter.oilGen.text.1=The <item>Oil Generator<r> uses buckets of <imp>Oil<r> to generate much bigger amounts of <imp>RF<r> than the <item>Coal Generator<r> does.
-
 booklet.actuallyadditions.chapter.solarPanel.name=Solar Panel
 booklet.actuallyadditions.chapter.solarPanel.text.1=The <item>Solar Panel<r> is a block that is used to generate <imp>RF<r> through the power of the sun! Just plop it down under a <imp>free sky<r> and watch it generate RF slowly just by sitting there. <n>It will obviously not work at night. <imp>Obviously.
 

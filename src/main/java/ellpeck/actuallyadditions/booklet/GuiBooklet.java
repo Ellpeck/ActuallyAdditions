@@ -56,7 +56,9 @@ public class GuiBooklet extends GuiScreen{
     private static final int BUTTON_BACK_ID = 1;
     private static final int BUTTON_RETURN_ID = 2;
     private static final int CHAPTER_BUTTONS_START = 3;
+
     public static final int BUTTONS_PER_PAGE = 13;
+    private static final int TOOLTIP_SPLIT_LENGTH = 160;
 
     private static final int BUTTON_UPDATE_ID = CHAPTER_BUTTONS_START+BUTTONS_PER_PAGE;
     private static final int BUTTON_TWITTER_ID = BUTTON_UPDATE_ID+1;
@@ -183,6 +185,11 @@ public class GuiBooklet extends GuiScreen{
         }
     }
 
+    @Override
+    public boolean doesGuiPauseGame(){
+        return false;
+    }
+
     private GuiButton getButton(int id){
         return (GuiButton)this.buttonList.get(id);
     }
@@ -256,9 +263,7 @@ public class GuiBooklet extends GuiScreen{
         if(x >= this.guiLeft+138 && x <= this.guiLeft+138+7 && y >= this.guiTop+10 && y <= this.guiTop+10+7){
             ArrayList list = new ArrayList();
             list.add(EnumChatFormatting.GOLD+"Show Configuration GUI");
-            list.add(EnumChatFormatting.ITALIC+"It is highly recommended that you restart");
-            list.add(EnumChatFormatting.ITALIC+"your game after changing anything as");
-            list.add(EnumChatFormatting.ITALIC+"that prevents possible bugs occuring!");
+            list.addAll(this.fontRendererObj.listFormattedStringToWidth("It is highly recommended that you restart your game after changing anything as that prevents possible bugs occuring!", TOOLTIP_SPLIT_LENGTH));
             this.func_146283_a(list, x, y);
 
         }
@@ -276,7 +281,8 @@ public class GuiBooklet extends GuiScreen{
                 ArrayList list = new ArrayList();
                 list.add(EnumChatFormatting.GOLD+"There is an Update available!");
                 list.add(EnumChatFormatting.ITALIC+"You have: "+ModUtil.VERSION+", Newest: "+UpdateChecker.updateVersionS);
-                list.add("Click this button to visit the download page!");
+                list.addAll(this.fontRendererObj.listFormattedStringToWidth(EnumChatFormatting.ITALIC+"Updates include: "+UpdateChecker.changelog, TOOLTIP_SPLIT_LENGTH));
+                list.add(EnumChatFormatting.GRAY+"Click this button to visit the download page!");
                 this.func_146283_a(list, x, y);
             }
         }

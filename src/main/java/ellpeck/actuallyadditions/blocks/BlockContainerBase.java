@@ -51,6 +51,7 @@ public abstract class BlockContainerBase extends BlockContainer{
                             world.spawnEntityInWorld(entityItem);
                             itemStack.stackSize = 0;
                         }
+                        tileEntity.setInventorySlotContents(i, null);
                     }
                 }
             }

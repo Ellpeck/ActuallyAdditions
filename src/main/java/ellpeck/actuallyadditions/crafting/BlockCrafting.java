@@ -68,6 +68,9 @@ public class BlockCrafting{
     public static IRecipe recipeBlockChar;
     public static IRecipe recipeFeeder;
     public static IRecipe recipeCompost;
+    public static IRecipe recipeCrate;
+    public static IRecipe recipeFermentingBarrel;
+    public static IRecipe recipeCanolaPress;
 
     public static void init(){
 
@@ -195,6 +198,7 @@ public class BlockCrafting{
                     'H', Blocks.hopper,
                     'R', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal()),
                     'D', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.CANOLA.ordinal())));
+            recipeCanolaPress = Util.lastIRecipe();
         }
 
         //Ore Magnet
@@ -216,6 +220,7 @@ public class BlockCrafting{
                     'H', Blocks.hopper,
                     'R', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.WOOD_CASING.ordinal()),
                     'D', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.CANOLA.ordinal())));
+            recipeFermentingBarrel = Util.lastIRecipe();
         }
 
         //Phantomface
@@ -453,6 +458,7 @@ public class BlockCrafting{
                     'C', new ItemStack(Blocks.chest),
                     'D', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.WOOD_CASING.ordinal()),
                     'W', "plankWood"));
+            recipeCrate = Util.lastIRecipe();
         }
 
         //Greenhouse Glass

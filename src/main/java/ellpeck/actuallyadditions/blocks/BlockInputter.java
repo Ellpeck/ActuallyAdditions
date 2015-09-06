@@ -98,6 +98,7 @@ public class BlockInputter extends BlockContainerBase implements INameableItem{
                     world.spawnEntityInWorld(entityItem);
                     itemStack.stackSize = 0;
                 }
+                tileEntity.setInventorySlotContents(0, null);
             }
         }
         super.breakBlock(world, x, y, z, block, par6);
