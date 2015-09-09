@@ -39,6 +39,33 @@ public class ItemCrafting{
     public static IRecipe recipeTinyCoal;
     public static IRecipe recipeTinyChar;
     public static IRecipe recipeMashedFood;
+    public static IRecipe recipeDrill;
+    public static IRecipe recipeDrillSpeedI;
+    public static IRecipe recipeDrillSpeedII;
+    public static IRecipe recipeDrillSpeedIII;
+    public static IRecipe recipeDrillFortuneI;
+    public static IRecipe recipeDrillFortuneII;
+    public static IRecipe recipeDrillSilk;
+    public static IRecipe recipeDrillPlacing;
+    public static IRecipe recipeDrillThree;
+    public static IRecipe recipeDrillFive;
+    public static IRecipe recipeBattery;
+    public static IRecipe recipeBatteryDouble;
+    public static IRecipe recipeBatteryTriple;
+    public static IRecipe recipeBatteryQuadruple;
+    public static IRecipe recipeBatteryQuintuple;
+    public static IRecipe recipeStaff;
+    public static IRecipe recipeGrowthRing;
+    public static IRecipe recipeMagnetRing;
+    public static IRecipe recipeWaterRing;
+    public static IRecipe recipeWings;
+    public static IRecipe recipeCup;
+    public static IRecipe recipeKnifeHandle;
+    public static IRecipe recipeKnifeBlade;
+    public static IRecipe recipeKnife;
+    public static IRecipe recipeRing;
+    public static IRecipe recipeDough;
+    public static IRecipe recipeRiceDough;
 
     public static void init(){
 
@@ -79,6 +106,7 @@ public class ItemCrafting{
                     'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal()),
                     'R', "dustRedstone",
                     'I', "blockIron"));
+            recipeDrill = Util.lastIRecipe();
         }
 
         //Tele Staff
@@ -88,6 +116,7 @@ public class ItemCrafting{
                     'E', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.ENDERPEARL_BLOCK.ordinal()),
                     'S', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.ENDER_CASING.ordinal()),
                     'B', new ItemStack(InitItems.itemBattery, 1, Util.WILDCARD)));
+            recipeStaff = Util.lastIRecipe();
         }
 
         //Drill Speed
@@ -97,18 +126,21 @@ public class ItemCrafting{
                     'I', "ingotIron",
                     'S', Items.sugar,
                     'R', "dustRedstone"));
+            recipeDrillSpeedI = Util.lastIRecipe();
 
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemDrillUpgradeSpeedII),
                     "ISI", "SCS", "ISI",
                     'I', "ingotIron",
                     'S', Items.sugar,
                     'C', Items.cake));
+            recipeDrillSpeedII = Util.lastIRecipe();
 
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemDrillUpgradeSpeedIII),
                     "ISI", "SFS", "ISI",
                     'I', "ingotIron",
                     'S', Items.sugar,
                     'F', "gemDiamond"));
+            recipeDrillSpeedIII = Util.lastIRecipe();
         }
 
         //Drill Fortune
@@ -118,12 +150,14 @@ public class ItemCrafting{
                     'I', Blocks.glowstone,
                     'S', Items.redstone,
                     'R', Blocks.diamond_block));
+            recipeDrillFortuneI = Util.lastIRecipe();
 
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemDrillUpgradeFortuneII),
                     "ISI", "SRS", "ISI",
                     'I', Blocks.glowstone,
                     'S', Items.redstone,
                     'R', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.ENDER_CASING.ordinal())));
+            recipeDrillFortuneII = Util.lastIRecipe();
         }
 
         //Drill Size
@@ -133,12 +167,14 @@ public class ItemCrafting{
                     'I', "ingotIron",
                     'D', "gemDiamond",
                     'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL.ordinal())));
+            recipeDrillThree = Util.lastIRecipe();
 
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemDrillUpgradeFiveByFive),
                     "DID", "ICI", "DID",
                     'I', "ingotIron",
                     'D', "gemDiamond",
                     'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal())));
+            recipeDrillFive = Util.lastIRecipe();
         }
 
         //Drill Silk Touch
@@ -148,6 +184,7 @@ public class ItemCrafting{
                     'D', "gemEmerald",
                     'S', "gemDiamond",
                     'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal())));
+            recipeDrillSilk = Util.lastIRecipe();
         }
 
         //Drill Placing
@@ -158,6 +195,7 @@ public class ItemCrafting{
                     'E', Items.ender_pearl,
                     'A', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL.ordinal()),
                     'R', "ingotIron"));
+            recipeDrillPlacing = Util.lastIRecipe();
         }
 
         //Battery
@@ -167,6 +205,7 @@ public class ItemCrafting{
                     'R', "dustRedstone",
                     'I', "ingotIron",
                     'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal())));
+            recipeBattery = Util.lastIRecipe();
         }
 
         //Double Battery
@@ -176,6 +215,7 @@ public class ItemCrafting{
                     'R', new ItemStack(InitItems.itemBattery),
                     'I', "ingotIron",
                     'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal())));
+            recipeBatteryDouble = Util.lastIRecipe();
         }
 
         //Magnet Ring
@@ -186,6 +226,7 @@ public class ItemCrafting{
                     'I', "ingotIron",
                     'B', new ItemStack(Items.dye, 1, 4),
                     'O', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.RING.ordinal())));
+            recipeMagnetRing = Util.lastIRecipe();
         }
 
         //Growth Ring
@@ -195,6 +236,7 @@ public class ItemCrafting{
                     'S', new ItemStack(Items.wheat_seeds),
                     'I', "ingotIron",
                     'O', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.RING.ordinal())));
+            recipeGrowthRing = Util.lastIRecipe();
         }
 
         //Water Ring
@@ -204,6 +246,7 @@ public class ItemCrafting{
                     'B', new ItemStack(Items.water_bucket),
                     'I', "ingotIron",
                     'O', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.RING.ordinal())));
+            recipeWaterRing = Util.lastIRecipe();
         }
 
         //Triple Battery
@@ -213,6 +256,7 @@ public class ItemCrafting{
                     'R', new ItemStack(InitItems.itemBatteryDouble),
                     'I', "ingotIron",
                     'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal())));
+            recipeBatteryTriple = Util.lastIRecipe();
         }
 
         //Quadruple Battery
@@ -222,6 +266,7 @@ public class ItemCrafting{
                     'R', new ItemStack(InitItems.itemBatteryTriple),
                     'I', "ingotIron",
                     'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal())));
+            recipeBatteryQuadruple = Util.lastIRecipe();
         }
 
         //Quintuple Battery
@@ -231,6 +276,7 @@ public class ItemCrafting{
                     'R', new ItemStack(InitItems.itemBatteryQuadruple),
                     'I', "ingotIron",
                     'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal())));
+            recipeBatteryQuintuple = Util.lastIRecipe();
         }
 
         //Bat Wings
@@ -240,6 +286,7 @@ public class ItemCrafting{
                     'W', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.BAT_WING.ordinal()),
                     'N', "blockDiamond",
                     'D', new ItemStack(Items.nether_star)));
+            recipeWings = Util.lastIRecipe();
         }
 
         //Quartz
@@ -264,6 +311,7 @@ public class ItemCrafting{
                     "S S", "SCS", "SSS",
                     'S', "stone",
                     'C', InitItems.itemCoffeeBean));
+            recipeCup = Util.lastIRecipe();
         }
 
         //Resonant Rice
@@ -320,6 +368,7 @@ public class ItemCrafting{
             GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemKnife),
                     new ItemStack(InitItems.itemMisc, 1, TheMiscItems.KNIFE_BLADE.ordinal()),
                     new ItemStack(InitItems.itemMisc, 1, TheMiscItems.KNIFE_HANDLE.ordinal())));
+            recipeKnife = Util.lastIRecipe();
         }
 
         //Crafter on a Stick
@@ -374,6 +423,7 @@ public class ItemCrafting{
                 'G', "ingotGold",
                 'I', "ingotIron",
                 'D', "dustGlowstone"));
+        recipeRing = Util.lastIRecipe();
 
         if(ConfigCrafting.RING_SPEED.isEnabled()){
             addRingRecipeWithStack(ThePotionRings.SPEED.craftingItem, ThePotionRings.SPEED.ordinal());

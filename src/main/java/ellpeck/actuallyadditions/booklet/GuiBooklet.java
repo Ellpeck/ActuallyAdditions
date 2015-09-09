@@ -363,7 +363,7 @@ public class GuiBooklet extends GuiScreen{
                     if(page != null) this.currentPage = page;
                 }
                 else{
-                    this.openIndexEntry(this.currentIndexEntry, this.pageOpenInIndex+1, true);
+                    this.openIndexEntry(this.currentIndexEntry, this.pageOpenInIndex+1, !(this.currentIndexEntry instanceof BookletEntryAllSearch));
                 }
             }
         }
@@ -374,7 +374,7 @@ public class GuiBooklet extends GuiScreen{
                     if(page != null) this.currentPage = page;
                 }
                 else{
-                    this.openIndexEntry(this.currentIndexEntry, this.pageOpenInIndex-1, true);
+                    this.openIndexEntry(this.currentIndexEntry, this.pageOpenInIndex-1, !(this.currentIndexEntry instanceof BookletEntryAllSearch));
                 }
             }
         }

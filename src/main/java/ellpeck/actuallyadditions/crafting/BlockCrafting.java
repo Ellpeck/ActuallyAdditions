@@ -71,6 +71,8 @@ public class BlockCrafting{
     public static IRecipe recipeCrate;
     public static IRecipe recipeFermentingBarrel;
     public static IRecipe recipeCanolaPress;
+    public static IRecipe[] recipesLamps = new IRecipe[BlockColoredLamp.allLampTypes.length];
+    public static IRecipe recipePowerer;
 
     public static void init(){
 
@@ -507,12 +509,14 @@ public class BlockCrafting{
                         'G', "glowstone",
                         'D', "dye"+BlockColoredLamp.allLampTypes[i].name,
                         'Q', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal())));
+                recipesLamps[i] = Util.lastIRecipe();
             }
 
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockLampPowerer, 4),
                     "XXX", "XLX", "XXX",
                     'X', "dustRedstone",
                     'L', new ItemStack(InitBlocks.blockColoredLamp, 1, Util.WILDCARD)));
+            recipePowerer = Util.lastIRecipe();
         }
 
     }
