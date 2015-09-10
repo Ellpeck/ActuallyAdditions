@@ -10,7 +10,7 @@
 
 package ellpeck.actuallyadditions.booklet;
 
-import ellpeck.actuallyadditions.booklet.page.IBookletPage;
+import ellpeck.actuallyadditions.booklet.page.BookletPage;
 import ellpeck.actuallyadditions.booklet.page.PageFurnace;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
@@ -21,17 +21,17 @@ import java.util.Map;
 
 public class BookletChapterFurnace extends BookletChapter{
 
-    public BookletChapterFurnace(String unlocalizedName, BookletIndexEntry entry, IBookletPage... pages){
-        super(unlocalizedName, entry, getAllPages(pages));
+    public BookletChapterFurnace(String unlocalizedName, BookletIndexEntry entry, ItemStack displayStack, BookletPage... pages){
+        super(unlocalizedName, entry, displayStack, getAllPages(pages));
     }
 
     @SuppressWarnings("unchecked")
-    private static IBookletPage[] getAllPages(IBookletPage... pages){
-        ArrayList<IBookletPage> list = new ArrayList<IBookletPage>();
+    private static BookletPage[] getAllPages(BookletPage... pages){
+        ArrayList<BookletPage> list = new ArrayList<BookletPage>();
         list.addAll(Arrays.asList(pages));
         for(Object o : FurnaceRecipes.smelting().getSmeltingList().entrySet()){
             list.add(new PageFurnace(list.size()+1, (ItemStack)((Map.Entry)o).getKey(), (ItemStack)((Map.Entry)o).getValue()));
         }
-        return list.toArray(new IBookletPage[list.size()]);
+        return list.toArray(new BookletPage[list.size()]);
     }
 }

@@ -103,7 +103,7 @@ public class PageCrafting extends BookletPage{
 
             int xShowOutput = gui.guiLeft+27+82;
             int yShowOutput = gui.guiTop+20+22;
-            this.renderItem(gui, recipe.getRecipeOutput(), xShowOutput, yShowOutput);
+            renderItem(gui, recipe.getRecipeOutput(), xShowOutput, yShowOutput, 1.0F);
             for(int i = 0; i < 2; i++){
                 boolean tooltip = i == 1;
                 for(int x = 0; x < width; x++){
@@ -114,7 +114,7 @@ public class PageCrafting extends BookletPage{
                             int xShow = gui.guiLeft+27+4+x*18;
                             int yShow = gui.guiTop+20+4+y*18;
                             if(!tooltip){
-                                this.renderItem(gui, stack, xShow, yShow);
+                                renderItem(gui, stack, xShow, yShow, 1.0F);
                             }
                             else{
                                 if(mouseX >= xShow && mouseX <= xShow+16 && mouseY >= yShow && mouseY <= yShow+16){

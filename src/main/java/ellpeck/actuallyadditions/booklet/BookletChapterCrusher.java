@@ -10,26 +10,27 @@
 
 package ellpeck.actuallyadditions.booklet;
 
-import ellpeck.actuallyadditions.booklet.page.IBookletPage;
+import ellpeck.actuallyadditions.booklet.page.BookletPage;
 import ellpeck.actuallyadditions.booklet.page.PageCrusherRecipe;
 import ellpeck.actuallyadditions.recipe.CrusherRecipeManualRegistry;
+import net.minecraft.item.ItemStack;
 import scala.actors.threadpool.Arrays;
 
 import java.util.ArrayList;
 
 public class BookletChapterCrusher extends BookletChapter{
 
-    public BookletChapterCrusher(String unlocalizedName, BookletIndexEntry entry, IBookletPage... pages){
-        super(unlocalizedName, entry, getAllPages(pages));
+    public BookletChapterCrusher(String unlocalizedName, BookletIndexEntry entry, ItemStack displayStack, BookletPage... pages){
+        super(unlocalizedName, entry, displayStack, getAllPages(pages));
     }
 
     @SuppressWarnings("unchecked")
-    private static IBookletPage[] getAllPages(IBookletPage... pages){
-        ArrayList<IBookletPage> list = new ArrayList<IBookletPage>();
+    private static BookletPage[] getAllPages(BookletPage... pages){
+        ArrayList<BookletPage> list = new ArrayList<BookletPage>();
         list.addAll(Arrays.asList(pages));
         for(CrusherRecipeManualRegistry.CrusherRecipe rec : CrusherRecipeManualRegistry.recipes){
             list.add(new PageCrusherRecipe(list.size()+1, rec));
         }
-        return list.toArray(new IBookletPage[list.size()]);
+        return list.toArray(new BookletPage[list.size()]);
     }
 }

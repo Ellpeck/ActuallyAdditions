@@ -12,7 +12,7 @@ package ellpeck.actuallyadditions.booklet;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ellpeck.actuallyadditions.booklet.page.IBookletPage;
+import ellpeck.actuallyadditions.booklet.page.BookletPage;
 import ellpeck.actuallyadditions.config.GuiConfiguration;
 import ellpeck.actuallyadditions.update.UpdateChecker;
 import ellpeck.actuallyadditions.util.*;
@@ -44,7 +44,7 @@ public class GuiBooklet extends GuiScreen{
     public int guiLeft;
     public int guiTop;
 
-    public IBookletPage currentPage;
+    public BookletPage currentPage;
     public BookletChapter currentChapter;
     public BookletIndexEntry currentIndexEntry;
     public int pageOpenInIndex;
@@ -145,7 +145,7 @@ public class GuiBooklet extends GuiScreen{
         this.addButton(new TexturedButton(BUTTON_RETURN_ID, this.guiLeft+this.xSize/2-7, this.guiTop+this.ySize+2, 182, 0, 15, 10));
 
         for(int i = 0; i < BUTTONS_PER_PAGE; i++){
-            this.addButton(new IndexButton(this.unicodeRenderer, CHAPTER_BUTTONS_START+i, guiLeft+15, guiTop+10+(i*12), 110, 10, ""));
+            this.addButton(new IndexButton(CHAPTER_BUTTONS_START+i, guiLeft+15, guiTop+10+(i*12), 110, 10, "", this));
         }
 
         this.addButton(new TexturedButton(BUTTON_UPDATE_ID, this.guiLeft-11, this.guiTop-11, 245, 0, 11, 11));
@@ -294,7 +294,7 @@ public class GuiBooklet extends GuiScreen{
         return KeyUtil.isControlPressed() && KeyUtil.isShiftPressed() && KeyUtil.isAltPressed();
     }
 
-    private IBookletPage getNextPage(BookletChapter chapter, IBookletPage currentPage){
+    private BookletPage getNextPage(BookletChapter chapter, BookletPage currentPage){
         for(int i = 0; i < chapter.pages.length; i++){
             if(chapter.pages[i] == currentPage){
                 if(i+1 < chapter.pages.length){
@@ -305,7 +305,7 @@ public class GuiBooklet extends GuiScreen{
         return null;
     }
 
-    private IBookletPage getPrevPage(BookletChapter chapter, IBookletPage currentPage){
+    private BookletPage getPrevPage(BookletChapter chapter, BookletPage currentPage){
         for(int i = 0; i < chapter.pages.length; i++){
             if(chapter.pages[i] == currentPage){
                 if(i-1 >= 0){
@@ -359,7 +359,7 @@ public class GuiBooklet extends GuiScreen{
         else if(button.id == BUTTON_FORWARD_ID){
             if(this.currentIndexEntry != null){
                 if(this.currentPage != null){
-                    IBookletPage page = this.getNextPage(this.currentChapter, this.currentPage);
+                    BookletPage page = this.getNextPage(this.currentChapter, this.currentPage);
                     if(page != null) this.currentPage = page;
                 }
                 else{
@@ -370,7 +370,7 @@ public class GuiBooklet extends GuiScreen{
         else if(button.id == BUTTON_BACK_ID){
             if(this.currentIndexEntry != null){
                 if(this.currentPage != null){
-                    IBookletPage page = this.getPrevPage(this.currentChapter, this.currentPage);
+                    BookletPage page = this.getPrevPage(this.currentChapter, this.currentPage);
                     if(page != null) this.currentPage = page;
                 }
                 else{
@@ -436,25 +436,28 @@ public class GuiBooklet extends GuiScreen{
         this.getButton(BUTTON_BACK_ID).visible = this.pageOpenInIndex > 1;
 
         for(int i = 0; i < BUTTONS_PER_PAGE; i++){
-            GuiButton button = this.getButton(CHAPTER_BUTTONS_START+i);
+            IndexButton button = (IndexButton)this.getButton(CHAPTER_BUTTONS_START+i);
             if(entry == null){
                 boolean entryExists = InitBooklet.entries.size() > i+(BUTTONS_PER_PAGE*this.pageOpenInIndex-BUTTONS_PER_PAGE);
                 button.visible = entryExists;
                 if(entryExists){
                     button.displayString = InitBooklet.entries.get(i+(BUTTONS_PER_PAGE*this.pageOpenInIndex-BUTTONS_PER_PAGE)).getLocalizedName();
+                    button.chap = null;
                 }
             }
             else{
                 boolean entryExists = entry.chapters.size() > i+(BUTTONS_PER_PAGE*this.pageOpenInIndex-BUTTONS_PER_PAGE);
                 button.visible = entryExists;
                 if(entryExists){
-                    button.displayString = entry.chapters.get(i+(BUTTONS_PER_PAGE*this.pageOpenInIndex-BUTTONS_PER_PAGE)).getLocalizedName();
+                    BookletChapter chap = entry.chapters.get(i+(BUTTONS_PER_PAGE*this.pageOpenInIndex-BUTTONS_PER_PAGE));
+                    button.displayString = chap.getLocalizedName();
+                    button.chap = chap;
                 }
             }
         }
     }
 
-    public void openChapter(BookletChapter chapter, IBookletPage page){
+    public void openChapter(BookletChapter chapter, BookletPage page){
         if(chapter == null) return;
 
         this.searchField.setVisible(false);
@@ -473,8 +476,8 @@ public class GuiBooklet extends GuiScreen{
         }
     }
 
-    private boolean hasPage(BookletChapter chapter, IBookletPage page){
-        for(IBookletPage aPage : chapter.pages){
+    private boolean hasPage(BookletChapter chapter, BookletPage page){
+        for(BookletPage aPage : chapter.pages){
             if(aPage == page){
                 return true;
             }
@@ -484,11 +487,12 @@ public class GuiBooklet extends GuiScreen{
 
     private static class IndexButton extends GuiButton{
 
-        private FontRenderer renderer;
+        private GuiBooklet gui;
+        public BookletChapter chap;
 
-        public IndexButton(FontRenderer renderer, int id, int x, int y, int width, int height, String text){
+        public IndexButton(int id, int x, int y, int width, int height, String text, GuiBooklet gui){
             super(id, x, y, width, height, text);
-            this.renderer = renderer;
+            this.gui = gui;
         }
 
         @Override
@@ -505,7 +509,17 @@ public class GuiBooklet extends GuiScreen{
                     color = 38144;
                 }
 
-                this.renderer.drawString((this.field_146123_n ? EnumChatFormatting.UNDERLINE : "")+this.displayString, this.xPosition, this.yPosition+(this.height-8)/2, color);
+                int textOffsetX = 0;
+                if(this.chap != null){
+                    if(this.chap.displayStack != null){
+                        GL11.glPushMatrix();
+                        BookletPage.renderItem(this.gui, this.chap.displayStack, this.xPosition-5, this.yPosition, 0.725F);
+                        GL11.glPopMatrix();
+                        textOffsetX = 8;
+                    }
+                }
+
+                this.gui.unicodeRenderer.drawString((this.field_146123_n ? EnumChatFormatting.UNDERLINE : "")+this.displayString, this.xPosition+textOffsetX, this.yPosition+(this.height-8)/2, color);
             }
         }
     }

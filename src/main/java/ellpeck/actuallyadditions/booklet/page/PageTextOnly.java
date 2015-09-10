@@ -14,15 +14,15 @@ import ellpeck.actuallyadditions.booklet.GuiBooklet;
 import ellpeck.actuallyadditions.booklet.InitBooklet;
 import net.minecraft.item.ItemStack;
 
-public class PageText extends BookletPage{
+public class PageTextOnly extends BookletPage{
 
     private ItemStack stack;
 
-    public PageText(int id){
+    public PageTextOnly(int id){
         super(id);
     }
 
-    public PageText setStack(ItemStack stack){
+    public PageTextOnly setStack(ItemStack stack){
         if(!InitBooklet.pagesWithItemStackData.contains(this)){
             InitBooklet.pagesWithItemStackData.add(this);
         }

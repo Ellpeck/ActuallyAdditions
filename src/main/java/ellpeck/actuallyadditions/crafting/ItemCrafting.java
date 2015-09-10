@@ -30,6 +30,8 @@ import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
+import java.util.ArrayList;
+
 public class ItemCrafting{
 
     public static IRecipe recipePhantomConnector;
@@ -66,6 +68,9 @@ public class ItemCrafting{
     public static IRecipe recipeRing;
     public static IRecipe recipeDough;
     public static IRecipe recipeRiceDough;
+    public static IRecipe recipeLeafBlower;
+    public static IRecipe recipeLeafBlowerAdvanced;
+    public static ArrayList<IRecipe> recipesPotionRings = new ArrayList<IRecipe>();
 
     public static void init(){
 
@@ -96,6 +101,7 @@ public class ItemCrafting{
                     'I', "ingotIron",
                     'P', new ItemStack(Blocks.piston),
                     'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal())));
+            recipeLeafBlower = Util.lastIRecipe();
         }
 
         //Drill
@@ -347,6 +353,7 @@ public class ItemCrafting{
                     'D', "gemDiamond",
                     'P', new ItemStack(Blocks.piston),
                     'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal())));
+            recipeLeafBlowerAdvanced = Util.lastIRecipe();
         }
 
         //Phantom Connector
@@ -459,7 +466,9 @@ public class ItemCrafting{
 
     public static void addRingRecipeWithStack(ItemStack mainStack, int meta){
         GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemPotionRing, 1, meta), mainStack, mainStack, mainStack, mainStack, new ItemStack(Blocks.diamond_block), new ItemStack(Items.nether_wart), new ItemStack(Items.potionitem), new ItemStack(InitItems.itemMisc, 1, TheMiscItems.RING.ordinal()));
+        recipesPotionRings.add(Util.lastIRecipe());
         GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemPotionRingAdvanced, 1, meta), new ItemStack(InitItems.itemPotionRing, 1, meta), new ItemStack(Items.nether_star), new ItemStack(Items.nether_star));
+        recipesPotionRings.add(Util.lastIRecipe());
     }
 
     public static void initMashedFoodRecipes(){

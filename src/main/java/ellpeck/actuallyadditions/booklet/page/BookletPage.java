@@ -25,9 +25,21 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class BookletPage implements IBookletPage{
+public class BookletPage{
+
+    private static class TextReplacement{
+        public String text;
+        public String replacement;
+
+        public TextReplacement(String text, String replacement){
+            this.text = text;
+            this.replacement = replacement;
+        }
+    }
+    private ArrayList<TextReplacement> textReplacements = new ArrayList<TextReplacement>();
 
     protected int id;
     protected BookletChapter chapter;
@@ -36,37 +48,43 @@ public class BookletPage implements IBookletPage{
         this.id = id;
     }
 
-    @Override
     public int getID(){
         return this.id;
     }
 
-    @Override
     public void setChapter(BookletChapter chapter){
         this.chapter = chapter;
     }
 
-    @Override
     public BookletChapter getChapter(){
         return this.chapter;
     }
 
-    @Override
-    public String getText(){
-        return StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".chapter."+this.chapter.getUnlocalizedName()+".text."+this.id).replaceAll("<imp>", EnumChatFormatting.DARK_GREEN+"").replaceAll("<item>", EnumChatFormatting.BLUE+"").replaceAll("<r>", EnumChatFormatting.BLACK+"").replaceAll("<n>", "\n").replaceAll("<i>", EnumChatFormatting.ITALIC+"").replaceAll("<rs>", EnumChatFormatting.RESET+"");
+    public final String getText(){
+        String base = StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".chapter."+this.chapter.getUnlocalizedName()+".text."+this.id).replaceAll("<imp>", EnumChatFormatting.DARK_GREEN+"").replaceAll("<item>", EnumChatFormatting.BLUE+"").replaceAll("<r>", EnumChatFormatting.BLACK+"").replaceAll("<n>", "\n").replaceAll("<i>", EnumChatFormatting.ITALIC+"").replaceAll("<rs>", EnumChatFormatting.RESET+"");
+        for(TextReplacement rep : this.textReplacements){
+            base = base.replaceAll(rep.text, rep.replacement);
+        }
+        return base;
     }
 
-    @Override
+    public BookletPage addTextReplacement(String text, String replacement){
+        textReplacements.add(new TextReplacement(text, replacement));
+        return this;
+    }
+
+    public BookletPage addTextReplacement(String text, int replacement){
+        return this.addTextReplacement(text, Integer.toString(replacement));
+    }
+
     public void renderPre(GuiBooklet gui, int mouseX, int mouseY, boolean mouseClick){
 
     }
 
-    @Override
     public void render(GuiBooklet gui, int mouseX, int mouseY, boolean mouseClick){
 
     }
 
-    @Override
     public ItemStack getItemStackForPage(){
         return null;
     }
@@ -85,7 +103,7 @@ public class BookletPage implements IBookletPage{
         }
 
         if(checkAndTransfer){
-            for(IBookletPage page : InitBooklet.pagesWithItemStackData){
+            for(BookletPage page : InitBooklet.pagesWithItemStackData){
                 if(page.getItemStackForPage() != null && page.getItemStackForPage().isItemEqual(stack)){
                     list.add(EnumChatFormatting.GOLD+StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".clickToSeeRecipe"));
 
@@ -103,7 +121,7 @@ public class BookletPage implements IBookletPage{
         gui.drawHoveringText(list, x, y);
     }
 
-    protected void renderItem(GuiBooklet gui, ItemStack stack, int x, int y){
+    public static void renderItem(GuiBooklet gui, ItemStack stack, int x, int y, float scale){
         GL11.glPushMatrix();
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
@@ -112,6 +130,7 @@ public class BookletPage implements IBookletPage{
         GL11.glEnable(GL12.GL_RESCALE_NORMAL);
         GL11.glPushMatrix();
         GL11.glTranslated(x, y, 0);
+        GL11.glScalef(scale, scale, scale);
         RenderItem.getInstance().renderItemAndEffectIntoGUI(gui.unicodeRenderer, gui.mc.getTextureManager(), stack, 0, 0);
         RenderItem.getInstance().renderItemOverlayIntoGUI(gui.mc.fontRenderer, gui.mc.getTextureManager(), stack, 0, 0);
         GL11.glPopMatrix();

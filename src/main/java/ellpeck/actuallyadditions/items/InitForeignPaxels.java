@@ -14,10 +14,12 @@ import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.registry.GameRegistry;
 import ellpeck.actuallyadditions.config.values.ConfigBoolValues;
 import ellpeck.actuallyadditions.config.values.ConfigCrafting;
+import ellpeck.actuallyadditions.crafting.ToolCrafting;
 import ellpeck.actuallyadditions.creative.CreativeTab;
 import ellpeck.actuallyadditions.items.tools.ItemAllToolAA;
 import ellpeck.actuallyadditions.util.ItemUtil;
 import ellpeck.actuallyadditions.util.ModUtil;
+import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemTool;
@@ -56,6 +58,7 @@ public class InitForeignPaxels{
 
                             if(ConfigCrafting.PAXELS.isEnabled()){
                                 GameRegistry.addRecipe(new ShapelessOreRecipe(mtPaxels[i], axe, pickaxe, hoe, sword, shovel));
+                                ToolCrafting.recipesPaxels.add(Util.lastIRecipe());
                             }
                         }
                     }
@@ -83,6 +86,7 @@ public class InitForeignPaxels{
 
                         if(ConfigCrafting.PAXELS.isEnabled()){
                             GameRegistry.addRecipe(new ShapelessOreRecipe(tfPaxels[i], axe, pickaxe, hoe, sword, shovel));
+                            ToolCrafting.recipesPaxels.add(Util.lastIRecipe());
                         }
                     }
                 }

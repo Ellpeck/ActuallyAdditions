@@ -16,7 +16,7 @@ import ellpeck.actuallyadditions.booklet.BookletChapter;
 import ellpeck.actuallyadditions.booklet.BookletIndexEntry;
 import ellpeck.actuallyadditions.booklet.GuiBooklet;
 import ellpeck.actuallyadditions.booklet.InitBooklet;
-import ellpeck.actuallyadditions.booklet.page.IBookletPage;
+import ellpeck.actuallyadditions.booklet.page.BookletPage;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
@@ -30,7 +30,7 @@ public class PersistantVariables{
 
     private static File theFile;
 
-    public static void saveBookPage(BookletIndexEntry entry, BookletChapter chapter, IBookletPage page, int pageInIndex){
+    public static void saveBookPage(BookletIndexEntry entry, BookletChapter chapter, BookletPage page, int pageInIndex){
         NBTTagCompound compound = getCompound();
         if(compound != null){
             compound.setInteger(getName("Entry"), entry == null ? -1 : InitBooklet.entries.indexOf(entry));
@@ -51,7 +51,7 @@ public class PersistantVariables{
 
                 BookletIndexEntry currentIndexEntry = entry == -1 ? null : InitBooklet.entries.get(entry);
                 BookletChapter currentChapter = chapter == -1 || entry == -1 ? null : currentIndexEntry.chapters.get(chapter);
-                IBookletPage currentPage = chapter == -1 ? null : currentChapter.pages[page-1];
+                BookletPage currentPage = chapter == -1 ? null : currentChapter.pages[page-1];
                 int pageInIndex = compound.getInteger(getName("PageInIndex"));
 
                 gui.openIndexEntry(currentIndexEntry, pageInIndex, true);

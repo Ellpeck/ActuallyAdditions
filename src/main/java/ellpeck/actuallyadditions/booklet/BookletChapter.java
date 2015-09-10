@@ -10,25 +10,28 @@
 
 package ellpeck.actuallyadditions.booklet;
 
-import ellpeck.actuallyadditions.booklet.page.IBookletPage;
+import ellpeck.actuallyadditions.booklet.page.BookletPage;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
+import net.minecraft.item.ItemStack;
 
 public class BookletChapter{
 
-    public final IBookletPage[] pages;
+    public final BookletPage[] pages;
     private final String unlocalizedName;
     public final BookletIndexEntry entry;
+    public final ItemStack displayStack;
 
-    public BookletChapter(String unlocalizedName, BookletIndexEntry entry, IBookletPage... pages){
+    public BookletChapter(String unlocalizedName, BookletIndexEntry entry, ItemStack displayStack, BookletPage... pages){
         this.pages = pages.clone();
 
         this.unlocalizedName = unlocalizedName;
         entry.addChapter(this);
         InitBooklet.allAndSearch.addChapter(this);
         this.entry = entry;
+        this.displayStack = displayStack;
 
-        for(IBookletPage page : this.pages){
+        for(BookletPage page : this.pages){
             page.setChapter(this);
         }
     }

@@ -75,7 +75,7 @@ public class PageFurnace extends BookletPage{
                     int xShow = gui.guiLeft+37+1+x*42;
                     int yShow = gui.guiTop+20+21;
                     if(!tooltip){
-                        this.renderItem(gui, stack, xShow, yShow);
+                        renderItem(gui, stack, xShow, yShow, 1.0F);
                     }
                     else{
                         if(mouseX >= xShow && mouseX <= xShow+16 && mouseY >= yShow && mouseY <= yShow+16){
