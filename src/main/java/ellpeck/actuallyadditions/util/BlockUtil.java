@@ -18,16 +18,24 @@ import net.minecraft.item.ItemBlock;
 public class BlockUtil{
 
     public static String createUnlocalizedName(Block block){
-        return ModUtil.MOD_ID_LOWER + "." + ((INameableItem)block).getName();
+        return ModUtil.MOD_ID_LOWER+"."+((INameableItem)block).getName();
     }
 
-    public static void register(Block block, Class<? extends ItemBlock> itemBlock, boolean addTab){
+    @SuppressWarnings("unchecked")
+    public static void register(Block block, boolean addTab){
         block.setCreativeTab(addTab ? CreativeTab.instance : null);
         block.setBlockName(createUnlocalizedName(block));
-        GameRegistry.registerBlock(block, itemBlock, ((INameableItem)block).getName());
+
+        for(Class sub : block.getClass().getDeclaredClasses()){
+            if(sub.getSuperclass() == ItemBlock.class){
+                GameRegistry.registerBlock(block, sub, ((INameableItem)block).getName());
+                break;
+            }
+        }
     }
 
-    public static void register(Block block, Class<? extends ItemBlock> itemBlock){
-        register(block, itemBlock, true);
+    @SuppressWarnings("unchecked")
+    public static void register(Block block){
+        register(block, true);
     }
 }
