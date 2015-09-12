@@ -25,21 +25,13 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class BookletPage{
 
-    private static class TextReplacement{
-        public String text;
-        public String replacement;
-
-        public TextReplacement(String text, String replacement){
-            this.text = text;
-            this.replacement = replacement;
-        }
-    }
-    private ArrayList<TextReplacement> textReplacements = new ArrayList<TextReplacement>();
+    private HashMap<String, String> textReplacements = new HashMap<String, String>();
 
     protected int id;
     protected BookletChapter chapter;
@@ -62,14 +54,15 @@ public class BookletPage{
 
     public final String getText(){
         String base = StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".chapter."+this.chapter.getUnlocalizedName()+".text."+this.id).replaceAll("<imp>", EnumChatFormatting.DARK_GREEN+"").replaceAll("<item>", EnumChatFormatting.BLUE+"").replaceAll("<r>", EnumChatFormatting.BLACK+"").replaceAll("<n>", "\n").replaceAll("<i>", EnumChatFormatting.ITALIC+"").replaceAll("<rs>", EnumChatFormatting.RESET+"");
-        for(TextReplacement rep : this.textReplacements){
-            base = base.replaceAll(rep.text, rep.replacement);
+        for(Object o : this.textReplacements.entrySet()){
+            Map.Entry e = (Map.Entry)o;
+            base = base.replaceAll((String)e.getKey(), (String)e.getValue());
         }
         return base;
     }
 
     public BookletPage addTextReplacement(String text, String replacement){
-        textReplacements.add(new TextReplacement(text, replacement));
+        this.textReplacements.put(text, replacement);
         return this;
     }
 

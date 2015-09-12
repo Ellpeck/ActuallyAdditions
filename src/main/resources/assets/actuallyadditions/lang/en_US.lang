@@ -4,8 +4,6 @@ achievement.page.actuallyadditions=Actually Additions
 fluid.oil=Oil
 fluid.canolaoil=Canola Oil
 
-tooltip.actuallyadditions.block.desc=Block
-
 tile.actuallyadditions.blockCompost.name=Compost
 tile.actuallyadditions.blockMiscOreBlackQuartz.name=Black Quartz Ore
 tile.actuallyadditions.blockMiscBlackQuartz.name=Block of Black Quartz
@@ -151,7 +149,7 @@ item.actuallyadditions.itemDrillUpgradeSpeedII.name=Drill Speed Augment II
 item.actuallyadditions.itemDrillUpgradeSpeedIII.name=Drill Speed Augment III
 item.actuallyadditions.itemDrillUpgradeSilkTouch.name=Drill Silk Touch Augment
 item.actuallyadditions.itemDrillUpgradeFortune.name=Drill Fortune Augment I
-item.actuallyadditions.itemDrillUpgradeFortuneII.name=Drill Fortune Augment II (That gives you Fortune III as it says in the tooltip...)
+item.actuallyadditions.itemDrillUpgradeFortuneII.name=Drill Fortune Augment II (Gives Fortune III!)
 item.actuallyadditions.itemDrillUpgradeBlockPlacing.name=Drill Block Placing Augment
 item.actuallyadditions.itemDrillUpgradeThreeByThree.name=Drill Mining Augment I
 item.actuallyadditions.itemDrillUpgradeFiveByFive.name=Drill Mining Augment II
@@ -374,104 +372,40 @@ booklet.actuallyadditions.indexEntry.functionalNoRF.name=Blocks that don't use R
 booklet.actuallyadditions.indexEntry.allAndSearch.name=All Items and Search
 booklet.actuallyadditions.indexEntry.functionalRF.name=Blocks that use RF
 booklet.actuallyadditions.indexEntry.generatingRF.name=Blocks that generate RF
+booklet.actuallyadditions.indexEntry.itemsNoRF.name=Items that don't use RF
+booklet.actuallyadditions.indexEntry.itemsRF.name=Items that use RF
 
 booklet.actuallyadditions.recipeDisabled=The crafting recipe for this item is disabled in the Config File! If you're on a server, ask the server author to enable it in the config. If you're on a client, press the 'Open Config'-Button on the top right and enable the recipe!
 booklet.actuallyadditions.clickToSeeRecipe=Click to see more Information
-
-booklet.actuallyadditions.chapter.foods.name=Food
-booklet.actuallyadditions.chapter.cloud.name=Smiley Cloud
-booklet.actuallyadditions.chapter.cloud.text.1=A <item>Smiley Cloud<r> is a neat little block that you can put down in the world. When in place, it will hover around across the ground, though staying on the block you placed it in. When right-clicking the cloud, it will open a GUI that enables you to change its name, and thus, its appearance if you do it right. On the next page, you can find some examples you can try out. <n><n><i>This seems so familiar... Tiny Potato?
-booklet.actuallyadditions.chapter.cloud.text.2=The Crafting Recipe is shown above. If you want to know what certain name changes do, try naming a cloud <imp>"Ellpeck"<r>, <imp>"Glenthor"<r> or <imp>"AcidBlues"<r>.
-
-booklet.actuallyadditions.chapter.phantomfaces.name=Phantomfaces
-booklet.actuallyadditions.chapter.phantomfaces.text.1=A <item>Phantomface<r> is a block that you can <imp>connect to any inventory<r> by using a <item>Phantom Connector<r>. When connected, the Phantomface will <imp>act as if it was the corresponding inventory<r>, accepting Items from pipes and hoppers and having items be able to get pulled out of the face (the same applies for <item>energyfaces<r> with RF and <item>liquifaces<r> with fluids.) a <item>Phantomfaces<r> has a default <imp>range of <rad> blocks<r> that can be enlarged with <item>Phantom Boosters<r>.
-booklet.actuallyadditions.chapter.phantomfaces.text.2=The normal <item>Phantomface<r> can connect to inventories like chests and furnaces, transfering Items into and out of them.
-booklet.actuallyadditions.chapter.phantomfaces.text.3=The <item>Phantom Liquiface<r> can connect to tanks and such, allowing all types of liquids to be pumped through. Giving it a Redstone Signal will cause it to auto-output.
-booklet.actuallyadditions.chapter.phantomfaces.text.4=The <item>Phantom Energyface<r> can connect to things like generators and crushers, allowing for RF to flow through them into and out of machines.
-booklet.actuallyadditions.chapter.phantomfaces.text.5=<imp>Shift-Right-Click<r> this onto any inventory and then on the Phantom Device to connect the two.
-booklet.actuallyadditions.chapter.phantomfaces.text.6=The <item>Phantom Booster<r> boosts the range of all <imp>Phantom Devices<r>. A Phantom device can have <imp>3<r> at most stacked atop it, with every booster <imp>doubling<r> the range the Phantom Device has.
-
-booklet.actuallyadditions.chapter.phantomBreaker.name=Phantom Breakers & Placers
-booklet.actuallyadditions.chapter.phantomBreaker.text.1=<item>Phantom Breakers<r> and <item>Placers<r> have similar mechanics to <item>Phantomfaces<r>: They can be connected via <item>Phantom Connectors<r>. <item>Phantom Breakers<r> and <item>Placers<r> have a <imp>range of 3 blocks<r>, in which they can destroy and place blocks in connected places. <imp>Shift-right-clicking<r> supplies you with <imp>information about the connection<r>, <imp>right-clicking<r> normally will <imp>open its interface<r>. See the <imp>Phantomface Page<r> for more information on <item>Phantom Connectors<r> and <item>Phantom Boosters<r>.
-booklet.actuallyadditions.chapter.phantomBreaker.text.2=The <item>Phantom Placer<r> places Blocks that you supply it with.
-booklet.actuallyadditions.chapter.phantomBreaker.text.3=The <item>Phantom Breaker<r> breaks blocks and stores them in its internal inventory.
-
-booklet.actuallyadditions.chapter.breaker.name=(Fluid) Placers & Breakers
-booklet.actuallyadditions.chapter.breaker.text.1=The <item>Breaker<r> breaks Blocks in front of it and stores them in its internal inventory. That's it.
-booklet.actuallyadditions.chapter.breaker.text.2=The <item>Placer<r> places Blocks that it has stored in its internal inventory in the world. Amazing.
-booklet.actuallyadditions.chapter.breaker.text.3=The <item>Fluid Placer<r> places liquids that you supply it with, if they have a block, in the world.
-booklet.actuallyadditions.chapter.breaker.text.4=The <item>Fluid Collector<r> collects liquids in front of it and stores them in its tank.
-
-booklet.actuallyadditions.chapter.craftingIngs.name=Crafting Ingredients
-booklet.actuallyadditions.chapter.craftingIngs.text.1=There is a lot of Items in <imp>Actually Additions<r> that need certain low-tier, basic items to be able to be crafted. Here is all of the items that don't have a purpose on their own, but are <imp>used in several crafting recipes<r> making them really necessary and useful.
-booklet.actuallyadditions.chapter.craftingIngs.text.2=The <item>Coil<r> is a low-tier item used for machines.
-booklet.actuallyadditions.chapter.craftingIngs.text.3=The <item>Advanced Coil<r> is a higher tier item used for more advanced machines.
-booklet.actuallyadditions.chapter.craftingIngs.text.4=The <item>Wood Casing<r> is a low-tier block used for machines.
-booklet.actuallyadditions.chapter.craftingIngs.text.5=The <item>Stone Casing<r> is a middle-tier block used for machines.
-booklet.actuallyadditions.chapter.craftingIngs.text.6=The <item>Ender Pearl<r> Block doesn't do anything on its own, but is used for Phantomfaces and the Ender Casing.
-booklet.actuallyadditions.chapter.craftingIngs.text.7=The <item>Ender Casing<r> is a high-tier block used for machines.
-
-booklet.actuallyadditions.chapter.esd.name=ESDs
-booklet.actuallyadditions.chapter.esd.text.1=The <item>ESD<r> is a block that basically works like an <imp>extremely advanced hopper<r>. You can <imp>configure the sides<r> and the <imp>exact range of slots to put into and pull from<r>. When hovering over the parts of the <item>ESD<r>'s GUI, you can see more in-depth info about it.
-booklet.actuallyadditions.chapter.esd.text.2=The normal <item>ESD<r> doesn't have a specific item filter. It'll just pull and put everything it finds.
-booklet.actuallyadditions.chapter.esd.text.3=The <item>Advanced ESD<r> has a filter, so that you can specify what to pull and put.
-
-booklet.actuallyadditions.chapter.coffeeMachine.name=Coffee Machine
-booklet.actuallyadditions.chapter.coffeeMachine.text.1=The <item>Coffee Machine<r> is a very powerful block that is basically a <item>extended brewing stand<r>. After adding <item>Coffee Beans<r>, a <item>Cup<r> and some <imp>RF<r> and <imp>Water<r>, you can add up to 8 different Items to the extra slots to <imp>give your coffee potion effects<r> of your choosing. When you have added all of the items for the effects you want, just press the OK-button or give the machine a redstone signal.
-booklet.actuallyadditions.chapter.coffeeMachine.text.2=Sugar > Speed 30s <n><n>Magma Cream > Fire Resistance 20s <n><n>Pufferfish > Water Breathing 10s <n><n>Golden Carrot > Night Vision 30s <n><n>Ghast Tear > Regeneration 5s <n><n>Blaze Powder > Strength 15s <n><n>Fermented Spider Eye > Invisibility 25s
-booklet.actuallyadditions.chapter.coffeeMachine.text.3=Every effect has a default amount of time it lasts for and a maximum amount that can be put into a coffee. The default amplifier of the effects is always I. <n>A <item>bucket of milk<r> (or a glass of soy milk if you have HarvestCraft installed!) causes all previously added effects (meaning all items added in slots with smaller numbers!) to last <imp>2 Minutes longer<r>, but <imp>lose one amplifier level<r>, meaning that you always have to add two of one item before you add a bucket of milk.
-
-booklet.actuallyadditions.chapter.crusher.name=Crushers
-booklet.actuallyadditions.chapter.crusher.text.1=The <item>Crusher<r> is a machine that uses <imp>RF<r> to <imp>double ores<r>, meaning when you put in any ore block, it gets broken down to two dust items which can be <imp>smelted in a furnace<r> afterwards. <n>See all of the recipes on the following pages.
-
-booklet.actuallyadditions.chapter.furnaceDouble.name=Double Furnace
-booklet.actuallyadditions.chapter.furnaceDouble.text.1=The <item>Double Furnace<r> is a block that works exactly <imp>like a furnace<r>, but it can smelt <imp>two items at a time<r> and uses <imp>RF<r> to work. <n>See all of the recipes on the following pages.
-
-booklet.actuallyadditions.chapter.xpSolidifier.name=Experience Solidifier
-booklet.actuallyadditions.chapter.xpSolidifier.text.1=The <item>Experience Solidifier<r> can be used to turn your Experience into <item>Solidified Experience<r>-Items that can then either be <imp>stored<r> or used again by right-clicking to get the XP you spent for them back. <item>Solidified Experience<r> also gets dropped from mobs sometimes!<n><imp>An easy way to store your XP!<r>
-booklet.actuallyadditions.chapter.xpSolidifier.text.2=Block of knowledge
-
-booklet.actuallyadditions.chapter.miner.name=Magnetic Miner
-booklet.actuallyadditions.chapter.miner.text.1=The <item>Magnetic Miner<r> is a block that automatically <imp>digs ores out of the ground<r>, supplied a bit of <imp>RF<r> and some <imp>Oil<r>, and places them on top of <item>Casing Blocks<r> that you need to put down <imp>one block below it<r> in the area in places where you want ores to be mined. The ores you get will then be <imp>stacked up on top of the casings<r>.
-booklet.actuallyadditions.chapter.miner.text.2=Magnet Ore
-booklet.actuallyadditions.chapter.miner.text.3=These blocks need to be placed <imp>one block lower than the miner is<r> around it where ores should be stacked up.
-
-booklet.actuallyadditions.chapter.greenhouseGlass.name=Greenhouse Glass
-booklet.actuallyadditions.chapter.greenhouseGlass.text.1=<item>Greenhouse Glass<r> can be used to <imp>make the growth of plants a lot faster<r>. When placed above a plant, it, and this is tech talk right here, ticks the plant much more often, causing it to grow much faster. It doesn't have a set range on the vertical axis, so you could place the glass really high above the plants to grow.<n>The Item version of this is the <item>Ring Of Growth<r>.
-booklet.actuallyadditions.chapter.greenhouseGlass.text.2=Growing Glass.
-
-booklet.actuallyadditions.chapter.lavaFactory.name=Lava Factory
-booklet.actuallyadditions.chapter.lavaFactory.text.1=The <item>Lava Factory<r> is a block that automatically generates lava if supplied with enough <imp>RF<r>. Before it can do that, however, you need to place <item>Casing Blocks<r> (their entries can be found on the Magnetic Miner page!) around it in a certain way: Go <imp>one block up above the controller<r>. That block is where the lava is going to appear. Around that block, place <imp>4 Casing Blocks<r>. You can check if you did it right by right-clicking the <item>Lava Factory<r>.
-booklet.actuallyadditions.chapter.lavaFactory.text.2=Mister Lava, Lava! <n>..sorry.
-
-booklet.actuallyadditions.chapter.energizer.name=Energizers and Enervators
-booklet.actuallyadditions.chapter.energizer.text.1=The <item>Energizer<r> will charge up Items that can hold <imp>RF<r>.
-booklet.actuallyadditions.chapter.energizer.text.2=The <item>Enervator<r> will enervate, meaning discharge, Items that can hold <imp>RF<r>.
 
 booklet.actuallyadditions.chapter.intro.name=An Introduction to ActAdd
 booklet.actuallyadditions.chapter.intro.text.1=<i>This book, written years ago, found by the player, used to help understand the wonders of this world, finally opened, finally looked at, full of glory, full of grace, will be used to help the player along on their journey through <imp>Actually Additions<r><i>. <n>What is <imp>Actually Additions<r><i>, you may ask. <n><imp>Actually Additions<r><i> adds blocks, items, and features to make the player's experience easier, automate the world and properly do what you've always wanted to do.
 booklet.actuallyadditions.chapter.intro.text.2=<i>This book, written by <imp>Ellpeck<r><i>, the author of everything <imp>Actually Additions<r><i> contains, often called Ellopecko, Peck or Ellpack, is easy to navigate. It has an <imp>index page<r><i> at the front from which you can choose <imp>criteria pages<r><i>. These criteria pages contain a list of every item which is part of the criteria, and clicking on that will show <imp>precise information and the crafting recipe<r><i> of the item. The page you were on previously will stay open between sessions, too! <n><rs>Go check it out!
 booklet.actuallyadditions.chapter.intro.text.3=If you, for some reason, want to craft this book again, just take a <item>piece of paper<r> and a <item>canola seed<r> which you can find randomly generated and craft them together!
 
+booklet.actuallyadditions.chapter.craftingIngs.name=Crafting Ingredients
+booklet.actuallyadditions.chapter.craftingIngs.text.1=<imp>Actually Additions<r> has lots of items that use certain <imp>basic crafting items<r> to be crafted. This chapter has all of these basic items <imp>grouped up<r> so that you can see all of them at once.
+
 booklet.actuallyadditions.chapter.quartz.name=Black Quartz
-booklet.actuallyadditions.chapter.quartz.text.1=<item>Black Quartz<r> is a semi-common ore that can be found underground. It can be used to make decor blocks, but it is also necessary to make <imp>important crafting ingredients<r> (found in the Crafting Ingredients page!).
-booklet.actuallyadditions.chapter.quartz.text.2=<item>Black Quartz<r> as an item is used to make lots of important crafting materials in the mod. It can also be, if you can't find the ore, made with one <item>Nether Quartz<r> and one <item>Coal<r>. This recipe isn't that cheap though, so you're <imp>better off just going caving<r>.
+booklet.actuallyadditions.chapter.quartz.text.1=<item>Black Quartz<r> is an <imp>Ore<r> that generates in the world <imp>between layer <lowest> and <highest><r>. When broken, it can be <imp>smelted in a furnace<r> or <imp>crushed in a crusher<r> to get broken down into <item>Black Quartz<r>.
+booklet.actuallyadditions.chapter.quartz.text.2=<item>Black Quartz<r> items are used in lots of <imp>Crafting Recipes<r> in <imp>Actually Additions<r>. They are very important for most of the Items and, thus, should be mined when found in the world. They can be crafted into a couple of different <imp>Decorative Blocks<r> shown on the following pages. <n><n><i>Nether Quartz, but deadlier
 
-booklet.actuallyadditions.chapter.fishingNet.name=Fishing Net
-booklet.actuallyadditions.chapter.fishingNet.text.1=When placing the <item>Fishing Net<r> above a puddle, a lake, or a sea of water, it will start caching <item>Fish<r> and <imp>other stuff you get from fishing<r> on its own over quite a long period of time. To store the stuff it catches, because it doesn't have an inventory, you can just place any inventory on top of it that can collect items from the bottom, and it will automatically input them into there. If you don't do this, it'll just spew out all of the items which is lovely too.
+booklet.actuallyadditions.chapter.cloud.name=Smiley Cloud
+booklet.actuallyadditions.chapter.cloud.text.1=The <item>Smiley Cloud<r> is a magical floating cloud which is getting put to life through the piece of Solidified Experience inside it. It hovers up and down in its place all jolly and fun, and when <imp>right-clicking<r>, you can <imp>give it a name<r>. <n>When giving it certain <imp>special names<r> like <imp>"Ellpeck"<r> or <imp>"AcidBlues<r>, it will have some special items it carries!
 
-booklet.actuallyadditions.chapter.repairer.name=Item Repairer
-booklet.actuallyadditions.chapter.repairer.text.1=The <item>Item Repairer<r> is used to repair tools and armor which you could usually repair in an anvil. It uses <imp>RF<r>, a lot of it, actually, to repair the item <imp>without needing any added materials<r>!
+booklet.actuallyadditions.chapter.coalStuff.name=Coal Stuff
+booklet.actuallyadditions.chapter.coalStuff.text.1=Sometimes your <item>Coal<r> just <imp>burns for too long or too short<r>, you know what I mean? <n>For that, you can now craft <item>Tiny Coal<r>, <item>Tiny Charcoal<r> and <item>Blocks of Charcoal<r> for using them in a furnace. <n>While the <item>Block of Charcoal<r> burns for as long as a <item>Block of Coal<r>, the <item>Tiny Coal<r> and <item>Tiny Charcoal<r> will burn for <imp>one eighth of a piece of coal<r>, meaning it will <imp>smelt one item in a normal furnace<r>.
 
-booklet.actuallyadditions.chapter.coalGen.name=Coal Generator
-booklet.actuallyadditions.chapter.coalGen.text.1=This is pretty self-explanatory: You fill the <item>Coal Generator<r> up with <item>Coal<r>, and it will generate RF.
+booklet.actuallyadditions.chapter.lamps.name=Lamps
+booklet.actuallyadditions.chapter.lamps.text.1=<item>Lamps<r> are a block providing lots of light, similar to the mystic Glowstone or Torches, but they can be <imp>dyed with all of the 16 different colors<r> either by <imp>crafting them<r> or by placing them on the ground and <imp>right-clicking them with a piece of dye<r>. <n>When <imp>right-clicking<r> them with an empty hand, they will <imp>turn on and off<r>. If you want them, however, to be toggled using <item>Redstone<r> Power, just place a <item>Lamp Controller<r> next to one.
 
-booklet.actuallyadditions.chapter.solarPanel.name=Solar Panel
-booklet.actuallyadditions.chapter.solarPanel.text.1=The <item>Solar Panel<r> is a block that is used to generate <imp>RF<r> through the power of the sun! Just plop it down under a <imp>free sky<r> and watch it generate RF slowly just by sitting there. <n>It will obviously not work at night. <imp>Obviously.
+booklet.actuallyadditions.chapter.treasureChest.name=Treasure Chests
+booklet.actuallyadditions.chapter.treasureChest.text.1=<item>Treasure Chests<r> are a semi-uncommon occurence <imp>in Ocean Biomes<r>. They appear on the bottom of the sea, probably left there by bypassing Ships who threw off or lost some load. These Chests however, <imp>hold some valuable items<r>, if you're lucky. Breaking them won't yield you anything, though, you just have to <imp>right-click them<r> to receive some amazing goodies.
 
-booklet.actuallyadditions.chapter.heatCollector.name=Heat Collector
-booklet.actuallyadditions.chapter.heatCollector.text.1=The <item>Heat Collector<r> is one of the more complicated methods of generating <imp>RF<r> in <imp>Actually Additions<r>. It needs to have a couple of lava blocks around it to generate <imp>RF<r> in the first place, but it will sometimes absorb some of the lava, having to have it replaced before it can continue working again. <n>This could be a good combination with the Lava Factory. Maybe.
+booklet.actuallyadditions.chapter.breaker.name=Breakers and Placers
+booklet.actuallyadditions.chapter.breaker.text.1=The <item>Breaker<r>... well.. it breaks blocks in front of it. That's about it. It can be oriented in every direction like a Piston.
+booklet.actuallyadditions.chapter.breaker.text.2=The <item>Placer<r>... well... it places blocks in front of it. That's about it. It can be oriented in every direction like a Piston.
+booklet.actuallyadditions.chapter.breaker.text.3=The <item>Liquid Placer<r> places blocks that correspond to the liquid you put in via a bucket or pipe in via a pipe. Needs <imp>1000mb<r> to place one block.
+booklet.actuallyadditions.chapter.breaker.text.4=The <item>Liquid Collector<r> will collect liquid blocks in front of it and convert them to <imp>1000mb<r> of fluid. That's the equivalent of a filled bucket.
 
-booklet.actuallyadditions.chapter.coalStuff.name=Stuff made with coal
-booklet.actuallyadditions.chapter.coalStuff.text.1=You can convert a <imp>single piece of coal<r> into 8 <item>tiny coal<r> so that you can smelt <imp>one item at a time<r> in a furnace without wasting fuel.
-booklet.actuallyadditions.chapter.coalStuff.text.2=You can convert a <imp>single piece of charcoal<r> into 8 <item>tiny charcoal<r> so that you can smelt <imp>one item at a time<r> in a furnace without wasting fuel.
+booklet.actuallyadditions.chapter.phantomfaces.name=Phantomfaces

@@ -49,31 +49,17 @@ public class InitBooklet{
     static{
         chapterIntro = new BookletChapter("intro", entryMisc, new ItemStack(InitItems.itemLexicon), new PageTextOnly(1), new PageTextOnly(2), new PageCrafting(3, ItemCrafting.recipeBook));
 
+        //Miscellaneous
         new BookletChapter("craftingIngs", entryMisc, new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL.ordinal()), new PageTextOnly(1), new PageCrafting(2, ItemCrafting.recipeCoil), new PageCrafting(3, ItemCrafting.recipeCoilAdvanced), new PageCrafting(4, BlockCrafting.recipeCase), new PageCrafting(5, BlockCrafting.recipeStoneCase), new PageCrafting(6, BlockCrafting.recipeEnderPearlBlock), new PageCrafting(7, BlockCrafting.recipeEnderCase), new PageCrafting(8, ItemCrafting.recipeRing), new PageCrafting(9, ItemCrafting.recipeKnifeHandle), new PageCrafting(10, ItemCrafting.recipeKnifeBlade), new PageCrafting(11, ItemCrafting.recipeKnife), new PageCrafting(12, ItemCrafting.recipeDough), new PageCrafting(13, ItemCrafting.recipeRiceDough));
-        new BookletChapter("quartz", entryMisc, new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal()), new PageTextOnly(1).setStack(new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.ORE_QUARTZ.ordinal())), new PageTextOnly(2).setStack(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal())), new PageCrafting(3, BlockCrafting.recipeQuartzBlock), new PageCrafting(4, BlockCrafting.recipeQuartzPillar), new PageCrafting(5, BlockCrafting.recipeQuartzChiseled));
+        new BookletChapter("quartz", entryMisc, new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal()), new PageTextOnly(1).setStack(new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.ORE_QUARTZ.ordinal())).addTextReplacement("<lowest>", ConfigIntValues.BLACK_QUARTZ_MIN_HEIGHT.getValue()).addTextReplacement("<highest>", ConfigIntValues.BLACK_QUARTZ_MAX_HEIGHT.getValue()), new PageTextOnly(2).setStack(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal())), new PageCrafting(3, BlockCrafting.recipeQuartzBlock), new PageCrafting(4, BlockCrafting.recipeQuartzPillar), new PageCrafting(5, BlockCrafting.recipeQuartzChiseled));
         new BookletChapter("cloud", entryMisc, new ItemStack(InitBlocks.blockSmileyCloud), new PageTextOnly(1), new PageCrafting(2, BlockCrafting.recipeSmileyCloud));
-        new BookletChapter("coalStuff", entryMisc, new ItemStack(InitItems.itemMisc, 1, TheMiscItems.TINY_COAL.ordinal()), new PageCrafting(1, ItemCrafting.recipeTinyCoal), new PageCrafting(2, ItemCrafting.recipeTinyChar), new PageCrafting(3, BlockCrafting.recipeBlockChar));
+        new BookletChapter("coalStuff", entryMisc, new ItemStack(InitItems.itemMisc, 1, TheMiscItems.TINY_COAL.ordinal()), new PageTextOnly(1), new PageCrafting(2, ItemCrafting.recipeTinyCoal), new PageCrafting(3, ItemCrafting.recipeTinyChar), new PageCrafting(4, BlockCrafting.recipeBlockChar));
         new BookletChapter("lamps", entryMisc, new ItemStack(InitBlocks.blockColoredLampOn, 1, TheColoredLampColors.GREEN.ordinal()), new PageTextOnly(1), new PageCrafting(2, BlockCrafting.recipePowerer), new PageCrafting(3, BlockCrafting.recipesLamps[0]), new PageCrafting(4, BlockCrafting.recipesLamps[1]), new PageCrafting(5, BlockCrafting.recipesLamps[2]), new PageCrafting(6, BlockCrafting.recipesLamps[3]), new PageCrafting(7, BlockCrafting.recipesLamps[4]), new PageCrafting(8, BlockCrafting.recipesLamps[5]), new PageCrafting(9, BlockCrafting.recipesLamps[6]), new PageCrafting(10, BlockCrafting.recipesLamps[7]), new PageCrafting(11, BlockCrafting.recipesLamps[8]), new PageCrafting(12, BlockCrafting.recipesLamps[9]), new PageCrafting(13, BlockCrafting.recipesLamps[10]), new PageCrafting(14, BlockCrafting.recipesLamps[11]), new PageCrafting(15, BlockCrafting.recipesLamps[12]), new PageCrafting(16, BlockCrafting.recipesLamps[13]), new PageCrafting(17, BlockCrafting.recipesLamps[14]), new PageCrafting(18, BlockCrafting.recipesLamps[15]));
         new BookletChapter("treasureChest", entryMisc, new ItemStack(InitBlocks.blockTreasureChest), new PageTextOnly(1).setStack(new ItemStack(InitBlocks.blockTreasureChest)));
 
-        ArrayList<BookletPage> aiotPages = new ArrayList<BookletPage>();
-        aiotPages.add(new PageTextOnly(aiotPages.size()+1));
-        for(IRecipe recipe : ToolCrafting.recipesPaxels){
-            aiotPages.add(new PageCrafting(aiotPages.size()+1, recipe));
-        }
-        new BookletChapter("aiots", entryMisc, new ItemStack(InitItems.emeraldPaxel), aiotPages.toArray(new BookletPage[aiotPages.size()]));
-
-        new BookletChapter("jams", entryMisc, new ItemStack(InitItems.itemJams), new PageTextOnly(1).setStack(new ItemStack(InitItems.itemJams)));
-
-        ArrayList<BookletPage> potionRingPages = new ArrayList<BookletPage>();
-        potionRingPages.add(new PageTextOnly(potionRingPages.size()+1));
-        for(IRecipe recipe : ItemCrafting.recipesPotionRings){
-            potionRingPages.add(new PageCrafting(potionRingPages.size()+1, recipe));
-        }
-        new BookletChapter("potionRings", entryMisc, new ItemStack(InitItems.itemPotionRing), potionRingPages.toArray(new BookletPage[potionRingPages.size()]));
-
+        //No RF Using Blocks
         new BookletChapter("breaker", entryFunctionalNonRF, new ItemStack(InitBlocks.blockBreaker), new PageCrafting(1, BlockCrafting.recipeBreaker), new PageCrafting(2, BlockCrafting.recipePlacer), new PageCrafting(3, BlockCrafting.recipeLiquidPlacer), new PageCrafting(4, BlockCrafting.recipeLiquidCollector));
-        new BookletChapter("phantomfaces", entryFunctionalNonRF, new ItemStack(InitBlocks.blockPhantomLiquiface), new PageTextOnly(1).addTextReplacement("<rad>", ConfigIntValues.PHANTOMFACE_RANGE.getValue()), new PageCrafting(2, BlockCrafting.recipePhantomface), new PageCrafting(3, BlockCrafting.recipeLiquiface), new PageCrafting(4, BlockCrafting.recipeEnergyface), new PageCrafting(5, ItemCrafting.recipePhantomConnector), new PageCrafting(6, BlockCrafting.recipePhantomBooster));
+        new BookletChapter("phantomfaces", entryFunctionalNonRF, new ItemStack(InitBlocks.blockPhantomLiquiface), new PageTextOnly(1), new PageCrafting(2, BlockCrafting.recipePhantomface), new PageCrafting(3, BlockCrafting.recipeLiquiface), new PageCrafting(4, BlockCrafting.recipeEnergyface), new PageCrafting(5, ItemCrafting.recipePhantomConnector), new PageCrafting(6, BlockCrafting.recipePhantomBooster));
         new BookletChapter("phantomBreaker", entryFunctionalNonRF, new ItemStack(InitBlocks.blockPhantomBreaker), new PageTextOnly(1), new PageCrafting(2, BlockCrafting.recipePhantomPlacer), new PageCrafting(3, BlockCrafting.recipePhantomBreaker));
         new BookletChapter("esd", entryFunctionalNonRF, new ItemStack(InitBlocks.blockInputterAdvanced), new PageTextOnly(1), new PageCrafting(2, BlockCrafting.recipeESD), new PageCrafting(3, BlockCrafting.recipeAdvancedESD));
         new BookletChapter("xpSolidifier", entryFunctionalNonRF, new ItemStack(InitBlocks.blockXPSolidifier), new PageTextOnly(1).setStack(new ItemStack(InitItems.itemSpecialDrop, 1, TheSpecialDrops.SOLIDIFIED_EXPERIENCE.ordinal())), new PageCrafting(2, BlockCrafting.recipeSolidifier));
@@ -83,6 +69,7 @@ public class InitBooklet{
         new BookletChapter("compost", entryFunctionalNonRF, new ItemStack(InitBlocks.blockCompost), new PageTextOnly(1).setStack(new ItemStack(InitItems.itemFertilizer)), new PageCrafting(2, BlockCrafting.recipeCompost), new PageCrafting(3, ItemCrafting.recipeMashedFood));
         new BookletChapter("crate", entryFunctionalNonRF, new ItemStack(InitBlocks.blockGiantChest), new PageCrafting(1, BlockCrafting.recipeCrate));
 
+        //RF Using Blocks
         new BookletChapter("coffeeMachine", entryFunctionalRF, new ItemStack(InitBlocks.blockCoffeeMachine), new PageTextOnly(1), new PageTextOnly(2), new PageTextOnly(3), new PageCrafting(4, BlockCrafting.recipeCoffeeMachine), new PageCrafting(5, ItemCrafting.recipeCup));
         new BookletChapterCrusher("crusher", entryFunctionalRF, new ItemStack(InitBlocks.blockGrinderDouble), new PageTextOnly(1), new PageCrafting(2, BlockCrafting.recipeCrusher), new PageCrafting(3, BlockCrafting.recipeDoubleCrusher));
         new BookletChapterFurnace("furnaceDouble", entryFunctionalRF, new ItemStack(InitBlocks.blockFurnaceDouble), new PageCrafting(1, BlockCrafting.recipeFurnace));
@@ -91,15 +78,33 @@ public class InitBooklet{
         new BookletChapter("energizer", entryFunctionalRF, new ItemStack(InitBlocks.blockEnergizer), new PageCrafting(1, BlockCrafting.recipeEnergizer), new PageCrafting(2, BlockCrafting.recipeEnervator));
         new BookletChapter("repairer", entryFunctionalRF, new ItemStack(InitBlocks.blockItemRepairer), new PageTextOnly(1), new PageCrafting(2, BlockCrafting.recipeRepairer));
 
+        //RF Generating Blocks
         new BookletChapter("coalGen", entryGeneratingRF, new ItemStack(InitBlocks.blockCoalGenerator), new PageCrafting(1, BlockCrafting.recipeCoalGen));
         new BookletChapter("solarPanel", entryGeneratingRF, new ItemStack(InitBlocks.blockFurnaceSolar), new PageTextOnly(1), new PageCrafting(2, BlockCrafting.recipeSolar));
         new BookletChapter("heatCollector", entryGeneratingRF, new ItemStack(InitBlocks.blockHeatCollector), new PageTextOnly(1), new PageCrafting(2, BlockCrafting.recipeHeatCollector));
         new BookletChapter("canola", entryGeneratingRF, new ItemStack(InitBlocks.blockFermentingBarrel), new PageTextOnly(1), new PageTextOnly(2).setStack(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.CANOLA.ordinal())), new PageCrafting(3, BlockCrafting.recipeCanolaPress), new PageCrafting(4, BlockCrafting.recipeFermentingBarrel), new PageCrafting(5, BlockCrafting.recipeOilGen));
 
+        //No RF Using Items
         new BookletChapter("wings", entryItemsNonRF, new ItemStack(InitItems.itemWingsOfTheBats), new PageTextOnly(1).setStack(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.BAT_WING.ordinal())), new PageCrafting(2, ItemCrafting.recipeWings));
         new BookletChapter("foods", entryItemsNonRF, new ItemStack(InitItems.itemFoods, 1, TheFoods.HAMBURGER.ordinal()), new PageCrafting(1, FoodCrafting.recipePizza), new PageFurnace(2, new ItemStack(InitItems.itemFoods, 1, TheFoods.RICE_BREAD.ordinal())), new PageCrafting(3, FoodCrafting.recipeHamburger), new PageCrafting(4, FoodCrafting.recipeBigCookie), new PageCrafting(5, FoodCrafting.recipeSubSandwich), new PageCrafting(6, FoodCrafting.recipeFrenchFry), new PageCrafting(7, FoodCrafting.recipeFrenchFries), new PageCrafting(8, FoodCrafting.recipeFishNChips), new PageCrafting(9, FoodCrafting.recipeCheese), new PageCrafting(10, FoodCrafting.recipePumpkinStew), new PageCrafting(11, FoodCrafting.recipeCarrotJuice), new PageCrafting(12, FoodCrafting.recipeSpaghetti), new PageCrafting(13, FoodCrafting.recipeNoodle), new PageCrafting(14, FoodCrafting.recipeChocolate), new PageCrafting(15, FoodCrafting.recipeChocolateCake), new PageCrafting(16, FoodCrafting.recipeToast), new PageFurnace(17, new ItemStack(InitItems.itemFoods, 1, TheFoods.BAGUETTE.ordinal())));
         new BookletChapter("leafBlower", entryItemsNonRF, new ItemStack(InitItems.itemLeafBlowerAdvanced), new PageTextOnly(1), new PageCrafting(2, ItemCrafting.recipeLeafBlower), new PageCrafting(3, ItemCrafting.recipeLeafBlowerAdvanced));
+        ArrayList<BookletPage> aiotPages = new ArrayList<BookletPage>();
+        aiotPages.add(new PageTextOnly(aiotPages.size()+1));
+        for(IRecipe recipe : ToolCrafting.recipesPaxels){
+            aiotPages.add(new PageCrafting(aiotPages.size()+1, recipe));
+        }
+        new BookletChapter("aiots", entryItemsNonRF, new ItemStack(InitItems.emeraldPaxel), aiotPages.toArray(new BookletPage[aiotPages.size()]));
 
+        new BookletChapter("jams", entryItemsNonRF, new ItemStack(InitItems.itemJams), new PageTextOnly(1).setStack(new ItemStack(InitItems.itemJams)));
+
+        ArrayList<BookletPage> potionRingPages = new ArrayList<BookletPage>();
+        potionRingPages.add(new PageTextOnly(potionRingPages.size()+1));
+        for(IRecipe recipe : ItemCrafting.recipesPotionRings){
+            potionRingPages.add(new PageCrafting(potionRingPages.size()+1, recipe));
+        }
+        new BookletChapter("potionRings", entryItemsNonRF, new ItemStack(InitItems.itemPotionRing), potionRingPages.toArray(new BookletPage[potionRingPages.size()]));
+
+        //RF Using Items
         new BookletChapter("drill", entryItemsRF, new ItemStack(InitItems.itemDrill), new PageTextOnly(1), new PageCrafting(2, ItemCrafting.recipeDrill), new PageCrafting(3, ItemCrafting.recipeDrillSpeedI), new PageCrafting(4, ItemCrafting.recipeDrillSpeedII), new PageCrafting(5, ItemCrafting.recipeDrillSpeedIII), new PageCrafting(6, ItemCrafting.recipeDrillFortuneI), new PageCrafting(7, ItemCrafting.recipeDrillFortuneII), new PageCrafting(8, ItemCrafting.recipeDrillSilk), new PageCrafting(9, ItemCrafting.recipeDrillThree), new PageCrafting(10, ItemCrafting.recipeDrillFive), new PageCrafting(11, ItemCrafting.recipeDrillPlacing));
         new BookletChapter("staff", entryItemsRF, new ItemStack(InitItems.itemTeleStaff), new PageTextOnly(1), new PageCrafting(2, ItemCrafting.recipeStaff));
         new BookletChapter("magnetRing", entryItemsRF, new ItemStack(InitItems.itemMagnetRing), new PageCrafting(1, ItemCrafting.recipeMagnetRing));

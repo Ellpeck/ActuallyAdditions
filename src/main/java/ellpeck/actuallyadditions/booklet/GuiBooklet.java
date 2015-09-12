@@ -237,7 +237,7 @@ public class GuiBooklet extends GuiScreen{
         }
 
         if(this.isGimmicky()){
-            this.unicodeRenderer.drawSplitString("This book looks a lot like the one from Botania, doesn't it? Well, I think it does, too, and I'm kind of annoyed by it to be honest. Wasn't really meant to be that way. I guess I just kind of had the design of the Botania Book in mind when designing this. Well. The Code is made by me, at least. So that's something. Also: How did you find this gimmick? :P -Peck", this.guiLeft-80-3, this.guiTop+25, 80, StringUtil.DECIMAL_COLOR_WHITE);
+            this.unicodeRenderer.drawSplitString("This book looks a lot like the one from Botania, doesn't it? Well, I think it does, too, and I'm kind of annoyed by it to be honest. Wasn't really meant to be that way. I guess I just kind of had the design of the Botania Book in mind when designing this. Well. I made the Code on my own, so I don't really care. Also: How did you find this gimmick? :P -Peck", this.guiLeft-80-3, this.guiTop+25, 80, StringUtil.DECIMAL_COLOR_WHITE);
 
             String strg = "Click this! I need followaz #Pathetic #DontTakeSeriously ->";
             this.unicodeRenderer.drawString(strg, this.guiLeft-this.unicodeRenderer.getStringWidth(strg)-3, this.guiTop, StringUtil.DECIMAL_COLOR_WHITE);
@@ -246,6 +246,11 @@ public class GuiBooklet extends GuiScreen{
                 strg = "Hey Hose, I kind of hate you a bit for that Ellopecko thing. (Not really! It's fun and games and stuff! :D)";
                 this.unicodeRenderer.drawString(strg, this.guiLeft+this.xSize/2-this.unicodeRenderer.getStringWidth(strg)/2, this.guiTop-20, StringUtil.DECIMAL_COLOR_WHITE);
             }
+        }
+        else{
+            //TODO WIP Text
+            this.unicodeRenderer.drawSplitString(!KeyUtil.isShiftPressed() ? EnumChatFormatting.ITALIC+"Press Shift!" : EnumChatFormatting.UNDERLINE+"WIP INFO:"+EnumChatFormatting.RESET+"\nThis book is not completely finished yet! \nThings still to come: \n-Items for a Crafting Recipe shown in the book getting automatically put into a Crafting Table On A Stick through a button \n-Seeing an Item's page by clicking a keybind while the item is getting hovered over in the player's inventory", this.guiLeft+this.xSize+3, this.guiTop+3, 80, StringUtil.DECIMAL_COLOR_WHITE);
+
         }
 
         super.drawScreen(x, y, f);
