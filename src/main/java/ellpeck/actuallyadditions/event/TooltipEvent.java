@@ -62,9 +62,9 @@ public class TooltipEvent{
                             for(BookletPage page : InitBooklet.pagesWithItemStackData){
                                 if(page.getItemStackForPage() != null && page.getItemStackForPage().isItemEqual(stack)){
                                     int keyCode = KeyBinds.keybindOpenBooklet.getKeyCode();
-                                    event.toolTip.add(EnumChatFormatting.GOLD+StringUtil.localizeFormatted("booklet."+ModUtil.MOD_ID_LOWER+".keyToSeeRecipe", keyCode > 0 && keyCode < Keyboard.KEYBOARD_SIZE ? "'"+Keyboard.getKeyName(keyCode)+"'" : "[KEY NOT DEFINED!]"));
+                                    event.toolTip.add(EnumChatFormatting.GOLD+StringUtil.localizeFormatted("booklet."+ModUtil.MOD_ID_LOWER+".keyToSeeRecipe", keyCode > 0 && keyCode < Keyboard.KEYBOARD_SIZE ? "'"+Keyboard.getKeyName(keyCode)+"'" : "[NONE]"));
 
-                                    //Do something better for checking if the key is pressed
+                                    //TODO Find a better method to do this eventually
                                     if(Keyboard.isKeyDown(KeyBinds.keybindOpenBooklet.getKeyCode())){
                                         GuiBooklet book = new GuiBooklet();
                                         Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.func_147674_a(new ResourceLocation("gui.button.press"), 1.0F));

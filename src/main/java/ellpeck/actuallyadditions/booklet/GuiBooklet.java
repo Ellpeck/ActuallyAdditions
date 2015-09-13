@@ -247,11 +247,6 @@ public class GuiBooklet extends GuiScreen{
                 this.unicodeRenderer.drawString(strg, this.guiLeft+this.xSize/2-this.unicodeRenderer.getStringWidth(strg)/2, this.guiTop-20, StringUtil.DECIMAL_COLOR_WHITE);
             }
         }
-        else{
-            //TODO WIP Text
-            this.unicodeRenderer.drawSplitString(!KeyUtil.isShiftPressed() ? EnumChatFormatting.ITALIC+"Press Shift!" : EnumChatFormatting.UNDERLINE+"WIP INFO:"+EnumChatFormatting.RESET+"\nThis book is not completely finished yet! \nThings still to come: \n-Items for a Crafting Recipe shown in the book getting automatically put into a Crafting Table On A Stick through a button \n-Seeing an Item's page by clicking a keybind while the item is getting hovered over in the player's inventory", this.guiLeft+this.xSize+3, this.guiTop+3, 80, StringUtil.DECIMAL_COLOR_WHITE);
-
-        }
 
         super.drawScreen(x, y, f);
         this.searchField.drawTextBox();
