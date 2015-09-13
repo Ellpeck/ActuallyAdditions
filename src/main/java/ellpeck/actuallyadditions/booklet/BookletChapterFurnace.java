@@ -14,9 +14,9 @@ import ellpeck.actuallyadditions.booklet.page.BookletPage;
 import ellpeck.actuallyadditions.booklet.page.PageFurnace;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
-import scala.actors.threadpool.Arrays;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 
 public class BookletChapterFurnace extends BookletChapter{
