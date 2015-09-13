@@ -405,7 +405,7 @@ booklet.actuallyadditions.chapter.treasureChest.text.1=<item>Treasure Chests<r> 
 booklet.actuallyadditions.chapter.breaker.name=Breakers and Placers
 booklet.actuallyadditions.chapter.breaker.text.1=The <item>Breaker<r>... well.. it breaks blocks in front of it. That's about it. It can be oriented in every direction like a Piston.
 booklet.actuallyadditions.chapter.breaker.text.2=The <item>Placer<r>... well... it places blocks in front of it. That's about it. It can be oriented in every direction like a Piston.
-booklet.actuallyadditions.chapter.breaker.text.3=The <item>Liquid Placer<r> places blocks that correspond to the liquid you put in via a bucket or pipe in via a pipe. Needs <imp>1000mb<r> to place one block.
-booklet.actuallyadditions.chapter.breaker.text.4=The <item>Liquid Collector<r> will collect liquid blocks in front of it and convert them to <imp>1000mb<r> of fluid. That's the equivalent of a filled bucket.
+booklet.actuallyadditions.chapter.breaker.text.3=The <item>Liquid Placer<r> places blocks that correspond to the liquid you put in via a bucket or pipe in via a pipe. Needs <imp>1000mB<r> to place one block.
+booklet.actuallyadditions.chapter.breaker.text.4=The <item>Liquid Collector<r> will collect liquid blocks in front of it and convert them to <imp>1000mB<r> of fluid. That's the equivalent of a filled bucket.
 
 booklet.actuallyadditions.chapter.phantomfaces.name=Phantomfaces

@@ -15,6 +15,7 @@ import com.google.common.collect.Multimap;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.ActuallyAdditions;
+import ellpeck.actuallyadditions.config.ConfigValues;
 import ellpeck.actuallyadditions.config.values.ConfigFloatValues;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.inventory.GuiHandler;
@@ -401,14 +402,24 @@ public class ItemDrill extends ItemEnergy implements INameableItem{
         return true;
     }
 
+    private boolean hasExtraWhitelist(Block block){
+        String name = Block.blockRegistry.getNameForObject(block);
+        if(name != null){
+            for(String list : ConfigValues.drillExtraminingWhitelist){
+                if(list.equals(name)) return true;
+            }
+        }
+        return false;
+    }
+
     @Override
     public float getDigSpeed(ItemStack stack, Block block, int meta){
-        return this.getEnergyStored(stack) >= this.getEnergyUsePerBlock(stack) ? (block.getHarvestTool(meta) == null || block.getHarvestTool(meta).isEmpty() || this.getToolClasses(stack).contains(block.getHarvestTool(meta)) ? this.getEfficiencyFromUpgrade(stack) : 1.0F) : 0.0F;
+        return this.getEnergyStored(stack) >= this.getEnergyUsePerBlock(stack) ? (this.hasExtraWhitelist(block) || block.getHarvestTool(meta) == null || block.getHarvestTool(meta).isEmpty() || this.getToolClasses(stack).contains(block.getHarvestTool(meta)) ? this.getEfficiencyFromUpgrade(stack) : 1.0F) : 0.0F;
     }
 
     @Override
     public boolean canHarvestBlock(Block block, ItemStack stack){
-        return this.getEnergyStored(stack) >= this.getEnergyUsePerBlock(stack) && (block.getMaterial().isToolNotRequired() || (block == Blocks.snow_layer || block == Blocks.snow || (block == Blocks.obsidian ? ToolMaterial.EMERALD.getHarvestLevel() == 3 : (block != Blocks.diamond_block && block != Blocks.diamond_ore ? (block != Blocks.emerald_ore && block != Blocks.emerald_block ? (block != Blocks.gold_block && block != Blocks.gold_ore ? (block != Blocks.iron_block && block != Blocks.iron_ore ? (block != Blocks.lapis_block && block != Blocks.lapis_ore ? (block != Blocks.redstone_ore && block != Blocks.lit_redstone_ore ? (block.getMaterial() == Material.rock || (block.getMaterial() == Material.iron || block.getMaterial() == Material.anvil)) : ToolMaterial.EMERALD.getHarvestLevel() >= 2) : ToolMaterial.EMERALD.getHarvestLevel() >= 1) : ToolMaterial.EMERALD.getHarvestLevel() >= 1) : ToolMaterial.EMERALD.getHarvestLevel() >= 2) : ToolMaterial.EMERALD.getHarvestLevel() >= 2) : ToolMaterial.EMERALD.getHarvestLevel() >= 2))));
+        return this.getEnergyStored(stack) >= this.getEnergyUsePerBlock(stack) && (this.hasExtraWhitelist(block) || block.getMaterial().isToolNotRequired() || (block == Blocks.snow_layer || block == Blocks.snow || (block == Blocks.obsidian ? ToolMaterial.EMERALD.getHarvestLevel() == 3 : (block != Blocks.diamond_block && block != Blocks.diamond_ore ? (block != Blocks.emerald_ore && block != Blocks.emerald_block ? (block != Blocks.gold_block && block != Blocks.gold_ore ? (block != Blocks.iron_block && block != Blocks.iron_ore ? (block != Blocks.lapis_block && block != Blocks.lapis_ore ? (block != Blocks.redstone_ore && block != Blocks.lit_redstone_ore ? (block.getMaterial() == Material.rock || (block.getMaterial() == Material.iron || block.getMaterial() == Material.anvil)) : ToolMaterial.EMERALD.getHarvestLevel() >= 2) : ToolMaterial.EMERALD.getHarvestLevel() >= 1) : ToolMaterial.EMERALD.getHarvestLevel() >= 1) : ToolMaterial.EMERALD.getHarvestLevel() >= 2) : ToolMaterial.EMERALD.getHarvestLevel() >= 2) : ToolMaterial.EMERALD.getHarvestLevel() >= 2))));
     }
 
     @Override
