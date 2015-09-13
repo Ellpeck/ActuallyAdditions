@@ -58,7 +58,7 @@ public class GuiBooklet extends GuiScreen{
     private static final int CHAPTER_BUTTONS_START = 3;
 
     public static final int BUTTONS_PER_PAGE = 13;
-    private static final int TOOLTIP_SPLIT_LENGTH = 160;
+    public static final int TOOLTIP_SPLIT_LENGTH = 160;
 
     private static final int BUTTON_UPDATE_ID = CHAPTER_BUTTONS_START+BUTTONS_PER_PAGE;
     private static final int BUTTON_TWITTER_ID = BUTTON_UPDATE_ID+1;

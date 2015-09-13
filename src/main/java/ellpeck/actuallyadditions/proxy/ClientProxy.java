@@ -22,6 +22,7 @@ import ellpeck.actuallyadditions.blocks.render.*;
 import ellpeck.actuallyadditions.config.values.ConfigBoolValues;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.event.RenderPlayerEventAA;
+import ellpeck.actuallyadditions.event.TooltipEvent;
 import ellpeck.actuallyadditions.tile.*;
 import ellpeck.actuallyadditions.update.UpdateCheckerClientNotifier;
 import ellpeck.actuallyadditions.util.*;
@@ -78,6 +79,7 @@ public class ClientProxy implements IProxy{
 
         VillagerRegistry.instance().registerVillagerSkin(ConfigIntValues.JAM_VILLAGER_ID.getValue(), new ResourceLocation(ModUtil.MOD_ID_LOWER, "textures/entity/villager/jamVillager.png"));
 
+        Util.registerEvent(new TooltipEvent());
         Util.registerEvent(new RenderPlayerEventAA());
     }
 

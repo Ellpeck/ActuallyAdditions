@@ -12,6 +12,7 @@ package ellpeck.actuallyadditions.inventory.gui;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import ellpeck.actuallyadditions.booklet.GuiBooklet;
 import ellpeck.actuallyadditions.inventory.ContainerInputter;
 import ellpeck.actuallyadditions.network.PacketHandler;
 import ellpeck.actuallyadditions.network.gui.PacketGuiButton;
@@ -34,8 +35,7 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.regex.Pattern;
+import java.util.List;
 
 @SideOnly(Side.CLIENT)
 public class GuiInputter extends GuiContainer{
@@ -224,19 +224,19 @@ public class GuiInputter extends GuiContainer{
         this.whitelistPut.displayString = this.tileInputter.isPutWhitelist ? "O" : "X";
 
         if(this.isAdvanced){
-            String[] strings = StringUtil.localizeFormatted("info."+ModUtil.MOD_ID_LOWER+".inputter.whitelistInfo").split(Pattern.quote("|"));
+            List infoList = this.fontRendererObj.listFormattedStringToWidth(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID_LOWER+".inputter.whitelistInfo"), GuiBooklet.TOOLTIP_SPLIT_LENGTH);
             String text1 = this.tileInputter.isPullWhitelist ? StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.whitelist") : StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.blacklist");
             if(x >= guiLeft+3 && y >= guiTop+16 && x <= guiLeft+18 && y <= guiTop+31){
                 ArrayList list = new ArrayList();
                 list.add(EnumChatFormatting.BOLD+text1);
-                list.addAll(Arrays.asList(strings));
+                list.addAll(infoList);
                 this.func_146283_a(list, x, y);
             }
             String text2 = this.tileInputter.isPutWhitelist ? StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.whitelist") : StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.blacklist");
             if(x >= guiLeft+157 && y >= guiTop+16 && x <= guiLeft+172 && y <= guiTop+31){
                 ArrayList list = new ArrayList();
                 list.add(EnumChatFormatting.BOLD+text2);
-                list.addAll(Arrays.asList(strings));
+                list.addAll(infoList);
                 this.func_146283_a(list, x, y);
             }
         }
@@ -244,20 +244,16 @@ public class GuiInputter extends GuiContainer{
         int newTopOffset = this.guiTop+(this.isAdvanced ? OFFSET_ADVANCED : 0);
         //Info Mode on!
         if(x >= guiLeft+11 && y >= newTopOffset+65 && x <= guiLeft+11+31 && y <= newTopOffset+65+12){
-            String[] strings = StringUtil.localizeFormatted("info."+ModUtil.MOD_ID_LOWER+".inputter.info.1").replace("[p]", StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.pull")).split(Pattern.quote("|"));
-            this.func_146283_a(Arrays.asList(strings), x, y);
+            this.func_146283_a(this.fontRendererObj.listFormattedStringToWidth(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID_LOWER+".inputter.info.1").replace("<p>", StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.pull")), GuiBooklet.TOOLTIP_SPLIT_LENGTH), x, y);
         }
         if(x >= guiLeft+96 && y >= newTopOffset+65 && x <= guiLeft+96+31 && y <= newTopOffset+65+12){
-            String[] strings = StringUtil.localizeFormatted("info."+ModUtil.MOD_ID_LOWER+".inputter.info.1").replace("[p]", StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.put")).split(Pattern.quote("|"));
-            this.func_146283_a(Arrays.asList(strings), x, y);
+            this.func_146283_a(this.fontRendererObj.listFormattedStringToWidth(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID_LOWER+".inputter.info.1").replace("<p>", StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.put")), GuiBooklet.TOOLTIP_SPLIT_LENGTH), x, y);
         }
         if(x >= guiLeft+48 && y >= newTopOffset+65 && x <= guiLeft+48+31 && y <= newTopOffset+65+12){
-            String[] strings = StringUtil.localizeFormatted("info."+ModUtil.MOD_ID_LOWER+".inputter.info.2").replace("[p]", StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.pull")).split(Pattern.quote("|"));
-            this.func_146283_a(Arrays.asList(strings), x, y);
+            this.func_146283_a(this.fontRendererObj.listFormattedStringToWidth(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID_LOWER+".inputter.info.2").replace("<p>", StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.pull")), GuiBooklet.TOOLTIP_SPLIT_LENGTH), x, y);
         }
         if(x >= guiLeft+133 && y >= newTopOffset+65 && x <= guiLeft+133+31 && y <= newTopOffset+65+12){
-            String[] strings = StringUtil.localizeFormatted("info."+ModUtil.MOD_ID_LOWER+".inputter.info.2").replace("[p]", StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.put")).split(Pattern.quote("|"));
-            this.func_146283_a(Arrays.asList(strings), x, y);
+            this.func_146283_a(this.fontRendererObj.listFormattedStringToWidth(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID_LOWER+".inputter.info.2").replace("<p>", StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.put")), GuiBooklet.TOOLTIP_SPLIT_LENGTH), x, y);
         }
     }
 

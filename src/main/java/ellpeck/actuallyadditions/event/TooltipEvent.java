@@ -34,13 +34,12 @@ import net.minecraftforge.oredict.OreDictionary;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
-import java.util.regex.Pattern;
-
 public class TooltipEvent{
 
     private static final String ADVANCED_INFO_TEXT_PRE = EnumChatFormatting.DARK_GRAY+"     ";
     private static final String ADVANCED_INFO_HEADER_PRE = EnumChatFormatting.GRAY+"  -";
 
+    @SuppressWarnings("unchecked")
     @SubscribeEvent
     public void onTooltipEvent(ItemTooltipEvent event){
         //Booklet Access
@@ -118,9 +117,7 @@ public class TooltipEvent{
                     }
 
                     //Disabling Info
-                    for(String str : StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".disablingInfo.desc").split(Pattern.quote("|"))){
-                        event.toolTip.add(EnumChatFormatting.ITALIC+str);
-                    }
+                    event.toolTip.addAll(Minecraft.getMinecraft().fontRenderer.listFormattedStringToWidth(EnumChatFormatting.ITALIC+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".disablingInfo.desc"), GuiBooklet.TOOLTIP_SPLIT_LENGTH));
                 }
                 else{
                     if(ConfigBoolValues.CTRL_INFO_FOR_EXTRA_INFO.isEnabled()){
