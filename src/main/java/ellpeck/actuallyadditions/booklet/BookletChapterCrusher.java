@@ -14,9 +14,9 @@ import ellpeck.actuallyadditions.booklet.page.BookletPage;
 import ellpeck.actuallyadditions.booklet.page.PageCrusherRecipe;
 import ellpeck.actuallyadditions.recipe.CrusherRecipeManualRegistry;
 import net.minecraft.item.ItemStack;
-import scala.actors.threadpool.Arrays;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class BookletChapterCrusher extends BookletChapter{
 
