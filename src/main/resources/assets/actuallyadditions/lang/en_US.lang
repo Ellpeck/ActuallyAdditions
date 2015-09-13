@@ -376,7 +376,9 @@ booklet.actuallyadditions.indexEntry.itemsNoRF.name=Items that don't use RF
 booklet.actuallyadditions.indexEntry.itemsRF.name=Items that use RF
 
 booklet.actuallyadditions.recipeDisabled=The crafting recipe for this item is disabled in the Config File! If you're on a server, ask the server author to enable it in the config. If you're on a client, press the 'Open Config'-Button on the top right and enable the recipe!
+
 booklet.actuallyadditions.clickToSeeRecipe=Click to see more Information
+booklet.actuallyadditions.keyToSeeRecipe=Press %s to see more Information
 
 booklet.actuallyadditions.chapter.intro.name=An Introduction to ActAdd
 booklet.actuallyadditions.chapter.intro.text.1=<i>This book, written years ago, found by the player, used to help understand the wonders of this world, finally opened, finally looked at, full of glory, full of grace, will be used to help the player along on their journey through <imp>Actually Additions<r><i>. <n>What is <imp>Actually Additions<r><i>, you may ask. <n><imp>Actually Additions<r><i> adds blocks, items, and features to make the player's experience easier, automate the world and properly do what you've always wanted to do.

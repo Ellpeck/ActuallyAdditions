@@ -24,10 +24,7 @@ import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.event.RenderPlayerEventAA;
 import ellpeck.actuallyadditions.tile.*;
 import ellpeck.actuallyadditions.update.UpdateCheckerClientNotifier;
-import ellpeck.actuallyadditions.util.AssetUtil;
-import ellpeck.actuallyadditions.util.ModUtil;
-import ellpeck.actuallyadditions.util.PersistantVariables;
-import ellpeck.actuallyadditions.util.Util;
+import ellpeck.actuallyadditions.util.*;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.MinecraftForgeClient;
@@ -43,6 +40,7 @@ public class ClientProxy implements IProxy{
 
         PersistantVariables.setTheFile(new File(event.getModConfigurationDirectory().getParent(), ModUtil.MOD_ID+"Data.dat"));
 
+        KeyBinds.init();
     }
 
     @Override
