@@ -14,25 +14,28 @@ import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import ellpeck.actuallyadditions.blocks.InitBlocks;
 import ellpeck.actuallyadditions.gadget.RenderSpecial;
+import ellpeck.actuallyadditions.items.InitItems;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 
 import java.util.UUID;
 
 public class RenderPlayerEventAA{
 
-    private static RenderSpecial ellpeckRender = new RenderSpecial(InitBlocks.blockPhantomLiquiface, 0);
-    private static RenderSpecial hoseRender = new RenderSpecial(Blocks.torch, 0);
-    private static RenderSpecial paktoRender = new RenderSpecial(Blocks.wool, 6);
-    private static RenderSpecial glenRender = new RenderSpecial(InitBlocks.blockHeatCollector, 0);
-    private static RenderSpecial lordiRender = new RenderSpecial(InitBlocks.blockBreaker, 0);
-    public static RenderSpecial lariRender = new RenderSpecial(null, 0);
+    private static RenderSpecial ellpeckRender = new RenderSpecial(new ItemStack(InitItems.itemPhantomConnector));
+    private static RenderSpecial hoseRender = new RenderSpecial(new ItemStack(Blocks.torch));
+    private static RenderSpecial paktoRender = new RenderSpecial(new ItemStack(Blocks.wool, 1, 6));
+    private static RenderSpecial glenRender = new RenderSpecial(new ItemStack(InitBlocks.blockHeatCollector));
+    private static RenderSpecial lordiRender = new RenderSpecial(new ItemStack(InitBlocks.blockBreaker));
+    public static RenderSpecial lariRender = new RenderSpecial(null);
+    //public static RenderSpecial doughnutRender = new RenderSpecial(new ItemStack(InitItems.itemFoods, 1, TheFoods.DOUGHNUT.ordinal()));
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void RenderPlayerEvent(RenderPlayerEvent.Specials.Pre event){
         //Ellpeck
         if(event.entityPlayer.getUniqueID().equals(UUID.fromString("3f9f4a94-95e3-40fe-8895-e8e3e84d1468"))){
-            ellpeckRender.render(event.entityPlayer, 0.3F, 0);
+            ellpeckRender.render(event.entityPlayer, 0.4F, 0.2F);
         }
         //Paktosan
         else if(event.entityPlayer.getUniqueID().equals(UUID.fromString("0bac71ad-9156-487e-9ade-9c5b57274b23"))){
@@ -54,5 +57,9 @@ public class RenderPlayerEventAA{
         else if(event.entityPlayer.getUniqueID().equals(UUID.fromString("ac275e30-c468-42af-b5d4-b26c1c705b70"))){
             lariRender.render(event.entityPlayer, 0.15F, -0.125F);
         }
+        //DoughnutDev
+        /*else if(event.entityPlayer.getUniqueID().equals(UUID.fromString("fd303402-d627-4de0-8a02-eb8c7fd2acb6"))){
+            doughnutRender.render(event.entityPlayer, 0.35F, 0.225F);
+        }*/
     }
 }

@@ -26,6 +26,7 @@ tile.actuallyadditions.blockEnergizer.name=Energizer
 tile.actuallyadditions.blockEnervator.name=Enervator
 tile.actuallyadditions.blockRice.name=Rice Plant
 item.actuallyadditions.itemFoodRice.name=Rice
+item.actuallyadditions.itemFoodDoughnut.name=Doughnut
 item.actuallyadditions.itemMiscRiceDough.name=Rice Dough
 item.actuallyadditions.itemFoodRiceBread.name=Rice Bread
 item.actuallyadditions.itemRiceSeed.name=Rice Seeds

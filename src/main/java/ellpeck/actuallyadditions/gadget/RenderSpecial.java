@@ -16,6 +16,8 @@ import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelSquid;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
@@ -23,14 +25,12 @@ public class RenderSpecial{
 
     private double lastTimeForBobbing;
 
-    private Block theBlock;
-    private int meta;
+    private ItemStack theThingToRender;
 
     private static final ResourceLocation squidTextures = new ResourceLocation("textures/entity/squid.png");
 
-    public RenderSpecial(Block block, int meta){
-        this.theBlock = block;
-        this.meta = meta;
+    public RenderSpecial(ItemStack stack){
+        this.theThingToRender = stack;
     }
 
     public void render(EntityPlayer player, float size, float offsetUp){
@@ -65,7 +65,13 @@ public class RenderSpecial{
             new ModelSquid().render(null, 0F, 0F, 0.25F, 0F, 0F, 0.0625F);
         }
         else{
-            AssetUtil.renderBlock(this.theBlock, this.meta);
+            if(this.theThingToRender.getItem() instanceof ItemBlock){
+                AssetUtil.renderBlock(Block.getBlockFromItem(this.theThingToRender.getItem()), this.theThingToRender.getItemDamage());
+            }
+            else{
+                GL11.glTranslatef(-0.5F, 0F, 0F);
+                AssetUtil.renderItem(this.theThingToRender, 0);
+            }
         }
         GL11.glEnable(GL11.GL_LIGHTING);
 
