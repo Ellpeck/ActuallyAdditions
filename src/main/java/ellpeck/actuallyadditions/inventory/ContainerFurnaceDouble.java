@@ -10,7 +10,6 @@
 
 package ellpeck.actuallyadditions.inventory;
 
-import ellpeck.actuallyadditions.inventory.slot.SlotOutput;
 import ellpeck.actuallyadditions.tile.TileEntityBase;
 import ellpeck.actuallyadditions.tile.TileEntityFurnaceDouble;
 import invtweaks.api.container.InventoryContainer;
@@ -18,6 +17,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
+import net.minecraft.inventory.SlotFurnace;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 
@@ -30,9 +30,9 @@ public class ContainerFurnaceDouble extends Container{
         this.tileFurnace = (TileEntityFurnaceDouble)tile;
 
         this.addSlotToContainer(new Slot(this.tileFurnace, TileEntityFurnaceDouble.SLOT_INPUT_1, 51, 21));
-        this.addSlotToContainer(new SlotOutput(this.tileFurnace, TileEntityFurnaceDouble.SLOT_OUTPUT_1, 51, 69));
+        this.addSlotToContainer(new SlotFurnace(inventory.player, this.tileFurnace, TileEntityFurnaceDouble.SLOT_OUTPUT_1, 51, 69));
         this.addSlotToContainer(new Slot(this.tileFurnace, TileEntityFurnaceDouble.SLOT_INPUT_2, 109, 21));
-        this.addSlotToContainer(new SlotOutput(this.tileFurnace, TileEntityFurnaceDouble.SLOT_OUTPUT_2, 108, 69));
+        this.addSlotToContainer(new SlotFurnace(inventory.player, this.tileFurnace, TileEntityFurnaceDouble.SLOT_OUTPUT_2, 108, 69));
 
         for (int i = 0; i < 3; i++){
             for (int j = 0; j < 9; j++){
