@@ -60,7 +60,7 @@ public class PageCrafting extends BookletPage{
         }
 
         String text = gui.currentPage.getText();
-        if(text != null && !text.isEmpty() && !text.contains("booklet.")){
+        if(text != null && !text.isEmpty()){
             gui.unicodeRenderer.drawSplitString(text, gui.guiLeft+14, gui.guiTop+100, 115, 0);
         }
 

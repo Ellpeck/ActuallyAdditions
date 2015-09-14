@@ -1,6 +1,9 @@
 itemGroup.actuallyadditions=Actually Additions
 achievement.page.actuallyadditions=Actually Additions
 
+key.actuallyadditions.category=Actually Additions
+key.actuallyadditions.openBooklet.name=Open Booklet in Inventory
+
 fluid.oil=Oil
 fluid.canolaoil=Canola Oil
 
@@ -380,6 +383,7 @@ booklet.actuallyadditions.recipeDisabled=The crafting recipe for this item is di
 
 booklet.actuallyadditions.clickToSeeRecipe=Click to see more Information
 booklet.actuallyadditions.keyToSeeRecipe=Press %s to see more Information
+booklet.actuallyadditions.noBookletInInventory=If you had an Actually Additions Information Manual, you could check out more Information :(
 
 booklet.actuallyadditions.chapter.intro.name=An Introduction to ActAdd
 booklet.actuallyadditions.chapter.intro.text.1=<i>This book, written years ago, found by the player, used to help understand the wonders of this world, finally opened, finally looked at, full of glory, full of grace, will be used to help the player along on their journey through <imp>Actually Additions<r><i>. <n>What is <imp>Actually Additions<r><i>, you may ask. <n><imp>Actually Additions<r><i> adds blocks, items, and features to make the player's experience easier, automate the world and properly do what you've always wanted to do.

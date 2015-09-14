@@ -35,9 +35,15 @@ public class BookletPage{
 
     protected int id;
     protected BookletChapter chapter;
+    private boolean hasNoText;
 
     public BookletPage(int id){
         this.id = id;
+    }
+
+    public BookletPage setNoText(){
+        this.hasNoText = true;
+        return this;
     }
 
     public int getID(){
@@ -53,6 +59,10 @@ public class BookletPage{
     }
 
     public final String getText(){
+        if(this.hasNoText){
+            return null;
+        }
+
         String base = StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".chapter."+this.chapter.getUnlocalizedName()+".text."+this.id).replaceAll("<imp>", EnumChatFormatting.DARK_GREEN+"").replaceAll("<item>", EnumChatFormatting.BLUE+"").replaceAll("<r>", EnumChatFormatting.BLACK+"").replaceAll("<n>", "\n").replaceAll("<i>", EnumChatFormatting.ITALIC+"").replaceAll("<rs>", EnumChatFormatting.RESET+"");
         for(Object o : this.textReplacements.entrySet()){
             Map.Entry e = (Map.Entry)o;
