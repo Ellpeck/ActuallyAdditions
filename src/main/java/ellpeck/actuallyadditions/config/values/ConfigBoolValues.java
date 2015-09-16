@@ -54,7 +54,9 @@ public enum ConfigBoolValues{
     PREVENT_CANOLA_BLOCK_OVERRIDE("Canola Oil Block Override", ConfigCategories.FLUIDS, false, "If not registering Canola Oil Blocks from Actually Additions if other Canola Oil is already registered should be prevented"+ConfigurationHandler.ISSUES_WARNING),
 
     CTRL_EXTRA_INFO("Advanced Info", ConfigCategories.OTHER, true, "Show Advanced Item Info when holding Control on every Item"),
-    CTRL_INFO_FOR_EXTRA_INFO("Advanced Info Tooltips", ConfigCategories.OTHER, true, "Show the 'Press Control for more Info'-Text on Item Tooltips");
+    CTRL_INFO_FOR_EXTRA_INFO("Advanced Info Tooltips", ConfigCategories.OTHER, true, "Show the 'Press Control for more Info'-Text on Item Tooltips"),
+
+    NEED_BOOKLET_FOR_KEYBIND_INFO("Booklet Quick Opening", ConfigCategories.TOOL_VALUES, true, "If the booklet should have to be inside the player's inventory to be able to hover over an item and press a keybind to quickly access the item's page");
 
     public final String name;
     public final String category;

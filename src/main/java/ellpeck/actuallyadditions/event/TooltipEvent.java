@@ -62,7 +62,7 @@ public class TooltipEvent{
                             for(BookletPage page : InitBooklet.pagesWithItemStackData){
                                 if(page.getItemStackForPage() != null && page.getItemStackForPage().isItemEqual(stack)){
                                     int keyCode = KeyBinds.keybindOpenBooklet.getKeyCode();
-                                    if(Minecraft.getMinecraft().thePlayer.inventory.hasItem(InitItems.itemLexicon)){
+                                    if(!ConfigBoolValues.NEED_BOOKLET_FOR_KEYBIND_INFO.isEnabled() || Minecraft.getMinecraft().thePlayer.inventory.hasItem(InitItems.itemLexicon)){
                                         event.toolTip.add(EnumChatFormatting.GOLD+StringUtil.localizeFormatted("booklet."+ModUtil.MOD_ID_LOWER+".keyToSeeRecipe", keyCode > 0 && keyCode < Keyboard.KEYBOARD_SIZE ? "'"+Keyboard.getKeyName(keyCode)+"'" : "[NONE]"));
 
                                         //TODO Find a better method to do this eventually
