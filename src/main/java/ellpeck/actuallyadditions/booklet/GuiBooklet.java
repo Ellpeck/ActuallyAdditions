@@ -145,7 +145,7 @@ public class GuiBooklet extends GuiScreen{
         this.addButton(new TexturedButton(BUTTON_RETURN_ID, this.guiLeft+this.xSize/2-7, this.guiTop+this.ySize+2, 182, 0, 15, 10));
 
         for(int i = 0; i < BUTTONS_PER_PAGE; i++){
-            this.addButton(new IndexButton(CHAPTER_BUTTONS_START+i, guiLeft+15, guiTop+10+(i*12), 110, 10, "", this));
+            this.addButton(new IndexButton(CHAPTER_BUTTONS_START+i, guiLeft+15, guiTop+10+(i*12), 115, 10, "", this));
         }
 
         this.addButton(new TexturedButton(BUTTON_UPDATE_ID, this.guiLeft-11, this.guiTop-11, 245, 0, 11, 11));
