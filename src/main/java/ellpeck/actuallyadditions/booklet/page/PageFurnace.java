@@ -17,6 +17,7 @@ import ellpeck.actuallyadditions.util.StringUtil;
 import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
+import net.minecraft.util.EnumChatFormatting;
 
 import java.util.Map;
 
@@ -53,7 +54,7 @@ public class PageFurnace extends BookletPage{
     public void render(GuiBooklet gui, int mouseX, int mouseY, boolean mouseClick){
         ItemStack input = this.input != null ? this.input : this.getInputForOutput(this.result);
         if(input == null){
-            gui.unicodeRenderer.drawSplitString(StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".recipeDisabled"), gui.guiLeft+14, gui.guiTop+15, 115, 0);
+            gui.unicodeRenderer.drawSplitString(EnumChatFormatting.DARK_RED+StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".recipeDisabled"), gui.guiLeft+14, gui.guiTop+15, 115, 0);
         }
         else{
             String strg = "Furnace Recipe";

@@ -17,6 +17,7 @@ import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
 import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumChatFormatting;
 
 public class PageCrusherRecipe extends BookletPage{
 
@@ -45,7 +46,7 @@ public class PageCrusherRecipe extends BookletPage{
     @Override
     public void render(GuiBooklet gui, int mouseX, int mouseY, boolean mouseClick){
         if(recipe == null){
-            gui.unicodeRenderer.drawSplitString(StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".recipeDisabled"), gui.guiLeft+14, gui.guiTop+15, 115, 0);
+            gui.unicodeRenderer.drawSplitString(EnumChatFormatting.DARK_RED+StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".recipeDisabled"), gui.guiLeft+14, gui.guiTop+15, 115, 0);
         }
         else{
             String strg = "Crusher Recipe";

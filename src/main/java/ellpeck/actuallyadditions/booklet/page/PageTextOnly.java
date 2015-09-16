@@ -39,7 +39,7 @@ public class PageTextOnly extends BookletPage{
     public void renderPre(GuiBooklet gui, int mouseX, int mouseY, boolean mouseClick){
         String text = gui.currentPage.getText();
         if(text != null && !text.isEmpty()){
-            gui.unicodeRenderer.drawSplitString(text, gui.guiLeft+14, gui.guiTop+11, 115, 0);
+            gui.unicodeRenderer.drawSplitString(text, gui.guiLeft+14, gui.guiTop+9, 115, 0);
         }
     }
 }

@@ -20,6 +20,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraft.item.crafting.ShapelessRecipes;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
@@ -52,7 +53,7 @@ public class PageCrafting extends BookletPage{
     @Override
     public void render(GuiBooklet gui, int mouseX, int mouseY, boolean mouseClick){
         if(this.recipe == null){
-            gui.unicodeRenderer.drawSplitString(StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".recipeDisabled"), gui.guiLeft+14, gui.guiTop+15, 115, 0);
+            gui.unicodeRenderer.drawSplitString(EnumChatFormatting.DARK_RED+StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".recipeDisabled"), gui.guiLeft+14, gui.guiTop+15, 115, 0);
         }
         else{
             String strg = StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+"."+(recipe instanceof ShapedRecipes ? "shapedRecipe" : (recipe instanceof ShapelessRecipes ? "shapelessRecipe" : (recipe instanceof ShapelessOreRecipe ? "shapelessOreRecipe" : "shapedOreRecipe"))));
@@ -61,7 +62,7 @@ public class PageCrafting extends BookletPage{
 
         String text = gui.currentPage.getText();
         if(text != null && !text.isEmpty()){
-            gui.unicodeRenderer.drawSplitString(text, gui.guiLeft+14, gui.guiTop+100, 115, 0);
+            gui.unicodeRenderer.drawSplitString(text, gui.guiLeft+14, gui.guiTop+90, 115, 0);
         }
 
         if(this.recipe != null){

@@ -54,12 +54,19 @@ public class InitBooklet{
         new BookletChapter("quartz", entryMisc, new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal()), new PageTextOnly(1).setStack(new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.ORE_QUARTZ.ordinal())).addTextReplacement("<lowest>", ConfigIntValues.BLACK_QUARTZ_MIN_HEIGHT.getValue()).addTextReplacement("<highest>", ConfigIntValues.BLACK_QUARTZ_MAX_HEIGHT.getValue()), new PageTextOnly(2).setStack(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal())), new PageCrafting(3, BlockCrafting.recipeQuartzBlock).setNoText(), new PageCrafting(4, BlockCrafting.recipeQuartzPillar).setNoText(), new PageCrafting(5, BlockCrafting.recipeQuartzChiseled).setNoText());
         new BookletChapter("cloud", entryMisc, new ItemStack(InitBlocks.blockSmileyCloud), new PageTextOnly(1), new PageCrafting(2, BlockCrafting.recipeSmileyCloud).setNoText());
         new BookletChapter("coalStuff", entryMisc, new ItemStack(InitItems.itemMisc, 1, TheMiscItems.TINY_COAL.ordinal()), new PageTextOnly(1), new PageCrafting(2, ItemCrafting.recipeTinyCoal).setNoText(), new PageCrafting(3, ItemCrafting.recipeTinyChar).setNoText(), new PageCrafting(4, BlockCrafting.recipeBlockChar).setNoText());
-        new BookletChapter("lamps", entryMisc, new ItemStack(InitBlocks.blockColoredLampOn, 1, TheColoredLampColors.GREEN.ordinal()), new PageTextOnly(1), new PageCrafting(2, BlockCrafting.recipePowerer).setNoText(), new PageCrafting(3, BlockCrafting.recipesLamps[0]).setNoText(), new PageCrafting(4, BlockCrafting.recipesLamps[1]).setNoText(), new PageCrafting(5, BlockCrafting.recipesLamps[2]).setNoText(), new PageCrafting(6, BlockCrafting.recipesLamps[3]).setNoText(), new PageCrafting(7, BlockCrafting.recipesLamps[4]).setNoText(), new PageCrafting(8, BlockCrafting.recipesLamps[5]).setNoText(), new PageCrafting(9, BlockCrafting.recipesLamps[6]).setNoText(), new PageCrafting(10, BlockCrafting.recipesLamps[7]).setNoText(), new PageCrafting(11, BlockCrafting.recipesLamps[8]).setNoText(), new PageCrafting(12, BlockCrafting.recipesLamps[9]).setNoText(), new PageCrafting(13, BlockCrafting.recipesLamps[10]).setNoText(), new PageCrafting(14, BlockCrafting.recipesLamps[11]).setNoText(), new PageCrafting(15, BlockCrafting.recipesLamps[12]).setNoText(), new PageCrafting(16, BlockCrafting.recipesLamps[13]).setNoText(), new PageCrafting(17, BlockCrafting.recipesLamps[14]).setNoText(), new PageCrafting(18, BlockCrafting.recipesLamps[15]).setNoText());
+        ArrayList<BookletPage> lampPages = new ArrayList<BookletPage>();
+        lampPages.add(new PageTextOnly(lampPages.size()+1).setNoText());
+        lampPages.add(new PageCrafting(lampPages.size()+1, BlockCrafting.recipePowerer));
+        for(IRecipe recipe : BlockCrafting.recipesLamps){
+            lampPages.add(new PageCrafting(lampPages.size()+1, recipe).setNoText());
+        }
+        new BookletChapter("lamps", entryMisc, new ItemStack(InitBlocks.blockColoredLampOn, 1, TheColoredLampColors.GREEN.ordinal()), lampPages.toArray(new BookletPage[lampPages.size()]));
+
         new BookletChapter("treasureChest", entryMisc, new ItemStack(InitBlocks.blockTreasureChest), new PageTextOnly(1).setStack(new ItemStack(InitBlocks.blockTreasureChest)));
 
         //No RF Using Blocks
         new BookletChapter("breaker", entryFunctionalNonRF, new ItemStack(InitBlocks.blockBreaker), new PageCrafting(1, BlockCrafting.recipeBreaker), new PageCrafting(2, BlockCrafting.recipePlacer), new PageCrafting(3, BlockCrafting.recipeLiquidPlacer), new PageCrafting(4, BlockCrafting.recipeLiquidCollector));
-        new BookletChapter("phantomfaces", entryFunctionalNonRF, new ItemStack(InitBlocks.blockPhantomLiquiface), new PageTextOnly(1), new PageCrafting(2, BlockCrafting.recipePhantomface), new PageCrafting(3, BlockCrafting.recipeLiquiface), new PageCrafting(4, BlockCrafting.recipeEnergyface), new PageCrafting(5, ItemCrafting.recipePhantomConnector), new PageCrafting(6, BlockCrafting.recipePhantomBooster));
+        new BookletChapter("phantomfaces", entryFunctionalNonRF, new ItemStack(InitBlocks.blockPhantomLiquiface), new PageTextOnly(1).addTextReplacement("<range>", ConfigIntValues.PHANTOMFACE_RANGE.getValue()), new PageCrafting(2, BlockCrafting.recipePhantomface), new PageCrafting(3, BlockCrafting.recipeLiquiface), new PageCrafting(4, BlockCrafting.recipeEnergyface), new PageCrafting(5, ItemCrafting.recipePhantomConnector).setNoText(), new PageCrafting(6, BlockCrafting.recipePhantomBooster));
         new BookletChapter("phantomBreaker", entryFunctionalNonRF, new ItemStack(InitBlocks.blockPhantomBreaker), new PageTextOnly(1), new PageCrafting(2, BlockCrafting.recipePhantomPlacer), new PageCrafting(3, BlockCrafting.recipePhantomBreaker));
         new BookletChapter("esd", entryFunctionalNonRF, new ItemStack(InitBlocks.blockInputterAdvanced), new PageTextOnly(1), new PageCrafting(2, BlockCrafting.recipeESD), new PageCrafting(3, BlockCrafting.recipeAdvancedESD));
         new BookletChapter("xpSolidifier", entryFunctionalNonRF, new ItemStack(InitBlocks.blockXPSolidifier), new PageTextOnly(1).setStack(new ItemStack(InitItems.itemSpecialDrop, 1, TheSpecialDrops.SOLIDIFIED_EXPERIENCE.ordinal())), new PageCrafting(2, BlockCrafting.recipeSolidifier));
@@ -91,7 +98,7 @@ public class InitBooklet{
         ArrayList<BookletPage> aiotPages = new ArrayList<BookletPage>();
         aiotPages.add(new PageTextOnly(aiotPages.size()+1));
         for(IRecipe recipe : ToolCrafting.recipesPaxels){
-            aiotPages.add(new PageCrafting(aiotPages.size()+1, recipe));
+            aiotPages.add(new PageCrafting(aiotPages.size()+1, recipe).setNoText());
         }
         new BookletChapter("aiots", entryItemsNonRF, new ItemStack(InitItems.emeraldPaxel), aiotPages.toArray(new BookletPage[aiotPages.size()]));
 
@@ -100,7 +107,7 @@ public class InitBooklet{
         ArrayList<BookletPage> potionRingPages = new ArrayList<BookletPage>();
         potionRingPages.add(new PageTextOnly(potionRingPages.size()+1));
         for(IRecipe recipe : ItemCrafting.recipesPotionRings){
-            potionRingPages.add(new PageCrafting(potionRingPages.size()+1, recipe));
+            potionRingPages.add(new PageCrafting(potionRingPages.size()+1, recipe).setNoText());
         }
         new BookletChapter("potionRings", entryItemsNonRF, new ItemStack(InitItems.itemPotionRing), potionRingPages.toArray(new BookletPage[potionRingPages.size()]));
 
