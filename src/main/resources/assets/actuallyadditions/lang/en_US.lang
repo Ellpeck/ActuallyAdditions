@@ -1,12 +1,16 @@
+#General
 itemGroup.actuallyadditions=Actually Additions
 achievement.page.actuallyadditions=Actually Additions
 
+#Keybindings
 key.actuallyadditions.category=Actually Additions
 key.actuallyadditions.openBooklet.name=Open Booklet in Inventory
 
+#Fluids
 fluid.oil=Oil
 fluid.canolaoil=Canola Oil
 
+#Blocks
 tile.actuallyadditions.blockCompost.name=Compost
 tile.actuallyadditions.blockMiscOreBlackQuartz.name=Black Quartz Ore
 tile.actuallyadditions.blockMiscBlackQuartz.name=Block of Black Quartz
@@ -21,27 +25,13 @@ tile.actuallyadditions.blockFishingNet.name=Fishing Net
 tile.actuallyadditions.blockFurnaceSolar.name=Solar Panel
 tile.actuallyadditions.blockHeatCollector.name=Heat Collector
 tile.actuallyadditions.blockItemRepairer.name=Item Repairer
-item.actuallyadditions.itemDrill.name=Drill
 tile.actuallyadditions.blockMiscWoodCasing.name=Wood Casing
 tile.actuallyadditions.blockMiscStoneCasing.name=Stone Casing
 tile.actuallyadditions.blockGreenhouseGlass.name=Greenhouse Glass
 tile.actuallyadditions.blockEnergizer.name=Energizer
 tile.actuallyadditions.blockEnervator.name=Enervator
 tile.actuallyadditions.blockRice.name=Rice Plant
-item.actuallyadditions.itemFoodRice.name=Rice
-item.actuallyadditions.itemFoodDoughnut.name=Doughnut
-item.actuallyadditions.itemMiscRiceDough.name=Rice Dough
-item.actuallyadditions.itemFoodRiceBread.name=Rice Bread
-item.actuallyadditions.itemRiceSeed.name=Rice Seeds
-item.actuallyadditions.itemMiscTinyCoal.name=Tiny Coal
-item.actuallyadditions.itemMiscTinyCharcoal.name=Tiny Charcoal
 tile.actuallyadditions.blockMiscCharcoal.name=Block of Charcoal
-item.actuallyadditions.itemMiscRiceSlime.name=Rice Slimeball
-item.actuallyadditions.itemBattery.name=Single Battery
-item.actuallyadditions.itemBatteryDouble.name=Double Battery
-item.actuallyadditions.itemBatteryTriple.name=Triple Battery
-item.actuallyadditions.itemBatteryQuadruple.name=Quadruple Battery
-item.actuallyadditions.itemBatteryQuintuple.name=Quintuple Battery
 tile.actuallyadditions.blockCoalGenerator.name=Coal Generator
 tile.actuallyadditions.blockLampPowerer.name=Lamp Controller
 tile.actuallyadditions.blockColoredLampWhite.name=White Lamp
@@ -60,12 +50,7 @@ tile.actuallyadditions.blockColoredLampLime.name=Lime Lamp
 tile.actuallyadditions.blockColoredLampPink.name=Pink Lamp
 tile.actuallyadditions.blockColoredLampCyan.name=Cyan Lamp
 tile.actuallyadditions.blockColoredLampPurple.name=Purple Lamp
-item.actuallyadditions.itemGrowthRing.name=Ring of Growth
-item.actuallyadditions.itemWaterRemovalRing.name=Ring of Liquid Banning
-item.actuallyadditions.itemSuctionRing.name=Ring of Magnetizing
 tile.actuallyadditions.blockOreMagnet.name=Magnetic Miner
-item.actuallyadditions.itemBucketCanolaOil.name=Canola Oil Bucket
-item.actuallyadditions.itemBucketOil.name=Oil Bucket
 tile.actuallyadditions.blockPhantomface.name=Phantomface
 tile.actuallyadditions.blockPhantomEnergyface.name=Phantom Energyface
 tile.actuallyadditions.blockPhantomLiquiface.name=Phantom Liquiface
@@ -74,6 +59,75 @@ tile.actuallyadditions.blockPhantomBreaker.name=Phantom Breaker
 tile.actuallyadditions.blockLavaFactoryController.name=Lava Factory Controller
 tile.actuallyadditions.blockMiscLavaFactoryCase.name=Casing
 tile.actuallyadditions.blockFluidPlacer.name=Fluid Placer
+tile.actuallyadditions.blockFluidCollector.name=Fluid Collector
+tile.actuallyadditions.blockPhantomBooster.name=Phantom Booster
+tile.actuallyadditions.blockCoffee.name=Coffee Plant
+tile.actuallyadditions.blockWildCanola.name=Wild Canola
+tile.actuallyadditions.blockWildRice.name=Wild Rice
+tile.actuallyadditions.blockWildCoffee.name=Wild Coffee
+tile.actuallyadditions.blockWildFlax.name=Wild Flax
+tile.actuallyadditions.blockTestifiBucksGreenWall.name=Green TestifiBucks Wall
+tile.actuallyadditions.blockTestifiBucksWhiteWall.name=White TestifiBucks Wall
+tile.actuallyadditions.blockTestifiBucksGreenStairs.name=Green TestifiBucks Stairs
+tile.actuallyadditions.blockTestifiBucksWhiteStairs.name=White TestifiBucks Stairs
+tile.actuallyadditions.blockTestifiBucksGreenSlab.name=Green TestifiBucks Slab
+tile.actuallyadditions.blockTestifiBucksWhiteSlab.name=White TestifiBucks Slab
+tile.actuallyadditions.blockCanola.name=Canola Plant
+tile.actuallyadditions.blockTreasureChest.name=Treasure Chest
+tile.actuallyadditions.blockCanolaPress.name=Canola Press
+tile.actuallyadditions.blockFermentingBarrel.name=Fermenting Barrel
+tile.actuallyadditions.blockCanolaOil.name=Canola Oil
+tile.actuallyadditions.blockOil.name=Oil
+tile.actuallyadditions.blockMiscEnderpearl.name=Block of Enderpearl
+tile.actuallyadditions.blockOilGenerator.name=Oil Generator
+tile.actuallyadditions.blockBreaker.name=Auto-Breaker
+tile.actuallyadditions.blockPlacer.name=Auto-Placer
+tile.actuallyadditions.blockDropper.name=Automatic Precision Dropper
+tile.actuallyadditions.blockMiscEnderCasing.name=Ender Casing
+tile.actuallyadditions.blockFlax.name=Flax Plant
+tile.actuallyadditions.blockCoffeeMachine.name=Coffee Machine
+tile.actuallyadditions.blockXPSolidifier.name=Experience Solidifier
+tile.actuallyadditions.blockSmileyCloud.name=Smiley Cloud
+
+#ESD
+tile.actuallyadditions.blockInputter.name=ESD
+tile.actuallyadditions.blockInputterAdvanced.name=Advanced ESD
+tile.actuallyadditions.blockInputter.add.1.name=Ellpeck's Slot Device
+tile.actuallyadditions.blockInputter.add.2.name=Ethereal System Dude
+tile.actuallyadditions.blockInputter.add.3.name=Energy Stuff Distributor
+tile.actuallyadditions.blockInputter.add.4.name=Existing Stuff Donator
+tile.actuallyadditions.blockInputter.add.5.name=ExtraUtils Stealing Device
+tile.actuallyadditions.blockInputter.add.6.name=Experienced Sauce Deriver
+tile.actuallyadditions.blockInputter.add.7.name=Excellent Spaghetti Dessert
+tile.actuallyadditions.blockInputter.add.8.name=Extraordinary Sample Deliverer
+tile.actuallyadditions.blockInputter.add.9.name=Express Sending Doughnut
+tile.actuallyadditions.blockInputter.add.10.name=Expelling Sugar Dagger
+tile.actuallyadditions.blockInputter.add.11.name=Extra-Long Solidifying Dissociation
+tile.actuallyadditions.blockInputter.add.12.name=Energetic Solo Dancer
+tile.actuallyadditions.blockInputter.add.13.name=Efficient Sucking Dilettant
+tile.actuallyadditions.blockInputter.add.14.name=Extreme Sand Digger
+tile.actuallyadditions.blockInputter.add.15.name=Ending Serious Daughter
+
+#Items
+item.actuallyadditions.itemDrill.name=Drill
+item.actuallyadditions.itemFoodRice.name=Rice
+item.actuallyadditions.itemFoodDoughnut.name=Doughnut
+item.actuallyadditions.itemMiscRiceDough.name=Rice Dough
+item.actuallyadditions.itemFoodRiceBread.name=Rice Bread
+item.actuallyadditions.itemRiceSeed.name=Rice Seeds
+item.actuallyadditions.itemMiscTinyCoal.name=Tiny Coal
+item.actuallyadditions.itemMiscTinyCharcoal.name=Tiny Charcoal
+item.actuallyadditions.itemMiscRiceSlime.name=Rice Slimeball
+item.actuallyadditions.itemBattery.name=Single Battery
+item.actuallyadditions.itemBatteryDouble.name=Double Battery
+item.actuallyadditions.itemBatteryTriple.name=Triple Battery
+item.actuallyadditions.itemBatteryQuadruple.name=Quadruple Battery
+item.actuallyadditions.itemBatteryQuintuple.name=Quintuple Battery
+item.actuallyadditions.itemGrowthRing.name=Ring of Growth
+item.actuallyadditions.itemWaterRemovalRing.name=Ring of Liquid Banning
+item.actuallyadditions.itemSuctionRing.name=Ring of Magnetizing
+item.actuallyadditions.itemBucketCanolaOil.name=Canola Oil Bucket
+item.actuallyadditions.itemBucketOil.name=Oil Bucket
 item.actuallyadditions.itemWingsOfTheBats.name=Wings Of The Bats
 item.actuallyadditions.itemMiscBatWing.name=Bat's Wing
 item.actuallyadditions.woodenPaxel.name=Wooden AIOT
@@ -99,55 +153,14 @@ item.actuallyadditions.paxelMTLapisLazuli.name=MT Lapis Lazuli AIOT
 item.actuallyadditions.paxelMTOsmium.name=MT Osmium AIOT
 item.actuallyadditions.paxelMTBronze.name=MT Bronze AIOT
 item.actuallyadditions.paxelMTSteel.name=MT Steel AIOT
-tile.actuallyadditions.blockFluidCollector.name=Fluid Collector
-tile.actuallyadditions.blockPhantomBooster.name=Phantom Booster
 item.actuallyadditions.itemPhantomConnector.name=Phantom Connector
 item.actuallyadditions.itemMiscCup.name=Empty Cup
 item.actuallyadditions.itemCoffee.name=Cup with Coffee
 item.actuallyadditions.itemCoffeeSeed.name=Coffee Seeds
-tile.actuallyadditions.blockCoffee.name=Coffee Plant
 item.actuallyadditions.itemCoffeeBeans.name=Coffee Beans
-tile.actuallyadditions.blockWildCanola.name=Wild Canola
-tile.actuallyadditions.blockWildRice.name=Wild Rice
-tile.actuallyadditions.blockWildCoffee.name=Wild Coffee
-tile.actuallyadditions.blockWildFlax.name=Wild Flax
-tile.actuallyadditions.blockTestifiBucksGreenWall.name=Green TestifiBucks Wall
-tile.actuallyadditions.blockTestifiBucksWhiteWall.name=White TestifiBucks Wall
-tile.actuallyadditions.blockTestifiBucksGreenStairs.name=Green TestifiBucks Stairs
-tile.actuallyadditions.blockTestifiBucksWhiteStairs.name=White TestifiBucks Stairs
-tile.actuallyadditions.blockTestifiBucksGreenSlab.name=Green TestifiBucks Slab
-tile.actuallyadditions.blockTestifiBucksWhiteSlab.name=White TestifiBucks Slab
 item.actuallyadditions.itemCanolaSeed.name=Canola Seeds
 item.actuallyadditions.itemMiscCanola.name=Canola
-tile.actuallyadditions.blockCanola.name=Canola Plant
 item.actuallyadditions.itemResonantRice.name=Resonant Rice
-tile.actuallyadditions.blockTreasureChest.name=Treasure Chest
-tile.actuallyadditions.blockCanolaPress.name=Canola Press
-tile.actuallyadditions.blockFermentingBarrel.name=Fermenting Barrel
-tile.actuallyadditions.blockCanolaOil.name=Canola Oil
-tile.actuallyadditions.blockOil.name=Oil
-tile.actuallyadditions.blockMiscEnderpearl.name=Block of Enderpearl
-tile.actuallyadditions.blockOilGenerator.name=Oil Generator
-tile.actuallyadditions.blockBreaker.name=Auto-Breaker
-tile.actuallyadditions.blockPlacer.name=Auto-Placer
-tile.actuallyadditions.blockDropper.name=Automatic Precision Dropper
-tile.actuallyadditions.blockInputter.name=ESD
-tile.actuallyadditions.blockInputterAdvanced.name=Advanced ESD
-tile.actuallyadditions.blockInputter.add.1.name=Ellpeck's Slot Device
-tile.actuallyadditions.blockInputter.add.2.name=Ethereal System Dude
-tile.actuallyadditions.blockInputter.add.3.name=Energy Stuff Distributor
-tile.actuallyadditions.blockInputter.add.4.name=Existing Stuff Donator
-tile.actuallyadditions.blockInputter.add.5.name=ExtraUtils Stealing Device
-tile.actuallyadditions.blockInputter.add.6.name=Experienced Sauce Deriver
-tile.actuallyadditions.blockInputter.add.7.name=Excellent Spaghetti Dessert
-tile.actuallyadditions.blockInputter.add.8.name=Extraordinary Sample Deliverer
-tile.actuallyadditions.blockInputter.add.9.name=Express Sending Doughnut
-tile.actuallyadditions.blockInputter.add.10.name=Expelling Sugar Dagger
-tile.actuallyadditions.blockInputter.add.11.name=Extra-Long Solidifying Dissociation
-tile.actuallyadditions.blockInputter.add.12.name=Energetic Solo Dancer
-tile.actuallyadditions.blockInputter.add.13.name=Efficient Sucking Dilettant
-tile.actuallyadditions.blockInputter.add.14.name=Extreme Sand Digger
-tile.actuallyadditions.blockInputter.add.15.name=Ending Serious Daughter
 item.actuallyadditions.itemDrillUpgradeSpeed.name=Drill Speed Augment I
 item.actuallyadditions.itemDrillUpgradeSpeedII.name=Drill Speed Augment II
 item.actuallyadditions.itemDrillUpgradeSpeedIII.name=Drill Speed Augment III
@@ -157,20 +170,6 @@ item.actuallyadditions.itemDrillUpgradeFortuneII.name=Drill Fortune Augment II (
 item.actuallyadditions.itemDrillUpgradeBlockPlacing.name=Drill Block Placing Augment
 item.actuallyadditions.itemDrillUpgradeThreeByThree.name=Drill Mining Augment I
 item.actuallyadditions.itemDrillUpgradeFiveByFive.name=Drill Mining Augment II
-tile.actuallyadditions.blockMiscEnderCasing.name=Ender Casing
-
-tooltip.actuallyadditions.onSuffix.desc=On
-tooltip.actuallyadditions.phantom.connected.desc=<Block connected!>
-tooltip.actuallyadditions.phantom.stored.desc=<Block stored to this Connector!>
-tooltip.actuallyadditions.phantom.unbound.desc=The Connection was cleared!
-tooltip.actuallyadditions.phantom.inWorld.desc=In World
-tooltip.actuallyadditions.phantom.boundTo.desc=Bound to
-tooltip.actuallyadditions.phantom.connectedRange.desc=The Connection is fine and working.
-tooltip.actuallyadditions.phantom.connectedNoRange.desc=The Connection is obstructed: It is either not in Range, not in loaded Chunks or not the right type of Block for this Phantom Device.
-tooltip.actuallyadditions.phantom.notConnected.desc=This isn't connected to anything!
-tooltip.actuallyadditions.phantom.blockInfo.desc=The connected Block is %s at %s, %s, %s that is %s Blocks away.
-tooltip.actuallyadditions.factory.notPart.desc=The Controller isn't part of the right Multi-Block! Look at the Controller's Description!
-tooltip.actuallyadditions.factory.works.desc=This Lava Factory is complete and can produce Lava!
 item.actuallyadditions.itemMiscMashedFood.name=Mashed Food
 item.actuallyadditions.itemFertilizer.name=Fertilizer
 item.actuallyadditions.itemMiscDough.name=Dough
@@ -232,7 +231,6 @@ item.actuallyadditions.itemSpecialBloodFragment.name=Blood Fragment
 item.actuallyadditions.itemSpecialHeartPart.name=Part of a Heart
 item.actuallyadditions.itemSpecialPearlShard.name=Ender Pearl Shard
 item.actuallyadditions.itemSpecialEmeraldShard.name=Emerald Shard
-tile.actuallyadditions.blockCoffeeMachine.name=Coffee Machine
 item.actuallyadditions.itemDustIron.name=Crushed Iron
 item.actuallyadditions.itemDustGold.name=Crushed Gold
 item.actuallyadditions.itemDustDiamond.name=Crushed Diamond
@@ -241,6 +239,26 @@ item.actuallyadditions.itemDustEmerald.name=Crushed Emerald
 item.actuallyadditions.itemDustQuartz.name=Crushed Quartz
 item.actuallyadditions.itemDustCoal.name=Crushed Coal
 item.actuallyadditions.itemDustQuartzBlack.name=Crushed Black Quartz
+item.actuallyadditions.itemFlaxSeed.name=Flax Seeds
+item.actuallyadditions.itemHelmObsidian.name=Obsidian Helm
+item.actuallyadditions.itemChestObsidian.name=Obsidian Chestplate
+item.actuallyadditions.itemPantsObsidian.name=Obsidian Pants
+item.actuallyadditions.itemBootsObsidian.name=Obsidian Boots
+item.actuallyadditions.itemBooklet.name=Actually Additions Information Manual
+
+#Tooltips
+tooltip.actuallyadditions.onSuffix.desc=On
+tooltip.actuallyadditions.phantom.connected.desc=<Block connected!>
+tooltip.actuallyadditions.phantom.stored.desc=<Block stored to this Connector!>
+tooltip.actuallyadditions.phantom.unbound.desc=The Connection was cleared!
+tooltip.actuallyadditions.phantom.inWorld.desc=In World
+tooltip.actuallyadditions.phantom.boundTo.desc=Bound to
+tooltip.actuallyadditions.phantom.connectedRange.desc=The Connection is fine and working.
+tooltip.actuallyadditions.phantom.connectedNoRange.desc=The Connection is obstructed: It is either not in Range, not in loaded Chunks or not the right type of Block for this Phantom Device.
+tooltip.actuallyadditions.phantom.notConnected.desc=This isn't connected to anything!
+tooltip.actuallyadditions.phantom.blockInfo.desc=The connected Block is %s at %s, %s, %s that is %s Blocks away.
+tooltip.actuallyadditions.factory.notPart.desc=The Controller isn't part of the right Multi-Block! Look at the Controller's Description!
+tooltip.actuallyadditions.factory.works.desc=This Lava Factory is complete and can produce Lava!
 tooltip.actuallyadditions.oredictName.desc=OreDictionary Entries
 tooltip.actuallyadditions.noOredictNameAvail.desc=None
 tooltip.actuallyadditions.codeName.desc=Code Name
@@ -249,23 +267,9 @@ tooltip.actuallyadditions.unlocName.desc=Meta's Unlocalized Name
 tooltip.actuallyadditions.disablingInfo.desc=If you don't want this Information to appear, disable it in the Actually Additions Config!
 tooltip.actuallyadditions.ctrlForMoreInfo.desc=Press CTRL for Advanced Info
 tooltip.actuallyadditions.extraInfo.desc=Advanced Info
-tile.actuallyadditions.blockXPSolidifier.name=Experience Solidifier
 tooltip.actuallyadditions.blockPhantomRange.desc=Range
-tile.actuallyadditions.blockFlax.name=Flax Plant
-item.actuallyadditions.itemFlaxSeed.name=Flax Seeds
-item.actuallyadditions.itemHelmObsidian.name=Obsidian Helm
-item.actuallyadditions.itemChestObsidian.name=Obsidian Chestplate
-item.actuallyadditions.itemPantsObsidian.name=Obsidian Pants
-item.actuallyadditions.itemBootsObsidian.name=Obsidian Boots
-tile.actuallyadditions.blockSmileyCloud.name=Smiley Cloud
-item.actuallyadditions.itemHelmEmerald.name=Emerald Helm
-item.actuallyadditions.itemChestEmerald.name=Emerald Chestplate
-item.actuallyadditions.itemPantsEmerald.name=Emerald Pants
-item.actuallyadditions.itemBootsEmerald.name=Emerald Boots
-item.actuallyadditions.itemHelmQuartz.name=Black Quartz Helm
-item.actuallyadditions.itemChestQuartz.name=Black Quartz Chestplate
-item.actuallyadditions.itemPantsQuartz.name=Black Quartz Pants
-item.actuallyadditions.itemBootsQuartz.name=Black Quartz Boots
+
+#Gui Information
 info.actuallyadditions.gui.animals=Animals
 info.actuallyadditions.gui.enoughToBreed=Enough to breed!
 info.actuallyadditions.gui.tooMany=Too many to breed!
@@ -285,6 +289,11 @@ info.actuallyadditions.gui.blacklist=Blacklist
 info.actuallyadditions.gui.coffee=Coffee
 info.actuallyadditions.gui.ok=Ok
 info.actuallyadditions.gui.the=the
+info.actuallyadditions.inputter.info.1=This is the first Slot in the connected Inventory to <p> at.
+info.actuallyadditions.inputter.info.2=This is the slot after the last Slot in the connected Inventory to <p> at. What that means: If you, for example, write 2 in the field to the left and 5 in this one, it will <p> at Slot 2, 3, and 4.
+info.actuallyadditions.inputter.whitelistInfo=This applies for this part of the white-/blacklist. The other side applies as well, so you can have some Items whitelisted and some blacklisted. Note that, if you have an empty blacklist or an item whitelisted on at least one side, it will always go through.
+
+#Container Names
 container.actuallyadditions.inputter.name=ESD
 container.actuallyadditions.inputterAdvanced.name=Advanced ESD
 container.actuallyadditions.grinder.name=Crusher
@@ -315,6 +324,8 @@ container.actuallyadditions.enervator.name=Enervator
 container.actuallyadditions.xpSolidifier.name=Experience Solidifier
 container.actuallyadditions.oreMagnet.name=Magnetic Miner
 container.actuallyadditions.cloud.name=Smiley Cloud
+
+#NEI Integration
 container.nei.actuallyadditions.crushing.name=Crusher
 container.nei.actuallyadditions.crushingDouble.name=Double Crusher
 container.nei.actuallyadditions.ballOfHair.name=Ball Of Hair Usage
@@ -327,14 +338,15 @@ container.nei.actuallyadditions.coffee.special=Special Feature
 container.nei.actuallyadditions.coffee.maxAmount=Max Amount
 container.nei.actuallyadditions.coffee.shift=[SHIFT]!
 container.nei.actuallyadditions.coffee.extra.milk=+01:00, -1 Level
+
+#Update Information
 info.actuallyadditions.update.generic.desc=[{"text":"There is an "},{"text":"Update ","bold":"true"},{"text":"for ","bold":"false"},{"text":"Actually Additions ","color":"dark_green","bold":"true"},{"text":"available!","color":"none","bold":"false"}]
 info.actuallyadditions.update.versionComp.desc=[{"text":"You have Version "},{"text":"%s","color":"dark_red","italic":"false"},{"text":", the newest one is ","color":"none","italic":"false"},{"text":"%s","color":"dark_green","underlined":"false"},{"text":"!","color":"none","underlined":"false"}]
 info.actuallyadditions.update.download.desc=[{"text":"Download the newest Version "},{"text":"here! (Click me!)","color":"dark_green","underlined":"true","clickEvent":{"action":"open_url","value":"%s"},"hoverEvent":{"action":"show_text","value":{"text":"","extra":[{"text":"Click here to open your Browser and download the newest Version!"}]}}}]
 info.actuallyadditions.update.failed.desc=[{"text":"The Update Check for "},{"text":"Actually Additions ","color":"dark_green","bold":"true"},{"text":"failed! Check your Internet Connection and the Logs for more Info!","color":"none"}]
 info.actuallyadditions.update.changelog.desc=Updates: %s
-info.actuallyadditions.inputter.info.1=This is the first Slot in the connected Inventory to <p> at.
-info.actuallyadditions.inputter.info.2=This is the slot after the last Slot in the connected Inventory to <p> at. What that means: If you, for example, write 2 in the field to the left and 5 in this one, it will <p> at Slot 2, 3, and 4.
-info.actuallyadditions.inputter.whitelistInfo=This applies for this part of the white-/blacklist. The other side applies as well, so you can have some Items whitelisted and some blacklisted. Note that, if you have an empty blacklist or an item whitelisted on at least one side, it will always go through.
+
+#Achievements
 achievement.actuallyadditions.pickUpSolidXP=Square and yummy!
 achievement.actuallyadditions.pickUpSolidXP.desc=Pick up some Solidified Experience
 achievement.actuallyadditions.craftKnifeBlade=Sharp! So Sharp!
@@ -364,13 +376,13 @@ achievement.actuallyadditions.craftPhantomEnergyface.desc=Craft a Phantom Energy
 achievement.actuallyadditions.openTreasureChest=You almost drowned!!
 achievement.actuallyadditions.openTreasureChest.desc=Open a Treasure Chest underwater
 
-item.actuallyadditions.itemBooklet.name=Actually Additions Information Manual
-
+#Booklet Recipe Names
 booklet.actuallyadditions.shapelessRecipe=Shapeless Recipe
 booklet.actuallyadditions.shapedRecipe=Shaped Recipe
 booklet.actuallyadditions.shapelessOreRecipe=Shapeless OreDictionary Recipe
 booklet.actuallyadditions.shapedOreRecipe=Shaped OreDictionary Recipe
 
+#Booklet Entries
 booklet.actuallyadditions.indexEntry.misc.name=Miscellaneous
 booklet.actuallyadditions.indexEntry.functionalNoRF.name=Blocks that don't use RF
 booklet.actuallyadditions.indexEntry.allAndSearch.name=All Items and Search
@@ -379,12 +391,13 @@ booklet.actuallyadditions.indexEntry.generatingRF.name=Blocks that generate RF
 booklet.actuallyadditions.indexEntry.itemsNoRF.name=Items that don't use RF
 booklet.actuallyadditions.indexEntry.itemsRF.name=Items that use RF
 
+#Booklet Info
 booklet.actuallyadditions.recipeDisabled=The crafting recipe for this item is disabled in the Config File! If you're on a server, ask the server author to enable it in the config. If you're on a client, press the 'Open Config'-Button on the top right and enable the recipe!
-
 booklet.actuallyadditions.clickToSeeRecipe=Click to see more Information
 booklet.actuallyadditions.keyToSeeRecipe=Press %s to see more Information
 booklet.actuallyadditions.noBookletInInventory=If you had an Actually Additions Information Manual, you could check out more Information :(
 
+#Booklet Chapters
 booklet.actuallyadditions.chapter.intro.name=An Introduction to ActAdd
 booklet.actuallyadditions.chapter.intro.text.1=<i>This book, written years ago, found by the player, used to help understand the wonders of this world, finally opened, finally looked at, full of glory, full of grace, will be used to help the player along on their journey through <imp>Actually Additions<r><i>. <n>What is <imp>Actually Additions<r><i>, you may ask. <n><imp>Actually Additions<r><i> adds blocks, items, and features to make the player's experience easier, automate the world and properly do what you've always wanted to do.
 booklet.actuallyadditions.chapter.intro.text.2=<i>This book, written by <imp>Ellpeck<r><i>, the author of everything <imp>Actually Additions<r><i> contains, often called Ellopecko, Peck or Ellpack, is easy to navigate. It has an <imp>index page<r><i> at the front from which you can choose <imp>criteria pages<r><i>. These criteria pages contain a list of every item which is part of the criteria, and clicking on that will show <imp>precise information and the crafting recipe<r><i> of the item. The page you were on previously will stay open between sessions, too! <n><rs>Go check it out!
