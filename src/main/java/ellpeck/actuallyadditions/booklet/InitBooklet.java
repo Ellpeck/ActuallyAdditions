@@ -77,7 +77,7 @@ public class InitBooklet{
         new BookletChapter("crate", entryFunctionalNonRF, new ItemStack(InitBlocks.blockGiantChest), new PageCrafting(1, BlockCrafting.recipeCrate));
 
         //RF Using Blocks
-        new BookletChapter("coffeeMachine", entryFunctionalRF, new ItemStack(InitBlocks.blockCoffeeMachine), new PageTextOnly(1), new PageTextOnly(2), new PageTextOnly(3), new PageCrafting(4, BlockCrafting.recipeCoffeeMachine), new PageCrafting(5, ItemCrafting.recipeCup));
+        new BookletChapter("coffeeMachine", entryFunctionalRF, new ItemStack(InitBlocks.blockCoffeeMachine), new PageTextOnly(1).setStack(new ItemStack(InitItems.itemCoffeeBean)).addTextReplacement("<rf>", ConfigIntValues.COFFEE_MACHINE_ENERGY_USED.getValue()).addTextReplacement("<coffee>", ConfigIntValues.COFFEE_CACHE_USED_PER_ITEM.getValue()).addTextReplacement("<water>", ConfigIntValues.COFFEE_MACHINE_WATER_USED.getValue()), new PageTextOnly(2).setStack(new ItemStack(InitItems.itemCoffee)), new PageTextOnly(3), new PageCrafting(4, BlockCrafting.recipeCoffeeMachine).setNoText(), new PageCrafting(5, ItemCrafting.recipeCup).setNoText());
         new BookletChapterCrusher("crusher", entryFunctionalRF, new ItemStack(InitBlocks.blockGrinderDouble), new PageTextOnly(1), new PageCrafting(2, BlockCrafting.recipeCrusher), new PageCrafting(3, BlockCrafting.recipeDoubleCrusher));
         new BookletChapterFurnace("furnaceDouble", entryFunctionalRF, new ItemStack(InitBlocks.blockFurnaceDouble), new PageCrafting(1, BlockCrafting.recipeFurnace));
         new BookletChapter("miner", entryFunctionalRF, new ItemStack(InitBlocks.blockOreMagnet), new PageTextOnly(1), new PageCrafting(2, BlockCrafting.recipeMiner), new PageCrafting(3, BlockCrafting.recipeCasing));
