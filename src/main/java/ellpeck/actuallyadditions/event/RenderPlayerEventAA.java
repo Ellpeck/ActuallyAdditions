@@ -29,7 +29,6 @@ public class RenderPlayerEventAA{
     private static RenderSpecial glenRender = new RenderSpecial(new ItemStack(InitBlocks.blockHeatCollector));
     private static RenderSpecial lordiRender = new RenderSpecial(new ItemStack(InitBlocks.blockBreaker));
     public static RenderSpecial lariRender = new RenderSpecial(null);
-    //public static RenderSpecial doughnutRender = new RenderSpecial(new ItemStack(InitItems.itemFoods, 1, TheFoods.DOUGHNUT.ordinal()));
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void RenderPlayerEvent(RenderPlayerEvent.Specials.Pre event){
@@ -57,9 +56,5 @@ public class RenderPlayerEventAA{
         else if(event.entityPlayer.getUniqueID().equals(UUID.fromString("ac275e30-c468-42af-b5d4-b26c1c705b70"))){
             lariRender.render(event.entityPlayer, 0.15F, -0.125F);
         }
-        //DoughnutDev
-        /*else if(event.entityPlayer.getUniqueID().equals(UUID.fromString("fd303402-d627-4de0-8a02-eb8c7fd2acb6"))){
-            doughnutRender.render(event.entityPlayer, 0.35F, 0.225F);
-        }*/
     }
 }

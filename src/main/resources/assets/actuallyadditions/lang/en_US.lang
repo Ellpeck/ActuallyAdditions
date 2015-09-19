@@ -503,3 +503,39 @@ booklet.actuallyadditions.chapter.heatCollector.text.1=The <item>Heat Collector<
 
 booklet.actuallyadditions.chapter.canola.name=Everything Canola
 booklet.actuallyadditions.chapter.canola.text.1=There is lots of stuff that can be produced from Canola (which can be found in the wild and then planted and harvested!): You can make <imp>Canola Oil<r>, <imp>Oil<r> and produce <imp>RF<r> from it. <n>The way to do that is to take some <item>Canola, put it into a <item>Canola Press<r> which uses <pressRF> RF/t. That creates <imp><canola> mB of Canola Oil<r>. Put that into a <item>Fermenting Barrel<r>, let it sit there for a while before it converts into <imp>Oil<r>. That oil can then be used in a <item>Oil Generator<r> to create <imp><rf> RF/t<r>.
+
+booklet.actuallyadditions.chapter.wings.name=Wings Of The Bats
+booklet.actuallyadditions.chapter.wings.text.1=Sometimes, bats will drop <item>Wings<r>. These wings can't really be used to fly, but that's just because they're not powerful enough. <n>To make them more powerful, you can craft <item>Wings Of The Bats<r>. When you have these in your inventory, they will allow you to <imp>fly like in creative mode<r>.
+
+booklet.actuallyadditions.chapter.foods.name=Foodstuffs
+
+booklet.actuallyadditions.chapter.leafBlower.name=Leaf Blowers
+booklet.actuallyadditions.chapter.leafBlower.text.1=The <item>Leaf Blower<r> can blow away tall grass, flowers and other stuff around you when you <imp>hold right-click<r>. There is an <item>Advanced Leaf Blower<r>, which works like the basic one, except that it <imp>also breaks leaves<r>.
+
+booklet.actuallyadditions.chapter.aiots.name=All-In-One-Tools (AIOTs)
+booklet.actuallyadditions.chapter.aiots.text.1=An <item>All-In-One-Tool<r> is a tool that is <imp>Pickaxe, Axe, Shovel, Sword and Hoe in one<r>. They are available in every material and if you have <imp>Thermal Foundation<r> or <imp>MekanismTools<r> installed, there are even AIOTs made of their materials!
+
+booklet.actuallyadditions.chapter.jams.name=Jams
+booklet.actuallyadditions.chapter.jams.text.1=Once, there was a <imp>Kitty<r> who really wanted some Jam. <n>So I made some <item>Jam<r>. <n>Seriously, this is Jam. You can find it in Village Houses or buy it from the <imp>Jam Villager<r>. <n>Every Jam gives you two different <imp>potion effects<r>!
+
+booklet.actuallyadditions.chapter.potionRings.name=Potioni Rings
+booklet.actuallyadditions.chapter.potionRings.text.1=The <item>Potion Rings<r> have two versions: A <imp>normal version<r> and an <imp>advanced version<r>. <n>The normal version, when you have it in your hand, will give you a <imp>Potion Effect<r> of Level 1. The advanced version can be anywhere in your inventory and gives you an effect of Level 2!
+
+booklet.actuallyadditions.chapter.drill.name=Drills
+booklet.actuallyadditions.chapter.drill.text.1=The <item>Drill<r> works like a Pickaxe and a Shovel. It uses <imp>RF<r>per block. It can be <imp>charged in an Energizer<r> and upgraded by <imp>right-clicking<r> with it in your hand. There is <imp>a lot of upgrades<r>, but here is an explanation of some of them: <n>The <item>Mining Uprgades<r> enlarge the hole which the Drill digs. <n>The <item>Placement Upgrade<r>, after you right-click it in any slot of your hotbar, will make the Drill able to <imp>place a block from that slot by right-clicking<r>. You can also put a <item>Battery<r> inside the Drill to give it more charge.
+
+booklet.actuallyadditions.chapter.staff.name=Staff
+booklet.actuallyadditions.chapter.staff.text.1=The <item>Teleport Staff<r>, when charged in an Energizer, can be <imp>right-clicked<r> to <imp>teleport you to where you're looking<r>. When you are looking at a block, it will teleport you there, however, when you aren't looking at a block, you can only be looking upwards up to <imp>5 degrees<r>, otherwise the teleport will fail.
+
+booklet.actuallyadditions.chapter.magnetRing.name=Ring Of Magnetism
+booklet.actuallyadditions.chapter.magnetRing.text.1=The <item>Ring Of Magnetism<r>, when it is charged in an Energizer and inside your inventory, uses <imp>RF<r> to suck up items that are farther away than you can pick up by yourself.
+
+booklet.actuallyadditions.chapter.growthRing.name=Ring Of Growth
+booklet.actuallyadditions.chapter.growthRing.text.1=The <item>Ring Of Growth<r>, when it is charged in an Energizer and in your hand, uses <imp>RF<r> to make plants around you grow much faster.
+
+booklet.actuallyadditions.chapter.waterRemovalRing.name=Ring Of Liquid Banning
+booklet.actuallyadditions.chapter.waterRemovalRing.text.1=The <item>Ring Of Liquid Banning<r>, when it is charged in an Energizer and in your hand, uses <imp>RF<r> to remove <imp>Lava<r> and <imp>Water<r>.
+
+booklet.actuallyadditions.chapter.batteries.name=Batteries
+booklet.actuallyadditions.chapter.batteries.text.1=<item>Batteries<r> are a good way to store RF to move around. They can be <imp>charged in an Energizer<r> and <imp>discharged in an Enervator<r>.
+
