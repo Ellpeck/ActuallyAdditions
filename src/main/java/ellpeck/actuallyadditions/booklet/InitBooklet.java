@@ -55,7 +55,7 @@ public class InitBooklet{
         new BookletChapter("cloud", entryMisc, new ItemStack(InitBlocks.blockSmileyCloud), new PageTextOnly(1), new PageCrafting(2, BlockCrafting.recipeSmileyCloud).setNoText());
         new BookletChapter("coalStuff", entryMisc, new ItemStack(InitItems.itemMisc, 1, TheMiscItems.TINY_COAL.ordinal()), new PageTextOnly(1), new PageCrafting(2, ItemCrafting.recipeTinyCoal).setNoText(), new PageCrafting(3, ItemCrafting.recipeTinyChar).setNoText(), new PageCrafting(4, BlockCrafting.recipeBlockChar).setNoText());
         ArrayList<BookletPage> lampPages = new ArrayList<BookletPage>();
-        lampPages.add(new PageTextOnly(lampPages.size()+1).setNoText());
+        lampPages.add(new PageTextOnly(lampPages.size()+1));
         lampPages.add(new PageCrafting(lampPages.size()+1, BlockCrafting.recipePowerer).setNoText());
         for(IRecipe recipe : BlockCrafting.recipesLamps){
             lampPages.add(new PageCrafting(lampPages.size()+1, recipe).setNoText());

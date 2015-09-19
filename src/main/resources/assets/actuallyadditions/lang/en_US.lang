@@ -403,7 +403,7 @@ booklet.actuallyadditions.indexEntry.itemsRF.name=Items that use RF
 booklet.actuallyadditions.recipeDisabled=The crafting recipe for this item is disabled in the Config File! If you're on a server, ask the server author to enable it in the config. If you're on a client, press the 'Open Config'-Button on the top right and enable the recipe!
 booklet.actuallyadditions.clickToSeeRecipe=Click to see more Information
 booklet.actuallyadditions.keyToSeeRecipe=Press %s to see more Information
-booklet.actuallyadditions.noBookletInInventory=Get an ActAdd Manual to see more Information!
+booklet.actuallyadditions.noBookletInInventory=Get an Actually Additions Manual to see more Information!
 
 #Booklet Chapters
 booklet.actuallyadditions.chapter.intro.name=An Introduction to ActAdd
@@ -518,11 +518,11 @@ booklet.actuallyadditions.chapter.aiots.text.1=An <item>All-In-One-Tool<r> is a 
 booklet.actuallyadditions.chapter.jams.name=Jams
 booklet.actuallyadditions.chapter.jams.text.1=Once, there was a <imp>Kitty<r> who really wanted some Jam. <n>So I made some <item>Jam<r>. <n>Seriously, this is Jam. You can find it in Village Houses or buy it from the <imp>Jam Villager<r>. <n>Every Jam gives you two different <imp>potion effects<r>!
 
-booklet.actuallyadditions.chapter.potionRings.name=Potioni Rings
+booklet.actuallyadditions.chapter.potionRings.name=Potion Rings
 booklet.actuallyadditions.chapter.potionRings.text.1=The <item>Potion Rings<r> have two versions: A <imp>normal version<r> and an <imp>advanced version<r>. <n>The normal version, when you have it in your hand, will give you a <imp>Potion Effect<r> of Level 1. The advanced version can be anywhere in your inventory and gives you an effect of Level 2!
 
 booklet.actuallyadditions.chapter.drill.name=Drills
-booklet.actuallyadditions.chapter.drill.text.1=The <item>Drill<r> works like a Pickaxe and a Shovel. It uses <imp>RF<r>per block. It can be <imp>charged in an Energizer<r> and upgraded by <imp>right-clicking<r> with it in your hand. There is <imp>a lot of upgrades<r>, but here is an explanation of some of them: <n>The <item>Mining Uprgades<r> enlarge the hole which the Drill digs. <n>The <item>Placement Upgrade<r>, after you right-click it in any slot of your hotbar, will make the Drill able to <imp>place a block from that slot by right-clicking<r>. You can also put a <item>Battery<r> inside the Drill to give it more charge.
+booklet.actuallyadditions.chapter.drill.text.1=The <item>Drill<r> works like a Pickaxe and a Shovel. It uses <imp>RF<r> per block. It can be <imp>charged in an Energizer<r> and upgraded by <imp>right-clicking<r> with it in your hand. There is <imp>a lot of upgrades<r>, but here is an explanation of some of them: <n>The <item>Mining Uprgades<r> enlarge the hole which the Drill digs. <n>The <item>Placement Upgrade<r>, after you right-click it in any slot of your hotbar, will make the Drill able to <imp>place a block from that slot by right-clicking<r>. You can also put a <item>Battery<r> inside the Drill to give it more charge.
 
 booklet.actuallyadditions.chapter.staff.name=Staff
 booklet.actuallyadditions.chapter.staff.text.1=The <item>Teleport Staff<r>, when charged in an Energizer, can be <imp>right-clicked<r> to <imp>teleport you to where you're looking<r>. When you are looking at a block, it will teleport you there, however, when you aren't looking at a block, you can only be looking upwards up to <imp>5 degrees<r>, otherwise the teleport will fail.
