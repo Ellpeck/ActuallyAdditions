@@ -12,6 +12,7 @@ package ellpeck.actuallyadditions.gadget;
 
 import ellpeck.actuallyadditions.event.RenderPlayerEventAA;
 import ellpeck.actuallyadditions.util.AssetUtil;
+import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelSquid;
@@ -27,7 +28,7 @@ public class RenderSpecial{
 
     private ItemStack theThingToRender;
 
-    private static final ResourceLocation squidTextures = new ResourceLocation("textures/entity/squid.png");
+    private static final ResourceLocation squidTextures = new ResourceLocation(ModUtil.MOD_ID_LOWER, "textures/specialSquid.png");
 
     public RenderSpecial(ItemStack stack){
         this.theThingToRender = stack;
