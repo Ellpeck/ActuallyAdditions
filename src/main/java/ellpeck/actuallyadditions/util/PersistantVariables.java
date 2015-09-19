@@ -50,8 +50,8 @@ public class PersistantVariables{
                 int page = compound.getInteger(getName("Page"));
 
                 BookletIndexEntry currentIndexEntry = entry == -1 ? null : InitBooklet.entries.get(entry);
-                BookletChapter currentChapter = chapter == -1 || entry == -1 ? null : currentIndexEntry.chapters.get(chapter);
-                BookletPage currentPage = chapter == -1 ? null : currentChapter.pages[page-1];
+                BookletChapter currentChapter = chapter == -1 || entry == -1 || currentIndexEntry.chapters.size() <= chapter ? null : currentIndexEntry.chapters.get(chapter);
+                BookletPage currentPage = chapter == -1 || currentChapter == null || currentChapter.pages.length <= page-1 ? null : currentChapter.pages[page-1];
                 int pageInIndex = compound.getInteger(getName("PageInIndex"));
 
                 gui.openIndexEntry(currentIndexEntry, pageInIndex, true);

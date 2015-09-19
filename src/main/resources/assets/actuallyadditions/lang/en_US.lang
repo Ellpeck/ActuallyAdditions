@@ -472,3 +472,34 @@ booklet.actuallyadditions.chapter.coffeeMachine.name=Coffee Machine
 booklet.actuallyadditions.chapter.coffeeMachine.text.1=The <item>Coffee Machine<r> basically works like a Brewing Stand, only 20 times more customizable. <n>After inserting an <item>Empty Cup<r>, <coffee> <item>Coffee<r>, which can be <imp>found in the wild, planted and harvested<r>, and <water>mB of <imp>Water<r> and <imp><rf> RF/t<r>, it will be able to brew some coffee for you! <n>This is where the customizable bit comes in, though: You can <imp>choose what potion effects the coffee should get and how long for by dropping in potion ingredients just the way you want your coffee to be<r>!
 booklet.actuallyadditions.chapter.coffeeMachine.text.2=Every ingredient has a <imp>base time<r> and a <imp>maximum amount<r> of which it can be inputted into the machine. <n>Here are the ingredients: <n><n>Sugar -> Speed 30s, 4max <n>Magma Cream -> 20s, 1max <n>Pufferfish -> Water Breathing, 10s, 1max <n>Golden Carrot -> Night Vision, 30s, 1max <n>Ghast Tear -> Regeneration, 5s, 3max <n>Blaze Powder -> Strength, 15s, 4max <n>Fermented Spider Eye -> Invisibility, 25s, 1max
 booklet.actuallyadditions.chapter.coffeeMachine.text.3=There is one special item, however, that is very powerful for the <item>Coffee Machine<r>: <n>The <item>Milk Bucket<r>. <n>This item is especially powerful, because it <imp>doubles the time of an effect<r> while <imp>taking one amplifier away<r>. But be careful: If you only have an amplifier of 1 on an effect, it'll be removed! <n>To amplify the effect of a certain item, just <imp>put it into multiple slots<r> causing the amplifier of it to rise. <n>When you're ready, just press the button to brew your coffee!
+
+booklet.actuallyadditions.chapter.crusher.name=Crusher and Double Crusher
+booklet.actuallyadditions.chapter.crusher.text.1=The <item>Crusher<r> turns every ore, ingot and gem into its corresponding <imp>dust<r> using <rf1> RF/t. <n>When you put in <imp>Ores<r> however, they will yield <imp>2 pieces of dust<r>. <n>The <item>Double Crusher<r> basically does the same, however it can crush two ores at a time and uses <rf2> RF/t. <n>On the following pages, you can see <imp>all of the recipes<r>. <n><n><i>He's my crush
+
+booklet.actuallyadditions.chapter.furnaceDouble.name=Double Furnace
+booklet.actuallyadditions.chapter.furnaceDouble.text.1=The <item>Double Furnace<r> works like a furnace, however, it uses <rf> RF/t and can smelt <imp>two items at a time<r>. <n>On the following pages, you can see all of the recipes.
+
+booklet.actuallyadditions.chapter.miner.name=Magnetic Miner
+booklet.actuallyadditions.chapter.miner.text.1=The <item>Magnetic Miner<r> pulls ore blocks out of the ground using <rf> RF/t and <oil> of Oil/block mined. <n>Every place where an ore should be pulled up must have a <item>Casing Block<r> one block lower than the miner. <n>It has a range of <range> blocks.
+
+booklet.actuallyadditions.chapter.lavaFactory.name=Lava Factory
+booklet.actuallyadditions.chapter.lavaFactory.text.1=The <item>Lava Factory<r> can produce blocks of lava given <imp><rf> RF/block<r>. <n>The Block above it has to be surrounded with 4 Casing Blocks (which can be found on the Magnetic Miner Page!), otherwise it won't be able to produce Lava. <n>Right-Clicking on the <item>Lava Factory<r> will show you if it's able to produce Lava in its current setup. <n><n><i>Lava, for a fact. <n>                ory
+
+booklet.actuallyadditions.chapter.energizer.name=Energizer and Enervator
+booklet.actuallyadditions.chapter.energizer.text.1=The <item>Energizer<r> <imp>charges items that hold RF<r> using its energy supply.
+booklet.actuallyadditions.chapter.energizer.text.2=The <item>Enervator<r> <imp>discharges items that hold RF<r> and stores the energy in its energy supply.
+
+booklet.actuallyadditions.chapter.repairer.name=Item Repairer
+booklet.actuallyadditions.chapter.repairer.text.1=The <item>Item Repairer<r> uses <imp><rf> RF/t<r> to repair items that can be repaired in an Anvil <imp>without needing any materials<r>!
+
+booklet.actuallyadditions.chapter.coalGen.name=Coal Generator
+booklet.actuallyadditions.chapter.coalGen.text.1=The <item>Coal Generator<r> generates <imp><rf> RF/t<r> through the use of everything that can be put into a furnace. <n>Note that it only starts burning something up if there's enough space for the energy generated.
+
+booklet.actuallyadditions.chapter.solarPanel.name=Solar Panel
+booklet.actuallyadditions.chapter.solarPanel.text.1=The <item>Solar Panel<r> <imp>produces <rf> RF/t<r> when it has direct daylight above it and it is daytime. <n><n><i>Panelled walls
+
+booklet.actuallyadditions.chapter.heatCollector.name=Heat Collector
+booklet.actuallyadditions.chapter.heatCollector.text.1=The <item>Heat Collector<r> is a block that <imp>produces <rf> RF/t<r>. <n>To do that, it needs to be <imp>surrounded with at least <min> Lava Blocks<r> directly around it on any side except the top one. But watch out, it sometimes <imp>destroys some of these Lava Blocks<r>!
+
+booklet.actuallyadditions.chapter.canola.name=Everything Canola
+booklet.actuallyadditions.chapter.canola.text.1=There is lots of stuff that can be produced from Canola (which can be found in the wild and then planted and harvested!): You can make <imp>Canola Oil<r>, <imp>Oil<r> and produce <imp>RF<r> from it. <n>The way to do that is to take some <item>Canola, put it into a <item>Canola Press<r> which uses <pressRF> RF/t. That creates <imp><canola> mB of Canola Oil<r>. Put that into a <item>Fermenting Barrel<r>, let it sit there for a while before it converts into <imp>Oil<r>. That oil can then be used in a <item>Oil Generator<r> to create <imp><rf> RF/t<r>.

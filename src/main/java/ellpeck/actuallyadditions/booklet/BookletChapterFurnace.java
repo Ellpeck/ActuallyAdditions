@@ -30,7 +30,7 @@ public class BookletChapterFurnace extends BookletChapter{
         ArrayList<BookletPage> list = new ArrayList<BookletPage>();
         list.addAll(Arrays.asList(pages));
         for(Object o : FurnaceRecipes.smelting().getSmeltingList().entrySet()){
-            list.add(new PageFurnace(list.size()+1, (ItemStack)((Map.Entry)o).getKey(), (ItemStack)((Map.Entry)o).getValue()));
+            list.add(new PageFurnace(list.size()+1, (ItemStack)((Map.Entry)o).getKey(), (ItemStack)((Map.Entry)o).getValue()).setNoText());
         }
         return list.toArray(new BookletPage[list.size()]);
     }

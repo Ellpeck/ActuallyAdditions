@@ -29,7 +29,7 @@ public class BookletChapterCrusher extends BookletChapter{
         ArrayList<BookletPage> list = new ArrayList<BookletPage>();
         list.addAll(Arrays.asList(pages));
         for(CrusherRecipeManualRegistry.CrusherRecipe rec : CrusherRecipeManualRegistry.recipes){
-            list.add(new PageCrusherRecipe(list.size()+1, rec));
+            list.add(new PageCrusherRecipe(list.size()+1, rec).setNoText());
         }
         return list.toArray(new BookletPage[list.size()]);
     }
