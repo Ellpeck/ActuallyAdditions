@@ -14,6 +14,7 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent;
 import ellpeck.actuallyadditions.achievement.InitAchievements;
 import ellpeck.actuallyadditions.achievement.TheAchievements;
+import ellpeck.actuallyadditions.config.values.ConfigBoolValues;
 import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.network.PacketCheckBook;
 import ellpeck.actuallyadditions.network.PacketHandler;
@@ -29,9 +30,11 @@ public class CraftEvent{
     public void onCraftedEvent(PlayerEvent.ItemCraftedEvent event){
         checkAchievements(event.crafting, event.player, InitAchievements.CRAFTING_ACH);
 
-        if(!event.player.worldObj.isRemote && event.crafting.getItem() != InitItems.itemLexicon && (event.crafting.getItem() instanceof INameableItem || Block.getBlockFromItem(event.crafting.getItem()) instanceof INameableItem)){
-            if(event.player instanceof EntityPlayerMP){
-                PacketHandler.theNetwork.sendTo(new PacketCheckBook(event.player), (EntityPlayerMP)event.player);
+        if(ConfigBoolValues.GIVE_BOOKLET_ON_FIRST_CRAFT.isEnabled()){
+            if(!event.player.worldObj.isRemote && event.crafting.getItem() != InitItems.itemLexicon && (event.crafting.getItem() instanceof INameableItem || Block.getBlockFromItem(event.crafting.getItem()) instanceof INameableItem)){
+                if(event.player instanceof EntityPlayerMP){
+                    PacketHandler.theNetwork.sendTo(new PacketCheckBook(event.player), (EntityPlayerMP)event.player);
+                }
             }
         }
     }
