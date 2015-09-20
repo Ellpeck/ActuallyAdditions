@@ -25,7 +25,7 @@ public class GuiHandler implements IGuiHandler{
     @Override
     public Object getServerGuiElement(int id, EntityPlayer entityPlayer, World world, int x, int y, int z){
         TileEntityBase tile = null;
-        if(id != GuiTypes.CRAFTER.ordinal() && id != GuiTypes.DRILL.ordinal() && id != GuiTypes.BOOK.ordinal()){
+        if(GuiTypes.values()[id].checkTileEntity){
             tile = (TileEntityBase)world.getTileEntity(x, y, z);
         }
         switch(GuiTypes.values()[id]){
@@ -85,7 +85,7 @@ public class GuiHandler implements IGuiHandler{
     @Override
     public Object getClientGuiElement(int id, EntityPlayer entityPlayer, World world, int x, int y, int z){
         TileEntityBase tile = null;
-        if(id != GuiTypes.CRAFTER.ordinal() && id != GuiTypes.DRILL.ordinal() && id != GuiTypes.BOOK.ordinal()){
+        if(GuiTypes.values()[id].checkTileEntity){
             tile = (TileEntityBase)world.getTileEntity(x, y, z);
         }
         switch(GuiTypes.values()[id]){
@@ -147,7 +147,7 @@ public class GuiHandler implements IGuiHandler{
     public enum GuiTypes{
         FEEDER,
         GIANT_CHEST,
-        CRAFTER,
+        CRAFTER(false),
         GRINDER,
         GRINDER_DOUBLE,
         FURNACE_DOUBLE,
@@ -163,13 +163,23 @@ public class GuiHandler implements IGuiHandler{
         PHANTOM_PLACER,
         FLUID_COLLECTOR,
         COFFEE_MACHINE,
-        DRILL,
+        DRILL(false),
         ENERGIZER,
         ENERVATOR,
         XP_SOLIDIFIER,
         ORE_MAGNET,
         CLOUD,
-        BOOK
+        BOOK(false);
+
+        public boolean checkTileEntity;
+
+        GuiTypes(boolean checkTileEntity){
+            this.checkTileEntity = checkTileEntity;
+        }
+
+        GuiTypes(){
+            this(true);
+        }
     }
 
     public static void init(){
