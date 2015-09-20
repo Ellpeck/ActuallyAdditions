@@ -17,9 +17,8 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.util.PersistantVariables;
 import io.netty.buffer.ByteBuf;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.world.World;
-import net.minecraftforge.common.DimensionManager;
 
 public class PacketCheckBook implements IMessage{
 
@@ -36,13 +35,11 @@ public class PacketCheckBook implements IMessage{
 
     @Override
     public void fromBytes(ByteBuf buf){
-        World world = DimensionManager.getWorld(buf.readInt());
-        this.player = (EntityPlayer)world.getEntityByID(buf.readInt());
+        this.player = (EntityPlayer)Minecraft.getMinecraft().theWorld.getEntityByID(buf.readInt());
     }
 
     @Override
     public void toBytes(ByteBuf buf){
-        buf.writeInt(this.player.worldObj.provider.dimensionId);
         buf.writeInt(this.player.getEntityId());
     }
 
