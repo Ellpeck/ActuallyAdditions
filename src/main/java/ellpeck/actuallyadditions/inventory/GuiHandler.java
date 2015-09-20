@@ -24,10 +24,8 @@ public class GuiHandler implements IGuiHandler{
 
     @Override
     public Object getServerGuiElement(int id, EntityPlayer entityPlayer, World world, int x, int y, int z){
-        if(id == GuiTypes.BOOK.ordinal()) return null;
-
         TileEntityBase tile = null;
-        if(id != GuiTypes.CRAFTER.ordinal() && id != GuiTypes.DRILL.ordinal()){
+        if(id != GuiTypes.CRAFTER.ordinal() && id != GuiTypes.DRILL.ordinal() && id != GuiTypes.BOOK.ordinal()){
             tile = (TileEntityBase)world.getTileEntity(x, y, z);
         }
         switch(GuiTypes.values()[id]){
@@ -87,7 +85,7 @@ public class GuiHandler implements IGuiHandler{
     @Override
     public Object getClientGuiElement(int id, EntityPlayer entityPlayer, World world, int x, int y, int z){
         TileEntityBase tile = null;
-        if(id != GuiTypes.CRAFTER.ordinal() && id != GuiTypes.DRILL.ordinal()){
+        if(id != GuiTypes.CRAFTER.ordinal() && id != GuiTypes.DRILL.ordinal() && id != GuiTypes.BOOK.ordinal()){
             tile = (TileEntityBase)world.getTileEntity(x, y, z);
         }
         switch(GuiTypes.values()[id]){
