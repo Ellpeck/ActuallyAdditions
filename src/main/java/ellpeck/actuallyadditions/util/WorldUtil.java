@@ -32,7 +32,6 @@ import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.*;
-import org.apache.logging.log4j.Level;
 
 import java.util.ArrayList;
 
@@ -135,7 +134,7 @@ public class WorldUtil{
                 return stack;
             }
             catch(Exception e){
-                ModUtil.LOGGER.log(Level.ERROR, "Something that places Blocks at "+x+", "+y+", "+z+" in World "+world.provider.dimensionId+" threw an Exception! Don't let that happen again!");
+                ModUtil.LOGGER.error("Something that places Blocks at "+x+", "+y+", "+z+" in World "+world.provider.dimensionId+" threw an Exception! Don't let that happen again!");
             }
         }
         return stack;

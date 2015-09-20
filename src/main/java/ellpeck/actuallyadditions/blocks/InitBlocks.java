@@ -19,7 +19,6 @@ import net.minecraft.block.material.Material;
 import net.minecraft.item.EnumRarity;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
-import org.apache.logging.log4j.Level;
 
 public class InitBlocks{
 
@@ -295,6 +294,6 @@ public class InitBlocks{
     }
 
     public static void errorAlreadyRegistered(String str){
-        ModUtil.LOGGER.log(Level.WARN, str + " from "+ModUtil.NAME+" is not getting used as it has already been registered by another Mod! If this causes Issues (which it shouldn't!), you can turn this off in the Config File!");
+        ModUtil.LOGGER.warn(str + " from "+ModUtil.NAME+" is not getting used as it has already been registered by another Mod! If this causes Issues (which it shouldn't!), you can turn this off in the Config File!");
     }
 }

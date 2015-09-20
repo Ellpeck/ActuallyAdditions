@@ -41,7 +41,6 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
-import org.apache.logging.log4j.Level;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -78,7 +77,7 @@ public class ItemDrill extends ItemEnergy implements INameableItem{
                         //Notify the Player and log the Exception
                         catch(Exception e){
                             player.addChatComponentMessage(new ChatComponentText("Ouch! That really hurt! You must have done something wrong, don't do that again please!"));
-                            ModUtil.LOGGER.log(Level.ERROR, "Player "+player.getDisplayName()+" who should place a Block using a Drill at "+player.posX+", "+player.posY+", "+player.posZ+" in World "+world.provider.dimensionId+" threw an Exception! Don't let that happen again!");
+                            ModUtil.LOGGER.error("Player "+player.getDisplayName()+" who should place a Block using a Drill at "+player.posX+", "+player.posY+", "+player.posZ+" in World "+world.provider.dimensionId+" threw an Exception! Don't let that happen again!");
                         }
                     }
                     else return true;

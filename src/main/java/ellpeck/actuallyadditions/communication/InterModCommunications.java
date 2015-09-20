@@ -19,7 +19,6 @@ import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
-import org.apache.logging.log4j.Level;
 
 import java.util.List;
 
@@ -39,7 +38,7 @@ public class InterModCommunications{
                         CrusherRecipeManualRegistry.registerRecipe(input, outputOne, outputTwo, secondChance);
                         ModUtil.LOGGER.info("Crusher Recipe that was sent from Mod "+message.getSender()+" has been registered successfully: "+input.toString()+" -> "+outputOne.toString()+(outputTwo != null ? " + "+outputTwo.toString()+", Second Chance: "+secondChance : ""));
                     }
-                    else ModUtil.LOGGER.log(Level.ERROR, "Crusher Recipe that was sent from Mod " + message.getSender() + " could not be registered: It's missing an Input or an Output!");
+                    else ModUtil.LOGGER.error("Crusher Recipe that was sent from Mod "+message.getSender()+" could not be registered: It's missing an Input or an Output!");
                 }
             }
 
@@ -57,7 +56,7 @@ public class InterModCommunications{
                         ItemCoffee.registerIngredient(new ItemCoffee.Ingredient(input, new PotionEffect[]{effect}, maxAmp));
                         ModUtil.LOGGER.info("Coffee Machine Recipe that was sent from Mod "+message.getSender()+" has been registered successfully: "+input.toString()+" -> "+effect.toString());
                     }
-                    else ModUtil.LOGGER.log(Level.ERROR, "Coffee Machine Recipe that was sent from Mod " + message.getSender() + " could not be registered: It's missing an Input, a Potion ID, a Duration or a max Amplifier!");
+                    else ModUtil.LOGGER.error("Coffee Machine Recipe that was sent from Mod " + message.getSender() + " could not be registered: It's missing an Input, a Potion ID, a Duration or a max Amplifier!");
                 }
             }
 
@@ -71,7 +70,7 @@ public class InterModCommunications{
                         HairyBallHandler.addReturn(output, chance);
                         ModUtil.LOGGER.info("Ball Of Hair Recipe that was sent from Mod "+message.getSender()+" has been registered successfully: "+output.toString()+", Chance: "+chance);
                     }
-                    else ModUtil.LOGGER.log(Level.ERROR, "Ball Of Hair Recipe that was sent from Mod " + message.getSender() + " could not be registered: It's missing an Output or a Chance!");
+                    else ModUtil.LOGGER.error("Ball Of Hair Recipe that was sent from Mod " + message.getSender() + " could not be registered: It's missing an Output or a Chance!");
                 }
             }
 
@@ -87,7 +86,7 @@ public class InterModCommunications{
                         TreasureChestHandler.addReturn(output, chance, minAmount, maxAmount);
                         ModUtil.LOGGER.info("Treasure Chest Recipe that was sent from Mod "+message.getSender()+" has been registered successfully: "+output.toString()+", Chance: "+chance+", Min Amount: "+minAmount+", Max Amount: "+maxAmount);
                     }
-                    else ModUtil.LOGGER.log(Level.ERROR, "Treasure Chest Recipe that was sent from Mod " + message.getSender() + " could not be registered: It's missing an Output, a Chance or minimum and maximum Amounts!");
+                    else ModUtil.LOGGER.error("Treasure Chest Recipe that was sent from Mod " + message.getSender() + " could not be registered: It's missing an Output, a Chance or minimum and maximum Amounts!");
                 }
             }
         }

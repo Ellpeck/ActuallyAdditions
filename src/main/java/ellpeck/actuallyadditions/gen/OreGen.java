@@ -24,7 +24,6 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldType;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.feature.WorldGenMinable;
-import org.apache.logging.log4j.Level;
 
 import java.util.Random;
 
@@ -72,7 +71,7 @@ public class OreGen implements IWorldGenerator{
                 new WorldGenMinable(block, meta, maxVeinSize, blockIn).generate(world, random, posX, posY, posZ);
             }
         }
-        else ModUtil.LOGGER.log(Level.FATAL, "Couldn't generate '" + block.getUnlocalizedName() + "' into the world because the Min Y coordinate is bigger than the Max! This is definitely a Config Error! Check the Files!");
+        else ModUtil.LOGGER.fatal("Couldn't generate '" + block.getUnlocalizedName() + "' into the world because the Min Y coordinate is bigger than the Max! This is definitely a Config Error! Check the Files!");
     }
 
     public static void init(){
