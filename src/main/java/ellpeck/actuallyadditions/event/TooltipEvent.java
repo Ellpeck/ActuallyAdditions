@@ -47,37 +47,39 @@ public class TooltipEvent{
         GuiScreen screen = Minecraft.getMinecraft().currentScreen;
         if(screen != null && !(screen instanceof GuiBooklet) && screen instanceof GuiContainer){
             GuiContainer gui = (GuiContainer)screen;
-            for(Object o : gui.inventorySlots.inventorySlots){
-                if(o instanceof Slot){
-                    Slot slot = (Slot)o;
+            if(gui.inventorySlots != null && gui.inventorySlots.inventorySlots != null && !gui.inventorySlots.inventorySlots.isEmpty()){
+                for(Object o : gui.inventorySlots.inventorySlots){
+                    if(o instanceof Slot){
+                        Slot slot = (Slot)o;
 
-                    int guiLeft = ReflectionHelper.getPrivateValue(GuiContainer.class, gui, 4);
-                    int guiTop = ReflectionHelper.getPrivateValue(GuiContainer.class, gui, 5);
-                    int mouseX = Mouse.getEventX()*gui.width/Minecraft.getMinecraft().displayWidth-guiLeft;
-                    int mouseY = gui.height-Mouse.getEventY()*gui.height/Minecraft.getMinecraft().displayHeight-1-guiTop;
+                        int guiLeft = ReflectionHelper.getPrivateValue(GuiContainer.class, gui, 4);
+                        int guiTop = ReflectionHelper.getPrivateValue(GuiContainer.class, gui, 5);
+                        int mouseX = Mouse.getEventX()*gui.width/Minecraft.getMinecraft().displayWidth-guiLeft;
+                        int mouseY = gui.height-Mouse.getEventY()*gui.height/Minecraft.getMinecraft().displayHeight-1-guiTop;
 
-                    if(mouseX >= slot.xDisplayPosition-1 && mouseY >= slot.yDisplayPosition-1 && mouseX <= slot.xDisplayPosition+16 && mouseY <= slot.yDisplayPosition+16){
-                        ItemStack stack = slot.getStack();
-                        if(stack != null){
-                            for(BookletPage page : InitBooklet.pagesWithItemStackData){
-                                if(page.getItemStackForPage() != null && page.getItemStackForPage().isItemEqual(stack)){
-                                    int keyCode = KeyBinds.keybindOpenBooklet.getKeyCode();
-                                    if(!ConfigBoolValues.NEED_BOOKLET_FOR_KEYBIND_INFO.isEnabled() || Minecraft.getMinecraft().thePlayer.inventory.hasItem(InitItems.itemLexicon)){
-                                        event.toolTip.add(EnumChatFormatting.GOLD+StringUtil.localizeFormatted("booklet."+ModUtil.MOD_ID_LOWER+".keyToSeeRecipe", keyCode > 0 && keyCode < Keyboard.KEYBOARD_SIZE ? "'"+Keyboard.getKeyName(keyCode)+"'" : "[NONE]"));
+                        if(mouseX >= slot.xDisplayPosition-1 && mouseY >= slot.yDisplayPosition-1 && mouseX <= slot.xDisplayPosition+16 && mouseY <= slot.yDisplayPosition+16){
+                            ItemStack stack = slot.getStack();
+                            if(stack != null){
+                                for(BookletPage page : InitBooklet.pagesWithItemStackData){
+                                    if(page.getItemStackForPage() != null && page.getItemStackForPage().isItemEqual(stack)){
+                                        int keyCode = KeyBinds.keybindOpenBooklet.getKeyCode();
+                                        if(!ConfigBoolValues.NEED_BOOKLET_FOR_KEYBIND_INFO.isEnabled() || Minecraft.getMinecraft().thePlayer.inventory.hasItem(InitItems.itemLexicon)){
+                                            event.toolTip.add(EnumChatFormatting.GOLD+StringUtil.localizeFormatted("booklet."+ModUtil.MOD_ID_LOWER+".keyToSeeRecipe", keyCode > 0 && keyCode < Keyboard.KEYBOARD_SIZE ? "'"+Keyboard.getKeyName(keyCode)+"'" : "[NONE]"));
 
-                                        //TODO Find a better method to do this eventually
-                                        if(Keyboard.isKeyDown(KeyBinds.keybindOpenBooklet.getKeyCode())){
-                                            GuiBooklet book = new GuiBooklet();
-                                            Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.func_147674_a(new ResourceLocation("gui.button.press"), 1.0F));
-                                            Minecraft.getMinecraft().displayGuiScreen(book);
-                                            book.openIndexEntry(page.getChapter().entry, InitBooklet.entries.indexOf(page.getChapter().entry)/GuiBooklet.BUTTONS_PER_PAGE+1, true);
-                                            book.openChapter(page.getChapter(), page);
+                                            //TODO Find a better method to do this eventually
+                                            if(Keyboard.isKeyDown(KeyBinds.keybindOpenBooklet.getKeyCode())){
+                                                GuiBooklet book = new GuiBooklet();
+                                                Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.func_147674_a(new ResourceLocation("gui.button.press"), 1.0F));
+                                                Minecraft.getMinecraft().displayGuiScreen(book);
+                                                book.openIndexEntry(page.getChapter().entry, InitBooklet.entries.indexOf(page.getChapter().entry)/GuiBooklet.BUTTONS_PER_PAGE+1, true);
+                                                book.openChapter(page.getChapter(), page);
+                                            }
                                         }
+                                        else{
+                                            event.toolTip.addAll(Minecraft.getMinecraft().fontRenderer.listFormattedStringToWidth(EnumChatFormatting.DARK_RED+StringUtil.localizeFormatted("booklet."+ModUtil.MOD_ID_LOWER+".noBookletInInventory"), GuiBooklet.TOOLTIP_SPLIT_LENGTH));
+                                        }
+                                        break;
                                     }
-                                    else{
-                                        event.toolTip.addAll(Minecraft.getMinecraft().fontRenderer.listFormattedStringToWidth(EnumChatFormatting.DARK_RED+StringUtil.localizeFormatted("booklet."+ModUtil.MOD_ID_LOWER+".noBookletInInventory"), GuiBooklet.TOOLTIP_SPLIT_LENGTH));
-                                    }
-                                    break;
                                 }
                             }
                         }

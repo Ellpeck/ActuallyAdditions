@@ -15,12 +15,12 @@ import cpw.mods.fml.common.gameevent.PlayerEvent;
 import ellpeck.actuallyadditions.achievement.InitAchievements;
 import ellpeck.actuallyadditions.achievement.TheAchievements;
 import ellpeck.actuallyadditions.items.InitItems;
-import ellpeck.actuallyadditions.network.PacketGiveBook;
+import ellpeck.actuallyadditions.network.PacketCheckBook;
 import ellpeck.actuallyadditions.network.PacketHandler;
 import ellpeck.actuallyadditions.util.INameableItem;
-import ellpeck.actuallyadditions.util.PersistantVariables;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 
 public class CraftEvent{
@@ -29,10 +29,9 @@ public class CraftEvent{
     public void onCraftedEvent(PlayerEvent.ItemCraftedEvent event){
         checkAchievements(event.crafting, event.player, InitAchievements.CRAFTING_ACH);
 
-        if(event.player.worldObj.isRemote && event.crafting.getItem() != InitItems.itemLexicon && (event.crafting.getItem() instanceof INameableItem || Block.getBlockFromItem(event.crafting.getItem()) instanceof INameableItem)){
-            if(!PersistantVariables.getBoolean("BookGotten")){
-                PacketHandler.theNetwork.sendToServer(new PacketGiveBook(event.player));
-                PersistantVariables.setBoolean("BookGotten", true);
+        if(!event.player.worldObj.isRemote && event.crafting.getItem() != InitItems.itemLexicon && (event.crafting.getItem() instanceof INameableItem || Block.getBlockFromItem(event.crafting.getItem()) instanceof INameableItem)){
+            if(event.player instanceof EntityPlayerMP){
+                PacketHandler.theNetwork.sendTo(new PacketCheckBook(event.player), (EntityPlayerMP)event.player);
             }
         }
     }
