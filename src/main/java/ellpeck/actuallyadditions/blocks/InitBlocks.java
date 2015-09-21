@@ -93,8 +93,13 @@ public class InitBlocks{
 
     public static Block blockSmileyCloud;
 
+    public static Block blockToolTable;
+
     public static void init(){
         ModUtil.LOGGER.info("Initializing Blocks...");
+
+        blockToolTable = new BlockToolTable();
+        BlockUtil.register(blockToolTable);
 
         blockSmileyCloud = new BlockSmileyCloud();
         BlockUtil.register(blockSmileyCloud);
@@ -294,6 +299,6 @@ public class InitBlocks{
     }
 
     public static void errorAlreadyRegistered(String str){
-        ModUtil.LOGGER.warn(str + " from "+ModUtil.NAME+" is not getting used as it has already been registered by another Mod! If this causes Issues (which it shouldn't!), you can turn this off in the Config File!");
+        ModUtil.LOGGER.warn(str+" from "+ModUtil.NAME+" is not getting used as it has already been registered by another Mod! If this causes Issues (which it shouldn't!), you can turn this off in the Config File!");
     }
 }

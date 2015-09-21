@@ -143,3 +143,9 @@
 -Laser Transport System
     -Lasers that shoot between different transmitters
     -Transmitters can have prisms etc. to change direction, split up or decide if items, fluids or energy should be moved and how much and how fast
+
+-Tool Table
+    -Put in any tool and special items
+    -Make the tool more awesome (Lumberaxe, Battleaxe, Silk Pick, Fortune Pick etc.)
+    -Every item in the table results in a special feature (e.g. Black Quartz -> Silk, Emeralds -> Fortune etc.)
+    -> Make drill more endgame, make this midgame stuff
