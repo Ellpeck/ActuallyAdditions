@@ -1,5 +1,5 @@
 /*
- * This file ("PageText.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("PageTextOnly.java") is part of the Actually Additions Mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
  * http://github.com/Ellpeck/ActuallyAdditions/blob/master/README.md
