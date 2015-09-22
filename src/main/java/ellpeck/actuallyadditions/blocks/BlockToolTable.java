@@ -102,8 +102,10 @@ public class BlockToolTable extends BlockContainerBase implements INameableItem{
             if(aTile instanceof TileEntityInventoryBase){
                 TileEntityInventoryBase tile = (TileEntityInventoryBase)aTile;
                 if(tile.getSizeInventory() > 0){
-                    for(int i = 0; i < tile.getSizeInventory()-1; i++){
-                        this.dropSlotFromInventory(i, tile, world, x, y, z);
+                    for(int i = 0; i < tile.getSizeInventory(); i++){
+                        if(i != TileEntityToolTable.SLOT_OUTPUT){
+                            this.dropSlotFromInventory(i, tile, world, x, y, z);
+                        }
                     }
                 }
             }
