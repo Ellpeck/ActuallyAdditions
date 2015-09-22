@@ -14,6 +14,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.ActuallyAdditions;
 import ellpeck.actuallyadditions.inventory.GuiHandler;
+import ellpeck.actuallyadditions.tile.TileEntityInventoryBase;
 import ellpeck.actuallyadditions.tile.TileEntityToolTable;
 import ellpeck.actuallyadditions.util.INameableItem;
 import ellpeck.actuallyadditions.util.ModUtil;
@@ -96,7 +97,17 @@ public class BlockToolTable extends BlockContainerBase implements INameableItem{
 
     @Override
     public void breakBlock(World world, int x, int y, int z, Block block, int par6){
-        this.dropInventory(world, x, y, z);
+        if(!world.isRemote){
+            TileEntity aTile = world.getTileEntity(x, y, z);
+            if(aTile instanceof TileEntityInventoryBase){
+                TileEntityInventoryBase tile = (TileEntityInventoryBase)aTile;
+                if(tile.getSizeInventory() > 0){
+                    for(int i = 0; i < tile.getSizeInventory()-1; i++){
+                        this.dropSlotFromInventory(i, tile, world, x, y, z);
+                    }
+                }
+            }
+        }
         super.breakBlock(world, x, y, z, block, par6);
     }
 

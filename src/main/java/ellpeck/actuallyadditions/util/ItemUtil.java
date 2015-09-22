@@ -60,11 +60,18 @@ public class ItemUtil{
      * Returns true if array contains stack or if both contain null
      */
     public static boolean contains(ItemStack[] array, ItemStack stack){
-        for(ItemStack aStack : array){
-            if((stack == null && aStack == null) || (stack != null && aStack != null && aStack.isItemEqual(stack))){
-                return true;
+        return getPlaceAt(array, stack) != -1;
+    }
+
+    /**
+     * Returns the place of stack in array, -1 if not present
+     */
+    public static int getPlaceAt(ItemStack[] array, ItemStack stack){
+        for(int i = 0; i < array.length; i++){
+            if((stack == null && array[i] == null) || (stack != null && array[i] != null && array[i].isItemEqual(stack))){
+                return i;
             }
         }
-        return false;
+        return -1;
     }
 }

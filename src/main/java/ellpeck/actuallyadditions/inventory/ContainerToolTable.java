@@ -52,9 +52,14 @@ public class ContainerToolTable extends Container{
                 if(this.inventory instanceof TileEntityToolTable){
                     TileEntityToolTable table = (TileEntityToolTable)this.inventory;
                     ToolTableHandler.Recipe recipe = ToolTableHandler.getRecipeFromSlots(table.slots);
-                    for(int i = 0; i < TileEntityToolTable.INPUT_SLOT_AMOUNT; i++){
-                        if(ItemUtil.contains(recipe.itemsNeeded, table.getStackInSlot(i))){
-                            table.decrStackSize(i, 1);
+                    if(recipe != null){
+                        ItemStack[] stacks = recipe.itemsNeeded.clone();
+                        for(int i = 0; i < TileEntityToolTable.INPUT_SLOT_AMOUNT; i++){
+                            int place = ItemUtil.getPlaceAt(stacks, table.getStackInSlot(i));
+                            if(place != -1){
+                                table.decrStackSize(i, 1);
+                                stacks[place] = null;
+                            }
                         }
                     }
 
