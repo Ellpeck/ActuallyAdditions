@@ -474,10 +474,10 @@ booklet.actuallyadditions.chapter.coffeeMachine.text.2=Every ingredient has a <i
 booklet.actuallyadditions.chapter.coffeeMachine.text.3=There is one special item, however, that is very powerful for the <item>Coffee Machine<r>: <n>The <item>Milk Bucket<r>. <n>This item is especially powerful, because it <imp>doubles the time of an effect<r> while <imp>taking one amplifier away<r>. But be careful: If you only have an amplifier of 1 on an effect, it'll be removed! <n>To amplify the effect of a certain item, just <imp>put it into multiple slots<r> causing the amplifier of it to rise. <n>When you're ready, just press the button to brew your coffee!
 
 booklet.actuallyadditions.chapter.crusher.name=Crusher and Double Crusher
-booklet.actuallyadditions.chapter.crusher.text.1=The <item>Crusher<r> turns every ore, ingot and gem into its corresponding <imp>dust<r> using <rf1> RF/t. <n>When you put in <imp>Ores<r> however, they will yield <imp>2 pieces of dust<r>. <n>The <item>Double Crusher<r> basically does the same, however it can crush two ores at a time and uses <rf2> RF/t. <n>On the following pages, you can see <imp>all of the recipes<r>. <n><n><i>He's my crush
+booklet.actuallyadditions.chapter.crusher.text.1=The <item>Crusher<r> turns every ore, ingot and gem into its corresponding <imp>dust<r> using <rf1> RF/t. <n>When you put in <imp>Ores<r> however, they will yield <imp>2 pieces of dust<r>. <n>The <item>Double Crusher<r> basically does the same, however it can crush two ores at a time and uses <rf2> RF/t. <n><n><i>He's my crush
 
 booklet.actuallyadditions.chapter.furnaceDouble.name=Double Furnace
-booklet.actuallyadditions.chapter.furnaceDouble.text.1=The <item>Double Furnace<r> works like a furnace, however, it uses <rf> RF/t and can smelt <imp>two items at a time<r>. <n>On the following pages, you can see all of the recipes.
+booklet.actuallyadditions.chapter.furnaceDouble.text.1=The <item>Double Furnace<r> works like a furnace, however, it uses <rf> RF/t and can smelt <imp>two items at a time<r>.
 
 booklet.actuallyadditions.chapter.miner.name=Magnetic Miner
 booklet.actuallyadditions.chapter.miner.text.1=The <item>Magnetic Miner<r> pulls ore blocks out of the ground using <rf> RF/t and <oil> of Oil/block mined. <n>Every place where an ore should be pulled up must have a <item>Casing Block<r> one block lower than the miner. <n>It has a range of <range> blocks.
