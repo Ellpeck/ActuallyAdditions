@@ -13,6 +13,7 @@ package ellpeck.actuallyadditions.util;
 import cpw.mods.fml.common.registry.GameRegistry;
 import ellpeck.actuallyadditions.creative.CreativeTab;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 
 public class ItemUtil{
 
@@ -40,7 +41,30 @@ public class ItemUtil{
     }
 
     public static String createUnlocalizedName(Item item){
-        return ModUtil.MOD_ID_LOWER + "." + ((INameableItem)item).getName();
+        return ModUtil.MOD_ID_LOWER+"."+((INameableItem)item).getName();
     }
 
+    /**
+     * Returns true if stacksOne contains every ItemStack in stackTwo
+     */
+    public static boolean containsAll(ItemStack[] stacksOne, ItemStack[] stacksTwo){
+        for(ItemStack stackTwo : stacksTwo){
+            if(!contains(stacksOne, stackTwo)){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Returns true if array contains stack or if both contain null
+     */
+    public static boolean contains(ItemStack[] array, ItemStack stack){
+        for(ItemStack aStack : array){
+            if((stack == null && aStack == null) || (stack != null && aStack != null && aStack.isItemEqual(stack))){
+                return true;
+            }
+        }
+        return false;
+    }
 }

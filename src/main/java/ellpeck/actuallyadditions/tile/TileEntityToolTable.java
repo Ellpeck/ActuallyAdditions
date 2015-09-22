@@ -15,14 +15,15 @@ import net.minecraft.item.ItemStack;
 public class TileEntityToolTable extends TileEntityInventoryBase{
 
     public static final int SLOT_OUTPUT = 6;
+    public static final int INPUT_SLOT_AMOUNT = 6;
 
     public TileEntityToolTable(){
         super(7, "toolTable");
     }
 
     @Override
-    public void updateEntity(){
-
+    public boolean canUpdate(){
+        return false;
     }
 
     @Override

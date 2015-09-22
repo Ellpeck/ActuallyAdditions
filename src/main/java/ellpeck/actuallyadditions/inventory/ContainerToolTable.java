@@ -11,11 +11,10 @@
 package ellpeck.actuallyadditions.inventory;
 
 import ellpeck.actuallyadditions.inventory.slot.SlotOutput;
-import ellpeck.actuallyadditions.items.InitItems;
-import ellpeck.actuallyadditions.items.metalists.TheMiscItems;
+import ellpeck.actuallyadditions.recipe.ToolTableHandler;
 import ellpeck.actuallyadditions.tile.TileEntityBase;
-import ellpeck.actuallyadditions.tile.TileEntityCoffeeMachine;
 import ellpeck.actuallyadditions.tile.TileEntityToolTable;
+import ellpeck.actuallyadditions.util.ItemUtil;
 import invtweaks.api.container.InventoryContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -31,12 +30,40 @@ public class ContainerToolTable extends Container{
     public ContainerToolTable(InventoryPlayer inventory, TileEntityBase tile){
         this.table = (TileEntityToolTable)tile;
 
-        this.addSlotToContainer(new SlotOutput(this.table, 0, 115, 25));
         for(int i = 0; i < 3; i++){
             for(int j = 0; j < 2; j++){
-                this.addSlotToContainer(new Slot(this.table, j+i*2+1, 35+j*18, 7+i*18));
+                this.addSlotToContainer(new Slot(this.table, j+i*2, 35+j*18, 7+i*18){
+                    @Override
+                    public void onSlotChanged(){
+                        if(this.inventory instanceof TileEntityToolTable){
+                            TileEntityToolTable table = (TileEntityToolTable)this.inventory;
+                            ItemStack stack = ToolTableHandler.getResultFromSlots(table.slots);
+                            table.slots[TileEntityToolTable.SLOT_OUTPUT] = stack == null ? null : stack.copy();
+                        }
+                        super.onSlotChanged();
+                    }
+                });
             }
         }
+
+        this.addSlotToContainer(new SlotOutput(this.table, TileEntityToolTable.SLOT_OUTPUT, 115, 25){
+            @Override
+            public void onPickupFromSlot(EntityPlayer player, ItemStack stack){
+                if(this.inventory instanceof TileEntityToolTable){
+                    TileEntityToolTable table = (TileEntityToolTable)this.inventory;
+                    ToolTableHandler.Recipe recipe = ToolTableHandler.getRecipeFromSlots(table.slots);
+                    for(int i = 0; i < TileEntityToolTable.INPUT_SLOT_AMOUNT; i++){
+                        if(ItemUtil.contains(recipe.itemsNeeded, table.getStackInSlot(i))){
+                            table.decrStackSize(i, 1);
+                        }
+                    }
+
+                    ItemStack newOutput = ToolTableHandler.getResultFromSlots(table.slots);
+                    table.slots[TileEntityToolTable.SLOT_OUTPUT] = newOutput == null ? null : newOutput.copy();
+                }
+                super.onPickupFromSlot(player, stack);
+            }
+        });
 
         for(int i = 0; i < 3; i++){
             for(int j = 0; j < 9; j++){
@@ -74,9 +101,8 @@ public class ContainerToolTable extends Container{
             //Other Slots in Inventory excluded
             else if(slot >= inventoryStart){
                 //Shift from Inventory
-                //TODO THIS
-                if(newStack.getItem() == InitItems.itemMisc && newStack.getItemDamage() == TheMiscItems.CUP.ordinal()){
-                    if(!this.mergeItemStack(newStack, TileEntityCoffeeMachine.SLOT_INPUT, TileEntityCoffeeMachine.SLOT_INPUT+1, false)) return null;
+                if(ToolTableHandler.isIngredient(newStack)){
+                    if(!this.mergeItemStack(newStack, 0, TileEntityToolTable.INPUT_SLOT_AMOUNT, false)) return null;
                 }
                 //
 
