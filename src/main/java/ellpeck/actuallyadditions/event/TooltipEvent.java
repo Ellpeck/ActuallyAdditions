@@ -66,7 +66,6 @@ public class TooltipEvent{
                                         if(!ConfigBoolValues.NEED_BOOKLET_FOR_KEYBIND_INFO.isEnabled() || Minecraft.getMinecraft().thePlayer.inventory.hasItem(InitItems.itemLexicon)){
                                             event.toolTip.add(EnumChatFormatting.GOLD+StringUtil.localizeFormatted("booklet."+ModUtil.MOD_ID_LOWER+".keyToSeeRecipe", keyCode > 0 && keyCode < Keyboard.KEYBOARD_SIZE ? "'"+Keyboard.getKeyName(keyCode)+"'" : "[NONE]"));
 
-                                            //TODO Find a better method to do this eventually
                                             if(Keyboard.isKeyDown(KeyBinds.keybindOpenBooklet.getKeyCode())){
                                                 GuiBooklet book = new GuiBooklet();
                                                 Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.func_147674_a(new ResourceLocation("gui.button.press"), 1.0F));
@@ -76,7 +75,9 @@ public class TooltipEvent{
                                             }
                                         }
                                         else{
-                                            event.toolTip.addAll(Minecraft.getMinecraft().fontRenderer.listFormattedStringToWidth(EnumChatFormatting.DARK_RED+StringUtil.localizeFormatted("booklet."+ModUtil.MOD_ID_LOWER+".noBookletInInventory"), GuiBooklet.TOOLTIP_SPLIT_LENGTH));
+                                            if(ConfigBoolValues.SHOW_NEED_BOOKLET_FOR_KEYBIND_INFO.isEnabled()){
+                                                event.toolTip.addAll(Minecraft.getMinecraft().fontRenderer.listFormattedStringToWidth(EnumChatFormatting.DARK_RED+StringUtil.localizeFormatted("booklet."+ModUtil.MOD_ID_LOWER+".noBookletInInventory"), GuiBooklet.TOOLTIP_SPLIT_LENGTH));
+                                            }
                                         }
                                         break;
                                     }
