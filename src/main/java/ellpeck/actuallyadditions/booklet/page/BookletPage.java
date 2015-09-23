@@ -13,6 +13,7 @@ package ellpeck.actuallyadditions.booklet.page;
 import ellpeck.actuallyadditions.booklet.BookletChapter;
 import ellpeck.actuallyadditions.booklet.GuiBooklet;
 import ellpeck.actuallyadditions.booklet.InitBooklet;
+import ellpeck.actuallyadditions.util.ItemUtil;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
 import net.minecraft.client.Minecraft;
@@ -107,7 +108,7 @@ public class BookletPage{
 
         if(checkAndTransfer){
             for(BookletPage page : InitBooklet.pagesWithItemStackData){
-                if(page.getItemStackForPage() != null && page.getItemStackForPage().isItemEqual(stack)){
+                if(ItemUtil.areItemsEqual(page.getItemStackForPage(), stack, true)){
                     list.add(EnumChatFormatting.GOLD+StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".clickToSeeRecipe"));
 
                     if(mouseClick){

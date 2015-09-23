@@ -74,4 +74,8 @@ public class ItemUtil{
         }
         return -1;
     }
+
+    public static boolean areItemsEqual(ItemStack stack1, ItemStack stack2, boolean checkWildcard){
+        return stack1 != null && stack2 != null && (stack1.isItemEqual(stack2) || (checkWildcard && stack1.getItem() == stack2.getItem() && (stack1.getItemDamage() == Util.WILDCARD || stack2.getItemDamage() == Util.WILDCARD)));
+    }
 }

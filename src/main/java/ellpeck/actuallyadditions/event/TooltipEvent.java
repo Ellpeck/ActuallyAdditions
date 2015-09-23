@@ -17,10 +17,7 @@ import ellpeck.actuallyadditions.booklet.InitBooklet;
 import ellpeck.actuallyadditions.booklet.page.BookletPage;
 import ellpeck.actuallyadditions.config.values.ConfigBoolValues;
 import ellpeck.actuallyadditions.items.InitItems;
-import ellpeck.actuallyadditions.util.KeyBinds;
-import ellpeck.actuallyadditions.util.KeyUtil;
-import ellpeck.actuallyadditions.util.ModUtil;
-import ellpeck.actuallyadditions.util.StringUtil;
+import ellpeck.actuallyadditions.util.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.gui.GuiScreen;
@@ -60,7 +57,7 @@ public class TooltipEvent{
                         ItemStack stack = slot.getStack();
                         if(stack != null){
                             for(BookletPage page : InitBooklet.pagesWithItemStackData){
-                                if(page.getItemStackForPage() != null && page.getItemStackForPage().isItemEqual(stack)){
+                                if(ItemUtil.areItemsEqual(stack, page.getItemStackForPage(), true)){
                                     int keyCode = KeyBinds.keybindOpenBooklet.getKeyCode();
                                     if(!ConfigBoolValues.NEED_BOOKLET_FOR_KEYBIND_INFO.isEnabled() || Minecraft.getMinecraft().thePlayer.inventory.hasItem(InitItems.itemLexicon)){
                                         if(ConfigBoolValues.SHOW_NEED_BOOKLET_FOR_KEYBIND_INFO.isEnabled()){
