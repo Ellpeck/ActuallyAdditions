@@ -28,7 +28,7 @@ import net.minecraft.world.World;
 public class ItemWaterRemovalRing extends ItemEnergy implements INameableItem{
 
     public ItemWaterRemovalRing(){
-        super(1000000, 5000, 1);
+        super(1000000, 5000);
     }
 
     @Override

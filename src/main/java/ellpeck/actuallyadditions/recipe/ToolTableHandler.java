@@ -10,10 +10,7 @@
 
 package ellpeck.actuallyadditions.recipe;
 
-import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.util.ItemUtil;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
 import java.util.ArrayList;
@@ -22,12 +19,7 @@ public class ToolTableHandler{
 
     public static ArrayList<Recipe> recipes = new ArrayList<Recipe>();
 
-    public static void init(){
-        //TODO Actual real recipes
-        addRecipe(new ItemStack(InitItems.itemPhantomConnector), new ItemStack(Items.diamond_pickaxe), new ItemStack(Blocks.stone_brick_stairs), new ItemStack(Blocks.planks));
-    }
-
-    private static void addRecipe(ItemStack output, ItemStack... itemsNeeded){
+    public static void addRecipe(ItemStack output, ItemStack... itemsNeeded){
         recipes.add(new Recipe(output, itemsNeeded));
     }
 

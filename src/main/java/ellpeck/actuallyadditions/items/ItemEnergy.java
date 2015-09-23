@@ -24,13 +24,10 @@ import java.util.List;
 
 public abstract class ItemEnergy extends ItemEnergyContainer{
 
-    private int infoLines;
-
-    public ItemEnergy(int maxPower, int transfer, int infoLines){
+    public ItemEnergy(int maxPower, int transfer){
         super(maxPower, transfer);
         this.setHasSubtypes(true);
         this.setMaxStackSize(1);
-        this.infoLines = infoLines;
     }
 
     @Override

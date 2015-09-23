@@ -36,7 +36,7 @@ import java.util.Random;
 public class ItemGrowthRing extends ItemEnergy implements INameableItem{
 
     public ItemGrowthRing(){
-        super(1000000, 5000, 1);
+        super(1000000, 5000);
     }
 
     @Override

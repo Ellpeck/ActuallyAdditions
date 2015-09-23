@@ -24,7 +24,7 @@ public class ItemBattery extends ItemEnergy implements INameableItem{
     private String name;
 
     public ItemBattery(String name, int capacity, int transfer){
-        super(capacity, transfer, 1);
+        super(capacity, transfer);
         this.setMaxStackSize(1);
         this.name = name;
     }

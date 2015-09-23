@@ -31,7 +31,7 @@ import java.util.ArrayList;
 public class ItemMagnetRing extends ItemEnergy implements INameableItem{
 
     public ItemMagnetRing(){
-        super(3000000, 5000, 1);
+        super(3000000, 5000);
     }
 
     @SuppressWarnings("unchecked")

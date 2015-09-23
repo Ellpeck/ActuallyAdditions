@@ -299,7 +299,7 @@ public class WorldUtil{
         Block block = world.getBlock(xPos, yPos, zPos);
         int meta = world.getBlockMetadata(xPos, yPos, zPos);
         //If the Block can be harvested or not
-        boolean canHarvest = block.canHarvestBlock(player, meta) && player.getCurrentEquippedItem() != null && player.getCurrentEquippedItem().getItem().canHarvestBlock(block, player.getCurrentEquippedItem());
+        boolean canHarvest = block.canHarvestBlock(player, meta);
 
         if(!world.isRemote){
             //Server-Side only, special cases

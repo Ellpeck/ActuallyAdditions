@@ -12,8 +12,10 @@ package ellpeck.actuallyadditions.util;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import ellpeck.actuallyadditions.creative.CreativeTab;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagList;
 
 public class ItemUtil{
 
@@ -77,5 +79,17 @@ public class ItemUtil{
 
     public static boolean areItemsEqual(ItemStack stack1, ItemStack stack2, boolean checkWildcard){
         return stack1 != null && stack2 != null && (stack1.isItemEqual(stack2) || (checkWildcard && stack1.getItem() == stack2.getItem() && (stack1.getItemDamage() == Util.WILDCARD || stack2.getItemDamage() == Util.WILDCARD)));
+    }
+
+    public static void removeEnchantment(ItemStack stack, Enchantment e){
+        NBTTagList ench = stack.getEnchantmentTagList();
+        if(ench != null){
+            for(int i = 0; i < ench.tagCount(); i++){
+                short id = ench.getCompoundTagAt(i).getShort("id");
+                if(id == e.effectId){
+                    ench.removeTag(i);
+                }
+            }
+        }
     }
 }

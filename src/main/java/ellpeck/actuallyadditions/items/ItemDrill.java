@@ -20,6 +20,7 @@ import ellpeck.actuallyadditions.config.values.ConfigFloatValues;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.inventory.GuiHandler;
 import ellpeck.actuallyadditions.util.INameableItem;
+import ellpeck.actuallyadditions.util.ItemUtil;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.block.Block;
@@ -49,7 +50,7 @@ import java.util.Set;
 public class ItemDrill extends ItemEnergy implements INameableItem{
 
     public ItemDrill(){
-        super(500000, 5000, 4);
+        super(500000, 5000);
     }
 
     @Override
@@ -379,15 +380,8 @@ public class ItemDrill extends ItemEnergy implements INameableItem{
             else toReturn = this.breakBlocks(stack, 0, player.worldObj, x, y, z, player);
 
             //Removes Enchantments added above
-            NBTTagList ench = stack.getEnchantmentTagList();
-            if(ench != null){
-                for(int i = 0; i < ench.tagCount(); i++){
-                    short id = ench.getCompoundTagAt(i).getShort("id");
-                    if(id == Enchantment.silkTouch.effectId || id == Enchantment.fortune.effectId){
-                        ench.removeTag(i);
-                    }
-                }
-            }
+            ItemUtil.removeEnchantment(stack, Enchantment.silkTouch);
+            ItemUtil.removeEnchantment(stack, Enchantment.fortune);
         }
         return toReturn;
     }

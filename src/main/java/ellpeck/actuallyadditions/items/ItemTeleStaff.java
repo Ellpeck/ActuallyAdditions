@@ -32,7 +32,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 public class ItemTeleStaff extends ItemEnergy implements INameableItem{
 
     public ItemTeleStaff(){
-        super(500000, 10000, 2);
+        super(500000, 10000);
     }
 
     @Override
