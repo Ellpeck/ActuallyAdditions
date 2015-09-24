@@ -79,7 +79,7 @@ public class ItemAxeFixedEnchants extends ItemAxeAA implements IToolTableRepairI
     @Override
     public void onCreated(ItemStack stack, World world, EntityPlayer player){
         for(EnchantmentCombo combo : this.enchantments){
-            stack.addEnchantment(combo.enchantment, combo.level);
+            ItemUtil.addEnchantment(stack, combo.enchantment, combo.level);
         }
     }
 
@@ -87,7 +87,7 @@ public class ItemAxeFixedEnchants extends ItemAxeAA implements IToolTableRepairI
     public void onUpdate(ItemStack stack, World world, Entity player, int par4, boolean par5){
         for(EnchantmentCombo combo : this.enchantments){
             if(!ItemUtil.hasEnchantment(stack, combo.enchantment)){
-                stack.addEnchantment(combo.enchantment, combo.level);
+                ItemUtil.addEnchantment(stack, combo.enchantment, combo.level);
             }
         }
     }
@@ -98,7 +98,7 @@ public class ItemAxeFixedEnchants extends ItemAxeAA implements IToolTableRepairI
     public void getSubItems(Item item, CreativeTabs tab, List list){
         ItemStack stack = new ItemStack(item);
         for(EnchantmentCombo combo : this.enchantments){
-            stack.addEnchantment(combo.enchantment, combo.level);
+            ItemUtil.addEnchantment(stack, combo.enchantment, combo.level);
         }
         list.add(stack);
     }

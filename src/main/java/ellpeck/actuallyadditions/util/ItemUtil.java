@@ -81,6 +81,12 @@ public class ItemUtil{
         return stack1 != null && stack2 != null && (stack1.isItemEqual(stack2) || (checkWildcard && stack1.getItem() == stack2.getItem() && (stack1.getItemDamage() == Util.WILDCARD || stack2.getItemDamage() == Util.WILDCARD)));
     }
 
+    public static void addEnchantment(ItemStack stack, Enchantment e, int level){
+        if(!hasEnchantment(stack, e)){
+            stack.addEnchantment(e, level);
+        }
+    }
+
     public static void removeEnchantment(ItemStack stack, Enchantment e){
         NBTTagList ench = stack.getEnchantmentTagList();
         if(ench != null){

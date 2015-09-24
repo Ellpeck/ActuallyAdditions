@@ -364,10 +364,10 @@ public class ItemDrill extends ItemEnergy implements INameableItem{
         if(this.getEnergyStored(stack) >= use){
             //Enchants the Drill depending on the Upgrades it has
             if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SILK_TOUCH))
-                stack.addEnchantment(Enchantment.silkTouch, 1);
+                ItemUtil.addEnchantment(stack, Enchantment.silkTouch, 1);
             else{
                 if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FORTUNE))
-                    stack.addEnchantment(Enchantment.fortune, this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FORTUNE_II) ? 3 : 1);
+                    ItemUtil.addEnchantment(stack, Enchantment.fortune, this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FORTUNE_II) ? 3 : 1);
             }
 
             //Breaks the Blocks
