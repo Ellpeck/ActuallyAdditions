@@ -92,4 +92,17 @@ public class ItemUtil{
             }
         }
     }
+
+    public static boolean hasEnchantment(ItemStack stack, Enchantment e){
+        NBTTagList ench = stack.getEnchantmentTagList();
+        if(ench != null){
+            for(int i = 0; i < ench.tagCount(); i++){
+                short id = ench.getCompoundTagAt(i).getShort("id");
+                if(id == e.effectId){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }

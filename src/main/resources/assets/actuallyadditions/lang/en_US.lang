@@ -276,6 +276,7 @@ tooltip.actuallyadditions.disablingInfo.desc=If you don't want this Information 
 tooltip.actuallyadditions.ctrlForMoreInfo.desc=Press CTRL for Advanced Info
 tooltip.actuallyadditions.extraInfo.desc=Advanced Info
 tooltip.actuallyadditions.blockPhantomRange.desc=Range
+tooltip.actuallyadditions.broken.desc=Broken
 
 #Gui Information
 info.actuallyadditions.gui.animals=Animals

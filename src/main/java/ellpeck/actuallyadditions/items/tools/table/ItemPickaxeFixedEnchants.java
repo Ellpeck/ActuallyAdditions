@@ -13,33 +13,47 @@ package ellpeck.actuallyadditions.items.tools.table;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.items.tools.ItemPickaxeAA;
+import ellpeck.actuallyadditions.util.ItemUtil;
+import ellpeck.actuallyadditions.util.ModUtil;
+import ellpeck.actuallyadditions.util.StringUtil;
+import net.minecraft.block.Block;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.enchantment.Enchantment;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
 import java.util.List;
 
-public class ItemPickaxeFixedEnchants extends ItemPickaxeAA{
+public class ItemPickaxeFixedEnchants extends ItemPickaxeAA implements IToolTableRepairItem{
 
-    public static class EnchantmentCombo{
-        public Enchantment enchantment;
-        public int level;
+    private final int maxToolDamage;
+    private final EnchantmentCombo[] enchantments;
 
-        public EnchantmentCombo(Enchantment ench, int level){
-            this.enchantment = ench;
-            this.level = level;
-        }
-    }
+    private ItemStack repairStack;
+    private int repairPerStack;
 
-    private EnchantmentCombo[] enchantments;
+    private IIcon iconBroken;
 
-    public ItemPickaxeFixedEnchants(ToolMaterial toolMat, String unlocalizedName, EnumRarity rarity, EnchantmentCombo... enchantments){
+    public ItemPickaxeFixedEnchants(ToolMaterial toolMat, String unlocalizedName, EnumRarity rarity, ItemStack repairStack, int repairPerStack, EnchantmentCombo... enchantments){
         super(toolMat, "", unlocalizedName, rarity);
         this.enchantments = enchantments;
+        this.maxToolDamage = this.getMaxDamage();
+        this.setMaxDamage(this.maxToolDamage+1);
+        this.repairStack = repairStack;
+        this.repairPerStack = repairPerStack;
+    }
+
+    public boolean isBroken(ItemStack stack){
+        return this.isBroken(stack.getItemDamage());
+    }
+
+    private boolean isBroken(int damage){
+        return damage > this.maxToolDamage;
     }
 
     @Override
@@ -69,6 +83,15 @@ public class ItemPickaxeFixedEnchants extends ItemPickaxeAA{
         }
     }
 
+    @Override
+    public void onUpdate(ItemStack stack, World world, Entity player, int par4, boolean par5){
+        for(EnchantmentCombo combo : this.enchantments){
+            if(!ItemUtil.hasEnchantment(stack, combo.enchantment)){
+                stack.addEnchantment(combo.enchantment, combo.level);
+            }
+        }
+    }
+
     @SuppressWarnings("unchecked")
     @Override
     @SideOnly(Side.CLIENT)
@@ -78,5 +101,48 @@ public class ItemPickaxeFixedEnchants extends ItemPickaxeAA{
             stack.addEnchantment(combo.enchantment, combo.level);
         }
         list.add(stack);
+    }
+
+    @Override
+    public String getItemStackDisplayName(ItemStack stack){
+        return super.getItemStackDisplayName(stack)+(this.isBroken(stack) ? " ("+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".broken.desc")+")" : "");
+    }
+
+    @Override
+    public float getDigSpeed(ItemStack stack, Block block, int meta){
+        return this.isBroken(stack) ? 0.0F : super.getDigSpeed(stack, block, meta);
+    }
+
+    @Override
+    public boolean canHarvestBlock(Block block, ItemStack stack){
+        return !this.isBroken(stack) && super.canHarvestBlock(block, stack);
+    }
+
+    @Override
+    public IIcon getIcon(ItemStack stack, int renderPass, EntityPlayer player, ItemStack useItem, int useRemaining){
+        return this.isBroken(stack) ? this.iconBroken : this.itemIcon;
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public IIcon getIconFromDamage(int damage){
+        return this.isBroken(damage) ? this.iconBroken : this.itemIcon;
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void registerIcons(IIconRegister iconReg){
+        this.iconBroken = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Broken");
+        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
+    }
+
+    @Override
+    public ItemStack getRepairStack(){
+        return this.repairStack;
+    }
+
+    @Override
+    public int repairPerStack(){
+        return this.repairPerStack;
     }
 }

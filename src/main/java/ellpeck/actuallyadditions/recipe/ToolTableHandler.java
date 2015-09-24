@@ -10,6 +10,7 @@
 
 package ellpeck.actuallyadditions.recipe;
 
+import ellpeck.actuallyadditions.items.tools.table.IToolTableRepairItem;
 import ellpeck.actuallyadditions.util.ItemUtil;
 import net.minecraft.item.ItemStack;
 
@@ -29,9 +30,21 @@ public class ToolTableHandler{
     }
 
     public static Recipe getRecipeFromSlots(ItemStack[] slots){
+        //Normal Recipes
         for(Recipe recipe : recipes){
             if(ItemUtil.containsAll(slots, recipe.itemsNeeded)){
                 return recipe;
+            }
+        }
+
+        //Repair Recipes
+        for(ItemStack slot : slots){
+            if(slot != null && slot.getItem() instanceof IToolTableRepairItem){
+                if(ItemUtil.contains(slots, ((IToolTableRepairItem)slot.getItem()).getRepairStack()) && slot.getItemDamage() > 0){
+                    ItemStack returnStack = slot.copy();
+                    returnStack.setItemDamage(Math.max(0, returnStack.getItemDamage()-((IToolTableRepairItem)returnStack.getItem()).repairPerStack()));
+                    return new Recipe(returnStack, slot, ((IToolTableRepairItem)returnStack.getItem()).getRepairStack());
+                }
             }
         }
         return null;
