@@ -69,9 +69,12 @@ public class GuiBooklet extends GuiScreen{
 
     private boolean mouseClicked;
 
-    public GuiBooklet(){
+    private GuiScreen parentScreen;
+
+    public GuiBooklet(GuiScreen parentScreen){
         this.xSize = 146;
         this.ySize = 180;
+        this.parentScreen = parentScreen;
     }
 
     @Override
@@ -379,7 +382,10 @@ public class GuiBooklet extends GuiScreen{
             }
         }
         else if(button.id == BUTTON_RETURN_ID){
-            if(this.currentChapter != null && this.currentChapter != InitBooklet.chapterIntro){
+            if(this.currentIndexEntry == null){
+                mc.displayGuiScreen(this.parentScreen);
+            }
+            else if(this.currentChapter != null && this.currentChapter != InitBooklet.chapterIntro){
                 this.openIndexEntry(this.currentIndexEntry, this.pageOpenInIndex, true);
             }
             else{
@@ -431,7 +437,7 @@ public class GuiBooklet extends GuiScreen{
         this.indexPageAmount = entry == null ? 1 : entry.chapters.size()/BUTTONS_PER_PAGE+1;
         this.pageOpenInIndex = entry == null ? 1 : (this.indexPageAmount <= page || page <= 0 ? this.indexPageAmount : page);
 
-        this.getButton(BUTTON_RETURN_ID).visible = entry != null;
+        this.getButton(BUTTON_RETURN_ID).visible = entry != null || this.parentScreen != null;
         this.getButton(BUTTON_FORWARD_ID).visible = this.pageOpenInIndex < this.indexPageAmount;
         this.getButton(BUTTON_BACK_ID).visible = this.pageOpenInIndex > 1;
 

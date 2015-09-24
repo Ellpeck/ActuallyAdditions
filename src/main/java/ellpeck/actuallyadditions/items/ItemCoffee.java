@@ -27,9 +27,11 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.StringUtils;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ItemCoffee extends ItemFood implements INameableItem{
 
@@ -46,12 +48,12 @@ public class ItemCoffee extends ItemFood implements INameableItem{
         }
 
         registerIngredient(new Ingredient(new ItemStack(Items.sugar), new PotionEffect[]{new PotionEffect(Potion.moveSpeed.getId(), 30, 0)}, 4));
-        registerIngredient(new Ingredient(new ItemStack(Items.magma_cream), new PotionEffect[]{new PotionEffect(Potion.fireResistance.getId(), 20, 0)}, 1));
-        registerIngredient(new Ingredient(new ItemStack(Items.fish, 1, 3), new PotionEffect[]{new PotionEffect(Potion.waterBreathing.getId(), 10, 0)}, 1));
-        registerIngredient(new Ingredient(new ItemStack(Items.golden_carrot), new PotionEffect[]{new PotionEffect(Potion.nightVision.getId(), 30, 0)}, 1));
+        registerIngredient(new Ingredient(new ItemStack(Items.magma_cream), new PotionEffect[]{new PotionEffect(Potion.fireResistance.getId(), 20, 0)}, 2));
+        registerIngredient(new Ingredient(new ItemStack(Items.fish, 1, 3), new PotionEffect[]{new PotionEffect(Potion.waterBreathing.getId(), 10, 0)}, 2));
+        registerIngredient(new Ingredient(new ItemStack(Items.golden_carrot), new PotionEffect[]{new PotionEffect(Potion.nightVision.getId(), 30, 0)}, 2));
         registerIngredient(new Ingredient(new ItemStack(Items.ghast_tear), new PotionEffect[]{new PotionEffect(Potion.regeneration.getId(), 5, 0)}, 3));
         registerIngredient(new Ingredient(new ItemStack(Items.blaze_powder), new PotionEffect[]{new PotionEffect(Potion.damageBoost.getId(), 15, 0)}, 4));
-        registerIngredient(new Ingredient(new ItemStack(Items.fermented_spider_eye), new PotionEffect[]{new PotionEffect(Potion.invisibility.getId(), 25, 0)}, 1));
+        registerIngredient(new Ingredient(new ItemStack(Items.fermented_spider_eye), new PotionEffect[]{new PotionEffect(Potion.invisibility.getId(), 25, 0)}, 2));
     }
 
     public ItemCoffee(){
@@ -60,6 +62,20 @@ public class ItemCoffee extends ItemFood implements INameableItem{
         this.setAlwaysEdible();
         this.setMaxStackSize(1);
         this.setNoRepair();
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean bool){
+        PotionEffect[] effects = getEffectsFromStack(stack);
+        if(effects != null){
+            for(PotionEffect effect : effects){
+                list.add(StringUtil.localize(effect.getEffectName())+" "+(effect.getAmplifier()+1)+", "+StringUtils.ticksToElapsedTime(effect.getDuration()*20));
+            }
+        }
+        else{
+            list.add("No Effects");
+        }
     }
 
     public static Ingredient getIngredientFromStack(ItemStack stack){
@@ -126,7 +142,7 @@ public class ItemCoffee extends ItemFood implements INameableItem{
         if(tag != null){
             int counter = tag.getInteger("Counter");
             while(counter > 0){
-                NBTTagCompound compound = (NBTTagCompound)tag.getTag(counter + "");
+                NBTTagCompound compound = (NBTTagCompound)tag.getTag(counter+"");
                 PotionEffect effect = new PotionEffect(compound.getInteger("ID"), compound.getInteger("Duration"), compound.getByte("Amplifier"));
                 if(effect.getPotionID() > 0){
                     effects.add(effect);
@@ -182,8 +198,12 @@ public class ItemCoffee extends ItemFood implements INameableItem{
         super.onEaten(stack, world, player);
         applyPotionEffectsFromStack(stack, player);
         theStack.setItemDamage(theStack.getItemDamage()+1);
-        if(theStack.getMaxDamage()-theStack.getItemDamage() < 0) return new ItemStack(InitItems.itemMisc, 1, TheMiscItems.CUP.ordinal());
-        else return theStack;
+        if(theStack.getMaxDamage()-theStack.getItemDamage() < 0){
+            return new ItemStack(InitItems.itemMisc, 1, TheMiscItems.CUP.ordinal());
+        }
+        else{
+            return theStack;
+        }
     }
 
     @Override
@@ -194,7 +214,7 @@ public class ItemCoffee extends ItemFood implements INameableItem{
     @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister iconReg){
-        itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":" + this.getName());
+        itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
     }
 
     @Override
@@ -218,10 +238,6 @@ public class ItemCoffee extends ItemFood implements INameableItem{
             this.maxAmplifier = maxAmplifier;
         }
 
-        public String getExtraText(){
-            return null;
-        }
-
         public PotionEffect[] getEffects(){
             return this.effects;
         }
@@ -231,7 +247,7 @@ public class ItemCoffee extends ItemFood implements INameableItem{
         }
     }
 
-    private static class MilkIngredient extends Ingredient{
+    public static class MilkIngredient extends Ingredient{
 
         public MilkIngredient(ItemStack ingredient){
             super(ingredient, null, 0);
@@ -243,7 +259,9 @@ public class ItemCoffee extends ItemFood implements INameableItem{
             ArrayList<PotionEffect> effectsNew = new ArrayList<PotionEffect>();
             if(effects != null && effects.length > 0){
                 for(PotionEffect effect : effects){
-                    if(effect.getAmplifier() > 0) effectsNew.add(new PotionEffect(effect.getPotionID(), effect.getDuration()+120, effect.getAmplifier()-1));
+                    if(effect.getAmplifier() > 0){
+                        effectsNew.add(new PotionEffect(effect.getPotionID(), effect.getDuration()+120, effect.getAmplifier()-1));
+                    }
                 }
                 stack.setTagCompound(new NBTTagCompound());
                 if(effectsNew.size() > 0){
@@ -253,11 +271,6 @@ public class ItemCoffee extends ItemFood implements INameableItem{
             }
             this.effects = null;
             return true;
-        }
-
-        @Override
-        public String getExtraText(){
-            return StringUtil.localize("container.nei."+ModUtil.MOD_ID_LOWER+".coffee.extra.milk");
         }
 
     }

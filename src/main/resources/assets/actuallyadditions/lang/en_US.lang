@@ -334,20 +334,6 @@ container.actuallyadditions.xpSolidifier.name=Experience Solidifier
 container.actuallyadditions.oreMagnet.name=Magnetic Miner
 container.actuallyadditions.cloud.name=Smiley Cloud
 
-#NEI Integration
-container.nei.actuallyadditions.crushing.name=Crusher
-container.nei.actuallyadditions.crushingDouble.name=Double Crusher
-container.nei.actuallyadditions.ballOfHair.name=Ball Of Hair Usage
-container.nei.actuallyadditions.compost.name=Compost
-container.nei.actuallyadditions.furnaceDouble.name=Double Furnace
-container.nei.actuallyadditions.treasureChest.name=Treasure Chest
-container.nei.actuallyadditions.treasureChest.info=Items at
-container.nei.actuallyadditions.coffee.name=Coffee Machine
-container.nei.actuallyadditions.coffee.special=Special Feature
-container.nei.actuallyadditions.coffee.maxAmount=Max Amount
-container.nei.actuallyadditions.coffee.shift=[SHIFT]!
-container.nei.actuallyadditions.coffee.extra.milk=+01:00, -1 Level
-
 #Update Information
 info.actuallyadditions.update.generic.desc=[{"text":"There is an "},{"text":"Update ","bold":"true"},{"text":"for ","bold":"false"},{"text":"Actually Additions ","color":"dark_green","bold":"true"},{"text":"available!","color":"none","bold":"false"}]
 info.actuallyadditions.update.versionComp.desc=[{"text":"You have Version "},{"text":"%s","color":"dark_red","italic":"false"},{"text":", the newest one is ","color":"none","italic":"false"},{"text":"%s","color":"dark_green","underlined":"false"},{"text":"!","color":"none","underlined":"false"}]
@@ -470,9 +456,7 @@ booklet.actuallyadditions.chapter.crate.name=Storage Crates
 booklet.actuallyadditions.chapter.crate.text.1=<item>Storage Crates<r> are big. <imp>Really big<r>. They hold tons of items, more than 4 chests worth of them. <n><n><i>"F-in' gigantic"<rs><n>   -Some Magazine
 
 booklet.actuallyadditions.chapter.coffeeMachine.name=Coffee Machine
-booklet.actuallyadditions.chapter.coffeeMachine.text.1=The <item>Coffee Machine<r> basically works like a Brewing Stand, only 20 times more customizable. <n>After inserting an <item>Empty Cup<r>, <coffee> <item>Coffee<r>, which can be <imp>found in the wild, planted and harvested<r>, and <water>mB of <imp>Water<r> and <imp><rf> RF/t<r>, it will be able to brew some coffee for you! <n>This is where the customizable bit comes in, though: You can <imp>choose what potion effects the coffee should get and how long for by dropping in potion ingredients just the way you want your coffee to be<r>!
-booklet.actuallyadditions.chapter.coffeeMachine.text.2=Every ingredient has a <imp>base time<r> and a <imp>maximum amount<r> of which it can be inputted into the machine. <n>Here are the ingredients: <n><n>Sugar -> Speed 30s, 4max <n>Magma Cream -> 20s, 1max <n>Pufferfish -> Water Breathing, 10s, 1max <n>Golden Carrot -> Night Vision, 30s, 1max <n>Ghast Tear -> Regeneration, 5s, 3max <n>Blaze Powder -> Strength, 15s, 4max <n>Fermented Spider Eye -> Invisibility, 25s, 1max
-booklet.actuallyadditions.chapter.coffeeMachine.text.3=There is one special item, however, that is very powerful for the <item>Coffee Machine<r>: <n>The <item>Milk Bucket<r>. <n>This item is especially powerful, because it <imp>doubles the time of an effect<r> while <imp>taking one amplifier away<r>. But be careful: If you only have an amplifier of 1 on an effect, it'll be removed! <n>To amplify the effect of a certain item, just <imp>put it into multiple slots<r> causing the amplifier of it to rise. <n>When you're ready, just press the button to brew your coffee!
+
 
 booklet.actuallyadditions.chapter.crusher.name=Crusher and Double Crusher
 booklet.actuallyadditions.chapter.crusher.text.1=The <item>Crusher<r> turns every ore, ingot and gem into its corresponding <imp>dust<r> using <rf1> RF/t. <n>When you put in <imp>Ores<r> however, they will yield <imp>2 pieces of dust<r>. <n>The <item>Double Crusher<r> basically does the same, however it can crush two ores at a time and uses <rf2> RF/t. <n><n><i>He's my crush

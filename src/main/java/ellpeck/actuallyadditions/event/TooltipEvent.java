@@ -44,7 +44,7 @@ public class TooltipEvent{
                             event.toolTip.add(EnumChatFormatting.GOLD+StringUtil.localizeFormatted("booklet."+ModUtil.MOD_ID_LOWER+".keyToSeeRecipe", keyCode > 0 && keyCode < Keyboard.KEYBOARD_SIZE ? "'"+Keyboard.getKeyName(keyCode)+"'" : "[NONE]"));
                         }
                         if(Keyboard.isKeyDown(KeyBinds.keybindOpenBooklet.getKeyCode())){
-                            GuiBooklet book = new GuiBooklet();
+                            GuiBooklet book = new GuiBooklet(Minecraft.getMinecraft().currentScreen);
                             Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.func_147674_a(new ResourceLocation("gui.button.press"), 1.0F));
                             Minecraft.getMinecraft().displayGuiScreen(book);
                             book.openIndexEntry(page.getChapter().entry, InitBooklet.entries.indexOf(page.getChapter().entry)/GuiBooklet.BUTTONS_PER_PAGE+1, true);
