@@ -63,6 +63,7 @@ public class ClientProxy implements IProxy{
         AssetUtil.COFFEE_MACHINE_RENDER_ID = RenderingRegistry.getNextAvailableRenderId();
         AssetUtil.PHANTOM_BOOSTER_RENDER_ID = RenderingRegistry.getNextAvailableRenderId();
         AssetUtil.SMILEY_CLOUD_RENDER_ID = RenderingRegistry.getNextAvailableRenderId();
+        AssetUtil.TOOL_TABLE_RENDER_ID = RenderingRegistry.getNextAvailableRenderId();
 
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCompost.class, new RenderTileEntity(new ModelCompost()));
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(InitBlocks.blockCompost), new RenderItems(new ModelCompost()));
@@ -81,6 +82,9 @@ public class ClientProxy implements IProxy{
 
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntitySmileyCloud.class, new RenderSmileyCloud(new ModelSmileyCloud()));
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(InitBlocks.blockSmileyCloud), new RenderItems(new ModelSmileyCloud()));
+
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityToolTable.class, new RenderTileEntity(new ModelToolTable()));
+        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(InitBlocks.blockToolTable), new RenderItems(new ModelToolTable()));
 
         VillagerRegistry.instance().registerVillagerSkin(ConfigIntValues.JAM_VILLAGER_ID.getValue(), new ResourceLocation(ModUtil.MOD_ID_LOWER, "textures/entity/villager/jamVillager.png"));
 

@@ -45,6 +45,7 @@ public class RenderItems implements IItemRenderer{
                 GL11.glTranslatef(0.5F,  0.5F, 0.5F);
                 GL11.glRotatef(180F, 0.0F, 0.0F, 1.0F);
                 GL11.glTranslatef(-0.5F, -1.27F, 0.5F);
+                GL11.glRotatef(180F, 0F, 1F, 0F);
                 Minecraft.getMinecraft().renderEngine.bindTexture(theTexture);
                 theModel.render(0.0625F);
                 GL11.glPopMatrix();
@@ -55,6 +56,7 @@ public class RenderItems implements IItemRenderer{
                 GL11.glTranslatef(0.5F, 0.5F, 0.5F);
                 GL11.glRotatef(180F, 0.0F, 0.0F, 1.0F);
                 GL11.glTranslatef(0.6F, -1.2F, -0.0F);
+                GL11.glRotatef(180F, 0F, 1F, 0F);
                 Minecraft.getMinecraft().renderEngine.bindTexture(theTexture);
                 theModel.render(0.0625F);
                 GL11.glPopMatrix();
@@ -65,6 +67,7 @@ public class RenderItems implements IItemRenderer{
                 GL11.glScalef(1.2F, 1.2F, 1.2F);
                 GL11.glRotatef(180, 2F, -0F, 0.1F);
                 GL11.glTranslatef(1.5F, -1.2F, -0.3F);
+                GL11.glRotatef(180F, 0F, 1F, 0F);
                 Minecraft.getMinecraft().renderEngine.bindTexture(theTexture);
                 theModel.render(0.0625F);
                 GL11.glPopMatrix();
@@ -74,6 +77,7 @@ public class RenderItems implements IItemRenderer{
                 GL11.glPushMatrix();
                 GL11.glRotatef(180F, 0.0F, 0.0F, 1.0F);
                 GL11.glTranslatef(0.0F, -1.27F, 0.0F);
+                GL11.glRotatef(180F, 0F, 1F, 0F);
                 Minecraft.getMinecraft().renderEngine.bindTexture(theTexture);
                 theModel.render(0.0625F);
                 GL11.glPopMatrix();

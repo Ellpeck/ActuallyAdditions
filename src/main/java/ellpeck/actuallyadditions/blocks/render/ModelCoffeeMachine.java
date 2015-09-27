@@ -12,6 +12,10 @@ package ellpeck.actuallyadditions.blocks.render;
 
 import net.minecraft.client.model.ModelRenderer;
 
+/**
+ * Made by Canitzp.
+ * Thanks.
+ */
 public class ModelCoffeeMachine extends ModelBaseAA{
 
     ModelRenderer p1;

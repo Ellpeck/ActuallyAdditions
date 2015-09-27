@@ -16,26 +16,23 @@ import ellpeck.actuallyadditions.ActuallyAdditions;
 import ellpeck.actuallyadditions.inventory.GuiHandler;
 import ellpeck.actuallyadditions.tile.TileEntityInventoryBase;
 import ellpeck.actuallyadditions.tile.TileEntityToolTable;
+import ellpeck.actuallyadditions.util.AssetUtil;
 import ellpeck.actuallyadditions.util.INameableItem;
-import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
-import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class BlockToolTable extends BlockContainerBase implements INameableItem{
-
-    private IIcon topIcon;
-    private IIcon frontIcon;
 
     public BlockToolTable(){
         super(Material.wood);
@@ -43,16 +40,18 @@ public class BlockToolTable extends BlockContainerBase implements INameableItem{
         this.setHardness(1.5F);
         this.setResistance(5.0F);
         this.setStepSound(soundTypeWood);
+
+        this.setBlockBounds(0F, 0F, 0F, 1F, 1F-3/16, 1F);
     }
 
     @Override
     public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack stack){
         int rotation = MathHelper.floor_double((double)(player.rotationYaw*4.0F/360.0F)+0.5D) & 3;
 
-        if(rotation == 0) world.setBlockMetadataWithNotify(x, y, z, 0, 2);
-        if(rotation == 1) world.setBlockMetadataWithNotify(x, y, z, 3, 2);
-        if(rotation == 2) world.setBlockMetadataWithNotify(x, y, z, 1, 2);
-        if(rotation == 3) world.setBlockMetadataWithNotify(x, y, z, 2, 2);
+        if(rotation == 0) world.setBlockMetadataWithNotify(x, y, z, 2, 0);
+        if(rotation == 1) world.setBlockMetadataWithNotify(x, y, z, 1, 3);
+        if(rotation == 2) world.setBlockMetadataWithNotify(x, y, z, 0, 2);
+        if(rotation == 3) world.setBlockMetadataWithNotify(x, y, z, 3, 3);
     }
 
     @Override
@@ -61,26 +60,29 @@ public class BlockToolTable extends BlockContainerBase implements INameableItem{
     }
 
     @Override
-    public IIcon getIcon(int side, int meta){
-        if(side == 1 || side == 0) return this.topIcon;
-        if(side == 3) return this.frontIcon;
-        return this.blockIcon;
-    }
-
-    @Override
-    public IIcon getIcon(IBlockAccess world, int x, int y, int z, int side){
-        int meta = world.getBlockMetadata(x, y, z);
-        if(side == 1 || side == 0) return this.topIcon;
-        if(side == meta+2) return this.frontIcon;
+    public IIcon getIcon(int side, int metadata){
         return this.blockIcon;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconReg){
-        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
-        this.topIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Top");
-        this.frontIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Front");
+        this.blockIcon = Blocks.planks.getIcon(0, 0);
+    }
+
+    @Override
+    public boolean isOpaqueCube(){
+        return false;
+    }
+
+    @Override
+    public boolean renderAsNormalBlock(){
+        return false;
+    }
+
+    @Override
+    public int getRenderType(){
+        return AssetUtil.TOOL_TABLE_RENDER_ID;
     }
 
     @Override
