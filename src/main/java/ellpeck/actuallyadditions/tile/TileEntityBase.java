@@ -71,7 +71,7 @@ public class TileEntityBase extends TileEntity{
         GameRegistry.registerTileEntity(TileEntityXPSolidifier.class, ModUtil.MOD_ID_LOWER+":tileEntityXPSolidifier");
         GameRegistry.registerTileEntity(TileEntityOreMagnet.class, ModUtil.MOD_ID_LOWER+":tileEntityOreMagnet");
         GameRegistry.registerTileEntity(TileEntitySmileyCloud.class, ModUtil.MOD_ID_LOWER+":tileEntityCloud");
-        GameRegistry.registerTileEntity(TileEntityToolTable.class, ModUtil.MOD_ID_LOWER+":tileEntityToolTable");
+        //GameRegistry.registerTileEntity(TileEntityToolTable.class, ModUtil.MOD_ID_LOWER+":tileEntityToolTable");
     }
 
     @Override
