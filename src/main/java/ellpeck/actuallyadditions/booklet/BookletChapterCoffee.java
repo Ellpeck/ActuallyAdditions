@@ -14,9 +14,9 @@ import ellpeck.actuallyadditions.booklet.page.BookletPage;
 import ellpeck.actuallyadditions.booklet.page.PageCoffeeRecipe;
 import ellpeck.actuallyadditions.items.ItemCoffee;
 import net.minecraft.item.ItemStack;
-import scala.actors.threadpool.Arrays;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class BookletChapterCoffee extends BookletChapter{
 
