@@ -33,7 +33,7 @@ public class ItemWingsOfTheBats extends Item implements INameableItem{
      * Saves Remote Players separately to make de-synced Event Calling
      * not bug out Capabilities when taking off the Wings
      *
-     * (Partially excerpted from Botania's Wing System (as I had fiddled around with the system and couldn't make it work) with permission, thanks!)
+     * (Partially excerpted from Botania's Wing System by Vazkii (as I had fiddled around with the system and couldn't make it work) with permission, thanks!)
      */
     public static ArrayList<String> wingedPlayers = new ArrayList<String>();
 

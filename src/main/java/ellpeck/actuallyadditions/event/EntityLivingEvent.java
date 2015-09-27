@@ -46,7 +46,7 @@ public class EntityLivingEvent{
 
     /**
      * Makes players be able to fly if they have Wings Of The Bats equipped
-     * (Partially excerpted from Botania's Wing System (as I had fiddled around with the system and couldn't make it work) with permission, thanks!)
+     * (Partially excerpted from Botania's Wing System by Vazkii (as I had fiddled around with the system and couldn't make it work) with permission, thanks!)
      */
     private void doWingStuff(LivingUpdateEvent event){
         if(event.entityLiving instanceof EntityPlayer){

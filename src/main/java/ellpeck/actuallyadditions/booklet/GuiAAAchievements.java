@@ -24,7 +24,7 @@ public class GuiAAAchievements extends GuiAchievements{
     }
 
     /**
-     * (Partially excerpted from Botania with permission, thanks!)
+     * (Partially excerpted from Botania by Vazkii with permission, thanks!)
      */
     @Override
     public void initGui(){
