@@ -29,8 +29,6 @@ public enum ConfigBoolValues{
     PEARL_SHARD_DROP("Ender Pearl Shard", ConfigCategories.MOB_DROPS, true, "If the Ender Pearl Shard drops from Mobs"),
     EMERALD_SHARD_CROP("Emerald Shard", ConfigCategories.MOB_DROPS, true, "If the Emerald Shard drops from Mobs"),
 
-    DO_WAILA_INFO("Waila Display Info", ConfigCategories.OTHER, true, "If the Shift Description should display in Waila too"),
-
     DO_UPDATE_CHECK("Do Update Check", ConfigCategories.OTHER, true, "If Actually Additions should check for an Update on joining a World"),
     DO_CRUSHER_SPAM("Crusher Debug", ConfigCategories.OTHER, false, "Print out Crusher Recipe Initializing Debug"),
     DO_CAT_DROPS("Do Cat Drops", ConfigCategories.OTHER, true, "If Cats drop Hairy Balls on Occasion"),
@@ -58,7 +56,7 @@ public enum ConfigBoolValues{
 
     NEED_BOOKLET_FOR_KEYBIND_INFO("Booklet Quick Opening", ConfigCategories.TOOL_VALUES, true, "If the booklet should have to be inside the player's inventory to be able to hover over an item and press a keybind to quickly access the item's page"),
     SHOW_NEED_BOOKLET_FOR_KEYBIND_INFO("Booklet Quick Opening Info", ConfigCategories.TOOL_VALUES, true, "If the 'Press key for more information'-button should show when the item has a page in the booklet"),
-    GIVE_BOOKLET_ON_FIRST_CRAFT("Give Booklet on First Craft", ConfigCategories.OTHER, true, "If the booklet should be given to the player when he first crafts something from the Mod (Reduces Packet Traffic a bit when turned off!)");
+    GIVE_BOOKLET_ON_FIRST_CRAFT("Give Booklet on First Craft", ConfigCategories.OTHER, true, "If the booklet should be given to the player when he first crafts something from the Mod");
 
     public final String name;
     public final String category;

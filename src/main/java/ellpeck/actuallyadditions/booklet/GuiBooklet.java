@@ -15,7 +15,11 @@ import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.booklet.page.BookletPage;
 import ellpeck.actuallyadditions.config.GuiConfiguration;
 import ellpeck.actuallyadditions.update.UpdateChecker;
-import ellpeck.actuallyadditions.util.*;
+import ellpeck.actuallyadditions.util.AssetUtil;
+import ellpeck.actuallyadditions.util.KeyUtil;
+import ellpeck.actuallyadditions.util.ModUtil;
+import ellpeck.actuallyadditions.util.StringUtil;
+import ellpeck.actuallyadditions.util.playerdata.PersistantClientData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
@@ -123,7 +127,7 @@ public class GuiBooklet extends GuiScreen{
 
     @Override
     public void onGuiClosed(){
-        PersistantVariables.saveBookPage(this.currentIndexEntry, this.currentChapter, this.currentPage, this.pageOpenInIndex);
+        PersistantClientData.saveBookPage(this.currentIndexEntry, this.currentChapter, this.currentPage, this.pageOpenInIndex);
     }
 
     @Override
@@ -167,14 +171,14 @@ public class GuiBooklet extends GuiScreen{
         this.currentChapter = null;
         this.currentIndexEntry = null;
 
-        if(!PersistantVariables.getBoolean("BookAlreadyOpened")){
+        if(!PersistantClientData.getBoolean("BookAlreadyOpened")){
             this.openIndexEntry(InitBooklet.chapterIntro.entry, 1, true);
             this.openChapter(InitBooklet.chapterIntro, null);
 
-            PersistantVariables.setBoolean("BookAlreadyOpened", true);
+            PersistantClientData.setBoolean("BookAlreadyOpened", true);
         }
         else{
-            PersistantVariables.openLastBookPage(this);
+            PersistantClientData.openLastBookPage(this);
         }
     }
 

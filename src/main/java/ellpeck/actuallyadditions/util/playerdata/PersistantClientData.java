@@ -8,7 +8,7 @@
  * © 2015 Ellpeck
  */
 
-package ellpeck.actuallyadditions.util;
+package ellpeck.actuallyadditions.util.playerdata;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -17,6 +17,7 @@ import ellpeck.actuallyadditions.booklet.BookletIndexEntry;
 import ellpeck.actuallyadditions.booklet.GuiBooklet;
 import ellpeck.actuallyadditions.booklet.InitBooklet;
 import ellpeck.actuallyadditions.booklet.page.BookletPage;
+import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
@@ -26,7 +27,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 
 @SideOnly(Side.CLIENT)
-public class PersistantVariables{
+public class PersistantClientData{
 
     private static File theFile;
 

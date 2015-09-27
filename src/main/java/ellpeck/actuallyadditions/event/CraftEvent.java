@@ -16,12 +16,11 @@ import ellpeck.actuallyadditions.achievement.InitAchievements;
 import ellpeck.actuallyadditions.achievement.TheAchievements;
 import ellpeck.actuallyadditions.config.values.ConfigBoolValues;
 import ellpeck.actuallyadditions.items.InitItems;
-import ellpeck.actuallyadditions.network.PacketCheckBook;
-import ellpeck.actuallyadditions.network.PacketHandler;
 import ellpeck.actuallyadditions.util.INameableItem;
+import ellpeck.actuallyadditions.util.playerdata.PersistantServerData;
 import net.minecraft.block.Block;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 
 public class CraftEvent{
@@ -32,8 +31,13 @@ public class CraftEvent{
 
         if(ConfigBoolValues.GIVE_BOOKLET_ON_FIRST_CRAFT.isEnabled()){
             if(!event.player.worldObj.isRemote && event.crafting.getItem() != InitItems.itemLexicon && (event.crafting.getItem() instanceof INameableItem || Block.getBlockFromItem(event.crafting.getItem()) instanceof INameableItem)){
-                if(event.player instanceof EntityPlayerMP){
-                    PacketHandler.theNetwork.sendTo(new PacketCheckBook(event.player), (EntityPlayerMP)event.player);
+                PersistantServerData data = PersistantServerData.get(event.player);
+                if(!data.bookGottenAlready){
+                    data.bookGottenAlready = true;
+
+                    EntityItem entityItem = new EntityItem(event.player.worldObj, event.player.posX, event.player.posY, event.player.posZ, new ItemStack(InitItems.itemLexicon));
+                    entityItem.delayBeforeCanPickup = 0;
+                    event.player.worldObj.spawnEntityInWorld(entityItem);
                 }
             }
         }

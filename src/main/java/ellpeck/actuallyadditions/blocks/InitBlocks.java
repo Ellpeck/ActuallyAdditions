@@ -93,13 +93,13 @@ public class InitBlocks{
 
     public static Block blockSmileyCloud;
 
-    //public static Block blockToolTable;
+    public static Block blockToolTable;
 
     public static void init(){
         ModUtil.LOGGER.info("Initializing Blocks...");
 
-        //blockToolTable = new BlockToolTable();
-        //BlockUtil.register(blockToolTable);
+        blockToolTable = new BlockToolTable();
+        BlockUtil.register(blockToolTable);
 
         blockSmileyCloud = new BlockSmileyCloud();
         BlockUtil.register(blockSmileyCloud);
