@@ -47,6 +47,10 @@ public class PersistantServerData implements IExtendedEntityProperties{
     }
 
     public static PersistantServerData get(EntityPlayer player){
-        return (PersistantServerData)player.getExtendedProperties(ModUtil.MOD_ID);
+        IExtendedEntityProperties properties = player.getExtendedProperties(ModUtil.MOD_ID);
+        if(properties != null && properties instanceof PersistantServerData){
+            return (PersistantServerData)properties;
+        }
+        return null;
     }
 }

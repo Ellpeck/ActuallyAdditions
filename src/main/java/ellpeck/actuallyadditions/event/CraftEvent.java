@@ -32,7 +32,7 @@ public class CraftEvent{
         if(ConfigBoolValues.GIVE_BOOKLET_ON_FIRST_CRAFT.isEnabled()){
             if(!event.player.worldObj.isRemote && event.crafting.getItem() != InitItems.itemLexicon && (event.crafting.getItem() instanceof INameableItem || Block.getBlockFromItem(event.crafting.getItem()) instanceof INameableItem)){
                 PersistantServerData data = PersistantServerData.get(event.player);
-                if(!data.bookGottenAlready){
+                if(data != null && !data.bookGottenAlready){
                     data.bookGottenAlready = true;
 
                     EntityItem entityItem = new EntityItem(event.player.worldObj, event.player.posX, event.player.posY, event.player.posZ, new ItemStack(InitItems.itemLexicon));
