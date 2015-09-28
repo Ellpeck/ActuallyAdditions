@@ -375,6 +375,9 @@ public class GuiBooklet extends GuiScreen{
                 if(this.currentPage != null){
                     BookletPage page = this.getNextPage(this.currentChapter, this.currentPage);
                     if(page != null) this.currentPage = page;
+
+                    this.getButton(BUTTON_FORWARD_ID).visible = this.getNextPage(this.currentChapter, this.currentPage) != null;
+                    this.getButton(BUTTON_BACK_ID).visible = this.getPrevPage(this.currentChapter, this.currentPage) != null;
                 }
                 else{
                     this.openIndexEntry(this.currentIndexEntry, this.pageOpenInIndex+1, !(this.currentIndexEntry instanceof BookletEntryAllSearch));
@@ -386,6 +389,9 @@ public class GuiBooklet extends GuiScreen{
                 if(this.currentPage != null){
                     BookletPage page = this.getPrevPage(this.currentChapter, this.currentPage);
                     if(page != null) this.currentPage = page;
+
+                    this.getButton(BUTTON_FORWARD_ID).visible = this.getNextPage(this.currentChapter, this.currentPage) != null;
+                    this.getButton(BUTTON_BACK_ID).visible = this.getPrevPage(this.currentChapter, this.currentPage) != null;
                 }
                 else{
                     this.openIndexEntry(this.currentIndexEntry, this.pageOpenInIndex-1, !(this.currentIndexEntry instanceof BookletEntryAllSearch));
@@ -413,15 +419,6 @@ public class GuiBooklet extends GuiScreen{
             else{
                 if(actualButton < InitBooklet.entries.size()){
                     this.openIndexEntry(InitBooklet.entries.get(actualButton), 1, true);
-                }
-            }
-        }
-
-        if(button.id == BUTTON_FORWARD_ID || button.id == BUTTON_BACK_ID){
-            if(this.currentChapter != null && this.currentIndexEntry != null){
-                if(this.currentPage != null){
-                    this.getButton(BUTTON_FORWARD_ID).visible = this.getNextPage(this.currentChapter, this.currentPage) != null;
-                    this.getButton(BUTTON_BACK_ID).visible = this.getPrevPage(this.currentChapter, this.currentPage) != null;
                 }
             }
         }
