@@ -59,7 +59,8 @@ public class GuiBooklet extends GuiScreen{
     private static final int BUTTON_FORWARD_ID = 0;
     private static final int BUTTON_BACK_ID = 1;
     private static final int BUTTON_RETURN_ID = 2;
-    private static final int CHAPTER_BUTTONS_START = 3;
+    private static final int BUTTON_BEFORE_GUI_ID = 3;
+    private static final int CHAPTER_BUTTONS_START = 4;
 
     public static final int BUTTONS_PER_PAGE = 13;
     public static final int TOOLTIP_SPLIT_LENGTH = 160;
@@ -150,6 +151,7 @@ public class GuiBooklet extends GuiScreen{
         this.addButton(new TexturedButton(BUTTON_FORWARD_ID, this.guiLeft+this.xSize, this.guiTop+this.ySize+2, 164, 0, 18, 10));
         this.addButton(new TexturedButton(BUTTON_BACK_ID, this.guiLeft-18, this.guiTop+this.ySize+2, 146, 0, 18, 10));
         this.addButton(new TexturedButton(BUTTON_RETURN_ID, this.guiLeft+this.xSize/2-7, this.guiTop+this.ySize+2, 182, 0, 15, 10));
+        this.addButton(new TexturedButton(BUTTON_BEFORE_GUI_ID, this.guiLeft+this.xSize/3, this.guiTop+this.ySize+2, 245, 44, 11, 15));
 
         for(int i = 0; i < BUTTONS_PER_PAGE; i++){
             this.addButton(new IndexButton(CHAPTER_BUTTONS_START+i, guiLeft+15, guiTop+10+(i*12), 115, 10, "", this));
@@ -325,7 +327,12 @@ public class GuiBooklet extends GuiScreen{
 
     @Override
     public void actionPerformed(GuiButton button){
-        if(button.id == BUTTON_UPDATE_ID){
+        if(button.id == BUTTON_BEFORE_GUI_ID){
+            if(this.parentScreen != null){
+                mc.displayGuiScreen(this.parentScreen);
+            }
+        }
+        else if(button.id == BUTTON_UPDATE_ID){
             if(UpdateChecker.doneChecking && UpdateChecker.updateVersion > UpdateChecker.clientVersion){
                 try{
                     if(Desktop.isDesktopSupported()){
@@ -386,10 +393,7 @@ public class GuiBooklet extends GuiScreen{
             }
         }
         else if(button.id == BUTTON_RETURN_ID){
-            if(this.currentIndexEntry == null){
-                mc.displayGuiScreen(this.parentScreen);
-            }
-            else if(this.currentChapter != null && this.currentChapter != InitBooklet.chapterIntro){
+            if(this.currentChapter != null && this.currentChapter != InitBooklet.chapterIntro){
                 this.openIndexEntry(this.currentIndexEntry, this.pageOpenInIndex, true);
             }
             else{
@@ -441,9 +445,10 @@ public class GuiBooklet extends GuiScreen{
         this.indexPageAmount = entry == null ? 1 : entry.chapters.size()/BUTTONS_PER_PAGE+1;
         this.pageOpenInIndex = entry == null ? 1 : (this.indexPageAmount <= page || page <= 0 ? this.indexPageAmount : page);
 
-        this.getButton(BUTTON_RETURN_ID).visible = entry != null || this.parentScreen != null;
+        this.getButton(BUTTON_RETURN_ID).visible = entry != null;
         this.getButton(BUTTON_FORWARD_ID).visible = this.pageOpenInIndex < this.indexPageAmount;
         this.getButton(BUTTON_BACK_ID).visible = this.pageOpenInIndex > 1;
+        this.getButton(BUTTON_BEFORE_GUI_ID).visible = this.parentScreen != null;
 
         for(int i = 0; i < BUTTONS_PER_PAGE; i++){
             IndexButton button = (IndexButton)this.getButton(CHAPTER_BUTTONS_START+i);
@@ -479,6 +484,8 @@ public class GuiBooklet extends GuiScreen{
 
         this.getButton(BUTTON_FORWARD_ID).visible = this.getNextPage(chapter, this.currentPage) != null;
         this.getButton(BUTTON_BACK_ID).visible = this.getPrevPage(chapter, this.currentPage) != null;
+        this.getButton(BUTTON_RETURN_ID).visible = true;
+        this.getButton(BUTTON_BEFORE_GUI_ID).visible = this.parentScreen != null;
 
         for(int i = 0; i < BUTTONS_PER_PAGE; i++){
             GuiButton button = this.getButton(CHAPTER_BUTTONS_START+i);
