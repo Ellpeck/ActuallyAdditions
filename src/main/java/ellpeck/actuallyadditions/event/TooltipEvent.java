@@ -37,7 +37,7 @@ public class TooltipEvent{
         //Booklet Access
         if(event.itemStack != null && !(Minecraft.getMinecraft().currentScreen instanceof GuiBooklet)){
             for(BookletPage page : InitBooklet.pagesWithItemStackData){
-                if(ItemUtil.areItemsEqual(event.itemStack, page.getItemStackForPage(), true)){
+                if(ItemUtil.contains(page.getItemStacksForPage(), event.itemStack, true)){
                     int keyCode = KeyBinds.keybindOpenBooklet.getKeyCode();
                     if(!ConfigBoolValues.NEED_BOOKLET_FOR_KEYBIND_INFO.isEnabled() || Minecraft.getMinecraft().thePlayer.inventory.hasItem(InitItems.itemLexicon)){
                         if(ConfigBoolValues.SHOW_NEED_BOOKLET_FOR_KEYBIND_INFO.isEnabled()){

@@ -49,9 +49,9 @@ public class ItemUtil{
     /**
      * Returns true if stacksOne contains every ItemStack in stackTwo
      */
-    public static boolean containsAll(ItemStack[] stacksOne, ItemStack[] stacksTwo){
+    public static boolean containsAll(ItemStack[] stacksOne, ItemStack[] stacksTwo, boolean checkWildcard){
         for(ItemStack stackTwo : stacksTwo){
-            if(!contains(stacksOne, stackTwo)){
+            if(!contains(stacksOne, stackTwo, checkWildcard)){
                 return false;
             }
         }
@@ -61,17 +61,19 @@ public class ItemUtil{
     /**
      * Returns true if array contains stack or if both contain null
      */
-    public static boolean contains(ItemStack[] array, ItemStack stack){
-        return getPlaceAt(array, stack) != -1;
+    public static boolean contains(ItemStack[] array, ItemStack stack, boolean checkWildcard){
+        return getPlaceAt(array, stack, checkWildcard) != -1;
     }
 
     /**
      * Returns the place of stack in array, -1 if not present
      */
-    public static int getPlaceAt(ItemStack[] array, ItemStack stack){
-        for(int i = 0; i < array.length; i++){
-            if((stack == null && array[i] == null) || (stack != null && array[i] != null && array[i].isItemEqual(stack))){
-                return i;
+    public static int getPlaceAt(ItemStack[] array, ItemStack stack, boolean checkWildcard){
+        if(array != null && array.length > 0){
+            for(int i = 0; i < array.length; i++){
+                if((stack == null && array[i] == null) || areItemsEqual(stack, array[i], checkWildcard)){
+                    return i;
+                }
             }
         }
         return -1;

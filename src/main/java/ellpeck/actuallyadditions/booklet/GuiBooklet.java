@@ -70,8 +70,8 @@ public class GuiBooklet extends GuiScreen{
     private static final int BUTTON_FORUM_ID = BUTTON_TWITTER_ID+1;
     private static final int BUTTON_ACHIEVEMENTS_ID = BUTTON_FORUM_ID+1;
     private static final int BUTTON_CONFIG_ID = BUTTON_ACHIEVEMENTS_ID+1;
-    private int cursorCounter;
 
+    private int ticksElapsed;
     private boolean mouseClicked;
 
     private GuiScreen parentScreen;
@@ -90,12 +90,13 @@ public class GuiBooklet extends GuiScreen{
         boolean buttonThere = UpdateChecker.doneChecking && UpdateChecker.updateVersion > UpdateChecker.clientVersion;
         this.getButton(BUTTON_UPDATE_ID).visible = buttonThere;
         if(buttonThere){
-            this.cursorCounter++;
-            if(this.cursorCounter%8 == 0){
+            if(this.ticksElapsed%8 == 0){
                 TexturedButton button = (TexturedButton)this.getButton(BUTTON_UPDATE_ID);
                 button.setTexturePos(245, button.texturePosY == 0 ? 22 : 0);
             }
         }
+
+        this.ticksElapsed++;
     }
 
     @SuppressWarnings("unchecked")
@@ -238,7 +239,7 @@ public class GuiBooklet extends GuiScreen{
         if(this.currentIndexEntry != null){
             if(this.currentChapter != null && this.currentPage != null){
                 this.drawCenteredString(this.unicodeRenderer, this.currentPage.getID()+"/"+this.currentChapter.pages.length, this.guiLeft+this.xSize/2, this.guiTop+172, StringUtil.DECIMAL_COLOR_WHITE);
-                this.currentPage.renderPre(this, x, y, this.mouseClicked);
+                this.currentPage.renderPre(this, x, y, this.mouseClicked, this.ticksElapsed);
             }
             else{
                 this.drawCenteredString(this.unicodeRenderer, this.pageOpenInIndex+"/"+this.indexPageAmount, this.guiLeft+this.xSize/2, this.guiTop+172, StringUtil.DECIMAL_COLOR_WHITE);
@@ -261,7 +262,7 @@ public class GuiBooklet extends GuiScreen{
         this.searchField.drawTextBox();
 
         if(this.currentIndexEntry != null && this.currentChapter != null && this.currentPage != null){
-            this.currentPage.render(this, x, y, this.mouseClicked);
+            this.currentPage.render(this, x, y, this.mouseClicked, this.ticksElapsed);
         }
 
         //Achievements Hover Text

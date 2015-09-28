@@ -29,14 +29,14 @@ public class PageCoffeeRecipe extends BookletPage{
     }
 
     @Override
-    public void renderPre(GuiBooklet gui, int mouseX, int mouseY, boolean mouseClick){
+    public void renderPre(GuiBooklet gui, int mouseX, int mouseY, boolean mouseClick, int ticksElapsed){
         gui.mc.getTextureManager().bindTexture(GuiBooklet.resLoc);
         gui.drawTexturedModalRect(gui.guiLeft+19, gui.guiTop+20, 146, 94, 99, 60);
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public void render(GuiBooklet gui, int mouseX, int mouseY, boolean mouseClick){
+    public void render(GuiBooklet gui, int mouseX, int mouseY, boolean mouseClick, int ticksElapsed){
         String strg = "Coffee Machine Recipe";
         gui.unicodeRenderer.drawString(strg, gui.guiLeft+gui.xSize/2-gui.unicodeRenderer.getStringWidth(strg)/2, gui.guiTop+10, 0);
 

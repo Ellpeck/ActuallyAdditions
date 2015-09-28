@@ -30,7 +30,7 @@ public class PageCrusherRecipe extends BookletPage{
     }
 
     @Override
-    public void renderPre(GuiBooklet gui, int mouseX, int mouseY, boolean mouseClick){
+    public void renderPre(GuiBooklet gui, int mouseX, int mouseY, boolean mouseClick, int ticksElapsed){
         if(recipe != null){
             gui.mc.getTextureManager().bindTexture(GuiBooklet.resLoc);
             gui.drawTexturedModalRect(gui.guiLeft+37, gui.guiTop+20, 60, 180, 60, 60);
@@ -38,13 +38,13 @@ public class PageCrusherRecipe extends BookletPage{
     }
 
     @Override
-    public ItemStack getItemStackForPage(){
-        return this.recipe == null ? null : this.recipe.firstOutput;
+    public ItemStack[] getItemStacksForPage(){
+        return new ItemStack[]{this.recipe == null ? null : this.recipe.firstOutput};
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public void render(GuiBooklet gui, int mouseX, int mouseY, boolean mouseClick){
+    public void render(GuiBooklet gui, int mouseX, int mouseY, boolean mouseClick, int ticksElapsed){
         if(recipe == null){
             gui.unicodeRenderer.drawSplitString(EnumChatFormatting.DARK_RED+StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".recipeDisabled"), gui.guiLeft+14, gui.guiTop+15, 115, 0);
         }

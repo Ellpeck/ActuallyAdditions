@@ -37,12 +37,12 @@ public class PageFurnace extends BookletPage{
     }
 
     @Override
-    public ItemStack getItemStackForPage(){
-        return this.result;
+    public ItemStack[] getItemStacksForPage(){
+        return new ItemStack[]{this.result};
     }
 
     @Override
-    public void renderPre(GuiBooklet gui, int mouseX, int mouseY, boolean mouseClick){
+    public void renderPre(GuiBooklet gui, int mouseX, int mouseY, boolean mouseClick, int ticksElapsed){
         if(this.input != null || this.getInputForOutput(this.result) != null){
             gui.mc.getTextureManager().bindTexture(GuiBooklet.resLoc);
             gui.drawTexturedModalRect(gui.guiLeft+37, gui.guiTop+20, 0, 180, 60, 60);
@@ -51,7 +51,7 @@ public class PageFurnace extends BookletPage{
 
     @SuppressWarnings("unchecked")
     @Override
-    public void render(GuiBooklet gui, int mouseX, int mouseY, boolean mouseClick){
+    public void render(GuiBooklet gui, int mouseX, int mouseY, boolean mouseClick, int ticksElapsed){
         ItemStack input = this.input != null ? this.input : this.getInputForOutput(this.result);
         if(input == null){
             gui.unicodeRenderer.drawSplitString(EnumChatFormatting.DARK_RED+StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".recipeDisabled"), gui.guiLeft+14, gui.guiTop+15, 115, 0);

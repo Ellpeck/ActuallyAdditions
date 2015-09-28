@@ -81,15 +81,15 @@ public class BookletPage{
         return this.addTextReplacement(text, Integer.toString(replacement));
     }
 
-    public void renderPre(GuiBooklet gui, int mouseX, int mouseY, boolean mouseClick){
+    public void renderPre(GuiBooklet gui, int mouseX, int mouseY, boolean mouseClick, int ticksElapsed){
 
     }
 
-    public void render(GuiBooklet gui, int mouseX, int mouseY, boolean mouseClick){
+    public void render(GuiBooklet gui, int mouseX, int mouseY, boolean mouseClick, int ticksElapsed){
 
     }
 
-    public ItemStack getItemStackForPage(){
+    public ItemStack[] getItemStacksForPage(){
         return null;
     }
 
@@ -108,7 +108,7 @@ public class BookletPage{
 
         if(checkAndTransfer){
             for(BookletPage page : InitBooklet.pagesWithItemStackData){
-                if(ItemUtil.areItemsEqual(page.getItemStackForPage(), stack, true)){
+                if(ItemUtil.contains(page.getItemStacksForPage(), stack, true)){
                     list.add(EnumChatFormatting.GOLD+StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".clickToSeeRecipe"));
 
                     if(mouseClick){

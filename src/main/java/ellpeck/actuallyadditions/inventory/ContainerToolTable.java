@@ -55,7 +55,7 @@ public class ContainerToolTable extends Container{
                     if(recipe != null){
                         ItemStack[] stacks = recipe.itemsNeeded.clone();
                         for(int i = 0; i < TileEntityToolTable.INPUT_SLOT_AMOUNT; i++){
-                            int place = ItemUtil.getPlaceAt(stacks, table.getStackInSlot(i));
+                            int place = ItemUtil.getPlaceAt(stacks, table.getStackInSlot(i), false);
                             if(place != -1){
                                 table.decrStackSize(i, 1);
                                 stacks[place] = null;

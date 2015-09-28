@@ -32,7 +32,7 @@ public class ToolTableHandler{
     public static Recipe getRecipeFromSlots(ItemStack[] slots){
         //Normal Recipes
         for(Recipe recipe : recipes){
-            if(ItemUtil.containsAll(slots, recipe.itemsNeeded)){
+            if(ItemUtil.containsAll(slots, recipe.itemsNeeded, false)){
                 return recipe;
             }
         }
@@ -40,7 +40,7 @@ public class ToolTableHandler{
         //Repair Recipes
         for(ItemStack slot : slots){
             if(slot != null && slot.getItem() instanceof IToolTableRepairItem){
-                if(ItemUtil.contains(slots, ((IToolTableRepairItem)slot.getItem()).getRepairStack()) && slot.getItemDamage() > 0){
+                if(ItemUtil.contains(slots, ((IToolTableRepairItem)slot.getItem()).getRepairStack(), false) && slot.getItemDamage() > 0){
                     ItemStack returnStack = slot.copy();
                     returnStack.setItemDamage(Math.max(0, returnStack.getItemDamage()-((IToolTableRepairItem)returnStack.getItem()).repairPerStack()));
                     return new Recipe(returnStack, slot, ((IToolTableRepairItem)returnStack.getItem()).getRepairStack());
