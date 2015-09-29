@@ -29,7 +29,6 @@ import ellpeck.actuallyadditions.inventory.GuiHandler;
 import ellpeck.actuallyadditions.items.InitForeignPaxels;
 import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.items.ItemCoffee;
-import ellpeck.actuallyadditions.items.tools.table.InitToolTableTools;
 import ellpeck.actuallyadditions.material.InitArmorMaterials;
 import ellpeck.actuallyadditions.material.InitToolMaterials;
 import ellpeck.actuallyadditions.misc.DispenserHandlerEmptyBucket;
@@ -99,7 +98,6 @@ public class ActuallyAdditions{
         HairyBallHandler.init();
         TreasureChestHandler.init();
         InitForeignPaxels.init();
-        InitToolTableTools.init();
         proxy.postInit(event);
 
         ModUtil.LOGGER.info("PostInitialization Finished.");
