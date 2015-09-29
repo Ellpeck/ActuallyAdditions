@@ -31,6 +31,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class ItemLeafBlower extends Item implements INameableItem{
 
@@ -44,7 +45,7 @@ public class ItemLeafBlower extends Item implements INameableItem{
     @Override
     public void onUsingTick(ItemStack stack, EntityPlayer player, int time){
         if(!player.worldObj.isRemote){
-            if(time <= getMaxItemUseDuration(stack) && time % 2 == 0){
+            if(time <= getMaxItemUseDuration(stack) && (this.isAdvanced || time % 3 == 0)){
                 //Breaks the Blocks
                 this.breakStuff(player.worldObj, MathHelper.floor_double(player.posX), MathHelper.floor_double(player.posY), MathHelper.floor_double(player.posZ));
                 //Plays a Minecart sounds (It really sounds like a Leaf Blower!)
@@ -61,32 +62,39 @@ public class ItemLeafBlower extends Item implements INameableItem{
      * @param z The Z Position of the Player
      */
     public void breakStuff(World world, int x, int y, int z){
+        ArrayList<WorldPos> breakPositions = new ArrayList<WorldPos>();
+
         for(int reachX = -ConfigIntValues.LEAF_BLOWER_RANGE_SIDES.getValue(); reachX < ConfigIntValues.LEAF_BLOWER_RANGE_SIDES.getValue()+1; reachX++){
             for(int reachZ = -ConfigIntValues.LEAF_BLOWER_RANGE_SIDES.getValue(); reachZ < ConfigIntValues.LEAF_BLOWER_RANGE_SIDES.getValue()+1; reachZ++){
                 for(int reachY = (this.isAdvanced ? -ConfigIntValues.LEAF_BLOWER_RANGE_SIDES.getValue() : -ConfigIntValues.LEAF_BLOWER_RANGE_UP.getValue()); reachY < (this.isAdvanced ? ConfigIntValues.LEAF_BLOWER_RANGE_SIDES.getValue()+1 : ConfigIntValues.LEAF_BLOWER_RANGE_UP.getValue()+1); reachY++){
                     //The current Block to break
                     Block block = world.getBlock(x+reachX, y+reachY, z+reachZ);
                     if(block != null && (block instanceof BlockBush || (this.isAdvanced && block.isLeaves(world, x+reachX, y+reachY, z+reachZ)))){
-                        WorldPos theCoord = new WorldPos(world, x+reachX, y+reachY, z+reachZ);
-                        Block theBlock = world.getBlock(theCoord.getX(), theCoord.getY(), theCoord.getZ());
-                        ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-                        int meta = world.getBlockMetadata(theCoord.getX(), theCoord.getY(), theCoord.getZ());
-                        //Gets all of the Drops the Block should have
-                        drops.addAll(theBlock.getDrops(world, theCoord.getX(), theCoord.getY(), theCoord.getZ(), meta, 0));
-
-                        //Deletes the Block
-                        world.setBlockToAir(theCoord.getX(), theCoord.getY(), theCoord.getZ());
-                        //Plays the Breaking Sound
-                        world.playAuxSFX(2001, theCoord.getX(), theCoord.getY(), theCoord.getZ(), Block.getIdFromBlock(theBlock)+(meta << 12));
-
-                        for(ItemStack theDrop : drops){
-                            //Drops the Items into the World
-                            world.spawnEntityInWorld(new EntityItem(world, theCoord.getX() + 0.5, theCoord.getY() + 0.5, theCoord.getZ() + 0.5, theDrop));
-                        }
-
-                        return;
+                        breakPositions.add(new WorldPos(world, x+reachX, y+reachY, z+reachZ));
                     }
                 }
+            }
+        }
+
+        if(!breakPositions.isEmpty()){
+            Collections.shuffle(breakPositions);
+
+            WorldPos theCoord = breakPositions.get(0);
+            Block theBlock = world.getBlock(theCoord.getX(), theCoord.getY(), theCoord.getZ());
+
+            ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
+            int meta = world.getBlockMetadata(theCoord.getX(), theCoord.getY(), theCoord.getZ());
+            //Gets all of the Drops the Block should have
+            drops.addAll(theBlock.getDrops(world, theCoord.getX(), theCoord.getY(), theCoord.getZ(), meta, 0));
+
+            //Deletes the Block
+            world.setBlockToAir(theCoord.getX(), theCoord.getY(), theCoord.getZ());
+            //Plays the Breaking Sound
+            world.playAuxSFX(2001, theCoord.getX(), theCoord.getY(), theCoord.getZ(), Block.getIdFromBlock(theBlock)+(meta << 12));
+
+            for(ItemStack theDrop : drops){
+                //Drops the Items into the World
+                world.spawnEntityInWorld(new EntityItem(world, theCoord.getX() + 0.5, theCoord.getY() + 0.5, theCoord.getZ() + 0.5, theDrop));
             }
         }
     }

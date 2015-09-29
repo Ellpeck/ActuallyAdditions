@@ -498,7 +498,7 @@ booklet.actuallyadditions.chapter.wings.text.1=Sometimes, bats will drop <item>W
 booklet.actuallyadditions.chapter.foods.name=Foodstuffs
 
 booklet.actuallyadditions.chapter.leafBlower.name=Leaf Blowers
-booklet.actuallyadditions.chapter.leafBlower.text.1=The <item>Leaf Blower<r> can blow away tall grass, flowers and other stuff around you when you <imp>hold right-click<r>. There is an <item>Advanced Leaf Blower<r>, which works like the basic one, except that it <imp>also breaks leaves<r>.
+booklet.actuallyadditions.chapter.leafBlower.text.1=The <item>Leaf Blower<r> can blow away tall grass, flowers and other stuff around you when you <imp>hold right-click<r>. There is an <item>Advanced Leaf Blower<r>, which works like the basic one, except that it operates <imp>much faster<r> and <imp>also breaks Leaves<r>.
 
 booklet.actuallyadditions.chapter.aiots.name=All-In-One-Tools (AIOTs)
 booklet.actuallyadditions.chapter.aiots.text.1=An <item>All-In-One-Tool<r> is a tool that is <imp>Pickaxe, Axe, Shovel, Sword and Hoe in one<r>. They are available in every material and if you have <imp>Thermal Foundation<r> or <imp>MekanismTools<r> installed, there are even AIOTs made of their materials!
