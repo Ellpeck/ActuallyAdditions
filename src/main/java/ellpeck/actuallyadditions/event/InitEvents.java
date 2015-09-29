@@ -10,6 +10,8 @@
 
 package ellpeck.actuallyadditions.event;
 
+import ellpeck.actuallyadditions.config.values.ConfigBoolValues;
+import ellpeck.actuallyadditions.update.UpdateCheckerClientNotifier;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.Util;
 import net.minecraftforge.common.MinecraftForge;
@@ -28,6 +30,15 @@ public class InitEvents{
         Util.registerEvent(new LogoutEvent());
         Util.registerEvent(new EntityConstructingEvent());
         MinecraftForge.TERRAIN_GEN_BUS.register(new WorldDecorationEvent());
+    }
+
+    public static void initClient(){
+        Util.registerEvent(new TooltipEvent());
+        Util.registerEvent(new RenderPlayerEventAA());
+
+        if(ConfigBoolValues.DO_UPDATE_CHECK.isEnabled()){
+            Util.registerEvent(new UpdateCheckerClientNotifier());
+        }
     }
 
 }

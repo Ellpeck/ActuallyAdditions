@@ -10,6 +10,7 @@
 
 package ellpeck.actuallyadditions.update;
 
+import ellpeck.actuallyadditions.config.values.ConfigBoolValues;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.Util;
 
@@ -25,8 +26,10 @@ public class UpdateChecker{
     public static final String DOWNLOAD_LINK = "http://minecraft.curseforge.com/mc-mods/228404-actually-additions/files";
 
     public void init(){
-        ModUtil.LOGGER.info("Initializing Update Checker...");
-        Util.registerEvent(this);
-        new ThreadUpdateChecker();
+        if(ConfigBoolValues.DO_UPDATE_CHECK.isEnabled()){
+            ModUtil.LOGGER.info("Initializing Update Checker...");
+            Util.registerEvent(this);
+            new ThreadUpdateChecker();
+        }
     }
 }

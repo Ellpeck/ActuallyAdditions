@@ -19,16 +19,12 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.VillagerRegistry;
 import ellpeck.actuallyadditions.blocks.InitBlocks;
 import ellpeck.actuallyadditions.blocks.render.*;
-import ellpeck.actuallyadditions.config.values.ConfigBoolValues;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
-import ellpeck.actuallyadditions.event.RenderPlayerEventAA;
-import ellpeck.actuallyadditions.event.TooltipEvent;
+import ellpeck.actuallyadditions.event.InitEvents;
 import ellpeck.actuallyadditions.tile.*;
-import ellpeck.actuallyadditions.update.UpdateCheckerClientNotifier;
 import ellpeck.actuallyadditions.util.AssetUtil;
 import ellpeck.actuallyadditions.util.KeyBinds;
 import ellpeck.actuallyadditions.util.ModUtil;
-import ellpeck.actuallyadditions.util.Util;
 import ellpeck.actuallyadditions.util.playerdata.PersistantClientData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.Item;
@@ -53,9 +49,7 @@ public class ClientProxy implements IProxy{
     public void init(FMLInitializationEvent event){
         ModUtil.LOGGER.info("Initializing ClientProxy...");
 
-        if(ConfigBoolValues.DO_UPDATE_CHECK.isEnabled()){
-            Util.registerEvent(new UpdateCheckerClientNotifier());
-        }
+        InitEvents.initClient();
 
         AssetUtil.COMPOST_RENDER_ID = RenderingRegistry.getNextAvailableRenderId();
         AssetUtil.FISHING_NET_RENDER_ID = RenderingRegistry.getNextAvailableRenderId();
@@ -84,9 +78,6 @@ public class ClientProxy implements IProxy{
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(InitBlocks.blockSmileyCloud), new RenderItems(new ModelSmileyCloud()));
 
         VillagerRegistry.instance().registerVillagerSkin(ConfigIntValues.JAM_VILLAGER_ID.getValue(), new ResourceLocation(ModUtil.MOD_ID_LOWER, "textures/entity/villager/jamVillager.png"));
-
-        Util.registerEvent(new TooltipEvent());
-        Util.registerEvent(new RenderPlayerEventAA());
     }
 
     @Override
