@@ -450,7 +450,7 @@ booklet.actuallyadditions.chapter.feeder.text.1=The <item>Feeder<r> is a good al
 
 booklet.actuallyadditions.chapter.compost.name=Compost and Fertilizer
 booklet.actuallyadditions.chapter.compost.text.1=The <item>Compost<r> is used to make <item>Fertilizier<r> from <item>Mashed Food<r>. <item>Fertilizer<r> acts just like Bone Meal, but can be crafted in a much simpler manner just by crafting <item>Mashed Food<r> and then putting <num> of those inside of a <item>Compost<r> and waiting for a bit. When the mashed food is composted, just take it out by right-clicking again.
-booklet.actuallyadditions.chapter.compost.text.3=<item>Mashed Food<r> can be crafted from <imp>any time of food or plantable item<r>.
+booklet.actuallyadditions.chapter.compost.text.3=<item>Mashed Food<r> can be crafted from <imp>any type of food or plantable item<r>.
 
 booklet.actuallyadditions.chapter.crate.name=Storage Crates
 booklet.actuallyadditions.chapter.crate.text.1=<item>Storage Crates<r> are big. <imp>Really big<r>. They hold tons of items, more than 4 chests worth of them. <n><n><i>"F-in' gigantic"<rs><n>   -Some Magazine

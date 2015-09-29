@@ -87,6 +87,10 @@ public class GuiBooklet extends GuiScreen{
         super.updateScreen();
         this.searchField.updateCursorCounter();
 
+        if(this.currentIndexEntry != null && this.currentChapter != null && this.currentPage != null){
+            this.currentPage.updateScreen(this.ticksElapsed);
+        }
+
         boolean buttonThere = UpdateChecker.doneChecking && UpdateChecker.updateVersion > UpdateChecker.clientVersion;
         this.getButton(BUTTON_UPDATE_ID).visible = buttonThere;
         if(buttonThere){

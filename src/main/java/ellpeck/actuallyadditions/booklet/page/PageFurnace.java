@@ -38,7 +38,7 @@ public class PageFurnace extends BookletPage{
 
     @Override
     public ItemStack[] getItemStacksForPage(){
-        return new ItemStack[]{this.result};
+        return this.result == null ? new ItemStack[0] : new ItemStack[]{this.result};
     }
 
     @Override

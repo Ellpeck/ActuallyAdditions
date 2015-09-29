@@ -28,31 +28,56 @@ import java.util.ArrayList;
 
 public class PageCrafting extends BookletPage{
 
-    private final IRecipe recipe;
+    private final IRecipe[] recipes;
+    private int recipePos;
 
-    public PageCrafting(int id, IRecipe recipe){
+    public PageCrafting(int id, IRecipe... recipes){
         super(id);
-        this.recipe = recipe;
+        this.recipes = recipes;
         InitBooklet.pagesWithItemStackData.add(this);
+    }
+
+    public PageCrafting(int id, ArrayList<IRecipe> recipes){
+        this(id, recipes.toArray(new IRecipe[recipes.size()]));
     }
 
     @Override
     public ItemStack[] getItemStacksForPage(){
-        return this.recipe == null ? null : new ItemStack[]{this.recipe.getRecipeOutput()};
+        ItemStack[] stacks = new ItemStack[this.recipes.length];
+        for(int i = 0; i < stacks.length; i++){
+            if(this.recipes[i] != null){
+                stacks[i] = this.recipes[i].getRecipeOutput();
+            }
+        }
+        return stacks;
     }
 
     @Override
     public void renderPre(GuiBooklet gui, int mouseX, int mouseY, boolean mouseClick, int ticksElapsed){
-        if(this.recipe != null){
+        if(this.recipes[this.recipePos] != null){
             gui.mc.getTextureManager().bindTexture(GuiBooklet.resLoc);
             gui.drawTexturedModalRect(gui.guiLeft+27, gui.guiTop+20, 146, 20, 99, 60);
+        }
+    }
+
+    @Override
+    public void updateScreen(int ticksElapsed){
+        if(ticksElapsed%30 == 0){
+            if(this.recipePos+1 >= this.recipes.length){
+                this.recipePos = 0;
+            }
+            else{
+                this.recipePos++;
+            }
         }
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public void render(GuiBooklet gui, int mouseX, int mouseY, boolean mouseClick, int ticksElapsed){
-        if(this.recipe == null){
+        IRecipe recipe = this.recipes[this.recipePos];
+
+        if(recipe == null){
             gui.unicodeRenderer.drawSplitString(EnumChatFormatting.DARK_RED+StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".recipeDisabled"), gui.guiLeft+14, gui.guiTop+15, 115, 0);
         }
         else{
@@ -65,7 +90,7 @@ public class PageCrafting extends BookletPage{
             gui.unicodeRenderer.drawSplitString(text, gui.guiLeft+14, gui.guiTop+90, 115, 0);
         }
 
-        if(this.recipe != null){
+        if(recipe != null){
 
             ItemStack[] stacks = new ItemStack[9];
             int width = 3;

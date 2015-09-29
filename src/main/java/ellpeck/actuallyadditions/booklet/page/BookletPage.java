@@ -93,6 +93,10 @@ public class BookletPage{
         return null;
     }
 
+    public void updateScreen(int ticksElapsed){
+
+    }
+
     @SuppressWarnings("unchecked")
     protected void renderTooltipAndTransfer(GuiBooklet gui, ItemStack stack, int x, int y, boolean checkAndTransfer, boolean mouseClick){
         List list = stack.getTooltip(gui.mc.thePlayer, gui.mc.gameSettings.advancedItemTooltips);

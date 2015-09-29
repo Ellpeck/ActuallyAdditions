@@ -40,7 +40,7 @@ public class ItemCrafting{
     public static IRecipe recipeBook;
     public static IRecipe recipeTinyCoal;
     public static IRecipe recipeTinyChar;
-    public static IRecipe recipeMashedFood;
+    public static ArrayList<IRecipe> recipesMashedFood = new ArrayList<IRecipe>();
     public static IRecipe recipeDrill;
     public static IRecipe recipeDrillSpeedI;
     public static IRecipe recipeDrillSpeedII;
@@ -478,9 +478,7 @@ public class ItemCrafting{
                     if(!isBlacklisted(item)){
                         ItemStack ingredient = new ItemStack((Item)item, 1, Util.WILDCARD);
                         GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemMisc, 8, TheMiscItems.MASHED_FOOD.ordinal()), ingredient, ingredient, ingredient, ingredient, new ItemStack(InitItems.itemKnife, 1, Util.WILDCARD));
-                        if(recipeMashedFood == null){
-                            recipeMashedFood = Util.lastIRecipe();
-                        }
+                        recipesMashedFood.add(Util.lastIRecipe());
                     }
                 }
             }

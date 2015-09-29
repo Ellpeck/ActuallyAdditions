@@ -32,7 +32,7 @@ public class PageTextOnly extends BookletPage{
 
     @Override
     public ItemStack[] getItemStacksForPage(){
-        return new ItemStack[]{this.stack};
+        return this.stack == null ? new ItemStack[0] : new ItemStack[]{this.stack};
     }
 
     @Override

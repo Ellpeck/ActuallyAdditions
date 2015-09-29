@@ -39,7 +39,7 @@ public class PageCrusherRecipe extends BookletPage{
 
     @Override
     public ItemStack[] getItemStacksForPage(){
-        return new ItemStack[]{this.recipe == null ? null : this.recipe.firstOutput};
+        return this.recipe == null ? new ItemStack[0] : new ItemStack[]{this.recipe.firstOutput};
     }
 
     @SuppressWarnings("unchecked")
