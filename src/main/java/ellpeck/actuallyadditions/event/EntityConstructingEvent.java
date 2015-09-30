@@ -12,7 +12,7 @@ package ellpeck.actuallyadditions.event;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import ellpeck.actuallyadditions.util.ModUtil;
-import ellpeck.actuallyadditions.util.playerdata.PersistantServerData;
+import ellpeck.actuallyadditions.util.playerdata.PersistentServerData;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.event.entity.EntityEvent;
 
@@ -21,8 +21,8 @@ public class EntityConstructingEvent{
     @SubscribeEvent
     public void onEntityConstructing(EntityEvent.EntityConstructing event){
         if(event.entity instanceof EntityPlayer){
-            if(PersistantServerData.get((EntityPlayer)event.entity) == null){
-                event.entity.registerExtendedProperties(ModUtil.MOD_ID, new PersistantServerData());
+            if(PersistentServerData.get((EntityPlayer)event.entity) == null){
+                event.entity.registerExtendedProperties(ModUtil.MOD_ID, new PersistentServerData());
             }
         }
     }

@@ -18,7 +18,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IExtendedEntityProperties;
 
-public class PersistantServerData implements IExtendedEntityProperties{
+public class PersistentServerData implements IExtendedEntityProperties{
 
     public boolean bookGottenAlready;
 
@@ -46,10 +46,10 @@ public class PersistantServerData implements IExtendedEntityProperties{
 
     }
 
-    public static PersistantServerData get(EntityPlayer player){
+    public static PersistentServerData get(EntityPlayer player){
         IExtendedEntityProperties properties = player.getExtendedProperties(ModUtil.MOD_ID);
-        if(properties != null && properties instanceof PersistantServerData){
-            return (PersistantServerData)properties;
+        if(properties != null && properties instanceof PersistentServerData){
+            return (PersistentServerData)properties;
         }
         return null;
     }

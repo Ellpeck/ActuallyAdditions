@@ -25,7 +25,7 @@ import ellpeck.actuallyadditions.tile.*;
 import ellpeck.actuallyadditions.util.AssetUtil;
 import ellpeck.actuallyadditions.util.KeyBinds;
 import ellpeck.actuallyadditions.util.ModUtil;
-import ellpeck.actuallyadditions.util.playerdata.PersistantClientData;
+import ellpeck.actuallyadditions.util.playerdata.PersistentClientData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
@@ -40,7 +40,7 @@ public class ClientProxy implements IProxy{
     public void preInit(FMLPreInitializationEvent event){
         ModUtil.LOGGER.info("PreInitializing ClientProxy...");
 
-        PersistantClientData.setTheFile(new File(Minecraft.getMinecraft().mcDataDir, ModUtil.MOD_ID+"Data.dat"));
+        PersistentClientData.setTheFile(new File(Minecraft.getMinecraft().mcDataDir, ModUtil.MOD_ID+"Data.dat"));
 
         KeyBinds.init();
     }

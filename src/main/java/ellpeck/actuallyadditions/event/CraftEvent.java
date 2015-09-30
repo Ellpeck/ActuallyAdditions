@@ -17,7 +17,7 @@ import ellpeck.actuallyadditions.achievement.TheAchievements;
 import ellpeck.actuallyadditions.config.values.ConfigBoolValues;
 import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.util.INameableItem;
-import ellpeck.actuallyadditions.util.playerdata.PersistantServerData;
+import ellpeck.actuallyadditions.util.playerdata.PersistentServerData;
 import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -31,7 +31,7 @@ public class CraftEvent{
 
         if(ConfigBoolValues.GIVE_BOOKLET_ON_FIRST_CRAFT.isEnabled()){
             if(!event.player.worldObj.isRemote && event.crafting.getItem() != InitItems.itemLexicon && (event.crafting.getItem() instanceof INameableItem || Block.getBlockFromItem(event.crafting.getItem()) instanceof INameableItem)){
-                PersistantServerData data = PersistantServerData.get(event.player);
+                PersistentServerData data = PersistentServerData.get(event.player);
                 if(data != null && !data.bookGottenAlready){
                     data.bookGottenAlready = true;
 
