@@ -1,6 +1,11 @@
 Textures to be made
 --------------------------------------------------------------------------------------------------------------
-This file is a reminder to Glenthor for what textures he should make or change yet.
+This file is a reminder to Glenthor for what textures he should make or change.
 If you want to give making some of these textures a go, go ahead and make a pull request when you're done.
 --------------------------------------------------------------------------------------------------------------
 
+-Leaf Generator (Generates RF from leaves)
+    -blockLeafGenerator (all sides)
+    -blockLeafGeneratorTop
+    -blockLeafGeneratorBottom
+    (if you wanna do more, just add them with the desired suffix)
