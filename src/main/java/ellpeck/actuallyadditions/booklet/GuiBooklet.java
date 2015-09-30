@@ -15,10 +15,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.booklet.page.BookletPage;
 import ellpeck.actuallyadditions.config.GuiConfiguration;
 import ellpeck.actuallyadditions.update.UpdateChecker;
-import ellpeck.actuallyadditions.util.AssetUtil;
-import ellpeck.actuallyadditions.util.KeyUtil;
-import ellpeck.actuallyadditions.util.ModUtil;
-import ellpeck.actuallyadditions.util.StringUtil;
+import ellpeck.actuallyadditions.util.*;
 import ellpeck.actuallyadditions.util.playerdata.PersistentClientData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -56,20 +53,23 @@ public class GuiBooklet extends GuiScreen{
 
     private GuiTextField searchField;
 
-    private static final int BUTTON_FORWARD_ID = 0;
-    private static final int BUTTON_BACK_ID = 1;
-    private static final int BUTTON_RETURN_ID = 2;
-    private static final int BUTTON_BEFORE_GUI_ID = 3;
-    private static final int CHAPTER_BUTTONS_START = 4;
+    public GuiButton buttonForward;
+    public GuiButton buttonBackward;
 
-    public static final int BUTTONS_PER_PAGE = 13;
-    public static final int TOOLTIP_SPLIT_LENGTH = 160;
+    public GuiButton buttonPreviousScreen;
+    public GuiButton buttonPreviouslyOpenedGui;
 
-    private static final int BUTTON_UPDATE_ID = CHAPTER_BUTTONS_START+BUTTONS_PER_PAGE;
-    private static final int BUTTON_TWITTER_ID = BUTTON_UPDATE_ID+1;
-    private static final int BUTTON_FORUM_ID = BUTTON_TWITTER_ID+1;
-    private static final int BUTTON_ACHIEVEMENTS_ID = BUTTON_FORUM_ID+1;
-    private static final int BUTTON_CONFIG_ID = BUTTON_ACHIEVEMENTS_ID+1;
+    public GuiButton buttonUpdate;
+    public GuiButton buttonTwitter;
+    public GuiButton buttonForum;
+
+    public GuiButton buttonAchievements;
+    public GuiButton buttonConfig;
+
+    public static final int CHAPTER_BUTTONS_AMOUNT = 13;
+    public GuiButton[] chapterButtons = new GuiButton[CHAPTER_BUTTONS_AMOUNT];
+
+    public static final int TOOLTIP_SPLIT_LENGTH = 200;
 
     private int ticksElapsed;
     private boolean mouseClicked;
@@ -92,10 +92,10 @@ public class GuiBooklet extends GuiScreen{
         }
 
         boolean buttonThere = UpdateChecker.doneChecking && UpdateChecker.updateVersion > UpdateChecker.clientVersion;
-        this.getButton(BUTTON_UPDATE_ID).visible = buttonThere;
+        this.buttonUpdate.visible = buttonThere;
         if(buttonThere){
             if(this.ticksElapsed%8 == 0){
-                TexturedButton button = (TexturedButton)this.getButton(BUTTON_UPDATE_ID);
+                TexturedButton button = (TexturedButton)this.buttonUpdate;
                 button.setTexturePos(245, button.texturePosY == 0 ? 22 : 0);
             }
         }
@@ -153,22 +153,38 @@ public class GuiBooklet extends GuiScreen{
 
         this.unicodeRenderer = new FontRenderer(this.mc.gameSettings, new ResourceLocation("textures/font/ascii.png"), this.mc.renderEngine, true);
 
-        this.addButton(new TexturedButton(BUTTON_FORWARD_ID, this.guiLeft+this.xSize, this.guiTop+this.ySize+2, 164, 0, 18, 10));
-        this.addButton(new TexturedButton(BUTTON_BACK_ID, this.guiLeft-18, this.guiTop+this.ySize+2, 146, 0, 18, 10));
-        this.addButton(new TexturedButton(BUTTON_RETURN_ID, this.guiLeft+this.xSize/2-7, this.guiTop+this.ySize+2, 182, 0, 15, 10));
-        this.addButton(new TexturedButton(BUTTON_BEFORE_GUI_ID, this.guiLeft+this.xSize/3, this.guiTop+this.ySize+2, 245, 44, 11, 15));
+        this.buttonForward = new TexturedButton(0, this.guiLeft+this.xSize, this.guiTop+this.ySize+2, 164, 0, 18, 10);
+        this.buttonList.add(this.buttonForward);
 
-        for(int i = 0; i < BUTTONS_PER_PAGE; i++){
-            this.addButton(new IndexButton(CHAPTER_BUTTONS_START+i, guiLeft+15, guiTop+10+(i*12), 115, 10, "", this));
+        this.buttonBackward = new TexturedButton(1, this.guiLeft-18, this.guiTop+this.ySize+2, 146, 0, 18, 10);
+        this.buttonList.add(this.buttonBackward);
+
+        this.buttonPreviousScreen = new TexturedButton(2, this.guiLeft+this.xSize/2-7, this.guiTop+this.ySize+2, 182, 0, 15, 10);
+        this.buttonList.add(this.buttonPreviousScreen);
+
+        this.buttonPreviouslyOpenedGui = new TexturedButton(3, this.guiLeft+this.xSize/3, this.guiTop+this.ySize+2, 245, 44, 11, 15);
+        this.buttonList.add(this.buttonPreviouslyOpenedGui);
+
+        this.buttonUpdate = new TexturedButton(4, this.guiLeft-11, this.guiTop-11, 245, 0, 11, 11);
+        this.buttonUpdate.visible = UpdateChecker.doneChecking && UpdateChecker.updateVersion > UpdateChecker.clientVersion;
+        this.buttonList.add(this.buttonUpdate);
+
+        this.buttonTwitter = new TexturedButton(5, this.guiLeft, this.guiTop, 213, 0, 8, 8);
+        this.buttonList.add(this.buttonTwitter);
+
+        this.buttonForum = new TexturedButton(6, this.guiLeft, this.guiTop+10, 221, 0, 8, 8);
+        this.buttonList.add(this.buttonForum);
+
+        this.buttonAchievements = new TexturedButton(7, this.guiLeft+138, this.guiTop, 205, 0, 8, 8);
+        this.buttonList.add(this.buttonAchievements);
+
+        this.buttonConfig = new TexturedButton(8, this.guiLeft+138, this.guiTop+10, 197, 0, 8, 8);
+        this.buttonList.add(this.buttonConfig);
+
+        for(int i = 0; i < this.chapterButtons.length; i++){
+            this.chapterButtons[i] = new IndexButton(9+i, guiLeft+15, guiTop+10+(i*12), 115, 10, "", this);
+            this.buttonList.add(this.chapterButtons[i]);
         }
-
-        this.addButton(new TexturedButton(BUTTON_UPDATE_ID, this.guiLeft-11, this.guiTop-11, 245, 0, 11, 11));
-        this.getButton(BUTTON_UPDATE_ID).visible = UpdateChecker.doneChecking && UpdateChecker.updateVersion > UpdateChecker.clientVersion;
-
-        this.addButton(new TexturedButton(BUTTON_TWITTER_ID, this.guiLeft, this.guiTop, 213, 0, 8, 8));
-        this.addButton(new TexturedButton(BUTTON_FORUM_ID, this.guiLeft, this.guiTop+10, 221, 0, 8, 8));
-        this.addButton(new TexturedButton(BUTTON_ACHIEVEMENTS_ID, this.guiLeft+138, this.guiTop, 205, 0, 8, 8));
-        this.addButton(new TexturedButton(BUTTON_CONFIG_ID, this.guiLeft+138, this.guiTop+10, 197, 0, 8, 8));
 
         this.searchField = new GuiTextField(this.unicodeRenderer, guiLeft+148, guiTop+162, 66, 10);
         this.searchField.setMaxStringLength(30);
@@ -189,23 +205,9 @@ public class GuiBooklet extends GuiScreen{
         }
     }
 
-    @SuppressWarnings("unchecked")
-    private void addButton(GuiButton button){
-        if(this.buttonList.size() > button.id){
-            this.buttonList.set(button.id, button);
-        }
-        else{
-            this.buttonList.add(button.id, button);
-        }
-    }
-
     @Override
     public boolean doesGuiPauseGame(){
         return false;
-    }
-
-    private GuiButton getButton(int id){
-        return (GuiButton)this.buttonList.get(id);
     }
 
     @Override
@@ -332,12 +334,12 @@ public class GuiBooklet extends GuiScreen{
 
     @Override
     public void actionPerformed(GuiButton button){
-        if(button.id == BUTTON_BEFORE_GUI_ID){
+        if(button == this.buttonPreviouslyOpenedGui){
             if(this.parentScreen != null){
                 mc.displayGuiScreen(this.parentScreen);
             }
         }
-        else if(button.id == BUTTON_UPDATE_ID){
+        else if(button == this.buttonUpdate){
             if(UpdateChecker.doneChecking && UpdateChecker.updateVersion > UpdateChecker.clientVersion){
                 try{
                     if(Desktop.isDesktopSupported()){
@@ -349,7 +351,7 @@ public class GuiBooklet extends GuiScreen{
                 }
             }
         }
-        else if(button.id == BUTTON_TWITTER_ID){
+        else if(button == this.buttonTwitter){
             try{
                 if(Desktop.isDesktopSupported()){
                     Desktop.getDesktop().browse(new URI("http://twitter.com/ActAddMod"));
@@ -359,7 +361,7 @@ public class GuiBooklet extends GuiScreen{
                 ModUtil.LOGGER.error("Something bad happened when trying to open a URL!", e);
             }
         }
-        else if(button.id == BUTTON_FORUM_ID){
+        else if(button == this.buttonForum){
             try{
                 if(Desktop.isDesktopSupported()){
                     Desktop.getDesktop().browse(new URI("http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/wip-mods/2374910-actually-additions-a-bunch-of-awesome-gadgets"));
@@ -369,41 +371,41 @@ public class GuiBooklet extends GuiScreen{
                 ModUtil.LOGGER.error("Something bad happened when trying to open a URL!", e);
             }
         }
-        else if(button.id == BUTTON_CONFIG_ID){
+        else if(button == this.buttonConfig){
             mc.displayGuiScreen(new GuiConfiguration(this));
         }
-        else if(button.id == BUTTON_ACHIEVEMENTS_ID){
+        else if(button == this.buttonAchievements){
             mc.displayGuiScreen(new GuiAAAchievements(this, mc.thePlayer.getStatFileWriter()));
         }
-        else if(button.id == BUTTON_FORWARD_ID){
+        else if(button == this.buttonForward){
             if(this.currentIndexEntry != null){
                 if(this.currentPage != null){
                     BookletPage page = this.getNextPage(this.currentChapter, this.currentPage);
                     if(page != null) this.currentPage = page;
 
-                    this.getButton(BUTTON_FORWARD_ID).visible = this.getNextPage(this.currentChapter, this.currentPage) != null;
-                    this.getButton(BUTTON_BACK_ID).visible = this.getPrevPage(this.currentChapter, this.currentPage) != null;
+                    this.buttonForward.visible = this.getNextPage(this.currentChapter, this.currentPage) != null;
+                    this.buttonBackward.visible = this.getPrevPage(this.currentChapter, this.currentPage) != null;
                 }
                 else{
                     this.openIndexEntry(this.currentIndexEntry, this.pageOpenInIndex+1, !(this.currentIndexEntry instanceof BookletEntryAllSearch));
                 }
             }
         }
-        else if(button.id == BUTTON_BACK_ID){
+        else if(button == this.buttonBackward){
             if(this.currentIndexEntry != null){
                 if(this.currentPage != null){
                     BookletPage page = this.getPrevPage(this.currentChapter, this.currentPage);
                     if(page != null) this.currentPage = page;
 
-                    this.getButton(BUTTON_FORWARD_ID).visible = this.getNextPage(this.currentChapter, this.currentPage) != null;
-                    this.getButton(BUTTON_BACK_ID).visible = this.getPrevPage(this.currentChapter, this.currentPage) != null;
+                    this.buttonForward.visible = this.getNextPage(this.currentChapter, this.currentPage) != null;
+                    this.buttonBackward.visible = this.getPrevPage(this.currentChapter, this.currentPage) != null;
                 }
                 else{
                     this.openIndexEntry(this.currentIndexEntry, this.pageOpenInIndex-1, !(this.currentIndexEntry instanceof BookletEntryAllSearch));
                 }
             }
         }
-        else if(button.id == BUTTON_RETURN_ID){
+        else if(button == this.buttonPreviousScreen){
             if(this.currentChapter != null && this.currentChapter != InitBooklet.chapterIntro){
                 this.openIndexEntry(this.currentIndexEntry, this.pageOpenInIndex, true);
             }
@@ -411,19 +413,21 @@ public class GuiBooklet extends GuiScreen{
                 this.openIndexEntry(null, 1, true);
             }
         }
-        else if(button.id >= CHAPTER_BUTTONS_START){
-            int actualButton = button.id-CHAPTER_BUTTONS_START;
-            if(this.currentIndexEntry != null){
-                if(this.currentChapter == null){
-                    if(actualButton < this.currentIndexEntry.chapters.size()){
-                        BookletChapter chap = currentIndexEntry.chapters.get(actualButton+(BUTTONS_PER_PAGE*this.pageOpenInIndex-BUTTONS_PER_PAGE));
-                        this.openChapter(chap, chap.pages[0]);
+        else{
+            int place = Util.arrayContains(this.chapterButtons, button);
+            if(place >= 0){
+                if(this.currentIndexEntry != null){
+                    if(this.currentChapter == null){
+                        if(place < this.currentIndexEntry.chapters.size()){
+                            BookletChapter chap = currentIndexEntry.chapters.get(place+(this.chapterButtons.length*this.pageOpenInIndex-this.chapterButtons.length));
+                            this.openChapter(chap, chap.pages[0]);
+                        }
                     }
                 }
-            }
-            else{
-                if(actualButton < InitBooklet.entries.size()){
-                    this.openIndexEntry(InitBooklet.entries.get(actualButton), 1, true);
+                else{
+                    if(place < InitBooklet.entries.size()){
+                        this.openIndexEntry(InitBooklet.entries.get(place), 1, true);
+                    }
                 }
             }
         }
@@ -444,29 +448,29 @@ public class GuiBooklet extends GuiScreen{
         this.currentChapter = null;
 
         this.currentIndexEntry = entry;
-        this.indexPageAmount = entry == null ? 1 : entry.chapters.size()/BUTTONS_PER_PAGE+1;
+        this.indexPageAmount = entry == null ? 1 : entry.chapters.size()/this.chapterButtons.length+1;
         this.pageOpenInIndex = entry == null ? 1 : (this.indexPageAmount <= page || page <= 0 ? this.indexPageAmount : page);
 
-        this.getButton(BUTTON_RETURN_ID).visible = entry != null;
-        this.getButton(BUTTON_FORWARD_ID).visible = this.pageOpenInIndex < this.indexPageAmount;
-        this.getButton(BUTTON_BACK_ID).visible = this.pageOpenInIndex > 1;
-        this.getButton(BUTTON_BEFORE_GUI_ID).visible = this.parentScreen != null;
+        this.buttonPreviousScreen.visible = entry != null;
+        this.buttonForward.visible = this.pageOpenInIndex < this.indexPageAmount;
+        this.buttonBackward.visible = this.pageOpenInIndex > 1;
+        this.buttonPreviouslyOpenedGui.visible = this.parentScreen != null;
 
-        for(int i = 0; i < BUTTONS_PER_PAGE; i++){
-            IndexButton button = (IndexButton)this.getButton(CHAPTER_BUTTONS_START+i);
+        for(int i = 0; i < this.chapterButtons.length; i++){
+            IndexButton button = (IndexButton)this.chapterButtons[i];
             if(entry == null){
-                boolean entryExists = InitBooklet.entries.size() > i+(BUTTONS_PER_PAGE*this.pageOpenInIndex-BUTTONS_PER_PAGE);
+                boolean entryExists = InitBooklet.entries.size() > i;
                 button.visible = entryExists;
                 if(entryExists){
-                    button.displayString = InitBooklet.entries.get(i+(BUTTONS_PER_PAGE*this.pageOpenInIndex-BUTTONS_PER_PAGE)).getLocalizedName();
+                    button.displayString = InitBooklet.entries.get(i).getLocalizedName();
                     button.chap = null;
                 }
             }
             else{
-                boolean entryExists = entry.chapters.size() > i+(BUTTONS_PER_PAGE*this.pageOpenInIndex-BUTTONS_PER_PAGE);
+                boolean entryExists = entry.chapters.size() > i+(this.chapterButtons.length*this.pageOpenInIndex-this.chapterButtons.length);
                 button.visible = entryExists;
                 if(entryExists){
-                    BookletChapter chap = entry.chapters.get(i+(BUTTONS_PER_PAGE*this.pageOpenInIndex-BUTTONS_PER_PAGE));
+                    BookletChapter chap = entry.chapters.get(i+(this.chapterButtons.length*this.pageOpenInIndex-this.chapterButtons.length));
                     button.displayString = chap.getLocalizedName();
                     button.chap = chap;
                 }
@@ -484,14 +488,13 @@ public class GuiBooklet extends GuiScreen{
         this.currentChapter = chapter;
         this.currentPage = page != null && this.hasPage(chapter, page) ? page : chapter.pages[0];
 
-        this.getButton(BUTTON_FORWARD_ID).visible = this.getNextPage(chapter, this.currentPage) != null;
-        this.getButton(BUTTON_BACK_ID).visible = this.getPrevPage(chapter, this.currentPage) != null;
-        this.getButton(BUTTON_RETURN_ID).visible = true;
-        this.getButton(BUTTON_BEFORE_GUI_ID).visible = this.parentScreen != null;
+        this.buttonForward.visible = this.getNextPage(chapter, this.currentPage) != null;
+        this.buttonBackward.visible = this.getPrevPage(chapter, this.currentPage) != null;
+        this.buttonPreviousScreen.visible = true;
+        this.buttonPreviouslyOpenedGui.visible = this.parentScreen != null;
 
-        for(int i = 0; i < BUTTONS_PER_PAGE; i++){
-            GuiButton button = this.getButton(CHAPTER_BUTTONS_START+i);
-            button.visible = false;
+        for(GuiButton chapterButton : this.chapterButtons){
+            chapterButton.visible = false;
         }
     }
 

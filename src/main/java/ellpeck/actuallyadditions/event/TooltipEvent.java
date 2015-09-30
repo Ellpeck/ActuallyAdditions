@@ -47,7 +47,7 @@ public class TooltipEvent{
                             GuiBooklet book = new GuiBooklet(Minecraft.getMinecraft().currentScreen);
                             Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.func_147674_a(new ResourceLocation("gui.button.press"), 1.0F));
                             Minecraft.getMinecraft().displayGuiScreen(book);
-                            book.openIndexEntry(page.getChapter().entry, InitBooklet.entries.indexOf(page.getChapter().entry)/GuiBooklet.BUTTONS_PER_PAGE+1, true);
+                            book.openIndexEntry(page.getChapter().entry, InitBooklet.entries.indexOf(page.getChapter().entry)/GuiBooklet.CHAPTER_BUTTONS_AMOUNT+1, true);
                             book.openChapter(page.getChapter(), page);
                         }
                     }

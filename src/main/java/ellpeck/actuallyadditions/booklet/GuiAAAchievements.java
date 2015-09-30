@@ -17,19 +17,19 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.achievement.GuiAchievements;
 import net.minecraft.stats.StatFileWriter;
 
+/**
+ * (Partially excerpted from Botania by Vazkii with permission, thanks!)
+ */
 public class GuiAAAchievements extends GuiAchievements{
 
     public GuiAAAchievements(GuiScreen screen, StatFileWriter writer){
         super(screen, writer);
+        ReflectionHelper.setPrivateValue(GuiAchievements.class, this, InitAchievements.pageNumber, 21);
     }
 
-    /**
-     * (Partially excerpted from Botania by Vazkii with permission, thanks!)
-     */
     @Override
     public void initGui(){
         super.initGui();
-        ReflectionHelper.setPrivateValue(GuiAchievements.class, this, InitAchievements.pageNumber, 21);
         ((GuiButton)buttonList.get(1)).displayString = InitAchievements.theAchievementPage.getName();
     }
 }
