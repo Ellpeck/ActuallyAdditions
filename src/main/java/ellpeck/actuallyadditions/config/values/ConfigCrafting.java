@@ -89,6 +89,7 @@ public enum ConfigCrafting{
     CANOLA_PRESS("Canola Press", ConfigCategories.BLOCKS_CRAFTING),
     FERMENTING_BARREL("Fermenting Barrel", ConfigCategories.BLOCKS_CRAFTING),
     COAL_GENERATOR("Coal Generator", ConfigCategories.BLOCKS_CRAFTING),
+    LEAF_GENERATOR("Leaf Generator", ConfigCategories.BLOCKS_CRAFTING),
     OIL_GENERATOR("Oil Generator", ConfigCategories.BLOCKS_CRAFTING),
     PHANTOMFACE("Phantomface", ConfigCategories.BLOCKS_CRAFTING),
     PHANTOM_CONNECTOR("Phantom Connector", ConfigCategories.ITEMS_CRAFTING),

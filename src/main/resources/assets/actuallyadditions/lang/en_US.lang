@@ -88,6 +88,7 @@ tile.actuallyadditions.blockFlax.name=Flax Plant
 tile.actuallyadditions.blockCoffeeMachine.name=Coffee Machine
 tile.actuallyadditions.blockXPSolidifier.name=Experience Solidifier
 tile.actuallyadditions.blockSmileyCloud.name=Smiley Cloud
+tile.actuallyadditions.blockLeafGenerator.name=Leaf-Eating Generator
 
 #ESD
 tile.actuallyadditions.blockInputter.name=ESD
@@ -527,3 +528,6 @@ booklet.actuallyadditions.chapter.waterRemovalRing.text.1=The <item>Ring Of Liqu
 booklet.actuallyadditions.chapter.batteries.name=Batteries
 booklet.actuallyadditions.chapter.batteries.text.1=<item>Batteries<r> are a good way to store RF to move around. They can be <imp>charged in an Energizer<r> and <imp>discharged in an Enervator<r>.
 
+booklet.actuallyadditions.chapter.leafGen.name=Leaf-Eating Generator
+booklet.actuallyadditions.chapter.leafGen.text.1=The <item>Leaf Generator<r> can generate <imp>RF<r> just by being placed alongside some <item>Leaves<r>. <n>It will destroy the leaves, generating <imp><rf> RF per leaf broken<r> in the process. <n>By right-clicking the generator, you can see how much RF it has stored.
+booklet.actuallyadditions.chapter.leafGen.text.2=<i>Munchy

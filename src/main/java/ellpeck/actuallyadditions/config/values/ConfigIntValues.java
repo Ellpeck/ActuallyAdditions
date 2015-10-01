@@ -160,7 +160,11 @@ public enum ConfigIntValues{
     ORE_MAGNET_MAX_TIMER("Ore Magnet: Max Timer", ConfigCategories.MACHINE_VALUES, 20, 1, 2000, "The approximate Time it takes for the Ore Magnet to search for a new block to mine"),
     ORE_MAGNET_RANGE("Ore Magnet: Range", ConfigCategories.MACHINE_VALUES, 10, 1, 60, "The range of the Ore Magnet"),
     ORE_MAGNET_OIL_USE("Ore Magnet: Oil Use", ConfigCategories.MACHINE_VALUES, 30, 0, 5000, "The amount of oil the Ore Magnet uses every Block"),
-    ORE_MAGNET_ENERGY_USE("Ore Magnet: Energy USe", ConfigCategories.MACHINE_VALUES, 250, 10, 10000, "The amount of Energy the Ore Magnet uses every tick");
+    ORE_MAGNET_ENERGY_USE("Ore Magnet: Energy USe", ConfigCategories.MACHINE_VALUES, 250, 10, 10000, "The amount of Energy the Ore Magnet uses every tick"),
+
+    LEAF_GENERATOR_ENERGY_PRODUCED("Leaf Generator: Energy Produce", ConfigCategories.MACHINE_VALUES, 20, 1, 10000, "How much Energy the Leaf Generator produces per Leaf broken"),
+    LEAF_GENERATOR_COOLDOWN_TIME("Leaf Generator: Cooldown Time", ConfigCategories.MACHINE_VALUES, 5, 0, 100, "The amount of ticks that it takes util another Leaf gets proken"),
+    LEAF_GENERATOR_RANGE("Leaf Generator: Range", ConfigCategories.MACHINE_VALUES, 5, 1, 100, "The radius of a leaf generator");
 
     public final String name;
     public final String category;

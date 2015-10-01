@@ -73,6 +73,7 @@ public class BlockCrafting{
     public static IRecipe recipeCanolaPress;
     public static IRecipe[] recipesLamps = new IRecipe[BlockColoredLamp.allLampTypes.length];
     public static IRecipe recipePowerer;
+    public static IRecipe recipeLeafGen;
 
     public static void init(){
 
@@ -306,6 +307,18 @@ public class BlockCrafting{
                     'R', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.STONE_CASING.ordinal()),
                     'B', new ItemStack(Items.coal, 1, Util.WILDCARD)));
             recipeCoalGen = Util.lastIRecipe();
+        }
+
+        //Leaf Generator
+        if(ConfigCrafting.LEAF_GENERATOR.isEnabled()){
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockLeafGenerator),
+                    "IEI", "GLG", "ICI",
+                    'I', "ingotIron",
+                    'G', "ingotGold",
+                    'E', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.STONE_CASING.ordinal()),
+                    'L', "treeLeaves",
+                    'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal())));
+            recipeLeafGen = Util.lastIRecipe();
         }
 
         //Enderpearl Block

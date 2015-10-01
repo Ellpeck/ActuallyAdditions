@@ -12,6 +12,7 @@ package ellpeck.actuallyadditions.tile;
 
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyProvider;
+import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.util.WorldPos;
 import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.block.Block;
@@ -32,14 +33,14 @@ public class TileEntityLeafGenerator extends TileEntityBase implements IEnergyPr
     public void updateEntity(){
         if(!worldObj.isRemote){
 
-            if(this.nextUseCounter >= 5){ //TODO Config
+            if(this.nextUseCounter >= ConfigIntValues.LEAF_GENERATOR_COOLDOWN_TIME.getValue()){
                 this.nextUseCounter = 0;
 
-                int energyProducedPerLeaf = 20; //TODO Config
+                int energyProducedPerLeaf = ConfigIntValues.LEAF_GENERATOR_ENERGY_PRODUCED.getValue();
                 if(energyProducedPerLeaf <= this.storage.getMaxEnergyStored()-this.storage.getEnergyStored()){
                     ArrayList<WorldPos> breakPositions = new ArrayList<WorldPos>();
 
-                    int range = 5; //TODO Config
+                    int range = ConfigIntValues.LEAF_GENERATOR_RANGE.getValue();
                     for(int reachX = -range; reachX < range+1; reachX++){
                         for(int reachZ = -range; reachZ < range+1; reachZ++){
                             for(int reachY = -range; reachY < range+1; reachY++){
