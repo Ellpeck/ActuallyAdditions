@@ -30,7 +30,7 @@ public class ConfigurationHandler{
         Util.registerEvent(this);
 
         if(config == null){
-            config = new Configuration(configFile);
+            config = new Configuration(configFile, true);
             loadConfig();
         }
     }

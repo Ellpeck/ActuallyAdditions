@@ -12,25 +12,25 @@ package ellpeck.actuallyadditions.config;
 
 public enum ConfigCategories{
 
-    FOOD_CRAFTING("food crafting", "Crafting Recipes for Food Items"),
-    BLOCKS_CRAFTING("block crafting", "Crafting Recipes for Blocks"),
-    ITEMS_CRAFTING("item crafting", "Crafting Recipes for Items"),
-    TOOL_VALUES("tool values", "Values for Tools"),
-    MACHINE_VALUES("machine values", "Values for Machines"),
-    MOB_DROPS("mob drops", "Everything regarding Item drops from mobs"),
-    WORLD_GEN("world gen", "Everything regarding World Generation"),
-    POTION_RING_CRAFTING("ring crafting", "Crafting Recipes for Rings"),
-    OTHER("other", "Everything else"),
-    FLUIDS("fluids", "Everything regarding fluids"),
-    DRILL_VALUES("drill values", "Properties of Drills and their Upgrades"),
-    CRUSHER_RECIPES("crusher recipes", "Recipes for the Crusher"),
-    ARMOR_VALUES("armor values", "Values for Armor");
+    FOOD_CRAFTING("Food Crafting", "Crafting Recipes for Food Items"),
+    BLOCKS_CRAFTING("Block Crafting", "Crafting Recipes for Blocks"),
+    ITEMS_CRAFTING("Item Crafting", "Crafting Recipes for Items"),
+    TOOL_VALUES("Tool Values", "Values for Tools"),
+    MACHINE_VALUES("Machine Values", "Values for Machines"),
+    MOB_DROPS("Mob Drops", "Everything regarding Item drops from mobs"),
+    WORLD_GEN("World Gen", "Everything regarding World Generation"),
+    POTION_RING_CRAFTING("Ring Crafting", "Crafting Recipes for Rings"),
+    OTHER("Other", "Everything else"),
+    FLUIDS("Fluids", "Everything regarding fluids"),
+    DRILL_VALUES("Drill Values", "Properties of Drills and their Upgrades"),
+    CRUSHER_RECIPES("Crusher Recipes", "Recipes for the Crusher"),
+    ARMOR_VALUES("Armor Values", "Values for Armor");
 
     public final String name;
     public final String comment;
 
     ConfigCategories(String name, String comment){
-        this.name = name.toLowerCase();
+        this.name = name;
         this.comment = comment;
     }
 }
