@@ -13,7 +13,7 @@ package ellpeck.actuallyadditions.items;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.items.metalists.TheSpecialDrops;
-import ellpeck.actuallyadditions.util.INameableItem;
+import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
@@ -27,7 +27,7 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class ItemSpecialDrop extends Item implements INameableItem{
+public class ItemSpecialDrop extends Item implements IActAddItemOrBlock{
 
     public static final int SOLID_XP_AMOUNT = 8;
 

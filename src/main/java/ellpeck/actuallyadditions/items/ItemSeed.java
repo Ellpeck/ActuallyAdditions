@@ -13,7 +13,7 @@ package ellpeck.actuallyadditions.items;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.blocks.BlockPlant;
-import ellpeck.actuallyadditions.util.INameableItem;
+import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -25,7 +25,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 
-public class ItemSeed extends ItemSeeds implements INameableItem{
+public class ItemSeed extends ItemSeeds implements IActAddItemOrBlock{
 
     public Block plant;
     public String name;

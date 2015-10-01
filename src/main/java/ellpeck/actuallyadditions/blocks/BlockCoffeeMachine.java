@@ -16,7 +16,7 @@ import ellpeck.actuallyadditions.ActuallyAdditions;
 import ellpeck.actuallyadditions.inventory.GuiHandler;
 import ellpeck.actuallyadditions.tile.TileEntityCoffeeMachine;
 import ellpeck.actuallyadditions.util.AssetUtil;
-import ellpeck.actuallyadditions.util.INameableItem;
+import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -31,7 +31,7 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
-public class BlockCoffeeMachine extends BlockContainerBase implements INameableItem{
+public class BlockCoffeeMachine extends BlockContainerBase implements IActAddItemOrBlock{
 
     public BlockCoffeeMachine(){
         super(Material.rock);

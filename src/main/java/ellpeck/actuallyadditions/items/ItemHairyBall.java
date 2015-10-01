@@ -13,7 +13,7 @@ package ellpeck.actuallyadditions.items;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.recipe.HairyBallHandler;
-import ellpeck.actuallyadditions.util.INameableItem;
+import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.item.EntityItem;
@@ -27,7 +27,7 @@ import net.minecraft.world.World;
 
 import java.util.Random;
 
-public class ItemHairyBall extends Item implements INameableItem{
+public class ItemHairyBall extends Item implements IActAddItemOrBlock{
 
     @Override
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player){

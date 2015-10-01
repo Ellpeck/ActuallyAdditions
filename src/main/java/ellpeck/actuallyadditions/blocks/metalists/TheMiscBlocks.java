@@ -10,10 +10,10 @@
 
 package ellpeck.actuallyadditions.blocks.metalists;
 
-import ellpeck.actuallyadditions.util.INameableItem;
+import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import net.minecraft.item.EnumRarity;
 
-public enum TheMiscBlocks implements INameableItem{
+public enum TheMiscBlocks implements IActAddItemOrBlock{
 
     QUARTZ_PILLAR("BlackQuartzPillar", EnumRarity.rare),
     QUARTZ_CHISELED("BlackQuartzChiseled", EnumRarity.rare),

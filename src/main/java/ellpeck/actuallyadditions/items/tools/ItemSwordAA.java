@@ -12,7 +12,7 @@ package ellpeck.actuallyadditions.items.tools;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ellpeck.actuallyadditions.util.INameableItem;
+import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.item.EnumRarity;
@@ -21,7 +21,7 @@ import net.minecraft.item.ItemSword;
 import net.minecraft.util.IIcon;
 import net.minecraftforge.oredict.OreDictionary;
 
-public class ItemSwordAA extends ItemSword implements INameableItem{
+public class ItemSwordAA extends ItemSword implements IActAddItemOrBlock{
 
     private String name;
     private String oredictName;

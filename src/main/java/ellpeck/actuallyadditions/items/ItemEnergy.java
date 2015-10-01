@@ -13,6 +13,7 @@ package ellpeck.actuallyadditions.items;
 import cofh.api.energy.ItemEnergyContainer;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -22,7 +23,7 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public abstract class ItemEnergy extends ItemEnergyContainer{
+public abstract class ItemEnergy extends ItemEnergyContainer implements IActAddItemOrBlock{
 
     public ItemEnergy(int maxPower, int transfer){
         super(maxPower, transfer);

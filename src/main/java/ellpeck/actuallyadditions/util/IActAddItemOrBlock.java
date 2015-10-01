@@ -10,7 +10,10 @@
 
 package ellpeck.actuallyadditions.util;
 
-public interface INameableItem{
+/**
+ * The indicator interface for any block or item that is part of ActuallyAdditions
+ */
+public interface IActAddItemOrBlock{
 
     String getName();
 

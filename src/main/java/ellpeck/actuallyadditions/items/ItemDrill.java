@@ -19,7 +19,6 @@ import ellpeck.actuallyadditions.config.ConfigValues;
 import ellpeck.actuallyadditions.config.values.ConfigFloatValues;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.inventory.GuiHandler;
-import ellpeck.actuallyadditions.util.INameableItem;
 import ellpeck.actuallyadditions.util.ItemUtil;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.WorldUtil;
@@ -47,7 +46,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @SuppressWarnings("unchecked")
-public class ItemDrill extends ItemEnergy implements INameableItem{
+public class ItemDrill extends ItemEnergy{
 
     public ItemDrill(){
         super(500000, 5000);

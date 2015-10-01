@@ -13,7 +13,6 @@ package ellpeck.actuallyadditions.items;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
-import ellpeck.actuallyadditions.util.INameableItem;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -29,7 +28,7 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
-public class ItemTeleStaff extends ItemEnergy implements INameableItem{
+public class ItemTeleStaff extends ItemEnergy{
 
     public ItemTeleStaff(){
         super(500000, 10000);

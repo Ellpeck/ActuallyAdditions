@@ -10,10 +10,10 @@
 
 package ellpeck.actuallyadditions.items.metalists;
 
-import ellpeck.actuallyadditions.util.INameableItem;
+import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import net.minecraft.item.EnumRarity;
 
-public enum TheMiscItems implements INameableItem{
+public enum TheMiscItems implements IActAddItemOrBlock{
 
     PAPER_CONE("PaperCone", EnumRarity.common),
     MASHED_FOOD("MashedFood", EnumRarity.uncommon),

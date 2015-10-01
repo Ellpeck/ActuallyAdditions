@@ -12,7 +12,7 @@ package ellpeck.actuallyadditions.blocks;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ellpeck.actuallyadditions.util.INameableItem;
+import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockCrops;
@@ -28,7 +28,7 @@ import net.minecraftforge.common.EnumPlantType;
 
 import java.util.Random;
 
-public class BlockPlant extends BlockCrops implements INameableItem{
+public class BlockPlant extends BlockCrops implements IActAddItemOrBlock{
 
     private IIcon[] textures;
     private String name;

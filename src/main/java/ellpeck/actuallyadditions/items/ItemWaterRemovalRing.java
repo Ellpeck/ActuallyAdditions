@@ -13,7 +13,6 @@ package ellpeck.actuallyadditions.items;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
-import ellpeck.actuallyadditions.util.INameableItem;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
@@ -25,7 +24,7 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
-public class ItemWaterRemovalRing extends ItemEnergy implements INameableItem{
+public class ItemWaterRemovalRing extends ItemEnergy{
 
     public ItemWaterRemovalRing(){
         super(1000000, 5000);

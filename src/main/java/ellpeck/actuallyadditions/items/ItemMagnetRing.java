@@ -13,7 +13,6 @@ package ellpeck.actuallyadditions.items;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
-import ellpeck.actuallyadditions.util.INameableItem;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
@@ -28,7 +27,7 @@ import net.minecraft.world.World;
 
 import java.util.ArrayList;
 
-public class ItemMagnetRing extends ItemEnergy implements INameableItem{
+public class ItemMagnetRing extends ItemEnergy{
 
     public ItemMagnetRing(){
         super(3000000, 5000);

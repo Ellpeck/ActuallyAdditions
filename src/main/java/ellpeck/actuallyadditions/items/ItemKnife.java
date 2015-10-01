@@ -14,7 +14,7 @@ import com.google.common.collect.Multimap;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
-import ellpeck.actuallyadditions.util.INameableItem;
+import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -24,7 +24,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 
-public class ItemKnife extends Item implements INameableItem{
+public class ItemKnife extends Item implements IActAddItemOrBlock{
 
     public ItemKnife(){
         this.setMaxDamage(ConfigIntValues.KNIFE_DAMAGE.getValue());

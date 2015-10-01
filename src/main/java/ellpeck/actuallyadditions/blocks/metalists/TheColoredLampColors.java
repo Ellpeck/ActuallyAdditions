@@ -10,9 +10,9 @@
 
 package ellpeck.actuallyadditions.blocks.metalists;
 
-import ellpeck.actuallyadditions.util.INameableItem;
+import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 
-public enum TheColoredLampColors implements INameableItem{
+public enum TheColoredLampColors implements IActAddItemOrBlock{
 
     WHITE("White"),
     ORANGE("Orange"),

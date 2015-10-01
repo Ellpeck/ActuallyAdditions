@@ -13,7 +13,7 @@ package ellpeck.actuallyadditions.items;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.tile.IPhantomTile;
-import ellpeck.actuallyadditions.util.INameableItem;
+import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
 import ellpeck.actuallyadditions.util.WorldPos;
@@ -30,7 +30,7 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
 
-public class ItemPhantomConnector extends Item implements INameableItem{
+public class ItemPhantomConnector extends Item implements IActAddItemOrBlock{
 
     public ItemPhantomConnector(){
         this.setMaxStackSize(1);

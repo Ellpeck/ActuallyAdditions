@@ -12,7 +12,7 @@ package ellpeck.actuallyadditions.items;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ellpeck.actuallyadditions.util.INameableItem;
+import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
@@ -22,7 +22,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraftforge.oredict.OreDictionary;
 
-public class ItemArmorAA extends ItemArmor implements INameableItem{
+public class ItemArmorAA extends ItemArmor implements IActAddItemOrBlock{
 
     private String repairItem;
     private String name;

@@ -12,7 +12,7 @@ package ellpeck.actuallyadditions.blocks;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ellpeck.actuallyadditions.util.INameableItem;
+import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -28,7 +28,7 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class BlockSlabs extends Block implements INameableItem{
+public class BlockSlabs extends Block implements IActAddItemOrBlock{
 
     private String name;
     private Block fullBlock;

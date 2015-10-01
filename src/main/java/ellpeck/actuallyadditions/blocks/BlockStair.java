@@ -10,14 +10,14 @@
 
 package ellpeck.actuallyadditions.blocks;
 
-import ellpeck.actuallyadditions.util.INameableItem;
+import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockStairs;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
-public class BlockStair extends BlockStairs implements INameableItem{
+public class BlockStair extends BlockStairs implements IActAddItemOrBlock{
 
     private String name;
 

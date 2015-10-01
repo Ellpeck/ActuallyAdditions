@@ -13,7 +13,6 @@ package ellpeck.actuallyadditions.items;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
-import ellpeck.actuallyadditions.util.INameableItem;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.WorldPos;
 import net.minecraft.block.Block;
@@ -33,7 +32,7 @@ import net.minecraftforge.common.IPlantable;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class ItemGrowthRing extends ItemEnergy implements INameableItem{
+public class ItemGrowthRing extends ItemEnergy{
 
     public ItemGrowthRing(){
         super(1000000, 5000);

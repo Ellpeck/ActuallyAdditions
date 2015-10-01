@@ -17,7 +17,7 @@ import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.tile.IPhantomTile;
 import ellpeck.actuallyadditions.tile.TileEntityPhantomPlacer;
 import ellpeck.actuallyadditions.tile.TileEntityPhantomface;
-import ellpeck.actuallyadditions.util.INameableItem;
+import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
 import net.minecraft.block.Block;
@@ -34,7 +34,7 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
-public class BlockPhantom extends BlockContainerBase implements INameableItem{
+public class BlockPhantom extends BlockContainerBase implements IActAddItemOrBlock{
 
     public enum Type{
         FACE,

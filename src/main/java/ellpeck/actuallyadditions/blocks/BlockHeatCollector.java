@@ -13,7 +13,7 @@ package ellpeck.actuallyadditions.blocks;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.tile.TileEntityHeatCollector;
-import ellpeck.actuallyadditions.util.INameableItem;
+import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -25,7 +25,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
-public class BlockHeatCollector extends BlockContainerBase implements INameableItem{
+public class BlockHeatCollector extends BlockContainerBase implements IActAddItemOrBlock{
 
     private IIcon topIcon;
     private IIcon bottomIcon;

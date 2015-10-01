@@ -14,7 +14,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.config.values.ConfigBoolValues;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
-import ellpeck.actuallyadditions.util.INameableItem;
+import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.WorldPos;
 import net.minecraft.block.Block;
@@ -33,7 +33,7 @@ import net.minecraft.world.World;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class ItemLeafBlower extends Item implements INameableItem{
+public class ItemLeafBlower extends Item implements IActAddItemOrBlock{
 
     private final boolean isAdvanced;
 

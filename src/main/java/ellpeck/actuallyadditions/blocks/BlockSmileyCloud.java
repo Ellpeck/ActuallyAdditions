@@ -16,7 +16,7 @@ import ellpeck.actuallyadditions.ActuallyAdditions;
 import ellpeck.actuallyadditions.inventory.GuiHandler;
 import ellpeck.actuallyadditions.tile.TileEntitySmileyCloud;
 import ellpeck.actuallyadditions.util.AssetUtil;
-import ellpeck.actuallyadditions.util.INameableItem;
+import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -32,7 +32,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockSmileyCloud extends BlockContainerBase implements INameableItem{
+public class BlockSmileyCloud extends BlockContainerBase implements IActAddItemOrBlock{
 
     public BlockSmileyCloud(){
         super(Material.cloth);

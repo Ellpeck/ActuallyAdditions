@@ -13,7 +13,7 @@ package ellpeck.actuallyadditions.blocks;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.tile.TileEntityLavaFactoryController;
-import ellpeck.actuallyadditions.util.INameableItem;
+import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
 import net.minecraft.block.Block;
@@ -28,7 +28,7 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
-public class BlockLavaFactoryController extends BlockContainerBase implements INameableItem{
+public class BlockLavaFactoryController extends BlockContainerBase implements IActAddItemOrBlock{
 
     private IIcon topIcon;
 

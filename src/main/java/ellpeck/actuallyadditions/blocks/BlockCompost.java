@@ -18,7 +18,7 @@ import ellpeck.actuallyadditions.items.ItemMisc;
 import ellpeck.actuallyadditions.items.metalists.TheMiscItems;
 import ellpeck.actuallyadditions.tile.TileEntityCompost;
 import ellpeck.actuallyadditions.util.AssetUtil;
-import ellpeck.actuallyadditions.util.INameableItem;
+import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -35,7 +35,7 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class BlockCompost extends BlockContainerBase implements INameableItem{
+public class BlockCompost extends BlockContainerBase implements IActAddItemOrBlock{
 
     public BlockCompost(){
         super(Material.wood);

@@ -13,7 +13,7 @@ package ellpeck.actuallyadditions.items;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.items.metalists.ThePotionRings;
-import ellpeck.actuallyadditions.util.INameableItem;
+import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -29,7 +29,7 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class ItemPotionRing extends Item implements INameableItem{
+public class ItemPotionRing extends Item implements IActAddItemOrBlock{
 
     public static final ThePotionRings[] allRings = ThePotionRings.values();
 

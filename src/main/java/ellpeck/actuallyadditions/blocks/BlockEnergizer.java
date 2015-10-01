@@ -16,7 +16,7 @@ import ellpeck.actuallyadditions.ActuallyAdditions;
 import ellpeck.actuallyadditions.inventory.GuiHandler;
 import ellpeck.actuallyadditions.tile.TileEntityEnergizer;
 import ellpeck.actuallyadditions.tile.TileEntityEnervator;
-import ellpeck.actuallyadditions.util.INameableItem;
+import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -29,7 +29,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
-public class BlockEnergizer extends BlockContainerBase implements INameableItem{
+public class BlockEnergizer extends BlockContainerBase implements IActAddItemOrBlock{
 
     private IIcon topIcon;
     private IIcon sideIcon;

@@ -10,14 +10,14 @@
 
 package ellpeck.actuallyadditions.items.metalists;
 
-import ellpeck.actuallyadditions.util.INameableItem;
+import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 
-public enum ThePotionRings implements INameableItem{
+public enum ThePotionRings implements IActAddItemOrBlock{
 
     SPEED(Potion.moveSpeed.getName(), 8171462, Potion.moveSpeed.getId(), 0, 1, 10, false, EnumRarity.uncommon, new ItemStack(Items.sugar)),
     //Slowness

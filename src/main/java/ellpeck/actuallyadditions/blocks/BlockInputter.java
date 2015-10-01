@@ -16,7 +16,7 @@ import ellpeck.actuallyadditions.ActuallyAdditions;
 import ellpeck.actuallyadditions.inventory.GuiHandler;
 import ellpeck.actuallyadditions.tile.TileEntityInputter;
 import ellpeck.actuallyadditions.tile.TileEntityInventoryBase;
-import ellpeck.actuallyadditions.util.INameableItem;
+import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
 import net.minecraft.block.Block;
@@ -32,7 +32,7 @@ import net.minecraft.world.World;
 
 import java.util.Random;
 
-public class BlockInputter extends BlockContainerBase implements INameableItem{
+public class BlockInputter extends BlockContainerBase implements IActAddItemOrBlock{
 
     public static final int NAME_FLAVOUR_AMOUNTS = 15;
 

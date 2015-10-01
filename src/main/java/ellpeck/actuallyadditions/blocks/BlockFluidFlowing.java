@@ -12,7 +12,7 @@ package ellpeck.actuallyadditions.blocks;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ellpeck.actuallyadditions.util.INameableItem;
+import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -26,7 +26,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fluids.BlockFluidClassic;
 import net.minecraftforge.fluids.Fluid;
 
-public class BlockFluidFlowing extends BlockFluidClassic implements INameableItem{
+public class BlockFluidFlowing extends BlockFluidClassic implements IActAddItemOrBlock{
 
     private String name;
 

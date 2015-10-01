@@ -14,7 +14,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.tile.TileEntityFishingNet;
 import ellpeck.actuallyadditions.util.AssetUtil;
-import ellpeck.actuallyadditions.util.INameableItem;
+import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -26,7 +26,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
-public class BlockFishingNet extends BlockContainerBase implements INameableItem{
+public class BlockFishingNet extends BlockContainerBase implements IActAddItemOrBlock{
 
     public BlockFishingNet(){
         super(Material.wood);

@@ -10,10 +10,10 @@
 
 package ellpeck.actuallyadditions.items.metalists;
 
-import ellpeck.actuallyadditions.util.INameableItem;
+import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import net.minecraft.item.EnumRarity;
 
-public enum TheJams implements INameableItem{
+public enum TheJams implements IActAddItemOrBlock{
 
     CU_BA_RA("CuBaRa", 6, 0.1F, EnumRarity.rare, 5, 12, 12595273),
     GRA_KI_BA("GraKiBa", 6, 0.1F, EnumRarity.rare, 16, 13, 5492820),

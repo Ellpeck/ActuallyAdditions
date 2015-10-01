@@ -13,7 +13,7 @@ package ellpeck.actuallyadditions.blocks;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.blocks.metalists.TheColoredLampColors;
-import ellpeck.actuallyadditions.util.INameableItem;
+import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
 import net.minecraft.block.Block;
@@ -33,7 +33,7 @@ import net.minecraftforge.oredict.OreDictionary;
 import java.util.List;
 import java.util.Random;
 
-public class BlockColoredLamp extends Block implements INameableItem{
+public class BlockColoredLamp extends Block implements IActAddItemOrBlock{
 
     public static TheColoredLampColors[] allLampTypes = TheColoredLampColors.values();
 
@@ -128,7 +128,7 @@ public class BlockColoredLamp extends Block implements INameableItem{
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconReg){
         for(int i = 0; i < allLampTypes.length; i++){
-            this.textures[i] = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":" + ((INameableItem)InitBlocks.blockColoredLamp).getName() + allLampTypes[i].name + (isOn ? "On" : ""));
+            this.textures[i] = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":" + ((IActAddItemOrBlock)InitBlocks.blockColoredLamp).getName() + allLampTypes[i].name + (isOn ? "On" : ""));
         }
     }
 

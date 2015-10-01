@@ -39,11 +39,11 @@ public class ItemUtil{
     public static void register(Item item, boolean addTab){
         item.setCreativeTab(addTab ? CreativeTab.instance : null);
         item.setUnlocalizedName(createUnlocalizedName(item));
-        GameRegistry.registerItem(item, ((INameableItem)item).getName());
+        GameRegistry.registerItem(item, ((IActAddItemOrBlock)item).getName());
     }
 
     public static String createUnlocalizedName(Item item){
-        return ModUtil.MOD_ID_LOWER+"."+((INameableItem)item).getName();
+        return ModUtil.MOD_ID_LOWER+"."+((IActAddItemOrBlock)item).getName();
     }
 
     /**

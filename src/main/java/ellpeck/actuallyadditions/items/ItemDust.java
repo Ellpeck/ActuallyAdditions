@@ -13,7 +13,7 @@ package ellpeck.actuallyadditions.items;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.items.metalists.TheDusts;
-import ellpeck.actuallyadditions.util.INameableItem;
+import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
@@ -24,7 +24,7 @@ import net.minecraft.util.IIcon;
 
 import java.util.List;
 
-public class ItemDust extends Item implements INameableItem{
+public class ItemDust extends Item implements IActAddItemOrBlock{
 
     public static final TheDusts[] allDusts = TheDusts.values();
 

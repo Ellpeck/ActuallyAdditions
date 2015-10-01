@@ -13,7 +13,7 @@ package ellpeck.actuallyadditions.blocks;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.tile.TileEntityLeafGenerator;
-import ellpeck.actuallyadditions.util.INameableItem;
+import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -29,7 +29,7 @@ import net.minecraft.world.World;
 
 import java.util.Random;
 
-public class BlockLeafGenerator extends BlockContainerBase implements INameableItem{
+public class BlockLeafGenerator extends BlockContainerBase implements IActAddItemOrBlock{
 
     private IIcon topIcon;
     private IIcon bottomIcon;

@@ -15,7 +15,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.ActuallyAdditions;
 import ellpeck.actuallyadditions.inventory.GuiHandler;
 import ellpeck.actuallyadditions.tile.TileEntityFermentingBarrel;
-import ellpeck.actuallyadditions.util.INameableItem;
+import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -28,7 +28,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
-public class BlockFermentingBarrel extends BlockContainerBase implements INameableItem{
+public class BlockFermentingBarrel extends BlockContainerBase implements IActAddItemOrBlock{
 
     private IIcon iconTop;
 

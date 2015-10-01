@@ -15,7 +15,7 @@ import cpw.mods.fml.common.eventhandler.Event;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.config.ConfigValues;
-import ellpeck.actuallyadditions.util.INameableItem;
+import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -35,7 +35,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @SuppressWarnings("unchecked")
-public class ItemAllToolAA extends ItemTool implements INameableItem{
+public class ItemAllToolAA extends ItemTool implements IActAddItemOrBlock{
 
     private String name;
     private EnumRarity rarity;

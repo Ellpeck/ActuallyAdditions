@@ -11,12 +11,12 @@
 package ellpeck.actuallyadditions.items.metalists;
 
 import ellpeck.actuallyadditions.items.InitItems;
-import ellpeck.actuallyadditions.util.INameableItem;
+import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 
-public enum TheFoods implements INameableItem{
+public enum TheFoods implements IActAddItemOrBlock{
 
     CHEESE("Cheese", 1, 0.5F, false, 3, EnumRarity.common),
     PUMPKIN_STEW("PumpkinStew", 10, 1F, true, 30, EnumRarity.common),

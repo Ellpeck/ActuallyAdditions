@@ -17,7 +17,7 @@ import ellpeck.actuallyadditions.inventory.GuiHandler;
 import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.items.metalists.TheSpecialDrops;
 import ellpeck.actuallyadditions.tile.TileEntityXPSolidifier;
-import ellpeck.actuallyadditions.util.INameableItem;
+import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -34,7 +34,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockXPSolidifier extends BlockContainerBase implements INameableItem{
+public class BlockXPSolidifier extends BlockContainerBase implements IActAddItemOrBlock{
 
     private IIcon topIcon;
     private IIcon frontIcon;

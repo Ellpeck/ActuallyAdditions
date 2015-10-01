@@ -13,7 +13,7 @@ package ellpeck.actuallyadditions.items;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.items.metalists.TheJams;
-import ellpeck.actuallyadditions.util.INameableItem;
+import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
@@ -30,7 +30,7 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class ItemJams extends ItemFood implements INameableItem{
+public class ItemJams extends ItemFood implements IActAddItemOrBlock{
 
     public static final TheJams[] allJams = TheJams.values();
     public IIcon overlayIcon;

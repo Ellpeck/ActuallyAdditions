@@ -10,11 +10,11 @@
 
 package ellpeck.actuallyadditions.items.metalists;
 
-import ellpeck.actuallyadditions.util.INameableItem;
+import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import ellpeck.actuallyadditions.util.StringUtil;
 import net.minecraft.item.EnumRarity;
 
-public enum TheDusts implements INameableItem{
+public enum TheDusts implements IActAddItemOrBlock{
 
     IRON("Iron", 7826534, EnumRarity.common),
     GOLD("Gold", 14335744, EnumRarity.uncommon),

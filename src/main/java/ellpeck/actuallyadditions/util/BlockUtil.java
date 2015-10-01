@@ -18,7 +18,7 @@ import net.minecraft.item.ItemBlock;
 public class BlockUtil{
 
     public static String createUnlocalizedName(Block block){
-        return ModUtil.MOD_ID_LOWER+"."+((INameableItem)block).getName();
+        return ModUtil.MOD_ID_LOWER+"."+((IActAddItemOrBlock)block).getName();
     }
 
     @SuppressWarnings("unchecked")
@@ -28,7 +28,7 @@ public class BlockUtil{
 
         for(Class sub : block.getClass().getDeclaredClasses()){
             if(sub.getSuperclass() == ItemBlock.class){
-                GameRegistry.registerBlock(block, sub, ((INameableItem)block).getName());
+                GameRegistry.registerBlock(block, sub, ((IActAddItemOrBlock)block).getName());
                 break;
             }
         }

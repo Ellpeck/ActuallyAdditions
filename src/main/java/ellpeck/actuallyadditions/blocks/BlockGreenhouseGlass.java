@@ -13,7 +13,7 @@ package ellpeck.actuallyadditions.blocks;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.tile.TileEntityGreenhouseGlass;
-import ellpeck.actuallyadditions.util.INameableItem;
+import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -27,7 +27,7 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockGreenhouseGlass extends BlockContainerBase implements INameableItem{
+public class BlockGreenhouseGlass extends BlockContainerBase implements IActAddItemOrBlock{
 
     public BlockGreenhouseGlass(){
         super(Material.rock);

@@ -12,7 +12,7 @@ package ellpeck.actuallyadditions.items;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ellpeck.actuallyadditions.util.INameableItem;
+import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
@@ -23,7 +23,7 @@ import net.minecraft.util.IIcon;
 
 import java.util.ArrayList;
 
-public class ItemWingsOfTheBats extends Item implements INameableItem{
+public class ItemWingsOfTheBats extends Item implements IActAddItemOrBlock{
 
     /**
      * A List containing all of the Players that can currently fly

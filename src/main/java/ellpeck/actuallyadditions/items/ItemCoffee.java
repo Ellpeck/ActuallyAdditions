@@ -15,7 +15,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.items.metalists.TheMiscItems;
-import ellpeck.actuallyadditions.util.INameableItem;
+import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import ellpeck.actuallyadditions.util.ItemUtil;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
@@ -33,7 +33,7 @@ import net.minecraft.world.World;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ItemCoffee extends ItemFood implements INameableItem{
+public class ItemCoffee extends ItemFood implements IActAddItemOrBlock{
 
     public static ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
 

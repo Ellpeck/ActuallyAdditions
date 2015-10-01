@@ -12,7 +12,7 @@ package ellpeck.actuallyadditions.blocks;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ellpeck.actuallyadditions.util.INameableItem;
+import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.WorldPos;
 import ellpeck.actuallyadditions.util.WorldUtil;
@@ -29,7 +29,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
-public class BlockLampPowerer extends Block implements INameableItem{
+public class BlockLampPowerer extends Block implements IActAddItemOrBlock{
 
     private IIcon frontIcon;
 

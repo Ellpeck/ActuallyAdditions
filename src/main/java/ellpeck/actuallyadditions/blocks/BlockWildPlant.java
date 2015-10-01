@@ -13,7 +13,7 @@ package ellpeck.actuallyadditions.blocks;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.blocks.metalists.TheWildPlants;
-import ellpeck.actuallyadditions.util.INameableItem;
+import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.material.Material;
@@ -30,7 +30,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BlockWildPlant extends BlockBush implements INameableItem{
+public class BlockWildPlant extends BlockBush implements IActAddItemOrBlock{
 
     public static final TheWildPlants[] allWildPlants = TheWildPlants.values();
     public IIcon[] textures = new IIcon[allWildPlants.length];

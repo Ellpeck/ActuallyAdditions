@@ -12,7 +12,7 @@ package ellpeck.actuallyadditions.items;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ellpeck.actuallyadditions.util.INameableItem;
+import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.item.EnumRarity;
@@ -20,7 +20,7 @@ import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 
-public class ItemCoffeeBean extends ItemFood implements INameableItem{
+public class ItemCoffeeBean extends ItemFood implements IActAddItemOrBlock{
 
     public ItemCoffeeBean(){
         super(1, 1F, false);
