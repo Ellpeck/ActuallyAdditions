@@ -14,7 +14,6 @@ import cpw.mods.fml.common.Loader;
 import ellpeck.actuallyadditions.config.values.ConfigBoolValues;
 import ellpeck.actuallyadditions.nei.NeiScreenEvents;
 import ellpeck.actuallyadditions.update.UpdateCheckerClientNotifier;
-import ellpeck.actuallyadditions.util.CompatUtil;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.Util;
 import net.minecraftforge.common.MinecraftForge;
@@ -39,7 +38,7 @@ public class InitEvents{
         Util.registerEvent(new TooltipEvent());
         Util.registerEvent(new RenderPlayerEventAA());
 
-        if(Loader.isModLoaded(CompatUtil.NEI_MOD_ID)){
+        if(Loader.isModLoaded("NotEnoughItems")){
             Util.registerEvent(new NeiScreenEvents());
         }
 

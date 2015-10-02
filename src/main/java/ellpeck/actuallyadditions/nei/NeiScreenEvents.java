@@ -12,12 +12,10 @@ package ellpeck.actuallyadditions.nei;
 
 import codechicken.nei.recipe.GuiRecipe;
 import codechicken.nei.recipe.IRecipeHandler;
-import cpw.mods.fml.common.Optional;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import ellpeck.actuallyadditions.booklet.GuiBooklet;
 import ellpeck.actuallyadditions.booklet.InitBooklet;
 import ellpeck.actuallyadditions.booklet.page.BookletPage;
-import ellpeck.actuallyadditions.util.CompatUtil;
 import ellpeck.actuallyadditions.util.ItemUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
 import net.minecraft.client.Minecraft;
@@ -30,7 +28,6 @@ public class NeiScreenEvents{
     private static final int NEI_BUTTON_ID = 123782;
     private GuiBooklet.TexturedButton neiButton;
 
-    @Optional.Method(modid = CompatUtil.NEI_MOD_ID)
     @SuppressWarnings("unchecked")
     @SubscribeEvent
     public void onInitGuiForNEI(GuiScreenEvent.InitGuiEvent event){
@@ -53,11 +50,11 @@ public class NeiScreenEvents{
             };
 
             event.buttonList.add(this.neiButton);
-            this.neiButton.visible = theGui.getCurrentRecipeHandlers().get(theGui.recipetype) instanceof INeiRecipeHandler;
+            IRecipeHandler handler = theGui.getCurrentRecipeHandlers().get(theGui.recipetype);
+            this.neiButton.visible = handler instanceof INeiRecipeHandler && ((INeiRecipeHandler)handler).getStackForInfo() != null;
         }
     }
 
-    @Optional.Method(modid = CompatUtil.NEI_MOD_ID)
     @SubscribeEvent
     public void guiPostAction(GuiScreenEvent.ActionPerformedEvent.Post event){
         if(this.neiButton != null && event.gui instanceof GuiRecipe){

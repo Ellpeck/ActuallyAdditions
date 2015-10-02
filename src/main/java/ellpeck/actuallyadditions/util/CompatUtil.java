@@ -19,8 +19,6 @@ import net.minecraft.nbt.NBTTagCompound;
 
 public class CompatUtil{
 
-    public static final String NEI_MOD_ID = "NotEnoughItems";
-
     public static void registerMFRPlant(Block block){
         FMLInterModComms.sendMessage("MineFactoryReloaded", "registerHarvestable_Crop", new ItemStack(block, 1, 7));
 
