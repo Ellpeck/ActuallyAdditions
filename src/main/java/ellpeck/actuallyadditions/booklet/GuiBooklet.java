@@ -546,7 +546,7 @@ public class GuiBooklet extends GuiScreen{
         }
     }
 
-    private static class TexturedButton extends GuiButton{
+    public static class TexturedButton extends GuiButton{
 
         public int texturePosX;
         public int texturePosY;

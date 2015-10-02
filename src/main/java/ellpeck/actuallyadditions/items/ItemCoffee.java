@@ -245,6 +245,10 @@ public class ItemCoffee extends ItemFood implements IActAddItemOrBlock{
         public boolean effect(ItemStack stack){
             return ItemCoffee.addEffectToStack(stack, this);
         }
+
+        public String getExtraText(){
+            return null;
+        }
     }
 
     public static class MilkIngredient extends Ingredient{
@@ -273,5 +277,9 @@ public class ItemCoffee extends ItemFood implements IActAddItemOrBlock{
             return true;
         }
 
+        @Override
+        public String getExtraText(){
+            return StringUtil.localize("container.nei."+ModUtil.MOD_ID_LOWER+".coffee.extra.milk");
+        }
     }
 }

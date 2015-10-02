@@ -28,6 +28,34 @@ public class NEIActuallyAdditionsConfig implements IConfigureNEI{
         API.registerGuiOverlay(GuiCrafter.class, "crafting");
         API.registerGuiOverlayHandler(GuiCrafter.class, new DefaultOverlayHandler(), "crafting");
 
+        CrusherRecipeHandler crusherRecipeHandler = new CrusherRecipeHandler();
+        API.registerRecipeHandler(crusherRecipeHandler);
+        API.registerUsageHandler(crusherRecipeHandler);
+
+        CrusherRecipeHandler.CrusherDoubleRecipeHandler crusherDoubleRecipeHandler = new CrusherRecipeHandler.CrusherDoubleRecipeHandler();
+        API.registerRecipeHandler(crusherDoubleRecipeHandler);
+        API.registerUsageHandler(crusherDoubleRecipeHandler);
+
+        FurnaceDoubleRecipeHandler furnaceDoubleRecipeHandler = new FurnaceDoubleRecipeHandler();
+        API.registerRecipeHandler(furnaceDoubleRecipeHandler);
+        API.registerUsageHandler(furnaceDoubleRecipeHandler);
+
+        HairyBallRecipeHandler ballRecipeHandler = new HairyBallRecipeHandler();
+        API.registerRecipeHandler(ballRecipeHandler);
+        API.registerUsageHandler(ballRecipeHandler);
+
+        TreasureChestRecipeHandler treasureRecipeHandler = new TreasureChestRecipeHandler();
+        API.registerRecipeHandler(treasureRecipeHandler);
+        API.registerUsageHandler(treasureRecipeHandler);
+
+        CompostRecipeHandler compostRecipeHandler = new CompostRecipeHandler();
+        API.registerRecipeHandler(compostRecipeHandler);
+        API.registerUsageHandler(compostRecipeHandler);
+
+        CoffeeMachineRecipeHandler coffeeMachineRecipeHandler = new CoffeeMachineRecipeHandler();
+        API.registerRecipeHandler(coffeeMachineRecipeHandler);
+        API.registerUsageHandler(coffeeMachineRecipeHandler);
+
         API.hideItem(new ItemStack(InitBlocks.blockRice));
         API.hideItem(new ItemStack(InitBlocks.blockCanola));
         API.hideItem(new ItemStack(InitBlocks.blockFlax));
@@ -38,11 +66,12 @@ public class NEIActuallyAdditionsConfig implements IConfigureNEI{
 
     @Override
     public String getName(){
-        return ModUtil.MOD_ID+" NEI Plugin";
+        return ModUtil.MOD_ID + " NEI Plugin";
     }
 
     @Override
     public String getVersion(){
         return ModUtil.VERSION;
     }
+
 }

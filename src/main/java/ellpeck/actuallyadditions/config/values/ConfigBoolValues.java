@@ -54,8 +54,7 @@ public enum ConfigBoolValues{
     CTRL_EXTRA_INFO("Advanced Info", ConfigCategories.OTHER, true, "Show Advanced Item Info when holding Control on every Item"),
     CTRL_INFO_FOR_EXTRA_INFO("Advanced Info Tooltips", ConfigCategories.OTHER, true, "Show the 'Press Control for more Info'-Text on Item Tooltips"),
 
-    NEED_BOOKLET_FOR_KEYBIND_INFO("Booklet Quick Opening", ConfigCategories.TOOL_VALUES, true, "If the booklet should have to be inside the player's inventory to be able to hover over an item and press a keybind to quickly access the item's page"),
-    SHOW_NEED_BOOKLET_FOR_KEYBIND_INFO("Booklet Quick Opening Info", ConfigCategories.TOOL_VALUES, true, "If the 'Press key for more information'-button should show when the item has a page in the booklet"),
+    SHOW_BOOKLET_INFO("Booklet Quick Opening Info", ConfigCategories.TOOL_VALUES, true, "If the 'Press key for more information'-text should show when the item has a page in the booklet"),
     GIVE_BOOKLET_ON_FIRST_CRAFT("Give Booklet on First Craft", ConfigCategories.OTHER, true, "If the booklet should be given to the player when he first crafts something from the Mod");
 
     public final String name;

@@ -15,7 +15,6 @@ import ellpeck.actuallyadditions.booklet.GuiBooklet;
 import ellpeck.actuallyadditions.booklet.InitBooklet;
 import ellpeck.actuallyadditions.booklet.page.BookletPage;
 import ellpeck.actuallyadditions.config.values.ConfigBoolValues;
-import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.util.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
@@ -38,23 +37,16 @@ public class TooltipEvent{
         if(event.itemStack != null && !(Minecraft.getMinecraft().currentScreen instanceof GuiBooklet)){
             for(BookletPage page : InitBooklet.pagesWithItemStackData){
                 if(ItemUtil.contains(page.getItemStacksForPage(), event.itemStack, true)){
-                    int keyCode = KeyBinds.keybindOpenBooklet.getKeyCode();
-                    if(!ConfigBoolValues.NEED_BOOKLET_FOR_KEYBIND_INFO.isEnabled() || Minecraft.getMinecraft().thePlayer.inventory.hasItem(InitItems.itemLexicon)){
-                        if(ConfigBoolValues.SHOW_NEED_BOOKLET_FOR_KEYBIND_INFO.isEnabled()){
-                            event.toolTip.add(EnumChatFormatting.GOLD+StringUtil.localizeFormatted("booklet."+ModUtil.MOD_ID_LOWER+".keyToSeeRecipe", keyCode > 0 && keyCode < Keyboard.KEYBOARD_SIZE ? "'"+Keyboard.getKeyName(keyCode)+"'" : "[NONE]"));
-                        }
-                        if(Keyboard.isKeyDown(KeyBinds.keybindOpenBooklet.getKeyCode())){
-                            GuiBooklet book = new GuiBooklet(Minecraft.getMinecraft().currentScreen);
-                            Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.func_147674_a(new ResourceLocation("gui.button.press"), 1.0F));
-                            Minecraft.getMinecraft().displayGuiScreen(book);
-                            book.openIndexEntry(page.getChapter().entry, InitBooklet.entries.indexOf(page.getChapter().entry)/GuiBooklet.CHAPTER_BUTTONS_AMOUNT+1, true);
-                            book.openChapter(page.getChapter(), page);
-                        }
+                    if(ConfigBoolValues.SHOW_BOOKLET_INFO.isEnabled()){
+                        int keyCode = KeyBinds.keybindOpenBooklet.getKeyCode();
+                        event.toolTip.add(EnumChatFormatting.GOLD+StringUtil.localizeFormatted("booklet."+ModUtil.MOD_ID_LOWER+".keyToSeeRecipe", keyCode > 0 && keyCode < Keyboard.KEYBOARD_SIZE ? "'"+Keyboard.getKeyName(keyCode)+"'" : "[NONE]"));
                     }
-                    else{
-                        if(ConfigBoolValues.SHOW_NEED_BOOKLET_FOR_KEYBIND_INFO.isEnabled()){
-                            event.toolTip.addAll(Minecraft.getMinecraft().fontRenderer.listFormattedStringToWidth(EnumChatFormatting.ITALIC+StringUtil.localizeFormatted("booklet."+ModUtil.MOD_ID_LOWER+".noBookletInInventory"), GuiBooklet.TOOLTIP_SPLIT_LENGTH));
-                        }
+                    if(Keyboard.isKeyDown(KeyBinds.keybindOpenBooklet.getKeyCode())){
+                        GuiBooklet book = new GuiBooklet(Minecraft.getMinecraft().currentScreen);
+                        Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.func_147674_a(new ResourceLocation("gui.button.press"), 1.0F));
+                        Minecraft.getMinecraft().displayGuiScreen(book);
+                        book.openIndexEntry(page.getChapter().entry, InitBooklet.entries.indexOf(page.getChapter().entry)/GuiBooklet.CHAPTER_BUTTONS_AMOUNT+1, true);
+                        book.openChapter(page.getChapter(), page);
                     }
                     break;
                 }

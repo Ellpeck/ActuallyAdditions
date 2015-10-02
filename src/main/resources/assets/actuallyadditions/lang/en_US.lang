@@ -10,6 +10,20 @@ key.actuallyadditions.openBooklet.name=Open Booklet in Inventory
 fluid.oil=Oil
 fluid.canolaoil=Canola Oil
 
+#NEI Integration
+container.nei.actuallyadditions.crushing.name=Crusher
+container.nei.actuallyadditions.crushingDouble.name=Double Crusher
+container.nei.actuallyadditions.ballOfHair.name=Ball Of Hair Usage
+container.nei.actuallyadditions.compost.name=Compost
+container.nei.actuallyadditions.furnaceDouble.name=Double Furnace
+container.nei.actuallyadditions.treasureChest.name=Treasure Chest
+container.nei.actuallyadditions.treasureChest.info=Items at
+container.nei.actuallyadditions.coffee.name=Coffee Machine
+container.nei.actuallyadditions.coffee.special=Special Feature
+container.nei.actuallyadditions.coffee.maxAmount=Max Amount
+container.nei.actuallyadditions.coffee.shift=[SHIFT]!
+container.nei.actuallyadditions.coffee.extra.milk=+01:00, -1 Level
+
 #Blocks
 tile.actuallyadditions.blockCompost.name=Compost
 tile.actuallyadditions.blockMiscOreBlackQuartz.name=Black Quartz Ore
@@ -391,7 +405,6 @@ booklet.actuallyadditions.indexEntry.itemsRF.name=Items that use RF
 booklet.actuallyadditions.recipeDisabled=The crafting recipe for this item is disabled in the Config File! If you're on a server, ask the server author to enable it in the config. If you're on a client, press the 'Open Config'-Button on the top right and enable the recipe!
 booklet.actuallyadditions.clickToSeeRecipe=Click to see more Information
 booklet.actuallyadditions.keyToSeeRecipe=Press %s to see more Information
-booklet.actuallyadditions.noBookletInInventory=Get an Actually Additions Manual to see more Information!
 
 #Booklet Chapters
 booklet.actuallyadditions.chapter.intro.name=An Introduction to ActAdd
