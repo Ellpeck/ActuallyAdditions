@@ -19,8 +19,6 @@ import ellpeck.actuallyadditions.booklet.page.BookletPage;
 import ellpeck.actuallyadditions.util.ItemUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.PositionedSoundRecord;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.GuiScreenEvent;
 
 public class NeiScreenEvents{
@@ -68,7 +66,6 @@ public class NeiScreenEvents{
                 for(BookletPage page : InitBooklet.pagesWithItemStackData){
                     if(ItemUtil.contains(page.getItemStacksForPage(), ((INeiRecipeHandler)handler).getStackForInfo(), true)){
                         GuiBooklet book = new GuiBooklet(Minecraft.getMinecraft().currentScreen);
-                        Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.func_147674_a(new ResourceLocation("gui.button.press"), 1.0F));
                         Minecraft.getMinecraft().displayGuiScreen(book);
                         book.openIndexEntry(page.getChapter().entry, InitBooklet.entries.indexOf(page.getChapter().entry)/GuiBooklet.CHAPTER_BUTTONS_AMOUNT+1, true);
                         book.openChapter(page.getChapter(), page);
