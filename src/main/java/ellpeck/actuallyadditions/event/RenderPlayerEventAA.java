@@ -27,7 +27,6 @@ public class RenderPlayerEventAA{
     private static RenderSpecial hoseRender = new RenderSpecial(new ItemStack(Blocks.torch));
     private static RenderSpecial paktoRender = new RenderSpecial(new ItemStack(Blocks.wool, 1, 6));
     private static RenderSpecial glenRender = new RenderSpecial(new ItemStack(InitBlocks.blockHeatCollector));
-    private static RenderSpecial lordiRender = new RenderSpecial(new ItemStack(InitBlocks.blockBreaker));
     public static RenderSpecial lariRender = new RenderSpecial(null);
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
@@ -47,10 +46,6 @@ public class RenderPlayerEventAA{
         //dqmhose
         else if(event.entityPlayer.getUniqueID().equals(UUID.fromString("cb7b293a-5031-484e-b5be-b4f2f4e92726"))){
             hoseRender.render(event.entityPlayer, 0.5F, -0.075F);
-        }
-        //Lordi
-        else if(event.entityPlayer.getUniqueID().equals(UUID.fromString("990ecf6d-15dd-442c-b91b-323a6420c78e"))){
-            lordiRender.render(event.entityPlayer, 0.3F, 0);
         }
         //Lari
         else if(event.entityPlayer.getUniqueID().equals(UUID.fromString("ac275e30-c468-42af-b5d4-b26c1c705b70"))){
