@@ -58,7 +58,9 @@ public class BlockCoffeeMachine extends BlockContainerBase implements IActAddIte
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int f6, float f7, float f8, float f9){
         if(!world.isRemote){
             TileEntityCoffeeMachine machine = (TileEntityCoffeeMachine)world.getTileEntity(x, y, z);
-            if (machine != null) player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.COFFEE_MACHINE.ordinal(), world, x, y, z);
+            if(machine != null){
+                player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.COFFEE_MACHINE.ordinal(), world, x, y, z);
+            }
             return true;
         }
         return true;

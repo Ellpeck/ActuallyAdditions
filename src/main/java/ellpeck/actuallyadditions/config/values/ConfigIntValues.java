@@ -48,14 +48,14 @@ public enum ConfigIntValues{
     QUARTZ_HARVEST_LEVEL("Quartz: Harvest Level", ConfigCategories.TOOL_VALUES, 2, 0, 3, "What Harvest Level Quartz Tools have (0 = Wood, 1 = Stone, 2 = Iron, 3 = Diamond)"),
     QUARTZ_USES("Quartz: Max Uses", ConfigCategories.TOOL_VALUES, 280, 50, 20000, "How often Quartz Tools can be used"),
     QUARTZ_ENCHANTABILITY("Quartz: Enchantability", ConfigCategories.TOOL_VALUES, 10, 1, 30, "How enchantable an Quartz Tool is"),
-    
+
     EMERALD_ARMOR_DURABILITY("Emerald Armor: Durability", ConfigCategories.ARMOR_VALUES, 1500, 10, 10000, "The Durability of Emerald Armor"),
     EMERALD_ARMOR_HEAD_DAMAGE("Emerald Helmets: Damage Reduction", ConfigCategories.ARMOR_VALUES, 5, 0, 10, "The Damage Reduction of Emerald Helmets"),
     EMERALD_ARMOR_CHEST_DAMAGE("Emerald Chests: Damage Reduction", ConfigCategories.ARMOR_VALUES, 9, 0, 10, "The Damage Reduction of Emerald Chests"),
     EMERALD_ARMOR_LEGS_DAMAGE("Emerald Legs: Damage Reduction", ConfigCategories.ARMOR_VALUES, 8, 0, 10, "The Damage Reduction of Emerald Legs"),
     EMERALD_ARMOR_BOOTS_DAMAGE("Emerald Boots: Damage Reduction", ConfigCategories.ARMOR_VALUES, 5, 0, 10, "The Damage Reduction of Emerald Boots"),
     EMERALD_ARMOR_ENCHANTABILITY("Emerald Armor: Enchantability", ConfigCategories.ARMOR_VALUES, 15, 1, 30, "The Enchantability of Emerald Armor"),
-    
+
     QUARTZ_ARMOR_DURABILITY("Quartz Armor: Durability", ConfigCategories.ARMOR_VALUES, 200, 10, 10000, "The Durability of Quartz Armor"),
     QUARTZ_ARMOR_HEAD_DAMAGE("Quartz Helmets: Damage Reduction", ConfigCategories.ARMOR_VALUES, 3, 0, 10, "The Damage Reduction of Quartz Helmets"),
     QUARTZ_ARMOR_CHEST_DAMAGE("Quartz Chests: Damage Reduction", ConfigCategories.ARMOR_VALUES, 6, 0, 10, "The Damage Reduction of Quartz Chests"),

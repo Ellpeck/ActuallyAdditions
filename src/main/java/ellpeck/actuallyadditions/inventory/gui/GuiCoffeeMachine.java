@@ -110,16 +110,16 @@ public class GuiCoffeeMachine extends GuiContainer{
     public void drawScreen(int x, int y, float f){
         super.drawScreen(x, y, f);
 
-        String text1 = this.machine.storage.getEnergyStored() + "/" + this.machine.storage.getMaxEnergyStored() + " RF";
+        String text1 = this.machine.storage.getEnergyStored()+"/"+this.machine.storage.getMaxEnergyStored()+" RF";
         if(x >= guiLeft+16 && y >= guiTop+5 && x <= guiLeft+23 && y <= guiTop+89){
             this.func_146283_a(Collections.singletonList(text1), x, y);
         }
-        String text3 = this.machine.tank.getFluidAmount() + "/" + this.machine.tank.getCapacity() + " mB "+FluidRegistry.WATER.getLocalizedName(this.machine.tank.getFluid());
+        String text3 = this.machine.tank.getFluidAmount()+"/"+this.machine.tank.getCapacity()+" mB "+FluidRegistry.WATER.getLocalizedName(this.machine.tank.getFluid());
         if(x >= guiLeft+27 && y >= guiTop+5 && x <= guiLeft+33 && y <= guiTop+70){
             this.func_146283_a(Collections.singletonList(text3), x, y);
         }
 
-        String text2 = this.machine.coffeeCacheAmount + "/" + this.machine.coffeeCacheMaxAmount+" "+StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.coffee");
+        String text2 = this.machine.coffeeCacheAmount+"/"+this.machine.coffeeCacheMaxAmount+" "+StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.coffee");
         if(x >= guiLeft+40 && y >= guiTop+25 && x <= guiLeft+49 && y <= guiTop+56){
             this.func_146283_a(Collections.singletonList(text2), x, y);
         }

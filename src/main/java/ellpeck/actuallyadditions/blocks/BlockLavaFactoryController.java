@@ -53,8 +53,8 @@ public class BlockLavaFactoryController extends BlockContainerBase implements IA
     @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconReg){
-        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":" + this.getName());
-        this.topIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":" + this.getName() + "Top");
+        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
+        this.topIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Top");
     }
 
     @Override
@@ -69,7 +69,7 @@ public class BlockLavaFactoryController extends BlockContainerBase implements IA
                 if(state == TileEntityLavaFactoryController.HAS_AIR || state == TileEntityLavaFactoryController.HAS_LAVA){
                     player.addChatComponentMessage(new ChatComponentText(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".factory.works.desc")));
                 }
-                player.addChatComponentMessage(new ChatComponentText(factory.storage.getEnergyStored() + "/" + factory.storage.getMaxEnergyStored() + " RF"));
+                player.addChatComponentMessage(new ChatComponentText(factory.storage.getEnergyStored()+"/"+factory.storage.getMaxEnergyStored()+" RF"));
             }
             return true;
         }

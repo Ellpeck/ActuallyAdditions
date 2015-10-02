@@ -64,7 +64,7 @@ public class GuiRepairer extends GuiContainer{
     @Override
     public void drawScreen(int x, int y, float f){
         super.drawScreen(x, y, f);
-        String text = this.tileRepairer.storage.getEnergyStored() + "/" + this.tileRepairer.storage.getMaxEnergyStored() + " RF";
+        String text = this.tileRepairer.storage.getEnergyStored()+"/"+this.tileRepairer.storage.getMaxEnergyStored()+" RF";
         if(x >= guiLeft+28 && y >= guiTop+6 && x <= guiLeft+43 && y <= guiTop+88){
             this.func_146283_a(Collections.singletonList(text), x, y);
         }

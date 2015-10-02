@@ -125,7 +125,9 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
                     }
                 }
             }
-            else this.firstCrushTime = 0;
+            else{
+                this.firstCrushTime = 0;
+            }
 
             if(this.isDouble){
                 if(canCrushOnSecond){
@@ -137,18 +139,26 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
                         }
                     }
                 }
-                else this.secondCrushTime = 0;
+                else{
+                    this.secondCrushTime = 0;
+                }
             }
 
-            if(this.storage.getEnergyStored() >= getEnergyUse() && this.firstCrushTime > 0 || this.secondCrushTime > 0) this.storage.extractEnergy(getEnergyUse(), false);
+            if(this.storage.getEnergyStored() >= getEnergyUse() && this.firstCrushTime > 0 || this.secondCrushTime > 0){
+                this.storage.extractEnergy(getEnergyUse(), false);
+            }
 
             if(flag != (this.firstCrushTime > 0 || this.secondCrushTime > 0)){
                 this.markDirty();
                 int meta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
                 if(meta == 1){
-                    if(!this.canCrushOn(SLOT_INPUT_1, SLOT_OUTPUT_1_1, SLOT_OUTPUT_1_2) && (!this.isDouble || !this.canCrushOn(SLOT_INPUT_2, SLOT_OUTPUT_2_1, SLOT_OUTPUT_2_2))) worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 0, 2);
+                    if(!this.canCrushOn(SLOT_INPUT_1, SLOT_OUTPUT_1_1, SLOT_OUTPUT_1_2) && (!this.isDouble || !this.canCrushOn(SLOT_INPUT_2, SLOT_OUTPUT_2_1, SLOT_OUTPUT_2_2))){
+                        worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 0, 2);
+                    }
                 }
-                else worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 1, 2);
+                else{
+                    worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 1, 2);
+                }
             }
 
             if(lastEnergy != this.storage.getEnergyStored() || this.lastFirstCrush != this.firstCrushTime || this.lastSecondCrush != this.secondCrushTime){
@@ -178,22 +188,30 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
     public void finishCrushing(int theInput, int theFirstOutput, int theSecondOutput){
         ItemStack outputOnFirst = CrusherRecipeManualRegistry.getOutput(this.slots[theInput], false);
         if(outputOnFirst != null){
-            if(this.slots[theFirstOutput] == null) this.slots[theFirstOutput] = outputOnFirst.copy();
-            else if(this.slots[theFirstOutput].getItem() == outputOnFirst.getItem()) this.slots[theFirstOutput].stackSize += outputOnFirst.stackSize;
+            if(this.slots[theFirstOutput] == null){
+                this.slots[theFirstOutput] = outputOnFirst.copy();
+            }
+            else if(this.slots[theFirstOutput].getItem() == outputOnFirst.getItem()){
+                this.slots[theFirstOutput].stackSize += outputOnFirst.stackSize;
+            }
         }
 
         int chance = CrusherRecipeManualRegistry.getSecondChance(this.slots[theInput]);
         ItemStack outputOnSecond = CrusherRecipeManualRegistry.getOutput(this.slots[theInput], true);
         if(outputOnSecond != null){
-            int rand = new Random().nextInt(100) + 1;
+            int rand = new Random().nextInt(100)+1;
             if(rand <= chance){
-                if(this.slots[theSecondOutput] == null) this.slots[theSecondOutput] = outputOnSecond.copy();
-                else if(this.slots[theSecondOutput].getItem() == outputOnSecond.getItem()) this.slots[theSecondOutput].stackSize += outputOnSecond.stackSize;
+                if(this.slots[theSecondOutput] == null){
+                    this.slots[theSecondOutput] = outputOnSecond.copy();
+                }
+                else if(this.slots[theSecondOutput].getItem() == outputOnSecond.getItem()){
+                    this.slots[theSecondOutput].stackSize += outputOnSecond.stackSize;
+                }
             }
         }
 
         this.slots[theInput].stackSize--;
-        if (this.slots[theInput].stackSize <= 0) this.slots[theInput] = null;
+        if(this.slots[theInput].stackSize <= 0) this.slots[theInput] = null;
     }
 
     @Override
@@ -214,17 +232,17 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
 
     @SideOnly(Side.CLIENT)
     public int getEnergyScaled(int i){
-        return this.storage.getEnergyStored() * i / this.storage.getMaxEnergyStored();
+        return this.storage.getEnergyStored()*i/this.storage.getMaxEnergyStored();
     }
 
     @SideOnly(Side.CLIENT)
     public int getFirstTimeToScale(int i){
-        return this.firstCrushTime * i / this.getMaxCrushTime();
+        return this.firstCrushTime*i/this.getMaxCrushTime();
     }
 
     @SideOnly(Side.CLIENT)
     public int getSecondTimeToScale(int i){
-        return this.secondCrushTime * i / this.getMaxCrushTime();
+        return this.secondCrushTime*i/this.getMaxCrushTime();
     }
 
     @Override

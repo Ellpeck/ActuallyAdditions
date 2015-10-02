@@ -59,10 +59,12 @@ public class BlockPlant extends BlockCrops implements IActAddItemOrBlock{
     @SideOnly(Side.CLIENT)
     public IIcon getIcon(int side, int meta){
         if(meta < 7){
-            if (meta == 6) meta = 5;
+            if(meta == 6) meta = 5;
             return this.textures[meta >> 1];
         }
-        else return this.textures[this.textures.length-1];
+        else{
+            return this.textures[this.textures.length-1];
+        }
     }
 
     @Override
@@ -93,8 +95,8 @@ public class BlockPlant extends BlockCrops implements IActAddItemOrBlock{
     @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconReg){
-        for (int i = 0; i < this.textures.length; i++){
-            textures[i] = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":" + this.getName() + "Stage" + (i+1));
+        for(int i = 0; i < this.textures.length; i++){
+            textures[i] = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Stage"+(i+1));
         }
     }
 

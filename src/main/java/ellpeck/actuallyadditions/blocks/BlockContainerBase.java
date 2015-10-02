@@ -51,7 +51,9 @@ public abstract class BlockContainerBase extends BlockContainer{
             float dY = rand.nextFloat()*0.8F+0.1F;
             float dZ = rand.nextFloat()*0.8F+0.1F;
             EntityItem entityItem = new EntityItem(world, x+dX, y+dY, z+dZ, stack.copy());
-            if(stack.hasTagCompound()) entityItem.getEntityItem().setTagCompound((NBTTagCompound)stack.getTagCompound().copy());
+            if(stack.hasTagCompound()){
+                entityItem.getEntityItem().setTagCompound((NBTTagCompound)stack.getTagCompound().copy());
+            }
             float factor = 0.05F;
             entityItem.motionX = rand.nextGaussian()*factor;
             entityItem.motionY = rand.nextGaussian()*factor+0.2F;

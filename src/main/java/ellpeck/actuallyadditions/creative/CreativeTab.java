@@ -111,7 +111,7 @@ public class CreativeTab extends CreativeTabs{
         add(InitItems.itemGrowthRing);
         add(InitItems.itemMagnetRing);
         add(InitItems.itemWaterRemovalRing);
-        
+
         add(InitItems.itemPhantomConnector);
         add(InitItems.itemBucketCanolaOil);
         add(InitItems.itemBucketOil);
@@ -163,7 +163,7 @@ public class CreativeTab extends CreativeTabs{
         add(InitItems.itemAxeEmerald);
         add(InitItems.itemShovelEmerald);
         add(InitItems.itemHoeEmerald);
-        
+
         add(InitItems.itemHelmEmerald);
         add(InitItems.itemChestEmerald);
         add(InitItems.itemPantsEmerald);

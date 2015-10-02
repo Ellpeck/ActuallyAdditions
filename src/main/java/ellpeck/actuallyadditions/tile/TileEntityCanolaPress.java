@@ -61,7 +61,9 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IE
                     }
                 }
             }
-            else this.currentProcessTime = 0;
+            else{
+                this.currentProcessTime = 0;
+            }
 
             WorldUtil.fillBucket(tank, slots, 1, 2);
 
@@ -90,17 +92,17 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IE
 
     @SideOnly(Side.CLIENT)
     public int getTankScaled(int i){
-        return this.tank.getFluidAmount() * i / this.tank.getCapacity();
+        return this.tank.getFluidAmount()*i/this.tank.getCapacity();
     }
 
     @SideOnly(Side.CLIENT)
     public int getProcessScaled(int i){
-        return this.currentProcessTime * i / ConfigIntValues.PRESS_PROCESSING_TIME.getValue();
+        return this.currentProcessTime*i/ConfigIntValues.PRESS_PROCESSING_TIME.getValue();
     }
 
     @SideOnly(Side.CLIENT)
     public int getEnergyScaled(int i){
-        return this.storage.getEnergyStored() * i / this.storage.getMaxEnergyStored();
+        return this.storage.getEnergyStored()*i/this.storage.getMaxEnergyStored();
     }
 
     @Override
@@ -196,7 +198,9 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IE
         if(values[2] != -1){
             this.tank.setFluid(new FluidStack(FluidRegistry.getFluid(values[2]), values[1]));
         }
-        else this.tank.setFluid(null);
+        else{
+            this.tank.setFluid(null);
+        }
         this.storage.setEnergyStored(values[3]);
     }
 

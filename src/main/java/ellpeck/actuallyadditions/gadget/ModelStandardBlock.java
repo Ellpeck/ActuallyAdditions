@@ -34,6 +34,6 @@ public class ModelStandardBlock extends ModelBaseAA{
 
     @Override
     public String getName(){
-        return "model" + this.name;
+        return "model"+this.name;
     }
 }

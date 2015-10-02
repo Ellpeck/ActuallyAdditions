@@ -63,8 +63,9 @@ public class BlockOreMagnet extends BlockContainerBase implements IActAddItemOrB
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9){
         if(!world.isRemote){
             TileEntityOreMagnet magnet = (TileEntityOreMagnet)world.getTileEntity(x, y, z);
-            if(magnet != null)
+            if(magnet != null){
                 player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.ORE_MAGNET.ordinal(), world, x, y, z);
+            }
             return true;
         }
         return true;

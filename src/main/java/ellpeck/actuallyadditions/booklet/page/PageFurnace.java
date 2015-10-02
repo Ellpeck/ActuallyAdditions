@@ -32,6 +32,7 @@ public class PageFurnace extends BookletPage{
         this.input = input;
         InitBooklet.pagesWithItemStackData.add(this);
     }
+
     public PageFurnace(int id, ItemStack result){
         this(id, null, result);
     }

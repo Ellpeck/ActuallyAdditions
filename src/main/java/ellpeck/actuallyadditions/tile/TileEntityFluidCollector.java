@@ -78,7 +78,9 @@ public class TileEntityFluidCollector extends TileEntityInventoryBase implements
         if(values[1] != -1){
             this.tank.setFluid(new FluidStack(FluidRegistry.getFluid(values[1]), values[0]));
         }
-        else this.tank.setFluid(null);
+        else{
+            this.tank.setFluid(null);
+        }
     }
 
     @Override
@@ -135,11 +137,11 @@ public class TileEntityFluidCollector extends TileEntityInventoryBase implements
                                     }
                                 }
                                 else if(blockToBreak == Blocks.water || blockToBreak == Blocks.flowing_water){
-                                        if(this.tank.fill(new FluidStack(FluidRegistry.WATER, FluidContainerRegistry.BUCKET_VOLUME), false) >= FluidContainerRegistry.BUCKET_VOLUME){
-                                            this.tank.fill(new FluidStack(FluidRegistry.WATER, FluidContainerRegistry.BUCKET_VOLUME), true);
-                                            WorldUtil.breakBlockAtSide(sideToManipulate, worldObj, xCoord, yCoord, zCoord);
-                                        }
+                                    if(this.tank.fill(new FluidStack(FluidRegistry.WATER, FluidContainerRegistry.BUCKET_VOLUME), false) >= FluidContainerRegistry.BUCKET_VOLUME){
+                                        this.tank.fill(new FluidStack(FluidRegistry.WATER, FluidContainerRegistry.BUCKET_VOLUME), true);
+                                        WorldUtil.breakBlockAtSide(sideToManipulate, worldObj, xCoord, yCoord, zCoord);
                                     }
+                                }
                             }
                             else if(this.isPlacer && worldObj.getBlock(coordsBlock.getX(), coordsBlock.getY(), coordsBlock.getZ()).isReplaceable(worldObj, coordsBlock.getX(), coordsBlock.getY(), coordsBlock.getZ())){
                                 if(this.tank.getFluidAmount() >= FluidContainerRegistry.BUCKET_VOLUME){
@@ -155,11 +157,17 @@ public class TileEntityFluidCollector extends TileEntityInventoryBase implements
                         }
                     }
                 }
-                else this.currentTime = ConfigIntValues.BREAKER_TIME_NEEDED.getValue();
+                else{
+                    this.currentTime = ConfigIntValues.BREAKER_TIME_NEEDED.getValue();
+                }
             }
 
-            if(!this.isPlacer) WorldUtil.fillBucket(tank, slots, 0, 1);
-            else WorldUtil.emptyBucket(tank, slots, 0, 1);
+            if(!this.isPlacer){
+                WorldUtil.fillBucket(tank, slots, 0, 1);
+            }
+            else{
+                WorldUtil.emptyBucket(tank, slots, 0, 1);
+            }
 
             if(!this.isPlacer && this.tank.getFluidAmount() > 0){
                 WorldUtil.pushFluid(worldObj, xCoord, yCoord, zCoord, ForgeDirection.DOWN, this.tank);
@@ -180,7 +188,7 @@ public class TileEntityFluidCollector extends TileEntityInventoryBase implements
 
     @SideOnly(Side.CLIENT)
     public int getTankScaled(int i){
-        return this.tank.getFluidAmount() * i / this.tank.getCapacity();
+        return this.tank.getFluidAmount()*i/this.tank.getCapacity();
     }
 
     @Override
@@ -200,8 +208,12 @@ public class TileEntityFluidCollector extends TileEntityInventoryBase implements
     @Override
     public boolean isItemValidForSlot(int i, ItemStack stack){
         if(i == 0){
-            if(this.isPlacer) return FluidContainerRegistry.isFilledContainer(stack);
-            else return stack.isItemEqual(FluidContainerRegistry.EMPTY_BUCKET);
+            if(this.isPlacer){
+                return FluidContainerRegistry.isFilledContainer(stack);
+            }
+            else{
+                return stack.isItemEqual(FluidContainerRegistry.EMPTY_BUCKET);
+            }
         }
         return false;
     }

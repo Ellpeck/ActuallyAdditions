@@ -64,7 +64,9 @@ public class TileEntityOreMagnet extends TileEntityInventoryBase implements IEne
                         this.mine();
                     }
                 }
-                else this.currentWorkTimer = ConfigIntValues.ORE_MAGNET_MAX_TIMER.getValue()+MathHelper.getRandomIntegerInRange(worldObj.rand, 0, ConfigIntValues.ORE_MAGNET_MAX_TIMER.getValue());
+                else{
+                    this.currentWorkTimer = ConfigIntValues.ORE_MAGNET_MAX_TIMER.getValue()+MathHelper.getRandomIntegerInRange(worldObj.rand, 0, ConfigIntValues.ORE_MAGNET_MAX_TIMER.getValue());
+                }
 
                 //Extract energy
                 this.storage.extractEnergy(ConfigIntValues.ORE_MAGNET_ENERGY_USE.getValue(), false);
@@ -168,12 +170,12 @@ public class TileEntityOreMagnet extends TileEntityInventoryBase implements IEne
 
     @SideOnly(Side.CLIENT)
     public int getEnergyScaled(int i){
-        return this.storage.getEnergyStored() * i / this.storage.getMaxEnergyStored();
+        return this.storage.getEnergyStored()*i/this.storage.getMaxEnergyStored();
     }
 
     @SideOnly(Side.CLIENT)
     public int getTankScaled(int i){
-        return this.tank.getFluidAmount() * i / this.tank.getCapacity();
+        return this.tank.getFluidAmount()*i/this.tank.getCapacity();
     }
 
     @Override
@@ -269,7 +271,9 @@ public class TileEntityOreMagnet extends TileEntityInventoryBase implements IEne
         if(values[2] != -1){
             this.tank.setFluid(new FluidStack(FluidRegistry.getFluid(values[2]), values[1]));
         }
-        else this.tank.setFluid(null);
+        else{
+            this.tank.setFluid(null);
+        }
     }
 
     @Override

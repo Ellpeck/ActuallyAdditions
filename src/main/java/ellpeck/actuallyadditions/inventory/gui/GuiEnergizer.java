@@ -61,7 +61,7 @@ public class GuiEnergizer extends GuiContainer{
     @Override
     public void drawScreen(int x, int y, float f){
         super.drawScreen(x, y, f);
-        String text1 = this.energizer.storage.getEnergyStored() + "/" + this.energizer.storage.getMaxEnergyStored() + " RF";
+        String text1 = this.energizer.storage.getEnergyStored()+"/"+this.energizer.storage.getMaxEnergyStored()+" RF";
         if(x >= guiLeft+57 && y >= guiTop+6 && x <= guiLeft+72 && y <= guiTop+88){
             this.func_146283_a(Collections.singletonList(text1), x, y);
         }

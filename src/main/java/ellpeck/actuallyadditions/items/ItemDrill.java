@@ -67,8 +67,9 @@ public class ItemDrill extends ItemEnergy{
                         try{
                             //Places the Block into the World
                             if(equip.tryPlaceItemIntoWorld(player, world, x, y, z, hitSide, hitX, hitY, hitZ)){
-                                if(!player.capabilities.isCreativeMode)
+                                if(!player.capabilities.isCreativeMode){
                                     player.inventory.setInventorySlotContents(slot, equip.stackSize <= 0 ? null : equip.copy());
+                                }
                                 //Synchronizes the Client
                                 player.inventoryContainer.detectAndSendChanges();
                                 return true;
@@ -80,7 +81,9 @@ public class ItemDrill extends ItemEnergy{
                             ModUtil.LOGGER.error("Player "+player.getDisplayName()+" who should place a Block using a Drill at "+player.posX+", "+player.posY+", "+player.posZ+" in World "+world.provider.dimensionId+" threw an Exception! Don't let that happen again!");
                         }
                     }
-                    else return true;
+                    else{
+                        return true;
+                    }
                 }
             }
         }
@@ -111,6 +114,7 @@ public class ItemDrill extends ItemEnergy{
 
     /**
      * Gets the Mining Speed of the Drill
+     *
      * @param stack The Drill
      * @return The Mining Speed depending on the Speed Upgrades
      */
@@ -118,16 +122,23 @@ public class ItemDrill extends ItemEnergy{
         float efficiency = ConfigFloatValues.DRILL_DAMAGE.getValue();
         if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SPEED)){
             if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SPEED_II)){
-                if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SPEED_III)) efficiency += 37.0F;
-                else efficiency += 25.0F;
+                if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SPEED_III)){
+                    efficiency += 37.0F;
+                }
+                else{
+                    efficiency += 25.0F;
+                }
             }
-            else efficiency += 8.0F;
+            else{
+                efficiency += 8.0F;
+            }
         }
         return efficiency;
     }
 
     /**
      * Gets the Energy that is used per Block broken
+     *
      * @param stack The Drill
      * @return The Energy use per Block
      */
@@ -139,27 +150,31 @@ public class ItemDrill extends ItemEnergy{
             use += ConfigIntValues.DRILL_SPEED_EXTRA_USE.getValue();
             if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SPEED_II)){
                 use += ConfigIntValues.DRILL_SPEED_II_EXTRA_USE.getValue();
-                if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SPEED_III))
+                if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SPEED_III)){
                     use += ConfigIntValues.DRILL_SPEED_III_EXTRA_USE.getValue();
+                }
             }
         }
 
         //Silk Touch
-        if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SILK_TOUCH))
+        if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SILK_TOUCH)){
             use += ConfigIntValues.DRILL_SILK_EXTRA_USE.getValue();
+        }
 
         //Fortune
         if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FORTUNE)){
             use += ConfigIntValues.DRILL_FORTUNE_EXTRA_USE.getValue();
-            if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FORTUNE_II))
+            if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FORTUNE_II)){
                 use += ConfigIntValues.DRILL_FORTUNE_II_EXTRA_USE.getValue();
+            }
         }
 
         //Size
         if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.THREE_BY_THREE)){
             use += ConfigIntValues.DRILL_THREE_BY_THREE_EXTRA_USE.getValue();
-            if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FIVE_BY_FIVE))
+            if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FIVE_BY_FIVE)){
                 use += ConfigIntValues.DRILL_FIVE_BY_FIVE_EXTRA_USE.getValue();
+            }
         }
 
         return use;
@@ -172,7 +187,8 @@ public class ItemDrill extends ItemEnergy{
 
     /**
      * Checks if a certain Upgrade is applied
-     * @param stack The Drill
+     *
+     * @param stack   The Drill
      * @param upgrade The Upgrade to be checked
      * @return Is the Upgrade applied?
      */
@@ -182,7 +198,8 @@ public class ItemDrill extends ItemEnergy{
 
     /**
      * Checks if a certain Upgrade is installed and returns it as an ItemStack
-     * @param stack The Drill
+     *
+     * @param stack   The Drill
      * @param upgrade The Upgrade to be checked
      * @return The Upgrade, if it's installed
      */
@@ -214,6 +231,7 @@ public class ItemDrill extends ItemEnergy{
 
     /**
      * Writes all of the Slots to NBT
+     *
      * @param slots The Slots
      * @param stack The Drill
      */
@@ -240,6 +258,7 @@ public class ItemDrill extends ItemEnergy{
 
     /**
      * Gets all of the Slots from NBT
+     *
      * @param stack The Drill
      * @return All of the Slots
      */
@@ -266,12 +285,13 @@ public class ItemDrill extends ItemEnergy{
     /**
      * Breaks Blocks in a certain Radius
      * Has to be called on both Server and Client
-     * @param stack The Drill
+     *
+     * @param stack  The Drill
      * @param radius The Radius to break Blocks in (0 means only 1 Block will be broken!)
-     * @param world The World
-     * @param x The X Coord of the main Block to break
-     * @param y The Y Coord of the main Block to break
-     * @param z The Z Coord of the main Block to break
+     * @param world  The World
+     * @param x      The X Coord of the main Block to break
+     * @param y      The Y Coord of the main Block to break
+     * @param z      The Z Coord of the main Block to break
      * @param player The Player who breaks the Blocks
      */
     public boolean breakBlocks(ItemStack stack, int radius, World world, int x, int y, int z, EntityPlayer player){
@@ -302,7 +322,9 @@ public class ItemDrill extends ItemEnergy{
         if(this.getEnergyStored(stack) >= use){
             if(!this.tryHarvestBlock(world, x, y, z, false, stack, player, use)) return false;
         }
-        else return false;
+        else{
+            return false;
+        }
 
         //Break Blocks around
         if(radius > 0){
@@ -316,7 +338,9 @@ public class ItemDrill extends ItemEnergy{
                                     this.tryHarvestBlock(world, xPos, yPos, zPos, true, stack, player, use);
                                 }
                             }
-                            else return false;
+                            else{
+                                return false;
+                            }
                         }
                     }
                 }
@@ -329,14 +353,15 @@ public class ItemDrill extends ItemEnergy{
      * Tries to harvest a certain Block
      * Breaks the Block, drops Particles etc.
      * Has to be called on both Server and Client
-     * @param world The World
-     * @param xPos The X Position of the Block to break
-     * @param yPos The Y Position of the Block to break
-     * @param zPos The Z Position of the Block to break
+     *
+     * @param world   The World
+     * @param xPos    The X Position of the Block to break
+     * @param yPos    The Y Position of the Block to break
+     * @param zPos    The Z Position of the Block to break
      * @param isExtra If the Block is the Block that was looked at when breaking or an additional Block
-     * @param stack The Drill
-     * @param player The Player breaking the Blocks
-     * @param use The Energy that should be extracted per Block
+     * @param stack   The Drill
+     * @param player  The Player breaking the Blocks
+     * @param use     The Energy that should be extracted per Block
      */
     private boolean tryHarvestBlock(World world, int xPos, int yPos, int zPos, boolean isExtra, ItemStack stack, EntityPlayer player, int use){
         Block block = world.getBlock(xPos, yPos, zPos);
@@ -362,11 +387,13 @@ public class ItemDrill extends ItemEnergy{
         int use = this.getEnergyUsePerBlock(stack);
         if(this.getEnergyStored(stack) >= use){
             //Enchants the Drill depending on the Upgrades it has
-            if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SILK_TOUCH))
+            if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SILK_TOUCH)){
                 ItemUtil.addEnchantment(stack, Enchantment.silkTouch, 1);
+            }
             else{
-                if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FORTUNE))
+                if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FORTUNE)){
                     ItemUtil.addEnchantment(stack, Enchantment.fortune, this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FORTUNE_II) ? 3 : 1);
+                }
             }
 
             //Breaks the Blocks
@@ -374,9 +401,13 @@ public class ItemDrill extends ItemEnergy{
                 if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FIVE_BY_FIVE)){
                     toReturn = this.breakBlocks(stack, 2, player.worldObj, x, y, z, player);
                 }
-                else toReturn = this.breakBlocks(stack, 1, player.worldObj, x, y, z, player);
+                else{
+                    toReturn = this.breakBlocks(stack, 1, player.worldObj, x, y, z, player);
+                }
             }
-            else toReturn = this.breakBlocks(stack, 0, player.worldObj, x, y, z, player);
+            else{
+                toReturn = this.breakBlocks(stack, 0, player.worldObj, x, y, z, player);
+            }
 
             //Removes Enchantments added above
             ItemUtil.removeEnchantment(stack, Enchantment.silkTouch);

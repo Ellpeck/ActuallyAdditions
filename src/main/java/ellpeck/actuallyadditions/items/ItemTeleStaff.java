@@ -52,7 +52,7 @@ public class ItemTeleStaff extends ItemEnergy{
     @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister iconReg){
-        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":" + this.getName());
+        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
     }
 
     @Override
@@ -74,8 +74,12 @@ public class ItemTeleStaff extends ItemEnergy{
 
     private int getWaitTime(ItemStack stack){
         NBTTagCompound compound = stack.getTagCompound();
-        if(compound == null) return 0;
-        else return compound.getInteger("waitTime");
+        if(compound == null){
+            return 0;
+        }
+        else{
+            return compound.getInteger("waitTime");
+        }
     }
 
     @Override

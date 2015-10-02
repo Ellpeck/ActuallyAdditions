@@ -54,16 +54,18 @@ public class BlockGiantChest extends BlockContainerBase implements IActAddItemOr
     @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconReg){
-        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":" + this.getName());
-        this.topIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":" + this.getName() + "Top");
-        this.bottomIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":" + this.getName() + "Bottom");
+        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
+        this.topIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Top");
+        this.bottomIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Bottom");
     }
 
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9){
         if(!world.isRemote){
             TileEntityGiantChest chest = (TileEntityGiantChest)world.getTileEntity(x, y, z);
-            if (chest != null) player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.GIANT_CHEST.ordinal(), world, x, y, z);
+            if(chest != null){
+                player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.GIANT_CHEST.ordinal(), world, x, y, z);
+            }
             return true;
         }
         return true;
@@ -100,6 +102,7 @@ public class BlockGiantChest extends BlockContainerBase implements IActAddItemOr
         public String getUnlocalizedName(ItemStack stack){
             return this.getUnlocalizedName();
         }
+
         @Override
         public int getMetadata(int damage){
             return damage;

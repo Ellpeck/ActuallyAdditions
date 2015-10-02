@@ -57,12 +57,12 @@ public class BlockTreasureChest extends Block implements IActAddItemOrBlock{
 
     @Override
     public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack stack){
-        int rotation = MathHelper.floor_double((double)(player.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
+        int rotation = MathHelper.floor_double((double)(player.rotationYaw*4.0F/360.0F)+0.5D) & 3;
 
-        if (rotation == 0) world.setBlockMetadataWithNotify(x, y, z, 0, 2);
-        if (rotation == 1) world.setBlockMetadataWithNotify(x, y, z, 3, 2);
-        if (rotation == 2) world.setBlockMetadataWithNotify(x, y, z, 1, 2);
-        if (rotation == 3) world.setBlockMetadataWithNotify(x, y, z, 2, 2);
+        if(rotation == 0) world.setBlockMetadataWithNotify(x, y, z, 0, 2);
+        if(rotation == 1) world.setBlockMetadataWithNotify(x, y, z, 3, 2);
+        if(rotation == 2) world.setBlockMetadataWithNotify(x, y, z, 1, 2);
+        if(rotation == 3) world.setBlockMetadataWithNotify(x, y, z, 2, 2);
     }
 
     @Override
@@ -90,10 +90,10 @@ public class BlockTreasureChest extends Block implements IActAddItemOrBlock{
     @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconReg){
-        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":" + this.getName());
-        this.topIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":" + this.getName() + "Top");
-        this.bottomIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":" + this.getName() + "Bottom");
-        this.frontIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":" + this.getName() + "Front");
+        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
+        this.topIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Top");
+        this.bottomIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Bottom");
+        this.frontIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Front");
     }
 
     @Override
@@ -118,7 +118,9 @@ public class BlockTreasureChest extends Block implements IActAddItemOrBlock{
             float dY = rand.nextFloat()*0.8F+0.1F;
             float dZ = rand.nextFloat()*0.8F+0.1F;
             EntityItem entityItem = new EntityItem(world, x+dX, y+dY, z+dZ, itemStack.copy());
-            if(itemStack.hasTagCompound()) entityItem.getEntityItem().setTagCompound((NBTTagCompound)itemStack.getTagCompound().copy());
+            if(itemStack.hasTagCompound()){
+                entityItem.getEntityItem().setTagCompound((NBTTagCompound)itemStack.getTagCompound().copy());
+            }
             float factor = 0.05F;
             entityItem.motionX = rand.nextGaussian()*factor;
             entityItem.motionY = rand.nextGaussian()*factor+0.2F;

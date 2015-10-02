@@ -39,7 +39,9 @@ public class TileEntityDropper extends TileEntityInventoryBase{
                         }
                     }
                 }
-                else this.currentTime = ConfigIntValues.DROPPER_TIME_NEEDED.getValue();
+                else{
+                    this.currentTime = ConfigIntValues.DROPPER_TIME_NEEDED.getValue();
+                }
             }
         }
     }

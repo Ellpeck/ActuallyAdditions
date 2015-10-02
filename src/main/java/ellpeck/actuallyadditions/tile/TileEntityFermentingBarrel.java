@@ -51,7 +51,9 @@ public class TileEntityFermentingBarrel extends TileEntityInventoryBase implemen
                     this.markDirty();
                 }
             }
-            else this.currentProcessTime = 0;
+            else{
+                this.currentProcessTime = 0;
+            }
 
             WorldUtil.emptyBucket(canolaTank, slots, 0, 1, InitBlocks.fluidCanolaOil);
             WorldUtil.fillBucket(oilTank, slots, 2, 3);
@@ -87,7 +89,7 @@ public class TileEntityFermentingBarrel extends TileEntityInventoryBase implemen
 
     @SideOnly(Side.CLIENT)
     public int getProcessScaled(int i){
-        return this.currentProcessTime * i / ConfigIntValues.BARREL_PROCESSING_TIME.getValue();
+        return this.currentProcessTime*i/ConfigIntValues.BARREL_PROCESSING_TIME.getValue();
     }
 
     @Override
@@ -100,12 +102,12 @@ public class TileEntityFermentingBarrel extends TileEntityInventoryBase implemen
 
     @SideOnly(Side.CLIENT)
     public int getOilTankScaled(int i){
-        return this.oilTank.getFluidAmount() * i / this.oilTank.getCapacity();
+        return this.oilTank.getFluidAmount()*i/this.oilTank.getCapacity();
     }
 
     @SideOnly(Side.CLIENT)
     public int getCanolaTankScaled(int i){
-        return this.canolaTank.getFluidAmount() * i / this.canolaTank.getCapacity();
+        return this.canolaTank.getFluidAmount()*i/this.canolaTank.getCapacity();
     }
 
     @Override
@@ -125,7 +127,9 @@ public class TileEntityFermentingBarrel extends TileEntityInventoryBase implemen
 
     @Override
     public int fill(ForgeDirection from, FluidStack resource, boolean doFill){
-        if(from != ForgeDirection.DOWN && resource.getFluid() == InitBlocks.fluidCanolaOil) return this.canolaTank.fill(resource, doFill);
+        if(from != ForgeDirection.DOWN && resource.getFluid() == InitBlocks.fluidCanolaOil){
+            return this.canolaTank.fill(resource, doFill);
+        }
         return 0;
     }
 
@@ -165,11 +169,15 @@ public class TileEntityFermentingBarrel extends TileEntityInventoryBase implemen
         if(values[1] != -1){
             this.oilTank.setFluid(new FluidStack(FluidRegistry.getFluid(values[1]), values[0]));
         }
-        else this.oilTank.setFluid(null);
+        else{
+            this.oilTank.setFluid(null);
+        }
         if(values[3] != -1){
             this.canolaTank.setFluid(new FluidStack(FluidRegistry.getFluid(values[3]), values[2]));
         }
-        else this.canolaTank.setFluid(null);
+        else{
+            this.canolaTank.setFluid(null);
+        }
         this.currentProcessTime = values[4];
     }
 

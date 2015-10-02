@@ -57,9 +57,9 @@ public class BlockEnergizer extends BlockContainerBase implements IActAddItemOrB
     @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconReg){
-        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":" + this.getName());
-        this.topIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":" + this.getName() + "Top");
-        this.sideIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":" + this.getName() + "Side");
+        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
+        this.topIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Top");
+        this.sideIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Side");
     }
 
     @Override
@@ -67,11 +67,15 @@ public class BlockEnergizer extends BlockContainerBase implements IActAddItemOrB
         if(!world.isRemote){
             if(this.isEnergizer){
                 TileEntityEnergizer energizer = (TileEntityEnergizer)world.getTileEntity(x, y, z);
-                if(energizer != null) player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.ENERGIZER.ordinal(), world, x, y, z);
+                if(energizer != null){
+                    player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.ENERGIZER.ordinal(), world, x, y, z);
+                }
             }
             else{
                 TileEntityEnervator energizer = (TileEntityEnervator)world.getTileEntity(x, y, z);
-                if(energizer != null) player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.ENERVATOR.ordinal(), world, x, y, z);
+                if(energizer != null){
+                    player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.ENERVATOR.ordinal(), world, x, y, z);
+                }
             }
             return true;
         }

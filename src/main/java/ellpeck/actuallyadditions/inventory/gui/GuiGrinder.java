@@ -66,7 +66,7 @@ public class GuiGrinder extends GuiContainer{
 
         if(this.tileGrinder.storage.getEnergyStored() > 0){
             int i = this.tileGrinder.getEnergyScaled(83);
-            drawTexturedModalRect(this.guiLeft + (isDouble ? 14 : 43), this.guiTop+89-i, 176, (isDouble ? 44 : 23), 16, i);
+            drawTexturedModalRect(this.guiLeft+(isDouble ? 14 : 43), this.guiTop+89-i, 176, (isDouble ? 44 : 23), 16, i);
         }
         if(this.tileGrinder.firstCrushTime > 0){
             int i = this.tileGrinder.getFirstTimeToScale(23);
@@ -75,7 +75,7 @@ public class GuiGrinder extends GuiContainer{
         if(this.isDouble){
             if(this.tileGrinder.secondCrushTime > 0){
                 int i = this.tileGrinder.getSecondTimeToScale(23);
-                this.drawTexturedModalRect(this.guiLeft + 101, this.guiTop + 40, 176, 22, 24, i);
+                this.drawTexturedModalRect(this.guiLeft+101, this.guiTop+40, 176, 22, 24, i);
             }
         }
     }
@@ -83,7 +83,7 @@ public class GuiGrinder extends GuiContainer{
     @Override
     public void drawScreen(int x, int y, float f){
         super.drawScreen(x, y, f);
-        String text = this.tileGrinder.storage.getEnergyStored() + "/" + this.tileGrinder.storage.getMaxEnergyStored() + " RF";
+        String text = this.tileGrinder.storage.getEnergyStored()+"/"+this.tileGrinder.storage.getMaxEnergyStored()+" RF";
         if((this.isDouble && x >= guiLeft+14 && y >= guiTop+6 && x <= guiLeft+29 && y <= guiTop+88) || (!this.isDouble && x >= guiLeft+43 && y >= guiTop+6 && x <= guiLeft+58 && y <= guiTop+88)){
             this.func_146283_a(Collections.singletonList(text), x, y);
         }

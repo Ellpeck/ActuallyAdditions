@@ -34,8 +34,8 @@ public class LivingDropEvent{
             for(int i = 0; i < TheSpecialDrops.values().length; i++){
                 TheSpecialDrops theDrop = TheSpecialDrops.values()[i];
                 if(theDrop.canDrop && theDrop.dropFrom.isAssignableFrom(event.entityLiving.getClass())){
-                    if(new Random().nextInt(100) + 1 <= theDrop.chance){
-                        event.entityLiving.entityDropItem(new ItemStack(InitItems.itemSpecialDrop, new Random().nextInt(theDrop.maxAmount) + 1, theDrop.ordinal()), 0);
+                    if(new Random().nextInt(100)+1 <= theDrop.chance){
+                        event.entityLiving.entityDropItem(new ItemStack(InitItems.itemSpecialDrop, new Random().nextInt(theDrop.maxAmount)+1, theDrop.ordinal()), 0);
                     }
                 }
             }

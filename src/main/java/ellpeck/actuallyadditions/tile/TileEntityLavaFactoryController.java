@@ -41,7 +41,9 @@ public class TileEntityLavaFactoryController extends TileEntityBase implements I
                     this.storage.extractEnergy(ConfigIntValues.LAVA_FACTORY_ENERGY_USED.getValue(), false);
                 }
             }
-            else this.currentWorkTime = 0;
+            else{
+                this.currentWorkTime = 0;
+            }
         }
     }
 

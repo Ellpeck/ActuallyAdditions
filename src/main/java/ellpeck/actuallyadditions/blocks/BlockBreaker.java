@@ -76,16 +76,18 @@ public class BlockBreaker extends BlockContainerBase implements IActAddItemOrBlo
     @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconReg){
-        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":" + this.getName());
-        this.frontIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":" + this.getName() + "Front");
-        this.topIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":" + this.getName() + "Top");
+        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
+        this.frontIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Front");
+        this.topIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Top");
     }
 
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9){
         if(!world.isRemote){
             TileEntityBreaker breaker = (TileEntityBreaker)world.getTileEntity(x, y, z);
-            if (breaker != null) player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.BREAKER.ordinal(), world, x, y, z);
+            if(breaker != null){
+                player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.BREAKER.ordinal(), world, x, y, z);
+            }
             return true;
         }
         return true;

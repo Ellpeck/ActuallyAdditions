@@ -48,7 +48,7 @@ public class InitItems{
     public static Item itemShovelEmerald;
     public static Item itemSwordEmerald;
     public static Item itemHoeEmerald;
-    
+
     public static Item itemHelmEmerald;
     public static Item itemChestEmerald;
     public static Item itemPantsEmerald;

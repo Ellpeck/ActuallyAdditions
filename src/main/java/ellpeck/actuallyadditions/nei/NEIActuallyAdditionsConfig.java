@@ -38,7 +38,7 @@ public class NEIActuallyAdditionsConfig implements IConfigureNEI{
 
     @Override
     public String getName(){
-        return ModUtil.MOD_ID + " NEI Plugin";
+        return ModUtil.MOD_ID+" NEI Plugin";
     }
 
     @Override

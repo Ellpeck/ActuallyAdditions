@@ -72,10 +72,13 @@ public class TileEntityOilGenerator extends TileEntityInventoryBase implements I
                 this.markDirty();
                 int meta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
                 if(meta == 1){
-                    if(!(ConfigIntValues.OIL_GEN_ENERGY_PRODUCED.getValue()*ConfigIntValues.OIL_GEN_BURN_TIME.getValue() <= this.getMaxEnergyStored(ForgeDirection.UNKNOWN)-this.getEnergyStored(ForgeDirection.UNKNOWN) && FluidContainerRegistry.BUCKET_VOLUME <= this.tank.getCapacity()-this.tank.getFluidAmount()))
+                    if(!(ConfigIntValues.OIL_GEN_ENERGY_PRODUCED.getValue()*ConfigIntValues.OIL_GEN_BURN_TIME.getValue() <= this.getMaxEnergyStored(ForgeDirection.UNKNOWN)-this.getEnergyStored(ForgeDirection.UNKNOWN) && FluidContainerRegistry.BUCKET_VOLUME <= this.tank.getCapacity()-this.tank.getFluidAmount())){
                         worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 0, 2);
+                    }
                 }
-                else worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 1, 2);
+                else{
+                    worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 1, 2);
+                }
             }
 
             if(this.storage.getEnergyStored() != this.lastEnergy || this.tank.getFluidAmount() != this.lastTank || this.lastBurnTime != this.currentBurnTime){
@@ -89,17 +92,17 @@ public class TileEntityOilGenerator extends TileEntityInventoryBase implements I
 
     @SideOnly(Side.CLIENT)
     public int getEnergyScaled(int i){
-        return this.storage.getEnergyStored() * i / this.storage.getMaxEnergyStored();
+        return this.storage.getEnergyStored()*i/this.storage.getMaxEnergyStored();
     }
 
     @SideOnly(Side.CLIENT)
     public int getTankScaled(int i){
-        return this.tank.getFluidAmount() * i / this.tank.getCapacity();
+        return this.tank.getFluidAmount()*i/this.tank.getCapacity();
     }
 
     @SideOnly(Side.CLIENT)
     public int getBurningScaled(int i){
-        return this.currentBurnTime * i / ConfigIntValues.OIL_GEN_BURN_TIME.getValue();
+        return this.currentBurnTime*i/ConfigIntValues.OIL_GEN_BURN_TIME.getValue();
     }
 
     @Override
@@ -196,7 +199,9 @@ public class TileEntityOilGenerator extends TileEntityInventoryBase implements I
         if(values[3] != -1){
             this.tank.setFluid(new FluidStack(FluidRegistry.getFluid(values[3]), values[2]));
         }
-        else this.tank.setFluid(null);
+        else{
+            this.tank.setFluid(null);
+        }
     }
 
     @Override

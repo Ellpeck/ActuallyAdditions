@@ -54,7 +54,9 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
                     this.maxBurnTime = burnTime;
                     this.currentBurnTime = burnTime;
                     this.slots[0].stackSize--;
-                    if(this.slots[0].stackSize == 0) this.slots[0] = this.slots[0].getItem().getContainerItem(this.slots[0]);
+                    if(this.slots[0].stackSize == 0){
+                        this.slots[0] = this.slots[0].getItem().getContainerItem(this.slots[0]);
+                    }
                 }
             }
 
@@ -71,10 +73,13 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
                 this.markDirty();
                 int meta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
                 if(meta == 1){
-                    if(!(this.currentBurnTime <= 0 && this.slots[0] != null && TileEntityFurnace.getItemBurnTime(this.slots[0]) > 0 && ConfigIntValues.COAL_GEN_ENERGY_PRODUCED.getValue()*TileEntityFurnace.getItemBurnTime(this.slots[0]) <= this.getMaxEnergyStored(ForgeDirection.UNKNOWN)-this.getEnergyStored(ForgeDirection.UNKNOWN)))
+                    if(!(this.currentBurnTime <= 0 && this.slots[0] != null && TileEntityFurnace.getItemBurnTime(this.slots[0]) > 0 && ConfigIntValues.COAL_GEN_ENERGY_PRODUCED.getValue()*TileEntityFurnace.getItemBurnTime(this.slots[0]) <= this.getMaxEnergyStored(ForgeDirection.UNKNOWN)-this.getEnergyStored(ForgeDirection.UNKNOWN))){
                         worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 0, 2);
+                    }
                 }
-                else worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 1, 2);
+                else{
+                    worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 1, 2);
+                }
             }
 
             if(this.storage.getEnergyStored() != this.lastEnergy || this.currentBurnTime != this.lastCurrentBurnTime || this.lastBurnTime != this.maxBurnTime){
@@ -88,12 +93,12 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
 
     @SideOnly(Side.CLIENT)
     public int getEnergyScaled(int i){
-        return this.storage.getEnergyStored() * i / this.storage.getMaxEnergyStored();
+        return this.storage.getEnergyStored()*i/this.storage.getMaxEnergyStored();
     }
 
     @SideOnly(Side.CLIENT)
     public int getBurningScaled(int i){
-        return this.currentBurnTime * i / this.maxBurnTime;
+        return this.currentBurnTime*i/this.maxBurnTime;
     }
 
     @Override

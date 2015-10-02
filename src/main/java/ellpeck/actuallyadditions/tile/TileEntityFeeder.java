@@ -39,7 +39,7 @@ public class TileEntityFeeder extends TileEntityInventoryBase implements IPacket
     public void updateEntity(){
         if(!worldObj.isRemote){
             boolean theFlag = this.currentTimer > 0;
-            List<EntityAnimal> animals = worldObj.getEntitiesWithinAABB(EntityAnimal.class, AxisAlignedBB.getBoundingBox(this.xCoord - ConfigIntValues.FEEDER_REACH.getValue(), this.yCoord - ConfigIntValues.FEEDER_REACH.getValue(), this.zCoord - ConfigIntValues.FEEDER_REACH.getValue(), this.xCoord + ConfigIntValues.FEEDER_REACH.getValue(), this.yCoord + ConfigIntValues.FEEDER_REACH.getValue(), this.zCoord + ConfigIntValues.FEEDER_REACH.getValue()));
+            List<EntityAnimal> animals = worldObj.getEntitiesWithinAABB(EntityAnimal.class, AxisAlignedBB.getBoundingBox(this.xCoord-ConfigIntValues.FEEDER_REACH.getValue(), this.yCoord-ConfigIntValues.FEEDER_REACH.getValue(), this.zCoord-ConfigIntValues.FEEDER_REACH.getValue(), this.xCoord+ConfigIntValues.FEEDER_REACH.getValue(), this.yCoord+ConfigIntValues.FEEDER_REACH.getValue(), this.zCoord+ConfigIntValues.FEEDER_REACH.getValue()));
             if(animals != null){
                 this.currentAnimalAmount = animals.size();
                 if(this.currentAnimalAmount >= 2){
@@ -53,16 +53,23 @@ public class TileEntityFeeder extends TileEntityInventoryBase implements IPacket
                                     this.feedAnimal(randomAnimal);
 
                                     this.slots[0].stackSize--;
-                                    if(this.slots[0].stackSize == 0)
+                                    if(this.slots[0].stackSize == 0){
                                         this.slots[0] = this.slots[0].getItem().getContainerItem(this.slots[0]);
+                                    }
                                 }
                             }
                         }
-                        else this.currentTimer++;
+                        else{
+                            this.currentTimer++;
+                        }
                     }
-                    else this.currentTimer = 0;
+                    else{
+                        this.currentTimer = 0;
+                    }
                 }
-                else this.currentTimer = 0;
+                else{
+                    this.currentTimer = 0;
+                }
             }
 
             if(theFlag != this.currentTimer > 0){
@@ -81,16 +88,16 @@ public class TileEntityFeeder extends TileEntityInventoryBase implements IPacket
         animal.func_146082_f(null);
         Random rand = new Random();
         for(int i = 0; i < 7; i++){
-            double d = rand.nextGaussian() * 0.02D;
-            double d1 = rand.nextGaussian() * 0.02D;
-            double d2 = rand.nextGaussian() * 0.02D;
-            worldObj.spawnParticle("heart", (animal.posX + (double)(rand.nextFloat() * animal.width * 2.0F)) - animal.width, animal.posY + 0.5D + (double)(rand.nextFloat() * animal.height), (animal.posZ + (double)(rand.nextFloat() * animal.width * 2.0F)) - animal.width, d, d1, d2);
+            double d = rand.nextGaussian()*0.02D;
+            double d1 = rand.nextGaussian()*0.02D;
+            double d2 = rand.nextGaussian()*0.02D;
+            worldObj.spawnParticle("heart", (animal.posX+(double)(rand.nextFloat()*animal.width*2.0F))-animal.width, animal.posY+0.5D+(double)(rand.nextFloat()*animal.height), (animal.posZ+(double)(rand.nextFloat()*animal.width*2.0F))-animal.width, d, d1, d2);
         }
     }
 
     @SideOnly(Side.CLIENT)
     public int getCurrentTimerToScale(int i){
-        return this.currentTimer * i / ConfigIntValues.FEEDER_TIME.getValue();
+        return this.currentTimer*i/ConfigIntValues.FEEDER_TIME.getValue();
     }
 
     @Override

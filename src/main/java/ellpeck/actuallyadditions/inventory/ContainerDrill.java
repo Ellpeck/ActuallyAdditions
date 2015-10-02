@@ -48,8 +48,12 @@ public class ContainerDrill extends Container{
             }
         }
         for(int i = 0; i < 9; i++){
-            if(i == inventory.currentItem) this.addSlotToContainer(new SlotImmovable(inventory, i, 8+i*18, 116));
-            else this.addSlotToContainer(new Slot(inventory, i, 8+i*18, 116));
+            if(i == inventory.currentItem){
+                this.addSlotToContainer(new SlotImmovable(inventory, i, 8+i*18, 116));
+            }
+            else{
+                this.addSlotToContainer(new Slot(inventory, i, 8+i*18, 116));
+            }
         }
 
         ItemStack stack = inventory.getCurrentItem();
@@ -70,15 +74,19 @@ public class ContainerDrill extends Container{
         if(stack != null && stack.getItem() instanceof ItemDrill){
             ((ItemDrill)stack.getItem()).writeSlotsToNBT(this.drillInventory.slots, inventory.getCurrentItem());
         }
-       super.onContainerClosed(player);
+        super.onContainerClosed(player);
     }
 
     @Override
     public ItemStack slotClick(int par1, int par2, int par3, EntityPlayer player){
         //par3 appears to be the type of clicking
         //par3 == 2 appears to be one of the number keys being hit
-        if(par3 == 2 && par2 == inventory.currentItem) return null;
-        else return super.slotClick(par1, par2, par3, player);
+        if(par3 == 2 && par2 == inventory.currentItem){
+            return null;
+        }
+        else{
+            return super.slotClick(par1, par2, par3, player);
+        }
     }
 
     @Override
@@ -90,7 +98,7 @@ public class ContainerDrill extends Container{
 
         Slot theSlot = (Slot)this.inventorySlots.get(slot);
 
-        if (theSlot != null && theSlot.getHasStack()){
+        if(theSlot != null && theSlot.getHasStack()){
             ItemStack newStack = theSlot.getStack();
             ItemStack currentStack = newStack.copy();
 
@@ -105,14 +113,20 @@ public class ContainerDrill extends Container{
                 else if(slot >= inventoryStart && slot <= inventoryEnd){
                     if(!this.mergeItemStack(newStack, hotbarStart, hotbarEnd+1, false)) return null;
                 }
-                else if(slot >= inventoryEnd+1 && slot < hotbarEnd+1 && !this.mergeItemStack(newStack, inventoryStart, inventoryEnd+1, false)) return null;
+                else if(slot >= inventoryEnd+1 && slot < hotbarEnd+1 && !this.mergeItemStack(newStack, inventoryStart, inventoryEnd+1, false)){
+                    return null;
+                }
             }
             else if(!this.mergeItemStack(newStack, inventoryStart, hotbarEnd+1, false)) return null;
 
-            if (newStack.stackSize == 0) theSlot.putStack(null);
-            else theSlot.onSlotChanged();
+            if(newStack.stackSize == 0){
+                theSlot.putStack(null);
+            }
+            else{
+                theSlot.onSlotChanged();
+            }
 
-            if (newStack.stackSize == currentStack.stackSize) return null;
+            if(newStack.stackSize == currentStack.stackSize) return null;
             theSlot.onPickupFromSlot(player, newStack);
 
             return currentStack;
@@ -190,7 +204,7 @@ public class ContainerDrill extends Container{
 
         @Override
         public ItemStack decrStackSize(int i, int j){
-            if (slots[i] != null){
+            if(slots[i] != null){
                 ItemStack stackAt;
                 if(slots[i].stackSize <= j){
                     stackAt = slots[i];
@@ -200,7 +214,7 @@ public class ContainerDrill extends Container{
                 }
                 else{
                     stackAt = slots[i].splitStack(j);
-                    if (slots[i].stackSize == 0) slots[i] = null;
+                    if(slots[i].stackSize == 0) slots[i] = null;
                     this.markDirty();
                     return stackAt;
                 }

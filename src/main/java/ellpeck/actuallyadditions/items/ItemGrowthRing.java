@@ -84,7 +84,9 @@ public class ItemGrowthRing extends ItemEnergy{
 
                 stack.stackTagCompound.setInteger("WaitTime", 0);
             }
-            else stack.stackTagCompound.setInteger("WaitTime", waitTime+1);
+            else{
+                stack.stackTagCompound.setInteger("WaitTime", waitTime+1);
+            }
 
             //Use Energy every tick
             if(!player.capabilities.isCreativeMode){
@@ -106,7 +108,7 @@ public class ItemGrowthRing extends ItemEnergy{
     @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister iconReg){
-        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":" + this.getName());
+        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
     }
 
     @Override

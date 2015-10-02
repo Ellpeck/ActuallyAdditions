@@ -82,7 +82,7 @@ public class TileEntityEnergizer extends TileEntityInventoryBase implements IEne
 
     @SideOnly(Side.CLIENT)
     public int getEnergyScaled(int i){
-        return this.storage.getEnergyStored() * i / this.storage.getMaxEnergyStored();
+        return this.storage.getEnergyStored()*i/this.storage.getMaxEnergyStored();
     }
 
     @Override

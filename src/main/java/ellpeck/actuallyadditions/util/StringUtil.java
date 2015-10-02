@@ -29,13 +29,17 @@ public class StringUtil{
     /**
      * Localizes a given formatted String with the given Replacements
      */
-    public static String localizeFormatted(String text, Object ... replace){
+    public static String localizeFormatted(String text, Object... replace){
         return StatCollector.translateToLocalFormatted(text, replace);
     }
 
     public static String toLowerCase(String string){
-        if(string == null) return null;
-        else return string.toLowerCase();
+        if(string == null){
+            return null;
+        }
+        else{
+            return string.toLowerCase();
+        }
     }
 
     public static boolean equalsToLowerCase(String one, String two){

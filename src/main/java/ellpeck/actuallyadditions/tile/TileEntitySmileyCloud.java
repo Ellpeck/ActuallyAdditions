@@ -77,7 +77,9 @@ public class TileEntitySmileyCloud extends TileEntityBase implements IPacketSync
             }
             this.name = newName;
         }
-        else this.name = null;
+        else{
+            this.name = null;
+        }
     }
 
     @Override

@@ -58,8 +58,9 @@ public class ItemPotionRing extends Item implements IActAddItemOrBlock{
                             thePlayer.addPotionEffect(new PotionEffect(effect.effectID, effect.activeTime, effect.normalAmplifier, true));
                         }
                     }
-                    else
+                    else{
                         thePlayer.addPotionEffect(new PotionEffect(effect.effectID, effect.activeTime, effect.advancedAmplifier, true));
+                    }
                 }
             }
         }
@@ -90,7 +91,7 @@ public class ItemPotionRing extends Item implements IActAddItemOrBlock{
 
     @Override
     public String getUnlocalizedName(ItemStack stack){
-        return this.getUnlocalizedName() + (stack.getItemDamage() >= allRings.length ? " ERROR!" : allRings[stack.getItemDamage()].getName().substring("potion".length()));
+        return this.getUnlocalizedName()+(stack.getItemDamage() >= allRings.length ? " ERROR!" : allRings[stack.getItemDamage()].getName().substring("potion".length()));
     }
 
     @Override
@@ -107,7 +108,7 @@ public class ItemPotionRing extends Item implements IActAddItemOrBlock{
     @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister iconReg){
-        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":" + this.getName());
+        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
     }
 
     @Override

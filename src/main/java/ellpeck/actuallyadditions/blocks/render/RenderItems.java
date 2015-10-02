@@ -24,7 +24,7 @@ public class RenderItems implements IItemRenderer{
 
     public RenderItems(ModelBaseAA model){
         this.theModel = model;
-        this.theTexture = new ResourceLocation(ModUtil.MOD_ID_LOWER, "textures/blocks/models/" + this.theModel.getName() + ".png");
+        this.theTexture = new ResourceLocation(ModUtil.MOD_ID_LOWER, "textures/blocks/models/"+this.theModel.getName()+".png");
     }
 
     @Override
@@ -42,7 +42,7 @@ public class RenderItems implements IItemRenderer{
         switch(type){
             case INVENTORY:
                 GL11.glPushMatrix();
-                GL11.glTranslatef(0.5F,  0.5F, 0.5F);
+                GL11.glTranslatef(0.5F, 0.5F, 0.5F);
                 GL11.glRotatef(180F, 0.0F, 0.0F, 1.0F);
                 GL11.glTranslatef(-0.5F, -1.27F, 0.5F);
                 GL11.glRotatef(180F, 0F, 1F, 0F);

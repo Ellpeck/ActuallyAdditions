@@ -57,11 +57,13 @@ public class GuiFeeder extends GuiContainer{
             this.drawTexturedModalRect(guiLeft+85, guiTop+42-i, 181, 19+19-i, 6, 20);
         }
 
-        if(this.tileFeeder.currentAnimalAmount >= 2 && this.tileFeeder.currentAnimalAmount < ConfigIntValues.FEEDER_THRESHOLD.getValue())
+        if(this.tileFeeder.currentAnimalAmount >= 2 && this.tileFeeder.currentAnimalAmount < ConfigIntValues.FEEDER_THRESHOLD.getValue()){
             this.drawTexturedModalRect(guiLeft+70, guiTop+31, 192, 16, 8, 8);
+        }
 
-        if(this.tileFeeder.currentAnimalAmount >= ConfigIntValues.FEEDER_THRESHOLD.getValue())
+        if(this.tileFeeder.currentAnimalAmount >= ConfigIntValues.FEEDER_THRESHOLD.getValue()){
             this.drawTexturedModalRect(guiLeft+70, guiTop+31, 192, 24, 8, 8);
+        }
     }
 
     @Override

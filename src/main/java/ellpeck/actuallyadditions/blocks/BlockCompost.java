@@ -54,15 +54,23 @@ public class BlockCompost extends BlockContainerBase implements IActAddItemOrBlo
             TileEntityCompost tile = (TileEntityCompost)world.getTileEntity(x, y, z);
             //Add items to be composted
             if(stackPlayer != null && stackPlayer.getItem() instanceof ItemMisc && stackPlayer.getItemDamage() == TheMiscItems.MASHED_FOOD.ordinal() && (tile.slots[0] == null || (!(tile.slots[0].getItem() instanceof ItemFertilizer) && tile.slots[0].stackSize < ConfigIntValues.COMPOST_AMOUNT.getValue()))){
-                if(tile.slots[0] == null) tile.slots[0] = new ItemStack(stackPlayer.getItem(), 1, TheMiscItems.MASHED_FOOD.ordinal());
-                else tile.slots[0].stackSize++;
+                if(tile.slots[0] == null){
+                    tile.slots[0] = new ItemStack(stackPlayer.getItem(), 1, TheMiscItems.MASHED_FOOD.ordinal());
+                }
+                else{
+                    tile.slots[0].stackSize++;
+                }
                 if(!player.capabilities.isCreativeMode) player.inventory.getCurrentItem().stackSize--;
             }
 
             //Add Fertilizer to player's inventory
-            else if(tile.slots[0] != null && (stackPlayer == null || (stackPlayer.getItem() instanceof ItemFertilizer && stackPlayer.stackSize <= stackPlayer.getMaxStackSize() - tile.slots[0].stackSize)) && tile.slots[0].getItem() instanceof ItemFertilizer){
-                if(stackPlayer == null) player.inventory.setInventorySlotContents(player.inventory.currentItem, tile.slots[0].copy());
-                else player.getCurrentEquippedItem().stackSize+=tile.slots[0].stackSize;
+            else if(tile.slots[0] != null && (stackPlayer == null || (stackPlayer.getItem() instanceof ItemFertilizer && stackPlayer.stackSize <= stackPlayer.getMaxStackSize()-tile.slots[0].stackSize)) && tile.slots[0].getItem() instanceof ItemFertilizer){
+                if(stackPlayer == null){
+                    player.inventory.setInventorySlotContents(player.inventory.currentItem, tile.slots[0].copy());
+                }
+                else{
+                    player.getCurrentEquippedItem().stackSize += tile.slots[0].stackSize;
+                }
                 tile.slots[0] = null;
             }
         }
@@ -78,9 +86,9 @@ public class BlockCompost extends BlockContainerBase implements IActAddItemOrBlo
         super.addCollisionBoxesToList(world, x, y, z, mask, list, collidingEntity);
         this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, f);
         super.addCollisionBoxesToList(world, x, y, z, mask, list, collidingEntity);
-        this.setBlockBounds(1.0F - f, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
+        this.setBlockBounds(1.0F-f, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
         super.addCollisionBoxesToList(world, x, y, z, mask, list, collidingEntity);
-        this.setBlockBounds(0.0F, 0.0F, 1.0F - f, 1.0F, 1.0F, 1.0F);
+        this.setBlockBounds(0.0F, 0.0F, 1.0F-f, 1.0F, 1.0F, 1.0F);
         super.addCollisionBoxesToList(world, x, y, z, mask, list, collidingEntity);
         this.setBlockBoundsForItemRender();
     }

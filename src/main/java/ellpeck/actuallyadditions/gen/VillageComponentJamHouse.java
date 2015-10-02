@@ -59,7 +59,7 @@ public class VillageComponentJamHouse extends StructureVillagePieces.House1{
         this.fillWithBlocks(world, sbb, 0, 0, 0, xSize-1, ySize-1, zSize-1, Blocks.air);
         this.spawnActualHouse(world, rand, sbb);
 
-        for (int i = 0; i < xSize; i++){
+        for(int i = 0; i < xSize; i++){
             for(int j = 0; j < zSize; j++){
                 this.clearCurrentPositionBlocksUpwards(world, i, ySize, j, sbb);
                 this.func_151554_b(world, Blocks.cobblestone, 0, i, -1, j, sbb);
@@ -100,7 +100,7 @@ public class VillageComponentJamHouse extends StructureVillagePieces.House1{
             this.fillWithBlocks(world, sbb, 1+i*8, 1, 7, 1+i*8, 4, 7, Blocks.cobblestone);
             this.fillWithBlocks(world, sbb, 1+i*8, 4, 2, 1+i*8, 5, 6, Blocks.cobblestone);
             this.fillWithBlocks(world, sbb, 1+i*8, 3, 2, 1+i*8, 3, 6, Blocks.planks);
-            this.placeBlockAtCurrentPosition(world, Blocks.planks, 0, 1+i* 8, 2, 2, sbb);
+            this.placeBlockAtCurrentPosition(world, Blocks.planks, 0, 1+i*8, 2, 2, sbb);
             this.placeBlockAtCurrentPosition(world, Blocks.planks, 0, 1+i*8, 2, 6, sbb);
             this.fillWithBlocks(world, sbb, 1+i*8, 2, 3, 1+i*8, 2, 5, Blocks.glass_pane);
         }

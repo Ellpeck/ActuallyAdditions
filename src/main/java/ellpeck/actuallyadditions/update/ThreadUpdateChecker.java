@@ -19,7 +19,7 @@ import java.net.URL;
 public class ThreadUpdateChecker extends Thread{
 
     public ThreadUpdateChecker(){
-        this.setName(ModUtil.MOD_ID + " Update Checker");
+        this.setName(ModUtil.MOD_ID+" Update Checker");
         this.setDaemon(true);
         this.start();
     }

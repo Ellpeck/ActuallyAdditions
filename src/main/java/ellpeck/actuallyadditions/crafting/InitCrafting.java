@@ -12,7 +12,7 @@ package ellpeck.actuallyadditions.crafting;
 
 import ellpeck.actuallyadditions.util.ModUtil;
 
-public class InitCrafting {
+public class InitCrafting{
 
     public static void init(){
         ModUtil.LOGGER.info("Initializing Crafting Recipes...");

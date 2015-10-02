@@ -61,7 +61,9 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
                     }
                 }
             }
-            else this.firstSmeltTime = 0;
+            else{
+                this.firstSmeltTime = 0;
+            }
 
             if(canSmeltOnSecond){
                 if(this.storage.getEnergyStored() >= ConfigIntValues.FURNACE_ENERGY_USED.getValue()){
@@ -72,17 +74,25 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
                     }
                 }
             }
-            else this.secondSmeltTime = 0;
+            else{
+                this.secondSmeltTime = 0;
+            }
 
-            if(this.storage.getEnergyStored() >= ConfigIntValues.FURNACE_ENERGY_USED.getValue() && this.firstSmeltTime > 0 || this.secondSmeltTime > 0) this.storage.extractEnergy(ConfigIntValues.FURNACE_ENERGY_USED.getValue(), false);
+            if(this.storage.getEnergyStored() >= ConfigIntValues.FURNACE_ENERGY_USED.getValue() && this.firstSmeltTime > 0 || this.secondSmeltTime > 0){
+                this.storage.extractEnergy(ConfigIntValues.FURNACE_ENERGY_USED.getValue(), false);
+            }
 
             if(flag != (this.firstSmeltTime > 0 || this.secondSmeltTime > 0)){
                 this.markDirty();
                 int meta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
                 if(meta > 3){
-                    if(!this.canSmeltOn(SLOT_INPUT_1, SLOT_OUTPUT_1) && !this.canSmeltOn(SLOT_INPUT_2, SLOT_OUTPUT_2)) worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, meta-4, 2);
+                    if(!this.canSmeltOn(SLOT_INPUT_1, SLOT_OUTPUT_1) && !this.canSmeltOn(SLOT_INPUT_2, SLOT_OUTPUT_2)){
+                        worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, meta-4, 2);
+                    }
                 }
-                else worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, meta+4, 2);
+                else{
+                    worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, meta+4, 2);
+                }
             }
 
             if(lastEnergy != this.storage.getEnergyStored() || this.lastFirstSmelt != this.firstSmeltTime || this.lastSecondSmelt != this.secondSmeltTime){
@@ -110,11 +120,15 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
 
     public void finishBurning(int theInput, int theOutput){
         ItemStack output = FurnaceRecipes.smelting().getSmeltingResult(this.slots[theInput]);
-        if (this.slots[theOutput] == null) this.slots[theOutput] = output.copy();
-        else if(this.slots[theOutput].getItem() == output.getItem()) this.slots[theOutput].stackSize += output.stackSize;
+        if(this.slots[theOutput] == null){
+            this.slots[theOutput] = output.copy();
+        }
+        else if(this.slots[theOutput].getItem() == output.getItem()){
+            this.slots[theOutput].stackSize += output.stackSize;
+        }
 
         this.slots[theInput].stackSize--;
-        if (this.slots[theInput].stackSize <= 0) this.slots[theInput] = null;
+        if(this.slots[theInput].stackSize <= 0) this.slots[theInput] = null;
     }
 
     @Override
@@ -135,17 +149,17 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
 
     @SideOnly(Side.CLIENT)
     public int getEnergyScaled(int i){
-        return this.storage.getEnergyStored() * i / this.storage.getMaxEnergyStored();
+        return this.storage.getEnergyStored()*i/this.storage.getMaxEnergyStored();
     }
 
     @SideOnly(Side.CLIENT)
     public int getFirstTimeToScale(int i){
-        return this.firstSmeltTime * i / ConfigIntValues.FURNACE_DOUBLE_SMELT_TIME.getValue();
+        return this.firstSmeltTime*i/ConfigIntValues.FURNACE_DOUBLE_SMELT_TIME.getValue();
     }
 
     @SideOnly(Side.CLIENT)
     public int getSecondTimeToScale(int i){
-        return this.secondSmeltTime * i / ConfigIntValues.FURNACE_DOUBLE_SMELT_TIME.getValue();
+        return this.secondSmeltTime*i/ConfigIntValues.FURNACE_DOUBLE_SMELT_TIME.getValue();
     }
 
     @Override

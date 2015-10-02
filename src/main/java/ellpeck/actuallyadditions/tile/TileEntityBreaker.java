@@ -63,7 +63,7 @@ public class TileEntityBreaker extends TileEntityInventoryBase{
                                 drops.addAll(blockToBreak.getDrops(worldObj, coordsBlock.getX(), coordsBlock.getY(), coordsBlock.getZ(), meta, 0));
 
                                 if(WorldUtil.addToInventory(this.slots, drops, false)){
-                                    worldObj.playAuxSFX(2001, coordsBlock.getX(), coordsBlock.getY(), coordsBlock.getZ(), Block.getIdFromBlock(blockToBreak) + (meta << 12));
+                                    worldObj.playAuxSFX(2001, coordsBlock.getX(), coordsBlock.getY(), coordsBlock.getZ(), Block.getIdFromBlock(blockToBreak)+(meta << 12));
                                     WorldUtil.breakBlockAtSide(sideToManipulate, worldObj, xCoord, yCoord, zCoord);
                                     WorldUtil.addToInventory(this.slots, drops, true);
                                     this.markDirty();
@@ -72,12 +72,16 @@ public class TileEntityBreaker extends TileEntityInventoryBase{
                             else if(this.isPlacer && worldObj.getBlock(coordsBlock.getX(), coordsBlock.getY(), coordsBlock.getZ()).isReplaceable(worldObj, coordsBlock.getX(), coordsBlock.getY(), coordsBlock.getZ())){
                                 int theSlot = WorldUtil.findFirstFilledSlot(this.slots);
                                 this.setInventorySlotContents(theSlot, WorldUtil.placeBlockAtSide(sideToManipulate, worldObj, xCoord, yCoord, zCoord, this.slots[theSlot]));
-                                if(this.slots[theSlot] != null && this.slots[theSlot].stackSize <= 0) this.slots[theSlot] = null;
+                                if(this.slots[theSlot] != null && this.slots[theSlot].stackSize <= 0){
+                                    this.slots[theSlot] = null;
+                                }
                             }
                         }
                     }
                 }
-                else this.currentTime = ConfigIntValues.BREAKER_TIME_NEEDED.getValue();
+                else{
+                    this.currentTime = ConfigIntValues.BREAKER_TIME_NEEDED.getValue();
+                }
             }
         }
     }

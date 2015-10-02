@@ -61,14 +61,16 @@ public class BlockInputter extends BlockContainerBase implements IActAddItemOrBl
     @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconReg){
-        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":" + this.getName());
+        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
     }
 
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9){
         if(!world.isRemote){
             TileEntityInputter inputter = (TileEntityInputter)world.getTileEntity(x, y, z);
-            if (inputter != null) player.openGui(ActuallyAdditions.instance, this.isAdvanced ? GuiHandler.GuiTypes.INPUTTER_ADVANCED.ordinal() : GuiHandler.GuiTypes.INPUTTER.ordinal(), world, x, y, z);
+            if(inputter != null){
+                player.openGui(ActuallyAdditions.instance, this.isAdvanced ? GuiHandler.GuiTypes.INPUTTER_ADVANCED.ordinal() : GuiHandler.GuiTypes.INPUTTER.ordinal(), world, x, y, z);
+            }
             return true;
         }
         return true;
@@ -120,7 +122,7 @@ public class BlockInputter extends BlockContainerBase implements IActAddItemOrBl
                 this.toPick = rand.nextInt(NAME_FLAVOUR_AMOUNTS)+1;
             }
 
-            return StringUtil.localize(this.getUnlocalizedName()+".name") + " (" + StringUtil.localize("tile."+ModUtil.MOD_ID_LOWER+".blockInputter.add."+this.toPick+".name") + ")";
+            return StringUtil.localize(this.getUnlocalizedName()+".name")+" ("+StringUtil.localize("tile."+ModUtil.MOD_ID_LOWER+".blockInputter.add."+this.toPick+".name")+")";
         }
 
         @Override

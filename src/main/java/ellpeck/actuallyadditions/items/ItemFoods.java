@@ -70,14 +70,14 @@ public class ItemFoods extends ItemFood implements IActAddItemOrBlock{
     @SuppressWarnings("all")
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item item, CreativeTabs tab, List list){
-        for (int j = 0; j < allFoods.length; j++){
+        for(int j = 0; j < allFoods.length; j++){
             list.add(new ItemStack(this, 1, j));
         }
     }
 
     @Override
     public String getUnlocalizedName(ItemStack stack){
-        return this.getUnlocalizedName() + (stack.getItemDamage() >= allFoods.length ? " ERROR!" : allFoods[stack.getItemDamage()].getName());
+        return this.getUnlocalizedName()+(stack.getItemDamage() >= allFoods.length ? " ERROR!" : allFoods[stack.getItemDamage()].getName());
     }
 
     @Override
@@ -105,7 +105,7 @@ public class ItemFoods extends ItemFood implements IActAddItemOrBlock{
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister iconReg){
         for(int i = 0; i < textures.length; i++){
-            textures[i] = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":" + this.getName() + allFoods[i].getName());
+            textures[i] = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+allFoods[i].getName());
         }
     }
 

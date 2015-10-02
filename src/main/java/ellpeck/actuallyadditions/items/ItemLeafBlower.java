@@ -45,21 +45,24 @@ public class ItemLeafBlower extends Item implements IActAddItemOrBlock{
     @Override
     public void onUsingTick(ItemStack stack, EntityPlayer player, int time){
         if(!player.worldObj.isRemote){
-            if(time <= getMaxItemUseDuration(stack) && (this.isAdvanced || time % 3 == 0)){
+            if(time <= getMaxItemUseDuration(stack) && (this.isAdvanced || time%3 == 0)){
                 //Breaks the Blocks
                 this.breakStuff(player.worldObj, MathHelper.floor_double(player.posX), MathHelper.floor_double(player.posY), MathHelper.floor_double(player.posZ));
                 //Plays a Minecart sounds (It really sounds like a Leaf Blower!)
-                if(ConfigBoolValues.LEAF_BLOWER_SOUND.isEnabled()) player.worldObj.playSoundAtEntity(player, "minecart.base", 0.3F, 0.001F);
+                if(ConfigBoolValues.LEAF_BLOWER_SOUND.isEnabled()){
+                    player.worldObj.playSoundAtEntity(player, "minecart.base", 0.3F, 0.001F);
+                }
             }
         }
     }
 
     /**
      * Breaks (harvests) Grass and Leaves around
+     *
      * @param world The World
-     * @param x The X Position of the Player
-     * @param y The Y Position of the Player
-     * @param z The Z Position of the Player
+     * @param x     The X Position of the Player
+     * @param y     The Y Position of the Player
+     * @param z     The Z Position of the Player
      */
     public void breakStuff(World world, int x, int y, int z){
         ArrayList<WorldPos> breakPositions = new ArrayList<WorldPos>();
@@ -94,7 +97,7 @@ public class ItemLeafBlower extends Item implements IActAddItemOrBlock{
 
             for(ItemStack theDrop : drops){
                 //Drops the Items into the World
-                world.spawnEntityInWorld(new EntityItem(world, theCoord.getX() + 0.5, theCoord.getY() + 0.5, theCoord.getZ() + 0.5, theDrop));
+                world.spawnEntityInWorld(new EntityItem(world, theCoord.getX()+0.5, theCoord.getY()+0.5, theCoord.getZ()+0.5, theDrop));
             }
         }
     }
@@ -129,7 +132,7 @@ public class ItemLeafBlower extends Item implements IActAddItemOrBlock{
     @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister iconReg){
-        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":" + this.getName());
+        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
     }
 
     @Override

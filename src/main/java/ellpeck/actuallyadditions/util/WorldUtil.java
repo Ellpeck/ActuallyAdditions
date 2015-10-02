@@ -168,9 +168,12 @@ public class WorldUtil{
             if(filled != null && FluidContainerRegistry.isEmptyContainer(slots[inputSlot]) && (slots[outputSlot] == null || (slots[outputSlot].isItemEqual(filled) && slots[outputSlot].stackSize < slots[outputSlot].getMaxStackSize()))){
                 int cap = FluidContainerRegistry.getContainerCapacity(tank.getFluid(), slots[inputSlot]);
                 if(cap > 0 && cap <= tank.getFluidAmount()){
-                    if(slots[outputSlot] == null)
+                    if(slots[outputSlot] == null){
                         slots[outputSlot] = FluidContainerRegistry.fillFluidContainer(tank.getFluid(), slots[inputSlot].copy());
-                    else slots[outputSlot].stackSize++;
+                    }
+                    else{
+                        slots[outputSlot].stackSize++;
+                    }
 
                     if(slots[outputSlot] != null){
                         tank.drain(cap, true);
@@ -190,9 +193,12 @@ public class WorldUtil{
         if(slots[inputSlot] != null && FluidContainerRegistry.isFilledContainer(slots[inputSlot]) && (slots[outputSlot] == null || (slots[outputSlot].isItemEqual(FluidContainerRegistry.drainFluidContainer(slots[inputSlot].copy())) && slots[outputSlot].stackSize < slots[outputSlot].getMaxStackSize()))){
             if(containedFluid == null || FluidContainerRegistry.containsFluid(slots[inputSlot], new FluidStack(containedFluid, 0))){
                 if((tank.getFluid() == null || FluidContainerRegistry.getFluidForFilledItem(slots[inputSlot]).isFluidEqual(tank.getFluid())) && tank.getCapacity()-tank.getFluidAmount() >= FluidContainerRegistry.getContainerCapacity(slots[inputSlot])){
-                    if(slots[outputSlot] == null)
+                    if(slots[outputSlot] == null){
                         slots[outputSlot] = FluidContainerRegistry.drainFluidContainer(slots[inputSlot].copy());
-                    else slots[outputSlot].stackSize++;
+                    }
+                    else{
+                        slots[outputSlot].stackSize++;
+                    }
 
                     tank.fill(FluidContainerRegistry.getFluidForFilledItem(slots[inputSlot]), true);
                     slots[inputSlot].stackSize--;
@@ -218,7 +224,9 @@ public class WorldUtil{
             if(side < VERTICAL_DIRECTIONS_ORDER.length){
                 return VERTICAL_DIRECTIONS_ORDER[side];
             }
-            else return CARDINAL_DIRECTIONS_ORDER[side-VERTICAL_DIRECTIONS_ORDER.length];
+            else{
+                return CARDINAL_DIRECTIONS_ORDER[side-VERTICAL_DIRECTIONS_ORDER.length];
+            }
         }
         return ForgeDirection.UNKNOWN;
     }
@@ -240,8 +248,12 @@ public class WorldUtil{
                 if(slots[i] == null || (slots[i].isItemEqual(stack) && slots[i].stackSize <= stack.getMaxStackSize()-stack.stackSize)){
                     working++;
                     if(actuallyDo){
-                        if(slots[i] == null) slots[i] = stack.copy();
-                        else slots[i].stackSize += stack.stackSize;
+                        if(slots[i] == null){
+                            slots[i] = stack.copy();
+                        }
+                        else{
+                            slots[i].stackSize += stack.stackSize;
+                        }
                     }
                     break;
                 }

@@ -72,11 +72,11 @@ public class GuiOilGenerator extends GuiContainer{
     @Override
     public void drawScreen(int x, int y, float f){
         super.drawScreen(x, y, f);
-        String text1 = this.generator.storage.getEnergyStored() + "/" + this.generator.storage.getMaxEnergyStored() + " RF";
+        String text1 = this.generator.storage.getEnergyStored()+"/"+this.generator.storage.getMaxEnergyStored()+" RF";
         if(x >= guiLeft+43 && y >= guiTop+6 && x <= guiLeft+58 && y <= guiTop+88){
             this.func_146283_a(Collections.singletonList(text1), x, y);
         }
-        String text2 = this.generator.tank.getFluidAmount() + "/" + this.generator.tank.getCapacity() + " mB " +StringUtil.localize("fluid.oil");
+        String text2 = this.generator.tank.getFluidAmount()+"/"+this.generator.tank.getCapacity()+" mB "+StringUtil.localize("fluid.oil");
         if(x >= guiLeft+117 && y >= guiTop+6 && x <= guiLeft+132 && y <= guiTop+88){
             this.func_146283_a(Collections.singletonList(text2), x, y);
         }

@@ -60,7 +60,7 @@ public class ToolCrafting{
                     "EE", " S", " S",
                     'E', "gemEmerald",
                     'S', new ItemStack(Items.stick)));
-            
+
             //Helm
             GameRegistry.addRecipe(new ItemStack(InitItems.itemHelmEmerald),
                     "OOO", "O O",

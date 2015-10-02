@@ -64,14 +64,14 @@ public class ItemJams extends ItemFood implements IActAddItemOrBlock{
     @SuppressWarnings("all")
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item item, CreativeTabs tab, List list){
-        for (int j = 0; j < allJams.length; j++){
+        for(int j = 0; j < allJams.length; j++){
             list.add(new ItemStack(this, 1, j));
         }
     }
 
     @Override
     public String getUnlocalizedName(ItemStack stack){
-        return this.getUnlocalizedName() + (stack.getItemDamage() >= allJams.length ? " ERROR!" : allJams[stack.getItemDamage()].getName());
+        return this.getUnlocalizedName()+(stack.getItemDamage() >= allJams.length ? " ERROR!" : allJams[stack.getItemDamage()].getName());
     }
 
     @Override
@@ -115,8 +115,8 @@ public class ItemJams extends ItemFood implements IActAddItemOrBlock{
     @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister iconReg){
-        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":" + this.getName());
-        this.overlayIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":" + this.getName() + "Overlay");
+        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
+        this.overlayIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Overlay");
     }
 
     @Override

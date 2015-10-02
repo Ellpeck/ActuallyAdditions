@@ -100,7 +100,9 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
                                 if(ingredient != null){
                                     if(ingredient.effect(output)){
                                         this.slots[i].stackSize--;
-                                        if(this.slots[i].stackSize <= 0) this.slots[i] = this.slots[i].getItem().getContainerItem(this.slots[i]);
+                                        if(this.slots[i].stackSize <= 0){
+                                            this.slots[i] = this.slots[i].getItem().getContainerItem(this.slots[i]);
+                                        }
                                     }
                                 }
                             }
@@ -113,28 +115,30 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
                     }
                 }
             }
-            else this.brewTime = 0;
+            else{
+                this.brewTime = 0;
+            }
         }
     }
 
     @SideOnly(Side.CLIENT)
     public int getCoffeeScaled(int i){
-        return this.coffeeCacheAmount * i / this.coffeeCacheMaxAmount;
+        return this.coffeeCacheAmount*i/this.coffeeCacheMaxAmount;
     }
 
     @SideOnly(Side.CLIENT)
     public int getWaterScaled(int i){
-        return this.tank.getFluidAmount() * i / this.tank.getCapacity();
+        return this.tank.getFluidAmount()*i/this.tank.getCapacity();
     }
 
     @SideOnly(Side.CLIENT)
     public int getEnergyScaled(int i){
-        return this.storage.getEnergyStored() * i / this.storage.getMaxEnergyStored();
+        return this.storage.getEnergyStored()*i/this.storage.getMaxEnergyStored();
     }
 
     @SideOnly(Side.CLIENT)
     public int getBrewScaled(int i){
-        return this.brewTime * i / ConfigIntValues.COFFEE_MACHINE_TIME_USED.getValue();
+        return this.brewTime*i/ConfigIntValues.COFFEE_MACHINE_TIME_USED.getValue();
     }
 
     @Override
@@ -237,7 +241,9 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
         if(values[1] != -1){
             this.tank.setFluid(new FluidStack(FluidRegistry.getFluid(values[1]), values[0]));
         }
-        else this.tank.setFluid(null);
+        else{
+            this.tank.setFluid(null);
+        }
         this.storage.setEnergyStored(values[2]);
         this.brewTime = values[3];
         this.coffeeCacheAmount = values[4];

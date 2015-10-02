@@ -24,6 +24,7 @@ public class SlotFilter extends Slot{
     /**
      * Gets called when the Filter Slot is clicked
      * Needs to be called in slotClick() in the Container!
+     *
      * @param player The player
      * @param button The button pressed (1 is right mouse button!)
      * @return Nothing, as the Item didn't really get "transferred"

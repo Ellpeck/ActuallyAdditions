@@ -73,7 +73,9 @@ public class ItemAllToolAA extends ItemTool implements IActAddItemOrBlock{
 
     @Override
     public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ){
-        if (!player.canPlayerEdit(x, y, z, side, stack)) return false;
+        if(!player.canPlayerEdit(x, y, z, side, stack)){
+            return false;
+        }
         else{
             UseHoeEvent event = new UseHoeEvent(player, stack, world, x, y, z);
             if(MinecraftForge.EVENT_BUS.post(event)) return false;
@@ -82,17 +84,21 @@ public class ItemAllToolAA extends ItemTool implements IActAddItemOrBlock{
                 return true;
             }
             Block block = world.getBlock(x, y, z);
-            if(side != 0 && world.getBlock(x, y + 1, z).isAir(world, x, y + 1, z) && (block == Blocks.grass || block == Blocks.dirt)){
+            if(side != 0 && world.getBlock(x, y+1, z).isAir(world, x, y+1, z) && (block == Blocks.grass || block == Blocks.dirt)){
                 Block block1 = Blocks.farmland;
-                world.playSoundEffect((double)((float)x + 0.5F), (double)((float)y + 0.5F), (double)((float)z + 0.5F), block1.stepSound.getStepResourcePath(), (block1.stepSound.getVolume() + 1.0F) / 2.0F, block1.stepSound.getPitch() * 0.8F);
-                if (world.isRemote) return true;
+                world.playSoundEffect((double)((float)x+0.5F), (double)((float)y+0.5F), (double)((float)z+0.5F), block1.stepSound.getStepResourcePath(), (block1.stepSound.getVolume()+1.0F)/2.0F, block1.stepSound.getPitch()*0.8F);
+                if(world.isRemote){
+                    return true;
+                }
                 else{
                     world.setBlock(x, y, z, block1);
                     stack.damageItem(1, player);
                     return true;
                 }
             }
-            else return false;
+            else{
+                return false;
+            }
         }
     }
 
@@ -118,7 +124,7 @@ public class ItemAllToolAA extends ItemTool implements IActAddItemOrBlock{
     @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister iconReg){
-        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":" + this.getName());
+        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
     }
 
     @Override

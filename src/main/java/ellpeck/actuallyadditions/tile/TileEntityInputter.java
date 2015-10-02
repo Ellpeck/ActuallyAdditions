@@ -28,13 +28,21 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
     public void onNumberReceived(int text, int textID, EntityPlayer player){
         if(text != -1){
             if(this.placeToPut instanceof IInventory){
-                if(textID == 0) this.slotToPutStart = Math.max(Math.min(text, ((IInventory)this.placeToPut).getSizeInventory()-1), 0);
-                if(textID == 1) this.slotToPutEnd = Math.max(Math.min(text, ((IInventory)this.placeToPut).getSizeInventory()), 0);
+                if(textID == 0){
+                    this.slotToPutStart = Math.max(Math.min(text, ((IInventory)this.placeToPut).getSizeInventory()-1), 0);
+                }
+                if(textID == 1){
+                    this.slotToPutEnd = Math.max(Math.min(text, ((IInventory)this.placeToPut).getSizeInventory()), 0);
+                }
             }
 
             if(this.placeToPull instanceof IInventory){
-                if(textID == 2) this.slotToPullStart =  Math.max(Math.min(text, ((IInventory)this.placeToPull).getSizeInventory()-1), 0);
-                if(textID == 3) this.slotToPullEnd = Math.max(Math.min(text, ((IInventory)this.placeToPull).getSizeInventory()), 0);
+                if(textID == 2){
+                    this.slotToPullStart = Math.max(Math.min(text, ((IInventory)this.placeToPull).getSizeInventory()-1), 0);
+                }
+                if(textID == 3){
+                    this.slotToPullEnd = Math.max(Math.min(text, ((IInventory)this.placeToPull).getSizeInventory()), 0);
+                }
             }
         }
         this.markDirty();
@@ -171,8 +179,12 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
                 ItemStack tempStack = theInventory.getStackInSlot(i);
                 if(tempStack != null){
                     //Set maxSize to the max Size of the temporary stack if it's smaller than the Inventory's Max Size
-                    if(tempStack.getMaxStackSize() < this.getInventoryStackLimit()) maxSize = tempStack.getMaxStackSize();
-                    else maxSize = this.getInventoryStackLimit();
+                    if(tempStack.getMaxStackSize() < this.getInventoryStackLimit()){
+                        maxSize = tempStack.getMaxStackSize();
+                    }
+                    else{
+                        maxSize = this.getInventoryStackLimit();
+                    }
                 }
                 //If ESD has enough Space & Item in question is on whitelist
                 if(tempStack != null && (this.slots[0] == null || (tempStack.isItemEqual(this.slots[0]) && this.slots[0].stackSize < maxSize)) && this.checkBothFilters(tempStack)){
@@ -204,13 +216,13 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
                 if(this.slots[0] != null){
                     if(theStack.isItemEqual(this.slots[0])){
                         //If the StackSize is smaller than the space the ESD has left
-                        if(theStack.stackSize <= maxSize - this.slots[0].stackSize){
+                        if(theStack.stackSize <= maxSize-this.slots[0].stackSize){
                             this.slots[0].stackSize += theStack.stackSize;
                             theInventory.setInventorySlotContents(theSlotToPull, null);
                         }
                         //If the StackSize is bigger than what fits into the Inventory
-                        else if(theStack.stackSize > maxSize - this.slots[0].stackSize){
-                            theInventory.decrStackSize(theSlotToPull, maxSize - this.slots[0].stackSize);
+                        else if(theStack.stackSize > maxSize-this.slots[0].stackSize){
+                            theInventory.decrStackSize(theSlotToPull, maxSize-this.slots[0].stackSize);
                             this.slots[0].stackSize = maxSize;
                         }
                     }
@@ -222,8 +234,12 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
                     //Actually puts the Item
                     this.setInventorySlotContents(0, toBePut);
                     //Removes the Item from the inventory getting pulled from
-                    if(theStack.stackSize == toBePut.stackSize) theInventory.setInventorySlotContents(theSlotToPull, null);
-                    else theInventory.decrStackSize(theSlotToPull, toBePut.stackSize);
+                    if(theStack.stackSize == toBePut.stackSize){
+                        theInventory.setInventorySlotContents(theSlotToPull, null);
+                    }
+                    else{
+                        theInventory.decrStackSize(theSlotToPull, toBePut.stackSize);
+                    }
                 }
             }
         }
@@ -247,8 +263,12 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
                 for(int i = Math.max(theSlotToPut, 0); i < Math.min(this.slotToPutEnd, theInventory.getSizeInventory()); i++){
                     ItemStack tempStack = theInventory.getStackInSlot(i);
                     if(tempStack != null){
-                        if(tempStack.getMaxStackSize() < theInventory.getInventoryStackLimit()) maxSize = tempStack.getMaxStackSize();
-                        else maxSize = theInventory.getInventoryStackLimit();
+                        if(tempStack.getMaxStackSize() < theInventory.getInventoryStackLimit()){
+                            maxSize = tempStack.getMaxStackSize();
+                        }
+                        else{
+                            maxSize = theInventory.getInventoryStackLimit();
+                        }
                     }
                     if(theInventory.isItemValidForSlot(i, this.slots[0]) && (tempStack == null || (tempStack.isItemEqual(this.slots[0]) && tempStack.stackSize < maxSize)) && this.checkBothFilters(this.slots[0])){
                         if(theSided != null){
@@ -273,13 +293,13 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
                     if(theStack != null){
                         ItemStack copiedStack = theStack.copy();
                         if(copiedStack.isItemEqual(this.slots[0])){
-                            if(this.slots[0].stackSize <= maxSize - copiedStack.stackSize){
+                            if(this.slots[0].stackSize <= maxSize-copiedStack.stackSize){
                                 copiedStack.stackSize += this.slots[0].stackSize;
                                 this.slots[0] = null;
                                 theInventory.setInventorySlotContents(theSlotToPut, copiedStack);
                             }
-                            else if(this.slots[0].stackSize > maxSize - copiedStack.stackSize){
-                                this.decrStackSize(0, maxSize - copiedStack.stackSize);
+                            else if(this.slots[0].stackSize > maxSize-copiedStack.stackSize){
+                                this.decrStackSize(0, maxSize-copiedStack.stackSize);
                                 copiedStack.stackSize = maxSize;
                                 theInventory.setInventorySlotContents(theSlotToPut, copiedStack);
                             }
@@ -289,8 +309,12 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
                         ItemStack toBePut = this.slots[0].copy();
                         if(maxSize < toBePut.stackSize) toBePut.stackSize = maxSize;
                         theInventory.setInventorySlotContents(theSlotToPut, toBePut);
-                        if(this.slots[0].stackSize == toBePut.stackSize) this.slots[0] = null;
-                        else this.decrStackSize(0, toBePut.stackSize);
+                        if(this.slots[0].stackSize == toBePut.stackSize){
+                            this.slots[0] = null;
+                        }
+                        else{
+                            this.decrStackSize(0, toBePut.stackSize);
+                        }
                     }
                 }
             }
@@ -300,6 +324,7 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
     /**
      * Checks if one of the filters contains the ItemStack
      * (Whitelist or empty Blacklist in one of them always lets the Item through!)
+     *
      * @param stack The ItemStack
      * @return If the Item is filtered correctly
      */
@@ -309,8 +334,9 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
 
     /**
      * Checks the Whitelist/Blacklist to see if Item fits
-     * @param stack The Stack to check for
-     * @param isPull If we're pulling or putting
+     *
+     * @param stack       The Stack to check for
+     * @param isPull      If we're pulling or putting
      * @param isWhitelist If it's set to white- or Blacklist
      * @return Is Item on White-/Blacklist?
      */
@@ -371,9 +397,15 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
         if(buttonID == 2) this.sideToPull++;
         if(buttonID == 3) this.sideToPull--;
 
-        if(this.sideToPut >= 6) this.sideToPut = -1;
-        else if(this.sideToPut < -1) this.sideToPut = 5;
-        else if(this.sideToPull >= 6) this.sideToPull = -1;
+        if(this.sideToPut >= 6){
+            this.sideToPut = -1;
+        }
+        else if(this.sideToPut < -1){
+            this.sideToPut = 5;
+        }
+        else if(this.sideToPull >= 6){
+            this.sideToPull = -1;
+        }
         else if(this.sideToPull < -1) this.sideToPull = 5;
 
         this.markDirty();

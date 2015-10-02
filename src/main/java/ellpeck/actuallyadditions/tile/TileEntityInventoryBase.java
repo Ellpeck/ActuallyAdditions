@@ -24,7 +24,7 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
 
     public TileEntityInventoryBase(int slots, String name){
         this.initializeSlots(slots);
-        this.name = "container." + ModUtil.MOD_ID_LOWER + "." + name;
+        this.name = "container."+ModUtil.MOD_ID_LOWER+"."+name;
     }
 
     @Override
@@ -66,7 +66,7 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
 
     @Override
     public boolean isUseableByPlayer(EntityPlayer player){
-        return player.getDistanceSq(xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D) <= 64;
+        return player.getDistanceSq(xCoord+0.5D, yCoord+0.5D, zCoord+0.5D) <= 64;
     }
 
     @Override
@@ -100,7 +100,7 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
 
     @Override
     public ItemStack decrStackSize(int i, int j){
-        if (slots[i] != null){
+        if(slots[i] != null){
             ItemStack stackAt;
             if(slots[i].stackSize <= j){
                 stackAt = slots[i];
@@ -110,7 +110,7 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
             }
             else{
                 stackAt = slots[i].splitStack(j);
-                if (slots[i].stackSize == 0) slots[i] = null;
+                if(slots[i].stackSize == 0) slots[i] = null;
                 this.markDirty();
                 return stackAt;
             }
@@ -151,6 +151,8 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
             }
             return theInt;
         }
-        else return new int[0];
+        else{
+            return new int[0];
+        }
     }
 }

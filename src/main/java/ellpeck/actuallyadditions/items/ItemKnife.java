@@ -35,7 +35,7 @@ public class ItemKnife extends Item implements IActAddItemOrBlock{
     @Override
     public ItemStack getContainerItem(ItemStack stack){
         ItemStack theStack = stack.copy();
-        theStack.setItemDamage(theStack.getItemDamage() + 1);
+        theStack.setItemDamage(theStack.getItemDamage()+1);
         theStack.stackSize = 1;
         return theStack;
     }
@@ -63,7 +63,7 @@ public class ItemKnife extends Item implements IActAddItemOrBlock{
     @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister iconReg){
-        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":" + this.getName());
+        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
     }
 
     @Override

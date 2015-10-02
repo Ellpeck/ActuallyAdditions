@@ -49,7 +49,9 @@ public class BlockFermentingBarrel extends BlockContainerBase implements IActAdd
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9){
         if(!world.isRemote){
             TileEntityFermentingBarrel press = (TileEntityFermentingBarrel)world.getTileEntity(x, y, z);
-            if (press != null) player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.FERMENTING_BARREL.ordinal(), world, x, y, z);
+            if(press != null){
+                player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.FERMENTING_BARREL.ordinal(), world, x, y, z);
+            }
             return true;
         }
         return true;
@@ -69,8 +71,8 @@ public class BlockFermentingBarrel extends BlockContainerBase implements IActAdd
     @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconReg){
-        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":" + this.getName());
-        this.iconTop = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":" + this.getName() + "Top");
+        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
+        this.iconTop = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Top");
     }
 
     @Override

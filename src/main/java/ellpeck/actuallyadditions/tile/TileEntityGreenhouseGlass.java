@@ -40,7 +40,9 @@ public class TileEntityGreenhouseGlass extends TileEntityBase{
                             }
                         }
                     }
-                    else this.timeUntilNextFert = ConfigIntValues.GLASS_TIME_NEEDED.getValue()+new Random().nextInt(ConfigIntValues.GLASS_TIME_NEEDED.getValue());
+                    else{
+                        this.timeUntilNextFert = ConfigIntValues.GLASS_TIME_NEEDED.getValue()+new Random().nextInt(ConfigIntValues.GLASS_TIME_NEEDED.getValue());
+                    }
                 }
             }
         }
@@ -53,7 +55,9 @@ public class TileEntityGreenhouseGlass extends TileEntityBase{
                 if((block instanceof IGrowable || block instanceof IPlantable) && !(block instanceof BlockGrass)){
                     return new WorldPos(worldObj, xCoord, i, zCoord);
                 }
-                else return null;
+                else{
+                    return null;
+                }
             }
         }
         return null;

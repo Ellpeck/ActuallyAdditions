@@ -74,7 +74,9 @@ public class BlockColoredLamp extends Block implements IActAddItemOrBlock{
                     if(world.getBlockMetadata(x, y, z) != color.ordinal()){
                         if(!world.isRemote){
                             world.setBlockMetadataWithNotify(x, y, z, color.ordinal(), 2);
-                            if(!player.capabilities.isCreativeMode) player.inventory.decrStackSize(player.inventory.currentItem, 1);
+                            if(!player.capabilities.isCreativeMode){
+                                player.inventory.decrStackSize(player.inventory.currentItem, 1);
+                            }
                         }
                         return true;
                     }
@@ -98,7 +100,7 @@ public class BlockColoredLamp extends Block implements IActAddItemOrBlock{
     @SuppressWarnings("all")
     @SideOnly(Side.CLIENT)
     public void getSubBlocks(Item item, CreativeTabs tab, List list){
-        for (int j = 0; j < allLampTypes.length; j++){
+        for(int j = 0; j < allLampTypes.length; j++){
             list.add(new ItemStack(item, 1, j));
         }
     }
@@ -128,7 +130,7 @@ public class BlockColoredLamp extends Block implements IActAddItemOrBlock{
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconReg){
         for(int i = 0; i < allLampTypes.length; i++){
-            this.textures[i] = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":" + ((IActAddItemOrBlock)InitBlocks.blockColoredLamp).getName() + allLampTypes[i].name + (isOn ? "On" : ""));
+            this.textures[i] = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+((IActAddItemOrBlock)InitBlocks.blockColoredLamp).getName()+allLampTypes[i].name+(isOn ? "On" : ""));
         }
     }
 
@@ -150,7 +152,7 @@ public class BlockColoredLamp extends Block implements IActAddItemOrBlock{
 
         @Override
         public String getUnlocalizedName(ItemStack stack){
-            return InitBlocks.blockColoredLamp.getUnlocalizedName() + allLampTypes[stack.getItemDamage()].getName();
+            return InitBlocks.blockColoredLamp.getUnlocalizedName()+allLampTypes[stack.getItemDamage()].getName();
         }
 
         @Override
@@ -161,7 +163,7 @@ public class BlockColoredLamp extends Block implements IActAddItemOrBlock{
         @Override
         public String getItemStackDisplayName(ItemStack stack){
             if(stack.getItemDamage() >= allLampTypes.length) return null;
-            return StringUtil.localize(this.getUnlocalizedName(stack)+".name") + (((BlockColoredLamp)this.theBlock).isOn ? " (" + StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".onSuffix.desc") + ")" : "");
+            return StringUtil.localize(this.getUnlocalizedName(stack)+".name")+(((BlockColoredLamp)this.theBlock).isOn ? " ("+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".onSuffix.desc")+")" : "");
         }
     }
 }

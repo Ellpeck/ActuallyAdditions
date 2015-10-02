@@ -52,8 +52,12 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
         int newRange = defaultRange;
         for(int i = 0; i < 3; i++){
             Block block = world.getBlock(x, y+1+i, z);
-            if(block == InitBlocks.blockPhantomBooster) newRange = newRange*2;
-            else break;
+            if(block == InitBlocks.blockPhantomBooster){
+                newRange = newRange*2;
+            }
+            else{
+                break;
+            }
         }
         return newRange;
     }

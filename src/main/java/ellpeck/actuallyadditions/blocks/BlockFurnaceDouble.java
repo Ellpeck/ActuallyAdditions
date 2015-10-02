@@ -50,12 +50,12 @@ public class BlockFurnaceDouble extends BlockContainerBase implements IActAddIte
 
     @Override
     public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack stack){
-        int rotation = MathHelper.floor_double((double)(player.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
+        int rotation = MathHelper.floor_double((double)(player.rotationYaw*4.0F/360.0F)+0.5D) & 3;
 
-        if (rotation == 0) world.setBlockMetadataWithNotify(x, y, z, 0, 2);
-        if (rotation == 1) world.setBlockMetadataWithNotify(x, y, z, 3, 2);
-        if (rotation == 2) world.setBlockMetadataWithNotify(x, y, z, 1, 2);
-        if (rotation == 3) world.setBlockMetadataWithNotify(x, y, z, 2, 2);
+        if(rotation == 0) world.setBlockMetadataWithNotify(x, y, z, 0, 2);
+        if(rotation == 1) world.setBlockMetadataWithNotify(x, y, z, 3, 2);
+        if(rotation == 2) world.setBlockMetadataWithNotify(x, y, z, 1, 2);
+        if(rotation == 3) world.setBlockMetadataWithNotify(x, y, z, 2, 2);
     }
 
     @Override
@@ -79,7 +79,9 @@ public class BlockFurnaceDouble extends BlockContainerBase implements IActAddIte
     public IIcon getIcon(IBlockAccess world, int x, int y, int z, int side){
         int meta = world.getBlockMetadata(x, y, z);
         if(side == 1) return this.topIcon;
-        if(side == meta+2 && meta <= 3) return this.frontIcon;
+        if(side == meta+2 && meta <= 3){
+            return this.frontIcon;
+        }
         else if(side == meta-2 && meta > 3) return this.onIcon;
         return this.blockIcon;
     }
@@ -87,17 +89,19 @@ public class BlockFurnaceDouble extends BlockContainerBase implements IActAddIte
     @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconReg){
-        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":" + this.getName());
-        this.topIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":" + this.getName() + "Top");
-        this.onIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":" + this.getName() + "On");
-        this.frontIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":" + this.getName() + "Front");
+        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
+        this.topIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Top");
+        this.onIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"On");
+        this.frontIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Front");
     }
 
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9){
         if(!world.isRemote){
             TileEntityFurnaceDouble furnace = (TileEntityFurnaceDouble)world.getTileEntity(x, y, z);
-            if (furnace != null) player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.FURNACE_DOUBLE.ordinal(), world, x, y, z);
+            if(furnace != null){
+                player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.FURNACE_DOUBLE.ordinal(), world, x, y, z);
+            }
             return true;
         }
         return true;
@@ -108,32 +112,32 @@ public class BlockFurnaceDouble extends BlockContainerBase implements IActAddIte
     public void randomDisplayTick(World world, int x, int y, int z, Random rand){
         int meta = world.getBlockMetadata(x, y, z);
 
-        if (meta > 3){
-            float f = (float)x + 0.5F;
-            float f1 = (float)y + 0.0F + rand.nextFloat() * 6.0F / 16.0F;
-            float f2 = (float)z + 0.5F;
+        if(meta > 3){
+            float f = (float)x+0.5F;
+            float f1 = (float)y+0.0F+rand.nextFloat()*6.0F/16.0F;
+            float f2 = (float)z+0.5F;
             float f3 = 0.52F;
-            float f4 = rand.nextFloat() * 0.6F - 0.3F;
+            float f4 = rand.nextFloat()*0.6F-0.3F;
 
             if(meta == 6){
-                world.spawnParticle("smoke", (double)(f - f3), (double)f1, (double)(f2 + f4), 0.0D, 0.0D, 0.0D);
-                world.spawnParticle("flame", (double)(f - f3), (double)f1, (double)(f2 + f4), 0.0D, 0.0D, 0.0D);
+                world.spawnParticle("smoke", (double)(f-f3), (double)f1, (double)(f2+f4), 0.0D, 0.0D, 0.0D);
+                world.spawnParticle("flame", (double)(f-f3), (double)f1, (double)(f2+f4), 0.0D, 0.0D, 0.0D);
             }
             if(meta == 7){
-                world.spawnParticle("smoke", (double)(f + f3), (double)f1, (double)(f2 + f4), 0.0D, 0.0D, 0.0D);
-                world.spawnParticle("flame", (double)(f + f3), (double)f1, (double)(f2 + f4), 0.0D, 0.0D, 0.0D);
+                world.spawnParticle("smoke", (double)(f+f3), (double)f1, (double)(f2+f4), 0.0D, 0.0D, 0.0D);
+                world.spawnParticle("flame", (double)(f+f3), (double)f1, (double)(f2+f4), 0.0D, 0.0D, 0.0D);
             }
             if(meta == 4){
-                world.spawnParticle("smoke", (double)(f + f4), (double)f1, (double)(f2 - f3), 0.0D, 0.0D, 0.0D);
-                world.spawnParticle("flame", (double)(f + f4), (double)f1, (double)(f2 - f3), 0.0D, 0.0D, 0.0D);
+                world.spawnParticle("smoke", (double)(f+f4), (double)f1, (double)(f2-f3), 0.0D, 0.0D, 0.0D);
+                world.spawnParticle("flame", (double)(f+f4), (double)f1, (double)(f2-f3), 0.0D, 0.0D, 0.0D);
             }
             if(meta == 5){
-                world.spawnParticle("smoke", (double)(f + f4), (double)f1, (double)(f2 + f3), 0.0D, 0.0D, 0.0D);
-                world.spawnParticle("flame", (double)(f + f4), (double)f1, (double)(f2 + f3), 0.0D, 0.0D, 0.0D);
+                world.spawnParticle("smoke", (double)(f+f4), (double)f1, (double)(f2+f3), 0.0D, 0.0D, 0.0D);
+                world.spawnParticle("flame", (double)(f+f4), (double)f1, (double)(f2+f3), 0.0D, 0.0D, 0.0D);
             }
 
             for(int i = 0; i < 5; i++){
-                world.spawnParticle("smoke", (double)x+0.5F, (double)y + 1.0F, (double)z+0.5F, 0.0D, 0.0D, 0.0D);
+                world.spawnParticle("smoke", (double)x+0.5F, (double)y+1.0F, (double)z+0.5F, 0.0D, 0.0D, 0.0D);
             }
         }
     }

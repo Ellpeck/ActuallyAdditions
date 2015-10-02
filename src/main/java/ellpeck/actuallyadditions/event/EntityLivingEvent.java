@@ -33,7 +33,7 @@ public class EntityLivingEvent{
                 EntityOcelot theOcelot = (EntityOcelot)event.entityLiving;
                 if(ConfigBoolValues.DO_CAT_DROPS.isEnabled() && theOcelot.isTamed()){
                     if(new Random().nextInt(ConfigIntValues.CAT_DROP_CHANCE.getValue())+1 == 1){
-                        EntityItem item = new EntityItem(theOcelot.worldObj, theOcelot.posX + 0.5, theOcelot.posY + 0.5, theOcelot.posZ + 0.5, new ItemStack(InitItems.itemHairyBall));
+                        EntityItem item = new EntityItem(theOcelot.worldObj, theOcelot.posX+0.5, theOcelot.posY+0.5, theOcelot.posZ+0.5, new ItemStack(InitItems.itemHairyBall));
                         theOcelot.worldObj.spawnEntityInWorld(item);
                     }
                 }

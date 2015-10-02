@@ -94,7 +94,9 @@ public class GuiSmileyCloud extends GuiContainer{
                 this.nameField.textboxKeyTyped(theChar, key);
             }
         }
-        else super.keyTyped(theChar, key);
+        else{
+            super.keyTyped(theChar, key);
+        }
     }
 
     public void setVariable(GuiTextField field){

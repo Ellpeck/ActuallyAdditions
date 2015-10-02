@@ -77,19 +77,27 @@ public class BlockPhantom extends BlockContainerBase implements IActAddItemOrBlo
                 if(tile instanceof IPhantomTile){
                     IPhantomTile phantom = (IPhantomTile)tile;
                     if(player.isSneaking() || phantom.getGuiID() == -1){
-                        player.addChatComponentMessage(new ChatComponentText(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".blockPhantomRange.desc") + ": " + phantom.getRange()));
+                        player.addChatComponentMessage(new ChatComponentText(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".blockPhantomRange.desc")+": "+phantom.getRange()));
                         if(phantom.hasBoundPosition()){
                             int distance = (int)Vec3.createVectorHelper(x, y, z).distanceTo(Vec3.createVectorHelper(phantom.getBoundPosition().getX(), phantom.getBoundPosition().getY(), phantom.getBoundPosition().getZ()));
                             Item item = phantom.getBoundPosition().getItemBlock();
                             String name = item == null ? "Absolutely Nothing" : item.getItemStackDisplayName(new ItemStack(phantom.getBoundPosition().getBlock(), 1, phantom.getBoundPosition().getMetadata()));
                             player.addChatComponentMessage(new ChatComponentText(StringUtil.localizeFormatted("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.blockInfo.desc", name, phantom.getBoundPosition().getX(), phantom.getBoundPosition().getY(), phantom.getBoundPosition().getZ(), distance)));
 
-                            if(phantom.isBoundThingInRange()) player.addChatComponentMessage(new ChatComponentText(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.connectedRange.desc")));
-                            else player.addChatComponentMessage(new ChatComponentText(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.connectedNoRange.desc")));
+                            if(phantom.isBoundThingInRange()){
+                                player.addChatComponentMessage(new ChatComponentText(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.connectedRange.desc")));
+                            }
+                            else{
+                                player.addChatComponentMessage(new ChatComponentText(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.connectedNoRange.desc")));
+                            }
                         }
-                        else player.addChatComponentMessage(new ChatComponentText(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.notConnected.desc")));
+                        else{
+                            player.addChatComponentMessage(new ChatComponentText(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.notConnected.desc")));
+                        }
                     }
-                    else player.openGui(ActuallyAdditions.instance, phantom.getGuiID(), world, x, y, z);
+                    else{
+                        player.openGui(ActuallyAdditions.instance, phantom.getGuiID(), world, x, y, z);
+                    }
                 }
             }
         }
@@ -120,7 +128,7 @@ public class BlockPhantom extends BlockContainerBase implements IActAddItemOrBlo
     @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconReg){
-        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":" + this.getName());
+        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
     }
 
     @Override

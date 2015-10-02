@@ -51,12 +51,14 @@ public class TileEntityItemRepairer extends TileEntityInventoryBase implements I
                         this.storage.extractEnergy(ConfigIntValues.REPAIRER_ENERGY_USED.getValue(), false);
                         if(this.nextRepairTick >= ConfigIntValues.REPAIRER_SPEED_SLOWDOWN.getValue()){
                             this.nextRepairTick = 0;
-                            this.slots[SLOT_INPUT].setItemDamage(this.slots[SLOT_INPUT].getItemDamage() - 1);
+                            this.slots[SLOT_INPUT].setItemDamage(this.slots[SLOT_INPUT].getItemDamage()-1);
                         }
                     }
                 }
             }
-            else this.nextRepairTick = 0;
+            else{
+                this.nextRepairTick = 0;
+            }
 
             if(this.lastEnergy != this.storage.getEnergyStored()){
                 this.lastEnergy = this.storage.getEnergyStored();
@@ -85,13 +87,13 @@ public class TileEntityItemRepairer extends TileEntityInventoryBase implements I
 
     @SideOnly(Side.CLIENT)
     public int getEnergyScaled(int i){
-        return this.storage.getEnergyStored() * i / this.storage.getMaxEnergyStored();
+        return this.storage.getEnergyStored()*i/this.storage.getMaxEnergyStored();
     }
 
     @SideOnly(Side.CLIENT)
     public int getItemDamageToScale(int i){
         if(this.slots[SLOT_INPUT] != null){
-            return (this.slots[SLOT_INPUT].getMaxDamage()-this.slots[SLOT_INPUT].getItemDamage()) * i / this.slots[SLOT_INPUT].getMaxDamage();
+            return (this.slots[SLOT_INPUT].getMaxDamage()-this.slots[SLOT_INPUT].getItemDamage())*i/this.slots[SLOT_INPUT].getMaxDamage();
         }
         return 0;
     }

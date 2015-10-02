@@ -46,7 +46,7 @@ public class CrusherRecipeAutoRegistry{
     public static void registerFinally(){
         String[] names = OreDictionary.getOreNames();
         for(String inputName : names){
-            
+
             if(!hasException(inputName)){
                 int resultAmount = 1;
                 String inputNameWithoutPrefix = null;

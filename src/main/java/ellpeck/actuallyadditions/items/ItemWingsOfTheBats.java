@@ -29,10 +29,10 @@ public class ItemWingsOfTheBats extends Item implements IActAddItemOrBlock{
      * A List containing all of the Players that can currently fly
      * Used so that Flight from other Mods' Items doesn't get broken when
      * these Wings aren't worn
-     *
+     * <p>
      * Saves Remote Players separately to make de-synced Event Calling
      * not bug out Capabilities when taking off the Wings
-     *
+     * <p>
      * (Partially excerpted from Botania's Wing System by Vazkii (as I had fiddled around with the system and couldn't make it work) with permission, thanks!)
      */
     public static ArrayList<String> wingedPlayers = new ArrayList<String>();
@@ -43,6 +43,7 @@ public class ItemWingsOfTheBats extends Item implements IActAddItemOrBlock{
 
     /**
      * Checks if the Player is winged
+     *
      * @param player The Player
      * @return Winged?
      */
@@ -52,7 +53,8 @@ public class ItemWingsOfTheBats extends Item implements IActAddItemOrBlock{
 
     /**
      * Removes the Player from the List of Players that have Wings
-     * @param player The Player
+     *
+     * @param player      The Player
      * @param worldRemote If the World the Player is in is remote
      */
     public static void removeWingsFromPlayer(EntityPlayer player, boolean worldRemote){
@@ -68,6 +70,7 @@ public class ItemWingsOfTheBats extends Item implements IActAddItemOrBlock{
 
     /**
      * Adds the Player to the List of Players that have Wings
+     *
      * @param player The Player
      */
     public static void addWingsToPlayer(EntityPlayer player){

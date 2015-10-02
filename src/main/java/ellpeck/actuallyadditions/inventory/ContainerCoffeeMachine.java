@@ -38,8 +38,8 @@ public class ContainerCoffeeMachine extends Container{
         this.addSlotToContainer(new Slot(machine, TileEntityCoffeeMachine.SLOT_INPUT, 80, 42));
         this.addSlotToContainer(new SlotOutput(machine, TileEntityCoffeeMachine.SLOT_OUTPUT, 80, 73));
 
-        for (int i = 0; i < 4; i++){
-            for (int j = 0; j < 2; j++){
+        for(int i = 0; i < 4; i++){
+            for(int j = 0; j < 2; j++){
                 this.addSlotToContainer(new Slot(machine, j+i*2+3, 125+j*18, 6+i*18));
             }
         }
@@ -47,13 +47,13 @@ public class ContainerCoffeeMachine extends Container{
         this.addSlotToContainer(new Slot(machine, TileEntityCoffeeMachine.SLOT_WATER_INPUT, 26, 73));
         this.addSlotToContainer(new SlotOutput(machine, TileEntityCoffeeMachine.SLOT_WATER_OUTPUT, 45, 73));
 
-        for (int i = 0; i < 3; i++){
-            for (int j = 0; j < 9; j++){
-                this.addSlotToContainer(new Slot(inventory, j + i * 9 + 9, 8 + j * 18, 97 + i * 18));
+        for(int i = 0; i < 3; i++){
+            for(int j = 0; j < 9; j++){
+                this.addSlotToContainer(new Slot(inventory, j+i*9+9, 8+j*18, 97+i*18));
             }
         }
-        for (int i = 0; i < 9; i++){
-            this.addSlotToContainer(new Slot(inventory, i, 8 + i * 18, 155));
+        for(int i = 0; i < 9; i++){
+            this.addSlotToContainer(new Slot(inventory, i, 8+i*18, 155));
         }
     }
 
@@ -71,7 +71,7 @@ public class ContainerCoffeeMachine extends Container{
 
         Slot theSlot = (Slot)this.inventorySlots.get(slot);
 
-        if (theSlot != null && theSlot.getHasStack()){
+        if(theSlot != null && theSlot.getHasStack()){
             ItemStack newStack = theSlot.getStack();
             ItemStack currentStack = newStack.copy();
 
@@ -84,30 +84,42 @@ public class ContainerCoffeeMachine extends Container{
             else if(slot >= inventoryStart){
                 //Shift from Inventory
                 if(newStack.getItem() == InitItems.itemMisc && newStack.getItemDamage() == TheMiscItems.CUP.ordinal()){
-                    if(!this.mergeItemStack(newStack, TileEntityCoffeeMachine.SLOT_INPUT, TileEntityCoffeeMachine.SLOT_INPUT+1, false)) return null;
+                    if(!this.mergeItemStack(newStack, TileEntityCoffeeMachine.SLOT_INPUT, TileEntityCoffeeMachine.SLOT_INPUT+1, false)){
+                        return null;
+                    }
                 }
                 else if(FluidContainerRegistry.containsFluid(newStack, new FluidStack(FluidRegistry.WATER, 1))){
-                    if(!this.mergeItemStack(newStack, TileEntityCoffeeMachine.SLOT_WATER_INPUT, TileEntityCoffeeMachine.SLOT_WATER_INPUT+1, false)) return null;
+                    if(!this.mergeItemStack(newStack, TileEntityCoffeeMachine.SLOT_WATER_INPUT, TileEntityCoffeeMachine.SLOT_WATER_INPUT+1, false)){
+                        return null;
+                    }
                 }
                 else if(ItemCoffee.getIngredientFromStack(newStack) != null){
                     if(!this.mergeItemStack(newStack, 3, 11, false)) return null;
                 }
                 else if(newStack.getItem() == InitItems.itemCoffeeBean){
-                    if(!this.mergeItemStack(newStack, TileEntityCoffeeMachine.SLOT_COFFEE_BEANS, TileEntityCoffeeMachine.SLOT_COFFEE_BEANS+1, false)) return null;
+                    if(!this.mergeItemStack(newStack, TileEntityCoffeeMachine.SLOT_COFFEE_BEANS, TileEntityCoffeeMachine.SLOT_COFFEE_BEANS+1, false)){
+                        return null;
+                    }
                 }
                 //
 
                 else if(slot >= inventoryStart && slot <= inventoryEnd){
                     if(!this.mergeItemStack(newStack, hotbarStart, hotbarEnd+1, false)) return null;
                 }
-                else if(slot >= inventoryEnd+1 && slot < hotbarEnd+1 && !this.mergeItemStack(newStack, inventoryStart, inventoryEnd+1, false)) return null;
+                else if(slot >= inventoryEnd+1 && slot < hotbarEnd+1 && !this.mergeItemStack(newStack, inventoryStart, inventoryEnd+1, false)){
+                    return null;
+                }
             }
             else if(!this.mergeItemStack(newStack, inventoryStart, hotbarEnd+1, false)) return null;
 
-            if (newStack.stackSize == 0) theSlot.putStack(null);
-            else theSlot.onSlotChanged();
+            if(newStack.stackSize == 0){
+                theSlot.putStack(null);
+            }
+            else{
+                theSlot.onSlotChanged();
+            }
 
-            if (newStack.stackSize == currentStack.stackSize) return null;
+            if(newStack.stackSize == currentStack.stackSize) return null;
             theSlot.onPickupFromSlot(player, newStack);
 
             return currentStack;

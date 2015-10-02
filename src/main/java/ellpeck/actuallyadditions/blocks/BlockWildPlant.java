@@ -41,7 +41,7 @@ public class BlockWildPlant extends BlockBush implements IActAddItemOrBlock{
 
     @Override
     public boolean canBlockStay(World world, int x, int y, int z){
-        return world.getBlockMetadata(x, y, z) == TheWildPlants.RICE.ordinal() ? world.getBlock(x, y-1, z).getMaterial() == Material.water : world.getBlock(x, y - 1, z).canSustainPlant(world, x, y - 1, z, ForgeDirection.UP, this);
+        return world.getBlockMetadata(x, y, z) == TheWildPlants.RICE.ordinal() ? world.getBlock(x, y-1, z).getMaterial() == Material.water : world.getBlock(x, y-1, z).canSustainPlant(world, x, y-1, z, ForgeDirection.UP, this);
     }
 
     @Override
@@ -52,7 +52,7 @@ public class BlockWildPlant extends BlockBush implements IActAddItemOrBlock{
     @SuppressWarnings("all")
     @SideOnly(Side.CLIENT)
     public void getSubBlocks(Item item, CreativeTabs tab, List list){
-        for (int j = 0; j < allWildPlants.length; j++){
+        for(int j = 0; j < allWildPlants.length; j++){
             list.add(new ItemStack(item, 1, j));
         }
     }
@@ -103,7 +103,7 @@ public class BlockWildPlant extends BlockBush implements IActAddItemOrBlock{
 
         @Override
         public String getUnlocalizedName(ItemStack stack){
-            return this.getUnlocalizedName() + (stack.getItemDamage() >= allWildPlants.length ? " ERROR!" : allWildPlants[stack.getItemDamage()].getName());
+            return this.getUnlocalizedName()+(stack.getItemDamage() >= allWildPlants.length ? " ERROR!" : allWildPlants[stack.getItemDamage()].getName());
         }
 
         @Override

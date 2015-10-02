@@ -89,8 +89,9 @@ public class BlockXPSolidifier extends BlockContainerBase implements IActAddItem
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9){
         if(!world.isRemote){
             TileEntityXPSolidifier solidifier = (TileEntityXPSolidifier)world.getTileEntity(x, y, z);
-            if(solidifier != null)
+            if(solidifier != null){
                 player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.XP_SOLIDIFIER.ordinal(), world, x, y, z);
+            }
             return true;
         }
         return true;

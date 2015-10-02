@@ -168,7 +168,7 @@ public enum ConfigCrafting{
         this.name = name;
         this.category = category.name;
         this.defaultValue = defaultValue;
-        this.extraText = extraText.length() > 0 ? extraText + " " : "";
+        this.extraText = extraText.length() > 0 ? extraText+" " : "";
     }
 
     ConfigCrafting(String name, ConfigCategories category, boolean defaultValue){

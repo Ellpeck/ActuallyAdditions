@@ -65,7 +65,9 @@ public class ContainerInputter extends Container{
             //Calls the Filter's SlotClick function
             return ((SlotFilter)getSlot(par1)).slotClick(player, par2);
         }
-        else return super.slotClick(par1, par2, par3, player);
+        else{
+            return super.slotClick(par1, par2, par3, player);
+        }
     }
 
     @Override
@@ -89,14 +91,19 @@ public class ContainerInputter extends Container{
                     if(slot >= inventoryStart && slot <= inventoryEnd){
                         if(!this.mergeItemStack(newStack, hotbarStart, hotbarEnd+1, false)) return null;
                     }
-                    else if(slot >= inventoryEnd+1 && slot < hotbarEnd+1 && !this.mergeItemStack(newStack, inventoryStart, inventoryEnd+1, false))
+                    else if(slot >= inventoryEnd+1 && slot < hotbarEnd+1 && !this.mergeItemStack(newStack, inventoryStart, inventoryEnd+1, false)){
                         return null;
+                    }
                 }
             }
             else if(!this.mergeItemStack(newStack, inventoryStart, hotbarEnd+1, false)) return null;
 
-            if(newStack.stackSize == 0) theSlot.putStack(null);
-            else theSlot.onSlotChanged();
+            if(newStack.stackSize == 0){
+                theSlot.putStack(null);
+            }
+            else{
+                theSlot.onSlotChanged();
+            }
 
             if(newStack.stackSize == currentStack.stackSize) return null;
             theSlot.onPickupFromSlot(player, newStack);

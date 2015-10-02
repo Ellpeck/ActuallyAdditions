@@ -34,6 +34,7 @@ public class SmileyCloudEasterEggs{
             public String[] getTriggerNames(){
                 return new String[]{"glenthor", "glenthorlp", "twoofeight"};
             }
+
             @Override
             public void renderExtra(float f){
                 renderHoldingItem(true, new ItemStack(Items.dye, 1, 2));
@@ -46,6 +47,7 @@ public class SmileyCloudEasterEggs{
             public String[] getTriggerNames(){
                 return new String[]{"ellpeck", "ellopecko", "peck"};
             }
+
             @Override
             public void renderExtra(float f){
                 renderHoldingItem(false, new ItemStack(InitItems.itemPhantomConnector));
@@ -58,6 +60,7 @@ public class SmileyCloudEasterEggs{
             public String[] getTriggerNames(){
                 return new String[]{"tyrex", "lord_tobinho", "tobinho"};
             }
+
             @Override
             public void renderExtra(float f){
                 renderHoldingItem(false, new ItemStack(Items.fishing_rod));
@@ -70,6 +73,7 @@ public class SmileyCloudEasterEggs{
             public String[] getTriggerNames(){
                 return new String[]{"dqmhose", "xdqmhose", "hose"};
             }
+
             @Override
             public void renderExtra(float f){
                 renderHoldingItem(false, new ItemStack(Items.reeds));
@@ -82,6 +86,7 @@ public class SmileyCloudEasterEggs{
             public String[] getTriggerNames(){
                 return new String[]{"jemx", "jemxx", "jemxxx", "spielertobi200"};
             }
+
             @Override
             public void renderExtra(float f){
                 renderHoldingItem(true, new ItemStack(Items.milk_bucket));
@@ -94,6 +99,7 @@ public class SmileyCloudEasterEggs{
             public String[] getTriggerNames(){
                 return new String[]{"vazkii", "vaski", "waskie"};
             }
+
             @Override
             public void renderExtra(float f){
                 renderHoldingItem(true, new ItemStack(Items.dye, 1, 15));
@@ -106,6 +112,7 @@ public class SmileyCloudEasterEggs{
             public String[] getTriggerNames(){
                 return new String[]{"kitty", "kiddy", "kittyvancat", "kittyvancatlp"};
             }
+
             @Override
             public void renderExtra(float f){
                 renderHoldingItem(true, new ItemStack(Items.fish));
@@ -119,6 +126,7 @@ public class SmileyCloudEasterEggs{
             public String[] getTriggerNames(){
                 return new String[]{"canitz", "canitzp", "kannnichts", "kannnichtsp"};
             }
+
             @Override
             public void renderExtra(float f){
                 renderHoldingItem(false, new ItemStack(Items.wooden_sword));
@@ -131,6 +139,7 @@ public class SmileyCloudEasterEggs{
             public String[] getTriggerNames(){
                 return new String[]{"lari", "larixine", "xine", "laxi", "lachsirine", "lala", "lalilu"};
             }
+
             @Override
             public void renderExtra(float f){
                 renderHoldingItem(false, new ItemStack(Items.iron_helmet));
@@ -143,6 +152,7 @@ public class SmileyCloudEasterEggs{
             public String[] getTriggerNames(){
                 return new String[]{"rotesding", "dotesring"};
             }
+
             @Override
             public void renderExtra(float f){
                 renderHoldingItem(false, new ItemStack(Items.milk_bucket));
@@ -156,6 +166,7 @@ public class SmileyCloudEasterEggs{
             public String[] getTriggerNames(){
                 return new String[]{"bande", "bandelenth"};
             }
+
             @Override
             public void renderExtra(float f){
                 renderHoldingItem(false, new ItemStack(Items.diamond_pickaxe));
@@ -168,6 +179,7 @@ public class SmileyCloudEasterEggs{
             public String[] getTriggerNames(){
                 return new String[]{"wolle", "wuitoi"};
             }
+
             @Override
             public void renderExtra(float f){
                 renderHoldingItem(false, new ItemStack(Items.string));
@@ -180,6 +192,7 @@ public class SmileyCloudEasterEggs{
             public String[] getTriggerNames(){
                 return new String[]{"pakto", "paktosan", "paktosanlp"};
             }
+
             @Override
             public void renderExtra(float f){
                 renderHoldingItem(false, new ItemStack(Items.dye, 1, 9));
@@ -192,6 +205,7 @@ public class SmileyCloudEasterEggs{
             public String[] getTriggerNames(){
                 return new String[]{"honka", "honkalonka", "lonka", "lonki"};
             }
+
             @Override
             public void renderExtra(float f){
                 renderHoldingItem(false, new ItemStack(InitItems.itemLeafBlowerAdvanced, 1, 9));
@@ -204,6 +218,7 @@ public class SmileyCloudEasterEggs{
             public String[] getTriggerNames(){
                 return new String[]{"acid", "acid_blues", "acidblues"};
             }
+
             @Override
             public void renderExtra(float f){
                 renderHoldingItem(false, new ItemStack(InitItems.itemFoods, 1, TheFoods.PIZZA.ordinal()));
@@ -216,6 +231,7 @@ public class SmileyCloudEasterEggs{
             public String[] getTriggerNames(){
                 return new String[]{"jasin", "jasindow"};
             }
+
             @Override
             public void renderExtra(float f){
                 renderHoldingItem(false, new ItemStack(Items.written_book));
@@ -228,6 +244,7 @@ public class SmileyCloudEasterEggs{
             public String[] getTriggerNames(){
                 return new String[]{"lordi", "lordhallo"};
             }
+
             @Override
             public void renderExtra(float f){
                 renderHoldingItem(true, new ItemStack(Items.paper));
@@ -241,6 +258,7 @@ public class SmileyCloudEasterEggs{
             public String[] getTriggerNames(){
                 return new String[]{"freakyninja", "ninja", "tl"};
             }
+
             @Override
             public void renderExtra(float f){
                 renderHoldingItem(false, new ItemStack(Items.diamond_sword));
@@ -253,6 +271,7 @@ public class SmileyCloudEasterEggs{
             public String[] getTriggerNames(){
                 return new String[]{"nihon", "nihontiger", "tiger"};
             }
+
             @Override
             public void renderExtra(float f){
                 renderHoldingItem(false, new ItemStack(Items.stone_pickaxe));

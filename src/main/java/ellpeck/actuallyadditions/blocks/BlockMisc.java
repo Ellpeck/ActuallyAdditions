@@ -42,7 +42,7 @@ public class BlockMisc extends Block implements IActAddItemOrBlock{
     @SuppressWarnings("all")
     @SideOnly(Side.CLIENT)
     public void getSubBlocks(Item item, CreativeTabs tab, List list){
-        for (int j = 0; j < allMiscBlocks.length; j++){
+        for(int j = 0; j < allMiscBlocks.length; j++){
             list.add(new ItemStack(item, 1, j));
         }
     }
@@ -61,7 +61,7 @@ public class BlockMisc extends Block implements IActAddItemOrBlock{
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconReg){
         for(int i = 0; i < textures.length; i++){
-            textures[i] = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":" + this.getName() + allMiscBlocks[i].getName());
+            textures[i] = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+allMiscBlocks[i].getName());
         }
     }
 
@@ -88,7 +88,7 @@ public class BlockMisc extends Block implements IActAddItemOrBlock{
 
         @Override
         public String getUnlocalizedName(ItemStack stack){
-            return this.getUnlocalizedName() + (stack.getItemDamage() >= allMiscBlocks.length ? " ERROR!" : allMiscBlocks[stack.getItemDamage()].getName());
+            return this.getUnlocalizedName()+(stack.getItemDamage() >= allMiscBlocks.length ? " ERROR!" : allMiscBlocks[stack.getItemDamage()].getName());
         }
 
         @Override

@@ -30,6 +30,8 @@ public class FakePlayerUtil{
             }
             return theFakePlayer;
         }
-        else return null;
+        else{
+            return null;
+        }
     }
 }

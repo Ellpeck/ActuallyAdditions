@@ -39,7 +39,7 @@ public class ItemHairyBall extends Item implements IActAddItemOrBlock{
                 player.worldObj.spawnEntityInWorld(entityItem);
             }
             stack.stackSize--;
-            world.playSoundAtEntity(player, "random.pop", 0.2F, new Random().nextFloat() * 0.1F + 0.9F);
+            world.playSoundAtEntity(player, "random.pop", 0.2F, new Random().nextFloat()*0.1F+0.9F);
         }
         return stack;
     }
@@ -61,7 +61,7 @@ public class ItemHairyBall extends Item implements IActAddItemOrBlock{
     @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister iconReg){
-        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":" + this.getName());
+        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
     }
 
     @Override

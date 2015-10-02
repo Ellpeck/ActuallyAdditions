@@ -43,6 +43,7 @@ import ellpeck.actuallyadditions.tile.TileEntityBase;
 import ellpeck.actuallyadditions.update.UpdateChecker;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.Util;
+
 //                                                                           So that BuildCraft Oil always gets used
 @Mod(modid = ModUtil.MOD_ID, name = ModUtil.NAME, version = ModUtil.VERSION, dependencies = "after:BuildCraft|Energy", canBeDeactivated = false, guiFactory = "ellpeck.actuallyadditions.config.GuiFactory")
 public class ActuallyAdditions{

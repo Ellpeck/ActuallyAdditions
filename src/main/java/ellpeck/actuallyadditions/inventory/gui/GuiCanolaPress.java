@@ -55,29 +55,29 @@ public class GuiCanolaPress extends GuiContainer{
 
         if(this.press.storage.getEnergyStored() > 0){
             int i = this.press.getEnergyScaled(83);
-            drawTexturedModalRect(this.guiLeft + 43, this.guiTop+89-i, 176, 29, 16, i);
+            drawTexturedModalRect(this.guiLeft+43, this.guiTop+89-i, 176, 29, 16, i);
         }
 
         if(this.press.tank.getFluidAmount() > 0){
             int i = this.press.getTankScaled(83);
-            drawTexturedModalRect(this.guiLeft + 117, this.guiTop+89-i, 192, 29, 16, i);
+            drawTexturedModalRect(this.guiLeft+117, this.guiTop+89-i, 192, 29, 16, i);
         }
 
         if(this.press.currentProcessTime > 0){
             int i = this.press.getProcessScaled(29);
-            drawTexturedModalRect(this.guiLeft + 83, this.guiTop+32, 176, 0, 12, i);
+            drawTexturedModalRect(this.guiLeft+83, this.guiTop+32, 176, 0, 12, i);
         }
     }
 
     @Override
     public void drawScreen(int x, int y, float f){
         super.drawScreen(x, y, f);
-        String text1 = this.press.storage.getEnergyStored() + "/" + this.press.storage.getMaxEnergyStored() + " RF";
+        String text1 = this.press.storage.getEnergyStored()+"/"+this.press.storage.getMaxEnergyStored()+" RF";
         if(x >= guiLeft+43 && y >= guiTop+6 && x <= guiLeft+58 && y <= guiTop+88){
             this.func_146283_a(Collections.singletonList(text1), x, y);
         }
 
-        String text2 = this.press.tank.getFluidAmount() + "/" + this.press.tank.getCapacity() + " mB " +StringUtil.localize("fluid.canolaoil");
+        String text2 = this.press.tank.getFluidAmount()+"/"+this.press.tank.getCapacity()+" mB "+StringUtil.localize("fluid.canolaoil");
         if(x >= guiLeft+117 && y >= guiTop+6 && x <= guiLeft+132 && y <= guiTop+88){
             this.func_146283_a(Collections.singletonList(text2), x, y);
         }

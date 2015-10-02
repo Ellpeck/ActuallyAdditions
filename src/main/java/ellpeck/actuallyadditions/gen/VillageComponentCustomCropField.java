@@ -56,7 +56,7 @@ public class VillageComponentCustomCropField extends StructureVillagePieces.Hous
         this.fillWithBlocks(world, sbb, 0, 0, 0, xSize-1, ySize-1, zSize-1, Blocks.air);
         this.spawnActualHouse(world, rand, sbb);
 
-        for (int i = 0; i < xSize; i++){
+        for(int i = 0; i < xSize; i++){
             for(int j = 0; j < zSize; j++){
                 this.clearCurrentPositionBlocksUpwards(world, i, ySize, j, sbb);
                 this.func_151554_b(world, Blocks.dirt, 0, i, -1, j, sbb);
@@ -68,10 +68,14 @@ public class VillageComponentCustomCropField extends StructureVillagePieces.Hous
 
     private Block getRandomCropType(Random rand){
         switch(rand.nextInt(4)){
-            case 0: return InitBlocks.blockFlax;
-            case 1: return InitBlocks.blockCoffee;
-            case 2: return InitBlocks.blockRice;
-            default: return InitBlocks.blockCanola;
+            case 0:
+                return InitBlocks.blockFlax;
+            case 1:
+                return InitBlocks.blockCoffee;
+            case 2:
+                return InitBlocks.blockRice;
+            default:
+                return InitBlocks.blockCanola;
         }
     }
 

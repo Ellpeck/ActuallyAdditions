@@ -64,7 +64,9 @@ public class InitForeignPaxels{
                     }
                 }
             }
-            else ModUtil.LOGGER.info(MEKANISM_TOOLS+" not loaded, can't initialize Special AIOTs.");
+            else{
+                ModUtil.LOGGER.info(MEKANISM_TOOLS+" not loaded, can't initialize Special AIOTs.");
+            }
         }
 
         //Thermal Foundation
@@ -91,7 +93,9 @@ public class InitForeignPaxels{
                     }
                 }
             }
-            else ModUtil.LOGGER.info(THERMAL_FOUNDATION+" not loaded, can't initialize Special AIOTs.");
+            else{
+                ModUtil.LOGGER.info(THERMAL_FOUNDATION+" not loaded, can't initialize Special AIOTs.");
+            }
         }
     }
 

@@ -57,7 +57,7 @@ public class ItemDust extends Item implements IActAddItemOrBlock{
 
     @Override
     public String getUnlocalizedName(ItemStack stack){
-        return this.getUnlocalizedName() + (stack.getItemDamage() >= allDusts.length ? " ERROR!" : allDusts[stack.getItemDamage()].getName());
+        return this.getUnlocalizedName()+(stack.getItemDamage() >= allDusts.length ? " ERROR!" : allDusts[stack.getItemDamage()].getName());
     }
 
     @Override
@@ -74,6 +74,6 @@ public class ItemDust extends Item implements IActAddItemOrBlock{
     @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister iconReg){
-        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":" + this.getName());
+        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
     }
 }

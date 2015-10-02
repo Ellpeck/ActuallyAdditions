@@ -265,7 +265,9 @@ public class GuiInputter extends GuiContainer{
             this.setVariable(this.fieldPullStart, 2);
             this.setVariable(this.fieldPullEnd, 3);
         }
-        else PacketHandler.theNetwork.sendToServer(new PacketGuiButton(x, y, z, world, button.id, Minecraft.getMinecraft().thePlayer));
+        else{
+            PacketHandler.theNetwork.sendToServer(new PacketGuiButton(x, y, z, world, button.id, Minecraft.getMinecraft().thePlayer));
+        }
     }
 
     public static class SmallerButton extends GuiButton{
@@ -290,8 +292,12 @@ public class GuiInputter extends GuiContainer{
                 this.mouseDragged(mc, x, y);
 
                 int color = 14737632;
-                if(packedFGColour != 0) color = packedFGColour;
-                else if(!this.enabled) color = 10526880;
+                if(packedFGColour != 0){
+                    color = packedFGColour;
+                }
+                else if(!this.enabled){
+                    color = 10526880;
+                }
                 else if(this.field_146123_n) color = 16777120;
 
                 this.drawCenteredString(mc.fontRenderer, this.displayString, this.xPosition+this.width/2, this.yPosition+(this.height-8)/2, color);

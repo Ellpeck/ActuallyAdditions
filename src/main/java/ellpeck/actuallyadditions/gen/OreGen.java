@@ -36,8 +36,8 @@ public class OreGen implements IWorldGenerator{
         switch(world.provider.dimensionId){
             case -1:
                 generateNether(world, random, chunkX*16, chunkZ*16);
-            //case 0:
-            //   generateSurface(world, random, chunkX*16, chunkZ*16);
+                //case 0:
+                //   generateSurface(world, random, chunkX*16, chunkZ*16);
             case 1:
                 generateEnd(world, random, chunkX*16, chunkZ*16);
             default:
@@ -63,15 +63,17 @@ public class OreGen implements IWorldGenerator{
 
     public void addOreSpawn(Block block, int meta, Block blockIn, World world, Random random, int blockXPos, int blockZPos, int maxVeinSize, int chancesToSpawn, int minY, int maxY){
         if(maxY > minY){
-            int yDiff = maxY - minY;
+            int yDiff = maxY-minY;
             for(int i = 0; i < chancesToSpawn; i++){
-                int posX = blockXPos + random.nextInt(16);
-                int posY = minY + random.nextInt(yDiff);
-                int posZ = blockZPos + random.nextInt(16);
+                int posX = blockXPos+random.nextInt(16);
+                int posY = minY+random.nextInt(yDiff);
+                int posZ = blockZPos+random.nextInt(16);
                 new WorldGenMinable(block, meta, maxVeinSize, blockIn).generate(world, random, posX, posY, posZ);
             }
         }
-        else ModUtil.LOGGER.fatal("Couldn't generate '" + block.getUnlocalizedName() + "' into the world because the Min Y coordinate is bigger than the Max! This is definitely a Config Error! Check the Files!");
+        else{
+            ModUtil.LOGGER.fatal("Couldn't generate '"+block.getUnlocalizedName()+"' into the world because the Min Y coordinate is bigger than the Max! This is definitely a Config Error! Check the Files!");
+        }
     }
 
     public static void init(){

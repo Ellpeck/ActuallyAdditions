@@ -58,8 +58,8 @@ public class BlockFluidFlowing extends BlockFluidClassic implements IActAddItemO
     @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconReg){
-        this.stillIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":" + this.getName() + "Still");
-        this.flowingIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":" + this.getName() + "Flowing");
+        this.stillIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Still");
+        this.flowingIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Flowing");
         this.definedFluid.setIcons(this.stillIcon, this.flowingIcon);
     }
 

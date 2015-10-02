@@ -62,8 +62,8 @@ public class BlockSlabs extends Block implements IActAddItemOrBlock{
 
     @Override
     public int onBlockPlaced(World par1World, int blockX, int blockY, int blockZ, int side, float hitX, float hitY, float hitZ, int meta){
-        if (side == 1) return meta;
-        if (side == 0 || hitY >= 0.5F) return meta+1;
+        if(side == 1) return meta;
+        if(side == 0 || hitY >= 0.5F) return meta+1;
         return meta;
     }
 

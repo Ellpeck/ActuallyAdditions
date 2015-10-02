@@ -72,30 +72,32 @@ public class BlockGrinder extends BlockContainerBase implements IActAddItemOrBlo
     public void randomDisplayTick(World world, int x, int y, int z, Random rand){
         int meta = world.getBlockMetadata(x, y, z);
 
-        if (meta == 1){
+        if(meta == 1){
             for(int i = 0; i < 5; i++){
-                double xRand = new Random().nextDouble()/0.75D - 0.5D;
-                double zRand = new Random().nextDouble()/0.75D - 0.5D;
-                world.spawnParticle("crit", (double)x+0.4F, (double)y + 0.8F, (double)z+0.4F, xRand, 0.5D, zRand);
+                double xRand = new Random().nextDouble()/0.75D-0.5D;
+                double zRand = new Random().nextDouble()/0.75D-0.5D;
+                world.spawnParticle("crit", (double)x+0.4F, (double)y+0.8F, (double)z+0.4F, xRand, 0.5D, zRand);
             }
-            world.spawnParticle("smoke", (double)x+0.5F, (double)y + 1.0F, (double)z+0.5F, 0.0D, 0.0D, 0.0D);
+            world.spawnParticle("smoke", (double)x+0.5F, (double)y+1.0F, (double)z+0.5F, 0.0D, 0.0D, 0.0D);
         }
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconReg){
-        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":" + this.getName());
-        this.topIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":blockGrinderTop");
-        this.onIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":blockGrinderOn");
-        this.bottomIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER + ":blockGrinderBottom");
+        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
+        this.topIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":blockGrinderTop");
+        this.onIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":blockGrinderOn");
+        this.bottomIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":blockGrinderBottom");
     }
 
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9){
         if(!world.isRemote){
             TileEntityGrinder grinder = (TileEntityGrinder)world.getTileEntity(x, y, z);
-            if (grinder != null) player.openGui(ActuallyAdditions.instance, this.isDouble ? GuiHandler.GuiTypes.GRINDER_DOUBLE.ordinal() : GuiHandler.GuiTypes.GRINDER.ordinal(), world, x, y, z);
+            if(grinder != null){
+                player.openGui(ActuallyAdditions.instance, this.isDouble ? GuiHandler.GuiTypes.GRINDER_DOUBLE.ordinal() : GuiHandler.GuiTypes.GRINDER.ordinal(), world, x, y, z);
+            }
             return true;
         }
         return true;
