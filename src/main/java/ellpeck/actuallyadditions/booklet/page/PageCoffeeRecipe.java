@@ -11,7 +11,6 @@
 package ellpeck.actuallyadditions.booklet.page;
 
 import ellpeck.actuallyadditions.booklet.GuiBooklet;
-import ellpeck.actuallyadditions.booklet.InitBooklet;
 import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.items.ItemCoffee;
 import ellpeck.actuallyadditions.items.metalists.TheMiscItems;
@@ -25,7 +24,6 @@ public class PageCoffeeRecipe extends BookletPage{
     public PageCoffeeRecipe(int id, ItemCoffee.Ingredient ingredient){
         super(id);
         this.ingredient = ingredient;
-        InitBooklet.pagesWithItemStackData.add(this);
     }
 
     @Override
