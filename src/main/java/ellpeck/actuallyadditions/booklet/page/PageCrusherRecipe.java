@@ -42,26 +42,6 @@ public class PageCrusherRecipe extends BookletPage{
         }
     }
 
-    @Override
-    public void updateScreen(int ticksElapsed){
-        if(ticksElapsed%5 == 0){
-            if(this.inputPos+1 < this.recipe.getRecipeInputs().size()){
-                this.inputPos++;
-            }
-            else if(this.outOnePos+1 < this.recipe.getRecipeOutputOnes().size()){
-                this.outOnePos++;
-            }
-            else if(this.outTwoPos+1 < this.recipe.getRecipeOutputTwos().size()){
-                this.outTwoPos++;
-            }
-            else{
-                this.inputPos = 0;
-                this.outOnePos = 0;
-                this.outTwoPos = 0;
-            }
-        }
-    }
-
     @SuppressWarnings("unchecked")
     @Override
     public void render(GuiBooklet gui, int mouseX, int mouseY, boolean mouseClick, int ticksElapsed){
@@ -117,6 +97,26 @@ public class PageCrusherRecipe extends BookletPage{
                         }
                     }
                 }
+            }
+        }
+    }
+
+    @Override
+    public void updateScreen(int ticksElapsed){
+        if(ticksElapsed%5 == 0){
+            if(this.inputPos+1 < this.recipe.getRecipeInputs().size()){
+                this.inputPos++;
+            }
+            else if(this.outOnePos+1 < this.recipe.getRecipeOutputOnes().size()){
+                this.outOnePos++;
+            }
+            else if(this.outTwoPos+1 < this.recipe.getRecipeOutputTwos().size()){
+                this.outTwoPos++;
+            }
+            else{
+                this.inputPos = 0;
+                this.outOnePos = 0;
+                this.outTwoPos = 0;
             }
         }
     }

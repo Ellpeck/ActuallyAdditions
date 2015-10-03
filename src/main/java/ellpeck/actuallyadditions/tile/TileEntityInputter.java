@@ -425,19 +425,6 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound compound){
-        super.writeToNBT(compound);
-        compound.setInteger("SideToPut", this.sideToPut);
-        compound.setInteger("SlotToPut", this.slotToPutStart);
-        compound.setInteger("SlotToPutEnd", this.slotToPutEnd);
-        compound.setInteger("SideToPull", this.sideToPull);
-        compound.setInteger("SlotToPull", this.slotToPullStart);
-        compound.setInteger("SlotToPullEnd", this.slotToPullEnd);
-        compound.setBoolean("PullWhitelist", this.isPullWhitelist);
-        compound.setBoolean("PutWhitelist", this.isPutWhitelist);
-    }
-
-    @Override
     public void readFromNBT(NBTTagCompound compound){
         this.sideToPut = compound.getInteger("SideToPut");
         this.slotToPutStart = compound.getInteger("SlotToPut");
@@ -448,6 +435,19 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
         this.isPullWhitelist = compound.getBoolean("PullWhitelist");
         this.isPutWhitelist = compound.getBoolean("PutWhitelist");
         super.readFromNBT(compound);
+    }
+
+    @Override
+    public void writeToNBT(NBTTagCompound compound){
+        super.writeToNBT(compound);
+        compound.setInteger("SideToPut", this.sideToPut);
+        compound.setInteger("SlotToPut", this.slotToPutStart);
+        compound.setInteger("SlotToPutEnd", this.slotToPutEnd);
+        compound.setInteger("SideToPull", this.sideToPull);
+        compound.setInteger("SlotToPull", this.slotToPullStart);
+        compound.setInteger("SlotToPullEnd", this.slotToPullEnd);
+        compound.setBoolean("PullWhitelist", this.isPullWhitelist);
+        compound.setBoolean("PutWhitelist", this.isPutWhitelist);
     }
 
     @Override

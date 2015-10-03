@@ -142,13 +142,19 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler implements INeiR
         }
 
         @Override
-        public Class<? extends GuiContainer> getGuiClass(){
-            return GuiGrinder.GuiGrinderDouble.class;
+        public String getGuiTexture(){
+            return ModUtil.MOD_ID_LOWER+":textures/gui/guiGrinderDouble.png";
         }
 
         @Override
-        public String getGuiTexture(){
-            return ModUtil.MOD_ID_LOWER+":textures/gui/guiGrinderDouble.png";
+        public void drawExtras(int recipe){
+            drawProgressBar(51, 40, 176, 0, 24, 23, 48, 1);
+            this.drawChanceString(66, 93, recipe);
+        }
+
+        @Override
+        public Class<? extends GuiContainer> getGuiClass(){
+            return GuiGrinder.GuiGrinderDouble.class;
         }
 
         @Override
@@ -156,12 +162,6 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler implements INeiR
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
             GuiDraw.changeTexture(getGuiTexture());
             GuiDraw.drawTexturedModalRect(33, 20, 33, 20, 110, 70);
-        }
-
-        @Override
-        public void drawExtras(int recipe){
-            drawProgressBar(51, 40, 176, 0, 24, 23, 48, 1);
-            this.drawChanceString(66, 93, recipe);
         }
     }
 

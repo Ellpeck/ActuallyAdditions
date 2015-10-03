@@ -216,19 +216,19 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound compound){
-        compound.setInteger("FirstCrushTime", this.firstCrushTime);
-        compound.setInteger("SecondCrushTime", this.secondCrushTime);
-        this.storage.writeToNBT(compound);
-        super.writeToNBT(compound);
-    }
-
-    @Override
     public void readFromNBT(NBTTagCompound compound){
         this.firstCrushTime = compound.getInteger("FirstCrushTime");
         this.secondCrushTime = compound.getInteger("SecondCrushTime");
         this.storage.readFromNBT(compound);
         super.readFromNBT(compound);
+    }
+
+    @Override
+    public void writeToNBT(NBTTagCompound compound){
+        compound.setInteger("FirstCrushTime", this.firstCrushTime);
+        compound.setInteger("SecondCrushTime", this.secondCrushTime);
+        this.storage.writeToNBT(compound);
+        super.writeToNBT(compound);
     }
 
     @Override

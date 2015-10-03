@@ -57,15 +57,15 @@ public class TileEntityCompost extends TileEntityInventoryBase{
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound compound){
-        super.writeToNBT(compound);
-        compound.setInteger("ConversionTime", this.conversionTime);
-    }
-
-    @Override
     public void readFromNBT(NBTTagCompound compound){
         super.readFromNBT(compound);
         this.conversionTime = compound.getInteger("ConversionTime");
+    }
+
+    @Override
+    public void writeToNBT(NBTTagCompound compound){
+        super.writeToNBT(compound);
+        compound.setInteger("ConversionTime", this.conversionTime);
     }
 
     @Override

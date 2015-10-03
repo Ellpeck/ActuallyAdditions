@@ -56,15 +56,15 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound compound){
-        super.writeToNBT(compound);
-        compound.setShort("Amount", this.amount);
-    }
-
-    @Override
     public void readFromNBT(NBTTagCompound compound){
         super.readFromNBT(compound);
         this.amount = compound.getShort("Amount");
+    }
+
+    @Override
+    public void writeToNBT(NBTTagCompound compound){
+        super.writeToNBT(compound);
+        compound.setShort("Amount", this.amount);
     }
 
     @Override

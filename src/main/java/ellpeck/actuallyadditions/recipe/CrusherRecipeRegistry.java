@@ -28,10 +28,6 @@ public class CrusherRecipeRegistry{
         recipes.add(new CrusherRecipe(input, outputOne, outputOneAmount, outputTwo, outputTwoAmount, outputTwoChance));
     }
 
-    public static void addRecipe(String input, String outputOne, int outputOneAmount){
-        recipes.add(new CrusherRecipe(input, outputOne, outputOneAmount, "", 0, 0));
-    }
-
     public static void registerFinally(){
         ArrayList<String> oresNoResult = new ArrayList<String>();
         int recipesAdded = 0;
@@ -88,6 +84,15 @@ public class CrusherRecipeRegistry{
         return false;
     }
 
+    public static void addRecipe(String input, String outputOne, int outputOneAmount){
+        recipes.add(new CrusherRecipe(input, outputOne, outputOneAmount, "", 0, 0));
+    }
+
+    public static ArrayList<ItemStack> getOutputOnes(ItemStack input){
+        CrusherRecipe recipe = getRecipeFromInput(input);
+        return recipe == null ? null : recipe.getRecipeOutputOnes();
+    }
+
     public static CrusherRecipe getRecipeFromInput(ItemStack input){
         for(CrusherRecipe recipe : recipes){
             if(ItemUtil.contains(recipe.getRecipeInputs(), input, true)){
@@ -95,11 +100,6 @@ public class CrusherRecipeRegistry{
             }
         }
         return null;
-    }
-
-    public static ArrayList<ItemStack> getOutputOnes(ItemStack input){
-        CrusherRecipe recipe = getRecipeFromInput(input);
-        return recipe == null ? null : recipe.getRecipeOutputOnes();
     }
 
     public static ArrayList<ItemStack> getOutputTwos(ItemStack input){
@@ -133,7 +133,9 @@ public class CrusherRecipeRegistry{
         }
 
         public ArrayList<ItemStack> getRecipeOutputOnes(){
-            if(this.outputOne == null || this.outputOne.isEmpty()) return null;
+            if(this.outputOne == null || this.outputOne.isEmpty()){
+                return null;
+            }
 
             ArrayList<ItemStack> stacks = OreDictionary.getOres(this.outputOne);
             for(ItemStack stack : stacks){
@@ -143,7 +145,9 @@ public class CrusherRecipeRegistry{
         }
 
         public ArrayList<ItemStack> getRecipeOutputTwos(){
-            if(this.outputTwo == null || this.outputTwo.isEmpty()) return null;
+            if(this.outputTwo == null || this.outputTwo.isEmpty()){
+                return null;
+            }
 
             ArrayList<ItemStack> stacks = OreDictionary.getOres(this.outputTwo);
             for(ItemStack stack : stacks){
@@ -153,7 +157,9 @@ public class CrusherRecipeRegistry{
         }
 
         public ArrayList<ItemStack> getRecipeInputs(){
-            if(this.input == null || this.input.isEmpty()) return null;
+            if(this.input == null || this.input.isEmpty()){
+                return null;
+            }
 
             ArrayList<ItemStack> stacks = OreDictionary.getOres(this.input);
             for(ItemStack stack : stacks){
@@ -169,14 +175,14 @@ public class CrusherRecipeRegistry{
         int resultAmount;
         String resultPreString;
 
+        public SearchCase(String theCase, int resultAmount){
+            this(theCase, resultAmount, "dust");
+        }
+
         public SearchCase(String theCase, int resultAmount, String resultPreString){
             this.theCase = theCase;
             this.resultAmount = resultAmount;
             this.resultPreString = resultPreString;
-        }
-
-        public SearchCase(String theCase, int resultAmount){
-            this(theCase, resultAmount, "dust");
         }
     }
 

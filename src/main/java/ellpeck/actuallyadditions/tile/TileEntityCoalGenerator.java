@@ -101,19 +101,19 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound compound){
-        compound.setInteger("BurnTime", this.currentBurnTime);
-        compound.setInteger("MaxBurnTime", this.maxBurnTime);
-        this.storage.writeToNBT(compound);
-        super.writeToNBT(compound);
-    }
-
-    @Override
     public void readFromNBT(NBTTagCompound compound){
         this.currentBurnTime = compound.getInteger("BurnTime");
         this.maxBurnTime = compound.getInteger("MaxBurnTime");
         this.storage.readFromNBT(compound);
         super.readFromNBT(compound);
+    }
+
+    @Override
+    public void writeToNBT(NBTTagCompound compound){
+        compound.setInteger("BurnTime", this.currentBurnTime);
+        compound.setInteger("MaxBurnTime", this.maxBurnTime);
+        this.storage.writeToNBT(compound);
+        super.writeToNBT(compound);
     }
 
     @Override

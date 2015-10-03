@@ -105,6 +105,18 @@ public class ItemAllToolAA extends ItemTool implements IActAddItemOrBlock{
         return this.hasExtraWhitelist(block) || block.getMaterial().isToolNotRequired() || (block == Blocks.snow_layer || block == Blocks.snow || (block == Blocks.obsidian ? this.toolMaterial.getHarvestLevel() == 3 : (block != Blocks.diamond_block && block != Blocks.diamond_ore ? (block != Blocks.emerald_ore && block != Blocks.emerald_block ? (block != Blocks.gold_block && block != Blocks.gold_ore ? (block != Blocks.iron_block && block != Blocks.iron_ore ? (block != Blocks.lapis_block && block != Blocks.lapis_ore ? (block != Blocks.redstone_ore && block != Blocks.lit_redstone_ore ? (block.getMaterial() == Material.rock || (block.getMaterial() == Material.iron || block.getMaterial() == Material.anvil)) : this.toolMaterial.getHarvestLevel() >= 2) : this.toolMaterial.getHarvestLevel() >= 1) : this.toolMaterial.getHarvestLevel() >= 1) : this.toolMaterial.getHarvestLevel() >= 2) : this.toolMaterial.getHarvestLevel() >= 2) : this.toolMaterial.getHarvestLevel() >= 2)));
     }
 
+    private boolean hasExtraWhitelist(Block block){
+        String name = Block.blockRegistry.getNameForObject(block);
+        if(name != null){
+            for(String list : ConfigValues.paxelExtraMiningWhitelist){
+                if(list.equals(name)){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     @Override
     public String getName(){
         return name;
@@ -133,17 +145,5 @@ public class ItemAllToolAA extends ItemTool implements IActAddItemOrBlock{
     @Override
     public float getDigSpeed(ItemStack stack, Block block, int meta){
         return this.hasExtraWhitelist(block) || block.getHarvestTool(meta) == null || block.getHarvestTool(meta).isEmpty() || this.getToolClasses(stack).contains(block.getHarvestTool(meta)) ? this.efficiencyOnProperMaterial : 1.0F;
-    }
-
-    private boolean hasExtraWhitelist(Block block){
-        String name = Block.blockRegistry.getNameForObject(block);
-        if(name != null){
-            for(String list : ConfigValues.paxelExtraMiningWhitelist){
-                if(list.equals(name)){
-                    return true;
-                }
-            }
-        }
-        return false;
     }
 }

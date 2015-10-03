@@ -61,9 +61,6 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
             }
             compound.setTag("Items", tagList);
         }
-    }    @Override
-    public int getInventoryStackLimit(){
-        return 64;
     }
 
     @Override
@@ -79,6 +76,13 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
             return new int[0];
         }
     }    @Override
+    public int getInventoryStackLimit(){
+        return 64;
+    }
+
+
+
+    @Override
     public boolean isUseableByPlayer(EntityPlayer player){
         return player.getDistanceSq(xCoord+0.5D, yCoord+0.5D, zCoord+0.5D) <= 64;
     }
@@ -133,7 +137,6 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
         }
         return null;
     }
-
 
 
     @Override

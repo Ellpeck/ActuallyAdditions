@@ -401,6 +401,28 @@ public class GuiBooklet extends GuiScreen{
         return false;
     }
 
+    private BookletPage getNextPage(BookletChapter chapter, BookletPage currentPage){
+        for(int i = 0; i < chapter.pages.length; i++){
+            if(chapter.pages[i] == currentPage){
+                if(i+1 < chapter.pages.length){
+                    return chapter.pages[i+1];
+                }
+            }
+        }
+        return null;
+    }
+
+    private BookletPage getPrevPage(BookletChapter chapter, BookletPage currentPage){
+        for(int i = 0; i < chapter.pages.length; i++){
+            if(chapter.pages[i] == currentPage){
+                if(i-1 >= 0){
+                    return chapter.pages[i-1];
+                }
+            }
+        }
+        return null;
+    }
+
     public void openChapter(BookletChapter chapter, BookletPage page){
         if(chapter == null){
             return;
@@ -430,28 +452,6 @@ public class GuiBooklet extends GuiScreen{
             }
         }
         return false;
-    }
-
-    private BookletPage getNextPage(BookletChapter chapter, BookletPage currentPage){
-        for(int i = 0; i < chapter.pages.length; i++){
-            if(chapter.pages[i] == currentPage){
-                if(i+1 < chapter.pages.length){
-                    return chapter.pages[i+1];
-                }
-            }
-        }
-        return null;
-    }
-
-    private BookletPage getPrevPage(BookletChapter chapter, BookletPage currentPage){
-        for(int i = 0; i < chapter.pages.length; i++){
-            if(chapter.pages[i] == currentPage){
-                if(i-1 >= 0){
-                    return chapter.pages[i-1];
-                }
-            }
-        }
-        return null;
     }
 
     @SuppressWarnings("unchecked")

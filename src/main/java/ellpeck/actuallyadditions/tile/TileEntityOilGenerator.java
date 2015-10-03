@@ -104,19 +104,19 @@ public class TileEntityOilGenerator extends TileEntityInventoryBase implements I
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound compound){
-        compound.setInteger("BurnTime", this.currentBurnTime);
-        this.storage.writeToNBT(compound);
-        this.tank.writeToNBT(compound);
-        super.writeToNBT(compound);
-    }
-
-    @Override
     public void readFromNBT(NBTTagCompound compound){
         this.currentBurnTime = compound.getInteger("BurnTime");
         this.storage.readFromNBT(compound);
         this.tank.readFromNBT(compound);
         super.readFromNBT(compound);
+    }
+
+    @Override
+    public void writeToNBT(NBTTagCompound compound){
+        compound.setInteger("BurnTime", this.currentBurnTime);
+        this.storage.writeToNBT(compound);
+        this.tank.writeToNBT(compound);
+        super.writeToNBT(compound);
     }
 
     @Override

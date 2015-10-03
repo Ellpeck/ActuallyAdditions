@@ -106,19 +106,19 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IE
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound compound){
-        compound.setInteger("ProcessTime", this.currentProcessTime);
-        this.storage.writeToNBT(compound);
-        this.tank.writeToNBT(compound);
-        super.writeToNBT(compound);
-    }
-
-    @Override
     public void readFromNBT(NBTTagCompound compound){
         this.currentProcessTime = compound.getInteger("ProcessTime");
         this.storage.readFromNBT(compound);
         this.tank.readFromNBT(compound);
         super.readFromNBT(compound);
+    }
+
+    @Override
+    public void writeToNBT(NBTTagCompound compound){
+        compound.setInteger("ProcessTime", this.currentProcessTime);
+        this.storage.writeToNBT(compound);
+        this.tank.writeToNBT(compound);
+        super.writeToNBT(compound);
     }
 
     @Override

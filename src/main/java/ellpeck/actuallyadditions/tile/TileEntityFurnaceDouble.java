@@ -132,19 +132,19 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound compound){
-        super.writeToNBT(compound);
-        compound.setInteger("FirstSmeltTime", this.firstSmeltTime);
-        compound.setInteger("SecondSmeltTime", this.secondSmeltTime);
-        this.storage.writeToNBT(compound);
-    }
-
-    @Override
     public void readFromNBT(NBTTagCompound compound){
         super.readFromNBT(compound);
         this.firstSmeltTime = compound.getInteger("FirstSmeltTime");
         this.secondSmeltTime = compound.getInteger("SecondSmeltTime");
         this.storage.readFromNBT(compound);
+    }
+
+    @Override
+    public void writeToNBT(NBTTagCompound compound){
+        super.writeToNBT(compound);
+        compound.setInteger("FirstSmeltTime", this.firstSmeltTime);
+        compound.setInteger("SecondSmeltTime", this.secondSmeltTime);
+        this.storage.writeToNBT(compound);
     }
 
     @Override

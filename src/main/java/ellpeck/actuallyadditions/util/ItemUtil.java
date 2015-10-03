@@ -62,13 +62,6 @@ public class ItemUtil{
     }
 
     /**
-     * Returns true if list contains stack or if both contain null
-     */
-    public static boolean contains(List<ItemStack> list, ItemStack stack, boolean checkWildcard){
-        return !(list == null || list.isEmpty()) && getPlaceAt(list.toArray(new ItemStack[list.size()]), stack, checkWildcard) != -1;
-    }
-
-    /**
      * Returns true if array contains stack or if both contain null
      */
     public static boolean contains(ItemStack[] array, ItemStack stack, boolean checkWildcard){
@@ -91,6 +84,13 @@ public class ItemUtil{
 
     public static boolean areItemsEqual(ItemStack stack1, ItemStack stack2, boolean checkWildcard){
         return stack1 != null && stack2 != null && (stack1.isItemEqual(stack2) || (checkWildcard && stack1.getItem() == stack2.getItem() && (stack1.getItemDamage() == Util.WILDCARD || stack2.getItemDamage() == Util.WILDCARD)));
+    }
+
+    /**
+     * Returns true if list contains stack or if both contain null
+     */
+    public static boolean contains(List<ItemStack> list, ItemStack stack, boolean checkWildcard){
+        return !(list == null || list.isEmpty()) && getPlaceAt(list.toArray(new ItemStack[list.size()]), stack, checkWildcard) != -1;
     }
 
     public static void addEnchantment(ItemStack stack, Enchantment e, int level){

@@ -101,15 +101,15 @@ public class TileEntityFeeder extends TileEntityInventoryBase implements IPacket
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound compound){
-        super.writeToNBT(compound);
-        compound.setInteger("Timer", this.currentTimer);
-    }
-
-    @Override
     public void readFromNBT(NBTTagCompound compound){
         super.readFromNBT(compound);
         this.currentTimer = compound.getInteger("Timer");
+    }
+
+    @Override
+    public void writeToNBT(NBTTagCompound compound){
+        super.writeToNBT(compound);
+        compound.setInteger("Timer", this.currentTimer);
     }
 
     @Override

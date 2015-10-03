@@ -66,15 +66,15 @@ public class TileEntityEnervator extends TileEntityInventoryBase implements IEne
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound compound){
-        this.storage.writeToNBT(compound);
-        super.writeToNBT(compound);
-    }
-
-    @Override
     public void readFromNBT(NBTTagCompound compound){
         this.storage.readFromNBT(compound);
         super.readFromNBT(compound);
+    }
+
+    @Override
+    public void writeToNBT(NBTTagCompound compound){
+        this.storage.writeToNBT(compound);
+        super.writeToNBT(compound);
     }
 
     @Override

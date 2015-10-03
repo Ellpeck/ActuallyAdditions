@@ -182,19 +182,19 @@ public class TileEntityOreMagnet extends TileEntityInventoryBase implements IEne
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound compound){
-        this.storage.writeToNBT(compound);
-        this.tank.writeToNBT(compound);
-        compound.setInteger("CurrentWorkTimer", this.currentWorkTimer);
-        super.writeToNBT(compound);
-    }
-
-    @Override
     public void readFromNBT(NBTTagCompound compound){
         this.storage.readFromNBT(compound);
         this.tank.readFromNBT(compound);
         this.currentWorkTimer = compound.getInteger("CurrentWorkTimer");
         super.readFromNBT(compound);
+    }
+
+    @Override
+    public void writeToNBT(NBTTagCompound compound){
+        this.storage.writeToNBT(compound);
+        this.tank.writeToNBT(compound);
+        compound.setInteger("CurrentWorkTimer", this.currentWorkTimer);
+        super.writeToNBT(compound);
     }
 
     @Override
