@@ -11,6 +11,7 @@
 package ellpeck.actuallyadditions.util;
 
 import cpw.mods.fml.common.FMLCommonHandler;
+import ellpeck.actuallyadditions.recipe.CrusherRecipeRegistry;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.dispenser.BehaviorDefaultDispenseItem;
 import net.minecraft.item.Item;
@@ -19,6 +20,7 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.oredict.OreDictionary;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings("unused")
@@ -35,12 +37,6 @@ public class Util{
         BlockDispenser.dispenseBehaviorRegistry.putObject(item, handler);
     }
 
-    public static IRecipe lastIRecipe(){
-        List list = CraftingManager.getInstance().getRecipeList();
-        Object recipe = list.get(list.size()-1);
-        return recipe instanceof IRecipe ? (IRecipe)recipe : null;
-    }
-
     public static int arrayContains(Object[] array, Object obj){
         if(obj != null){
             for(int i = 0; i < array.length; i++){
@@ -50,5 +46,19 @@ public class Util{
             }
         }
         return -1;
+    }
+
+    public static class GetRecipes{
+
+        public static CrusherRecipeRegistry.CrusherRecipe lastCrusherRecipe(){
+            ArrayList<CrusherRecipeRegistry.CrusherRecipe> list = CrusherRecipeRegistry.recipes;
+            return list.get(list.size()-1);
+        }
+
+        public static IRecipe lastIRecipe(){
+            List list = CraftingManager.getInstance().getRecipeList();
+            Object recipe = list.get(list.size()-1);
+            return recipe instanceof IRecipe ? (IRecipe)recipe : null;
+        }
     }
 }

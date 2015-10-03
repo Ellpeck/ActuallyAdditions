@@ -13,8 +13,11 @@ package ellpeck.actuallyadditions.crafting;
 import ellpeck.actuallyadditions.config.values.ConfigCrafting;
 import ellpeck.actuallyadditions.recipe.CrusherRecipeRegistry;
 import ellpeck.actuallyadditions.util.ModUtil;
+import ellpeck.actuallyadditions.util.Util;
 
 public class CrusherCrafting{
+
+    public static CrusherRecipeRegistry.CrusherRecipe recipeSugar;
 
     public static void init(){
         ModUtil.LOGGER.info("Initializing Crusher Recipes...");
@@ -49,6 +52,7 @@ public class CrusherCrafting{
         }
         if(ConfigCrafting.RICE_SUGAR.isEnabled()){
             CrusherRecipeRegistry.addRecipe("cropRice", "sugar", 2);
+            recipeSugar = Util.GetRecipes.lastCrusherRecipe();
         }
 
         if(ConfigCrafting.NICKEL.isEnabled()){

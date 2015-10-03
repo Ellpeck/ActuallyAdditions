@@ -76,7 +76,7 @@ public class ItemCrafting{
 
         //Booklet
         GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemLexicon), new ItemStack(InitItems.itemCanolaSeed), new ItemStack(Items.paper)));
-        recipeBook = Util.lastIRecipe();
+        recipeBook = Util.GetRecipes.lastIRecipe();
 
         //Rice Stuff
         if(ConfigCrafting.RICE_GADGETS.isEnabled()){
@@ -101,7 +101,7 @@ public class ItemCrafting{
                     'I', "ingotIron",
                     'P', new ItemStack(Blocks.piston),
                     'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal())));
-            recipeLeafBlower = Util.lastIRecipe();
+            recipeLeafBlower = Util.GetRecipes.lastIRecipe();
         }
 
         //Drill
@@ -112,7 +112,7 @@ public class ItemCrafting{
                     'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal()),
                     'R', "dustRedstone",
                     'I', "blockIron"));
-            recipeDrill = Util.lastIRecipe();
+            recipeDrill = Util.GetRecipes.lastIRecipe();
         }
 
         //Tele Staff
@@ -122,7 +122,7 @@ public class ItemCrafting{
                     'E', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.ENDERPEARL_BLOCK.ordinal()),
                     'S', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.ENDER_CASING.ordinal()),
                     'B', new ItemStack(InitItems.itemBattery, 1, Util.WILDCARD)));
-            recipeStaff = Util.lastIRecipe();
+            recipeStaff = Util.GetRecipes.lastIRecipe();
         }
 
         //Drill Speed
@@ -132,21 +132,21 @@ public class ItemCrafting{
                     'I', "ingotIron",
                     'S', Items.sugar,
                     'R', "dustRedstone"));
-            recipeDrillSpeedI = Util.lastIRecipe();
+            recipeDrillSpeedI = Util.GetRecipes.lastIRecipe();
 
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemDrillUpgradeSpeedII),
                     "ISI", "SCS", "ISI",
                     'I', "ingotIron",
                     'S', Items.sugar,
                     'C', Items.cake));
-            recipeDrillSpeedII = Util.lastIRecipe();
+            recipeDrillSpeedII = Util.GetRecipes.lastIRecipe();
 
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemDrillUpgradeSpeedIII),
                     "ISI", "SFS", "ISI",
                     'I', "ingotIron",
                     'S', Items.sugar,
                     'F', "gemDiamond"));
-            recipeDrillSpeedIII = Util.lastIRecipe();
+            recipeDrillSpeedIII = Util.GetRecipes.lastIRecipe();
         }
 
         //Drill Fortune
@@ -156,14 +156,14 @@ public class ItemCrafting{
                     'I', Blocks.glowstone,
                     'S', Items.redstone,
                     'R', Blocks.diamond_block));
-            recipeDrillFortuneI = Util.lastIRecipe();
+            recipeDrillFortuneI = Util.GetRecipes.lastIRecipe();
 
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemDrillUpgradeFortuneII),
                     "ISI", "SRS", "ISI",
                     'I', Blocks.glowstone,
                     'S', Items.redstone,
                     'R', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.ENDER_CASING.ordinal())));
-            recipeDrillFortuneII = Util.lastIRecipe();
+            recipeDrillFortuneII = Util.GetRecipes.lastIRecipe();
         }
 
         //Drill Size
@@ -173,14 +173,14 @@ public class ItemCrafting{
                     'I', "ingotIron",
                     'D', "gemDiamond",
                     'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL.ordinal())));
-            recipeDrillThree = Util.lastIRecipe();
+            recipeDrillThree = Util.GetRecipes.lastIRecipe();
 
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemDrillUpgradeFiveByFive),
                     "DID", "ICI", "DID",
                     'I', "ingotIron",
                     'D', "gemDiamond",
                     'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal())));
-            recipeDrillFive = Util.lastIRecipe();
+            recipeDrillFive = Util.GetRecipes.lastIRecipe();
         }
 
         //Drill Silk Touch
@@ -190,7 +190,7 @@ public class ItemCrafting{
                     'D', "gemEmerald",
                     'S', "gemDiamond",
                     'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal())));
-            recipeDrillSilk = Util.lastIRecipe();
+            recipeDrillSilk = Util.GetRecipes.lastIRecipe();
         }
 
         //Drill Placing
@@ -201,7 +201,7 @@ public class ItemCrafting{
                     'E', Items.ender_pearl,
                     'A', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL.ordinal()),
                     'R', "ingotIron"));
-            recipeDrillPlacing = Util.lastIRecipe();
+            recipeDrillPlacing = Util.GetRecipes.lastIRecipe();
         }
 
         //Battery
@@ -211,7 +211,7 @@ public class ItemCrafting{
                     'R', "dustRedstone",
                     'I', "ingotIron",
                     'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal())));
-            recipeBattery = Util.lastIRecipe();
+            recipeBattery = Util.GetRecipes.lastIRecipe();
         }
 
         //Double Battery
@@ -221,7 +221,7 @@ public class ItemCrafting{
                     'R', new ItemStack(InitItems.itemBattery),
                     'I', "ingotIron",
                     'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal())));
-            recipeBatteryDouble = Util.lastIRecipe();
+            recipeBatteryDouble = Util.GetRecipes.lastIRecipe();
         }
 
         //Magnet Ring
@@ -232,7 +232,7 @@ public class ItemCrafting{
                     'I', "ingotIron",
                     'B', new ItemStack(Items.dye, 1, 4),
                     'O', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.RING.ordinal())));
-            recipeMagnetRing = Util.lastIRecipe();
+            recipeMagnetRing = Util.GetRecipes.lastIRecipe();
         }
 
         //Growth Ring
@@ -242,7 +242,7 @@ public class ItemCrafting{
                     'S', new ItemStack(Items.wheat_seeds),
                     'I', "ingotIron",
                     'O', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.RING.ordinal())));
-            recipeGrowthRing = Util.lastIRecipe();
+            recipeGrowthRing = Util.GetRecipes.lastIRecipe();
         }
 
         //Water Ring
@@ -252,7 +252,7 @@ public class ItemCrafting{
                     'B', new ItemStack(Items.water_bucket),
                     'I', "ingotIron",
                     'O', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.RING.ordinal())));
-            recipeWaterRing = Util.lastIRecipe();
+            recipeWaterRing = Util.GetRecipes.lastIRecipe();
         }
 
         //Triple Battery
@@ -262,7 +262,7 @@ public class ItemCrafting{
                     'R', new ItemStack(InitItems.itemBatteryDouble),
                     'I', "ingotIron",
                     'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal())));
-            recipeBatteryTriple = Util.lastIRecipe();
+            recipeBatteryTriple = Util.GetRecipes.lastIRecipe();
         }
 
         //Quadruple Battery
@@ -272,7 +272,7 @@ public class ItemCrafting{
                     'R', new ItemStack(InitItems.itemBatteryTriple),
                     'I', "ingotIron",
                     'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal())));
-            recipeBatteryQuadruple = Util.lastIRecipe();
+            recipeBatteryQuadruple = Util.GetRecipes.lastIRecipe();
         }
 
         //Quintuple Battery
@@ -282,7 +282,7 @@ public class ItemCrafting{
                     'R', new ItemStack(InitItems.itemBatteryQuadruple),
                     'I', "ingotIron",
                     'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal())));
-            recipeBatteryQuintuple = Util.lastIRecipe();
+            recipeBatteryQuintuple = Util.GetRecipes.lastIRecipe();
         }
 
         //Bat Wings
@@ -292,7 +292,7 @@ public class ItemCrafting{
                     'W', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.BAT_WING.ordinal()),
                     'N', "blockDiamond",
                     'D', new ItemStack(Items.nether_star)));
-            recipeWings = Util.lastIRecipe();
+            recipeWings = Util.GetRecipes.lastIRecipe();
         }
 
         //Quartz
@@ -308,7 +308,7 @@ public class ItemCrafting{
                     " R ", "RIR", " R ",
                     'I', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal()),
                     'R', "dustRedstone"));
-            recipeCoil = Util.lastIRecipe();
+            recipeCoil = Util.GetRecipes.lastIRecipe();
         }
 
         //Cup
@@ -317,7 +317,7 @@ public class ItemCrafting{
                     "S S", "SCS", "SSS",
                     'S', "stone",
                     'C', InitItems.itemCoffeeBean));
-            recipeCup = Util.lastIRecipe();
+            recipeCup = Util.GetRecipes.lastIRecipe();
         }
 
         //Resonant Rice
@@ -332,7 +332,7 @@ public class ItemCrafting{
                     " G ", "GCG", " G ",
                     'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL.ordinal()),
                     'G', "ingotGold"));
-            recipeCoilAdvanced = Util.lastIRecipe();
+            recipeCoilAdvanced = Util.GetRecipes.lastIRecipe();
         }
 
         //Ender Pearl
@@ -353,7 +353,7 @@ public class ItemCrafting{
                     'D', "gemDiamond",
                     'P', new ItemStack(Blocks.piston),
                     'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal())));
-            recipeLeafBlowerAdvanced = Util.lastIRecipe();
+            recipeLeafBlowerAdvanced = Util.GetRecipes.lastIRecipe();
         }
 
         //Phantom Connector
@@ -363,7 +363,7 @@ public class ItemCrafting{
                     'Y', Items.ender_eye,
                     'E', Items.ender_pearl,
                     'S', "stickWood"));
-            recipePhantomConnector = Util.lastIRecipe();
+            recipePhantomConnector = Util.GetRecipes.lastIRecipe();
         }
 
         //Quartz
@@ -375,7 +375,7 @@ public class ItemCrafting{
             GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemKnife),
                     new ItemStack(InitItems.itemMisc, 1, TheMiscItems.KNIFE_BLADE.ordinal()),
                     new ItemStack(InitItems.itemMisc, 1, TheMiscItems.KNIFE_HANDLE.ordinal())));
-            recipeKnife = Util.lastIRecipe();
+            recipeKnife = Util.GetRecipes.lastIRecipe();
         }
 
         //Crafter on a Stick
@@ -388,10 +388,10 @@ public class ItemCrafting{
         //Tiny Coal
         GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemMisc, 8, TheMiscItems.TINY_COAL.ordinal()),
                 new ItemStack(Items.coal));
-        recipeTinyCoal = Util.lastIRecipe();
+        recipeTinyCoal = Util.GetRecipes.lastIRecipe();
         GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemMisc, 8, TheMiscItems.TINY_CHAR.ordinal()),
                 new ItemStack(Items.coal, 1, 1));
-        recipeTinyChar = Util.lastIRecipe();
+        recipeTinyChar = Util.GetRecipes.lastIRecipe();
 
         //Rice Seeds
         GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemRiceSeed),
@@ -430,7 +430,7 @@ public class ItemCrafting{
                 'G', "ingotGold",
                 'I', "ingotIron",
                 'D', "dustGlowstone"));
-        recipeRing = Util.lastIRecipe();
+        recipeRing = Util.GetRecipes.lastIRecipe();
 
         if(ConfigCrafting.RING_SPEED.isEnabled()){
             addRingRecipeWithStack(ThePotionRings.SPEED.craftingItem, ThePotionRings.SPEED.ordinal());
@@ -466,9 +466,9 @@ public class ItemCrafting{
 
     public static void addRingRecipeWithStack(ItemStack mainStack, int meta){
         GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemPotionRing, 1, meta), mainStack, mainStack, mainStack, mainStack, new ItemStack(Blocks.diamond_block), new ItemStack(Items.nether_wart), new ItemStack(Items.potionitem), new ItemStack(InitItems.itemMisc, 1, TheMiscItems.RING.ordinal()));
-        recipesPotionRings.add(Util.lastIRecipe());
+        recipesPotionRings.add(Util.GetRecipes.lastIRecipe());
         GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemPotionRingAdvanced, 1, meta), new ItemStack(InitItems.itemPotionRing, 1, meta), new ItemStack(Items.nether_star), new ItemStack(Items.nether_star));
-        recipesPotionRings.add(Util.lastIRecipe());
+        recipesPotionRings.add(Util.GetRecipes.lastIRecipe());
     }
 
     public static void initMashedFoodRecipes(){
@@ -478,7 +478,7 @@ public class ItemCrafting{
                     if(!isBlacklisted(item)){
                         ItemStack ingredient = new ItemStack((Item)item, 1, Util.WILDCARD);
                         GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemMisc, 8, TheMiscItems.MASHED_FOOD.ordinal()), ingredient, ingredient, ingredient, ingredient, new ItemStack(InitItems.itemKnife, 1, Util.WILDCARD));
-                        recipesMashedFood.add(Util.lastIRecipe());
+                        recipesMashedFood.add(Util.GetRecipes.lastIRecipe());
                     }
                 }
             }

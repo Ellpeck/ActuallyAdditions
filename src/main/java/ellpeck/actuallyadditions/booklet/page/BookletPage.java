@@ -129,7 +129,7 @@ public class BookletPage{
                 if(ItemUtil.contains(page.getItemStacksForPage(), stack, true)){
                     list.add(EnumChatFormatting.GOLD+StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".clickToSeeRecipe"));
 
-                    if(KeyStates.mouseButtonState.isPressed()){
+                    if(KeyStates.mouseButtonState.checkPressed(true)){
                         gui.openIndexEntry(page.getChapter().entry, InitBooklet.entries.indexOf(page.getChapter().entry)/GuiBooklet.CHAPTER_BUTTONS_AMOUNT+1, true);
                         gui.openChapter(page.getChapter(), page);
                         Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.func_147674_a(new ResourceLocation("gui.button.press"), 1.0F));

@@ -33,17 +33,17 @@ public class KeyStates{
 
         private boolean pressed;
         private boolean pressedLastTime;
-        private boolean recentlyCheckedPress;
 
         public void tick(boolean pressed){
             this.pressed = pressed && !this.pressedLastTime;
             this.pressedLastTime = pressed;
-            this.recentlyCheckedPress = false;
         }
 
-        public boolean isPressed(){
-            boolean isPressed = this.pressed && !this.recentlyCheckedPress;
-            this.recentlyCheckedPress = true;
+        public boolean checkPressed(boolean shouldUnpress){
+            boolean isPressed = this.pressed;
+            if(shouldUnpress){
+                this.pressed = false;
+            }
             return isPressed;
         }
     }

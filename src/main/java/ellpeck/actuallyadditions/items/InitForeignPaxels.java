@@ -56,7 +56,7 @@ public class InitForeignPaxels{
 
                             if(ConfigCrafting.PAXELS.isEnabled()){
                                 GameRegistry.addRecipe(new ShapelessOreRecipe(mtPaxels[i], axe, pickaxe, hoe, sword, shovel));
-                                ToolCrafting.recipesPaxels.add(Util.lastIRecipe());
+                                ToolCrafting.recipesPaxels.add(Util.GetRecipes.lastIRecipe());
                             }
                         }
                     }
@@ -86,7 +86,7 @@ public class InitForeignPaxels{
 
                         if(ConfigCrafting.PAXELS.isEnabled()){
                             GameRegistry.addRecipe(new ShapelessOreRecipe(tfPaxels[i], axe, pickaxe, hoe, sword, shovel));
-                            ToolCrafting.recipesPaxels.add(Util.lastIRecipe());
+                            ToolCrafting.recipesPaxels.add(Util.GetRecipes.lastIRecipe());
                         }
                     }
                 }

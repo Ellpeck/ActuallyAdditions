@@ -19,6 +19,8 @@ import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 
+import java.util.ArrayList;
+
 
 public class PageCrusherRecipe extends BookletPage{
 
@@ -58,41 +60,44 @@ public class PageCrusherRecipe extends BookletPage{
             gui.mc.fontRenderer.drawSplitString(text, gui.guiLeft+14, gui.guiTop+100, 115, 0);
         }
 
-        if(recipe.outputTwoChance > 0){
-            gui.mc.fontRenderer.drawString(recipe.outputTwoChance+"%", gui.guiLeft+37+62, gui.guiTop+20+33, 0);
-        }
+        if(recipe != null){
+            if(recipe.outputTwoChance > 0){
+                gui.mc.fontRenderer.drawString(recipe.outputTwoChance+"%", gui.guiLeft+37+62, gui.guiTop+20+33, 0);
+            }
 
-        if(recipe.getRecipeOutputOnes() != null){
-            for(int i = 0; i < 2; i++){
-                for(int j = 0; j < 3; j++){
-                    ItemStack stack;
-                    switch(j){
-                        case 0:
-                            stack = this.recipe.getRecipeInputs().get(this.inputPos);
-                            break;
-                        case 1:
-                            stack = this.recipe.getRecipeOutputOnes().get(this.outOnePos);
-                            break;
-                        default:
-                            stack = this.recipe.getRecipeOutputTwos().get(this.outTwoPos);
-                            break;
-                    }
-
-                    if(stack != null){
-                        if(stack.getItemDamage() == Util.WILDCARD){
-                            stack.setItemDamage(0);
+            if(recipe.getRecipeOutputOnes() != null){
+                for(int i = 0; i < 2; i++){
+                    for(int j = 0; j < 3; j++){
+                        ItemStack stack;
+                        switch(j){
+                            case 0:
+                                stack = this.recipe.getRecipeInputs().get(this.inputPos);
+                                break;
+                            case 1:
+                                stack = this.recipe.getRecipeOutputOnes().get(this.outOnePos);
+                                break;
+                            default:
+                                ArrayList<ItemStack> outputTwos = this.recipe.getRecipeOutputTwos();
+                                stack = outputTwos == null ? null : outputTwos.get(this.outTwoPos);
+                                break;
                         }
 
-                        boolean tooltip = i == 1;
+                        if(stack != null){
+                            if(stack.getItemDamage() == Util.WILDCARD){
+                                stack.setItemDamage(0);
+                            }
 
-                        int xShow = gui.guiLeft+37+(j == 0 ? 1 : (j == 1 ? 43 : (j == 2 ? 43 : 0)));
-                        int yShow = gui.guiTop+20+(j == 0 ? 21 : (j == 1 ? 11 : (j == 2 ? 29 : 0)));
-                        if(!tooltip){
-                            renderItem(gui, stack, xShow, yShow, 1.0F);
-                        }
-                        else{
-                            if(mouseX >= xShow && mouseX <= xShow+16 && mouseY >= yShow && mouseY <= yShow+16){
-                                this.renderTooltipAndTransfer(gui, stack, mouseX, mouseY, j == 0);
+                            boolean tooltip = i == 1;
+
+                            int xShow = gui.guiLeft+37+(j == 0 ? 1 : (j == 1 ? 43 : (j == 2 ? 43 : 0)));
+                            int yShow = gui.guiTop+20+(j == 0 ? 21 : (j == 1 ? 11 : (j == 2 ? 29 : 0)));
+                            if(!tooltip){
+                                renderItem(gui, stack, xShow, yShow, 1.0F);
+                            }
+                            else{
+                                if(mouseX >= xShow && mouseX <= xShow+16 && mouseY >= yShow && mouseY <= yShow+16){
+                                    this.renderTooltipAndTransfer(gui, stack, mouseX, mouseY, j == 0);
+                                }
                             }
                         }
                     }
@@ -110,7 +115,7 @@ public class PageCrusherRecipe extends BookletPage{
             else if(this.outOnePos+1 < this.recipe.getRecipeOutputOnes().size()){
                 this.outOnePos++;
             }
-            else if(this.outTwoPos+1 < this.recipe.getRecipeOutputTwos().size()){
+            else if(this.recipe.getRecipeOutputTwos() != null && this.outTwoPos+1 < this.recipe.getRecipeOutputTwos().size()){
                 this.outTwoPos++;
             }
             else{

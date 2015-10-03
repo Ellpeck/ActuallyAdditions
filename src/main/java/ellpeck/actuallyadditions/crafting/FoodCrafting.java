@@ -67,7 +67,7 @@ public class FoodCrafting{
                     'F', new ItemStack(Items.cooked_fished, 1, Util.WILDCARD),
                     'K', knifeStack,
                     'H', new ItemStack(InitItems.itemFoods, 1, TheFoods.CHEESE.ordinal())));
-            recipePizza = Util.lastIRecipe();
+            recipePizza = Util.GetRecipes.lastIRecipe();
         }
 
         //Hamburger
@@ -78,7 +78,7 @@ public class FoodCrafting{
                     'C', new ItemStack(InitItems.itemFoods, 1, TheFoods.CHEESE.ordinal()),
                     'K', knifeStack,
                     'B', new ItemStack(Items.cooked_beef)));
-            recipeHamburger = Util.lastIRecipe();
+            recipeHamburger = Util.GetRecipes.lastIRecipe();
         }
 
         //Big Cookie
@@ -87,7 +87,7 @@ public class FoodCrafting{
                     "DCD", "CDC", "DCD",
                     'D', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.DOUGH.ordinal()),
                     'C', new ItemStack(Items.dye, 1, 3)));
-            recipeBigCookie = Util.lastIRecipe();
+            recipeBigCookie = Util.GetRecipes.lastIRecipe();
         }
 
         //Sub Sandwich
@@ -99,7 +99,7 @@ public class FoodCrafting{
                     'F', new ItemStack(Items.cooked_fished, 1, Util.WILDCARD),
                     'B', new ItemStack(InitItems.itemFoods, 1, TheFoods.BAGUETTE.ordinal()),
                     'K', knifeStack));
-            recipeSubSandwich = Util.lastIRecipe();
+            recipeSubSandwich = Util.GetRecipes.lastIRecipe();
         }
 
         //French Fry
@@ -107,7 +107,7 @@ public class FoodCrafting{
             GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemFoods, 2, TheFoods.FRENCH_FRY.ordinal()),
                     new ItemStack(Items.baked_potato),
                     knifeStack));
-            recipeFrenchFry = Util.lastIRecipe();
+            recipeFrenchFry = Util.GetRecipes.lastIRecipe();
         }
 
         //French Fries
@@ -116,7 +116,7 @@ public class FoodCrafting{
                     "FFF", " P ",
                     'P', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.PAPER_CONE.ordinal()),
                     'F', new ItemStack(InitItems.itemFoods, 1, TheFoods.FRENCH_FRY.ordinal())));
-            recipeFrenchFries = Util.lastIRecipe();
+            recipeFrenchFries = Util.GetRecipes.lastIRecipe();
         }
 
         //Fish N Chips
@@ -126,14 +126,14 @@ public class FoodCrafting{
                     'I', new ItemStack(Items.cooked_fished, 1, Util.WILDCARD),
                     'P', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.PAPER_CONE.ordinal()),
                     'F', new ItemStack(InitItems.itemFoods, 1, TheFoods.FRENCH_FRY.ordinal())));
-            recipeFishNChips = Util.lastIRecipe();
+            recipeFishNChips = Util.GetRecipes.lastIRecipe();
         }
 
         //Cheese
         if(ConfigCrafting.CHEESE.isEnabled()){
             GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemFoods, 1, TheFoods.CHEESE.ordinal()),
                     new ItemStack(Items.milk_bucket));
-            recipeCheese = Util.lastIRecipe();
+            recipeCheese = Util.GetRecipes.lastIRecipe();
         }
 
         //Pumpkin Stew
@@ -142,14 +142,14 @@ public class FoodCrafting{
                     "P", "B",
                     'P', new ItemStack(Blocks.pumpkin),
                     'B', new ItemStack(Items.bowl));
-            recipePumpkinStew = Util.lastIRecipe();
+            recipePumpkinStew = Util.GetRecipes.lastIRecipe();
         }
 
         //Carrot Juice
         if(ConfigCrafting.CARROT_JUICE.isEnabled()){
             GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemFoods, 1, TheFoods.CARROT_JUICE.ordinal()),
                     new ItemStack(Items.glass_bottle), "cropCarrot", knifeStack));
-            recipeCarrotJuice = Util.lastIRecipe();
+            recipeCarrotJuice = Util.GetRecipes.lastIRecipe();
         }
 
         //Spaghetti
@@ -158,14 +158,14 @@ public class FoodCrafting{
                     "NNN", " B ",
                     'N', new ItemStack(InitItems.itemFoods, 1, TheFoods.NOODLE.ordinal()),
                     'B', new ItemStack(Items.bowl)));
-            recipeSpaghetti = Util.lastIRecipe();
+            recipeSpaghetti = Util.GetRecipes.lastIRecipe();
         }
 
         //Noodle
         if(ConfigCrafting.NOODLE.isEnabled()){
             GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemFoods, 1, TheFoods.NOODLE.ordinal()),
                     "cropWheat", knifeStack));
-            recipeNoodle = Util.lastIRecipe();
+            recipeNoodle = Util.GetRecipes.lastIRecipe();
         }
 
         //Chocolate
@@ -174,7 +174,7 @@ public class FoodCrafting{
                     "C C", "CMC", "C C",
                     'C', new ItemStack(Items.dye, 1, 3),
                     'M', new ItemStack(Items.milk_bucket));
-            recipeChocolate = Util.lastIRecipe();
+            recipeChocolate = Util.GetRecipes.lastIRecipe();
         }
 
         //Chocolate Cake
@@ -186,14 +186,14 @@ public class FoodCrafting{
                     'D', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.DOUGH.ordinal()),
                     'S', new ItemStack(Items.sugar),
                     'C', new ItemStack(Items.dye, 1, 3)));
-            recipeChocolateCake = Util.lastIRecipe();
+            recipeChocolateCake = Util.GetRecipes.lastIRecipe();
         }
 
         //Toast
         if(ConfigCrafting.TOAST.isEnabled()){
             GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemFoods, 2, TheFoods.TOAST.ordinal()),
                     new ItemStack(Items.bread));
-            recipeToast = Util.lastIRecipe();
+            recipeToast = Util.GetRecipes.lastIRecipe();
         }
     }
 
