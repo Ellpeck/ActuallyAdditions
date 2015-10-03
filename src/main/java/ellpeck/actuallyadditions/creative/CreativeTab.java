@@ -76,6 +76,8 @@ public class CreativeTab extends CreativeTabs{
         add(InitBlocks.blockHeatCollector);
         add(InitBlocks.blockCoalGenerator);
         add(InitBlocks.blockOilGenerator);
+        add(InitBlocks.blockLeafGenerator);
+
         add(InitBlocks.blockItemRepairer);
         add(InitBlocks.blockFishingNet);
         add(InitBlocks.blockBreaker);
