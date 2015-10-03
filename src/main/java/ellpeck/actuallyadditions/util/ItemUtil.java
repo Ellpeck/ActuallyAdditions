@@ -17,6 +17,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagList;
 
+import java.util.List;
+
 public class ItemUtil{
 
     public static Item getItemFromName(String name){
@@ -56,6 +58,13 @@ public class ItemUtil{
             }
         }
         return true;
+    }
+
+    /**
+     * Returns true if list contains stack or if both contain null
+     */
+    public static boolean contains(List<ItemStack> list, ItemStack stack, boolean checkWildcard){
+        return !(list == null || list.isEmpty()) && getPlaceAt(list.toArray(new ItemStack[list.size()]), stack, checkWildcard) != -1;
     }
 
     /**

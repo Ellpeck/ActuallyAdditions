@@ -32,6 +32,10 @@ public class InitOreDict{
 
         //Vanilla Ores
         addOre(Blocks.obsidian, "obsidian");
+        addOre(new ItemStack(Items.coal), "coal");
+        addOre(Items.flint, "flint");
+        addOre(Blocks.gravel, "gravel");
+        addOre(Items.sugar, "sugar");
 
         //My Ores
         addOre(InitItems.itemDust, TheDusts.IRON.ordinal(), "dustIron");

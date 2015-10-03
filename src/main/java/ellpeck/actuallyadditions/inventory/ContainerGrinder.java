@@ -11,7 +11,7 @@
 package ellpeck.actuallyadditions.inventory;
 
 import ellpeck.actuallyadditions.inventory.slot.SlotOutput;
-import ellpeck.actuallyadditions.recipe.CrusherRecipeManualRegistry;
+import ellpeck.actuallyadditions.recipe.CrusherRecipeRegistry;
 import ellpeck.actuallyadditions.tile.TileEntityBase;
 import ellpeck.actuallyadditions.tile.TileEntityGrinder;
 import invtweaks.api.container.InventoryContainer;
@@ -73,7 +73,7 @@ public class ContainerGrinder extends Container{
             //Other Slots in Inventory excluded
             else if(slot >= inventoryStart){
                 //Shift from Inventory
-                if(CrusherRecipeManualRegistry.getOutput(newStack, false) != null){
+                if(CrusherRecipeRegistry.getRecipeFromInput(newStack) != null){
                     if(!this.mergeItemStack(newStack, TileEntityGrinder.SLOT_INPUT_1, TileEntityGrinder.SLOT_INPUT_1+1, false)){
                         if(this.isDouble){
                             if(!this.mergeItemStack(newStack, TileEntityGrinder.SLOT_INPUT_2, TileEntityGrinder.SLOT_INPUT_2+1, false)){

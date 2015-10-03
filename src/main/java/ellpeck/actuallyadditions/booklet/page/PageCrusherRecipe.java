@@ -12,7 +12,7 @@ package ellpeck.actuallyadditions.booklet.page;
 
 import ellpeck.actuallyadditions.booklet.GuiBooklet;
 import ellpeck.actuallyadditions.booklet.InitBooklet;
-import ellpeck.actuallyadditions.recipe.CrusherRecipeManualRegistry;
+import ellpeck.actuallyadditions.recipe.CrusherRecipeRegistry;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
 import ellpeck.actuallyadditions.util.Util;
@@ -21,9 +21,13 @@ import net.minecraft.util.EnumChatFormatting;
 
 public class PageCrusherRecipe extends BookletPage{
 
-    public CrusherRecipeManualRegistry.CrusherRecipe recipe;
+    public CrusherRecipeRegistry.CrusherRecipe recipe;
 
-    public PageCrusherRecipe(int id, CrusherRecipeManualRegistry.CrusherRecipe recipe){
+    private int inputPos;
+    private int outOnePos;
+    private int outTwoPos;
+
+    public PageCrusherRecipe(int id, CrusherRecipeRegistry.CrusherRecipe recipe){
         super(id);
         this.recipe = recipe;
         InitBooklet.pagesWithItemStackData.add(this);
@@ -34,6 +38,26 @@ public class PageCrusherRecipe extends BookletPage{
         if(recipe != null){
             gui.mc.getTextureManager().bindTexture(GuiBooklet.resLoc);
             gui.drawTexturedModalRect(gui.guiLeft+37, gui.guiTop+20, 60, 180, 60, 60);
+        }
+    }
+
+    @Override
+    public void updateScreen(int ticksElapsed){
+        if(ticksElapsed%5 == 0){
+            if(this.inputPos+1 < this.recipe.getRecipeInputs().size()){
+                this.inputPos++;
+            }
+            else if(this.outOnePos+1 < this.recipe.getRecipeOutputOnes().size()){
+                this.outOnePos++;
+            }
+            else if(this.outTwoPos+1 < this.recipe.getRecipeOutputTwos().size()){
+                this.outTwoPos++;
+            }
+            else{
+                this.inputPos = 0;
+                this.outOnePos = 0;
+                this.outTwoPos = 0;
+            }
         }
     }
 
@@ -53,14 +77,25 @@ public class PageCrusherRecipe extends BookletPage{
             gui.mc.fontRenderer.drawSplitString(text, gui.guiLeft+14, gui.guiTop+100, 115, 0);
         }
 
-        if(recipe.secondChance > 0){
-            gui.mc.fontRenderer.drawString(recipe.secondChance+"%", gui.guiLeft+37+62, gui.guiTop+20+33, 0);
+        if(recipe.outputTwoChance > 0){
+            gui.mc.fontRenderer.drawString(recipe.outputTwoChance+"%", gui.guiLeft+37+62, gui.guiTop+20+33, 0);
         }
 
-        if(recipe.firstOutput != null){
+        if(recipe.getRecipeOutputOnes() != null){
             for(int i = 0; i < 2; i++){
                 for(int j = 0; j < 3; j++){
-                    ItemStack stack = (j == 0 ? this.recipe.input : (j == 1 ? recipe.firstOutput : (j == 2 ? recipe.secondOutput : null)));
+                    ItemStack stack;
+                    switch(j){
+                        case 0:
+                            stack = this.recipe.getRecipeInputs().get(this.inputPos);
+                            break;
+                        case 1:
+                            stack = this.recipe.getRecipeOutputOnes().get(this.outOnePos);
+                            break;
+                        default:
+                            stack = this.recipe.getRecipeOutputTwos().get(this.outTwoPos);
+                            break;
+                    }
 
                     if(stack != null){
                         if(stack.getItemDamage() == Util.WILDCARD){
@@ -87,6 +122,6 @@ public class PageCrusherRecipe extends BookletPage{
 
     @Override
     public ItemStack[] getItemStacksForPage(){
-        return this.recipe == null ? new ItemStack[0] : new ItemStack[]{this.recipe.firstOutput};
+        return this.recipe == null ? new ItemStack[0] : this.recipe.getRecipeOutputOnes().toArray(new ItemStack[this.recipe.getRecipeOutputOnes().size()]);
     }
 }

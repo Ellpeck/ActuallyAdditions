@@ -17,11 +17,12 @@ import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.network.sync.IPacketSyncerToClient;
 import ellpeck.actuallyadditions.network.sync.PacketSyncerToClient;
-import ellpeck.actuallyadditions.recipe.CrusherRecipeManualRegistry;
+import ellpeck.actuallyadditions.recipe.CrusherRecipeRegistry;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class TileEntityGrinder extends TileEntityInventoryBase implements IEnergyReceiver, IPacketSyncerToClient{
@@ -154,9 +155,11 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
 
     public boolean canCrushOn(int theInput, int theFirstOutput, int theSecondOutput){
         if(this.slots[theInput] != null){
-            ItemStack outputOne = CrusherRecipeManualRegistry.getOutput(this.slots[theInput], false);
-            ItemStack outputTwo = CrusherRecipeManualRegistry.getOutput(this.slots[theInput], true);
-            if(this.slots[theInput] != null){
+            ArrayList<ItemStack> outputOnes = CrusherRecipeRegistry.getOutputOnes(this.slots[theInput]);
+            if(outputOnes != null && !outputOnes.isEmpty()){
+                ItemStack outputOne = outputOnes.get(0);
+                ArrayList<ItemStack> outputTwos = CrusherRecipeRegistry.getOutputTwos(this.slots[theInput]);
+                ItemStack outputTwo = outputTwos == null ? null : outputTwos.get(0);
                 if(outputOne != null){
                     if((this.slots[theFirstOutput] == null || (this.slots[theFirstOutput].isItemEqual(outputOne) && this.slots[theFirstOutput].stackSize <= this.slots[theFirstOutput].getMaxStackSize()-outputOne.stackSize)) && (outputTwo == null || (this.slots[theSecondOutput] == null || (this.slots[theSecondOutput].isItemEqual(outputTwo) && this.slots[theSecondOutput].stackSize <= this.slots[theSecondOutput].getMaxStackSize()-outputTwo.stackSize)))){
                         return true;
@@ -176,26 +179,31 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
     }
 
     public void finishCrushing(int theInput, int theFirstOutput, int theSecondOutput){
-        ItemStack outputOnFirst = CrusherRecipeManualRegistry.getOutput(this.slots[theInput], false);
-        if(outputOnFirst != null){
-            if(this.slots[theFirstOutput] == null){
-                this.slots[theFirstOutput] = outputOnFirst.copy();
-            }
-            else if(this.slots[theFirstOutput].getItem() == outputOnFirst.getItem()){
-                this.slots[theFirstOutput].stackSize += outputOnFirst.stackSize;
+        ArrayList<ItemStack> outputOnes = CrusherRecipeRegistry.getOutputOnes(this.slots[theInput]);
+        if(outputOnes != null){
+            ItemStack outputOne = outputOnes.get(0);
+            if(outputOne != null){
+                if(this.slots[theFirstOutput] == null){
+                    this.slots[theFirstOutput] = outputOne.copy();
+                }
+                else if(this.slots[theFirstOutput].getItem() == outputOne.getItem()){
+                    this.slots[theFirstOutput].stackSize += outputOne.stackSize;
+                }
             }
         }
 
-        int chance = CrusherRecipeManualRegistry.getSecondChance(this.slots[theInput]);
-        ItemStack outputOnSecond = CrusherRecipeManualRegistry.getOutput(this.slots[theInput], true);
-        if(outputOnSecond != null){
-            int rand = new Random().nextInt(100)+1;
-            if(rand <= chance){
-                if(this.slots[theSecondOutput] == null){
-                    this.slots[theSecondOutput] = outputOnSecond.copy();
-                }
-                else if(this.slots[theSecondOutput].getItem() == outputOnSecond.getItem()){
-                    this.slots[theSecondOutput].stackSize += outputOnSecond.stackSize;
+        ArrayList<ItemStack> outputTwos = CrusherRecipeRegistry.getOutputTwos(this.slots[theInput]);
+        if(outputTwos != null){
+            ItemStack outputTwo = outputTwos.get(0);
+            if(outputTwo != null){
+                int rand = new Random().nextInt(100)+1;
+                if(rand <= CrusherRecipeRegistry.getOutputTwoChance(this.slots[theInput])){
+                    if(this.slots[theSecondOutput] == null){
+                        this.slots[theSecondOutput] = outputTwo.copy();
+                    }
+                    else if(this.slots[theSecondOutput].getItem() == outputTwo.getItem()){
+                        this.slots[theSecondOutput].stackSize += outputTwo.stackSize;
+                    }
                 }
             }
         }
@@ -224,7 +232,7 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
 
     @Override
     public boolean isItemValidForSlot(int i, ItemStack stack){
-        return (i == SLOT_INPUT_1 || i == SLOT_INPUT_2) && CrusherRecipeManualRegistry.getOutput(stack, false) != null;
+        return (i == SLOT_INPUT_1 || i == SLOT_INPUT_2) && CrusherRecipeRegistry.getRecipeFromInput(stack) != null;
     }
 
     @SideOnly(Side.CLIENT)

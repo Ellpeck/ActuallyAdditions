@@ -11,13 +11,13 @@
 package ellpeck.actuallyadditions.nei;
 
 import codechicken.lib.gui.GuiDraw;
-import codechicken.nei.NEIServerUtils;
 import codechicken.nei.PositionedStack;
 import codechicken.nei.recipe.RecipeInfo;
 import codechicken.nei.recipe.TemplateRecipeHandler;
 import ellpeck.actuallyadditions.blocks.InitBlocks;
 import ellpeck.actuallyadditions.inventory.gui.GuiGrinder;
-import ellpeck.actuallyadditions.recipe.CrusherRecipeManualRegistry;
+import ellpeck.actuallyadditions.recipe.CrusherRecipeRegistry;
+import ellpeck.actuallyadditions.util.ItemUtil;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -48,9 +48,8 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler implements INeiR
     @Override
     public void loadCraftingRecipes(String outputId, Object... results){
         if(outputId.equals(this.getName()) && (getClass() == CrusherRecipeHandler.class || getClass() == CrusherDoubleRecipeHandler.class)){
-            ArrayList<CrusherRecipeManualRegistry.CrusherRecipe> recipes = CrusherRecipeManualRegistry.recipes;
-            for(CrusherRecipeManualRegistry.CrusherRecipe recipe : recipes){
-                arecipes.add(new CachedCrush(recipe.input, recipe.firstOutput, recipe.secondOutput, recipe.secondChance, this));
+            for(CrusherRecipeRegistry.CrusherRecipe recipe : CrusherRecipeRegistry.recipes){
+                arecipes.add(new CachedCrush(recipe.getRecipeInputs(), recipe.getRecipeOutputOnes(), recipe.getRecipeOutputTwos(), recipe.outputTwoChance, this));
             }
         }
         else{
@@ -60,20 +59,18 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler implements INeiR
 
     @Override
     public void loadCraftingRecipes(ItemStack result){
-        ArrayList<CrusherRecipeManualRegistry.CrusherRecipe> recipes = CrusherRecipeManualRegistry.recipes;
-        for(CrusherRecipeManualRegistry.CrusherRecipe recipe : recipes){
-            if(NEIServerUtils.areStacksSameType(recipe.firstOutput, result) || NEIServerUtils.areStacksSameType(recipe.secondOutput, result)){
-                arecipes.add(new CachedCrush(recipe.input, recipe.firstOutput, recipe.secondOutput, recipe.secondChance, this));
+        for(CrusherRecipeRegistry.CrusherRecipe recipe : CrusherRecipeRegistry.recipes){
+            if(ItemUtil.contains(recipe.getRecipeOutputOnes(), result, true) || ItemUtil.contains(recipe.getRecipeOutputTwos(), result, true)){
+                arecipes.add(new CachedCrush(recipe.getRecipeInputs(), recipe.getRecipeOutputOnes(), recipe.getRecipeOutputTwos(), recipe.outputTwoChance, this));
             }
         }
     }
 
     @Override
     public void loadUsageRecipes(ItemStack ingredient){
-        ArrayList<CrusherRecipeManualRegistry.CrusherRecipe> recipes = CrusherRecipeManualRegistry.recipes;
-        for(CrusherRecipeManualRegistry.CrusherRecipe recipe : recipes){
-            if(NEIServerUtils.areStacksSameTypeCrafting(recipe.input, ingredient)){
-                CachedCrush theRecipe = new CachedCrush(recipe.input, recipe.firstOutput, recipe.secondOutput, recipe.secondChance, this);
+        for(CrusherRecipeRegistry.CrusherRecipe recipe : CrusherRecipeRegistry.recipes){
+            if(ItemUtil.contains(recipe.getRecipeInputs(), ingredient, true)){
+                CachedCrush theRecipe = new CachedCrush(recipe.getRecipeInputs(), recipe.getRecipeOutputOnes(), recipe.getRecipeOutputTwos(), recipe.outputTwoChance, this);
                 theRecipe.setIngredientPermutation(Collections.singletonList(theRecipe.ingredient), ingredient);
                 arecipes.add(theRecipe);
             }
@@ -175,32 +172,32 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler implements INeiR
         public PositionedStack resultTwo;
         public int secondChance;
 
-        public CachedCrush(ItemStack in, ItemStack resultOne, ItemStack resultTwo, int secondChance, CrusherRecipeHandler handler){
+        public CachedCrush(ArrayList<ItemStack> in, ArrayList<ItemStack> outOne, ArrayList<ItemStack> outTwo, int secondChance, CrusherRecipeHandler handler){
             boolean isDouble = handler instanceof CrusherDoubleRecipeHandler;
-            in.stackSize = 1;
             this.ingredient = new PositionedStack(in, isDouble ? 51 : 80, 21);
-            this.resultOne = new PositionedStack(resultOne, isDouble ? 38 : 66, 69);
-            if(resultTwo != null){
-                this.resultTwo = new PositionedStack(resultTwo, isDouble ? 63 : 94, 69);
+            this.resultOne = new PositionedStack(outOne, isDouble ? 38 : 66, 69);
+            if(outTwo != null && !outTwo.isEmpty()){
+                this.resultTwo = new PositionedStack(outTwo, isDouble ? 63 : 94, 69);
             }
             this.secondChance = secondChance;
         }
 
         @Override
         public PositionedStack getResult(){
-            return resultOne;
+            return null;
         }
 
         @Override
         public List<PositionedStack> getIngredients(){
-            return getCycledIngredients(cycleticks/48, Collections.singletonList(ingredient));
+            return this.getCycledIngredients(cycleticks/48, Collections.singletonList(this.ingredient));
         }
 
         @Override
         public List<PositionedStack> getOtherStacks(){
             ArrayList<PositionedStack> list = new ArrayList<PositionedStack>();
+            list.addAll(this.getCycledIngredients(cycleticks/48, Collections.singletonList(this.resultOne)));
             if(this.resultTwo != null){
-                list.add(this.resultTwo);
+                list.addAll(this.getCycledIngredients(cycleticks/48, Collections.singletonList(this.resultTwo)));
             }
             return list;
         }

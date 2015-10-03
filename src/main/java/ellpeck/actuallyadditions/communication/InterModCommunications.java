@@ -12,7 +12,6 @@ package ellpeck.actuallyadditions.communication;
 
 import cpw.mods.fml.common.event.FMLInterModComms;
 import ellpeck.actuallyadditions.items.ItemCoffee;
-import ellpeck.actuallyadditions.recipe.CrusherRecipeManualRegistry;
 import ellpeck.actuallyadditions.recipe.HairyBallHandler;
 import ellpeck.actuallyadditions.recipe.TreasureChestHandler;
 import ellpeck.actuallyadditions.util.ModUtil;
@@ -26,7 +25,8 @@ public class InterModCommunications{
 
     public static void processIMC(List<FMLInterModComms.IMCMessage> messages){
         for(FMLInterModComms.IMCMessage message : messages){
-            if(message.key.equalsIgnoreCase("registerCrusherRecipe")){
+            //TODO This
+            /*if(message.key.equalsIgnoreCase("registerCrusherRecipe")){
                 NBTTagCompound compound = message.getNBTValue();
                 if(compound != null){
                     ItemStack input = ItemStack.loadItemStackFromNBT(compound.getCompoundTag("input"));
@@ -42,7 +42,7 @@ public class InterModCommunications{
                         ModUtil.LOGGER.error("Crusher Recipe that was sent from Mod "+message.getSender()+" could not be registered: It's missing an Input or an Output!");
                     }
                 }
-            }
+            }*/
 
             if(message.key.equalsIgnoreCase("registerCoffeeMachineRecipe")){
                 NBTTagCompound compound = message.getNBTValue();
