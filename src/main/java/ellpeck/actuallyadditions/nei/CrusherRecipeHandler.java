@@ -41,23 +41,8 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler implements INeiR
     }
 
     @Override
-    public int recipiesPerPage(){
-        return 1;
-    }
-
-    @Override
     public void loadTransferRects(){
         transferRects.add(new RecipeTransferRect(new Rectangle(80, 40, 24, 22), this.getName()));
-    }
-
-    @Override
-    public Class<? extends GuiContainer> getGuiClass(){
-        return GuiGrinder.class;
-    }
-
-    @Override
-    public String getRecipeName(){
-        return StringUtil.localize("container.nei."+this.getName()+".name");
     }
 
     @Override
@@ -101,10 +86,8 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler implements INeiR
     }
 
     @Override
-    public void drawBackground(int recipeIndex){
-        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        GuiDraw.changeTexture(getGuiTexture());
-        GuiDraw.drawTexturedModalRect(60, 13, 60, 13, 56, 79);
+    public String getOverlayIdentifier(){
+        return this.getName();
     }
 
     @Override
@@ -114,12 +97,20 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler implements INeiR
     }
 
     @Override
-    public String getOverlayIdentifier(){
-        return this.getName();
+    public Class<? extends GuiContainer> getGuiClass(){
+        return GuiGrinder.class;
     }
 
-    protected String getName(){
-        return "actuallyadditions."+(this instanceof CrusherDoubleRecipeHandler ? "crushingDouble" : "crushing");
+    @Override
+    public void drawBackground(int recipeIndex){
+        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+        GuiDraw.changeTexture(getGuiTexture());
+        GuiDraw.drawTexturedModalRect(60, 13, 60, 13, 56, 79);
+    }
+
+    @Override
+    public int recipiesPerPage(){
+        return 1;
     }
 
     protected void drawChanceString(int x, int y, int recipe){
@@ -131,6 +122,15 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler implements INeiR
         }
     }
 
+    protected String getName(){
+        return "actuallyadditions."+(this instanceof CrusherDoubleRecipeHandler ? "crushingDouble" : "crushing");
+    }
+
+    @Override
+    public String getRecipeName(){
+        return StringUtil.localize("container.nei."+this.getName()+".name");
+    }
+
     public static class CrusherDoubleRecipeHandler extends CrusherRecipeHandler{
 
         @Override
@@ -139,14 +139,14 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler implements INeiR
         }
 
         @Override
-        public Class<? extends GuiContainer> getGuiClass(){
-            return GuiGrinder.GuiGrinderDouble.class;
-        }
-
-        @Override
         public void loadTransferRects(){
             transferRects.add(new RecipeTransferRect(new Rectangle(51, 40, 24, 22), this.getName()));
             transferRects.add(new RecipeTransferRect(new Rectangle(101, 40, 24, 22), this.getName()));
+        }
+
+        @Override
+        public Class<? extends GuiContainer> getGuiClass(){
+            return GuiGrinder.GuiGrinderDouble.class;
         }
 
         @Override
@@ -187,13 +187,13 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler implements INeiR
         }
 
         @Override
-        public List<PositionedStack> getIngredients(){
-            return getCycledIngredients(cycleticks/48, Collections.singletonList(ingredient));
+        public PositionedStack getResult(){
+            return resultOne;
         }
 
         @Override
-        public PositionedStack getResult(){
-            return resultOne;
+        public List<PositionedStack> getIngredients(){
+            return getCycledIngredients(cycleticks/48, Collections.singletonList(ingredient));
         }
 
         @Override

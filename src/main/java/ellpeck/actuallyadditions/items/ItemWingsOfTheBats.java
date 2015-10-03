@@ -52,6 +52,13 @@ public class ItemWingsOfTheBats extends Item implements IActAddItemOrBlock{
     }
 
     /**
+     * Same as above, but Remote Checking is done automatically
+     */
+    public static void removeWingsFromPlayer(EntityPlayer player){
+        removeWingsFromPlayer(player, player.worldObj.isRemote);
+    }
+
+    /**
      * Removes the Player from the List of Players that have Wings
      *
      * @param player      The Player
@@ -59,13 +66,6 @@ public class ItemWingsOfTheBats extends Item implements IActAddItemOrBlock{
      */
     public static void removeWingsFromPlayer(EntityPlayer player, boolean worldRemote){
         wingedPlayers.remove(player.getUniqueID()+(worldRemote ? "-Remote" : ""));
-    }
-
-    /**
-     * Same as above, but Remote Checking is done automatically
-     */
-    public static void removeWingsFromPlayer(EntityPlayer player){
-        removeWingsFromPlayer(player, player.worldObj.isRemote);
     }
 
     /**
@@ -98,14 +98,14 @@ public class ItemWingsOfTheBats extends Item implements IActAddItemOrBlock{
     }
 
     @Override
-    public IIcon getIcon(ItemStack stack, int pass){
-        return this.itemIcon;
-    }
-
-    @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister iconReg){
         this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
+    }
+
+    @Override
+    public IIcon getIcon(ItemStack stack, int pass){
+        return this.itemIcon;
     }
 
     @Override

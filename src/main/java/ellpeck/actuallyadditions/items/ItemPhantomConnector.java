@@ -73,13 +73,6 @@ public class ItemPhantomConnector extends Item implements IActAddItemOrBlock{
         }
     }
 
-    @Override
-    public void onUpdate(ItemStack stack, World world, Entity entity, int par4, boolean par5){
-        if(this.getStoredPosition(stack) == null){
-            this.clearStorage(stack);
-        }
-    }
-
     public WorldPos getStoredPosition(ItemStack stack){
         NBTTagCompound tag = stack.getTagCompound();
         if(tag != null){
@@ -92,6 +85,10 @@ public class ItemPhantomConnector extends Item implements IActAddItemOrBlock{
             }
         }
         return null;
+    }
+
+    public void clearStorage(ItemStack stack){
+        stack.setTagCompound(new NBTTagCompound());
     }
 
     public void storeConnection(ItemStack stack, int x, int y, int z, World world){
@@ -108,18 +105,21 @@ public class ItemPhantomConnector extends Item implements IActAddItemOrBlock{
         stack.setTagCompound(tag);
     }
 
-    public void clearStorage(ItemStack stack){
-        stack.setTagCompound(new NBTTagCompound());
+    @Override
+    public boolean getShareTag(){
+        return true;
+    }
+
+    @Override
+    public void onUpdate(ItemStack stack, World world, Entity entity, int par4, boolean par5){
+        if(this.getStoredPosition(stack) == null){
+            this.clearStorage(stack);
+        }
     }
 
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.epic;
-    }
-
-    @Override
-    public IIcon getIcon(ItemStack stack, int pass){
-        return this.itemIcon;
     }
 
     @Override
@@ -129,12 +129,12 @@ public class ItemPhantomConnector extends Item implements IActAddItemOrBlock{
     }
 
     @Override
-    public String getName(){
-        return "itemPhantomConnector";
+    public IIcon getIcon(ItemStack stack, int pass){
+        return this.itemIcon;
     }
 
     @Override
-    public boolean getShareTag(){
-        return true;
+    public String getName(){
+        return "itemPhantomConnector";
     }
 }

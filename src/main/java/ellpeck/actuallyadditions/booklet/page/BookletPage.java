@@ -68,14 +68,6 @@ public class BookletPage{
         return this.id;
     }
 
-    public BookletChapter getChapter(){
-        return this.chapter;
-    }
-
-    public void setChapter(BookletChapter chapter){
-        this.chapter = chapter;
-    }
-
     public final String getText(){
         if(this.hasNoText){
             return null;
@@ -89,13 +81,13 @@ public class BookletPage{
         return base;
     }
 
+    public BookletPage addTextReplacement(String text, int replacement){
+        return this.addTextReplacement(text, Integer.toString(replacement));
+    }
+
     public BookletPage addTextReplacement(String text, String replacement){
         this.textReplacements.put(text, replacement);
         return this;
-    }
-
-    public BookletPage addTextReplacement(String text, int replacement){
-        return this.addTextReplacement(text, Integer.toString(replacement));
     }
 
     public void renderPre(GuiBooklet gui, int mouseX, int mouseY, boolean mouseClick, int ticksElapsed){
@@ -104,10 +96,6 @@ public class BookletPage{
 
     public void render(GuiBooklet gui, int mouseX, int mouseY, boolean mouseClick, int ticksElapsed){
 
-    }
-
-    public ItemStack[] getItemStacksForPage(){
-        return null;
     }
 
     public void updateScreen(int ticksElapsed){
@@ -144,5 +132,17 @@ public class BookletPage{
         }
 
         gui.drawHoveringText(list, x, y);
+    }
+
+    public ItemStack[] getItemStacksForPage(){
+        return null;
+    }
+
+    public BookletChapter getChapter(){
+        return this.chapter;
+    }
+
+    public void setChapter(BookletChapter chapter){
+        this.chapter = chapter;
     }
 }

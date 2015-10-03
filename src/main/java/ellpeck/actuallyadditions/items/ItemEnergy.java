@@ -32,31 +32,13 @@ public abstract class ItemEnergy extends ItemEnergyContainer implements IActAddI
     }
 
     @Override
-    public double getDurabilityForDisplay(ItemStack stack){
-        double energyDif = getMaxEnergyStored(stack)-getEnergyStored(stack);
-        double maxAmount = getMaxEnergyStored(stack);
-        return energyDif/maxAmount;
-    }
-
-    @Override
-    public boolean showDurabilityBar(ItemStack itemStack){
+    public boolean getShareTag(){
         return true;
     }
 
     @Override
     public void onCreated(ItemStack stack, World world, EntityPlayer player){
         this.setEnergy(stack, 0);
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public boolean hasEffect(ItemStack stack, int pass){
-        return false;
-    }
-
-    @Override
-    public boolean getShareTag(){
-        return true;
     }
 
     @Override
@@ -70,6 +52,24 @@ public abstract class ItemEnergy extends ItemEnergyContainer implements IActAddI
         ItemStack stackEmpty = new ItemStack(this);
         this.setEnergy(stackEmpty, 0);
         list.add(stackEmpty);
+    }
+
+    @Override
+    public boolean showDurabilityBar(ItemStack itemStack){
+        return true;
+    }
+
+    @Override
+    public double getDurabilityForDisplay(ItemStack stack){
+        double energyDif = getMaxEnergyStored(stack)-getEnergyStored(stack);
+        double maxAmount = getMaxEnergyStored(stack);
+        return energyDif/maxAmount;
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public boolean hasEffect(ItemStack stack, int pass){
+        return false;
     }
 
     public void setEnergy(ItemStack stack, int energy){

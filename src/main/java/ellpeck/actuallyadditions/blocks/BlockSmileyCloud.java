@@ -42,6 +42,37 @@ public class BlockSmileyCloud extends BlockContainerBase implements IActAddItemO
     }
 
     @Override
+    public boolean renderAsNormalBlock(){
+        return false;
+    }
+
+    @Override
+    public int getRenderType(){
+        return AssetUtil.SMILEY_CLOUD_RENDER_ID;
+    }
+
+    @Override
+    public IIcon getIcon(int side, int metadata){
+        return this.blockIcon;
+    }
+
+    @Override
+    public boolean isOpaqueCube(){
+        return false;
+    }
+
+    @Override
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int f6, float f7, float f8, float f9){
+        if(!world.isRemote){
+            TileEntity tile = world.getTileEntity(x, y, z);
+            if(tile instanceof TileEntitySmileyCloud){
+                player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.CLOUD.ordinal(), world, x, y, z);
+            }
+        }
+        return true;
+    }
+
+    @Override
     public void setBlockBoundsBasedOnState(IBlockAccess world, int x, int y, int z){
         int meta = world.getBlockMetadata(x, y, z);
         float f = 0.0625F;
@@ -58,22 +89,6 @@ public class BlockSmileyCloud extends BlockContainerBase implements IActAddItemO
         if(meta == 3){
             this.setBlockBounds(f*3F, 0F, 0F, 1F, 1F, 1F);
         }
-    }
-
-    @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int f6, float f7, float f8, float f9){
-        if(!world.isRemote){
-            TileEntity tile = world.getTileEntity(x, y, z);
-            if(tile instanceof TileEntitySmileyCloud){
-                player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.CLOUD.ordinal(), world, x, y, z);
-            }
-        }
-        return true;
-    }
-
-    @Override
-    public IIcon getIcon(int side, int metadata){
-        return this.blockIcon;
     }
 
     @Override
@@ -98,21 +113,6 @@ public class BlockSmileyCloud extends BlockContainerBase implements IActAddItemO
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconReg){
         this.blockIcon = Blocks.wool.getIcon(0, 0);
-    }
-
-    @Override
-    public boolean isOpaqueCube(){
-        return false;
-    }
-
-    @Override
-    public boolean renderAsNormalBlock(){
-        return false;
-    }
-
-    @Override
-    public int getRenderType(){
-        return AssetUtil.SMILEY_CLOUD_RENDER_ID;
     }
 
     @Override
@@ -143,11 +143,6 @@ public class BlockSmileyCloud extends BlockContainerBase implements IActAddItemO
         }
 
         @Override
-        public EnumRarity getRarity(ItemStack stack){
-            return EnumRarity.uncommon;
-        }
-
-        @Override
         public String getUnlocalizedName(ItemStack stack){
             return this.getUnlocalizedName();
         }
@@ -155,6 +150,11 @@ public class BlockSmileyCloud extends BlockContainerBase implements IActAddItemO
         @Override
         public int getMetadata(int damage){
             return damage;
+        }
+
+        @Override
+        public EnumRarity getRarity(ItemStack stack){
+            return EnumRarity.uncommon;
         }
     }
 }

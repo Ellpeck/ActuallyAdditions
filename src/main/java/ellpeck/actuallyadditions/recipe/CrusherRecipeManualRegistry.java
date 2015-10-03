@@ -22,12 +22,6 @@ public class CrusherRecipeManualRegistry{
 
     public static ArrayList<CrusherRecipe> recipes = new ArrayList<CrusherRecipe>();
 
-    public static void registerRecipe(ItemStack input, ItemStack outputOne, ItemStack outputTwo, int secondChance){
-        if(!hasRecipe(input, outputOne, outputTwo)){
-            recipes.add(new CrusherRecipe(input, outputOne, outputTwo, secondChance));
-        }
-    }
-
     public static void registerRecipe(String input, String outputOne, int outputOneAmount){
         registerRecipe(input, outputOne, "", 0, outputOneAmount, 0);
     }
@@ -70,17 +64,10 @@ public class CrusherRecipeManualRegistry{
         }
     }
 
-    public static void registerRecipe(ItemStack input, ItemStack outputOne){
-        registerRecipe(input, outputOne, null, 0);
-    }
-
-    public static ItemStack getOutput(ItemStack input, boolean wantSecond){
-        for(CrusherRecipe recipe : recipes){
-            if(recipe.input.isItemEqual(input) || (recipe.input.getItem() == input.getItem() && recipe.input.getItemDamage() == Util.WILDCARD)){
-                return wantSecond ? recipe.secondOutput : recipe.firstOutput;
-            }
+    public static void registerRecipe(ItemStack input, ItemStack outputOne, ItemStack outputTwo, int secondChance){
+        if(!hasRecipe(input, outputOne, outputTwo)){
+            recipes.add(new CrusherRecipe(input, outputOne, outputTwo, secondChance));
         }
-        return null;
     }
 
     public static boolean hasRecipe(ItemStack input, ItemStack outputOne, ItemStack outputTwo){
@@ -92,6 +79,19 @@ public class CrusherRecipeManualRegistry{
             }
         }
         return false;
+    }
+
+    public static void registerRecipe(ItemStack input, ItemStack outputOne){
+        registerRecipe(input, outputOne, null, 0);
+    }
+
+    public static ItemStack getOutput(ItemStack input, boolean wantSecond){
+        for(CrusherRecipe recipe : recipes){
+            if(recipe.input.isItemEqual(input) || (recipe.input.getItem() == input.getItem() && recipe.input.getItemDamage() == Util.WILDCARD)){
+                return wantSecond ? recipe.secondOutput : recipe.firstOutput;
+            }
+        }
+        return null;
     }
 
     public static int getSecondChance(ItemStack input){

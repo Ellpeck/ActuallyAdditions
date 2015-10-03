@@ -42,22 +42,25 @@ public class BlockSlabs extends Block implements IActAddItemOrBlock{
     }
 
     @Override
+    public boolean renderAsNormalBlock(){
+        return false;
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public IIcon getIcon(int side, int meta){
+        return this.fullBlock.getIcon(0, 0);
+    }
+
+    @Override
     public void addCollisionBoxesToList(World world, int x, int y, int z, AxisAlignedBB axis, List list, Entity entity){
         this.setBlockBoundsBasedOnState(world, x, y, z);
         super.addCollisionBoxesToList(world, x, y, z, axis, list, entity);
     }
 
     @Override
-    public void setBlockBoundsForItemRender(){
-        this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.5F, 1.0F);
-    }
-
-    @Override
-    public void setBlockBoundsBasedOnState(IBlockAccess world, int x, int y, int z){
-        int meta = world.getBlockMetadata(x, y, z);
-        float minY = meta == 1 ? 0.5F : 0.0F;
-        float maxY = meta == 1 ? 1.0F : 0.5F;
-        this.setBlockBounds(0.0F, minY, 0F, 1.0F, maxY, 1.0F);
+    public boolean isOpaqueCube(){
+        return false;
     }
 
     @Override
@@ -72,19 +75,16 @@ public class BlockSlabs extends Block implements IActAddItemOrBlock{
     }
 
     @Override
-    public boolean isOpaqueCube(){
-        return false;
+    public void setBlockBoundsBasedOnState(IBlockAccess world, int x, int y, int z){
+        int meta = world.getBlockMetadata(x, y, z);
+        float minY = meta == 1 ? 0.5F : 0.0F;
+        float maxY = meta == 1 ? 1.0F : 0.5F;
+        this.setBlockBounds(0.0F, minY, 0F, 1.0F, maxY, 1.0F);
     }
 
     @Override
-    public boolean renderAsNormalBlock(){
-        return false;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public IIcon getIcon(int side, int meta){
-        return this.fullBlock.getIcon(0, 0);
+    public void setBlockBoundsForItemRender(){
+        this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.5F, 1.0F);
     }
 
     @Override
@@ -110,18 +110,13 @@ public class BlockSlabs extends Block implements IActAddItemOrBlock{
         }
 
         @Override
-        public EnumRarity getRarity(ItemStack stack){
-            return EnumRarity.uncommon;
-        }
-
-        @Override
-        public String getUnlocalizedName(ItemStack stack){
-            return this.getUnlocalizedName();
-        }
-
-        @Override
         public int getMetadata(int meta){
             return meta;
+        }
+
+        @Override
+        public EnumRarity getRarity(ItemStack stack){
+            return EnumRarity.uncommon;
         }
 
         @Override
@@ -134,6 +129,11 @@ public class BlockSlabs extends Block implements IActAddItemOrBlock{
                 }
             }
             return super.onItemUse(stack, player, world, x, y, z, side, hitX, hitY, hitZ);
+        }
+
+        @Override
+        public String getUnlocalizedName(ItemStack stack){
+            return this.getUnlocalizedName();
         }
     }
 }

@@ -133,9 +133,10 @@ public class ModelSmileyCloud extends ModelBaseAA{
         setRotation(s16, 0F, 0F, 0F);
     }
 
-    @Override
-    public boolean doesRotate(){
-        return true;
+    private void setRotation(ModelRenderer model, float x, float y, float z){
+        model.rotateAngleX = x;
+        model.rotateAngleY = y;
+        model.rotateAngleZ = z;
     }
 
     @Override
@@ -158,14 +159,13 @@ public class ModelSmileyCloud extends ModelBaseAA{
         s16.render(f);
     }
 
-    private void setRotation(ModelRenderer model, float x, float y, float z){
-        model.rotateAngleX = x;
-        model.rotateAngleY = y;
-        model.rotateAngleZ = z;
-    }
-
     @Override
     public String getName(){
         return "modelSmileyCloud";
+    }
+
+    @Override
+    public boolean doesRotate(){
+        return true;
     }
 }

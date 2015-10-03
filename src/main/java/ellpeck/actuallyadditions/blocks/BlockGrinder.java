@@ -54,11 +54,6 @@ public class BlockGrinder extends BlockContainerBase implements IActAddItemOrBlo
     }
 
     @Override
-    public int getLightValue(IBlockAccess world, int x, int y, int z){
-        return world.getBlockMetadata(x, y, z) == 1 ? 12 : 0;
-    }
-
-    @Override
     public IIcon getIcon(int side, int meta){
         if(side == 1 && meta != 1){
             return this.topIcon;
@@ -88,15 +83,6 @@ public class BlockGrinder extends BlockContainerBase implements IActAddItemOrBlo
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister iconReg){
-        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
-        this.topIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":blockGrinderTop");
-        this.onIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":blockGrinderOn");
-        this.bottomIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":blockGrinderBottom");
-    }
-
-    @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9){
         if(!world.isRemote){
             TileEntityGrinder grinder = (TileEntityGrinder)world.getTileEntity(x, y, z);
@@ -109,14 +95,28 @@ public class BlockGrinder extends BlockContainerBase implements IActAddItemOrBlo
     }
 
     @Override
-    public void breakBlock(World world, int x, int y, int z, Block block, int par6){
-        this.dropInventory(world, x, y, z);
-        super.breakBlock(world, x, y, z, block, par6);
+    @SideOnly(Side.CLIENT)
+    public void registerBlockIcons(IIconRegister iconReg){
+        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
+        this.topIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":blockGrinderTop");
+        this.onIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":blockGrinderOn");
+        this.bottomIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":blockGrinderBottom");
+    }
+
+    @Override
+    public int getLightValue(IBlockAccess world, int x, int y, int z){
+        return world.getBlockMetadata(x, y, z) == 1 ? 12 : 0;
     }
 
     @Override
     public String getName(){
         return isDouble ? "blockGrinderDouble" : "blockGrinder";
+    }
+
+    @Override
+    public void breakBlock(World world, int x, int y, int z, Block block, int par6){
+        this.dropInventory(world, x, y, z);
+        super.breakBlock(world, x, y, z, block, par6);
     }
 
     public static class TheItemBlock extends ItemBlock{
@@ -131,11 +131,6 @@ public class BlockGrinder extends BlockContainerBase implements IActAddItemOrBlo
         }
 
         @Override
-        public EnumRarity getRarity(ItemStack stack){
-            return ((BlockGrinder)theBlock).isDouble ? EnumRarity.epic : EnumRarity.rare;
-        }
-
-        @Override
         public String getUnlocalizedName(ItemStack stack){
             return this.getUnlocalizedName();
         }
@@ -143,6 +138,11 @@ public class BlockGrinder extends BlockContainerBase implements IActAddItemOrBlo
         @Override
         public int getMetadata(int meta){
             return meta;
+        }
+
+        @Override
+        public EnumRarity getRarity(ItemStack stack){
+            return ((BlockGrinder)theBlock).isDouble ? EnumRarity.epic : EnumRarity.rare;
         }
     }
 }

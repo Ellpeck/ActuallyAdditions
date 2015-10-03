@@ -34,14 +34,14 @@ public class ItemCoffeeBean extends ItemFood implements IActAddItemOrBlock{
 
     @Override
     @SideOnly(Side.CLIENT)
-    public IIcon getIcon(ItemStack stack, int pass){
-        return this.itemIcon;
+    public void registerIcons(IIconRegister iconReg){
+        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister iconReg){
-        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
+    public IIcon getIcon(ItemStack stack, int pass){
+        return this.itemIcon;
     }
 
     @Override

@@ -64,10 +64,49 @@ public class ItemCoffee extends ItemFood implements IActAddItemOrBlock{
         registerIngredient(new Ingredient(new ItemStack(Items.fermented_spider_eye), new PotionEffect[]{new PotionEffect(Potion.invisibility.getId(), 25, 0)}, 2));
     }
 
+    public static void registerIngredient(Ingredient ingredient){
+        ingredients.add(ingredient);
+    }
+
     public static Ingredient getIngredientFromStack(ItemStack stack){
         for(Ingredient ingredient : ingredients){
             if(ingredient.ingredient.copy().isItemEqual(stack)){
                 return ingredient;
+            }
+        }
+        return null;
+    }
+
+    public static boolean addEffectToStack(ItemStack stack, Ingredient ingredient){
+        boolean worked = false;
+        if(ingredient != null){
+            PotionEffect[] effects = ingredient.getEffects();
+            if(effects != null && effects.length > 0){
+                for(PotionEffect effect : effects){
+                    PotionEffect effectHas = getSameEffectFromStack(stack, effect);
+                    if(effectHas != null){
+                        if(effectHas.getAmplifier() < ingredient.maxAmplifier-1){
+                            addEffectProperties(stack, effect, false, true);
+                            worked = true;
+                        }
+                    }
+                    else{
+                        addEffectToStack(stack, effect);
+                        worked = true;
+                    }
+                }
+            }
+        }
+        return worked;
+    }
+
+    public static PotionEffect getSameEffectFromStack(ItemStack stack, PotionEffect effect){
+        PotionEffect[] effectsStack = getEffectsFromStack(stack);
+        if(effectsStack != null && effectsStack.length > 0){
+            for(PotionEffect effectStack : effectsStack){
+                if(effect.getPotionID() == effectStack.getPotionID()){
+                    return effectStack;
+                }
             }
         }
         return null;
@@ -103,29 +142,6 @@ public class ItemCoffee extends ItemFood implements IActAddItemOrBlock{
         stack.setTagCompound(tag);
     }
 
-    public static boolean addEffectToStack(ItemStack stack, Ingredient ingredient){
-        boolean worked = false;
-        if(ingredient != null){
-            PotionEffect[] effects = ingredient.getEffects();
-            if(effects != null && effects.length > 0){
-                for(PotionEffect effect : effects){
-                    PotionEffect effectHas = getSameEffectFromStack(stack, effect);
-                    if(effectHas != null){
-                        if(effectHas.getAmplifier() < ingredient.maxAmplifier-1){
-                            addEffectProperties(stack, effect, false, true);
-                            worked = true;
-                        }
-                    }
-                    else{
-                        addEffectToStack(stack, effect);
-                        worked = true;
-                    }
-                }
-            }
-        }
-        return worked;
-    }
-
     public static PotionEffect[] getEffectsFromStack(ItemStack stack){
         ArrayList<PotionEffect> effects = new ArrayList<PotionEffect>();
         NBTTagCompound tag = stack.getTagCompound();
@@ -143,16 +159,18 @@ public class ItemCoffee extends ItemFood implements IActAddItemOrBlock{
         return effects.size() > 0 ? effects.toArray(new PotionEffect[effects.size()]) : null;
     }
 
-    public static PotionEffect getSameEffectFromStack(ItemStack stack, PotionEffect effect){
-        PotionEffect[] effectsStack = getEffectsFromStack(stack);
-        if(effectsStack != null && effectsStack.length > 0){
-            for(PotionEffect effectStack : effectsStack){
-                if(effect.getPotionID() == effectStack.getPotionID()){
-                    return effectStack;
-                }
-            }
+    @Override
+    public ItemStack onEaten(ItemStack stack, World world, EntityPlayer player){
+        ItemStack theStack = stack.copy();
+        super.onEaten(stack, world, player);
+        applyPotionEffectsFromStack(stack, player);
+        theStack.setItemDamage(theStack.getItemDamage()+1);
+        if(theStack.getMaxDamage()-theStack.getItemDamage() < 0){
+            return new ItemStack(InitItems.itemMisc, 1, TheMiscItems.CUP.ordinal());
         }
-        return null;
+        else{
+            return theStack;
+        }
     }
 
     public static void applyPotionEffectsFromStack(ItemStack stack, EntityPlayer player){
@@ -164,8 +182,24 @@ public class ItemCoffee extends ItemFood implements IActAddItemOrBlock{
         }
     }
 
-    public static void registerIngredient(Ingredient ingredient){
-        ingredients.add(ingredient);
+    @Override
+    public EnumAction getItemUseAction(ItemStack stack){
+        return EnumAction.drink;
+    }
+
+    @Override
+    public IIcon getIconFromDamage(int par1){
+        return this.itemIcon;
+    }
+
+    @Override
+    public int getMetadata(int damage){
+        return damage;
+    }
+
+    @Override
+    public boolean getShareTag(){
+        return true;
     }
 
     @SuppressWarnings("unchecked")
@@ -183,42 +217,8 @@ public class ItemCoffee extends ItemFood implements IActAddItemOrBlock{
     }
 
     @Override
-    public boolean getShareTag(){
-        return true;
-    }
-
-    @Override
-    public EnumAction getItemUseAction(ItemStack stack){
-        return EnumAction.drink;
-    }
-
-    @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.rare;
-    }
-
-    @Override
-    public int getMetadata(int damage){
-        return damage;
-    }
-
-    @Override
-    public ItemStack onEaten(ItemStack stack, World world, EntityPlayer player){
-        ItemStack theStack = stack.copy();
-        super.onEaten(stack, world, player);
-        applyPotionEffectsFromStack(stack, player);
-        theStack.setItemDamage(theStack.getItemDamage()+1);
-        if(theStack.getMaxDamage()-theStack.getItemDamage() < 0){
-            return new ItemStack(InitItems.itemMisc, 1, TheMiscItems.CUP.ordinal());
-        }
-        else{
-            return theStack;
-        }
-    }
-
-    @Override
-    public IIcon getIconFromDamage(int par1){
-        return this.itemIcon;
     }
 
     @Override

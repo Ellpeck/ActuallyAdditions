@@ -51,13 +51,6 @@ public class BlockCanolaPress extends BlockContainerBase implements IActAddItemO
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister iconReg){
-        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
-        this.topIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Top");
-    }
-
-    @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9){
         if(!world.isRemote){
             TileEntityCanolaPress press = (TileEntityCanolaPress)world.getTileEntity(x, y, z);
@@ -70,14 +63,21 @@ public class BlockCanolaPress extends BlockContainerBase implements IActAddItemO
     }
 
     @Override
-    public void breakBlock(World world, int x, int y, int z, Block block, int par6){
-        this.dropInventory(world, x, y, z);
-        super.breakBlock(world, x, y, z, block, par6);
+    @SideOnly(Side.CLIENT)
+    public void registerBlockIcons(IIconRegister iconReg){
+        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
+        this.topIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Top");
     }
 
     @Override
     public String getName(){
         return "blockCanolaPress";
+    }
+
+    @Override
+    public void breakBlock(World world, int x, int y, int z, Block block, int par6){
+        this.dropInventory(world, x, y, z);
+        super.breakBlock(world, x, y, z, block, par6);
     }
 
     public static class TheItemBlock extends ItemBlock{
@@ -92,11 +92,6 @@ public class BlockCanolaPress extends BlockContainerBase implements IActAddItemO
         }
 
         @Override
-        public EnumRarity getRarity(ItemStack stack){
-            return EnumRarity.rare;
-        }
-
-        @Override
         public String getUnlocalizedName(ItemStack stack){
             return this.getUnlocalizedName();
         }
@@ -104,6 +99,11 @@ public class BlockCanolaPress extends BlockContainerBase implements IActAddItemO
         @Override
         public int getMetadata(int damage){
             return damage;
+        }
+
+        @Override
+        public EnumRarity getRarity(ItemStack stack){
+            return EnumRarity.rare;
         }
     }
 }

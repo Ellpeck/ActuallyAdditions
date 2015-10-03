@@ -53,6 +53,11 @@ public class OreGen implements IWorldGenerator{
     }
 
     @SuppressWarnings("unused")
+    private void generateNether(World world, Random random, int x, int z){
+
+    }
+
+    @SuppressWarnings("unused")
     private void generateEnd(World world, Random random, int x, int z){
 
     }
@@ -61,11 +66,6 @@ public class OreGen implements IWorldGenerator{
         if(ConfigBoolValues.GENERATE_QUARTZ.isEnabled()){
             this.addOreSpawn(InitBlocks.blockMisc, TheMiscBlocks.ORE_QUARTZ.ordinal(), Blocks.stone, world, random, x, z, MathHelper.getRandomIntegerInRange(random, ConfigIntValues.BLACK_QUARTZ_BASE_AMOUNT.getValue(), ConfigIntValues.BLACK_QUARTZ_ADD_CHANCE.getValue()), ConfigIntValues.BLACK_QUARTZ_CHANCE.getValue(), ConfigIntValues.BLACK_QUARTZ_MIN_HEIGHT.getValue(), ConfigIntValues.BLACK_QUARTZ_MAX_HEIGHT.getValue());
         }
-    }
-
-    @SuppressWarnings("unused")
-    private void generateNether(World world, Random random, int x, int z){
-
     }
 
     public void addOreSpawn(Block block, int meta, Block blockIn, World world, Random random, int blockXPos, int blockZPos, int maxVeinSize, int chancesToSpawn, int minY, int maxY){

@@ -44,11 +44,6 @@ public class BlockStair extends BlockStairs implements IActAddItemOrBlock{
         }
 
         @Override
-        public EnumRarity getRarity(ItemStack stack){
-            return EnumRarity.uncommon;
-        }
-
-        @Override
         public String getUnlocalizedName(ItemStack stack){
             return this.getUnlocalizedName();
         }
@@ -56,6 +51,11 @@ public class BlockStair extends BlockStairs implements IActAddItemOrBlock{
         @Override
         public int getMetadata(int meta){
             return meta;
+        }
+
+        @Override
+        public EnumRarity getRarity(ItemStack stack){
+            return EnumRarity.uncommon;
         }
     }
 }

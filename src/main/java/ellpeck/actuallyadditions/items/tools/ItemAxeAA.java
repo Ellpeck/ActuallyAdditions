@@ -46,8 +46,8 @@ public class ItemAxeAA extends ItemAxe implements IActAddItemOrBlock{
     }
 
     @Override
-    public IIcon getIcon(ItemStack stack, int pass){
-        return this.itemIcon;
+    public EnumRarity getRarity(ItemStack stack){
+        return this.rarity;
     }
 
     @Override
@@ -57,8 +57,8 @@ public class ItemAxeAA extends ItemAxe implements IActAddItemOrBlock{
     }
 
     @Override
-    public EnumRarity getRarity(ItemStack stack){
-        return this.rarity;
+    public IIcon getIcon(ItemStack stack, int pass){
+        return this.itemIcon;
     }
 
     @Override

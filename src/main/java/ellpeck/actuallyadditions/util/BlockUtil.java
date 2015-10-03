@@ -17,8 +17,9 @@ import net.minecraft.item.ItemBlock;
 
 public class BlockUtil{
 
-    public static String createUnlocalizedName(Block block){
-        return ModUtil.MOD_ID_LOWER+"."+((IActAddItemOrBlock)block).getName();
+    @SuppressWarnings("unchecked")
+    public static void register(Block block){
+        register(block, true);
     }
 
     @SuppressWarnings("unchecked")
@@ -34,8 +35,7 @@ public class BlockUtil{
         }
     }
 
-    @SuppressWarnings("unchecked")
-    public static void register(Block block){
-        register(block, true);
+    public static String createUnlocalizedName(Block block){
+        return ModUtil.MOD_ID_LOWER+"."+((IActAddItemOrBlock)block).getName();
     }
 }

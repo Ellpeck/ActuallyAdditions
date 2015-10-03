@@ -35,6 +35,11 @@ public class GuiDropper extends GuiContainer{
     }
 
     @Override
+    public void drawScreen(int x, int y, float f){
+        super.drawScreen(x, y, f);
+    }
+
+    @Override
     public void drawGuiContainerForegroundLayer(int x, int y){
         AssetUtil.displayNameString(this.fontRendererObj, xSize, -10, this.dropper.getInventoryName());
     }
@@ -48,10 +53,5 @@ public class GuiDropper extends GuiContainer{
 
         this.mc.getTextureManager().bindTexture(resLoc);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 93);
-    }
-
-    @Override
-    public void drawScreen(int x, int y, float f){
-        super.drawScreen(x, y, f);
     }
 }

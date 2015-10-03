@@ -37,6 +37,11 @@ public class ItemHoeAA extends ItemHoe implements IActAddItemOrBlock{
     }
 
     @Override
+    public EnumRarity getRarity(ItemStack stack){
+        return this.rarity;
+    }
+
+    @Override
     public boolean getIsRepairable(ItemStack itemToRepair, ItemStack stack){
         int[] idsStack = OreDictionary.getOreIDs(stack);
         for(int id : idsStack){
@@ -48,19 +53,14 @@ public class ItemHoeAA extends ItemHoe implements IActAddItemOrBlock{
     }
 
     @Override
-    public EnumRarity getRarity(ItemStack stack){
-        return this.rarity;
+    @SideOnly(Side.CLIENT)
+    public void registerIcons(IIconRegister iconReg){
+        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
     }
 
     @Override
     public IIcon getIcon(ItemStack stack, int pass){
         return this.itemIcon;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister iconReg){
-        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
     }
 
     @Override

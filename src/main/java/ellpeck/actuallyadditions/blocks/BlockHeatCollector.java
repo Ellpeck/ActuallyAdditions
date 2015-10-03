@@ -73,11 +73,6 @@ public class BlockHeatCollector extends BlockContainerBase implements IActAddIte
         }
 
         @Override
-        public EnumRarity getRarity(ItemStack stack){
-            return EnumRarity.rare;
-        }
-
-        @Override
         public String getUnlocalizedName(ItemStack stack){
             return this.getUnlocalizedName();
         }
@@ -85,6 +80,11 @@ public class BlockHeatCollector extends BlockContainerBase implements IActAddIte
         @Override
         public int getMetadata(int damage){
             return damage;
+        }
+
+        @Override
+        public EnumRarity getRarity(ItemStack stack){
+            return EnumRarity.rare;
         }
     }
 }

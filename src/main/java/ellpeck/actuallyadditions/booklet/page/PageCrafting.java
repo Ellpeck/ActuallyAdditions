@@ -31,25 +31,14 @@ public class PageCrafting extends BookletPage{
     private final IRecipe[] recipes;
     private int recipePos;
 
-    public PageCrafting(int id, IRecipe... recipes){
-        super(id);
-        this.recipes = recipes;
-        InitBooklet.pagesWithItemStackData.add(this);
-    }
-
     public PageCrafting(int id, ArrayList<IRecipe> recipes){
         this(id, recipes.toArray(new IRecipe[recipes.size()]));
     }
 
-    @Override
-    public ItemStack[] getItemStacksForPage(){
-        ItemStack[] stacks = new ItemStack[this.recipes.length];
-        for(int i = 0; i < stacks.length; i++){
-            if(this.recipes[i] != null){
-                stacks[i] = this.recipes[i].getRecipeOutput();
-            }
-        }
-        return stacks;
+    public PageCrafting(int id, IRecipe... recipes){
+        super(id);
+        this.recipes = recipes;
+        InitBooklet.pagesWithItemStackData.add(this);
     }
 
     @Override
@@ -57,18 +46,6 @@ public class PageCrafting extends BookletPage{
         if(this.recipes[this.recipePos] != null){
             gui.mc.getTextureManager().bindTexture(GuiBooklet.resLoc);
             gui.drawTexturedModalRect(gui.guiLeft+27, gui.guiTop+20, 146, 20, 99, 60);
-        }
-    }
-
-    @Override
-    public void updateScreen(int ticksElapsed){
-        if(ticksElapsed%30 == 0){
-            if(this.recipePos+1 >= this.recipes.length){
-                this.recipePos = 0;
-            }
-            else{
-                this.recipePos++;
-            }
         }
     }
 
@@ -157,5 +134,28 @@ public class PageCrafting extends BookletPage{
                 gui.renderToolTip(recipe.getRecipeOutput(), mouseX, mouseY);
             }
         }
+    }
+
+    @Override
+    public void updateScreen(int ticksElapsed){
+        if(ticksElapsed%30 == 0){
+            if(this.recipePos+1 >= this.recipes.length){
+                this.recipePos = 0;
+            }
+            else{
+                this.recipePos++;
+            }
+        }
+    }
+
+    @Override
+    public ItemStack[] getItemStacksForPage(){
+        ItemStack[] stacks = new ItemStack[this.recipes.length];
+        for(int i = 0; i < stacks.length; i++){
+            if(this.recipes[i] != null){
+                stacks[i] = this.recipes[i].getRecipeOutput();
+            }
+        }
+        return stacks;
     }
 }

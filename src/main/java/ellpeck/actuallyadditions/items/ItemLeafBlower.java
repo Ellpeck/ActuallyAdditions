@@ -43,6 +43,34 @@ public class ItemLeafBlower extends Item implements IActAddItemOrBlock{
     }
 
     @Override
+    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player){
+        player.setItemInUse(stack, this.getMaxItemUseDuration(stack));
+        return stack;
+    }
+
+    @Override
+    public EnumAction getItemUseAction(ItemStack stack){
+        return EnumAction.bow;
+    }
+
+    @Override
+    public int getMaxItemUseDuration(ItemStack stack){
+        //Cuz you won't hold it for that long right-clicking anyways
+        return Integer.MAX_VALUE;
+    }
+
+    @Override
+    public EnumRarity getRarity(ItemStack stack){
+        return this.isAdvanced ? EnumRarity.epic : EnumRarity.rare;
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void registerIcons(IIconRegister iconReg){
+        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
+    }
+
+    @Override
     public void onUsingTick(ItemStack stack, EntityPlayer player, int time){
         if(!player.worldObj.isRemote){
             if(time <= getMaxItemUseDuration(stack) && (this.isAdvanced || time%3 == 0)){
@@ -103,36 +131,8 @@ public class ItemLeafBlower extends Item implements IActAddItemOrBlock{
     }
 
     @Override
-    public int getMaxItemUseDuration(ItemStack stack){
-        //Cuz you won't hold it for that long right-clicking anyways
-        return Integer.MAX_VALUE;
-    }
-
-    @Override
-    public EnumAction getItemUseAction(ItemStack stack){
-        return EnumAction.bow;
-    }
-
-    @Override
-    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player){
-        player.setItemInUse(stack, this.getMaxItemUseDuration(stack));
-        return stack;
-    }
-
-    @Override
-    public EnumRarity getRarity(ItemStack stack){
-        return this.isAdvanced ? EnumRarity.epic : EnumRarity.rare;
-    }
-
-    @Override
     public IIcon getIcon(ItemStack stack, int pass){
         return this.itemIcon;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister iconReg){
-        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
     }
 
     @Override

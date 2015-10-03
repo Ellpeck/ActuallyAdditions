@@ -55,22 +55,6 @@ public class WorldDecorationEvent{
         }
     }
 
-    private void genPlantNormally(Block plant, int meta, int amount, boolean doIt, Material blockBelow, DecorateBiomeEvent event){
-        if(doIt){
-            for(int i = 0; i < amount; i++){
-                if(event.rand.nextInt(ConfigIntValues.NORMAL_PLANT_CHANCE.getValue()) == 0){
-                    int genX = event.chunkX+event.rand.nextInt(16)+8;
-                    int genZ = event.chunkZ+event.rand.nextInt(16)+8;
-                    int genY = event.world.getTopSolidOrLiquidBlock(genX, genZ)-1;
-
-                    if(event.world.getBlock(genX, genY, genZ).getMaterial() == blockBelow){
-                        event.world.setBlock(genX, genY+1, genZ, plant, meta, 2);
-                    }
-                }
-            }
-        }
-    }
-
     private void generateRice(DecorateBiomeEvent event){
         if(ConfigBoolValues.DO_RICE_GEN.isEnabled()){
             for(int i = 0; i < ConfigIntValues.RICE_AMOUNT.getValue(); i++){
@@ -87,6 +71,22 @@ public class WorldDecorationEvent{
                                 event.world.setBlock(genX, genY+1, genZ, InitBlocks.blockWildPlant, TheWildPlants.RICE.ordinal(), 2);
                             }
                         }
+                    }
+                }
+            }
+        }
+    }
+
+    private void genPlantNormally(Block plant, int meta, int amount, boolean doIt, Material blockBelow, DecorateBiomeEvent event){
+        if(doIt){
+            for(int i = 0; i < amount; i++){
+                if(event.rand.nextInt(ConfigIntValues.NORMAL_PLANT_CHANCE.getValue()) == 0){
+                    int genX = event.chunkX+event.rand.nextInt(16)+8;
+                    int genZ = event.chunkZ+event.rand.nextInt(16)+8;
+                    int genY = event.world.getTopSolidOrLiquidBlock(genX, genZ)-1;
+
+                    if(event.world.getBlock(genX, genY, genZ).getMaterial() == blockBelow){
+                        event.world.setBlock(genX, genY+1, genZ, plant, meta, 2);
                     }
                 }
             }

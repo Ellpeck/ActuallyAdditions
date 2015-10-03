@@ -46,6 +46,17 @@ public class BlockFermentingBarrel extends BlockContainerBase implements IActAdd
     }
 
     @Override
+    public void breakBlock(World world, int x, int y, int z, Block block, int par6){
+        this.dropInventory(world, x, y, z);
+        super.breakBlock(world, x, y, z, block, par6);
+    }
+
+    @Override
+    public IIcon getIcon(int side, int metadata){
+        return side <= 1 ? this.iconTop : this.blockIcon;
+    }
+
+    @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9){
         if(!world.isRemote){
             TileEntityFermentingBarrel press = (TileEntityFermentingBarrel)world.getTileEntity(x, y, z);
@@ -55,17 +66,6 @@ public class BlockFermentingBarrel extends BlockContainerBase implements IActAdd
             return true;
         }
         return true;
-    }
-
-    @Override
-    public void breakBlock(World world, int x, int y, int z, Block block, int par6){
-        this.dropInventory(world, x, y, z);
-        super.breakBlock(world, x, y, z, block, par6);
-    }
-
-    @Override
-    public IIcon getIcon(int side, int metadata){
-        return side <= 1 ? this.iconTop : this.blockIcon;
     }
 
     @Override
@@ -92,11 +92,6 @@ public class BlockFermentingBarrel extends BlockContainerBase implements IActAdd
         }
 
         @Override
-        public EnumRarity getRarity(ItemStack stack){
-            return EnumRarity.uncommon;
-        }
-
-        @Override
         public String getUnlocalizedName(ItemStack stack){
             return this.getUnlocalizedName();
         }
@@ -104,6 +99,11 @@ public class BlockFermentingBarrel extends BlockContainerBase implements IActAdd
         @Override
         public int getMetadata(int meta){
             return meta;
+        }
+
+        @Override
+        public EnumRarity getRarity(ItemStack stack){
+            return EnumRarity.uncommon;
         }
     }
 }

@@ -37,6 +37,15 @@ public class GuiEnervator extends GuiContainer{
     }
 
     @Override
+    public void drawScreen(int x, int y, float f){
+        super.drawScreen(x, y, f);
+        String text1 = this.enervator.storage.getEnergyStored()+"/"+this.enervator.storage.getMaxEnergyStored()+" RF";
+        if(x >= guiLeft+57 && y >= guiTop+6 && x <= guiLeft+72 && y <= guiTop+88){
+            this.func_146283_a(Collections.singletonList(text1), x, y);
+        }
+    }
+
+    @Override
     public void drawGuiContainerForegroundLayer(int x, int y){
         AssetUtil.displayNameString(this.fontRendererObj, xSize, -10, this.enervator.getInventoryName());
     }
@@ -54,15 +63,6 @@ public class GuiEnervator extends GuiContainer{
         if(this.enervator.storage.getEnergyStored() > 0){
             int i = this.enervator.getEnergyScaled(83);
             drawTexturedModalRect(this.guiLeft+57, this.guiTop+89-i, 176, 0, 16, i);
-        }
-    }
-
-    @Override
-    public void drawScreen(int x, int y, float f){
-        super.drawScreen(x, y, f);
-        String text1 = this.enervator.storage.getEnergyStored()+"/"+this.enervator.storage.getMaxEnergyStored()+" RF";
-        if(x >= guiLeft+57 && y >= guiTop+6 && x <= guiLeft+72 && y <= guiTop+88){
-            this.func_146283_a(Collections.singletonList(text1), x, y);
         }
     }
 }

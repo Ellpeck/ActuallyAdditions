@@ -79,11 +79,6 @@ public class BlockFluidFlowing extends BlockFluidClassic implements IActAddItemO
         }
 
         @Override
-        public EnumRarity getRarity(ItemStack stack){
-            return EnumRarity.uncommon;
-        }
-
-        @Override
         public String getUnlocalizedName(ItemStack stack){
             return this.getUnlocalizedName();
         }
@@ -91,6 +86,11 @@ public class BlockFluidFlowing extends BlockFluidClassic implements IActAddItemO
         @Override
         public int getMetadata(int damage){
             return damage;
+        }
+
+        @Override
+        public EnumRarity getRarity(ItemStack stack){
+            return EnumRarity.uncommon;
         }
     }
 }

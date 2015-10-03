@@ -33,13 +33,19 @@ public class ItemDust extends Item implements IActAddItemOrBlock{
     }
 
     @Override
-    public String getName(){
-        return "itemDust";
+    public int getMetadata(int damage){
+        return damage;
     }
 
     @Override
-    public int getMetadata(int damage){
-        return damage;
+    public String getUnlocalizedName(ItemStack stack){
+        return this.getUnlocalizedName()+(stack.getItemDamage() >= allDusts.length ? " ERROR!" : allDusts[stack.getItemDamage()].getName());
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public int getColorFromItemStack(ItemStack stack, int pass){
+        return stack.getItemDamage() >= allDusts.length ? 0 : allDusts[stack.getItemDamage()].color;
     }
 
     @Override
@@ -56,24 +62,18 @@ public class ItemDust extends Item implements IActAddItemOrBlock{
     }
 
     @Override
-    public String getUnlocalizedName(ItemStack stack){
-        return this.getUnlocalizedName()+(stack.getItemDamage() >= allDusts.length ? " ERROR!" : allDusts[stack.getItemDamage()].getName());
+    @SideOnly(Side.CLIENT)
+    public void registerIcons(IIconRegister iconReg){
+        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
+    }
+
+    @Override
+    public String getName(){
+        return "itemDust";
     }
 
     @Override
     public IIcon getIcon(ItemStack stack, int pass){
         return this.itemIcon;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public int getColorFromItemStack(ItemStack stack, int pass){
-        return stack.getItemDamage() >= allDusts.length ? 0 : allDusts[stack.getItemDamage()].color;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister iconReg){
-        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
     }
 }

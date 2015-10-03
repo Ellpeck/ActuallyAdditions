@@ -26,20 +26,15 @@ public class PageFurnace extends BookletPage{
     private final ItemStack result;
     private final ItemStack input;
 
+    public PageFurnace(int id, ItemStack result){
+        this(id, null, result);
+    }
+
     public PageFurnace(int id, ItemStack input, ItemStack result){
         super(id);
         this.result = result;
         this.input = input;
         InitBooklet.pagesWithItemStackData.add(this);
-    }
-
-    public PageFurnace(int id, ItemStack result){
-        this(id, null, result);
-    }
-
-    @Override
-    public ItemStack[] getItemStacksForPage(){
-        return this.result == null ? new ItemStack[0] : new ItemStack[]{this.result};
     }
 
     @Override
@@ -89,6 +84,11 @@ public class PageFurnace extends BookletPage{
                 }
             }
         }
+    }
+
+    @Override
+    public ItemStack[] getItemStacksForPage(){
+        return this.result == null ? new ItemStack[0] : new ItemStack[]{this.result};
     }
 
     private ItemStack getInputForOutput(ItemStack output){

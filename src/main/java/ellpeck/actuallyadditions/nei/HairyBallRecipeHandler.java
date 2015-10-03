@@ -42,16 +42,6 @@ public class HairyBallRecipeHandler extends TemplateRecipeHandler implements INe
     }
 
     @Override
-    public int recipiesPerPage(){
-        return 2;
-    }
-
-    @Override
-    public Class<? extends GuiContainer> getGuiClass(){
-        return null;
-    }
-
-    @Override
     public String getRecipeName(){
         return StringUtil.localize("container.nei."+NAME+".name");
     }
@@ -102,10 +92,8 @@ public class HairyBallRecipeHandler extends TemplateRecipeHandler implements INe
     }
 
     @Override
-    public void drawBackground(int recipeIndex){
-        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        GuiDraw.changeTexture(getGuiTexture());
-        GuiDraw.drawTexturedModalRect(32, 0, 0, 0, 96, 60);
+    public String getOverlayIdentifier(){
+        return NAME;
     }
 
     @Override
@@ -119,8 +107,20 @@ public class HairyBallRecipeHandler extends TemplateRecipeHandler implements INe
     }
 
     @Override
-    public String getOverlayIdentifier(){
-        return NAME;
+    public Class<? extends GuiContainer> getGuiClass(){
+        return null;
+    }
+
+    @Override
+    public void drawBackground(int recipeIndex){
+        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+        GuiDraw.changeTexture(getGuiTexture());
+        GuiDraw.drawTexturedModalRect(32, 0, 0, 0, 96, 60);
+    }
+
+    @Override
+    public int recipiesPerPage(){
+        return 2;
     }
 
     public class CachedBallRecipe extends CachedRecipe{
@@ -136,13 +136,13 @@ public class HairyBallRecipeHandler extends TemplateRecipeHandler implements INe
         }
 
         @Override
-        public PositionedStack getIngredient(){
-            return input;
+        public PositionedStack getResult(){
+            return result;
         }
 
         @Override
-        public PositionedStack getResult(){
-            return result;
+        public PositionedStack getIngredient(){
+            return input;
         }
     }
 }

@@ -56,30 +56,6 @@ public class ContainerCrafter extends Container{
     }
 
     @Override
-    public void onCraftMatrixChanged(IInventory inv){
-        this.craftResult.setInventorySlotContents(0, CraftingManager.getInstance().findMatchingRecipe(this.craftMatrix, this.world));
-    }
-
-    @Override
-    public void onContainerClosed(EntityPlayer player){
-        super.onContainerClosed(player);
-
-        if(!this.world.isRemote){
-            for(int i = 0; i < 9; ++i){
-                ItemStack stack = this.craftMatrix.getStackInSlotOnClosing(i);
-                if(stack != null){
-                    player.dropPlayerItemWithRandomChoice(stack, false);
-                }
-            }
-        }
-    }
-
-    @Override
-    public boolean canInteractWith(EntityPlayer player){
-        return true;
-    }
-
-    @Override
     public ItemStack transferStackInSlot(EntityPlayer player, int slot){
         ItemStack stack = null;
         Slot theSlot = (Slot)this.inventorySlots.get(slot);
@@ -118,5 +94,29 @@ public class ContainerCrafter extends Container{
             theSlot.onPickupFromSlot(player, savedStack);
         }
         return stack;
+    }
+
+    @Override
+    public void onContainerClosed(EntityPlayer player){
+        super.onContainerClosed(player);
+
+        if(!this.world.isRemote){
+            for(int i = 0; i < 9; ++i){
+                ItemStack stack = this.craftMatrix.getStackInSlotOnClosing(i);
+                if(stack != null){
+                    player.dropPlayerItemWithRandomChoice(stack, false);
+                }
+            }
+        }
+    }
+
+    @Override
+    public void onCraftMatrixChanged(IInventory inv){
+        this.craftResult.setInventorySlotContents(0, CraftingManager.getInstance().findMatchingRecipe(this.craftMatrix, this.world));
+    }
+
+    @Override
+    public boolean canInteractWith(EntityPlayer player){
+        return true;
     }
 }

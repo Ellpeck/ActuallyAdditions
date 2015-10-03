@@ -35,56 +35,6 @@ public class ItemTeleStaff extends ItemEnergy{
     }
 
     @Override
-    public EnumRarity getRarity(ItemStack stack){
-        return EnumRarity.epic;
-    }
-
-    @Override
-    public String getName(){
-        return "itemTeleStaff";
-    }
-
-    @Override
-    public IIcon getIcon(ItemStack stack, int pass){
-        return this.itemIcon;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister iconReg){
-        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
-    }
-
-    @Override
-    public void onUpdate(ItemStack stack, World world, Entity entity, int par4, boolean par5){
-        int time = this.getWaitTime(stack);
-        if(time > 0){
-            this.setWaitTime(stack, time-1);
-        }
-    }
-
-    private void setWaitTime(ItemStack stack, int time){
-        NBTTagCompound compound = stack.getTagCompound();
-        if(compound == null){
-            compound = new NBTTagCompound();
-        }
-
-        compound.setInteger("waitTime", time);
-
-        stack.setTagCompound(compound);
-    }
-
-    private int getWaitTime(ItemStack stack){
-        NBTTagCompound compound = stack.getTagCompound();
-        if(compound == null){
-            return 0;
-        }
-        else{
-            return compound.getInteger("waitTime");
-        }
-    }
-
-    @Override
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player){
         if(!world.isRemote){
             if(this.getWaitTime(stack) <= 0){
@@ -114,5 +64,55 @@ public class ItemTeleStaff extends ItemEnergy{
         }
         player.swingItem();
         return stack;
+    }
+
+    @Override
+    public void onUpdate(ItemStack stack, World world, Entity entity, int par4, boolean par5){
+        int time = this.getWaitTime(stack);
+        if(time > 0){
+            this.setWaitTime(stack, time-1);
+        }
+    }
+
+    @Override
+    public EnumRarity getRarity(ItemStack stack){
+        return EnumRarity.epic;
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void registerIcons(IIconRegister iconReg){
+        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
+    }
+
+    @Override
+    public String getName(){
+        return "itemTeleStaff";
+    }
+
+    @Override
+    public IIcon getIcon(ItemStack stack, int pass){
+        return this.itemIcon;
+    }
+
+    private int getWaitTime(ItemStack stack){
+        NBTTagCompound compound = stack.getTagCompound();
+        if(compound == null){
+            return 0;
+        }
+        else{
+            return compound.getInteger("waitTime");
+        }
+    }
+
+    private void setWaitTime(ItemStack stack, int time){
+        NBTTagCompound compound = stack.getTagCompound();
+        if(compound == null){
+            compound = new NBTTagCompound();
+        }
+
+        compound.setInteger("waitTime", time);
+
+        stack.setTagCompound(compound);
     }
 }

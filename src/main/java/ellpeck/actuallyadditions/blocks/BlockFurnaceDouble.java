@@ -49,42 +49,8 @@ public class BlockFurnaceDouble extends BlockContainerBase implements IActAddIte
     }
 
     @Override
-    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack stack){
-        int rotation = MathHelper.floor_double((double)(player.rotationYaw*4.0F/360.0F)+0.5D) & 3;
-
-        if(rotation == 0){
-            world.setBlockMetadataWithNotify(x, y, z, 0, 2);
-        }
-        if(rotation == 1){
-            world.setBlockMetadataWithNotify(x, y, z, 3, 2);
-        }
-        if(rotation == 2){
-            world.setBlockMetadataWithNotify(x, y, z, 1, 2);
-        }
-        if(rotation == 3){
-            world.setBlockMetadataWithNotify(x, y, z, 2, 2);
-        }
-    }
-
-    @Override
     public TileEntity createNewTileEntity(World world, int par2){
         return new TileEntityFurnaceDouble();
-    }
-
-    @Override
-    public int getLightValue(IBlockAccess world, int x, int y, int z){
-        return world.getBlockMetadata(x, y, z) > 3 ? 12 : 0;
-    }
-
-    @Override
-    public IIcon getIcon(int side, int meta){
-        if(side == 1){
-            return this.topIcon;
-        }
-        if(side == 3){
-            return this.frontIcon;
-        }
-        return this.blockIcon;
     }
 
     @Override
@@ -103,24 +69,14 @@ public class BlockFurnaceDouble extends BlockContainerBase implements IActAddIte
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister iconReg){
-        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
-        this.topIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Top");
-        this.onIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"On");
-        this.frontIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Front");
-    }
-
-    @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9){
-        if(!world.isRemote){
-            TileEntityFurnaceDouble furnace = (TileEntityFurnaceDouble)world.getTileEntity(x, y, z);
-            if(furnace != null){
-                player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.FURNACE_DOUBLE.ordinal(), world, x, y, z);
-            }
-            return true;
+    public IIcon getIcon(int side, int meta){
+        if(side == 1){
+            return this.topIcon;
         }
-        return true;
+        if(side == 3){
+            return this.frontIcon;
+        }
+        return this.blockIcon;
     }
 
     @Override
@@ -159,14 +115,58 @@ public class BlockFurnaceDouble extends BlockContainerBase implements IActAddIte
     }
 
     @Override
-    public void breakBlock(World world, int x, int y, int z, Block block, int par6){
-        this.dropInventory(world, x, y, z);
-        super.breakBlock(world, x, y, z, block, par6);
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9){
+        if(!world.isRemote){
+            TileEntityFurnaceDouble furnace = (TileEntityFurnaceDouble)world.getTileEntity(x, y, z);
+            if(furnace != null){
+                player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.FURNACE_DOUBLE.ordinal(), world, x, y, z);
+            }
+            return true;
+        }
+        return true;
+    }
+
+    @Override
+    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack stack){
+        int rotation = MathHelper.floor_double((double)(player.rotationYaw*4.0F/360.0F)+0.5D) & 3;
+
+        if(rotation == 0){
+            world.setBlockMetadataWithNotify(x, y, z, 0, 2);
+        }
+        if(rotation == 1){
+            world.setBlockMetadataWithNotify(x, y, z, 3, 2);
+        }
+        if(rotation == 2){
+            world.setBlockMetadataWithNotify(x, y, z, 1, 2);
+        }
+        if(rotation == 3){
+            world.setBlockMetadataWithNotify(x, y, z, 2, 2);
+        }
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void registerBlockIcons(IIconRegister iconReg){
+        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
+        this.topIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Top");
+        this.onIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"On");
+        this.frontIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Front");
+    }
+
+    @Override
+    public int getLightValue(IBlockAccess world, int x, int y, int z){
+        return world.getBlockMetadata(x, y, z) > 3 ? 12 : 0;
     }
 
     @Override
     public String getName(){
         return "blockFurnaceDouble";
+    }
+
+    @Override
+    public void breakBlock(World world, int x, int y, int z, Block block, int par6){
+        this.dropInventory(world, x, y, z);
+        super.breakBlock(world, x, y, z, block, par6);
     }
 
     public static class TheItemBlock extends ItemBlock{
@@ -181,11 +181,6 @@ public class BlockFurnaceDouble extends BlockContainerBase implements IActAddIte
         }
 
         @Override
-        public EnumRarity getRarity(ItemStack stack){
-            return EnumRarity.rare;
-        }
-
-        @Override
         public String getUnlocalizedName(ItemStack stack){
             return this.getUnlocalizedName();
         }
@@ -193,6 +188,11 @@ public class BlockFurnaceDouble extends BlockContainerBase implements IActAddIte
         @Override
         public int getMetadata(int damage){
             return damage;
+        }
+
+        @Override
+        public EnumRarity getRarity(ItemStack stack){
+            return EnumRarity.rare;
         }
     }
 }

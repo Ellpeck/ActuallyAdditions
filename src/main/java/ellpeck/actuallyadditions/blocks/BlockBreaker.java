@@ -48,25 +48,8 @@ public class BlockBreaker extends BlockContainerBase implements IActAddItemOrBlo
     }
 
     @Override
-    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack stack){
-        int rotation = BlockPistonBase.determineOrientation(world, x, y, z, player);
-        world.setBlockMetadataWithNotify(x, y, z, rotation, 2);
-    }
-
-    @Override
     public TileEntity createNewTileEntity(World world, int par2){
         return this.isPlacer ? new TileEntityBreaker.TileEntityPlacer() : new TileEntityBreaker();
-    }
-
-    @Override
-    public IIcon getIcon(int side, int meta){
-        if(side == 0 || side == 1){
-            return this.topIcon;
-        }
-        if(side == 3){
-            return this.frontIcon;
-        }
-        return this.blockIcon;
     }
 
     @Override
@@ -82,11 +65,14 @@ public class BlockBreaker extends BlockContainerBase implements IActAddItemOrBlo
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister iconReg){
-        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
-        this.frontIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Front");
-        this.topIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Top");
+    public IIcon getIcon(int side, int meta){
+        if(side == 0 || side == 1){
+            return this.topIcon;
+        }
+        if(side == 3){
+            return this.frontIcon;
+        }
+        return this.blockIcon;
     }
 
     @Override
@@ -102,14 +88,28 @@ public class BlockBreaker extends BlockContainerBase implements IActAddItemOrBlo
     }
 
     @Override
-    public void breakBlock(World world, int x, int y, int z, Block block, int par6){
-        this.dropInventory(world, x, y, z);
-        super.breakBlock(world, x, y, z, block, par6);
+    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack stack){
+        int rotation = BlockPistonBase.determineOrientation(world, x, y, z, player);
+        world.setBlockMetadataWithNotify(x, y, z, rotation, 2);
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void registerBlockIcons(IIconRegister iconReg){
+        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
+        this.frontIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Front");
+        this.topIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Top");
     }
 
     @Override
     public String getName(){
         return this.isPlacer ? "blockPlacer" : "blockBreaker";
+    }
+
+    @Override
+    public void breakBlock(World world, int x, int y, int z, Block block, int par6){
+        this.dropInventory(world, x, y, z);
+        super.breakBlock(world, x, y, z, block, par6);
     }
 
     public static class TheItemBlock extends ItemBlock{
@@ -124,11 +124,6 @@ public class BlockBreaker extends BlockContainerBase implements IActAddItemOrBlo
         }
 
         @Override
-        public EnumRarity getRarity(ItemStack stack){
-            return EnumRarity.rare;
-        }
-
-        @Override
         public String getUnlocalizedName(ItemStack stack){
             return this.getUnlocalizedName();
         }
@@ -136,6 +131,11 @@ public class BlockBreaker extends BlockContainerBase implements IActAddItemOrBlo
         @Override
         public int getMetadata(int damage){
             return damage;
+        }
+
+        @Override
+        public EnumRarity getRarity(ItemStack stack){
+            return EnumRarity.rare;
         }
     }
 }

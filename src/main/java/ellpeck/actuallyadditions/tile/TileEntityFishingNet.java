@@ -28,6 +28,18 @@ public class TileEntityFishingNet extends TileEntityBase{
     public int timeUntilNextDrop;
 
     @Override
+    public void readFromNBT(NBTTagCompound compound){
+        super.readFromNBT(compound);
+        this.timeUntilNextDrop = compound.getInteger("TimeUntilNextDrop");
+    }
+
+    @Override
+    public void writeToNBT(NBTTagCompound compound){
+        super.writeToNBT(compound);
+        compound.setInteger("TimeUntilNextDrop", this.timeUntilNextDrop);
+    }
+
+    @Override
     public void updateEntity(){
         if(!worldObj.isRemote){
             if(!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)){
@@ -72,17 +84,5 @@ public class TileEntityFishingNet extends TileEntityBase{
                 }
             }
         }
-    }
-
-    @Override
-    public void writeToNBT(NBTTagCompound compound){
-        super.writeToNBT(compound);
-        compound.setInteger("TimeUntilNextDrop", this.timeUntilNextDrop);
-    }
-
-    @Override
-    public void readFromNBT(NBTTagCompound compound){
-        super.readFromNBT(compound);
-        this.timeUntilNextDrop = compound.getInteger("TimeUntilNextDrop");
     }
 }

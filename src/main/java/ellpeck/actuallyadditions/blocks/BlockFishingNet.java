@@ -43,14 +43,18 @@ public class BlockFishingNet extends BlockContainerBase implements IActAddItemOr
     }
 
     @Override
-    public IIcon getIcon(int side, int metadata){
-        return this.blockIcon;
+    public boolean renderAsNormalBlock(){
+        return false;
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister iconReg){
-        this.blockIcon = Blocks.planks.getIcon(0, 0);
+    public int getRenderType(){
+        return AssetUtil.FISHING_NET_RENDER_ID;
+    }
+
+    @Override
+    public IIcon getIcon(int side, int metadata){
+        return this.blockIcon;
     }
 
     @Override
@@ -59,13 +63,9 @@ public class BlockFishingNet extends BlockContainerBase implements IActAddItemOr
     }
 
     @Override
-    public boolean renderAsNormalBlock(){
-        return false;
-    }
-
-    @Override
-    public int getRenderType(){
-        return AssetUtil.FISHING_NET_RENDER_ID;
+    @SideOnly(Side.CLIENT)
+    public void registerBlockIcons(IIconRegister iconReg){
+        this.blockIcon = Blocks.planks.getIcon(0, 0);
     }
 
     @Override
@@ -85,11 +85,6 @@ public class BlockFishingNet extends BlockContainerBase implements IActAddItemOr
         }
 
         @Override
-        public EnumRarity getRarity(ItemStack stack){
-            return EnumRarity.uncommon;
-        }
-
-        @Override
         public String getUnlocalizedName(ItemStack stack){
             return this.getUnlocalizedName();
         }
@@ -97,6 +92,11 @@ public class BlockFishingNet extends BlockContainerBase implements IActAddItemOr
         @Override
         public int getMetadata(int meta){
             return meta;
+        }
+
+        @Override
+        public EnumRarity getRarity(ItemStack stack){
+            return EnumRarity.uncommon;
         }
     }
 }

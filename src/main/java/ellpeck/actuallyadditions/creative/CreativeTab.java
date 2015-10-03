@@ -33,6 +33,16 @@ public class CreativeTab extends CreativeTabs{
     }
 
     @Override
+    public ItemStack getIconItemStack(){
+        return new ItemStack(this.getTabIconItem());
+    }
+
+    @Override
+    public Item getTabIconItem(){
+        return Item.getItemFromBlock(InitBlocks.blockPhantomLiquiface);
+    }
+
+    @Override
     @SideOnly(Side.CLIENT)
     public void displayAllReleventItems(List list){
         this.list = list;
@@ -184,16 +194,6 @@ public class CreativeTab extends CreativeTabs{
 
         add(InitItems.itemPotionRing);
         add(InitItems.itemPotionRingAdvanced);
-    }
-
-    @Override
-    public Item getTabIconItem(){
-        return Item.getItemFromBlock(InitBlocks.blockPhantomLiquiface);
-    }
-
-    @Override
-    public ItemStack getIconItemStack(){
-        return new ItemStack(this.getTabIconItem());
     }
 
     public void add(Item item){

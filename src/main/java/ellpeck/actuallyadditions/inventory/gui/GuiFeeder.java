@@ -40,6 +40,15 @@ public class GuiFeeder extends GuiContainer{
     }
 
     @Override
+    public void drawScreen(int x, int y, float f){
+        super.drawScreen(x, y, f);
+        if(x >= guiLeft+69 && y >= guiTop+30 && x <= guiLeft+69+10 && y <= guiTop+30+10){
+            String[] array = new String[]{(this.tileFeeder.currentAnimalAmount+" "+StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.animals")), ((this.tileFeeder.currentAnimalAmount >= 2 && this.tileFeeder.currentAnimalAmount < ConfigIntValues.FEEDER_THRESHOLD.getValue()) ? StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.enoughToBreed") : (this.tileFeeder.currentAnimalAmount >= ConfigIntValues.FEEDER_THRESHOLD.getValue() ? StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.tooMany") : StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.notEnough")))};
+            this.func_146283_a(Arrays.asList(array), x, y);
+        }
+    }
+
+    @Override
     public void drawGuiContainerForegroundLayer(int x, int y){
         AssetUtil.displayNameString(this.fontRendererObj, xSize, -10, this.tileFeeder.getInventoryName());
     }
@@ -63,15 +72,6 @@ public class GuiFeeder extends GuiContainer{
 
         if(this.tileFeeder.currentAnimalAmount >= ConfigIntValues.FEEDER_THRESHOLD.getValue()){
             this.drawTexturedModalRect(guiLeft+70, guiTop+31, 192, 24, 8, 8);
-        }
-    }
-
-    @Override
-    public void drawScreen(int x, int y, float f){
-        super.drawScreen(x, y, f);
-        if(x >= guiLeft+69 && y >= guiTop+30 && x <= guiLeft+69+10 && y <= guiTop+30+10){
-            String[] array = new String[]{(this.tileFeeder.currentAnimalAmount+" "+StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.animals")), ((this.tileFeeder.currentAnimalAmount >= 2 && this.tileFeeder.currentAnimalAmount < ConfigIntValues.FEEDER_THRESHOLD.getValue()) ? StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.enoughToBreed") : (this.tileFeeder.currentAnimalAmount >= ConfigIntValues.FEEDER_THRESHOLD.getValue() ? StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.tooMany") : StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.notEnough")))};
-            this.func_146283_a(Arrays.asList(array), x, y);
         }
     }
 }

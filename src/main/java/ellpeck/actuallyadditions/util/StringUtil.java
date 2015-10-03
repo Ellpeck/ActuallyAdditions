@@ -33,6 +33,10 @@ public class StringUtil{
         return StatCollector.translateToLocalFormatted(text, replace);
     }
 
+    public static boolean equalsToLowerCase(String one, String two){
+        return Objects.equals(toLowerCase(one), toLowerCase(two));
+    }
+
     public static String toLowerCase(String string){
         if(string == null){
             return null;
@@ -40,9 +44,5 @@ public class StringUtil{
         else{
             return string.toLowerCase();
         }
-    }
-
-    public static boolean equalsToLowerCase(String one, String two){
-        return Objects.equals(toLowerCase(one), toLowerCase(two));
     }
 }

@@ -47,24 +47,9 @@ public class CoffeeMachineRecipeHandler extends TemplateRecipeHandler implements
     }
 
     @Override
-    public int recipiesPerPage(){
-        return 1;
-    }
-
-    @Override
     public void loadTransferRects(){
         transferRects.add(new RecipeTransferRect(new Rectangle(20, 39, 20, 16), NAME));
         transferRects.add(new RecipeTransferRect(new Rectangle(64, 42, 23, 10), NAME));
-    }
-
-    @Override
-    public Class<? extends GuiContainer> getGuiClass(){
-        return GuiCoffeeMachine.class;
-    }
-
-    @Override
-    public String getRecipeName(){
-        return StringUtil.localize("container.nei."+NAME+".name");
     }
 
     @Override
@@ -109,10 +94,8 @@ public class CoffeeMachineRecipeHandler extends TemplateRecipeHandler implements
     }
 
     @Override
-    public void drawBackground(int recipeIndex){
-        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        GuiDraw.changeTexture(getGuiTexture());
-        GuiDraw.drawTexturedModalRect(0, 0, 0, 0, 126, 88);
+    public String getOverlayIdentifier(){
+        return NAME;
     }
 
     @Override
@@ -133,8 +116,25 @@ public class CoffeeMachineRecipeHandler extends TemplateRecipeHandler implements
     }
 
     @Override
-    public String getOverlayIdentifier(){
-        return NAME;
+    public Class<? extends GuiContainer> getGuiClass(){
+        return GuiCoffeeMachine.class;
+    }
+
+    @Override
+    public void drawBackground(int recipeIndex){
+        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+        GuiDraw.changeTexture(getGuiTexture());
+        GuiDraw.drawTexturedModalRect(0, 0, 0, 0, 126, 88);
+    }
+
+    @Override
+    public int recipiesPerPage(){
+        return 1;
+    }
+
+    @Override
+    public String getRecipeName(){
+        return StringUtil.localize("container.nei."+NAME+".name");
     }
 
     public class CachedCoffee extends CachedRecipe{
@@ -162,17 +162,17 @@ public class CoffeeMachineRecipeHandler extends TemplateRecipeHandler implements
         }
 
         @Override
+        public PositionedStack getResult(){
+            return result;
+        }
+
+        @Override
         public List<PositionedStack> getIngredients(){
             ArrayList<PositionedStack> list = new ArrayList<PositionedStack>();
             list.add(this.ingredientStack);
             list.add(this.cup);
             list.add(this.coffeeBeans);
             return list;
-        }
-
-        @Override
-        public PositionedStack getResult(){
-            return result;
         }
     }
 }

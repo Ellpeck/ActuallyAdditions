@@ -29,17 +29,17 @@ public class FuelHandler implements IFuelHandler{
 
     private static HashMap<Pair<Item, Integer>, Integer> fuelList = new HashMap<Pair<Item, Integer>, Integer>();
 
-    public static void setFuelValues(){
-        addFuel(InitItems.itemMisc, TheMiscItems.TINY_CHAR.ordinal(), 200);
-        addFuel(InitItems.itemMisc, TheMiscItems.TINY_COAL.ordinal(), 200);
-        addFuel(InitBlocks.blockMisc, TheMiscBlocks.CHARCOAL_BLOCK.ordinal(), 16000);
-    }
-
     public static void init(){
         ModUtil.LOGGER.info("Initializing Fuelstuffs...");
 
         GameRegistry.registerFuelHandler(new FuelHandler());
         setFuelValues();
+    }
+
+    public static void setFuelValues(){
+        addFuel(InitItems.itemMisc, TheMiscItems.TINY_CHAR.ordinal(), 200);
+        addFuel(InitItems.itemMisc, TheMiscItems.TINY_COAL.ordinal(), 200);
+        addFuel(InitBlocks.blockMisc, TheMiscBlocks.CHARCOAL_BLOCK.ordinal(), 16000);
     }
 
     private static void addFuel(Item item, int metadata, int value){
@@ -48,6 +48,11 @@ public class FuelHandler implements IFuelHandler{
 
     private static void addFuel(Block block, int metadata, int value){
         addFuel(Item.getItemFromBlock(block), metadata, value);
+    }
+
+    @Override
+    public int getBurnTime(ItemStack fuel){
+        return getFuelValue(fuel);
     }
 
     private static int getFuelValue(ItemStack stack){
@@ -65,10 +70,5 @@ public class FuelHandler implements IFuelHandler{
             }
         }
         return 0;
-    }
-
-    @Override
-    public int getBurnTime(ItemStack fuel){
-        return getFuelValue(fuel);
     }
 }

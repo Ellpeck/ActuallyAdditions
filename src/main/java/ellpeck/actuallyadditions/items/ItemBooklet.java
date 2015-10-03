@@ -32,14 +32,14 @@ public class ItemBooklet extends Item implements IActAddItemOrBlock{
     }
 
     @Override
-    public EnumRarity getRarity(ItemStack stack){
-        return EnumRarity.epic;
+    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player){
+        player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.BOOK.ordinal(), world, (int)player.posX, (int)player.posY, (int)player.posZ);
+        return stack;
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public IIcon getIcon(ItemStack stack, int pass){
-        return this.itemIcon;
+    public EnumRarity getRarity(ItemStack stack){
+        return EnumRarity.epic;
     }
 
     @Override
@@ -49,13 +49,13 @@ public class ItemBooklet extends Item implements IActAddItemOrBlock{
     }
 
     @Override
-    public String getName(){
-        return "itemBooklet";
+    @SideOnly(Side.CLIENT)
+    public IIcon getIcon(ItemStack stack, int pass){
+        return this.itemIcon;
     }
 
     @Override
-    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player){
-        player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.BOOK.ordinal(), world, (int)player.posX, (int)player.posY, (int)player.posZ);
-        return stack;
+    public String getName(){
+        return "itemBooklet";
     }
 }

@@ -39,9 +39,11 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
     private int lastEnergy;
     private int lastFirstCrush;
     private int lastSecondCrush;
+
     public TileEntityGrinder(int slots, String name){
         super(slots, name);
     }
+
     public TileEntityGrinder(){
         super(3, "grinder");
         this.isDouble = false;
@@ -82,14 +84,6 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
     @Override
     public void sendUpdate(){
         PacketSyncerToClient.sendPacket(this);
-    }
-
-    private int getMaxCrushTime(){
-        return this.isDouble ? ConfigIntValues.GRINDER_DOUBLE_CRUSH_TIME.getValue() : ConfigIntValues.GRINDER_CRUSH_TIME.getValue();
-    }
-
-    private int getEnergyUse(){
-        return this.isDouble ? ConfigIntValues.GRINDER_DOUBLE_ENERGY_USED.getValue() : ConfigIntValues.GRINDER_ENERGY_USED.getValue();
     }
 
     @Override
@@ -173,6 +167,14 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
         return false;
     }
 
+    private int getEnergyUse(){
+        return this.isDouble ? ConfigIntValues.GRINDER_DOUBLE_ENERGY_USED.getValue() : ConfigIntValues.GRINDER_ENERGY_USED.getValue();
+    }
+
+    private int getMaxCrushTime(){
+        return this.isDouble ? ConfigIntValues.GRINDER_DOUBLE_CRUSH_TIME.getValue() : ConfigIntValues.GRINDER_CRUSH_TIME.getValue();
+    }
+
     public void finishCrushing(int theInput, int theFirstOutput, int theSecondOutput){
         ItemStack outputOnFirst = CrusherRecipeManualRegistry.getOutput(this.slots[theInput], false);
         if(outputOnFirst != null){
@@ -220,6 +222,11 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
         super.readFromNBT(compound);
     }
 
+    @Override
+    public boolean isItemValidForSlot(int i, ItemStack stack){
+        return (i == SLOT_INPUT_1 || i == SLOT_INPUT_2) && CrusherRecipeManualRegistry.getOutput(stack, false) != null;
+    }
+
     @SideOnly(Side.CLIENT)
     public int getEnergyScaled(int i){
         return this.storage.getEnergyStored()*i/this.storage.getMaxEnergyStored();
@@ -233,11 +240,6 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
     @SideOnly(Side.CLIENT)
     public int getSecondTimeToScale(int i){
         return this.secondCrushTime*i/this.getMaxCrushTime();
-    }
-
-    @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
-        return (i == SLOT_INPUT_1 || i == SLOT_INPUT_2) && CrusherRecipeManualRegistry.getOutput(stack, false) != null;
     }
 
     @Override

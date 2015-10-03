@@ -29,6 +29,18 @@ public class TileEntityLeafGenerator extends TileEntityBase implements IEnergyPr
     private int nextUseCounter;
 
     @Override
+    public void readFromNBT(NBTTagCompound compound){
+        this.storage.readFromNBT(compound);
+        super.readFromNBT(compound);
+    }
+
+    @Override
+    public void writeToNBT(NBTTagCompound compound){
+        this.storage.writeToNBT(compound);
+        super.writeToNBT(compound);
+    }
+
+    @Override
     @SuppressWarnings("unchecked")
     public void updateEntity(){
         if(!worldObj.isRemote){
@@ -79,18 +91,6 @@ public class TileEntityLeafGenerator extends TileEntityBase implements IEnergyPr
                 WorldUtil.pushEnergy(worldObj, xCoord, yCoord, zCoord, ForgeDirection.WEST, storage);
             }
         }
-    }
-
-    @Override
-    public void writeToNBT(NBTTagCompound compound){
-        this.storage.writeToNBT(compound);
-        super.writeToNBT(compound);
-    }
-
-    @Override
-    public void readFromNBT(NBTTagCompound compound){
-        this.storage.readFromNBT(compound);
-        super.readFromNBT(compound);
     }
 
     @Override

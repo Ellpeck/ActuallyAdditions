@@ -45,8 +45,20 @@ public class BlockWildPlant extends BlockBush implements IActAddItemOrBlock{
     }
 
     @Override
+    public IIcon getIcon(int side, int metadata){
+        return metadata >= allWildPlants.length ? null : allWildPlants[metadata].wildVersionOf.getIcon(0, 7);
+    }
+
+    @Override
     public boolean canSilkHarvest(){
         return false;
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public Item getItem(World world, int x, int y, int z){
+        int meta = world.getBlockMetadata(x, y, z);
+        return meta >= allWildPlants.length ? null : ((BlockPlant)allWildPlants[meta].wildVersionOf).seedItem;
     }
 
     @SuppressWarnings("all")
@@ -58,31 +70,19 @@ public class BlockWildPlant extends BlockBush implements IActAddItemOrBlock{
     }
 
     @Override
-    public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune){
-        return metadata >= allWildPlants.length ? null : allWildPlants[metadata].wildVersionOf.getDrops(world, x, y, z, 7, fortune);
-    }
-
-    @Override
-    public IIcon getIcon(int side, int metadata){
-        return metadata >= allWildPlants.length ? null : allWildPlants[metadata].wildVersionOf.getIcon(0, 7);
-    }
-
-    @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconReg){
 
     }
 
     @Override
-    public String getName(){
-        return "blockWild";
+    public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune){
+        return metadata >= allWildPlants.length ? null : allWildPlants[metadata].wildVersionOf.getDrops(world, x, y, z, 7, fortune);
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public Item getItem(World world, int x, int y, int z){
-        int meta = world.getBlockMetadata(x, y, z);
-        return meta >= allWildPlants.length ? null : ((BlockPlant)allWildPlants[meta].wildVersionOf).seedItem;
+    public String getName(){
+        return "blockWild";
     }
 
     public static class TheItemBlock extends ItemBlock{
@@ -97,24 +97,24 @@ public class BlockWildPlant extends BlockBush implements IActAddItemOrBlock{
         }
 
         @Override
-        public EnumRarity getRarity(ItemStack stack){
-            return stack.getItemDamage() >= allWildPlants.length ? EnumRarity.common : allWildPlants[stack.getItemDamage()].rarity;
-        }
-
-        @Override
-        public String getUnlocalizedName(ItemStack stack){
-            return this.getUnlocalizedName()+(stack.getItemDamage() >= allWildPlants.length ? " ERROR!" : allWildPlants[stack.getItemDamage()].getName());
-        }
-
-        @Override
         public int getMetadata(int damage){
             return damage;
+        }
+
+        @Override
+        public EnumRarity getRarity(ItemStack stack){
+            return stack.getItemDamage() >= allWildPlants.length ? EnumRarity.common : allWildPlants[stack.getItemDamage()].rarity;
         }
 
         @SideOnly(Side.CLIENT)
         @Override
         public IIcon getIconFromDamage(int meta){
             return this.theBlock.getIcon(0, meta);
+        }
+
+        @Override
+        public String getUnlocalizedName(ItemStack stack){
+            return this.getUnlocalizedName()+(stack.getItemDamage() >= allWildPlants.length ? " ERROR!" : allWildPlants[stack.getItemDamage()].getName());
         }
 
     }

@@ -51,11 +51,6 @@ public class BlockPlant extends BlockCrops implements IActAddItemOrBlock{
     }
 
     @Override
-    public int quantityDropped(int meta, int fortune, Random random){
-        return meta >= 7 ? random.nextInt(addDropAmount)+minDropAmount : super.quantityDropped(meta, fortune, random);
-    }
-
-    @Override
     @SideOnly(Side.CLIENT)
     public IIcon getIcon(int side, int meta){
         if(meta < 7){
@@ -75,23 +70,13 @@ public class BlockPlant extends BlockCrops implements IActAddItemOrBlock{
     }
 
     @Override
-    public Item getItemDropped(int meta, Random rand, int par3){
-        return meta >= 7 ? this.func_149865_P() : this.func_149866_i();
-    }
-
-    @Override
     public Item func_149865_P(){
         return this.returnItem;
     }
 
     @Override
-    public int damageDropped(int meta){
-        return this.returnMeta;
-    }
-
-    @Override
-    public int getDamageValue(World world, int x, int y, int z){
-        return 0;
+    public Item getItemDropped(int meta, Random rand, int par3){
+        return meta >= 7 ? this.func_149865_P() : this.func_149866_i();
     }
 
     @Override
@@ -107,6 +92,21 @@ public class BlockPlant extends BlockCrops implements IActAddItemOrBlock{
         return this.name;
     }
 
+    @Override
+    public int damageDropped(int meta){
+        return this.returnMeta;
+    }
+
+    @Override
+    public int getDamageValue(World world, int x, int y, int z){
+        return 0;
+    }
+
+    @Override
+    public int quantityDropped(int meta, int fortune, Random random){
+        return meta >= 7 ? random.nextInt(addDropAmount)+minDropAmount : super.quantityDropped(meta, fortune, random);
+    }
+
     public static class TheItemBlock extends ItemBlock{
 
         private Block theBlock;
@@ -119,11 +119,6 @@ public class BlockPlant extends BlockCrops implements IActAddItemOrBlock{
         }
 
         @Override
-        public EnumRarity getRarity(ItemStack stack){
-            return EnumRarity.uncommon;
-        }
-
-        @Override
         public String getUnlocalizedName(ItemStack stack){
             return this.getUnlocalizedName();
         }
@@ -131,6 +126,11 @@ public class BlockPlant extends BlockCrops implements IActAddItemOrBlock{
         @Override
         public int getMetadata(int damage){
             return damage;
+        }
+
+        @Override
+        public EnumRarity getRarity(ItemStack stack){
+            return EnumRarity.uncommon;
         }
     }
 }

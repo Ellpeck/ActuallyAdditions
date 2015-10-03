@@ -31,6 +31,20 @@ public class TileEntityLavaFactoryController extends TileEntityBase implements I
     private int currentWorkTime;
 
     @Override
+    public void readFromNBT(NBTTagCompound compound){
+        this.storage.readFromNBT(compound);
+        this.currentWorkTime = compound.getInteger("WorkTime");
+        super.readFromNBT(compound);
+    }
+
+    @Override
+    public void writeToNBT(NBTTagCompound compound){
+        this.storage.writeToNBT(compound);
+        compound.setInteger("WorkTime", this.currentWorkTime);
+        super.writeToNBT(compound);
+    }
+
+    @Override
     @SuppressWarnings("unchecked")
     public void updateEntity(){
         if(!worldObj.isRemote){
@@ -58,20 +72,6 @@ public class TileEntityLavaFactoryController extends TileEntityBase implements I
             }
         }
         return NOT_MULTI;
-    }
-
-    @Override
-    public void writeToNBT(NBTTagCompound compound){
-        this.storage.writeToNBT(compound);
-        compound.setInteger("WorkTime", this.currentWorkTime);
-        super.writeToNBT(compound);
-    }
-
-    @Override
-    public void readFromNBT(NBTTagCompound compound){
-        this.storage.readFromNBT(compound);
-        this.currentWorkTime = compound.getInteger("WorkTime");
-        super.readFromNBT(compound);
     }
 
     @Override

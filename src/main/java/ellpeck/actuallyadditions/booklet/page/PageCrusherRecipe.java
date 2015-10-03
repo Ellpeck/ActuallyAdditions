@@ -37,11 +37,6 @@ public class PageCrusherRecipe extends BookletPage{
         }
     }
 
-    @Override
-    public ItemStack[] getItemStacksForPage(){
-        return this.recipe == null ? new ItemStack[0] : new ItemStack[]{this.recipe.firstOutput};
-    }
-
     @SuppressWarnings("unchecked")
     @Override
     public void render(GuiBooklet gui, int mouseX, int mouseY, boolean mouseClick, int ticksElapsed){
@@ -88,5 +83,10 @@ public class PageCrusherRecipe extends BookletPage{
                 }
             }
         }
+    }
+
+    @Override
+    public ItemStack[] getItemStacksForPage(){
+        return this.recipe == null ? new ItemStack[0] : new ItemStack[]{this.recipe.firstOutput};
     }
 }

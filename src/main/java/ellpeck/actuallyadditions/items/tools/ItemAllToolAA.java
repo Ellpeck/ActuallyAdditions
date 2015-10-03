@@ -51,28 +51,6 @@ public class ItemAllToolAA extends ItemTool implements IActAddItemOrBlock{
         this.setMaxDamage(this.getMaxDamage()*4);
     }
 
-    private boolean hasExtraWhitelist(Block block){
-        String name = Block.blockRegistry.getNameForObject(block);
-        if(name != null){
-            for(String list : ConfigValues.paxelExtraMiningWhitelist){
-                if(list.equals(name)){
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    @Override
-    public float getDigSpeed(ItemStack stack, Block block, int meta){
-        return this.hasExtraWhitelist(block) || block.getHarvestTool(meta) == null || block.getHarvestTool(meta).isEmpty() || this.getToolClasses(stack).contains(block.getHarvestTool(meta)) ? this.efficiencyOnProperMaterial : 1.0F;
-    }
-
-    @Override
-    public boolean canHarvestBlock(Block block, ItemStack stack){
-        return this.hasExtraWhitelist(block) || block.getMaterial().isToolNotRequired() || (block == Blocks.snow_layer || block == Blocks.snow || (block == Blocks.obsidian ? this.toolMaterial.getHarvestLevel() == 3 : (block != Blocks.diamond_block && block != Blocks.diamond_ore ? (block != Blocks.emerald_ore && block != Blocks.emerald_block ? (block != Blocks.gold_block && block != Blocks.gold_ore ? (block != Blocks.iron_block && block != Blocks.iron_ore ? (block != Blocks.lapis_block && block != Blocks.lapis_ore ? (block != Blocks.redstone_ore && block != Blocks.lit_redstone_ore ? (block.getMaterial() == Material.rock || (block.getMaterial() == Material.iron || block.getMaterial() == Material.anvil)) : this.toolMaterial.getHarvestLevel() >= 2) : this.toolMaterial.getHarvestLevel() >= 1) : this.toolMaterial.getHarvestLevel() >= 1) : this.toolMaterial.getHarvestLevel() >= 2) : this.toolMaterial.getHarvestLevel() >= 2) : this.toolMaterial.getHarvestLevel() >= 2)));
-    }
-
     @Override
     public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ){
         if(!player.canPlayerEdit(x, y, z, side, stack)){
@@ -107,6 +85,32 @@ public class ItemAllToolAA extends ItemTool implements IActAddItemOrBlock{
     }
 
     @Override
+    public EnumRarity getRarity(ItemStack stack){
+        return this.rarity;
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void registerIcons(IIconRegister iconReg){
+        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
+    }
+
+    @Override
+    public IIcon getIcon(ItemStack stack, int pass){
+        return this.itemIcon;
+    }
+
+    @Override
+    public boolean canHarvestBlock(Block block, ItemStack stack){
+        return this.hasExtraWhitelist(block) || block.getMaterial().isToolNotRequired() || (block == Blocks.snow_layer || block == Blocks.snow || (block == Blocks.obsidian ? this.toolMaterial.getHarvestLevel() == 3 : (block != Blocks.diamond_block && block != Blocks.diamond_ore ? (block != Blocks.emerald_ore && block != Blocks.emerald_block ? (block != Blocks.gold_block && block != Blocks.gold_ore ? (block != Blocks.iron_block && block != Blocks.iron_ore ? (block != Blocks.lapis_block && block != Blocks.lapis_ore ? (block != Blocks.redstone_ore && block != Blocks.lit_redstone_ore ? (block.getMaterial() == Material.rock || (block.getMaterial() == Material.iron || block.getMaterial() == Material.anvil)) : this.toolMaterial.getHarvestLevel() >= 2) : this.toolMaterial.getHarvestLevel() >= 1) : this.toolMaterial.getHarvestLevel() >= 1) : this.toolMaterial.getHarvestLevel() >= 2) : this.toolMaterial.getHarvestLevel() >= 2) : this.toolMaterial.getHarvestLevel() >= 2)));
+    }
+
+    @Override
+    public String getName(){
+        return name;
+    }
+
+    @Override
     public boolean getIsRepairable(ItemStack itemToRepair, ItemStack stack){
         int[] idsStack = OreDictionary.getOreIDs(stack);
         for(int id : idsStack){
@@ -118,32 +122,28 @@ public class ItemAllToolAA extends ItemTool implements IActAddItemOrBlock{
     }
 
     @Override
-    public EnumRarity getRarity(ItemStack stack){
-        return this.rarity;
-    }
-
-    @Override
-    public IIcon getIcon(ItemStack stack, int pass){
-        return this.itemIcon;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister iconReg){
-        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
-    }
-
-    @Override
-    public String getName(){
-        return name;
-    }
-
-    @Override
     public Set<String> getToolClasses(ItemStack stack){
         HashSet<String> hashSet = new HashSet<String>();
         hashSet.add("pickaxe");
         hashSet.add("axe");
         hashSet.add("shovel");
         return hashSet;
+    }
+
+    @Override
+    public float getDigSpeed(ItemStack stack, Block block, int meta){
+        return this.hasExtraWhitelist(block) || block.getHarvestTool(meta) == null || block.getHarvestTool(meta).isEmpty() || this.getToolClasses(stack).contains(block.getHarvestTool(meta)) ? this.efficiencyOnProperMaterial : 1.0F;
+    }
+
+    private boolean hasExtraWhitelist(Block block){
+        String name = Block.blockRegistry.getNameForObject(block);
+        if(name != null){
+            for(String list : ConfigValues.paxelExtraMiningWhitelist){
+                if(list.equals(name)){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

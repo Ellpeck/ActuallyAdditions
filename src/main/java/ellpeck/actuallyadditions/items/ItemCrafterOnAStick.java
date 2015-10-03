@@ -31,17 +31,6 @@ public class ItemCrafterOnAStick extends Item implements IActAddItemOrBlock{
     }
 
     @Override
-    public IIcon getIcon(ItemStack stack, int pass){
-        return this.itemIcon;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister iconReg){
-        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
-    }
-
-    @Override
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player){
         if(!world.isRemote){
             player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.CRAFTER.ordinal(), world, (int)player.posX, (int)player.posY, (int)player.posZ);
@@ -52,6 +41,17 @@ public class ItemCrafterOnAStick extends Item implements IActAddItemOrBlock{
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.epic;
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void registerIcons(IIconRegister iconReg){
+        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
+    }
+
+    @Override
+    public IIcon getIcon(ItemStack stack, int pass){
+        return this.itemIcon;
     }
 
     @Override

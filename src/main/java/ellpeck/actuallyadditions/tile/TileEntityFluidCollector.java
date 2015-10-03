@@ -181,17 +181,17 @@ public class TileEntityFluidCollector extends TileEntityInventoryBase implements
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound compound){
-        super.writeToNBT(compound);
-        compound.setInteger("CurrentTime", this.currentTime);
-        this.tank.writeToNBT(compound);
-    }
-
-    @Override
     public void readFromNBT(NBTTagCompound compound){
         super.readFromNBT(compound);
         this.currentTime = compound.getInteger("CurrentTime");
         this.tank.readFromNBT(compound);
+    }
+
+    @Override
+    public void writeToNBT(NBTTagCompound compound){
+        super.writeToNBT(compound);
+        compound.setInteger("CurrentTime", this.currentTime);
+        this.tank.writeToNBT(compound);
     }
 
     @Override

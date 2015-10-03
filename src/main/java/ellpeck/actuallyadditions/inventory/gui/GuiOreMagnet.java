@@ -39,6 +39,23 @@ public class GuiOreMagnet extends GuiContainer{
     }
 
     @Override
+    public void drawScreen(int x, int y, float f){
+        super.drawScreen(x, y, f);
+        String text1 = this.magnet.storage.getEnergyStored()+"/"+this.magnet.storage.getMaxEnergyStored()+" RF";
+        if(x >= guiLeft+43 && y >= guiTop+6 && x <= guiLeft+58 && y <= guiTop+88){
+            this.func_146283_a(Collections.singletonList(text1), x, y);
+        }
+        String text2 = this.magnet.tank.getFluidAmount()+"/"+this.magnet.tank.getCapacity()+" mB "+StringUtil.localize("fluid.oil");
+        if(x >= guiLeft+117 && y >= guiTop+6 && x <= guiLeft+132 && y <= guiTop+88){
+            this.func_146283_a(Collections.singletonList(text2), x, y);
+        }
+        //TODO Upgrade Slot Joke
+        if(x >= guiLeft+70 && y >= guiTop+42 && x <= guiLeft+70+18 && y <= guiTop+42+18){
+            this.func_146283_a(Arrays.asList("@SuppressWarnings(\"unused\")", "This slot is currently unused. Ignore it."), x, y);
+        }
+    }
+
+    @Override
     public void drawGuiContainerForegroundLayer(int x, int y){
         AssetUtil.displayNameString(this.fontRendererObj, xSize, -10, this.magnet.getInventoryName());
     }
@@ -61,23 +78,6 @@ public class GuiOreMagnet extends GuiContainer{
         if(this.magnet.tank.getFluidAmount() > 0){
             int i = this.magnet.getTankScaled(83);
             drawTexturedModalRect(this.guiLeft+117, this.guiTop+89-i, 192, 0, 16, i);
-        }
-    }
-
-    @Override
-    public void drawScreen(int x, int y, float f){
-        super.drawScreen(x, y, f);
-        String text1 = this.magnet.storage.getEnergyStored()+"/"+this.magnet.storage.getMaxEnergyStored()+" RF";
-        if(x >= guiLeft+43 && y >= guiTop+6 && x <= guiLeft+58 && y <= guiTop+88){
-            this.func_146283_a(Collections.singletonList(text1), x, y);
-        }
-        String text2 = this.magnet.tank.getFluidAmount()+"/"+this.magnet.tank.getCapacity()+" mB "+StringUtil.localize("fluid.oil");
-        if(x >= guiLeft+117 && y >= guiTop+6 && x <= guiLeft+132 && y <= guiTop+88){
-            this.func_146283_a(Collections.singletonList(text2), x, y);
-        }
-        //TODO Upgrade Slot Joke
-        if(x >= guiLeft+70 && y >= guiTop+42 && x <= guiLeft+70+18 && y <= guiTop+42+18){
-            this.func_146283_a(Arrays.asList("@SuppressWarnings(\"unused\")", "This slot is currently unused. Ignore it."), x, y);
         }
     }
 }

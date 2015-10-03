@@ -43,41 +43,9 @@ public class FurnaceDoubleRecipeHandler extends TemplateRecipeHandler implements
     }
 
     @Override
-    public Class<? extends GuiContainer> getGuiClass(){
-        return GuiFurnaceDouble.class;
-    }
-
-    @Override
     public void loadTransferRects(){
         transferRects.add(new RecipeTransferRect(new Rectangle(51, 40, 24, 22), NAME));
         transferRects.add(new RecipeTransferRect(new Rectangle(101, 40, 24, 22), NAME));
-    }
-
-    @Override
-    public String getGuiTexture(){
-        return ModUtil.MOD_ID_LOWER+":textures/gui/guiFurnaceDouble.png";
-    }
-
-    @Override
-    public void drawBackground(int recipeIndex){
-        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        GuiDraw.changeTexture(getGuiTexture());
-        GuiDraw.drawTexturedModalRect(46, 20, 46, 20, 84, 70);
-    }
-
-    @Override
-    public void drawExtras(int recipe){
-        drawProgressBar(51, 40, 176, 0, 24, 23, 48, 1);
-    }
-
-    @Override
-    public int recipiesPerPage(){
-        return 1;
-    }
-
-    @Override
-    public String getRecipeName(){
-        return StringUtil.localize("container.nei."+NAME+".name");
     }
 
     @SuppressWarnings("unchecked")
@@ -119,8 +87,40 @@ public class FurnaceDoubleRecipeHandler extends TemplateRecipeHandler implements
     }
 
     @Override
+    public String getGuiTexture(){
+        return ModUtil.MOD_ID_LOWER+":textures/gui/guiFurnaceDouble.png";
+    }
+
+    @Override
     public String getOverlayIdentifier(){
         return NAME;
+    }
+
+    @Override
+    public void drawExtras(int recipe){
+        drawProgressBar(51, 40, 176, 0, 24, 23, 48, 1);
+    }
+
+    @Override
+    public Class<? extends GuiContainer> getGuiClass(){
+        return GuiFurnaceDouble.class;
+    }
+
+    @Override
+    public void drawBackground(int recipeIndex){
+        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+        GuiDraw.changeTexture(getGuiTexture());
+        GuiDraw.drawTexturedModalRect(46, 20, 46, 20, 84, 70);
+    }
+
+    @Override
+    public int recipiesPerPage(){
+        return 1;
+    }
+
+    @Override
+    public String getRecipeName(){
+        return StringUtil.localize("container.nei."+NAME+".name");
     }
 
     public class CachedFurn extends CachedRecipe{
@@ -135,13 +135,13 @@ public class FurnaceDoubleRecipeHandler extends TemplateRecipeHandler implements
         }
 
         @Override
-        public List<PositionedStack> getIngredients(){
-            return getCycledIngredients(cycleticks/48, Collections.singletonList(ingredient));
+        public PositionedStack getResult(){
+            return resultOne;
         }
 
         @Override
-        public PositionedStack getResult(){
-            return resultOne;
+        public List<PositionedStack> getIngredients(){
+            return getCycledIngredients(cycleticks/48, Collections.singletonList(ingredient));
         }
     }
 }

@@ -47,14 +47,19 @@ public class ItemSeed extends ItemSeeds implements IActAddItemOrBlock{
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
+    public void registerIcons(IIconRegister iconReg){
+        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
+    }
+
+    @Override
     public IIcon getIcon(ItemStack stack, int pass){
         return this.itemIcon;
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister iconReg){
-        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
+    public String getName(){
+        return this.name;
     }
 
     @Override
@@ -65,10 +70,5 @@ public class ItemSeed extends ItemSeeds implements IActAddItemOrBlock{
     @Override
     public int getPlantMetadata(IBlockAccess world, int x, int y, int z){
         return 0;
-    }
-
-    @Override
-    public String getName(){
-        return this.name;
     }
 }

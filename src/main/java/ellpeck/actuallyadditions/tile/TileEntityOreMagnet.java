@@ -137,6 +137,18 @@ public class TileEntityOreMagnet extends TileEntityInventoryBase implements IEne
         }
     }
 
+    private boolean hasExtraWhitelist(Block block){
+        String name = Block.blockRegistry.getNameForObject(block);
+        if(name != null){
+            for(String list : ConfigValues.oreMagnetExtraWhitelist){
+                if(list.equals(name)){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     private void removeBlock(int x, int y, int z, Block block, int meta, int toPlaceY){
         //Remove the Block
         worldObj.setBlockToAir(xCoord+x, y, zCoord+z);
@@ -154,18 +166,6 @@ public class TileEntityOreMagnet extends TileEntityInventoryBase implements IEne
         for(String except : ConfigValues.oreMagnetExceptions){
             if(except.equals(name)){
                 return true;
-            }
-        }
-        return false;
-    }
-
-    private boolean hasExtraWhitelist(Block block){
-        String name = Block.blockRegistry.getNameForObject(block);
-        if(name != null){
-            for(String list : ConfigValues.oreMagnetExtraWhitelist){
-                if(list.equals(name)){
-                    return true;
-                }
             }
         }
         return false;

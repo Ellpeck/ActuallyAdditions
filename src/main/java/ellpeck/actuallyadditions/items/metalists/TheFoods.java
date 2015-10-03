@@ -45,6 +45,7 @@ public enum TheFoods implements IActAddItemOrBlock{
     public final int useDuration;
     public final EnumRarity rarity;
     public ItemStack returnItem;
+
     TheFoods(String name, int healAmount, float saturation, boolean getsDrunken, int useDuration, EnumRarity rarity){
         this.name = name;
         this.getsDrunken = getsDrunken;

@@ -48,13 +48,6 @@ public class WorldUtil{
      */
     public static final ForgeDirection[] CARDINAL_DIRECTIONS_ORDER = new ForgeDirection[]{ForgeDirection.NORTH, ForgeDirection.EAST, ForgeDirection.SOUTH, ForgeDirection.WEST};
 
-    public static WorldPos getCoordsFromSide(ForgeDirection side, World world, int x, int y, int z){
-        if(side == ForgeDirection.UNKNOWN){
-            return null;
-        }
-        return new WorldPos(world, x+side.offsetX, y+side.offsetY, z+side.offsetZ);
-    }
-
     public static void breakBlockAtSide(ForgeDirection side, World world, int x, int y, int z){
         if(side == ForgeDirection.UNKNOWN){
             world.setBlockToAir(x, y, z);
@@ -66,6 +59,13 @@ public class WorldUtil{
         }
     }
 
+    public static WorldPos getCoordsFromSide(ForgeDirection side, World world, int x, int y, int z){
+        if(side == ForgeDirection.UNKNOWN){
+            return null;
+        }
+        return new WorldPos(world, x+side.offsetX, y+side.offsetY, z+side.offsetZ);
+    }
+
     public static void pushEnergy(World world, int x, int y, int z, ForgeDirection side, EnergyStorage storage){
         TileEntity tile = getTileEntityFromSide(side, world, x, y, z);
         if(tile != null && tile instanceof IEnergyReceiver && storage.getEnergyStored() > 0){
@@ -74,6 +74,14 @@ public class WorldUtil{
                 storage.extractEnergy(receive, false);
             }
         }
+    }
+
+    public static TileEntity getTileEntityFromSide(ForgeDirection side, World world, int x, int y, int z){
+        WorldPos c = getCoordsFromSide(side, world, x, y, z);
+        if(c != null){
+            return world.getTileEntity(c.getX(), c.getY(), c.getZ());
+        }
+        return null;
     }
 
     /**
@@ -165,14 +173,6 @@ public class WorldUtil{
             }
         }
         return false;
-    }
-
-    public static TileEntity getTileEntityFromSide(ForgeDirection side, World world, int x, int y, int z){
-        WorldPos c = getCoordsFromSide(side, world, x, y, z);
-        if(c != null){
-            return world.getTileEntity(c.getX(), c.getY(), c.getZ());
-        }
-        return null;
     }
 
     public static void fillBucket(FluidTank tank, ItemStack[] slots, int inputSlot, int outputSlot){
@@ -281,10 +281,6 @@ public class WorldUtil{
         return getMovingObjectPosWithReachDistance(world, player, reach, false, false, true);
     }
 
-    public static MovingObjectPosition getNearestBlockWithDefaultReachDistance(World world, EntityPlayer player){
-        return getMovingObjectPosWithReachDistance(world, player, player instanceof EntityPlayerMP ? ((EntityPlayerMP)player).theItemInWorldManager.getBlockReachDistance() : 5.0D, false, true, false);
-    }
-
     private static MovingObjectPosition getMovingObjectPosWithReachDistance(World world, EntityPlayer player, double distance, boolean p1, boolean p2, boolean p3){
         float f = 1.0F;
         float f1 = player.prevRotationPitch+(player.rotationPitch-player.prevRotationPitch)*f;
@@ -301,6 +297,10 @@ public class WorldUtil{
         float f8 = f3*f5;
         Vec3 vec31 = vec3.addVector((double)f7*distance, (double)f6*distance, (double)f8*distance);
         return world.func_147447_a(vec3, vec31, p1, p2, p3);
+    }
+
+    public static MovingObjectPosition getNearestBlockWithDefaultReachDistance(World world, EntityPlayer player){
+        return getMovingObjectPosWithReachDistance(world, player, player instanceof EntityPlayerMP ? ((EntityPlayerMP)player).theItemInWorldManager.getBlockReachDistance() : 5.0D, false, true, false);
     }
 
     /**

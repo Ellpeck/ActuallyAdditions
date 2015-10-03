@@ -57,11 +57,6 @@ public class TileEntityCompost extends TileEntityInventoryBase{
     }
 
     @Override
-    public int getInventoryStackLimit(){
-        return ConfigIntValues.COMPOST_AMOUNT.getValue();
-    }
-
-    @Override
     public void writeToNBT(NBTTagCompound compound){
         super.writeToNBT(compound);
         compound.setInteger("ConversionTime", this.conversionTime);
@@ -71,6 +66,11 @@ public class TileEntityCompost extends TileEntityInventoryBase{
     public void readFromNBT(NBTTagCompound compound){
         super.readFromNBT(compound);
         this.conversionTime = compound.getInteger("ConversionTime");
+    }
+
+    @Override
+    public int getInventoryStackLimit(){
+        return ConfigIntValues.COMPOST_AMOUNT.getValue();
     }
 
     @Override

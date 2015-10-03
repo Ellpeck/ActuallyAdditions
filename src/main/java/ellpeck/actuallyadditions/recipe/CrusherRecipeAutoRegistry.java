@@ -19,15 +19,6 @@ public class CrusherRecipeAutoRegistry{
 
     public static ArrayList<SearchCase> searchCases = new ArrayList<SearchCase>();
 
-    private static boolean hasException(String name){
-        for(String except : ConfigValues.crusherRecipeExceptions){
-            if(except.equals(name)){
-                return true;
-            }
-        }
-        return false;
-    }
-
     public static void registerFinally(){
         String[] names = OreDictionary.getOreNames();
         for(String inputName : names){
@@ -55,20 +46,29 @@ public class CrusherRecipeAutoRegistry{
         }
     }
 
+    private static boolean hasException(String name){
+        for(String except : ConfigValues.crusherRecipeExceptions){
+            if(except.equals(name)){
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static class SearchCase{
 
         public final String name;
         public final int resultAmount;
         public final String replacer;
 
+        public SearchCase(String name, int resultAmount){
+            this(name, resultAmount, "dust");
+        }
+
         public SearchCase(String name, int resultAmount, String replacer){
             this.name = name;
             this.resultAmount = resultAmount;
             this.replacer = replacer;
-        }
-
-        public SearchCase(String name, int resultAmount){
-            this(name, resultAmount, "dust");
         }
     }
 }

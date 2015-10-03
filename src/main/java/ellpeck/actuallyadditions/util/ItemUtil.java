@@ -89,18 +89,6 @@ public class ItemUtil{
         }
     }
 
-    public static void removeEnchantment(ItemStack stack, Enchantment e){
-        NBTTagList ench = stack.getEnchantmentTagList();
-        if(ench != null){
-            for(int i = 0; i < ench.tagCount(); i++){
-                short id = ench.getCompoundTagAt(i).getShort("id");
-                if(id == e.effectId){
-                    ench.removeTag(i);
-                }
-            }
-        }
-    }
-
     public static boolean hasEnchantment(ItemStack stack, Enchantment e){
         NBTTagList ench = stack.getEnchantmentTagList();
         if(ench != null){
@@ -112,5 +100,17 @@ public class ItemUtil{
             }
         }
         return false;
+    }
+
+    public static void removeEnchantment(ItemStack stack, Enchantment e){
+        NBTTagList ench = stack.getEnchantmentTagList();
+        if(ench != null){
+            for(int i = 0; i < ench.tagCount(); i++){
+                short id = ench.getCompoundTagAt(i).getShort("id");
+                if(id == e.effectId){
+                    ench.removeTag(i);
+                }
+            }
+        }
     }
 }

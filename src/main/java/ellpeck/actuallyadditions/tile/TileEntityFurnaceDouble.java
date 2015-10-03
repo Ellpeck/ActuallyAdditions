@@ -147,6 +147,11 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
         this.storage.readFromNBT(compound);
     }
 
+    @Override
+    public boolean isItemValidForSlot(int i, ItemStack stack){
+        return (i == SLOT_INPUT_1 || i == SLOT_INPUT_2) && FurnaceRecipes.smelting().getSmeltingResult(stack) != null;
+    }
+
     @SideOnly(Side.CLIENT)
     public int getEnergyScaled(int i){
         return this.storage.getEnergyStored()*i/this.storage.getMaxEnergyStored();
@@ -160,11 +165,6 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
     @SideOnly(Side.CLIENT)
     public int getSecondTimeToScale(int i){
         return this.secondSmeltTime*i/ConfigIntValues.FURNACE_DOUBLE_SMELT_TIME.getValue();
-    }
-
-    @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
-        return (i == SLOT_INPUT_1 || i == SLOT_INPUT_2) && FurnaceRecipes.smelting().getSmeltingResult(stack) != null;
     }
 
     @Override

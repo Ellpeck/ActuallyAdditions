@@ -38,49 +38,6 @@ public class ItemFoods extends ItemFood implements IActAddItemOrBlock{
     }
 
     @Override
-    public EnumRarity getRarity(ItemStack stack){
-        return stack.getItemDamage() >= allFoods.length ? EnumRarity.common : allFoods[stack.getItemDamage()].rarity;
-    }
-
-    @Override
-    public int func_150905_g(ItemStack stack){
-        return stack.getItemDamage() >= allFoods.length ? 0 : allFoods[stack.getItemDamage()].healAmount;
-    }
-
-    @Override
-    public float func_150906_h(ItemStack stack){
-        return stack.getItemDamage() >= allFoods.length ? 0 : allFoods[stack.getItemDamage()].saturation;
-    }
-
-    @Override
-    public EnumAction getItemUseAction(ItemStack stack){
-        return stack.getItemDamage() >= allFoods.length ? EnumAction.eat : (allFoods[stack.getItemDamage()].getsDrunken ? EnumAction.drink : EnumAction.eat);
-    }
-
-    @Override
-    public int getMaxItemUseDuration(ItemStack stack){
-        return stack.getItemDamage() >= allFoods.length ? 0 : allFoods[stack.getItemDamage()].useDuration;
-    }
-
-    @Override
-    public int getMetadata(int damage){
-        return damage;
-    }
-
-    @SuppressWarnings("all")
-    @SideOnly(Side.CLIENT)
-    public void getSubItems(Item item, CreativeTabs tab, List list){
-        for(int j = 0; j < allFoods.length; j++){
-            list.add(new ItemStack(this, 1, j));
-        }
-    }
-
-    @Override
-    public String getUnlocalizedName(ItemStack stack){
-        return this.getUnlocalizedName()+(stack.getItemDamage() >= allFoods.length ? " ERROR!" : allFoods[stack.getItemDamage()].getName());
-    }
-
-    @Override
     public ItemStack onEaten(ItemStack stack, World world, EntityPlayer player){
         ItemStack stackToReturn = super.onEaten(stack, world, player);
         ItemStack returnItem = stack.getItemDamage() >= allFoods.length ? null : allFoods[stack.getItemDamage()].returnItem;
@@ -97,8 +54,51 @@ public class ItemFoods extends ItemFood implements IActAddItemOrBlock{
     }
 
     @Override
+    public int getMaxItemUseDuration(ItemStack stack){
+        return stack.getItemDamage() >= allFoods.length ? 0 : allFoods[stack.getItemDamage()].useDuration;
+    }
+
+    @Override
+    public EnumAction getItemUseAction(ItemStack stack){
+        return stack.getItemDamage() >= allFoods.length ? EnumAction.eat : (allFoods[stack.getItemDamage()].getsDrunken ? EnumAction.drink : EnumAction.eat);
+    }
+
+    @Override
+    public int func_150905_g(ItemStack stack){
+        return stack.getItemDamage() >= allFoods.length ? 0 : allFoods[stack.getItemDamage()].healAmount;
+    }
+
+    @Override
+    public float func_150906_h(ItemStack stack){
+        return stack.getItemDamage() >= allFoods.length ? 0 : allFoods[stack.getItemDamage()].saturation;
+    }
+
+    @Override
     public IIcon getIconFromDamage(int par1){
         return par1 >= textures.length ? null : textures[par1];
+    }
+
+    @Override
+    public int getMetadata(int damage){
+        return damage;
+    }
+
+    @Override
+    public String getUnlocalizedName(ItemStack stack){
+        return this.getUnlocalizedName()+(stack.getItemDamage() >= allFoods.length ? " ERROR!" : allFoods[stack.getItemDamage()].getName());
+    }
+
+    @Override
+    public EnumRarity getRarity(ItemStack stack){
+        return stack.getItemDamage() >= allFoods.length ? EnumRarity.common : allFoods[stack.getItemDamage()].rarity;
+    }
+
+    @SuppressWarnings("all")
+    @SideOnly(Side.CLIENT)
+    public void getSubItems(Item item, CreativeTabs tab, List list){
+        for(int j = 0; j < allFoods.length; j++){
+            list.add(new ItemStack(this, 1, j));
+        }
     }
 
     @Override

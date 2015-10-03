@@ -47,11 +47,6 @@ public class ContainerFermentingBarrel extends Container{
     }
 
     @Override
-    public boolean canInteractWith(EntityPlayer player){
-        return this.barrel.isUseableByPlayer(player);
-    }
-
-    @Override
     public ItemStack transferStackInSlot(EntityPlayer player, int slot){
         final int inventoryStart = 4;
         final int inventoryEnd = inventoryStart+26;
@@ -107,5 +102,10 @@ public class ContainerFermentingBarrel extends Container{
             return currentStack;
         }
         return null;
+    }
+
+    @Override
+    public boolean canInteractWith(EntityPlayer player){
+        return this.barrel.isUseableByPlayer(player);
     }
 }

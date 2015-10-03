@@ -38,6 +38,23 @@ public class BlockGreenhouseGlass extends BlockContainerBase implements IActAddI
     }
 
     @Override
+    public boolean renderAsNormalBlock(){
+        return false;
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public boolean shouldSideBeRendered(IBlockAccess world, int x, int y, int z, int meta){
+        return world.getBlockMetadata(x, y, z) != world.getBlockMetadata(x-Facing.offsetsXForSide[meta], y-Facing.offsetsYForSide[meta], z-Facing.offsetsZForSide[meta]) || (world.getBlock(x, y, z) != this && super.shouldSideBeRendered(world, x, y, z, meta));
+
+    }
+
+    @Override
+    public IIcon getIcon(int side, int metadata){
+        return this.blockIcon;
+    }
+
+    @Override
     public boolean isOpaqueCube(){
         return false;
     }
@@ -46,21 +63,6 @@ public class BlockGreenhouseGlass extends BlockContainerBase implements IActAddI
     @SideOnly(Side.CLIENT)
     public int getRenderBlockPass(){
         return 0;
-    }
-
-    @Override
-    public boolean renderAsNormalBlock(){
-        return false;
-    }
-
-    @Override
-    public TileEntity createNewTileEntity(World world, int par2){
-        return new TileEntityGreenhouseGlass();
-    }
-
-    @Override
-    public IIcon getIcon(int side, int metadata){
-        return this.blockIcon;
     }
 
     @Override
@@ -75,10 +77,8 @@ public class BlockGreenhouseGlass extends BlockContainerBase implements IActAddI
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public boolean shouldSideBeRendered(IBlockAccess world, int x, int y, int z, int meta){
-        return world.getBlockMetadata(x, y, z) != world.getBlockMetadata(x-Facing.offsetsXForSide[meta], y-Facing.offsetsYForSide[meta], z-Facing.offsetsZForSide[meta]) || (world.getBlock(x, y, z) != this && super.shouldSideBeRendered(world, x, y, z, meta));
-
+    public TileEntity createNewTileEntity(World world, int par2){
+        return new TileEntityGreenhouseGlass();
     }
 
     public static class TheItemBlock extends ItemBlock{
@@ -93,11 +93,6 @@ public class BlockGreenhouseGlass extends BlockContainerBase implements IActAddI
         }
 
         @Override
-        public EnumRarity getRarity(ItemStack stack){
-            return EnumRarity.epic;
-        }
-
-        @Override
         public String getUnlocalizedName(ItemStack stack){
             return this.getUnlocalizedName();
         }
@@ -105,6 +100,11 @@ public class BlockGreenhouseGlass extends BlockContainerBase implements IActAddI
         @Override
         public int getMetadata(int damage){
             return damage;
+        }
+
+        @Override
+        public EnumRarity getRarity(ItemStack stack){
+            return EnumRarity.epic;
         }
     }
 }

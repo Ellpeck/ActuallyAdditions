@@ -45,6 +45,38 @@ public class BlockCoffeeMachine extends BlockContainerBase implements IActAddIte
     }
 
     @Override
+    public boolean renderAsNormalBlock(){
+        return false;
+    }
+
+    @Override
+    public int getRenderType(){
+        return AssetUtil.COFFEE_MACHINE_RENDER_ID;
+    }
+
+    @Override
+    public IIcon getIcon(int side, int metadata){
+        return this.blockIcon;
+    }
+
+    @Override
+    public boolean isOpaqueCube(){
+        return false;
+    }
+
+    @Override
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int f6, float f7, float f8, float f9){
+        if(!world.isRemote){
+            TileEntityCoffeeMachine machine = (TileEntityCoffeeMachine)world.getTileEntity(x, y, z);
+            if(machine != null){
+                player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.COFFEE_MACHINE.ordinal(), world, x, y, z);
+            }
+            return true;
+        }
+        return true;
+    }
+
+    @Override
     public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack stack){
         int rotation = MathHelper.floor_double((double)(player.rotationYaw*4.0F/360.0F)+0.5D) & 3;
 
@@ -63,41 +95,9 @@ public class BlockCoffeeMachine extends BlockContainerBase implements IActAddIte
     }
 
     @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int f6, float f7, float f8, float f9){
-        if(!world.isRemote){
-            TileEntityCoffeeMachine machine = (TileEntityCoffeeMachine)world.getTileEntity(x, y, z);
-            if(machine != null){
-                player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.COFFEE_MACHINE.ordinal(), world, x, y, z);
-            }
-            return true;
-        }
-        return true;
-    }
-
-    @Override
-    public IIcon getIcon(int side, int metadata){
-        return this.blockIcon;
-    }
-
-    @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconReg){
         this.blockIcon = Blocks.coal_block.getIcon(0, 0);
-    }
-
-    @Override
-    public boolean isOpaqueCube(){
-        return false;
-    }
-
-    @Override
-    public boolean renderAsNormalBlock(){
-        return false;
-    }
-
-    @Override
-    public int getRenderType(){
-        return AssetUtil.COFFEE_MACHINE_RENDER_ID;
     }
 
     @Override
@@ -128,11 +128,6 @@ public class BlockCoffeeMachine extends BlockContainerBase implements IActAddIte
         }
 
         @Override
-        public EnumRarity getRarity(ItemStack stack){
-            return EnumRarity.rare;
-        }
-
-        @Override
         public String getUnlocalizedName(ItemStack stack){
             return this.getUnlocalizedName();
         }
@@ -140,6 +135,11 @@ public class BlockCoffeeMachine extends BlockContainerBase implements IActAddIte
         @Override
         public int getMetadata(int damage){
             return damage;
+        }
+
+        @Override
+        public EnumRarity getRarity(ItemStack stack){
+            return EnumRarity.rare;
         }
     }
 }

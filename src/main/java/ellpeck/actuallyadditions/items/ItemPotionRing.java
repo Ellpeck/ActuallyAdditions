@@ -42,6 +42,22 @@ public class ItemPotionRing extends Item implements IActAddItemOrBlock{
     }
 
     @Override
+    public int getMetadata(int damage){
+        return damage;
+    }
+
+    @Override
+    public String getUnlocalizedName(ItemStack stack){
+        return this.getUnlocalizedName()+(stack.getItemDamage() >= allRings.length ? " ERROR!" : allRings[stack.getItemDamage()].getName().substring("potion".length()));
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public int getColorFromItemStack(ItemStack stack, int pass){
+        return stack.getItemDamage() >= allRings.length ? 0 : allRings[stack.getItemDamage()].color;
+    }
+
+    @Override
     @SuppressWarnings("unchecked")
     public void onUpdate(ItemStack stack, World world, Entity player, int par4, boolean par5){
         super.onUpdate(stack, world, player, par4, par5);
@@ -67,13 +83,13 @@ public class ItemPotionRing extends Item implements IActAddItemOrBlock{
     }
 
     @Override
-    public String getName(){
-        return this.isAdvanced ? "itemPotionRingAdvanced" : "itemPotionRing";
-    }
-
-    @Override
-    public int getMetadata(int damage){
-        return damage;
+    public String getItemStackDisplayName(ItemStack stack){
+        String standardName = StringUtil.localize(this.getUnlocalizedName()+".name");
+        if(stack.getItemDamage() < allRings.length){
+            String effect = StringUtil.localize(allRings[stack.getItemDamage()].getName());
+            return standardName+" "+effect;
+        }
+        return standardName;
     }
 
     @Override
@@ -90,34 +106,18 @@ public class ItemPotionRing extends Item implements IActAddItemOrBlock{
     }
 
     @Override
-    public String getUnlocalizedName(ItemStack stack){
-        return this.getUnlocalizedName()+(stack.getItemDamage() >= allRings.length ? " ERROR!" : allRings[stack.getItemDamage()].getName().substring("potion".length()));
-    }
-
-    @Override
-    public IIcon getIcon(ItemStack stack, int pass){
-        return this.itemIcon;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public int getColorFromItemStack(ItemStack stack, int pass){
-        return stack.getItemDamage() >= allRings.length ? 0 : allRings[stack.getItemDamage()].color;
-    }
-
-    @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister iconReg){
         this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
     }
 
     @Override
-    public String getItemStackDisplayName(ItemStack stack){
-        String standardName = StringUtil.localize(this.getUnlocalizedName()+".name");
-        if(stack.getItemDamage() < allRings.length){
-            String effect = StringUtil.localize(allRings[stack.getItemDamage()].getName());
-            return standardName+" "+effect;
-        }
-        return standardName;
+    public String getName(){
+        return this.isAdvanced ? "itemPotionRingAdvanced" : "itemPotionRing";
+    }
+
+    @Override
+    public IIcon getIcon(ItemStack stack, int pass){
+        return this.itemIcon;
     }
 }

@@ -48,8 +48,23 @@ public class BlockColoredLamp extends Block implements IActAddItemOrBlock{
     }
 
     @Override
-    public int getLightValue(IBlockAccess world, int x, int y, int z){
-        return this.isOn ? 15 : 0;
+    public String getName(){
+        return this.isOn ? "blockColoredLampOn" : "blockColoredLamp";
+    }
+
+    @Override
+    public IIcon getIcon(int side, int meta){
+        return meta >= allLampTypes.length ? null : textures[meta];
+    }
+
+    @Override
+    public Item getItemDropped(int par1, Random rand, int par3){
+        return Item.getItemFromBlock(InitBlocks.blockColoredLamp);
+    }
+
+    @Override
+    public int damageDropped(int meta){
+        return meta;
     }
 
     @Override
@@ -86,13 +101,14 @@ public class BlockColoredLamp extends Block implements IActAddItemOrBlock{
     }
 
     @Override
-    public String getName(){
-        return this.isOn ? "blockColoredLampOn" : "blockColoredLamp";
+    public ItemStack createStackedBlock(int meta){
+        return new ItemStack(InitBlocks.blockColoredLamp, 1, meta);
     }
 
     @Override
-    public IIcon getIcon(int side, int meta){
-        return meta >= allLampTypes.length ? null : textures[meta];
+    @SideOnly(Side.CLIENT)
+    public Item getItem(World world, int x, int y, int z){
+        return Item.getItemFromBlock(InitBlocks.blockColoredLamp);
     }
 
     @SuppressWarnings("all")
@@ -104,32 +120,16 @@ public class BlockColoredLamp extends Block implements IActAddItemOrBlock{
     }
 
     @Override
-    public Item getItemDropped(int par1, Random rand, int par3){
-        return Item.getItemFromBlock(InitBlocks.blockColoredLamp);
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public Item getItem(World world, int x, int y, int z){
-        return Item.getItemFromBlock(InitBlocks.blockColoredLamp);
-    }
-
-    @Override
-    public ItemStack createStackedBlock(int meta){
-        return new ItemStack(InitBlocks.blockColoredLamp, 1, meta);
-    }
-
-    @Override
-    public int damageDropped(int meta){
-        return meta;
-    }
-
-    @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconReg){
         for(int i = 0; i < allLampTypes.length; i++){
             this.textures[i] = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+((IActAddItemOrBlock)InitBlocks.blockColoredLamp).getName()+allLampTypes[i].name+(isOn ? "On" : ""));
         }
+    }
+
+    @Override
+    public int getLightValue(IBlockAccess world, int x, int y, int z){
+        return this.isOn ? 15 : 0;
     }
 
     public static class TheItemBlock extends ItemBlock{
@@ -144,16 +144,6 @@ public class BlockColoredLamp extends Block implements IActAddItemOrBlock{
         }
 
         @Override
-        public EnumRarity getRarity(ItemStack stack){
-            return EnumRarity.rare;
-        }
-
-        @Override
-        public String getUnlocalizedName(ItemStack stack){
-            return InitBlocks.blockColoredLamp.getUnlocalizedName()+allLampTypes[stack.getItemDamage()].getName();
-        }
-
-        @Override
         public int getMetadata(int damage){
             return damage;
         }
@@ -164,6 +154,16 @@ public class BlockColoredLamp extends Block implements IActAddItemOrBlock{
                 return null;
             }
             return StringUtil.localize(this.getUnlocalizedName(stack)+".name")+(((BlockColoredLamp)this.theBlock).isOn ? " ("+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".onSuffix.desc")+")" : "");
+        }
+
+        @Override
+        public EnumRarity getRarity(ItemStack stack){
+            return EnumRarity.rare;
+        }
+
+        @Override
+        public String getUnlocalizedName(ItemStack stack){
+            return InitBlocks.blockColoredLamp.getUnlocalizedName()+allLampTypes[stack.getItemDamage()].getName();
         }
     }
 }

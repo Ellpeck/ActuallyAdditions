@@ -72,139 +72,6 @@ public class GuiBooklet extends GuiScreen{
         this.parentScreen = parentScreen;
     }
 
-    @Override
-    public void updateScreen(){
-        super.updateScreen();
-        this.searchField.updateCursorCounter();
-
-        if(this.currentIndexEntry != null && this.currentChapter != null && this.currentPage != null){
-            this.currentPage.updateScreen(this.ticksElapsed);
-        }
-
-        boolean buttonThere = UpdateChecker.doneChecking && UpdateChecker.updateVersion > UpdateChecker.clientVersion;
-        this.buttonUpdate.visible = buttonThere;
-        if(buttonThere){
-            if(this.ticksElapsed%8 == 0){
-                TexturedButton button = (TexturedButton)this.buttonUpdate;
-                button.setTexturePos(245, button.texturePosY == 0 ? 22 : 0);
-            }
-        }
-
-        this.ticksElapsed++;
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public void keyTyped(char theChar, int key){
-        if(key != 1 && this.searchField.isFocused()){
-            this.searchField.textboxKeyTyped(theChar, key);
-
-            if(this.currentIndexEntry instanceof BookletEntryAllSearch){
-                BookletEntryAllSearch currentEntry = (BookletEntryAllSearch)this.currentIndexEntry;
-                if(this.searchField.getText() != null && !this.searchField.getText().isEmpty()){
-                    currentEntry.chapters.clear();
-
-                    for(BookletChapter chapter : currentEntry.allChapters){
-                        if(chapter.getLocalizedName().toLowerCase().contains(this.searchField.getText().toLowerCase())){
-                            currentEntry.chapters.add(chapter);
-                        }
-                    }
-                }
-                else{
-                    currentEntry.chapters = (ArrayList<BookletChapter>)currentEntry.allChapters.clone();
-                }
-                this.openIndexEntry(this.currentIndexEntry, this.pageOpenInIndex, false);
-            }
-        }
-        else{
-            super.keyTyped(theChar, key);
-        }
-    }
-
-    @Override
-    public void onGuiClosed(){
-        PersistentClientData.saveBookPage(this.currentIndexEntry, this.currentChapter, this.currentPage, this.pageOpenInIndex);
-    }
-
-    @Override
-    protected void mouseClicked(int par1, int par2, int par3){
-        this.searchField.mouseClicked(par1, par2, par3);
-        if(par3 == 0 && this.currentChapter != null){
-            this.mouseClicked = true;
-        }
-        super.mouseClicked(par1, par2, par3);
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public void initGui(){
-        this.guiLeft = (this.width-this.xSize)/2;
-        this.guiTop = (this.height-this.ySize)/2;
-
-        this.unicodeRenderer = new FontRenderer(this.mc.gameSettings, new ResourceLocation("textures/font/ascii.png"), this.mc.renderEngine, true);
-
-        this.buttonForward = new TexturedButton(0, this.guiLeft+this.xSize, this.guiTop+this.ySize+2, 164, 0, 18, 10);
-        this.buttonList.add(this.buttonForward);
-
-        this.buttonBackward = new TexturedButton(1, this.guiLeft-18, this.guiTop+this.ySize+2, 146, 0, 18, 10);
-        this.buttonList.add(this.buttonBackward);
-
-        this.buttonPreviousScreen = new TexturedButton(2, this.guiLeft+this.xSize/2-7, this.guiTop+this.ySize+2, 182, 0, 15, 10);
-        this.buttonList.add(this.buttonPreviousScreen);
-
-        this.buttonPreviouslyOpenedGui = new TexturedButton(3, this.guiLeft+this.xSize/3, this.guiTop+this.ySize+2, 245, 44, 11, 15);
-        this.buttonList.add(this.buttonPreviouslyOpenedGui);
-
-        this.buttonUpdate = new TexturedButton(4, this.guiLeft-11, this.guiTop-11, 245, 0, 11, 11);
-        this.buttonUpdate.visible = UpdateChecker.doneChecking && UpdateChecker.updateVersion > UpdateChecker.clientVersion;
-        this.buttonList.add(this.buttonUpdate);
-
-        this.buttonTwitter = new TexturedButton(5, this.guiLeft, this.guiTop, 213, 0, 8, 8);
-        this.buttonList.add(this.buttonTwitter);
-
-        this.buttonForum = new TexturedButton(6, this.guiLeft, this.guiTop+10, 221, 0, 8, 8);
-        this.buttonList.add(this.buttonForum);
-
-        this.buttonAchievements = new TexturedButton(7, this.guiLeft+138, this.guiTop, 205, 0, 8, 8);
-        this.buttonList.add(this.buttonAchievements);
-
-        this.buttonConfig = new TexturedButton(8, this.guiLeft+138, this.guiTop+10, 197, 0, 8, 8);
-        this.buttonList.add(this.buttonConfig);
-
-        for(int i = 0; i < this.chapterButtons.length; i++){
-            this.chapterButtons[i] = new IndexButton(9+i, guiLeft+15, guiTop+10+(i*12), 115, 10, "", this);
-            this.buttonList.add(this.chapterButtons[i]);
-        }
-
-        this.searchField = new GuiTextField(this.unicodeRenderer, guiLeft+148, guiTop+162, 66, 10);
-        this.searchField.setMaxStringLength(30);
-        this.searchField.setEnableBackgroundDrawing(false);
-
-        this.currentPage = null;
-        this.currentChapter = null;
-        this.currentIndexEntry = null;
-
-        if(!PersistentClientData.getBoolean("BookAlreadyOpened")){
-            this.openIndexEntry(InitBooklet.chapterIntro.entry, 1, true);
-            this.openChapter(InitBooklet.chapterIntro, null);
-
-            PersistentClientData.setBoolean("BookAlreadyOpened", true);
-        }
-        else{
-            PersistentClientData.openLastBookPage(this);
-        }
-    }
-
-    @Override
-    public boolean doesGuiPauseGame(){
-        return false;
-    }
-
-    @Override
-    public void renderToolTip(ItemStack stack, int x, int y){
-        super.renderToolTip(stack, x, y);
-    }
-
     public void drawHoveringText(List list, int x, int y){
         super.func_146283_a(list, x, y);
     }
@@ -298,30 +165,46 @@ public class GuiBooklet extends GuiScreen{
         }
     }
 
-    private boolean isGimmicky(){
-        return KeyUtil.isControlPressed() && KeyUtil.isShiftPressed() && KeyUtil.isAltPressed();
-    }
+    @SuppressWarnings("unchecked")
+    @Override
+    public void keyTyped(char theChar, int key){
+        if(key != 1 && this.searchField.isFocused()){
+            this.searchField.textboxKeyTyped(theChar, key);
 
-    private BookletPage getNextPage(BookletChapter chapter, BookletPage currentPage){
-        for(int i = 0; i < chapter.pages.length; i++){
-            if(chapter.pages[i] == currentPage){
-                if(i+1 < chapter.pages.length){
-                    return chapter.pages[i+1];
+            if(this.currentIndexEntry instanceof BookletEntryAllSearch){
+                BookletEntryAllSearch currentEntry = (BookletEntryAllSearch)this.currentIndexEntry;
+                if(this.searchField.getText() != null && !this.searchField.getText().isEmpty()){
+                    currentEntry.chapters.clear();
+
+                    for(BookletChapter chapter : currentEntry.allChapters){
+                        if(chapter.getLocalizedName().toLowerCase().contains(this.searchField.getText().toLowerCase())){
+                            currentEntry.chapters.add(chapter);
+                        }
+                    }
                 }
+                else{
+                    currentEntry.chapters = (ArrayList<BookletChapter>)currentEntry.allChapters.clone();
+                }
+                this.openIndexEntry(this.currentIndexEntry, this.pageOpenInIndex, false);
             }
         }
-        return null;
+        else{
+            super.keyTyped(theChar, key);
+        }
     }
 
-    private BookletPage getPrevPage(BookletChapter chapter, BookletPage currentPage){
-        for(int i = 0; i < chapter.pages.length; i++){
-            if(chapter.pages[i] == currentPage){
-                if(i-1 >= 0){
-                    return chapter.pages[i-1];
-                }
-            }
+    @Override
+    public void renderToolTip(ItemStack stack, int x, int y){
+        super.renderToolTip(stack, x, y);
+    }
+
+    @Override
+    protected void mouseClicked(int par1, int par2, int par3){
+        this.searchField.mouseClicked(par1, par2, par3);
+        if(par3 == 0 && this.currentChapter != null){
+            this.mouseClicked = true;
         }
-        return null;
+        super.mouseClicked(par1, par2, par3);
     }
 
     @Override
@@ -430,6 +313,150 @@ public class GuiBooklet extends GuiScreen{
     }
 
     @SuppressWarnings("unchecked")
+    @Override
+    public void initGui(){
+        this.guiLeft = (this.width-this.xSize)/2;
+        this.guiTop = (this.height-this.ySize)/2;
+
+        this.unicodeRenderer = new FontRenderer(this.mc.gameSettings, new ResourceLocation("textures/font/ascii.png"), this.mc.renderEngine, true);
+
+        this.buttonForward = new TexturedButton(0, this.guiLeft+this.xSize, this.guiTop+this.ySize+2, 164, 0, 18, 10);
+        this.buttonList.add(this.buttonForward);
+
+        this.buttonBackward = new TexturedButton(1, this.guiLeft-18, this.guiTop+this.ySize+2, 146, 0, 18, 10);
+        this.buttonList.add(this.buttonBackward);
+
+        this.buttonPreviousScreen = new TexturedButton(2, this.guiLeft+this.xSize/2-7, this.guiTop+this.ySize+2, 182, 0, 15, 10);
+        this.buttonList.add(this.buttonPreviousScreen);
+
+        this.buttonPreviouslyOpenedGui = new TexturedButton(3, this.guiLeft+this.xSize/3, this.guiTop+this.ySize+2, 245, 44, 11, 15);
+        this.buttonList.add(this.buttonPreviouslyOpenedGui);
+
+        this.buttonUpdate = new TexturedButton(4, this.guiLeft-11, this.guiTop-11, 245, 0, 11, 11);
+        this.buttonUpdate.visible = UpdateChecker.doneChecking && UpdateChecker.updateVersion > UpdateChecker.clientVersion;
+        this.buttonList.add(this.buttonUpdate);
+
+        this.buttonTwitter = new TexturedButton(5, this.guiLeft, this.guiTop, 213, 0, 8, 8);
+        this.buttonList.add(this.buttonTwitter);
+
+        this.buttonForum = new TexturedButton(6, this.guiLeft, this.guiTop+10, 221, 0, 8, 8);
+        this.buttonList.add(this.buttonForum);
+
+        this.buttonAchievements = new TexturedButton(7, this.guiLeft+138, this.guiTop, 205, 0, 8, 8);
+        this.buttonList.add(this.buttonAchievements);
+
+        this.buttonConfig = new TexturedButton(8, this.guiLeft+138, this.guiTop+10, 197, 0, 8, 8);
+        this.buttonList.add(this.buttonConfig);
+
+        for(int i = 0; i < this.chapterButtons.length; i++){
+            this.chapterButtons[i] = new IndexButton(9+i, guiLeft+15, guiTop+10+(i*12), 115, 10, "", this);
+            this.buttonList.add(this.chapterButtons[i]);
+        }
+
+        this.searchField = new GuiTextField(this.unicodeRenderer, guiLeft+148, guiTop+162, 66, 10);
+        this.searchField.setMaxStringLength(30);
+        this.searchField.setEnableBackgroundDrawing(false);
+
+        this.currentPage = null;
+        this.currentChapter = null;
+        this.currentIndexEntry = null;
+
+        if(!PersistentClientData.getBoolean("BookAlreadyOpened")){
+            this.openIndexEntry(InitBooklet.chapterIntro.entry, 1, true);
+            this.openChapter(InitBooklet.chapterIntro, null);
+
+            PersistentClientData.setBoolean("BookAlreadyOpened", true);
+        }
+        else{
+            PersistentClientData.openLastBookPage(this);
+        }
+    }
+
+    @Override
+    public void updateScreen(){
+        super.updateScreen();
+        this.searchField.updateCursorCounter();
+
+        if(this.currentIndexEntry != null && this.currentChapter != null && this.currentPage != null){
+            this.currentPage.updateScreen(this.ticksElapsed);
+        }
+
+        boolean buttonThere = UpdateChecker.doneChecking && UpdateChecker.updateVersion > UpdateChecker.clientVersion;
+        this.buttonUpdate.visible = buttonThere;
+        if(buttonThere){
+            if(this.ticksElapsed%8 == 0){
+                TexturedButton button = (TexturedButton)this.buttonUpdate;
+                button.setTexturePos(245, button.texturePosY == 0 ? 22 : 0);
+            }
+        }
+
+        this.ticksElapsed++;
+    }
+
+    @Override
+    public void onGuiClosed(){
+        PersistentClientData.saveBookPage(this.currentIndexEntry, this.currentChapter, this.currentPage, this.pageOpenInIndex);
+    }
+
+    @Override
+    public boolean doesGuiPauseGame(){
+        return false;
+    }
+
+    public void openChapter(BookletChapter chapter, BookletPage page){
+        if(chapter == null){
+            return;
+        }
+
+        this.searchField.setVisible(false);
+        this.searchField.setFocused(false);
+        this.searchField.setText("");
+
+        this.currentChapter = chapter;
+        this.currentPage = page != null && this.hasPage(chapter, page) ? page : chapter.pages[0];
+
+        this.buttonForward.visible = this.getNextPage(chapter, this.currentPage) != null;
+        this.buttonBackward.visible = this.getPrevPage(chapter, this.currentPage) != null;
+        this.buttonPreviousScreen.visible = true;
+        this.buttonPreviouslyOpenedGui.visible = this.parentScreen != null;
+
+        for(GuiButton chapterButton : this.chapterButtons){
+            chapterButton.visible = false;
+        }
+    }
+
+    private boolean hasPage(BookletChapter chapter, BookletPage page){
+        for(BookletPage aPage : chapter.pages){
+            if(aPage == page){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private BookletPage getNextPage(BookletChapter chapter, BookletPage currentPage){
+        for(int i = 0; i < chapter.pages.length; i++){
+            if(chapter.pages[i] == currentPage){
+                if(i+1 < chapter.pages.length){
+                    return chapter.pages[i+1];
+                }
+            }
+        }
+        return null;
+    }
+
+    private BookletPage getPrevPage(BookletChapter chapter, BookletPage currentPage){
+        for(int i = 0; i < chapter.pages.length; i++){
+            if(chapter.pages[i] == currentPage){
+                if(i-1 >= 0){
+                    return chapter.pages[i-1];
+                }
+            }
+        }
+        return null;
+    }
+
+    @SuppressWarnings("unchecked")
     public void openIndexEntry(BookletIndexEntry entry, int page, boolean resetTextField){
         if(resetTextField){
             this.searchField.setVisible(entry instanceof BookletEntryAllSearch);
@@ -474,35 +501,8 @@ public class GuiBooklet extends GuiScreen{
         }
     }
 
-    public void openChapter(BookletChapter chapter, BookletPage page){
-        if(chapter == null){
-            return;
-        }
-
-        this.searchField.setVisible(false);
-        this.searchField.setFocused(false);
-        this.searchField.setText("");
-
-        this.currentChapter = chapter;
-        this.currentPage = page != null && this.hasPage(chapter, page) ? page : chapter.pages[0];
-
-        this.buttonForward.visible = this.getNextPage(chapter, this.currentPage) != null;
-        this.buttonBackward.visible = this.getPrevPage(chapter, this.currentPage) != null;
-        this.buttonPreviousScreen.visible = true;
-        this.buttonPreviouslyOpenedGui.visible = this.parentScreen != null;
-
-        for(GuiButton chapterButton : this.chapterButtons){
-            chapterButton.visible = false;
-        }
-    }
-
-    private boolean hasPage(BookletChapter chapter, BookletPage page){
-        for(BookletPage aPage : chapter.pages){
-            if(aPage == page){
-                return true;
-            }
-        }
-        return false;
+    private boolean isGimmicky(){
+        return KeyUtil.isControlPressed() && KeyUtil.isShiftPressed() && KeyUtil.isAltPressed();
     }
 
     private static class IndexButton extends GuiButton{

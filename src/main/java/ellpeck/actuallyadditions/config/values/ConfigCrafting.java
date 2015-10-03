@@ -160,8 +160,8 @@ public enum ConfigCrafting{
         this(name, category, true);
     }
 
-    ConfigCrafting(String name, ConfigCategories category, String extraText){
-        this(name, category, extraText, true);
+    ConfigCrafting(String name, ConfigCategories category, boolean defaultValue){
+        this(name, category, "", defaultValue);
     }
 
     ConfigCrafting(String name, ConfigCategories category, String extraText, boolean defaultValue){
@@ -171,8 +171,8 @@ public enum ConfigCrafting{
         this.extraText = extraText.length() > 0 ? extraText+" " : "";
     }
 
-    ConfigCrafting(String name, ConfigCategories category, boolean defaultValue){
-        this(name, category, "", defaultValue);
+    ConfigCrafting(String name, ConfigCategories category, String extraText){
+        this(name, category, extraText, true);
     }
 
     public boolean isEnabled(){

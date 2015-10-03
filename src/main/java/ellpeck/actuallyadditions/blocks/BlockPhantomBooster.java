@@ -40,11 +40,6 @@ public class BlockPhantomBooster extends BlockContainerBase implements IActAddIt
     }
 
     @Override
-    public boolean isOpaqueCube(){
-        return false;
-    }
-
-    @Override
     public boolean renderAsNormalBlock(){
         return false;
     }
@@ -57,6 +52,11 @@ public class BlockPhantomBooster extends BlockContainerBase implements IActAddIt
     @Override
     public IIcon getIcon(int side, int metadata){
         return this.blockIcon;
+    }
+
+    @Override
+    public boolean isOpaqueCube(){
+        return false;
     }
 
     @Override
@@ -87,11 +87,6 @@ public class BlockPhantomBooster extends BlockContainerBase implements IActAddIt
         }
 
         @Override
-        public EnumRarity getRarity(ItemStack stack){
-            return EnumRarity.epic;
-        }
-
-        @Override
         public String getUnlocalizedName(ItemStack stack){
             return this.getUnlocalizedName();
         }
@@ -99,6 +94,11 @@ public class BlockPhantomBooster extends BlockContainerBase implements IActAddIt
         @Override
         public int getMetadata(int damage){
             return damage;
+        }
+
+        @Override
+        public EnumRarity getRarity(ItemStack stack){
+            return EnumRarity.epic;
         }
     }
 }

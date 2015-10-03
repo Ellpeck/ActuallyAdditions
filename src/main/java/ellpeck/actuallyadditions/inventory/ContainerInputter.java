@@ -55,22 +55,6 @@ public class ContainerInputter extends Container{
     }
 
     @Override
-    public boolean canInteractWith(EntityPlayer player){
-        return this.tileInputter.isUseableByPlayer(player);
-    }
-
-    @Override
-    public ItemStack slotClick(int par1, int par2, int par3, EntityPlayer player){
-        if(par1 >= 0 && par1 < this.inventorySlots.size() && this.getSlot(par1) instanceof SlotFilter){
-            //Calls the Filter's SlotClick function
-            return ((SlotFilter)getSlot(par1)).slotClick(player, par2);
-        }
-        else{
-            return super.slotClick(par1, par2, par3, player);
-        }
-    }
-
-    @Override
     public ItemStack transferStackInSlot(EntityPlayer player, int slot){
         final int inventoryStart = this.isAdvanced ? 25 : 1;
         final int inventoryEnd = inventoryStart+26;
@@ -117,5 +101,21 @@ public class ContainerInputter extends Container{
             return currentStack;
         }
         return null;
+    }
+
+    @Override
+    public ItemStack slotClick(int par1, int par2, int par3, EntityPlayer player){
+        if(par1 >= 0 && par1 < this.inventorySlots.size() && this.getSlot(par1) instanceof SlotFilter){
+            //Calls the Filter's SlotClick function
+            return ((SlotFilter)getSlot(par1)).slotClick(player, par2);
+        }
+        else{
+            return super.slotClick(par1, par2, par3, player);
+        }
+    }
+
+    @Override
+    public boolean canInteractWith(EntityPlayer player){
+        return this.tileInputter.isUseableByPlayer(player);
     }
 }

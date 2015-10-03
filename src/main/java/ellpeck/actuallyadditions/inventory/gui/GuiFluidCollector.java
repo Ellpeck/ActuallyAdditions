@@ -37,6 +37,16 @@ public class GuiFluidCollector extends GuiContainer{
     }
 
     @Override
+    public void drawScreen(int x, int y, float f){
+        super.drawScreen(x, y, f);
+
+        String text2 = this.collector.tank.getFluidAmount()+"/"+this.collector.tank.getCapacity()+" mB "+(this.collector.tank.getFluidAmount() > 0 ? this.collector.tank.getFluid().getLocalizedName() : "");
+        if(x >= guiLeft+68 && y >= guiTop+6 && x <= guiLeft+83 && y <= guiTop+88){
+            this.func_146283_a(Collections.singletonList(text2), x, y);
+        }
+    }
+
+    @Override
     public void drawGuiContainerForegroundLayer(int x, int y){
         AssetUtil.displayNameString(this.fontRendererObj, xSize, -10, this.collector.getInventoryName());
     }
@@ -54,16 +64,6 @@ public class GuiFluidCollector extends GuiContainer{
         if(this.collector.tank.getFluidAmount() > 0){
             int i = this.collector.getTankScaled(83);
             drawTexturedModalRect(this.guiLeft+68, this.guiTop+89-i, 176, 0, 16, i);
-        }
-    }
-
-    @Override
-    public void drawScreen(int x, int y, float f){
-        super.drawScreen(x, y, f);
-
-        String text2 = this.collector.tank.getFluidAmount()+"/"+this.collector.tank.getCapacity()+" mB "+(this.collector.tank.getFluidAmount() > 0 ? this.collector.tank.getFluid().getLocalizedName() : "");
-        if(x >= guiLeft+68 && y >= guiTop+6 && x <= guiLeft+83 && y <= guiTop+88){
-            this.func_146283_a(Collections.singletonList(text2), x, y);
         }
     }
 }

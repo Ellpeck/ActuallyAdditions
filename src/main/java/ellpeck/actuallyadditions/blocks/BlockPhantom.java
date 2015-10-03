@@ -38,6 +38,7 @@ public class BlockPhantom extends BlockContainerBase implements IActAddItemOrBlo
 
     public Type type;
     public int range;
+
     public BlockPhantom(Type type){
         super(Material.rock);
         this.type = type;
@@ -60,6 +61,27 @@ public class BlockPhantom extends BlockContainerBase implements IActAddItemOrBlo
             this.dropInventory(world, x, y, z);
         }
         super.breakBlock(world, x, y, z, block, par6);
+    }
+
+    @Override
+    public TileEntity createNewTileEntity(World world, int par2){
+        switch(this.type){
+            case PLACER:
+                return new TileEntityPhantomPlacer();
+            case BREAKER:
+                return new TileEntityPhantomPlacer.TileEntityPhantomBreaker();
+            case LIQUIFACE:
+                return new TileEntityPhantomface.TileEntityPhantomLiquiface();
+            case ENERGYFACE:
+                return new TileEntityPhantomface.TileEntityPhantomEnergyface();
+            default:
+                return new TileEntityPhantomface.TileEntityPhantomItemface();
+        }
+    }
+
+    @Override
+    public IIcon getIcon(int side, int metadata){
+        return this.blockIcon;
     }
 
     @Override
@@ -95,27 +117,6 @@ public class BlockPhantom extends BlockContainerBase implements IActAddItemOrBlo
             }
         }
         return true;
-    }
-
-    @Override
-    public TileEntity createNewTileEntity(World world, int par2){
-        switch(this.type){
-            case PLACER:
-                return new TileEntityPhantomPlacer();
-            case BREAKER:
-                return new TileEntityPhantomPlacer.TileEntityPhantomBreaker();
-            case LIQUIFACE:
-                return new TileEntityPhantomface.TileEntityPhantomLiquiface();
-            case ENERGYFACE:
-                return new TileEntityPhantomface.TileEntityPhantomEnergyface();
-            default:
-                return new TileEntityPhantomface.TileEntityPhantomItemface();
-        }
-    }
-
-    @Override
-    public IIcon getIcon(int side, int metadata){
-        return this.blockIcon;
     }
 
     @Override
@@ -160,11 +161,6 @@ public class BlockPhantom extends BlockContainerBase implements IActAddItemOrBlo
         }
 
         @Override
-        public EnumRarity getRarity(ItemStack stack){
-            return EnumRarity.epic;
-        }
-
-        @Override
         public String getUnlocalizedName(ItemStack stack){
             return this.getUnlocalizedName();
         }
@@ -172,6 +168,11 @@ public class BlockPhantom extends BlockContainerBase implements IActAddItemOrBlo
         @Override
         public int getMetadata(int damage){
             return damage;
+        }
+
+        @Override
+        public EnumRarity getRarity(ItemStack stack){
+            return EnumRarity.epic;
         }
     }
 }

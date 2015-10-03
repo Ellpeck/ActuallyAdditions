@@ -44,11 +44,6 @@ public class ContainerBreaker extends Container{
     }
 
     @Override
-    public boolean canInteractWith(EntityPlayer player){
-        return this.breaker.isUseableByPlayer(player);
-    }
-
-    @Override
     public ItemStack transferStackInSlot(EntityPlayer player, int slot){
         final int inventoryStart = 9;
         final int inventoryEnd = inventoryStart+26;
@@ -95,5 +90,10 @@ public class ContainerBreaker extends Container{
             return currentStack;
         }
         return null;
+    }
+
+    @Override
+    public boolean canInteractWith(EntityPlayer player){
+        return this.breaker.isUseableByPlayer(player);
     }
 }

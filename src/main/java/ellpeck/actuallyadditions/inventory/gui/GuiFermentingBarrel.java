@@ -38,6 +38,21 @@ public class GuiFermentingBarrel extends GuiContainer{
     }
 
     @Override
+    public void drawScreen(int x, int y, float f){
+        super.drawScreen(x, y, f);
+
+        String text1 = this.press.canolaTank.getFluidAmount()+"/"+this.press.canolaTank.getCapacity()+" mB "+StringUtil.localize("fluid.canolaoil");
+        if(x >= guiLeft+61 && y >= guiTop+6 && x <= guiLeft+76 && y <= guiTop+88){
+            this.func_146283_a(Collections.singletonList(text1), x, y);
+        }
+
+        String text2 = this.press.oilTank.getFluidAmount()+"/"+this.press.oilTank.getCapacity()+" mB "+StringUtil.localize("fluid.oil");
+        if(x >= guiLeft+99 && y >= guiTop+6 && x <= guiLeft+114 && y <= guiTop+88){
+            this.func_146283_a(Collections.singletonList(text2), x, y);
+        }
+    }
+
+    @Override
     public void drawGuiContainerForegroundLayer(int x, int y){
         AssetUtil.displayNameString(this.fontRendererObj, xSize, -10, this.press.getInventoryName());
     }
@@ -65,21 +80,6 @@ public class GuiFermentingBarrel extends GuiContainer{
         if(this.press.currentProcessTime > 0){
             int i = this.press.getProcessScaled(29);
             drawTexturedModalRect(this.guiLeft+82, this.guiTop+34, 176, 0, 12, i);
-        }
-    }
-
-    @Override
-    public void drawScreen(int x, int y, float f){
-        super.drawScreen(x, y, f);
-
-        String text1 = this.press.canolaTank.getFluidAmount()+"/"+this.press.canolaTank.getCapacity()+" mB "+StringUtil.localize("fluid.canolaoil");
-        if(x >= guiLeft+61 && y >= guiTop+6 && x <= guiLeft+76 && y <= guiTop+88){
-            this.func_146283_a(Collections.singletonList(text1), x, y);
-        }
-
-        String text2 = this.press.oilTank.getFluidAmount()+"/"+this.press.oilTank.getCapacity()+" mB "+StringUtil.localize("fluid.oil");
-        if(x >= guiLeft+99 && y >= guiTop+6 && x <= guiLeft+114 && y <= guiTop+88){
-            this.func_146283_a(Collections.singletonList(text2), x, y);
         }
     }
 }

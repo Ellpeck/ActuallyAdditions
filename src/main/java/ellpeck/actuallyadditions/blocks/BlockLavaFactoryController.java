@@ -51,13 +51,6 @@ public class BlockLavaFactoryController extends BlockContainerBase implements IA
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister iconReg){
-        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
-        this.topIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Top");
-    }
-
-    @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9){
         if(!world.isRemote){
             TileEntityLavaFactoryController factory = (TileEntityLavaFactoryController)world.getTileEntity(x, y, z);
@@ -77,6 +70,13 @@ public class BlockLavaFactoryController extends BlockContainerBase implements IA
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
+    public void registerBlockIcons(IIconRegister iconReg){
+        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
+        this.topIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Top");
+    }
+
+    @Override
     public String getName(){
         return "blockLavaFactoryController";
     }
@@ -93,11 +93,6 @@ public class BlockLavaFactoryController extends BlockContainerBase implements IA
         }
 
         @Override
-        public EnumRarity getRarity(ItemStack stack){
-            return EnumRarity.uncommon;
-        }
-
-        @Override
         public String getUnlocalizedName(ItemStack stack){
             return this.getUnlocalizedName();
         }
@@ -105,6 +100,11 @@ public class BlockLavaFactoryController extends BlockContainerBase implements IA
         @Override
         public int getMetadata(int damage){
             return damage;
+        }
+
+        @Override
+        public EnumRarity getRarity(ItemStack stack){
+            return EnumRarity.uncommon;
         }
     }
 }

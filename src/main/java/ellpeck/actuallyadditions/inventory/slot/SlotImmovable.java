@@ -22,6 +22,11 @@ public class SlotImmovable extends Slot{
     }
 
     @Override
+    public boolean isItemValid(ItemStack stack){
+        return false;
+    }
+
+    @Override
     public void putStack(ItemStack stack){
 
     }
@@ -33,11 +38,6 @@ public class SlotImmovable extends Slot{
 
     @Override
     public boolean canTakeStack(EntityPlayer player){
-        return false;
-    }
-
-    @Override
-    public boolean isItemValid(ItemStack stack){
         return false;
     }
 }

@@ -51,6 +51,63 @@ public class BlockTreasureChest extends Block implements IActAddItemOrBlock{
     }
 
     @Override
+    public IIcon getIcon(IBlockAccess world, int x, int y, int z, int side){
+        int meta = world.getBlockMetadata(x, y, z);
+        if(side == 1){
+            return this.topIcon;
+        }
+        if(side == meta+2){
+            return this.frontIcon;
+        }
+        if(side == 0){
+            return this.bottomIcon;
+        }
+        return this.blockIcon;
+    }
+
+    @Override
+    public IIcon getIcon(int side, int meta){
+        if(side == 1){
+            return this.topIcon;
+        }
+        if(side == 0){
+            return this.bottomIcon;
+        }
+        if(side == 3){
+            return this.frontIcon;
+        }
+        return this.blockIcon;
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void randomDisplayTick(World world, int x, int y, int z, Random rand){
+        for(int i = 0; i < 2; i++){
+            for(float f = 0; f <= 3; f += 0.5){
+                float particleX = rand.nextFloat();
+                float particleZ = rand.nextFloat();
+                world.spawnParticle("bubble", (double)x+particleX, (double)y+f+1, (double)z+particleZ, 0.0D, 0.2D, 0.0D);
+            }
+        }
+    }
+
+    @Override
+    public Item getItemDropped(int par1, Random rand, int par3){
+        return null;
+    }
+
+    @Override
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9){
+        if(!world.isRemote){
+            world.playSoundAtEntity(player, "random.chestopen", 0.2F, new Random().nextFloat()*0.1F+0.9F);
+            this.dropItems(world, x, y, z);
+            player.addStat(TheAchievements.OPEN_TREASURE_CHEST.ach, 1);
+            world.setBlockToAir(x, y, z);
+        }
+        return true;
+    }
+
+    @Override
     public boolean canSilkHarvest(){
         return false;
     }
@@ -74,40 +131,6 @@ public class BlockTreasureChest extends Block implements IActAddItemOrBlock{
     }
 
     @Override
-    public Item getItemDropped(int par1, Random rand, int par3){
-        return null;
-    }
-
-    @Override
-    public IIcon getIcon(int side, int meta){
-        if(side == 1){
-            return this.topIcon;
-        }
-        if(side == 0){
-            return this.bottomIcon;
-        }
-        if(side == 3){
-            return this.frontIcon;
-        }
-        return this.blockIcon;
-    }
-
-    @Override
-    public IIcon getIcon(IBlockAccess world, int x, int y, int z, int side){
-        int meta = world.getBlockMetadata(x, y, z);
-        if(side == 1){
-            return this.topIcon;
-        }
-        if(side == meta+2){
-            return this.frontIcon;
-        }
-        if(side == 0){
-            return this.bottomIcon;
-        }
-        return this.blockIcon;
-    }
-
-    @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconReg){
         this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
@@ -117,14 +140,8 @@ public class BlockTreasureChest extends Block implements IActAddItemOrBlock{
     }
 
     @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9){
-        if(!world.isRemote){
-            world.playSoundAtEntity(player, "random.chestopen", 0.2F, new Random().nextFloat()*0.1F+0.9F);
-            this.dropItems(world, x, y, z);
-            player.addStat(TheAchievements.OPEN_TREASURE_CHEST.ach, 1);
-            world.setBlockToAir(x, y, z);
-        }
-        return true;
+    public String getName(){
+        return "blockTreasureChest";
     }
 
     private void dropItems(World world, int x, int y, int z){
@@ -150,23 +167,6 @@ public class BlockTreasureChest extends Block implements IActAddItemOrBlock{
         }
     }
 
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void randomDisplayTick(World world, int x, int y, int z, Random rand){
-        for(int i = 0; i < 2; i++){
-            for(float f = 0; f <= 3; f += 0.5){
-                float particleX = rand.nextFloat();
-                float particleZ = rand.nextFloat();
-                world.spawnParticle("bubble", (double)x+particleX, (double)y+f+1, (double)z+particleZ, 0.0D, 0.2D, 0.0D);
-            }
-        }
-    }
-
-    @Override
-    public String getName(){
-        return "blockTreasureChest";
-    }
-
     public static class TheItemBlock extends ItemBlock{
 
         private Block theBlock;
@@ -179,11 +179,6 @@ public class BlockTreasureChest extends Block implements IActAddItemOrBlock{
         }
 
         @Override
-        public EnumRarity getRarity(ItemStack stack){
-            return EnumRarity.epic;
-        }
-
-        @Override
         public String getUnlocalizedName(ItemStack stack){
             return this.getUnlocalizedName();
         }
@@ -191,6 +186,11 @@ public class BlockTreasureChest extends Block implements IActAddItemOrBlock{
         @Override
         public int getMetadata(int damage){
             return damage;
+        }
+
+        @Override
+        public EnumRarity getRarity(ItemStack stack){
+            return EnumRarity.epic;
         }
     }
 }

@@ -66,32 +66,6 @@ public class ContainerDrill extends Container{
     }
 
     @Override
-    public boolean canInteractWith(EntityPlayer player){
-        return this.drillInventory.isUseableByPlayer(player);
-    }
-
-    @Override
-    public void onContainerClosed(EntityPlayer player){
-        ItemStack stack = inventory.getCurrentItem();
-        if(stack != null && stack.getItem() instanceof ItemDrill){
-            ((ItemDrill)stack.getItem()).writeSlotsToNBT(this.drillInventory.slots, inventory.getCurrentItem());
-        }
-        super.onContainerClosed(player);
-    }
-
-    @Override
-    public ItemStack slotClick(int par1, int par2, int par3, EntityPlayer player){
-        //par3 appears to be the type of clicking
-        //par3 == 2 appears to be one of the number keys being hit
-        if(par3 == 2 && par2 == inventory.currentItem){
-            return null;
-        }
-        else{
-            return super.slotClick(par1, par2, par3, player);
-        }
-    }
-
-    @Override
     public ItemStack transferStackInSlot(EntityPlayer player, int slot){
         final int inventoryStart = 5;
         final int inventoryEnd = inventoryStart+26;
@@ -142,6 +116,32 @@ public class ContainerDrill extends Container{
             return currentStack;
         }
         return null;
+    }
+
+    @Override
+    public ItemStack slotClick(int par1, int par2, int par3, EntityPlayer player){
+        //par3 appears to be the type of clicking
+        //par3 == 2 appears to be one of the number keys being hit
+        if(par3 == 2 && par2 == inventory.currentItem){
+            return null;
+        }
+        else{
+            return super.slotClick(par1, par2, par3, player);
+        }
+    }
+
+    @Override
+    public void onContainerClosed(EntityPlayer player){
+        ItemStack stack = inventory.getCurrentItem();
+        if(stack != null && stack.getItem() instanceof ItemDrill){
+            ((ItemDrill)stack.getItem()).writeSlotsToNBT(this.drillInventory.slots, inventory.getCurrentItem());
+        }
+        super.onContainerClosed(player);
+    }
+
+    @Override
+    public boolean canInteractWith(EntityPlayer player){
+        return this.drillInventory.isUseableByPlayer(player);
     }
 
     public static class InventoryDrill implements IInventory{

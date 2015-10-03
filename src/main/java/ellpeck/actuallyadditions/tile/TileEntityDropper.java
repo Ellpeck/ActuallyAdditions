@@ -46,18 +46,6 @@ public class TileEntityDropper extends TileEntityInventoryBase{
         }
     }
 
-    @Override
-    public void writeToNBT(NBTTagCompound compound){
-        super.writeToNBT(compound);
-        compound.setInteger("CurrentTime", this.currentTime);
-    }
-
-    @Override
-    public void readFromNBT(NBTTagCompound compound){
-        super.readFromNBT(compound);
-        this.currentTime = compound.getInteger("CurrentTime");
-    }
-
     public ItemStack removeFromInventory(boolean actuallyDo){
         for(int i = 0; i < this.slots.length; i++){
             if(this.slots[i] != null){
@@ -72,6 +60,18 @@ public class TileEntityDropper extends TileEntityInventoryBase{
             }
         }
         return null;
+    }
+
+    @Override
+    public void writeToNBT(NBTTagCompound compound){
+        super.writeToNBT(compound);
+        compound.setInteger("CurrentTime", this.currentTime);
+    }
+
+    @Override
+    public void readFromNBT(NBTTagCompound compound){
+        super.readFromNBT(compound);
+        this.currentTime = compound.getInteger("CurrentTime");
     }
 
     @Override

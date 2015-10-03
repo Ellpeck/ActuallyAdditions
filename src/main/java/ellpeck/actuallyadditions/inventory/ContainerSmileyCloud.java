@@ -17,12 +17,12 @@ import net.minecraft.item.ItemStack;
 public class ContainerSmileyCloud extends Container{
 
     @Override
-    public boolean canInteractWith(EntityPlayer player){
-        return true;
+    public ItemStack transferStackInSlot(EntityPlayer player, int slot){
+        return null;
     }
 
     @Override
-    public ItemStack transferStackInSlot(EntityPlayer player, int slot){
-        return null;
+    public boolean canInteractWith(EntityPlayer player){
+        return true;
     }
 }

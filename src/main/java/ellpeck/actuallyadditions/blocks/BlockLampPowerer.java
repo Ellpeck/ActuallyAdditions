@@ -42,14 +42,12 @@ public class BlockLampPowerer extends Block implements IActAddItemOrBlock{
     }
 
     @Override
-    public String getName(){
-        return "blockLampPowerer";
-    }
-
-    @Override
-    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack stack){
-        int rotation = BlockPistonBase.determineOrientation(world, x, y, z, player);
-        world.setBlockMetadataWithNotify(x, y, z, rotation, 2);
+    public IIcon getIcon(IBlockAccess world, int x, int y, int z, int side){
+        int meta = world.getBlockMetadata(x, y, z);
+        if(side == meta){
+            return this.frontIcon;
+        }
+        return this.blockIcon;
     }
 
     @Override
@@ -61,12 +59,8 @@ public class BlockLampPowerer extends Block implements IActAddItemOrBlock{
     }
 
     @Override
-    public IIcon getIcon(IBlockAccess world, int x, int y, int z, int side){
-        int meta = world.getBlockMetadata(x, y, z);
-        if(side == meta){
-            return this.frontIcon;
-        }
-        return this.blockIcon;
+    public void onNeighborBlockChange(World world, int x, int y, int z, Block block){
+        this.updateLamp(world, x, y, z);
     }
 
     @Override
@@ -75,8 +69,21 @@ public class BlockLampPowerer extends Block implements IActAddItemOrBlock{
     }
 
     @Override
-    public void onNeighborBlockChange(World world, int x, int y, int z, Block block){
-        this.updateLamp(world, x, y, z);
+    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack stack){
+        int rotation = BlockPistonBase.determineOrientation(world, x, y, z, player);
+        world.setBlockMetadataWithNotify(x, y, z, rotation, 2);
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void registerBlockIcons(IIconRegister iconReg){
+        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
+        this.frontIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Front");
+    }
+
+    @Override
+    public String getName(){
+        return "blockLampPowerer";
     }
 
     private void updateLamp(World world, int x, int y, int z){
@@ -97,13 +104,6 @@ public class BlockLampPowerer extends Block implements IActAddItemOrBlock{
         }
     }
 
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister iconReg){
-        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
-        this.frontIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Front");
-    }
-
     public static class TheItemBlock extends ItemBlock{
 
         private Block theBlock;
@@ -116,11 +116,6 @@ public class BlockLampPowerer extends Block implements IActAddItemOrBlock{
         }
 
         @Override
-        public EnumRarity getRarity(ItemStack stack){
-            return EnumRarity.uncommon;
-        }
-
-        @Override
         public String getUnlocalizedName(ItemStack stack){
             return this.getUnlocalizedName();
         }
@@ -128,6 +123,11 @@ public class BlockLampPowerer extends Block implements IActAddItemOrBlock{
         @Override
         public int getMetadata(int meta){
             return meta;
+        }
+
+        @Override
+        public EnumRarity getRarity(ItemStack stack){
+            return EnumRarity.uncommon;
         }
     }
 }

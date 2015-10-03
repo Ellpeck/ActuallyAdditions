@@ -39,6 +39,11 @@ public class ItemSpecialDrop extends Item implements IActAddItemOrBlock{
     }
 
     @Override
+    public IIcon getIconFromDamage(int par1){
+        return par1 >= textures.length ? null : textures[par1];
+    }
+
+    @Override
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player){
         if(!world.isRemote){
             if(stack.getItemDamage() == TheSpecialDrops.SOLIDIFIED_EXPERIENCE.ordinal()){
@@ -60,18 +65,18 @@ public class ItemSpecialDrop extends Item implements IActAddItemOrBlock{
     }
 
     @Override
-    public String getName(){
-        return "itemSpecial";
+    public int getMetadata(int damage){
+        return damage;
+    }
+
+    @Override
+    public String getUnlocalizedName(ItemStack stack){
+        return this.getUnlocalizedName()+(stack.getItemDamage() >= allDrops.length ? " ERROR!" : allDrops[stack.getItemDamage()].getName());
     }
 
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return stack.getItemDamage() >= allDrops.length ? EnumRarity.common : allDrops[stack.getItemDamage()].rarity;
-    }
-
-    @Override
-    public int getMetadata(int damage){
-        return damage;
     }
 
     @SuppressWarnings("all")
@@ -83,20 +88,15 @@ public class ItemSpecialDrop extends Item implements IActAddItemOrBlock{
     }
 
     @Override
-    public String getUnlocalizedName(ItemStack stack){
-        return this.getUnlocalizedName()+(stack.getItemDamage() >= allDrops.length ? " ERROR!" : allDrops[stack.getItemDamage()].getName());
-    }
-
-    @Override
-    public IIcon getIconFromDamage(int par1){
-        return par1 >= textures.length ? null : textures[par1];
-    }
-
-    @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister iconReg){
         for(int i = 0; i < textures.length; i++){
             textures[i] = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+allDrops[i].getName());
         }
+    }
+
+    @Override
+    public String getName(){
+        return "itemSpecial";
     }
 }

@@ -38,6 +38,19 @@ public class GuiOilGenerator extends GuiContainer{
     }
 
     @Override
+    public void drawScreen(int x, int y, float f){
+        super.drawScreen(x, y, f);
+        String text1 = this.generator.storage.getEnergyStored()+"/"+this.generator.storage.getMaxEnergyStored()+" RF";
+        if(x >= guiLeft+43 && y >= guiTop+6 && x <= guiLeft+58 && y <= guiTop+88){
+            this.func_146283_a(Collections.singletonList(text1), x, y);
+        }
+        String text2 = this.generator.tank.getFluidAmount()+"/"+this.generator.tank.getCapacity()+" mB "+StringUtil.localize("fluid.oil");
+        if(x >= guiLeft+117 && y >= guiTop+6 && x <= guiLeft+132 && y <= guiTop+88){
+            this.func_146283_a(Collections.singletonList(text2), x, y);
+        }
+    }
+
+    @Override
     public void drawGuiContainerForegroundLayer(int x, int y){
         AssetUtil.displayNameString(this.fontRendererObj, xSize, -10, this.generator.getInventoryName());
     }
@@ -65,19 +78,6 @@ public class GuiOilGenerator extends GuiContainer{
         if(this.generator.currentBurnTime > 0){
             int i = this.generator.getBurningScaled(13);
             this.drawTexturedModalRect(guiLeft+72, guiTop+44+12-i, 176, 96-i, 14, i);
-        }
-    }
-
-    @Override
-    public void drawScreen(int x, int y, float f){
-        super.drawScreen(x, y, f);
-        String text1 = this.generator.storage.getEnergyStored()+"/"+this.generator.storage.getMaxEnergyStored()+" RF";
-        if(x >= guiLeft+43 && y >= guiTop+6 && x <= guiLeft+58 && y <= guiTop+88){
-            this.func_146283_a(Collections.singletonList(text1), x, y);
-        }
-        String text2 = this.generator.tank.getFluidAmount()+"/"+this.generator.tank.getCapacity()+" mB "+StringUtil.localize("fluid.oil");
-        if(x >= guiLeft+117 && y >= guiTop+6 && x <= guiLeft+132 && y <= guiTop+88){
-            this.func_146283_a(Collections.singletonList(text2), x, y);
         }
     }
 }

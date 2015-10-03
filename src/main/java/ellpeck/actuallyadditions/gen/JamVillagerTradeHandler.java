@@ -40,6 +40,15 @@ public class JamVillagerTradeHandler implements VillagerRegistry.IVillageTradeHa
         this.addWants("dustGlowstone", 12, 22);
     }
 
+    public void addWants(String oredictName, int minSize, int maxSize){
+        ArrayList<ItemStack> stacks = (ArrayList<ItemStack>)OreDictionary.getOres(oredictName, false);
+        trades.add(new Trade(stacks, minSize, maxSize));
+    }
+
+    public void addWants(ItemStack stack, int minSize, int maxSize){
+        trades.add(new Trade(stack, minSize, maxSize));
+    }
+
     @Override
     @SuppressWarnings("all")
     public void manipulateTradesForVillager(EntityVillager villager, MerchantRecipeList recipeList, Random rand){
@@ -65,15 +74,6 @@ public class JamVillagerTradeHandler implements VillagerRegistry.IVillageTradeHa
                 }
             }
         }
-    }
-
-    public void addWants(String oredictName, int minSize, int maxSize){
-        ArrayList<ItemStack> stacks = (ArrayList<ItemStack>)OreDictionary.getOres(oredictName, false);
-        trades.add(new Trade(stacks, minSize, maxSize));
-    }
-
-    public void addWants(ItemStack stack, int minSize, int maxSize){
-        trades.add(new Trade(stack, minSize, maxSize));
     }
 
     public static class Trade{

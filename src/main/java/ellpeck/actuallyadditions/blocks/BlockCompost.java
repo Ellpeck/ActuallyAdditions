@@ -48,6 +48,42 @@ public class BlockCompost extends BlockContainerBase implements IActAddItemOrBlo
     }
 
     @Override
+    public boolean renderAsNormalBlock(){
+        return false;
+    }
+
+    @Override
+    public int getRenderType(){
+        return AssetUtil.COMPOST_RENDER_ID;
+    }
+
+    @Override
+    public IIcon getIcon(int side, int metadata){
+        return this.blockIcon;
+    }
+
+    @Override
+    public void addCollisionBoxesToList(World world, int x, int y, int z, AxisAlignedBB mask, List list, Entity collidingEntity){
+        this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.3125F, 1.0F);
+        super.addCollisionBoxesToList(world, x, y, z, mask, list, collidingEntity);
+        float f = 0.125F;
+        this.setBlockBounds(0.0F, 0.0F, 0.0F, f, 1.0F, 1.0F);
+        super.addCollisionBoxesToList(world, x, y, z, mask, list, collidingEntity);
+        this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, f);
+        super.addCollisionBoxesToList(world, x, y, z, mask, list, collidingEntity);
+        this.setBlockBounds(1.0F-f, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
+        super.addCollisionBoxesToList(world, x, y, z, mask, list, collidingEntity);
+        this.setBlockBounds(0.0F, 0.0F, 1.0F-f, 1.0F, 1.0F, 1.0F);
+        super.addCollisionBoxesToList(world, x, y, z, mask, list, collidingEntity);
+        this.setBlockBoundsForItemRender();
+    }
+
+    @Override
+    public boolean isOpaqueCube(){
+        return false;
+    }
+
+    @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int f6, float f7, float f8, float f9){
         if(!world.isRemote){
             ItemStack stackPlayer = player.getCurrentEquippedItem();
@@ -80,51 +116,15 @@ public class BlockCompost extends BlockContainerBase implements IActAddItemOrBlo
     }
 
     @Override
-    public void addCollisionBoxesToList(World world, int x, int y, int z, AxisAlignedBB mask, List list, Entity collidingEntity){
-        this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.3125F, 1.0F);
-        super.addCollisionBoxesToList(world, x, y, z, mask, list, collidingEntity);
-        float f = 0.125F;
-        this.setBlockBounds(0.0F, 0.0F, 0.0F, f, 1.0F, 1.0F);
-        super.addCollisionBoxesToList(world, x, y, z, mask, list, collidingEntity);
-        this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, f);
-        super.addCollisionBoxesToList(world, x, y, z, mask, list, collidingEntity);
-        this.setBlockBounds(1.0F-f, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
-        super.addCollisionBoxesToList(world, x, y, z, mask, list, collidingEntity);
-        this.setBlockBounds(0.0F, 0.0F, 1.0F-f, 1.0F, 1.0F, 1.0F);
-        super.addCollisionBoxesToList(world, x, y, z, mask, list, collidingEntity);
-        this.setBlockBoundsForItemRender();
-    }
-
-    @Override
-    public IIcon getIcon(int side, int metadata){
-        return this.blockIcon;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister iconReg){
-        this.blockIcon = Blocks.planks.getIcon(0, 0);
-    }
-
-    @Override
     public void setBlockBoundsForItemRender(){
         float f = 1.0F/16.0F;
         this.setBlockBounds(f, 0.0F, f, 1.0F-f, 1.0F, 1.0F-f);
     }
 
     @Override
-    public boolean isOpaqueCube(){
-        return false;
-    }
-
-    @Override
-    public boolean renderAsNormalBlock(){
-        return false;
-    }
-
-    @Override
-    public int getRenderType(){
-        return AssetUtil.COMPOST_RENDER_ID;
+    @SideOnly(Side.CLIENT)
+    public void registerBlockIcons(IIconRegister iconReg){
+        this.blockIcon = Blocks.planks.getIcon(0, 0);
     }
 
     @Override
@@ -155,11 +155,6 @@ public class BlockCompost extends BlockContainerBase implements IActAddItemOrBlo
         }
 
         @Override
-        public EnumRarity getRarity(ItemStack stack){
-            return EnumRarity.uncommon;
-        }
-
-        @Override
         public String getUnlocalizedName(ItemStack stack){
             return this.getUnlocalizedName();
         }
@@ -167,6 +162,11 @@ public class BlockCompost extends BlockContainerBase implements IActAddItemOrBlo
         @Override
         public int getMetadata(int damage){
             return damage;
+        }
+
+        @Override
+        public EnumRarity getRarity(ItemStack stack){
+            return EnumRarity.uncommon;
         }
     }
 }

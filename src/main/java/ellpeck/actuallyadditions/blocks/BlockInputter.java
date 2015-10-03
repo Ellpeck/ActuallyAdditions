@@ -59,12 +59,6 @@ public class BlockInputter extends BlockContainerBase implements IActAddItemOrBl
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister iconReg){
-        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
-    }
-
-    @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9){
         if(!world.isRemote){
             TileEntityInputter inputter = (TileEntityInputter)world.getTileEntity(x, y, z);
@@ -77,6 +71,17 @@ public class BlockInputter extends BlockContainerBase implements IActAddItemOrBl
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
+    public void registerBlockIcons(IIconRegister iconReg){
+        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
+    }
+
+    @Override
+    public String getName(){
+        return this.isAdvanced ? "blockInputterAdvanced" : "blockInputter";
+    }
+
+    @Override
     public void breakBlock(World world, int x, int y, int z, Block block, int par6){
         if(!world.isRemote){
             TileEntity aTile = world.getTileEntity(x, y, z);
@@ -86,11 +91,6 @@ public class BlockInputter extends BlockContainerBase implements IActAddItemOrBl
             }
         }
         super.breakBlock(world, x, y, z, block, par6);
-    }
-
-    @Override
-    public String getName(){
-        return this.isAdvanced ? "blockInputterAdvanced" : "blockInputter";
     }
 
     public static class TheItemBlock extends ItemBlock{
@@ -108,8 +108,13 @@ public class BlockInputter extends BlockContainerBase implements IActAddItemOrBl
         }
 
         @Override
-        public EnumRarity getRarity(ItemStack stack){
-            return ((BlockInputter)theBlock).isAdvanced ? EnumRarity.epic : EnumRarity.rare;
+        public String getUnlocalizedName(ItemStack stack){
+            return this.getUnlocalizedName();
+        }
+
+        @Override
+        public int getMetadata(int damage){
+            return damage;
         }
 
         @Override
@@ -126,13 +131,8 @@ public class BlockInputter extends BlockContainerBase implements IActAddItemOrBl
         }
 
         @Override
-        public String getUnlocalizedName(ItemStack stack){
-            return this.getUnlocalizedName();
-        }
-
-        @Override
-        public int getMetadata(int damage){
-            return damage;
+        public EnumRarity getRarity(ItemStack stack){
+            return ((BlockInputter)theBlock).isAdvanced ? EnumRarity.epic : EnumRarity.rare;
         }
     }
 }

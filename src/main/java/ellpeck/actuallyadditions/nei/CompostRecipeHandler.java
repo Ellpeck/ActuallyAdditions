@@ -43,16 +43,6 @@ public class CompostRecipeHandler extends TemplateRecipeHandler implements INeiR
     }
 
     @Override
-    public int recipiesPerPage(){
-        return 2;
-    }
-
-    @Override
-    public Class<? extends GuiContainer> getGuiClass(){
-        return null;
-    }
-
-    @Override
     public String getRecipeName(){
         return StringUtil.localize("container.nei."+NAME+".name");
     }
@@ -94,6 +84,16 @@ public class CompostRecipeHandler extends TemplateRecipeHandler implements INeiR
     }
 
     @Override
+    public String getOverlayIdentifier(){
+        return NAME;
+    }
+
+    @Override
+    public Class<? extends GuiContainer> getGuiClass(){
+        return null;
+    }
+
+    @Override
     public void drawBackground(int recipeIndex){
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         GuiDraw.changeTexture(getGuiTexture());
@@ -101,8 +101,8 @@ public class CompostRecipeHandler extends TemplateRecipeHandler implements INeiR
     }
 
     @Override
-    public String getOverlayIdentifier(){
-        return NAME;
+    public int recipiesPerPage(){
+        return 2;
     }
 
     public class CachedCompostRecipe extends CachedRecipe{
@@ -117,13 +117,13 @@ public class CompostRecipeHandler extends TemplateRecipeHandler implements INeiR
         }
 
         @Override
-        public PositionedStack getIngredient(){
-            return input;
+        public PositionedStack getResult(){
+            return result;
         }
 
         @Override
-        public PositionedStack getResult(){
-            return result;
+        public PositionedStack getIngredient(){
+            return input;
         }
     }
 }

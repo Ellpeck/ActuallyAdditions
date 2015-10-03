@@ -116,6 +116,12 @@ public class ModelCoffeeMachine extends ModelBaseAA{
         setRotation(p13, 0F, 0F, 0F);
     }
 
+    private void setRotation(ModelRenderer model, float x, float y, float z){
+        model.rotateAngleX = x;
+        model.rotateAngleY = y;
+        model.rotateAngleZ = z;
+    }
+
     @Override
     public void render(float f){
         p1.render(f);
@@ -131,12 +137,6 @@ public class ModelCoffeeMachine extends ModelBaseAA{
         p11.render(f);
         p12.render(f);
         p13.render(f);
-    }
-
-    private void setRotation(ModelRenderer model, float x, float y, float z){
-        model.rotateAngleX = x;
-        model.rotateAngleY = y;
-        model.rotateAngleZ = z;
     }
 
     @Override

@@ -178,12 +178,12 @@ public class GuiHandler implements IGuiHandler{
 
         public boolean checkTileEntity;
 
-        GuiTypes(boolean checkTileEntity){
-            this.checkTileEntity = checkTileEntity;
-        }
-
         GuiTypes(){
             this(true);
+        }
+
+        GuiTypes(boolean checkTileEntity){
+            this.checkTileEntity = checkTileEntity;
         }
     }
 }

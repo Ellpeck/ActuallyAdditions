@@ -73,6 +73,10 @@ public class VillageComponentJamHouse extends StructureVillagePieces.House1{
         return true;
     }
 
+    public void fillWithBlocks(World world, StructureBoundingBox sbb, int minX, int minY, int minZ, int maxX, int maxY, int maxZ, Block block){
+        this.fillWithBlocks(world, sbb, minX, minY, minZ, maxX, maxY, maxZ, block, block, false);
+    }
+
     public void spawnActualHouse(World world, Random rand, StructureBoundingBox sbb){
         //Base
         this.fillWithBlocks(world, sbb, 1, 0, 8, 9, 0, 10, Blocks.grass);
@@ -191,10 +195,6 @@ public class VillageComponentJamHouse extends StructureVillagePieces.House1{
         this.placeBlockAtCurrentPosition(world, Blocks.torch, 0, 2, 3, 6, sbb);
         this.placeBlockAtCurrentPosition(world, Blocks.torch, 0, 8, 3, 2, sbb);
         this.placeBlockAtCurrentPosition(world, Blocks.torch, 0, 8, 3, 6, sbb);
-    }
-
-    public void fillWithBlocks(World world, StructureBoundingBox sbb, int minX, int minY, int minZ, int maxX, int maxY, int maxZ, Block block){
-        this.fillWithBlocks(world, sbb, minX, minY, minZ, maxX, maxY, maxZ, block, block, false);
     }
 
     @Override

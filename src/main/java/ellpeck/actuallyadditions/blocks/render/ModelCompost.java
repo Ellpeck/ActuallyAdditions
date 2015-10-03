@@ -55,6 +55,20 @@ public class ModelCompost extends ModelBaseAA{
     }
 
     @Override
+    public void render(float f){
+        this.wallThree.render(f);
+        this.wallFour.render(f);
+        this.wallOne.render(f);
+        this.wallTwo.render(f);
+        this.floor.render(f);
+    }
+
+    @Override
+    public String getName(){
+        return "modelCompost";
+    }
+
+    @Override
     public void renderExtra(float f, TileEntity tile){
         int meta = tile.getWorldObj().getBlockMetadata(tile.xCoord, tile.yCoord, tile.zCoord);
         if(meta > 0 && meta <= ConfigIntValues.COMPOST_AMOUNT.getValue()){
@@ -68,19 +82,5 @@ public class ModelCompost extends ModelBaseAA{
         else if(meta == ConfigIntValues.COMPOST_AMOUNT.getValue()+1){
             this.innerDone.render(f);
         }
-    }
-
-    @Override
-    public void render(float f){
-        this.wallThree.render(f);
-        this.wallFour.render(f);
-        this.wallOne.render(f);
-        this.wallTwo.render(f);
-        this.floor.render(f);
-    }
-
-    @Override
-    public String getName(){
-        return "modelCompost";
     }
 }

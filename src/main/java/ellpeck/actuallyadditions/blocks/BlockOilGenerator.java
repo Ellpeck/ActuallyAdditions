@@ -45,18 +45,6 @@ public class BlockOilGenerator extends BlockContainerBase implements IActAddItem
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void randomDisplayTick(World world, int x, int y, int z, Random rand){
-        int meta = world.getBlockMetadata(x, y, z);
-
-        if(meta == 1){
-            for(int i = 0; i < 5; i++){
-                world.spawnParticle("smoke", (double)x+0.5F, (double)y+1.0F, (double)z+0.5F, 0.0D, 0.0D, 0.0D);
-            }
-        }
-    }
-
-    @Override
     public TileEntity createNewTileEntity(World world, int par2){
         return new TileEntityOilGenerator();
     }
@@ -68,10 +56,14 @@ public class BlockOilGenerator extends BlockContainerBase implements IActAddItem
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister iconReg){
-        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
-        this.topIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Top");
-        this.bottomIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Bottom");
+    public void randomDisplayTick(World world, int x, int y, int z, Random rand){
+        int meta = world.getBlockMetadata(x, y, z);
+
+        if(meta == 1){
+            for(int i = 0; i < 5; i++){
+                world.spawnParticle("smoke", (double)x+0.5F, (double)y+1.0F, (double)z+0.5F, 0.0D, 0.0D, 0.0D);
+            }
+        }
     }
 
     @Override
@@ -87,14 +79,22 @@ public class BlockOilGenerator extends BlockContainerBase implements IActAddItem
     }
 
     @Override
-    public void breakBlock(World world, int x, int y, int z, Block block, int par6){
-        this.dropInventory(world, x, y, z);
-        super.breakBlock(world, x, y, z, block, par6);
+    @SideOnly(Side.CLIENT)
+    public void registerBlockIcons(IIconRegister iconReg){
+        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
+        this.topIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Top");
+        this.bottomIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Bottom");
     }
 
     @Override
     public String getName(){
         return "blockOilGenerator";
+    }
+
+    @Override
+    public void breakBlock(World world, int x, int y, int z, Block block, int par6){
+        this.dropInventory(world, x, y, z);
+        super.breakBlock(world, x, y, z, block, par6);
     }
 
     public static class TheItemBlock extends ItemBlock{
@@ -109,11 +109,6 @@ public class BlockOilGenerator extends BlockContainerBase implements IActAddItem
         }
 
         @Override
-        public EnumRarity getRarity(ItemStack stack){
-            return EnumRarity.uncommon;
-        }
-
-        @Override
         public String getUnlocalizedName(ItemStack stack){
             return this.getUnlocalizedName();
         }
@@ -121,6 +116,11 @@ public class BlockOilGenerator extends BlockContainerBase implements IActAddItem
         @Override
         public int getMetadata(int damage){
             return damage;
+        }
+
+        @Override
+        public EnumRarity getRarity(ItemStack stack){
+            return EnumRarity.uncommon;
         }
     }
 }

@@ -30,6 +30,7 @@ public class GuiGrinder extends GuiContainer{
     private static final ResourceLocation resLocDouble = AssetUtil.getGuiLocation("guiGrinderDouble");
     private TileEntityGrinder tileGrinder;
     private boolean isDouble;
+
     public GuiGrinder(InventoryPlayer inventoryPlayer, TileEntityBase tile){
         this(inventoryPlayer, tile, false);
     }
@@ -40,6 +41,15 @@ public class GuiGrinder extends GuiContainer{
         this.isDouble = isDouble;
         this.xSize = 176;
         this.ySize = 93+86;
+    }
+
+    @Override
+    public void drawScreen(int x, int y, float f){
+        super.drawScreen(x, y, f);
+        String text = this.tileGrinder.storage.getEnergyStored()+"/"+this.tileGrinder.storage.getMaxEnergyStored()+" RF";
+        if((this.isDouble && x >= guiLeft+14 && y >= guiTop+6 && x <= guiLeft+29 && y <= guiTop+88) || (!this.isDouble && x >= guiLeft+43 && y >= guiTop+6 && x <= guiLeft+58 && y <= guiTop+88)){
+            this.func_146283_a(Collections.singletonList(text), x, y);
+        }
     }
 
     @Override
@@ -70,15 +80,6 @@ public class GuiGrinder extends GuiContainer{
                 int i = this.tileGrinder.getSecondTimeToScale(23);
                 this.drawTexturedModalRect(this.guiLeft+101, this.guiTop+40, 176, 22, 24, i);
             }
-        }
-    }
-
-    @Override
-    public void drawScreen(int x, int y, float f){
-        super.drawScreen(x, y, f);
-        String text = this.tileGrinder.storage.getEnergyStored()+"/"+this.tileGrinder.storage.getMaxEnergyStored()+" RF";
-        if((this.isDouble && x >= guiLeft+14 && y >= guiTop+6 && x <= guiLeft+29 && y <= guiTop+88) || (!this.isDouble && x >= guiLeft+43 && y >= guiTop+6 && x <= guiLeft+58 && y <= guiTop+88)){
-            this.func_146283_a(Collections.singletonList(text), x, y);
         }
     }
 

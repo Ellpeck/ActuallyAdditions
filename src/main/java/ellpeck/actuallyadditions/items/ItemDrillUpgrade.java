@@ -26,6 +26,7 @@ public class ItemDrillUpgrade extends Item implements IActAddItemOrBlock{
 
     public UpgradeType type;
     public String unlocalizedName;
+
     public ItemDrillUpgrade(UpgradeType type, String unlocName){
         this.type = type;
         this.unlocalizedName = unlocName;
@@ -60,14 +61,14 @@ public class ItemDrillUpgrade extends Item implements IActAddItemOrBlock{
     }
 
     @Override
-    public IIcon getIcon(ItemStack stack, int pass){
-        return this.itemIcon;
-    }
-
-    @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister iconReg){
         this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
+    }
+
+    @Override
+    public IIcon getIcon(ItemStack stack, int pass){
+        return this.itemIcon;
     }
 
     @Override

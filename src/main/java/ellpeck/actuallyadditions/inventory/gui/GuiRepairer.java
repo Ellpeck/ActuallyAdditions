@@ -37,6 +37,15 @@ public class GuiRepairer extends GuiContainer{
     }
 
     @Override
+    public void drawScreen(int x, int y, float f){
+        super.drawScreen(x, y, f);
+        String text = this.tileRepairer.storage.getEnergyStored()+"/"+this.tileRepairer.storage.getMaxEnergyStored()+" RF";
+        if(x >= guiLeft+28 && y >= guiTop+6 && x <= guiLeft+43 && y <= guiTop+88){
+            this.func_146283_a(Collections.singletonList(text), x, y);
+        }
+    }
+
+    @Override
     public void drawGuiContainerForegroundLayer(int x, int y){
         AssetUtil.displayNameString(this.fontRendererObj, xSize, -10, this.tileRepairer.getInventoryName());
     }
@@ -58,15 +67,6 @@ public class GuiRepairer extends GuiContainer{
         if(TileEntityItemRepairer.canBeRepaired(this.tileRepairer.slots[TileEntityItemRepairer.SLOT_INPUT])){
             int i = this.tileRepairer.getItemDamageToScale(22);
             this.drawTexturedModalRect(this.guiLeft+73, this.guiTop+52, 176, 28, i, 16);
-        }
-    }
-
-    @Override
-    public void drawScreen(int x, int y, float f){
-        super.drawScreen(x, y, f);
-        String text = this.tileRepairer.storage.getEnergyStored()+"/"+this.tileRepairer.storage.getMaxEnergyStored()+" RF";
-        if(x >= guiLeft+28 && y >= guiTop+6 && x <= guiLeft+43 && y <= guiTop+88){
-            this.func_146283_a(Collections.singletonList(text), x, y);
         }
     }
 }

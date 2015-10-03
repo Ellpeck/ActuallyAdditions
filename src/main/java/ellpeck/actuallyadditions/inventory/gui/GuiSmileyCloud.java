@@ -54,19 +54,6 @@ public class GuiSmileyCloud extends GuiContainer{
         this.ySize = 20;
     }
 
-    @Override
-    public void drawGuiContainerForegroundLayer(int x, int y){
-        String name = cloud.name == null || cloud.name.isEmpty() ? "" : EnumChatFormatting.GOLD+cloud.name+EnumChatFormatting.RESET+" "+StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.the")+" ";
-        String localizedName = name+StringUtil.localize("container."+ModUtil.MOD_ID_LOWER+".cloud.name");
-        this.fontRendererObj.drawString(localizedName, xSize/2-this.fontRendererObj.getStringWidth(localizedName)/2, -10, StringUtil.DECIMAL_COLOR_WHITE);
-    }
-
-    @Override
-    public void updateScreen(){
-        super.updateScreen();
-        this.nameField.updateCursorCounter();
-    }
-
     @SuppressWarnings("unchecked")
     @Override
     public void initGui(){
@@ -76,6 +63,29 @@ public class GuiSmileyCloud extends GuiContainer{
         this.nameField.setMaxStringLength(20);
         this.nameField.setEnableBackgroundDrawing(false);
         this.nameField.setFocused(true);
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public void drawScreen(int x, int y, float f){
+        super.drawScreen(x, y, f);
+    }
+
+    @Override
+    public void drawGuiContainerForegroundLayer(int x, int y){
+        String name = cloud.name == null || cloud.name.isEmpty() ? "" : EnumChatFormatting.GOLD+cloud.name+EnumChatFormatting.RESET+" "+StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.the")+" ";
+        String localizedName = name+StringUtil.localize("container."+ModUtil.MOD_ID_LOWER+".cloud.name");
+        this.fontRendererObj.drawString(localizedName, xSize/2-this.fontRendererObj.getStringWidth(localizedName)/2, -10, StringUtil.DECIMAL_COLOR_WHITE);
+    }
+
+    @Override
+    public void drawGuiContainerBackgroundLayer(float f, int x, int y){
+        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+
+        this.mc.getTextureManager().bindTexture(resLoc);
+        this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
+
+        this.nameField.drawTextBox();
     }
 
     @Override
@@ -99,6 +109,12 @@ public class GuiSmileyCloud extends GuiContainer{
         }
     }
 
+    @Override
+    public void updateScreen(){
+        super.updateScreen();
+        this.nameField.updateCursorCounter();
+    }
+
     public void setVariable(GuiTextField field){
         this.sendPacket(field.getText(), 0);
         field.setText("");
@@ -106,21 +122,5 @@ public class GuiSmileyCloud extends GuiContainer{
 
     private void sendPacket(String text, int textID){
         PacketHandler.theNetwork.sendToServer(new PacketGuiString(x, y, z, world, text, textID, Minecraft.getMinecraft().thePlayer));
-    }
-
-    @Override
-    public void drawGuiContainerBackgroundLayer(float f, int x, int y){
-        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-
-        this.mc.getTextureManager().bindTexture(resLoc);
-        this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
-
-        this.nameField.drawTextBox();
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public void drawScreen(int x, int y, float f){
-        super.drawScreen(x, y, f);
     }
 }

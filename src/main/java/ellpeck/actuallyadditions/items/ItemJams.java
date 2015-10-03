@@ -42,31 +42,8 @@ public class ItemJams extends ItemFood implements IActAddItemOrBlock{
     }
 
     @Override
-    public EnumRarity getRarity(ItemStack stack){
-        return stack.getItemDamage() >= allJams.length ? EnumRarity.common : allJams[stack.getItemDamage()].rarity;
-    }
-
-    @Override
-    public int func_150905_g(ItemStack stack){
-        return stack.getItemDamage() >= allJams.length ? 0 : allJams[stack.getItemDamage()].healAmount;
-    }
-
-    @Override
-    public float func_150906_h(ItemStack stack){
-        return stack.getItemDamage() >= allJams.length ? 0 : allJams[stack.getItemDamage()].saturation;
-    }
-
-    @Override
     public int getMetadata(int damage){
         return damage;
-    }
-
-    @SuppressWarnings("all")
-    @SideOnly(Side.CLIENT)
-    public void getSubItems(Item item, CreativeTabs tab, List list){
-        for(int j = 0; j < allJams.length; j++){
-            list.add(new ItemStack(this, 1, j));
-        }
     }
 
     @Override
@@ -78,6 +55,42 @@ public class ItemJams extends ItemFood implements IActAddItemOrBlock{
     @SideOnly(Side.CLIENT)
     public int getColorFromItemStack(ItemStack stack, int pass){
         return pass > 0 ? (stack.getItemDamage() >= allJams.length ? 0 : allJams[stack.getItemDamage()].color) : super.getColorFromItemStack(stack, pass);
+    }
+
+    @Override
+    public EnumRarity getRarity(ItemStack stack){
+        return stack.getItemDamage() >= allJams.length ? EnumRarity.common : allJams[stack.getItemDamage()].rarity;
+    }
+
+    @Override
+    public boolean requiresMultipleRenderPasses(){
+        return true;
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public IIcon getIconFromDamageForRenderPass(int damage, int pass){
+        return pass > 0 ? this.overlayIcon : super.getIconFromDamageForRenderPass(damage, pass);
+    }
+
+    @SuppressWarnings("all")
+    @SideOnly(Side.CLIENT)
+    public void getSubItems(Item item, CreativeTabs tab, List list){
+        for(int j = 0; j < allJams.length; j++){
+            list.add(new ItemStack(this, 1, j));
+        }
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void registerIcons(IIconRegister iconReg){
+        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
+        this.overlayIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Overlay");
+    }
+
+    @Override
+    public String getName(){
+        return "itemJam";
     }
 
     @Override
@@ -102,25 +115,12 @@ public class ItemJams extends ItemFood implements IActAddItemOrBlock{
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public IIcon getIconFromDamageForRenderPass(int damage, int pass){
-        return pass > 0 ? this.overlayIcon : super.getIconFromDamageForRenderPass(damage, pass);
+    public int func_150905_g(ItemStack stack){
+        return stack.getItemDamage() >= allJams.length ? 0 : allJams[stack.getItemDamage()].healAmount;
     }
 
     @Override
-    public boolean requiresMultipleRenderPasses(){
-        return true;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister iconReg){
-        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
-        this.overlayIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Overlay");
-    }
-
-    @Override
-    public String getName(){
-        return "itemJam";
+    public float func_150906_h(ItemStack stack){
+        return stack.getItemDamage() >= allJams.length ? 0 : allJams[stack.getItemDamage()].saturation;
     }
 }

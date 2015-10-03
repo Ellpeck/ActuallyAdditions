@@ -48,6 +48,46 @@ public class BlockXPSolidifier extends BlockContainerBase implements IActAddItem
     }
 
     @Override
+    public TileEntity createNewTileEntity(World world, int par2){
+        return new TileEntityXPSolidifier();
+    }
+
+    @Override
+    public IIcon getIcon(IBlockAccess world, int x, int y, int z, int side){
+        int meta = world.getBlockMetadata(x, y, z);
+        if(side == 1 || side == 0){
+            return this.topIcon;
+        }
+        if(side == meta+2){
+            return this.frontIcon;
+        }
+        return this.blockIcon;
+    }
+
+    @Override
+    public IIcon getIcon(int side, int meta){
+        if(side == 1 || side == 0){
+            return this.topIcon;
+        }
+        if(side == 3){
+            return this.frontIcon;
+        }
+        return this.blockIcon;
+    }
+
+    @Override
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9){
+        if(!world.isRemote){
+            TileEntityXPSolidifier solidifier = (TileEntityXPSolidifier)world.getTileEntity(x, y, z);
+            if(solidifier != null){
+                player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.XP_SOLIDIFIER.ordinal(), world, x, y, z);
+            }
+            return true;
+        }
+        return true;
+    }
+
+    @Override
     public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack stack){
         int rotation = MathHelper.floor_double((double)(player.rotationYaw*4.0F/360.0F)+0.5D) & 3;
 
@@ -66,34 +106,6 @@ public class BlockXPSolidifier extends BlockContainerBase implements IActAddItem
     }
 
     @Override
-    public TileEntity createNewTileEntity(World world, int par2){
-        return new TileEntityXPSolidifier();
-    }
-
-    @Override
-    public IIcon getIcon(int side, int meta){
-        if(side == 1 || side == 0){
-            return this.topIcon;
-        }
-        if(side == 3){
-            return this.frontIcon;
-        }
-        return this.blockIcon;
-    }
-
-    @Override
-    public IIcon getIcon(IBlockAccess world, int x, int y, int z, int side){
-        int meta = world.getBlockMetadata(x, y, z);
-        if(side == 1 || side == 0){
-            return this.topIcon;
-        }
-        if(side == meta+2){
-            return this.frontIcon;
-        }
-        return this.blockIcon;
-    }
-
-    @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconReg){
         this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
@@ -102,15 +114,8 @@ public class BlockXPSolidifier extends BlockContainerBase implements IActAddItem
     }
 
     @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9){
-        if(!world.isRemote){
-            TileEntityXPSolidifier solidifier = (TileEntityXPSolidifier)world.getTileEntity(x, y, z);
-            if(solidifier != null){
-                player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.XP_SOLIDIFIER.ordinal(), world, x, y, z);
-            }
-            return true;
-        }
-        return true;
+    public String getName(){
+        return "blockXPSolidifier";
     }
 
     @Override
@@ -145,11 +150,6 @@ public class BlockXPSolidifier extends BlockContainerBase implements IActAddItem
         world.spawnEntityInWorld(entityItem);
     }
 
-    @Override
-    public String getName(){
-        return "blockXPSolidifier";
-    }
-
     public static class TheItemBlock extends ItemBlock{
 
         private Block theBlock;
@@ -162,11 +162,6 @@ public class BlockXPSolidifier extends BlockContainerBase implements IActAddItem
         }
 
         @Override
-        public EnumRarity getRarity(ItemStack stack){
-            return EnumRarity.epic;
-        }
-
-        @Override
         public String getUnlocalizedName(ItemStack stack){
             return this.getUnlocalizedName();
         }
@@ -174,6 +169,11 @@ public class BlockXPSolidifier extends BlockContainerBase implements IActAddItem
         @Override
         public int getMetadata(int damage){
             return damage;
+        }
+
+        @Override
+        public EnumRarity getRarity(ItemStack stack){
+            return EnumRarity.epic;
         }
     }
 }

@@ -25,13 +25,13 @@ public class TileEntityGiantChest extends TileEntityInventoryBase{
     }
 
     @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
-        return true;
+    public boolean canInsertItem(int slot, ItemStack stack, int side){
+        return this.isItemValidForSlot(slot, stack);
     }
 
     @Override
-    public boolean canInsertItem(int slot, ItemStack stack, int side){
-        return this.isItemValidForSlot(slot, stack);
+    public boolean isItemValidForSlot(int i, ItemStack stack){
+        return true;
     }
 
     @Override

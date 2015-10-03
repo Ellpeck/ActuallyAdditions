@@ -76,21 +76,6 @@ public class GuiInputter extends GuiContainer{
         this.isAdvanced = isAdvanced;
     }
 
-    @Override
-    public void drawGuiContainerForegroundLayer(int x, int y){
-        AssetUtil.displayNameString(this.fontRendererObj, xSize, -10, this.tileInputter.getInventoryName());
-    }
-
-    @Override
-    public void updateScreen(){
-        super.updateScreen();
-
-        this.fieldPutStart.updateCursorCounter();
-        this.fieldPutEnd.updateCursorCounter();
-        this.fieldPullStart.updateCursorCounter();
-        this.fieldPullEnd.updateCursorCounter();
-    }
-
     @SuppressWarnings("unchecked")
     @Override
     public void initGui(){
@@ -132,90 +117,6 @@ public class GuiInputter extends GuiContainer{
     }
 
     @Override
-    protected void mouseClicked(int par1, int par2, int par3){
-        this.fieldPutStart.mouseClicked(par1, par2, par3);
-        this.fieldPutEnd.mouseClicked(par1, par2, par3);
-        this.fieldPullStart.mouseClicked(par1, par2, par3);
-        this.fieldPullEnd.mouseClicked(par1, par2, par3);
-
-        super.mouseClicked(par1, par2, par3);
-    }
-
-    @Override
-    public void keyTyped(char theChar, int key){
-        if(key == Keyboard.KEY_RETURN || key == Keyboard.KEY_NUMPADENTER){
-            if(this.fieldPutStart.isFocused()){
-                this.setVariable(this.fieldPutStart, 0);
-            }
-            if(this.fieldPutEnd.isFocused()){
-                this.setVariable(this.fieldPutEnd, 1);
-            }
-            if(this.fieldPullStart.isFocused()){
-                this.setVariable(this.fieldPullStart, 2);
-            }
-            if(this.fieldPullEnd.isFocused()){
-                this.setVariable(this.fieldPullEnd, 3);
-            }
-        }
-        else if(Character.isDigit(theChar) || key == Keyboard.KEY_BACK || key == Keyboard.KEY_DELETE || key == Keyboard.KEY_LEFT || key == Keyboard.KEY_RIGHT){
-            this.fieldPutStart.textboxKeyTyped(theChar, key);
-            this.fieldPutEnd.textboxKeyTyped(theChar, key);
-            this.fieldPullStart.textboxKeyTyped(theChar, key);
-            this.fieldPullEnd.textboxKeyTyped(theChar, key);
-        }
-        else{
-            super.keyTyped(theChar, key);
-        }
-    }
-
-    public void setVariable(GuiTextField field, int sendInt){
-        if(!field.getText().isEmpty()){
-            this.sendPacket(parse(field.getText()), sendInt);
-            field.setText("");
-        }
-    }
-
-    private int parse(String theInt){
-        try{
-            return Integer.parseInt(theInt);
-        }
-        catch(Exception e){
-            return -1;
-        }
-    }
-
-    private void sendPacket(int text, int textID){
-        PacketHandler.theNetwork.sendToServer(new PacketGuiNumber(x, y, z, world, text, textID, Minecraft.getMinecraft().thePlayer));
-    }
-
-    @Override
-    public void drawGuiContainerBackgroundLayer(float f, int x, int y){
-        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-
-        this.mc.getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
-        this.drawTexturedModalRect(this.guiLeft, this.guiTop+93+(isAdvanced ? OFFSET_ADVANCED : 0), 0, 0, 176, 86);
-
-        this.mc.getTextureManager().bindTexture(this.isAdvanced ? resLocAdvanced : resLoc);
-        this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 93+(isAdvanced ? OFFSET_ADVANCED : 0));
-
-        this.fontRendererObj.drawString(StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.pull"), guiLeft+22+3, guiTop+32+(isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_GRAY_TEXT);
-        this.fontRendererObj.drawString(StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.put"), guiLeft+107+3, guiTop+32+(isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_GRAY_TEXT);
-
-        this.fontRendererObj.drawString(sideString[tileInputter.sideToPull+1], guiLeft+24+1, guiTop+45+3+(isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_GRAY_TEXT);
-        this.fontRendererObj.drawString(sideString[tileInputter.sideToPut+1], guiLeft+109+1, guiTop+45+3+(isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_GRAY_TEXT);
-
-        this.fontRendererObj.drawString(Integer.toString(this.tileInputter.slotToPutStart), guiLeft+99, guiTop+67+(isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_WHITE);
-        this.fontRendererObj.drawString(Integer.toString(this.tileInputter.slotToPutEnd), guiLeft+136, guiTop+67+(isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_WHITE);
-        this.fontRendererObj.drawString(Integer.toString(this.tileInputter.slotToPullStart), guiLeft+14, guiTop+67+(isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_WHITE);
-        this.fontRendererObj.drawString(Integer.toString(this.tileInputter.slotToPullEnd), guiLeft+51, guiTop+67+(isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_WHITE);
-
-        this.fieldPutStart.drawTextBox();
-        this.fieldPutEnd.drawTextBox();
-        this.fieldPullStart.drawTextBox();
-        this.fieldPullEnd.drawTextBox();
-    }
-
-    @Override
     @SuppressWarnings("unchecked")
     public void drawScreen(int x, int y, float f){
         super.drawScreen(x, y, f);
@@ -254,6 +155,105 @@ public class GuiInputter extends GuiContainer{
         }
         if(x >= guiLeft+133 && y >= newTopOffset+65 && x <= guiLeft+133+31 && y <= newTopOffset+65+12){
             this.func_146283_a(this.fontRendererObj.listFormattedStringToWidth(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID_LOWER+".inputter.info.2").replace("<p>", StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.put")), GuiBooklet.TOOLTIP_SPLIT_LENGTH), x, y);
+        }
+    }
+
+    @Override
+    public void drawGuiContainerForegroundLayer(int x, int y){
+        AssetUtil.displayNameString(this.fontRendererObj, xSize, -10, this.tileInputter.getInventoryName());
+    }
+
+    @Override
+    public void drawGuiContainerBackgroundLayer(float f, int x, int y){
+        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+
+        this.mc.getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
+        this.drawTexturedModalRect(this.guiLeft, this.guiTop+93+(isAdvanced ? OFFSET_ADVANCED : 0), 0, 0, 176, 86);
+
+        this.mc.getTextureManager().bindTexture(this.isAdvanced ? resLocAdvanced : resLoc);
+        this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 93+(isAdvanced ? OFFSET_ADVANCED : 0));
+
+        this.fontRendererObj.drawString(StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.pull"), guiLeft+22+3, guiTop+32+(isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_GRAY_TEXT);
+        this.fontRendererObj.drawString(StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.put"), guiLeft+107+3, guiTop+32+(isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_GRAY_TEXT);
+
+        this.fontRendererObj.drawString(sideString[tileInputter.sideToPull+1], guiLeft+24+1, guiTop+45+3+(isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_GRAY_TEXT);
+        this.fontRendererObj.drawString(sideString[tileInputter.sideToPut+1], guiLeft+109+1, guiTop+45+3+(isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_GRAY_TEXT);
+
+        this.fontRendererObj.drawString(Integer.toString(this.tileInputter.slotToPutStart), guiLeft+99, guiTop+67+(isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_WHITE);
+        this.fontRendererObj.drawString(Integer.toString(this.tileInputter.slotToPutEnd), guiLeft+136, guiTop+67+(isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_WHITE);
+        this.fontRendererObj.drawString(Integer.toString(this.tileInputter.slotToPullStart), guiLeft+14, guiTop+67+(isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_WHITE);
+        this.fontRendererObj.drawString(Integer.toString(this.tileInputter.slotToPullEnd), guiLeft+51, guiTop+67+(isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_WHITE);
+
+        this.fieldPutStart.drawTextBox();
+        this.fieldPutEnd.drawTextBox();
+        this.fieldPullStart.drawTextBox();
+        this.fieldPullEnd.drawTextBox();
+    }
+
+    @Override
+    protected void mouseClicked(int par1, int par2, int par3){
+        this.fieldPutStart.mouseClicked(par1, par2, par3);
+        this.fieldPutEnd.mouseClicked(par1, par2, par3);
+        this.fieldPullStart.mouseClicked(par1, par2, par3);
+        this.fieldPullEnd.mouseClicked(par1, par2, par3);
+
+        super.mouseClicked(par1, par2, par3);
+    }
+
+    @Override
+    public void keyTyped(char theChar, int key){
+        if(key == Keyboard.KEY_RETURN || key == Keyboard.KEY_NUMPADENTER){
+            if(this.fieldPutStart.isFocused()){
+                this.setVariable(this.fieldPutStart, 0);
+            }
+            if(this.fieldPutEnd.isFocused()){
+                this.setVariable(this.fieldPutEnd, 1);
+            }
+            if(this.fieldPullStart.isFocused()){
+                this.setVariable(this.fieldPullStart, 2);
+            }
+            if(this.fieldPullEnd.isFocused()){
+                this.setVariable(this.fieldPullEnd, 3);
+            }
+        }
+        else if(Character.isDigit(theChar) || key == Keyboard.KEY_BACK || key == Keyboard.KEY_DELETE || key == Keyboard.KEY_LEFT || key == Keyboard.KEY_RIGHT){
+            this.fieldPutStart.textboxKeyTyped(theChar, key);
+            this.fieldPutEnd.textboxKeyTyped(theChar, key);
+            this.fieldPullStart.textboxKeyTyped(theChar, key);
+            this.fieldPullEnd.textboxKeyTyped(theChar, key);
+        }
+        else{
+            super.keyTyped(theChar, key);
+        }
+    }
+
+    @Override
+    public void updateScreen(){
+        super.updateScreen();
+
+        this.fieldPutStart.updateCursorCounter();
+        this.fieldPutEnd.updateCursorCounter();
+        this.fieldPullStart.updateCursorCounter();
+        this.fieldPullEnd.updateCursorCounter();
+    }
+
+    public void setVariable(GuiTextField field, int sendInt){
+        if(!field.getText().isEmpty()){
+            this.sendPacket(parse(field.getText()), sendInt);
+            field.setText("");
+        }
+    }
+
+    private void sendPacket(int text, int textID){
+        PacketHandler.theNetwork.sendToServer(new PacketGuiNumber(x, y, z, world, text, textID, Minecraft.getMinecraft().thePlayer));
+    }
+
+    private int parse(String theInt){
+        try{
+            return Integer.parseInt(theInt);
+        }
+        catch(Exception e){
+            return -1;
         }
     }
 

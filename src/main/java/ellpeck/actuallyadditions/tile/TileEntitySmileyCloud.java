@@ -30,14 +30,9 @@ public class TileEntitySmileyCloud extends TileEntityBase implements IPacketSync
     private String nameBefore;
 
     @Override
-    public void updateEntity(){
-        if(!worldObj.isRemote){
-            if(!Objects.equals(this.name, this.nameBefore)){
-                this.nameBefore = this.name;
-                this.sendUpdate();
-                this.markDirty();
-            }
-        }
+    public void readFromNBT(NBTTagCompound compound){
+        super.readFromNBT(compound);
+        this.name = compound.getString("Name");
     }
 
     @Override
@@ -49,9 +44,14 @@ public class TileEntitySmileyCloud extends TileEntityBase implements IPacketSync
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound compound){
-        super.readFromNBT(compound);
-        this.name = compound.getString("Name");
+    public void updateEntity(){
+        if(!worldObj.isRemote){
+            if(!Objects.equals(this.name, this.nameBefore)){
+                this.nameBefore = this.name;
+                this.sendUpdate();
+                this.markDirty();
+            }
+        }
     }
 
     @Override

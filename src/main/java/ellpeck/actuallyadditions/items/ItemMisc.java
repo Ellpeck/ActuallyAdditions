@@ -34,18 +34,23 @@ public class ItemMisc extends Item implements IActAddItemOrBlock{
     }
 
     @Override
-    public String getName(){
-        return "itemMisc";
-    }
-
-    @Override
-    public EnumRarity getRarity(ItemStack stack){
-        return stack.getItemDamage() >= allMiscItems.length ? EnumRarity.common : allMiscItems[stack.getItemDamage()].rarity;
+    public IIcon getIconFromDamage(int par1){
+        return par1 >= textures.length ? null : textures[par1];
     }
 
     @Override
     public int getMetadata(int damage){
         return damage;
+    }
+
+    @Override
+    public String getUnlocalizedName(ItemStack stack){
+        return this.getUnlocalizedName()+(stack.getItemDamage() >= allMiscItems.length ? " ERROR!" : allMiscItems[stack.getItemDamage()].getName());
+    }
+
+    @Override
+    public EnumRarity getRarity(ItemStack stack){
+        return stack.getItemDamage() >= allMiscItems.length ? EnumRarity.common : allMiscItems[stack.getItemDamage()].rarity;
     }
 
     @SuppressWarnings("all")
@@ -57,20 +62,15 @@ public class ItemMisc extends Item implements IActAddItemOrBlock{
     }
 
     @Override
-    public String getUnlocalizedName(ItemStack stack){
-        return this.getUnlocalizedName()+(stack.getItemDamage() >= allMiscItems.length ? " ERROR!" : allMiscItems[stack.getItemDamage()].getName());
-    }
-
-    @Override
-    public IIcon getIconFromDamage(int par1){
-        return par1 >= textures.length ? null : textures[par1];
-    }
-
-    @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister iconReg){
         for(int i = 0; i < textures.length; i++){
             textures[i] = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+allMiscItems[i].getName());
         }
+    }
+
+    @Override
+    public String getName(){
+        return "itemMisc";
     }
 }

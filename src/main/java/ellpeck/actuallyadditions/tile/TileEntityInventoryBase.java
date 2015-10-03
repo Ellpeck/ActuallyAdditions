@@ -27,21 +27,8 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
         this.name = "container."+ModUtil.MOD_ID_LOWER+"."+name;
     }
 
-    @Override
-    public void writeToNBT(NBTTagCompound compound){
-        super.writeToNBT(compound);
-        if(this.slots.length > 0){
-            NBTTagList tagList = new NBTTagList();
-            for(int currentIndex = 0; currentIndex < slots.length; currentIndex++){
-                if(slots[currentIndex] != null){
-                    NBTTagCompound tagCompound = new NBTTagCompound();
-                    tagCompound.setByte("Slot", (byte)currentIndex);
-                    slots[currentIndex].writeToNBT(tagCompound);
-                    tagList.appendTag(tagCompound);
-                }
-            }
-            compound.setTag("Items", tagList);
-        }
+    public void initializeSlots(int itemAmount){
+        this.slots = new ItemStack[itemAmount];
     }
 
     @Override
@@ -60,11 +47,38 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
     }
 
     @Override
+    public void writeToNBT(NBTTagCompound compound){
+        super.writeToNBT(compound);
+        if(this.slots.length > 0){
+            NBTTagList tagList = new NBTTagList();
+            for(int currentIndex = 0; currentIndex < slots.length; currentIndex++){
+                if(slots[currentIndex] != null){
+                    NBTTagCompound tagCompound = new NBTTagCompound();
+                    tagCompound.setByte("Slot", (byte)currentIndex);
+                    slots[currentIndex].writeToNBT(tagCompound);
+                    tagList.appendTag(tagCompound);
+                }
+            }
+            compound.setTag("Items", tagList);
+        }
+    }    @Override
     public int getInventoryStackLimit(){
         return 64;
     }
 
     @Override
+    public int[] getAccessibleSlotsFromSide(int side){
+        if(this.slots.length > 0){
+            int[] theInt = new int[slots.length];
+            for(int i = 0; i < theInt.length; i++){
+                theInt[i] = i;
+            }
+            return theInt;
+        }
+        else{
+            return new int[0];
+        }
+    }    @Override
     public boolean isUseableByPlayer(EntityPlayer player){
         return player.getDistanceSq(xCoord+0.5D, yCoord+0.5D, zCoord+0.5D) <= 64;
     }
@@ -120,9 +134,7 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
         return null;
     }
 
-    public void initializeSlots(int itemAmount){
-        this.slots = new ItemStack[itemAmount];
-    }
+
 
     @Override
     public String getInventoryName(){
@@ -144,17 +156,5 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
 
     }
 
-    @Override
-    public int[] getAccessibleSlotsFromSide(int side){
-        if(this.slots.length > 0){
-            int[] theInt = new int[slots.length];
-            for(int i = 0; i < theInt.length; i++){
-                theInt[i] = i;
-            }
-            return theInt;
-        }
-        else{
-            return new int[0];
-        }
-    }
+
 }

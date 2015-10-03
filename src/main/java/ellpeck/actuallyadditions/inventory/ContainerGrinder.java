@@ -51,11 +51,6 @@ public class ContainerGrinder extends Container{
     }
 
     @Override
-    public boolean canInteractWith(EntityPlayer player){
-        return this.tileGrinder.isUseableByPlayer(player);
-    }
-
-    @Override
     public ItemStack transferStackInSlot(EntityPlayer player, int slot){
         final int inventoryStart = this.isDouble ? 6 : 3;
         final int inventoryEnd = inventoryStart+26;
@@ -120,5 +115,10 @@ public class ContainerGrinder extends Container{
             return currentStack;
         }
         return null;
+    }
+
+    @Override
+    public boolean canInteractWith(EntityPlayer player){
+        return this.tileGrinder.isUseableByPlayer(player);
     }
 }

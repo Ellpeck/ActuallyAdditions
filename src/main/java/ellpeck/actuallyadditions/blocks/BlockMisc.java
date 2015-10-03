@@ -39,12 +39,9 @@ public class BlockMisc extends Block implements IActAddItemOrBlock{
         this.setHarvestLevel("pickaxe", 1);
     }
 
-    @SuppressWarnings("all")
-    @SideOnly(Side.CLIENT)
-    public void getSubBlocks(Item item, CreativeTabs tab, List list){
-        for(int j = 0; j < allMiscBlocks.length; j++){
-            list.add(new ItemStack(item, 1, j));
-        }
+    @Override
+    public IIcon getIcon(int side, int metadata){
+        return metadata >= textures.length ? null : textures[metadata];
     }
 
     @Override
@@ -52,9 +49,12 @@ public class BlockMisc extends Block implements IActAddItemOrBlock{
         return meta;
     }
 
-    @Override
-    public IIcon getIcon(int side, int metadata){
-        return metadata >= textures.length ? null : textures[metadata];
+    @SuppressWarnings("all")
+    @SideOnly(Side.CLIENT)
+    public void getSubBlocks(Item item, CreativeTabs tab, List list){
+        for(int j = 0; j < allMiscBlocks.length; j++){
+            list.add(new ItemStack(item, 1, j));
+        }
     }
 
     @Override
@@ -82,11 +82,6 @@ public class BlockMisc extends Block implements IActAddItemOrBlock{
         }
 
         @Override
-        public EnumRarity getRarity(ItemStack stack){
-            return stack.getItemDamage() >= allMiscBlocks.length ? EnumRarity.common : allMiscBlocks[stack.getItemDamage()].rarity;
-        }
-
-        @Override
         public String getUnlocalizedName(ItemStack stack){
             return this.getUnlocalizedName()+(stack.getItemDamage() >= allMiscBlocks.length ? " ERROR!" : allMiscBlocks[stack.getItemDamage()].getName());
         }
@@ -94,6 +89,11 @@ public class BlockMisc extends Block implements IActAddItemOrBlock{
         @Override
         public int getMetadata(int damage){
             return damage;
+        }
+
+        @Override
+        public EnumRarity getRarity(ItemStack stack){
+            return stack.getItemDamage() >= allMiscBlocks.length ? EnumRarity.common : allMiscBlocks[stack.getItemDamage()].rarity;
         }
     }
 }

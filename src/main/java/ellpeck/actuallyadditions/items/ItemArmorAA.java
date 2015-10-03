@@ -40,24 +40,18 @@ public class ItemArmorAA extends ItemArmor implements IActAddItemOrBlock{
     }
 
     @Override
-    public IIcon getIcon(ItemStack stack, int pass){
-        return this.itemIcon;
-    }
-
-    @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.rare;
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister iconReg){
-        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
+    public IIcon getIcon(ItemStack stack, int pass){
+        return this.itemIcon;
     }
 
     @Override
-    public String getName(){
-        return this.name;
+    public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type){
+        return this.textures[slot == 2 ? 1 : 0];
     }
 
     @Override
@@ -72,7 +66,13 @@ public class ItemArmorAA extends ItemArmor implements IActAddItemOrBlock{
     }
 
     @Override
-    public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type){
-        return this.textures[slot == 2 ? 1 : 0];
+    @SideOnly(Side.CLIENT)
+    public void registerIcons(IIconRegister iconReg){
+        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
+    }
+
+    @Override
+    public String getName(){
+        return this.name;
     }
 }

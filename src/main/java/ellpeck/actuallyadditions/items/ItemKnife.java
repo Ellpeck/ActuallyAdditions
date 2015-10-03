@@ -33,21 +33,8 @@ public class ItemKnife extends Item implements IActAddItemOrBlock{
     }
 
     @Override
-    public ItemStack getContainerItem(ItemStack stack){
-        ItemStack theStack = stack.copy();
-        theStack.setItemDamage(theStack.getItemDamage()+1);
-        theStack.stackSize = 1;
-        return theStack;
-    }
-
-    @Override
     public boolean doesContainerItemLeaveCraftingGrid(ItemStack stack){
         return false;
-    }
-
-    @Override
-    public EnumRarity getRarity(ItemStack stack){
-        return EnumRarity.epic;
     }
 
     @Override
@@ -56,8 +43,8 @@ public class ItemKnife extends Item implements IActAddItemOrBlock{
     }
 
     @Override
-    public IIcon getIcon(ItemStack stack, int pass){
-        return this.itemIcon;
+    public EnumRarity getRarity(ItemStack stack){
+        return EnumRarity.epic;
     }
 
     @Override
@@ -77,5 +64,18 @@ public class ItemKnife extends Item implements IActAddItemOrBlock{
         Multimap map = super.getAttributeModifiers(stack);
         map.put(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(), new AttributeModifier(field_111210_e, "Knife Modifier", 3, 0));
         return map;
+    }
+
+    @Override
+    public ItemStack getContainerItem(ItemStack stack){
+        ItemStack theStack = stack.copy();
+        theStack.setItemDamage(theStack.getItemDamage()+1);
+        theStack.stackSize = 1;
+        return theStack;
+    }
+
+    @Override
+    public IIcon getIcon(ItemStack stack, int pass){
+        return this.itemIcon;
     }
 }

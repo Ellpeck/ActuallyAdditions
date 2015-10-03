@@ -68,17 +68,8 @@ public class VillageComponentCustomCropField extends StructureVillagePieces.Hous
         return true;
     }
 
-    private Block getRandomCropType(Random rand){
-        switch(rand.nextInt(4)){
-            case 0:
-                return InitBlocks.blockFlax;
-            case 1:
-                return InitBlocks.blockCoffee;
-            case 2:
-                return InitBlocks.blockRice;
-            default:
-                return InitBlocks.blockCanola;
-        }
+    public void fillWithBlocks(World world, StructureBoundingBox sbb, int minX, int minY, int minZ, int maxX, int maxY, int maxZ, Block block){
+        this.fillWithBlocks(world, sbb, minX, minY, minZ, maxX, maxY, maxZ, block, block, false);
     }
 
     public void spawnActualHouse(World world, Random rand, StructureBoundingBox sbb){
@@ -106,7 +97,16 @@ public class VillageComponentCustomCropField extends StructureVillagePieces.Hous
         }
     }
 
-    public void fillWithBlocks(World world, StructureBoundingBox sbb, int minX, int minY, int minZ, int maxX, int maxY, int maxZ, Block block){
-        this.fillWithBlocks(world, sbb, minX, minY, minZ, maxX, maxY, maxZ, block, block, false);
+    private Block getRandomCropType(Random rand){
+        switch(rand.nextInt(4)){
+            case 0:
+                return InitBlocks.blockFlax;
+            case 1:
+                return InitBlocks.blockCoffee;
+            case 2:
+                return InitBlocks.blockRice;
+            default:
+                return InitBlocks.blockCanola;
+        }
     }
 }

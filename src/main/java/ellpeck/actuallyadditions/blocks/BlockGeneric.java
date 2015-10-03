@@ -36,11 +36,6 @@ public class BlockGeneric extends Block implements IActAddItemOrBlock{
     }
 
     @Override
-    public String getName(){
-        return this.name;
-    }
-
-    @Override
     public IIcon getIcon(int side, int meta){
         return this.blockIcon;
     }
@@ -49,6 +44,11 @@ public class BlockGeneric extends Block implements IActAddItemOrBlock{
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconReg){
         this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
+    }
+
+    @Override
+    public String getName(){
+        return this.name;
     }
 
     public static class TheItemBlock extends ItemBlock{
@@ -63,11 +63,6 @@ public class BlockGeneric extends Block implements IActAddItemOrBlock{
         }
 
         @Override
-        public EnumRarity getRarity(ItemStack stack){
-            return EnumRarity.uncommon;
-        }
-
-        @Override
         public String getUnlocalizedName(ItemStack stack){
             return this.getUnlocalizedName();
         }
@@ -75,6 +70,11 @@ public class BlockGeneric extends Block implements IActAddItemOrBlock{
         @Override
         public int getMetadata(int meta){
             return meta;
+        }
+
+        @Override
+        public EnumRarity getRarity(ItemStack stack){
+            return EnumRarity.uncommon;
         }
     }
 }

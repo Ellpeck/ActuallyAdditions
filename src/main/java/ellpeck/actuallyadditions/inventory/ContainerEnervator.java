@@ -50,13 +50,13 @@ public class ContainerEnervator extends Container{
             final int finalI = i;
             this.addSlotToContainer(new Slot(inventory, inventory.getSizeInventory()-1-i, 102, 19+i*18){
                 @Override
-                public int getSlotStackLimit(){
-                    return 1;
+                public boolean isItemValid(ItemStack stack){
+                    return stack != null && stack.getItem().isValidArmor(stack, finalI, finalPlayer);
                 }
 
                 @Override
-                public boolean isItemValid(ItemStack stack){
-                    return stack != null && stack.getItem().isValidArmor(stack, finalI, finalPlayer);
+                public int getSlotStackLimit(){
+                    return 1;
                 }
 
                 @Override
@@ -66,11 +66,6 @@ public class ContainerEnervator extends Container{
                 }
             });
         }
-    }
-
-    @Override
-    public boolean canInteractWith(EntityPlayer player){
-        return this.enervator.isUseableByPlayer(player);
     }
 
     @Override
@@ -131,5 +126,10 @@ public class ContainerEnervator extends Container{
             return currentStack;
         }
         return null;
+    }
+
+    @Override
+    public boolean canInteractWith(EntityPlayer player){
+        return this.enervator.isUseableByPlayer(player);
     }
 }

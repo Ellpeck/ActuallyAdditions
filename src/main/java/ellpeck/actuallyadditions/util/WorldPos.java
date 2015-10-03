@@ -30,22 +30,6 @@ public class WorldPos{
         this.z = z;
     }
 
-    public int getX(){
-        return this.x;
-    }
-
-    public int getY(){
-        return this.y;
-    }
-
-    public int getZ(){
-        return this.z;
-    }
-
-    public World getWorld(){
-        return this.world;
-    }
-
     public Block getBlock(){
         return this.world != null ? this.world.getBlock(this.x, this.y, this.z) : null;
     }
@@ -68,6 +52,22 @@ public class WorldPos{
 
     public boolean isEqual(WorldPos pos){
         return pos != null && this.x == pos.getX() && this.y == pos.getY() && this.z == pos.getZ() && this.world == pos.getWorld();
+    }
+
+    public int getX(){
+        return this.x;
+    }
+
+    public int getY(){
+        return this.y;
+    }
+
+    public int getZ(){
+        return this.z;
+    }
+
+    public World getWorld(){
+        return this.world;
     }
 
     public WorldPos copy(){

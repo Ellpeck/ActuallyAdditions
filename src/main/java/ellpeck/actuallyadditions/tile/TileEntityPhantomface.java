@@ -48,20 +48,6 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
         super(0, name);
     }
 
-    public static int upgradeRange(int defaultRange, World world, int x, int y, int z){
-        int newRange = defaultRange;
-        for(int i = 0; i < 3; i++){
-            Block block = world.getBlock(x, y+1+i, z);
-            if(block == InitBlocks.blockPhantomBooster){
-                newRange = newRange*2;
-            }
-            else{
-                break;
-            }
-        }
-        return newRange;
-    }
-
     @Override
     public void updateEntity(){
         if(!worldObj.isRemote){
@@ -80,38 +66,18 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
         }
     }
 
-    @Override
-    public void writeToNBT(NBTTagCompound compound){
-        super.writeToNBT(compound);
-        if(this.hasBoundPosition()){
-            compound.setInteger("XCoordOfTileStored", boundPosition.getX());
-            compound.setInteger("YCoordOfTileStored", boundPosition.getY());
-            compound.setInteger("ZCoordOfTileStored", boundPosition.getZ());
-            compound.setInteger("WorldOfTileStored", boundPosition.getWorld().provider.dimensionId);
+    public static int upgradeRange(int defaultRange, World world, int x, int y, int z){
+        int newRange = defaultRange;
+        for(int i = 0; i < 3; i++){
+            Block block = world.getBlock(x, y+1+i, z);
+            if(block == InitBlocks.blockPhantomBooster){
+                newRange = newRange*2;
+            }
+            else{
+                break;
+            }
         }
-    }
-
-    @Override
-    public void readFromNBT(NBTTagCompound compound){
-        super.readFromNBT(compound);
-        int x = compound.getInteger("XCoordOfTileStored");
-        int y = compound.getInteger("YCoordOfTileStored");
-        int z = compound.getInteger("ZCoordOfTileStored");
-        World world = DimensionManager.getWorld(compound.getInteger("WorldOfTileStored"));
-        if(x != 0 && y != 0 && z != 0 && world != null){
-            this.boundPosition = new WorldPos(world, x, y, z);
-            this.markDirty();
-        }
-    }
-
-    @Override
-    public boolean canInsertItem(int slot, ItemStack stack, int side){
-        return false;
-    }
-
-    @Override
-    public boolean canExtractItem(int slot, ItemStack stack, int side){
-        return false;
+        return newRange;
     }
 
     @Override
@@ -164,6 +130,40 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
         return this.range;
     }
 
+    @Override
+    public void writeToNBT(NBTTagCompound compound){
+        super.writeToNBT(compound);
+        if(this.hasBoundPosition()){
+            compound.setInteger("XCoordOfTileStored", boundPosition.getX());
+            compound.setInteger("YCoordOfTileStored", boundPosition.getY());
+            compound.setInteger("ZCoordOfTileStored", boundPosition.getZ());
+            compound.setInteger("WorldOfTileStored", boundPosition.getWorld().provider.dimensionId);
+        }
+    }
+
+    @Override
+    public void readFromNBT(NBTTagCompound compound){
+        super.readFromNBT(compound);
+        int x = compound.getInteger("XCoordOfTileStored");
+        int y = compound.getInteger("YCoordOfTileStored");
+        int z = compound.getInteger("ZCoordOfTileStored");
+        World world = DimensionManager.getWorld(compound.getInteger("WorldOfTileStored"));
+        if(x != 0 && y != 0 && z != 0 && world != null){
+            this.boundPosition = new WorldPos(world, x, y, z);
+            this.markDirty();
+        }
+    }
+
+    @Override
+    public boolean canInsertItem(int slot, ItemStack stack, int side){
+        return false;
+    }
+
+    @Override
+    public boolean canExtractItem(int slot, ItemStack stack, int side){
+        return false;
+    }
+
     public static class TileEntityPhantomLiquiface extends TileEntityPhantomface implements IFluidHandler{
 
         public TileEntityPhantomLiquiface(){
@@ -187,6 +187,16 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
             }
         }
 
+        public IFluidHandler getHandler(){
+            if(this.boundPosition != null && this.boundPosition.getWorld() != null){
+                TileEntity tile = boundPosition.getWorld().getTileEntity(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ());
+                if(tile instanceof IFluidHandler){
+                    return (IFluidHandler)tile;
+                }
+            }
+            return null;
+        }
+
         private void pushFluid(ForgeDirection side){
             TileEntity tile = WorldUtil.getTileEntityFromSide(side, worldObj, xCoord, yCoord, zCoord);
             if(tile != null && tile instanceof IFluidHandler && this.getTankInfo(side) != null && this.getTankInfo(side).length > 0 && ((IFluidHandler)tile).getTankInfo(side.getOpposite()) != null && ((IFluidHandler)tile).getTankInfo(side.getOpposite()).length > 0){
@@ -204,21 +214,9 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
                     }
                 }
             }
-        }
-
-        @Override
+        }        @Override
         public boolean isBoundThingInRange(){
             return super.isBoundThingInRange() && this.boundPosition.getWorld().getTileEntity(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ()) instanceof IFluidHandler;
-        }
-
-        public IFluidHandler getHandler(){
-            if(this.boundPosition != null && this.boundPosition.getWorld() != null){
-                TileEntity tile = boundPosition.getWorld().getTileEntity(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ());
-                if(tile instanceof IFluidHandler){
-                    return (IFluidHandler)tile;
-                }
-            }
-            return null;
         }
 
         @Override
@@ -262,6 +260,8 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
             }
             return new FluidTankInfo[0];
         }
+
+
     }
 
     public static class TileEntityPhantomEnergyface extends TileEntityPhantomface implements IEnergyHandler{
@@ -272,11 +272,17 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
         }
 
         @Override
+        public int receiveEnergy(ForgeDirection from, int maxReceive, boolean simulate){
+            return this.isBoundThingInRange() && this.getReceiver() != null ? this.getReceiver().receiveEnergy(from, maxReceive, simulate) : 0;
+        }        @Override
         public boolean isBoundThingInRange(){
             return super.isBoundThingInRange() && (this.boundPosition.getWorld().getTileEntity(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ()) instanceof IEnergyReceiver || this.boundPosition.getWorld().getTileEntity(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ()) instanceof IEnergyProvider);
         }
 
         @Override
+        public int extractEnergy(ForgeDirection from, int maxExtract, boolean simulate){
+            return this.isBoundThingInRange() && this.getProvider() != null ? this.getProvider().extractEnergy(from, maxExtract, simulate) : 0;
+        }        @Override
         public void updateEntity(){
             super.updateEntity();
 
@@ -292,7 +298,18 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
             }
         }
 
-        private void pushEnergy(ForgeDirection side){
+        @Override
+        public int getEnergyStored(ForgeDirection from){
+            if(this.isBoundThingInRange()){
+                if(this.getProvider() != null){
+                    return this.getProvider().getEnergyStored(from);
+                }
+                if(this.getReceiver() != null){
+                    return this.getReceiver().getEnergyStored(from);
+                }
+            }
+            return 0;
+        }        private void pushEnergy(ForgeDirection side){
             TileEntity tile = WorldUtil.getTileEntityFromSide(side, worldObj, xCoord, yCoord, zCoord);
             if(tile != null && tile instanceof IEnergyReceiver && this.getProvider().getEnergyStored(ForgeDirection.UNKNOWN) > 0){
                 if(((IEnergyReceiver)tile).canConnectEnergy(side.getOpposite()) && this.canConnectEnergy(side)){
@@ -303,7 +320,18 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
             }
         }
 
-        public IEnergyProvider getProvider(){
+        @Override
+        public int getMaxEnergyStored(ForgeDirection from){
+            if(this.isBoundThingInRange()){
+                if(this.getProvider() != null){
+                    return this.getProvider().getMaxEnergyStored(from);
+                }
+                if(this.getReceiver() != null){
+                    return this.getReceiver().getMaxEnergyStored(from);
+                }
+            }
+            return 0;
+        }        public IEnergyProvider getProvider(){
             if(this.boundPosition != null && this.boundPosition.getWorld() != null){
                 TileEntity tile = boundPosition.getWorld().getTileEntity(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ());
                 if(tile instanceof IEnergyProvider){
@@ -323,41 +351,13 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
             return null;
         }
 
-        @Override
-        public int receiveEnergy(ForgeDirection from, int maxReceive, boolean simulate){
-            return this.isBoundThingInRange() && this.getReceiver() != null ? this.getReceiver().receiveEnergy(from, maxReceive, simulate) : 0;
-        }
 
-        @Override
-        public int extractEnergy(ForgeDirection from, int maxExtract, boolean simulate){
-            return this.isBoundThingInRange() && this.getProvider() != null ? this.getProvider().extractEnergy(from, maxExtract, simulate) : 0;
-        }
 
-        @Override
-        public int getEnergyStored(ForgeDirection from){
-            if(this.isBoundThingInRange()){
-                if(this.getProvider() != null){
-                    return this.getProvider().getEnergyStored(from);
-                }
-                if(this.getReceiver() != null){
-                    return this.getReceiver().getEnergyStored(from);
-                }
-            }
-            return 0;
-        }
 
-        @Override
-        public int getMaxEnergyStored(ForgeDirection from){
-            if(this.isBoundThingInRange()){
-                if(this.getProvider() != null){
-                    return this.getProvider().getMaxEnergyStored(from);
-                }
-                if(this.getReceiver() != null){
-                    return this.getReceiver().getMaxEnergyStored(from);
-                }
-            }
-            return 0;
-        }
+
+
+
+
 
         @Override
         public boolean canConnectEnergy(ForgeDirection from){

@@ -126,6 +126,12 @@ public class ModelPhantomBooster extends ModelBaseAA{
         setRotation(s15, 0F, 0F, 0F);
     }
 
+    private void setRotation(ModelRenderer model, float x, float y, float z){
+        model.rotateAngleX = x;
+        model.rotateAngleY = y;
+        model.rotateAngleZ = z;
+    }
+
     @Override
     public void render(float f){
         s1.render(f);
@@ -153,11 +159,5 @@ public class ModelPhantomBooster extends ModelBaseAA{
     @Override
     public boolean doesRotate(){
         return true;
-    }
-
-    private void setRotation(ModelRenderer model, float x, float y, float z){
-        model.rotateAngleX = x;
-        model.rotateAngleY = y;
-        model.rotateAngleZ = z;
     }
 }

@@ -49,11 +49,6 @@ public class BlockItemRepairer extends BlockContainerBase implements IActAddItem
     }
 
     @Override
-    public int getLightValue(IBlockAccess world, int x, int y, int z){
-        return world.getBlockMetadata(x, y, z) == 1 ? 12 : 0;
-    }
-
-    @Override
     public IIcon getIcon(int side, int meta){
         if(side == 1){
             return this.topIcon;
@@ -62,14 +57,6 @@ public class BlockItemRepairer extends BlockContainerBase implements IActAddItem
             return this.bottomIcon;
         }
         return this.blockIcon;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister iconReg){
-        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
-        this.topIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Top");
-        this.bottomIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Bottom");
     }
 
     @Override
@@ -85,14 +72,27 @@ public class BlockItemRepairer extends BlockContainerBase implements IActAddItem
     }
 
     @Override
-    public void breakBlock(World world, int x, int y, int z, Block block, int par6){
-        this.dropInventory(world, x, y, z);
-        super.breakBlock(world, x, y, z, block, par6);
+    @SideOnly(Side.CLIENT)
+    public void registerBlockIcons(IIconRegister iconReg){
+        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
+        this.topIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Top");
+        this.bottomIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Bottom");
+    }
+
+    @Override
+    public int getLightValue(IBlockAccess world, int x, int y, int z){
+        return world.getBlockMetadata(x, y, z) == 1 ? 12 : 0;
     }
 
     @Override
     public String getName(){
         return "blockItemRepairer";
+    }
+
+    @Override
+    public void breakBlock(World world, int x, int y, int z, Block block, int par6){
+        this.dropInventory(world, x, y, z);
+        super.breakBlock(world, x, y, z, block, par6);
     }
 
     public static class TheItemBlock extends ItemBlock{
@@ -107,11 +107,6 @@ public class BlockItemRepairer extends BlockContainerBase implements IActAddItem
         }
 
         @Override
-        public EnumRarity getRarity(ItemStack stack){
-            return EnumRarity.epic;
-        }
-
-        @Override
         public String getUnlocalizedName(ItemStack stack){
             return this.getUnlocalizedName();
         }
@@ -119,6 +114,11 @@ public class BlockItemRepairer extends BlockContainerBase implements IActAddItem
         @Override
         public int getMetadata(int meta){
             return meta;
+        }
+
+        @Override
+        public EnumRarity getRarity(ItemStack stack){
+            return EnumRarity.epic;
         }
     }
 }

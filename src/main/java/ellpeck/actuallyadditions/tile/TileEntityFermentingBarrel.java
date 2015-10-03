@@ -76,16 +76,6 @@ public class TileEntityFermentingBarrel extends TileEntityInventoryBase implemen
         }
     }
 
-    @Override
-    public void writeToNBT(NBTTagCompound compound){
-        compound.setInteger("ProcessTime", this.currentProcessTime);
-        this.canolaTank.writeToNBT(compound);
-        NBTTagCompound tag = new NBTTagCompound();
-        this.oilTank.writeToNBT(tag);
-        compound.setTag("OilTank", tag);
-        super.writeToNBT(compound);
-    }
-
     @SideOnly(Side.CLIENT)
     public int getProcessScaled(int i){
         return this.currentProcessTime*i/ConfigIntValues.BARREL_PROCESSING_TIME.getValue();
@@ -99,6 +89,21 @@ public class TileEntityFermentingBarrel extends TileEntityInventoryBase implemen
         super.readFromNBT(compound);
     }
 
+    @Override
+    public void writeToNBT(NBTTagCompound compound){
+        compound.setInteger("ProcessTime", this.currentProcessTime);
+        this.canolaTank.writeToNBT(compound);
+        NBTTagCompound tag = new NBTTagCompound();
+        this.oilTank.writeToNBT(tag);
+        compound.setTag("OilTank", tag);
+        super.writeToNBT(compound);
+    }
+
+    @Override
+    public boolean isItemValidForSlot(int i, ItemStack stack){
+        return (i == 0 && FluidContainerRegistry.containsFluid(stack, new FluidStack(InitBlocks.fluidCanolaOil, FluidContainerRegistry.BUCKET_VOLUME))) || (i == 2 && stack.getItem() == Items.bucket);
+    }
+
     @SideOnly(Side.CLIENT)
     public int getOilTankScaled(int i){
         return this.oilTank.getFluidAmount()*i/this.oilTank.getCapacity();
@@ -107,11 +112,6 @@ public class TileEntityFermentingBarrel extends TileEntityInventoryBase implemen
     @SideOnly(Side.CLIENT)
     public int getCanolaTankScaled(int i){
         return this.canolaTank.getFluidAmount()*i/this.canolaTank.getCapacity();
-    }
-
-    @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
-        return (i == 0 && FluidContainerRegistry.containsFluid(stack, new FluidStack(InitBlocks.fluidCanolaOil, FluidContainerRegistry.BUCKET_VOLUME))) || (i == 2 && stack.getItem() == Items.bucket);
     }
 
     @Override

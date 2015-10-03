@@ -34,10 +34,6 @@ public class TileEntityItemRepairer extends TileEntityInventoryBase implements I
         super(2, "repairer");
     }
 
-    public static boolean canBeRepaired(ItemStack stack){
-        return stack != null && stack.getItem().isRepairable();
-    }
-
     @Override
     @SuppressWarnings("unchecked")
     public void updateEntity(){
@@ -70,6 +66,10 @@ public class TileEntityItemRepairer extends TileEntityInventoryBase implements I
         }
     }
 
+    public static boolean canBeRepaired(ItemStack stack){
+        return stack != null && stack.getItem().isRepairable();
+    }
+
     @Override
     public void writeToNBT(NBTTagCompound compound){
         compound.setInteger("NextRepairTick", this.nextRepairTick);
@@ -84,6 +84,11 @@ public class TileEntityItemRepairer extends TileEntityInventoryBase implements I
         this.storage.readFromNBT(compound);
     }
 
+    @Override
+    public boolean isItemValidForSlot(int i, ItemStack stack){
+        return i == SLOT_INPUT;
+    }
+
     @SideOnly(Side.CLIENT)
     public int getEnergyScaled(int i){
         return this.storage.getEnergyStored()*i/this.storage.getMaxEnergyStored();
@@ -95,11 +100,6 @@ public class TileEntityItemRepairer extends TileEntityInventoryBase implements I
             return (this.slots[SLOT_INPUT].getMaxDamage()-this.slots[SLOT_INPUT].getItemDamage())*i/this.slots[SLOT_INPUT].getMaxDamage();
         }
         return 0;
-    }
-
-    @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
-        return i == SLOT_INPUT;
     }
 
     @Override

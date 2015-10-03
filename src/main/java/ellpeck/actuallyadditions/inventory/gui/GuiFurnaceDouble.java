@@ -37,6 +37,15 @@ public class GuiFurnaceDouble extends GuiContainer{
     }
 
     @Override
+    public void drawScreen(int x, int y, float f){
+        super.drawScreen(x, y, f);
+        String text = this.tileFurnace.storage.getEnergyStored()+"/"+this.tileFurnace.storage.getMaxEnergyStored()+" RF";
+        if(x >= guiLeft+28 && y >= guiTop+6 && x <= guiLeft+43 && y <= guiTop+88){
+            this.func_146283_a(Collections.singletonList(text), x, y);
+        }
+    }
+
+    @Override
     public void drawGuiContainerForegroundLayer(int x, int y){
         AssetUtil.displayNameString(this.fontRendererObj, xSize, -10, this.tileFurnace.getInventoryName());
     }
@@ -62,15 +71,6 @@ public class GuiFurnaceDouble extends GuiContainer{
         if(this.tileFurnace.secondSmeltTime > 0){
             int i = this.tileFurnace.getSecondTimeToScale(23);
             this.drawTexturedModalRect(this.guiLeft+101, this.guiTop+40, 176, 22, 24, i);
-        }
-    }
-
-    @Override
-    public void drawScreen(int x, int y, float f){
-        super.drawScreen(x, y, f);
-        String text = this.tileFurnace.storage.getEnergyStored()+"/"+this.tileFurnace.storage.getMaxEnergyStored()+" RF";
-        if(x >= guiLeft+28 && y >= guiTop+6 && x <= guiLeft+43 && y <= guiTop+88){
-            this.func_146283_a(Collections.singletonList(text), x, y);
         }
     }
 }
