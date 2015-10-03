@@ -18,12 +18,10 @@ import ellpeck.actuallyadditions.update.UpdateChecker;
 import ellpeck.actuallyadditions.util.*;
 import ellpeck.actuallyadditions.util.playerdata.PersistentClientData;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.renderer.OpenGlHelper;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
@@ -40,7 +38,6 @@ public class GuiBooklet extends GuiScreen{
     public static final ResourceLocation resLoc = AssetUtil.getGuiLocation("guiBooklet");
     public static final int CHAPTER_BUTTONS_AMOUNT = 13;
     public static final int TOOLTIP_SPLIT_LENGTH = 200;
-    public FontRenderer unicodeRenderer;
     public int xSize;
     public int ySize;
     public int guiLeft;
@@ -79,6 +76,9 @@ public class GuiBooklet extends GuiScreen{
     @SuppressWarnings("unchecked")
     @Override
     public void drawScreen(int x, int y, float f){
+        boolean unicodeBefore = this.fontRendererObj.getUnicodeFlag();
+        this.fontRendererObj.setUnicodeFlag(true);
+
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(resLoc);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, this.isGimmicky() ? 256 : this.xSize, this.isGimmicky() ? 256 : this.ySize);
@@ -87,6 +87,7 @@ public class GuiBooklet extends GuiScreen{
             this.drawTexturedModalRect(this.guiLeft+146, this.guiTop+160, 146, 80, 70, 14);
         }
 
+        this.fontRendererObj.setUnicodeFlag(false);
         if(this.currentIndexEntry != null){
             if(this.currentChapter == null){
                 this.drawCenteredString(this.fontRendererObj, this.currentIndexEntry.getLocalizedName(), this.guiLeft+this.xSize/2, this.guiTop-8, StringUtil.DECIMAL_COLOR_WHITE);
@@ -98,26 +99,27 @@ public class GuiBooklet extends GuiScreen{
         else{
             this.drawCenteredString(this.fontRendererObj, StringUtil.localize("itemGroup."+ModUtil.MOD_ID_LOWER), this.guiLeft+this.xSize/2, this.guiTop-8, StringUtil.DECIMAL_COLOR_WHITE);
         }
+        this.fontRendererObj.setUnicodeFlag(true);
 
         if(this.currentIndexEntry != null){
             if(this.currentChapter != null && this.currentPage != null){
-                this.drawCenteredString(this.unicodeRenderer, this.currentPage.getID()+"/"+this.currentChapter.pages.length, this.guiLeft+this.xSize/2, this.guiTop+172, StringUtil.DECIMAL_COLOR_WHITE);
+                this.drawCenteredString(this.fontRendererObj, this.currentPage.getID()+"/"+this.currentChapter.pages.length, this.guiLeft+this.xSize/2, this.guiTop+172, StringUtil.DECIMAL_COLOR_WHITE);
                 this.currentPage.renderPre(this, x, y, this.mouseClicked, this.ticksElapsed);
             }
             else{
-                this.drawCenteredString(this.unicodeRenderer, this.pageOpenInIndex+"/"+this.indexPageAmount, this.guiLeft+this.xSize/2, this.guiTop+172, StringUtil.DECIMAL_COLOR_WHITE);
+                this.drawCenteredString(this.fontRendererObj, this.pageOpenInIndex+"/"+this.indexPageAmount, this.guiLeft+this.xSize/2, this.guiTop+172, StringUtil.DECIMAL_COLOR_WHITE);
             }
         }
 
         if(this.isGimmicky()){
-            this.unicodeRenderer.drawSplitString("This book looks a lot like the one from Botania, doesn't it? Well, I think it does, too, and I'm kind of annoyed by it to be honest. Wasn't really meant to be that way. I guess I just kind of had the design of the Botania Book in mind when designing this. Well. I made the Code on my own, so I don't really care. Also: How did you find this gimmick? :P -Peck", this.guiLeft-80-3, this.guiTop+25, 80, StringUtil.DECIMAL_COLOR_WHITE);
+            this.fontRendererObj.drawSplitString("This book looks a lot like the one from Botania, doesn't it? Well, I think it does, too, and I'm kind of annoyed by it to be honest. Wasn't really meant to be that way. I guess I just kind of had the design of the Botania Book in mind when designing this. Well. I made the Code on my own, so I don't really care. Also: How did you find this gimmick? :P -Peck", this.guiLeft-80-3, this.guiTop+25, 80, StringUtil.DECIMAL_COLOR_WHITE);
 
             String strg = "Click this! I need followaz #Pathetic #DontTakeSeriously ->";
-            this.unicodeRenderer.drawString(strg, this.guiLeft-this.unicodeRenderer.getStringWidth(strg)-3, this.guiTop, StringUtil.DECIMAL_COLOR_WHITE);
+            this.fontRendererObj.drawString(strg, this.guiLeft-this.fontRendererObj.getStringWidth(strg)-3, this.guiTop, StringUtil.DECIMAL_COLOR_WHITE);
 
             if(this.currentChapter == InitBooklet.chapterIntro && this.currentPage == InitBooklet.chapterIntro.pages[1]){
                 strg = "Hey Hose, I kind of hate you a bit for that Ellopecko thing. (Not really! It's fun and games and stuff! :D)";
-                this.unicodeRenderer.drawString(strg, this.guiLeft+this.xSize/2-this.unicodeRenderer.getStringWidth(strg)/2, this.guiTop-20, StringUtil.DECIMAL_COLOR_WHITE);
+                this.fontRendererObj.drawString(strg, this.guiLeft+this.xSize/2-this.fontRendererObj.getStringWidth(strg)/2, this.guiTop-20, StringUtil.DECIMAL_COLOR_WHITE);
             }
         }
 
@@ -128,6 +130,7 @@ public class GuiBooklet extends GuiScreen{
             this.currentPage.render(this, x, y, this.mouseClicked, this.ticksElapsed);
         }
 
+        this.fontRendererObj.setUnicodeFlag(false);
         //Achievements Hover Text
         if(x >= this.guiLeft+138 && x <= this.guiLeft+138+7 && y >= this.guiTop && y <= this.guiTop+7){
             this.func_146283_a(Collections.singletonList(EnumChatFormatting.GOLD+"Show Achievements"), x, y);
@@ -163,6 +166,8 @@ public class GuiBooklet extends GuiScreen{
         if(this.mouseClicked){
             this.mouseClicked = false;
         }
+
+        this.fontRendererObj.setUnicodeFlag(unicodeBefore);
     }
 
     @SuppressWarnings("unchecked")
@@ -191,11 +196,6 @@ public class GuiBooklet extends GuiScreen{
         else{
             super.keyTyped(theChar, key);
         }
-    }
-
-    @Override
-    public void renderToolTip(ItemStack stack, int x, int y){
-        super.renderToolTip(stack, x, y);
     }
 
     @Override
@@ -318,8 +318,6 @@ public class GuiBooklet extends GuiScreen{
         this.guiLeft = (this.width-this.xSize)/2;
         this.guiTop = (this.height-this.ySize)/2;
 
-        this.unicodeRenderer = new FontRenderer(this.mc.gameSettings, new ResourceLocation("textures/font/ascii.png"), this.mc.renderEngine, true);
-
         this.buttonForward = new TexturedButton(0, this.guiLeft+this.xSize, this.guiTop+this.ySize+2, 164, 0, 18, 10);
         this.buttonList.add(this.buttonForward);
 
@@ -353,7 +351,7 @@ public class GuiBooklet extends GuiScreen{
             this.buttonList.add(this.chapterButtons[i]);
         }
 
-        this.searchField = new GuiTextField(this.unicodeRenderer, guiLeft+148, guiTop+162, 66, 10);
+        this.searchField = new GuiTextField(this.fontRendererObj, guiLeft+148, guiTop+162, 66, 10);
         this.searchField.setMaxStringLength(30);
         this.searchField.setEnableBackgroundDrawing(false);
 
@@ -539,7 +537,7 @@ public class GuiBooklet extends GuiScreen{
                     }
                 }
 
-                this.gui.unicodeRenderer.drawString((this.field_146123_n ? EnumChatFormatting.UNDERLINE : "")+this.displayString, this.xPosition+textOffsetX, this.yPosition+(this.height-8)/2, color);
+                this.gui.fontRendererObj.drawString((this.field_146123_n ? EnumChatFormatting.UNDERLINE : "")+this.displayString, this.xPosition+textOffsetX, this.yPosition+(this.height-8)/2, color);
             }
         }
     }

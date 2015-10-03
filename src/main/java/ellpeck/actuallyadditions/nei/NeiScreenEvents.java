@@ -17,6 +17,7 @@ import ellpeck.actuallyadditions.booklet.GuiBooklet;
 import ellpeck.actuallyadditions.booklet.InitBooklet;
 import ellpeck.actuallyadditions.booklet.page.BookletPage;
 import ellpeck.actuallyadditions.util.ItemUtil;
+import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.event.GuiScreenEvent;
@@ -42,7 +43,7 @@ public class NeiScreenEvents{
                 public void drawButton(Minecraft minecraft, int x, int y){
                     super.drawButton(minecraft, x, y);
                     if(this.visible && this.field_146123_n){
-                        this.drawString(Minecraft.getMinecraft().fontRenderer, "View more Information", this.xPosition+this.width+5, this.yPosition+this.height/2-Minecraft.getMinecraft().fontRenderer.FONT_HEIGHT/2, StringUtil.DECIMAL_COLOR_WHITE);
+                        this.drawString(Minecraft.getMinecraft().fontRenderer, StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".clickToSeeRecipe"), this.xPosition+this.width+5, this.yPosition+this.height/2-Minecraft.getMinecraft().fontRenderer.FONT_HEIGHT/2, StringUtil.DECIMAL_COLOR_WHITE);
                     }
                 }
             };

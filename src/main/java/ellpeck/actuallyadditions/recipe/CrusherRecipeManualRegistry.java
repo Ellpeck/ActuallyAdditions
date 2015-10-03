@@ -18,6 +18,7 @@ import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
 
+//TODO REDO COMPLETELY
 public class CrusherRecipeManualRegistry{
 
     public static ArrayList<CrusherRecipe> recipes = new ArrayList<CrusherRecipe>();

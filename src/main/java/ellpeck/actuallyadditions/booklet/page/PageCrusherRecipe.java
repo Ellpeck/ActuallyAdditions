@@ -41,20 +41,20 @@ public class PageCrusherRecipe extends BookletPage{
     @Override
     public void render(GuiBooklet gui, int mouseX, int mouseY, boolean mouseClick, int ticksElapsed){
         if(recipe == null){
-            gui.unicodeRenderer.drawSplitString(EnumChatFormatting.DARK_RED+StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".recipeDisabled"), gui.guiLeft+14, gui.guiTop+15, 115, 0);
+            gui.mc.fontRenderer.drawSplitString(EnumChatFormatting.DARK_RED+StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".recipeDisabled"), gui.guiLeft+14, gui.guiTop+15, 115, 0);
         }
         else{
             String strg = "Crusher Recipe";
-            gui.unicodeRenderer.drawString(strg, gui.guiLeft+gui.xSize/2-gui.unicodeRenderer.getStringWidth(strg)/2, gui.guiTop+10, 0);
+            gui.mc.fontRenderer.drawString(strg, gui.guiLeft+gui.xSize/2-gui.mc.fontRenderer.getStringWidth(strg)/2, gui.guiTop+10, 0);
         }
 
         String text = gui.currentPage.getText();
         if(text != null && !text.isEmpty()){
-            gui.unicodeRenderer.drawSplitString(text, gui.guiLeft+14, gui.guiTop+100, 115, 0);
+            gui.mc.fontRenderer.drawSplitString(text, gui.guiLeft+14, gui.guiTop+100, 115, 0);
         }
 
         if(recipe.secondChance > 0){
-            gui.unicodeRenderer.drawString(recipe.secondChance+"%", gui.guiLeft+37+62, gui.guiTop+20+33, 0);
+            gui.mc.fontRenderer.drawString(recipe.secondChance+"%", gui.guiLeft+37+62, gui.guiTop+20+33, 0);
         }
 
         if(recipe.firstOutput != null){

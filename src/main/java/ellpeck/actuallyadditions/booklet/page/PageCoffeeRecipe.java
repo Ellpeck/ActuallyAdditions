@@ -36,15 +36,15 @@ public class PageCoffeeRecipe extends BookletPage{
     @Override
     public void render(GuiBooklet gui, int mouseX, int mouseY, boolean mouseClick, int ticksElapsed){
         String strg = "Coffee Machine Recipe";
-        gui.unicodeRenderer.drawString(strg, gui.guiLeft+gui.xSize/2-gui.unicodeRenderer.getStringWidth(strg)/2, gui.guiTop+10, 0);
+        gui.mc.fontRenderer.drawString(strg, gui.guiLeft+gui.xSize/2-gui.mc.fontRenderer.getStringWidth(strg)/2, gui.guiTop+10, 0);
 
         String text = gui.currentPage.getText();
         if(text != null && !text.isEmpty()){
-            gui.unicodeRenderer.drawSplitString(text, gui.guiLeft+14, gui.guiTop+100, 115, 0);
+            gui.mc.fontRenderer.drawSplitString(text, gui.guiLeft+14, gui.guiTop+100, 115, 0);
         }
 
         if(this.ingredient.maxAmplifier > 0){
-            gui.unicodeRenderer.drawString("Maximum Amplifier: "+this.ingredient.maxAmplifier, gui.guiLeft+19+5, gui.guiTop+20+60, 0);
+            gui.mc.fontRenderer.drawString("Maximum Amplifier: "+this.ingredient.maxAmplifier, gui.guiLeft+19+5, gui.guiTop+20+60, 0);
         }
 
         for(int i = 0; i < 2; i++){

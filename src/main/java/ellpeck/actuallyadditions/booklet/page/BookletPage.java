@@ -51,8 +51,13 @@ public class BookletPage{
         GL11.glPushMatrix();
         GL11.glTranslated(x, y, 0);
         GL11.glScalef(scale, scale, scale);
-        RenderItem.getInstance().renderItemAndEffectIntoGUI(gui.unicodeRenderer, gui.mc.getTextureManager(), stack, 0, 0);
+
+        boolean flagBefore = gui.mc.fontRenderer.getUnicodeFlag();
+        gui.mc.fontRenderer.setUnicodeFlag(false);
+        RenderItem.getInstance().renderItemAndEffectIntoGUI(gui.mc.fontRenderer, gui.mc.getTextureManager(), stack, 0, 0);
         RenderItem.getInstance().renderItemOverlayIntoGUI(gui.mc.fontRenderer, gui.mc.getTextureManager(), stack, 0, 0);
+        gui.mc.fontRenderer.setUnicodeFlag(flagBefore);
+
         GL11.glPopMatrix();
         RenderHelper.disableStandardItemLighting();
         GL11.glPopMatrix();
@@ -104,6 +109,9 @@ public class BookletPage{
 
     @SuppressWarnings("unchecked")
     protected void renderTooltipAndTransfer(GuiBooklet gui, ItemStack stack, int x, int y, boolean checkAndTransfer, boolean mouseClick){
+        boolean flagBefore = gui.mc.fontRenderer.getUnicodeFlag();
+        gui.mc.fontRenderer.setUnicodeFlag(false);
+
         List list = stack.getTooltip(gui.mc.thePlayer, gui.mc.gameSettings.advancedItemTooltips);
 
         for(int k = 0; k < list.size(); ++k){
@@ -132,6 +140,8 @@ public class BookletPage{
         }
 
         gui.drawHoveringText(list, x, y);
+
+        gui.mc.fontRenderer.setUnicodeFlag(flagBefore);
     }
 
     public ItemStack[] getItemStacksForPage(){

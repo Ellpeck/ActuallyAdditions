@@ -15,6 +15,7 @@ import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
 
+//TODO REDO COMPLETELY
 public class CrusherRecipeAutoRegistry{
 
     public static ArrayList<SearchCase> searchCases = new ArrayList<SearchCase>();
