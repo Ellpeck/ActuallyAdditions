@@ -32,14 +32,31 @@ import java.util.Map;
 
 public class BookletPage{
 
-    private HashMap<String, String> textReplacements = new HashMap<String, String>();
-
     protected int id;
     protected BookletChapter chapter;
+    private HashMap<String, String> textReplacements = new HashMap<String, String>();
     private boolean hasNoText;
 
     public BookletPage(int id){
         this.id = id;
+    }
+
+    public static void renderItem(GuiBooklet gui, ItemStack stack, int x, int y, float scale){
+        GL11.glPushMatrix();
+        GL11.glEnable(GL11.GL_BLEND);
+        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+        RenderHelper.enableGUIStandardItemLighting();
+        GL11.glEnable(GL11.GL_DEPTH_TEST);
+        GL11.glEnable(GL12.GL_RESCALE_NORMAL);
+        GL11.glPushMatrix();
+        GL11.glTranslated(x, y, 0);
+        GL11.glScalef(scale, scale, scale);
+        RenderItem.getInstance().renderItemAndEffectIntoGUI(gui.unicodeRenderer, gui.mc.getTextureManager(), stack, 0, 0);
+        RenderItem.getInstance().renderItemOverlayIntoGUI(gui.mc.fontRenderer, gui.mc.getTextureManager(), stack, 0, 0);
+        GL11.glPopMatrix();
+        RenderHelper.disableStandardItemLighting();
+        GL11.glPopMatrix();
+
     }
 
     public BookletPage setNoText(){
@@ -51,12 +68,12 @@ public class BookletPage{
         return this.id;
     }
 
-    public void setChapter(BookletChapter chapter){
-        this.chapter = chapter;
-    }
-
     public BookletChapter getChapter(){
         return this.chapter;
+    }
+
+    public void setChapter(BookletChapter chapter){
+        this.chapter = chapter;
     }
 
     public final String getText(){
@@ -127,23 +144,5 @@ public class BookletPage{
         }
 
         gui.drawHoveringText(list, x, y);
-    }
-
-    public static void renderItem(GuiBooklet gui, ItemStack stack, int x, int y, float scale){
-        GL11.glPushMatrix();
-        GL11.glEnable(GL11.GL_BLEND);
-        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-        RenderHelper.enableGUIStandardItemLighting();
-        GL11.glEnable(GL11.GL_DEPTH_TEST);
-        GL11.glEnable(GL12.GL_RESCALE_NORMAL);
-        GL11.glPushMatrix();
-        GL11.glTranslated(x, y, 0);
-        GL11.glScalef(scale, scale, scale);
-        RenderItem.getInstance().renderItemAndEffectIntoGUI(gui.unicodeRenderer, gui.mc.getTextureManager(), stack, 0, 0);
-        RenderItem.getInstance().renderItemOverlayIntoGUI(gui.mc.fontRenderer, gui.mc.getTextureManager(), stack, 0, 0);
-        GL11.glPopMatrix();
-        RenderHelper.disableStandardItemLighting();
-        GL11.glPopMatrix();
-
     }
 }

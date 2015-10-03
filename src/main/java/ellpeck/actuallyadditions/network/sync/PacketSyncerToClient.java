@@ -41,13 +41,21 @@ public class PacketSyncerToClient implements IMessage{
         this.values = values;
     }
 
+    public static void sendPacket(TileEntity tile){
+        if(tile instanceof IPacketSyncerToClient){
+            PacketHandler.theNetwork.sendToAllAround(new PacketSyncerToClient(tile, ((IPacketSyncerToClient)tile).getValues()), new NetworkRegistry.TargetPoint(tile.getWorldObj().provider.dimensionId, tile.xCoord, tile.yCoord, tile.zCoord, 128));
+        }
+    }
+
     @Override
     public void fromBytes(ByteBuf buf){
         this.x = buf.readInt();
         this.y = buf.readInt();
         this.z = buf.readInt();
         int length = buf.readInt();
-        if(this.values == null) this.values = new int[length];
+        if(this.values == null){
+            this.values = new int[length];
+        }
         for(int i = 0; i < length; i++){
             this.values[i] = buf.readInt();
         }
@@ -75,12 +83,6 @@ public class PacketSyncerToClient implements IMessage{
                 ((IPacketSyncerToClient)tile).setValues(message.values);
             }
             return null;
-        }
-    }
-
-    public static void sendPacket(TileEntity tile){
-        if(tile instanceof IPacketSyncerToClient){
-            PacketHandler.theNetwork.sendToAllAround(new PacketSyncerToClient(tile, ((IPacketSyncerToClient)tile).getValues()), new NetworkRegistry.TargetPoint(tile.getWorldObj().provider.dimensionId, tile.xCoord, tile.yCoord, tile.zCoord, 128));
         }
     }
 }

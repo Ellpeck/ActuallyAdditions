@@ -27,12 +27,10 @@ import net.minecraftforge.fluids.*;
 public class TileEntityOilGenerator extends TileEntityInventoryBase implements IEnergyProvider, IFluidHandler, IPacketSyncerToClient{
 
     public EnergyStorage storage = new EnergyStorage(50000);
-    private int lastEnergy;
-
     public FluidTank tank = new FluidTank(2*FluidContainerRegistry.BUCKET_VOLUME);
-    private int lastTank;
-
     public int currentBurnTime;
+    private int lastEnergy;
+    private int lastTank;
     private int lastBurnTime;
 
     public TileEntityOilGenerator(){
@@ -158,7 +156,9 @@ public class TileEntityOilGenerator extends TileEntityInventoryBase implements I
 
     @Override
     public int fill(ForgeDirection from, FluidStack resource, boolean doFill){
-        if(resource.getFluid() == InitBlocks.fluidOil) return this.tank.fill(resource, doFill);
+        if(resource.getFluid() == InitBlocks.fluidOil){
+            return this.tank.fill(resource, doFill);
+        }
         return 0;
     }
 

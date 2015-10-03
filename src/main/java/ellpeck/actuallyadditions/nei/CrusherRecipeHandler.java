@@ -31,84 +31,13 @@ import java.util.List;
 
 public class CrusherRecipeHandler extends TemplateRecipeHandler implements INeiRecipeHandler{
 
-    @Override
-    public ItemStack getStackForInfo(){
-        return new ItemStack(InitBlocks.blockGrinder);
-    }
-
-    public static class CrusherDoubleRecipeHandler extends CrusherRecipeHandler{
-
-        @Override
-        public ItemStack getStackForInfo(){
-            return new ItemStack(InitBlocks.blockGrinderDouble);
-        }
-
-        @Override
-        public Class<? extends GuiContainer> getGuiClass(){
-            return GuiGrinder.GuiGrinderDouble.class;
-        }
-
-        @Override
-        public void loadTransferRects(){
-            transferRects.add(new RecipeTransferRect(new Rectangle(51, 40, 24, 22), this.getName()));
-            transferRects.add(new RecipeTransferRect(new Rectangle(101, 40, 24, 22), this.getName()));
-        }
-
-        @Override
-        public String getGuiTexture(){
-            return ModUtil.MOD_ID_LOWER+":textures/gui/guiGrinderDouble.png";
-        }
-
-        @Override
-        public void drawBackground(int recipeIndex){
-            GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-            GuiDraw.changeTexture(getGuiTexture());
-            GuiDraw.drawTexturedModalRect(33, 20, 33, 20, 110, 70);
-        }
-
-        @Override
-        public void drawExtras(int recipe){
-            drawProgressBar(51, 40, 176, 0, 24, 23, 48, 1);
-            this.drawChanceString(66, 93, recipe);
-        }
-    }
-
     public CrusherRecipeHandler(){
         RecipeInfo.setGuiOffset(this.getGuiClass(), 0, 0);
     }
 
-    public class CachedCrush extends CachedRecipe{
-
-        public PositionedStack ingredient;
-        public PositionedStack resultOne;
-        public PositionedStack resultTwo;
-        public int secondChance;
-
-        public CachedCrush(ItemStack in, ItemStack resultOne, ItemStack resultTwo, int secondChance, CrusherRecipeHandler handler){
-            boolean isDouble = handler instanceof CrusherDoubleRecipeHandler;
-            in.stackSize = 1;
-            this.ingredient = new PositionedStack(in, isDouble ? 51 : 80, 21);
-            this.resultOne = new PositionedStack(resultOne, isDouble ? 38 : 66, 69);
-            if(resultTwo != null) this.resultTwo = new PositionedStack(resultTwo, isDouble ? 63 : 94, 69);
-            this.secondChance = secondChance;
-        }
-
-        @Override
-        public List<PositionedStack> getIngredients(){
-            return getCycledIngredients(cycleticks/48, Collections.singletonList(ingredient));
-        }
-
-        @Override
-        public PositionedStack getResult(){
-            return resultOne;
-        }
-
-        @Override
-        public List<PositionedStack> getOtherStacks(){
-            ArrayList<PositionedStack> list = new ArrayList<PositionedStack>();
-            if(this.resultTwo != null) list.add(this.resultTwo);
-            return list;
-        }
+    @Override
+    public ItemStack getStackForInfo(){
+        return new ItemStack(InitBlocks.blockGrinder);
     }
 
     @Override
@@ -139,15 +68,18 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler implements INeiR
                 arecipes.add(new CachedCrush(recipe.input, recipe.firstOutput, recipe.secondOutput, recipe.secondChance, this));
             }
         }
-        else super.loadCraftingRecipes(outputId, results);
+        else{
+            super.loadCraftingRecipes(outputId, results);
+        }
     }
 
     @Override
     public void loadCraftingRecipes(ItemStack result){
         ArrayList<CrusherRecipeManualRegistry.CrusherRecipe> recipes = CrusherRecipeManualRegistry.recipes;
         for(CrusherRecipeManualRegistry.CrusherRecipe recipe : recipes){
-            if(NEIServerUtils.areStacksSameType(recipe.firstOutput, result) || NEIServerUtils.areStacksSameType(recipe.secondOutput, result))
+            if(NEIServerUtils.areStacksSameType(recipe.firstOutput, result) || NEIServerUtils.areStacksSameType(recipe.secondOutput, result)){
                 arecipes.add(new CachedCrush(recipe.input, recipe.firstOutput, recipe.secondOutput, recipe.secondChance, this));
+            }
         }
     }
 
@@ -196,6 +128,81 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler implements INeiR
             int secondChance = crush.secondChance;
             String secondString = secondChance+"%";
             GuiDraw.drawString(secondString, x, y, StringUtil.DECIMAL_COLOR_GRAY_TEXT, false);
+        }
+    }
+
+    public static class CrusherDoubleRecipeHandler extends CrusherRecipeHandler{
+
+        @Override
+        public ItemStack getStackForInfo(){
+            return new ItemStack(InitBlocks.blockGrinderDouble);
+        }
+
+        @Override
+        public Class<? extends GuiContainer> getGuiClass(){
+            return GuiGrinder.GuiGrinderDouble.class;
+        }
+
+        @Override
+        public void loadTransferRects(){
+            transferRects.add(new RecipeTransferRect(new Rectangle(51, 40, 24, 22), this.getName()));
+            transferRects.add(new RecipeTransferRect(new Rectangle(101, 40, 24, 22), this.getName()));
+        }
+
+        @Override
+        public String getGuiTexture(){
+            return ModUtil.MOD_ID_LOWER+":textures/gui/guiGrinderDouble.png";
+        }
+
+        @Override
+        public void drawBackground(int recipeIndex){
+            GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+            GuiDraw.changeTexture(getGuiTexture());
+            GuiDraw.drawTexturedModalRect(33, 20, 33, 20, 110, 70);
+        }
+
+        @Override
+        public void drawExtras(int recipe){
+            drawProgressBar(51, 40, 176, 0, 24, 23, 48, 1);
+            this.drawChanceString(66, 93, recipe);
+        }
+    }
+
+    public class CachedCrush extends CachedRecipe{
+
+        public PositionedStack ingredient;
+        public PositionedStack resultOne;
+        public PositionedStack resultTwo;
+        public int secondChance;
+
+        public CachedCrush(ItemStack in, ItemStack resultOne, ItemStack resultTwo, int secondChance, CrusherRecipeHandler handler){
+            boolean isDouble = handler instanceof CrusherDoubleRecipeHandler;
+            in.stackSize = 1;
+            this.ingredient = new PositionedStack(in, isDouble ? 51 : 80, 21);
+            this.resultOne = new PositionedStack(resultOne, isDouble ? 38 : 66, 69);
+            if(resultTwo != null){
+                this.resultTwo = new PositionedStack(resultTwo, isDouble ? 63 : 94, 69);
+            }
+            this.secondChance = secondChance;
+        }
+
+        @Override
+        public List<PositionedStack> getIngredients(){
+            return getCycledIngredients(cycleticks/48, Collections.singletonList(ingredient));
+        }
+
+        @Override
+        public PositionedStack getResult(){
+            return resultOne;
+        }
+
+        @Override
+        public List<PositionedStack> getOtherStacks(){
+            ArrayList<PositionedStack> list = new ArrayList<PositionedStack>();
+            if(this.resultTwo != null){
+                list.add(this.resultTwo);
+            }
+            return list;
         }
     }
 }

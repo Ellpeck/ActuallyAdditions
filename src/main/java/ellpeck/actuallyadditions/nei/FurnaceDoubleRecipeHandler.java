@@ -42,28 +42,6 @@ public class FurnaceDoubleRecipeHandler extends TemplateRecipeHandler implements
         return new ItemStack(InitBlocks.blockFurnaceDouble);
     }
 
-    public class CachedFurn extends CachedRecipe{
-
-        public PositionedStack ingredient;
-        public PositionedStack resultOne;
-
-        public CachedFurn(ItemStack in, ItemStack resultOne){
-            in.stackSize = 1;
-            this.ingredient = new PositionedStack(in,  51, 21);
-            this.resultOne = new PositionedStack(resultOne, 50, 69);
-        }
-
-        @Override
-        public List<PositionedStack> getIngredients(){
-            return getCycledIngredients(cycleticks/48, Collections.singletonList(ingredient));
-        }
-
-        @Override
-        public PositionedStack getResult(){
-            return resultOne;
-        }
-    }
-
     @Override
     public Class<? extends GuiContainer> getGuiClass(){
         return GuiFurnaceDouble.class;
@@ -111,7 +89,9 @@ public class FurnaceDoubleRecipeHandler extends TemplateRecipeHandler implements
                 arecipes.add(new CachedFurn(recipe.getKey(), recipe.getValue()));
             }
         }
-        else super.loadCraftingRecipes(outputId, results);
+        else{
+            super.loadCraftingRecipes(outputId, results);
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -119,8 +99,9 @@ public class FurnaceDoubleRecipeHandler extends TemplateRecipeHandler implements
     public void loadCraftingRecipes(ItemStack result){
         Map<ItemStack, ItemStack> recipes = (Map<ItemStack, ItemStack>)FurnaceRecipes.smelting().getSmeltingList();
         for(Map.Entry<ItemStack, ItemStack> recipe : recipes.entrySet()){
-            if(NEIServerUtils.areStacksSameType(recipe.getValue(), result))
+            if(NEIServerUtils.areStacksSameType(recipe.getValue(), result)){
                 arecipes.add(new CachedFurn(recipe.getKey(), recipe.getValue()));
+            }
         }
     }
 
@@ -140,5 +121,27 @@ public class FurnaceDoubleRecipeHandler extends TemplateRecipeHandler implements
     @Override
     public String getOverlayIdentifier(){
         return NAME;
+    }
+
+    public class CachedFurn extends CachedRecipe{
+
+        public PositionedStack ingredient;
+        public PositionedStack resultOne;
+
+        public CachedFurn(ItemStack in, ItemStack resultOne){
+            in.stackSize = 1;
+            this.ingredient = new PositionedStack(in, 51, 21);
+            this.resultOne = new PositionedStack(resultOne, 50, 69);
+        }
+
+        @Override
+        public List<PositionedStack> getIngredients(){
+            return getCycledIngredients(cycleticks/48, Collections.singletonList(ingredient));
+        }
+
+        @Override
+        public PositionedStack getResult(){
+            return resultOne;
+        }
     }
 }

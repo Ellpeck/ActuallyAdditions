@@ -88,25 +88,33 @@ public class ContainerEnergizer extends Container{
 
             //Slots in Inventory to shift from
             if(slot == 1){
-                if(!this.mergeItemStack(newStack, inventoryStart, hotbarEnd+1, true)) return null;
+                if(!this.mergeItemStack(newStack, inventoryStart, hotbarEnd+1, true)){
+                    return null;
+                }
                 theSlot.onSlotChange(newStack, currentStack);
             }
             //Other Slots in Inventory excluded
             else if(slot >= inventoryStart){
                 //Shift from Inventory
                 if(newStack.getItem() instanceof IEnergyContainerItem){
-                    if(!this.mergeItemStack(newStack, 0, 1, false)) return null;
+                    if(!this.mergeItemStack(newStack, 0, 1, false)){
+                        return null;
+                    }
                 }
                 //
 
                 else if(slot >= inventoryStart && slot <= inventoryEnd){
-                    if(!this.mergeItemStack(newStack, hotbarStart, hotbarEnd+1, false)) return null;
+                    if(!this.mergeItemStack(newStack, hotbarStart, hotbarEnd+1, false)){
+                        return null;
+                    }
                 }
                 else if(slot >= inventoryEnd+1 && slot < hotbarEnd+1 && !this.mergeItemStack(newStack, inventoryStart, inventoryEnd+1, false)){
                     return null;
                 }
             }
-            else if(!this.mergeItemStack(newStack, inventoryStart, hotbarEnd+1, false)) return null;
+            else if(!this.mergeItemStack(newStack, inventoryStart, hotbarEnd+1, false)){
+                return null;
+            }
 
             if(newStack.stackSize == 0){
                 theSlot.putStack(null);
@@ -115,7 +123,9 @@ public class ContainerEnergizer extends Container{
                 theSlot.onSlotChanged();
             }
 
-            if(newStack.stackSize == currentStack.stackSize) return null;
+            if(newStack.stackSize == currentStack.stackSize){
+                return null;
+            }
             theSlot.onPickupFromSlot(player, newStack);
 
             return currentStack;

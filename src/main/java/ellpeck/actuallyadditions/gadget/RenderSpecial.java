@@ -24,18 +24,18 @@ import org.lwjgl.opengl.GL11;
 
 public class RenderSpecial{
 
-    private double lastTimeForBobbing;
-
-    private ItemStack theThingToRender;
-
     private static final ResourceLocation squidTextures = new ResourceLocation(ModUtil.MOD_ID_LOWER, "textures/specialSquid.png");
+    private double lastTimeForBobbing;
+    private ItemStack theThingToRender;
 
     public RenderSpecial(ItemStack stack){
         this.theThingToRender = stack;
     }
 
     public void render(EntityPlayer player, float size, float offsetUp){
-        if(player.isInvisible() || player.getHideCape()) return;
+        if(player.isInvisible() || player.getHideCape()){
+            return;
+        }
 
         int bobHeight = 70;
         long theTime = Minecraft.getSystemTime();

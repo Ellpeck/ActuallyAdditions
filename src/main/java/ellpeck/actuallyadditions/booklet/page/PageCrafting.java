@@ -136,7 +136,9 @@ public class PageCrafting extends BookletPage{
                     for(int y = 0; y < height; y++){
                         ItemStack stack = stacks[y*width+x];
                         if(stack != null){
-                            if(stack.getItemDamage() == Util.WILDCARD) stack.setItemDamage(0);
+                            if(stack.getItemDamage() == Util.WILDCARD){
+                                stack.setItemDamage(0);
+                            }
                             int xShow = gui.guiLeft+27+4+x*18;
                             int yShow = gui.guiTop+20+4+y*18;
                             if(!tooltip){

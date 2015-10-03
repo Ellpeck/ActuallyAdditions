@@ -26,9 +26,8 @@ import java.util.Collections;
 @SideOnly(Side.CLIENT)
 public class GuiEnervator extends GuiContainer{
 
-    private TileEntityEnervator enervator;
-
     private static final ResourceLocation resLoc = AssetUtil.getGuiLocation("guiEnergizer");
+    private TileEntityEnervator enervator;
 
     public GuiEnervator(EntityPlayer inventory, TileEntityBase tile){
         super(new ContainerEnervator(inventory, tile));

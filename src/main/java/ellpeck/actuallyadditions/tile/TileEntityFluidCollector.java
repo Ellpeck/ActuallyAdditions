@@ -27,7 +27,18 @@ import net.minecraftforge.fluids.*;
 public class TileEntityFluidCollector extends TileEntityInventoryBase implements IFluidHandler, IPacketSyncerToClient{
 
     public FluidTank tank = new FluidTank(8*FluidContainerRegistry.BUCKET_VOLUME);
+    public boolean isPlacer;
     private int lastTankAmount;
+    private int currentTime;
+
+    public TileEntityFluidCollector(int slots, String name){
+        super(slots, name);
+    }
+
+    public TileEntityFluidCollector(){
+        super(2, "fluidCollector");
+        this.isPlacer = false;
+    }
 
     @Override
     public int fill(ForgeDirection from, FluidStack resource, boolean doFill){
@@ -86,28 +97,6 @@ public class TileEntityFluidCollector extends TileEntityInventoryBase implements
     @Override
     public void sendUpdate(){
         PacketSyncerToClient.sendPacket(this);
-    }
-
-    public static class TileEntityFluidPlacer extends TileEntityFluidCollector{
-
-        public TileEntityFluidPlacer(){
-            super(2, "fluidPlacer");
-            this.isPlacer = true;
-        }
-
-    }
-
-    public boolean isPlacer;
-
-    private int currentTime;
-
-    public TileEntityFluidCollector(int slots, String name){
-        super(slots, name);
-    }
-
-    public TileEntityFluidCollector(){
-        super(2, "fluidCollector");
-        this.isPlacer = false;
     }
 
     @Override
@@ -226,6 +215,15 @@ public class TileEntityFluidCollector extends TileEntityInventoryBase implements
     @Override
     public boolean canExtractItem(int slot, ItemStack stack, int side){
         return slot == 1;
+    }
+
+    public static class TileEntityFluidPlacer extends TileEntityFluidCollector{
+
+        public TileEntityFluidPlacer(){
+            super(2, "fluidPlacer");
+            this.isPlacer = true;
+        }
+
     }
 
 }

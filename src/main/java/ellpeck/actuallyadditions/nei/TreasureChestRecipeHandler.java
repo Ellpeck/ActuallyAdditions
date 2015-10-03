@@ -41,33 +41,6 @@ public class TreasureChestRecipeHandler extends TemplateRecipeHandler implements
         return new ItemStack(InitBlocks.blockTreasureChest);
     }
 
-    public class CachedTreasure extends CachedRecipe{
-
-        public PositionedStack result;
-        public PositionedStack input;
-        public int chance;
-        public int minAmount;
-        public int maxAmount;
-
-        public CachedTreasure(ItemStack input, ItemStack result, int chance, int minAmount, int maxAmount){
-            this.result = new PositionedStack(result, 67+32, 19);
-            this.chance = chance;
-            this.input = new PositionedStack(input, 5+32, 19);
-            this.minAmount = minAmount;
-            this.maxAmount = maxAmount;
-        }
-
-        @Override
-        public PositionedStack getIngredient(){
-            return input;
-        }
-
-        @Override
-        public PositionedStack getResult(){
-            return result;
-        }
-    }
-
     @Override
     public int recipiesPerPage(){
         return 2;
@@ -96,14 +69,18 @@ public class TreasureChestRecipeHandler extends TemplateRecipeHandler implements
                 arecipes.add(new CachedTreasure(recipe.input, recipe.returnItem, recipe.itemWeight, recipe.minAmount, recipe.maxAmount));
             }
         }
-        else super.loadCraftingRecipes(outputId, results);
+        else{
+            super.loadCraftingRecipes(outputId, results);
+        }
     }
 
     @Override
     public void loadCraftingRecipes(ItemStack result){
         ArrayList<TreasureChestHandler.Return> recipes = TreasureChestHandler.returns;
         for(TreasureChestHandler.Return recipe : recipes){
-            if(NEIServerUtils.areStacksSameType(recipe.returnItem, result)) arecipes.add(new CachedTreasure(recipe.input, recipe.returnItem, recipe.itemWeight, recipe.minAmount, recipe.maxAmount));
+            if(NEIServerUtils.areStacksSameType(recipe.returnItem, result)){
+                arecipes.add(new CachedTreasure(recipe.input, recipe.returnItem, recipe.itemWeight, recipe.minAmount, recipe.maxAmount));
+            }
         }
     }
 
@@ -121,7 +98,7 @@ public class TreasureChestRecipeHandler extends TemplateRecipeHandler implements
 
     @Override
     public String getGuiTexture(){
-        return ModUtil.MOD_ID_LOWER + ":textures/gui/guiNEISimple.png";
+        return ModUtil.MOD_ID_LOWER+":textures/gui/guiNEISimple.png";
     }
 
     @Override
@@ -142,5 +119,32 @@ public class TreasureChestRecipeHandler extends TemplateRecipeHandler implements
     @Override
     public String getOverlayIdentifier(){
         return NAME;
+    }
+
+    public class CachedTreasure extends CachedRecipe{
+
+        public PositionedStack result;
+        public PositionedStack input;
+        public int chance;
+        public int minAmount;
+        public int maxAmount;
+
+        public CachedTreasure(ItemStack input, ItemStack result, int chance, int minAmount, int maxAmount){
+            this.result = new PositionedStack(result, 67+32, 19);
+            this.chance = chance;
+            this.input = new PositionedStack(input, 5+32, 19);
+            this.minAmount = minAmount;
+            this.maxAmount = maxAmount;
+        }
+
+        @Override
+        public PositionedStack getIngredient(){
+            return input;
+        }
+
+        @Override
+        public PositionedStack getResult(){
+            return result;
+        }
     }
 }

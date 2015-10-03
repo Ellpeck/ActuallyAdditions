@@ -31,12 +31,16 @@ public class RenderSmileyCloud extends RenderTileEntity{
 
     @Override
     public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float par5){
-        if(!(tile instanceof TileEntitySmileyCloud)) return;
+        if(!(tile instanceof TileEntitySmileyCloud)){
+            return;
+        }
         TileEntitySmileyCloud theCloud = (TileEntitySmileyCloud)tile;
 
         GL11.glPushMatrix();
         {
-            if(theCloud.flyHeight == 0) theCloud.flyHeight = new Random().nextInt(30)+30;
+            if(theCloud.flyHeight == 0){
+                theCloud.flyHeight = new Random().nextInt(30)+30;
+            }
             int bobHeight = theCloud.flyHeight;
             long theTime = Minecraft.getSystemTime();
             long time = theTime/50;
@@ -60,9 +64,15 @@ public class RenderSmileyCloud extends RenderTileEntity{
             {
                 if(theModel.doesRotate()){
                     int meta = tile.getWorldObj().getBlockMetadata(tile.xCoord, tile.yCoord, tile.zCoord);
-                    if(meta == 0) GL11.glRotatef(180F, 0F, 1F, 0F);
-                    if(meta == 1) GL11.glRotatef(90F, 0F, 1F, 0F);
-                    if(meta == 3) GL11.glRotatef(270F, 0F, 1F, 0F);
+                    if(meta == 0){
+                        GL11.glRotatef(180F, 0F, 1F, 0F);
+                    }
+                    if(meta == 1){
+                        GL11.glRotatef(90F, 0F, 1F, 0F);
+                    }
+                    if(meta == 3){
+                        GL11.glRotatef(270F, 0F, 1F, 0F);
+                    }
                 }
 
                 this.bindTexture(resLoc);
@@ -79,7 +89,9 @@ public class RenderSmileyCloud extends RenderTileEntity{
                                 break;
                             }
                         }
-                        if(canBreak) break;
+                        if(canBreak){
+                            break;
+                        }
                     }
                 }
             }

@@ -150,6 +150,11 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
     }
 
     @Override
+    public void setBoundPosition(WorldPos pos){
+        this.boundPosition = pos == null ? null : pos.copy();
+    }
+
+    @Override
     public int getGuiID(){
         return -1;
     }
@@ -157,11 +162,6 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
     @Override
     public int getRange(){
         return this.range;
-    }
-
-    @Override
-    public void setBoundPosition(WorldPos pos){
-        this.boundPosition = pos == null ? null : pos.copy();
     }
 
     public static class TileEntityPhantomLiquiface extends TileEntityPhantomface implements IFluidHandler{
@@ -214,26 +214,34 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
         public IFluidHandler getHandler(){
             if(this.boundPosition != null && this.boundPosition.getWorld() != null){
                 TileEntity tile = boundPosition.getWorld().getTileEntity(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ());
-                if(tile instanceof IFluidHandler) return (IFluidHandler)tile;
+                if(tile instanceof IFluidHandler){
+                    return (IFluidHandler)tile;
+                }
             }
             return null;
         }
 
         @Override
         public int fill(ForgeDirection from, FluidStack resource, boolean doFill){
-            if(this.isBoundThingInRange()) return this.getHandler().fill(from, resource, doFill);
+            if(this.isBoundThingInRange()){
+                return this.getHandler().fill(from, resource, doFill);
+            }
             return 0;
         }
 
         @Override
         public FluidStack drain(ForgeDirection from, FluidStack resource, boolean doDrain){
-            if(this.isBoundThingInRange()) return this.getHandler().drain(from, resource, doDrain);
+            if(this.isBoundThingInRange()){
+                return this.getHandler().drain(from, resource, doDrain);
+            }
             return null;
         }
 
         @Override
         public FluidStack drain(ForgeDirection from, int maxDrain, boolean doDrain){
-            if(this.isBoundThingInRange()) return this.getHandler().drain(from, maxDrain, doDrain);
+            if(this.isBoundThingInRange()){
+                return this.getHandler().drain(from, maxDrain, doDrain);
+            }
             return null;
         }
 
@@ -249,7 +257,9 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
 
         @Override
         public FluidTankInfo[] getTankInfo(ForgeDirection from){
-            if(this.isBoundThingInRange()) return this.getHandler().getTankInfo(from);
+            if(this.isBoundThingInRange()){
+                return this.getHandler().getTankInfo(from);
+            }
             return new FluidTankInfo[0];
         }
     }
@@ -296,7 +306,9 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
         public IEnergyProvider getProvider(){
             if(this.boundPosition != null && this.boundPosition.getWorld() != null){
                 TileEntity tile = boundPosition.getWorld().getTileEntity(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ());
-                if(tile instanceof IEnergyProvider) return (IEnergyProvider)tile;
+                if(tile instanceof IEnergyProvider){
+                    return (IEnergyProvider)tile;
+                }
             }
             return null;
         }
@@ -304,7 +316,9 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
         public IEnergyReceiver getReceiver(){
             if(this.boundPosition != null && this.boundPosition.getWorld() != null){
                 TileEntity tile = boundPosition.getWorld().getTileEntity(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ());
-                if(tile instanceof IEnergyReceiver) return (IEnergyReceiver)tile;
+                if(tile instanceof IEnergyReceiver){
+                    return (IEnergyReceiver)tile;
+                }
             }
             return null;
         }
@@ -322,8 +336,12 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
         @Override
         public int getEnergyStored(ForgeDirection from){
             if(this.isBoundThingInRange()){
-                if(this.getProvider() != null) return this.getProvider().getEnergyStored(from);
-                if(this.getReceiver() != null) return this.getReceiver().getEnergyStored(from);
+                if(this.getProvider() != null){
+                    return this.getProvider().getEnergyStored(from);
+                }
+                if(this.getReceiver() != null){
+                    return this.getReceiver().getEnergyStored(from);
+                }
             }
             return 0;
         }
@@ -331,8 +349,12 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
         @Override
         public int getMaxEnergyStored(ForgeDirection from){
             if(this.isBoundThingInRange()){
-                if(this.getProvider() != null) return this.getProvider().getMaxEnergyStored(from);
-                if(this.getReceiver() != null) return this.getReceiver().getMaxEnergyStored(from);
+                if(this.getProvider() != null){
+                    return this.getProvider().getMaxEnergyStored(from);
+                }
+                if(this.getReceiver() != null){
+                    return this.getReceiver().getMaxEnergyStored(from);
+                }
             }
             return 0;
         }
@@ -340,8 +362,12 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
         @Override
         public boolean canConnectEnergy(ForgeDirection from){
             if(this.isBoundThingInRange()){
-                if(this.getProvider() != null) return this.getProvider().canConnectEnergy(from);
-                if(this.getReceiver() != null) return this.getReceiver().canConnectEnergy(from);
+                if(this.getProvider() != null){
+                    return this.getProvider().canConnectEnergy(from);
+                }
+                if(this.getReceiver() != null){
+                    return this.getReceiver().canConnectEnergy(from);
+                }
             }
             return false;
         }
@@ -357,7 +383,9 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
         public IInventory getInventory(){
             if(this.boundPosition != null && this.boundPosition.getWorld() != null){
                 TileEntity tile = boundPosition.getWorld().getTileEntity(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ());
-                if(tile instanceof IInventory) return (IInventory)tile;
+                if(tile instanceof IInventory){
+                    return (IInventory)tile;
+                }
             }
             return null;
         }
@@ -388,7 +416,9 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
 
         @Override
         public void setInventorySlotContents(int i, ItemStack stack){
-            if(this.isBoundThingInRange()) this.getInventory().setInventorySlotContents(i, stack);
+            if(this.isBoundThingInRange()){
+                this.getInventory().setInventorySlotContents(i, stack);
+            }
             this.markDirty();
         }
 

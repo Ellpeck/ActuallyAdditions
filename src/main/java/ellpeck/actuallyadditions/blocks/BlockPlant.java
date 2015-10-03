@@ -30,11 +30,11 @@ import java.util.Random;
 
 public class BlockPlant extends BlockCrops implements IActAddItemOrBlock{
 
-    private IIcon[] textures;
-    private String name;
     public Item seedItem;
     public Item returnItem;
     public int returnMeta;
+    private IIcon[] textures;
+    private String name;
     private int minDropAmount;
     private int addDropAmount;
 
@@ -59,7 +59,9 @@ public class BlockPlant extends BlockCrops implements IActAddItemOrBlock{
     @SideOnly(Side.CLIENT)
     public IIcon getIcon(int side, int meta){
         if(meta < 7){
-            if(meta == 6) meta = 5;
+            if(meta == 6){
+                meta = 5;
+            }
             return this.textures[meta >> 1];
         }
         else{

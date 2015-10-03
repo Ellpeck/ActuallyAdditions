@@ -22,6 +22,11 @@ import net.minecraft.world.World;
 
 public class GuiHandler implements IGuiHandler{
 
+    public static void init(){
+        ModUtil.LOGGER.info("Initializing GuiHandler...");
+        NetworkRegistry.INSTANCE.registerGuiHandler(ActuallyAdditions.instance, new GuiHandler());
+    }
+
     @Override
     public Object getServerGuiElement(int id, EntityPlayer entityPlayer, World world, int x, int y, int z){
         TileEntityBase tile = null;
@@ -180,10 +185,5 @@ public class GuiHandler implements IGuiHandler{
         GuiTypes(){
             this(true);
         }
-    }
-
-    public static void init(){
-        ModUtil.LOGGER.info("Initializing GuiHandler...");
-        NetworkRegistry.INSTANCE.registerGuiHandler(ActuallyAdditions.instance, new GuiHandler());
     }
 }

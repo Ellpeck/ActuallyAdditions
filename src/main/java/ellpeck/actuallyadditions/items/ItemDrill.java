@@ -205,13 +205,17 @@ public class ItemDrill extends ItemEnergy{
      */
     public ItemStack getHasUpgradeAsStack(ItemStack stack, ItemDrillUpgrade.UpgradeType upgrade){
         NBTTagCompound compound = stack.getTagCompound();
-        if(compound == null) return null;
+        if(compound == null){
+            return null;
+        }
 
         ItemStack[] slots = this.getSlotsFromNBT(stack);
         if(slots != null && slots.length > 0){
             for(ItemStack slotStack : slots){
                 if(slotStack != null && slotStack.getItem() instanceof ItemDrillUpgrade){
-                    if(((ItemDrillUpgrade)slotStack.getItem()).type == upgrade) return slotStack;
+                    if(((ItemDrillUpgrade)slotStack.getItem()).type == upgrade){
+                        return slotStack;
+                    }
                 }
             }
         }
@@ -237,7 +241,9 @@ public class ItemDrill extends ItemEnergy{
      */
     public void writeSlotsToNBT(ItemStack[] slots, ItemStack stack){
         NBTTagCompound compound = stack.getTagCompound();
-        if(compound == null) compound = new NBTTagCompound();
+        if(compound == null){
+            compound = new NBTTagCompound();
+        }
 
         if(slots != null && slots.length > 0){
             compound.setInteger("SlotAmount", slots.length);
@@ -264,7 +270,9 @@ public class ItemDrill extends ItemEnergy{
      */
     public ItemStack[] getSlotsFromNBT(ItemStack stack){
         NBTTagCompound compound = stack.getTagCompound();
-        if(compound == null) return null;
+        if(compound == null){
+            return null;
+        }
 
         int slotAmount = compound.getInteger("SlotAmount");
         ItemStack[] slots = new ItemStack[slotAmount];
@@ -301,7 +309,9 @@ public class ItemDrill extends ItemEnergy{
 
         //Block hit
         MovingObjectPosition pos = WorldUtil.getNearestBlockWithDefaultReachDistance(world, player);
-        if(pos == null) return false;
+        if(pos == null){
+            return false;
+        }
 
         //Corrects Blocks to hit depending on Side of original Block hit
         int side = pos.sideHit;
@@ -320,7 +330,9 @@ public class ItemDrill extends ItemEnergy{
         //Break Middle Block first
         int use = this.getEnergyUsePerBlock(stack);
         if(this.getEnergyStored(stack) >= use){
-            if(!this.tryHarvestBlock(world, x, y, z, false, stack, player, use)) return false;
+            if(!this.tryHarvestBlock(world, x, y, z, false, stack, player, use)){
+                return false;
+            }
         }
         else{
             return false;
@@ -429,7 +441,9 @@ public class ItemDrill extends ItemEnergy{
         String name = Block.blockRegistry.getNameForObject(block);
         if(name != null){
             for(String list : ConfigValues.drillExtraminingWhitelist){
-                if(list.equals(name)) return true;
+                if(list.equals(name)){
+                    return true;
+                }
             }
         }
         return false;

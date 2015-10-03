@@ -56,7 +56,9 @@ public class JamVillagerTradeHandler implements VillagerRegistry.IVillageTradeHa
                         wantsTwo.stackSize = MathHelper.getRandomIntegerInRange(rand, trades.get(k).minStackSize, trades.get(k).maxStackSize);
                     }
                 }
-                if(wantsOne == wantsTwo) wantsTwo = null;
+                if(wantsOne == wantsTwo){
+                    wantsTwo = null;
+                }
 
                 for(int k = 0; k < TheJams.values().length; k++){
                     recipeList.add(new MerchantRecipe(wantsOne, wantsTwo, new ItemStack(InitItems.itemJams, rand.nextInt(3)+1, k)));

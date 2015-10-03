@@ -18,9 +18,9 @@ import net.minecraft.item.ItemStack;
 public class BookletChapter{
 
     public final BookletPage[] pages;
-    private final String unlocalizedName;
     public final BookletIndexEntry entry;
     public final ItemStack displayStack;
+    private final String unlocalizedName;
 
     public BookletChapter(String unlocalizedName, BookletIndexEntry entry, ItemStack displayStack, BookletPage... pages){
         this.pages = pages.clone();

@@ -21,13 +21,12 @@ import net.minecraft.world.World;
 @InventoryContainer
 public class ContainerCrafter extends Container{
 
-    public InventoryCrafting craftMatrix = new InventoryCrafting(this, 3, 3);
-    public IInventory craftResult = new InventoryCraftResult();
-
     public final int x;
     public final int y;
     public final int z;
     public final World world;
+    public InventoryCrafting craftMatrix = new InventoryCrafting(this, 3, 3);
+    public IInventory craftResult = new InventoryCraftResult();
 
     public ContainerCrafter(EntityPlayer player){
         InventoryPlayer inventory = player.inventory;
@@ -68,7 +67,9 @@ public class ContainerCrafter extends Container{
         if(!this.world.isRemote){
             for(int i = 0; i < 9; ++i){
                 ItemStack stack = this.craftMatrix.getStackInSlotOnClosing(i);
-                if(stack != null) player.dropPlayerItemWithRandomChoice(stack, false);
+                if(stack != null){
+                    player.dropPlayerItemWithRandomChoice(stack, false);
+                }
             }
         }
     }
@@ -88,7 +89,9 @@ public class ContainerCrafter extends Container{
             stack = savedStack.copy();
 
             if(slot == 0){
-                if(!this.mergeItemStack(savedStack, 10, 46, true)) return null;
+                if(!this.mergeItemStack(savedStack, 10, 46, true)){
+                    return null;
+                }
                 theSlot.onSlotChange(savedStack, stack);
             }
             else if(slot >= 10 && slot < 37 && !this.mergeItemStack(savedStack, 37, 46, false)){
@@ -97,7 +100,9 @@ public class ContainerCrafter extends Container{
             else if(slot >= 37 && slot < 46 && !this.mergeItemStack(savedStack, 10, 37, false)){
                 return null;
             }
-            else if(!this.mergeItemStack(savedStack, 10, 46, false)) return null;
+            else if(!this.mergeItemStack(savedStack, 10, 46, false)){
+                return null;
+            }
 
             if(savedStack.stackSize == 0){
                 theSlot.putStack(null);
@@ -106,7 +111,9 @@ public class ContainerCrafter extends Container{
                 theSlot.onSlotChanged();
             }
 
-            if(savedStack.stackSize == stack.stackSize) return null;
+            if(savedStack.stackSize == stack.stackSize){
+                return null;
+            }
 
             theSlot.onPickupFromSlot(player, savedStack);
         }

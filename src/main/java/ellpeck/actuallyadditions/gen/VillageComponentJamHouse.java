@@ -52,7 +52,9 @@ public class VillageComponentJamHouse extends StructureVillagePieces.House1{
     public boolean addComponentParts(World world, Random rand, StructureBoundingBox sbb){
         if(this.averageGroundLevel < 0){
             this.averageGroundLevel = this.getAverageGroundLevel(world, sbb);
-            if(this.averageGroundLevel < 0) return true;
+            if(this.averageGroundLevel < 0){
+                return true;
+            }
             this.boundingBox.offset(0, this.averageGroundLevel-this.boundingBox.maxY+ySize-1, 0);
         }
 

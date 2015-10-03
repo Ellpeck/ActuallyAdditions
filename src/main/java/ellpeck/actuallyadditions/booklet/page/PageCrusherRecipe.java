@@ -68,7 +68,9 @@ public class PageCrusherRecipe extends BookletPage{
                     ItemStack stack = (j == 0 ? this.recipe.input : (j == 1 ? recipe.firstOutput : (j == 2 ? recipe.secondOutput : null)));
 
                     if(stack != null){
-                        if(stack.getItemDamage() == Util.WILDCARD) stack.setItemDamage(0);
+                        if(stack.getItemDamage() == Util.WILDCARD){
+                            stack.setItemDamage(0);
+                        }
 
                         boolean tooltip = i == 1;
 

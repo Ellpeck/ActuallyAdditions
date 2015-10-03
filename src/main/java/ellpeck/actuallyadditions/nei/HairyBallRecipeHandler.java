@@ -41,29 +41,6 @@ public class HairyBallRecipeHandler extends TemplateRecipeHandler implements INe
         return null;
     }
 
-    public class CachedBallRecipe extends CachedRecipe{
-
-        public PositionedStack result;
-        public PositionedStack input;
-        public int chance;
-
-        public CachedBallRecipe(ItemStack input, ItemStack result, int chance){
-            this.result = new PositionedStack(result, 67+32, 19);
-            this.chance = chance;
-            this.input = new PositionedStack(input, 5+32, 19);
-        }
-
-        @Override
-        public PositionedStack getIngredient(){
-            return input;
-        }
-
-        @Override
-        public PositionedStack getResult(){
-            return result;
-        }
-    }
-
     @Override
     public int recipiesPerPage(){
         return 2;
@@ -92,14 +69,18 @@ public class HairyBallRecipeHandler extends TemplateRecipeHandler implements INe
                 arecipes.add(new CachedBallRecipe(recipe.inputItem, recipe.returnItem, recipe.itemWeight));
             }
         }
-        else super.loadCraftingRecipes(outputId, results);
+        else{
+            super.loadCraftingRecipes(outputId, results);
+        }
     }
 
     @Override
     public void loadCraftingRecipes(ItemStack result){
         ArrayList<HairyBallHandler.Return> recipes = HairyBallHandler.returns;
         for(HairyBallHandler.Return recipe : recipes){
-            if(NEIServerUtils.areStacksSameType(recipe.returnItem, result)) arecipes.add(new CachedBallRecipe(recipe.inputItem, recipe.returnItem, recipe.itemWeight));
+            if(NEIServerUtils.areStacksSameType(recipe.returnItem, result)){
+                arecipes.add(new CachedBallRecipe(recipe.inputItem, recipe.returnItem, recipe.itemWeight));
+            }
         }
     }
 
@@ -117,7 +98,7 @@ public class HairyBallRecipeHandler extends TemplateRecipeHandler implements INe
 
     @Override
     public String getGuiTexture(){
-        return ModUtil.MOD_ID_LOWER + ":textures/gui/guiNEISimple.png";
+        return ModUtil.MOD_ID_LOWER+":textures/gui/guiNEISimple.png";
     }
 
     @Override
@@ -132,7 +113,7 @@ public class HairyBallRecipeHandler extends TemplateRecipeHandler implements INe
         CachedBallRecipe recipe = (CachedBallRecipe)this.arecipes.get(rec);
         if(recipe.result != null){
             int secondChance = recipe.chance;
-            String secondString = secondChance + "%";
+            String secondString = secondChance+"%";
             GuiDraw.drawString(secondString, 65+32, 45, StringUtil.DECIMAL_COLOR_GRAY_TEXT, false);
         }
     }
@@ -140,5 +121,28 @@ public class HairyBallRecipeHandler extends TemplateRecipeHandler implements INe
     @Override
     public String getOverlayIdentifier(){
         return NAME;
+    }
+
+    public class CachedBallRecipe extends CachedRecipe{
+
+        public PositionedStack result;
+        public PositionedStack input;
+        public int chance;
+
+        public CachedBallRecipe(ItemStack input, ItemStack result, int chance){
+            this.result = new PositionedStack(result, 67+32, 19);
+            this.chance = chance;
+            this.input = new PositionedStack(input, 5+32, 19);
+        }
+
+        @Override
+        public PositionedStack getIngredient(){
+            return input;
+        }
+
+        @Override
+        public PositionedStack getResult(){
+            return result;
+        }
     }
 }

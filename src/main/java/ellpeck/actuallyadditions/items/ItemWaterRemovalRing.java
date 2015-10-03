@@ -32,7 +32,9 @@ public class ItemWaterRemovalRing extends ItemEnergy{
 
     @Override
     public void onUpdate(ItemStack stack, World world, Entity entity, int par4, boolean par5){
-        if(!(entity instanceof EntityPlayer) || world.isRemote) return;
+        if(!(entity instanceof EntityPlayer) || world.isRemote){
+            return;
+        }
 
         EntityPlayer player = (EntityPlayer)entity;
         ItemStack equipped = player.getCurrentEquippedItem();

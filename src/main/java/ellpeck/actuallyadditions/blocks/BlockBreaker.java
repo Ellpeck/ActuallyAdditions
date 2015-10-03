@@ -60,16 +60,24 @@ public class BlockBreaker extends BlockContainerBase implements IActAddItemOrBlo
 
     @Override
     public IIcon getIcon(int side, int meta){
-        if(side == 0 || side == 1) return this.topIcon;
-        if(side == 3) return this.frontIcon;
+        if(side == 0 || side == 1){
+            return this.topIcon;
+        }
+        if(side == 3){
+            return this.frontIcon;
+        }
         return this.blockIcon;
     }
 
     @Override
     public IIcon getIcon(IBlockAccess world, int x, int y, int z, int side){
         int meta = world.getBlockMetadata(x, y, z);
-        if(side != meta && (side == 0 || side == 1)) return this.topIcon;
-        if(side == meta) return this.frontIcon;
+        if(side != meta && (side == 0 || side == 1)){
+            return this.topIcon;
+        }
+        if(side == meta){
+            return this.frontIcon;
+        }
         return this.blockIcon;
     }
 

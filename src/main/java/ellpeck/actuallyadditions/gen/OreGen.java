@@ -29,9 +29,16 @@ import java.util.Random;
 
 public class OreGen implements IWorldGenerator{
 
+    public static void init(){
+        ModUtil.LOGGER.info("Registering World Generator...");
+        GameRegistry.registerWorldGenerator(new OreGen(), 10);
+    }
+
     @Override
     public void generate(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider){
-        if(world.provider.terrainType == WorldType.FLAT) return;
+        if(world.provider.terrainType == WorldType.FLAT){
+            return;
+        }
 
         switch(world.provider.dimensionId){
             case -1:
@@ -74,10 +81,5 @@ public class OreGen implements IWorldGenerator{
         else{
             ModUtil.LOGGER.fatal("Couldn't generate '"+block.getUnlocalizedName()+"' into the world because the Min Y coordinate is bigger than the Max! This is definitely a Config Error! Check the Files!");
         }
-    }
-
-    public static void init(){
-        ModUtil.LOGGER.info("Registering World Generator...");
-        GameRegistry.registerWorldGenerator(new OreGen(), 10);
     }
 }

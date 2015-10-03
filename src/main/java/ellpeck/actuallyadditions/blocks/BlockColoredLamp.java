@@ -36,10 +36,8 @@ import java.util.Random;
 public class BlockColoredLamp extends Block implements IActAddItemOrBlock{
 
     public static TheColoredLampColors[] allLampTypes = TheColoredLampColors.values();
-
-    private IIcon[] textures = new IIcon[allLampTypes.length];
-
     public boolean isOn;
+    private IIcon[] textures = new IIcon[allLampTypes.length];
 
     public BlockColoredLamp(boolean isOn){
         super(Material.redstoneLight);
@@ -162,7 +160,9 @@ public class BlockColoredLamp extends Block implements IActAddItemOrBlock{
 
         @Override
         public String getItemStackDisplayName(ItemStack stack){
-            if(stack.getItemDamage() >= allLampTypes.length) return null;
+            if(stack.getItemDamage() >= allLampTypes.length){
+                return null;
+            }
             return StringUtil.localize(this.getUnlocalizedName(stack)+".name")+(((BlockColoredLamp)this.theBlock).isOn ? " ("+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".onSuffix.desc")+")" : "");
         }
     }

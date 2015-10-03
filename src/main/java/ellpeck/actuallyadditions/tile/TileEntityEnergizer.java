@@ -42,7 +42,9 @@ public class TileEntityEnergizer extends TileEntityInventoryBase implements IEne
                 if(((IEnergyContainerItem)this.slots[0].getItem()).getEnergyStored(this.slots[0]) >= ((IEnergyContainerItem)this.slots[0].getItem()).getMaxEnergyStored(this.slots[0])){
                     this.slots[1] = this.slots[0].copy();
                     this.slots[0].stackSize--;
-                    if(this.slots[0].stackSize <= 0) this.slots[0] = null;
+                    if(this.slots[0].stackSize <= 0){
+                        this.slots[0] = null;
+                    }
                 }
             }
 

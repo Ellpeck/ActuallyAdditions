@@ -78,7 +78,9 @@ public class PageCoffeeRecipe extends BookletPage{
                 }
 
                 if(stack != null){
-                    if(stack.getItemDamage() == Util.WILDCARD) stack.setItemDamage(0);
+                    if(stack.getItemDamage() == Util.WILDCARD){
+                        stack.setItemDamage(0);
+                    }
 
                     boolean tooltip = i == 1;
 

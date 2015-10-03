@@ -59,10 +59,18 @@ public class BlockTreasureChest extends Block implements IActAddItemOrBlock{
     public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack stack){
         int rotation = MathHelper.floor_double((double)(player.rotationYaw*4.0F/360.0F)+0.5D) & 3;
 
-        if(rotation == 0) world.setBlockMetadataWithNotify(x, y, z, 0, 2);
-        if(rotation == 1) world.setBlockMetadataWithNotify(x, y, z, 3, 2);
-        if(rotation == 2) world.setBlockMetadataWithNotify(x, y, z, 1, 2);
-        if(rotation == 3) world.setBlockMetadataWithNotify(x, y, z, 2, 2);
+        if(rotation == 0){
+            world.setBlockMetadataWithNotify(x, y, z, 0, 2);
+        }
+        if(rotation == 1){
+            world.setBlockMetadataWithNotify(x, y, z, 3, 2);
+        }
+        if(rotation == 2){
+            world.setBlockMetadataWithNotify(x, y, z, 1, 2);
+        }
+        if(rotation == 3){
+            world.setBlockMetadataWithNotify(x, y, z, 2, 2);
+        }
     }
 
     @Override
@@ -72,18 +80,30 @@ public class BlockTreasureChest extends Block implements IActAddItemOrBlock{
 
     @Override
     public IIcon getIcon(int side, int meta){
-        if(side == 1) return this.topIcon;
-        if(side == 0) return this.bottomIcon;
-        if(side == 3) return this.frontIcon;
+        if(side == 1){
+            return this.topIcon;
+        }
+        if(side == 0){
+            return this.bottomIcon;
+        }
+        if(side == 3){
+            return this.frontIcon;
+        }
         return this.blockIcon;
     }
 
     @Override
     public IIcon getIcon(IBlockAccess world, int x, int y, int z, int side){
         int meta = world.getBlockMetadata(x, y, z);
-        if(side == 1) return this.topIcon;
-        if(side == meta+2) return this.frontIcon;
-        if(side == 0) return this.bottomIcon;
+        if(side == 1){
+            return this.topIcon;
+        }
+        if(side == meta+2){
+            return this.frontIcon;
+        }
+        if(side == 0){
+            return this.bottomIcon;
+        }
         return this.blockIcon;
     }
 

@@ -44,11 +44,15 @@ public class ItemSpecialDrop extends Item implements IActAddItemOrBlock{
             if(stack.getItemDamage() == TheSpecialDrops.SOLIDIFIED_EXPERIENCE.ordinal()){
                 if(!player.isSneaking()){
                     world.spawnEntityInWorld(new EntityXPOrb(world, player.posX+0.5, player.posY+0.5, player.posZ+0.5, SOLID_XP_AMOUNT));
-                    if(!player.capabilities.isCreativeMode) stack.stackSize--;
+                    if(!player.capabilities.isCreativeMode){
+                        stack.stackSize--;
+                    }
                 }
                 else{
                     world.spawnEntityInWorld(new EntityXPOrb(world, player.posX+0.5, player.posY+0.5, player.posZ+0.5, SOLID_XP_AMOUNT*stack.stackSize));
-                    if(!player.capabilities.isCreativeMode) stack.stackSize = 0;
+                    if(!player.capabilities.isCreativeMode){
+                        stack.stackSize = 0;
+                    }
                 }
             }
         }

@@ -26,6 +26,10 @@ import java.util.List;
 @SuppressWarnings("unused")
 public class WailaDataProvider implements IWailaDataProvider{
 
+    public static void register(IWailaRegistrar registrar){
+        ModUtil.LOGGER.info("Initializing Waila Plugin...");
+    }
+
     @Override
     public ItemStack getWailaStack(IWailaDataAccessor accessor, IWailaConfigHandler config){
         return null;
@@ -49,9 +53,5 @@ public class WailaDataProvider implements IWailaDataProvider{
     @Override
     public NBTTagCompound getNBTData(EntityPlayerMP player, TileEntity te, NBTTagCompound tag, World world, int x, int y, int z){
         return tag;
-    }
-
-    public static void register(IWailaRegistrar registrar){
-        ModUtil.LOGGER.info("Initializing Waila Plugin...");
     }
 }

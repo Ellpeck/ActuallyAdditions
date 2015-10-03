@@ -40,7 +40,9 @@ public class ItemGrowthRing extends ItemEnergy{
 
     @Override
     public void onUpdate(ItemStack stack, World world, Entity entity, int par4, boolean par5){
-        if(!(entity instanceof EntityPlayer) || world.isRemote) return;
+        if(!(entity instanceof EntityPlayer) || world.isRemote){
+            return;
+        }
 
         EntityPlayer player = (EntityPlayer)entity;
         ItemStack equipped = player.getCurrentEquippedItem();
@@ -48,7 +50,9 @@ public class ItemGrowthRing extends ItemEnergy{
         if(equipped != null && equipped == stack && this.getEnergyStored(stack) >= ConfigIntValues.GROWTH_RING_ENERGY_USE.getValue()){
             ArrayList<WorldPos> blocks = new ArrayList<WorldPos>();
 
-            if(stack.stackTagCompound == null) stack.setTagCompound(new NBTTagCompound());
+            if(stack.stackTagCompound == null){
+                stack.setTagCompound(new NBTTagCompound());
+            }
             int waitTime = stack.stackTagCompound.getInteger("WaitTime");
 
             //Adding all possible Blocks

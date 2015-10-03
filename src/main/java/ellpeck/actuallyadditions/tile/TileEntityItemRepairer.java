@@ -27,12 +27,15 @@ public class TileEntityItemRepairer extends TileEntityInventoryBase implements I
     public static final int SLOT_OUTPUT = 1;
 
     public EnergyStorage storage = new EnergyStorage(300000);
-    private int lastEnergy;
-
     public int nextRepairTick;
+    private int lastEnergy;
 
     public TileEntityItemRepairer(){
         super(2, "repairer");
+    }
+
+    public static boolean canBeRepaired(ItemStack stack){
+        return stack != null && stack.getItem().isRepairable();
     }
 
     @Override
@@ -65,10 +68,6 @@ public class TileEntityItemRepairer extends TileEntityInventoryBase implements I
                 this.sendUpdate();
             }
         }
-    }
-
-    public static boolean canBeRepaired(ItemStack stack){
-        return stack != null && stack.getItem().isRepairable();
     }
 
     @Override

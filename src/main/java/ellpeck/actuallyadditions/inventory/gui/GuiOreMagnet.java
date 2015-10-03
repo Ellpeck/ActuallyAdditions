@@ -28,9 +28,8 @@ import java.util.Collections;
 @SideOnly(Side.CLIENT)
 public class GuiOreMagnet extends GuiContainer{
 
-    private TileEntityOreMagnet magnet;
-
     private static final ResourceLocation resLoc = AssetUtil.getGuiLocation("guiOreMagnet");
+    private TileEntityOreMagnet magnet;
 
     public GuiOreMagnet(InventoryPlayer inventory, TileEntityBase tile){
         super(new ContainerOreMagnet(inventory, tile));

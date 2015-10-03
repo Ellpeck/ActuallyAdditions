@@ -24,9 +24,8 @@ import org.lwjgl.opengl.GL11;
 @SideOnly(Side.CLIENT)
 public class GuiDropper extends GuiContainer{
 
-    private TileEntityDropper dropper;
-
     private static final ResourceLocation resLoc = AssetUtil.getGuiLocation("guiBreaker");
+    private TileEntityDropper dropper;
 
     public GuiDropper(InventoryPlayer inventory, TileEntityBase tile){
         super(new ContainerDropper(inventory, tile));

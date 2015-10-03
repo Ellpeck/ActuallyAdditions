@@ -36,9 +36,15 @@ public class RenderTileEntity extends TileEntitySpecialRenderer{
 
         if(theModel.doesRotate()){
             int meta = tile.getWorldObj().getBlockMetadata(tile.xCoord, tile.yCoord, tile.zCoord);
-            if(meta == 0) GL11.glRotatef(180F, 0F, 1F, 0F);
-            if(meta == 1) GL11.glRotatef(90F, 0F, 1F, 0F);
-            if(meta == 3) GL11.glRotatef(270F, 0F, 1F, 0F);
+            if(meta == 0){
+                GL11.glRotatef(180F, 0F, 1F, 0F);
+            }
+            if(meta == 1){
+                GL11.glRotatef(90F, 0F, 1F, 0F);
+            }
+            if(meta == 3){
+                GL11.glRotatef(270F, 0F, 1F, 0F);
+            }
         }
 
         theModel.render(0.0625F);

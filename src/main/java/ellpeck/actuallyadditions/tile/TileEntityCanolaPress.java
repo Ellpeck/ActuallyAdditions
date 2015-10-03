@@ -30,12 +30,10 @@ import net.minecraftforge.fluids.*;
 public class TileEntityCanolaPress extends TileEntityInventoryBase implements IEnergyReceiver, IFluidHandler, IPacketSyncerToClient{
 
     public EnergyStorage storage = new EnergyStorage(40000);
-    private int lastEnergyStored;
-
     public FluidTank tank = new FluidTank(2*FluidContainerRegistry.BUCKET_VOLUME);
-    private int lastTankAmount;
-
     public int currentProcessTime;
+    private int lastEnergyStored;
+    private int lastTankAmount;
     private int lastProcessTime;
 
     public TileEntityCanolaPress(){
@@ -54,7 +52,9 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IE
                         this.currentProcessTime = 0;
 
                         this.slots[0].stackSize--;
-                        if(this.slots[0].stackSize == 0) this.slots[0] = null;
+                        if(this.slots[0].stackSize == 0){
+                            this.slots[0] = null;
+                        }
 
                         this.tank.fill(new FluidStack(InitBlocks.fluidCanolaOil, ConfigIntValues.PRESS_MB_PRODUCED.getValue()), true);
                         this.markDirty();
@@ -163,7 +163,9 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IE
 
     @Override
     public FluidStack drain(ForgeDirection from, FluidStack resource, boolean doDrain){
-        if(resource.getFluid() == InitBlocks.fluidCanolaOil) return this.tank.drain(resource.amount, doDrain);
+        if(resource.getFluid() == InitBlocks.fluidCanolaOil){
+            return this.tank.drain(resource.amount, doDrain);
+        }
         return null;
     }
 

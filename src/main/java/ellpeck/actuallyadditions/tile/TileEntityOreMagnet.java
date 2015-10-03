@@ -40,9 +40,8 @@ public class TileEntityOreMagnet extends TileEntityInventoryBase implements IEne
     public static final int SLOT_UPGRADE = 2;
 
     public EnergyStorage storage = new EnergyStorage(2000000);
-    private int lastEnergy;
-
     public FluidTank tank = new FluidTank(16*FluidContainerRegistry.BUCKET_VOLUME);
+    private int lastEnergy;
     private int lastTankAmount;
 
     private int currentWorkTimer;
@@ -153,7 +152,9 @@ public class TileEntityOreMagnet extends TileEntityInventoryBase implements IEne
 
     private boolean hasException(String name){
         for(String except : ConfigValues.oreMagnetExceptions){
-            if(except.equals(name)) return true;
+            if(except.equals(name)){
+                return true;
+            }
         }
         return false;
     }
@@ -162,7 +163,9 @@ public class TileEntityOreMagnet extends TileEntityInventoryBase implements IEne
         String name = Block.blockRegistry.getNameForObject(block);
         if(name != null){
             for(String list : ConfigValues.oreMagnetExtraWhitelist){
-                if(list.equals(name)) return true;
+                if(list.equals(name)){
+                    return true;
+                }
             }
         }
         return false;
@@ -231,7 +234,9 @@ public class TileEntityOreMagnet extends TileEntityInventoryBase implements IEne
 
     @Override
     public int fill(ForgeDirection from, FluidStack resource, boolean doFill){
-        if(this.canFill(from, resource.getFluid())) return this.tank.fill(resource, doFill);
+        if(this.canFill(from, resource.getFluid())){
+            return this.tank.fill(resource, doFill);
+        }
         return 0;
     }
 

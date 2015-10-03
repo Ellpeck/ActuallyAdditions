@@ -28,7 +28,9 @@ public class ItemFertilizer extends Item implements IActAddItemOrBlock{
     @Override
     public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int par7, float par8, float par9, float par10){
         if(ItemDye.applyBonemeal(stack, world, x, y, z, player)){
-            if(!world.isRemote) world.playAuxSFX(2005, x, y, z, 0);
+            if(!world.isRemote){
+                world.playAuxSFX(2005, x, y, z, 0);
+            }
             return true;
         }
         return super.onItemUse(stack, player, world, x, y, z, par7, par8, par9, par10);

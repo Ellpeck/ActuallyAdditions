@@ -27,9 +27,8 @@ import java.util.Collections;
 @SideOnly(Side.CLIENT)
 public class GuiOilGenerator extends GuiContainer{
 
-    private TileEntityOilGenerator generator;
-
     private static final ResourceLocation resLoc = AssetUtil.getGuiLocation("guiOilGenerator");
+    private TileEntityOilGenerator generator;
 
     public GuiOilGenerator(InventoryPlayer inventory, TileEntityBase tile){
         super(new ContainerOilGenerator(inventory, tile));

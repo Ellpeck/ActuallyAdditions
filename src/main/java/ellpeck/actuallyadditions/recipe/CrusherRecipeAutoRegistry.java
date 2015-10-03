@@ -19,26 +19,11 @@ public class CrusherRecipeAutoRegistry{
 
     public static ArrayList<SearchCase> searchCases = new ArrayList<SearchCase>();
 
-    public static class SearchCase{
-
-        public final String name;
-        public final int resultAmount;
-        public final String replacer;
-
-        public SearchCase(String name, int resultAmount, String replacer){
-            this.name = name;
-            this.resultAmount = resultAmount;
-            this.replacer = replacer;
-        }
-
-        public SearchCase(String name, int resultAmount){
-            this(name, resultAmount, "dust");
-        }
-    }
-
     private static boolean hasException(String name){
         for(String except : ConfigValues.crusherRecipeExceptions){
-            if(except.equals(name)) return true;
+            if(except.equals(name)){
+                return true;
+            }
         }
         return false;
     }
@@ -67,6 +52,23 @@ public class CrusherRecipeAutoRegistry{
                     CrusherRecipeManualRegistry.registerRecipe(inputName, inputWithDustPrefix, resultAmount);
                 }
             }
+        }
+    }
+
+    public static class SearchCase{
+
+        public final String name;
+        public final int resultAmount;
+        public final String replacer;
+
+        public SearchCase(String name, int resultAmount, String replacer){
+            this.name = name;
+            this.resultAmount = resultAmount;
+            this.replacer = replacer;
+        }
+
+        public SearchCase(String name, int resultAmount){
+            this(name, resultAmount, "dust");
         }
     }
 }

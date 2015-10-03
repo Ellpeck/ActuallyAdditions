@@ -24,6 +24,40 @@ import net.minecraft.tileentity.TileEntity;
 
 public class TileEntityInputter extends TileEntityInventoryBase implements IButtonReactor, INumberReactor, IPacketSyncerToClient{
 
+    public static final int PUT_FILTER_START = 13;
+    public static final int PULL_FILTER_START = 1;
+    public static final int WHITELIST_PULL_BUTTON_ID = 87;
+    public static final int WHITELIST_PUT_BUTTON_ID = 88;
+    public static final int OKAY_BUTTON_ID = 133;
+    public int sideToPut = -1;
+    public int slotToPutStart;
+    public int slotToPutEnd;
+    public TileEntity placeToPut;
+    public int sideToPull = -1;
+    public int slotToPullStart;
+    public int slotToPullEnd;
+    public TileEntity placeToPull;
+    public boolean isAdvanced;
+    public boolean isPullWhitelist = true;
+    public boolean isPutWhitelist = true;
+    private int lastPutSide;
+    private int lastPutStart;
+    private int lastPutEnd;
+    private int lastPullSide;
+    private int lastPullStart;
+    private int lastPullEnd;
+    private boolean lastPullWhite;
+    private boolean lastPutWhite;
+
+    public TileEntityInputter(int slots, String name){
+        super(slots, name);
+    }
+
+    public TileEntityInputter(){
+        super(1, "inputter");
+        this.isAdvanced = false;
+    }
+
     @Override
     public void onNumberReceived(int text, int textID, EntityPlayer player){
         if(text != -1){
@@ -70,61 +104,6 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
         PacketSyncerToClient.sendPacket(this);
     }
 
-    public static class TileEntityInputterAdvanced extends TileEntityInputter{
-
-        public TileEntityInputterAdvanced(){
-            super(25, "inputterAdvanced");
-            this.isAdvanced = true;
-        }
-
-    }
-
-    public static final int PUT_FILTER_START = 13;
-    public static final int PULL_FILTER_START = 1;
-
-    public static final int WHITELIST_PULL_BUTTON_ID = 87;
-    public static final int WHITELIST_PUT_BUTTON_ID = 88;
-    public static final int OKAY_BUTTON_ID = 133;
-
-    public int sideToPut = -1;
-    private int lastPutSide;
-
-    public int slotToPutStart;
-    private int lastPutStart;
-
-    public int slotToPutEnd;
-    private int lastPutEnd;
-
-    public TileEntity placeToPut;
-
-    public int sideToPull = -1;
-    private int lastPullSide;
-
-    public int slotToPullStart;
-    private int lastPullStart;
-
-    public int slotToPullEnd;
-    private int lastPullEnd;
-
-    public TileEntity placeToPull;
-
-    public boolean isAdvanced;
-
-    public boolean isPullWhitelist = true;
-    private boolean lastPullWhite;
-
-    public boolean isPutWhitelist = true;
-    private boolean lastPutWhite;
-
-    public TileEntityInputter(int slots, String name){
-        super(slots, name);
-    }
-
-    public TileEntityInputter(){
-        super(1, "inputter");
-        this.isAdvanced = false;
-    }
-
     @Override
     public void updateEntity(){
         if(!worldObj.isRemote){
@@ -133,8 +112,12 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
             //Is Block not powered by Redstone?
             if(!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)){
                 if(!(this.sideToPull == this.sideToPut && this.slotToPullStart == this.slotToPutStart && this.slotToPullEnd == this.slotToPutEnd)){
-                    if(sideToPull != -1 && this.placeToPull instanceof IInventory) this.pull();
-                    if(sideToPut != -1 && this.placeToPut instanceof IInventory) this.put();
+                    if(sideToPull != -1 && this.placeToPull instanceof IInventory){
+                        this.pull();
+                    }
+                    if(sideToPut != -1 && this.placeToPut instanceof IInventory){
+                        this.put();
+                    }
                 }
             }
 
@@ -167,7 +150,9 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
             int maxSize = theInventory.getInventoryStackLimit();
             //If the Inventory is ISided, deal with that
             ISidedInventory theSided = null;
-            if(theInventory instanceof ISidedInventory) theSided = (ISidedInventory)theInventory;
+            if(theInventory instanceof ISidedInventory){
+                theSided = (ISidedInventory)theInventory;
+            }
             //If can be pulled (for later)
             boolean can = false;
 
@@ -208,7 +193,9 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
                     }
                 }
                 //Stop if it can already pull
-                if(can) break;
+                if(can){
+                    break;
+                }
             }
             //If pull can be done
             if(can){
@@ -230,7 +217,9 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
                 //If ESD is empty
                 else{
                     ItemStack toBePut = theStack.copy();
-                    if(maxSize < toBePut.stackSize) toBePut.stackSize = maxSize;
+                    if(maxSize < toBePut.stackSize){
+                        toBePut.stackSize = maxSize;
+                    }
                     //Actually puts the Item
                     this.setInventorySlotContents(0, toBePut);
                     //Removes the Item from the inventory getting pulled from
@@ -255,7 +244,9 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
             int theSlotToPut = this.slotToPutStart;
             int maxSize = theInventory.getInventoryStackLimit();
             ISidedInventory theSided = null;
-            if(theInventory instanceof ISidedInventory) theSided = (ISidedInventory)theInventory;
+            if(theInventory instanceof ISidedInventory){
+                theSided = (ISidedInventory)theInventory;
+            }
             boolean can = false;
 
             if(this.slots[0] != null){
@@ -287,7 +278,9 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
                             can = true;
                         }
                     }
-                    if(can) break;
+                    if(can){
+                        break;
+                    }
                 }
                 if(can){
                     if(theStack != null){
@@ -307,7 +300,9 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
                     }
                     else{
                         ItemStack toBePut = this.slots[0].copy();
-                        if(maxSize < toBePut.stackSize) toBePut.stackSize = maxSize;
+                        if(maxSize < toBePut.stackSize){
+                            toBePut.stackSize = maxSize;
+                        }
                         theInventory.setInventorySlotContents(theSlotToPut, toBePut);
                         if(this.slots[0].stackSize == toBePut.stackSize){
                             this.slots[0] = null;
@@ -341,13 +336,17 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
      * @return Is Item on White-/Blacklist?
      */
     private boolean checkFilter(ItemStack stack, boolean isPull, boolean isWhitelist){
-        if(!this.isAdvanced) return true;
+        if(!this.isAdvanced){
+            return true;
+        }
 
         int slotStart = isPull ? PULL_FILTER_START : PUT_FILTER_START;
         int slotStop = slotStart+12;
 
         for(int i = slotStart; i < slotStop; i++){
-            if(this.slots[i] != null && this.slots[i].isItemEqual(stack)) return isWhitelist;
+            if(this.slots[i] != null && this.slots[i].isItemEqual(stack)){
+                return isWhitelist;
+            }
         }
         return !isWhitelist;
     }
@@ -363,10 +362,14 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
 
         //Resets the Variables
         if(this.placeToPull instanceof IInventory){
-            if(this.slotToPullEnd <= 0) this.slotToPullEnd = ((IInventory)this.placeToPull).getSizeInventory();
+            if(this.slotToPullEnd <= 0){
+                this.slotToPullEnd = ((IInventory)this.placeToPull).getSizeInventory();
+            }
         }
         if(this.placeToPut instanceof IInventory){
-            if(this.slotToPutEnd <= 0) this.slotToPutEnd = ((IInventory)this.placeToPut).getSizeInventory();
+            if(this.slotToPutEnd <= 0){
+                this.slotToPutEnd = ((IInventory)this.placeToPut).getSizeInventory();
+            }
         }
     }
 
@@ -391,11 +394,19 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
             this.slotToPullEnd = 0;
         }
 
-        if(buttonID == 0) this.sideToPut++;
-        if(buttonID == 1) this.sideToPut--;
+        if(buttonID == 0){
+            this.sideToPut++;
+        }
+        if(buttonID == 1){
+            this.sideToPut--;
+        }
 
-        if(buttonID == 2) this.sideToPull++;
-        if(buttonID == 3) this.sideToPull--;
+        if(buttonID == 2){
+            this.sideToPull++;
+        }
+        if(buttonID == 3){
+            this.sideToPull--;
+        }
 
         if(this.sideToPut >= 6){
             this.sideToPut = -1;
@@ -406,7 +417,9 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
         else if(this.sideToPull >= 6){
             this.sideToPull = -1;
         }
-        else if(this.sideToPull < -1) this.sideToPull = 5;
+        else if(this.sideToPull < -1){
+            this.sideToPull = 5;
+        }
 
         this.markDirty();
     }
@@ -450,5 +463,14 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
     @Override
     public boolean canExtractItem(int slot, ItemStack stack, int side){
         return slot == 0;
+    }
+
+    public static class TileEntityInputterAdvanced extends TileEntityInputter{
+
+        public TileEntityInputterAdvanced(){
+            super(25, "inputterAdvanced");
+            this.isAdvanced = true;
+        }
+
     }
 }

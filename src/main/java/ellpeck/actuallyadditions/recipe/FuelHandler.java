@@ -42,11 +42,6 @@ public class FuelHandler implements IFuelHandler{
         setFuelValues();
     }
 
-    @Override
-    public int getBurnTime(ItemStack fuel){
-        return getFuelValue(fuel);
-    }
-
     private static void addFuel(Item item, int metadata, int value){
         fuelList.put(Pair.of(item, metadata), value);
     }
@@ -70,5 +65,10 @@ public class FuelHandler implements IFuelHandler{
             }
         }
         return 0;
+    }
+
+    @Override
+    public int getBurnTime(ItemStack fuel){
+        return getFuelValue(fuel);
     }
 }

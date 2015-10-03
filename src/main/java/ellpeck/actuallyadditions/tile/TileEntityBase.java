@@ -22,18 +22,6 @@ import net.minecraft.world.World;
 
 public class TileEntityBase extends TileEntity{
 
-    @Override
-    public Packet getDescriptionPacket(){
-        NBTTagCompound tag = new NBTTagCompound();
-        this.writeToNBT(tag);
-        return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord, 1, tag);
-    }
-
-    @Override
-    public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt){
-        this.readFromNBT(pkt.func_148857_g());
-    }
-
     public static void init(){
         ModUtil.LOGGER.info("Registering TileEntities...");
         GameRegistry.registerTileEntity(TileEntityCompost.class, ModUtil.MOD_ID_LOWER+":tileEntityCompost");
@@ -72,6 +60,18 @@ public class TileEntityBase extends TileEntity{
         GameRegistry.registerTileEntity(TileEntityOreMagnet.class, ModUtil.MOD_ID_LOWER+":tileEntityOreMagnet");
         GameRegistry.registerTileEntity(TileEntitySmileyCloud.class, ModUtil.MOD_ID_LOWER+":tileEntityCloud");
         GameRegistry.registerTileEntity(TileEntityLeafGenerator.class, ModUtil.MOD_ID_LOWER+":tileEntityLeafGenerator");
+    }
+
+    @Override
+    public Packet getDescriptionPacket(){
+        NBTTagCompound tag = new NBTTagCompound();
+        this.writeToNBT(tag);
+        return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord, 1, tag);
+    }
+
+    @Override
+    public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt){
+        this.readFromNBT(pkt.func_148857_g());
     }
 
     @Override

@@ -55,7 +55,9 @@ public class ItemAllToolAA extends ItemTool implements IActAddItemOrBlock{
         String name = Block.blockRegistry.getNameForObject(block);
         if(name != null){
             for(String list : ConfigValues.paxelExtraMiningWhitelist){
-                if(list.equals(name)) return true;
+                if(list.equals(name)){
+                    return true;
+                }
             }
         }
         return false;
@@ -78,7 +80,9 @@ public class ItemAllToolAA extends ItemTool implements IActAddItemOrBlock{
         }
         else{
             UseHoeEvent event = new UseHoeEvent(player, stack, world, x, y, z);
-            if(MinecraftForge.EVENT_BUS.post(event)) return false;
+            if(MinecraftForge.EVENT_BUS.post(event)){
+                return false;
+            }
             if(event.getResult() == Event.Result.ALLOW){
                 stack.damageItem(1, player);
                 return true;
@@ -106,7 +110,9 @@ public class ItemAllToolAA extends ItemTool implements IActAddItemOrBlock{
     public boolean getIsRepairable(ItemStack itemToRepair, ItemStack stack){
         int[] idsStack = OreDictionary.getOreIDs(stack);
         for(int id : idsStack){
-            if(OreDictionary.getOreName(id).equals(repairItem)) return true;
+            if(OreDictionary.getOreName(id).equals(repairItem)){
+                return true;
+            }
         }
         return false;
     }

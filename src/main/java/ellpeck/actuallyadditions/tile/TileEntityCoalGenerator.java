@@ -26,11 +26,10 @@ import net.minecraftforge.common.util.ForgeDirection;
 public class TileEntityCoalGenerator extends TileEntityInventoryBase implements IEnergyProvider, IPacketSyncerToClient{
 
     public EnergyStorage storage = new EnergyStorage(60000);
-    private int lastEnergy;
-
     public int maxBurnTime;
-    private int lastBurnTime;
     public int currentBurnTime;
+    private int lastEnergy;
+    private int lastBurnTime;
     private int lastCurrentBurnTime;
 
     public TileEntityCoalGenerator(){

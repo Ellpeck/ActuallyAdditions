@@ -77,6 +77,21 @@ public class ItemWingsOfTheBats extends Item implements IActAddItemOrBlock{
         wingedPlayers.add(player.getUniqueID()+(player.worldObj.isRemote ? "-Remote" : ""));
     }
 
+    /**
+     * Checks if the Player has Wings in its Inventory
+     *
+     * @param player The Player
+     * @return The Wings
+     */
+    public static ItemStack getWingItem(EntityPlayer player){
+        for(int i = 0; i < player.inventory.getSizeInventory(); i++){
+            if(player.inventory.getStackInSlot(i) != null && player.inventory.getStackInSlot(i).getItem() instanceof ItemWingsOfTheBats){
+                return player.inventory.getStackInSlot(i);
+            }
+        }
+        return null;
+    }
+
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.epic;
@@ -96,20 +111,5 @@ public class ItemWingsOfTheBats extends Item implements IActAddItemOrBlock{
     @Override
     public String getName(){
         return "itemWingsOfTheBats";
-    }
-
-    /**
-     * Checks if the Player has Wings in its Inventory
-     *
-     * @param player The Player
-     * @return The Wings
-     */
-    public static ItemStack getWingItem(EntityPlayer player){
-        for(int i = 0; i < player.inventory.getSizeInventory(); i++){
-            if(player.inventory.getStackInSlot(i) != null && player.inventory.getStackInSlot(i).getItem() instanceof ItemWingsOfTheBats){
-                return player.inventory.getStackInSlot(i);
-            }
-        }
-        return null;
     }
 }

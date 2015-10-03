@@ -29,6 +29,8 @@ public interface IPhantomTile{
      */
     WorldPos getBoundPosition();
 
+    void setBoundPosition(WorldPos pos);
+
     /**
      * @return The ID of the GUI it opens, -1 if none
      */
@@ -38,6 +40,4 @@ public interface IPhantomTile{
      * @return The range the tile currently has
      */
     int getRange();
-
-    void setBoundPosition(WorldPos pos);
 }

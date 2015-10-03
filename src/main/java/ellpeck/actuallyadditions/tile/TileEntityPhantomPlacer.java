@@ -25,20 +25,9 @@ import java.util.ArrayList;
 
 public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements IPhantomTile{
 
-    public static class TileEntityPhantomBreaker extends TileEntityPhantomPlacer{
-
-        public TileEntityPhantomBreaker(){
-            super(9, "phantomBreaker");
-            this.isBreaker = true;
-        }
-
-    }
-
     public WorldPos boundPosition;
-
     public int currentTime;
     public int range;
-
     public boolean isBreaker;
 
     public TileEntityPhantomPlacer(int slots, String name){
@@ -134,6 +123,11 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
     }
 
     @Override
+    public void setBoundPosition(WorldPos pos){
+        this.boundPosition = pos == null ? null : pos.copy();
+    }
+
+    @Override
     public int getGuiID(){
         return GuiHandler.GuiTypes.PHANTOM_PLACER.ordinal();
     }
@@ -141,11 +135,6 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
     @Override
     public int getRange(){
         return this.range;
-    }
-
-    @Override
-    public void setBoundPosition(WorldPos pos){
-        this.boundPosition = pos == null ? null : pos.copy();
     }
 
     @Override
@@ -186,5 +175,14 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
     @Override
     public boolean canExtractItem(int slot, ItemStack stack, int side){
         return this.isBreaker;
+    }
+
+    public static class TileEntityPhantomBreaker extends TileEntityPhantomPlacer{
+
+        public TileEntityPhantomBreaker(){
+            super(9, "phantomBreaker");
+            this.isBreaker = true;
+        }
+
     }
 }

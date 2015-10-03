@@ -38,39 +38,29 @@ import java.util.List;
 public class GuiBooklet extends GuiScreen{
 
     public static final ResourceLocation resLoc = AssetUtil.getGuiLocation("guiBooklet");
+    public static final int CHAPTER_BUTTONS_AMOUNT = 13;
+    public static final int TOOLTIP_SPLIT_LENGTH = 200;
     public FontRenderer unicodeRenderer;
-
     public int xSize;
     public int ySize;
     public int guiLeft;
     public int guiTop;
-
     public BookletPage currentPage;
     public BookletChapter currentChapter;
     public BookletIndexEntry currentIndexEntry;
     public int pageOpenInIndex;
     public int indexPageAmount;
-
-    private GuiTextField searchField;
-
     public GuiButton buttonForward;
     public GuiButton buttonBackward;
-
     public GuiButton buttonPreviousScreen;
     public GuiButton buttonPreviouslyOpenedGui;
-
     public GuiButton buttonUpdate;
     public GuiButton buttonTwitter;
     public GuiButton buttonForum;
-
     public GuiButton buttonAchievements;
     public GuiButton buttonConfig;
-
-    public static final int CHAPTER_BUTTONS_AMOUNT = 13;
     public GuiButton[] chapterButtons = new GuiButton[CHAPTER_BUTTONS_AMOUNT];
-
-    public static final int TOOLTIP_SPLIT_LENGTH = 200;
-
+    private GuiTextField searchField;
     private int ticksElapsed;
     private boolean mouseClicked;
 
@@ -303,7 +293,9 @@ public class GuiBooklet extends GuiScreen{
             }
         }
 
-        if(this.mouseClicked) this.mouseClicked = false;
+        if(this.mouseClicked){
+            this.mouseClicked = false;
+        }
     }
 
     private boolean isGimmicky(){
@@ -381,7 +373,9 @@ public class GuiBooklet extends GuiScreen{
             if(this.currentIndexEntry != null){
                 if(this.currentPage != null){
                     BookletPage page = this.getNextPage(this.currentChapter, this.currentPage);
-                    if(page != null) this.currentPage = page;
+                    if(page != null){
+                        this.currentPage = page;
+                    }
 
                     this.buttonForward.visible = this.getNextPage(this.currentChapter, this.currentPage) != null;
                     this.buttonBackward.visible = this.getPrevPage(this.currentChapter, this.currentPage) != null;
@@ -395,7 +389,9 @@ public class GuiBooklet extends GuiScreen{
             if(this.currentIndexEntry != null){
                 if(this.currentPage != null){
                     BookletPage page = this.getPrevPage(this.currentChapter, this.currentPage);
-                    if(page != null) this.currentPage = page;
+                    if(page != null){
+                        this.currentPage = page;
+                    }
 
                     this.buttonForward.visible = this.getNextPage(this.currentChapter, this.currentPage) != null;
                     this.buttonBackward.visible = this.getPrevPage(this.currentChapter, this.currentPage) != null;
@@ -479,7 +475,9 @@ public class GuiBooklet extends GuiScreen{
     }
 
     public void openChapter(BookletChapter chapter, BookletPage page){
-        if(chapter == null) return;
+        if(chapter == null){
+            return;
+        }
 
         this.searchField.setVisible(false);
         this.searchField.setFocused(false);
@@ -509,8 +507,8 @@ public class GuiBooklet extends GuiScreen{
 
     private static class IndexButton extends GuiButton{
 
-        private GuiBooklet gui;
         public BookletChapter chap;
+        private GuiBooklet gui;
 
         public IndexButton(int id, int x, int y, int width, int height, String text, GuiBooklet gui){
             super(id, x, y, width, height, text);
@@ -569,7 +567,9 @@ public class GuiBooklet extends GuiScreen{
                 GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
                 this.field_146123_n = x >= this.xPosition && y >= this.yPosition && x < this.xPosition+this.width && y < this.yPosition+this.height;
                 int k = this.getHoverState(this.field_146123_n);
-                if(k == 0) k = 1;
+                if(k == 0){
+                    k = 1;
+                }
                 GL11.glEnable(GL11.GL_BLEND);
                 OpenGlHelper.glBlendFunc(770, 771, 1, 0);
                 GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);

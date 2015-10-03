@@ -22,12 +22,13 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 public class TileEntityLavaFactoryController extends TileEntityBase implements IEnergyReceiver{
 
-    public EnergyStorage storage = new EnergyStorage(3000000);
-
-    private int currentWorkTime;
-
+    public static final int NOT_MULTI = 0;
+    public static final int HAS_LAVA = 1;
+    public static final int HAS_AIR = 2;
     //The Positions the Case Blocks should be in for the Factory to work
     private static final int[][] CASE_POSITIONS = {{-1, 1, 0}, {1, 1, 0}, {0, 1, -1}, {0, 1, 1}};
+    public EnergyStorage storage = new EnergyStorage(3000000);
+    private int currentWorkTime;
 
     @Override
     @SuppressWarnings("unchecked")
@@ -58,10 +59,6 @@ public class TileEntityLavaFactoryController extends TileEntityBase implements I
         }
         return NOT_MULTI;
     }
-
-    public static final int NOT_MULTI = 0;
-    public static final int HAS_LAVA = 1;
-    public static final int HAS_AIR = 2;
 
     @Override
     public void writeToNBT(NBTTagCompound compound){

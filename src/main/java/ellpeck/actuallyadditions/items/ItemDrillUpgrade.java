@@ -24,25 +24,20 @@ import net.minecraft.world.World;
 
 public class ItemDrillUpgrade extends Item implements IActAddItemOrBlock{
 
-    public enum UpgradeType{
-        SPEED,
-        SPEED_II,
-        SPEED_III,
-        SILK_TOUCH,
-        FORTUNE,
-        FORTUNE_II,
-        THREE_BY_THREE,
-        FIVE_BY_FIVE,
-        PLACER
-    }
-
     public UpgradeType type;
     public String unlocalizedName;
-
     public ItemDrillUpgrade(UpgradeType type, String unlocName){
         this.type = type;
         this.unlocalizedName = unlocName;
         this.setMaxStackSize(1);
+    }
+
+    public static int getSlotToPlaceFrom(ItemStack stack){
+        NBTTagCompound compound = stack.getTagCompound();
+        if(compound != null){
+            return compound.getInteger("SlotToPlaceFrom")-1;
+        }
+        return -1;
     }
 
     @Override
@@ -55,19 +50,13 @@ public class ItemDrillUpgrade extends Item implements IActAddItemOrBlock{
 
     public void setSlotToPlaceFrom(ItemStack stack, int slot){
         NBTTagCompound compound = stack.getTagCompound();
-        if(compound == null) compound = new NBTTagCompound();
+        if(compound == null){
+            compound = new NBTTagCompound();
+        }
 
         compound.setInteger("SlotToPlaceFrom", slot+1);
 
         stack.setTagCompound(compound);
-    }
-
-    public static int getSlotToPlaceFrom(ItemStack stack){
-        NBTTagCompound compound = stack.getTagCompound();
-        if(compound != null){
-            return compound.getInteger("SlotToPlaceFrom")-1;
-        }
-        return -1;
     }
 
     @Override
@@ -84,5 +73,17 @@ public class ItemDrillUpgrade extends Item implements IActAddItemOrBlock{
     @Override
     public String getName(){
         return this.unlocalizedName;
+    }
+
+    public enum UpgradeType{
+        SPEED,
+        SPEED_II,
+        SPEED_III,
+        SILK_TOUCH,
+        FORTUNE,
+        FORTUNE_II,
+        THREE_BY_THREE,
+        FIVE_BY_FIVE,
+        PLACER
     }
 }

@@ -71,7 +71,9 @@ public abstract class BlockContainerBase extends BlockContainer{
     @Override
     public int getComparatorInputOverride(World world, int x, int y, int z, int meta){
         TileEntity tile = world.getTileEntity(x, y, z);
-        if(tile instanceof IInventory) return Container.calcRedstoneFromInventory((IInventory)tile);
+        if(tile instanceof IInventory){
+            return Container.calcRedstoneFromInventory((IInventory)tile);
+        }
         return 0;
     }
 }

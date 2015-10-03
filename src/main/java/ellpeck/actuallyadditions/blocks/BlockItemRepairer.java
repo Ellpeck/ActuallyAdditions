@@ -55,8 +55,12 @@ public class BlockItemRepairer extends BlockContainerBase implements IActAddItem
 
     @Override
     public IIcon getIcon(int side, int meta){
-        if(side == 1) return this.topIcon;
-        if(side == 0) return this.bottomIcon;
+        if(side == 1){
+            return this.topIcon;
+        }
+        if(side == 0){
+            return this.bottomIcon;
+        }
         return this.blockIcon;
     }
 

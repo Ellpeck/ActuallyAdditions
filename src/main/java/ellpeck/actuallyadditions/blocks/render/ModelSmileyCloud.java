@@ -31,11 +31,6 @@ public class ModelSmileyCloud extends ModelBaseAA{
     ModelRenderer s15;
     ModelRenderer s16;
 
-    @Override
-    public boolean doesRotate(){
-        return true;
-    }
-
     public ModelSmileyCloud(){
         textureWidth = 64;
         textureHeight = 64;
@@ -136,6 +131,11 @@ public class ModelSmileyCloud extends ModelBaseAA{
         s16.setTextureSize(64, 64);
         s16.mirror = true;
         setRotation(s16, 0F, 0F, 0F);
+    }
+
+    @Override
+    public boolean doesRotate(){
+        return true;
     }
 
     @Override

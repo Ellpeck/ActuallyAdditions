@@ -19,6 +19,8 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 public class TileEntityFurnaceSolar extends TileEntityBase implements IEnergyProvider{
 
+    public EnergyStorage storage = new EnergyStorage(30000);
+
     @Override
     public int extractEnergy(ForgeDirection from, int maxExtract, boolean simulate){
         return this.storage.extractEnergy(maxExtract, simulate);
@@ -38,8 +40,6 @@ public class TileEntityFurnaceSolar extends TileEntityBase implements IEnergyPro
     public boolean canConnectEnergy(ForgeDirection from){
         return from != ForgeDirection.UP;
     }
-
-    public EnergyStorage storage = new EnergyStorage(30000);
 
     @Override
     public void updateEntity(){

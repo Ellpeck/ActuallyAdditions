@@ -38,7 +38,9 @@ public class ItemPickaxeAA extends ItemPickaxe implements IActAddItemOrBlock{
     public boolean getIsRepairable(ItemStack itemToRepair, ItemStack stack){
         int[] idsStack = OreDictionary.getOreIDs(stack);
         for(int id : idsStack){
-            if(OreDictionary.getOreName(id).equals(repairItem)) return true;
+            if(OreDictionary.getOreName(id).equals(repairItem)){
+                return true;
+            }
         }
         return false;
     }

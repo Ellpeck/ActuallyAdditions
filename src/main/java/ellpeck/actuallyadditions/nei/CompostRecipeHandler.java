@@ -42,28 +42,6 @@ public class CompostRecipeHandler extends TemplateRecipeHandler implements INeiR
         return new ItemStack(InitBlocks.blockCompost);
     }
 
-    public class CachedCompostRecipe extends CachedRecipe{
-
-        public PositionedStack result;
-        public PositionedStack input;
-        public int chance;
-
-        public CachedCompostRecipe(ItemStack input, ItemStack result){
-            this.result = new PositionedStack(result, 67+32, 19);
-            this.input = new PositionedStack(input, 5+32, 19);
-        }
-
-        @Override
-        public PositionedStack getIngredient(){
-            return input;
-        }
-
-        @Override
-        public PositionedStack getResult(){
-            return result;
-        }
-    }
-
     @Override
     public int recipiesPerPage(){
         return 2;
@@ -89,12 +67,16 @@ public class CompostRecipeHandler extends TemplateRecipeHandler implements INeiR
         if(outputId.equals(NAME) && getClass() == CompostRecipeHandler.class){
             arecipes.add(new CachedCompostRecipe(new ItemStack(InitItems.itemMisc, ConfigIntValues.COMPOST_AMOUNT.getValue(), TheMiscItems.MASHED_FOOD.ordinal()), new ItemStack(InitItems.itemFertilizer, ConfigIntValues.COMPOST_AMOUNT.getValue())));
         }
-        else super.loadCraftingRecipes(outputId, results);
+        else{
+            super.loadCraftingRecipes(outputId, results);
+        }
     }
 
     @Override
     public void loadCraftingRecipes(ItemStack result){
-        if(NEIServerUtils.areStacksSameType(new ItemStack(InitItems.itemFertilizer), result)) arecipes.add(new CachedCompostRecipe(new ItemStack(InitItems.itemMisc, ConfigIntValues.COMPOST_AMOUNT.getValue(), TheMiscItems.MASHED_FOOD.ordinal()), new ItemStack(InitItems.itemFertilizer, ConfigIntValues.COMPOST_AMOUNT.getValue())));
+        if(NEIServerUtils.areStacksSameType(new ItemStack(InitItems.itemFertilizer), result)){
+            arecipes.add(new CachedCompostRecipe(new ItemStack(InitItems.itemMisc, ConfigIntValues.COMPOST_AMOUNT.getValue(), TheMiscItems.MASHED_FOOD.ordinal()), new ItemStack(InitItems.itemFertilizer, ConfigIntValues.COMPOST_AMOUNT.getValue())));
+        }
     }
 
     @Override
@@ -108,7 +90,7 @@ public class CompostRecipeHandler extends TemplateRecipeHandler implements INeiR
 
     @Override
     public String getGuiTexture(){
-        return ModUtil.MOD_ID_LOWER + ":textures/gui/guiNEISimple.png";
+        return ModUtil.MOD_ID_LOWER+":textures/gui/guiNEISimple.png";
     }
 
     @Override
@@ -121,5 +103,27 @@ public class CompostRecipeHandler extends TemplateRecipeHandler implements INeiR
     @Override
     public String getOverlayIdentifier(){
         return NAME;
+    }
+
+    public class CachedCompostRecipe extends CachedRecipe{
+
+        public PositionedStack result;
+        public PositionedStack input;
+        public int chance;
+
+        public CachedCompostRecipe(ItemStack input, ItemStack result){
+            this.result = new PositionedStack(result, 67+32, 19);
+            this.input = new PositionedStack(input, 5+32, 19);
+        }
+
+        @Override
+        public PositionedStack getIngredient(){
+            return input;
+        }
+
+        @Override
+        public PositionedStack getResult(){
+            return result;
+        }
     }
 }

@@ -54,14 +54,18 @@ public class BlockLampPowerer extends Block implements IActAddItemOrBlock{
 
     @Override
     public IIcon getIcon(int side, int meta){
-        if(side == 3) return this.frontIcon;
+        if(side == 3){
+            return this.frontIcon;
+        }
         return this.blockIcon;
     }
 
     @Override
     public IIcon getIcon(IBlockAccess world, int x, int y, int z, int side){
         int meta = world.getBlockMetadata(x, y, z);
-        if(side == meta) return this.frontIcon;
+        if(side == meta){
+            return this.frontIcon;
+        }
         return this.blockIcon;
     }
 

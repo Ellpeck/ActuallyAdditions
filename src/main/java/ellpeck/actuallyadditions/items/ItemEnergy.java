@@ -74,7 +74,9 @@ public abstract class ItemEnergy extends ItemEnergyContainer implements IActAddI
 
     public void setEnergy(ItemStack stack, int energy){
         NBTTagCompound compound = stack.getTagCompound();
-        if(compound == null) compound = new NBTTagCompound();
+        if(compound == null){
+            compound = new NBTTagCompound();
+        }
         compound.setInteger("Energy", energy);
         stack.setTagCompound(compound);
     }

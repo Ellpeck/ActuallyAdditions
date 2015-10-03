@@ -22,6 +22,14 @@ public class PersistentServerData implements IExtendedEntityProperties{
 
     public boolean bookGottenAlready;
 
+    public static PersistentServerData get(EntityPlayer player){
+        IExtendedEntityProperties properties = player.getExtendedProperties(ModUtil.MOD_ID);
+        if(properties != null && properties instanceof PersistentServerData){
+            return (PersistentServerData)properties;
+        }
+        return null;
+    }
+
     @Override
     public void saveNBTData(NBTTagCompound aComp){
         NBTTagCompound compound = new NBTTagCompound();
@@ -44,13 +52,5 @@ public class PersistentServerData implements IExtendedEntityProperties{
     @Override
     public void init(Entity entity, World world){
 
-    }
-
-    public static PersistentServerData get(EntityPlayer player){
-        IExtendedEntityProperties properties = player.getExtendedProperties(ModUtil.MOD_ID);
-        if(properties != null && properties instanceof PersistentServerData){
-            return (PersistentServerData)properties;
-        }
-        return null;
     }
 }

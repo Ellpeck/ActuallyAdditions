@@ -26,11 +26,10 @@ import net.minecraftforge.fluids.*;
 public class TileEntityFermentingBarrel extends TileEntityInventoryBase implements IFluidHandler, IPacketSyncerToClient{
 
     public FluidTank canolaTank = new FluidTank(2*FluidContainerRegistry.BUCKET_VOLUME);
-    private int lastCanola;
     public FluidTank oilTank = new FluidTank(2*FluidContainerRegistry.BUCKET_VOLUME);
-    private int lastOil;
-
     public int currentProcessTime;
+    private int lastCanola;
+    private int lastOil;
     private int lastProcessTime;
 
     public TileEntityFermentingBarrel(){
@@ -135,7 +134,9 @@ public class TileEntityFermentingBarrel extends TileEntityInventoryBase implemen
 
     @Override
     public FluidStack drain(ForgeDirection from, FluidStack resource, boolean doDrain){
-        if(resource.getFluid() == InitBlocks.fluidOil) return this.oilTank.drain(resource.amount, doDrain);
+        if(resource.getFluid() == InitBlocks.fluidOil){
+            return this.oilTank.drain(resource.amount, doDrain);
+        }
         return null;
     }
 

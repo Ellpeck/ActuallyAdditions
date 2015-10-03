@@ -110,7 +110,9 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
             }
             else{
                 stackAt = slots[i].splitStack(j);
-                if(slots[i].stackSize == 0) slots[i] = null;
+                if(slots[i].stackSize == 0){
+                    slots[i] = null;
+                }
                 this.markDirty();
                 return stackAt;
             }

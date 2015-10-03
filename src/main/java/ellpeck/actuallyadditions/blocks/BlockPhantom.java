@@ -36,17 +36,8 @@ import net.minecraft.world.World;
 
 public class BlockPhantom extends BlockContainerBase implements IActAddItemOrBlock{
 
-    public enum Type{
-        FACE,
-        PLACER,
-        BREAKER,
-        LIQUIFACE,
-        ENERGYFACE
-    }
-
     public Type type;
     public int range;
-
     public BlockPhantom(Type type){
         super(Material.rock);
         this.type = type;
@@ -65,7 +56,9 @@ public class BlockPhantom extends BlockContainerBase implements IActAddItemOrBlo
 
     @Override
     public void breakBlock(World world, int x, int y, int z, Block block, int par6){
-        if(this.type == Type.PLACER || this.type == Type.BREAKER) this.dropInventory(world, x, y, z);
+        if(this.type == Type.PLACER || this.type == Type.BREAKER){
+            this.dropInventory(world, x, y, z);
+        }
         super.breakBlock(world, x, y, z, block, par6);
     }
 
@@ -145,6 +138,14 @@ public class BlockPhantom extends BlockContainerBase implements IActAddItemOrBlo
             default:
                 return "blockPhantomface";
         }
+    }
+
+    public enum Type{
+        FACE,
+        PLACER,
+        BREAKER,
+        LIQUIFACE,
+        ENERGYFACE
     }
 
     public static class TheItemBlock extends ItemBlock{

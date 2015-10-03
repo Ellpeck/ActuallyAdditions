@@ -59,7 +59,9 @@ public class ModelCompost extends ModelBaseAA{
         int meta = tile.getWorldObj().getBlockMetadata(tile.xCoord, tile.yCoord, tile.zCoord);
         if(meta > 0 && meta <= ConfigIntValues.COMPOST_AMOUNT.getValue()){
             int heightToDisplay = meta*13/ConfigIntValues.COMPOST_AMOUNT.getValue();
-            if(heightToDisplay > 13) heightToDisplay = 13;
+            if(heightToDisplay > 13){
+                heightToDisplay = 13;
+            }
 
             this.innerRawList[heightToDisplay-1].render(f);
         }

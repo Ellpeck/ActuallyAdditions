@@ -16,14 +16,13 @@ import ellpeck.actuallyadditions.util.Util;
 
 public class UpdateChecker{
 
+    public static final String DOWNLOAD_LINK = "http://minecraft.curseforge.com/mc-mods/228404-actually-additions/files";
     public static boolean doneChecking = false;
     public static boolean checkFailed = false;
     public static String updateVersionS;
     public static int updateVersion;
     public static int clientVersion;
     public static String changelog;
-
-    public static final String DOWNLOAD_LINK = "http://minecraft.curseforge.com/mc-mods/228404-actually-additions/files";
 
     public void init(){
         if(ConfigBoolValues.DO_UPDATE_CHECK.isEnabled()){

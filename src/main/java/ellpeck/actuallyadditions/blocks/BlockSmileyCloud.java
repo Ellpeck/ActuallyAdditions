@@ -80,10 +80,18 @@ public class BlockSmileyCloud extends BlockContainerBase implements IActAddItemO
     public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack stack){
         int rotation = MathHelper.floor_double((double)(player.rotationYaw*4.0F/360.0F)+0.5D) & 3;
 
-        if(rotation == 0) world.setBlockMetadataWithNotify(x, y, z, 2, 2);
-        if(rotation == 1) world.setBlockMetadataWithNotify(x, y, z, 1, 2);
-        if(rotation == 2) world.setBlockMetadataWithNotify(x, y, z, 0, 2);
-        if(rotation == 3) world.setBlockMetadataWithNotify(x, y, z, 3, 2);
+        if(rotation == 0){
+            world.setBlockMetadataWithNotify(x, y, z, 2, 2);
+        }
+        if(rotation == 1){
+            world.setBlockMetadataWithNotify(x, y, z, 1, 2);
+        }
+        if(rotation == 2){
+            world.setBlockMetadataWithNotify(x, y, z, 0, 2);
+        }
+        if(rotation == 3){
+            world.setBlockMetadataWithNotify(x, y, z, 3, 2);
+        }
     }
 
     @Override

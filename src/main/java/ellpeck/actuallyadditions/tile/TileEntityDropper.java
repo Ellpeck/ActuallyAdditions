@@ -64,7 +64,9 @@ public class TileEntityDropper extends TileEntityInventoryBase{
                 ItemStack slot = this.slots[i].copy();
                 if(actuallyDo){
                     this.slots[i].stackSize--;
-                    if(this.slots[i].stackSize <= 0) this.slots[i] = null;
+                    if(this.slots[i].stackSize <= 0){
+                        this.slots[i] = null;
+                    }
                 }
                 return slot;
             }

@@ -27,15 +27,13 @@ import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 public class InitForeignPaxels{
 
+    public static final String[] mtNames = new String[]{"Obsidian", "LapisLazuli", "Osmium", "Bronze", "Glowstone", "Steel"};
     private static final String THERMAL_FOUNDATION = "ThermalFoundation";
     private static final String MEKANISM_TOOLS = "MekanismTools";
-
-    public static Item[] tfPaxels = new Item[9];
     private static final String[] tfNames = new String[]{"Copper", "Tin", "Silver", "Lead", "Nickel", "Electrum", "Bronze", "Platinum", "Invar"};
-
-    private static Item[] mtPaxels = new Item[6];
-    public static final String[] mtNames = new String[]{"Obsidian", "LapisLazuli", "Osmium", "Bronze", "Glowstone", "Steel"};
     private static final String[] mtRepairNames = new String[]{"ingotRefinedObsidian", "gemLapis", "ingotOsmium", "ingotBronze", "ingotRefinedGlowstone", "ingotSteel"};
+    public static Item[] tfPaxels = new Item[9];
+    private static Item[] mtPaxels = new Item[6];
 
     public static void init(){
         //MekanismTools

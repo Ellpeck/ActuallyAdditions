@@ -23,12 +23,11 @@ import java.util.Objects;
 public class TileEntitySmileyCloud extends TileEntityBase implements IPacketSyncerToClient, IStringReactor{
 
     public String name;
-    private String nameBefore;
-
     @SideOnly(Side.CLIENT)
     public double lastFlyHeight;
     @SideOnly(Side.CLIENT)
     public int flyHeight;
+    private String nameBefore;
 
     @Override
     public void updateEntity(){

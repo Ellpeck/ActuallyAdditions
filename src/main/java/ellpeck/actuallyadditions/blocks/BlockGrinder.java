@@ -33,11 +33,10 @@ import java.util.Random;
 
 public class BlockGrinder extends BlockContainerBase implements IActAddItemOrBlock{
 
+    private final boolean isDouble;
     private IIcon topIcon;
     private IIcon onIcon;
     private IIcon bottomIcon;
-
-    private final boolean isDouble;
 
     public BlockGrinder(boolean isDouble){
         super(Material.rock);
@@ -61,9 +60,15 @@ public class BlockGrinder extends BlockContainerBase implements IActAddItemOrBlo
 
     @Override
     public IIcon getIcon(int side, int meta){
-        if(side == 1 && meta != 1) return this.topIcon;
-        if(side == 1) return this.onIcon;
-        if(side == 0) return this.bottomIcon;
+        if(side == 1 && meta != 1){
+            return this.topIcon;
+        }
+        if(side == 1){
+            return this.onIcon;
+        }
+        if(side == 0){
+            return this.bottomIcon;
+        }
         return this.blockIcon;
     }
 

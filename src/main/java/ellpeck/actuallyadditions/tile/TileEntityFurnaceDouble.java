@@ -30,12 +30,10 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
     public static final int SLOT_OUTPUT_2 = 3;
 
     public EnergyStorage storage = new EnergyStorage(30000);
-    private int lastEnergy;
-
     public int firstSmeltTime;
-    private int lastFirstSmelt;
-
     public int secondSmeltTime;
+    private int lastEnergy;
+    private int lastFirstSmelt;
     private int lastSecondSmelt;
 
     public TileEntityFurnaceDouble(){
@@ -128,7 +126,9 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
         }
 
         this.slots[theInput].stackSize--;
-        if(this.slots[theInput].stackSize <= 0) this.slots[theInput] = null;
+        if(this.slots[theInput].stackSize <= 0){
+            this.slots[theInput] = null;
+        }
     }
 
     @Override

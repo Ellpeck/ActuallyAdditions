@@ -46,6 +46,97 @@ public class CoffeeMachineRecipeHandler extends TemplateRecipeHandler implements
         return new ItemStack(InitBlocks.blockCoffeeMachine);
     }
 
+    @Override
+    public int recipiesPerPage(){
+        return 1;
+    }
+
+    @Override
+    public void loadTransferRects(){
+        transferRects.add(new RecipeTransferRect(new Rectangle(20, 39, 20, 16), NAME));
+        transferRects.add(new RecipeTransferRect(new Rectangle(64, 42, 23, 10), NAME));
+    }
+
+    @Override
+    public Class<? extends GuiContainer> getGuiClass(){
+        return GuiCoffeeMachine.class;
+    }
+
+    @Override
+    public String getRecipeName(){
+        return StringUtil.localize("container.nei."+NAME+".name");
+    }
+
+    @Override
+    public void loadCraftingRecipes(String outputId, Object... results){
+        if(outputId.equals(NAME) && getClass() == CoffeeMachineRecipeHandler.class){
+            ArrayList<ItemCoffee.Ingredient> ingredients = ItemCoffee.ingredients;
+            for(ItemCoffee.Ingredient ingredient : ingredients){
+                arecipes.add(new CachedCoffee(ingredient));
+            }
+        }
+        else{
+            super.loadCraftingRecipes(outputId, results);
+        }
+    }
+
+    @Override
+    public void loadCraftingRecipes(ItemStack result){
+        ArrayList<ItemCoffee.Ingredient> ingredients = ItemCoffee.ingredients;
+        for(ItemCoffee.Ingredient ingredient : ingredients){
+            if(result.getItem() instanceof ItemCoffee){
+                arecipes.add(new CachedCoffee(ingredient));
+            }
+        }
+    }
+
+    @Override
+    public void loadUsageRecipes(ItemStack ingredient){
+
+        ArrayList<ItemCoffee.Ingredient> ingredients = ItemCoffee.ingredients;
+        for(ItemCoffee.Ingredient ingr : ingredients){
+            if(NEIServerUtils.areStacksSameTypeCrafting(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.CUP.ordinal()), ingredient) || NEIServerUtils.areStacksSameTypeCrafting(new ItemStack(InitItems.itemCoffeeBean), ingredient) || NEIServerUtils.areStacksSameTypeCrafting(ingr.ingredient.copy(), ingredient)){
+                CachedCoffee theRecipe = new CachedCoffee(ingr);
+                theRecipe.setIngredientPermutation(Collections.singletonList(theRecipe.ingredientStack), ingredient);
+                arecipes.add(theRecipe);
+            }
+        }
+    }
+
+    @Override
+    public String getGuiTexture(){
+        return ModUtil.MOD_ID_LOWER+":textures/gui/guiNEICoffeeMachine.png";
+    }
+
+    @Override
+    public void drawBackground(int recipeIndex){
+        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+        GuiDraw.changeTexture(getGuiTexture());
+        GuiDraw.drawTexturedModalRect(0, 0, 0, 0, 126, 88);
+    }
+
+    @Override
+    public void drawExtras(int recipe){
+        drawProgressBar(20, 39, 126, 0, 21, 16, 48, 0);
+        drawProgressBar(63, 42, 125, 16, 24, 12, 48, 2);
+
+        CachedCoffee cache = (CachedCoffee)this.arecipes.get(recipe);
+        if(cache.extraText != null){
+            GuiDraw.drawString(StringUtil.localize("container.nei."+ModUtil.MOD_ID_LOWER+".coffee.special")+":", 2, 4, StringUtil.DECIMAL_COLOR_GRAY_TEXT, false);
+            GuiDraw.drawString(cache.extraText, 2, 16, StringUtil.DECIMAL_COLOR_GRAY_TEXT, false);
+        }
+        GuiDraw.drawString(StringUtil.localize("container.nei."+ModUtil.MOD_ID_LOWER+".coffee.shift"), 1, 75, StringUtil.DECIMAL_COLOR_GRAY_TEXT, false);
+
+        if(cache.maxAmp > 0){
+            GuiDraw.drawString(StringUtil.localize("container.nei."+ModUtil.MOD_ID_LOWER+".coffee.maxAmount")+": "+cache.maxAmp, 2, 28, StringUtil.DECIMAL_COLOR_GRAY_TEXT, false);
+        }
+    }
+
+    @Override
+    public String getOverlayIdentifier(){
+        return NAME;
+    }
+
     public class CachedCoffee extends CachedRecipe{
 
         public PositionedStack cup;
@@ -83,92 +174,5 @@ public class CoffeeMachineRecipeHandler extends TemplateRecipeHandler implements
         public PositionedStack getResult(){
             return result;
         }
-    }
-
-    @Override
-    public int recipiesPerPage(){
-        return 1;
-    }
-
-    @Override
-    public void loadTransferRects(){
-        transferRects.add(new RecipeTransferRect(new Rectangle(20, 39, 20, 16), NAME));
-        transferRects.add(new RecipeTransferRect(new Rectangle(64, 42, 23, 10), NAME));
-    }
-
-    @Override
-    public Class<? extends GuiContainer> getGuiClass(){
-        return GuiCoffeeMachine.class;
-    }
-
-    @Override
-    public String getRecipeName(){
-        return StringUtil.localize("container.nei."+NAME+".name");
-    }
-
-    @Override
-    public void loadCraftingRecipes(String outputId, Object... results){
-        if(outputId.equals(NAME) && getClass() == CoffeeMachineRecipeHandler.class){
-            ArrayList<ItemCoffee.Ingredient> ingredients = ItemCoffee.ingredients;
-            for(ItemCoffee.Ingredient ingredient : ingredients){
-                arecipes.add(new CachedCoffee(ingredient));
-            }
-        }
-        else super.loadCraftingRecipes(outputId, results);
-    }
-
-    @Override
-    public void loadCraftingRecipes(ItemStack result){
-        ArrayList<ItemCoffee.Ingredient> ingredients = ItemCoffee.ingredients;
-        for(ItemCoffee.Ingredient ingredient : ingredients){
-            if(result.getItem() instanceof ItemCoffee) arecipes.add(new CachedCoffee(ingredient));
-        }
-    }
-
-    @Override
-    public void loadUsageRecipes(ItemStack ingredient){
-
-        ArrayList<ItemCoffee.Ingredient> ingredients = ItemCoffee.ingredients;
-        for(ItemCoffee.Ingredient ingr : ingredients){
-            if(NEIServerUtils.areStacksSameTypeCrafting(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.CUP.ordinal()), ingredient) || NEIServerUtils.areStacksSameTypeCrafting(new ItemStack(InitItems.itemCoffeeBean), ingredient) || NEIServerUtils.areStacksSameTypeCrafting(ingr.ingredient.copy(), ingredient)){
-                CachedCoffee theRecipe = new CachedCoffee(ingr);
-                theRecipe.setIngredientPermutation(Collections.singletonList(theRecipe.ingredientStack), ingredient);
-                arecipes.add(theRecipe);
-            }
-        }
-    }
-
-    @Override
-    public String getGuiTexture(){
-        return ModUtil.MOD_ID_LOWER + ":textures/gui/guiNEICoffeeMachine.png";
-    }
-
-    @Override
-    public void drawBackground(int recipeIndex){
-        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        GuiDraw.changeTexture(getGuiTexture());
-        GuiDraw.drawTexturedModalRect(0, 0, 0, 0, 126, 88);
-    }
-
-    @Override
-    public void drawExtras(int recipe){
-        drawProgressBar(20, 39, 126, 0, 21, 16, 48, 0);
-        drawProgressBar(63, 42, 125, 16, 24, 12, 48, 2);
-
-        CachedCoffee cache = (CachedCoffee)this.arecipes.get(recipe);
-        if(cache.extraText != null){
-            GuiDraw.drawString(StringUtil.localize("container.nei."+ModUtil.MOD_ID_LOWER+".coffee.special") + ":", 2, 4, StringUtil.DECIMAL_COLOR_GRAY_TEXT, false);
-            GuiDraw.drawString(cache.extraText, 2, 16, StringUtil.DECIMAL_COLOR_GRAY_TEXT, false);
-        }
-        GuiDraw.drawString(StringUtil.localize("container.nei."+ModUtil.MOD_ID_LOWER+".coffee.shift"), 1, 75, StringUtil.DECIMAL_COLOR_GRAY_TEXT, false);
-
-        if(cache.maxAmp > 0){
-            GuiDraw.drawString(StringUtil.localize("container.nei."+ModUtil.MOD_ID_LOWER+".coffee.maxAmount") + ": " + cache.maxAmp, 2, 28, StringUtil.DECIMAL_COLOR_GRAY_TEXT, false);
-        }
-    }
-
-    @Override
-    public String getOverlayIdentifier(){
-        return NAME;
     }
 }

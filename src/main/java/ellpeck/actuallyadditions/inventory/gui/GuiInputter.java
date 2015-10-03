@@ -40,29 +40,7 @@ import java.util.List;
 @SideOnly(Side.CLIENT)
 public class GuiInputter extends GuiContainer{
 
-    private static final ResourceLocation resLoc = AssetUtil.getGuiLocation("guiInputter");
-    private static final ResourceLocation resLocAdvanced = AssetUtil.getGuiLocation("guiInputterAdvanced");
-
-    public TileEntityInputter tileInputter;
-
-    private int x;
-    private int y;
-    private int z;
-    private World world;
-
-    private SmallerButton whitelistPut;
-    private SmallerButton whitelistPull;
-
-    private GuiTextField fieldPutStart;
-    private GuiTextField fieldPutEnd;
-
-    private GuiTextField fieldPullStart;
-    private GuiTextField fieldPullEnd;
-
-    private boolean isAdvanced;
-
     public static final int OFFSET_ADVANCED = 12+36;
-
     public static final String[] sideString = new String[]{
             StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.disabled"),
             StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.up"),
@@ -71,6 +49,20 @@ public class GuiInputter extends GuiContainer{
             StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.east"),
             StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.south"),
             StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.west")};
+    private static final ResourceLocation resLoc = AssetUtil.getGuiLocation("guiInputter");
+    private static final ResourceLocation resLocAdvanced = AssetUtil.getGuiLocation("guiInputterAdvanced");
+    public TileEntityInputter tileInputter;
+    private int x;
+    private int y;
+    private int z;
+    private World world;
+    private SmallerButton whitelistPut;
+    private SmallerButton whitelistPull;
+    private GuiTextField fieldPutStart;
+    private GuiTextField fieldPutEnd;
+    private GuiTextField fieldPullStart;
+    private GuiTextField fieldPullEnd;
+    private boolean isAdvanced;
 
     public GuiInputter(InventoryPlayer inventory, TileEntityBase tile, int x, int y, int z, World world, boolean isAdvanced){
         super(new ContainerInputter(inventory, tile, isAdvanced));
@@ -152,10 +144,18 @@ public class GuiInputter extends GuiContainer{
     @Override
     public void keyTyped(char theChar, int key){
         if(key == Keyboard.KEY_RETURN || key == Keyboard.KEY_NUMPADENTER){
-            if(this.fieldPutStart.isFocused()) this.setVariable(this.fieldPutStart, 0);
-            if(this.fieldPutEnd.isFocused()) this.setVariable(this.fieldPutEnd, 1);
-            if(this.fieldPullStart.isFocused()) this.setVariable(this.fieldPullStart, 2);
-            if(this.fieldPullEnd.isFocused()) this.setVariable(this.fieldPullEnd, 3);
+            if(this.fieldPutStart.isFocused()){
+                this.setVariable(this.fieldPutStart, 0);
+            }
+            if(this.fieldPutEnd.isFocused()){
+                this.setVariable(this.fieldPutEnd, 1);
+            }
+            if(this.fieldPullStart.isFocused()){
+                this.setVariable(this.fieldPullStart, 2);
+            }
+            if(this.fieldPullEnd.isFocused()){
+                this.setVariable(this.fieldPullEnd, 3);
+            }
         }
         else if(Character.isDigit(theChar) || key == Keyboard.KEY_BACK || key == Keyboard.KEY_DELETE || key == Keyboard.KEY_LEFT || key == Keyboard.KEY_RIGHT){
             this.fieldPutStart.textboxKeyTyped(theChar, key);
@@ -298,7 +298,9 @@ public class GuiInputter extends GuiContainer{
                 else if(!this.enabled){
                     color = 10526880;
                 }
-                else if(this.field_146123_n) color = 16777120;
+                else if(this.field_146123_n){
+                    color = 16777120;
+                }
 
                 this.drawCenteredString(mc.fontRenderer, this.displayString, this.xPosition+this.width/2, this.yPosition+(this.height-8)/2, color);
             }

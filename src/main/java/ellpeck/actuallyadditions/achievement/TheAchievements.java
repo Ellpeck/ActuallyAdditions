@@ -51,7 +51,9 @@ public enum TheAchievements{
 
     TheAchievements(String name, int x, int y, ItemStack displayStack, Achievement hasToHaveBefore, int type){
         this.ach = new Achievement("achievement."+ModUtil.MOD_ID_LOWER+"."+name, ModUtil.MOD_ID_LOWER+"."+name, x, y, displayStack, hasToHaveBefore);
-        if(hasToHaveBefore == null) this.ach.initIndependentStat();
+        if(hasToHaveBefore == null){
+            this.ach.initIndependentStat();
+        }
         this.ach.registerStat();
         this.type = type;
     }

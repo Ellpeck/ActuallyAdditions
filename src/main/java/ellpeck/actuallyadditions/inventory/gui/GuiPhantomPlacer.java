@@ -24,9 +24,8 @@ import org.lwjgl.opengl.GL11;
 @SideOnly(Side.CLIENT)
 public class GuiPhantomPlacer extends GuiContainer{
 
-    private TileEntityPhantomPlacer placer;
-
     private static final ResourceLocation resLoc = AssetUtil.getGuiLocation("guiBreaker");
+    private TileEntityPhantomPlacer placer;
 
     public GuiPhantomPlacer(InventoryPlayer inventory, TileEntityBase tile){
         super(new ContainerPhantomPlacer(inventory, tile));

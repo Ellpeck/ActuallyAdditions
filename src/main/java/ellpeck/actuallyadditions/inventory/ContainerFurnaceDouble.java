@@ -64,7 +64,9 @@ public class ContainerFurnaceDouble extends Container{
 
             //Slots in Inventory to shift from
             if(slot == TileEntityFurnaceDouble.SLOT_OUTPUT_1 || slot == TileEntityFurnaceDouble.SLOT_OUTPUT_2){
-                if(!this.mergeItemStack(newStack, inventoryStart, hotbarEnd+1, true)) return null;
+                if(!this.mergeItemStack(newStack, inventoryStart, hotbarEnd+1, true)){
+                    return null;
+                }
                 theSlot.onSlotChange(newStack, currentStack);
             }
             //Other Slots in Inventory excluded
@@ -80,13 +82,17 @@ public class ContainerFurnaceDouble extends Container{
                 //
 
                 else if(slot >= inventoryStart && slot <= inventoryEnd){
-                    if(!this.mergeItemStack(newStack, hotbarStart, hotbarEnd+1, false)) return null;
+                    if(!this.mergeItemStack(newStack, hotbarStart, hotbarEnd+1, false)){
+                        return null;
+                    }
                 }
                 else if(slot >= inventoryEnd+1 && slot < hotbarEnd+1 && !this.mergeItemStack(newStack, inventoryStart, inventoryEnd+1, false)){
                     return null;
                 }
             }
-            else if(!this.mergeItemStack(newStack, inventoryStart, hotbarEnd+1, false)) return null;
+            else if(!this.mergeItemStack(newStack, inventoryStart, hotbarEnd+1, false)){
+                return null;
+            }
 
             if(newStack.stackSize == 0){
                 theSlot.putStack(null);
@@ -95,7 +101,9 @@ public class ContainerFurnaceDouble extends Container{
                 theSlot.onSlotChanged();
             }
 
-            if(newStack.stackSize == currentStack.stackSize) return null;
+            if(newStack.stackSize == currentStack.stackSize){
+                return null;
+            }
             theSlot.onPickupFromSlot(player, newStack);
 
             return currentStack;

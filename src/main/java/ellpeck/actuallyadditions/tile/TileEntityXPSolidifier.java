@@ -25,6 +25,7 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
 
     public short amount;
     private short lastAmount;
+    private int[] buttonAmounts = new int[]{1, 5, 10, 20, 30, 40, 50, 64, -999};
 
     public TileEntityXPSolidifier(){
         super(1, "xpSolidifier");
@@ -81,8 +82,6 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
         return true;
     }
 
-    private int[] buttonAmounts = new int[]{1, 5, 10, 20, 30, 40, 50, 64, -999};
-
     @Override
     public void onButtonPressed(int buttonID, EntityPlayer player){
         if(buttonID < this.buttonAmounts.length){
@@ -90,7 +89,9 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
                 int xp = this.buttonAmounts[buttonID] == -999 ? this.getPlayerXP(player)/ItemSpecialDrop.SOLID_XP_AMOUNT : this.buttonAmounts[buttonID];
                 if(this.amount < Short.MAX_VALUE-xp && this.getPlayerXP(player) >= ItemSpecialDrop.SOLID_XP_AMOUNT*xp){
                     this.addPlayerXP(player, -(ItemSpecialDrop.SOLID_XP_AMOUNT*xp));
-                    if(!worldObj.isRemote) this.amount += xp;
+                    if(!worldObj.isRemote){
+                        this.amount += xp;
+                    }
                 }
             }
         }

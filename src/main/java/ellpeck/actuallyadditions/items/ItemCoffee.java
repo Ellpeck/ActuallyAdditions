@@ -37,6 +37,14 @@ public class ItemCoffee extends ItemFood implements IActAddItemOrBlock{
 
     public static ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
 
+    public ItemCoffee(){
+        super(8, 5.0F, false);
+        this.setMaxDamage(ConfigIntValues.COFFEE_DRINK_AMOUNT.getValue()-1);
+        this.setAlwaysEdible();
+        this.setMaxStackSize(1);
+        this.setNoRepair();
+    }
+
     public static void initIngredients(){
         registerIngredient(new MilkIngredient(new ItemStack(Items.milk_bucket)));
         //Pam's Soy Milk (For Jemx because he's lactose intolerant. YER HAPPY NAO!?)
@@ -56,31 +64,11 @@ public class ItemCoffee extends ItemFood implements IActAddItemOrBlock{
         registerIngredient(new Ingredient(new ItemStack(Items.fermented_spider_eye), new PotionEffect[]{new PotionEffect(Potion.invisibility.getId(), 25, 0)}, 2));
     }
 
-    public ItemCoffee(){
-        super(8, 5.0F, false);
-        this.setMaxDamage(ConfigIntValues.COFFEE_DRINK_AMOUNT.getValue()-1);
-        this.setAlwaysEdible();
-        this.setMaxStackSize(1);
-        this.setNoRepair();
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean bool){
-        PotionEffect[] effects = getEffectsFromStack(stack);
-        if(effects != null){
-            for(PotionEffect effect : effects){
-                list.add(StringUtil.localize(effect.getEffectName())+" "+(effect.getAmplifier()+1)+", "+StringUtils.ticksToElapsedTime(effect.getDuration()*20));
-            }
-        }
-        else{
-            list.add("No Effects");
-        }
-    }
-
     public static Ingredient getIngredientFromStack(ItemStack stack){
         for(Ingredient ingredient : ingredients){
-            if(ingredient.ingredient.copy().isItemEqual(stack)) return ingredient;
+            if(ingredient.ingredient.copy().isItemEqual(stack)){
+                return ingredient;
+            }
         }
         return null;
     }
@@ -98,7 +86,9 @@ public class ItemCoffee extends ItemFood implements IActAddItemOrBlock{
 
     public static void addEffectToStack(ItemStack stack, PotionEffect effect){
         NBTTagCompound tag = stack.getTagCompound();
-        if(tag == null) tag = new NBTTagCompound();
+        if(tag == null){
+            tag = new NBTTagCompound();
+        }
 
         int prevCounter = tag.getInteger("Counter");
         NBTTagCompound compound = new NBTTagCompound();
@@ -157,7 +147,9 @@ public class ItemCoffee extends ItemFood implements IActAddItemOrBlock{
         PotionEffect[] effectsStack = getEffectsFromStack(stack);
         if(effectsStack != null && effectsStack.length > 0){
             for(PotionEffect effectStack : effectsStack){
-                if(effect.getPotionID() == effectStack.getPotionID()) return effectStack;
+                if(effect.getPotionID() == effectStack.getPotionID()){
+                    return effectStack;
+                }
             }
         }
         return null;
@@ -169,6 +161,24 @@ public class ItemCoffee extends ItemFood implements IActAddItemOrBlock{
             for(PotionEffect effect : effects){
                 player.addPotionEffect(new PotionEffect(effect.getPotionID(), effect.getDuration()*20, effect.getAmplifier()));
             }
+        }
+    }
+
+    public static void registerIngredient(Ingredient ingredient){
+        ingredients.add(ingredient);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean bool){
+        PotionEffect[] effects = getEffectsFromStack(stack);
+        if(effects != null){
+            for(PotionEffect effect : effects){
+                list.add(StringUtil.localize(effect.getEffectName())+" "+(effect.getAmplifier()+1)+", "+StringUtils.ticksToElapsedTime(effect.getDuration()*20));
+            }
+        }
+        else{
+            list.add("No Effects");
         }
     }
 
@@ -222,15 +232,11 @@ public class ItemCoffee extends ItemFood implements IActAddItemOrBlock{
         return "itemCoffee";
     }
 
-    public static void registerIngredient(Ingredient ingredient){
-        ingredients.add(ingredient);
-    }
-
     public static class Ingredient{
 
         public final ItemStack ingredient;
-        protected PotionEffect[] effects;
         public final int maxAmplifier;
+        protected PotionEffect[] effects;
 
         public Ingredient(ItemStack ingredient, PotionEffect[] effects, int maxAmplifier){
             this.ingredient = ingredient.copy();

@@ -37,8 +37,21 @@ import java.util.ArrayList;
 
 public class WorldUtil{
 
+    /**
+     * Vertical Directions in Order:
+     * Up, Down
+     */
+    public static final ForgeDirection[] VERTICAL_DIRECTIONS_ORDER = new ForgeDirection[]{ForgeDirection.UP, ForgeDirection.DOWN};
+    /**
+     * Cardinal Directions in Order:
+     * North, East, South, West
+     */
+    public static final ForgeDirection[] CARDINAL_DIRECTIONS_ORDER = new ForgeDirection[]{ForgeDirection.NORTH, ForgeDirection.EAST, ForgeDirection.SOUTH, ForgeDirection.WEST};
+
     public static WorldPos getCoordsFromSide(ForgeDirection side, World world, int x, int y, int z){
-        if(side == ForgeDirection.UNKNOWN) return null;
+        if(side == ForgeDirection.UNKNOWN){
+            return null;
+        }
         return new WorldPos(world, x+side.offsetX, y+side.offsetY, z+side.offsetZ);
     }
 
@@ -178,7 +191,9 @@ public class WorldUtil{
                     if(slots[outputSlot] != null){
                         tank.drain(cap, true);
                         slots[inputSlot].stackSize--;
-                        if(slots[inputSlot].stackSize <= 0) slots[inputSlot] = null;
+                        if(slots[inputSlot].stackSize <= 0){
+                            slots[inputSlot] = null;
+                        }
                     }
                 }
             }
@@ -202,22 +217,13 @@ public class WorldUtil{
 
                     tank.fill(FluidContainerRegistry.getFluidForFilledItem(slots[inputSlot]), true);
                     slots[inputSlot].stackSize--;
-                    if(slots[inputSlot].stackSize <= 0) slots[inputSlot] = null;
+                    if(slots[inputSlot].stackSize <= 0){
+                        slots[inputSlot] = null;
+                    }
                 }
             }
         }
     }
-
-    /**
-     * Vertical Directions in Order:
-     * Up, Down
-     */
-    public static final ForgeDirection[] VERTICAL_DIRECTIONS_ORDER = new ForgeDirection[]{ForgeDirection.UP, ForgeDirection.DOWN};
-    /**
-     * Cardinal Directions in Order:
-     * North, East, South, West
-     */
-    public static final ForgeDirection[] CARDINAL_DIRECTIONS_ORDER = new ForgeDirection[]{ForgeDirection.NORTH, ForgeDirection.EAST, ForgeDirection.SOUTH, ForgeDirection.WEST};
 
     public static ForgeDirection getDirectionBySidesInOrder(int side){
         if(side >= 0 && side < VERTICAL_DIRECTIONS_ORDER.length+CARDINAL_DIRECTIONS_ORDER.length){

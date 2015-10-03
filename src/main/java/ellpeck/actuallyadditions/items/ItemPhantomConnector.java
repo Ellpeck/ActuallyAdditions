@@ -75,7 +75,9 @@ public class ItemPhantomConnector extends Item implements IActAddItemOrBlock{
 
     @Override
     public void onUpdate(ItemStack stack, World world, Entity entity, int par4, boolean par5){
-        if(this.getStoredPosition(stack) == null) this.clearStorage(stack);
+        if(this.getStoredPosition(stack) == null){
+            this.clearStorage(stack);
+        }
     }
 
     public WorldPos getStoredPosition(ItemStack stack){
@@ -94,7 +96,9 @@ public class ItemPhantomConnector extends Item implements IActAddItemOrBlock{
 
     public void storeConnection(ItemStack stack, int x, int y, int z, World world){
         NBTTagCompound tag = stack.getTagCompound();
-        if(tag == null) tag = new NBTTagCompound();
+        if(tag == null){
+            tag = new NBTTagCompound();
+        }
 
         tag.setInteger("XCoordOfTileStored", x);
         tag.setInteger("YCoordOfTileStored", y);

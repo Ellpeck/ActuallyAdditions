@@ -28,10 +28,9 @@ import net.minecraftforge.fluids.Fluid;
 
 public class BlockFluidFlowing extends BlockFluidClassic implements IActAddItemOrBlock{
 
-    private String name;
-
     public IIcon stillIcon;
     public IIcon flowingIcon;
+    private String name;
 
     public BlockFluidFlowing(Fluid fluid, Material material, String unlocalizedName){
         super(fluid, material);

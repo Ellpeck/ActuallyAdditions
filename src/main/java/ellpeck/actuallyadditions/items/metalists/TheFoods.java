@@ -38,22 +38,13 @@ public enum TheFoods implements IActAddItemOrBlock{
     RICE_BREAD("RiceBread", 8, 3F, false, 25, EnumRarity.uncommon),
     DOUGHNUT("Doughnut", 4, 0.5F, false, 10, EnumRarity.epic);
 
-    public static void setReturnItems(){
-        SPAGHETTI.returnItem = new ItemStack(Items.bowl);
-        PUMPKIN_STEW.returnItem = new ItemStack(Items.bowl);
-        CARROT_JUICE.returnItem = new ItemStack(Items.glass_bottle);
-        FRENCH_FRIES.returnItem = new ItemStack(InitItems.itemMisc, 1, TheMiscItems.PAPER_CONE.ordinal());
-        FISH_N_CHIPS.returnItem = new ItemStack(InitItems.itemMisc, 1, TheMiscItems.PAPER_CONE.ordinal());
-    }
-
     public final String name;
     public final int healAmount;
     public final float saturation;
     public final boolean getsDrunken;
     public final int useDuration;
-    public ItemStack returnItem;
     public final EnumRarity rarity;
-
+    public ItemStack returnItem;
     TheFoods(String name, int healAmount, float saturation, boolean getsDrunken, int useDuration, EnumRarity rarity){
         this.name = name;
         this.getsDrunken = getsDrunken;
@@ -61,6 +52,14 @@ public enum TheFoods implements IActAddItemOrBlock{
         this.saturation = saturation;
         this.useDuration = useDuration;
         this.rarity = rarity;
+    }
+
+    public static void setReturnItems(){
+        SPAGHETTI.returnItem = new ItemStack(Items.bowl);
+        PUMPKIN_STEW.returnItem = new ItemStack(Items.bowl);
+        CARROT_JUICE.returnItem = new ItemStack(Items.glass_bottle);
+        FRENCH_FRIES.returnItem = new ItemStack(InitItems.itemMisc, 1, TheMiscItems.PAPER_CONE.ordinal());
+        FISH_N_CHIPS.returnItem = new ItemStack(InitItems.itemMisc, 1, TheMiscItems.PAPER_CONE.ordinal());
     }
 
     @Override

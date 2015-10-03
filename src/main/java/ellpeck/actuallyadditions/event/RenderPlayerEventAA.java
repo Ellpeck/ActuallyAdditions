@@ -23,11 +23,11 @@ import java.util.UUID;
 
 public class RenderPlayerEventAA{
 
+    public static RenderSpecial lariRender = new RenderSpecial(null);
     private static RenderSpecial ellpeckRender = new RenderSpecial(new ItemStack(InitItems.itemPhantomConnector));
     private static RenderSpecial hoseRender = new RenderSpecial(new ItemStack(Blocks.torch));
     private static RenderSpecial paktoRender = new RenderSpecial(new ItemStack(Blocks.wool, 1, 6));
     private static RenderSpecial glenRender = new RenderSpecial(new ItemStack(InitBlocks.blockHeatCollector));
-    public static RenderSpecial lariRender = new RenderSpecial(null);
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void RenderPlayerEvent(RenderPlayerEvent.Specials.Pre event){

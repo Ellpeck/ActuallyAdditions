@@ -487,7 +487,9 @@ public class ItemCrafting{
 
     private static boolean isBlacklisted(Object item){
         for(String except : ConfigValues.mashedFoodCraftingExceptions){
-            if(Item.itemRegistry.getNameForObject(item).equals(except)) return true;
+            if(Item.itemRegistry.getNameForObject(item).equals(except)){
+                return true;
+            }
         }
         return false;
     }

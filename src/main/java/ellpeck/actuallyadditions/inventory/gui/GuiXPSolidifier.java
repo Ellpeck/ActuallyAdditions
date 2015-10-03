@@ -30,10 +30,8 @@ import org.lwjgl.opengl.GL11;
 @SideOnly(Side.CLIENT)
 public class GuiXPSolidifier extends GuiContainer{
 
-    private TileEntityXPSolidifier solidifier;
-
     private static final ResourceLocation resLoc = AssetUtil.getGuiLocation("guiXPSolidifier");
-
+    private TileEntityXPSolidifier solidifier;
     private int x;
     private int y;
     private int z;

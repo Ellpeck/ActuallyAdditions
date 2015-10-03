@@ -22,17 +22,7 @@ import java.util.ArrayList;
 
 public class TileEntityBreaker extends TileEntityInventoryBase{
 
-    public static class TileEntityPlacer extends TileEntityBreaker{
-
-        public TileEntityPlacer(){
-            super(9, "placer");
-            this.isPlacer = true;
-        }
-
-    }
-
     public boolean isPlacer;
-
     private int currentTime;
 
     public TileEntityBreaker(int slots, String name){
@@ -111,6 +101,15 @@ public class TileEntityBreaker extends TileEntityInventoryBase{
     @Override
     public boolean canExtractItem(int slot, ItemStack stack, int side){
         return true;
+    }
+
+    public static class TileEntityPlacer extends TileEntityBreaker{
+
+        public TileEntityPlacer(){
+            super(9, "placer");
+            this.isPlacer = true;
+        }
+
     }
 
 }

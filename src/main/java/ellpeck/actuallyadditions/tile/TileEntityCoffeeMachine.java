@@ -35,19 +35,15 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
     public static final int SLOT_OUTPUT = 2;
     public static final int SLOT_WATER_INPUT = 11;
     public static final int SLOT_WATER_OUTPUT = 12;
-
-    public EnergyStorage storage = new EnergyStorage(300000);
-    private int lastEnergy;
-    public FluidTank tank = new FluidTank(4*FluidContainerRegistry.BUCKET_VOLUME);
-    private int lastTank;
-
     public final int waterUsedPerCoffee = 500;
-
     public final int coffeeCacheMaxAmount = 300;
+    public EnergyStorage storage = new EnergyStorage(300000);
+    public FluidTank tank = new FluidTank(4*FluidContainerRegistry.BUCKET_VOLUME);
     public int coffeeCacheAmount;
-    private int lastCoffeeAmount;
-
     public int brewTime;
+    private int lastEnergy;
+    private int lastTank;
+    private int lastCoffeeAmount;
     private int lastBrewTime;
 
     public TileEntityCoffeeMachine(){
@@ -77,7 +73,9 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
         if(this.slots[SLOT_COFFEE_BEANS] != null && this.slots[SLOT_COFFEE_BEANS].getItem() == InitItems.itemCoffeeBean){
             if(ConfigIntValues.COFFEE_CACHE_ADDED_PER_ITEM.getValue() <= this.coffeeCacheMaxAmount-this.coffeeCacheAmount){
                 this.slots[SLOT_COFFEE_BEANS].stackSize--;
-                if(this.slots[SLOT_COFFEE_BEANS].stackSize <= 0) this.slots[SLOT_COFFEE_BEANS] = null;
+                if(this.slots[SLOT_COFFEE_BEANS].stackSize <= 0){
+                    this.slots[SLOT_COFFEE_BEANS] = null;
+                }
                 this.coffeeCacheAmount += ConfigIntValues.COFFEE_CACHE_ADDED_PER_ITEM.getValue();
             }
         }
@@ -109,7 +107,9 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
                         }
                         this.slots[SLOT_OUTPUT] = output.copy();
                         this.slots[SLOT_INPUT].stackSize--;
-                        if(this.slots[SLOT_INPUT].stackSize <= 0) this.slots[SLOT_INPUT] = null;
+                        if(this.slots[SLOT_INPUT].stackSize <= 0){
+                            this.slots[SLOT_INPUT] = null;
+                        }
                         this.coffeeCacheAmount -= ConfigIntValues.COFFEE_CACHE_USED_PER_ITEM.getValue();
                         this.tank.drain(this.waterUsedPerCoffee, true);
                     }

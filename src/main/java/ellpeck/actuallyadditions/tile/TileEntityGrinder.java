@@ -26,8 +26,26 @@ import java.util.Random;
 
 public class TileEntityGrinder extends TileEntityInventoryBase implements IEnergyReceiver, IPacketSyncerToClient{
 
+    public static final int SLOT_INPUT_1 = 0;
+    public static final int SLOT_OUTPUT_1_1 = 1;
+    public static final int SLOT_OUTPUT_1_2 = 2;
+    public static final int SLOT_INPUT_2 = 3;
+    public static final int SLOT_OUTPUT_2_1 = 4;
+    public static final int SLOT_OUTPUT_2_2 = 5;
     public EnergyStorage storage = new EnergyStorage(60000);
+    public int firstCrushTime;
+    public int secondCrushTime;
+    public boolean isDouble;
     private int lastEnergy;
+    private int lastFirstCrush;
+    private int lastSecondCrush;
+    public TileEntityGrinder(int slots, String name){
+        super(slots, name);
+    }
+    public TileEntityGrinder(){
+        super(3, "grinder");
+        this.isDouble = false;
+    }
 
     @Override
     public int receiveEnergy(ForgeDirection from, int maxReceive, boolean simulate){
@@ -66,38 +84,6 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
         PacketSyncerToClient.sendPacket(this);
     }
 
-    public static class TileEntityGrinderDouble extends TileEntityGrinder{
-
-        public TileEntityGrinderDouble(){
-            super(6, "grinderDouble");
-            this.isDouble = true;
-        }
-
-    }
-
-    public static final int SLOT_INPUT_1 = 0;
-    public static final int SLOT_OUTPUT_1_1 = 1;
-    public static final int SLOT_OUTPUT_1_2 = 2;
-    public static final int SLOT_INPUT_2 = 3;
-    public static final int SLOT_OUTPUT_2_1 = 4;
-    public static final int SLOT_OUTPUT_2_2 = 5;
-
-    public int firstCrushTime;
-    private int lastFirstCrush;
-    public int secondCrushTime;
-    private int lastSecondCrush;
-
-    public boolean isDouble;
-
-    public TileEntityGrinder(int slots, String name){
-        super(slots, name);
-    }
-
-    public TileEntityGrinder(){
-        super(3, "grinder");
-        this.isDouble = false;
-    }
-
     private int getMaxCrushTime(){
         return this.isDouble ? ConfigIntValues.GRINDER_DOUBLE_CRUSH_TIME.getValue() : ConfigIntValues.GRINDER_CRUSH_TIME.getValue();
     }
@@ -114,7 +100,9 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
 
             boolean canCrushOnFirst = this.canCrushOn(SLOT_INPUT_1, SLOT_OUTPUT_1_1, SLOT_OUTPUT_1_2);
             boolean canCrushOnSecond = false;
-            if(this.isDouble) canCrushOnSecond = this.canCrushOn(SLOT_INPUT_2, SLOT_OUTPUT_2_1, SLOT_OUTPUT_2_2);
+            if(this.isDouble){
+                canCrushOnSecond = this.canCrushOn(SLOT_INPUT_2, SLOT_OUTPUT_2_1, SLOT_OUTPUT_2_2);
+            }
 
             if(canCrushOnFirst){
                 if(this.storage.getEnergyStored() >= getEnergyUse()){
@@ -211,7 +199,9 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
         }
 
         this.slots[theInput].stackSize--;
-        if(this.slots[theInput].stackSize <= 0) this.slots[theInput] = null;
+        if(this.slots[theInput].stackSize <= 0){
+            this.slots[theInput] = null;
+        }
     }
 
     @Override
@@ -258,5 +248,14 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
     @Override
     public boolean canExtractItem(int slot, ItemStack stack, int side){
         return slot == SLOT_OUTPUT_1_1 || slot == SLOT_OUTPUT_1_2 || slot == SLOT_OUTPUT_2_1 || slot == SLOT_OUTPUT_2_2;
+    }
+
+    public static class TileEntityGrinderDouble extends TileEntityGrinder{
+
+        public TileEntityGrinderDouble(){
+            super(6, "grinderDouble");
+            this.isDouble = true;
+        }
+
     }
 }

@@ -60,7 +60,9 @@ public class BlockCompost extends BlockContainerBase implements IActAddItemOrBlo
                 else{
                     tile.slots[0].stackSize++;
                 }
-                if(!player.capabilities.isCreativeMode) player.inventory.getCurrentItem().stackSize--;
+                if(!player.capabilities.isCreativeMode){
+                    player.inventory.getCurrentItem().stackSize--;
+                }
             }
 
             //Add Fertilizer to player's inventory

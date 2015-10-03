@@ -71,7 +71,9 @@ public class PageFurnace extends BookletPage{
             for(int i = 0; i < 2; i++){
                 for(int x = 0; x < 2; x++){
                     ItemStack stack = x == 0 ? input : this.result;
-                    if(stack.getItemDamage() == Util.WILDCARD) stack.setItemDamage(0);
+                    if(stack.getItemDamage() == Util.WILDCARD){
+                        stack.setItemDamage(0);
+                    }
                     boolean tooltip = i == 1;
 
                     int xShow = gui.guiLeft+37+1+x*42;
@@ -92,7 +94,9 @@ public class PageFurnace extends BookletPage{
     private ItemStack getInputForOutput(ItemStack output){
         for(Object o : FurnaceRecipes.smelting().getSmeltingList().entrySet()){
             ItemStack stack = (ItemStack)((Map.Entry)o).getValue();
-            if(stack.isItemEqual(output)) return (ItemStack)((Map.Entry)o).getKey();
+            if(stack.isItemEqual(output)){
+                return (ItemStack)((Map.Entry)o).getKey();
+            }
         }
         return null;
     }
