@@ -10,9 +10,11 @@ The two Brackets will have to get replaced with one of the parts of Information 
 
 ##### Crusher Recipes
 - Create an NBTTagCompound
-- To the Compound, add an NBTTagCompound with the name "input" that contains the Input ItemStack saved to NBT (To do this, just use ItemStack.writeToNBT)
-- To the Compound, add an NBTTagCompound with the name "outputOne" that contains the first Output saved to NBT
-- To the Compound, add an NBTTagCompound with the name "outputTwo" that contains the second Output saved to NBT
+- To the Compound, add a String with the name "input" that contains the Input Oredict Name
+- To the Compound, add a String with the name "outputOne" that contains the first Output Oredict Name
+- To the Compound, add an int with the name "outputOneAmount" the contains the first Output's amount
+- To the Compound, add a String with the name "outputTwo" that contains the second Output Oredict Name
+- To the Compound, add an int with the name "outputTwoAmount" the contains the second Output's amount
 - To the Compound, add an int with the name "secondChance" that contains the Chance for the second Output to appear
 - Send the Message with "registerCrusherRecipe" as the [X] Argument, the Compound as the [Y] Argument.
 

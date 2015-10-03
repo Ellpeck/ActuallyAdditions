@@ -12,6 +12,7 @@ package ellpeck.actuallyadditions.communication;
 
 import cpw.mods.fml.common.event.FMLInterModComms;
 import ellpeck.actuallyadditions.items.ItemCoffee;
+import ellpeck.actuallyadditions.recipe.CrusherRecipeRegistry;
 import ellpeck.actuallyadditions.recipe.HairyBallHandler;
 import ellpeck.actuallyadditions.recipe.TreasureChestHandler;
 import ellpeck.actuallyadditions.util.ModUtil;
@@ -26,24 +27,25 @@ public class InterModCommunications{
 
     public static void processIMC(List<FMLInterModComms.IMCMessage> messages){
         for(FMLInterModComms.IMCMessage message : messages){
-            //TODO This
-            /*if(message.key.equalsIgnoreCase("registerCrusherRecipe")){
+            if(message.key.equalsIgnoreCase("registerCrusherRecipe")){
                 NBTTagCompound compound = message.getNBTValue();
                 if(compound != null){
-                    ItemStack input = ItemStack.loadItemStackFromNBT(compound.getCompoundTag("input"));
-                    ItemStack outputOne = ItemStack.loadItemStackFromNBT(compound.getCompoundTag("outputOne"));
-                    ItemStack outputTwo = ItemStack.loadItemStackFromNBT(compound.getCompoundTag("outputTwo"));
+                    String input = compound.getString("input");
+                    String outputOne = compound.getString("outputOne");
+                    int outputOneAmount = compound.getInteger("outputOneAmount");
+                    String outputTwo = compound.getString("outputTwo");
+                    int outputTwoAmount = compound.getInteger("outputTwoAmount");
                     int secondChance = compound.getInteger("secondChance");
 
                     if(input != null && outputOne != null){
-                        CrusherRecipeManualRegistry.registerRecipe(input, outputOne, outputTwo, secondChance);
-                        ModUtil.LOGGER.info("Crusher Recipe that was sent from Mod "+message.getSender()+" has been registered successfully: "+input.toString()+" -> "+outputOne.toString()+(outputTwo != null ? " + "+outputTwo.toString()+", Second Chance: "+secondChance : ""));
+                        CrusherRecipeRegistry.addRecipe(input, outputOne, outputOneAmount, outputTwo, outputTwoAmount, secondChance);
+                        ModUtil.LOGGER.info("Crusher Recipe that was sent from Mod "+message.getSender()+" has been registered successfully: "+input+" -> "+outputOne+(outputTwo != null && !outputTwo.isEmpty() ? " + "+outputTwo+", Second Chance: "+secondChance : ""));
                     }
                     else{
                         ModUtil.LOGGER.error("Crusher Recipe that was sent from Mod "+message.getSender()+" could not be registered: It's missing an Input or an Output!");
                     }
                 }
-            }*/
+            }
 
             if(message.key.equalsIgnoreCase("registerCoffeeMachineRecipe")){
                 NBTTagCompound compound = message.getNBTValue();
