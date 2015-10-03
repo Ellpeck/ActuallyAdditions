@@ -19,6 +19,7 @@ import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 
+
 public class PageCrusherRecipe extends BookletPage{
 
     public CrusherRecipeRegistry.CrusherRecipe recipe;

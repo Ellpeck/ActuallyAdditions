@@ -34,6 +34,9 @@ public class CrusherCrafting{
         if(ConfigCrafting.COAL_BLOCKS.isEnabled()){
             CrusherRecipeRegistry.addRecipe("blockCoal", "coal", 9);
         }
+        if(ConfigCrafting.QUARTZ_ORE.isEnabled()){
+            CrusherRecipeRegistry.addRecipe("oreQuartz", "gemQuartz", 3);
+        }
 
         if(ConfigCrafting.COBBLESTONE.isEnabled()){
             CrusherRecipeRegistry.addRecipe("cobblestone", "sand", 1);

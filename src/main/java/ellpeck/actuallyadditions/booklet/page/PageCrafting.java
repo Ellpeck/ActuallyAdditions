@@ -26,6 +26,7 @@ import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 import java.util.ArrayList;
 
+
 public class PageCrafting extends BookletPage{
 
     private final IRecipe[] recipes;

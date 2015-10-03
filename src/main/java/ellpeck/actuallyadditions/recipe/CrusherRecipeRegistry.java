@@ -18,6 +18,7 @@ import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
 
+
 public class CrusherRecipeRegistry{
 
     public static ArrayList<CrusherRecipe> recipes = new ArrayList<CrusherRecipe>();
