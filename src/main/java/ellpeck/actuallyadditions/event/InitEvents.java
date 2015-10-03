@@ -37,6 +37,7 @@ public class InitEvents{
     public static void initClient(){
         Util.registerEvent(new TooltipEvent());
         Util.registerEvent(new RenderPlayerEventAA());
+        Util.registerEvent(new KeyStates());
 
         if(Loader.isModLoaded("NotEnoughItems")){
             Util.registerEvent(new NeiScreenEvents());

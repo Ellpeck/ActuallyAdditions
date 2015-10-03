@@ -27,14 +27,14 @@ public class PageCoffeeRecipe extends BookletPage{
     }
 
     @Override
-    public void renderPre(GuiBooklet gui, int mouseX, int mouseY, boolean mouseClick, int ticksElapsed){
+    public void renderPre(GuiBooklet gui, int mouseX, int mouseY, int ticksElapsed){
         gui.mc.getTextureManager().bindTexture(GuiBooklet.resLoc);
         gui.drawTexturedModalRect(gui.guiLeft+19, gui.guiTop+20, 146, 94, 99, 60);
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public void render(GuiBooklet gui, int mouseX, int mouseY, boolean mouseClick, int ticksElapsed){
+    public void render(GuiBooklet gui, int mouseX, int mouseY, int ticksElapsed){
         String strg = "Coffee Machine Recipe";
         gui.mc.fontRenderer.drawString(strg, gui.guiLeft+gui.xSize/2-gui.mc.fontRenderer.getStringWidth(strg)/2, gui.guiTop+10, 0);
 
@@ -91,7 +91,7 @@ public class PageCoffeeRecipe extends BookletPage{
                     }
                     else{
                         if(mouseX >= xShow && mouseX <= xShow+16 && mouseY >= yShow && mouseY <= yShow+16){
-                            this.renderTooltipAndTransfer(gui, stack, mouseX, mouseY, j != 2, mouseClick);
+                            this.renderTooltipAndTransfer(gui, stack, mouseX, mouseY, j != 2);
                         }
                     }
                 }
