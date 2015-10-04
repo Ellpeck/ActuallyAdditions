@@ -106,7 +106,7 @@ public class BookletInfoRecipeHandler extends TemplateRecipeHandler implements I
                     if(aText != null){
                         List text = Minecraft.getMinecraft().fontRenderer.listFormattedStringToWidth(aText, 165);
                         for(int i = 0; i < Math.min(maxLines, text.size()); i++){
-                            GuiDraw.drawString(text.get(i)+(i == maxLines-1 && text.size() >= maxLines ? "..." : ""), 0, 18+25+i*(Minecraft.getMinecraft().fontRenderer.FONT_HEIGHT+1), 0, false);
+                            GuiDraw.drawString(text.get(i)+(i == maxLines-1 && text.size() > maxLines ? EnumChatFormatting.RESET+""+EnumChatFormatting.BLACK+"..." : ""), 0, 18+25+i*(Minecraft.getMinecraft().fontRenderer.FONT_HEIGHT+1), 0, false);
                         }
                     }
                 }
