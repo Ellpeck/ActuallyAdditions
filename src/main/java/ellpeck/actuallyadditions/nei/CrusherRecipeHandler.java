@@ -36,7 +36,7 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler implements INeiR
     }
 
     @Override
-    public ItemStack getStackForInfo(){
+    public ItemStack getStackForInfo(int page){
         return new ItemStack(InitBlocks.blockGrinder);
     }
 
@@ -131,7 +131,7 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler implements INeiR
     public static class CrusherDoubleRecipeHandler extends CrusherRecipeHandler{
 
         @Override
-        public ItemStack getStackForInfo(){
+        public ItemStack getStackForInfo(int page){
             return new ItemStack(InitBlocks.blockGrinderDouble);
         }
 

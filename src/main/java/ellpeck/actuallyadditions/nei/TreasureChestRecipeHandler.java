@@ -37,7 +37,7 @@ public class TreasureChestRecipeHandler extends TemplateRecipeHandler implements
     }
 
     @Override
-    public ItemStack getStackForInfo(){
+    public ItemStack getStackForInfo(int page){
         return new ItemStack(InitBlocks.blockTreasureChest);
     }
 

@@ -38,7 +38,7 @@ public class CompostRecipeHandler extends TemplateRecipeHandler implements INeiR
     }
 
     @Override
-    public ItemStack getStackForInfo(){
+    public ItemStack getStackForInfo(int page){
         return new ItemStack(InitBlocks.blockCompost);
     }
 

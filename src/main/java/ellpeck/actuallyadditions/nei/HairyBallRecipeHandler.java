@@ -36,7 +36,7 @@ public class HairyBallRecipeHandler extends TemplateRecipeHandler implements INe
     }
 
     @Override
-    public ItemStack getStackForInfo(){
+    public ItemStack getStackForInfo(int page){
         //TODO Add Hairy Ball Page
         return null;
     }

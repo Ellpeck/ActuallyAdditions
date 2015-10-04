@@ -12,18 +12,15 @@ package ellpeck.actuallyadditions.event;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import ellpeck.actuallyadditions.booklet.GuiBooklet;
-import ellpeck.actuallyadditions.booklet.InitBooklet;
-import ellpeck.actuallyadditions.booklet.page.BookletPage;
 import ellpeck.actuallyadditions.config.values.ConfigBoolValues;
-import ellpeck.actuallyadditions.util.*;
+import ellpeck.actuallyadditions.util.KeyUtil;
+import ellpeck.actuallyadditions.util.ModUtil;
+import ellpeck.actuallyadditions.util.StringUtil;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.item.Item;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.oredict.OreDictionary;
-import org.lwjgl.input.Keyboard;
 
 public class TooltipEvent{
 
@@ -33,26 +30,6 @@ public class TooltipEvent{
     @SuppressWarnings("unchecked")
     @SubscribeEvent
     public void onTooltipEvent(ItemTooltipEvent event){
-        //Booklet Access
-        if(event.itemStack != null && !(Minecraft.getMinecraft().currentScreen instanceof GuiBooklet)){
-            for(BookletPage page : InitBooklet.pagesWithItemStackData){
-                if(ItemUtil.contains(page.getItemStacksForPage(), event.itemStack, true)){
-                    int keyCode = KeyBinds.keybindOpenBooklet.getKeyCode();
-                    if(ConfigBoolValues.SHOW_BOOKLET_INFO.isEnabled()){
-                        event.toolTip.add(EnumChatFormatting.GOLD+StringUtil.localizeFormatted("booklet."+ModUtil.MOD_ID_LOWER+".keyToSeeRecipe", keyCode > 0 && keyCode < Keyboard.KEYBOARD_SIZE ? Keyboard.getKeyName(keyCode) : "[NONE]"));
-                    }
-                    if(keyCode > 0 && keyCode < Keyboard.KEYBOARD_SIZE && Keyboard.isKeyDown(keyCode) && KeyUtil.isAltPressed()){
-                        GuiBooklet book = new GuiBooklet(Minecraft.getMinecraft().currentScreen);
-                        Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.func_147674_a(new ResourceLocation("gui.button.press"), 1.0F));
-                        Minecraft.getMinecraft().displayGuiScreen(book);
-                        book.openIndexEntry(page.getChapter().entry, InitBooklet.entries.indexOf(page.getChapter().entry)/GuiBooklet.CHAPTER_BUTTONS_AMOUNT+1, true);
-                        book.openChapter(page.getChapter(), page);
-                    }
-                    break;
-                }
-            }
-        }
-
         //Advanced Item Info
         if(event.itemStack.getItem() != null){
             if(ConfigBoolValues.CTRL_EXTRA_INFO.isEnabled()){

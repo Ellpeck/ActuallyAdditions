@@ -38,7 +38,7 @@ public class FurnaceDoubleRecipeHandler extends TemplateRecipeHandler implements
     }
 
     @Override
-    public ItemStack getStackForInfo(){
+    public ItemStack getStackForInfo(int page){
         return new ItemStack(InitBlocks.blockFurnaceDouble);
     }
 

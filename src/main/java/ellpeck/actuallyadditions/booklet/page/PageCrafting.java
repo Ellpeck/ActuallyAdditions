@@ -114,6 +114,7 @@ public class PageCrafting extends BookletPage{
                     for(int y = 0; y < height; y++){
                         ItemStack stack = stacks[y*width+x];
                         if(stack != null){
+                            stack.stackSize = 1;
                             if(stack.getItemDamage() == Util.WILDCARD){
                                 stack.setItemDamage(0);
                             }
@@ -151,12 +152,9 @@ public class PageCrafting extends BookletPage{
 
     @Override
     public ItemStack[] getItemStacksForPage(){
-        ItemStack[] stacks = new ItemStack[this.recipes.length];
-        for(int i = 0; i < stacks.length; i++){
-            if(this.recipes[i] != null){
-                stacks[i] = this.recipes[i].getRecipeOutput();
-            }
+        if(this.recipes != null && this.recipes.length > 0){
+            return new ItemStack[]{this.recipes[0].getRecipeOutput()};
         }
-        return stacks;
+        return null;
     }
 }

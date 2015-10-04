@@ -14,5 +14,5 @@ import net.minecraft.item.ItemStack;
 
 public interface INeiRecipeHandler{
 
-    ItemStack getStackForInfo();
+    ItemStack getStackForInfo(int page);
 }

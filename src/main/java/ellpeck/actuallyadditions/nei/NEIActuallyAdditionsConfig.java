@@ -56,6 +56,10 @@ public class NEIActuallyAdditionsConfig implements IConfigureNEI{
         API.registerRecipeHandler(coffeeMachineRecipeHandler);
         API.registerUsageHandler(coffeeMachineRecipeHandler);
 
+        BookletInfoRecipeHandler bookletInfoRecipeHandler = new BookletInfoRecipeHandler();
+        API.registerRecipeHandler(bookletInfoRecipeHandler);
+        API.registerUsageHandler(bookletInfoRecipeHandler);
+
         API.hideItem(new ItemStack(InitBlocks.blockRice));
         API.hideItem(new ItemStack(InitBlocks.blockCanola));
         API.hideItem(new ItemStack(InitBlocks.blockFlax));

@@ -2,10 +2,6 @@
 itemGroup.actuallyadditions=Actually Additions
 achievement.page.actuallyadditions=Actually Additions
 
-#Keybindings
-key.actuallyadditions.category=Actually Additions
-key.actuallyadditions.openBooklet.name=Open Booklet in Inventory
-
 #Fluids
 fluid.oil=Oil
 fluid.canolaoil=Canola Oil
@@ -23,6 +19,9 @@ container.nei.actuallyadditions.coffee.special=Special Feature
 container.nei.actuallyadditions.coffee.maxAmount=Max Amount
 container.nei.actuallyadditions.coffee.shift=[SHIFT]!
 container.nei.actuallyadditions.coffee.extra.milk=+01:00, -1 Level
+
+container.nei.actuallyadditions.booklet.name=ActAdd Manual
+container.nei.actuallyadditions.booklet.header=The <item>Actually Additions Manual<r> reads:
 
 #Blocks
 tile.actuallyadditions.blockCompost.name=Compost
@@ -404,7 +403,6 @@ booklet.actuallyadditions.indexEntry.itemsRF.name=Items that use RF
 #Booklet Info
 booklet.actuallyadditions.recipeDisabled=The crafting recipe for this item is disabled in the Config File! If you're on a server, ask the server author to enable it in the config. If you're on a client, press the 'Open Config'-Button on the top right and enable the recipe!
 booklet.actuallyadditions.clickToSeeRecipe=Click to see more Information
-booklet.actuallyadditions.keyToSeeRecipe=Press ALT+%s to see more Information
 
 #Booklet Chapters
 booklet.actuallyadditions.chapter.intro.name=An Introduction to ActAdd

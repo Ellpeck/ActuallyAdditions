@@ -38,19 +38,20 @@ public class NeiScreenEvents{
             int guiLeft = (event.gui.width-xSize)/2;
             int guiTop = (event.gui.height-ySize)/2;
 
-            this.neiButton = new GuiBooklet.TexturedButton(NEI_BUTTON_ID, guiLeft+xSize-24, guiTop+ySize/2-20, 146, 154, 20, 20){
+            this.neiButton = new GuiBooklet.TexturedButton(NEI_BUTTON_ID, guiLeft+xSize-24, guiTop+127, 146, 154, 20, 20){
                 @Override
                 public void drawButton(Minecraft minecraft, int x, int y){
                     super.drawButton(minecraft, x, y);
                     if(this.visible && this.field_146123_n){
-                        this.drawString(Minecraft.getMinecraft().fontRenderer, StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".clickToSeeRecipe"), this.xPosition+this.width+5, this.yPosition+this.height/2-Minecraft.getMinecraft().fontRenderer.FONT_HEIGHT/2, StringUtil.DECIMAL_COLOR_WHITE);
+                        String text = StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".clickToSeeRecipe");
+                        Minecraft.getMinecraft().fontRenderer.drawString(text, this.xPosition-Minecraft.getMinecraft().fontRenderer.getStringWidth(text)-1, this.yPosition+this.height/2-Minecraft.getMinecraft().fontRenderer.FONT_HEIGHT/2, StringUtil.DECIMAL_COLOR_WHITE, true);
                     }
                 }
             };
 
             event.buttonList.add(this.neiButton);
             IRecipeHandler handler = theGui.getCurrentRecipeHandlers().get(theGui.recipetype);
-            this.neiButton.visible = handler instanceof INeiRecipeHandler && ((INeiRecipeHandler)handler).getStackForInfo() != null;
+            this.neiButton.visible = handler instanceof INeiRecipeHandler && ((INeiRecipeHandler)handler).getStackForInfo(theGui.page) != null;
         }
     }
 
@@ -60,16 +61,16 @@ public class NeiScreenEvents{
             GuiRecipe theGui = (GuiRecipe)event.gui;
 
             IRecipeHandler handler = theGui.getCurrentRecipeHandlers().get(theGui.recipetype);
-            boolean isPage = handler instanceof INeiRecipeHandler && ((INeiRecipeHandler)handler).getStackForInfo() != null;
+            boolean isPage = handler instanceof INeiRecipeHandler && ((INeiRecipeHandler)handler).getStackForInfo(theGui.page) != null;
             this.neiButton.visible = isPage;
 
             if(isPage && event.button.id == NEI_BUTTON_ID){
                 for(BookletPage page : InitBooklet.pagesWithItemStackData){
-                    if(ItemUtil.contains(page.getItemStacksForPage(), ((INeiRecipeHandler)handler).getStackForInfo(), true)){
+                    if(ItemUtil.contains(page.getItemStacksForPage(), ((INeiRecipeHandler)handler).getStackForInfo(theGui.page), true)){
                         GuiBooklet book = new GuiBooklet(Minecraft.getMinecraft().currentScreen);
                         Minecraft.getMinecraft().displayGuiScreen(book);
                         book.openIndexEntry(page.getChapter().entry, InitBooklet.entries.indexOf(page.getChapter().entry)/GuiBooklet.CHAPTER_BUTTONS_AMOUNT+1, true);
-                        book.openChapter(page.getChapter(), page);
+                        book.openChapter(page.getChapter(), page.getChapter().pages[0]);
                     }
                 }
             }
