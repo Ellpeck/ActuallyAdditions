@@ -164,7 +164,7 @@ public enum ConfigIntValues{
 
     LEAF_GENERATOR_ENERGY_PRODUCED("Leaf Generator: Energy Produce", ConfigCategories.MACHINE_VALUES, 40, 1, 10000, "How much Energy the Leaf Generator produces per Leaf broken"),
     LEAF_GENERATOR_COOLDOWN_TIME("Leaf Generator: Cooldown Time", ConfigCategories.MACHINE_VALUES, 5, 0, 100, "The amount of ticks that it takes util another Leaf gets proken"),
-    LEAF_GENERATOR_RANGE("Leaf Generator: Range", ConfigCategories.MACHINE_VALUES, 5, 1, 100, "The radius of a leaf generator");
+    LEAF_GENERATOR_RANGE("Leaf Generator: Range", ConfigCategories.MACHINE_VALUES, 7, 1, 100, "The radius of a leaf generator");
 
     public final String name;
     public final String category;

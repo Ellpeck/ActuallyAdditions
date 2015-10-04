@@ -59,6 +59,7 @@ public class GuiBooklet extends GuiScreen{
     public GuiButton[] chapterButtons = new GuiButton[CHAPTER_BUTTONS_AMOUNT];
     private GuiTextField searchField;
     private int ticksElapsed;
+    private boolean mousePressed;
 
     private GuiScreen parentScreen;
 
@@ -103,7 +104,7 @@ public class GuiBooklet extends GuiScreen{
         if(this.currentIndexEntry != null){
             if(this.currentChapter != null && this.currentPage != null){
                 this.drawCenteredString(this.fontRendererObj, this.currentPage.getID()+"/"+this.currentChapter.pages.length, this.guiLeft+this.xSize/2, this.guiTop+172, StringUtil.DECIMAL_COLOR_WHITE);
-                this.currentPage.renderPre(this, x, y, this.ticksElapsed);
+                this.currentPage.renderPre(this, x, y, this.ticksElapsed, this.mousePressed);
             }
             else{
                 this.drawCenteredString(this.fontRendererObj, this.pageOpenInIndex+"/"+this.indexPageAmount, this.guiLeft+this.xSize/2, this.guiTop+172, StringUtil.DECIMAL_COLOR_WHITE);
@@ -126,7 +127,7 @@ public class GuiBooklet extends GuiScreen{
         this.searchField.drawTextBox();
 
         if(this.currentIndexEntry != null && this.currentChapter != null && this.currentPage != null){
-            this.currentPage.render(this, x, y, this.ticksElapsed);
+            this.currentPage.render(this, x, y, this.ticksElapsed, this.mousePressed);
         }
 
         this.fontRendererObj.setUnicodeFlag(false);
@@ -163,6 +164,10 @@ public class GuiBooklet extends GuiScreen{
         }
 
         this.fontRendererObj.setUnicodeFlag(unicodeBefore);
+
+        if(this.mousePressed){
+            this.mousePressed = false;
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -196,6 +201,11 @@ public class GuiBooklet extends GuiScreen{
     @Override
     protected void mouseClicked(int par1, int par2, int par3){
         this.searchField.mouseClicked(par1, par2, par3);
+
+        if(par3 == 0){
+            this.mousePressed = true;
+        }
+
         super.mouseClicked(par1, par2, par3);
     }
 

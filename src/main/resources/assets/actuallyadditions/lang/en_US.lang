@@ -404,7 +404,7 @@ booklet.actuallyadditions.indexEntry.itemsRF.name=Items that use RF
 #Booklet Info
 booklet.actuallyadditions.recipeDisabled=The crafting recipe for this item is disabled in the Config File! If you're on a server, ask the server author to enable it in the config. If you're on a client, press the 'Open Config'-Button on the top right and enable the recipe!
 booklet.actuallyadditions.clickToSeeRecipe=Click to see more Information
-booklet.actuallyadditions.keyToSeeRecipe=Press %s to see more Information
+booklet.actuallyadditions.keyToSeeRecipe=Press ALT+%s to see more Information
 
 #Booklet Chapters
 booklet.actuallyadditions.chapter.intro.name=An Introduction to ActAdd
@@ -542,5 +542,5 @@ booklet.actuallyadditions.chapter.batteries.name=Batteries
 booklet.actuallyadditions.chapter.batteries.text.1=<item>Batteries<r> are a good way to store RF to move around. They can be <imp>charged in an Energizer<r> and <imp>discharged in an Enervator<r>.
 
 booklet.actuallyadditions.chapter.leafGen.name=Leaf-Eating Generator
-booklet.actuallyadditions.chapter.leafGen.text.1=The <item>Leaf Generator<r> can generate <imp>RF<r> just by being placed alongside some <item>Leaves<r>. <n>It will destroy the leaves, generating <imp><rf> RF per leaf broken<r> in the process. <n>By right-clicking the generator, you can see how much RF it has stored.
+booklet.actuallyadditions.chapter.leafGen.text.1=The <item>Leaf Generator<r> can generate <imp>RF<r> just by being placed alongside some <item>Leaves<r>. <n>It will destroy the leaves, generating <imp><rf> RF per leaf broken<r> in the process. <n>By right-clicking the generator, you can see how much RF it has stored. <n>It has a <imp>range of <range><r> blocks.
 booklet.actuallyadditions.chapter.leafGen.text.2=<i>Munchy

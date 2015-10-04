@@ -43,7 +43,7 @@ public class PageCrafting extends BookletPage{
     }
 
     @Override
-    public void renderPre(GuiBooklet gui, int mouseX, int mouseY, int ticksElapsed){
+    public void renderPre(GuiBooklet gui, int mouseX, int mouseY, int ticksElapsed, boolean mousePressed){
         if(this.recipes[this.recipePos] != null){
             gui.mc.getTextureManager().bindTexture(GuiBooklet.resLoc);
             gui.drawTexturedModalRect(gui.guiLeft+27, gui.guiTop+20, 146, 20, 99, 60);
@@ -52,7 +52,7 @@ public class PageCrafting extends BookletPage{
 
     @SuppressWarnings("unchecked")
     @Override
-    public void render(GuiBooklet gui, int mouseX, int mouseY, int ticksElapsed){
+    public void render(GuiBooklet gui, int mouseX, int mouseY, int ticksElapsed, boolean mousePressed){
         IRecipe recipe = this.recipes[this.recipePos];
 
         if(recipe == null){
@@ -124,7 +124,7 @@ public class PageCrafting extends BookletPage{
                             }
                             else{
                                 if(mouseX >= xShow && mouseX <= xShow+16 && mouseY >= yShow && mouseY <= yShow+16){
-                                    this.renderTooltipAndTransfer(gui, stack, mouseX, mouseY, true);
+                                    this.renderTooltipAndTransfer(gui, stack, mouseX, mouseY, true, mousePressed);
                                 }
                             }
                         }
@@ -132,7 +132,7 @@ public class PageCrafting extends BookletPage{
                 }
             }
             if(mouseX >= xShowOutput && mouseX <= xShowOutput+16 && mouseY >= yShowOutput && mouseY <= yShowOutput+16){
-                this.renderTooltipAndTransfer(gui, recipe.getRecipeOutput(), mouseX, mouseY, false);
+                this.renderTooltipAndTransfer(gui, recipe.getRecipeOutput(), mouseX, mouseY, false, mousePressed);
             }
         }
     }

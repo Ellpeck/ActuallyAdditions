@@ -27,20 +27,17 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
-import java.util.Random;
-
 public class BlockLeafGenerator extends BlockContainerBase implements IActAddItemOrBlock{
 
     private IIcon topIcon;
     private IIcon bottomIcon;
 
     public BlockLeafGenerator(){
-        super(Material.rock);
-        this.setHarvestLevel("axe", 0);
-        this.setHardness(0.75F);
-        this.setResistance(3.0F);
-        this.setStepSound(soundTypeWood);
-        this.setTickRandomly(true);
+        super(Material.iron);
+        this.setHarvestLevel("pickaxe", 0);
+        this.setHardness(5.0F);
+        this.setResistance(10.0F);
+        this.setStepSound(soundTypeMetal);
     }
 
     @Override
@@ -51,18 +48,6 @@ public class BlockLeafGenerator extends BlockContainerBase implements IActAddIte
     @Override
     public IIcon getIcon(int side, int meta){
         return side <= 1 ? (side == 0 ? this.bottomIcon : this.topIcon) : this.blockIcon;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void randomDisplayTick(World world, int x, int y, int z, Random rand){
-        int meta = world.getBlockMetadata(x, y, z);
-
-        if(meta == 1){
-            for(int i = 0; i < 5; i++){
-                world.spawnParticle("smoke", (double)x+0.5F, (double)y+1.0F, (double)z+0.5F, 0.0D, 0.0D, 0.0D);
-            }
-        }
     }
 
     @Override
