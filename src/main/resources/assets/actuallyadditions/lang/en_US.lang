@@ -22,6 +22,7 @@ container.nei.actuallyadditions.coffee.extra.milk=+01:00, -1 Level
 
 container.nei.actuallyadditions.booklet.name=ActAdd Manual
 container.nei.actuallyadditions.booklet.header=The <item>Actually Additions Manual<r> reads:
+container.nei.actuallyadditions.booklet.noText=Nothing, apparently! But that doesn't matter. Just click the button on the bottom to see the item inside the booklet and look through its pages to find some fancy stuff!
 
 #Blocks
 tile.actuallyadditions.blockCompost.name=Compost

@@ -279,6 +279,19 @@ public class SmileyCloudEasterEggs{
                 renderHeadBlock(Blocks.gravel, 0, 47F);
             }
         });
+        register(new ISmileyCloudEasterEgg(){
+            @Override
+            public String[] getTriggerNames(){
+                return new String[]{"FrauBaerchen", "Baerchen", "Nina"};
+            }
+
+            @Override
+            public void renderExtra(float f){
+                renderHoldingItem(false, new ItemStack(Items.cookie));
+                renderHoldingItem(true, new ItemStack(Items.paper));
+                renderHeadBlock(Blocks.coal_block, 0, 60F);
+            }
+        });
     }
 
     private static void register(ISmileyCloudEasterEgg egg){
