@@ -28,7 +28,7 @@ public class EntityLivingEvent{
     @SubscribeEvent
     public void livingUpdateEvent(LivingUpdateEvent event){
         //Ocelots dropping Hair Balls
-        if(!event.entityLiving.worldObj.isRemote){
+        if(event.entityLiving != null && event.entityLiving.worldObj != null && !event.entityLiving.worldObj.isRemote){
             if(event.entityLiving instanceof EntityOcelot){
                 EntityOcelot theOcelot = (EntityOcelot)event.entityLiving;
                 if(ConfigBoolValues.DO_CAT_DROPS.isEnabled() && theOcelot.isTamed()){
