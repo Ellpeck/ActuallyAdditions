@@ -72,6 +72,12 @@ public abstract class ItemEnergy extends ItemEnergyContainer implements IActAddI
         return false;
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean bool){
+        list.add(this.getEnergyStored(stack)+"/"+this.getMaxEnergyStored(stack)+" RF");
+    }
+
     public void setEnergy(ItemStack stack, int energy){
         NBTTagCompound compound = stack.getTagCompound();
         if(compound == null){
