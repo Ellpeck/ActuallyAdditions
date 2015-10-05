@@ -149,7 +149,8 @@ public enum ConfigCrafting{
 
     MAGNET_RING("Magnet Ring", ConfigCategories.ITEMS_CRAFTING),
     WATER_RING("Water Ring", ConfigCategories.ITEMS_CRAFTING),
-    GROWTH_RING("Growth Ring", ConfigCategories.ITEMS_CRAFTING);
+    GROWTH_RING("Growth Ring", ConfigCategories.ITEMS_CRAFTING),
+    DIRECTIONAL_BREAKER("Long-Range Breaker", ConfigCategories.BLOCKS_CRAFTING);
 
     public final String name;
     public final String category;

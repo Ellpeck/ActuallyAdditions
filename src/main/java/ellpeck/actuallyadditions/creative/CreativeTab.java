@@ -81,6 +81,7 @@ public class CreativeTab extends CreativeTabs{
         add(InitBlocks.blockItemRepairer);
         add(InitBlocks.blockFishingNet);
         add(InitBlocks.blockBreaker);
+        add(InitBlocks.blockDirectionalBreaker);
         add(InitBlocks.blockPlacer);
         add(InitBlocks.blockDropper);
         add(InitBlocks.blockFluidPlacer);

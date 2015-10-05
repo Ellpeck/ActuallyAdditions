@@ -43,8 +43,8 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase implem
     public void updateEntity(){
         if(!worldObj.isRemote){
             if(!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)){
-                int usagePerBlock = 5; //TODO Config
-                int range = 8; //TODO Config
+                int usagePerBlock = ConfigIntValues.DIRECTIONAL_BREAKER_RF_PER_BLOCK.getValue();
+                int range = ConfigIntValues.DIRECTIONAL_BREAKER_RANGE.getValue();
                 if(this.storage.getEnergyStored() >= usagePerBlock*range){
                     if(this.currentTime > 0){
                         this.currentTime--;

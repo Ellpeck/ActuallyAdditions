@@ -42,6 +42,11 @@ public class BookletInfoRecipeHandler extends TemplateRecipeHandler implements I
         return ((CachedInfoStack)this.arecipes.get(page)).theStack;
     }
 
+    @Override
+    public void loadTransferRects(){
+        transferRects.add(new RecipeTransferRect(new Rectangle(0, 18, 165, Minecraft.getMinecraft().fontRenderer.FONT_HEIGHT), NAME));
+    }
+
     @SuppressWarnings("unchecked")
     @Override
     public void loadCraftingRecipes(String outputId, Object... results){
@@ -113,6 +118,11 @@ public class BookletInfoRecipeHandler extends TemplateRecipeHandler implements I
     }
 
     @Override
+    public Class<? extends GuiContainer> getGuiClass(){
+        return GuiFurnaceDouble.class;
+    }
+
+    @Override
     public void drawBackground(int recipe){
 
     }
@@ -122,16 +132,6 @@ public class BookletInfoRecipeHandler extends TemplateRecipeHandler implements I
         GL11.glColor4f(1F, 1F, 1F, 1F);
         GL11.glDisable(GL11.GL_LIGHTING);
         this.drawExtras(recipe);
-    }
-
-    @Override
-    public void loadTransferRects(){
-        transferRects.add(new RecipeTransferRect(new Rectangle(0, 18, 165, Minecraft.getMinecraft().fontRenderer.FONT_HEIGHT), NAME));
-    }
-
-    @Override
-    public Class<? extends GuiContainer> getGuiClass(){
-        return GuiFurnaceDouble.class;
     }
 
     @Override

@@ -164,7 +164,10 @@ public enum ConfigIntValues{
 
     LEAF_GENERATOR_ENERGY_PRODUCED("Leaf Generator: Energy Produce", ConfigCategories.MACHINE_VALUES, 40, 1, 10000, "How much Energy the Leaf Generator produces per Leaf broken"),
     LEAF_GENERATOR_COOLDOWN_TIME("Leaf Generator: Cooldown Time", ConfigCategories.MACHINE_VALUES, 5, 0, 100, "The amount of ticks that it takes util another Leaf gets proken"),
-    LEAF_GENERATOR_RANGE("Leaf Generator: Range", ConfigCategories.MACHINE_VALUES, 7, 1, 100, "The radius of a leaf generator");
+    LEAF_GENERATOR_RANGE("Leaf Generator: Range", ConfigCategories.MACHINE_VALUES, 7, 1, 100, "The radius of a leaf generator"),
+
+    DIRECTIONAL_BREAKER_RF_PER_BLOCK("Directional Breaker: RF per Block", ConfigCategories.MACHINE_VALUES, 5, 0, 1000, "The amount of RF the Directional Breaker uses to break each block"),
+    DIRECTIONAL_BREAKER_RANGE("Directional Breaker: Range", ConfigCategories.MACHINE_VALUES, 8, 1, 1000, "The range of the Directional Breaker");
 
     public final String name;
     public final String category;

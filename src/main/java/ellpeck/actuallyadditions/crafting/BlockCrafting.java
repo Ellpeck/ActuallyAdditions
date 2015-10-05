@@ -74,8 +74,17 @@ public class BlockCrafting{
     public static IRecipe[] recipesLamps = new IRecipe[BlockColoredLamp.allLampTypes.length];
     public static IRecipe recipePowerer;
     public static IRecipe recipeLeafGen;
+    public static IRecipe recipeDirectionalBreaker;
 
     public static void init(){
+
+        //Directional Breaker
+        if(ConfigCrafting.DIRECTIONAL_BREAKER.isEnabled()){
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockDirectionalBreaker),
+                    "BBB",
+                    'B', new ItemStack(InitBlocks.blockBreaker)));
+            recipeDirectionalBreaker = Util.GetRecipes.lastIRecipe();
+        }
 
         //Smiley Cloud
         if(ConfigCrafting.CLOUD.isEnabled()){

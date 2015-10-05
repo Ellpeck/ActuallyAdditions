@@ -79,6 +79,7 @@ public class InitBooklet{
         new BookletChapter("lavaFactory", entryFunctionalRF, new ItemStack(InitBlocks.blockLavaFactoryController), new PageTextOnly(1).addTextReplacement("<rf>", ConfigIntValues.LAVA_FACTORY_ENERGY_USED.getValue()), new PageCrafting(2, BlockCrafting.recipeLavaFactory).setNoText());
         new BookletChapter("energizer", entryFunctionalRF, new ItemStack(InitBlocks.blockEnergizer), new PageCrafting(1, BlockCrafting.recipeEnergizer), new PageCrafting(2, BlockCrafting.recipeEnervator));
         new BookletChapter("repairer", entryFunctionalRF, new ItemStack(InitBlocks.blockItemRepairer), new PageCrafting(1, BlockCrafting.recipeRepairer).addTextReplacement("<rf>", ConfigIntValues.REPAIRER_ENERGY_USED.getValue()));
+        new BookletChapter("longRangeBreaker", entryFunctionalRF, new ItemStack(InitBlocks.blockDirectionalBreaker), new PageTextOnly(1).addTextReplacement("<rf>", ConfigIntValues.DIRECTIONAL_BREAKER_RF_PER_BLOCK.getValue()).addTextReplacement("<range>", ConfigIntValues.DIRECTIONAL_BREAKER_RANGE.getValue()), new PageCrafting(2, BlockCrafting.recipeDirectionalBreaker));
 
         //RF Generating Blocks
         new BookletChapter("coalGen", entryGeneratingRF, new ItemStack(InitBlocks.blockCoalGenerator), new PageCrafting(1, BlockCrafting.recipeCoalGen).addTextReplacement("<rf>", ConfigIntValues.COAL_GEN_ENERGY_PRODUCED.getValue()));

@@ -75,11 +75,12 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
         else{
             return new int[0];
         }
-    }    @Override
+    }
+
+    @Override
     public int getInventoryStackLimit(){
         return 64;
     }
-
 
 
     @Override

@@ -48,6 +48,10 @@ public class WorldUtil{
      */
     public static final ForgeDirection[] CARDINAL_DIRECTIONS_ORDER = new ForgeDirection[]{ForgeDirection.NORTH, ForgeDirection.EAST, ForgeDirection.SOUTH, ForgeDirection.WEST};
 
+    public static void breakBlockAtSide(ForgeDirection side, World world, int x, int y, int z){
+        breakBlockAtSide(side, world, x, y, z, 0);
+    }
+
     public static void breakBlockAtSide(ForgeDirection side, World world, int x, int y, int z, int offset){
         if(side == ForgeDirection.UNKNOWN){
             world.setBlockToAir(x, y, z);
@@ -57,10 +61,6 @@ public class WorldUtil{
         if(c != null){
             world.setBlockToAir(c.getX(), c.getY(), c.getZ());
         }
-    }
-
-    public static void breakBlockAtSide(ForgeDirection side, World world, int x, int y, int z){
-        breakBlockAtSide(side, world, x, y, z, 0);
     }
 
     public static WorldPos getCoordsFromSide(ForgeDirection side, World world, int x, int y, int z, int offset){
@@ -253,8 +253,9 @@ public class WorldUtil{
 
     /**
      * Add an ArrayList of ItemStacks to an Array of slots
-     * @param slots The slots to try to put the items into
-     * @param stacks The stacks to be put into the slots (Items don't actually get removed from there!)
+     *
+     * @param slots      The slots to try to put the items into
+     * @param stacks     The stacks to be put into the slots (Items don't actually get removed from there!)
      * @param actuallyDo Do it or just test if it works?
      * @return Does it work?
      */
@@ -278,9 +279,9 @@ public class WorldUtil{
                     }
                     else{
                         if(actuallyDo){
-                            slots[i].stackSize+=stackToPutIn.stackSize;
+                            slots[i].stackSize += stackToPutIn.stackSize;
                         }
-                        testSlots[i].stackSize+=stackToPutIn.stackSize;
+                        testSlots[i].stackSize += stackToPutIn.stackSize;
                     }
                     working++;
 

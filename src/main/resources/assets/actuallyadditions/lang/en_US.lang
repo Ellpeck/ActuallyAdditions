@@ -103,6 +103,7 @@ tile.actuallyadditions.blockCoffeeMachine.name=Coffee Machine
 tile.actuallyadditions.blockXPSolidifier.name=Experience Solidifier
 tile.actuallyadditions.blockSmileyCloud.name=Smiley Cloud
 tile.actuallyadditions.blockLeafGenerator.name=Leaf-Eating Generator
+tile.actuallyadditions.blockDirectionalBreaker.name=Long-Range Breaker
 
 #ESD
 tile.actuallyadditions.blockInputter.name=ESD
@@ -348,6 +349,7 @@ container.actuallyadditions.enervator.name=Enervator
 container.actuallyadditions.xpSolidifier.name=Experience Solidifier
 container.actuallyadditions.oreMagnet.name=Magnetic Miner
 container.actuallyadditions.cloud.name=Smiley Cloud
+container.actuallyadditions.directionalBreaker.name=Long-Range Breaker
 
 #Update Information
 info.actuallyadditions.update.generic.desc=[{"text":"There is an "},{"text":"Update ","bold":"true"},{"text":"for ","bold":"false"},{"text":"Actually Additions ","color":"dark_green","bold":"true"},{"text":"available!","color":"none","bold":"false"}]
@@ -543,3 +545,7 @@ booklet.actuallyadditions.chapter.batteries.text.1=<item>Batteries<r> are a good
 booklet.actuallyadditions.chapter.leafGen.name=Leaf-Eating Generator
 booklet.actuallyadditions.chapter.leafGen.text.1=The <item>Leaf Generator<r> can generate <imp>RF<r> just by being placed alongside some <item>Leaves<r>. <n>It will destroy the leaves, generating <imp><rf> RF per leaf broken<r> in the process. <n>By right-clicking the generator, you can see how much RF it has stored. <n>It has a <imp>range of <range><r> blocks.
 booklet.actuallyadditions.chapter.leafGen.text.2=<i>Munchy
+
+booklet.actuallyadditions.chapter.longRangeBreaker.name=Long-Range Breaker
+booklet.actuallyadditions.chapter.longRangeBreaker.text.1=The <item>Long-Range Breaker<r> works like a normal <item>Breaker<r>, but it can break <imp>up to <range> blocks in front of it<r>. <n>Per block broken, it uses <imp><rf> RF<r>. <n><n><i>Breaking the <range>th wall
+booklet.actuallyadditions.chapter.longRangeBreaker.text.2=<i>Sequence Breaking
