@@ -252,11 +252,11 @@ public class SmileyCloudEasterEggs{
                 renderHeadBlock(Blocks.quartz_block, 0, 17F);
             }
         });
-        //FreakyNinja
+        //ShadowNinjaCat
         register(new ISmileyCloudEasterEgg(){
             @Override
             public String[] getTriggerNames(){
-                return new String[]{"freakyninja", "ninja", "tl"};
+                return new String[]{"shadowninjacat", "ninja", "tl"};
             }
 
             @Override
@@ -282,7 +282,7 @@ public class SmileyCloudEasterEggs{
         register(new ISmileyCloudEasterEgg(){
             @Override
             public String[] getTriggerNames(){
-                return new String[]{"FrauBaerchen", "Baerchen", "Nina"};
+                return new String[]{"fraubaerchen", "baerchen", "nina"};
             }
 
             @Override
