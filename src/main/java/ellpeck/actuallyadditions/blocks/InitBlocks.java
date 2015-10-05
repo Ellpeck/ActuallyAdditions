@@ -94,9 +94,13 @@ public class InitBlocks{
     public static Block blockSmileyCloud;
 
     public static Block blockLeafGenerator;
+    public static Block blockDirectionalBreaker;
 
     public static void init(){
         ModUtil.LOGGER.info("Initializing Blocks...");
+
+        blockDirectionalBreaker = new BlockDirectionalBreaker();
+        BlockUtil.register(blockDirectionalBreaker);
 
         blockLeafGenerator = new BlockLeafGenerator();
         BlockUtil.register(blockLeafGenerator);

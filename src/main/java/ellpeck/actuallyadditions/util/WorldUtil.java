@@ -48,22 +48,26 @@ public class WorldUtil{
      */
     public static final ForgeDirection[] CARDINAL_DIRECTIONS_ORDER = new ForgeDirection[]{ForgeDirection.NORTH, ForgeDirection.EAST, ForgeDirection.SOUTH, ForgeDirection.WEST};
 
-    public static void breakBlockAtSide(ForgeDirection side, World world, int x, int y, int z){
+    public static void breakBlockAtSide(ForgeDirection side, World world, int x, int y, int z, int offset){
         if(side == ForgeDirection.UNKNOWN){
             world.setBlockToAir(x, y, z);
             return;
         }
-        WorldPos c = getCoordsFromSide(side, world, x, y, z);
+        WorldPos c = getCoordsFromSide(side, world, x, y, z, offset);
         if(c != null){
             world.setBlockToAir(c.getX(), c.getY(), c.getZ());
         }
     }
 
-    public static WorldPos getCoordsFromSide(ForgeDirection side, World world, int x, int y, int z){
+    public static void breakBlockAtSide(ForgeDirection side, World world, int x, int y, int z){
+        breakBlockAtSide(side, world, x, y, z, 0);
+    }
+
+    public static WorldPos getCoordsFromSide(ForgeDirection side, World world, int x, int y, int z, int offset){
         if(side == ForgeDirection.UNKNOWN){
             return null;
         }
-        return new WorldPos(world, x+side.offsetX, y+side.offsetY, z+side.offsetZ);
+        return new WorldPos(world, x+side.offsetX*(offset+1), y+side.offsetY*(offset+1), z+side.offsetZ*(offset+1));
     }
 
     public static void pushEnergy(World world, int x, int y, int z, ForgeDirection side, EnergyStorage storage){
@@ -77,7 +81,7 @@ public class WorldUtil{
     }
 
     public static TileEntity getTileEntityFromSide(ForgeDirection side, World world, int x, int y, int z){
-        WorldPos c = getCoordsFromSide(side, world, x, y, z);
+        WorldPos c = getCoordsFromSide(side, world, x, y, z, 0);
         if(c != null){
             return world.getTileEntity(c.getX(), c.getY(), c.getZ());
         }
@@ -163,7 +167,7 @@ public class WorldUtil{
 
     public static boolean dropItemAtSide(ForgeDirection side, World world, int x, int y, int z, ItemStack stack){
         if(side != ForgeDirection.UNKNOWN){
-            WorldPos coords = getCoordsFromSide(side, world, x, y, z);
+            WorldPos coords = getCoordsFromSide(side, world, x, y, z, 0);
             if(coords != null){
                 EntityItem item = new EntityItem(world, coords.getX()+0.5, coords.getY()+0.5, coords.getZ()+0.5, stack);
                 item.motionX = 0;

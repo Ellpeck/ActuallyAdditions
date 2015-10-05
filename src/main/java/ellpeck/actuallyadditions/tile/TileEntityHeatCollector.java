@@ -32,7 +32,7 @@ public class TileEntityHeatCollector extends TileEntityBase implements IEnergyPr
             ArrayList<Integer> blocksAround = new ArrayList<Integer>();
             if(ConfigIntValues.HEAT_COLLECTOR_ENERGY_PRODUCED.getValue() <= this.getMaxEnergyStored(ForgeDirection.UNKNOWN)-this.getEnergyStored(ForgeDirection.UNKNOWN)){
                 for(int i = 1; i <= 5; i++){
-                    WorldPos coords = WorldUtil.getCoordsFromSide(WorldUtil.getDirectionBySidesInOrder(i), worldObj, xCoord, yCoord, zCoord);
+                    WorldPos coords = WorldUtil.getCoordsFromSide(WorldUtil.getDirectionBySidesInOrder(i), worldObj, xCoord, yCoord, zCoord, 0);
                     if(coords != null){
                         Block block = worldObj.getBlock(coords.getX(), coords.getY(), coords.getZ());
                         if(block != null && block.getMaterial() == Material.lava && worldObj.getBlockMetadata(coords.getX(), coords.getY(), coords.getZ()) == 0){

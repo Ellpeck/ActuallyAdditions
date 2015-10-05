@@ -82,6 +82,8 @@ public class GuiHandler implements IGuiHandler{
                 return new ContainerOreMagnet(entityPlayer.inventory, tile);
             case CLOUD:
                 return new ContainerSmileyCloud();
+            case DIRECTIONAL_BREAKER:
+                return new ContainerDirectionalBreaker(entityPlayer.inventory, tile);
             default:
                 return null;
         }
@@ -144,6 +146,8 @@ public class GuiHandler implements IGuiHandler{
                 return new GuiSmileyCloud(tile, x, y, z, world);
             case BOOK:
                 return new GuiBooklet(null);
+            case DIRECTIONAL_BREAKER:
+                return new GuiDirectionalBreaker(entityPlayer.inventory, tile);
             default:
                 return null;
         }
@@ -174,7 +178,8 @@ public class GuiHandler implements IGuiHandler{
         XP_SOLIDIFIER,
         ORE_MAGNET,
         CLOUD,
-        BOOK(false);
+        BOOK(false),
+        DIRECTIONAL_BREAKER;
 
         public boolean checkTileEntity;
 
