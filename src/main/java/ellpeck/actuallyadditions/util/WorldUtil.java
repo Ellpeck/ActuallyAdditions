@@ -247,20 +247,39 @@ public class WorldUtil{
         return blocks;
     }
 
+    /**
+     * Add an ArrayList of ItemStacks to an Array of slots
+     * @param slots The slots to try to put the items into
+     * @param stacks The stacks to be put into the slots (Items don't actually get removed from there!)
+     * @param actuallyDo Do it or just test if it works?
+     * @return Does it work?
+     */
     public static boolean addToInventory(ItemStack[] slots, ArrayList<ItemStack> stacks, boolean actuallyDo){
+        ItemStack[] testSlots = new ItemStack[slots.length];
+        for(int i = 0; i < testSlots.length; i++){
+            if(slots[i] != null){
+                testSlots[i] = slots[i].copy();
+            }
+        }
+
         int working = 0;
-        for(ItemStack stack : stacks){
-            for(int i = 0; i < slots.length; i++){
-                if(slots[i] == null || (slots[i].isItemEqual(stack) && slots[i].stackSize <= stack.getMaxStackSize()-stack.stackSize)){
-                    working++;
-                    if(actuallyDo){
-                        if(slots[i] == null){
-                            slots[i] = stack.copy();
+        for(ItemStack stackToPutIn : stacks){
+            for(int i = 0; i < testSlots.length; i++){
+                if(stackToPutIn != null && (testSlots[i] == null || (testSlots[i].isItemEqual(stackToPutIn) && testSlots[i].getMaxStackSize() >= testSlots[i].stackSize+stackToPutIn.stackSize))){
+                    if(testSlots[i] == null){
+                        if(actuallyDo){
+                            slots[i] = stackToPutIn.copy();
                         }
-                        else{
-                            slots[i].stackSize += stack.stackSize;
-                        }
+                        testSlots[i] = stackToPutIn.copy();
                     }
+                    else{
+                        if(actuallyDo){
+                            slots[i].stackSize+=stackToPutIn.stackSize;
+                        }
+                        testSlots[i].stackSize+=stackToPutIn.stackSize;
+                    }
+                    working++;
+
                     break;
                 }
             }

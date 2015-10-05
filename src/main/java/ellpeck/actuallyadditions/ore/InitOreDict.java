@@ -32,10 +32,13 @@ public class InitOreDict{
 
         //Vanilla Ores
         addOre(Blocks.obsidian, "obsidian");
-        addOre(new ItemStack(Items.coal), "coal");
+        addOre(Items.coal, "coal");
         addOre(Items.flint, "flint");
         addOre(Blocks.gravel, "gravel");
         addOre(Items.sugar, "sugar");
+        addOre(Items.diamond_horse_armor, "armorHorseDiamond");
+        addOre(Items.golden_horse_armor, "armorHorseGold");
+        addOre(Items.iron_horse_armor, "armorHorseIron");
 
         //My Ores
         addOre(InitItems.itemDust, TheDusts.IRON.ordinal(), "dustIron");

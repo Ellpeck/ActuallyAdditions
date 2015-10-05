@@ -108,7 +108,7 @@ public class PageCrusherRecipe extends BookletPage{
 
     @Override
     public void updateScreen(int ticksElapsed){
-        if(ticksElapsed%5 == 0){
+        if(ticksElapsed%10 == 0){
             if(this.inputPos+1 < this.recipe.getRecipeInputs().size()){
                 this.inputPos++;
             }

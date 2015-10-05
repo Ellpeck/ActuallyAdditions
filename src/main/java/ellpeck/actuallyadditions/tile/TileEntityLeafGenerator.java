@@ -44,42 +44,44 @@ public class TileEntityLeafGenerator extends TileEntityBase implements IEnergyPr
     @SuppressWarnings("unchecked")
     public void updateEntity(){
         if(!worldObj.isRemote){
+            if(!this.worldObj.isBlockIndirectlyGettingPowered(this.xCoord, this.yCoord, this.zCoord)){
 
-            if(this.nextUseCounter >= ConfigIntValues.LEAF_GENERATOR_COOLDOWN_TIME.getValue()){
-                this.nextUseCounter = 0;
+                if(this.nextUseCounter >= ConfigIntValues.LEAF_GENERATOR_COOLDOWN_TIME.getValue()){
+                    this.nextUseCounter = 0;
 
-                int energyProducedPerLeaf = ConfigIntValues.LEAF_GENERATOR_ENERGY_PRODUCED.getValue();
-                if(energyProducedPerLeaf <= this.storage.getMaxEnergyStored()-this.storage.getEnergyStored()){
-                    ArrayList<WorldPos> breakPositions = new ArrayList<WorldPos>();
+                    int energyProducedPerLeaf = ConfigIntValues.LEAF_GENERATOR_ENERGY_PRODUCED.getValue();
+                    if(energyProducedPerLeaf <= this.storage.getMaxEnergyStored()-this.storage.getEnergyStored()){
+                        ArrayList<WorldPos> breakPositions = new ArrayList<WorldPos>();
 
-                    int range = ConfigIntValues.LEAF_GENERATOR_RANGE.getValue();
-                    for(int reachX = -range; reachX < range+1; reachX++){
-                        for(int reachZ = -range; reachZ < range+1; reachZ++){
-                            for(int reachY = -range; reachY < range+1; reachY++){
-                                Block block = this.worldObj.getBlock(this.xCoord+reachX, this.yCoord+reachY, this.zCoord+reachZ);
-                                if(block != null && block.isLeaves(this.worldObj, this.xCoord+reachX, this.yCoord+reachY, this.zCoord+reachZ)){
-                                    breakPositions.add(new WorldPos(this.worldObj, this.xCoord+reachX, this.yCoord+reachY, this.zCoord+reachZ));
+                        int range = ConfigIntValues.LEAF_GENERATOR_RANGE.getValue();
+                        for(int reachX = -range; reachX < range+1; reachX++){
+                            for(int reachZ = -range; reachZ < range+1; reachZ++){
+                                for(int reachY = -range; reachY < range+1; reachY++){
+                                    Block block = this.worldObj.getBlock(this.xCoord+reachX, this.yCoord+reachY, this.zCoord+reachZ);
+                                    if(block != null && block.isLeaves(this.worldObj, this.xCoord+reachX, this.yCoord+reachY, this.zCoord+reachZ)){
+                                        breakPositions.add(new WorldPos(this.worldObj, this.xCoord+reachX, this.yCoord+reachY, this.zCoord+reachZ));
+                                    }
                                 }
                             }
                         }
-                    }
 
-                    if(!breakPositions.isEmpty()){
-                        Collections.shuffle(breakPositions);
-                        WorldPos theCoord = breakPositions.get(0);
+                        if(!breakPositions.isEmpty()){
+                            Collections.shuffle(breakPositions);
+                            WorldPos theCoord = breakPositions.get(0);
 
-                        Block theBlock = this.worldObj.getBlock(theCoord.getX(), theCoord.getY(), theCoord.getZ());
-                        int meta = this.worldObj.getBlockMetadata(theCoord.getX(), theCoord.getY(), theCoord.getZ());
-                        this.worldObj.playAuxSFX(2001, theCoord.getX(), theCoord.getY(), theCoord.getZ(), Block.getIdFromBlock(theBlock)+(meta << 12));
+                            Block theBlock = this.worldObj.getBlock(theCoord.getX(), theCoord.getY(), theCoord.getZ());
+                            int meta = this.worldObj.getBlockMetadata(theCoord.getX(), theCoord.getY(), theCoord.getZ());
+                            this.worldObj.playAuxSFX(2001, theCoord.getX(), theCoord.getY(), theCoord.getZ(), Block.getIdFromBlock(theBlock)+(meta << 12));
 
-                        this.worldObj.setBlockToAir(theCoord.getX(), theCoord.getY(), theCoord.getZ());
+                            this.worldObj.setBlockToAir(theCoord.getX(), theCoord.getY(), theCoord.getZ());
 
-                        this.storage.receiveEnergy(energyProducedPerLeaf, false);
+                            this.storage.receiveEnergy(energyProducedPerLeaf, false);
+                        }
                     }
                 }
-            }
-            else{
-                this.nextUseCounter++;
+                else{
+                    this.nextUseCounter++;
+                }
             }
 
             if(this.getEnergyStored(ForgeDirection.UNKNOWN) > 0){

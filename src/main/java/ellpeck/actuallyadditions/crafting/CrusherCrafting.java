@@ -18,6 +18,9 @@ import ellpeck.actuallyadditions.util.Util;
 public class CrusherCrafting{
 
     public static CrusherRecipeRegistry.CrusherRecipe recipeSugar;
+    public static CrusherRecipeRegistry.CrusherRecipe recipeIronHorseArmor;
+    public static CrusherRecipeRegistry.CrusherRecipe recipeGoldHorseArmor;
+    public static CrusherRecipeRegistry.CrusherRecipe recipeDiamondHorseArmor;
 
     public static void init(){
         ModUtil.LOGGER.info("Initializing Crusher Recipes...");
@@ -60,6 +63,16 @@ public class CrusherCrafting{
         }
         if(ConfigCrafting.IRON.isEnabled()){
             CrusherRecipeRegistry.addRecipe("oreIron", "dustIron", 2, "dustGold", 1, 20);
+        }
+        if(ConfigCrafting.HORSE_ARMORS.isEnabled()){
+            CrusherRecipeRegistry.addRecipe("armorHorseIron", "dustIron", 8);
+            recipeIronHorseArmor = Util.GetRecipes.lastCrusherRecipe();
+
+            CrusherRecipeRegistry.addRecipe("armorHorseGold", "dustGold", 8);
+            recipeGoldHorseArmor = Util.GetRecipes.lastCrusherRecipe();
+
+            CrusherRecipeRegistry.addRecipe("armorHorseDiamond", "dustDiamond", 8);
+            recipeDiamondHorseArmor = Util.GetRecipes.lastCrusherRecipe();
         }
 
         CrusherRecipeRegistry.searchCases.add(new CrusherRecipeRegistry.SearchCase("oreNether", 6));
