@@ -433,8 +433,8 @@ booklet.actuallyadditions.chapter.treasureChest.name=Treasure Chests
 booklet.actuallyadditions.chapter.treasureChest.text.1=<item>Treasure Chests<r> are a semi-uncommon occurence <imp>in Ocean Biomes<r>. They appear on the bottom of the sea, probably left there by bypassing Ships who threw off or lost some load. These Chests however, <imp>hold some valuable items<r>, if you're lucky. Breaking them won't yield you anything, though, you just have to <imp>right-click them<r> to receive some amazing goodies.
 
 booklet.actuallyadditions.chapter.breaker.name=Breakers and Placers
-booklet.actuallyadditions.chapter.breaker.text.1=The <item>Breaker<r>... well.. it breaks blocks in front of it. That's about it. It can be oriented in every direction like a Piston.
-booklet.actuallyadditions.chapter.breaker.text.2=The <item>Placer<r>... well... it places blocks in front of it. That's about it. It can be oriented in every direction like a Piston.
+booklet.actuallyadditions.chapter.breaker.text.1=The <item>Breaker<r>... well.. it breaks blocks in front of it. That's about it. It can be oriented in every direction like a Piston. It can be turned off with Redstone.
+booklet.actuallyadditions.chapter.breaker.text.2=The <item>Placer<r>... well... it places blocks in front of it. That's about it. It can be oriented in every direction like a Piston. It can be turned off with Redstone.
 booklet.actuallyadditions.chapter.breaker.text.3=The <item>Liquid Placer<r> places blocks that correspond to the liquid you put in via a bucket or pipe in via a pipe. Needs <imp>1000mB<r> to place one block.
 booklet.actuallyadditions.chapter.breaker.text.4=The <item>Liquid Collector<r> will collect liquid blocks in front of it and convert them to <imp>1000mB<r> of fluid. That's the equivalent of a filled bucket.
 
@@ -549,3 +549,6 @@ booklet.actuallyadditions.chapter.leafGen.text.2=<i>Munchy
 booklet.actuallyadditions.chapter.longRangeBreaker.name=Long-Range Breaker
 booklet.actuallyadditions.chapter.longRangeBreaker.text.1=The <item>Long-Range Breaker<r> works like a normal <item>Breaker<r>, but it can break <imp>up to <range> blocks in front of it<r>. <n>Per block broken, it uses <imp><rf> RF<r>. <n><n><i>Breaking the <range>th wall
 booklet.actuallyadditions.chapter.longRangeBreaker.text.2=<i>Sequence Breaking
+
+booklet.actuallyadditions.chapter.dropper.name=Automatic Precision Dropper
+booklet.actuallyadditions.chapter.dropper.text.1=The <item>Automatic Precision Dropper<r> works much like a normal dropper, but it will drop items <imp>without needing a Redstone Signal<r>. <n>It also won't spit them out all over the ground, but it will <imp>drop them straight into the direction you point it at<r>! <n>It can be turned off with a Redstone Signal.

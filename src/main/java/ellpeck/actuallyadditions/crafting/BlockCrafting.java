@@ -75,6 +75,7 @@ public class BlockCrafting{
     public static IRecipe recipePowerer;
     public static IRecipe recipeLeafGen;
     public static IRecipe recipeDirectionalBreaker;
+    public static IRecipe recipeDropper;
 
     public static void init(){
 
@@ -522,6 +523,7 @@ public class BlockCrafting{
                     'C', "cobblestone",
                     'D', Blocks.dropper,
                     'R', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal())));
+            recipeDropper = Util.GetRecipes.lastIRecipe();
         }
 
         if(ConfigCrafting.LAMPS.isEnabled()){
