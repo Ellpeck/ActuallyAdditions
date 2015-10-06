@@ -292,6 +292,18 @@ public class SmileyCloudEasterEggs{
                 renderHeadBlock(Blocks.coal_block, 0, 60F);
             }
         });
+        register(new ISmileyCloudEasterEgg(){
+            @Override
+            public String[] getTriggerNames(){
+                return new String[]{"0xdd", "didi", "theultimatehose"};
+            }
+
+            @Override
+            public void renderExtra(float f){
+                renderHoldingItem(true, new ItemStack(InitItems.itemDrill));
+                renderHeadBlock(Blocks.redstone_block, 0, 30F);
+            }
+        });
     }
 
     private static void register(ISmileyCloudEasterEgg egg){
