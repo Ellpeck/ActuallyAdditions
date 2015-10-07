@@ -304,6 +304,18 @@ public class SmileyCloudEasterEggs{
                 renderHeadBlock(Blocks.redstone_block, 0, 30F);
             }
         });
+        register(new ISmileyCloudEasterEgg(){
+            @Override
+            public String[] getTriggerNames(){
+                return new String[]{"mineload", "miney", "loady", "mineyloady"};
+            }
+
+            @Override
+            public void renderExtra(float f){
+                renderHoldingItem(false, new ItemStack(InitItems.itemMagnetRing));
+                renderHeadBlock(Blocks.crafting_table, 0, 35F);
+            }
+        });
     }
 
     private static void register(ISmileyCloudEasterEgg egg){
