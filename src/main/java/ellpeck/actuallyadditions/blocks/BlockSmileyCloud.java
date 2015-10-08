@@ -133,11 +133,8 @@ public class BlockSmileyCloud extends BlockContainerBase implements IActAddItemO
 
     public static class TheItemBlock extends ItemBlock{
 
-        private Block theBlock;
-
         public TheItemBlock(Block block){
             super(block);
-            this.theBlock = block;
             this.setHasSubtypes(false);
             this.setMaxDamage(0);
         }

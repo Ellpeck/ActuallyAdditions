@@ -134,11 +134,8 @@ public class BlockColoredLamp extends Block implements IActAddItemOrBlock{
 
     public static class TheItemBlock extends ItemBlock{
 
-        private Block theBlock;
-
         public TheItemBlock(Block block){
             super(block);
-            this.theBlock = block;
             this.setHasSubtypes(true);
             this.setMaxDamage(0);
         }
@@ -153,7 +150,7 @@ public class BlockColoredLamp extends Block implements IActAddItemOrBlock{
             if(stack.getItemDamage() >= allLampTypes.length){
                 return null;
             }
-            return StringUtil.localize(this.getUnlocalizedName(stack)+".name")+(((BlockColoredLamp)this.theBlock).isOn ? " ("+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".onSuffix.desc")+")" : "");
+            return StringUtil.localize(this.getUnlocalizedName(stack)+".name")+(((BlockColoredLamp)this.field_150939_a).isOn ? " ("+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".onSuffix.desc")+")" : "");
         }
 
         @Override

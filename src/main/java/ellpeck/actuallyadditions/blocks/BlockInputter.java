@@ -95,14 +95,11 @@ public class BlockInputter extends BlockContainerBase implements IActAddItemOrBl
 
     public static class TheItemBlock extends ItemBlock{
 
-        private Block theBlock;
-
         private long lastSysTime;
         private int toPick;
 
         public TheItemBlock(Block block){
             super(block);
-            this.theBlock = block;
             this.setHasSubtypes(false);
             this.setMaxDamage(0);
         }
@@ -132,7 +129,7 @@ public class BlockInputter extends BlockContainerBase implements IActAddItemOrBl
 
         @Override
         public EnumRarity getRarity(ItemStack stack){
-            return ((BlockInputter)theBlock).isAdvanced ? EnumRarity.epic : EnumRarity.rare;
+            return ((BlockInputter)this.field_150939_a).isAdvanced ? EnumRarity.epic : EnumRarity.rare;
         }
     }
 }

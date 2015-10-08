@@ -87,11 +87,8 @@ public class BlockWildPlant extends BlockBush implements IActAddItemOrBlock{
 
     public static class TheItemBlock extends ItemBlock{
 
-        private Block theBlock;
-
         public TheItemBlock(Block block){
             super(block);
-            this.theBlock = block;
             this.setHasSubtypes(true);
             this.setMaxDamage(0);
         }
@@ -109,7 +106,7 @@ public class BlockWildPlant extends BlockBush implements IActAddItemOrBlock{
         @SideOnly(Side.CLIENT)
         @Override
         public IIcon getIconFromDamage(int meta){
-            return this.theBlock.getIcon(0, meta);
+            return this.field_150939_a.getIcon(0, meta);
         }
 
         @Override

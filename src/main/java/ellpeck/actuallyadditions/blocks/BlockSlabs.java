@@ -100,11 +100,8 @@ public class BlockSlabs extends Block implements IActAddItemOrBlock{
 
     public static class TheItemBlock extends ItemBlock{
 
-        private Block theBlock;
-
         public TheItemBlock(Block block){
             super(block);
-            this.theBlock = block;
             this.setHasSubtypes(false);
             this.setMaxDamage(0);
         }
@@ -121,9 +118,9 @@ public class BlockSlabs extends Block implements IActAddItemOrBlock{
 
         @Override
         public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ){
-            if(world.getBlock(x, y, z) == this.theBlock && ((side == 1 && world.getBlockMetadata(x, y, z) == 0) || (side == 0 && world.getBlockMetadata(x, y, z) == 1))){
-                if(world.setBlock(x, y, z, ((BlockSlabs)this.theBlock).fullBlock, 0, 3)){
-                    world.playSoundEffect(x+0.5F, y+0.5F, z+0.5F, this.theBlock.stepSound.getBreakSound(), (this.theBlock.stepSound.getVolume()+1.0F)/2.0F, this.theBlock.stepSound.getPitch()*0.8F);
+            if(world.getBlock(x, y, z) == this.field_150939_a && ((side == 1 && world.getBlockMetadata(x, y, z) == 0) || (side == 0 && world.getBlockMetadata(x, y, z) == 1))){
+                if(world.setBlock(x, y, z, ((BlockSlabs)this.field_150939_a).fullBlock, 0, 3)){
+                    world.playSoundEffect(x+0.5F, y+0.5F, z+0.5F, this.field_150939_a.stepSound.getBreakSound(), (this.field_150939_a.stepSound.getVolume()+1.0F)/2.0F, this.field_150939_a.stepSound.getPitch()*0.8F);
                     stack.stackSize--;
                     return true;
                 }

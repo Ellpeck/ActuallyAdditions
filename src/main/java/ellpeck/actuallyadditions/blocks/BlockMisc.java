@@ -72,11 +72,8 @@ public class BlockMisc extends Block implements IActAddItemOrBlock{
 
     public static class TheItemBlock extends ItemBlock{
 
-        private Block theBlock;
-
         public TheItemBlock(Block block){
             super(block);
-            this.theBlock = block;
             this.setHasSubtypes(true);
             this.setMaxDamage(0);
         }

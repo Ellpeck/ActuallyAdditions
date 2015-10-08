@@ -77,11 +77,8 @@ public class BlockPhantomBooster extends BlockContainerBase implements IActAddIt
 
     public static class TheItemBlock extends ItemBlock{
 
-        private Block theBlock;
-
         public TheItemBlock(Block block){
             super(block);
-            this.theBlock = block;
             this.setHasSubtypes(false);
             this.setMaxDamage(0);
         }

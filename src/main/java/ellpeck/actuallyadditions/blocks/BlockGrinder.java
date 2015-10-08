@@ -121,11 +121,8 @@ public class BlockGrinder extends BlockContainerBase implements IActAddItemOrBlo
 
     public static class TheItemBlock extends ItemBlock{
 
-        private Block theBlock;
-
         public TheItemBlock(Block block){
             super(block);
-            this.theBlock = block;
             this.setHasSubtypes(false);
             this.setMaxDamage(0);
         }
@@ -142,7 +139,7 @@ public class BlockGrinder extends BlockContainerBase implements IActAddItemOrBlo
 
         @Override
         public EnumRarity getRarity(ItemStack stack){
-            return ((BlockGrinder)theBlock).isDouble ? EnumRarity.epic : EnumRarity.rare;
+            return ((BlockGrinder)this.field_150939_a).isDouble ? EnumRarity.epic : EnumRarity.rare;
         }
     }
 }
