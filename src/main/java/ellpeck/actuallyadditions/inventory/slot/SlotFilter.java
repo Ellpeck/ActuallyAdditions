@@ -54,4 +54,13 @@ public class SlotFilter extends Slot{
         super.putStack(theStack);
     }
 
+    @Override
+    public boolean isItemValid(ItemStack stack){
+        return false;
+    }
+
+    @Override
+    public boolean canTakeStack(EntityPlayer player){
+        return false;
+    }
 }

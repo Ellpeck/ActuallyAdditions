@@ -95,9 +95,13 @@ public class InitBlocks{
 
     public static Block blockLeafGenerator;
     public static Block blockDirectionalBreaker;
+    public static Block blockRangedCollector;
 
     public static void init(){
         ModUtil.LOGGER.info("Initializing Blocks...");
+
+        blockRangedCollector = new BlockRangedCollector();
+        BlockUtil.register(blockRangedCollector);
 
         blockDirectionalBreaker = new BlockDirectionalBreaker();
         BlockUtil.register(blockDirectionalBreaker);

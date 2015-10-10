@@ -84,6 +84,8 @@ public class GuiHandler implements IGuiHandler{
                 return new ContainerSmileyCloud();
             case DIRECTIONAL_BREAKER:
                 return new ContainerDirectionalBreaker(entityPlayer.inventory, tile);
+            case RANGED_COLLECTOR:
+                return new ContainerRangedCollector(entityPlayer.inventory, tile);
             default:
                 return null;
         }
@@ -148,6 +150,8 @@ public class GuiHandler implements IGuiHandler{
                 return new GuiBooklet(null);
             case DIRECTIONAL_BREAKER:
                 return new GuiDirectionalBreaker(entityPlayer.inventory, tile);
+            case RANGED_COLLECTOR:
+                return new GuiRangedCollector(entityPlayer.inventory, tile, x, y, z, world);
             default:
                 return null;
         }
@@ -179,7 +183,8 @@ public class GuiHandler implements IGuiHandler{
         ORE_MAGNET,
         CLOUD,
         BOOK(false),
-        DIRECTIONAL_BREAKER;
+        DIRECTIONAL_BREAKER,
+        RANGED_COLLECTOR;
 
         public boolean checkTileEntity;
 

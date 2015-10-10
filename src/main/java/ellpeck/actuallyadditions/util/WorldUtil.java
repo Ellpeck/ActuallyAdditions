@@ -251,6 +251,10 @@ public class WorldUtil{
         return blocks;
     }
 
+    public static boolean addToInventory(ItemStack[] slots, ArrayList<ItemStack> stacks, boolean actuallyDo){
+        return addToInventory(slots, 0, slots.length, stacks, actuallyDo);
+    }
+
     /**
      * Add an ArrayList of ItemStacks to an Array of slots
      *
@@ -259,29 +263,31 @@ public class WorldUtil{
      * @param actuallyDo Do it or just test if it works?
      * @return Does it work?
      */
-    public static boolean addToInventory(ItemStack[] slots, ArrayList<ItemStack> stacks, boolean actuallyDo){
-        ItemStack[] testSlots = new ItemStack[slots.length];
-        for(int i = 0; i < testSlots.length; i++){
-            if(slots[i] != null){
-                testSlots[i] = slots[i].copy();
+    public static boolean addToInventory(ItemStack[] slots, int start, int end, ArrayList<ItemStack> stacks, boolean actuallyDo){
+        ItemStack[] theSlots;
+        if(actuallyDo){
+            theSlots = slots;
+        }
+        else{
+            //Create "Test Slots" to put the items into to try if it works out in the end
+            theSlots = new ItemStack[slots.length];
+
+            for(int i = 0; i < theSlots.length; i++){
+                if(slots[i] != null){
+                    theSlots[i] = slots[i].copy();
+                }
             }
         }
 
         int working = 0;
         for(ItemStack stackToPutIn : stacks){
-            for(int i = 0; i < testSlots.length; i++){
-                if(stackToPutIn != null && (testSlots[i] == null || (testSlots[i].isItemEqual(stackToPutIn) && testSlots[i].getMaxStackSize() >= testSlots[i].stackSize+stackToPutIn.stackSize))){
-                    if(testSlots[i] == null){
-                        if(actuallyDo){
-                            slots[i] = stackToPutIn.copy();
-                        }
-                        testSlots[i] = stackToPutIn.copy();
+            for(int i = start; i < end; i++){
+                if(stackToPutIn != null && (theSlots[i] == null || (theSlots[i].isItemEqual(stackToPutIn) && theSlots[i].getMaxStackSize() >= theSlots[i].stackSize+stackToPutIn.stackSize))){
+                    if(theSlots[i] == null){
+                        theSlots[i] = stackToPutIn.copy();
                     }
                     else{
-                        if(actuallyDo){
-                            slots[i].stackSize += stackToPutIn.stackSize;
-                        }
-                        testSlots[i].stackSize += stackToPutIn.stackSize;
+                        theSlots[i].stackSize += stackToPutIn.stackSize;
                     }
                     working++;
 

@@ -61,6 +61,7 @@ public class TileEntityBase extends TileEntity{
         GameRegistry.registerTileEntity(TileEntitySmileyCloud.class, ModUtil.MOD_ID_LOWER+":tileEntityCloud");
         GameRegistry.registerTileEntity(TileEntityLeafGenerator.class, ModUtil.MOD_ID_LOWER+":tileEntityLeafGenerator");
         GameRegistry.registerTileEntity(TileEntityDirectionalBreaker.class, ModUtil.MOD_ID_LOWER+":tileEntityDirectionalBreaker");
+        GameRegistry.registerTileEntity(TileEntityRangedCollector.class, ModUtil.MOD_ID_LOWER+":tileEntityRangedCollector");
     }
 
     @Override
