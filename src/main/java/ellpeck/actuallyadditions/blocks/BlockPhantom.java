@@ -14,9 +14,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.ActuallyAdditions;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
-import ellpeck.actuallyadditions.tile.IPhantomTile;
-import ellpeck.actuallyadditions.tile.TileEntityPhantomPlacer;
-import ellpeck.actuallyadditions.tile.TileEntityPhantomface;
+import ellpeck.actuallyadditions.tile.*;
 import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
@@ -71,11 +69,11 @@ public class BlockPhantom extends BlockContainerBase implements IActAddItemOrBlo
             case BREAKER:
                 return new TileEntityPhantomPlacer.TileEntityPhantomBreaker();
             case LIQUIFACE:
-                return new TileEntityPhantomface.TileEntityPhantomLiquiface();
+                return new TileEntityPhantomLiquiface();
             case ENERGYFACE:
-                return new TileEntityPhantomface.TileEntityPhantomEnergyface();
+                return new TileEntityPhantomEnergyface();
             default:
-                return new TileEntityPhantomface.TileEntityPhantomItemface();
+                return new TileEntityPhantomItemface();
         }
     }
 

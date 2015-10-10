@@ -44,9 +44,9 @@ public class TileEntityBase extends TileEntity{
         GameRegistry.registerTileEntity(TileEntityFermentingBarrel.class, ModUtil.MOD_ID_LOWER+":tileEntityFermentingBarrel");
         GameRegistry.registerTileEntity(TileEntityOilGenerator.class, ModUtil.MOD_ID_LOWER+":tileEntityOilGenerator");
         GameRegistry.registerTileEntity(TileEntityCoalGenerator.class, ModUtil.MOD_ID_LOWER+":tileEntityCoalGenerator");
-        GameRegistry.registerTileEntity(TileEntityPhantomface.TileEntityPhantomItemface.class, ModUtil.MOD_ID_LOWER+":tileEntityPhantomItemface");
-        GameRegistry.registerTileEntity(TileEntityPhantomface.TileEntityPhantomLiquiface.class, ModUtil.MOD_ID_LOWER+":tileEntityPhantomLiquiface");
-        GameRegistry.registerTileEntity(TileEntityPhantomface.TileEntityPhantomEnergyface.class, ModUtil.MOD_ID_LOWER+":tileEntityPhantomEnergyface");
+        GameRegistry.registerTileEntity(TileEntityPhantomItemface.class, ModUtil.MOD_ID_LOWER+":tileEntityPhantomItemface");
+        GameRegistry.registerTileEntity(TileEntityPhantomLiquiface.class, ModUtil.MOD_ID_LOWER+":tileEntityPhantomLiquiface");
+        GameRegistry.registerTileEntity(TileEntityPhantomEnergyface.class, ModUtil.MOD_ID_LOWER+":tileEntityPhantomEnergyface");
         GameRegistry.registerTileEntity(TileEntityPhantomPlacer.class, ModUtil.MOD_ID_LOWER+":tileEntityPhantomPlacer");
         GameRegistry.registerTileEntity(TileEntityPhantomPlacer.TileEntityPhantomBreaker.class, ModUtil.MOD_ID_LOWER+":tileEntityPhantomBreaker");
         GameRegistry.registerTileEntity(TileEntityFluidCollector.class, ModUtil.MOD_ID_LOWER+":tileEntityFluidCollector");
