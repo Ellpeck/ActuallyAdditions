@@ -26,10 +26,9 @@ public class SlotFilter extends Slot{
      * Needs to be called in slotClick() in the Container!
      *
      * @param player The player
-     * @param button The button pressed (1 is right mouse button!)
      * @return Nothing, as the Item didn't really get "transferred"
      */
-    public ItemStack slotClick(EntityPlayer player, int button){
+    public ItemStack slotClick(EntityPlayer player){
         ItemStack heldStack = player.inventory.getItemStack();
 
         //Delete the stack in the inventory
@@ -49,14 +48,14 @@ public class SlotFilter extends Slot{
     }
 
     @Override
-    public void putStack(ItemStack stack){
-        ItemStack theStack = (stack != null ? stack.copy() : null);
-        super.putStack(theStack);
+    public boolean isItemValid(ItemStack stack){
+        return false;
     }
 
     @Override
-    public boolean isItemValid(ItemStack stack){
-        return false;
+    public void putStack(ItemStack stack){
+        ItemStack theStack = (stack != null ? stack.copy() : null);
+        super.putStack(theStack);
     }
 
     @Override

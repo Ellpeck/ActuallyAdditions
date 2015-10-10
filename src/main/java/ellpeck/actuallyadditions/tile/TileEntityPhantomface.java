@@ -230,9 +230,6 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
                 return this.getHandler().drain(from, resource, doDrain);
             }
             return null;
-        }        @Override
-        public boolean isBoundThingInRange(){
-            return super.isBoundThingInRange() && this.boundPosition.getWorld().getTileEntity(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ()) instanceof IFluidHandler;
         }
 
         @Override
@@ -241,6 +238,9 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
                 return this.getHandler().drain(from, maxDrain, doDrain);
             }
             return null;
+        }        @Override
+        public boolean isBoundThingInRange(){
+            return super.isBoundThingInRange() && this.boundPosition.getWorld().getTileEntity(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ()) instanceof IFluidHandler;
         }
 
         @Override
@@ -294,9 +294,6 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
                 }
             }
             return 0;
-        }        @Override
-        public boolean isBoundThingInRange(){
-            return super.isBoundThingInRange() && (this.boundPosition.getWorld().getTileEntity(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ()) instanceof IEnergyReceiver || this.boundPosition.getWorld().getTileEntity(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ()) instanceof IEnergyProvider);
         }
 
         @Override
@@ -310,6 +307,9 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
                 }
             }
             return 0;
+        }        @Override
+        public boolean isBoundThingInRange(){
+            return super.isBoundThingInRange() && (this.boundPosition.getWorld().getTileEntity(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ()) instanceof IEnergyReceiver || this.boundPosition.getWorld().getTileEntity(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ()) instanceof IEnergyProvider);
         }
 
         public IEnergyProvider getProvider(){
@@ -330,7 +330,11 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
                 }
             }
             return null;
-        }        @Override
+        }
+
+
+
+        @Override
         public void updateEntity(){
             super.updateEntity();
 
@@ -347,7 +351,6 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
         }
 
 
-
         private void pushEnergy(ForgeDirection side){
             TileEntity tile = WorldUtil.getTileEntityFromSide(side, worldObj, xCoord, yCoord, zCoord);
             if(tile != null && tile instanceof IEnergyReceiver && this.getProvider().getEnergyStored(ForgeDirection.UNKNOWN) > 0){
@@ -358,9 +361,6 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
                 }
             }
         }
-
-
-
 
 
         @Override

@@ -50,17 +50,6 @@ public class ContainerRangedCollector extends Container{
     }
 
     @Override
-    public ItemStack slotClick(int par1, int par2, int par3, EntityPlayer player){
-        if(par1 >= 0 && par1 < this.inventorySlots.size() && this.getSlot(par1) instanceof SlotFilter){
-            //Calls the Filter's SlotClick function
-            return ((SlotFilter)getSlot(par1)).slotClick(player, par2);
-        }
-        else{
-            return super.slotClick(par1, par2, par3, player);
-        }
-    }
-
-    @Override
     public ItemStack transferStackInSlot(EntityPlayer player, int slot){
         final int inventoryStart = 18;
         final int inventoryEnd = inventoryStart+26;
@@ -107,6 +96,17 @@ public class ContainerRangedCollector extends Container{
             return currentStack;
         }
         return null;
+    }
+
+    @Override
+    public ItemStack slotClick(int par1, int par2, int par3, EntityPlayer player){
+        if(par1 >= 0 && par1 < this.inventorySlots.size() && this.getSlot(par1) instanceof SlotFilter){
+            //Calls the Filter's SlotClick function
+            return ((SlotFilter)getSlot(par1)).slotClick(player);
+        }
+        else{
+            return super.slotClick(par1, par2, par3, player);
+        }
     }
 
     @Override

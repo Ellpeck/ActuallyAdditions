@@ -64,11 +64,6 @@ public class GuiRangedCollector extends GuiContainer{
     }
 
     @Override
-    public void actionPerformed(GuiButton button){
-        PacketHandler.theNetwork.sendToServer(new PacketGuiButton(x, y, z, world, button.id, Minecraft.getMinecraft().thePlayer));
-    }
-
-    @Override
     @SuppressWarnings("unchecked")
     public void drawScreen(int x, int y, float f){
         super.drawScreen(x, y, f);
@@ -95,5 +90,10 @@ public class GuiRangedCollector extends GuiContainer{
 
         this.mc.getTextureManager().bindTexture(resLoc);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 86);
+    }
+
+    @Override
+    public void actionPerformed(GuiButton button){
+        PacketHandler.theNetwork.sendToServer(new PacketGuiButton(x, y, z, world, button.id, Minecraft.getMinecraft().thePlayer));
     }
 }

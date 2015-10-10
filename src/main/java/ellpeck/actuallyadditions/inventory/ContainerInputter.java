@@ -107,7 +107,7 @@ public class ContainerInputter extends Container{
     public ItemStack slotClick(int par1, int par2, int par3, EntityPlayer player){
         if(par1 >= 0 && par1 < this.inventorySlots.size() && this.getSlot(par1) instanceof SlotFilter){
             //Calls the Filter's SlotClick function
-            return ((SlotFilter)getSlot(par1)).slotClick(player, par2);
+            return ((SlotFilter)getSlot(par1)).slotClick(player);
         }
         else{
             return super.slotClick(par1, par2, par3, player);
