@@ -10,6 +10,7 @@
 
 package ellpeck.actuallyadditions.tile;
 
+import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.network.gui.IButtonReactor;
 import ellpeck.actuallyadditions.network.sync.IPacketSyncerToClient;
 import ellpeck.actuallyadditions.network.sync.PacketSyncerToClient;
@@ -38,11 +39,11 @@ public class TileEntityRangedCollector extends TileEntityInventoryBase implement
     public void updateEntity(){
         if(!worldObj.isRemote){
             if(!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)){
-                int range = 8;
+                int range = ConfigIntValues.RANGED_COLLECTOR_RANGE.getValue();
                 ArrayList<EntityItem> items = (ArrayList<EntityItem>)this.worldObj.getEntitiesWithinAABB(EntityItem.class, AxisAlignedBB.getBoundingBox(this.xCoord-range, this.yCoord-range, this.zCoord-range, this.xCoord+range, this.yCoord+range, this.zCoord+range));
                 if(!items.isEmpty()){
                     for(EntityItem item : items){
-                        if(item.getEntityItem() != null){
+                        if(!item.isDead && item.getEntityItem() != null){
                             ItemStack toAdd = item.getEntityItem().copy();
                             if(this.checkFilter(toAdd)){
                                 ArrayList<ItemStack> checkList = new ArrayList<ItemStack>();

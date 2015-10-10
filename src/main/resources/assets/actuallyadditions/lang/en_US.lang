@@ -104,6 +104,7 @@ tile.actuallyadditions.blockXPSolidifier.name=Experience Solidifier
 tile.actuallyadditions.blockSmileyCloud.name=Smiley Cloud
 tile.actuallyadditions.blockLeafGenerator.name=Leaf-Eating Generator
 tile.actuallyadditions.blockDirectionalBreaker.name=Long-Range Breaker
+tile.actuallyadditions.blockRangedCollector.name=Ranged Collector
 
 #ESD
 tile.actuallyadditions.blockInputter.name=ESD
@@ -350,6 +351,7 @@ container.actuallyadditions.xpSolidifier.name=Experience Solidifier
 container.actuallyadditions.oreMagnet.name=Magnetic Miner
 container.actuallyadditions.cloud.name=Smiley Cloud
 container.actuallyadditions.directionalBreaker.name=Long-Range Breaker
+container.actuallyadditions.rangedCollector.name=Ranged Collector
 
 #Update Information
 info.actuallyadditions.update.generic.desc=[{"text":"There is an "},{"text":"Update ","bold":"true"},{"text":"for ","bold":"false"},{"text":"Actually Additions ","color":"dark_green","bold":"true"},{"text":"available!","color":"none","bold":"false"}]
@@ -552,3 +554,6 @@ booklet.actuallyadditions.chapter.longRangeBreaker.text.2=<i>Sequence Breaking
 
 booklet.actuallyadditions.chapter.dropper.name=Automatic Precision Dropper
 booklet.actuallyadditions.chapter.dropper.text.1=The <item>Automatic Precision Dropper<r> works much like a normal dropper, but it will drop items <imp>without needing a Redstone Signal<r>. <n>It also won't spit them out all over the ground, but it will <imp>drop them straight into the direction you point it at<r>! <n>It can be turned off with a Redstone Signal.
+
+booklet.actuallyadditions.chapter.rangedCollector.name=Ranged Collector
+booklet.actuallyadditions.chapter.rangedCollector.text.1=The <item>Ranged Collector<r> works much like a hopper, in that it <imp>collects items around it<r>, having the power, however, to pick up items that are in an area of <imp><range> blocks<r> around it. <n>It has a <imp>filter<r> that can be set to <imp>white- or blacklist<r>. <n>This comes with a disadvantage, however: It doesn't auto-output its items.

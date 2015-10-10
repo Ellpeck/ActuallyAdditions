@@ -356,6 +356,7 @@ public class GuiBooklet extends GuiScreen{
         this.searchField = new GuiTextField(this.fontRendererObj, guiLeft+148, guiTop+162, 66, 10);
         this.searchField.setMaxStringLength(30);
         this.searchField.setEnableBackgroundDrawing(false);
+        this.searchField.setCanLoseFocus(false);
 
         this.currentPage = null;
         this.currentChapter = null;
@@ -458,9 +459,9 @@ public class GuiBooklet extends GuiScreen{
 
     @SuppressWarnings("unchecked")
     public void openIndexEntry(BookletIndexEntry entry, int page, boolean resetTextField){
+        this.searchField.setVisible(entry instanceof BookletEntryAllSearch);
+        this.searchField.setFocused(entry instanceof BookletEntryAllSearch);
         if(resetTextField){
-            this.searchField.setVisible(entry instanceof BookletEntryAllSearch);
-            this.searchField.setFocused(entry instanceof BookletEntryAllSearch);
             this.searchField.setText("");
             if(entry instanceof BookletEntryAllSearch){
                 entry.chapters = (ArrayList<BookletChapter>)((BookletEntryAllSearch)entry).allChapters.clone();

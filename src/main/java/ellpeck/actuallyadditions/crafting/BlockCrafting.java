@@ -76,8 +76,19 @@ public class BlockCrafting{
     public static IRecipe recipeLeafGen;
     public static IRecipe recipeDirectionalBreaker;
     public static IRecipe recipeDropper;
+    public static IRecipe recipeRangedCollector;
 
     public static void init(){
+
+        //Ranged Collector
+        if(ConfigCrafting.RANGED_COLLECTOR.isEnabled()){
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockRangedCollector),
+                    "EHE", " C ",
+                    'E', new ItemStack(Items.ender_pearl),
+                    'H', new ItemStack(Blocks.hopper),
+                    'C', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.STONE_CASING.ordinal())));
+            recipeRangedCollector = Util.GetRecipes.lastIRecipe();
+        }
 
         //Directional Breaker
         if(ConfigCrafting.DIRECTIONAL_BREAKER.isEnabled()){

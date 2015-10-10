@@ -167,7 +167,9 @@ public enum ConfigIntValues{
     LEAF_GENERATOR_RANGE("Leaf Generator: Range", ConfigCategories.MACHINE_VALUES, 7, 1, 100, "The radius of a leaf generator"),
 
     DIRECTIONAL_BREAKER_RF_PER_BLOCK("Directional Breaker: RF per Block", ConfigCategories.MACHINE_VALUES, 5, 0, 1000, "The amount of RF the Directional Breaker uses to break each block"),
-    DIRECTIONAL_BREAKER_RANGE("Directional Breaker: Range", ConfigCategories.MACHINE_VALUES, 8, 1, 1000, "The range of the Directional Breaker");
+    DIRECTIONAL_BREAKER_RANGE("Directional Breaker: Range", ConfigCategories.MACHINE_VALUES, 8, 1, 1000, "The range of the Directional Breaker"),
+
+    RANGED_COLLECTOR_RANGE("Ranged Collector: Range", ConfigCategories.MACHINE_VALUES, 6, 1, 30, "The range of the Ranged Collector");
 
     public final String name;
     public final String category;
