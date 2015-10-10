@@ -1,1 +1,1 @@
-Made the ActAdd Manual Tooltip more subtle, added better coffee machine pages into the book
+Leaf-Eating Generator, Long-Range Breaker, Ranged Collector, Better NEI
