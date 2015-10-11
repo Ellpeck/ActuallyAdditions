@@ -253,7 +253,7 @@ public class ItemDrill extends ItemEnergy{
 
     @Override
     public boolean canHarvestBlock(Block block, ItemStack stack){
-        return this.getEnergyStored(stack) >= this.getEnergyUsePerBlock(stack) && (this.hasExtraWhitelist(block) || block.getMaterial().isToolNotRequired() || (block == Blocks.snow_layer || block == Blocks.snow || (block == Blocks.obsidian ? ToolMaterial.EMERALD.getHarvestLevel() == 3 : (block != Blocks.diamond_block && block != Blocks.diamond_ore ? (block != Blocks.emerald_ore && block != Blocks.emerald_block ? (block != Blocks.gold_block && block != Blocks.gold_ore ? (block != Blocks.iron_block && block != Blocks.iron_ore ? (block != Blocks.lapis_block && block != Blocks.lapis_ore ? (block != Blocks.redstone_ore && block != Blocks.lit_redstone_ore ? (block.getMaterial() == Material.rock || (block.getMaterial() == Material.iron || block.getMaterial() == Material.anvil)) : ToolMaterial.EMERALD.getHarvestLevel() >= 2) : ToolMaterial.EMERALD.getHarvestLevel() >= 1) : ToolMaterial.EMERALD.getHarvestLevel() >= 1) : ToolMaterial.EMERALD.getHarvestLevel() >= 2) : ToolMaterial.EMERALD.getHarvestLevel() >= 2) : ToolMaterial.EMERALD.getHarvestLevel() >= 2))));
+        return this.getEnergyStored(stack) >= this.getEnergyUsePerBlock(stack) && (this.hasExtraWhitelist(block) || block.getMaterial().isToolNotRequired() || (block == Blocks.snow_layer || block == Blocks.snow || (block == Blocks.obsidian ? ConfigIntValues.DRILL_HARVEST_LEVEL.getValue() == 3 : (block != Blocks.diamond_block && block != Blocks.diamond_ore ? (block != Blocks.emerald_ore && block != Blocks.emerald_block ? (block != Blocks.gold_block && block != Blocks.gold_ore ? (block != Blocks.iron_block && block != Blocks.iron_ore ? (block != Blocks.lapis_block && block != Blocks.lapis_ore ? (block != Blocks.redstone_ore && block != Blocks.lit_redstone_ore ? (block.getMaterial() == Material.rock || (block.getMaterial() == Material.iron || block.getMaterial() == Material.anvil)) : ConfigIntValues.DRILL_HARVEST_LEVEL.getValue() >= 2) : ConfigIntValues.DRILL_HARVEST_LEVEL.getValue() >= 1) : ConfigIntValues.DRILL_HARVEST_LEVEL.getValue() >= 1) : ConfigIntValues.DRILL_HARVEST_LEVEL.getValue() >= 2) : ConfigIntValues.DRILL_HARVEST_LEVEL.getValue() >= 2) : ConfigIntValues.DRILL_HARVEST_LEVEL.getValue() >= 2))));
     }
 
     @Override
@@ -266,7 +266,7 @@ public class ItemDrill extends ItemEnergy{
 
     @Override
     public int getHarvestLevel(ItemStack stack, String toolClass){
-        return ToolMaterial.EMERALD.getHarvestLevel();
+        return ConfigIntValues.DRILL_HARVEST_LEVEL.getValue();
     }
 
     /**

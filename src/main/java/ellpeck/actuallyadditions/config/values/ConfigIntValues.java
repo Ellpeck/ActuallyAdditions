@@ -37,17 +37,19 @@ public enum ConfigIntValues{
 
     KNIFE_DAMAGE("Knife: Max Uses", ConfigCategories.TOOL_VALUES, 100, 5, 5000, "How often the Knife can be crafted with"),
 
-    EMERALD_HARVEST_LEVEL("Emerald: Harvest Level", ConfigCategories.TOOL_VALUES, 3, 0, 3, "What Harvest Level Emerald Tools have (0 = Wood, 1 = Stone, 2 = Iron, 3 = Diamond)"),
+    EMERALD_HARVEST_LEVEL("Emerald: Harvest Level", ConfigCategories.TOOL_VALUES, 3, 0, 20, "What Harvest Level Emerald Tools have (0 = Wood, 1 = Stone, 2 = Iron, 3 = Diamond)"),
     EMERALD_USES("Emerald: Max Uses", ConfigCategories.TOOL_VALUES, 2000, 50, 10000, "How often Emerald Tools can be used"),
     EMERALD_ENCHANTABILITY("Emerald: Enchantability", ConfigCategories.TOOL_VALUES, 15, 1, 30, "How enchantable an Emerald Tool is"),
 
-    OBSIDIAN_HARVEST_LEVEL("Obsidian: Harvest Level", ConfigCategories.TOOL_VALUES, 3, 0, 3, "What Harvest Level Obsidian Tools have (0 = Wood, 1 = Stone, 2 = Iron, 3 = Diamond)"),
+    OBSIDIAN_HARVEST_LEVEL("Obsidian: Harvest Level", ConfigCategories.TOOL_VALUES, 3, 0, 20, "What Harvest Level Obsidian Tools have (0 = Wood, 1 = Stone, 2 = Iron, 3 = Diamond)"),
     OBSIDIAN_USES("Obsidian: Max Uses", ConfigCategories.TOOL_VALUES, 8000, 50, 20000, "How often Obsidian Tools can be used"),
     OBSIDIAN_ENCHANTABILITY("Obsidian: Enchantability", ConfigCategories.TOOL_VALUES, 15, 1, 30, "How enchantable an Obsidian Tool is"),
 
-    QUARTZ_HARVEST_LEVEL("Quartz: Harvest Level", ConfigCategories.TOOL_VALUES, 2, 0, 3, "What Harvest Level Quartz Tools have (0 = Wood, 1 = Stone, 2 = Iron, 3 = Diamond)"),
+    QUARTZ_HARVEST_LEVEL("Quartz: Harvest Level", ConfigCategories.TOOL_VALUES, 2, 0, 20, "What Harvest Level Quartz Tools have (0 = Wood, 1 = Stone, 2 = Iron, 3 = Diamond)"),
     QUARTZ_USES("Quartz: Max Uses", ConfigCategories.TOOL_VALUES, 280, 50, 20000, "How often Quartz Tools can be used"),
     QUARTZ_ENCHANTABILITY("Quartz: Enchantability", ConfigCategories.TOOL_VALUES, 10, 1, 30, "How enchantable an Quartz Tool is"),
+
+    DRILL_HARVEST_LEVEL("Drill: Harvest Level", ConfigCategories.TOOL_VALUES, 4, 0, 20, "What Harvest Level the Drill has (0 = Wood, 1 = Stone, 2 = Iron, 3 = Diamond)"),
 
     EMERALD_ARMOR_DURABILITY("Emerald Armor: Durability", ConfigCategories.ARMOR_VALUES, 1500, 10, 10000, "The Durability of Emerald Armor"),
     EMERALD_ARMOR_HEAD_DAMAGE("Emerald Helmets: Damage Reduction", ConfigCategories.ARMOR_VALUES, 5, 0, 10, "The Damage Reduction of Emerald Helmets"),
