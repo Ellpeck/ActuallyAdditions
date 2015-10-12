@@ -47,7 +47,7 @@ public class DispenserHandlerFillBucket extends BehaviorDefaultDispenseItem{
         else if(((TileEntityDispenser)source.getBlockTileEntity()).func_146019_a(filledBucket.copy()) < 0){
             new BehaviorDefaultDispenseItem().dispense(source, filledBucket.copy());
         }
-        //At this point, it is either the filled bucket at the empty bucket was in or the bucket in another slot of the Dispenser
+        //Filled Bucket or Empty Buckets because either they weren't filled or the full one was dispensed out because of missing space
         return emptyBucket;
     }
 
