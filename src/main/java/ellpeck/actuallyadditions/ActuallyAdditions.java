@@ -33,6 +33,7 @@ import ellpeck.actuallyadditions.material.InitArmorMaterials;
 import ellpeck.actuallyadditions.material.InitToolMaterials;
 import ellpeck.actuallyadditions.misc.DispenserHandlerEmptyBucket;
 import ellpeck.actuallyadditions.misc.DispenserHandlerFertilize;
+import ellpeck.actuallyadditions.misc.DispenserHandlerFillBucket;
 import ellpeck.actuallyadditions.network.PacketHandler;
 import ellpeck.actuallyadditions.ore.InitOreDict;
 import ellpeck.actuallyadditions.proxy.IProxy;
@@ -43,6 +44,7 @@ import ellpeck.actuallyadditions.tile.TileEntityBase;
 import ellpeck.actuallyadditions.update.UpdateChecker;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.Util;
+import net.minecraft.init.Items;
 
 //                                                                           So that BuildCraft Oil always gets used
 @Mod(modid = ModUtil.MOD_ID, name = ModUtil.NAME, version = ModUtil.VERSION, dependencies = "after:BuildCraft|Energy", canBeDeactivated = false, guiFactory = "ellpeck.actuallyadditions.config.GuiFactory")
@@ -113,6 +115,7 @@ public class ActuallyAdditions{
     public void serverStarting(FMLServerStartingEvent event){
         Util.registerDispenserHandler(InitItems.itemBucketOil, new DispenserHandlerEmptyBucket());
         Util.registerDispenserHandler(InitItems.itemBucketCanolaOil, new DispenserHandlerEmptyBucket());
+        Util.registerDispenserHandler(Items.bucket, new DispenserHandlerFillBucket());
         Util.registerDispenserHandler(InitItems.itemFertilizer, new DispenserHandlerFertilize());
     }
 }
