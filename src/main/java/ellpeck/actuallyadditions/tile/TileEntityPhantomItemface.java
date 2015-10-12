@@ -40,38 +40,9 @@ public class TileEntityPhantomItemface extends TileEntityPhantomface{
         return new int[0];
     }
 
-    public ISidedInventory getSided(){
-        return this.getInventory() instanceof ISidedInventory ? (ISidedInventory)this.getInventory() : null;
-    }
-
     @Override
     public int getInventoryStackLimit(){
         return this.isBoundThingInRange() ? this.getInventory().getInventoryStackLimit() : 0;
-    }
-
-    @Override
-    public boolean isBoundThingInRange(){
-        return super.isBoundThingInRange() && this.boundPosition.getWorld().getTileEntity(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ()) instanceof IInventory;
-    }
-
-    public IInventory getInventory(){
-        if(this.boundPosition != null && this.boundPosition.getWorld() != null){
-            TileEntity tile = boundPosition.getWorld().getTileEntity(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ());
-            if(tile instanceof IInventory){
-                return (IInventory)tile;
-            }
-        }
-        return null;
-    }
-
-    @Override
-    public boolean canInsertItem(int slot, ItemStack stack, int side){
-        return this.isBoundThingInRange() && (this.getSided() == null || this.getSided().canInsertItem(slot, stack, side));
-    }
-
-    @Override
-    public boolean canExtractItem(int slot, ItemStack stack, int side){
-        return this.isBoundThingInRange() && (this.getSided() == null || this.getSided().canExtractItem(slot, stack, side));
     }
 
     @Override
@@ -110,6 +81,35 @@ public class TileEntityPhantomItemface extends TileEntityPhantomface{
     @Override
     public String getInventoryName(){
         return this.name;
+    }
+
+    @Override
+    public boolean isBoundThingInRange(){
+        return super.isBoundThingInRange() && this.boundPosition.getWorld().getTileEntity(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ()) instanceof IInventory;
+    }
+
+    public ISidedInventory getSided(){
+        return this.getInventory() instanceof ISidedInventory ? (ISidedInventory)this.getInventory() : null;
+    }
+
+    public IInventory getInventory(){
+        if(this.boundPosition != null && this.boundPosition.getWorld() != null){
+            TileEntity tile = boundPosition.getWorld().getTileEntity(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ());
+            if(tile instanceof IInventory){
+                return (IInventory)tile;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public boolean canInsertItem(int slot, ItemStack stack, int side){
+        return this.isBoundThingInRange() && (this.getSided() == null || this.getSided().canInsertItem(slot, stack, side));
+    }
+
+    @Override
+    public boolean canExtractItem(int slot, ItemStack stack, int side){
+        return this.isBoundThingInRange() && (this.getSided() == null || this.getSided().canExtractItem(slot, stack, side));
     }
 
 }

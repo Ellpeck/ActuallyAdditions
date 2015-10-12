@@ -40,18 +40,6 @@ public class BlockFurnaceSolar extends BlockContainerBase implements IActAddItem
     }
 
     @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9){
-        if(!world.isRemote){
-            TileEntityFurnaceSolar generator = (TileEntityFurnaceSolar)world.getTileEntity(x, y, z);
-            if(generator != null){
-                player.addChatComponentMessage(new ChatComponentText(generator.storage.getEnergyStored()+"/"+generator.storage.getMaxEnergyStored()+" RF"));
-            }
-            return true;
-        }
-        return true;
-    }
-
-    @Override
     public TileEntity createNewTileEntity(World world, int par2){
         return new TileEntityFurnaceSolar();
     }
@@ -74,6 +62,18 @@ public class BlockFurnaceSolar extends BlockContainerBase implements IActAddItem
     @Override
     public boolean isOpaqueCube(){
         return false;
+    }
+
+    @Override
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9){
+        if(!world.isRemote){
+            TileEntityFurnaceSolar generator = (TileEntityFurnaceSolar)world.getTileEntity(x, y, z);
+            if(generator != null){
+                player.addChatComponentMessage(new ChatComponentText(generator.storage.getEnergyStored()+"/"+generator.storage.getMaxEnergyStored()+" RF"));
+            }
+            return true;
+        }
+        return true;
     }
 
     @Override
