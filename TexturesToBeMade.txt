@@ -4,3 +4,8 @@ This file is a reminder to Glenthor for what textures he should make or change.
 If you want to give making some of these textures a go, go ahead and make a pull request when you're done.
 --------------------------------------------------------------------------------------------------------------
 
+-Chest To Storage Crate Upgrade (right click on chest to turn into storage crate) "itemChestToCrateUpgrade"
+
+-Crafty Crate (Storage Crate with Crafting inside of it) "blockCraftyCrate"
+
+-Storage Crate To Crafty Crate Upgrade "itemCrateToCraftyUpgrade"

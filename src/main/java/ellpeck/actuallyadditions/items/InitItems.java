@@ -125,8 +125,13 @@ public class InitItems{
     public static Item itemMagnetRing;
     public static Item itemWaterRemovalRing;
 
+    public static Item itemChestToCrateUpgrade;
+
     public static void init(){
         ModUtil.LOGGER.info("Initializing Items...");
+
+        itemChestToCrateUpgrade = new ItemChestToCrateUpgrade();
+        ItemUtil.register(itemChestToCrateUpgrade);
 
         itemLexicon = new ItemBooklet();
         ItemUtil.register(itemLexicon);
