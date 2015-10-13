@@ -59,11 +59,11 @@ public class PersistentClientData{
                 if(currentChapter != null){
                     gui.openChapter(currentChapter, currentPage);
                 }
-            }
-            else{
-                gui.openIndexEntry(null, 1, true);
+                return;
             }
         }
+        //If everything fails, initialize the front page
+        gui.openIndexEntry(null, 1, true);
     }
 
     public static void setBoolean(String name, boolean bool){
