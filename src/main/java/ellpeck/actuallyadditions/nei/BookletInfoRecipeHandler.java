@@ -16,7 +16,6 @@ import codechicken.nei.recipe.RecipeInfo;
 import codechicken.nei.recipe.TemplateRecipeHandler;
 import ellpeck.actuallyadditions.booklet.InitBooklet;
 import ellpeck.actuallyadditions.booklet.page.BookletPage;
-import ellpeck.actuallyadditions.inventory.gui.GuiFurnaceDouble;
 import ellpeck.actuallyadditions.util.ItemUtil;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
@@ -119,7 +118,7 @@ public class BookletInfoRecipeHandler extends TemplateRecipeHandler implements I
 
     @Override
     public Class<? extends GuiContainer> getGuiClass(){
-        return GuiFurnaceDouble.class;
+        return null;
     }
 
     @Override
