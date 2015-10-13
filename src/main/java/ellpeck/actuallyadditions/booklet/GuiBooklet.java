@@ -153,12 +153,18 @@ public class GuiBooklet extends GuiScreen{
         }
         //Update Checker Hover Text
         if(x >= this.guiLeft-11 && x <= this.guiLeft-11+10 && y >= this.guiTop-11 && y <= this.guiTop-11+10){
-            if(UpdateChecker.doneChecking && UpdateChecker.updateVersion > UpdateChecker.clientVersion){
+            if(UpdateChecker.doneChecking){
                 ArrayList list = new ArrayList();
-                list.add(EnumChatFormatting.GOLD+"There is an Update available!");
-                list.add(EnumChatFormatting.ITALIC+"You have: "+ModUtil.VERSION+", Newest: "+UpdateChecker.updateVersionS);
-                list.addAll(this.fontRendererObj.listFormattedStringToWidth(EnumChatFormatting.ITALIC+"Updates include: "+UpdateChecker.changelog, TOOLTIP_SPLIT_LENGTH));
-                list.add(EnumChatFormatting.GRAY+"Click this button to visit the download page!");
+                if(UpdateChecker.checkFailed){
+                    list.add(EnumChatFormatting.DARK_RED+"The Update Check failed!");
+                    list.add("Check your log for more Information!");
+                }
+                else if(UpdateChecker.updateVersion > UpdateChecker.clientVersion){
+                    list.add(EnumChatFormatting.GOLD+"There is an Update available!");
+                    list.add(EnumChatFormatting.ITALIC+"You have: "+ModUtil.VERSION+", Newest: "+UpdateChecker.updateVersionS);
+                    list.addAll(this.fontRendererObj.listFormattedStringToWidth(EnumChatFormatting.ITALIC+"Updates include: "+UpdateChecker.changelog, TOOLTIP_SPLIT_LENGTH));
+                    list.add(EnumChatFormatting.GRAY+"Click this button to visit the download page!");
+                }
                 this.func_146283_a(list, x, y);
             }
         }

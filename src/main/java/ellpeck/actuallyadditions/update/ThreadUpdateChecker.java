@@ -39,6 +39,9 @@ public class ThreadUpdateChecker extends Thread{
             changeReader.close();
 
             ModUtil.LOGGER.info("Update Check done!");
+
+            UpdateChecker.updateVersion = Integer.parseInt(UpdateChecker.updateVersionS.replace("-", "").replace(".", ""));
+            UpdateChecker.clientVersion = Integer.parseInt(ModUtil.VERSION.replace("-", "").replace(".", ""));
         }
         catch(Exception e){
             ModUtil.LOGGER.error("Update Check failed!", e);
@@ -46,26 +49,15 @@ public class ThreadUpdateChecker extends Thread{
         }
 
         if(!UpdateChecker.checkFailed){
-            try{
-                UpdateChecker.updateVersion = Integer.parseInt(UpdateChecker.updateVersionS.replace("-", "").replace(".", ""));
-                UpdateChecker.clientVersion = Integer.parseInt(ModUtil.VERSION.replace("-", "").replace(".", ""));
+            if(UpdateChecker.updateVersion > UpdateChecker.clientVersion){
+                ModUtil.LOGGER.info("There is an Update for "+ModUtil.MOD_ID+" available!");
+                ModUtil.LOGGER.info("The installed Version is "+ModUtil.VERSION+", but the newest Version is "+UpdateChecker.updateVersionS+"!");
+                ModUtil.LOGGER.info("The Changes are: "+UpdateChecker.changelog);
+                ModUtil.LOGGER.info("Download the newest Version at "+UpdateChecker.DOWNLOAD_LINK);
             }
-            catch(Exception e){
-                ModUtil.LOGGER.error("Comparing the newest and the current Version failed!", e);
-                UpdateChecker.checkFailed = true;
-            }
-
-            if(!UpdateChecker.checkFailed){
-                if(UpdateChecker.updateVersion > UpdateChecker.clientVersion){
-                    ModUtil.LOGGER.info("There is an Update for "+ModUtil.MOD_ID+" available!");
-                    ModUtil.LOGGER.info("The installed Version is "+ModUtil.VERSION+", but the newest Version is "+UpdateChecker.updateVersionS+"!");
-                    ModUtil.LOGGER.info("The Changes are: "+UpdateChecker.changelog);
-                    ModUtil.LOGGER.info("Download the newest Version at "+UpdateChecker.DOWNLOAD_LINK);
-                }
-                else{
-                    ModUtil.LOGGER.info("There is no new Update for "+ModUtil.MOD_ID+" available!");
-                    ModUtil.LOGGER.info("That's cool. You're really up to date, you have all of the latest awesome Features!");
-                }
+            else{
+                ModUtil.LOGGER.info("There is no new Update for "+ModUtil.MOD_ID+" available!");
+                ModUtil.LOGGER.info("That's cool. You're really up to date, you have all of the latest awesome Features!");
             }
         }
 
