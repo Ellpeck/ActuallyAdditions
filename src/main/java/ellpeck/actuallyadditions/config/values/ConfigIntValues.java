@@ -164,7 +164,7 @@ public enum ConfigIntValues{
     ORE_MAGNET_OIL_USE("Ore Magnet: Oil Use", ConfigCategories.MACHINE_VALUES, 30, 0, 5000, "The amount of oil the Ore Magnet uses every Block"),
     ORE_MAGNET_ENERGY_USE("Ore Magnet: Energy USe", ConfigCategories.MACHINE_VALUES, 250, 10, 10000, "The amount of Energy the Ore Magnet uses every tick"),
 
-    LEAF_GENERATOR_ENERGY_PRODUCED("Leaf Generator: Energy Produce", ConfigCategories.MACHINE_VALUES, 120, 1, 10000, "How much Energy the Leaf Generator produces per Leaf broken"),
+    LEAF_GENERATOR_ENERGY_PRODUCED("Leaf Generator: Energy Produced", ConfigCategories.MACHINE_VALUES, 500, 1, 10000, "How much Energy the Leaf Generator produces per Leaf broken"),
     LEAF_GENERATOR_COOLDOWN_TIME("Leaf Generator: Cooldown Time", ConfigCategories.MACHINE_VALUES, 5, 0, 100, "The amount of ticks that it takes util another Leaf gets proken"),
     LEAF_GENERATOR_RANGE("Leaf Generator: Range", ConfigCategories.MACHINE_VALUES, 7, 1, 100, "The radius of a leaf generator"),
 
