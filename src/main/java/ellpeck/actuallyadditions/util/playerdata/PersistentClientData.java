@@ -75,7 +75,7 @@ public class PersistentClientData{
     }
 
     private static String getName(String name){
-        return (Minecraft.getMinecraft().isIntegratedServerRunning() ? Minecraft.getMinecraft().getIntegratedServer().getWorldName() : Minecraft.getMinecraft().func_147104_D().serverIP)+"-"+name;
+        return (Minecraft.getMinecraft().isIntegratedServerRunning() ? Minecraft.getMinecraft().getIntegratedServer().getFolderName() : Minecraft.getMinecraft().func_147104_D().serverIP)+"-"+name;
     }
 
     public static boolean getBoolean(String name){
