@@ -1,4 +1,4 @@
-![](https://github.com/Ellpeck/ActuallyAdditions/blob/master/src/main/resources/assets/actuallyadditions/textures/logoBig.png)
+![](https://raw.githubusercontent.com/Ellpeck/ActuallyAdditions/master/pics/logoBig.png)
 
 ##It's a Minecraft Mod!
 
