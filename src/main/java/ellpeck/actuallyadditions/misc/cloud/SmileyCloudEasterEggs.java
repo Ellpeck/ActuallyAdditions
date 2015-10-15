@@ -8,7 +8,7 @@
  * © 2015 Ellpeck
  */
 
-package ellpeck.actuallyadditions.gadget.cloud;
+package ellpeck.actuallyadditions.misc.cloud;
 
 import ellpeck.actuallyadditions.blocks.InitBlocks;
 import ellpeck.actuallyadditions.items.InitItems;

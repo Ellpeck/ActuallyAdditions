@@ -8,7 +8,7 @@
  * © 2015 Ellpeck
  */
 
-package ellpeck.actuallyadditions.gadget;
+package ellpeck.actuallyadditions.misc;
 
 import ellpeck.actuallyadditions.event.RenderPlayerEventAA;
 import ellpeck.actuallyadditions.util.AssetUtil;
