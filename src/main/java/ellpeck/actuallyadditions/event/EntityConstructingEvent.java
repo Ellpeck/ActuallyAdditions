@@ -20,7 +20,7 @@ public class EntityConstructingEvent{
 
     @SubscribeEvent
     public void onEntityConstructing(EntityEvent.EntityConstructing event){
-        if(event.entity instanceof EntityPlayer){
+        if(event.entity instanceof EntityPlayer && !event.entity.worldObj.isRemote){
             if(PersistentServerData.get((EntityPlayer)event.entity) == null){
                 event.entity.registerExtendedProperties(ModUtil.MOD_ID, new PersistentServerData());
             }
