@@ -27,7 +27,7 @@ import net.minecraft.world.World;
 public class ItemBooklet extends Item implements IActAddItemOrBlock{
 
     public ItemBooklet(){
-        this.setMaxStackSize(1);
+        this.setMaxStackSize(16);
         this.setMaxDamage(0);
     }
 
