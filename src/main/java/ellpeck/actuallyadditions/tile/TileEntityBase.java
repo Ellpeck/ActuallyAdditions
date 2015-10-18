@@ -76,8 +76,6 @@ public abstract class TileEntityBase extends TileEntity{
         this.writeSyncableNBT(compound, false);
     }
 
-    public abstract void readSyncableNBT(NBTTagCompound compound, boolean isForSync);
-
     public abstract void writeSyncableNBT(NBTTagCompound compound, boolean isForSync);
 
     @Override
@@ -96,6 +94,8 @@ public abstract class TileEntityBase extends TileEntity{
     public boolean shouldRefresh(Block oldBlock, Block newBlock, int oldMeta, int newMeta, World world, int x, int y, int z){
         return !(oldBlock.isAssociatedBlock(newBlock));
     }
+
+    public abstract void readSyncableNBT(NBTTagCompound compound, boolean isForSync);
 
     protected void sendUpdate(){
         this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);

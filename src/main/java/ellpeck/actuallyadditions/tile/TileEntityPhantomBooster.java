@@ -20,12 +20,12 @@ public class TileEntityPhantomBooster extends TileEntityBase{
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean isForSync){
+    public void writeSyncableNBT(NBTTagCompound compound, boolean isForSync){
 
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean isForSync){
+    public void readSyncableNBT(NBTTagCompound compound, boolean isForSync){
 
     }
 }

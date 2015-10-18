@@ -32,22 +32,6 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean isForSync){
-        if(!isForSync){
-            if(this.slots.length > 0){
-                NBTTagList tagList = compound.getTagList("Items", 10);
-                for(int i = 0; i < tagList.tagCount(); i++){
-                    NBTTagCompound tagCompound = tagList.getCompoundTagAt(i);
-                    byte slotIndex = tagCompound.getByte("Slot");
-                    if(slotIndex >= 0 && slotIndex < slots.length){
-                        slots[slotIndex] = ItemStack.loadItemStackFromNBT(tagCompound);
-                    }
-                }
-            }
-        }
-    }
-
-    @Override
     public void writeSyncableNBT(NBTTagCompound compound, boolean isForSync){
         if(!isForSync){
             if(this.slots.length > 0){
@@ -61,6 +45,22 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
                     }
                 }
                 compound.setTag("Items", tagList);
+            }
+        }
+    }
+
+    @Override
+    public void readSyncableNBT(NBTTagCompound compound, boolean isForSync){
+        if(!isForSync){
+            if(this.slots.length > 0){
+                NBTTagList tagList = compound.getTagList("Items", 10);
+                for(int i = 0; i < tagList.tagCount(); i++){
+                    NBTTagCompound tagCompound = tagList.getCompoundTagAt(i);
+                    byte slotIndex = tagCompound.getByte("Slot");
+                    if(slotIndex >= 0 && slotIndex < slots.length){
+                        slots[slotIndex] = ItemStack.loadItemStackFromNBT(tagCompound);
+                    }
+                }
             }
         }
     }

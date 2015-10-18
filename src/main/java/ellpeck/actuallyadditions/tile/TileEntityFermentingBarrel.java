@@ -80,14 +80,6 @@ public class TileEntityFermentingBarrel extends TileEntityInventoryBase implemen
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        this.currentProcessTime = compound.getInteger("ProcessTime");
-        this.canolaTank.readFromNBT(compound);
-        this.oilTank.readFromNBT((NBTTagCompound)compound.getTag("OilTank"));
-        super.readSyncableNBT(compound, sync);
-    }
-
-    @Override
     public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
         compound.setInteger("ProcessTime", this.currentProcessTime);
         this.canolaTank.writeToNBT(compound);
@@ -95,6 +87,14 @@ public class TileEntityFermentingBarrel extends TileEntityInventoryBase implemen
         this.oilTank.writeToNBT(tag);
         compound.setTag("OilTank", tag);
         super.writeSyncableNBT(compound, sync);
+    }
+
+    @Override
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
+        this.currentProcessTime = compound.getInteger("ProcessTime");
+        this.canolaTank.readFromNBT(compound);
+        this.oilTank.readFromNBT((NBTTagCompound)compound.getTag("OilTank"));
+        super.readSyncableNBT(compound, sync);
     }
 
     @Override

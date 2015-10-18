@@ -89,17 +89,17 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase implem
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.readSyncableNBT(compound, sync);
-        this.storage.readFromNBT(compound);
-        this.currentTime = compound.getInteger("CurrentTime");
-    }
-
-    @Override
     public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
         super.writeSyncableNBT(compound, sync);
         this.storage.writeToNBT(compound);
         compound.setInteger("CurrentTime", this.currentTime);
+    }
+
+    @Override
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.readSyncableNBT(compound, sync);
+        this.storage.readFromNBT(compound);
+        this.currentTime = compound.getInteger("CurrentTime");
     }
 
     @Override

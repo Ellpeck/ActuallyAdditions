@@ -75,15 +75,15 @@ public class TileEntityRangedCollector extends TileEntityInventoryBase implement
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.readSyncableNBT(compound, sync);
-        this.isWhitelist = compound.getBoolean("Whitelist");
-    }
-
-    @Override
     public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
         super.writeSyncableNBT(compound, sync);
         compound.setBoolean("Whitelist", this.isWhitelist);
+    }
+
+    @Override
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.readSyncableNBT(compound, sync);
+        this.isWhitelist = compound.getBoolean("Whitelist");
     }
 
     @Override

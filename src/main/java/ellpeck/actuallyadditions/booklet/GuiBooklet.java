@@ -359,7 +359,7 @@ public class GuiBooklet extends GuiScreen{
         this.currentChapter = null;
         this.currentIndexEntry = null;
 
-           //So that the First Page will still open if used via something like NEI before
+        //So that the First Page will still open if used via something like NEI before
         if(this.parentScreen == null && !PersistentClientData.getBoolean("BookAlreadyOpened")){
             this.openIndexEntry(InitBooklet.chapterIntro.entry, 1, true);
             this.openChapter(InitBooklet.chapterIntro, null);

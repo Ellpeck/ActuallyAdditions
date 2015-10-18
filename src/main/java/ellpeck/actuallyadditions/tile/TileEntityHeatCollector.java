@@ -80,12 +80,12 @@ public class TileEntityHeatCollector extends TileEntityBase implements IEnergyPr
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean isForSync){
-        this.storage.readFromNBT(compound);
+    public void writeSyncableNBT(NBTTagCompound compound, boolean isForSync){
+        this.storage.writeToNBT(compound);
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean isForSync){
-        this.storage.writeToNBT(compound);
+    public void readSyncableNBT(NBTTagCompound compound, boolean isForSync){
+        this.storage.readFromNBT(compound);
     }
 }
