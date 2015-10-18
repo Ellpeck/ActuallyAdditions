@@ -33,6 +33,7 @@ public class AssetUtil{
     public static int PHANTOM_BOOSTER_RENDER_ID;
     public static int SMILEY_CLOUD_RENDER_ID;
     public static int TOOL_TABLE_RENDER_ID;
+    public static int LASER_RELAY_RENDER_ID;
 
     public static ResourceLocation getGuiLocation(String file){
         return new ResourceLocation(ModUtil.MOD_ID_LOWER, "textures/gui/"+file+".png");
