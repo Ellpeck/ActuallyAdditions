@@ -17,6 +17,7 @@ import ellpeck.actuallyadditions.util.WorldPos;
 import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 
 import java.util.ArrayList;
@@ -76,5 +77,15 @@ public class TileEntityHeatCollector extends TileEntityBase implements IEnergyPr
     @Override
     public boolean canConnectEnergy(ForgeDirection from){
         return from == ForgeDirection.UP;
+    }
+
+    @Override
+    public void readSyncableNBT(NBTTagCompound compound, boolean isForSync){
+        this.storage.readFromNBT(compound);
+    }
+
+    @Override
+    public void writeSyncableNBT(NBTTagCompound compound, boolean isForSync){
+        this.storage.writeToNBT(compound);
     }
 }

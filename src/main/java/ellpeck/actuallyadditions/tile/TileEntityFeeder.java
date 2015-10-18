@@ -13,8 +13,6 @@ package ellpeck.actuallyadditions.tile;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
-import ellpeck.actuallyadditions.network.sync.IPacketSyncerToClient;
-import ellpeck.actuallyadditions.network.sync.PacketSyncerToClient;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -23,7 +21,7 @@ import net.minecraft.util.AxisAlignedBB;
 import java.util.List;
 import java.util.Random;
 
-public class TileEntityFeeder extends TileEntityInventoryBase implements IPacketSyncerToClient{
+public class TileEntityFeeder extends TileEntityInventoryBase{
 
     public int currentTimer;
     public int currentAnimalAmount;
@@ -101,14 +99,14 @@ public class TileEntityFeeder extends TileEntityInventoryBase implements IPacket
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound compound){
-        super.readFromNBT(compound);
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.readSyncableNBT(compound, sync);
         this.currentTimer = compound.getInteger("Timer");
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound compound){
-        super.writeToNBT(compound);
+    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.writeSyncableNBT(compound, sync);
         compound.setInteger("Timer", this.currentTimer);
     }
 
@@ -125,21 +123,5 @@ public class TileEntityFeeder extends TileEntityInventoryBase implements IPacket
     @Override
     public boolean canExtractItem(int slot, ItemStack stack, int side){
         return false;
-    }
-
-    @Override
-    public int[] getValues(){
-        return new int[]{this.currentAnimalAmount, this.currentTimer};
-    }
-
-    @Override
-    public void setValues(int[] values){
-        this.currentAnimalAmount = values[0];
-        this.currentTimer = values[1];
-    }
-
-    @Override
-    public void sendUpdate(){
-        PacketSyncerToClient.sendPacket(this);
     }
 }

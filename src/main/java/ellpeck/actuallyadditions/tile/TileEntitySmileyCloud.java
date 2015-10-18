@@ -13,14 +13,12 @@ package ellpeck.actuallyadditions.tile;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.network.gui.IStringReactor;
-import ellpeck.actuallyadditions.network.sync.IPacketSyncerToClient;
-import ellpeck.actuallyadditions.network.sync.PacketSyncerToClient;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 
 import java.util.Objects;
 
-public class TileEntitySmileyCloud extends TileEntityBase implements IPacketSyncerToClient, IStringReactor{
+public class TileEntitySmileyCloud extends TileEntityBase implements IStringReactor{
 
     public String name;
     @SideOnly(Side.CLIENT)
@@ -30,14 +28,12 @@ public class TileEntitySmileyCloud extends TileEntityBase implements IPacketSync
     private String nameBefore;
 
     @Override
-    public void readFromNBT(NBTTagCompound compound){
-        super.readFromNBT(compound);
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
         this.name = compound.getString("Name");
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound compound){
-        super.writeToNBT(compound);
+    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
         if(this.name != null){
             compound.setString("Name", this.name);
         }
@@ -52,38 +48,6 @@ public class TileEntitySmileyCloud extends TileEntityBase implements IPacketSync
                 this.markDirty();
             }
         }
-    }
-
-    @Override
-    public int[] getValues(){
-        if(this.name != null && !this.name.isEmpty()){
-            int[] chars = new int[this.name.length()];
-            for(int i = 0; i < this.name.length(); i++){
-                char atPlace = this.name.charAt(i);
-                chars[i] = (int)atPlace;
-            }
-            return chars;
-        }
-        return new int[0];
-    }
-
-    @Override
-    public void setValues(int[] values){
-        if(values != null && values.length > 0){
-            String newName = "";
-            for(int value : values){
-                newName += (char)value;
-            }
-            this.name = newName;
-        }
-        else{
-            this.name = null;
-        }
-    }
-
-    @Override
-    public void sendUpdate(){
-        PacketSyncerToClient.sendPacket(this);
     }
 
     @Override

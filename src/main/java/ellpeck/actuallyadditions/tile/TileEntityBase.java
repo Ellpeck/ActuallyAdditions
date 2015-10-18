@@ -20,7 +20,7 @@ import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
-public class TileEntityBase extends TileEntity{
+public abstract class TileEntityBase extends TileEntity{
 
     public static void init(){
         ModUtil.LOGGER.info("Registering TileEntities...");
@@ -65,19 +65,39 @@ public class TileEntityBase extends TileEntity{
     }
 
     @Override
+    public final void readFromNBT(NBTTagCompound compound){
+        super.readFromNBT(compound);
+        this.readSyncableNBT(compound, false);
+    }
+
+    @Override
+    public final void writeToNBT(NBTTagCompound compound){
+        super.writeToNBT(compound);
+        this.writeSyncableNBT(compound, false);
+    }
+
+    public abstract void readSyncableNBT(NBTTagCompound compound, boolean isForSync);
+
+    public abstract void writeSyncableNBT(NBTTagCompound compound, boolean isForSync);
+
+    @Override
     public Packet getDescriptionPacket(){
         NBTTagCompound tag = new NBTTagCompound();
-        this.writeToNBT(tag);
-        return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord, 1, tag);
+        this.writeSyncableNBT(tag, true);
+        return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord, 3, tag);
     }
 
     @Override
     public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt){
-        this.readFromNBT(pkt.func_148857_g());
+        this.readSyncableNBT(pkt.func_148857_g(), true);
     }
 
     @Override
     public boolean shouldRefresh(Block oldBlock, Block newBlock, int oldMeta, int newMeta, World world, int x, int y, int z){
         return !(oldBlock.isAssociatedBlock(newBlock));
+    }
+
+    protected void sendUpdate(){
+        this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
     }
 }

@@ -12,8 +12,6 @@ package ellpeck.actuallyadditions.tile;
 
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.network.gui.IButtonReactor;
-import ellpeck.actuallyadditions.network.sync.IPacketSyncerToClient;
-import ellpeck.actuallyadditions.network.sync.PacketSyncerToClient;
 import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -23,7 +21,7 @@ import net.minecraft.util.AxisAlignedBB;
 
 import java.util.ArrayList;
 
-public class TileEntityRangedCollector extends TileEntityInventoryBase implements IButtonReactor, IPacketSyncerToClient{
+public class TileEntityRangedCollector extends TileEntityInventoryBase implements IButtonReactor{
 
     public static final int WHITELIST_START = 6;
 
@@ -77,14 +75,14 @@ public class TileEntityRangedCollector extends TileEntityInventoryBase implement
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound compound){
-        super.readFromNBT(compound);
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.readSyncableNBT(compound, sync);
         this.isWhitelist = compound.getBoolean("Whitelist");
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound compound){
-        super.writeToNBT(compound);
+    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.writeSyncableNBT(compound, sync);
         compound.setBoolean("Whitelist", this.isWhitelist);
     }
 
@@ -106,20 +104,5 @@ public class TileEntityRangedCollector extends TileEntityInventoryBase implement
     @Override
     public void onButtonPressed(int buttonID, EntityPlayer player){
         this.isWhitelist = !this.isWhitelist;
-    }
-
-    @Override
-    public int[] getValues(){
-        return new int[]{this.isWhitelist ? 1 : 0};
-    }
-
-    @Override
-    public void setValues(int[] values){
-        this.isWhitelist = values[0] == 1;
-    }
-
-    @Override
-    public void sendUpdate(){
-        PacketSyncerToClient.sendPacket(this);
     }
 }

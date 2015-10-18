@@ -18,8 +18,6 @@ import ellpeck.actuallyadditions.blocks.InitBlocks;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.items.metalists.TheMiscItems;
-import ellpeck.actuallyadditions.network.sync.IPacketSyncerToClient;
-import ellpeck.actuallyadditions.network.sync.PacketSyncerToClient;
 import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -27,7 +25,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.*;
 
-public class TileEntityCanolaPress extends TileEntityInventoryBase implements IEnergyReceiver, IFluidHandler, IPacketSyncerToClient{
+public class TileEntityCanolaPress extends TileEntityInventoryBase implements IEnergyReceiver, IFluidHandler{
 
     public EnergyStorage storage = new EnergyStorage(40000);
     public FluidTank tank = new FluidTank(2*FluidContainerRegistry.BUCKET_VOLUME);
@@ -106,19 +104,19 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IE
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound compound){
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
         this.currentProcessTime = compound.getInteger("ProcessTime");
         this.storage.readFromNBT(compound);
         this.tank.readFromNBT(compound);
-        super.readFromNBT(compound);
+        super.readSyncableNBT(compound, sync);
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound compound){
+    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
         compound.setInteger("ProcessTime", this.currentProcessTime);
         this.storage.writeToNBT(compound);
         this.tank.writeToNBT(compound);
-        super.writeToNBT(compound);
+        super.writeSyncableNBT(compound, sync);
     }
 
     @Override
@@ -187,27 +185,5 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IE
     @Override
     public FluidTankInfo[] getTankInfo(ForgeDirection from){
         return new FluidTankInfo[]{this.tank.getInfo()};
-    }
-
-    @Override
-    public int[] getValues(){
-        return new int[]{this.currentProcessTime, this.tank.getFluidAmount(), this.tank.getFluid() == null ? -1 : this.tank.getFluid().getFluidID(), this.storage.getEnergyStored()};
-    }
-
-    @Override
-    public void setValues(int[] values){
-        this.currentProcessTime = values[0];
-        if(values[2] != -1){
-            this.tank.setFluid(new FluidStack(FluidRegistry.getFluid(values[2]), values[1]));
-        }
-        else{
-            this.tank.setFluid(null);
-        }
-        this.storage.setEnergyStored(values[3]);
-    }
-
-    @Override
-    public void sendUpdate(){
-        PacketSyncerToClient.sendPacket(this);
     }
 }

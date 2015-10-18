@@ -19,8 +19,6 @@ import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.items.ItemCoffee;
 import ellpeck.actuallyadditions.items.metalists.TheMiscItems;
 import ellpeck.actuallyadditions.network.gui.IButtonReactor;
-import ellpeck.actuallyadditions.network.sync.IPacketSyncerToClient;
-import ellpeck.actuallyadditions.network.sync.PacketSyncerToClient;
 import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -28,7 +26,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.*;
 
-public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements IButtonReactor, IEnergyReceiver, IFluidHandler, IPacketSyncerToClient{
+public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements IButtonReactor, IEnergyReceiver, IFluidHandler{
 
     public static final int SLOT_COFFEE_BEANS = 0;
     public static final int SLOT_INPUT = 1;
@@ -142,8 +140,8 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound compound){
-        super.readFromNBT(compound);
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.readSyncableNBT(compound, sync);
         this.storage.readFromNBT(compound);
         this.tank.readFromNBT(compound);
         this.coffeeCacheAmount = compound.getInteger("Cache");
@@ -151,8 +149,8 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound compound){
-        super.writeToNBT(compound);
+    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.writeSyncableNBT(compound, sync);
         this.storage.writeToNBT(compound);
         this.tank.writeToNBT(compound);
         compound.setInteger("Cache", this.coffeeCacheAmount);
@@ -229,28 +227,5 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
     @Override
     public FluidTankInfo[] getTankInfo(ForgeDirection from){
         return new FluidTankInfo[]{this.tank.getInfo()};
-    }
-
-    @Override
-    public int[] getValues(){
-        return new int[]{this.tank.getFluidAmount(), this.tank.getFluid() == null ? -1 : this.tank.getFluid().getFluidID(), this.storage.getEnergyStored(), this.brewTime, this.coffeeCacheAmount};
-    }
-
-    @Override
-    public void setValues(int[] values){
-        if(values[1] != -1){
-            this.tank.setFluid(new FluidStack(FluidRegistry.getFluid(values[1]), values[0]));
-        }
-        else{
-            this.tank.setFluid(null);
-        }
-        this.storage.setEnergyStored(values[2]);
-        this.brewTime = values[3];
-        this.coffeeCacheAmount = values[4];
-    }
-
-    @Override
-    public void sendUpdate(){
-        PacketSyncerToClient.sendPacket(this);
     }
 }

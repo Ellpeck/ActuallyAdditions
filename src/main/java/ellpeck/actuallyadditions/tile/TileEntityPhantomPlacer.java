@@ -138,8 +138,8 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound compound){
-        super.readFromNBT(compound);
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.readSyncableNBT(compound, sync);
         int x = compound.getInteger("XCoordOfTileStored");
         int y = compound.getInteger("YCoordOfTileStored");
         int z = compound.getInteger("ZCoordOfTileStored");
@@ -151,8 +151,8 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound compound){
-        super.writeToNBT(compound);
+    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.writeSyncableNBT(compound, sync);
         compound.setInteger("Time", currentTime);
         if(this.hasBoundPosition()){
             compound.setInteger("XCoordOfTileStored", boundPosition.getX());

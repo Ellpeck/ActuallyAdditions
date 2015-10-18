@@ -63,14 +63,14 @@ public class TileEntityDropper extends TileEntityInventoryBase{
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound compound){
-        super.readFromNBT(compound);
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.readSyncableNBT(compound, sync);
         this.currentTime = compound.getInteger("CurrentTime");
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound compound){
-        super.writeToNBT(compound);
+    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.writeSyncableNBT(compound, sync);
         compound.setInteger("CurrentTime", this.currentTime);
     }
 

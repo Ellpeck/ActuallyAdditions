@@ -15,14 +15,12 @@ import cofh.api.energy.IEnergyReceiver;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
-import ellpeck.actuallyadditions.network.sync.IPacketSyncerToClient;
-import ellpeck.actuallyadditions.network.sync.PacketSyncerToClient;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 
-public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements IEnergyReceiver, IPacketSyncerToClient{
+public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements IEnergyReceiver{
 
     public static final int SLOT_INPUT_1 = 0;
     public static final int SLOT_OUTPUT_1 = 1;
@@ -132,16 +130,16 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound compound){
-        super.readFromNBT(compound);
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.readSyncableNBT(compound, sync);
         this.firstSmeltTime = compound.getInteger("FirstSmeltTime");
         this.secondSmeltTime = compound.getInteger("SecondSmeltTime");
         this.storage.readFromNBT(compound);
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound compound){
-        super.writeToNBT(compound);
+    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.writeSyncableNBT(compound, sync);
         compound.setInteger("FirstSmeltTime", this.firstSmeltTime);
         compound.setInteger("SecondSmeltTime", this.secondSmeltTime);
         this.storage.writeToNBT(compound);
@@ -195,22 +193,5 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
     @Override
     public boolean canConnectEnergy(ForgeDirection from){
         return true;
-    }
-
-    @Override
-    public int[] getValues(){
-        return new int[]{this.storage.getEnergyStored(), this.firstSmeltTime, this.secondSmeltTime};
-    }
-
-    @Override
-    public void setValues(int[] values){
-        this.storage.setEnergyStored(values[0]);
-        this.firstSmeltTime = values[1];
-        this.secondSmeltTime = values[2];
-    }
-
-    @Override
-    public void sendUpdate(){
-        PacketSyncerToClient.sendPacket(this);
     }
 }

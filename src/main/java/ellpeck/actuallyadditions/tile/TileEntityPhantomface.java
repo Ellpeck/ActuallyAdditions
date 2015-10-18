@@ -120,8 +120,8 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound compound){
-        super.readFromNBT(compound);
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.readSyncableNBT(compound, sync);
         int x = compound.getInteger("XCoordOfTileStored");
         int y = compound.getInteger("YCoordOfTileStored");
         int z = compound.getInteger("ZCoordOfTileStored");
@@ -133,8 +133,8 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound compound){
-        super.writeToNBT(compound);
+    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.writeSyncableNBT(compound, sync);
         if(this.hasBoundPosition()){
             compound.setInteger("XCoordOfTileStored", boundPosition.getX());
             compound.setInteger("YCoordOfTileStored", boundPosition.getY());

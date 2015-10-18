@@ -15,13 +15,11 @@ import cofh.api.energy.IEnergyContainerItem;
 import cofh.api.energy.IEnergyReceiver;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ellpeck.actuallyadditions.network.sync.IPacketSyncerToClient;
-import ellpeck.actuallyadditions.network.sync.PacketSyncerToClient;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 
-public class TileEntityEnergizer extends TileEntityInventoryBase implements IEnergyReceiver, IPacketSyncerToClient{
+public class TileEntityEnergizer extends TileEntityInventoryBase implements IEnergyReceiver{
 
     public EnergyStorage storage = new EnergyStorage(500000);
     private int lastEnergy;
@@ -56,15 +54,15 @@ public class TileEntityEnergizer extends TileEntityInventoryBase implements IEne
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound compound){
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
         this.storage.readFromNBT(compound);
-        super.readFromNBT(compound);
+        super.readSyncableNBT(compound, sync);
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound compound){
+    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
         this.storage.writeToNBT(compound);
-        super.writeToNBT(compound);
+        super.writeSyncableNBT(compound, sync);
     }
 
     @Override
@@ -105,20 +103,5 @@ public class TileEntityEnergizer extends TileEntityInventoryBase implements IEne
     @Override
     public boolean canConnectEnergy(ForgeDirection from){
         return true;
-    }
-
-    @Override
-    public int[] getValues(){
-        return new int[]{this.storage.getEnergyStored()};
-    }
-
-    @Override
-    public void setValues(int[] values){
-        this.storage.setEnergyStored(values[0]);
-    }
-
-    @Override
-    public void sendUpdate(){
-        PacketSyncerToClient.sendPacket(this);
     }
 }

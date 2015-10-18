@@ -28,13 +28,12 @@ public class TileEntityFishingNet extends TileEntityBase{
     public int timeUntilNextDrop;
 
     @Override
-    public void readFromNBT(NBTTagCompound compound){
-        super.readFromNBT(compound);
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
         this.timeUntilNextDrop = compound.getInteger("TimeUntilNextDrop");
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound compound){
+    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
         super.writeToNBT(compound);
         compound.setInteger("TimeUntilNextDrop", this.timeUntilNextDrop);
     }

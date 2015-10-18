@@ -15,13 +15,11 @@ import cofh.api.energy.IEnergyReceiver;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
-import ellpeck.actuallyadditions.network.sync.IPacketSyncerToClient;
-import ellpeck.actuallyadditions.network.sync.PacketSyncerToClient;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 
-public class TileEntityItemRepairer extends TileEntityInventoryBase implements IEnergyReceiver, IPacketSyncerToClient{
+public class TileEntityItemRepairer extends TileEntityInventoryBase implements IEnergyReceiver{
 
     public static final int SLOT_INPUT = 0;
     public static final int SLOT_OUTPUT = 1;
@@ -71,16 +69,16 @@ public class TileEntityItemRepairer extends TileEntityInventoryBase implements I
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound compound){
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
         this.nextRepairTick = compound.getInteger("NextRepairTick");
-        super.readFromNBT(compound);
+        super.readSyncableNBT(compound, sync);
         this.storage.readFromNBT(compound);
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound compound){
+    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
         compound.setInteger("NextRepairTick", this.nextRepairTick);
-        super.writeToNBT(compound);
+        super.writeSyncableNBT(compound, sync);
         this.storage.writeToNBT(compound);
     }
 
@@ -130,20 +128,5 @@ public class TileEntityItemRepairer extends TileEntityInventoryBase implements I
     @Override
     public boolean canConnectEnergy(ForgeDirection from){
         return true;
-    }
-
-    @Override
-    public int[] getValues(){
-        return new int[]{this.storage.getEnergyStored()};
-    }
-
-    @Override
-    public void setValues(int[] values){
-        this.storage.setEnergyStored(values[0]);
-    }
-
-    @Override
-    public void sendUpdate(){
-        PacketSyncerToClient.sendPacket(this);
     }
 }
