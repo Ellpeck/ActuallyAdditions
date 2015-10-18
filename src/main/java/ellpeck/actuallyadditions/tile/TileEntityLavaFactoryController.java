@@ -31,17 +31,15 @@ public class TileEntityLavaFactoryController extends TileEntityBase implements I
     private int currentWorkTime;
 
     @Override
-    public void readFromNBT(NBTTagCompound compound){
-        this.storage.readFromNBT(compound);
-        this.currentWorkTime = compound.getInteger("WorkTime");
-        super.readFromNBT(compound);
+    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
+        this.storage.writeToNBT(compound);
+        compound.setInteger("WorkTime", this.currentWorkTime);
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound compound){
-        this.storage.writeToNBT(compound);
-        compound.setInteger("WorkTime", this.currentWorkTime);
-        super.writeToNBT(compound);
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
+        this.storage.readFromNBT(compound);
+        this.currentWorkTime = compound.getInteger("WorkTime");
     }
 
     @Override

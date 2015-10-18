@@ -15,15 +15,13 @@ import cofh.api.energy.IEnergyProvider;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
-import ellpeck.actuallyadditions.network.sync.IPacketSyncerToClient;
-import ellpeck.actuallyadditions.network.sync.PacketSyncerToClient;
 import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraftforge.common.util.ForgeDirection;
 
-public class TileEntityCoalGenerator extends TileEntityInventoryBase implements IEnergyProvider, IPacketSyncerToClient{
+public class TileEntityCoalGenerator extends TileEntityInventoryBase implements IEnergyProvider{
 
     public EnergyStorage storage = new EnergyStorage(60000);
     public int maxBurnTime;
@@ -101,19 +99,19 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound compound){
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
         this.currentBurnTime = compound.getInteger("BurnTime");
         this.maxBurnTime = compound.getInteger("MaxBurnTime");
         this.storage.readFromNBT(compound);
-        super.readFromNBT(compound);
+        super.readSyncableNBT(compound, sync);
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound compound){
+    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
         compound.setInteger("BurnTime", this.currentBurnTime);
         compound.setInteger("MaxBurnTime", this.maxBurnTime);
         this.storage.writeToNBT(compound);
-        super.writeToNBT(compound);
+        super.writeSyncableNBT(compound, sync);
     }
 
     @Override
@@ -149,22 +147,5 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
     @Override
     public boolean canConnectEnergy(ForgeDirection from){
         return true;
-    }
-
-    @Override
-    public int[] getValues(){
-        return new int[]{this.storage.getEnergyStored(), this.currentBurnTime, this.maxBurnTime};
-    }
-
-    @Override
-    public void setValues(int[] values){
-        this.storage.setEnergyStored(values[0]);
-        this.currentBurnTime = values[1];
-        this.maxBurnTime = values[2];
-    }
-
-    @Override
-    public void sendUpdate(){
-        PacketSyncerToClient.sendPacket(this);
     }
 }

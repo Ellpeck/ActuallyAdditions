@@ -198,7 +198,7 @@ public class ItemCrafting{
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemDrillUpgradeBlockPlacing),
                     "CEC", "RAR", "CEC",
                     'C', "cobblestone",
-                    'E', Items.ender_pearl,
+                    'E', Items.paper,
                     'A', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL.ordinal()),
                     'R', "ingotIron"));
             recipeDrillPlacing = Util.GetRecipes.lastIRecipe();

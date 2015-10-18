@@ -15,6 +15,7 @@ import ellpeck.actuallyadditions.util.WorldPos;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockGrass;
 import net.minecraft.block.IGrowable;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.IPlantable;
 
 import java.util.Random;
@@ -63,4 +64,13 @@ public class TileEntityGreenhouseGlass extends TileEntityBase{
         return null;
     }
 
+    @Override
+    public void writeSyncableNBT(NBTTagCompound compound, boolean isForSync){
+        this.timeUntilNextFert = compound.getInteger("Time");
+    }
+
+    @Override
+    public void readSyncableNBT(NBTTagCompound compound, boolean isForSync){
+        compound.setInteger("Time", this.timeUntilNextFert);
+    }
 }

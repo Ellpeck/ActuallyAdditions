@@ -10,8 +10,8 @@
 
 package ellpeck.actuallyadditions.blocks.render;
 
-import ellpeck.actuallyadditions.gadget.cloud.ISmileyCloudEasterEgg;
-import ellpeck.actuallyadditions.gadget.cloud.SmileyCloudEasterEggs;
+import ellpeck.actuallyadditions.misc.cloud.ISmileyCloudEasterEgg;
+import ellpeck.actuallyadditions.misc.cloud.SmileyCloudEasterEggs;
 import ellpeck.actuallyadditions.tile.TileEntitySmileyCloud;
 import ellpeck.actuallyadditions.util.StringUtil;
 import net.minecraft.client.Minecraft;

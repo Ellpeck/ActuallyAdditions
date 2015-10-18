@@ -15,13 +15,11 @@ import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.items.ItemSpecialDrop;
 import ellpeck.actuallyadditions.items.metalists.TheSpecialDrops;
 import ellpeck.actuallyadditions.network.gui.IButtonReactor;
-import ellpeck.actuallyadditions.network.sync.IPacketSyncerToClient;
-import ellpeck.actuallyadditions.network.sync.PacketSyncerToClient;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
-public class TileEntityXPSolidifier extends TileEntityInventoryBase implements IButtonReactor, IPacketSyncerToClient{
+public class TileEntityXPSolidifier extends TileEntityInventoryBase implements IButtonReactor{
 
     public short amount;
     private short lastAmount;
@@ -56,14 +54,14 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound compound){
-        super.readFromNBT(compound);
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.readSyncableNBT(compound, sync);
         this.amount = compound.getShort("Amount");
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound compound){
-        super.writeToNBT(compound);
+    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.writeSyncableNBT(compound, sync);
         compound.setShort("Amount", this.amount);
     }
 
@@ -149,20 +147,5 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
             }
         }
         return 0;
-    }
-
-    @Override
-    public int[] getValues(){
-        return new int[]{this.amount};
-    }
-
-    @Override
-    public void setValues(int[] values){
-        this.amount = (short)values[0];
-    }
-
-    @Override
-    public void sendUpdate(){
-        PacketSyncerToClient.sendPacket(this);
     }
 }

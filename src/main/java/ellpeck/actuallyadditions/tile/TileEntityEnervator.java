@@ -15,14 +15,12 @@ import cofh.api.energy.IEnergyContainerItem;
 import cofh.api.energy.IEnergyProvider;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ellpeck.actuallyadditions.network.sync.IPacketSyncerToClient;
-import ellpeck.actuallyadditions.network.sync.PacketSyncerToClient;
 import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 
-public class TileEntityEnervator extends TileEntityInventoryBase implements IEnergyProvider, IPacketSyncerToClient{
+public class TileEntityEnervator extends TileEntityInventoryBase implements IEnergyProvider{
 
     public EnergyStorage storage = new EnergyStorage(500000);
     private int lastEnergy;
@@ -66,15 +64,15 @@ public class TileEntityEnervator extends TileEntityInventoryBase implements IEne
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound compound){
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
         this.storage.readFromNBT(compound);
-        super.readFromNBT(compound);
+        super.readSyncableNBT(compound, sync);
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound compound){
+    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
         this.storage.writeToNBT(compound);
-        super.writeToNBT(compound);
+        super.writeSyncableNBT(compound, sync);
     }
 
     @Override
@@ -115,20 +113,5 @@ public class TileEntityEnervator extends TileEntityInventoryBase implements IEne
     @Override
     public boolean canExtractItem(int slot, ItemStack stack, int side){
         return slot == 1;
-    }
-
-    @Override
-    public int[] getValues(){
-        return new int[]{this.storage.getEnergyStored()};
-    }
-
-    @Override
-    public void setValues(int[] values){
-        this.storage.setEnergyStored(values[0]);
-    }
-
-    @Override
-    public void sendUpdate(){
-        PacketSyncerToClient.sendPacket(this);
     }
 }

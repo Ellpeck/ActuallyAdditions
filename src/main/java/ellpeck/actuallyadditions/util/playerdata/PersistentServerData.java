@@ -34,7 +34,7 @@ public class PersistentServerData implements IExtendedEntityProperties{
     public void saveNBTData(NBTTagCompound aComp){
         NBTTagCompound compound = new NBTTagCompound();
 
-        compound.setBoolean("BookGotten", bookGottenAlready);
+        compound.setBoolean("BookGotten", this.bookGottenAlready);
 
         aComp.setTag(ModUtil.MOD_ID, compound);
     }

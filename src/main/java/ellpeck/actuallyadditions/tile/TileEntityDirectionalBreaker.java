@@ -15,8 +15,6 @@ import cofh.api.energy.IEnergyReceiver;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
-import ellpeck.actuallyadditions.network.sync.IPacketSyncerToClient;
-import ellpeck.actuallyadditions.network.sync.PacketSyncerToClient;
 import ellpeck.actuallyadditions.util.WorldPos;
 import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.block.Block;
@@ -27,7 +25,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 import java.util.ArrayList;
 
-public class TileEntityDirectionalBreaker extends TileEntityInventoryBase implements IEnergyReceiver, IPacketSyncerToClient{
+public class TileEntityDirectionalBreaker extends TileEntityInventoryBase implements IEnergyReceiver{
 
     public EnergyStorage storage = new EnergyStorage(10000);
     private int lastEnergy;
@@ -91,17 +89,17 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase implem
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound compound){
-        super.readFromNBT(compound);
-        this.storage.readFromNBT(compound);
-        this.currentTime = compound.getInteger("CurrentTime");
+    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.writeSyncableNBT(compound, sync);
+        this.storage.writeToNBT(compound);
+        compound.setInteger("CurrentTime", this.currentTime);
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound compound){
-        super.writeToNBT(compound);
-        this.storage.writeToNBT(compound);
-        compound.setInteger("CurrentTime", this.currentTime);
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.readSyncableNBT(compound, sync);
+        this.storage.readFromNBT(compound);
+        this.currentTime = compound.getInteger("CurrentTime");
     }
 
     @Override
@@ -137,20 +135,5 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase implem
     @Override
     public boolean canConnectEnergy(ForgeDirection from){
         return true;
-    }
-
-    @Override
-    public int[] getValues(){
-        return new int[]{this.storage.getEnergyStored()};
-    }
-
-    @Override
-    public void setValues(int[] values){
-        this.storage.setEnergyStored(values[0]);
-    }
-
-    @Override
-    public void sendUpdate(){
-        PacketSyncerToClient.sendPacket(this);
     }
 }

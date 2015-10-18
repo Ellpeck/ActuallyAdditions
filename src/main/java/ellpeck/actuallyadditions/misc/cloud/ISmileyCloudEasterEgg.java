@@ -8,7 +8,7 @@
  * © 2015 Ellpeck
  */
 
-package ellpeck.actuallyadditions.gadget.cloud;
+package ellpeck.actuallyadditions.misc.cloud;
 
 public interface ISmileyCloudEasterEgg{
 

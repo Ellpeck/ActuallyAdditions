@@ -10,6 +10,8 @@
 
 package ellpeck.actuallyadditions.tile;
 
+import net.minecraft.nbt.NBTTagCompound;
+
 public class TileEntityPhantomBooster extends TileEntityBase{
 
     @Override
@@ -17,4 +19,13 @@ public class TileEntityPhantomBooster extends TileEntityBase{
         return false;
     }
 
+    @Override
+    public void writeSyncableNBT(NBTTagCompound compound, boolean isForSync){
+
+    }
+
+    @Override
+    public void readSyncableNBT(NBTTagCompound compound, boolean isForSync){
+
+    }
 }

@@ -42,15 +42,13 @@ public class TileEntityFurnaceSolar extends TileEntityBase implements IEnergyPro
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound compound){
-        this.storage.readFromNBT(compound);
-        super.readFromNBT(compound);
+    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
+        this.storage.writeToNBT(compound);
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound compound){
-        this.storage.writeToNBT(compound);
-        super.writeToNBT(compound);
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
+        this.storage.readFromNBT(compound);
     }
 
     @Override

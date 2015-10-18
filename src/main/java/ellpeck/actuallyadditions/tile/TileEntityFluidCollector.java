@@ -13,8 +13,6 @@ package ellpeck.actuallyadditions.tile;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
-import ellpeck.actuallyadditions.network.sync.IPacketSyncerToClient;
-import ellpeck.actuallyadditions.network.sync.PacketSyncerToClient;
 import ellpeck.actuallyadditions.util.WorldPos;
 import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.block.Block;
@@ -24,7 +22,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.*;
 
-public class TileEntityFluidCollector extends TileEntityInventoryBase implements IFluidHandler, IPacketSyncerToClient{
+public class TileEntityFluidCollector extends TileEntityInventoryBase implements IFluidHandler{
 
     public FluidTank tank = new FluidTank(8*FluidContainerRegistry.BUCKET_VOLUME);
     public boolean isPlacer;
@@ -77,26 +75,6 @@ public class TileEntityFluidCollector extends TileEntityInventoryBase implements
     @Override
     public FluidTankInfo[] getTankInfo(ForgeDirection from){
         return new FluidTankInfo[]{this.tank.getInfo()};
-    }
-
-    @Override
-    public int[] getValues(){
-        return new int[]{this.tank.getFluidAmount(), this.tank.getFluid() == null ? -1 : this.tank.getFluid().getFluidID()};
-    }
-
-    @Override
-    public void setValues(int[] values){
-        if(values[1] != -1){
-            this.tank.setFluid(new FluidStack(FluidRegistry.getFluid(values[1]), values[0]));
-        }
-        else{
-            this.tank.setFluid(null);
-        }
-    }
-
-    @Override
-    public void sendUpdate(){
-        PacketSyncerToClient.sendPacket(this);
     }
 
     @Override
@@ -181,17 +159,17 @@ public class TileEntityFluidCollector extends TileEntityInventoryBase implements
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound compound){
-        super.readFromNBT(compound);
-        this.currentTime = compound.getInteger("CurrentTime");
-        this.tank.readFromNBT(compound);
+    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.writeSyncableNBT(compound, sync);
+        compound.setInteger("CurrentTime", this.currentTime);
+        this.tank.writeToNBT(compound);
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound compound){
-        super.writeToNBT(compound);
-        compound.setInteger("CurrentTime", this.currentTime);
-        this.tank.writeToNBT(compound);
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.readSyncableNBT(compound, sync);
+        this.currentTime = compound.getInteger("CurrentTime");
+        this.tank.readFromNBT(compound);
     }
 
     @Override

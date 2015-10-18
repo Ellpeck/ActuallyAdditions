@@ -18,8 +18,6 @@ import ellpeck.actuallyadditions.blocks.InitBlocks;
 import ellpeck.actuallyadditions.blocks.metalists.TheMiscBlocks;
 import ellpeck.actuallyadditions.config.ConfigValues;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
-import ellpeck.actuallyadditions.network.sync.IPacketSyncerToClient;
-import ellpeck.actuallyadditions.network.sync.PacketSyncerToClient;
 import ellpeck.actuallyadditions.util.WorldPos;
 import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.block.Block;
@@ -32,7 +30,7 @@ import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
 
-public class TileEntityOreMagnet extends TileEntityInventoryBase implements IEnergyReceiver, IFluidHandler, IPacketSyncerToClient{
+public class TileEntityOreMagnet extends TileEntityInventoryBase implements IEnergyReceiver, IFluidHandler{
 
     public static final int SLOT_OIL_INPUT = 0;
     public static final int SLOT_OIL_OUTPUT = 1;
@@ -182,19 +180,19 @@ public class TileEntityOreMagnet extends TileEntityInventoryBase implements IEne
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound compound){
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
         this.storage.readFromNBT(compound);
         this.tank.readFromNBT(compound);
         this.currentWorkTimer = compound.getInteger("CurrentWorkTimer");
-        super.readFromNBT(compound);
+        super.readSyncableNBT(compound, sync);
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound compound){
+    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
         this.storage.writeToNBT(compound);
         this.tank.writeToNBT(compound);
         compound.setInteger("CurrentWorkTimer", this.currentWorkTimer);
-        super.writeToNBT(compound);
+        super.writeSyncableNBT(compound, sync);
     }
 
     @Override
@@ -263,26 +261,5 @@ public class TileEntityOreMagnet extends TileEntityInventoryBase implements IEne
     @Override
     public FluidTankInfo[] getTankInfo(ForgeDirection from){
         return new FluidTankInfo[]{this.tank.getInfo()};
-    }
-
-    @Override
-    public int[] getValues(){
-        return new int[]{this.storage.getEnergyStored(), this.tank.getFluidAmount(), this.tank.getFluid() == null ? -1 : this.tank.getFluid().getFluidID()};
-    }
-
-    @Override
-    public void setValues(int[] values){
-        this.storage.setEnergyStored(values[0]);
-        if(values[2] != -1){
-            this.tank.setFluid(new FluidStack(FluidRegistry.getFluid(values[2]), values[1]));
-        }
-        else{
-            this.tank.setFluid(null);
-        }
-    }
-
-    @Override
-    public void sendUpdate(){
-        PacketSyncerToClient.sendPacket(this);
     }
 }

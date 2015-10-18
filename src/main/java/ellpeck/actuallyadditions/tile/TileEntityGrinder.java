@@ -16,8 +16,6 @@ import cofh.api.energy.IEnergyReceiver;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
-import ellpeck.actuallyadditions.network.sync.IPacketSyncerToClient;
-import ellpeck.actuallyadditions.network.sync.PacketSyncerToClient;
 import ellpeck.actuallyadditions.recipe.CrusherRecipeRegistry;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -26,7 +24,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class TileEntityGrinder extends TileEntityInventoryBase implements IEnergyReceiver, IPacketSyncerToClient{
+public class TileEntityGrinder extends TileEntityInventoryBase implements IEnergyReceiver{
 
     public static final int SLOT_INPUT_1 = 0;
     public static final int SLOT_OUTPUT_1_1 = 1;
@@ -69,23 +67,6 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
     @Override
     public boolean canConnectEnergy(ForgeDirection from){
         return true;
-    }
-
-    @Override
-    public int[] getValues(){
-        return new int[]{this.storage.getEnergyStored(), this.firstCrushTime, this.secondCrushTime};
-    }
-
-    @Override
-    public void setValues(int[] values){
-        this.storage.setEnergyStored(values[0]);
-        this.firstCrushTime = values[1];
-        this.secondCrushTime = values[2];
-    }
-
-    @Override
-    public void sendUpdate(){
-        PacketSyncerToClient.sendPacket(this);
     }
 
     @Override
@@ -216,19 +197,19 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound compound){
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
         this.firstCrushTime = compound.getInteger("FirstCrushTime");
         this.secondCrushTime = compound.getInteger("SecondCrushTime");
         this.storage.readFromNBT(compound);
-        super.readFromNBT(compound);
+        super.readSyncableNBT(compound, sync);
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound compound){
+    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
         compound.setInteger("FirstCrushTime", this.firstCrushTime);
         compound.setInteger("SecondCrushTime", this.secondCrushTime);
         this.storage.writeToNBT(compound);
-        super.writeToNBT(compound);
+        super.writeSyncableNBT(compound, sync);
     }
 
     @Override

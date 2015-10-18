@@ -12,8 +12,6 @@ package ellpeck.actuallyadditions.tile;
 
 import ellpeck.actuallyadditions.network.gui.IButtonReactor;
 import ellpeck.actuallyadditions.network.gui.INumberReactor;
-import ellpeck.actuallyadditions.network.sync.IPacketSyncerToClient;
-import ellpeck.actuallyadditions.network.sync.PacketSyncerToClient;
 import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -22,7 +20,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 
-public class TileEntityInputter extends TileEntityInventoryBase implements IButtonReactor, INumberReactor, IPacketSyncerToClient{
+public class TileEntityInputter extends TileEntityInventoryBase implements IButtonReactor, INumberReactor{
 
     public static final int PUT_FILTER_START = 13;
     public static final int PULL_FILTER_START = 1;
@@ -80,28 +78,6 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
             }
         }
         this.markDirty();
-    }
-
-    @Override
-    public int[] getValues(){
-        return new int[]{sideToPut, sideToPull, slotToPutStart, slotToPutEnd, slotToPullStart, slotToPullEnd, this.isPutWhitelist ? 1 : 0, this.isPullWhitelist ? 1 : 0};
-    }
-
-    @Override
-    public void setValues(int[] values){
-        this.sideToPut = values[0];
-        this.sideToPull = values[1];
-        this.slotToPutStart = values[2];
-        this.slotToPutEnd = values[3];
-        this.slotToPullStart = values[4];
-        this.slotToPullEnd = values[5];
-        this.isPutWhitelist = values[6] == 1;
-        this.isPullWhitelist = values[7] == 1;
-    }
-
-    @Override
-    public void sendUpdate(){
-        PacketSyncerToClient.sendPacket(this);
     }
 
     @Override
@@ -425,7 +401,7 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound compound){
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
         this.sideToPut = compound.getInteger("SideToPut");
         this.slotToPutStart = compound.getInteger("SlotToPut");
         this.slotToPutEnd = compound.getInteger("SlotToPutEnd");
@@ -434,12 +410,12 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
         this.slotToPullEnd = compound.getInteger("SlotToPullEnd");
         this.isPullWhitelist = compound.getBoolean("PullWhitelist");
         this.isPutWhitelist = compound.getBoolean("PutWhitelist");
-        super.readFromNBT(compound);
+        super.readSyncableNBT(compound, sync);
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound compound){
-        super.writeToNBT(compound);
+    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.writeSyncableNBT(compound, sync);
         compound.setInteger("SideToPut", this.sideToPut);
         compound.setInteger("SlotToPut", this.slotToPutStart);
         compound.setInteger("SlotToPutEnd", this.slotToPutEnd);
