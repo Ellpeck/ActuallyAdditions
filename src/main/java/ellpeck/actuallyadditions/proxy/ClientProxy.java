@@ -31,13 +31,21 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.MinecraftForgeClient;
 
 import java.io.File;
+import java.util.Calendar;
 
 @SuppressWarnings("unused")
 public class ClientProxy implements IProxy{
 
+    public static boolean pumpkinBlurPumpkinBlur;
+    public static boolean jingleAllTheWay;
+
     @Override
     public void preInit(FMLPreInitializationEvent event){
         ModUtil.LOGGER.info("PreInitializing ClientProxy...");
+
+        Calendar c = Calendar.getInstance();
+        pumpkinBlurPumpkinBlur = c.get(Calendar.MONTH) == Calendar.OCTOBER;
+        jingleAllTheWay = c.get(Calendar.MONTH) == Calendar.DECEMBER && c.get(Calendar.DAY_OF_MONTH) >= 6 && c.get(Calendar.DAY_OF_MONTH) <= 26;
 
         PersistentClientData.setTheFile(new File(Minecraft.getMinecraft().mcDataDir, ModUtil.MOD_ID+"Data.dat"));
     }

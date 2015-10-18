@@ -14,6 +14,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.ActuallyAdditions;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
+import ellpeck.actuallyadditions.proxy.ClientProxy;
 import ellpeck.actuallyadditions.tile.*;
 import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import ellpeck.actuallyadditions.util.ModUtil;
@@ -36,6 +37,8 @@ public class BlockPhantom extends BlockContainerBase implements IActAddItemOrBlo
 
     public Type type;
     public int range;
+
+    private IIcon iconSeasonal;
 
     public BlockPhantom(Type type){
         super(Material.rock);
@@ -79,7 +82,7 @@ public class BlockPhantom extends BlockContainerBase implements IActAddItemOrBlo
 
     @Override
     public IIcon getIcon(int side, int metadata){
-        return this.blockIcon;
+        return (this.type == Type.FACE && ClientProxy.pumpkinBlurPumpkinBlur && side > 1) ? this.iconSeasonal : this.blockIcon;
     }
 
     @Override
@@ -121,6 +124,8 @@ public class BlockPhantom extends BlockContainerBase implements IActAddItemOrBlo
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconReg){
         this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
+
+        this.iconSeasonal = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":blockPhantomfacePumpkin");
     }
 
     @Override

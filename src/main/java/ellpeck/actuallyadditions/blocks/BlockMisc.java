@@ -13,6 +13,7 @@ package ellpeck.actuallyadditions.blocks;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.blocks.metalists.TheMiscBlocks;
+import ellpeck.actuallyadditions.proxy.ClientProxy;
 import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.block.Block;
@@ -32,6 +33,9 @@ public class BlockMisc extends Block implements IActAddItemOrBlock{
     public static final TheMiscBlocks[] allMiscBlocks = TheMiscBlocks.values();
     public IIcon[] textures = new IIcon[allMiscBlocks.length];
 
+    private IIcon stoneCasingSeasonalTop;
+    private IIcon stoneCasingSeasonal;
+
     public BlockMisc(){
         super(Material.rock);
         this.setHardness(1.5F);
@@ -41,6 +45,9 @@ public class BlockMisc extends Block implements IActAddItemOrBlock{
 
     @Override
     public IIcon getIcon(int side, int metadata){
+        if(ClientProxy.jingleAllTheWay && metadata == TheMiscBlocks.STONE_CASING.ordinal() && side != 0){
+            return side == 1 ? this.stoneCasingSeasonalTop : this.stoneCasingSeasonal;
+        }
         return metadata >= textures.length ? null : textures[metadata];
     }
 
@@ -63,6 +70,9 @@ public class BlockMisc extends Block implements IActAddItemOrBlock{
         for(int i = 0; i < textures.length; i++){
             textures[i] = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+allMiscBlocks[i].getName());
         }
+
+        this.stoneCasingSeasonalTop = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":blockMiscStoneCasingSnowTop");
+        this.stoneCasingSeasonal = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":blockMiscStoneCasingSnow");
     }
 
     @Override

@@ -10,17 +10,21 @@
 
 package ellpeck.actuallyadditions.misc;
 
-import ellpeck.actuallyadditions.event.RenderPlayerEventAA;
+import ellpeck.actuallyadditions.proxy.ClientProxy;
 import ellpeck.actuallyadditions.util.AssetUtil;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelSquid;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
+
+import java.util.Calendar;
 
 public class RenderSpecial{
 
@@ -35,6 +39,12 @@ public class RenderSpecial{
     public void render(EntityPlayer player, float size, float offsetUp){
         if(player.isInvisible() || player.getHideCape()){
             return;
+        }
+
+        if(ClientProxy.pumpkinBlurPumpkinBlur){
+            this.theThingToRender = new ItemStack(Calendar.getInstance().get(Calendar.DAY_OF_MONTH) % 2 == 0 ? Blocks.lit_pumpkin : Blocks.pumpkin);
+            size = 0.3F;
+            offsetUp = 0;
         }
 
         int bobHeight = 70;
@@ -60,18 +70,20 @@ public class RenderSpecial{
         GL11.glRotated((double)theTime/20, 0, 1, 0);
 
         GL11.glDisable(GL11.GL_LIGHTING);
-        if(this == RenderPlayerEventAA.lariRender){
-            Minecraft.getMinecraft().renderEngine.bindTexture(squidTextures);
-            GL11.glRotatef(180F, 1F, 0F, 0F);
-            new ModelSquid().render(null, 0F, 0F, 0.25F, 0F, 0F, 0.0625F);
-        }
-        else{
-            if(this.theThingToRender.getItem() instanceof ItemBlock){
-                AssetUtil.renderBlock(Block.getBlockFromItem(this.theThingToRender.getItem()), this.theThingToRender.getItemDamage());
+        if(this.theThingToRender != null){
+            if(this.theThingToRender.getItem() == Items.dye && this.theThingToRender.getItemDamage() == 0){
+                Minecraft.getMinecraft().renderEngine.bindTexture(squidTextures);
+                GL11.glRotatef(180F, 1F, 0F, 0F);
+                new ModelSquid().render(null, 0F, 0F, 0.25F, 0F, 0F, 0.0625F);
             }
             else{
-                GL11.glTranslatef(-0.5F, 0F, 0F);
-                AssetUtil.renderItem(this.theThingToRender, 0);
+                if(this.theThingToRender.getItem() instanceof ItemBlock){
+                    AssetUtil.renderBlock(Block.getBlockFromItem(this.theThingToRender.getItem()), this.theThingToRender.getItemDamage());
+                }
+                else{
+                    GL11.glTranslatef(-0.5F, 0F, 0F);
+                    AssetUtil.renderItem(this.theThingToRender, 0);
+                }
             }
         }
         GL11.glEnable(GL11.GL_LIGHTING);

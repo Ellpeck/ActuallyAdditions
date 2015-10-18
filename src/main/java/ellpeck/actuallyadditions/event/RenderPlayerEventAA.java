@@ -16,6 +16,7 @@ import ellpeck.actuallyadditions.blocks.InitBlocks;
 import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.misc.RenderSpecial;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 
@@ -23,7 +24,7 @@ import java.util.UUID;
 
 public class RenderPlayerEventAA{
 
-    public static RenderSpecial lariRender = new RenderSpecial(null);
+    public static RenderSpecial lariRender = new RenderSpecial(new ItemStack(Items.dye));
     private static RenderSpecial ellpeckRender = new RenderSpecial(new ItemStack(InitItems.itemPhantomConnector));
     private static RenderSpecial hoseRender = new RenderSpecial(new ItemStack(Blocks.torch));
     private static RenderSpecial paktoRender = new RenderSpecial(new ItemStack(Blocks.wool, 1, 6));

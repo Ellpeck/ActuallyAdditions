@@ -14,6 +14,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.booklet.page.BookletPage;
 import ellpeck.actuallyadditions.config.GuiConfiguration;
+import ellpeck.actuallyadditions.proxy.ClientProxy;
 import ellpeck.actuallyadditions.update.UpdateChecker;
 import ellpeck.actuallyadditions.util.AssetUtil;
 import ellpeck.actuallyadditions.util.ModUtil;
@@ -39,6 +40,8 @@ import java.util.List;
 public class GuiBooklet extends GuiScreen{
 
     public static final ResourceLocation resLoc = AssetUtil.getGuiLocation("guiBooklet");
+    public static final ResourceLocation resLocHalloween = AssetUtil.getGuiLocation("guiBookletHalloween");
+    public static final ResourceLocation resLocChristmas = AssetUtil.getGuiLocation("guiBookletChristmas");
     public static final int CHAPTER_BUTTONS_AMOUNT = 13;
     public static final int TOOLTIP_SPLIT_LENGTH = 200;
     public int xSize;
@@ -83,8 +86,9 @@ public class GuiBooklet extends GuiScreen{
         this.fontRendererObj.setUnicodeFlag(true);
 
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        this.mc.getTextureManager().bindTexture(resLoc);
+        this.mc.getTextureManager().bindTexture(ClientProxy.jingleAllTheWay ? resLocChristmas : (ClientProxy.pumpkinBlurPumpkinBlur ? resLocHalloween : resLoc));
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
+        this.mc.getTextureManager().bindTexture(resLoc);
 
         if(this.currentIndexEntry instanceof BookletEntryAllSearch && this.currentChapter == null){
             this.drawTexturedModalRect(this.guiLeft+146, this.guiTop+160, 146, 80, 70, 14);
