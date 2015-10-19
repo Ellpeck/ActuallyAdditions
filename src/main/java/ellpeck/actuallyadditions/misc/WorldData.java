@@ -20,8 +20,8 @@ public class WorldData extends WorldSavedData{
 
     public static final String DATA_TAG = ModUtil.MOD_ID+"WorldData";
 
-    public WorldData(){
-        super(DATA_TAG);
+    public WorldData(String tag){
+        super(tag);
     }
 
     public static WorldData instance;
@@ -49,7 +49,7 @@ public class WorldData extends WorldSavedData{
                 WorldSavedData savedData = world.loadItemData(WorldData.class, WorldData.DATA_TAG);
                 //Generate new SavedData
                 if(savedData == null){
-                    savedData = new WorldData();
+                    savedData = new WorldData(WorldData.DATA_TAG);
                     world.setItemData(WorldData.DATA_TAG, savedData);
                 }
                 //Set the current SavedData to the retreived one

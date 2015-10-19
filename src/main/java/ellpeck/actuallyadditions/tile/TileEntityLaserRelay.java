@@ -11,14 +11,26 @@
 package ellpeck.actuallyadditions.tile;
 
 import cofh.api.energy.IEnergyReceiver;
+import ellpeck.actuallyadditions.misc.LaserRelayConnectionHandler;
+import ellpeck.actuallyadditions.util.WorldPos;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
+
+import java.util.ArrayList;
 
 public class TileEntityLaserRelay extends TileEntityBase implements IEnergyReceiver{
 
     @Override
     public boolean canUpdate(){
         return false;
+    }
+
+    @Override
+    public void invalidate(){
+        super.invalidate();
+        if(!worldObj.isRemote){
+            LaserRelayConnectionHandler.getInstance().removeRelayFromNetwork(new WorldPos(this.worldObj, this.xCoord, this.yCoord, this.zCoord));
+        }
     }
 
     @Override
@@ -38,20 +50,27 @@ public class TileEntityLaserRelay extends TileEntityBase implements IEnergyRecei
 
     @Override
     public int getEnergyStored(ForgeDirection from){
-        return 0; //TODO Get Energy in Network
+        return 0;
     }
 
     @Override
     public int getMaxEnergyStored(ForgeDirection from){
-        return 0; //TODO Get Max Energy in Network
+        return 0;
     }
 
     @Override
     public boolean canConnectEnergy(ForgeDirection from){
-        return false;
+        return true;
     }
 
     public int transmitEnergy(int maxTransmit, boolean simulate){
-        return 0;
+        int transmitted = 0;
+        if(maxTransmit > 0){
+            ArrayList<LaserRelayConnectionHandler.ConnectionPair> network = LaserRelayConnectionHandler.getInstance().getNetworkFor(new WorldPos(this.worldObj, this.xCoord, this.yCoord, this.zCoord));
+            if(network != null){
+                transmitted = LaserRelayConnectionHandler.getInstance().transferEnergyToReceiverInNeed(network, maxTransmit, simulate);
+            }
+        }
+        return transmitted;
     }
 }

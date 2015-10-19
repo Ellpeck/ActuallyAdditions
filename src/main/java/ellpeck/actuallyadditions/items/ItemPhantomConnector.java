@@ -45,8 +45,8 @@ public class ItemPhantomConnector extends Item implements IActAddItemOrBlock{
                 //Passing to Phantom
                 if(tile instanceof IPhantomTile){
                     if(this.checkHasConnection(stack, player, tile)){
-                        ((IPhantomTile)tile).setBoundPosition(this.getStoredPosition(stack));
-                        this.clearStorage(stack);
+                        ((IPhantomTile)tile).setBoundPosition(getStoredPosition(stack));
+                        clearStorage(stack);
                         player.addChatComponentMessage(new ChatComponentText(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.connected.desc")));
                         return true;
                     }
@@ -54,14 +54,14 @@ public class ItemPhantomConnector extends Item implements IActAddItemOrBlock{
                 }
             }
             //Storing Connections
-            this.storeConnection(stack, x, y, z, world);
+            storeConnection(stack, x, y, z, world);
             player.addChatComponentMessage(new ChatComponentText(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.stored.desc")));
         }
         return true;
     }
 
     public boolean checkHasConnection(ItemStack stack, EntityPlayer player, TileEntity tile){
-        if(this.getStoredPosition(stack) != null){
+        if(getStoredPosition(stack) != null){
             return true;
         }
         else{
@@ -73,7 +73,7 @@ public class ItemPhantomConnector extends Item implements IActAddItemOrBlock{
         }
     }
 
-    public WorldPos getStoredPosition(ItemStack stack){
+    public static WorldPos getStoredPosition(ItemStack stack){
         NBTTagCompound tag = stack.getTagCompound();
         if(tag != null){
             int x = tag.getInteger("XCoordOfTileStored");
@@ -87,11 +87,11 @@ public class ItemPhantomConnector extends Item implements IActAddItemOrBlock{
         return null;
     }
 
-    public void clearStorage(ItemStack stack){
+    public static void clearStorage(ItemStack stack){
         stack.setTagCompound(new NBTTagCompound());
     }
 
-    public void storeConnection(ItemStack stack, int x, int y, int z, World world){
+    public static void storeConnection(ItemStack stack, int x, int y, int z, World world){
         NBTTagCompound tag = stack.getTagCompound();
         if(tag == null){
             tag = new NBTTagCompound();
@@ -112,8 +112,8 @@ public class ItemPhantomConnector extends Item implements IActAddItemOrBlock{
 
     @Override
     public void onUpdate(ItemStack stack, World world, Entity entity, int par4, boolean par5){
-        if(this.getStoredPosition(stack) == null){
-            this.clearStorage(stack);
+        if(getStoredPosition(stack) == null){
+            clearStorage(stack);
         }
     }
 

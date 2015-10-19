@@ -73,4 +73,8 @@ public class WorldPos{
     public WorldPos copy(){
         return new WorldPos(this.world, this.x, this.y, this.z);
     }
+
+    public String toString(){
+        return "["+this.x+", "+this.y+", "+this.z+" in world "+this.world.provider.dimensionId+"]";
+    }
 }
