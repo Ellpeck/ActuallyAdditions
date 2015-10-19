@@ -62,6 +62,7 @@ public class LaserRelayConnectionHandler{
         else if(secondNetwork != null){
             secondNetwork.add(new ConnectionPair(firstRelay, secondRelay));
         }
+        WorldData.makeDirty();
     }
 
     /**
@@ -76,6 +77,7 @@ public class LaserRelayConnectionHandler{
                 }
             }
         }
+        WorldData.makeDirty();
     }
 
     /**
