@@ -34,6 +34,7 @@ import ellpeck.actuallyadditions.material.InitToolMaterials;
 import ellpeck.actuallyadditions.misc.DispenserHandlerEmptyBucket;
 import ellpeck.actuallyadditions.misc.DispenserHandlerFertilize;
 import ellpeck.actuallyadditions.misc.DispenserHandlerFillBucket;
+import ellpeck.actuallyadditions.misc.WorldData;
 import ellpeck.actuallyadditions.network.PacketHandler;
 import ellpeck.actuallyadditions.ore.InitOreDict;
 import ellpeck.actuallyadditions.proxy.IProxy;
@@ -117,5 +118,7 @@ public class ActuallyAdditions{
         Util.registerDispenserHandler(InitItems.itemBucketCanolaOil, new DispenserHandlerEmptyBucket());
         Util.registerDispenserHandler(Items.bucket, new DispenserHandlerFillBucket());
         Util.registerDispenserHandler(InitItems.itemFertilizer, new DispenserHandlerFertilize());
+
+        WorldData.init(event.getServer());
     }
 }

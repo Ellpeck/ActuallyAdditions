@@ -97,7 +97,7 @@ public class InitBlocks{
     public static Block blockDirectionalBreaker;
     public static Block blockRangedCollector;
 
-    //public static Block blockLaserRelay;
+    public static Block blockLaserRelay;
 
     //TODO: Plan for Laser Power Transmitters:
     //TODO: Connectable with Laser Wrench
@@ -112,8 +112,8 @@ public class InitBlocks{
     public static void init(){
         ModUtil.LOGGER.info("Initializing Blocks...");
 
-        //blockLaserRelay = new BlockLaserRelay();
-        //BlockUtil.register(blockLaserRelay);
+        blockLaserRelay = new BlockLaserRelay();
+        BlockUtil.register(blockLaserRelay);
 
         blockRangedCollector = new BlockRangedCollector();
         BlockUtil.register(blockRangedCollector);
