@@ -14,6 +14,9 @@ import cofh.api.energy.IEnergyReceiver;
 import ellpeck.actuallyadditions.misc.LaserRelayConnectionHandler;
 import ellpeck.actuallyadditions.util.WorldPos;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.Packet;
+import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
 
 import java.util.ArrayList;
@@ -34,13 +37,33 @@ public class TileEntityLaserRelay extends TileEntityBase implements IEnergyRecei
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean isForSync){
+    public Packet getDescriptionPacket(){
+        NBTTagCompound compound = new NBTTagCompound();
 
+        WorldPos thisPos = new WorldPos(this.worldObj, this.xCoord, this.yCoord, this.zCoord);
+        ArrayList<LaserRelayConnectionHandler.ConnectionPair> connections = LaserRelayConnectionHandler.getInstance().getConnectionsFor(thisPos);
+
+        if(connections != null){
+            compound.setInteger("ConnectionAmount", connections.size());
+            for(int i = 0; i < connections.size(); i++){
+                connections.get(i).writeToNBT(compound, "Connection"+i);
+            }
+            return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord, 3, compound);
+        }
+        return null;
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean isForSync){
+    public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt){
+        NBTTagCompound compound = pkt.func_148857_g();
 
+        LaserRelayConnectionHandler.getInstance().removeRelayFromNetwork(new WorldPos(this.worldObj, this.xCoord, this.yCoord, this.zCoord));
+
+        int amount = compound.getInteger("ConnectionAmount");
+        for(int i = 0; i < amount; i++){
+            LaserRelayConnectionHandler.ConnectionPair pair = LaserRelayConnectionHandler.ConnectionPair.readFromNBT(compound, "Connection"+i);
+            LaserRelayConnectionHandler.getInstance().addConnection(pair.firstRelay, pair.secondRelay);
+        }
     }
 
     @Override

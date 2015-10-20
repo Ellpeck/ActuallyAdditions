@@ -51,7 +51,13 @@ public class WorldPos{
     }
 
     public boolean isEqual(WorldPos pos){
-        return pos != null && this.x == pos.getX() && this.y == pos.getY() && this.z == pos.getZ() && this.world == pos.getWorld();
+        return pos != null && this.x == pos.getX() && this.y == pos.getY() && this.z == pos.getZ() && (this.world == pos.getWorld() || ((world.isRemote || pos.getWorld().isRemote) && this.world.provider.dimensionId == pos.getWorld().provider.dimensionId));
+    }
+
+    public void update(){
+        if(this.world != null){
+            this.world.markBlockForUpdate(this.x, this.y, this.z);
+        }
     }
 
     public int getX(){

@@ -10,8 +10,14 @@
 
 package ellpeck.actuallyadditions.blocks.render;
 
+import ellpeck.actuallyadditions.misc.LaserRelayConnectionHandler;
+import ellpeck.actuallyadditions.tile.TileEntityLaserRelay;
+import ellpeck.actuallyadditions.util.WorldPos;
 import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.tileentity.TileEntity;
 import org.lwjgl.opengl.GL11;
+
+import java.util.ArrayList;
 
 public class ModelLaserRelay extends ModelBaseAA{
 
@@ -162,6 +168,20 @@ public class ModelLaserRelay extends ModelBaseAA{
         covering10.render(f);
         covering11.render(f);
         covering12.render(f);
+    }
+
+    @Override
+    public void renderExtra(float f, TileEntity tile){
+        TileEntityLaserRelay relay = (TileEntityLaserRelay)tile;
+        WorldPos thisPos = new WorldPos(relay.getWorldObj(), relay.xCoord, relay.yCoord, relay.zCoord);
+        ArrayList<LaserRelayConnectionHandler.ConnectionPair> network = LaserRelayConnectionHandler.getInstance().getNetworkFor(thisPos);
+        if(network != null){
+            for(LaserRelayConnectionHandler.ConnectionPair aPair : network){
+                if(aPair.contains(thisPos) && aPair.firstRelay.isEqual(thisPos)){
+                    //TODO Make this work
+                }
+            }
+        }
     }
 
     @Override
