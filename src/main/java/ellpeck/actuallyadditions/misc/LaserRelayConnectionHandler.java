@@ -11,6 +11,7 @@
 package ellpeck.actuallyadditions.misc;
 
 import cofh.api.energy.IEnergyReceiver;
+import ellpeck.actuallyadditions.tile.TileEntityLaserRelay;
 import ellpeck.actuallyadditions.util.WorldPos;
 import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.tileentity.TileEntity;
@@ -54,7 +55,7 @@ public class LaserRelayConnectionHandler{
      * Adds a new connection between two relays
      * (Puts it into the correct network!)
      */
-    public void addConnection(WorldPos firstRelay, WorldPos secondRelay){
+    public boolean addConnection(WorldPos firstRelay, WorldPos secondRelay){
         ArrayList<ConnectionPair> firstNetwork = this.getNetworkFor(firstRelay);
         ArrayList<ConnectionPair> secondNetwork = this.getNetworkFor(secondRelay);
 
@@ -66,7 +67,7 @@ public class LaserRelayConnectionHandler{
         }
         //The same Network
         else if(firstNetwork == secondNetwork){
-            return;
+            return false;
         }
         //Both relays have networks
         else if(firstNetwork != null && secondNetwork != null){
@@ -83,6 +84,7 @@ public class LaserRelayConnectionHandler{
         WorldData.makeDirty();
         System.out.println("Connected "+firstRelay.toString()+" to "+secondRelay.toString());
         System.out.println(firstNetwork == null ? secondNetwork.toString() : firstNetwork.toString());
+        return true;
     }
 
     /**
@@ -135,7 +137,7 @@ public class LaserRelayConnectionHandler{
                         ForgeDirection side = ForgeDirection.getOrientation(i);
                         //Get the TileEntity at the side
                         TileEntity tile = WorldUtil.getTileEntityFromSide(side, relay.getWorld(), relay.getX(), relay.getY(), relay.getZ());
-                        if(tile instanceof IEnergyReceiver){
+                        if((tile instanceof TileEntityLaserRelay && this.getNetworkFor(new WorldPos(tile.getWorldObj(), tile.xCoord, tile.yCoord, tile.zCoord)) != network) || tile instanceof IEnergyReceiver){
                             IEnergyReceiver receiver = (IEnergyReceiver)tile;
                             //Does it need Energy?
                             if(receiver.getEnergyStored(side.getOpposite()) < receiver.getMaxEnergyStored(side.getOpposite())){

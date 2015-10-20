@@ -48,9 +48,13 @@ public class ItemLaserWrench extends Item implements IActAddItemOrBlock{
                     if(savedPos.getTileEntity() instanceof TileEntityLaserRelay){
                         WorldPos otherPos = new WorldPos(world, x, y, z);
                         if(!savedPos.isEqual(otherPos) && savedPos.getWorld() == otherPos.getWorld()){
-                            LaserRelayConnectionHandler.getInstance().addConnection(savedPos, otherPos);
-                            player.addChatComponentMessage(new ChatComponentText("Connected!"));
-                            ItemPhantomConnector.clearStorage(stack);
+                            if(LaserRelayConnectionHandler.getInstance().addConnection(savedPos, otherPos)){
+                                player.addChatComponentMessage(new ChatComponentText("Connected!"));
+                                ItemPhantomConnector.clearStorage(stack);
+                            }
+                            else{
+                                player.addChatComponentMessage(new ChatComponentText("Couldn't connect!"));
+                            }
                         }
                     }
                     else{
