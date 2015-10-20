@@ -4,3 +4,4 @@ This file is a reminder to Glenthor for what textures he should make or change.
 If you want to give making some of these textures a go, go ahead and make a pull request when you're done.
 --------------------------------------------------------------------------------------------------------------
 
+-itemLaserWrench (An item that connects RF Lasers)
