@@ -26,6 +26,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
 public class ItemLaserWrench extends Item implements IActAddItemOrBlock{
@@ -47,19 +48,28 @@ public class ItemLaserWrench extends Item implements IActAddItemOrBlock{
                     WorldPos savedPos = ItemPhantomConnector.getStoredPosition(stack);
                     if(savedPos.getTileEntity() instanceof TileEntityLaserRelay){
                         WorldPos otherPos = new WorldPos(world, x, y, z);
-                        if(!savedPos.isEqual(otherPos) && savedPos.getWorld() == otherPos.getWorld()){
-                            if(LaserRelayConnectionHandler.getInstance().addConnection(savedPos, otherPos)){
-                                player.addChatComponentMessage(new ChatComponentText("Connected!"));
-                                ItemPhantomConnector.clearStorage(stack);
+                        int distance = (int)Vec3.createVectorHelper(otherPos.getX(), otherPos.getY(), otherPos.getZ()).distanceTo(Vec3.createVectorHelper(savedPos.getX(), savedPos.getY(), savedPos.getZ()));
+                        if(distance <= 15){
+                            if(!savedPos.isEqual(otherPos) && savedPos.getWorld() == otherPos.getWorld()){
+                                if(LaserRelayConnectionHandler.getInstance().addConnection(savedPos, otherPos)){
+                                    player.addChatComponentMessage(new ChatComponentText("Connected!"));
+                                    ItemPhantomConnector.clearStorage(stack);
+                                }
+                                else{
+                                    player.addChatComponentMessage(new ChatComponentText("Couldn't connect!"));
+                                }
                             }
                             else{
-                                player.addChatComponentMessage(new ChatComponentText("Couldn't connect!"));
+                                player.addChatComponentMessage(new ChatComponentText("Can't connect a Laser Relay to itself!"));
                             }
+                        }
+                        else{
+                            player.addChatComponentMessage(new ChatComponentText("Too far away! Distance is "+distance+ "blocks!"));
                         }
                     }
                     else{
+                        player.addChatComponentMessage(new ChatComponentText("The Laser Relay you were trying to connect to doesn't exist!"));
                         ItemPhantomConnector.clearStorage(stack);
-                        player.addChatComponentMessage(new ChatComponentText("The Laser Relay you were trying to connect to doesn't exist anymore!"));
                     }
                 }
             }

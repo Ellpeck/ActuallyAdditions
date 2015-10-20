@@ -148,6 +148,8 @@ public class ModelLaserRelay extends ModelBaseAA{
         bottom.render(f);
         laserPillar.render(f);
         laserBase.render(f);
+        energyBall.render(f);
+        top.render(f);
         covering1.render(f);
         covering2.render(f);
         covering3.render(f);
@@ -156,12 +158,10 @@ public class ModelLaserRelay extends ModelBaseAA{
         covering6.render(f);
         covering7.render(f);
         covering8.render(f);
-        top.render(f);
         covering9.render(f);
         covering10.render(f);
         covering11.render(f);
         covering12.render(f);
-        energyBall.render(f);
     }
 
     @Override

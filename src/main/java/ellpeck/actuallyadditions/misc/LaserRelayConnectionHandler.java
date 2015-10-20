@@ -72,6 +72,7 @@ public class LaserRelayConnectionHandler{
         //Both relays have networks
         else if(firstNetwork != null && secondNetwork != null){
             this.mergeNetworks(firstNetwork, secondNetwork);
+            firstNetwork.add(new ConnectionPair(firstRelay, secondRelay));
         }
         //Only first network exists
         else if(firstNetwork != null){
@@ -82,8 +83,8 @@ public class LaserRelayConnectionHandler{
             secondNetwork.add(new ConnectionPair(firstRelay, secondRelay));
         }
         WorldData.makeDirty();
-        System.out.println("Connected "+firstRelay.toString()+" to "+secondRelay.toString());
-        System.out.println(firstNetwork == null ? secondNetwork.toString() : firstNetwork.toString());
+        //System.out.println("Connected "+firstRelay.toString()+" to "+secondRelay.toString());
+        //System.out.println(firstNetwork == null ? secondNetwork.toString() : firstNetwork.toString());
         return true;
     }
 
@@ -99,7 +100,7 @@ public class LaserRelayConnectionHandler{
                 ConnectionPair next = iterator.next();
                 if(next.contains(relay)){
                     iterator.remove();
-                    System.out.println("Removed "+relay.toString()+" from Network "+network.toString());
+                    //System.out.println("Removed "+relay.toString()+" from Network "+network.toString());
                 }
             }
 
@@ -122,7 +123,7 @@ public class LaserRelayConnectionHandler{
         }
         this.networks.remove(secondNetwork);
         WorldData.makeDirty();
-        System.out.println("Merged Two Networks!");
+        //System.out.println("Merged Two Networks!");
     }
 
     public int transferEnergyToReceiverInNeed(ArrayList<ConnectionPair> network, int maxTransfer, boolean simulate){
@@ -137,14 +138,11 @@ public class LaserRelayConnectionHandler{
                         ForgeDirection side = ForgeDirection.getOrientation(i);
                         //Get the TileEntity at the side
                         TileEntity tile = WorldUtil.getTileEntityFromSide(side, relay.getWorld(), relay.getX(), relay.getY(), relay.getZ());
-                        if((tile instanceof TileEntityLaserRelay && this.getNetworkFor(new WorldPos(tile.getWorldObj(), tile.xCoord, tile.yCoord, tile.zCoord)) != network) || tile instanceof IEnergyReceiver){
+                        if(tile instanceof IEnergyReceiver && !(tile instanceof TileEntityLaserRelay)){
                             IEnergyReceiver receiver = (IEnergyReceiver)tile;
-                            //Does it need Energy?
-                            if(receiver.getEnergyStored(side.getOpposite()) < receiver.getMaxEnergyStored(side.getOpposite())){
-                                if(receiver.canConnectEnergy(side.getOpposite())){
-                                    //Transfer the energy
-                                    return ((IEnergyReceiver)tile).receiveEnergy(side.getOpposite(), maxTransfer, simulate);
-                                }
+                            if(receiver.canConnectEnergy(side.getOpposite())){
+                                //Transfer the energy
+                                return ((IEnergyReceiver)tile).receiveEnergy(side.getOpposite(), maxTransfer, simulate);
                             }
                         }
                     }
