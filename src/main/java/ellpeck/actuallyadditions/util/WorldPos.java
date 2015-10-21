@@ -15,48 +15,49 @@ import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import net.minecraftforge.common.DimensionManager;
 
 public class WorldPos{
 
     private int x;
     private int y;
     private int z;
-    private World world;
+    private int worldID;
 
     public WorldPos(World world, int x, int y, int z){
-        this.world = world;
+        this.worldID = world.provider.dimensionId;
         this.x = x;
         this.y = y;
         this.z = z;
     }
 
     public Block getBlock(){
-        return this.world != null ? this.world.getBlock(this.x, this.y, this.z) : null;
+        return this.getWorld() != null ? this.getWorld().getBlock(this.x, this.y, this.z) : null;
     }
 
     public TileEntity getTileEntity(){
-        return this.world != null ? this.world.getTileEntity(this.x, this.y, this.z) : null;
+        return this.getWorld() != null ? this.getWorld().getTileEntity(this.x, this.y, this.z) : null;
     }
 
     public Material getMaterial(){
-        return this.world != null ? this.world.getBlock(this.x, this.y, this.z).getMaterial() : null;
+        return this.getWorld() != null ? this.getWorld().getBlock(this.x, this.y, this.z).getMaterial() : null;
     }
 
     public Item getItemBlock(){
-        return this.world != null ? Item.getItemFromBlock(this.world.getBlock(this.x, this.y, this.z)) : null;
+        return this.getWorld() != null ? Item.getItemFromBlock(this.getBlock()) : null;
     }
 
     public int getMetadata(){
-        return this.world != null ? this.world.getBlockMetadata(this.x, this.y, this.z) : 0;
+        return this.getWorld() != null ? this.getWorld().getBlockMetadata(this.x, this.y, this.z) : 0;
     }
 
     public boolean isEqual(WorldPos pos){
-        return pos != null && this.x == pos.getX() && this.y == pos.getY() && this.z == pos.getZ() && (this.world == pos.getWorld() || ((world.isRemote || pos.getWorld().isRemote) && this.world.provider.dimensionId == pos.getWorld().provider.dimensionId));
+        return pos != null && this.x == pos.getX() && this.y == pos.getY() && this.z == pos.getZ() && this.getWorld() == pos.getWorld();
     }
 
     public void update(){
-        if(this.world != null){
-            this.world.markBlockForUpdate(this.x, this.y, this.z);
+        if(this.getWorld() != null){
+            this.getWorld().markBlockForUpdate(this.x, this.y, this.z);
         }
     }
 
@@ -73,14 +74,14 @@ public class WorldPos{
     }
 
     public World getWorld(){
-        return this.world;
+        return DimensionManager.getWorld(this.worldID);
     }
 
     public WorldPos copy(){
-        return new WorldPos(this.world, this.x, this.y, this.z);
+        return new WorldPos(this.getWorld(), this.x, this.y, this.z);
     }
 
     public String toString(){
-        return "["+this.x+", "+this.y+", "+this.z+" in world "+this.world.provider.dimensionId+"]";
+        return "["+this.x+", "+this.y+", "+this.z+" in world "+this.worldID+"]";
     }
 }
