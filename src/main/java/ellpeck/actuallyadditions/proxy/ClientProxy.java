@@ -62,7 +62,6 @@ public class ClientProxy implements IProxy{
         AssetUtil.COFFEE_MACHINE_RENDER_ID = RenderingRegistry.getNextAvailableRenderId();
         AssetUtil.PHANTOM_BOOSTER_RENDER_ID = RenderingRegistry.getNextAvailableRenderId();
         AssetUtil.SMILEY_CLOUD_RENDER_ID = RenderingRegistry.getNextAvailableRenderId();
-        AssetUtil.TOOL_TABLE_RENDER_ID = RenderingRegistry.getNextAvailableRenderId();
         AssetUtil.LASER_RELAY_RENDER_ID = RenderingRegistry.getNextAvailableRenderId();
 
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCompost.class, new RenderTileEntity(new ModelCompost()));

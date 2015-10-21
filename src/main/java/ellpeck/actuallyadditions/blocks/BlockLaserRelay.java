@@ -62,7 +62,7 @@ public class BlockLaserRelay extends BlockContainerBase implements IActAddItemOr
     @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconReg){
-        this.blockIcon = Blocks.coal_block.getIcon(0, 0);
+        this.blockIcon = Blocks.stone.getIcon(0, 0);
     }
 
     @Override
