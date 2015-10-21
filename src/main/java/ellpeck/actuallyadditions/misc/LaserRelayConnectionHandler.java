@@ -176,6 +176,7 @@ public class LaserRelayConnectionHandler{
     }
 
     public int transferEnergyToReceiverInNeed(ArrayList<ConnectionPair> network, int maxTransfer, boolean simulate){
+        int transmitted = 0;
         //Go through all of the connections in the network
         for(ConnectionPair pair : network){
             WorldPos[] relays = new WorldPos[]{pair.firstRelay, pair.secondRelay};
@@ -191,14 +192,14 @@ public class LaserRelayConnectionHandler{
                             IEnergyReceiver receiver = (IEnergyReceiver)tile;
                             if(receiver.canConnectEnergy(side.getOpposite())){
                                 //Transfer the energy
-                                return ((IEnergyReceiver)tile).receiveEnergy(side.getOpposite(), maxTransfer, simulate);
+                                transmitted += ((IEnergyReceiver)tile).receiveEnergy(side.getOpposite(), maxTransfer-transmitted, simulate);
                             }
                         }
                     }
                 }
             }
         }
-        return 0;
+        return transmitted;
     }
 
     public static class ConnectionPair{

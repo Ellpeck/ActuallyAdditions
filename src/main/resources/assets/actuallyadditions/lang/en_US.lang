@@ -294,7 +294,9 @@ tooltip.actuallyadditions.disablingInfo.desc=If you don't want this Information 
 tooltip.actuallyadditions.ctrlForMoreInfo.desc=Press CTRL for Advanced Info
 tooltip.actuallyadditions.extraInfo.desc=Advanced Info
 tooltip.actuallyadditions.blockPhantomRange.desc=Range
-tooltip.actuallyadditions.broken.desc=Broken
+tooltip.actuallyadditions.laser.stored.desc=<Laser stored!>
+tooltip.actuallyadditions.laser.connected.desc=<Laser connected!>
+tooltip.actuallyadditions.laser.cantConnect.desc=Can't connect: The relays are either part of the same network, the stored relay doesn't exist anymore or it is too far away!
 
 #Gui Information
 info.actuallyadditions.gui.animals=Animals

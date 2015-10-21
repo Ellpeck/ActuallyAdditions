@@ -40,29 +40,29 @@ public class ItemLaserWrench extends Item implements IActAddItemOrBlock{
 
     @Override
     public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int par7, float par8, float par9, float par10){
-        TileEntity tile = world.getTileEntity(x, y, z);
-        if(tile instanceof TileEntityLaserRelay){
-            if(!world.isRemote){
+        if(!world.isRemote){
+            TileEntity tile = world.getTileEntity(x, y, z);
+            if(tile instanceof TileEntityLaserRelay){
                 if(ItemPhantomConnector.getStoredPosition(stack) == null){
                     ItemPhantomConnector.storeConnection(stack, x, y, z, world);
-                    player.addChatComponentMessage(new ChatComponentText("Stored!"));
+                    player.addChatComponentMessage(new ChatComponentText(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".laser.stored.desc")));
                 }
                 else{
                     WorldPos savedPos = ItemPhantomConnector.getStoredPosition(stack);
                     WorldPos otherPos = new WorldPos(world, x, y, z);
                     if(savedPos.getTileEntity() instanceof TileEntityLaserRelay && LaserRelayConnectionHandler.getInstance().addConnection(savedPos, otherPos)){
-                        player.addChatComponentMessage(new ChatComponentText("Connected!"));
                         ItemPhantomConnector.clearStorage(stack);
 
                         savedPos.update();
                         otherPos.update();
+
+                        player.addChatComponentMessage(new ChatComponentText(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".laser.connected.desc")));
                     }
                     else{
-                        player.addChatComponentMessage(new ChatComponentText("Couldn't connect!"));
+                        player.addChatComponentMessage(new ChatComponentText(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".laser.cantConnect.desc")));
                     }
                 }
             }
-            return true;
         }
         return false;
     }
