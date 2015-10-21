@@ -19,6 +19,10 @@ import org.lwjgl.opengl.GL11;
 
 import java.util.ArrayList;
 
+/**
+ * Made by Canitzp.
+ * Thanks. Seriously. It looks really awesome. I don't think I could do this.
+ */
 public class ModelLaserRelay extends ModelBaseAA{
 
     ModelRenderer bottom;
