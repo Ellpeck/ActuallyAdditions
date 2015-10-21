@@ -36,7 +36,7 @@ public class BlockLaserRelay extends BlockContainerBase implements IActAddItemOr
         this.setStepSound(soundTypeStone);
 
         float f = 1F/16F;
-        this.setBlockBounds(3*f, 0F, 3*f, 1-3*f, 1F, 1-3*f);
+        this.setBlockBounds(2*f, 0F, 2*f, 1-2*f, 1-1*f, 1-2*f);
     }
 
     @Override

@@ -26,9 +26,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
+
+import java.util.List;
 
 public class ItemPhantomConnector extends Item implements IActAddItemOrBlock{
 
@@ -70,6 +73,24 @@ public class ItemPhantomConnector extends Item implements IActAddItemOrBlock{
             }
             player.addChatComponentMessage(new ChatComponentText(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.unbound.desc")));
             return false;
+        }
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    @SideOnly(Side.CLIENT)
+    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld){
+        WorldPos coords = getStoredPosition(stack);
+        if(coords != null){
+            World world = coords.getWorld();
+            if(world != null){
+                list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".boundTo.desc")+":");
+                list.add("X: "+coords.getX());
+                list.add("Y: "+coords.getY());
+                list.add("Z: "+coords.getZ());
+                list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".inWorld.desc")+" "+world.provider.dimensionId);
+                list.add(EnumChatFormatting.ITALIC+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".clearStorage.desc"));
+            }
         }
     }
 

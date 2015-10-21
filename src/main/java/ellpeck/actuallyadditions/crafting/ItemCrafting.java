@@ -78,6 +78,10 @@ public class ItemCrafting{
         GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemLexicon), new ItemStack(InitItems.itemCanolaSeed), new ItemStack(Items.paper)));
         recipeBook = Util.GetRecipes.lastIRecipe();
 
+        //Clearing NBT Storage
+        GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemLaserWrench), new ItemStack(InitItems.itemLaserWrench));
+        GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemPhantomConnector), new ItemStack(InitItems.itemPhantomConnector));
+
         //Rice Stuff
         if(ConfigCrafting.RICE_GADGETS.isEnabled()){
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.paper, 3),

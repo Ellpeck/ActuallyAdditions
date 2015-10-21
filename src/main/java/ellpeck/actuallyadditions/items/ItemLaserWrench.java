@@ -16,6 +16,7 @@ import ellpeck.actuallyadditions.misc.LaserRelayConnectionHandler;
 import ellpeck.actuallyadditions.tile.TileEntityLaserRelay;
 import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import ellpeck.actuallyadditions.util.ModUtil;
+import ellpeck.actuallyadditions.util.StringUtil;
 import ellpeck.actuallyadditions.util.WorldPos;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
@@ -25,9 +26,11 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IIcon;
-import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public class ItemLaserWrench extends Item implements IActAddItemOrBlock{
 
@@ -36,18 +39,9 @@ public class ItemLaserWrench extends Item implements IActAddItemOrBlock{
     }
 
     @Override
-    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player){
-        if(player.isSneaking() && !world.isRemote){
-            ItemPhantomConnector.clearStorage(stack);
-            player.addChatComponentMessage(new ChatComponentText("Storage cleared!"));
-        }
-        return stack;
-    }
-
-    @Override
     public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int par7, float par8, float par9, float par10){
         TileEntity tile = world.getTileEntity(x, y, z);
-        if(tile instanceof TileEntityLaserRelay && !player.isSneaking()){
+        if(tile instanceof TileEntityLaserRelay){
             if(!world.isRemote){
                 if(ItemPhantomConnector.getStoredPosition(stack) == null){
                     ItemPhantomConnector.storeConnection(stack, x, y, z, world);
@@ -55,39 +49,40 @@ public class ItemLaserWrench extends Item implements IActAddItemOrBlock{
                 }
                 else{
                     WorldPos savedPos = ItemPhantomConnector.getStoredPosition(stack);
-                    if(savedPos.getTileEntity() instanceof TileEntityLaserRelay){
-                        WorldPos otherPos = new WorldPos(world, x, y, z);
-                        int distance = (int)Vec3.createVectorHelper(otherPos.getX(), otherPos.getY(), otherPos.getZ()).distanceTo(Vec3.createVectorHelper(savedPos.getX(), savedPos.getY(), savedPos.getZ()));
-                        if(distance <= 15){
-                            if(!savedPos.isEqual(otherPos) && savedPos.getWorld() == otherPos.getWorld()){
-                                if(LaserRelayConnectionHandler.getInstance().addConnection(savedPos, otherPos)){
-                                    player.addChatComponentMessage(new ChatComponentText("Connected!"));
-                                    ItemPhantomConnector.clearStorage(stack);
+                    WorldPos otherPos = new WorldPos(world, x, y, z);
+                    if(savedPos.getTileEntity() instanceof TileEntityLaserRelay && LaserRelayConnectionHandler.getInstance().addConnection(savedPos, otherPos)){
+                        player.addChatComponentMessage(new ChatComponentText("Connected!"));
+                        ItemPhantomConnector.clearStorage(stack);
 
-                                    savedPos.update();
-                                    otherPos.update();
-                                }
-                                else{
-                                    player.addChatComponentMessage(new ChatComponentText("Couldn't connect!"));
-                                }
-                            }
-                            else{
-                                player.addChatComponentMessage(new ChatComponentText("Can't connect a Laser Relay to itself!"));
-                            }
-                        }
-                        else{
-                            player.addChatComponentMessage(new ChatComponentText("Too far away! Distance is "+distance+ "blocks!"));
-                        }
+                        savedPos.update();
+                        otherPos.update();
                     }
                     else{
-                        player.addChatComponentMessage(new ChatComponentText("The Laser Relay you were trying to connect to doesn't exist!"));
-                        ItemPhantomConnector.clearStorage(stack);
+                        player.addChatComponentMessage(new ChatComponentText("Couldn't connect!"));
                     }
                 }
             }
             return true;
         }
         return false;
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    @SideOnly(Side.CLIENT)
+    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld){
+        WorldPos coords = ItemPhantomConnector.getStoredPosition(stack);
+        if(coords != null){
+            World world = coords.getWorld();
+            if(world != null){
+                list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".boundTo.desc")+":");
+                list.add("X: "+coords.getX());
+                list.add("Y: "+coords.getY());
+                list.add("Z: "+coords.getZ());
+                list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".inWorld.desc")+" "+world.provider.dimensionId);
+                list.add(EnumChatFormatting.ITALIC+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".clearStorage.desc"));
+            }
+        }
     }
 
     @Override
