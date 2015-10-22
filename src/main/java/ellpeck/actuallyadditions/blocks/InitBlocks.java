@@ -100,14 +100,9 @@ public class InitBlocks{
     public static Block blockLaserRelay;
 
     //TODO: Plan for Laser Power Transmitters:
-    //TODO: Connectable with Laser Wrench
-    //TODO: Generate a Network that is (maybe) stored via WorldSavedData
-    //TODO: Whenever a Transmitter is fed with energy, it tries to find a connector that is connected to a block that needs energy
-    //TODO: The power then gets transferred through a Laser Entity that will find its way past all of the transmitters on its way to the block in need
-    //TODO: Or maybe, instead, if I can't be bothered, the points will be connected through shiny lines that light up or flash when power is transmitted
-    //TODO: Save the Connections via an Array of "ConnectionPairs" which stores two connected lasers to make calculating the laser entity easier
-    //TODO: -> To find every laser one is connected to, just go through the array, find the laser itself and get the second part of the pair
-    //TODO: Notify Client of Connections through NBT -> Every laser adds itself to the connection list on the client
+    //TODO: When there is a block in the way, they don't render their laser and don't transmit
+    //TODO: They stay connected and can be connected together even though they're blocked
+    //TODO: If blocked, they display the block coords blocking them on right-click
 
     public static void init(){
         ModUtil.LOGGER.info("Initializing Blocks...");

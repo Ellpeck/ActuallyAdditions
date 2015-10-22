@@ -10,47 +10,52 @@
 
 package ellpeck.actuallyadditions.util.playerdata;
 
-import ellpeck.actuallyadditions.util.ModUtil;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.world.World;
-import net.minecraftforge.common.IExtendedEntityProperties;
 
-public class PersistentServerData implements IExtendedEntityProperties{
+import java.util.ArrayList;
+import java.util.UUID;
 
-    public boolean bookGottenAlready;
+public class PersistentServerData{
 
-    public static PersistentServerData get(EntityPlayer player){
-        IExtendedEntityProperties properties = player.getExtendedProperties(ModUtil.MOD_ID);
-        if(properties != null && properties instanceof PersistentServerData){
-            return (PersistentServerData)properties;
+    public static ArrayList<PlayerSave> playerSaveData = new ArrayList<PlayerSave>();
+
+    public static NBTTagCompound getDataFromPlayer(EntityPlayer player){
+        //Get Data from existing data
+        for(PlayerSave save : playerSaveData){
+            if(save.thePlayerUUID.equals(player.getUniqueID())){
+                return save.theCompound;
+            }
         }
-        return null;
+
+        //Add Data if none is existant
+        PlayerSave aSave = new PlayerSave(player.getUniqueID(), new NBTTagCompound());
+        playerSaveData.add(aSave);
+        return aSave.theCompound;
     }
 
-    @Override
-    public void saveNBTData(NBTTagCompound aComp){
-        NBTTagCompound compound = new NBTTagCompound();
+    public static class PlayerSave{
 
-        compound.setBoolean("BookGotten", this.bookGottenAlready);
+        public UUID thePlayerUUID;
+        public NBTTagCompound theCompound;
 
-        aComp.setTag(ModUtil.MOD_ID, compound);
-    }
+        public PlayerSave(UUID theUUID, NBTTagCompound theCompound){
+            this.thePlayerUUID = theUUID;
+            this.theCompound = theCompound;
+        }
 
-    @Override
-    public void loadNBTData(NBTTagCompound aComp){
-        NBTBase base = aComp.getTag(ModUtil.MOD_ID);
-        if(base != null && base instanceof NBTTagCompound){
-            NBTTagCompound compound = (NBTTagCompound)base;
+        public void toNBT(NBTTagCompound compound, String name){
+            compound.setLong(name+"LeastSignificant", this.thePlayerUUID.getLeastSignificantBits());
+            compound.setLong(name+"MostSignificant", this.thePlayerUUID.getMostSignificantBits());
 
-            this.bookGottenAlready = compound.getBoolean("BookGotten");
+            compound.setTag(name+"Tag", this.theCompound);
+        }
+
+        public static PlayerSave fromNBT(NBTTagCompound compound, String name){
+            UUID theID = new UUID(compound.getLong(name+"MostSignificant"), compound.getLong(name+"LeastSignificant"));
+            NBTTagCompound theCompound = compound.getCompoundTag(name+"Tag");
+            return new PlayerSave(theID, theCompound);
         }
     }
 
-    @Override
-    public void init(Entity entity, World world){
-
-    }
 }

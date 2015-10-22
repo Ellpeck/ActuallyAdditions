@@ -11,6 +11,7 @@
 package ellpeck.actuallyadditions.misc;
 
 import ellpeck.actuallyadditions.util.ModUtil;
+import ellpeck.actuallyadditions.util.playerdata.PersistentServerData;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
@@ -30,8 +31,8 @@ public class WorldData extends WorldSavedData{
 
     @Override
     public void readFromNBT(NBTTagCompound compound){
+        //Laser World Data
         int netAmount = compound.getInteger("LaserNetworkAmount");
-
         LaserRelayConnectionHandler.getInstance().networks.clear();
         for(int i = 0; i < netAmount; i++){
             ArrayList<LaserRelayConnectionHandler.ConnectionPair> network = LaserRelayConnectionHandler.getInstance().readNetworkFromNBT(compound, "LaserNetwork"+i);
@@ -39,15 +40,33 @@ public class WorldData extends WorldSavedData{
                 LaserRelayConnectionHandler.getInstance().networks.add(network);
             }
         }
+
+        //Player Data
+        int dataSize = compound.getInteger("PersistentDataSize");
+        PersistentServerData.playerSaveData.clear();
+        for(int i = 0; i < dataSize; i++){
+            PersistentServerData.PlayerSave aSave = PersistentServerData.PlayerSave.fromNBT(compound, "PlayerSaveData"+i);
+            if(aSave != null){
+                PersistentServerData.playerSaveData.add(aSave);
+            }
+        }
     }
 
     @Override
     public void writeToNBT(NBTTagCompound compound){
+        //Laser World Data
         int netAmount = LaserRelayConnectionHandler.getInstance().networks.size();
         compound.setInteger("LaserNetworkAmount", netAmount);
 
         for(int i = 0; i < netAmount; i++){
             LaserRelayConnectionHandler.getInstance().writeNetworkToNBT(LaserRelayConnectionHandler.getInstance().networks.get(i), compound, "LaserNetwork"+i);
+        }
+
+        //Player Data
+        compound.setInteger("PersistentDataSize", PersistentServerData.playerSaveData.size());
+        for(int i = 0; i < PersistentServerData.playerSaveData.size(); i++){
+            PersistentServerData.PlayerSave theSave = PersistentServerData.playerSaveData.get(i);
+            theSave.toNBT(compound, "PlayerSaveData"+i);
         }
     }
 

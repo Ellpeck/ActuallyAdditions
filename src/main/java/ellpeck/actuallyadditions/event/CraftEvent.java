@@ -16,12 +16,14 @@ import ellpeck.actuallyadditions.achievement.InitAchievements;
 import ellpeck.actuallyadditions.achievement.TheAchievements;
 import ellpeck.actuallyadditions.config.values.ConfigBoolValues;
 import ellpeck.actuallyadditions.items.InitItems;
+import ellpeck.actuallyadditions.misc.WorldData;
 import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import ellpeck.actuallyadditions.util.playerdata.PersistentServerData;
 import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 
 public class CraftEvent{
 
@@ -31,9 +33,10 @@ public class CraftEvent{
 
         if(ConfigBoolValues.GIVE_BOOKLET_ON_FIRST_CRAFT.isEnabled()){
             if(!event.player.worldObj.isRemote && event.crafting.getItem() != InitItems.itemLexicon && (event.crafting.getItem() instanceof IActAddItemOrBlock || Block.getBlockFromItem(event.crafting.getItem()) instanceof IActAddItemOrBlock)){
-                PersistentServerData data = PersistentServerData.get(event.player);
-                if(data != null && !data.bookGottenAlready){
-                    data.bookGottenAlready = true;
+                NBTTagCompound compound = PersistentServerData.getDataFromPlayer(event.player);
+                if(compound != null && !compound.getBoolean("BookGottenAlready")){
+                    compound.setBoolean("BookGottenAlready", true);
+                    WorldData.makeDirty();
 
                     EntityItem entityItem = new EntityItem(event.player.worldObj, event.player.posX, event.player.posY, event.player.posZ, new ItemStack(InitItems.itemLexicon));
                     entityItem.delayBeforeCanPickup = 0;

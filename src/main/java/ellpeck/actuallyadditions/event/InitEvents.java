@@ -24,13 +24,13 @@ public class InitEvents{
         ModUtil.LOGGER.info("Initializing Events...");
 
         Util.registerEvent(new SmeltEvent());
+
         Util.registerEvent(new CraftEvent());
         Util.registerEvent(new LivingDropEvent());
         Util.registerEvent(new PickupEvent());
         Util.registerEvent(new EntityLivingEvent());
         Util.registerEvent(new BucketFillEvent());
         Util.registerEvent(new LogoutEvent());
-        Util.registerEvent(new EntityConstructingEvent());
         Util.registerEvent(new WorldLoadEvent());
         MinecraftForge.TERRAIN_GEN_BUS.register(new WorldDecorationEvent());
     }
