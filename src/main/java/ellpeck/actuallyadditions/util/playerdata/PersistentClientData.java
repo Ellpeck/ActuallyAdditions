@@ -32,18 +32,18 @@ public class PersistentClientData{
     private static File theFile;
 
     public static void saveBookPage(BookletIndexEntry entry, BookletChapter chapter, BookletPage page, int pageInIndex){
-        NBTTagCompound compound = getCompound();
+        NBTTagCompound compound = readCompound();
         if(compound != null){
             compound.setInteger(getName("Entry"), entry == null ? -1 : InitBooklet.entries.indexOf(entry));
             compound.setInteger(getName("Chapter"), entry == null || chapter == null ? -1 : entry.chapters.indexOf(chapter));
             compound.setInteger(getName("Page"), page == null ? -1 : page.getID());
             compound.setInteger(getName("PageInIndex"), pageInIndex);
-            writeCompoundToFile(compound);
+            writeCompound(compound);
         }
     }
 
     public static void openLastBookPage(GuiBooklet gui){
-        NBTTagCompound compound = getCompound();
+        NBTTagCompound compound = readCompound();
         if(compound != null){
             if(compound.hasKey(getName("Entry"))){
                 int entry = compound.getInteger(getName("Entry"));
@@ -67,10 +67,10 @@ public class PersistentClientData{
     }
 
     public static void setBoolean(String name, boolean bool){
-        NBTTagCompound compound = getCompound();
+        NBTTagCompound compound = readCompound();
         if(compound != null){
             compound.setBoolean(getName(name), bool);
-            writeCompoundToFile(compound);
+            writeCompound(compound);
         }
     }
 
@@ -79,49 +79,29 @@ public class PersistentClientData{
     }
 
     public static boolean getBoolean(String name){
-        NBTTagCompound compound = getCompound();
+        NBTTagCompound compound = readCompound();
         return compound != null && compound.getBoolean(getName(name));
-    }
-
-    private static File getTheFile() throws Exception{
-        if(!theFile.exists()){
-            theFile.createNewFile();
-        }
-        return theFile;
     }
 
     public static void setTheFile(File file){
         theFile = file;
     }
 
-    private static NBTTagCompound getCompound(){
+    private static NBTTagCompound readCompound(){
         try{
-            return getCompound(getTheFile());
+            return CompressedStreamTools.readCompressed(new FileInputStream(theFile));
         }
         catch(Exception e){
-            ModUtil.LOGGER.fatal("Couldn't read Persistant Variable!", e);
-            return null;
+            return new NBTTagCompound();
         }
     }
 
-    private static NBTTagCompound getCompound(File file) throws Exception{
+    private static void writeCompound(NBTTagCompound compound){
         try{
-            return CompressedStreamTools.readCompressed(new FileInputStream(file));
-        }
-        catch(Exception e){
-            return createNewCompound(file);
-        }
-    }
-
-    private static NBTTagCompound createNewCompound(File file) throws Exception{
-        NBTTagCompound compound = new NBTTagCompound();
-        CompressedStreamTools.writeCompressed(compound, new FileOutputStream(file));
-        return getCompound(file);
-    }
-
-    private static void writeCompoundToFile(NBTTagCompound compound){
-        try{
-            CompressedStreamTools.writeCompressed(compound, new FileOutputStream(getTheFile()));
+            if(!theFile.exists()){
+                theFile.createNewFile();
+            }
+            CompressedStreamTools.writeCompressed(compound, new FileOutputStream(theFile));
         }
         catch(Exception e){
             ModUtil.LOGGER.fatal("Couldn't write Persistant Variable!", e);
