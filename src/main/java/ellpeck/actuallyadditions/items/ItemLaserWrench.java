@@ -36,9 +36,18 @@ public class ItemLaserWrench extends Item implements IActAddItemOrBlock{
     }
 
     @Override
+    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player){
+        if(player.isSneaking() && !world.isRemote){
+            ItemPhantomConnector.clearStorage(stack);
+            player.addChatComponentMessage(new ChatComponentText("Storage cleared!"));
+        }
+        return stack;
+    }
+
+    @Override
     public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int par7, float par8, float par9, float par10){
         TileEntity tile = world.getTileEntity(x, y, z);
-        if(tile instanceof TileEntityLaserRelay){
+        if(tile instanceof TileEntityLaserRelay && !player.isSneaking()){
             if(!world.isRemote){
                 if(ItemPhantomConnector.getStoredPosition(stack) == null){
                     ItemPhantomConnector.storeConnection(stack, x, y, z, world);
@@ -54,6 +63,9 @@ public class ItemLaserWrench extends Item implements IActAddItemOrBlock{
                                 if(LaserRelayConnectionHandler.getInstance().addConnection(savedPos, otherPos)){
                                     player.addChatComponentMessage(new ChatComponentText("Connected!"));
                                     ItemPhantomConnector.clearStorage(stack);
+
+                                    savedPos.update();
+                                    otherPos.update();
                                 }
                                 else{
                                     player.addChatComponentMessage(new ChatComponentText("Couldn't connect!"));

@@ -14,7 +14,10 @@ import cofh.api.energy.IEnergyReceiver;
 import ellpeck.actuallyadditions.tile.TileEntityLaserRelay;
 import ellpeck.actuallyadditions.util.WorldPos;
 import ellpeck.actuallyadditions.util.WorldUtil;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
+import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.util.ForgeDirection;
 
 import java.util.ArrayList;
@@ -31,10 +34,35 @@ public class LaserRelayConnectionHandler{
     public ArrayList<ArrayList<ConnectionPair>> networks = new ArrayList<ArrayList<ConnectionPair>>();
 
     public static LaserRelayConnectionHandler getInstance(){
-        if(instance == null){
-            instance = new LaserRelayConnectionHandler();
-        }
         return instance;
+    }
+
+    public static void setInstance(LaserRelayConnectionHandler i){
+        instance = i;
+    }
+
+    public void writeNetworkToNBT(ArrayList<ConnectionPair> network, NBTTagCompound tag, String name){
+        NBTTagCompound compound = new NBTTagCompound();
+        compound.setInteger("NetworkSize", network.size());
+
+        for(int pair = 0; pair < network.size(); pair++){
+            network.get(pair).writeToNBT(compound, "Pair"+pair);
+        }
+
+        tag.setTag(name, compound);
+    }
+
+    public ArrayList<ConnectionPair> readNetworkFromNBT(NBTTagCompound tag, String name){
+        NBTTagCompound compound = tag.getCompoundTag(name);
+
+        int networkSize = compound.getInteger("NetworkSize");
+
+        ArrayList<ConnectionPair> network = new ArrayList<ConnectionPair>();
+        for(int pair = 0; pair < networkSize; pair++){
+            network.add(ConnectionPair.readFromNBT(compound, "Pair"+pair));
+        }
+
+        return network;
     }
 
     /**
@@ -49,6 +77,21 @@ public class LaserRelayConnectionHandler{
             }
         }
         return null;
+    }
+
+    /**
+     * Gets all Connections for a Relay
+     */
+    public ArrayList<ConnectionPair> getConnectionsFor(WorldPos relay){
+        ArrayList<ConnectionPair> allPairs = new ArrayList<ConnectionPair>();
+        for(ArrayList<ConnectionPair> aNetwork : this.networks){
+            for(ConnectionPair pair : aNetwork){
+                if(pair.contains(relay)){
+                    allPairs.add(pair);
+                }
+            }
+        }
+        return allPairs;
     }
 
     /**
@@ -169,6 +212,28 @@ public class LaserRelayConnectionHandler{
         @Override
         public String toString(){
             return (this.firstRelay == null ? "-" : this.firstRelay.toString())+" | "+(this.secondRelay == null ? "-" : this.secondRelay.toString());
+        }
+
+        public void writeToNBT(NBTTagCompound compound, String name){
+            for(int i = 0; i < 2; i++){
+                WorldPos relay = i == 0 ? this.firstRelay : this.secondRelay;
+                compound.setInteger("world"+name+i, relay.getWorld().provider.dimensionId);
+                compound.setInteger("x"+name+i, relay.getX());
+                compound.setInteger("y"+name+i, relay.getY());
+                compound.setInteger("z"+name+i, relay.getZ());
+            }
+        }
+
+        public static ConnectionPair readFromNBT(NBTTagCompound compound, String name){
+            WorldPos[] pos = new WorldPos[2];
+            for(int i = 0; i < pos.length; i++){
+                World aWorld = DimensionManager.getWorld(compound.getInteger("world"+name+i));
+                int anX = compound.getInteger("x"+name+i);
+                int aY = compound.getInteger("y"+name+i);
+                int aZ = compound.getInteger("z"+name+i);
+                pos[i] = new WorldPos(aWorld, anX, aY, aZ);
+            }
+            return new ConnectionPair(pos[0], pos[1]);
         }
     }
 }

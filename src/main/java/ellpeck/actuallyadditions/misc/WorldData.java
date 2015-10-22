@@ -16,6 +16,8 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldSavedData;
 
+import java.util.ArrayList;
+
 public class WorldData extends WorldSavedData{
 
     public static final String DATA_TAG = ModUtil.MOD_ID+"WorldData";
@@ -28,12 +30,25 @@ public class WorldData extends WorldSavedData{
 
     @Override
     public void readFromNBT(NBTTagCompound compound){
+        int netAmount = compound.getInteger("LaserNetworkAmount");
 
+        LaserRelayConnectionHandler.getInstance().networks.clear();
+        for(int i = 0; i < netAmount; i++){
+            ArrayList<LaserRelayConnectionHandler.ConnectionPair> network = LaserRelayConnectionHandler.getInstance().readNetworkFromNBT(compound, "LaserNetwork"+i);
+            if(network != null){
+                LaserRelayConnectionHandler.getInstance().networks.add(network);
+            }
+        }
     }
 
     @Override
     public void writeToNBT(NBTTagCompound compound){
+        int netAmount = LaserRelayConnectionHandler.getInstance().networks.size();
+        compound.setInteger("LaserNetworkAmount", netAmount);
 
+        for(int i = 0; i < netAmount; i++){
+            LaserRelayConnectionHandler.getInstance().writeNetworkToNBT(LaserRelayConnectionHandler.getInstance().networks.get(i), compound, "LaserNetwork"+i);
+        }
     }
 
     public static void makeDirty(){
