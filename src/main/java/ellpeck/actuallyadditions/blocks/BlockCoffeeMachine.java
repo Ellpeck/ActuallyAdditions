@@ -24,7 +24,6 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumRarity;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
@@ -116,27 +115,8 @@ public class BlockCoffeeMachine extends BlockContainerBase implements IActAddIte
         return "blockCoffeeMachine";
     }
 
-    public static class TheItemBlock extends ItemBlock{
-
-        public TheItemBlock(Block block){
-            super(block);
-            this.setHasSubtypes(false);
-            this.setMaxDamage(0);
-        }
-
-        @Override
-        public String getUnlocalizedName(ItemStack stack){
-            return this.getUnlocalizedName();
-        }
-
-        @Override
-        public int getMetadata(int damage){
-            return damage;
-        }
-
-        @Override
-        public EnumRarity getRarity(ItemStack stack){
-            return EnumRarity.rare;
-        }
+    @Override
+    public EnumRarity getRarity(ItemStack stack){
+        return EnumRarity.epic;
     }
 }

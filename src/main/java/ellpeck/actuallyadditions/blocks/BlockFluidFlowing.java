@@ -14,11 +14,9 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import ellpeck.actuallyadditions.util.ModUtil;
-import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.item.EnumRarity;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
@@ -67,27 +65,8 @@ public class BlockFluidFlowing extends BlockFluidClassic implements IActAddItemO
         return this.name;
     }
 
-    public static class TheItemBlock extends ItemBlock{
-
-        public TheItemBlock(Block block){
-            super(block);
-            this.setHasSubtypes(false);
-            this.setMaxDamage(0);
-        }
-
-        @Override
-        public String getUnlocalizedName(ItemStack stack){
-            return this.getUnlocalizedName();
-        }
-
-        @Override
-        public int getMetadata(int damage){
-            return damage;
-        }
-
-        @Override
-        public EnumRarity getRarity(ItemStack stack){
-            return EnumRarity.uncommon;
-        }
+    @Override
+    public EnumRarity getRarity(ItemStack stack){
+        return EnumRarity.epic;
     }
 }

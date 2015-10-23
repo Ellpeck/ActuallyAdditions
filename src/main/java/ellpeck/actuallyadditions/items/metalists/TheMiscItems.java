@@ -10,10 +10,9 @@
 
 package ellpeck.actuallyadditions.items.metalists;
 
-import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import net.minecraft.item.EnumRarity;
 
-public enum TheMiscItems implements IActAddItemOrBlock{
+public enum TheMiscItems{
 
     PAPER_CONE("PaperCone", EnumRarity.common),
     MASHED_FOOD("MashedFood", EnumRarity.uncommon),
@@ -38,10 +37,5 @@ public enum TheMiscItems implements IActAddItemOrBlock{
     TheMiscItems(String name, EnumRarity rarity){
         this.name = name;
         this.rarity = rarity;
-    }
-
-    @Override
-    public String getName(){
-        return this.name;
     }
 }

@@ -24,7 +24,6 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
@@ -107,32 +106,13 @@ public class BlockBreaker extends BlockContainerBase implements IActAddItemOrBlo
     }
 
     @Override
+    public EnumRarity getRarity(ItemStack stack){
+        return EnumRarity.uncommon;
+    }
+
+    @Override
     public void breakBlock(World world, int x, int y, int z, Block block, int par6){
         this.dropInventory(world, x, y, z);
         super.breakBlock(world, x, y, z, block, par6);
-    }
-
-    public static class TheItemBlock extends ItemBlock{
-
-        public TheItemBlock(Block block){
-            super(block);
-            this.setHasSubtypes(false);
-            this.setMaxDamage(0);
-        }
-
-        @Override
-        public String getUnlocalizedName(ItemStack stack){
-            return this.getUnlocalizedName();
-        }
-
-        @Override
-        public int getMetadata(int damage){
-            return damage;
-        }
-
-        @Override
-        public EnumRarity getRarity(ItemStack stack){
-            return EnumRarity.rare;
-        }
     }
 }

@@ -48,7 +48,7 @@ public class ItemJams extends ItemFood implements IActAddItemOrBlock{
 
     @Override
     public String getUnlocalizedName(ItemStack stack){
-        return this.getUnlocalizedName()+(stack.getItemDamage() >= allJams.length ? " ERROR!" : allJams[stack.getItemDamage()].getName());
+        return this.getUnlocalizedName()+(stack.getItemDamage() >= allJams.length ? " ERROR!" : allJams[stack.getItemDamage()].name);
     }
 
     @Override

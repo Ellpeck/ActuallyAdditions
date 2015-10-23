@@ -10,10 +10,9 @@
 
 package ellpeck.actuallyadditions.items.metalists;
 
-import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import net.minecraft.item.EnumRarity;
 
-public enum TheJams implements IActAddItemOrBlock{
+public enum TheJams{
 
     CU_BA_RA("CuBaRa", 6, 0.1F, EnumRarity.rare, 5, 12, 12595273),
     GRA_KI_BA("GraKiBa", 6, 0.1F, EnumRarity.rare, 16, 13, 5492820),
@@ -38,10 +37,5 @@ public enum TheJams implements IActAddItemOrBlock{
         this.firstEffectToGet = firstEffectID;
         this.secondEffectToGet = secondEffectID;
         this.color = color;
-    }
-
-    @Override
-    public String getName(){
-        return this.name;
     }
 }

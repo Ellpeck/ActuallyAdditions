@@ -85,7 +85,7 @@ public class ItemFoods extends ItemFood implements IActAddItemOrBlock{
 
     @Override
     public String getUnlocalizedName(ItemStack stack){
-        return this.getUnlocalizedName()+(stack.getItemDamage() >= allFoods.length ? " ERROR!" : allFoods[stack.getItemDamage()].getName());
+        return this.getUnlocalizedName()+(stack.getItemDamage() >= allFoods.length ? " ERROR!" : allFoods[stack.getItemDamage()].name);
     }
 
     @Override
@@ -105,7 +105,7 @@ public class ItemFoods extends ItemFood implements IActAddItemOrBlock{
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister iconReg){
         for(int i = 0; i < textures.length; i++){
-            textures[i] = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+allFoods[i].getName());
+            textures[i] = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+allFoods[i].name);
         }
     }
 

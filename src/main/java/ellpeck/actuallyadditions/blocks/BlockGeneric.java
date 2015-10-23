@@ -18,7 +18,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.item.EnumRarity;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 
@@ -51,27 +50,8 @@ public class BlockGeneric extends Block implements IActAddItemOrBlock{
         return this.name;
     }
 
-    public static class TheItemBlock extends ItemBlock{
-
-        public TheItemBlock(Block block){
-            super(block);
-            this.setHasSubtypes(false);
-            this.setMaxDamage(0);
-        }
-
-        @Override
-        public String getUnlocalizedName(ItemStack stack){
-            return this.getUnlocalizedName();
-        }
-
-        @Override
-        public int getMetadata(int meta){
-            return meta;
-        }
-
-        @Override
-        public EnumRarity getRarity(ItemStack stack){
-            return EnumRarity.uncommon;
-        }
+    @Override
+    public EnumRarity getRarity(ItemStack stack){
+        return EnumRarity.common;
     }
 }

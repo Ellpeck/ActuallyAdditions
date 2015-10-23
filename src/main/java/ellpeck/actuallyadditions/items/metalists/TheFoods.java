@@ -11,12 +11,11 @@
 package ellpeck.actuallyadditions.items.metalists;
 
 import ellpeck.actuallyadditions.items.InitItems;
-import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 
-public enum TheFoods implements IActAddItemOrBlock{
+public enum TheFoods{
 
     CHEESE("Cheese", 1, 0.5F, false, 3, EnumRarity.common),
     PUMPKIN_STEW("PumpkinStew", 10, 1F, true, 30, EnumRarity.common),
@@ -61,10 +60,5 @@ public enum TheFoods implements IActAddItemOrBlock{
         CARROT_JUICE.returnItem = new ItemStack(Items.glass_bottle);
         FRENCH_FRIES.returnItem = new ItemStack(InitItems.itemMisc, 1, TheMiscItems.PAPER_CONE.ordinal());
         FISH_N_CHIPS.returnItem = new ItemStack(InitItems.itemMisc, 1, TheMiscItems.PAPER_CONE.ordinal());
-    }
-
-    @Override
-    public String getName(){
-        return this.name;
     }
 }

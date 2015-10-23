@@ -15,11 +15,9 @@ import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.tile.TileEntityGreenhouseGlass;
 import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import ellpeck.actuallyadditions.util.ModUtil;
-import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.item.EnumRarity;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Facing;
@@ -77,31 +75,13 @@ public class BlockGreenhouseGlass extends BlockContainerBase implements IActAddI
     }
 
     @Override
+    public EnumRarity getRarity(ItemStack stack){
+        return EnumRarity.epic;
+    }
+
+    @Override
     public TileEntity createNewTileEntity(World world, int par2){
         return new TileEntityGreenhouseGlass();
     }
 
-    public static class TheItemBlock extends ItemBlock{
-
-        public TheItemBlock(Block block){
-            super(block);
-            this.setHasSubtypes(false);
-            this.setMaxDamage(0);
-        }
-
-        @Override
-        public String getUnlocalizedName(ItemStack stack){
-            return this.getUnlocalizedName();
-        }
-
-        @Override
-        public int getMetadata(int damage){
-            return damage;
-        }
-
-        @Override
-        public EnumRarity getRarity(ItemStack stack){
-            return EnumRarity.epic;
-        }
-    }
 }

@@ -94,4 +94,5 @@ public class ItemChestToCrateUpgrade extends Item implements IActAddItemOrBlock{
     public String getName(){
         return "itemChestToCrateUpgrade";
     }
+
 }

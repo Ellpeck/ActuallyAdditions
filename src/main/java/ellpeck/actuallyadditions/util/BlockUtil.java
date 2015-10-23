@@ -12,27 +12,28 @@ package ellpeck.actuallyadditions.util;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import ellpeck.actuallyadditions.creative.CreativeTab;
+import ellpeck.actuallyadditions.items.ItemBlockBase;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 
 public class BlockUtil{
 
-    @SuppressWarnings("unchecked")
-    public static void register(Block block){
-        register(block, true);
+    public static void register(Block block, Class<? extends ItemBlock> itemBlock){
+        register(block, itemBlock, true);
     }
 
-    @SuppressWarnings("unchecked")
+    public static void register(Block block){
+        register(block, ItemBlockBase.class, true);
+    }
+
     public static void register(Block block, boolean addTab){
+        register(block, ItemBlockBase.class, addTab);
+    }
+
+    public static void register(Block block, Class<? extends ItemBlock> itemBlock, boolean addTab){
         block.setCreativeTab(addTab ? CreativeTab.instance : null);
         block.setBlockName(createUnlocalizedName(block));
-
-        for(Class sub : block.getClass().getDeclaredClasses()){
-            if(sub.getSuperclass() == ItemBlock.class){
-                GameRegistry.registerBlock(block, sub, ((IActAddItemOrBlock)block).getName());
-                break;
-            }
-        }
+        GameRegistry.registerBlock(block, itemBlock, ((IActAddItemOrBlock)block).getName());
     }
 
     public static String createUnlocalizedName(Block block){

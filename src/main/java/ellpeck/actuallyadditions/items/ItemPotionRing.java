@@ -48,7 +48,7 @@ public class ItemPotionRing extends Item implements IActAddItemOrBlock{
 
     @Override
     public String getUnlocalizedName(ItemStack stack){
-        return this.getUnlocalizedName()+(stack.getItemDamage() >= allRings.length ? " ERROR!" : allRings[stack.getItemDamage()].getName().substring("potion".length()));
+        return this.getUnlocalizedName()+(stack.getItemDamage() >= allRings.length ? " ERROR!" : allRings[stack.getItemDamage()].name.substring("potion".length()));
     }
 
     @Override
@@ -86,7 +86,7 @@ public class ItemPotionRing extends Item implements IActAddItemOrBlock{
     public String getItemStackDisplayName(ItemStack stack){
         String standardName = StringUtil.localize(this.getUnlocalizedName()+".name");
         if(stack.getItemDamage() < allRings.length){
-            String effect = StringUtil.localize(allRings[stack.getItemDamage()].getName());
+            String effect = StringUtil.localize(allRings[stack.getItemDamage()].name);
             return standardName+" "+effect;
         }
         return standardName;

@@ -13,6 +13,7 @@ package ellpeck.actuallyadditions.blocks;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.blocks.metalists.TheMiscBlocks;
+import ellpeck.actuallyadditions.items.ItemBlockBase;
 import ellpeck.actuallyadditions.proxy.ClientProxy;
 import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import ellpeck.actuallyadditions.util.ModUtil;
@@ -22,7 +23,6 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 
@@ -68,7 +68,7 @@ public class BlockMisc extends Block implements IActAddItemOrBlock{
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconReg){
         for(int i = 0; i < textures.length; i++){
-            textures[i] = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+allMiscBlocks[i].getName());
+            textures[i] = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+allMiscBlocks[i].name);
         }
 
         this.stoneCasingSeasonalTop = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":blockMiscStoneCasingSnowTop");
@@ -80,7 +80,12 @@ public class BlockMisc extends Block implements IActAddItemOrBlock{
         return "blockMisc";
     }
 
-    public static class TheItemBlock extends ItemBlock{
+    @Override
+    public EnumRarity getRarity(ItemStack stack){
+        return stack.getItemDamage() >= allMiscBlocks.length ? EnumRarity.common : allMiscBlocks[stack.getItemDamage()].rarity;
+    }
+
+    public static class TheItemBlock extends ItemBlockBase{
 
         public TheItemBlock(Block block){
             super(block);
@@ -90,7 +95,7 @@ public class BlockMisc extends Block implements IActAddItemOrBlock{
 
         @Override
         public String getUnlocalizedName(ItemStack stack){
-            return this.getUnlocalizedName()+(stack.getItemDamage() >= allMiscBlocks.length ? " ERROR!" : allMiscBlocks[stack.getItemDamage()].getName());
+            return this.getUnlocalizedName()+(stack.getItemDamage() >= allMiscBlocks.length ? " ERROR!" : allMiscBlocks[stack.getItemDamage()].name);
         }
 
         @Override
@@ -100,7 +105,8 @@ public class BlockMisc extends Block implements IActAddItemOrBlock{
 
         @Override
         public EnumRarity getRarity(ItemStack stack){
-            return stack.getItemDamage() >= allMiscBlocks.length ? EnumRarity.common : allMiscBlocks[stack.getItemDamage()].rarity;
+            EnumRarity rarity = ((IActAddItemOrBlock)this.field_150939_a).getRarity(stack);
+            return rarity == null ? EnumRarity.common : rarity;
         }
     }
 }

@@ -10,9 +10,7 @@
 
 package ellpeck.actuallyadditions.blocks.metalists;
 
-import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
-
-public enum TheColoredLampColors implements IActAddItemOrBlock{
+public enum TheColoredLampColors{
 
     WHITE("White"),
     ORANGE("Orange"),
@@ -41,16 +39,11 @@ public enum TheColoredLampColors implements IActAddItemOrBlock{
         if(color.substring(0, 3).equals("dye")){
             String actualName = color.substring(3);
             for(int i = 0; i < values().length; i++){
-                if(values()[i].getName().equals(actualName)){
+                if(values()[i].name.equals(actualName)){
                     return values()[i];
                 }
             }
         }
         return null;
-    }
-
-    @Override
-    public String getName(){
-        return name;
     }
 }

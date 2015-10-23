@@ -71,7 +71,7 @@ public class ItemSpecialDrop extends Item implements IActAddItemOrBlock{
 
     @Override
     public String getUnlocalizedName(ItemStack stack){
-        return this.getUnlocalizedName()+(stack.getItemDamage() >= allDrops.length ? " ERROR!" : allDrops[stack.getItemDamage()].getName());
+        return this.getUnlocalizedName()+(stack.getItemDamage() >= allDrops.length ? " ERROR!" : allDrops[stack.getItemDamage()].name);
     }
 
     @Override
@@ -91,7 +91,7 @@ public class ItemSpecialDrop extends Item implements IActAddItemOrBlock{
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister iconReg){
         for(int i = 0; i < textures.length; i++){
-            textures[i] = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+allDrops[i].getName());
+            textures[i] = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+allDrops[i].name);
         }
     }
 

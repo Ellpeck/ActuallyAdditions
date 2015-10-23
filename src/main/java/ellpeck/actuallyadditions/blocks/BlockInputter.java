@@ -14,6 +14,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.ActuallyAdditions;
 import ellpeck.actuallyadditions.inventory.GuiHandler;
+import ellpeck.actuallyadditions.items.ItemBlockBase;
 import ellpeck.actuallyadditions.tile.TileEntityInputter;
 import ellpeck.actuallyadditions.tile.TileEntityInventoryBase;
 import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
@@ -24,7 +25,6 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
@@ -82,6 +82,11 @@ public class BlockInputter extends BlockContainerBase implements IActAddItemOrBl
     }
 
     @Override
+    public EnumRarity getRarity(ItemStack stack){
+        return EnumRarity.epic;
+    }
+
+    @Override
     public void breakBlock(World world, int x, int y, int z, Block block, int par6){
         if(!world.isRemote){
             TileEntity aTile = world.getTileEntity(x, y, z);
@@ -93,7 +98,7 @@ public class BlockInputter extends BlockContainerBase implements IActAddItemOrBl
         super.breakBlock(world, x, y, z, block, par6);
     }
 
-    public static class TheItemBlock extends ItemBlock{
+    public static class TheItemBlock extends ItemBlockBase{
 
         private long lastSysTime;
         private int toPick;
@@ -129,7 +134,8 @@ public class BlockInputter extends BlockContainerBase implements IActAddItemOrBl
 
         @Override
         public EnumRarity getRarity(ItemStack stack){
-            return ((BlockInputter)this.field_150939_a).isAdvanced ? EnumRarity.epic : EnumRarity.rare;
+            EnumRarity rarity = ((IActAddItemOrBlock)this.field_150939_a).getRarity(stack);
+            return rarity == null ? EnumRarity.common : rarity;
         }
     }
 }

@@ -24,7 +24,6 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.IIcon;
@@ -144,6 +143,11 @@ public class BlockTreasureChest extends Block implements IActAddItemOrBlock{
         return "blockTreasureChest";
     }
 
+    @Override
+    public EnumRarity getRarity(ItemStack stack){
+        return EnumRarity.epic;
+    }
+
     private void dropItems(World world, int x, int y, int z){
         Random rand = new Random();
         for(int i = 0; i < MathHelper.getRandomIntegerInRange(rand, 3, 6); i++){
@@ -164,30 +168,6 @@ public class BlockTreasureChest extends Block implements IActAddItemOrBlock{
             entityItem.motionZ = rand.nextGaussian()*factor;
             world.spawnEntityInWorld(entityItem);
             itemStack.stackSize = 0;
-        }
-    }
-
-    public static class TheItemBlock extends ItemBlock{
-
-        public TheItemBlock(Block block){
-            super(block);
-            this.setHasSubtypes(false);
-            this.setMaxDamage(0);
-        }
-
-        @Override
-        public String getUnlocalizedName(ItemStack stack){
-            return this.getUnlocalizedName();
-        }
-
-        @Override
-        public int getMetadata(int damage){
-            return damage;
-        }
-
-        @Override
-        public EnumRarity getRarity(ItemStack stack){
-            return EnumRarity.epic;
         }
     }
 }

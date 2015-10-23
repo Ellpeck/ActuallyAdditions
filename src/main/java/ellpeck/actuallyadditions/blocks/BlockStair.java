@@ -14,7 +14,6 @@ import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockStairs;
 import net.minecraft.item.EnumRarity;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
 public class BlockStair extends BlockStairs implements IActAddItemOrBlock{
@@ -32,27 +31,8 @@ public class BlockStair extends BlockStairs implements IActAddItemOrBlock{
         return this.name;
     }
 
-    public static class TheItemBlock extends ItemBlock{
-
-        public TheItemBlock(Block block){
-            super(block);
-            this.setHasSubtypes(false);
-            this.setMaxDamage(0);
-        }
-
-        @Override
-        public String getUnlocalizedName(ItemStack stack){
-            return this.getUnlocalizedName();
-        }
-
-        @Override
-        public int getMetadata(int meta){
-            return meta;
-        }
-
-        @Override
-        public EnumRarity getRarity(ItemStack stack){
-            return EnumRarity.uncommon;
-        }
+    @Override
+    public EnumRarity getRarity(ItemStack stack){
+        return EnumRarity.common;
     }
 }

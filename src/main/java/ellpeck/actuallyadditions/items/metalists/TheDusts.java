@@ -10,11 +10,10 @@
 
 package ellpeck.actuallyadditions.items.metalists;
 
-import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import ellpeck.actuallyadditions.util.StringUtil;
 import net.minecraft.item.EnumRarity;
 
-public enum TheDusts implements IActAddItemOrBlock{
+public enum TheDusts{
 
     IRON("Iron", 7826534, EnumRarity.common),
     GOLD("Gold", 14335744, EnumRarity.uncommon),
@@ -35,8 +34,5 @@ public enum TheDusts implements IActAddItemOrBlock{
         this.rarity = rarity;
     }
 
-    @Override
-    public String getName(){
-        return this.name;
-    }
+
 }

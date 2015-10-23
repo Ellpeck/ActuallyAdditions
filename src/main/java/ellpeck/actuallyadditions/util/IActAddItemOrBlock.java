@@ -10,11 +10,16 @@
 
 package ellpeck.actuallyadditions.util;
 
+import net.minecraft.item.EnumRarity;
+import net.minecraft.item.ItemStack;
+
 /**
  * The indicator interface for any block or item that is part of ActuallyAdditions
  */
 public interface IActAddItemOrBlock{
 
     String getName();
+
+    EnumRarity getRarity(ItemStack stack);
 
 }

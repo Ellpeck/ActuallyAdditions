@@ -11,14 +11,13 @@
 package ellpeck.actuallyadditions.items.metalists;
 
 import ellpeck.actuallyadditions.config.values.ConfigBoolValues;
-import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.item.EnumRarity;
 
-public enum TheSpecialDrops implements IActAddItemOrBlock{
+public enum TheSpecialDrops{
 
     SOLIDIFIED_EXPERIENCE("SolidifiedExperience", 40, 3, EntityCreature.class, EnumRarity.uncommon, ConfigBoolValues.EXPERIENCE_DROP.isEnabled()),
     BLOOD_FRAGMENT("BloodFragment", 15, 1, EntityCreature.class, EnumRarity.uncommon, ConfigBoolValues.BLOOD_DROP.isEnabled()),
@@ -41,10 +40,5 @@ public enum TheSpecialDrops implements IActAddItemOrBlock{
         this.maxAmount = maxAmount;
         this.dropFrom = dropFrom;
         this.canDrop = canDrop;
-    }
-
-    @Override
-    public String getName(){
-        return this.name;
     }
 }

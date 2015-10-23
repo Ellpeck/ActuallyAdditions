@@ -22,7 +22,6 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.EnumRarity;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
@@ -86,6 +85,11 @@ public class BlockLampPowerer extends Block implements IActAddItemOrBlock{
         return "blockLampPowerer";
     }
 
+    @Override
+    public EnumRarity getRarity(ItemStack stack){
+        return EnumRarity.rare;
+    }
+
     private void updateLamp(World world, int x, int y, int z){
         if(!world.isRemote){
             WorldPos coords = WorldUtil.getCoordsFromSide(ForgeDirection.getOrientation(world.getBlockMetadata(x, y, z)), world, x, y, z, 0);
@@ -101,30 +105,6 @@ public class BlockLampPowerer extends Block implements IActAddItemOrBlock{
                     }
                 }
             }
-        }
-    }
-
-    public static class TheItemBlock extends ItemBlock{
-
-        public TheItemBlock(Block block){
-            super(block);
-            this.setHasSubtypes(false);
-            this.setMaxDamage(0);
-        }
-
-        @Override
-        public String getUnlocalizedName(ItemStack stack){
-            return this.getUnlocalizedName();
-        }
-
-        @Override
-        public int getMetadata(int meta){
-            return meta;
-        }
-
-        @Override
-        public EnumRarity getRarity(ItemStack stack){
-            return EnumRarity.uncommon;
         }
     }
 }

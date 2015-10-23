@@ -11,11 +11,10 @@
 package ellpeck.actuallyadditions.blocks.metalists;
 
 import ellpeck.actuallyadditions.blocks.InitBlocks;
-import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import net.minecraft.block.Block;
 import net.minecraft.item.EnumRarity;
 
-public enum TheWildPlants implements IActAddItemOrBlock{
+public enum TheWildPlants{
 
     CANOLA("Canola", EnumRarity.rare, InitBlocks.blockCanola),
     FLAX("Flax", EnumRarity.rare, InitBlocks.blockFlax),
@@ -30,10 +29,5 @@ public enum TheWildPlants implements IActAddItemOrBlock{
         this.name = name;
         this.rarity = rarity;
         this.wildVersionOf = wildVersionOf;
-    }
-
-    @Override
-    public String getName(){
-        return this.name;
     }
 }

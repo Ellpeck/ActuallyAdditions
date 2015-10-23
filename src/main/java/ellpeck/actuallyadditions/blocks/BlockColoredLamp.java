@@ -13,6 +13,7 @@ package ellpeck.actuallyadditions.blocks;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.blocks.metalists.TheColoredLampColors;
+import ellpeck.actuallyadditions.items.ItemBlockBase;
 import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
@@ -23,7 +24,6 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
@@ -50,6 +50,11 @@ public class BlockColoredLamp extends Block implements IActAddItemOrBlock{
     @Override
     public String getName(){
         return this.isOn ? "blockColoredLampOn" : "blockColoredLamp";
+    }
+
+    @Override
+    public EnumRarity getRarity(ItemStack stack){
+        return EnumRarity.rare;
     }
 
     @Override
@@ -132,7 +137,7 @@ public class BlockColoredLamp extends Block implements IActAddItemOrBlock{
         return this.isOn ? 15 : 0;
     }
 
-    public static class TheItemBlock extends ItemBlock{
+    public static class TheItemBlock extends ItemBlockBase{
 
         public TheItemBlock(Block block){
             super(block);
@@ -155,12 +160,13 @@ public class BlockColoredLamp extends Block implements IActAddItemOrBlock{
 
         @Override
         public EnumRarity getRarity(ItemStack stack){
-            return EnumRarity.rare;
+            EnumRarity rarity = ((IActAddItemOrBlock)this.field_150939_a).getRarity(stack);
+            return rarity == null ? EnumRarity.common : rarity;
         }
 
         @Override
         public String getUnlocalizedName(ItemStack stack){
-            return InitBlocks.blockColoredLamp.getUnlocalizedName()+allLampTypes[stack.getItemDamage()].getName();
+            return InitBlocks.blockColoredLamp.getUnlocalizedName()+allLampTypes[stack.getItemDamage()].name;
         }
     }
 }

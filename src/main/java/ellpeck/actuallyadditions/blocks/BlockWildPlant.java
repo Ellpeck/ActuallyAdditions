@@ -13,6 +13,7 @@ package ellpeck.actuallyadditions.blocks;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.blocks.metalists.TheWildPlants;
+import ellpeck.actuallyadditions.items.ItemBlockBase;
 import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
@@ -21,7 +22,6 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
@@ -85,7 +85,12 @@ public class BlockWildPlant extends BlockBush implements IActAddItemOrBlock{
         return "blockWild";
     }
 
-    public static class TheItemBlock extends ItemBlock{
+    @Override
+    public EnumRarity getRarity(ItemStack stack){
+        return stack.getItemDamage() >= allWildPlants.length ? EnumRarity.common : allWildPlants[stack.getItemDamage()].rarity;
+    }
+
+    public static class TheItemBlock extends ItemBlockBase{
 
         public TheItemBlock(Block block){
             super(block);
@@ -100,7 +105,8 @@ public class BlockWildPlant extends BlockBush implements IActAddItemOrBlock{
 
         @Override
         public EnumRarity getRarity(ItemStack stack){
-            return stack.getItemDamage() >= allWildPlants.length ? EnumRarity.common : allWildPlants[stack.getItemDamage()].rarity;
+            EnumRarity rarity = ((IActAddItemOrBlock)this.field_150939_a).getRarity(stack);
+            return rarity == null ? EnumRarity.common : rarity;
         }
 
         @SideOnly(Side.CLIENT)
@@ -111,8 +117,7 @@ public class BlockWildPlant extends BlockBush implements IActAddItemOrBlock{
 
         @Override
         public String getUnlocalizedName(ItemStack stack){
-            return this.getUnlocalizedName()+(stack.getItemDamage() >= allWildPlants.length ? " ERROR!" : allWildPlants[stack.getItemDamage()].getName());
+            return this.getUnlocalizedName()+(stack.getItemDamage() >= allWildPlants.length ? " ERROR!" : allWildPlants[stack.getItemDamage()].name);
         }
-
     }
 }

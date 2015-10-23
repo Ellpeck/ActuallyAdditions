@@ -39,7 +39,7 @@ public class ItemDust extends Item implements IActAddItemOrBlock{
 
     @Override
     public String getUnlocalizedName(ItemStack stack){
-        return this.getUnlocalizedName()+(stack.getItemDamage() >= allDusts.length ? " ERROR!" : allDusts[stack.getItemDamage()].getName());
+        return this.getUnlocalizedName()+(stack.getItemDamage() >= allDusts.length ? " ERROR!" : allDusts[stack.getItemDamage()].name);
     }
 
     @Override
