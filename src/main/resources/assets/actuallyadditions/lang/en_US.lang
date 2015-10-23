@@ -451,7 +451,7 @@ booklet.actuallyadditions.chapter.phantomfaces.text.3=The <item>Phantom Liquifac
 booklet.actuallyadditions.chapter.phantomfaces.text.4=The <item>Phantom Energyface<r> acts exactly like the normal <item>Phantomface<r>, but it <imp>works for RF<r>, meaning you can connect it to things like Generators and Crushers.
 booklet.actuallyadditions.chapter.phantomfaces.text.6=The <item>Phantom Booster<r>, as explained on the first page, ups the range of <item>Phantomface<r>s by being placed <imp>on top of them<r>. The maximum amount above one <item>Phantomface<r> is <imp>3<r>.
 
-booklet.actuallyadditions.chapter.phantomBreaker.name=Phantom Breakers and Placers
+booklet.actuallyadditions.chapter.phantomBreaker.name=Phantom Breakers & Placers
 booklet.actuallyadditions.chapter.phantomBreaker.text.1=<item>Phantom Breakers<r> and <item>Placers<r> work similarly to the normal <item>Phantomfaces<r>, except that they are used to <imp>break and place blocks from a distance<r>. Their default range is <imp><range> Blocks<r>, however. To connect them to blocks to break, just store the block with a <item>Phantom Connector<r> as described in the <imp>Phantomface Chapter<r>. When connecting them to air spaces, just place a block, store it and then break it again.
 
 booklet.actuallyadditions.chapter.esd.name=ESDs

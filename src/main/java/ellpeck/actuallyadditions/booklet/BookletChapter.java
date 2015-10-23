@@ -14,6 +14,7 @@ import ellpeck.actuallyadditions.booklet.page.BookletPage;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumChatFormatting;
 
 public class BookletChapter{
 
@@ -21,6 +22,7 @@ public class BookletChapter{
     public final BookletIndexEntry entry;
     public final ItemStack displayStack;
     private final String unlocalizedName;
+    public EnumChatFormatting color;
 
     public BookletChapter(String unlocalizedName, BookletIndexEntry entry, ItemStack displayStack, BookletPage... pages){
         this.pages = pages.clone();
@@ -34,6 +36,8 @@ public class BookletChapter{
         for(BookletPage page : this.pages){
             page.setChapter(this);
         }
+
+        this.color = EnumChatFormatting.RESET;
     }
 
     public String getUnlocalizedName(){
@@ -41,6 +45,20 @@ public class BookletChapter{
     }
 
     public String getLocalizedName(){
-        return StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".chapter."+this.unlocalizedName+".name");
+        return this.color+StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".chapter."+this.unlocalizedName+".name");
+    }
+
+    public String getNameWithColor(){
+        return this.color+this.getLocalizedName();
+    }
+
+    public BookletChapter setImportant(){
+        this.color = EnumChatFormatting.DARK_GREEN;
+        return this;
+    }
+
+    public BookletChapter setSpecial(){
+        this.color = EnumChatFormatting.GOLD;
+        return this;
     }
 }

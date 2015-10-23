@@ -488,7 +488,7 @@ public class GuiBooklet extends GuiScreen{
                 boolean entryExists = InitBooklet.entries.size() > i;
                 button.visible = entryExists;
                 if(entryExists){
-                    button.displayString = InitBooklet.entries.get(i).getLocalizedName();
+                    button.displayString = InitBooklet.entries.get(i).getNameWithColor();
                     button.chap = null;
                 }
             }
@@ -497,7 +497,7 @@ public class GuiBooklet extends GuiScreen{
                 button.visible = entryExists;
                 if(entryExists){
                     BookletChapter chap = entry.chapters.get(i+(this.chapterButtons.length*this.pageOpenInIndex-this.chapterButtons.length));
-                    button.displayString = chap.getLocalizedName();
+                    button.displayString = chap.getNameWithColor();
                     button.chap = chap;
                 }
             }
@@ -523,22 +523,24 @@ public class GuiBooklet extends GuiScreen{
                 OpenGlHelper.glBlendFunc(770, 771, 1, 0);
                 GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
                 this.mouseDragged(minecraft, mouseX, mouseY);
-                int color = 0;
-                if(this.field_146123_n){
-                    color = 38144;
-                }
 
                 int textOffsetX = 0;
                 if(this.chap != null){
                     if(this.chap.displayStack != null){
                         GL11.glPushMatrix();
-                        BookletPage.renderItem(this.gui, this.chap.displayStack, this.xPosition-5, this.yPosition, 0.725F);
+                        BookletPage.renderItem(this.gui, this.chap.displayStack, this.xPosition-4, this.yPosition, 0.725F);
                         GL11.glPopMatrix();
-                        textOffsetX = 8;
+                        textOffsetX = 10;
                     }
                 }
 
-                this.gui.fontRendererObj.drawString((this.field_146123_n ? EnumChatFormatting.UNDERLINE : "")+this.displayString, this.xPosition+textOffsetX, this.yPosition+(this.height-8)/2, color);
+                if(this.field_146123_n){
+                    GL11.glPushMatrix();
+                    AssetUtil.drawHorizontalGradientRect(this.xPosition+textOffsetX-1, this.yPosition+this.height-1, this.xPosition+this.gui.fontRendererObj.getStringWidth(this.displayString)+textOffsetX+1, this.yPosition+this.height, 0x80 << 24 | 22271, 22271);
+                    GL11.glPopMatrix();
+                }
+
+                this.gui.fontRendererObj.drawString(this.displayString, this.xPosition+textOffsetX, this.yPosition+(this.height-8)/2, 0);
             }
         }
     }

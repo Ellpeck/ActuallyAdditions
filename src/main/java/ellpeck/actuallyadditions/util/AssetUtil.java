@@ -16,12 +16,14 @@ import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.ItemRenderer;
+import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 
 public class AssetUtil{
 
@@ -58,5 +60,35 @@ public class AssetUtil{
     public static void renderBlock(Block block, int meta){
         Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.locationBlocksTexture);
         RenderBlocks.getInstance().renderBlockAsItem(block, meta, 1F);
+    }
+
+    //Copied from Gui.class and changed
+    public static void drawHorizontalGradientRect(int startX, int startY, int endX, int endY, int firstColor, int secondColor){
+        float f = (float)(firstColor >> 24 & 255)/255.0F;
+        float f1 = (float)(firstColor >> 16 & 255)/255.0F;
+        float f2 = (float)(firstColor >> 8 & 255)/255.0F;
+        float f3 = (float)(firstColor & 255)/255.0F;
+        float f4 = (float)(secondColor >> 24 & 255)/255.0F;
+        float f5 = (float)(secondColor >> 16 & 255)/255.0F;
+        float f6 = (float)(secondColor >> 8 & 255)/255.0F;
+        float f7 = (float)(secondColor & 255)/255.0F;
+        GL11.glDisable(GL11.GL_TEXTURE_2D);
+        GL11.glEnable(GL11.GL_BLEND);
+        GL11.glDisable(GL11.GL_ALPHA_TEST);
+        OpenGlHelper.glBlendFunc(770, 771, 1, 0);
+        GL11.glShadeModel(GL11.GL_SMOOTH);
+        Tessellator tessellator = Tessellator.instance;
+        tessellator.startDrawingQuads();
+        tessellator.setColorRGBA_F(f1, f2, f3, f);
+        tessellator.addVertex((double)startX, (double)startY, 0);
+        tessellator.addVertex((double)startX, (double)endY, 0);
+        tessellator.setColorRGBA_F(f5, f6, f7, f4);
+        tessellator.addVertex((double)endX, (double)endY, 0);
+        tessellator.addVertex((double)endX, (double)startY, 0);
+        tessellator.draw();
+        GL11.glShadeModel(GL11.GL_FLAT);
+        GL11.glDisable(GL11.GL_BLEND);
+        GL11.glEnable(GL11.GL_ALPHA_TEST);
+        GL11.glEnable(GL11.GL_TEXTURE_2D);
     }
 }
