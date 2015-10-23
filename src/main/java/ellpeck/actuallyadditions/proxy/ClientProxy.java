@@ -82,7 +82,7 @@ public class ClientProxy implements IProxy{
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntitySmileyCloud.class, new RenderSmileyCloud(new ModelSmileyCloud()));
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(InitBlocks.blockSmileyCloud), new RenderItems(new ModelSmileyCloud()));
 
-        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityLaserRelay.class, new RenderTileEntity(new ModelLaserRelay()));
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityLaserRelay.class, new RenderLaserRelay(new ModelLaserRelay()));
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(InitBlocks.blockLaserRelay), new RenderItems(new ModelLaserRelay()));
 
         VillagerRegistry.instance().registerVillagerSkin(ConfigIntValues.JAM_VILLAGER_ID.getValue(), new ResourceLocation(ModUtil.MOD_ID_LOWER, "textures/entity/villager/jamVillager.png"));

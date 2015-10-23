@@ -34,14 +34,16 @@ public class BlockLaserRelay extends BlockContainerBase implements IActAddItemOr
         this.setHardness(1.5F);
         this.setResistance(10.0F);
         this.setStepSound(soundTypeStone);
-
-        float f = 1F/16F;
-        this.setBlockBounds(2*f, 0F, 2*f, 1-2*f, 1-1*f, 1-2*f);
     }
 
     @Override
     public boolean renderAsNormalBlock(){
         return false;
+    }
+
+    @Override
+    public int onBlockPlaced(World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int metadata){
+        return side;
     }
 
     @Override

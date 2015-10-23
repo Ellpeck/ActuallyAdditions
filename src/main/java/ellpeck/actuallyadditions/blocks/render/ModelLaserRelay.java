@@ -198,4 +198,9 @@ public class ModelLaserRelay extends ModelBaseAA{
         model.rotateAngleY = y;
         model.rotateAngleZ = z;
     }
+
+    @Override
+    public boolean doesRotate(){
+        return true;
+    }
 }
