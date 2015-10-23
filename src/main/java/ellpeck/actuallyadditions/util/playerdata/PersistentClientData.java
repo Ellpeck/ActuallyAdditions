@@ -87,9 +87,21 @@ public class PersistentClientData{
         theFile = file;
     }
 
+    public static File getTheFile(){
+        try{
+            if(!theFile.exists()){
+                theFile.createNewFile();
+            }
+        }
+        catch(Exception e){
+            ModUtil.LOGGER.fatal("Couldn't create Persistent Variables file!", e);
+        }
+        return theFile;
+    }
+
     private static NBTTagCompound readCompound(){
         try{
-            return CompressedStreamTools.readCompressed(new FileInputStream(theFile));
+            return CompressedStreamTools.readCompressed(new FileInputStream(getTheFile()));
         }
         catch(Exception e){
             return new NBTTagCompound();
@@ -98,13 +110,11 @@ public class PersistentClientData{
 
     private static void writeCompound(NBTTagCompound compound){
         try{
-            if(!theFile.exists()){
-                theFile.createNewFile();
-            }
-            CompressedStreamTools.writeCompressed(compound, new FileOutputStream(theFile));
+
+            CompressedStreamTools.writeCompressed(compound, new FileOutputStream(getTheFile()));
         }
         catch(Exception e){
-            ModUtil.LOGGER.fatal("Couldn't write Persistant Variable!", e);
+            ModUtil.LOGGER.fatal("Couldn't write Persistent Variable!", e);
         }
     }
 }
