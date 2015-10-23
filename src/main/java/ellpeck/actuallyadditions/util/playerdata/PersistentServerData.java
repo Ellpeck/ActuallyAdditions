@@ -44,17 +44,17 @@ public class PersistentServerData{
             this.theCompound = theCompound;
         }
 
+        public static PlayerSave fromNBT(NBTTagCompound compound, String name){
+            UUID theID = new UUID(compound.getLong(name+"MostSignificant"), compound.getLong(name+"LeastSignificant"));
+            NBTTagCompound theCompound = compound.getCompoundTag(name+"Tag");
+            return new PlayerSave(theID, theCompound);
+        }
+
         public void toNBT(NBTTagCompound compound, String name){
             compound.setLong(name+"LeastSignificant", this.thePlayerUUID.getLeastSignificantBits());
             compound.setLong(name+"MostSignificant", this.thePlayerUUID.getMostSignificantBits());
 
             compound.setTag(name+"Tag", this.theCompound);
-        }
-
-        public static PlayerSave fromNBT(NBTTagCompound compound, String name){
-            UUID theID = new UUID(compound.getLong(name+"MostSignificant"), compound.getLong(name+"LeastSignificant"));
-            NBTTagCompound theCompound = compound.getCompoundTag(name+"Tag");
-            return new PlayerSave(theID, theCompound);
         }
     }
 

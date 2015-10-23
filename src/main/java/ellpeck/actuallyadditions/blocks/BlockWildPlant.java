@@ -98,17 +98,6 @@ public class BlockWildPlant extends BlockBush implements IActAddItemOrBlock{
             this.setMaxDamage(0);
         }
 
-        @Override
-        public int getMetadata(int damage){
-            return damage;
-        }
-
-        @Override
-        public EnumRarity getRarity(ItemStack stack){
-            EnumRarity rarity = ((IActAddItemOrBlock)this.field_150939_a).getRarity(stack);
-            return rarity == null ? EnumRarity.common : rarity;
-        }
-
         @SideOnly(Side.CLIENT)
         @Override
         public IIcon getIconFromDamage(int meta){
@@ -118,6 +107,17 @@ public class BlockWildPlant extends BlockBush implements IActAddItemOrBlock{
         @Override
         public String getUnlocalizedName(ItemStack stack){
             return this.getUnlocalizedName()+(stack.getItemDamage() >= allWildPlants.length ? " ERROR!" : allWildPlants[stack.getItemDamage()].name);
+        }
+
+        @Override
+        public int getMetadata(int damage){
+            return damage;
+        }
+
+        @Override
+        public EnumRarity getRarity(ItemStack stack){
+            EnumRarity rarity = ((IActAddItemOrBlock)this.field_150939_a).getRarity(stack);
+            return rarity == null ? EnumRarity.common : rarity;
         }
     }
 }

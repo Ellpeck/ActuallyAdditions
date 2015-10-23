@@ -22,14 +22,6 @@ public class BlockUtil{
         register(block, itemBlock, true);
     }
 
-    public static void register(Block block){
-        register(block, ItemBlockBase.class, true);
-    }
-
-    public static void register(Block block, boolean addTab){
-        register(block, ItemBlockBase.class, addTab);
-    }
-
     public static void register(Block block, Class<? extends ItemBlock> itemBlock, boolean addTab){
         block.setCreativeTab(addTab ? CreativeTab.instance : null);
         block.setBlockName(createUnlocalizedName(block));
@@ -38,5 +30,13 @@ public class BlockUtil{
 
     public static String createUnlocalizedName(Block block){
         return ModUtil.MOD_ID_LOWER+"."+((IActAddItemOrBlock)block).getName();
+    }
+
+    public static void register(Block block){
+        register(block, ItemBlockBase.class, true);
+    }
+
+    public static void register(Block block, boolean addTab){
+        register(block, ItemBlockBase.class, addTab);
     }
 }

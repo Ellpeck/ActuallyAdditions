@@ -67,20 +67,6 @@ public class LaserRelayConnectionHandler{
     }
 
     /**
-     * Gets a Network for a Relay
-     */
-    public ArrayList<ConnectionPair> getNetworkFor(WorldPos relay){
-        for(ArrayList<ConnectionPair> aNetwork : this.networks){
-            for(ConnectionPair pair : aNetwork){
-                if(pair.contains(relay)){
-                    return aNetwork;
-                }
-            }
-        }
-        return null;
-    }
-
-    /**
      * Gets all Connections for a Relay
      */
     public ArrayList<ConnectionPair> getConnectionsFor(WorldPos relay){
@@ -93,6 +79,45 @@ public class LaserRelayConnectionHandler{
             }
         }
         return allPairs;
+    }
+
+    /**
+     * Removes a Relay from its Network
+     */
+    public void removeRelayFromNetwork(WorldPos relay){
+        ArrayList<ConnectionPair> network = this.getNetworkFor(relay);
+        if(network != null){
+            //Remove the relay from the network
+            Iterator<ConnectionPair> iterator = network.iterator();
+            while(iterator.hasNext()){
+                ConnectionPair next = iterator.next();
+                if(next.contains(relay)){
+                    iterator.remove();
+                    //System.out.println("Removed "+relay.toString()+" from Network "+network.toString());
+                }
+            }
+
+            //Setup new network (so that splitting a network will cause it to break into two)
+            this.networks.remove(network);
+            for(ConnectionPair pair : network){
+                this.addConnection(pair.firstRelay, pair.secondRelay);
+            }
+        }
+        WorldData.makeDirty();
+    }
+
+    /**
+     * Gets a Network for a Relay
+     */
+    public ArrayList<ConnectionPair> getNetworkFor(WorldPos relay){
+        for(ArrayList<ConnectionPair> aNetwork : this.networks){
+            for(ConnectionPair pair : aNetwork){
+                if(pair.contains(relay)){
+                    return aNetwork;
+                }
+            }
+        }
+        return null;
     }
 
     /**
@@ -135,31 +160,6 @@ public class LaserRelayConnectionHandler{
         //System.out.println("Connected "+firstRelay.toString()+" to "+secondRelay.toString());
         //System.out.println(firstNetwork == null ? secondNetwork.toString() : firstNetwork.toString());
         return true;
-    }
-
-    /**
-     * Removes a Relay from its Network
-     */
-    public void removeRelayFromNetwork(WorldPos relay){
-        ArrayList<ConnectionPair> network = this.getNetworkFor(relay);
-        if(network != null){
-            //Remove the relay from the network
-            Iterator<ConnectionPair> iterator = network.iterator();
-            while(iterator.hasNext()){
-                ConnectionPair next = iterator.next();
-                if(next.contains(relay)){
-                    iterator.remove();
-                    //System.out.println("Removed "+relay.toString()+" from Network "+network.toString());
-                }
-            }
-
-            //Setup new network (so that splitting a network will cause it to break into two)
-            this.networks.remove(network);
-            for(ConnectionPair pair : network){
-                this.addConnection(pair.firstRelay, pair.secondRelay);
-            }
-        }
-        WorldData.makeDirty();
     }
 
     /**
@@ -212,6 +212,18 @@ public class LaserRelayConnectionHandler{
             this.secondRelay = secondRelay;
         }
 
+        public static ConnectionPair readFromNBT(NBTTagCompound compound, String name){
+            WorldPos[] pos = new WorldPos[2];
+            for(int i = 0; i < pos.length; i++){
+                World aWorld = DimensionManager.getWorld(compound.getInteger("world"+name+i));
+                int anX = compound.getInteger("x"+name+i);
+                int aY = compound.getInteger("y"+name+i);
+                int aZ = compound.getInteger("z"+name+i);
+                pos[i] = new WorldPos(aWorld, anX, aY, aZ);
+            }
+            return new ConnectionPair(pos[0], pos[1]);
+        }
+
         public boolean contains(WorldPos relay){
             return (this.firstRelay != null && this.firstRelay.isEqual(relay)) || (this.secondRelay != null && this.secondRelay.isEqual(relay));
         }
@@ -229,18 +241,6 @@ public class LaserRelayConnectionHandler{
                 compound.setInteger("y"+name+i, relay.getY());
                 compound.setInteger("z"+name+i, relay.getZ());
             }
-        }
-
-        public static ConnectionPair readFromNBT(NBTTagCompound compound, String name){
-            WorldPos[] pos = new WorldPos[2];
-            for(int i = 0; i < pos.length; i++){
-                World aWorld = DimensionManager.getWorld(compound.getInteger("world"+name+i));
-                int anX = compound.getInteger("x"+name+i);
-                int aY = compound.getInteger("y"+name+i);
-                int aZ = compound.getInteger("z"+name+i);
-                pos[i] = new WorldPos(aWorld, anX, aY, aZ);
-            }
-            return new ConnectionPair(pos[0], pos[1]);
         }
     }
 }

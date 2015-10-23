@@ -120,6 +120,12 @@ public class BlockInputter extends BlockContainerBase implements IActAddItemOrBl
         }
 
         @Override
+        public EnumRarity getRarity(ItemStack stack){
+            EnumRarity rarity = ((IActAddItemOrBlock)this.field_150939_a).getRarity(stack);
+            return rarity == null ? EnumRarity.common : rarity;
+        }
+
+        @Override
         public String getItemStackDisplayName(ItemStack stack){
             Random rand = new Random();
             long sysTime = System.currentTimeMillis();
@@ -130,12 +136,6 @@ public class BlockInputter extends BlockContainerBase implements IActAddItemOrBl
             }
 
             return StringUtil.localize(this.getUnlocalizedName()+".name")+" ("+StringUtil.localize("tile."+ModUtil.MOD_ID_LOWER+".blockInputter.add."+this.toPick+".name")+")";
-        }
-
-        @Override
-        public EnumRarity getRarity(ItemStack stack){
-            EnumRarity rarity = ((IActAddItemOrBlock)this.field_150939_a).getRarity(stack);
-            return rarity == null ? EnumRarity.common : rarity;
         }
     }
 }

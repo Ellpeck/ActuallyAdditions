@@ -69,17 +69,17 @@ public class TileEntityItemRepairer extends TileEntityInventoryBase implements I
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        this.nextRepairTick = compound.getInteger("NextRepairTick");
-        super.readSyncableNBT(compound, sync);
-        this.storage.readFromNBT(compound);
-    }
-
-    @Override
     public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
         compound.setInteger("NextRepairTick", this.nextRepairTick);
         super.writeSyncableNBT(compound, sync);
         this.storage.writeToNBT(compound);
+    }
+
+    @Override
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
+        this.nextRepairTick = compound.getInteger("NextRepairTick");
+        super.readSyncableNBT(compound, sync);
+        this.storage.readFromNBT(compound);
     }
 
     @Override

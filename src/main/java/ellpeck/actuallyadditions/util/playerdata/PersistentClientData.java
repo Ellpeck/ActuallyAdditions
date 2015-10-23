@@ -42,6 +42,45 @@ public class PersistentClientData{
         }
     }
 
+    private static NBTTagCompound readCompound(){
+        try{
+            return CompressedStreamTools.readCompressed(new FileInputStream(getTheFile()));
+        }
+        catch(Exception e){
+            return new NBTTagCompound();
+        }
+    }
+
+    private static String getName(String name){
+        return (Minecraft.getMinecraft().isIntegratedServerRunning() ? Minecraft.getMinecraft().getIntegratedServer().getFolderName() : Minecraft.getMinecraft().func_147104_D().serverIP)+"-"+name;
+    }
+
+    private static void writeCompound(NBTTagCompound compound){
+        try{
+
+            CompressedStreamTools.writeCompressed(compound, new FileOutputStream(getTheFile()));
+        }
+        catch(Exception e){
+            ModUtil.LOGGER.fatal("Couldn't write Persistent Variable!", e);
+        }
+    }
+
+    public static File getTheFile(){
+        try{
+            if(!theFile.exists()){
+                theFile.createNewFile();
+            }
+        }
+        catch(Exception e){
+            ModUtil.LOGGER.fatal("Couldn't create Persistent Variables file!", e);
+        }
+        return theFile;
+    }
+
+    public static void setTheFile(File file){
+        theFile = file;
+    }
+
     public static void openLastBookPage(GuiBooklet gui){
         NBTTagCompound compound = readCompound();
         if(compound != null){
@@ -74,47 +113,8 @@ public class PersistentClientData{
         }
     }
 
-    private static String getName(String name){
-        return (Minecraft.getMinecraft().isIntegratedServerRunning() ? Minecraft.getMinecraft().getIntegratedServer().getFolderName() : Minecraft.getMinecraft().func_147104_D().serverIP)+"-"+name;
-    }
-
     public static boolean getBoolean(String name){
         NBTTagCompound compound = readCompound();
         return compound != null && compound.getBoolean(getName(name));
-    }
-
-    public static void setTheFile(File file){
-        theFile = file;
-    }
-
-    public static File getTheFile(){
-        try{
-            if(!theFile.exists()){
-                theFile.createNewFile();
-            }
-        }
-        catch(Exception e){
-            ModUtil.LOGGER.fatal("Couldn't create Persistent Variables file!", e);
-        }
-        return theFile;
-    }
-
-    private static NBTTagCompound readCompound(){
-        try{
-            return CompressedStreamTools.readCompressed(new FileInputStream(getTheFile()));
-        }
-        catch(Exception e){
-            return new NBTTagCompound();
-        }
-    }
-
-    private static void writeCompound(NBTTagCompound compound){
-        try{
-
-            CompressedStreamTools.writeCompressed(compound, new FileOutputStream(getTheFile()));
-        }
-        catch(Exception e){
-            ModUtil.LOGGER.fatal("Couldn't write Persistent Variable!", e);
-        }
     }
 }

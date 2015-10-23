@@ -68,6 +68,18 @@ public class ItemLaserWrench extends Item implements IActAddItemOrBlock{
     }
 
     @Override
+    public boolean getShareTag(){
+        return true;
+    }
+
+    @Override
+    public void onUpdate(ItemStack stack, World world, Entity entity, int par4, boolean par5){
+        if(ItemPhantomConnector.getStoredPosition(stack) == null){
+            ItemPhantomConnector.clearStorage(stack);
+        }
+    }
+
+    @Override
     @SuppressWarnings("unchecked")
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld){
@@ -82,18 +94,6 @@ public class ItemLaserWrench extends Item implements IActAddItemOrBlock{
                 list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".inWorld.desc")+" "+world.provider.dimensionId);
                 list.add(EnumChatFormatting.ITALIC+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".clearStorage.desc"));
             }
-        }
-    }
-
-    @Override
-    public boolean getShareTag(){
-        return true;
-    }
-
-    @Override
-    public void onUpdate(ItemStack stack, World world, Entity entity, int par4, boolean par5){
-        if(ItemPhantomConnector.getStoredPosition(stack) == null){
-            ItemPhantomConnector.clearStorage(stack);
         }
     }
 

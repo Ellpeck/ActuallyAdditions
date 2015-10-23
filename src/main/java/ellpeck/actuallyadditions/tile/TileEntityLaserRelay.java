@@ -24,16 +24,16 @@ import java.util.ArrayList;
 public class TileEntityLaserRelay extends TileEntityBase implements IEnergyReceiver{
 
     @Override
-    public boolean canUpdate(){
-        return false;
-    }
-
-    @Override
     public void invalidate(){
         super.invalidate();
         if(!worldObj.isRemote){
             LaserRelayConnectionHandler.getInstance().removeRelayFromNetwork(new WorldPos(this.worldObj, this.xCoord, this.yCoord, this.zCoord));
         }
+    }
+
+    @Override
+    public boolean canUpdate(){
+        return false;
     }
 
     @Override
@@ -81,11 +81,6 @@ public class TileEntityLaserRelay extends TileEntityBase implements IEnergyRecei
         return 0;
     }
 
-    @Override
-    public boolean canConnectEnergy(ForgeDirection from){
-        return true;
-    }
-
     public int transmitEnergy(int maxTransmit, boolean simulate){
         int transmitted = 0;
         if(maxTransmit > 0){
@@ -95,5 +90,10 @@ public class TileEntityLaserRelay extends TileEntityBase implements IEnergyRecei
             }
         }
         return transmitted;
+    }
+
+    @Override
+    public boolean canConnectEnergy(ForgeDirection from){
+        return true;
     }
 }

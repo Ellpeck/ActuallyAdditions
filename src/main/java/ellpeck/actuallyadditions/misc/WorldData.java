@@ -22,12 +22,35 @@ import java.util.ArrayList;
 public class WorldData extends WorldSavedData{
 
     public static final String DATA_TAG = ModUtil.MOD_ID+"WorldData";
+    public static WorldData instance;
 
     public WorldData(String tag){
         super(tag);
     }
 
-    public static WorldData instance;
+    public static void makeDirty(){
+        if(instance != null){
+            instance.markDirty();
+        }
+    }
+
+    public static void init(MinecraftServer server){
+        if(server != null){
+            World world = server.getEntityWorld();
+            if(!world.isRemote){
+                WorldSavedData savedData = world.loadItemData(WorldData.class, WorldData.DATA_TAG);
+                //Generate new SavedData
+                if(savedData == null){
+                    savedData = new WorldData(WorldData.DATA_TAG);
+                    world.setItemData(WorldData.DATA_TAG, savedData);
+                }
+                //Set the current SavedData to the retreived one
+                if(savedData instanceof WorldData){
+                    WorldData.instance = (WorldData)savedData;
+                }
+            }
+        }
+    }
 
     @Override
     public void readFromNBT(NBTTagCompound compound){
@@ -67,30 +90,6 @@ public class WorldData extends WorldSavedData{
         for(int i = 0; i < PersistentServerData.playerSaveData.size(); i++){
             PersistentServerData.PlayerSave theSave = PersistentServerData.playerSaveData.get(i);
             theSave.toNBT(compound, "PlayerSaveData"+i);
-        }
-    }
-
-    public static void makeDirty(){
-        if(instance != null){
-            instance.markDirty();
-        }
-    }
-
-    public static void init(MinecraftServer server){
-        if(server != null){
-            World world = server.getEntityWorld();
-            if(!world.isRemote){
-                WorldSavedData savedData = world.loadItemData(WorldData.class, WorldData.DATA_TAG);
-                //Generate new SavedData
-                if(savedData == null){
-                    savedData = new WorldData(WorldData.DATA_TAG);
-                    world.setItemData(WorldData.DATA_TAG, savedData);
-                }
-                //Set the current SavedData to the retreived one
-                if(savedData instanceof WorldData){
-                    WorldData.instance = (WorldData)savedData;
-                }
-            }
         }
     }
 }

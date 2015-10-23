@@ -76,24 +76,6 @@ public class ItemPhantomConnector extends Item implements IActAddItemOrBlock{
         }
     }
 
-    @Override
-    @SuppressWarnings("unchecked")
-    @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld){
-        WorldPos coords = getStoredPosition(stack);
-        if(coords != null){
-            World world = coords.getWorld();
-            if(world != null){
-                list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".boundTo.desc")+":");
-                list.add("X: "+coords.getX());
-                list.add("Y: "+coords.getY());
-                list.add("Z: "+coords.getZ());
-                list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".inWorld.desc")+" "+world.provider.dimensionId);
-                list.add(EnumChatFormatting.ITALIC+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".clearStorage.desc"));
-            }
-        }
-    }
-
     public static WorldPos getStoredPosition(ItemStack stack){
         NBTTagCompound tag = stack.getTagCompound();
         if(tag != null){
@@ -135,6 +117,24 @@ public class ItemPhantomConnector extends Item implements IActAddItemOrBlock{
     public void onUpdate(ItemStack stack, World world, Entity entity, int par4, boolean par5){
         if(getStoredPosition(stack) == null){
             clearStorage(stack);
+        }
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    @SideOnly(Side.CLIENT)
+    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld){
+        WorldPos coords = getStoredPosition(stack);
+        if(coords != null){
+            World world = coords.getWorld();
+            if(world != null){
+                list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".boundTo.desc")+":");
+                list.add("X: "+coords.getX());
+                list.add("Y: "+coords.getY());
+                list.add("Z: "+coords.getZ());
+                list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".inWorld.desc")+" "+world.provider.dimensionId);
+                list.add(EnumChatFormatting.ITALIC+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".clearStorage.desc"));
+            }
         }
     }
 

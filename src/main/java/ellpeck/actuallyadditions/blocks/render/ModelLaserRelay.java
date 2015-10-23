@@ -151,6 +151,12 @@ public class ModelLaserRelay extends ModelBaseAA{
         setRotation(energyBall, 0F, 0F, 0F);
     }
 
+    private void setRotation(ModelRenderer model, float x, float y, float z){
+        model.rotateAngleX = x;
+        model.rotateAngleY = y;
+        model.rotateAngleZ = z;
+    }
+
     @Override
     public void render(float f){
         GL11.glEnable(GL11.GL_BLEND);
@@ -175,6 +181,11 @@ public class ModelLaserRelay extends ModelBaseAA{
     }
 
     @Override
+    public String getName(){
+        return "modelLaserRelay";
+    }
+
+    @Override
     public void renderExtra(float f, TileEntity tile){
         TileEntityLaserRelay relay = (TileEntityLaserRelay)tile;
         WorldPos thisPos = new WorldPos(relay.getWorldObj(), relay.xCoord, relay.yCoord, relay.zCoord);
@@ -186,17 +197,6 @@ public class ModelLaserRelay extends ModelBaseAA{
                 }
             }
         }
-    }
-
-    @Override
-    public String getName(){
-        return "modelLaserRelay";
-    }
-
-    private void setRotation(ModelRenderer model, float x, float y, float z){
-        model.rotateAngleX = x;
-        model.rotateAngleY = y;
-        model.rotateAngleZ = z;
     }
 
     @Override

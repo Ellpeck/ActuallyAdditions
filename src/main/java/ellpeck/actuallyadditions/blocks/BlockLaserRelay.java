@@ -40,11 +40,6 @@ public class BlockLaserRelay extends BlockContainerBase implements IActAddItemOr
     }
 
     @Override
-    public int onBlockPlaced(World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int metadata){
-        return side;
-    }
-
-    @Override
     public int getRenderType(){
         return AssetUtil.LASER_RELAY_RENDER_ID;
     }
@@ -57,6 +52,11 @@ public class BlockLaserRelay extends BlockContainerBase implements IActAddItemOr
     @Override
     public boolean isOpaqueCube(){
         return false;
+    }
+
+    @Override
+    public int onBlockPlaced(World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int metadata){
+        return side;
     }
 
     @Override

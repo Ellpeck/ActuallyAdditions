@@ -31,12 +31,12 @@ public class WorldPos{
         this.z = z;
     }
 
-    public Block getBlock(){
-        return this.getWorld() != null ? this.getWorld().getBlock(this.x, this.y, this.z) : null;
-    }
-
     public TileEntity getTileEntity(){
         return this.getWorld() != null ? this.getWorld().getTileEntity(this.x, this.y, this.z) : null;
+    }
+
+    public World getWorld(){
+        return DimensionManager.getWorld(this.worldID);
     }
 
     public Material getMaterial(){
@@ -47,18 +47,16 @@ public class WorldPos{
         return this.getWorld() != null ? Item.getItemFromBlock(this.getBlock()) : null;
     }
 
+    public Block getBlock(){
+        return this.getWorld() != null ? this.getWorld().getBlock(this.x, this.y, this.z) : null;
+    }
+
     public int getMetadata(){
         return this.getWorld() != null ? this.getWorld().getBlockMetadata(this.x, this.y, this.z) : 0;
     }
 
     public boolean isEqual(WorldPos pos){
         return pos != null && this.x == pos.getX() && this.y == pos.getY() && this.z == pos.getZ() && this.getWorld() == pos.getWorld();
-    }
-
-    public void update(){
-        if(this.getWorld() != null){
-            this.getWorld().markBlockForUpdate(this.x, this.y, this.z);
-        }
     }
 
     public int getX(){
@@ -73,8 +71,10 @@ public class WorldPos{
         return this.z;
     }
 
-    public World getWorld(){
-        return DimensionManager.getWorld(this.worldID);
+    public void update(){
+        if(this.getWorld() != null){
+            this.getWorld().markBlockForUpdate(this.x, this.y, this.z);
+        }
     }
 
     public WorldPos copy(){

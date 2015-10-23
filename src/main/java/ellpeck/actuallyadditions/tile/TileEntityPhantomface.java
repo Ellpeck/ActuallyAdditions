@@ -120,6 +120,17 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
     }
 
     @Override
+    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.writeSyncableNBT(compound, sync);
+        if(this.hasBoundPosition()){
+            compound.setInteger("XCoordOfTileStored", boundPosition.getX());
+            compound.setInteger("YCoordOfTileStored", boundPosition.getY());
+            compound.setInteger("ZCoordOfTileStored", boundPosition.getZ());
+            compound.setInteger("WorldOfTileStored", boundPosition.getWorld().provider.dimensionId);
+        }
+    }
+
+    @Override
     public void readSyncableNBT(NBTTagCompound compound, boolean sync){
         super.readSyncableNBT(compound, sync);
         int x = compound.getInteger("XCoordOfTileStored");
@@ -129,17 +140,6 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
         if(x != 0 && y != 0 && z != 0 && world != null){
             this.boundPosition = new WorldPos(world, x, y, z);
             this.markDirty();
-        }
-    }
-
-    @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.writeSyncableNBT(compound, sync);
-        if(this.hasBoundPosition()){
-            compound.setInteger("XCoordOfTileStored", boundPosition.getX());
-            compound.setInteger("YCoordOfTileStored", boundPosition.getY());
-            compound.setInteger("ZCoordOfTileStored", boundPosition.getZ());
-            compound.setInteger("WorldOfTileStored", boundPosition.getWorld().provider.dimensionId);
         }
     }
 
