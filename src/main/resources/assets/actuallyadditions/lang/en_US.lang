@@ -421,6 +421,7 @@ booklet.actuallyadditions.chapter.intro.text.4=If you, for some reason, want to 
 
 booklet.actuallyadditions.chapter.craftingIngs.name=Crafting Ingredients
 booklet.actuallyadditions.chapter.craftingIngs.text.1=<imp>Actually Additions<r> has lots of items that use certain <imp>basic crafting items<r> to be crafted. This chapter has all of these basic items <imp>grouped up<r> so that you can see all of them at once.
+booklet.actuallyadditions.chapter.craftingIngs.text.5=This thing is terribly snowy right now. If you put this into your machines, you might make them explode. <n><i>Watch out for that.
 
 booklet.actuallyadditions.chapter.quartz.name=Black Quartz
 booklet.actuallyadditions.chapter.quartz.text.1=<item>Black Quartz<r> is an <imp>Ore<r> that generates in the world <imp>between layer <lowest> and <highest><r>. When broken, it can be <imp>smelted in a furnace<r> or <imp>crushed in a crusher<r> to get broken down into <item>Black Quartz<r>.
@@ -447,6 +448,7 @@ booklet.actuallyadditions.chapter.breaker.text.4=The <item>Liquid Collector<r> w
 booklet.actuallyadditions.chapter.phantomfaces.name=Phantomfaces
 booklet.actuallyadditions.chapter.phantomfaces.text.1=<item>Phantomfaces<r> are a simple way to <imp>connect inventories together<r>, they have a very important twist however: Instead of just connecting two inventories, a <item>Phantomface<r> <imp>simulates the inventory it is connected to<r>, meaning you can put items into and pull out of the Phantomface itself. A <item>Phantomface<r> has a <imp>default range of <range> blocks<r>, but it can be upgraded with a <item>Phantom Booster<r>. <item>Phantomfaces<r> are connected by <imp>right-clicking<r> an inventory with a <item>Phantom Connector<r> and then <imp>right-clicking<r> the <item>Phantomface.
 booklet.actuallyadditions.chapter.phantomfaces.text.2=The default <item>Phantomface<r> works for items, like described on the first page.
+booklet.actuallyadditions.chapter.phantomfaces.text.666=The default <item>Phantomface<r> scares people away by being so terribly creepy. Actually, it just works for items like described on the first page.
 booklet.actuallyadditions.chapter.phantomfaces.text.3=The <item>Phantom Liquiface<r> acts exactly like the normal <item>Phantomface<r>, but it <imp>works for liquid containing blocks<r>. When given a <imp>Redstone Signal<r>, it can be set to <imp>Auto-Output<r>. Be careful with this though, as it <imp>could cause infinte loops and lag<r> under certain conditions!
 booklet.actuallyadditions.chapter.phantomfaces.text.4=The <item>Phantom Energyface<r> acts exactly like the normal <item>Phantomface<r>, but it <imp>works for RF<r>, meaning you can connect it to things like Generators and Crushers.
 booklet.actuallyadditions.chapter.phantomfaces.text.6=The <item>Phantom Booster<r>, as explained on the first page, ups the range of <item>Phantomface<r>s by being placed <imp>on top of them<r>. The maximum amount above one <item>Phantomface<r> is <imp>3<r>.
