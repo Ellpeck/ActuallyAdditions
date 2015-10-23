@@ -14,6 +14,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.ActuallyAdditions;
 import ellpeck.actuallyadditions.inventory.GuiHandler;
+import ellpeck.actuallyadditions.proxy.ClientProxy;
 import ellpeck.actuallyadditions.tile.TileEntitySmileyCloud;
 import ellpeck.actuallyadditions.util.AssetUtil;
 import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
@@ -88,6 +89,11 @@ public class BlockSmileyCloud extends BlockContainerBase implements IActAddItemO
         if(meta == 3){
             this.setBlockBounds(f*3F, 0F, 0F, 1F, 1F, 1F);
         }
+    }
+
+    @Override
+    public String getUnlocalizedName(){
+        return super.getUnlocalizedName()+(ClientProxy.bulletForMyValentine ? "Valentine" : "");
     }
 
     @Override

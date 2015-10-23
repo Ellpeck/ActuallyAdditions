@@ -13,6 +13,7 @@ package ellpeck.actuallyadditions.booklet.page;
 import cpw.mods.fml.relauncher.ReflectionHelper;
 import ellpeck.actuallyadditions.booklet.GuiBooklet;
 import ellpeck.actuallyadditions.booklet.InitBooklet;
+import ellpeck.actuallyadditions.proxy.ClientProxy;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
 import ellpeck.actuallyadditions.util.Util;
@@ -45,7 +46,7 @@ public class PageCrafting extends BookletPage{
     @Override
     public void renderPre(GuiBooklet gui, int mouseX, int mouseY, int ticksElapsed, boolean mousePressed){
         if(this.recipes[this.recipePos] != null){
-            gui.mc.getTextureManager().bindTexture(GuiBooklet.resLoc);
+            gui.mc.getTextureManager().bindTexture(ClientProxy.bulletForMyValentine ? GuiBooklet.resLocValentine : GuiBooklet.resLoc);
             gui.drawTexturedModalRect(gui.guiLeft+27, gui.guiTop+20, 146, 20, 99, 60);
         }
     }

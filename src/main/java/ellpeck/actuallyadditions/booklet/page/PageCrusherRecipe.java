@@ -12,6 +12,7 @@ package ellpeck.actuallyadditions.booklet.page;
 
 import ellpeck.actuallyadditions.booklet.GuiBooklet;
 import ellpeck.actuallyadditions.booklet.InitBooklet;
+import ellpeck.actuallyadditions.proxy.ClientProxy;
 import ellpeck.actuallyadditions.recipe.CrusherRecipeRegistry;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
@@ -39,7 +40,7 @@ public class PageCrusherRecipe extends BookletPage{
     @Override
     public void renderPre(GuiBooklet gui, int mouseX, int mouseY, int ticksElapsed, boolean mousePressed){
         if(recipe != null){
-            gui.mc.getTextureManager().bindTexture(GuiBooklet.resLoc);
+            gui.mc.getTextureManager().bindTexture(ClientProxy.bulletForMyValentine ? GuiBooklet.resLocValentine : GuiBooklet.resLoc);
             gui.drawTexturedModalRect(gui.guiLeft+37, gui.guiTop+20, 60, 180, 60, 60);
         }
     }

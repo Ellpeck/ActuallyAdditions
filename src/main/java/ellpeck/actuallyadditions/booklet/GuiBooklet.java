@@ -42,6 +42,7 @@ public class GuiBooklet extends GuiScreen{
     public static final ResourceLocation resLoc = AssetUtil.getGuiLocation("guiBooklet");
     public static final ResourceLocation resLocHalloween = AssetUtil.getGuiLocation("guiBookletHalloween");
     public static final ResourceLocation resLocChristmas = AssetUtil.getGuiLocation("guiBookletChristmas");
+    public static final ResourceLocation resLocValentine = AssetUtil.getGuiLocation("guiBookletValentinesDay");
     public static final int CHAPTER_BUTTONS_AMOUNT = 13;
     public static final int TOOLTIP_SPLIT_LENGTH = 200;
     public int xSize;
@@ -86,7 +87,7 @@ public class GuiBooklet extends GuiScreen{
         this.fontRendererObj.setUnicodeFlag(true);
 
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        this.mc.getTextureManager().bindTexture(ClientProxy.jingleAllTheWay ? resLocChristmas : (ClientProxy.pumpkinBlurPumpkinBlur ? resLocHalloween : resLoc));
+        this.mc.getTextureManager().bindTexture(ClientProxy.jingleAllTheWay ? resLocChristmas : (ClientProxy.pumpkinBlurPumpkinBlur ? resLocHalloween : (ClientProxy.bulletForMyValentine ? resLocValentine : resLoc)));
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
         this.mc.getTextureManager().bindTexture(resLoc);
 

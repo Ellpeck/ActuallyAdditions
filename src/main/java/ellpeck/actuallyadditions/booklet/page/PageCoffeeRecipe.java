@@ -14,6 +14,7 @@ import ellpeck.actuallyadditions.booklet.GuiBooklet;
 import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.items.ItemCoffee;
 import ellpeck.actuallyadditions.items.metalists.TheMiscItems;
+import ellpeck.actuallyadditions.proxy.ClientProxy;
 import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.item.ItemStack;
 
@@ -28,7 +29,7 @@ public class PageCoffeeRecipe extends BookletPage{
 
     @Override
     public void renderPre(GuiBooklet gui, int mouseX, int mouseY, int ticksElapsed, boolean mousePressed){
-        gui.mc.getTextureManager().bindTexture(GuiBooklet.resLoc);
+        gui.mc.getTextureManager().bindTexture(ClientProxy.bulletForMyValentine ? GuiBooklet.resLocValentine : GuiBooklet.resLoc);
         gui.drawTexturedModalRect(gui.guiLeft+19, gui.guiTop+20, 146, 94, 99, 60);
     }
 

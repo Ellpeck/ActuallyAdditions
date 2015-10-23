@@ -14,6 +14,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.ActuallyAdditions;
 import ellpeck.actuallyadditions.inventory.GuiHandler;
+import ellpeck.actuallyadditions.proxy.ClientProxy;
 import ellpeck.actuallyadditions.tile.TileEntityFurnaceDouble;
 import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import ellpeck.actuallyadditions.util.ModUtil;
@@ -108,7 +109,7 @@ public class BlockFurnaceDouble extends BlockContainerBase implements IActAddIte
             }
 
             for(int i = 0; i < 5; i++){
-                world.spawnParticle("smoke", (double)x+0.5F, (double)y+1.0F, (double)z+0.5F, 0.0D, 0.0D, 0.0D);
+                world.spawnParticle(ClientProxy.bulletForMyValentine ? "heart" : "smoke", (double)x+0.5F, (double)y+1.0F, (double)z+0.5F, 0.0D, 0.0D, 0.0D);
             }
         }
     }

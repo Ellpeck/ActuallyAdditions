@@ -14,6 +14,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.ActuallyAdditions;
 import ellpeck.actuallyadditions.inventory.GuiHandler;
+import ellpeck.actuallyadditions.proxy.ClientProxy;
 import ellpeck.actuallyadditions.tile.TileEntityGrinder;
 import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import ellpeck.actuallyadditions.util.ModUtil;
@@ -77,7 +78,7 @@ public class BlockGrinder extends BlockContainerBase implements IActAddItemOrBlo
                 double zRand = new Random().nextDouble()/0.75D-0.5D;
                 world.spawnParticle("crit", (double)x+0.4F, (double)y+0.8F, (double)z+0.4F, xRand, 0.5D, zRand);
             }
-            world.spawnParticle("smoke", (double)x+0.5F, (double)y+1.0F, (double)z+0.5F, 0.0D, 0.0D, 0.0D);
+            world.spawnParticle(ClientProxy.bulletForMyValentine ? "heart" : "smoke", (double)x+0.5F, (double)y+1.0F, (double)z+0.5F, 0.0D, 0.0D, 0.0D);
         }
     }
 
