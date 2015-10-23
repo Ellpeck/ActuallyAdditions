@@ -45,9 +45,9 @@ public class ClientProxy implements IProxy{
         ModUtil.LOGGER.info("PreInitializing ClientProxy...");
 
         Calendar c = Calendar.getInstance();
-        pumpkinBlurPumpkinBlur = false;//c.get(Calendar.MONTH) == Calendar.OCTOBER;
+        pumpkinBlurPumpkinBlur = c.get(Calendar.MONTH) == Calendar.OCTOBER;
         jingleAllTheWay = c.get(Calendar.MONTH) == Calendar.DECEMBER && c.get(Calendar.DAY_OF_MONTH) >= 6 && c.get(Calendar.DAY_OF_MONTH) <= 26;
-        bulletForMyValentine = true;//c.get(Calendar.MONTH) == Calendar.FEBRUARY && c.get(Calendar.DAY_OF_MONTH) >= 12 && c.get(Calendar.DAY_OF_MONTH) <= 16;
+        bulletForMyValentine = c.get(Calendar.MONTH) == Calendar.FEBRUARY && c.get(Calendar.DAY_OF_MONTH) >= 12 && c.get(Calendar.DAY_OF_MONTH) <= 16;
 
         PersistentClientData.setTheFile(new File(Minecraft.getMinecraft().mcDataDir, ModUtil.MOD_ID+"Data.dat"));
     }
