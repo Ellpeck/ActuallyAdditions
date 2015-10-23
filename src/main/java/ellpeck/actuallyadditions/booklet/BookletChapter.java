@@ -45,7 +45,7 @@ public class BookletChapter{
     }
 
     public String getLocalizedName(){
-        return this.color+StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".chapter."+this.unlocalizedName+".name");
+        return StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".chapter."+this.unlocalizedName+".name");
     }
 
     public String getNameWithColor(){
