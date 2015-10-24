@@ -52,7 +52,7 @@ public enum ConfigCrafting{
     CHOCOLATE("Chocolate", ConfigCategories.FOOD_CRAFTING),
     CHOCOLATE_CAKE("Chocolate Cake", ConfigCategories.FOOD_CRAFTING),
     TOAST("Toast", ConfigCategories.FOOD_CRAFTING),
-    CHOCOTOAST("ChocoToast", ConfigCategories.FOOD_CRAFTING),
+    CHOCOLATE_TOAST("Chocolate Toast", ConfigCategories.FOOD_CRAFTING),
 
     LEAF_BLOWER("Leaf Blower", ConfigCategories.ITEMS_CRAFTING),
     LEAF_BLOWER_ADVANCED("Advanced Leaf Blower", ConfigCategories.ITEMS_CRAFTING),

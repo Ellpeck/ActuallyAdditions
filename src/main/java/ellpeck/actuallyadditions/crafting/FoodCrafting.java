@@ -40,7 +40,7 @@ public class FoodCrafting{
     public static IRecipe recipeChocolate;
     public static IRecipe recipeChocolateCake;
     public static IRecipe recipeToast;
-    public static IRecipe recipeChocoToast;
+    public static IRecipe recipeChocolateToast;
 
     public static void init(){
 
@@ -197,10 +197,10 @@ public class FoodCrafting{
             recipeToast = Util.GetRecipes.lastIRecipe();
         }
 
-        //ChocoToast:
-        if(ConfigCrafting.CHOCOTOAST.isEnabled()){
-            GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemFoods, 1, TheFoods.CHOCOTOAST.ordinal()), new ItemStack(InitItems.itemFoods, 1, TheFoods.TOAST.ordinal()), new ItemStack(InitItems.itemFoods, 1, TheFoods.CHOCOLATE.ordinal()));
-            recipeChocoToast = Util.GetRecipes.lastIRecipe();
+        //Chocolate Toast
+        if(ConfigCrafting.CHOCOLATE_TOAST.isEnabled()){
+            GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemFoods, 1, TheFoods.CHOCOLATE_TOAST.ordinal()), new ItemStack(InitItems.itemFoods, 1, TheFoods.TOAST.ordinal()), new ItemStack(InitItems.itemFoods, 1, TheFoods.CHOCOLATE.ordinal()));
+            recipeChocolateToast = Util.GetRecipes.lastIRecipe();
         }
     }
 
