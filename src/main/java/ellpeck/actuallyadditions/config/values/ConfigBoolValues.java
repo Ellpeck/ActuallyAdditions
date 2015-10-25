@@ -35,7 +35,6 @@ public enum ConfigBoolValues{
     TF_PAXELS("Thermal Foundation Paxels", ConfigCategories.OTHER, true, "If Paxels made of Thermal Foundation Materials should exist"),
     MT_PAXELS("MekanismTools Paxels", ConfigCategories.OTHER, true, "If Paxels made of MekanismTools Materials should exist"),
     SO_PAXELS("Simpleores Paxels", ConfigCategories.OTHER, true, "If Paxels made of SimpleOres Materials should exist"),
-    NR_PAXLES("NetherRocks Paxels", ConfigCategories.OTHER, true, "If Paxels made of Netherrock Materials should exist"),
 
     DO_RICE_GEN("Rice Gen", ConfigCategories.WORLD_GEN, true, "If Rice should generate in the World"),
     DO_CANOLA_GEN("Canola Gen", ConfigCategories.WORLD_GEN, true, "If Canola should generate in the World"),
