@@ -13,15 +13,19 @@ package ellpeck.actuallyadditions.tile;
 import cofh.api.energy.IEnergyReceiver;
 import ellpeck.actuallyadditions.misc.LaserRelayConnectionHandler;
 import ellpeck.actuallyadditions.util.WorldPos;
+import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.ForgeDirection;
+import org.lwjgl.opengl.GL11;
 
 import java.util.ArrayList;
 
 public class TileEntityLaserRelay extends TileEntityBase implements IEnergyReceiver{
+
 
     @Override
     public void invalidate(){
@@ -96,4 +100,32 @@ public class TileEntityLaserRelay extends TileEntityBase implements IEnergyRecei
     public boolean canConnectEnergy(ForgeDirection from){
         return true;
     }
+
+    public void firstDraw(WorldPos firstPos, WorldPos secondPos){
+        double x = firstPos.getX() - secondPos.getX();
+        double y = firstPos.getY() - secondPos.getY() + 1;
+        double z = -(firstPos.getZ() - secondPos.getZ());
+        double player = Minecraft.getMinecraft().thePlayer.posY-firstPos.getY();
+        float f = 5;
+        System.out.println(player);
+        if(player < 10) f=5;
+        else if(player < 20 && player > 10) f = 4;
+        else if(player < 30 && player > 20) f = 3;
+        else if(player < 40 && player > 30) f = 2;
+        else if(player < 50 && player > 40) f = 1;
+        else f=1;
+
+        GL11.glPushMatrix();
+        GL11.glLineWidth(f);
+        GL11.glBegin(GL11.GL_LINE_STRIP);
+        {
+            GL11.glColor3f(1.0F, 0, 0);
+            GL11.glVertex3d(x, y, z);
+            GL11.glVertex3d(0, 1, 0);
+        }
+        GL11.glEnd();
+        GL11.glLineWidth(1);
+        GL11.glPopMatrix();
+    }
+
 }

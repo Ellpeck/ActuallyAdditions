@@ -11,7 +11,9 @@
 package ellpeck.actuallyadditions.blocks.render;
 
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
+
 
 public class RenderLaserRelay extends RenderTileEntity{
 
@@ -52,9 +54,12 @@ public class RenderLaserRelay extends RenderTileEntity{
         }
 
         theModel.render(0.0625F);
+        bindTexture(new ResourceLocation("actuallyadditions:textures/blocks/blockBreaker.png"));
         theModel.renderExtra(0.0625F, tile);
+        bindTexture(resLoc);
 
         GL11.glPopMatrix();
+
     }
 
 }
