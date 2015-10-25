@@ -54,10 +54,9 @@ public class RenderLaserRelay extends RenderTileEntity{
         }
 
         theModel.render(0.0625F);
+        //A Random texture, so it is a smooth Laser!
         bindTexture(new ResourceLocation("actuallyadditions:textures/blocks/blockBreaker.png"));
         theModel.renderExtra(0.0625F, tile);
-        bindTexture(resLoc);
-
         GL11.glPopMatrix();
 
     }

@@ -194,7 +194,7 @@ public class ModelLaserRelay extends ModelBaseAA{
             for(LaserRelayConnectionHandler.ConnectionPair aPair : network){
                 TileEntityLaserRelay firstRelay = (TileEntityLaserRelay) aPair.firstRelay.getTileEntity();
                 if(aPair.contains(firstWP) && aPair.firstRelay.isEqual(firstWP)){
-                    firstRelay.firstDraw(aPair.firstRelay, aPair.secondRelay);
+                    firstRelay.drawLine(aPair.firstRelay, aPair.secondRelay);
                 }
             }
         }
