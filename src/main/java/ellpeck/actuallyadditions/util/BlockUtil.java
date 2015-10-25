@@ -19,11 +19,7 @@ import net.minecraft.item.ItemBlock;
 public class BlockUtil{
 
     public static void register(Block block, Class<? extends ItemBlock> itemBlock){
-        register(block, itemBlock, true);
-    }
-
-    public static void register(Block block, Class<? extends ItemBlock> itemBlock, boolean addTab){
-        block.setCreativeTab(addTab ? CreativeTab.instance : null);
+        block.setCreativeTab(CreativeTab.instance);
         block.setBlockName(createUnlocalizedName(block));
         GameRegistry.registerBlock(block, itemBlock, ((IActAddItemOrBlock)block).getName());
     }
@@ -33,10 +29,6 @@ public class BlockUtil{
     }
 
     public static void register(Block block){
-        register(block, ItemBlockBase.class, true);
-    }
-
-    public static void register(Block block, boolean addTab){
-        register(block, ItemBlockBase.class, addTab);
+        register(block, ItemBlockBase.class);
     }
 }

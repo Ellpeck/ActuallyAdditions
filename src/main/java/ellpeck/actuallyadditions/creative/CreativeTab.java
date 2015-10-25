@@ -39,7 +39,7 @@ public class CreativeTab extends CreativeTabs{
 
     @Override
     public Item getTabIconItem(){
-        return Item.getItemFromBlock(InitBlocks.blockPhantomLiquiface);
+        return InitItems.itemLexicon;
     }
 
     @Override
