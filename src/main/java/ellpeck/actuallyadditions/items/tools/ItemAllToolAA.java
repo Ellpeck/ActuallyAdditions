@@ -37,16 +37,20 @@ import java.util.Set;
 @SuppressWarnings("unchecked")
 public class ItemAllToolAA extends ItemTool implements IActAddItemOrBlock{
 
+    private IIcon overlayIcon;
+    private int color;
+
     private String name;
     private EnumRarity rarity;
     private String repairItem;
 
-    public ItemAllToolAA(ToolMaterial toolMat, String repairItem, String unlocalizedName, EnumRarity rarity){
+    public ItemAllToolAA(ToolMaterial toolMat, String repairItem, String unlocalizedName, EnumRarity rarity, int color){
         super(4.0F, toolMat, Sets.newHashSet());
 
         this.repairItem = repairItem;
         this.name = unlocalizedName;
         this.rarity = rarity;
+        this.color = color;
 
         this.setMaxDamage(this.getMaxDamage()*4);
     }
@@ -91,13 +95,26 @@ public class ItemAllToolAA extends ItemTool implements IActAddItemOrBlock{
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister iconReg){
-        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
+    public int getColorFromItemStack(ItemStack stack, int pass){
+        return pass > 0 ? this.color : super.getColorFromItemStack(stack, pass);
     }
 
     @Override
-    public IIcon getIcon(ItemStack stack, int pass){
-        return this.itemIcon;
+    @SideOnly(Side.CLIENT)
+    public IIcon getIconFromDamageForRenderPass(int damage, int pass){
+        return pass > 0 ? this.overlayIcon : super.getIconFromDamageForRenderPass(damage, pass);
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void registerIcons(IIconRegister iconReg){
+        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":itemPaxel");
+        this.overlayIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":itemPaxelOverlay");
+    }
+
+    @Override
+    public boolean requiresMultipleRenderPasses(){
+        return true;
     }
 
     @Override
