@@ -129,9 +129,6 @@ public class InitItems{
 
     public static Item itemLaserWrench;
 
-    //canitzp:
-    public static Item itemBatonWood;
-
     public static void init(){
         ModUtil.LOGGER.info("Initializing Items...");
 
@@ -303,9 +300,5 @@ public class InitItems{
         obsidianPaxel = new ItemAllToolAA(InitToolMaterials.toolMaterialObsidian, "obsidian", "obsidianPaxel", EnumRarity.epic);
         quartzPaxel = new ItemAllToolAA(InitToolMaterials.toolMaterialQuartz, "gemQuartzBlack", "quartzPaxel", EnumRarity.rare);
         ItemUtil.registerItems(new Item[]{woodenPaxel, stonePaxel, ironPaxel, goldPaxel, diamondPaxel, emeraldPaxel, obsidianPaxel, quartzPaxel});
-
-        //canitzp:
-        itemBatonWood = new ItemBatonAA(Item.ToolMaterial.WOOD, "plank", "itemBatonWood");
-        ItemUtil.register(itemBatonWood);
     }
 }
