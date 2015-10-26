@@ -14,6 +14,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
 
@@ -83,5 +84,9 @@ public class WorldPos{
 
     public String toString(){
         return "["+this.x+", "+this.y+", "+this.z+" in world "+this.worldID+"]";
+    }
+
+    public Vec3 toVec(){
+        return Vec3.createVectorHelper(this.x, this.y, this.z);
     }
 }

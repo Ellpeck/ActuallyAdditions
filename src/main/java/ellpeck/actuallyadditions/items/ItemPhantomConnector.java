@@ -83,7 +83,7 @@ public class ItemPhantomConnector extends Item implements IActAddItemOrBlock{
             int y = tag.getInteger("YCoordOfTileStored");
             int z = tag.getInteger("ZCoordOfTileStored");
             World world = DimensionManager.getWorld(tag.getInteger("WorldOfTileStored"));
-            if(x != 0 && y != 0 && z != 0 && world != null){
+            if(!(x == 0 && y == 0 && z == 0) && world != null){
                 return new WorldPos(world, x, y, z);
             }
         }

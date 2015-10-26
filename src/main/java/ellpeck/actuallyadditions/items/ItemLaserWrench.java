@@ -60,6 +60,7 @@ public class ItemLaserWrench extends Item implements IActAddItemOrBlock{
                     }
                     else{
                         player.addChatComponentMessage(new ChatComponentText(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".laser.cantConnect.desc")));
+                        ItemPhantomConnector.clearStorage(stack);
                     }
                 }
             }

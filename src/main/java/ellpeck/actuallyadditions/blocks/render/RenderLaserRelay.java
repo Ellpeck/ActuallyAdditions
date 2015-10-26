@@ -11,7 +11,6 @@
 package ellpeck.actuallyadditions.blocks.render;
 
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
 
@@ -54,11 +53,7 @@ public class RenderLaserRelay extends RenderTileEntity{
         }
 
         theModel.render(0.0625F);
-        //A Random texture, so it is a smooth Laser!
-        bindTexture(new ResourceLocation("actuallyadditions:textures/blocks/blockBreaker.png"));
-        theModel.renderExtra(0.0625F, tile);
         GL11.glPopMatrix();
-
     }
 
 }
