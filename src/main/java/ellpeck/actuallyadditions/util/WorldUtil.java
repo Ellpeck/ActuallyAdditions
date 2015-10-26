@@ -116,6 +116,7 @@ public class WorldUtil{
         tile.getWorldObj().markBlockForUpdate(tile.xCoord, tile.yCoord-1, tile.zCoord);
         tile.getWorldObj().markBlockForUpdate(tile.xCoord, tile.yCoord, tile.zCoord+1);
         tile.getWorldObj().markBlockForUpdate(tile.xCoord, tile.yCoord, tile.zCoord-1);
+        tile.getWorldObj().markBlockForUpdate(tile.xCoord, tile.yCoord, tile.zCoord);
         tile.markDirty();
     }
 
