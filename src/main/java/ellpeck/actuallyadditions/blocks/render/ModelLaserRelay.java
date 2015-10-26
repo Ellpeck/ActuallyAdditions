@@ -188,12 +188,13 @@ public class ModelLaserRelay extends ModelBaseAA{
     @Override
     public void renderExtra(float f, TileEntity tile){
         TileEntityLaserRelay relay = (TileEntityLaserRelay)tile;
-        WorldPos thisPos = new WorldPos(relay.getWorldObj(), relay.xCoord, relay.yCoord, relay.zCoord);
-        ArrayList<LaserRelayConnectionHandler.ConnectionPair> network = LaserRelayConnectionHandler.getInstance().getNetworkFor(thisPos);
+        WorldPos firstWP = new WorldPos(relay.getWorldObj(), relay.xCoord, relay.yCoord, relay.zCoord);
+        ArrayList<LaserRelayConnectionHandler.ConnectionPair> network = LaserRelayConnectionHandler.getInstance().getNetworkFor(firstWP);
         if(network != null){
             for(LaserRelayConnectionHandler.ConnectionPair aPair : network){
-                if(aPair.contains(thisPos) && aPair.firstRelay.isEqual(thisPos)){
-                    //TODO Make this work
+                TileEntityLaserRelay firstRelay = (TileEntityLaserRelay) aPair.firstRelay.getTileEntity();
+                if(aPair.contains(firstWP) && aPair.firstRelay.isEqual(firstWP)){
+                    firstRelay.drawLine(aPair.firstRelay, aPair.secondRelay);
                 }
             }
         }
