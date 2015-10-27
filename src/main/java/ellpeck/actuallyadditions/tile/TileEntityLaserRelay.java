@@ -14,8 +14,6 @@ import cofh.api.energy.IEnergyReceiver;
 import ellpeck.actuallyadditions.config.values.ConfigBoolValues;
 import ellpeck.actuallyadditions.misc.LaserRelayConnectionHandler;
 import ellpeck.actuallyadditions.util.WorldPos;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.particle.EntityReddustFX;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
@@ -43,15 +41,13 @@ public class TileEntityLaserRelay extends TileEntityBase implements IEnergyRecei
                 if(network != null){
                     for(LaserRelayConnectionHandler.ConnectionPair aPair : network){
                         if(aPair.contains(thisPos) && thisPos.isEqual(aPair.firstRelay)){
-                            if(Minecraft.getMinecraft().thePlayer.getDistance(aPair.firstRelay.getX(), aPair.firstRelay.getY(), aPair.firstRelay.getZ()) <= 64){
-                                int difX = aPair.firstRelay.getX()-aPair.secondRelay.getX();
-                                int difY = aPair.firstRelay.getY()-aPair.secondRelay.getY();
-                                int difZ = aPair.firstRelay.getZ()-aPair.secondRelay.getZ();
+                            int difX = aPair.firstRelay.getX()-aPair.secondRelay.getX();
+                            int difY = aPair.firstRelay.getY()-aPair.secondRelay.getY();
+                            int difZ = aPair.firstRelay.getZ()-aPair.secondRelay.getZ();
 
-                                double distance = aPair.firstRelay.toVec().distanceTo(aPair.secondRelay.toVec());
-                                for(double i = 0; i <= 1; i += 1/(distance*(ConfigBoolValues.LESS_LASER_RELAY_PARTICLES.isEnabled() ? 1 : 4))){
-                                    Minecraft.getMinecraft().effectRenderer.addEffect(new EntityReddustFX(this.worldObj, (difX*i)+aPair.secondRelay.getX()+0.5, (difY*i)+aPair.secondRelay.getY()+0.5, (difZ*i)+aPair.secondRelay.getZ()+0.5, 0, 0, 0));
-                                }
+                            double distance = aPair.firstRelay.toVec().distanceTo(aPair.secondRelay.toVec());
+                            for(double i = 0; i <= 1; i += 1/(distance*(ConfigBoolValues.LESS_LASER_RELAY_PARTICLES.isEnabled() ? 1 : 4))){
+                                this.worldObj.spawnParticle("reddust", (difX*i)+aPair.secondRelay.getX()+0.5, (difY*i)+aPair.secondRelay.getY()+0.5, (difZ*i)+aPair.secondRelay.getZ()+0.5, 0, 0, 0);
                             }
                         }
                     }
