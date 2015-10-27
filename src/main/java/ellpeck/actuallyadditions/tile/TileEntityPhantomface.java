@@ -10,6 +10,8 @@
 
 package ellpeck.actuallyadditions.tile;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.blocks.BlockPhantom;
 import ellpeck.actuallyadditions.blocks.InitBlocks;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
@@ -19,7 +21,6 @@ import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
-import net.minecraftforge.common.DimensionManager;
 
 public class TileEntityPhantomface extends TileEntityInventoryBase implements IPhantomTile{
 
@@ -55,18 +56,23 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
         }
         else{
             if(this.boundPosition != null){
-                if(this.worldObj.rand.nextInt(2) == 0){
-                    double d1 = (double)((float)this.boundPosition.getY()+worldObj.rand.nextFloat());
-                    int i1 = worldObj.rand.nextInt(2)*2-1;
-                    int j1 = worldObj.rand.nextInt(2)*2-1;
-                    double d4 = ((double)worldObj.rand.nextFloat()-0.5D)*0.125D;
-                    double d2 = (double)this.boundPosition.getZ()+0.5D+0.25D*(double)j1;
-                    double d5 = (double)(worldObj.rand.nextFloat()*1.0F*(float)j1);
-                    double d0 = (double)this.boundPosition.getX()+0.5D+0.25D*(double)i1;
-                    double d3 = (double)(worldObj.rand.nextFloat()*1.0F*(float)i1);
-                    worldObj.spawnParticle("portal", d0, d1, d2, d3, d4, d5);
-                }
+                this.renderParticles();
             }
+        }
+    }
+
+    @SideOnly(Side.CLIENT)
+    public void renderParticles(){
+        if(this.worldObj.rand.nextInt(2) == 0){
+            double d1 = (double)((float)this.boundPosition.getY()+worldObj.rand.nextFloat());
+            int i1 = worldObj.rand.nextInt(2)*2-1;
+            int j1 = worldObj.rand.nextInt(2)*2-1;
+            double d4 = ((double)worldObj.rand.nextFloat()-0.5D)*0.125D;
+            double d2 = (double)this.boundPosition.getZ()+0.5D+0.25D*(double)j1;
+            double d5 = (double)(worldObj.rand.nextFloat()*1.0F*(float)j1);
+            double d0 = (double)this.boundPosition.getX()+0.5D+0.25D*(double)i1;
+            double d3 = (double)(worldObj.rand.nextFloat()*1.0F*(float)i1);
+            worldObj.spawnParticle("portal", d0, d1, d2, d3, d4, d5);
         }
     }
 
@@ -137,7 +143,7 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
     @Override
     public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
         super.writeSyncableNBT(compound, sync);
-        if(this.hasBoundPosition()){
+        if(this.boundPosition != null){
             compound.setInteger("XCoordOfTileStored", boundPosition.getX());
             compound.setInteger("YCoordOfTileStored", boundPosition.getY());
             compound.setInteger("ZCoordOfTileStored", boundPosition.getZ());
@@ -151,8 +157,8 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
         int x = compound.getInteger("XCoordOfTileStored");
         int y = compound.getInteger("YCoordOfTileStored");
         int z = compound.getInteger("ZCoordOfTileStored");
-        World world = DimensionManager.getWorld(compound.getInteger("WorldOfTileStored"));
-        if(x != 0 && y != 0 && z != 0 && world != null){
+        int world = compound.getInteger("WorldOfTileStored");
+        if(!(x == 0 && y == 0 && z == 0)){
             this.boundPosition = new WorldPos(world, x, y, z);
             this.markDirty();
         }

@@ -11,9 +11,13 @@
 package ellpeck.actuallyadditions.tile;
 
 import cofh.api.energy.IEnergyReceiver;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.config.values.ConfigBoolValues;
 import ellpeck.actuallyadditions.misc.LaserRelayConnectionHandler;
 import ellpeck.actuallyadditions.util.WorldPos;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.particle.EntityReddustFX;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
@@ -27,27 +31,32 @@ public class TileEntityLaserRelay extends TileEntityBase implements IEnergyRecei
     @Override
     public void invalidate(){
         super.invalidate();
-        if(!worldObj.isRemote){
-            LaserRelayConnectionHandler.getInstance().removeRelayFromNetwork(new WorldPos(this.worldObj, this.xCoord, this.yCoord, this.zCoord));
-        }
+        LaserRelayConnectionHandler.getInstance().removeRelayFromNetwork(new WorldPos(this.worldObj, this.xCoord, this.yCoord, this.zCoord));
     }
 
     @Override
     public void updateEntity(){
         if(this.worldObj.isRemote){
-            if(this.worldObj.rand.nextInt(2) == 0){
-                WorldPos thisPos = new WorldPos(this.getWorldObj(), this.xCoord, this.yCoord, this.zCoord);
-                ArrayList<LaserRelayConnectionHandler.ConnectionPair> network = LaserRelayConnectionHandler.getInstance().getNetworkFor(thisPos);
-                if(network != null){
-                    for(LaserRelayConnectionHandler.ConnectionPair aPair : network){
-                        if(aPair.contains(thisPos) && thisPos.isEqual(aPair.firstRelay)){
+            this.renderParticles();
+        }
+    }
+
+    @SideOnly(Side.CLIENT)
+    public void renderParticles(){
+        if(this.worldObj.rand.nextInt(2) == 0){
+            WorldPos thisPos = new WorldPos(this.getWorldObj(), this.xCoord, this.yCoord, this.zCoord);
+            ArrayList<LaserRelayConnectionHandler.ConnectionPair> network = LaserRelayConnectionHandler.getInstance().getNetworkFor(thisPos);
+            if(network != null){
+                for(LaserRelayConnectionHandler.ConnectionPair aPair : network){
+                    if(aPair.contains(thisPos) && thisPos.isEqual(aPair.firstRelay)){
+                        if(Minecraft.getMinecraft().thePlayer.getDistance(aPair.firstRelay.getX(), aPair.firstRelay.getY(), aPair.firstRelay.getZ()) <= 64){
                             int difX = aPair.firstRelay.getX()-aPair.secondRelay.getX();
                             int difY = aPair.firstRelay.getY()-aPair.secondRelay.getY();
                             int difZ = aPair.firstRelay.getZ()-aPair.secondRelay.getZ();
 
                             double distance = aPair.firstRelay.toVec().distanceTo(aPair.secondRelay.toVec());
-                            for(double i = 0; i <= 1; i += 1/(distance*(ConfigBoolValues.LESS_LASER_RELAY_PARTICLES.isEnabled() ? 1 : 4))){
-                                this.worldObj.spawnParticle("reddust", (difX*i)+aPair.secondRelay.getX()+0.5, (difY*i)+aPair.secondRelay.getY()+0.5, (difZ*i)+aPair.secondRelay.getZ()+0.5, 0, 0, 0);
+                            for(double i = 0; i <= 1; i += 1/(distance*(ConfigBoolValues.LESS_LASER_RELAY_PARTICLES.isEnabled() ? 1 : 5))){
+                                Minecraft.getMinecraft().effectRenderer.addEffect(new EntityReddustFX(this.worldObj, (difX*i)+aPair.secondRelay.getX()+0.5, (difY*i)+aPair.secondRelay.getY()+0.5, (difZ*i)+aPair.secondRelay.getZ()+0.5, 0.75F, 0, 0, 0));
                             }
                         }
                     }
