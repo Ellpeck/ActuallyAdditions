@@ -56,7 +56,8 @@ public enum ConfigBoolValues{
     SHOW_BOOKLET_INFO("Booklet Quick Opening Info", ConfigCategories.TOOL_VALUES, true, "If the 'Press key for more information'-text should show when the item has a page in the booklet"),
     GIVE_BOOKLET_ON_FIRST_CRAFT("Give Booklet on First Craft", ConfigCategories.OTHER, true, "If the booklet should be given to the player when he first crafts something from the Mod"),
 
-    ENABLE_SEASONAL("Seasonal Mode", ConfigCategories.OTHER, true, "If Seasonal Mode is enabled");
+    ENABLE_SEASONAL("Seasonal Mode", ConfigCategories.OTHER, true, "If Seasonal Mode is enabled"),
+    LESS_LASER_RELAY_PARTICLES("Laser Relay: Particles", ConfigCategories.MACHINE_VALUES, false, "If the Laser Relay should have less laser particles to prevent lag");
 
     public final String name;
     public final String category;

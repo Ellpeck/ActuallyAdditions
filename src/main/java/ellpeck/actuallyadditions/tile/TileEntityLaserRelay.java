@@ -11,6 +11,7 @@
 package ellpeck.actuallyadditions.tile;
 
 import cofh.api.energy.IEnergyReceiver;
+import ellpeck.actuallyadditions.config.values.ConfigBoolValues;
 import ellpeck.actuallyadditions.misc.LaserRelayConnectionHandler;
 import ellpeck.actuallyadditions.util.WorldPos;
 import net.minecraft.nbt.NBTTagCompound;
@@ -34,7 +35,7 @@ public class TileEntityLaserRelay extends TileEntityBase implements IEnergyRecei
     @Override
     public void updateEntity(){
         if(this.worldObj.isRemote){
-            if(this.worldObj.rand.nextInt(4) == 0){
+            if(this.worldObj.rand.nextInt(ConfigBoolValues.LESS_LASER_RELAY_PARTICLES.isEnabled() ? 8 : 4) == 0){
                 WorldPos thisPos = new WorldPos(this.getWorldObj(), this.xCoord, this.yCoord, this.zCoord);
                 ArrayList<LaserRelayConnectionHandler.ConnectionPair> network = LaserRelayConnectionHandler.getInstance().getNetworkFor(thisPos);
                 if(network != null){
@@ -45,7 +46,7 @@ public class TileEntityLaserRelay extends TileEntityBase implements IEnergyRecei
                             int difZ = aPair.firstRelay.getZ()-aPair.secondRelay.getZ();
 
                             double distance = aPair.firstRelay.toVec().distanceTo(aPair.secondRelay.toVec());
-                            for(double i = 0; i <= 1; i += 1/(distance*4)){
+                            for(double i = 0; i <= 1; i += 1/(distance*(ConfigBoolValues.LESS_LASER_RELAY_PARTICLES.isEnabled() ? 2 : 4))){
                                 this.worldObj.spawnParticle("reddust", (difX*i)+aPair.secondRelay.getX()+0.5, (difY*i)+aPair.secondRelay.getY()+0.5, (difZ*i)+aPair.secondRelay.getZ()+0.5, 0, 0, 0);
                             }
                         }
