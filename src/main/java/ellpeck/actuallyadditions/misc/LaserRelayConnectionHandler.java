@@ -17,8 +17,6 @@ import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Vec3;
-import net.minecraft.world.World;
-import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.util.ForgeDirection;
 
 import java.util.ArrayList;
@@ -215,11 +213,10 @@ public class LaserRelayConnectionHandler{
         public static ConnectionPair readFromNBT(NBTTagCompound compound, String name){
             WorldPos[] pos = new WorldPos[2];
             for(int i = 0; i < pos.length; i++){
-                World aWorld = DimensionManager.getWorld(compound.getInteger("world"+name+i));
                 int anX = compound.getInteger("x"+name+i);
                 int aY = compound.getInteger("y"+name+i);
                 int aZ = compound.getInteger("z"+name+i);
-                pos[i] = new WorldPos(aWorld, anX, aY, aZ);
+                pos[i] = new WorldPos(compound.getInteger("world"+name+i), anX, aY, aZ);
             }
             return new ConnectionPair(pos[0], pos[1]);
         }
@@ -236,7 +233,7 @@ public class LaserRelayConnectionHandler{
         public void writeToNBT(NBTTagCompound compound, String name){
             for(int i = 0; i < 2; i++){
                 WorldPos relay = i == 0 ? this.firstRelay : this.secondRelay;
-                compound.setInteger("world"+name+i, relay.getWorld().provider.dimensionId);
+                compound.setInteger("world"+name+i, relay.getWorldID());
                 compound.setInteger("x"+name+i, relay.getX());
                 compound.setInteger("y"+name+i, relay.getY());
                 compound.setInteger("z"+name+i, relay.getZ());

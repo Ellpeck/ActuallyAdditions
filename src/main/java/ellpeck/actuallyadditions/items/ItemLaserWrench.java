@@ -86,15 +86,12 @@ public class ItemLaserWrench extends Item implements IActAddItemOrBlock{
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld){
         WorldPos coords = ItemPhantomConnector.getStoredPosition(stack);
         if(coords != null){
-            World world = coords.getWorld();
-            if(world != null){
-                list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".boundTo.desc")+":");
-                list.add("X: "+coords.getX());
-                list.add("Y: "+coords.getY());
-                list.add("Z: "+coords.getZ());
-                list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".inWorld.desc")+" "+world.provider.dimensionId);
-                list.add(EnumChatFormatting.ITALIC+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".clearStorage.desc"));
-            }
+            list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".boundTo.desc")+":");
+            list.add("X: "+coords.getX());
+            list.add("Y: "+coords.getY());
+            list.add("Z: "+coords.getZ());
+            list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".inWorld.desc")+" "+coords.getWorldID());
+            list.add(EnumChatFormatting.ITALIC+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".clearStorage.desc"));
         }
     }
 

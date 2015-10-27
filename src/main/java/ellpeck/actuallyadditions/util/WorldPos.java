@@ -26,10 +26,18 @@ public class WorldPos{
     private int worldID;
 
     public WorldPos(World world, int x, int y, int z){
-        this.worldID = world.provider.dimensionId;
+        this(world.provider.dimensionId, x, y, z);
+    }
+
+    public WorldPos(int worldID, int x, int y, int z){
+        this.worldID = worldID;
         this.x = x;
         this.y = y;
         this.z = z;
+    }
+
+    public int getWorldID(){
+        return this.worldID;
     }
 
     public TileEntity getTileEntity(){
