@@ -29,16 +29,16 @@ import java.util.ArrayList;
 public class TileEntityLaserRelay extends TileEntityBase implements IEnergyReceiver{
 
     @Override
-    public void invalidate(){
-        super.invalidate();
-        LaserRelayConnectionHandler.getInstance().removeRelayFromNetwork(new WorldPos(this.worldObj, this.xCoord, this.yCoord, this.zCoord));
-    }
-
-    @Override
     public void updateEntity(){
         if(this.worldObj.isRemote){
             this.renderParticles();
         }
+    }
+
+    @Override
+    public void invalidate(){
+        super.invalidate();
+        LaserRelayConnectionHandler.getInstance().removeRelayFromNetwork(new WorldPos(this.worldObj, this.xCoord, this.yCoord, this.zCoord));
     }
 
     @SideOnly(Side.CLIENT)

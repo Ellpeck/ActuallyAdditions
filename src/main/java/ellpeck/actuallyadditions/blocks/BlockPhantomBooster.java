@@ -48,6 +48,7 @@ public class BlockPhantomBooster extends BlockContainerBase implements IActAddIt
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public IIcon getIcon(int side, int metadata){
         return this.blockIcon;
     }

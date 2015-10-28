@@ -57,6 +57,7 @@ public class ItemPickaxeAA extends ItemPickaxe implements IActAddItemOrBlock{
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public IIcon getIcon(ItemStack stack, int pass){
         return this.itemIcon;
     }

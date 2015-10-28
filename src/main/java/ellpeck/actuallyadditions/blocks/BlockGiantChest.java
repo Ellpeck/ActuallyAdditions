@@ -29,7 +29,9 @@ import net.minecraft.world.World;
 
 public class BlockGiantChest extends BlockContainerBase implements IActAddItemOrBlock{
 
+    @SideOnly(Side.CLIENT)
     private IIcon topIcon;
+    @SideOnly(Side.CLIENT)
     private IIcon bottomIcon;
 
     public BlockGiantChest(){
@@ -46,6 +48,7 @@ public class BlockGiantChest extends BlockContainerBase implements IActAddItemOr
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public IIcon getIcon(int side, int metadata){
         return side == 1 ? this.topIcon : (side == 0 ? this.bottomIcon : this.blockIcon);
     }

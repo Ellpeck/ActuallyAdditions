@@ -51,6 +51,7 @@ public class BlockFishingNet extends BlockContainerBase implements IActAddItemOr
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public IIcon getIcon(int side, int metadata){
         return this.blockIcon;
     }

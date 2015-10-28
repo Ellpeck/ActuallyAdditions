@@ -33,6 +33,7 @@ import java.util.List;
 public class ItemJams extends ItemFood implements IActAddItemOrBlock{
 
     public static final TheJams[] allJams = TheJams.values();
+    @SideOnly(Side.CLIENT)
     public IIcon overlayIcon;
 
     public ItemJams(){

@@ -36,8 +36,11 @@ import java.util.Random;
 
 public class BlockTreasureChest extends Block implements IActAddItemOrBlock{
 
+    @SideOnly(Side.CLIENT)
     private IIcon topIcon;
+    @SideOnly(Side.CLIENT)
     private IIcon bottomIcon;
+    @SideOnly(Side.CLIENT)
     private IIcon frontIcon;
 
     public BlockTreasureChest(){
@@ -50,6 +53,7 @@ public class BlockTreasureChest extends Block implements IActAddItemOrBlock{
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public IIcon getIcon(IBlockAccess world, int x, int y, int z, int side){
         int meta = world.getBlockMetadata(x, y, z);
         if(side == 1){
@@ -65,6 +69,7 @@ public class BlockTreasureChest extends Block implements IActAddItemOrBlock{
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public IIcon getIcon(int side, int meta){
         if(side == 1){
             return this.topIcon;

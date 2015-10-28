@@ -35,6 +35,7 @@ public class BlockGeneric extends Block implements IActAddItemOrBlock{
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public IIcon getIcon(int side, int meta){
         return this.blockIcon;
     }

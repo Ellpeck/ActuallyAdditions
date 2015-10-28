@@ -54,6 +54,7 @@ public class BlockCoffeeMachine extends BlockContainerBase implements IActAddIte
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public IIcon getIcon(int side, int metadata){
         return this.blockIcon;
     }

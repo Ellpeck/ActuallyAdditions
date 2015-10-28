@@ -37,6 +37,7 @@ public class BlockPhantom extends BlockContainerBase implements IActAddItemOrBlo
     public Type type;
     public int range;
 
+    @SideOnly(Side.CLIENT)
     private IIcon iconSeasonal;
 
     public BlockPhantom(Type type){
@@ -80,6 +81,7 @@ public class BlockPhantom extends BlockContainerBase implements IActAddItemOrBlo
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public IIcon getIcon(int side, int metadata){
         return (this.type == Type.FACE && ClientProxy.pumpkinBlurPumpkinBlur && side > 1) ? this.iconSeasonal : this.blockIcon;
     }

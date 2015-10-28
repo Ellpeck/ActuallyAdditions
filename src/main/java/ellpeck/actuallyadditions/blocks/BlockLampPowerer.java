@@ -30,6 +30,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 public class BlockLampPowerer extends Block implements IActAddItemOrBlock{
 
+    @SideOnly(Side.CLIENT)
     private IIcon frontIcon;
 
     public BlockLampPowerer(){
@@ -41,6 +42,7 @@ public class BlockLampPowerer extends Block implements IActAddItemOrBlock{
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public IIcon getIcon(IBlockAccess world, int x, int y, int z, int side){
         int meta = world.getBlockMetadata(x, y, z);
         if(side == meta){
@@ -50,6 +52,7 @@ public class BlockLampPowerer extends Block implements IActAddItemOrBlock{
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public IIcon getIcon(int side, int meta){
         if(side == 3){
             return this.frontIcon;

@@ -43,6 +43,7 @@ public class BlockRangedCollector extends BlockContainerBase implements IActAddI
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public IIcon getIcon(int side, int meta){
         return this.blockIcon;
     }

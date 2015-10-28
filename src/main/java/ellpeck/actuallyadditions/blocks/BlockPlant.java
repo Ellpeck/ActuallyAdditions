@@ -31,14 +31,16 @@ public class BlockPlant extends BlockCrops implements IActAddItemOrBlock{
     public Item seedItem;
     public Item returnItem;
     public int returnMeta;
+    @SideOnly(Side.CLIENT)
     private IIcon[] textures;
+    private int stages;
     private String name;
     private int minDropAmount;
     private int addDropAmount;
 
     public BlockPlant(String name, int stages, int minDropAmount, int addDropAmount){
         this.name = name;
-        this.textures = new IIcon[stages];
+        this.stages = stages;
         this.minDropAmount = minDropAmount;
         this.addDropAmount = addDropAmount;
     }
@@ -80,6 +82,7 @@ public class BlockPlant extends BlockCrops implements IActAddItemOrBlock{
     @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconReg){
+        this.textures = new IIcon[this.stages];
         for(int i = 0; i < this.textures.length; i++){
             textures[i] = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Stage"+(i+1));
         }

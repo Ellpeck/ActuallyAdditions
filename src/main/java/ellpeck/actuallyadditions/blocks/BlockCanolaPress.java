@@ -29,6 +29,7 @@ import net.minecraft.world.World;
 
 public class BlockCanolaPress extends BlockContainerBase implements IActAddItemOrBlock{
 
+    @SideOnly(Side.CLIENT)
     private IIcon topIcon;
 
     public BlockCanolaPress(){
@@ -45,6 +46,7 @@ public class BlockCanolaPress extends BlockContainerBase implements IActAddItemO
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public IIcon getIcon(int side, int meta){
         return side == 1 || side == 0 ? this.topIcon : this.blockIcon;
     }

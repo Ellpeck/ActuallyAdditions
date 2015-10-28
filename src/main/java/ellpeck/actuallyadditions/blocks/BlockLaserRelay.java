@@ -45,6 +45,7 @@ public class BlockLaserRelay extends BlockContainerBase implements IActAddItemOr
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public IIcon getIcon(int side, int metadata){
         return this.blockIcon;
     }

@@ -247,6 +247,7 @@ public class ItemDrill extends ItemEnergy{
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public IIcon getIcon(ItemStack stack, int pass){
         return this.itemIcon;
     }

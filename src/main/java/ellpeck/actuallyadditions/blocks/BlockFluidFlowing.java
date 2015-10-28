@@ -26,7 +26,9 @@ import net.minecraftforge.fluids.Fluid;
 
 public class BlockFluidFlowing extends BlockFluidClassic implements IActAddItemOrBlock{
 
+    @SideOnly(Side.CLIENT)
     public IIcon stillIcon;
+    @SideOnly(Side.CLIENT)
     public IIcon flowingIcon;
     private String name;
 
@@ -48,6 +50,7 @@ public class BlockFluidFlowing extends BlockFluidClassic implements IActAddItemO
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public IIcon getIcon(int side, int meta){
         return side <= 1 ? this.stillIcon : this.flowingIcon;
     }

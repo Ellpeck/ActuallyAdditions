@@ -30,7 +30,9 @@ import net.minecraft.world.World;
 
 public class BlockItemRepairer extends BlockContainerBase implements IActAddItemOrBlock{
 
+    @SideOnly(Side.CLIENT)
     private IIcon topIcon;
+    @SideOnly(Side.CLIENT)
     private IIcon bottomIcon;
 
     public BlockItemRepairer(){
@@ -48,6 +50,7 @@ public class BlockItemRepairer extends BlockContainerBase implements IActAddItem
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public IIcon getIcon(int side, int meta){
         if(side == 1){
             return this.topIcon;

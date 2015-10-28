@@ -18,6 +18,10 @@ import net.minecraft.item.ItemBlock;
 
 public class BlockUtil{
 
+    public static void register(Block block){
+        register(block, ItemBlockBase.class);
+    }
+
     public static void register(Block block, Class<? extends ItemBlock> itemBlock){
         block.setCreativeTab(CreativeTab.instance);
         block.setBlockName(createUnlocalizedName(block));
@@ -26,9 +30,5 @@ public class BlockUtil{
 
     public static String createUnlocalizedName(Block block){
         return ModUtil.MOD_ID_LOWER+"."+((IActAddItemOrBlock)block).getName();
-    }
-
-    public static void register(Block block){
-        register(block, ItemBlockBase.class);
     }
 }

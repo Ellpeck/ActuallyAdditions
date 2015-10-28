@@ -48,6 +48,7 @@ public class BlockGreenhouseGlass extends BlockContainerBase implements IActAddI
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public IIcon getIcon(int side, int metadata){
         return this.blockIcon;
     }

@@ -37,6 +37,7 @@ import java.util.Set;
 @SuppressWarnings("unchecked")
 public class ItemAllToolAA extends ItemTool implements IActAddItemOrBlock{
 
+    @SideOnly(Side.CLIENT)
     private IIcon overlayIcon;
     private int color;
 
@@ -89,14 +90,19 @@ public class ItemAllToolAA extends ItemTool implements IActAddItemOrBlock{
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
+    public int getColorFromItemStack(ItemStack stack, int pass){
+        return pass > 0 ? this.color : super.getColorFromItemStack(stack, pass);
+    }
+
+    @Override
     public EnumRarity getRarity(ItemStack stack){
         return this.rarity;
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public int getColorFromItemStack(ItemStack stack, int pass){
-        return pass > 0 ? this.color : super.getColorFromItemStack(stack, pass);
+    public boolean requiresMultipleRenderPasses(){
+        return true;
     }
 
     @Override
@@ -110,11 +116,6 @@ public class ItemAllToolAA extends ItemTool implements IActAddItemOrBlock{
     public void registerIcons(IIconRegister iconReg){
         this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":itemPaxel");
         this.overlayIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":itemPaxelOverlay");
-    }
-
-    @Override
-    public boolean requiresMultipleRenderPasses(){
-        return true;
     }
 
     @Override

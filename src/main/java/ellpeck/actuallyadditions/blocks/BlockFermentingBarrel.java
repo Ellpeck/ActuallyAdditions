@@ -29,6 +29,7 @@ import net.minecraft.world.World;
 
 public class BlockFermentingBarrel extends BlockContainerBase implements IActAddItemOrBlock{
 
+    @SideOnly(Side.CLIENT)
     private IIcon iconTop;
 
     public BlockFermentingBarrel(){
@@ -51,6 +52,7 @@ public class BlockFermentingBarrel extends BlockContainerBase implements IActAdd
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public IIcon getIcon(int side, int metadata){
         return side <= 1 ? this.iconTop : this.blockIcon;
     }

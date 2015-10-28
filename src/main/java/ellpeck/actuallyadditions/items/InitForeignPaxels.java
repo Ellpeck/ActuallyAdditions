@@ -27,25 +27,23 @@ import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 public class InitForeignPaxels{
 
-    //MekanismTools
-    private static final String MEKANISM_TOOLS = "MekanismTools";
     public static final int[] MT_COLORS = new int[]{4166, 2248890, 8882649, 12410135, 11451392, 3684412};
     public static final String[] MT_NAMES = new String[]{"Obsidian", "LapisLazuli", "Osmium", "Bronze", "Glowstone", "Steel"};
+    public static final int[] TF_COLORS = new int[]{13332762, 5407943, 5407895, 5394789, 12960613, 12960653, 12410135, 2999795, 10143162};
+    public static final int[] SO_COLORS = new int[]{9409450, 2040021, 5714944, 526344, 545032};
+    //MekanismTools
+    private static final String MEKANISM_TOOLS = "MekanismTools";
     private static final String[] MT_REPAIR_NAMES = new String[]{"ingotRefinedObsidian", "gemLapis", "ingotOsmium", "ingotBronze", "ingotRefinedGlowstone", "ingotSteel"};
-    private static Item[] mtPaxels = new Item[6];
-
     //ThermalFoundation
     private static final String THERMAL_FOUNDATION = "ThermalFoundation";
-    public static final int[] TF_COLORS = new int[]{13332762, 5407943, 5407895, 5394789, 12960613, 12960653, 12410135, 2999795, 10143162};
     private static final String[] TF_NAMES = new String[]{"Copper", "Tin", "Silver", "Lead", "Nickel", "Electrum", "Bronze", "Platinum", "Invar"};
-    public static Item[] tfPaxels = new Item[9];
-
     //SimpleOres
     private static final String SIMPLE_ORES = "simpleores";
-    public static final int[] SO_COLORS = new int[]{9409450, 2040021, 5714944, 526344, 545032};
     private static final String[] SO_NAMES = new String[]{"tin", "mythril", "copper", "onyx", "adamantium"};
     private static final String[] SO_REPAIR_NAMES = new String[]{"ingotTin", "ingotMythril", "ingotCopper", "gemOnyx", "ingotAdamantium"};
+    public static Item[] tfPaxels = new Item[9];
     public static Item[] soPaxels = new Item[5];
+    private static Item[] mtPaxels = new Item[6];
 
     public static void init(){
         //SimpleOres

@@ -53,6 +53,7 @@ public class BlockFurnaceSolar extends BlockContainerBase implements IActAddItem
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public IIcon getIcon(int side, int metadata){
         return this.blockIcon;
     }

@@ -51,6 +51,7 @@ public class BlockSmileyCloud extends BlockContainerBase implements IActAddItemO
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public IIcon getIcon(int side, int metadata){
         return this.blockIcon;
     }

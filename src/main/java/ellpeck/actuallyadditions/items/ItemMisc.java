@@ -27,13 +27,15 @@ import java.util.List;
 public class ItemMisc extends Item implements IActAddItemOrBlock{
 
     public static final TheMiscItems[] allMiscItems = TheMiscItems.values();
-    public IIcon[] textures = new IIcon[allMiscItems.length];
+    @SideOnly(Side.CLIENT)
+    public IIcon[] textures;
 
     public ItemMisc(){
         this.setHasSubtypes(true);
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public IIcon getIconFromDamage(int par1){
         return par1 >= textures.length ? null : textures[par1];
     }
@@ -64,6 +66,7 @@ public class ItemMisc extends Item implements IActAddItemOrBlock{
     @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister iconReg){
+        this.textures = new IIcon[allMiscItems.length];
         for(int i = 0; i < textures.length; i++){
             textures[i] = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+allMiscItems[i].name);
         }

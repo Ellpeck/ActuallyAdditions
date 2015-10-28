@@ -31,9 +31,12 @@ import java.util.List;
 public class BlockMisc extends Block implements IActAddItemOrBlock{
 
     public static final TheMiscBlocks[] allMiscBlocks = TheMiscBlocks.values();
-    public IIcon[] textures = new IIcon[allMiscBlocks.length];
+    @SideOnly(Side.CLIENT)
+    public IIcon[] textures;
 
+    @SideOnly(Side.CLIENT)
     private IIcon stoneCasingSeasonalTop;
+    @SideOnly(Side.CLIENT)
     private IIcon stoneCasingSeasonal;
 
     public BlockMisc(){
@@ -44,6 +47,7 @@ public class BlockMisc extends Block implements IActAddItemOrBlock{
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public IIcon getIcon(int side, int metadata){
         if(ClientProxy.jingleAllTheWay && metadata == TheMiscBlocks.STONE_CASING.ordinal() && side != 0){
             return side == 1 ? this.stoneCasingSeasonalTop : this.stoneCasingSeasonal;
@@ -67,6 +71,7 @@ public class BlockMisc extends Block implements IActAddItemOrBlock{
     @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconReg){
+        this.textures = new IIcon[allMiscBlocks.length];
         for(int i = 0; i < textures.length; i++){
             textures[i] = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+allMiscBlocks[i].name);
         }

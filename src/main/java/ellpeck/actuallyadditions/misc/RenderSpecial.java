@@ -42,7 +42,7 @@ public class RenderSpecial{
         }
 
         if(ClientProxy.pumpkinBlurPumpkinBlur){
-            this.theThingToRender = new ItemStack(Calendar.getInstance().get(Calendar.DAY_OF_MONTH) % 2 == 0 ? Blocks.lit_pumpkin : Blocks.pumpkin);
+            this.theThingToRender = new ItemStack(Calendar.getInstance().get(Calendar.DAY_OF_MONTH)%2 == 0 ? Blocks.lit_pumpkin : Blocks.pumpkin);
             size = 0.3F;
             offsetUp = 0;
         }

@@ -30,7 +30,9 @@ import net.minecraft.world.World;
 
 public class BlockEnergizer extends BlockContainerBase implements IActAddItemOrBlock{
 
+    @SideOnly(Side.CLIENT)
     private IIcon topIcon;
+    @SideOnly(Side.CLIENT)
     private IIcon sideIcon;
     private boolean isEnergizer;
 
@@ -49,6 +51,7 @@ public class BlockEnergizer extends BlockContainerBase implements IActAddItemOrB
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public IIcon getIcon(int side, int meta){
         return side == 1 ? this.topIcon : (side == 0 ? this.blockIcon : this.sideIcon);
     }

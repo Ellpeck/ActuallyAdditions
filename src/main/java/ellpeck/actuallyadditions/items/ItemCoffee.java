@@ -188,6 +188,7 @@ public class ItemCoffee extends ItemFood implements IActAddItemOrBlock{
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public IIcon getIconFromDamage(int par1){
         return this.itemIcon;
     }

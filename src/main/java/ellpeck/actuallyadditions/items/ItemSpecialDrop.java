@@ -32,13 +32,15 @@ public class ItemSpecialDrop extends Item implements IActAddItemOrBlock{
     public static final int SOLID_XP_AMOUNT = 8;
 
     public static final TheSpecialDrops[] allDrops = TheSpecialDrops.values();
-    public IIcon[] textures = new IIcon[allDrops.length];
+    @SideOnly(Side.CLIENT)
+    public IIcon[] textures;
 
     public ItemSpecialDrop(){
         this.setHasSubtypes(true);
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public IIcon getIconFromDamage(int par1){
         return par1 >= textures.length ? null : textures[par1];
     }
@@ -90,6 +92,7 @@ public class ItemSpecialDrop extends Item implements IActAddItemOrBlock{
     @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister iconReg){
+        this.textures = new IIcon[allDrops.length];
         for(int i = 0; i < textures.length; i++){
             textures[i] = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+allDrops[i].name);
         }

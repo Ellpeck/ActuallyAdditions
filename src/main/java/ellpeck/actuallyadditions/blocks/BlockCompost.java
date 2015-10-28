@@ -57,6 +57,7 @@ public class BlockCompost extends BlockContainerBase implements IActAddItemOrBlo
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public IIcon getIcon(int side, int metadata){
         return this.blockIcon;
     }

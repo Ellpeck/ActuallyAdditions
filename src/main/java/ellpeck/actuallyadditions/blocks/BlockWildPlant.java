@@ -33,7 +33,6 @@ import java.util.List;
 public class BlockWildPlant extends BlockBush implements IActAddItemOrBlock{
 
     public static final TheWildPlants[] allWildPlants = TheWildPlants.values();
-    public IIcon[] textures = new IIcon[allWildPlants.length];
 
     public BlockWildPlant(){
         this.setStepSound(soundTypeGrass);
@@ -45,6 +44,7 @@ public class BlockWildPlant extends BlockBush implements IActAddItemOrBlock{
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public IIcon getIcon(int side, int metadata){
         return metadata >= allWildPlants.length ? null : allWildPlants[metadata].wildVersionOf.getIcon(0, 7);
     }
@@ -98,8 +98,8 @@ public class BlockWildPlant extends BlockBush implements IActAddItemOrBlock{
             this.setMaxDamage(0);
         }
 
-        @SideOnly(Side.CLIENT)
         @Override
+        @SideOnly(Side.CLIENT)
         public IIcon getIconFromDamage(int meta){
             return this.field_150939_a.getIcon(0, meta);
         }

@@ -28,6 +28,7 @@ import net.minecraft.world.World;
 
 public class BlockLavaFactoryController extends BlockContainerBase implements IActAddItemOrBlock{
 
+    @SideOnly(Side.CLIENT)
     private IIcon topIcon;
 
     public BlockLavaFactoryController(){
@@ -44,6 +45,7 @@ public class BlockLavaFactoryController extends BlockContainerBase implements IA
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public IIcon getIcon(int side, int meta){
         return side == 1 ? this.topIcon : this.blockIcon;
     }

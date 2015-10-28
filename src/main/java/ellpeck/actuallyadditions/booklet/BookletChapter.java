@@ -44,12 +44,12 @@ public class BookletChapter{
         return this.unlocalizedName;
     }
 
-    public String getLocalizedName(){
-        return StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".chapter."+this.unlocalizedName+".name");
-    }
-
     public String getNameWithColor(){
         return this.color+this.getLocalizedName();
+    }
+
+    public String getLocalizedName(){
+        return StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".chapter."+this.unlocalizedName+".name");
     }
 
     public BookletChapter setImportant(){

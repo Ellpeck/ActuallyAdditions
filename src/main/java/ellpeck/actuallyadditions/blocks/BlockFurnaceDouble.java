@@ -35,8 +35,11 @@ import java.util.Random;
 
 public class BlockFurnaceDouble extends BlockContainerBase implements IActAddItemOrBlock{
 
+    @SideOnly(Side.CLIENT)
     private IIcon topIcon;
+    @SideOnly(Side.CLIENT)
     private IIcon onIcon;
+    @SideOnly(Side.CLIENT)
     private IIcon frontIcon;
 
     public BlockFurnaceDouble(){
@@ -54,6 +57,7 @@ public class BlockFurnaceDouble extends BlockContainerBase implements IActAddIte
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public IIcon getIcon(IBlockAccess world, int x, int y, int z, int side){
         int meta = world.getBlockMetadata(x, y, z);
         if(side == 1){
@@ -69,6 +73,7 @@ public class BlockFurnaceDouble extends BlockContainerBase implements IActAddIte
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public IIcon getIcon(int side, int meta){
         if(side == 1){
             return this.topIcon;

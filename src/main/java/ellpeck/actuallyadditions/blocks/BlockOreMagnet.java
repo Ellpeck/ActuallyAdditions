@@ -29,7 +29,9 @@ import net.minecraft.world.World;
 
 public class BlockOreMagnet extends BlockContainerBase implements IActAddItemOrBlock{
 
+    @SideOnly(Side.CLIENT)
     private IIcon topIcon;
+    @SideOnly(Side.CLIENT)
     private IIcon bottomIcon;
 
     public BlockOreMagnet(){
@@ -46,6 +48,7 @@ public class BlockOreMagnet extends BlockContainerBase implements IActAddItemOrB
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public IIcon getIcon(int side, int meta){
         return (side == 1 ? this.topIcon : (side == 0 ? this.bottomIcon : this.blockIcon));
     }

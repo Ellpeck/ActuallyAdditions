@@ -32,7 +32,9 @@ import java.util.Random;
 
 public class BlockCoalGenerator extends BlockContainerBase implements IActAddItemOrBlock{
 
+    @SideOnly(Side.CLIENT)
     private IIcon topIcon;
+    @SideOnly(Side.CLIENT)
     private IIcon bottomIcon;
 
     public BlockCoalGenerator(){
@@ -50,6 +52,7 @@ public class BlockCoalGenerator extends BlockContainerBase implements IActAddIte
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public IIcon getIcon(int side, int meta){
         return side <= 1 ? (side == 0 ? this.bottomIcon : this.topIcon) : this.blockIcon;
     }

@@ -54,6 +54,7 @@ public class BlockInputter extends BlockContainerBase implements IActAddItemOrBl
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public IIcon getIcon(int side, int meta){
         return this.blockIcon;
     }
