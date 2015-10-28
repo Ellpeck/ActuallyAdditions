@@ -1,1 +1,2 @@
 1.7.10-0.1.0.0
+(This is a fallback for the old versions of the mod which use the old versioning System. Don't change.)
