@@ -1,1 +1,0 @@
-Added Seasonal Mode: Halloween & Christmas! \o/ & Bugfixes & Experimental new Server -> Client Syncing that should work better
