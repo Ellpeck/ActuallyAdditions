@@ -152,7 +152,11 @@ public enum ConfigCrafting{
     WATER_RING("Water Ring", ConfigCategories.ITEMS_CRAFTING),
     GROWTH_RING("Growth Ring", ConfigCategories.ITEMS_CRAFTING),
     DIRECTIONAL_BREAKER("Long-Range Breaker", ConfigCategories.BLOCKS_CRAFTING),
-    RANGED_COLLECTOR("Ranged Collector", ConfigCategories.BLOCKS_CRAFTING);
+    RANGED_COLLECTOR("Ranged Collector", ConfigCategories.BLOCKS_CRAFTING),
+    LASER_RELAY("Laser Relay", ConfigCategories.BLOCKS_CRAFTING),
+    LASER_WRENCH("Laser Wrench", ConfigCategories.ITEMS_CRAFTING),
+
+    CHEST_TO_CRATE_UPGRADE("Chest To Crate Upgrade", ConfigCategories.ITEMS_CRAFTING);
 
     public final String name;
     public final String category;

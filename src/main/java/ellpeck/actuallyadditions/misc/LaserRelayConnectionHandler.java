@@ -11,6 +11,7 @@
 package ellpeck.actuallyadditions.misc;
 
 import cofh.api.energy.IEnergyReceiver;
+import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.tile.TileEntityLaserRelay;
 import ellpeck.actuallyadditions.util.WorldPos;
 import ellpeck.actuallyadditions.util.WorldUtil;
@@ -19,7 +20,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class LaserRelayConnectionHandler{
 
@@ -84,20 +84,12 @@ public class LaserRelayConnectionHandler{
     public void removeRelayFromNetwork(WorldPos relay){
         ArrayList<ConnectionPair> network = this.getNetworkFor(relay);
         if(network != null){
-            //Remove the relay from the network
-            Iterator<ConnectionPair> iterator = network.iterator();
-            while(iterator.hasNext()){
-                ConnectionPair next = iterator.next();
-                if(next.contains(relay)){
-                    iterator.remove();
-                    //System.out.println("Removed "+relay.toString()+" from Network "+network.toString());
-                }
-            }
-
             //Setup new network (so that splitting a network will cause it to break into two)
             this.networks.remove(network);
             for(ConnectionPair pair : network){
-                this.addConnection(pair.firstRelay, pair.secondRelay);
+                if(!pair.contains(relay)){
+                    this.addConnection(pair.firstRelay, pair.secondRelay);
+                }
             }
         }
         WorldData.makeDirty();
@@ -123,7 +115,7 @@ public class LaserRelayConnectionHandler{
      */
     public boolean addConnection(WorldPos firstRelay, WorldPos secondRelay){
         int distance = (int)firstRelay.toVec().distanceTo(secondRelay.toVec());
-        if(distance > 15 || firstRelay.isEqual(secondRelay) || firstRelay.getWorld() != secondRelay.getWorld()){
+        if(distance > ConfigIntValues.LASER_RELAY_MAX_DISTANCE.getValue() || firstRelay.isEqual(secondRelay) || firstRelay.getWorld() != secondRelay.getWorld()){
             return false;
         }
 
@@ -188,8 +180,13 @@ public class LaserRelayConnectionHandler{
                         if(tile instanceof IEnergyReceiver && !(tile instanceof TileEntityLaserRelay)){
                             IEnergyReceiver receiver = (IEnergyReceiver)tile;
                             if(receiver.canConnectEnergy(side.getOpposite())){
-                                //Transfer the energy
-                                transmitted += ((IEnergyReceiver)tile).receiveEnergy(side.getOpposite(), maxTransfer-transmitted, simulate);
+                                //Transfer the energy (with the energy loss!)
+                                int theoreticalReceived = ((IEnergyReceiver)tile).receiveEnergy(side.getOpposite(), maxTransfer-transmitted, true);
+                                //The amount of energy lost during a transfer
+                                int deduct = (int)(theoreticalReceived*((double)ConfigIntValues.LASER_RELAY_LOSS.getValue()/100));
+
+                                transmitted+=((IEnergyReceiver)tile).receiveEnergy(side.getOpposite(), theoreticalReceived-deduct, simulate);
+                                transmitted+=deduct;
                             }
                         }
                     }

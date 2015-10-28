@@ -77,8 +77,19 @@ public class BlockCrafting{
     public static IRecipe recipeDirectionalBreaker;
     public static IRecipe recipeDropper;
     public static IRecipe recipeRangedCollector;
+    public static IRecipe recipeLaserRelay;
 
     public static void init(){
+
+        //Laser Relay
+        if(ConfigCrafting.LASER_RELAY.isEnabled()){
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockLaserRelay),
+                    "ORO", "RCR", "ORO",
+                    'O', new ItemStack(Blocks.obsidian),
+                    'R', new ItemStack(Items.redstone),
+                    'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal())));
+            recipeLaserRelay = Util.GetRecipes.lastIRecipe();
+        }
 
         //Ranged Collector
         if(ConfigCrafting.RANGED_COLLECTOR.isEnabled()){

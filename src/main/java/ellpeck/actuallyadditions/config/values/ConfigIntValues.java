@@ -171,7 +171,10 @@ public enum ConfigIntValues{
     DIRECTIONAL_BREAKER_RF_PER_BLOCK("Directional Breaker: RF per Block", ConfigCategories.MACHINE_VALUES, 5, 0, 1000, "The amount of RF the Directional Breaker uses to break each block"),
     DIRECTIONAL_BREAKER_RANGE("Directional Breaker: Range", ConfigCategories.MACHINE_VALUES, 8, 1, 1000, "The range of the Directional Breaker"),
 
-    RANGED_COLLECTOR_RANGE("Ranged Collector: Range", ConfigCategories.MACHINE_VALUES, 6, 1, 30, "The range of the Ranged Collector");
+    RANGED_COLLECTOR_RANGE("Ranged Collector: Range", ConfigCategories.MACHINE_VALUES, 6, 1, 30, "The range of the Ranged Collector"),
+
+    LASER_RELAY_LOSS("Laser Relay: Loss", ConfigCategories.MACHINE_VALUES, 5, 0, 80, "The Energy Loss of the Laser Relay per Transfer in Percent"),
+    LASER_RELAY_MAX_DISTANCE("Laser Relay: Max Distance", ConfigCategories.MACHINE_VALUES, 10, 3, 80, "The max distance between two connected Laser Relays");
 
     public final String name;
     public final String category;

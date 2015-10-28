@@ -71,6 +71,8 @@ public class ItemCrafting{
     public static IRecipe recipeLeafBlower;
     public static IRecipe recipeLeafBlowerAdvanced;
     public static ArrayList<IRecipe> recipesPotionRings = new ArrayList<IRecipe>();
+    public static IRecipe recipeChestToCrateUpgrade;
+    public static IRecipe recipeLaserWrench;
 
     public static void init(){
 
@@ -81,6 +83,24 @@ public class ItemCrafting{
         //Clearing NBT Storage
         GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemLaserWrench), new ItemStack(InitItems.itemLaserWrench));
         GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemPhantomConnector), new ItemStack(InitItems.itemPhantomConnector));
+
+        //Chest To Crate Upgrade
+        if(ConfigCrafting.CHEST_TO_CRATE_UPGRADE.isEnabled()){
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemChestToCrateUpgrade),
+                    "CWC", "WWW", "CWC",
+                    'C', new ItemStack(Blocks.chest),
+                    'W', "plankWood"));
+            recipeChestToCrateUpgrade = Util.GetRecipes.lastIRecipe();
+        }
+
+        //Laser Wrench
+        if(ConfigCrafting.LASER_WRENCH.isEnabled()){
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemLaserWrench),
+                    "C  ", " S ", "  S",
+                    'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal()),
+                    'S', "ingotIron"));
+            recipeLaserWrench = Util.GetRecipes.lastIRecipe();
+        }
 
         //Rice Stuff
         if(ConfigCrafting.RICE_GADGETS.isEnabled()){
