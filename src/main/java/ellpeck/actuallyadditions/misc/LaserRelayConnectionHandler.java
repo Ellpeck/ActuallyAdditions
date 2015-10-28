@@ -68,8 +68,10 @@ public class LaserRelayConnectionHandler{
      */
     public ArrayList<ConnectionPair> getConnectionsFor(WorldPos relay){
         ArrayList<ConnectionPair> allPairs = new ArrayList<ConnectionPair>();
-        for(ArrayList<ConnectionPair> aNetwork : this.networks){
-            for(ConnectionPair pair : aNetwork){
+        ArrayList<ArrayList<ConnectionPair>> theNetworks = new ArrayList<ArrayList<ConnectionPair>>(this.networks);
+        for(ArrayList<ConnectionPair> aNetwork : theNetworks){
+            ArrayList<ConnectionPair> pairs = new ArrayList<ConnectionPair>(aNetwork);
+            for(ConnectionPair pair : pairs){
                 if(pair.contains(relay)){
                     allPairs.add(pair);
                 }
@@ -86,7 +88,8 @@ public class LaserRelayConnectionHandler{
         if(network != null){
             //Setup new network (so that splitting a network will cause it to break into two)
             this.networks.remove(network);
-            for(ConnectionPair pair : network){
+            ArrayList<ConnectionPair> pairs = new ArrayList<ConnectionPair>(network);
+            for(ConnectionPair pair : pairs){
                 if(!pair.contains(relay)){
                     this.addConnection(pair.firstRelay, pair.secondRelay);
                 }
@@ -99,8 +102,10 @@ public class LaserRelayConnectionHandler{
      * Gets a Network for a Relay
      */
     public ArrayList<ConnectionPair> getNetworkFor(WorldPos relay){
-        for(ArrayList<ConnectionPair> aNetwork : this.networks){
-            for(ConnectionPair pair : aNetwork){
+        ArrayList<ArrayList<ConnectionPair>> theNetworks = new ArrayList<ArrayList<ConnectionPair>>(this.networks);
+        for(ArrayList<ConnectionPair> aNetwork : theNetworks){
+            ArrayList<ConnectionPair> pairs = new ArrayList<ConnectionPair>(aNetwork);
+            for(ConnectionPair pair : pairs){
                 if(pair.contains(relay)){
                     return aNetwork;
                 }
@@ -156,7 +161,8 @@ public class LaserRelayConnectionHandler{
      * (Actually puts everything from the second network into the first one and removes the second one)
      */
     public void mergeNetworks(ArrayList<ConnectionPair> firstNetwork, ArrayList<ConnectionPair> secondNetwork){
-        for(ConnectionPair secondPair : secondNetwork){
+        ArrayList<ConnectionPair> pairs = new ArrayList<ConnectionPair>(secondNetwork);
+        for(ConnectionPair secondPair : pairs){
             firstNetwork.add(secondPair);
         }
         this.networks.remove(secondNetwork);
@@ -167,7 +173,8 @@ public class LaserRelayConnectionHandler{
     public int transferEnergyToReceiverInNeed(ArrayList<ConnectionPair> network, int maxTransfer, boolean simulate){
         int transmitted = 0;
         //Go through all of the connections in the network
-        for(ConnectionPair pair : network){
+        ArrayList<ConnectionPair> pairs = new ArrayList<ConnectionPair>(network);
+        for(ConnectionPair pair : pairs){
             WorldPos[] relays = new WorldPos[]{pair.firstRelay, pair.secondRelay};
             //Go through both relays in the connection
             for(WorldPos relay : relays){
