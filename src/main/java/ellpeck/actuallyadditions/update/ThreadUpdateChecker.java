@@ -28,21 +28,15 @@ public class ThreadUpdateChecker extends Thread{
     public void run(){
         ModUtil.LOGGER.info("Starting Update Check...");
         try{
-            URL newestURL = new URL("https://raw.githubusercontent.com/Ellpeck/ActuallyAdditions/master/update/newestVersion.txt");
+            URL newestURL = new URL("https://raw.githubusercontent.com/Ellpeck/ActuallyAdditions/master/update/updateVersion.txt");
             BufferedReader newestReader = new BufferedReader(new InputStreamReader(newestURL.openStream()));
             UpdateChecker.updateVersion = newestReader.readLine();
             newestReader.close();
 
-            //Legacy Versions
-            if(!ModUtil.VERSION.contains("r")){
+            int updateVersion = Integer.parseInt(UpdateChecker.updateVersion.replace("-", "").replace(".", "").replace("r", ""));
+            int clientVersion = Integer.parseInt(ModUtil.VERSION.replace("-", "").replace(".", "").replace("r", ""));
+            if(updateVersion > clientVersion){
                 UpdateChecker.needsUpdateNotify = true;
-            }
-            else{
-                int updateVersion = Integer.parseInt(UpdateChecker.updateVersion.replace("-", "").replace(".", "").replace("r", ""));
-                int clientVersion = Integer.parseInt(ModUtil.VERSION.replace("-", "").replace(".", "").replace("r", ""));
-                if(updateVersion > clientVersion){
-                    UpdateChecker.needsUpdateNotify = true;
-                }
             }
 
             ModUtil.LOGGER.info("Update Check done!");

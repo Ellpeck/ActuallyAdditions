@@ -16,7 +16,6 @@ import ellpeck.actuallyadditions.util.WorldPos;
 import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Vec3;
 import net.minecraftforge.common.util.ForgeDirection;
 
 import java.util.ArrayList;
@@ -123,7 +122,7 @@ public class LaserRelayConnectionHandler{
      * (Puts it into the correct network!)
      */
     public boolean addConnection(WorldPos firstRelay, WorldPos secondRelay){
-        int distance = (int)Vec3.createVectorHelper(firstRelay.getX(), firstRelay.getY(), firstRelay.getZ()).distanceTo(Vec3.createVectorHelper(secondRelay.getX(), secondRelay.getY(), secondRelay.getZ()));
+        int distance = (int)firstRelay.toVec().distanceTo(secondRelay.toVec());
         if(distance > 15 || firstRelay.isEqual(secondRelay) || firstRelay.getWorld() != secondRelay.getWorld()){
             return false;
         }
