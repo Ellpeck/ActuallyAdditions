@@ -363,11 +363,11 @@ container.actuallyadditions.directionalBreaker.name=Long-Range Breaker
 container.actuallyadditions.rangedCollector.name=Ranged Collector
 
 #Update Information
-info.actuallyadditions.update.generic.desc=[{"text":"There is an "},{"text":"Update ","bold":"true"},{"text":"for ","bold":"false"},{"text":"Actually Additions ","color":"dark_green","bold":"true"},{"text":"available!","color":"none","bold":"false"}]
-info.actuallyadditions.update.versionComp.desc=[{"text":"You have Version "},{"text":"%s","color":"dark_red","italic":"false"},{"text":", the newest one is ","color":"none","italic":"false"},{"text":"%s","color":"dark_green","underlined":"false"},{"text":"!","color":"none","underlined":"false"}]
-info.actuallyadditions.update.download.desc=[{"text":"Download the newest Version "},{"text":"here! (Click me!)","color":"dark_green","underlined":"true","clickEvent":{"action":"open_url","value":"%s"},"hoverEvent":{"action":"show_text","value":{"text":"","extra":[{"text":"Click here to open your Browser and download the newest Version!"}]}}}]
-info.actuallyadditions.update.failed.desc=[{"text":"The Update Check for "},{"text":"Actually Additions ","color":"dark_green","bold":"true"},{"text":"failed! Check your Internet Connection and the Logs for more Info!","color":"none"}]
-info.actuallyadditions.update.changelog.desc=Updates: %s
+info.actuallyadditions.update.generic=[{"text":"There is an Update for "},{"text":"Actually Additions ","color":"dark_green"},{"text":"available!","color":"none"}]
+info.actuallyadditions.update.versionCompare=[{"text":"Current Version: "},{"text":"%s","color":"dark_red"},{"text":", newest Version: ","color":"none"},{"text":"%s","color":"dark_green"}]
+info.actuallyadditions.update.buttons=[{"text":"["},{"text":"Click for Changelog","color":"green","clickEvent":{"action":"open_url","value":"%s"}},{"text":"] [","color":"none"},{"text":"Click for Download","color":"green","clickEvent":{"action":"open_url","value":"%s"}},{"text":"]","color":"none"}]
+info.actuallyadditions.update.buttonOptions=Click for Changelog, Shift-Click for Download!
+info.actuallyadditions.update.failed=[{"text":"The Update Check for "},{"text":"Actually Additions ","color":"dark_green"},{"text":"failed! Check Logs for more Info!","color":"none"}]
 
 #Achievements
 achievement.actuallyadditions.pickUpSolidXP=Square and yummy!

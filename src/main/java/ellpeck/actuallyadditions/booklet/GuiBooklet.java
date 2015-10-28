@@ -16,10 +16,7 @@ import ellpeck.actuallyadditions.booklet.page.BookletPage;
 import ellpeck.actuallyadditions.config.GuiConfiguration;
 import ellpeck.actuallyadditions.proxy.ClientProxy;
 import ellpeck.actuallyadditions.update.UpdateChecker;
-import ellpeck.actuallyadditions.util.AssetUtil;
-import ellpeck.actuallyadditions.util.ModUtil;
-import ellpeck.actuallyadditions.util.StringUtil;
-import ellpeck.actuallyadditions.util.Util;
+import ellpeck.actuallyadditions.util.*;
 import ellpeck.actuallyadditions.util.playerdata.PersistentClientData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
@@ -27,6 +24,7 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.IChatComponent;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
@@ -149,20 +147,16 @@ public class GuiBooklet extends GuiScreen{
         }
         //Update Checker Hover Text
         if(x >= this.guiLeft-11 && x <= this.guiLeft-11+10 && y >= this.guiTop-11 && y <= this.guiTop-11+10){
-            if(UpdateChecker.doneChecking){
-                ArrayList list = new ArrayList();
-                if(UpdateChecker.checkFailed){
-                    list.add(EnumChatFormatting.DARK_RED+"The Update Check failed!");
-                    list.add("Check your log for more Information!");
-                }
-                else if(UpdateChecker.updateVersion > UpdateChecker.clientVersion){
-                    list.add(EnumChatFormatting.GOLD+"There is an Update available!");
-                    list.add(EnumChatFormatting.ITALIC+"You have: "+ModUtil.VERSION+", Newest: "+UpdateChecker.updateVersionS);
-                    list.addAll(this.fontRendererObj.listFormattedStringToWidth(EnumChatFormatting.ITALIC+"Updates include: "+UpdateChecker.changelog, TOOLTIP_SPLIT_LENGTH));
-                    list.add(EnumChatFormatting.GRAY+"Click this button to visit the download page!");
-                }
-                this.func_146283_a(list, x, y);
+            ArrayList list = new ArrayList();
+            if(UpdateChecker.checkFailed){
+                list.add(IChatComponent.Serializer.func_150699_a(StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".update.failed")).getFormattedText());
             }
+            else if(UpdateChecker.needsUpdateNotify){
+                list.add(IChatComponent.Serializer.func_150699_a(StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".update.generic")).getFormattedText());
+                list.add(IChatComponent.Serializer.func_150699_a(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID_LOWER+".update.versionCompare", ModUtil.VERSION, UpdateChecker.updateVersion)).getFormattedText());
+                list.add(StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".update.buttonOptions"));
+            }
+            this.func_146283_a(list, x, y);
         }
 
         this.fontRendererObj.setUnicodeFlag(unicodeBefore);
@@ -219,10 +213,15 @@ public class GuiBooklet extends GuiScreen{
             }
         }
         else if(button == this.buttonUpdate){
-            if(UpdateChecker.doneChecking && UpdateChecker.updateVersion > UpdateChecker.clientVersion){
+            if(UpdateChecker.needsUpdateNotify){
                 try{
                     if(Desktop.isDesktopSupported()){
-                        Desktop.getDesktop().browse(new URI(UpdateChecker.DOWNLOAD_LINK));
+                        if(KeyUtil.isShiftPressed()){
+                            Desktop.getDesktop().browse(new URI(UpdateChecker.DOWNLOAD_LINK));
+                        }
+                        else{
+                            Desktop.getDesktop().browse(new URI(UpdateChecker.CHANGELOG_LINK));
+                        }
                     }
                 }
                 catch(Exception e){
@@ -335,7 +334,7 @@ public class GuiBooklet extends GuiScreen{
         this.buttonList.add(this.buttonPreviouslyOpenedGui);
 
         this.buttonUpdate = new TexturedButton(4, this.guiLeft-11, this.guiTop-11, 245, 0, 11, 11);
-        this.buttonUpdate.visible = UpdateChecker.doneChecking && UpdateChecker.updateVersion > UpdateChecker.clientVersion;
+        this.buttonUpdate.visible = UpdateChecker.needsUpdateNotify;
         this.buttonList.add(this.buttonUpdate);
 
         this.buttonTwitter = new TexturedButton(5, this.guiLeft, this.guiTop, 213, 0, 8, 8);
@@ -385,7 +384,7 @@ public class GuiBooklet extends GuiScreen{
             this.currentPage.updateScreen(this.ticksElapsed);
         }
 
-        boolean buttonThere = UpdateChecker.doneChecking && UpdateChecker.updateVersion > UpdateChecker.clientVersion;
+        boolean buttonThere = UpdateChecker.needsUpdateNotify;
         this.buttonUpdate.visible = buttonThere;
         if(buttonThere){
             if(this.ticksElapsed%8 == 0){

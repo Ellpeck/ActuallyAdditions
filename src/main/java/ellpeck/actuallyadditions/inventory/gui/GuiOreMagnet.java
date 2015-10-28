@@ -49,7 +49,6 @@ public class GuiOreMagnet extends GuiContainer{
         if(x >= guiLeft+117 && y >= guiTop+6 && x <= guiLeft+132 && y <= guiTop+88){
             this.func_146283_a(Collections.singletonList(text2), x, y);
         }
-        //TODO Upgrade Slot Joke
         if(x >= guiLeft+70 && y >= guiTop+42 && x <= guiLeft+70+18 && y <= guiTop+42+18){
             this.func_146283_a(Arrays.asList("@SuppressWarnings(\"unused\")", "This slot is currently unused. Ignore it."), x, y);
         }

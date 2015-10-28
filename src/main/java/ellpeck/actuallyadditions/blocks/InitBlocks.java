@@ -99,11 +99,6 @@ public class InitBlocks{
 
     public static Block blockLaserRelay;
 
-    //TODO: Plan for Laser Power Transmitters:
-    //TODO: When there is a block in the way, they don't render their laser and don't transmit
-    //TODO: They stay connected and can be connected together even though they're blocked
-    //TODO: If blocked, they display the block coords blocking them on right-click
-
     public static void init(){
         ModUtil.LOGGER.info("Initializing Blocks...");
 

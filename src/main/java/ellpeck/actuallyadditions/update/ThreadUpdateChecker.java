@@ -30,18 +30,22 @@ public class ThreadUpdateChecker extends Thread{
         try{
             URL newestURL = new URL("https://raw.githubusercontent.com/Ellpeck/ActuallyAdditions/master/update/newestVersion.txt");
             BufferedReader newestReader = new BufferedReader(new InputStreamReader(newestURL.openStream()));
-            UpdateChecker.updateVersionS = newestReader.readLine();
+            UpdateChecker.updateVersion = newestReader.readLine();
             newestReader.close();
 
-            URL changeURL = new URL("https://raw.githubusercontent.com/Ellpeck/ActuallyAdditions/master/update/changelog.txt");
-            BufferedReader changeReader = new BufferedReader(new InputStreamReader(changeURL.openStream()));
-            UpdateChecker.changelog = changeReader.readLine();
-            changeReader.close();
+            //Legacy Versions
+            if(!ModUtil.VERSION.contains("r")){
+                UpdateChecker.needsUpdateNotify = true;
+            }
+            else{
+                int updateVersion = Integer.parseInt(UpdateChecker.updateVersion.replace("-", "").replace(".", "").replace("r", ""));
+                int clientVersion = Integer.parseInt(ModUtil.VERSION.replace("-", "").replace(".", "").replace("r", ""));
+                if(updateVersion > clientVersion){
+                    UpdateChecker.needsUpdateNotify = true;
+                }
+            }
 
             ModUtil.LOGGER.info("Update Check done!");
-
-            UpdateChecker.updateVersion = Integer.parseInt(UpdateChecker.updateVersionS.replace("-", "").replace(".", ""));
-            UpdateChecker.clientVersion = Integer.parseInt(ModUtil.VERSION.replace("-", "").replace(".", ""));
         }
         catch(Exception e){
             ModUtil.LOGGER.error("Update Check failed!", e);
@@ -49,18 +53,15 @@ public class ThreadUpdateChecker extends Thread{
         }
 
         if(!UpdateChecker.checkFailed){
-            if(UpdateChecker.updateVersion > UpdateChecker.clientVersion){
-                ModUtil.LOGGER.info("There is an Update for "+ModUtil.MOD_ID+" available!");
-                ModUtil.LOGGER.info("The installed Version is "+ModUtil.VERSION+", but the newest Version is "+UpdateChecker.updateVersionS+"!");
-                ModUtil.LOGGER.info("The Changes are: "+UpdateChecker.changelog);
-                ModUtil.LOGGER.info("Download the newest Version at "+UpdateChecker.DOWNLOAD_LINK);
+            if(UpdateChecker.needsUpdateNotify){
+                ModUtil.LOGGER.info("There is an Update for "+ModUtil.NAME+" available!");
+                ModUtil.LOGGER.info("Current Version: "+ModUtil.VERSION+", newest Version: "+UpdateChecker.updateVersion+"!");
+                ModUtil.LOGGER.info("View the Changelog at "+UpdateChecker.CHANGELOG_LINK);
+                ModUtil.LOGGER.info("Download at "+UpdateChecker.DOWNLOAD_LINK);
             }
             else{
-                ModUtil.LOGGER.info("There is no new Update for "+ModUtil.MOD_ID+" available!");
-                ModUtil.LOGGER.info("That's cool. You're really up to date, you have all of the latest awesome Features!");
+                ModUtil.LOGGER.info(ModUtil.NAME+" is up to date!");
             }
         }
-
-        UpdateChecker.doneChecking = true;
     }
 }
