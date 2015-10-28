@@ -50,6 +50,7 @@ public class CreativeTab extends CreativeTabs{
         add(InitItems.itemLexicon);
         add(InitBlocks.blockSmileyCloud);
 
+        add(InitBlocks.blockLaserRelay);
         add(InitBlocks.blockPhantomface);
         add(InitBlocks.blockPhantomEnergyface);
         add(InitBlocks.blockPhantomLiquiface);
@@ -104,6 +105,9 @@ public class CreativeTab extends CreativeTabs{
         add(InitBlocks.blockColoredLamp);
         add(InitBlocks.blockLampPowerer);
         add(InitBlocks.blockTreasureChest);
+
+        add(InitItems.itemLaserWrench);
+        add(InitItems.itemChestToCrateUpgrade);
 
         add(InitItems.itemDrill);
         add(InitItems.itemDrillUpgradeSpeed);
