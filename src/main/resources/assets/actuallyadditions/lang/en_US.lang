@@ -371,7 +371,7 @@ container.actuallyadditions.rangedCollector.name=Ranged Collector
 info.actuallyadditions.update.generic=[{"text":"There is an Update for "},{"text":"Actually Additions ","color":"dark_green"},{"text":"available!","color":"none"}]
 info.actuallyadditions.update.versionCompare=[{"text":"Current Version: "},{"text":"%s","color":"dark_red"},{"text":", newest Version: ","color":"none"},{"text":"%s","color":"dark_green"}]
 info.actuallyadditions.update.buttons=[{"text":"["},{"text":"Click for Changelog","color":"green","clickEvent":{"action":"open_url","value":"%s"}},{"text":"] [","color":"none"},{"text":"Click for Download","color":"green","clickEvent":{"action":"open_url","value":"%s"}},{"text":"]","color":"none"}]
-info.actuallyadditions.update.buttonOptions=Click for Changelog, Shift-Click for Download!
+info.actuallyadditions.update.buttonOptions=Click: Changelog, Shift-Click: Download! (In Browser)
 info.actuallyadditions.update.failed=[{"text":"The Update Check for "},{"text":"Actually Additions ","color":"dark_green"},{"text":"failed! Check Logs for more Info!","color":"none"}]
 
 #Achievements

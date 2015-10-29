@@ -1,2 +1,1 @@
-1.7.10-r2
-//For Testing the Update Checker
+1.7.10-r1

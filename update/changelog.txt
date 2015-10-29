@@ -1,2 +1,2 @@
-Laser Relays, out of Beta! +New Update Checker
+Laser Relays, out of Beta! +New Update Checker (If you still see this message, you really should update!)
 (This is a fallback for the old versions of the mod which use the old versioning System. Don't change.)

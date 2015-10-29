@@ -242,7 +242,7 @@ public class GuiBooklet extends GuiScreen{
         else if(button == this.buttonForum){
             try{
                 if(Desktop.isDesktopSupported()){
-                    Desktop.getDesktop().browse(new URI("http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/wip-mods/2374910-actually-additions-a-bunch-of-awesome-gadgets"));
+                    Desktop.getDesktop().browse(new URI("http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/2551118"));
                 }
             }
             catch(Exception e){
