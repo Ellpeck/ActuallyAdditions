@@ -85,7 +85,7 @@ public class LaserRelayConnectionHandler{
                     this.addConnection(pair.firstRelay, pair.secondRelay);
                 }
             }
-            System.out.println("Removing a Relay from the Network!");
+            //System.out.println("Removing a Relay from the Network!");
         }
         WorldData.makeDirty();
     }
@@ -141,9 +141,9 @@ public class LaserRelayConnectionHandler{
             secondNetwork.connections.add(new ConnectionPair(firstRelay, secondRelay));
         }
         WorldData.makeDirty();
-        System.out.println("Connected "+firstRelay.toString()+" to "+secondRelay.toString());
-        System.out.println(firstNetwork == null ? secondNetwork.toString() : firstNetwork.toString());
-        System.out.println(this.networks);
+        //System.out.println("Connected "+firstRelay.toString()+" to "+secondRelay.toString());
+        //System.out.println(firstNetwork == null ? secondNetwork.toString() : firstNetwork.toString());
+        //System.out.println(this.networks);
         return true;
     }
 
@@ -157,7 +157,7 @@ public class LaserRelayConnectionHandler{
         }
         this.networks.remove(secondNetwork);
         WorldData.makeDirty();
-        System.out.println("Merged Two Networks!");
+        //System.out.println("Merged Two Networks!");
     }
 
     public int transferEnergyToReceiverInNeed(WorldPos energyGottenFrom, Network network, int maxTransfer, boolean simulate){
