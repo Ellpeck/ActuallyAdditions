@@ -42,6 +42,7 @@ import ellpeck.actuallyadditions.tile.TileEntityBase;
 import ellpeck.actuallyadditions.update.UpdateChecker;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.Util;
+import ellpeck.actuallyadditions.util.playerdata.PersistentServerData;
 import net.minecraft.init.Items;
 
 //                                                                           So that BuildCraft Oil always gets used
@@ -125,7 +126,8 @@ public class ActuallyAdditions{
 
     @EventHandler
     public void serverStopped(FMLServerStoppedEvent event){
-        //Clear all Network Connections so that they won't be carried over into other worlds
+        //Clear Data so that it won't be carried over to other worlds
         LaserRelayConnectionHandler.getInstance().networks.clear();
+        PersistentServerData.playerSaveData.clear();
     }
 }

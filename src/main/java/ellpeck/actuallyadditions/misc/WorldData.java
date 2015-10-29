@@ -54,37 +54,35 @@ public class WorldData extends WorldSavedData{
     @Override
     public void readFromNBT(NBTTagCompound compound){
         //Laser World Data
-        NBTTagList list = compound.getTagList("Networks", 10);
-        for(int i = 0; i < list.tagCount(); i++){
-            LaserRelayConnectionHandler.Network network = LaserRelayConnectionHandler.getInstance().readNetworkFromNBT(list.getCompoundTagAt(i));
+        NBTTagList networkList = compound.getTagList("Networks", 10);
+        for(int i = 0; i < networkList.tagCount(); i++){
+            LaserRelayConnectionHandler.Network network = LaserRelayConnectionHandler.getInstance().readNetworkFromNBT(networkList.getCompoundTagAt(i));
             LaserRelayConnectionHandler.getInstance().networks.add(network);
         }
 
         //Player Data
-        int dataSize = compound.getInteger("PersistentDataSize");
-        PersistentServerData.playerSaveData.clear();
-        for(int i = 0; i < dataSize; i++){
-            PersistentServerData.PlayerSave aSave = PersistentServerData.PlayerSave.fromNBT(compound, "PlayerSaveData"+i);
-            if(aSave != null){
-                PersistentServerData.playerSaveData.add(aSave);
-            }
+        NBTTagList playerList = compound.getTagList("PlayerData", 10);
+        for(int i = 0; i < playerList.tagCount(); i++){
+            PersistentServerData.PlayerSave aSave = PersistentServerData.PlayerSave.fromNBT(playerList.getCompoundTagAt(i));
+            PersistentServerData.playerSaveData.add(aSave);
         }
     }
 
     @Override
     public void writeToNBT(NBTTagCompound compound){
         //Laser World Data
-        NBTTagList list = new NBTTagList();
+        NBTTagList networkList = new NBTTagList();
         for(LaserRelayConnectionHandler.Network network : LaserRelayConnectionHandler.getInstance().networks){
-            list.appendTag(LaserRelayConnectionHandler.getInstance().writeNetworkToNBT(network));
+            networkList.appendTag(LaserRelayConnectionHandler.getInstance().writeNetworkToNBT(network));
         }
-        compound.setTag("Networks", list);
+        compound.setTag("Networks", networkList);
 
         //Player Data
-        compound.setInteger("PersistentDataSize", PersistentServerData.playerSaveData.size());
+        NBTTagList playerList = new NBTTagList();
         for(int i = 0; i < PersistentServerData.playerSaveData.size(); i++){
             PersistentServerData.PlayerSave theSave = PersistentServerData.playerSaveData.get(i);
-            theSave.toNBT(compound, "PlayerSaveData"+i);
+            playerList.appendTag(theSave.toNBT());
         }
+        compound.setTag("PlayerData", playerList);
     }
 }
