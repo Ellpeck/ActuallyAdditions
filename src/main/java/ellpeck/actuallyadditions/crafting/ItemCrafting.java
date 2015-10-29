@@ -73,6 +73,7 @@ public class ItemCrafting{
     public static ArrayList<IRecipe> recipesPotionRings = new ArrayList<IRecipe>();
     public static IRecipe recipeChestToCrateUpgrade;
     public static IRecipe recipeLaserWrench;
+    public static IRecipe recipeDrillCore;
 
     public static void init(){
 
@@ -134,9 +135,19 @@ public class ItemCrafting{
                     "DDD", "CRC", "III",
                     'D', "gemDiamond",
                     'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal()),
-                    'R', "dustRedstone",
+                    'R', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.DRILL_CORE.ordinal()),
                     'I', "blockIron"));
             recipeDrill = Util.GetRecipes.lastIRecipe();
+        }
+
+        //Drill Core
+        if(ConfigCrafting.DRILL_CORE.isEnabled()){
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.DRILL_CORE.ordinal()),
+                    "ICI", "CRC", "ICI",
+                    'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL.ordinal()),
+                    'R', "dustRedstone",
+                    'I', "blockIron"));
+            recipeDrillCore = Util.GetRecipes.lastIRecipe();
         }
 
         //Tele Staff

@@ -153,7 +153,7 @@ public class PageCrafting extends BookletPage{
 
     @Override
     public ItemStack[] getItemStacksForPage(){
-        if(this.recipes != null && this.recipes.length > 0){
+        if(this.recipes != null && this.recipes.length > 0 && this.recipes[0] != null){
             return new ItemStack[]{this.recipes[0].getRecipeOutput()};
         }
         return null;

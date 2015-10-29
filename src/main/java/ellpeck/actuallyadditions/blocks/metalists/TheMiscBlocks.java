@@ -23,7 +23,8 @@ public enum TheMiscBlocks{
     CHARCOAL_BLOCK("Charcoal", EnumRarity.common),
     ENDERPEARL_BLOCK("Enderpearl", EnumRarity.rare),
     LAVA_FACTORY_CASE("LavaFactoryCase", EnumRarity.uncommon),
-    ENDER_CASING("EnderCasing", EnumRarity.epic);
+    ENDER_CASING("EnderCasing", EnumRarity.epic),
+    IRON_CASING("IronCasing", EnumRarity.rare);
 
     public final String name;
     public final EnumRarity rarity;

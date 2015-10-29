@@ -106,6 +106,7 @@ tile.actuallyadditions.blockLeafGenerator.name=Leaf-Eating Generator
 tile.actuallyadditions.blockDirectionalBreaker.name=Long-Range Breaker
 tile.actuallyadditions.blockRangedCollector.name=Ranged Collector
 tile.actuallyadditions.blockLaserRelay.name=Laser Relay
+tile.actuallyadditions.blockMiscIronCasing.name=Iron Casing
 
 #ESD
 tile.actuallyadditions.blockInputter.name=ESD
@@ -279,6 +280,7 @@ item.actuallyadditions.itemBootsQuartz.name=Black Quartz Boots
 item.actuallyadditions.itemBooklet.name=Actually Additions Manual
 item.actuallyadditions.itemLaserWrench.name=Laser Wrench
 item.actuallyadditions.itemChestToCrateUpgrade.name=Chest To Storage Crate Upgrade
+item.actuallyadditions.itemMiscDrillCore.name=Drill Core
 
 #Tooltips
 tooltip.actuallyadditions.onSuffix.desc=On

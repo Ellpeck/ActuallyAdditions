@@ -18,6 +18,7 @@ public enum ConfigCrafting{
     CLOUD("Smiley Cloud", ConfigCategories.BLOCKS_CRAFTING),
     XP_SOLIDIFIER("Experience Solidifier", ConfigCategories.BLOCKS_CRAFTING),
     WOOD_CASING("Wood Casing", ConfigCategories.BLOCKS_CRAFTING),
+    IRON_CASING("Iron Casing", ConfigCategories.BLOCKS_CRAFTING),
     STONE_CASING("Stone Casing", ConfigCategories.BLOCKS_CRAFTING),
     FISHING_NET("Fishing Net", ConfigCategories.BLOCKS_CRAFTING),
     REPAIRER("Repairer", ConfigCategories.BLOCKS_CRAFTING),
@@ -156,7 +157,8 @@ public enum ConfigCrafting{
     LASER_RELAY("Laser Relay", ConfigCategories.BLOCKS_CRAFTING),
     LASER_WRENCH("Laser Wrench", ConfigCategories.ITEMS_CRAFTING),
 
-    CHEST_TO_CRATE_UPGRADE("Chest To Crate Upgrade", ConfigCategories.ITEMS_CRAFTING);
+    CHEST_TO_CRATE_UPGRADE("Chest To Crate Upgrade", ConfigCategories.ITEMS_CRAFTING),
+    DRILL_CORE("Drill Core", ConfigCategories.ITEMS_CRAFTING);
 
     public final String name;
     public final String category;

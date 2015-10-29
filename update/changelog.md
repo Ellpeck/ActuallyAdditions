@@ -10,3 +10,4 @@
 - New AIOT Textures
 - AIOT Integration for SimpleOres 2
 - Changed Ball Of Hair Name to "Ball Of Fur", addedBooklet Page
+- Added Iron Casing & Drill Core

@@ -35,9 +35,11 @@ public class BlockMisc extends Block implements IActAddItemOrBlock{
     public IIcon[] textures;
 
     @SideOnly(Side.CLIENT)
-    private IIcon stoneCasingSeasonalTop;
+    private IIcon casingSeasonalTop;
     @SideOnly(Side.CLIENT)
     private IIcon stoneCasingSeasonal;
+    @SideOnly(Side.CLIENT)
+    private IIcon ironCasingSeasonal;
 
     public BlockMisc(){
         super(Material.rock);
@@ -49,8 +51,13 @@ public class BlockMisc extends Block implements IActAddItemOrBlock{
     @Override
     @SideOnly(Side.CLIENT)
     public IIcon getIcon(int side, int metadata){
-        if(ClientProxy.jingleAllTheWay && metadata == TheMiscBlocks.STONE_CASING.ordinal() && side != 0){
-            return side == 1 ? this.stoneCasingSeasonalTop : this.stoneCasingSeasonal;
+        if(ClientProxy.jingleAllTheWay && side != 0){
+            if(metadata == TheMiscBlocks.STONE_CASING.ordinal()){
+                return side == 1 ? this.casingSeasonalTop : this.stoneCasingSeasonal;
+            }
+            else if(metadata == TheMiscBlocks.IRON_CASING.ordinal()){
+                return side == 1 ? this.casingSeasonalTop : this.ironCasingSeasonal;
+            }
         }
         return metadata >= textures.length ? null : textures[metadata];
     }
@@ -76,8 +83,9 @@ public class BlockMisc extends Block implements IActAddItemOrBlock{
             textures[i] = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+allMiscBlocks[i].name);
         }
 
-        this.stoneCasingSeasonalTop = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":blockMiscStoneCasingSnowTop");
+        this.casingSeasonalTop = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":blockMiscStoneCasingSnowTop");
         this.stoneCasingSeasonal = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":blockMiscStoneCasingSnow");
+        this.ironCasingSeasonal = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":blockMiscIronCasingSnow");
     }
 
     @Override
