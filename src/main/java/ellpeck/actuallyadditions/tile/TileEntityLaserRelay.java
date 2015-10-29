@@ -16,6 +16,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.config.values.ConfigBoolValues;
 import ellpeck.actuallyadditions.misc.LaserRelayConnectionHandler;
 import ellpeck.actuallyadditions.util.WorldPos;
+import ellpeck.actuallyadditions.util.WorldUtil;
 import io.netty.util.internal.ConcurrentSet;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.EntityReddustFX;
@@ -98,7 +99,7 @@ public class TileEntityLaserRelay extends TileEntityBase implements IEnergyRecei
 
     @Override
     public int receiveEnergy(ForgeDirection from, int maxReceive, boolean simulate){
-        return this.transmitEnergy(maxReceive, simulate);
+        return this.transmitEnergy(WorldUtil.getCoordsFromSide(from, worldObj, xCoord, yCoord, zCoord, 0), maxReceive, simulate);
     }
 
     @Override
@@ -111,12 +112,12 @@ public class TileEntityLaserRelay extends TileEntityBase implements IEnergyRecei
         return 0;
     }
 
-    public int transmitEnergy(int maxTransmit, boolean simulate){
+    public int transmitEnergy(WorldPos blockFrom, int maxTransmit, boolean simulate){
         int transmitted = 0;
         if(maxTransmit > 0){
             LaserRelayConnectionHandler.Network network = LaserRelayConnectionHandler.getInstance().getNetworkFor(new WorldPos(this.worldObj, this.xCoord, this.yCoord, this.zCoord));
             if(network != null){
-                transmitted = LaserRelayConnectionHandler.getInstance().transferEnergyToReceiverInNeed(network, maxTransmit, simulate);
+                transmitted = LaserRelayConnectionHandler.getInstance().transferEnergyToReceiverInNeed(blockFrom, network, maxTransmit, simulate);
             }
         }
         return transmitted;

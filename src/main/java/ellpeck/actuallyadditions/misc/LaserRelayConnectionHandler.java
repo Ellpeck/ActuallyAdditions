@@ -160,7 +160,7 @@ public class LaserRelayConnectionHandler{
         System.out.println("Merged Two Networks!");
     }
 
-    public int transferEnergyToReceiverInNeed(Network network, int maxTransfer, boolean simulate){
+    public int transferEnergyToReceiverInNeed(WorldPos energyGottenFrom, Network network, int maxTransfer, boolean simulate){
         int transmitted = 0;
         //Go through all of the connections in the network
         for(ConnectionPair pair : network.connections){
@@ -171,18 +171,21 @@ public class LaserRelayConnectionHandler{
                     //Get every side of the relay
                     for(int i = 0; i <= 5; i++){
                         ForgeDirection side = ForgeDirection.getOrientation(i);
-                        //Get the TileEntity at the side
-                        TileEntity tile = WorldUtil.getTileEntityFromSide(side, relay.getWorld(), relay.getX(), relay.getY(), relay.getZ());
-                        if(tile instanceof IEnergyReceiver && !(tile instanceof TileEntityLaserRelay)){
-                            IEnergyReceiver receiver = (IEnergyReceiver)tile;
-                            if(receiver.canConnectEnergy(side.getOpposite())){
-                                //Transfer the energy (with the energy loss!)
-                                int theoreticalReceived = ((IEnergyReceiver)tile).receiveEnergy(side.getOpposite(), maxTransfer-transmitted, true);
-                                //The amount of energy lost during a transfer
-                                int deduct = (int)(theoreticalReceived*((double)ConfigIntValues.LASER_RELAY_LOSS.getValue()/100));
+                        //Get the Position at the side
+                        WorldPos pos = WorldUtil.getCoordsFromSide(side, relay.getWorld(), relay.getX(), relay.getY(), relay.getZ(), 0);
+                        if(!pos.isEqual(energyGottenFrom)){
+                            TileEntity tile = pos.getTileEntity();
+                            if(tile instanceof IEnergyReceiver && !(tile instanceof TileEntityLaserRelay)){
+                                IEnergyReceiver receiver = (IEnergyReceiver)tile;
+                                if(receiver.canConnectEnergy(side.getOpposite())){
+                                    //Transfer the energy (with the energy loss!)
+                                    int theoreticalReceived = ((IEnergyReceiver)tile).receiveEnergy(side.getOpposite(), maxTransfer-transmitted, true);
+                                    //The amount of energy lost during a transfer
+                                    int deduct = (int)(theoreticalReceived*((double)ConfigIntValues.LASER_RELAY_LOSS.getValue()/100));
 
-                                transmitted += ((IEnergyReceiver)tile).receiveEnergy(side.getOpposite(), theoreticalReceived-deduct, simulate);
-                                transmitted += deduct;
+                                    transmitted += ((IEnergyReceiver)tile).receiveEnergy(side.getOpposite(), theoreticalReceived-deduct, simulate);
+                                    transmitted += deduct;
+                                }
                             }
                         }
                     }
