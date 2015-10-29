@@ -109,7 +109,7 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
                 }
             }
 
-            if(this.storage.getEnergyStored() >= getEnergyUse() && this.firstCrushTime > 0 || this.secondCrushTime > 0){
+            if(this.storage.getEnergyStored() >= getEnergyUse() && (this.firstCrushTime > 0 || this.secondCrushTime > 0)){
                 this.storage.extractEnergy(getEnergyUse(), false);
             }
 

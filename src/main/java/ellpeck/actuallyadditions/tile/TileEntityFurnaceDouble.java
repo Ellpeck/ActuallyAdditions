@@ -74,7 +74,7 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
                 this.secondSmeltTime = 0;
             }
 
-            if(this.storage.getEnergyStored() >= ConfigIntValues.FURNACE_ENERGY_USED.getValue() && this.firstSmeltTime > 0 || this.secondSmeltTime > 0){
+            if(this.storage.getEnergyStored() >= ConfigIntValues.FURNACE_ENERGY_USED.getValue() && (this.firstSmeltTime > 0 || this.secondSmeltTime > 0)){
                 this.storage.extractEnergy(ConfigIntValues.FURNACE_ENERGY_USED.getValue(), false);
             }
 
