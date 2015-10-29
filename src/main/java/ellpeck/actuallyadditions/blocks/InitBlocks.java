@@ -132,9 +132,9 @@ public class InitBlocks{
         blockTestifiBucksWhiteStairs = new BlockStair(blockTestifiBucksWhiteWall, "blockTestifiBucksWhiteStairs");
         BlockUtil.register(blockTestifiBucksWhiteStairs);
         blockTestifiBucksGreenSlab = new BlockSlabs("blockTestifiBucksGreenSlab", blockTestifiBucksGreenWall);
-        BlockUtil.register(blockTestifiBucksGreenSlab);
+        BlockUtil.register(blockTestifiBucksGreenSlab, BlockSlabs.TheItemBlock.class);
         blockTestifiBucksWhiteSlab = new BlockSlabs("blockTestifiBucksWhiteSlab", blockTestifiBucksWhiteWall);
-        BlockUtil.register(blockTestifiBucksWhiteSlab);
+        BlockUtil.register(blockTestifiBucksWhiteSlab, BlockSlabs.TheItemBlock.class);
 
         blockColoredLamp = new BlockColoredLamp(false);
         BlockUtil.register(blockColoredLamp, BlockColoredLamp.TheItemBlock.class);
