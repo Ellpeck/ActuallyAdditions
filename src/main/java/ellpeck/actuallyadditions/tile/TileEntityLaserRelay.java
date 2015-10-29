@@ -41,13 +41,15 @@ public class TileEntityLaserRelay extends TileEntityBase implements IEnergyRecei
         LaserRelayConnectionHandler.getInstance().removeRelayFromNetwork(new WorldPos(this.worldObj, this.xCoord, this.yCoord, this.zCoord));
     }
 
+    @SuppressWarnings("ForLoopReplaceableByForEach")
     @SideOnly(Side.CLIENT)
     public void renderParticles(){
         if(this.worldObj.rand.nextInt(2) == 0){
             WorldPos thisPos = new WorldPos(this.getWorldObj(), this.xCoord, this.yCoord, this.zCoord);
             ArrayList<LaserRelayConnectionHandler.ConnectionPair> network = LaserRelayConnectionHandler.getInstance().getNetworkFor(thisPos);
             if(network != null){
-                for(LaserRelayConnectionHandler.ConnectionPair aPair : network){
+                for(int i1 = 0; i1 < network.size(); i1++){
+                    LaserRelayConnectionHandler.ConnectionPair aPair = network.get(i1);
                     if(aPair.contains(thisPos) && thisPos.isEqual(aPair.firstRelay)){
                         if(Minecraft.getMinecraft().thePlayer.getDistance(aPair.firstRelay.getX(), aPair.firstRelay.getY(), aPair.firstRelay.getZ()) <= 64){
                             int difX = aPair.firstRelay.getX()-aPair.secondRelay.getX();
