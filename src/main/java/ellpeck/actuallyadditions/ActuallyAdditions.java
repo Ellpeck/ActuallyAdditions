@@ -31,10 +31,7 @@ import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.items.ItemCoffee;
 import ellpeck.actuallyadditions.material.InitArmorMaterials;
 import ellpeck.actuallyadditions.material.InitToolMaterials;
-import ellpeck.actuallyadditions.misc.DispenserHandlerEmptyBucket;
-import ellpeck.actuallyadditions.misc.DispenserHandlerFertilize;
-import ellpeck.actuallyadditions.misc.DispenserHandlerFillBucket;
-import ellpeck.actuallyadditions.misc.WorldData;
+import ellpeck.actuallyadditions.misc.*;
 import ellpeck.actuallyadditions.network.PacketHandler;
 import ellpeck.actuallyadditions.ore.InitOreDict;
 import ellpeck.actuallyadditions.proxy.IProxy;
@@ -119,6 +116,16 @@ public class ActuallyAdditions{
         Util.registerDispenserHandler(Items.bucket, new DispenserHandlerFillBucket());
         Util.registerDispenserHandler(InitItems.itemFertilizer, new DispenserHandlerFertilize());
 
+        if(LaserRelayConnectionHandler.getInstance() == null){
+            LaserRelayConnectionHandler.setInstance(new LaserRelayConnectionHandler());
+        }
+
         WorldData.init(event.getServer());
+    }
+
+    @EventHandler
+    public void serverStopped(FMLServerStoppedEvent event){
+        //Clear all Network Connections so that they won't be carried over into other worlds
+        LaserRelayConnectionHandler.getInstance().networks.clear();
     }
 }

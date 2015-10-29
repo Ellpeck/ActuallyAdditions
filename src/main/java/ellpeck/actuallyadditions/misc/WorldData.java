@@ -13,11 +13,10 @@ package ellpeck.actuallyadditions.misc;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.playerdata.PersistentServerData;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldSavedData;
-
-import java.util.ArrayList;
 
 public class WorldData extends WorldSavedData{
 
@@ -55,13 +54,10 @@ public class WorldData extends WorldSavedData{
     @Override
     public void readFromNBT(NBTTagCompound compound){
         //Laser World Data
-        int netAmount = compound.getInteger("LaserNetworkAmount");
-        LaserRelayConnectionHandler.getInstance().networks.clear();
-        for(int i = 0; i < netAmount; i++){
-            ArrayList<LaserRelayConnectionHandler.ConnectionPair> network = LaserRelayConnectionHandler.getInstance().readNetworkFromNBT(compound, "LaserNetwork"+i);
-            if(network != null){
-                LaserRelayConnectionHandler.getInstance().networks.add(network);
-            }
+        NBTTagList list = compound.getTagList("Networks", 10);
+        for(int i = 0; i < list.tagCount(); i++){
+            LaserRelayConnectionHandler.Network network = LaserRelayConnectionHandler.getInstance().readNetworkFromNBT(list.getCompoundTagAt(i));
+            LaserRelayConnectionHandler.getInstance().networks.add(network);
         }
 
         //Player Data
@@ -78,12 +74,11 @@ public class WorldData extends WorldSavedData{
     @Override
     public void writeToNBT(NBTTagCompound compound){
         //Laser World Data
-        int netAmount = LaserRelayConnectionHandler.getInstance().networks.size();
-        compound.setInteger("LaserNetworkAmount", netAmount);
-
-        for(int i = 0; i < netAmount; i++){
-            LaserRelayConnectionHandler.getInstance().writeNetworkToNBT(LaserRelayConnectionHandler.getInstance().networks.get(i), compound, "LaserNetwork"+i);
+        NBTTagList list = new NBTTagList();
+        for(LaserRelayConnectionHandler.Network network : LaserRelayConnectionHandler.getInstance().networks){
+            list.appendTag(LaserRelayConnectionHandler.getInstance().writeNetworkToNBT(network));
         }
+        compound.setTag("Networks", list);
 
         //Player Data
         compound.setInteger("PersistentDataSize", PersistentServerData.playerSaveData.size());
