@@ -11,7 +11,6 @@
 package ellpeck.actuallyadditions.booklet.page;
 
 import ellpeck.actuallyadditions.booklet.GuiBooklet;
-import ellpeck.actuallyadditions.booklet.InitBooklet;
 import ellpeck.actuallyadditions.proxy.ClientProxy;
 import ellpeck.actuallyadditions.recipe.CrusherRecipeRegistry;
 import ellpeck.actuallyadditions.util.ModUtil;
@@ -34,7 +33,7 @@ public class PageCrusherRecipe extends BookletPage{
     public PageCrusherRecipe(int id, CrusherRecipeRegistry.CrusherRecipe recipe){
         super(id);
         this.recipe = recipe;
-        InitBooklet.pagesWithItemStackData.add(this);
+        this.addToPagesWithItemStackData();
     }
 
     @Override

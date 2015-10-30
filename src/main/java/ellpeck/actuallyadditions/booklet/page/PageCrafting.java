@@ -12,7 +12,6 @@ package ellpeck.actuallyadditions.booklet.page;
 
 import cpw.mods.fml.relauncher.ReflectionHelper;
 import ellpeck.actuallyadditions.booklet.GuiBooklet;
-import ellpeck.actuallyadditions.booklet.InitBooklet;
 import ellpeck.actuallyadditions.proxy.ClientProxy;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
@@ -40,7 +39,7 @@ public class PageCrafting extends BookletPage{
     public PageCrafting(int id, IRecipe... recipes){
         super(id);
         this.recipes = recipes;
-        InitBooklet.pagesWithItemStackData.add(this);
+        this.addToPagesWithItemStackData();
     }
 
     @Override

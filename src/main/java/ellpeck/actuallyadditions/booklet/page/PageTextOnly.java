@@ -11,7 +11,6 @@
 package ellpeck.actuallyadditions.booklet.page;
 
 import ellpeck.actuallyadditions.booklet.GuiBooklet;
-import ellpeck.actuallyadditions.booklet.InitBooklet;
 import net.minecraft.item.ItemStack;
 
 public class PageTextOnly extends BookletPage{
@@ -23,10 +22,8 @@ public class PageTextOnly extends BookletPage{
     }
 
     public PageTextOnly setStack(ItemStack stack){
-        if(!InitBooklet.pagesWithItemStackData.contains(this)){
-            InitBooklet.pagesWithItemStackData.add(this);
-        }
         this.stack = stack;
+        this.addToPagesWithItemStackData();
         return this;
     }
 

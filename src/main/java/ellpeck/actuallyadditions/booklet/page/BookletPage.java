@@ -41,6 +41,21 @@ public class BookletPage{
         this.id = id;
     }
 
+    public void addToPagesWithItemStackData(){
+        if(!InitBooklet.pagesWithItemStackData.contains(this)){
+            ItemStack[] stacks = this.getItemStacksForPage();
+            if(stacks != null && stacks.length > 0){
+                //Ensure that there is at least one ItemStack
+                for(ItemStack stack : stacks){
+                    if(stack != null){
+                        InitBooklet.pagesWithItemStackData.add(this);
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
     public static void renderItem(GuiBooklet gui, ItemStack stack, int x, int y, float scale){
         GL11.glPushMatrix();
         GL11.glEnable(GL11.GL_BLEND);
