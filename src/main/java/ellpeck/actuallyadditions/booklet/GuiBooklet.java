@@ -37,10 +37,10 @@ import java.util.List;
 @SideOnly(Side.CLIENT)
 public class GuiBooklet extends GuiScreen{
 
-    public static final ResourceLocation resLoc = AssetUtil.getGuiLocation("guiBooklet");
-    public static final ResourceLocation resLocHalloween = AssetUtil.getGuiLocation("guiBookletHalloween");
-    public static final ResourceLocation resLocChristmas = AssetUtil.getGuiLocation("guiBookletChristmas");
-    public static final ResourceLocation resLocValentine = AssetUtil.getGuiLocation("guiBookletValentinesDay");
+    public static final ResourceLocation resLoc = AssetUtil.getBookletGuiLocation("guiBooklet");
+    public static final ResourceLocation resLocHalloween = AssetUtil.getBookletGuiLocation("guiBookletHalloween");
+    public static final ResourceLocation resLocChristmas = AssetUtil.getBookletGuiLocation("guiBookletChristmas");
+    public static final ResourceLocation resLocValentine = AssetUtil.getBookletGuiLocation("guiBookletValentinesDay");
     public static final int CHAPTER_BUTTONS_AMOUNT = 13;
     public static final int TOOLTIP_SPLIT_LENGTH = 200;
     public int xSize;
