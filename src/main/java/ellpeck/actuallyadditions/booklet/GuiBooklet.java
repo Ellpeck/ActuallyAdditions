@@ -52,17 +52,17 @@ public class GuiBooklet extends GuiScreen{
     public BookletIndexEntry currentIndexEntry;
     public int pageOpenInIndex;
     public int indexPageAmount;
-    public GuiButton buttonForward;
-    public GuiButton buttonBackward;
-    public GuiButton buttonPreviousScreen;
-    public GuiButton buttonPreviouslyOpenedGui;
-    public GuiButton buttonUpdate;
-    public GuiButton buttonTwitter;
-    public GuiButton buttonForum;
-    public GuiButton buttonAchievements;
-    public GuiButton buttonConfig;
-    public GuiButton[] chapterButtons = new GuiButton[CHAPTER_BUTTONS_AMOUNT];
-    private GuiTextField searchField;
+    private GuiButton buttonForward;
+    private GuiButton buttonBackward;
+    private GuiButton buttonPreviousScreen;
+    private GuiButton buttonPreviouslyOpenedGui;
+    private GuiButton buttonUpdate;
+    private GuiButton buttonTwitter;
+    private GuiButton buttonForum;
+    private GuiButton buttonAchievements;
+    private GuiButton buttonConfig;
+    private GuiButton[] chapterButtons = new GuiButton[CHAPTER_BUTTONS_AMOUNT];
+    public GuiTextField searchField;
     private int ticksElapsed;
     private boolean mousePressed;
 
@@ -166,31 +166,34 @@ public class GuiBooklet extends GuiScreen{
         }
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public void keyTyped(char theChar, int key){
         if(key != 1 && this.searchField.isFocused()){
             this.searchField.textboxKeyTyped(theChar, key);
-
-            if(this.currentIndexEntry instanceof BookletEntryAllSearch){
-                BookletEntryAllSearch currentEntry = (BookletEntryAllSearch)this.currentIndexEntry;
-                if(this.searchField.getText() != null && !this.searchField.getText().isEmpty()){
-                    currentEntry.chapters.clear();
-
-                    for(BookletChapter chapter : currentEntry.allChapters){
-                        if(chapter.getLocalizedName().toLowerCase().contains(this.searchField.getText().toLowerCase())){
-                            currentEntry.chapters.add(chapter);
-                        }
-                    }
-                }
-                else{
-                    currentEntry.chapters = (ArrayList<BookletChapter>)currentEntry.allChapters.clone();
-                }
-                this.openIndexEntry(this.currentIndexEntry, this.pageOpenInIndex, false);
-            }
+            this.updateSearchBar();
         }
         else{
             super.keyTyped(theChar, key);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public void updateSearchBar(){
+        if(this.currentIndexEntry instanceof BookletEntryAllSearch){
+            BookletEntryAllSearch currentEntry = (BookletEntryAllSearch)this.currentIndexEntry;
+            if(this.searchField.getText() != null && !this.searchField.getText().isEmpty()){
+                currentEntry.chapters.clear();
+
+                for(BookletChapter chapter : currentEntry.allChapters){
+                    if(chapter.getLocalizedName().toLowerCase().contains(this.searchField.getText().toLowerCase())){
+                        currentEntry.chapters.add(chapter);
+                    }
+                }
+            }
+            else{
+                currentEntry.chapters = (ArrayList<BookletChapter>)currentEntry.allChapters.clone();
+            }
+            this.openIndexEntry(this.currentIndexEntry, this.pageOpenInIndex, false);
         }
     }
 
@@ -398,7 +401,7 @@ public class GuiBooklet extends GuiScreen{
 
     @Override
     public void onGuiClosed(){
-        PersistentClientData.saveBookPage(this.currentIndexEntry, this.currentChapter, this.currentPage, this.pageOpenInIndex);
+        PersistentClientData.saveBookPage(this.currentIndexEntry, this.currentChapter, this.currentPage, this.pageOpenInIndex, this.searchField.getText());
     }
 
     @Override

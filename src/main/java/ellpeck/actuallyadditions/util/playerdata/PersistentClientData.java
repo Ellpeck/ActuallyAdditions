@@ -31,7 +31,7 @@ public class PersistentClientData{
 
     private static File theFile;
 
-    public static void saveBookPage(BookletIndexEntry entry, BookletChapter chapter, BookletPage page, int pageInIndex){
+    public static void saveBookPage(BookletIndexEntry entry, BookletChapter chapter, BookletPage page, int pageInIndex, String searchWord){
         NBTTagCompound baseCompound = getBaseCompound();
         NBTTagCompound worldCompound = getCompoundForWorld(baseCompound);
         if(worldCompound != null){
@@ -39,6 +39,7 @@ public class PersistentClientData{
             worldCompound.setInteger("Chapter", entry == null || chapter == null ? -1 : entry.chapters.indexOf(chapter));
             worldCompound.setInteger("Page", page == null ? -1 : page.getID());
             worldCompound.setInteger("PageInIndex", pageInIndex);
+            worldCompound.setString("SearchWord", searchWord);
             writeCompound(baseCompound, worldCompound);
         }
     }
@@ -88,26 +89,31 @@ public class PersistentClientData{
 
     public static void openLastBookPage(GuiBooklet gui){
         NBTTagCompound worldCompound = getCompoundForWorld(getBaseCompound());
-        if(worldCompound != null){
-            if(worldCompound.hasKey("Entry")){
-                int entry = worldCompound.getInteger("Entry");
-                int chapter = worldCompound.getInteger("Chapter");
-                int page = worldCompound.getInteger("Page");
+        if(worldCompound != null && worldCompound.hasKey("Entry")){
+            int entry = worldCompound.getInteger("Entry");
+            int chapter = worldCompound.getInteger("Chapter");
+            int page = worldCompound.getInteger("Page");
 
-                BookletIndexEntry currentIndexEntry = entry == -1 ? null : InitBooklet.entries.get(entry);
-                BookletChapter currentChapter = chapter == -1 || entry == -1 || currentIndexEntry.chapters.size() <= chapter ? null : currentIndexEntry.chapters.get(chapter);
-                BookletPage currentPage = chapter == -1 || currentChapter == null || currentChapter.pages.length <= page-1 ? null : currentChapter.pages[page-1];
-                int pageInIndex = worldCompound.getInteger("PageInIndex");
+            BookletIndexEntry currentIndexEntry = entry == -1 ? null : InitBooklet.entries.get(entry);
+            BookletChapter currentChapter = chapter == -1 || entry == -1 || currentIndexEntry.chapters.size() <= chapter ? null : currentIndexEntry.chapters.get(chapter);
+            BookletPage currentPage = chapter == -1 || currentChapter == null || currentChapter.pages.length <= page-1 ? null : currentChapter.pages[page-1];
+            int pageInIndex = worldCompound.getInteger("PageInIndex");
 
-                gui.openIndexEntry(currentIndexEntry, pageInIndex, true);
-                if(currentChapter != null){
-                    gui.openChapter(currentChapter, currentPage);
-                }
-                return;
+            gui.openIndexEntry(currentIndexEntry, pageInIndex, true);
+            if(currentChapter != null){
+                gui.openChapter(currentChapter, currentPage);
+            }
+
+            String searchText = worldCompound.getString("SearchWord");
+            if(!searchText.isEmpty()){
+                gui.searchField.setText(searchText);
+                gui.updateSearchBar();
             }
         }
-        //If everything fails, initialize the front page
-        gui.openIndexEntry(null, 1, true);
+        else{
+            //If everything fails, initialize the front page
+            gui.openIndexEntry(null, 1, true);
+        }
     }
 
     public static void setBoolean(String name, boolean bool){
