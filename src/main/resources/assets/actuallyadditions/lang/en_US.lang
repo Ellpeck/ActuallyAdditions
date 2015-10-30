@@ -64,7 +64,6 @@ tile.actuallyadditions.blockColoredLampLime.name=Lime Lamp
 tile.actuallyadditions.blockColoredLampPink.name=Pink Lamp
 tile.actuallyadditions.blockColoredLampCyan.name=Cyan Lamp
 tile.actuallyadditions.blockColoredLampPurple.name=Purple Lamp
-tile.actuallyadditions.blockOreMagnet.name=Magnetic Miner
 tile.actuallyadditions.blockPhantomface.name=Phantomface
 tile.actuallyadditions.blockPhantomEnergyface.name=Phantom Energyface
 tile.actuallyadditions.blockPhantomLiquiface.name=Phantom Liquiface
@@ -362,7 +361,6 @@ container.actuallyadditions.drill.name=Drill
 container.actuallyadditions.energizer.name=Energizer
 container.actuallyadditions.enervator.name=Enervator
 container.actuallyadditions.xpSolidifier.name=Experience Solidifier
-container.actuallyadditions.oreMagnet.name=Magnetic Miner
 container.actuallyadditions.cloud.name=Smiley Cloud
 container.actuallyadditions.directionalBreaker.name=Long-Range Breaker
 container.actuallyadditions.rangedCollector.name=Ranged Collector
@@ -504,11 +502,8 @@ booklet.actuallyadditions.chapter.crusher.text.1=The <item>Crusher<r> turns ever
 booklet.actuallyadditions.chapter.furnaceDouble.name=Double Furnace
 booklet.actuallyadditions.chapter.furnaceDouble.text.1=The <item>Double Furnace<r> works like a furnace, however, it uses <rf> RF/t and can smelt <imp>two items at a time<r>.
 
-booklet.actuallyadditions.chapter.miner.name=Magnetic Miner
-booklet.actuallyadditions.chapter.miner.text.1=The <item>Magnetic Miner<r> pulls ore blocks out of the ground using <rf> RF/t and <oil> of Oil/block mined. <n>Every place where an ore should be pulled up must have a <item>Casing Block<r> one block lower than the miner. <n>It has a range of <range> blocks.
-
 booklet.actuallyadditions.chapter.lavaFactory.name=Lava Factory
-booklet.actuallyadditions.chapter.lavaFactory.text.1=The <item>Lava Factory<r> can produce blocks of lava given <imp><rf> RF/block<r>. <n>The Block above it has to be surrounded with 4 Casing Blocks (which can be found on the Magnetic Miner Page!), otherwise it won't be able to produce Lava. <n>Right-Clicking on the <item>Lava Factory<r> will show you if it's able to produce Lava in its current setup. <n><n><i>Lava, for a fact. <n>                ory
+booklet.actuallyadditions.chapter.lavaFactory.text.1=The <item>Lava Factory<r> can produce blocks of lava given <imp><rf> RF/block<r>. <n>The Block above it has to be surrounded with 4 Casing Blocks, otherwise it won't be able to produce Lava. <n>Right-Clicking on the <item>Lava Factory<r> will show you if it's able to produce Lava in its current setup. <n><n><i>Lava, for a fact. <n>                ory
 
 booklet.actuallyadditions.chapter.energizer.name=Energizer and Enervator
 booklet.actuallyadditions.chapter.energizer.text.1=The <item>Energizer<r> <imp>charges items that hold RF<r> using its energy supply.

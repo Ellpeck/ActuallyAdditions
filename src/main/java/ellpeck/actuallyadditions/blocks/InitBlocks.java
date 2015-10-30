@@ -89,7 +89,6 @@ public class InitBlocks{
 
     public static Block blockTreasureChest;
     public static Block blockXPSolidifier;
-    public static Block blockOreMagnet;
 
     public static Block blockSmileyCloud;
 
@@ -116,9 +115,6 @@ public class InitBlocks{
 
         blockSmileyCloud = new BlockSmileyCloud();
         BlockUtil.register(blockSmileyCloud);
-
-        blockOreMagnet = new BlockOreMagnet();
-        BlockUtil.register(blockOreMagnet);
 
         blockXPSolidifier = new BlockXPSolidifier();
         BlockUtil.register(blockXPSolidifier);

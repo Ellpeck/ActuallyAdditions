@@ -78,8 +78,6 @@ public class GuiHandler implements IGuiHandler{
                 return new ContainerEnervator(entityPlayer, tile);
             case XP_SOLIDIFIER:
                 return new ContainerXPSolidifier(entityPlayer.inventory, tile);
-            case ORE_MAGNET:
-                return new ContainerOreMagnet(entityPlayer.inventory, tile);
             case CLOUD:
                 return new ContainerSmileyCloud();
             case DIRECTIONAL_BREAKER:
@@ -142,8 +140,6 @@ public class GuiHandler implements IGuiHandler{
                 return new GuiEnervator(entityPlayer, tile);
             case XP_SOLIDIFIER:
                 return new GuiXPSolidifier(entityPlayer.inventory, tile, x, y, z, world);
-            case ORE_MAGNET:
-                return new GuiOreMagnet(entityPlayer.inventory, tile);
             case CLOUD:
                 return new GuiSmileyCloud(tile, x, y, z, world);
             case BOOK:
@@ -180,7 +176,6 @@ public class GuiHandler implements IGuiHandler{
         ENERGIZER,
         ENERVATOR,
         XP_SOLIDIFIER,
-        ORE_MAGNET,
         CLOUD,
         BOOK(false),
         DIRECTIONAL_BREAKER,

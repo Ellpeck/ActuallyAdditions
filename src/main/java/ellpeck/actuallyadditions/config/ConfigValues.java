@@ -26,9 +26,6 @@ public class ConfigValues{
     public static String[] crusherRecipeExceptions;
     public static String[] mashedFoodCraftingExceptions;
 
-    public static String[] oreMagnetExceptions;
-    public static String[] oreMagnetExtraWhitelist;
-
     public static String[] paxelExtraMiningWhitelist;
     public static String[] drillExtraminingWhitelist;
 
@@ -49,8 +46,6 @@ public class ConfigValues{
 
         crusherRecipeExceptions = config.get(ConfigCategories.CRUSHER_RECIPES.name, "Crusher Recipe Exceptions", new String[]{"ingotBrick", "ingotBrickNether"}, "The Ingots, Dusts and Ores blacklisted from being auto-registered to be crushed by the Crusher. This list uses OreDictionary Names of the Inputs only.").getStringList();
         mashedFoodCraftingExceptions = config.get(ConfigCategories.ITEMS_CRAFTING.name, "Mashed Food Crafting Exceptions", new String[]{"ActuallyAdditions:itemCoffee"}, "The ItemFood, IGrowable and IPlantable Items that can not be used to craft Mashed Food. These are the actual registered Item Names, the ones you use, for example, when using the /give Command.").getStringList();
-        oreMagnetExceptions = config.get(ConfigCategories.MACHINE_VALUES.name, "Ore Magnet Exceptions", new String[0], "By default, the Ore Magnet pulls up everything that is registered in the OreDictionary as a String that starts with 'ore'. If you want any Ore not to be pulled up by the Magnet, put its ORE DICTIONARY name here.").getStringList();
-        oreMagnetExtraWhitelist = config.get(ConfigCategories.MACHINE_VALUES.name, "Ore Magnet Extra Whitelist", new String[]{"rftools:dimensionalShardBlock"}, "By default, the Ore Magnet pulls up everything that is registered in the OreDictionary as a String that starts with 'ore'. If you want anything else to be pulled up by the Magnet, put its REGISTRY NAME here. These are the actual registered Item Names, the ones you use, for example, when using the /give Command.").getStringList();
         paxelExtraMiningWhitelist = config.get(ConfigCategories.TOOL_VALUES.name, "AIOT Extra Whitelist", new String[]{"TConstruct:GravelOre"}, "By default, the AIOT can mine certain blocks. If there is one that it can't mine, but should be able to, put its REGISTRY NAME here. These are the actual registered Item Names, the ones you use, for example, when using the /give Command.").getStringList();
         drillExtraminingWhitelist = config.get(ConfigCategories.TOOL_VALUES.name, "Drill Extra Whitelist", new String[]{"TConstruct:GravelOre"}, "By default, the Drill can mine certain blocks. If there is one that it can't mine, but should be able to, put its REGISTRY NAME here. These are the actual registered Item Names, the ones you use, for example, when using the /give Command.").getStringList();
     }

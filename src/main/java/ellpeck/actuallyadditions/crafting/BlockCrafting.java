@@ -51,7 +51,6 @@ public class BlockCrafting{
     public static IRecipe recipeDoubleCrusher;
     public static IRecipe recipeFurnace;
     public static IRecipe recipeSolidifier;
-    public static IRecipe recipeMiner;
     public static IRecipe recipeCasing;
     public static IRecipe recipeGlass;
     public static IRecipe recipeLavaFactory;
@@ -246,17 +245,6 @@ public class BlockCrafting{
                     'R', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal()),
                     'D', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.CANOLA.ordinal())));
             recipeCanolaPress = Util.GetRecipes.lastIRecipe();
-        }
-
-        //Ore Magnet
-        if(ConfigCrafting.ORE_MAGNET.isEnabled()){
-            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockOreMagnet),
-                    "SSS", "CBC", "ISI",
-                    'S', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.LAVA_FACTORY_CASE.ordinal()),
-                    'C', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.IRON_CASING.ordinal()),
-                    'B', new ItemStack(InitItems.itemBatteryDouble),
-                    'I', new ItemStack(Blocks.iron_block)));
-            recipeMiner = Util.GetRecipes.lastIRecipe();
         }
 
         //Fermenting Barrel

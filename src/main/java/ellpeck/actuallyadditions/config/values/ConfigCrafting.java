@@ -147,7 +147,6 @@ public enum ConfigCrafting{
 
     TELE_STAFF("Tele Staff", ConfigCategories.ITEMS_CRAFTING),
     CASING("Casing", ConfigCategories.BLOCKS_CRAFTING),
-    ORE_MAGNET("Ore Magnet", ConfigCategories.BLOCKS_CRAFTING),
 
     MAGNET_RING("Magnet Ring", ConfigCategories.ITEMS_CRAFTING),
     WATER_RING("Water Ring", ConfigCategories.ITEMS_CRAFTING),
