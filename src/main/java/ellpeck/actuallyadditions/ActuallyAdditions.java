@@ -117,10 +117,6 @@ public class ActuallyAdditions{
         Util.registerDispenserHandler(Items.bucket, new DispenserHandlerFillBucket());
         Util.registerDispenserHandler(InitItems.itemFertilizer, new DispenserHandlerFertilize());
 
-        if(LaserRelayConnectionHandler.getInstance() == null){
-            LaserRelayConnectionHandler.setInstance(new LaserRelayConnectionHandler());
-        }
-
         WorldData.init(event.getServer());
     }
 
