@@ -4,6 +4,7 @@
 - Added Preview Pictures to the booklet (Thanks to KittyVanCat for help!)
 - Fix Slabs
 - Fixed Bug with Double Furnace and Double Crusher not crushing if both slots are filled (Thanks to KittyVanCat)
+- Remove the Magnetic Miner
 
 # 1.7.10-r1
 - Finally out of beta! ~
