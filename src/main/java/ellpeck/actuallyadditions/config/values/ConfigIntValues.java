@@ -174,7 +174,8 @@ public enum ConfigIntValues{
     RANGED_COLLECTOR_RANGE("Ranged Collector: Range", ConfigCategories.MACHINE_VALUES, 6, 1, 30, "The range of the Ranged Collector"),
 
     LASER_RELAY_LOSS("Laser Relay: Loss", ConfigCategories.MACHINE_VALUES, 5, 0, 80, "The Energy Loss of the Laser Relay per Transfer in Percent"),
-    LASER_RELAY_MAX_DISTANCE("Laser Relay: Max Distance", ConfigCategories.MACHINE_VALUES, 15, 3, 80, "The max distance between two connected Laser Relays");
+    LASER_RELAY_MAX_DISTANCE("Laser Relay: Max Distance", ConfigCategories.MACHINE_VALUES, 15, 3, 80, "The max distance between two connected Laser Relays"),
+    LASER_RELAY_MAX_TRANSFER("Laser Relay: Max Transfer", ConfigCategories.MACHINE_VALUES, 10000, 100, 1000000, "The max amount of RF a Laser Relay can receive and try to transfer (if it's given 100 RF and can only transfer 50, it will only accept 50, it won't waste any power!)");
 
     public final String name;
     public final String category;

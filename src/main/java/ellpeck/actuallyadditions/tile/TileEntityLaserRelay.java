@@ -14,6 +14,7 @@ import cofh.api.energy.IEnergyReceiver;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.config.values.ConfigBoolValues;
+import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.misc.LaserRelayConnectionHandler;
 import ellpeck.actuallyadditions.util.WorldPos;
 import ellpeck.actuallyadditions.util.WorldUtil;
@@ -117,7 +118,7 @@ public class TileEntityLaserRelay extends TileEntityBase implements IEnergyRecei
         if(maxTransmit > 0){
             LaserRelayConnectionHandler.Network network = LaserRelayConnectionHandler.getInstance().getNetworkFor(new WorldPos(this.worldObj, this.xCoord, this.yCoord, this.zCoord));
             if(network != null){
-                transmitted = LaserRelayConnectionHandler.getInstance().transferEnergyToReceiverInNeed(blockFrom, network, maxTransmit, simulate);
+                transmitted = LaserRelayConnectionHandler.getInstance().transferEnergyToReceiverInNeed(blockFrom, network, Math.min(ConfigIntValues.LASER_RELAY_MAX_TRANSFER.getValue(), maxTransmit), simulate);
             }
         }
         return transmitted;
