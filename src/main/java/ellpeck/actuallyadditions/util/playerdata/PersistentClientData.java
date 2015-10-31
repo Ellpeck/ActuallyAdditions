@@ -54,7 +54,10 @@ public class PersistentClientData{
     }
 
     private static String getName(){
-        return Minecraft.getMinecraft().isIntegratedServerRunning() ? Minecraft.getMinecraft().getIntegratedServer().getFolderName() : Minecraft.getMinecraft().func_147104_D().serverIP;
+        if(Minecraft.getMinecraft().theWorld != null){
+            return Minecraft.getMinecraft().isIntegratedServerRunning() ? Minecraft.getMinecraft().getIntegratedServer().getFolderName() : Minecraft.getMinecraft().func_147104_D().serverIP;
+        }
+        return "Invalid";
     }
 
     private static NBTTagCompound getCompoundForWorld(NBTTagCompound mainCompound){
