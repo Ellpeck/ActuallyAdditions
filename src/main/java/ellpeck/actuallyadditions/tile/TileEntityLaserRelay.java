@@ -87,14 +87,18 @@ public class TileEntityLaserRelay extends TileEntityBase implements IEnergyRecei
 
     @Override
     public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt){
-        NBTTagCompound compound = pkt.func_148857_g();
+        if(pkt != null){
+            NBTTagCompound compound = pkt.func_148857_g();
 
-        LaserRelayConnectionHandler.getInstance().removeRelayFromNetwork(new WorldPos(this.worldObj, this.xCoord, this.yCoord, this.zCoord));
+            if(compound != null){
+                LaserRelayConnectionHandler.getInstance().removeRelayFromNetwork(new WorldPos(this.worldObj, this.xCoord, this.yCoord, this.zCoord));
 
-        NBTTagList list = compound.getTagList("Connections", 10);
-        for(int i = 0; i < list.tagCount(); i++){
-            LaserRelayConnectionHandler.ConnectionPair pair = LaserRelayConnectionHandler.ConnectionPair.readFromNBT(list.getCompoundTagAt(i));
-            LaserRelayConnectionHandler.getInstance().addConnection(pair.firstRelay, pair.secondRelay);
+                NBTTagList list = compound.getTagList("Connections", 10);
+                for(int i = 0; i < list.tagCount(); i++){
+                    LaserRelayConnectionHandler.ConnectionPair pair = LaserRelayConnectionHandler.ConnectionPair.readFromNBT(list.getCompoundTagAt(i));
+                    LaserRelayConnectionHandler.getInstance().addConnection(pair.firstRelay, pair.secondRelay);
+                }
+            }
         }
     }
 
