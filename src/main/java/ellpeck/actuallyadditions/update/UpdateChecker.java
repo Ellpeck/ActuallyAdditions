@@ -21,7 +21,7 @@ public class UpdateChecker{
     public static boolean needsUpdateNotify;
     public static String updateVersion;
 
-    public void init(){
+    public static void init(){
         if(ConfigBoolValues.DO_UPDATE_CHECK.isEnabled()){
             ModUtil.LOGGER.info("Initializing Update Checker...");
             new ThreadUpdateChecker();

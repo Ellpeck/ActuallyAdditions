@@ -70,7 +70,7 @@ public class ActuallyAdditions{
         InitItems.init();
         InitVillager.init();
         FuelHandler.init();
-        new UpdateChecker().init();
+        UpdateChecker.init();
         proxy.preInit(event);
 
         ModUtil.LOGGER.info("PreInitialization Finished.");

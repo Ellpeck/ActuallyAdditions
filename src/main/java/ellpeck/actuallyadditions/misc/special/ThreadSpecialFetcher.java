@@ -18,8 +18,6 @@ import java.util.Properties;
 
 public class ThreadSpecialFetcher extends Thread{
 
-    private static Properties specialProperties;
-
     public ThreadSpecialFetcher(){
         this.setName(ModUtil.MOD_ID+" Special Fetcher");
         this.setDaemon(true);
@@ -28,16 +26,17 @@ public class ThreadSpecialFetcher extends Thread{
 
     @Override
     public void run(){
-        ModUtil.LOGGER.info("Fetching Special People Stuff");
+        ModUtil.LOGGER.info("Fetching Special People Stuff...");
         try{
             URL url = new URL("https://raw.githubusercontent.com/Ellpeck/ActuallyAdditions/master/specialPeopleStuff.properties");
-            specialProperties = new Properties();
+            Properties specialProperties = new Properties();
             specialProperties.load(new InputStreamReader(url.openStream()));
+            SpecialRenderInit.parse(specialProperties);
 
             ModUtil.LOGGER.info("Fetching Special People Stuff done!");
         }
         catch(Exception e){
-            ModUtil.LOGGER.error("Fetching Special People Stuff failed!", e);
+            ModUtil.LOGGER.error("Fetching Special People Stuff failed! (You can ignore this error technically.)", e);
         }
     }
 }
