@@ -5,14 +5,13 @@
  * http://github.com/Ellpeck/ActuallyAdditions/blob/master/README.md
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2015 Ellpeck
+ * ï¿½ 2015 Ellpeck
  */
 
 package ellpeck.actuallyadditions.update;
 
 import ellpeck.actuallyadditions.config.values.ConfigBoolValues;
 import ellpeck.actuallyadditions.util.ModUtil;
-import ellpeck.actuallyadditions.util.Util;
 
 public class UpdateChecker{
 
@@ -25,7 +24,6 @@ public class UpdateChecker{
     public void init(){
         if(ConfigBoolValues.DO_UPDATE_CHECK.isEnabled()){
             ModUtil.LOGGER.info("Initializing Update Checker...");
-            Util.registerEvent(this);
             new ThreadUpdateChecker();
         }
     }
