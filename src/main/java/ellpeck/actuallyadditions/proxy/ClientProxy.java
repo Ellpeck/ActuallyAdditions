@@ -57,8 +57,6 @@ public class ClientProxy implements IProxy{
         }
 
         PersistentClientData.setTheFile(new File(Minecraft.getMinecraft().mcDataDir, ModUtil.MOD_ID+"Data.dat"));
-
-        SpecialRenderInit.init();
     }
 
     @Override
@@ -102,5 +100,7 @@ public class ClientProxy implements IProxy{
     @Override
     public void postInit(FMLPostInitializationEvent event){
         ModUtil.LOGGER.info("PostInitializing ClientProxy...");
+
+        SpecialRenderInit.init();
     }
 }
