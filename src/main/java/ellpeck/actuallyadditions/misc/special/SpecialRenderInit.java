@@ -12,6 +12,7 @@ package ellpeck.actuallyadditions.misc.special;
 
 import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import ellpeck.actuallyadditions.util.StringUtil;
 import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -36,7 +37,7 @@ public class SpecialRenderInit{
         if(!specialList.isEmpty()){
             for(Map.Entry<String, RenderSpecial> entry : specialList.entrySet()){
                 //Does the player have one of the names from the list?
-                if(entry.getKey().toLowerCase().equals(event.entityPlayer.getDisplayName().toLowerCase())){
+                if(StringUtil.equalsToLowerCase(entry.getKey(), event.entityPlayer.getDisplayName())){
                     //Render the special Item/Block
                     entry.getValue().render(event.entityPlayer);
                     break;
