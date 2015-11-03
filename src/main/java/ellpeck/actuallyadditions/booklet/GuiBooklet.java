@@ -33,6 +33,7 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 @SideOnly(Side.CLIENT)
 public class GuiBooklet extends GuiScreen{
@@ -185,7 +186,7 @@ public class GuiBooklet extends GuiScreen{
                 currentEntry.chapters.clear();
 
                 for(BookletChapter chapter : currentEntry.allChapters){
-                    if(chapter.getLocalizedName().toLowerCase().contains(this.searchField.getText().toLowerCase())){
+                    if(chapter.getLocalizedName().toLowerCase(Locale.ROOT).contains(this.searchField.getText().toLowerCase(Locale.ROOT))){
                         currentEntry.chapters.add(chapter);
                     }
                 }
