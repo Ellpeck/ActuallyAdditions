@@ -143,7 +143,7 @@ public class SmileyCloudEasterEggs{
             @Override
             public void renderExtra(float f){
                 renderHoldingItem(false, new ItemStack(Items.iron_helmet));
-                renderHeadBlock(Blocks.cake, 0, 28F);
+                renderHeadBlock(InitBlocks.blockBlackLotus, 0, 28F);
             }
         });
         //RotesDing
@@ -279,6 +279,7 @@ public class SmileyCloudEasterEggs{
                 renderHeadBlock(Blocks.gravel, 0, 47F);
             }
         });
+        //FrauBaerchen
         register(new ISmileyCloudEasterEgg(){
             @Override
             public String[] getTriggerNames(){
@@ -292,10 +293,11 @@ public class SmileyCloudEasterEggs{
                 renderHeadBlock(Blocks.coal_block, 0, 60F);
             }
         });
+        //Diddi
         register(new ISmileyCloudEasterEgg(){
             @Override
             public String[] getTriggerNames(){
-                return new String[]{"0xdd", "didi", "theultimatehose"};
+                return new String[]{"0xdd", "didi", "diddi", "theultimatehose"};
             }
 
             @Override
@@ -304,6 +306,7 @@ public class SmileyCloudEasterEggs{
                 renderHeadBlock(Blocks.redstone_block, 0, 30F);
             }
         });
+        //MineLoad
         register(new ISmileyCloudEasterEgg(){
             @Override
             public String[] getTriggerNames(){
@@ -314,6 +317,45 @@ public class SmileyCloudEasterEggs{
             public void renderExtra(float f){
                 renderHoldingItem(false, new ItemStack(InitItems.itemMagnetRing));
                 renderHeadBlock(Blocks.crafting_table, 0, 35F);
+            }
+        });
+        //Kilobyte (When I asked him if he liked the mod, he just looked at the code. Maybe he'll find this eventually.)
+        register(new ISmileyCloudEasterEgg(){
+            @Override
+            public String[] getTriggerNames(){
+                return new String[]{"kilobyte", "kilo", "byte"};
+            }
+
+            @Override
+            public void renderExtra(float f){
+                renderHoldingItem(false, new ItemStack(InitItems.itemMisc, 1, TheMiscItems.DRILL_CORE.ordinal()));
+                renderHeadBlock(Blocks.redstone_ore, 0, 80F);
+            }
+        });
+        //XDjackieXD
+        register(new ISmileyCloudEasterEgg(){
+            @Override
+            public String[] getTriggerNames(){
+                return new String[]{"jackie", "xdjackiexd", "xdjackie", "jackiexd"};
+            }
+
+            @Override
+            public void renderExtra(float f){
+                renderHoldingItem(false, new ItemStack(Items.enchanted_book));
+                renderHeadBlock(InitBlocks.blockDirectionalBreaker, 0, 40F);
+            }
+        });
+        //Little Lampi (I still can't get over it)
+        register(new ISmileyCloudEasterEgg(){
+            @Override
+            public String[] getTriggerNames(){
+                return new String[]{"lampi", "littlelampi", "little lampi"};
+            }
+
+            @Override
+            public void renderExtra(float f){
+                renderHoldingItem(false, new ItemStack(Items.glowstone_dust));
+                renderHeadBlock(InitBlocks.blockColoredLampOn, 4, 40F);
             }
         });
     }
