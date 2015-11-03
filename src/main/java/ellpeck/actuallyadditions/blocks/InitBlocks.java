@@ -98,8 +98,13 @@ public class InitBlocks{
 
     public static Block blockLaserRelay;
 
+    public static Block blockBlackLotus;
+
     public static void init(){
         ModUtil.LOGGER.info("Initializing Blocks...");
+
+        blockBlackLotus = new BlockBlackLotus();
+        BlockUtil.register(blockBlackLotus);
 
         blockLaserRelay = new BlockLaserRelay();
         BlockUtil.register(blockLaserRelay);

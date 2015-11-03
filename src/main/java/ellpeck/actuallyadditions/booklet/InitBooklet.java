@@ -59,6 +59,7 @@ public class InitBooklet{
 
         new BookletChapter("treasureChest", entryMisc, new ItemStack(InitBlocks.blockTreasureChest), new PagePicture(1, "pageTreasureChest", 150).setStack(new ItemStack(InitBlocks.blockTreasureChest)), new PageTextOnly(2)).setSpecial();
         new BookletChapter("hairBalls", entryMisc, new ItemStack(InitItems.itemHairyBall), new PagePicture(1, "pageFurBalls", 110).setStack(new ItemStack(InitItems.itemHairyBall)), new PageTextOnly(2)).setSpecial();
+        new BookletChapter("blackLotus", entryMisc, new ItemStack(InitBlocks.blockBlackLotus), new PageTextOnly(1).setStack(new ItemStack(InitBlocks.blockBlackLotus)), new PageCrafting(2, ItemCrafting.recipeBlackDye));
 
         //No RF Using Blocks
         new BookletChapter("breaker", entryFunctionalNonRF, new ItemStack(InitBlocks.blockBreaker), new PageCrafting(1, BlockCrafting.recipeBreaker), new PageCrafting(2, BlockCrafting.recipePlacer), new PageCrafting(3, BlockCrafting.recipeLiquidPlacer), new PageCrafting(4, BlockCrafting.recipeLiquidCollector));

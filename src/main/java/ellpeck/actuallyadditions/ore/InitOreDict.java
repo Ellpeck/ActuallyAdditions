@@ -71,6 +71,8 @@ public class InitOreDict{
         addOre(InitItems.itemSpecialDrop, TheSpecialDrops.PEARL_SHARD.ordinal(), "nuggetEnderpearl");
 
         addOre(InitItems.itemMisc, TheMiscItems.QUARTZ.ordinal(), "gemQuartzBlack");
+
+        addOre(InitItems.itemMisc, TheMiscItems.BLACK_DYE.ordinal(), "dyeBlack");
     }
 
     private static void addOre(ItemStack stack, String name){

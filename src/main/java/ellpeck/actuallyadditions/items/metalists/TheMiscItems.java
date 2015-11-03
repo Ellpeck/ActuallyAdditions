@@ -30,7 +30,8 @@ public enum TheMiscItems{
     CANOLA("Canola", EnumRarity.uncommon),
     CUP("Cup", EnumRarity.uncommon),
     BAT_WING("BatWing", EnumRarity.rare),
-    DRILL_CORE("DrillCore", EnumRarity.uncommon);
+    DRILL_CORE("DrillCore", EnumRarity.uncommon),
+    BLACK_DYE("BlackDye", EnumRarity.epic);
 
     public final String name;
     public final EnumRarity rarity;

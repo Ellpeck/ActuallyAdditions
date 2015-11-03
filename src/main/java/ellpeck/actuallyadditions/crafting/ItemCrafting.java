@@ -74,8 +74,13 @@ public class ItemCrafting{
     public static IRecipe recipeChestToCrateUpgrade;
     public static IRecipe recipeLaserWrench;
     public static IRecipe recipeDrillCore;
+    public static IRecipe recipeBlackDye;
 
     public static void init(){
+
+        //Black Dye
+        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.BLACK_DYE.ordinal()), new ItemStack(InitBlocks.blockBlackLotus)));
+        recipeBlackDye = Util.GetRecipes.lastIRecipe();
 
         //Booklet
         GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemLexicon), new ItemStack(InitItems.itemCanolaSeed), new ItemStack(Items.paper)));
