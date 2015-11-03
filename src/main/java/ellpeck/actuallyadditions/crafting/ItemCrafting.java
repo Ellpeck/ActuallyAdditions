@@ -79,7 +79,7 @@ public class ItemCrafting{
     public static void init(){
 
         //Black Dye
-        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.BLACK_DYE.ordinal()), new ItemStack(InitBlocks.blockBlackLotus)));
+        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemMisc, 2, TheMiscItems.BLACK_DYE.ordinal()), new ItemStack(InitBlocks.blockBlackLotus)));
         recipeBlackDye = Util.GetRecipes.lastIRecipe();
 
         //Booklet
