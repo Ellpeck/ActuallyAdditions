@@ -36,6 +36,7 @@ Everything that is not listed below applies to the above.
 ### NOTES
 - The above License only applies for Code I wrote myself, any APIs used (such as the CoFH API) have their own License that is being respected.
 - There are some excerpts from other code used (such as the OpenBlocks XP System). Credit to the creators of these parts is always given and their Permission is granted or their License is respected.
-- Almost all of the Assets used in this Mod are made by Glenthor and are owned by me. You are not allowed to copy them for any other Project without my Permission.
+- Almost all of the Assets used in this Mod are made by Glenthor and are owned by me. You are not allowed to copy them for any other Project.
+- Parts of this License, especially restrictive ones, can be ignored with Personal Permission. Said Permission, however, will only be given to people I know or someone who has a very good reason for needing it. If you don't, don't ask.
 
-© 2015 Ellpeck
+ï¿½ 2015 Ellpeck
