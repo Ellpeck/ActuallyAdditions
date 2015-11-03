@@ -104,6 +104,8 @@ public class CreativeTab extends CreativeTabs{
         add(InitBlocks.blockLampPowerer);
         add(InitBlocks.blockTreasureChest);
 
+        add(InitBlocks.blockBlackLotus);
+
         add(InitItems.itemLaserWrench);
         add(InitItems.itemChestToCrateUpgrade);
 
