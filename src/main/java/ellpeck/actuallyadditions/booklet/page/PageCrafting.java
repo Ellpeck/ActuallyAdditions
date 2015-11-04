@@ -93,7 +93,7 @@ public class PageCrafting extends BookletPage{
                 for(int i = 0; i < shaped.getInput().length; i++){
                     Object input = shaped.getInput()[i];
                     if(input != null){
-                        stacks[i] = input instanceof ItemStack ? (ItemStack)input : ((ArrayList<ItemStack>)input).get(0);
+                        stacks[i] = input instanceof ItemStack ? (ItemStack)input : (((ArrayList<ItemStack>)input).isEmpty() ? null : ((ArrayList<ItemStack>)input).get(0));
                     }
                 }
             }
@@ -101,7 +101,7 @@ public class PageCrafting extends BookletPage{
                 ShapelessOreRecipe shapeless = (ShapelessOreRecipe)recipe;
                 for(int i = 0; i < shapeless.getInput().size(); i++){
                     Object input = shapeless.getInput().get(i);
-                    stacks[i] = input instanceof ItemStack ? (ItemStack)input : ((ArrayList<ItemStack>)input).get(0);
+                    stacks[i] = input instanceof ItemStack ? (ItemStack)input : (((ArrayList<ItemStack>)input).isEmpty() ? null : ((ArrayList<ItemStack>)input).get(0));
                 }
             }
 
