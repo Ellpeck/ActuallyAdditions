@@ -1,3 +1,13 @@
+# 1.7.10-r3
+- Fixed the Heat Collector not outputting power if its internal buffer is full
+- Fixed Crash when the manual was open during a world crash or kick
+- Removed seasonal booklet page changes
+- Changed the way special overhead rendering for special people is handled (preparing for something coming up in the future!)
+- Added Black Lotus that spawns in the world
+- Added black dye that is craftable from the Black Lotus
+- Fixed a potential bug with booklet crafting page crashing if a Crafting Recipe doesn't have inputs
+- Added some more smiley clouds
+
 # 1.7.10-r2
 - Fix a Crash on Server with the Laser Relay
 - Gave the Laser Relay an Energy Transfer Cap
