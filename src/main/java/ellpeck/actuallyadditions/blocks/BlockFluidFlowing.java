@@ -5,7 +5,7 @@
  * http://github.com/Ellpeck/ActuallyAdditions/blob/master/README.md
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2015 Ellpeck
+ * Â© 2015 Ellpeck
  */
 
 package ellpeck.actuallyadditions.blocks;
@@ -26,7 +26,9 @@ import net.minecraftforge.fluids.Fluid;
 
 public class BlockFluidFlowing extends BlockFluidClassic implements IActAddItemOrBlock{
 
+    @SideOnly(Side.CLIENT)
     public IIcon stillIcon;
+    @SideOnly(Side.CLIENT)
     public IIcon flowingIcon;
     private String name;
 
@@ -48,6 +50,7 @@ public class BlockFluidFlowing extends BlockFluidClassic implements IActAddItemO
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public IIcon getIcon(int side, int meta){
         return side <= 1 ? this.stillIcon : this.flowingIcon;
     }

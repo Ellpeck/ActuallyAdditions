@@ -5,7 +5,7 @@
  * http://github.com/Ellpeck/ActuallyAdditions/blob/master/README.md
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2015 Ellpeck
+ * Â© 2015 Ellpeck
  */
 
 package ellpeck.actuallyadditions.crafting;
@@ -71,8 +71,16 @@ public class ItemCrafting{
     public static IRecipe recipeLeafBlower;
     public static IRecipe recipeLeafBlowerAdvanced;
     public static ArrayList<IRecipe> recipesPotionRings = new ArrayList<IRecipe>();
+    public static IRecipe recipeChestToCrateUpgrade;
+    public static IRecipe recipeLaserWrench;
+    public static IRecipe recipeDrillCore;
+    public static IRecipe recipeBlackDye;
 
     public static void init(){
+
+        //Black Dye
+        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemMisc, 2, TheMiscItems.BLACK_DYE.ordinal()), new ItemStack(InitBlocks.blockBlackLotus)));
+        recipeBlackDye = Util.GetRecipes.lastIRecipe();
 
         //Booklet
         GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemLexicon), new ItemStack(InitItems.itemCanolaSeed), new ItemStack(Items.paper)));
@@ -81,6 +89,24 @@ public class ItemCrafting{
         //Clearing NBT Storage
         GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemLaserWrench), new ItemStack(InitItems.itemLaserWrench));
         GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemPhantomConnector), new ItemStack(InitItems.itemPhantomConnector));
+
+        //Chest To Crate Upgrade
+        if(ConfigCrafting.CHEST_TO_CRATE_UPGRADE.isEnabled()){
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemChestToCrateUpgrade),
+                    "CWC", "WWW", "CWC",
+                    'C', new ItemStack(Blocks.chest),
+                    'W', "plankWood"));
+            recipeChestToCrateUpgrade = Util.GetRecipes.lastIRecipe();
+        }
+
+        //Laser Wrench
+        if(ConfigCrafting.LASER_WRENCH.isEnabled()){
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemLaserWrench),
+                    "C  ", " S ", "  S",
+                    'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal()),
+                    'S', "ingotIron"));
+            recipeLaserWrench = Util.GetRecipes.lastIRecipe();
+        }
 
         //Rice Stuff
         if(ConfigCrafting.RICE_GADGETS.isEnabled()){
@@ -114,9 +140,19 @@ public class ItemCrafting{
                     "DDD", "CRC", "III",
                     'D', "gemDiamond",
                     'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal()),
-                    'R', "dustRedstone",
+                    'R', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.DRILL_CORE.ordinal()),
                     'I', "blockIron"));
             recipeDrill = Util.GetRecipes.lastIRecipe();
+        }
+
+        //Drill Core
+        if(ConfigCrafting.DRILL_CORE.isEnabled()){
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.DRILL_CORE.ordinal()),
+                    "ICI", "CRC", "ICI",
+                    'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL.ordinal()),
+                    'R', "dustRedstone",
+                    'I', "blockIron"));
+            recipeDrillCore = Util.GetRecipes.lastIRecipe();
         }
 
         //Tele Staff

@@ -5,7 +5,7 @@
  * http://github.com/Ellpeck/ActuallyAdditions/blob/master/README.md
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2015 Ellpeck
+ * Â© 2015 Ellpeck
  */
 
 package ellpeck.actuallyadditions.tile;
@@ -401,19 +401,6 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        this.sideToPut = compound.getInteger("SideToPut");
-        this.slotToPutStart = compound.getInteger("SlotToPut");
-        this.slotToPutEnd = compound.getInteger("SlotToPutEnd");
-        this.sideToPull = compound.getInteger("SideToPull");
-        this.slotToPullStart = compound.getInteger("SlotToPull");
-        this.slotToPullEnd = compound.getInteger("SlotToPullEnd");
-        this.isPullWhitelist = compound.getBoolean("PullWhitelist");
-        this.isPutWhitelist = compound.getBoolean("PutWhitelist");
-        super.readSyncableNBT(compound, sync);
-    }
-
-    @Override
     public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
         super.writeSyncableNBT(compound, sync);
         compound.setInteger("SideToPut", this.sideToPut);
@@ -424,6 +411,19 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
         compound.setInteger("SlotToPullEnd", this.slotToPullEnd);
         compound.setBoolean("PullWhitelist", this.isPullWhitelist);
         compound.setBoolean("PutWhitelist", this.isPutWhitelist);
+    }
+
+    @Override
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
+        this.sideToPut = compound.getInteger("SideToPut");
+        this.slotToPutStart = compound.getInteger("SlotToPut");
+        this.slotToPutEnd = compound.getInteger("SlotToPutEnd");
+        this.sideToPull = compound.getInteger("SideToPull");
+        this.slotToPullStart = compound.getInteger("SlotToPull");
+        this.slotToPullEnd = compound.getInteger("SlotToPullEnd");
+        this.isPullWhitelist = compound.getBoolean("PullWhitelist");
+        this.isPutWhitelist = compound.getBoolean("PutWhitelist");
+        super.readSyncableNBT(compound, sync);
     }
 
     @Override

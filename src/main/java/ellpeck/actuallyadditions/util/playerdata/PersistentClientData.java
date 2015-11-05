@@ -1,11 +1,11 @@
 /*
  * This file ("PersistentClientData.java") is part of the Actually Additions Mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
- * under the Actually Additions License to be found at 
+ * under the Actually Additions License to be found at
  * http://github.com/Ellpeck/ActuallyAdditions/blob/master/README.md
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2015 Ellpeck
+ * Â© 2015 Ellpeck
  */
 
 package ellpeck.actuallyadditions.util.playerdata;
@@ -31,18 +31,20 @@ public class PersistentClientData{
 
     private static File theFile;
 
-    public static void saveBookPage(BookletIndexEntry entry, BookletChapter chapter, BookletPage page, int pageInIndex){
-        NBTTagCompound compound = readCompound();
-        if(compound != null){
-            compound.setInteger(getName("Entry"), entry == null ? -1 : InitBooklet.entries.indexOf(entry));
-            compound.setInteger(getName("Chapter"), entry == null || chapter == null ? -1 : entry.chapters.indexOf(chapter));
-            compound.setInteger(getName("Page"), page == null ? -1 : page.getID());
-            compound.setInteger(getName("PageInIndex"), pageInIndex);
-            writeCompound(compound);
+    public static void saveBookPage(BookletIndexEntry entry, BookletChapter chapter, BookletPage page, int pageInIndex, String searchWord){
+        NBTTagCompound baseCompound = getBaseCompound();
+        NBTTagCompound worldCompound = getCompoundForWorld(baseCompound);
+        if(worldCompound != null){
+            worldCompound.setInteger("Entry", entry == null ? -1 : InitBooklet.entries.indexOf(entry));
+            worldCompound.setInteger("Chapter", entry == null || chapter == null ? -1 : entry.chapters.indexOf(chapter));
+            worldCompound.setInteger("Page", page == null ? -1 : page.getID());
+            worldCompound.setInteger("PageInIndex", pageInIndex);
+            worldCompound.setString("SearchWord", searchWord);
+            writeCompound(baseCompound, worldCompound);
         }
     }
 
-    private static NBTTagCompound readCompound(){
+    private static NBTTagCompound getBaseCompound(){
         try{
             return CompressedStreamTools.readCompressed(new FileInputStream(getTheFile()));
         }
@@ -51,14 +53,21 @@ public class PersistentClientData{
         }
     }
 
-    private static String getName(String name){
-        return (Minecraft.getMinecraft().isIntegratedServerRunning() ? Minecraft.getMinecraft().getIntegratedServer().getFolderName() : Minecraft.getMinecraft().func_147104_D().serverIP)+"-"+name;
+    private static String getName(){
+        if(Minecraft.getMinecraft().theWorld != null){
+            return Minecraft.getMinecraft().isIntegratedServerRunning() ? Minecraft.getMinecraft().getIntegratedServer().getFolderName() : Minecraft.getMinecraft().func_147104_D().serverIP;
+        }
+        else return "Invalid";
     }
 
-    private static void writeCompound(NBTTagCompound compound){
-        try{
+    private static NBTTagCompound getCompoundForWorld(NBTTagCompound mainCompound){
+        return mainCompound.getCompoundTag(getName());
+    }
 
-            CompressedStreamTools.writeCompressed(compound, new FileOutputStream(getTheFile()));
+    private static void writeCompound(NBTTagCompound baseCompound, NBTTagCompound worldCompound){
+        baseCompound.setTag(getName(), worldCompound);
+        try{
+            CompressedStreamTools.writeCompressed(baseCompound, new FileOutputStream(getTheFile()));
         }
         catch(Exception e){
             ModUtil.LOGGER.fatal("Couldn't write Persistent Variable!", e);
@@ -82,39 +91,45 @@ public class PersistentClientData{
     }
 
     public static void openLastBookPage(GuiBooklet gui){
-        NBTTagCompound compound = readCompound();
-        if(compound != null){
-            if(compound.hasKey(getName("Entry"))){
-                int entry = compound.getInteger(getName("Entry"));
-                int chapter = compound.getInteger(getName("Chapter"));
-                int page = compound.getInteger(getName("Page"));
+        NBTTagCompound worldCompound = getCompoundForWorld(getBaseCompound());
+        if(worldCompound != null && worldCompound.hasKey("Entry")){
+            int entry = worldCompound.getInteger("Entry");
+            int chapter = worldCompound.getInteger("Chapter");
+            int page = worldCompound.getInteger("Page");
 
-                BookletIndexEntry currentIndexEntry = entry == -1 ? null : InitBooklet.entries.get(entry);
-                BookletChapter currentChapter = chapter == -1 || entry == -1 || currentIndexEntry.chapters.size() <= chapter ? null : currentIndexEntry.chapters.get(chapter);
-                BookletPage currentPage = chapter == -1 || currentChapter == null || currentChapter.pages.length <= page-1 ? null : currentChapter.pages[page-1];
-                int pageInIndex = compound.getInteger(getName("PageInIndex"));
+            BookletIndexEntry currentIndexEntry = entry == -1 ? null : InitBooklet.entries.get(entry);
+            BookletChapter currentChapter = chapter == -1 || entry == -1 || currentIndexEntry.chapters.size() <= chapter ? null : currentIndexEntry.chapters.get(chapter);
+            BookletPage currentPage = chapter == -1 || currentChapter == null || currentChapter.pages.length <= page-1 ? null : currentChapter.pages[page-1];
+            int pageInIndex = worldCompound.getInteger("PageInIndex");
 
-                gui.openIndexEntry(currentIndexEntry, pageInIndex, true);
-                if(currentChapter != null){
-                    gui.openChapter(currentChapter, currentPage);
-                }
-                return;
+            gui.openIndexEntry(currentIndexEntry, pageInIndex, true);
+            if(currentChapter != null){
+                gui.openChapter(currentChapter, currentPage);
+            }
+
+            String searchText = worldCompound.getString("SearchWord");
+            if(!searchText.isEmpty()){
+                gui.searchField.setText(searchText);
+                gui.updateSearchBar();
             }
         }
-        //If everything fails, initialize the front page
-        gui.openIndexEntry(null, 1, true);
+        else{
+            //If everything fails, initialize the front page
+            gui.openIndexEntry(null, 1, true);
+        }
     }
 
     public static void setBoolean(String name, boolean bool){
-        NBTTagCompound compound = readCompound();
-        if(compound != null){
-            compound.setBoolean(getName(name), bool);
-            writeCompound(compound);
+        NBTTagCompound baseCompound = getBaseCompound();
+        NBTTagCompound worldCompound = getCompoundForWorld(baseCompound);
+        if(worldCompound != null){
+            worldCompound.setBoolean(name, bool);
+            writeCompound(baseCompound, worldCompound);
         }
     }
 
     public static boolean getBoolean(String name){
-        NBTTagCompound compound = readCompound();
-        return compound != null && compound.getBoolean(getName(name));
+        NBTTagCompound worldCompound = getCompoundForWorld(getBaseCompound());
+        return worldCompound != null && worldCompound.getBoolean(name);
     }
 }

@@ -5,39 +5,66 @@
  * http://github.com/Ellpeck/ActuallyAdditions/blob/master/README.md
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2015 Ellpeck
+ * Â© 2015 Ellpeck
  */
 
 package ellpeck.actuallyadditions.tile;
 
 import cofh.api.energy.IEnergyReceiver;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import ellpeck.actuallyadditions.config.values.ConfigBoolValues;
+import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.misc.LaserRelayConnectionHandler;
 import ellpeck.actuallyadditions.util.WorldPos;
+import ellpeck.actuallyadditions.util.WorldUtil;
+import io.netty.util.internal.ConcurrentSet;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.particle.EntityReddustFX;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
-import org.lwjgl.opengl.GL11;
-
-import java.util.ArrayList;
 
 public class TileEntityLaserRelay extends TileEntityBase implements IEnergyReceiver{
 
-    private GLColor laserColor = GLColor.RED_PURE;
-
     @Override
-    public void invalidate(){
-        super.invalidate();
-        if(!worldObj.isRemote){
-            LaserRelayConnectionHandler.getInstance().removeRelayFromNetwork(new WorldPos(this.worldObj, this.xCoord, this.yCoord, this.zCoord));
+    public void updateEntity(){
+        if(this.worldObj.isRemote){
+            this.renderParticles();
         }
     }
 
     @Override
-    public boolean canUpdate(){
-        return false;
+    public void invalidate(){
+        super.invalidate();
+        LaserRelayConnectionHandler.getInstance().removeRelayFromNetwork(new WorldPos(this.worldObj, this.xCoord, this.yCoord, this.zCoord));
+    }
+
+    @SideOnly(Side.CLIENT)
+    public void renderParticles(){
+        if(this.worldObj.rand.nextInt(2) == 0){
+            WorldPos thisPos = new WorldPos(this.getWorldObj(), this.xCoord, this.yCoord, this.zCoord);
+            LaserRelayConnectionHandler.Network network = LaserRelayConnectionHandler.getInstance().getNetworkFor(thisPos);
+            if(network != null){
+                for(LaserRelayConnectionHandler.ConnectionPair aPair : network.connections){
+                    if(aPair.contains(thisPos) && thisPos.isEqual(aPair.firstRelay)){
+                        if(Minecraft.getMinecraft().thePlayer.getDistance(aPair.firstRelay.getX(), aPair.firstRelay.getY(), aPair.firstRelay.getZ()) <= 64){
+                            int difX = aPair.firstRelay.getX()-aPair.secondRelay.getX();
+                            int difY = aPair.firstRelay.getY()-aPair.secondRelay.getY();
+                            int difZ = aPair.firstRelay.getZ()-aPair.secondRelay.getZ();
+
+                            double distance = aPair.firstRelay.toVec().distanceTo(aPair.secondRelay.toVec());
+                            for(double i = 0; i <= 1; i += 1/(distance*(ConfigBoolValues.LESS_LASER_RELAY_PARTICLES.isEnabled() ? 1 : 5))){
+                                Minecraft.getMinecraft().effectRenderer.addEffect(new EntityReddustFX(this.worldObj, (difX*i)+aPair.secondRelay.getX()+0.5, (difY*i)+aPair.secondRelay.getY()+0.5, (difZ*i)+aPair.secondRelay.getZ()+0.5, 0.75F, 0, 0, 0));
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
     @Override
@@ -45,13 +72,14 @@ public class TileEntityLaserRelay extends TileEntityBase implements IEnergyRecei
         NBTTagCompound compound = new NBTTagCompound();
 
         WorldPos thisPos = new WorldPos(this.worldObj, this.xCoord, this.yCoord, this.zCoord);
-        ArrayList<LaserRelayConnectionHandler.ConnectionPair> connections = LaserRelayConnectionHandler.getInstance().getConnectionsFor(thisPos);
+        ConcurrentSet<LaserRelayConnectionHandler.ConnectionPair> connections = LaserRelayConnectionHandler.getInstance().getConnectionsFor(thisPos);
 
         if(connections != null){
-            compound.setInteger("ConnectionAmount", connections.size());
-            for(int i = 0; i < connections.size(); i++){
-                connections.get(i).writeToNBT(compound, "Connection"+i);
+            NBTTagList list = new NBTTagList();
+            for(LaserRelayConnectionHandler.ConnectionPair pair : connections){
+                list.appendTag(pair.writeToNBT());
             }
+            compound.setTag("Connections", list);
             return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord, 3, compound);
         }
         return null;
@@ -59,20 +87,24 @@ public class TileEntityLaserRelay extends TileEntityBase implements IEnergyRecei
 
     @Override
     public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt){
-        NBTTagCompound compound = pkt.func_148857_g();
+        if(pkt != null){
+            NBTTagCompound compound = pkt.func_148857_g();
 
-        LaserRelayConnectionHandler.getInstance().removeRelayFromNetwork(new WorldPos(this.worldObj, this.xCoord, this.yCoord, this.zCoord));
+            if(compound != null){
+                LaserRelayConnectionHandler.getInstance().removeRelayFromNetwork(new WorldPos(this.worldObj, this.xCoord, this.yCoord, this.zCoord));
 
-        int amount = compound.getInteger("ConnectionAmount");
-        for(int i = 0; i < amount; i++){
-            LaserRelayConnectionHandler.ConnectionPair pair = LaserRelayConnectionHandler.ConnectionPair.readFromNBT(compound, "Connection"+i);
-            LaserRelayConnectionHandler.getInstance().addConnection(pair.firstRelay, pair.secondRelay);
+                NBTTagList list = compound.getTagList("Connections", 10);
+                for(int i = 0; i < list.tagCount(); i++){
+                    LaserRelayConnectionHandler.ConnectionPair pair = LaserRelayConnectionHandler.ConnectionPair.readFromNBT(list.getCompoundTagAt(i));
+                    LaserRelayConnectionHandler.getInstance().addConnection(pair.firstRelay, pair.secondRelay);
+                }
+            }
         }
     }
 
     @Override
     public int receiveEnergy(ForgeDirection from, int maxReceive, boolean simulate){
-        return this.transmitEnergy(maxReceive, simulate);
+        return this.transmitEnergy(WorldUtil.getCoordsFromSide(from, worldObj, xCoord, yCoord, zCoord, 0), maxReceive, simulate);
     }
 
     @Override
@@ -85,12 +117,12 @@ public class TileEntityLaserRelay extends TileEntityBase implements IEnergyRecei
         return 0;
     }
 
-    public int transmitEnergy(int maxTransmit, boolean simulate){
+    public int transmitEnergy(WorldPos blockFrom, int maxTransmit, boolean simulate){
         int transmitted = 0;
         if(maxTransmit > 0){
-            ArrayList<LaserRelayConnectionHandler.ConnectionPair> network = LaserRelayConnectionHandler.getInstance().getNetworkFor(new WorldPos(this.worldObj, this.xCoord, this.yCoord, this.zCoord));
+            LaserRelayConnectionHandler.Network network = LaserRelayConnectionHandler.getInstance().getNetworkFor(new WorldPos(this.worldObj, this.xCoord, this.yCoord, this.zCoord));
             if(network != null){
-                transmitted = LaserRelayConnectionHandler.getInstance().transferEnergyToReceiverInNeed(network, maxTransmit, simulate);
+                transmitted = LaserRelayConnectionHandler.getInstance().transferEnergyToReceiverInNeed(blockFrom, network, Math.min(ConfigIntValues.LASER_RELAY_MAX_TRANSFER.getValue(), maxTransmit), simulate);
             }
         }
         return transmitted;
@@ -99,61 +131,5 @@ public class TileEntityLaserRelay extends TileEntityBase implements IEnergyRecei
     @Override
     public boolean canConnectEnergy(ForgeDirection from){
         return true;
-    }
-
-    public void drawLine(WorldPos firstPos, WorldPos secondPos){
-        double x = firstPos.getX() - secondPos.getX();
-        double y = firstPos.getY() - secondPos.getY() + 1;
-        double z = -(firstPos.getZ() - secondPos.getZ());
-        double relativePlayerBlockLocation = Minecraft.getMinecraft().thePlayer.posY - firstPos.getY();
-        float f;
-        if(relativePlayerBlockLocation < 10) f=5;
-        else if(relativePlayerBlockLocation < 20 && relativePlayerBlockLocation > 10) f = 4;
-        else if(relativePlayerBlockLocation < 30 && relativePlayerBlockLocation > 20) f = 3;
-        else if(relativePlayerBlockLocation < 40 && relativePlayerBlockLocation > 30) f = 2;
-        else if(relativePlayerBlockLocation < 50 && relativePlayerBlockLocation > 40) f = 1;
-        else f=1;
-        GL11.glPushMatrix();
-        GL11.glLineWidth(f);
-        GL11.glBegin(GL11.GL_LINE_STRIP);
-        {
-            GL11.glColor3f(this.laserColor.getRed(), this.laserColor.getGreen(), this.laserColor.getBlue());
-            GL11.glVertex3d(x, y, z);
-            GL11.glVertex3d(0, 1, 0);
-        }
-        GL11.glEnd();
-        GL11.glLineWidth(1);
-        GL11.glPopMatrix();
-    }
-
-    public void changeLineColor(GLColor color){this.laserColor = color;}
-
-
-    //Colors for the Laser:
-    public enum GLColor{
-
-        RED_PURE(1.0F, 0, 0),
-        GREEN_PURE(0, 1.0F, 0),
-        BLUE_PURE(0, 0, 1.0F),
-        DARK_YELLOW(1, 1, 0);
-
-        private float red, green, blue;
-        GLColor(float red, float green, float blue){
-            this.red = red;
-            this.green = green;
-            this.blue = blue;
-        }
-
-        public float getRed() {
-            return red;
-        }
-
-        public float getGreen() {
-            return green;
-        }
-
-        public float getBlue() {
-            return blue;
-        }
     }
 }

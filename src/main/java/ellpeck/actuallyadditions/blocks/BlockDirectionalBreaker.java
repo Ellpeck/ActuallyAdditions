@@ -5,7 +5,7 @@
  * http://github.com/Ellpeck/ActuallyAdditions/blob/master/README.md
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2015 Ellpeck
+ * Â© 2015 Ellpeck
  */
 
 package ellpeck.actuallyadditions.blocks;
@@ -32,7 +32,9 @@ import net.minecraft.world.World;
 
 public class BlockDirectionalBreaker extends BlockContainerBase implements IActAddItemOrBlock{
 
+    @SideOnly(Side.CLIENT)
     private IIcon frontIcon;
+    @SideOnly(Side.CLIENT)
     private IIcon topIcon;
 
     public BlockDirectionalBreaker(){
@@ -49,6 +51,7 @@ public class BlockDirectionalBreaker extends BlockContainerBase implements IActA
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public IIcon getIcon(IBlockAccess world, int x, int y, int z, int side){
         int meta = world.getBlockMetadata(x, y, z);
         if(side != meta && (side == 0 || side == 1)){
@@ -61,6 +64,7 @@ public class BlockDirectionalBreaker extends BlockContainerBase implements IActA
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public IIcon getIcon(int side, int meta){
         if(side == 0 || side == 1){
             return this.topIcon;

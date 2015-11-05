@@ -5,19 +5,13 @@
  * http://github.com/Ellpeck/ActuallyAdditions/blob/master/README.md
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2015 Ellpeck
+ * Â© 2015 Ellpeck
  */
 
 package ellpeck.actuallyadditions.blocks.render;
 
-import ellpeck.actuallyadditions.misc.LaserRelayConnectionHandler;
-import ellpeck.actuallyadditions.tile.TileEntityLaserRelay;
-import ellpeck.actuallyadditions.util.WorldPos;
 import net.minecraft.client.model.ModelRenderer;
-import net.minecraft.tileentity.TileEntity;
 import org.lwjgl.opengl.GL11;
-
-import java.util.ArrayList;
 
 /**
  * Made by Canitzp.
@@ -183,21 +177,6 @@ public class ModelLaserRelay extends ModelBaseAA{
     @Override
     public String getName(){
         return "modelLaserRelay";
-    }
-
-    @Override
-    public void renderExtra(float f, TileEntity tile){
-        TileEntityLaserRelay relay = (TileEntityLaserRelay)tile;
-        WorldPos firstWP = new WorldPos(relay.getWorldObj(), relay.xCoord, relay.yCoord, relay.zCoord);
-        ArrayList<LaserRelayConnectionHandler.ConnectionPair> network = LaserRelayConnectionHandler.getInstance().getNetworkFor(firstWP);
-        if(network != null){
-            for(LaserRelayConnectionHandler.ConnectionPair aPair : network){
-                TileEntityLaserRelay firstRelay = (TileEntityLaserRelay) aPair.firstRelay.getTileEntity();
-                if(aPair.contains(firstWP) && aPair.firstRelay.isEqual(firstWP)){
-                    firstRelay.drawLine(aPair.firstRelay, aPair.secondRelay);
-                }
-            }
-        }
     }
 
     @Override

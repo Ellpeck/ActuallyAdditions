@@ -5,13 +5,12 @@
  * http://github.com/Ellpeck/ActuallyAdditions/blob/master/README.md
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2015 Ellpeck
+ * Â© 2015 Ellpeck
  */
 
 package ellpeck.actuallyadditions.booklet.page;
 
 import ellpeck.actuallyadditions.booklet.GuiBooklet;
-import ellpeck.actuallyadditions.booklet.InitBooklet;
 import ellpeck.actuallyadditions.proxy.ClientProxy;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
@@ -35,7 +34,7 @@ public class PageFurnace extends BookletPage{
         super(id);
         this.result = result;
         this.input = input;
-        InitBooklet.pagesWithItemStackData.add(this);
+        this.addToPagesWithItemStackData();
     }
 
     @Override

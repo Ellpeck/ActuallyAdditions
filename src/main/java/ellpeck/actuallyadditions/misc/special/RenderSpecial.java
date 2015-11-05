@@ -5,30 +5,25 @@
  * http://github.com/Ellpeck/ActuallyAdditions/blob/master/README.md
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2015 Ellpeck
+ * Â© 2015 Ellpeck
  */
 
-package ellpeck.actuallyadditions.misc;
+package ellpeck.actuallyadditions.misc.special;
 
 import ellpeck.actuallyadditions.proxy.ClientProxy;
 import ellpeck.actuallyadditions.util.AssetUtil;
-import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.ModelSquid;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
 import java.util.Calendar;
 
 public class RenderSpecial{
 
-    private static final ResourceLocation squidTextures = new ResourceLocation(ModUtil.MOD_ID_LOWER, "textures/specialSquid.png");
     private double lastTimeForBobbing;
     private ItemStack theThingToRender;
 
@@ -36,13 +31,17 @@ public class RenderSpecial{
         this.theThingToRender = stack;
     }
 
-    public void render(EntityPlayer player, float size, float offsetUp){
+    public void render(EntityPlayer player){
         if(player.isInvisible() || player.getHideCape()){
             return;
         }
 
+        boolean isBlock = this.theThingToRender.getItem() instanceof ItemBlock;
+        float size = isBlock ? 0.3F : 0.4F;
+        float offsetUp = isBlock ? 0F : 0.2F;
+
         if(ClientProxy.pumpkinBlurPumpkinBlur){
-            this.theThingToRender = new ItemStack(Calendar.getInstance().get(Calendar.DAY_OF_MONTH) % 2 == 0 ? Blocks.lit_pumpkin : Blocks.pumpkin);
+            this.theThingToRender = new ItemStack(Calendar.getInstance().get(Calendar.DAY_OF_MONTH)%2 == 0 ? Blocks.lit_pumpkin : Blocks.pumpkin);
             size = 0.3F;
             offsetUp = 0;
         }
@@ -71,19 +70,12 @@ public class RenderSpecial{
 
         GL11.glDisable(GL11.GL_LIGHTING);
         if(this.theThingToRender != null){
-            if(this.theThingToRender.getItem() == Items.dye && this.theThingToRender.getItemDamage() == 0){
-                Minecraft.getMinecraft().renderEngine.bindTexture(squidTextures);
-                GL11.glRotatef(180F, 1F, 0F, 0F);
-                new ModelSquid().render(null, 0F, 0F, 0.25F, 0F, 0F, 0.0625F);
+            if(isBlock){
+                AssetUtil.renderBlock(Block.getBlockFromItem(this.theThingToRender.getItem()), this.theThingToRender.getItemDamage());
             }
             else{
-                if(this.theThingToRender.getItem() instanceof ItemBlock){
-                    AssetUtil.renderBlock(Block.getBlockFromItem(this.theThingToRender.getItem()), this.theThingToRender.getItemDamage());
-                }
-                else{
-                    GL11.glTranslatef(-0.5F, 0F, 0F);
-                    AssetUtil.renderItem(this.theThingToRender, 0);
-                }
+                GL11.glTranslatef(-0.5F, 0F, 0F);
+                AssetUtil.renderItem(this.theThingToRender, 0);
             }
         }
         GL11.glEnable(GL11.GL_LIGHTING);

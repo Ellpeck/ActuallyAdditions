@@ -5,7 +5,7 @@
  * http://github.com/Ellpeck/ActuallyAdditions/blob/master/README.md
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2015 Ellpeck
+ * Â© 2015 Ellpeck
  */
 
 package ellpeck.actuallyadditions;
@@ -45,6 +45,7 @@ import ellpeck.actuallyadditions.tile.TileEntityBase;
 import ellpeck.actuallyadditions.update.UpdateChecker;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.Util;
+import ellpeck.actuallyadditions.util.playerdata.PersistentServerData;
 import net.minecraft.init.Items;
 
 //                                                                           So that BuildCraft Oil always gets used
@@ -69,7 +70,7 @@ public class ActuallyAdditions{
         InitItems.init();
         InitVillager.init();
         FuelHandler.init();
-        new UpdateChecker().init();
+        UpdateChecker.init();
         proxy.preInit(event);
 
         ModUtil.LOGGER.info("PreInitialization Finished.");
@@ -120,5 +121,11 @@ public class ActuallyAdditions{
         Util.registerDispenserHandler(InitItems.itemFertilizer, new DispenserHandlerFertilize());
 
         WorldData.init(event.getServer());
+    }
+
+    @EventHandler
+    public void serverStopped(FMLServerStoppedEvent event){
+        //Clear Data so that it won't be carried over to other worlds
+        PersistentServerData.playerSaveData.clear();
     }
 }

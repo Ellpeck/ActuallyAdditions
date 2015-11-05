@@ -5,7 +5,7 @@
  * http://github.com/Ellpeck/ActuallyAdditions/blob/master/README.md
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2015 Ellpeck
+ * Â© 2015 Ellpeck
  */
 
 package ellpeck.actuallyadditions.booklet;
@@ -19,8 +19,8 @@ import java.util.ArrayList;
 public class BookletIndexEntry{
 
     private final String unlocalizedName;
-    private EnumChatFormatting color;
     public ArrayList<BookletChapter> chapters = new ArrayList<BookletChapter>();
+    private EnumChatFormatting color;
 
     public BookletIndexEntry(String unlocalizedName){
         this.unlocalizedName = unlocalizedName;
@@ -37,12 +37,12 @@ public class BookletIndexEntry{
         this.chapters.add(chapter);
     }
 
-    public String getLocalizedName(){
-        return StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".indexEntry."+this.unlocalizedName+".name");
-    }
-
     public String getNameWithColor(){
         return this.color+this.getLocalizedName();
+    }
+
+    public String getLocalizedName(){
+        return StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".indexEntry."+this.unlocalizedName+".name");
     }
 
     public BookletIndexEntry setImportant(){

@@ -5,7 +5,7 @@
  * http://github.com/Ellpeck/ActuallyAdditions/blob/master/README.md
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2015 Ellpeck
+ * Â© 2015 Ellpeck
  */
 
 package ellpeck.actuallyadditions.blocks;
@@ -89,7 +89,6 @@ public class InitBlocks{
 
     public static Block blockTreasureChest;
     public static Block blockXPSolidifier;
-    public static Block blockOreMagnet;
 
     public static Block blockSmileyCloud;
 
@@ -99,13 +98,13 @@ public class InitBlocks{
 
     public static Block blockLaserRelay;
 
-    //TODO: Plan for Laser Power Transmitters:
-    //TODO: When there is a block in the way, they don't render their laser and don't transmit
-    //TODO: They stay connected and can be connected together even though they're blocked
-    //TODO: If blocked, they display the block coords blocking them on right-click
+    public static Block blockBlackLotus;
 
     public static void init(){
         ModUtil.LOGGER.info("Initializing Blocks...");
+
+        blockBlackLotus = new BlockBlackLotus();
+        BlockUtil.register(blockBlackLotus);
 
         blockLaserRelay = new BlockLaserRelay();
         BlockUtil.register(blockLaserRelay);
@@ -122,9 +121,6 @@ public class InitBlocks{
         blockSmileyCloud = new BlockSmileyCloud();
         BlockUtil.register(blockSmileyCloud);
 
-        blockOreMagnet = new BlockOreMagnet();
-        BlockUtil.register(blockOreMagnet);
-
         blockXPSolidifier = new BlockXPSolidifier();
         BlockUtil.register(blockXPSolidifier);
 
@@ -137,9 +133,9 @@ public class InitBlocks{
         blockTestifiBucksWhiteStairs = new BlockStair(blockTestifiBucksWhiteWall, "blockTestifiBucksWhiteStairs");
         BlockUtil.register(blockTestifiBucksWhiteStairs);
         blockTestifiBucksGreenSlab = new BlockSlabs("blockTestifiBucksGreenSlab", blockTestifiBucksGreenWall);
-        BlockUtil.register(blockTestifiBucksGreenSlab);
+        BlockUtil.register(blockTestifiBucksGreenSlab, BlockSlabs.TheItemBlock.class);
         blockTestifiBucksWhiteSlab = new BlockSlabs("blockTestifiBucksWhiteSlab", blockTestifiBucksWhiteWall);
-        BlockUtil.register(blockTestifiBucksWhiteSlab);
+        BlockUtil.register(blockTestifiBucksWhiteSlab, BlockSlabs.TheItemBlock.class);
 
         blockColoredLamp = new BlockColoredLamp(false);
         BlockUtil.register(blockColoredLamp, BlockColoredLamp.TheItemBlock.class);
@@ -188,19 +184,19 @@ public class InitBlocks{
         BlockUtil.register(blockFermentingBarrel);
 
         blockRice = new BlockPlant("blockRice", 6, 1, 2);
-        BlockUtil.register(blockRice, false);
+        BlockUtil.register(blockRice);
         CompatUtil.registerMFRPlant(blockRice);
 
         blockCanola = new BlockPlant("blockCanola", 4, 3, 3);
-        BlockUtil.register(blockCanola, false);
+        BlockUtil.register(blockCanola);
         CompatUtil.registerMFRPlant(blockCanola);
 
         blockFlax = new BlockPlant("blockFlax", 6, 2, 4);
-        BlockUtil.register(blockFlax, false);
+        BlockUtil.register(blockFlax);
         CompatUtil.registerMFRPlant(blockFlax);
 
         blockCoffee = new BlockPlant("blockCoffee", 6, 2, 2);
-        BlockUtil.register(blockCoffee, false);
+        BlockUtil.register(blockCoffee);
         CompatUtil.registerMFRPlant(blockCoffee);
 
         blockCompost = new BlockCompost();
@@ -267,7 +263,7 @@ public class InitBlocks{
         BlockUtil.register(blockPhantomBooster);
 
         blockWildPlant = new BlockWildPlant();
-        BlockUtil.register(blockWildPlant, BlockWildPlant.TheItemBlock.class, false);
+        BlockUtil.register(blockWildPlant, BlockWildPlant.TheItemBlock.class);
 
         registerFluids();
     }
@@ -287,7 +283,7 @@ public class InitBlocks{
         //Canola Block
         if(fluidCanolaOil.getBlock() == null || ConfigBoolValues.PREVENT_CANOLA_BLOCK_OVERRIDE.isEnabled()){
             blockCanolaOil = new BlockFluidFlowing(fluidCanolaOil, Material.water, "blockCanolaOil");
-            BlockUtil.register(blockCanolaOil, false);
+            BlockUtil.register(blockCanolaOil);
         }
         else{
             errorAlreadyRegistered("Canola Oil Block");
@@ -308,7 +304,7 @@ public class InitBlocks{
         //Oil Block
         if(fluidOil.getBlock() == null || ConfigBoolValues.PREVENT_OIL_BLOCK_OVERRIDE.isEnabled()){
             blockOil = new BlockFluidFlowing(fluidOil, Material.water, "blockOil");
-            BlockUtil.register(blockOil, false);
+            BlockUtil.register(blockOil);
         }
         else{
             errorAlreadyRegistered("Oil Block");

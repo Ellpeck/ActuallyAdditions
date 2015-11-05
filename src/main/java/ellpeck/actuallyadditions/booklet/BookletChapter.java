@@ -5,7 +5,7 @@
  * http://github.com/Ellpeck/ActuallyAdditions/blob/master/README.md
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2015 Ellpeck
+ * Â© 2015 Ellpeck
  */
 
 package ellpeck.actuallyadditions.booklet;
@@ -44,12 +44,12 @@ public class BookletChapter{
         return this.unlocalizedName;
     }
 
-    public String getLocalizedName(){
-        return StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".chapter."+this.unlocalizedName+".name");
-    }
-
     public String getNameWithColor(){
         return this.color+this.getLocalizedName();
+    }
+
+    public String getLocalizedName(){
+        return StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".chapter."+this.unlocalizedName+".name");
     }
 
     public BookletChapter setImportant(){

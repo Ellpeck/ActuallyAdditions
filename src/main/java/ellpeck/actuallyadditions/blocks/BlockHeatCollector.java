@@ -5,7 +5,7 @@
  * http://github.com/Ellpeck/ActuallyAdditions/blob/master/README.md
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2015 Ellpeck
+ * Â© 2015 Ellpeck
  */
 
 package ellpeck.actuallyadditions.blocks;
@@ -27,7 +27,9 @@ import net.minecraft.world.World;
 
 public class BlockHeatCollector extends BlockContainerBase implements IActAddItemOrBlock{
 
+    @SideOnly(Side.CLIENT)
     private IIcon topIcon;
+    @SideOnly(Side.CLIENT)
     private IIcon bottomIcon;
 
     public BlockHeatCollector(){
@@ -44,6 +46,7 @@ public class BlockHeatCollector extends BlockContainerBase implements IActAddIte
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public IIcon getIcon(int side, int metadata){
         return side == 1 ? this.topIcon : (side == 0 ? this.bottomIcon : this.blockIcon);
     }

@@ -5,7 +5,7 @@
  * http://github.com/Ellpeck/ActuallyAdditions/blob/master/README.md
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2015 Ellpeck
+ * Â© 2015 Ellpeck
  */
 
 package ellpeck.actuallyadditions.blocks.metalists;
@@ -23,7 +23,8 @@ public enum TheMiscBlocks{
     CHARCOAL_BLOCK("Charcoal", EnumRarity.common),
     ENDERPEARL_BLOCK("Enderpearl", EnumRarity.rare),
     LAVA_FACTORY_CASE("LavaFactoryCase", EnumRarity.uncommon),
-    ENDER_CASING("EnderCasing", EnumRarity.epic);
+    ENDER_CASING("EnderCasing", EnumRarity.epic),
+    IRON_CASING("IronCasing", EnumRarity.rare);
 
     public final String name;
     public final EnumRarity rarity;

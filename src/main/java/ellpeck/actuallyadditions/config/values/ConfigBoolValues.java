@@ -5,7 +5,7 @@
  * http://github.com/Ellpeck/ActuallyAdditions/blob/master/README.md
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2015 Ellpeck
+ * Â© 2015 Ellpeck
  */
 
 package ellpeck.actuallyadditions.config.values;
@@ -34,12 +34,13 @@ public enum ConfigBoolValues{
 
     TF_PAXELS("Thermal Foundation Paxels", ConfigCategories.OTHER, true, "If Paxels made of Thermal Foundation Materials should exist"),
     MT_PAXELS("MekanismTools Paxels", ConfigCategories.OTHER, true, "If Paxels made of MekanismTools Materials should exist"),
-    DUPLICATE_PAXELS("Allow Duplicate Paxels", ConfigCategories.OTHER, true, "If Paxels are allowed to have Duplicates (for Example ActuallyAdditions' Obsidian and MekanismTools' Obsidian)"),
+    SO_PAXELS("Simpleores Paxels", ConfigCategories.OTHER, true, "If Paxels made of SimpleOres Materials should exist"),
 
     DO_RICE_GEN("Rice Gen", ConfigCategories.WORLD_GEN, true, "If Rice should generate in the World"),
     DO_CANOLA_GEN("Canola Gen", ConfigCategories.WORLD_GEN, true, "If Canola should generate in the World"),
     DO_FLAX_GEN("Flax Gen", ConfigCategories.WORLD_GEN, true, "If Flax should generate in the World"),
     DO_COFFEE_GEN("Coffee Gen", ConfigCategories.WORLD_GEN, true, "If Coffee should generate in the World"),
+    DO_LOTUS_GEN("Black Lotus Gen", ConfigCategories.WORLD_GEN, true, "If the Black Lotus should generate in the World"),
     DO_TREASURE_CHEST_GEN("Treasure Chest Gen", ConfigCategories.WORLD_GEN, true, "If Treasure Chests should generate in the World"),
 
     DO_SPIDER_DROPS("Spider Cobweb Drop", ConfigCategories.MOB_DROPS, true, "If Cobwebs should sometimes drop from Spiders"),
@@ -56,7 +57,8 @@ public enum ConfigBoolValues{
     SHOW_BOOKLET_INFO("Booklet Quick Opening Info", ConfigCategories.TOOL_VALUES, true, "If the 'Press key for more information'-text should show when the item has a page in the booklet"),
     GIVE_BOOKLET_ON_FIRST_CRAFT("Give Booklet on First Craft", ConfigCategories.OTHER, true, "If the booklet should be given to the player when he first crafts something from the Mod"),
 
-    ENABLE_SEASONAL("Seasonal Mode", ConfigCategories.OTHER, true, "If Seasonal Mode is enabled");
+    ENABLE_SEASONAL("Seasonal Mode", ConfigCategories.OTHER, true, "If Seasonal Mode is enabled"),
+    LESS_LASER_RELAY_PARTICLES("Laser Relay: Particles", ConfigCategories.MACHINE_VALUES, false, "If the Laser Relay should have less laser particles to prevent lag");
 
     public final String name;
     public final String category;

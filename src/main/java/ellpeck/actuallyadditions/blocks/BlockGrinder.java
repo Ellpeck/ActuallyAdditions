@@ -5,7 +5,7 @@
  * http://github.com/Ellpeck/ActuallyAdditions/blob/master/README.md
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2015 Ellpeck
+ * Â© 2015 Ellpeck
  */
 
 package ellpeck.actuallyadditions.blocks;
@@ -34,8 +34,11 @@ import java.util.Random;
 public class BlockGrinder extends BlockContainerBase implements IActAddItemOrBlock{
 
     private final boolean isDouble;
+    @SideOnly(Side.CLIENT)
     private IIcon topIcon;
+    @SideOnly(Side.CLIENT)
     private IIcon onIcon;
+    @SideOnly(Side.CLIENT)
     private IIcon bottomIcon;
 
     public BlockGrinder(boolean isDouble){
@@ -54,6 +57,7 @@ public class BlockGrinder extends BlockContainerBase implements IActAddItemOrBlo
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public IIcon getIcon(int side, int meta){
         if(side == 1 && meta != 1){
             return this.topIcon;

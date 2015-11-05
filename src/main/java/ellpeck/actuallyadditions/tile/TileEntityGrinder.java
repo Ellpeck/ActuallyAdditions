@@ -5,7 +5,7 @@
  * http://github.com/Ellpeck/ActuallyAdditions/blob/master/README.md
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2015 Ellpeck
+ * Â© 2015 Ellpeck
  */
 
 package ellpeck.actuallyadditions.tile;
@@ -109,7 +109,7 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
                 }
             }
 
-            if(this.storage.getEnergyStored() >= getEnergyUse() && this.firstCrushTime > 0 || this.secondCrushTime > 0){
+            if(this.storage.getEnergyStored() >= getEnergyUse() && (this.firstCrushTime > 0 || this.secondCrushTime > 0)){
                 this.storage.extractEnergy(getEnergyUse(), false);
             }
 

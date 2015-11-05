@@ -5,7 +5,7 @@
  * http://github.com/Ellpeck/ActuallyAdditions/blob/master/README.md
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2015 Ellpeck
+ * Â© 2015 Ellpeck
  */
 
 package ellpeck.actuallyadditions.items;
@@ -291,14 +291,14 @@ public class InitItems{
         itemHoeQuartz = new ItemHoeAA(InitToolMaterials.toolMaterialQuartz, "gemQuartzBlack", "itemHoeQuartz", EnumRarity.rare);
         ItemUtil.registerItems(new Item[]{itemPickaxeQuartz, itemAxeQuartz, itemShovelQuartz, itemSwordQuartz, itemHoeQuartz});
 
-        woodenPaxel = new ItemAllToolAA(Item.ToolMaterial.WOOD, "plankWood", "woodenPaxel", EnumRarity.uncommon);
-        stonePaxel = new ItemAllToolAA(Item.ToolMaterial.STONE, "stone", "stonePaxel", EnumRarity.uncommon);
-        ironPaxel = new ItemAllToolAA(Item.ToolMaterial.IRON, "ingotIron", "ironPaxel", EnumRarity.rare);
-        goldPaxel = new ItemAllToolAA(Item.ToolMaterial.GOLD, "ingotGold", "goldPaxel", EnumRarity.rare);
-        diamondPaxel = new ItemAllToolAA(Item.ToolMaterial.EMERALD, "gemDiamond", "diamondPaxel", EnumRarity.epic);
-        emeraldPaxel = new ItemAllToolAA(InitToolMaterials.toolMaterialEmerald, "gemEmerald", "emeraldPaxel", EnumRarity.epic);
-        obsidianPaxel = new ItemAllToolAA(InitToolMaterials.toolMaterialObsidian, "obsidian", "obsidianPaxel", EnumRarity.epic);
-        quartzPaxel = new ItemAllToolAA(InitToolMaterials.toolMaterialQuartz, "gemQuartzBlack", "quartzPaxel", EnumRarity.rare);
+        woodenPaxel = new ItemAllToolAA(Item.ToolMaterial.WOOD, "plankWood", "woodenPaxel", EnumRarity.uncommon, 5192733);
+        stonePaxel = new ItemAllToolAA(Item.ToolMaterial.STONE, "stone", "stonePaxel", EnumRarity.uncommon, 7040621);
+        ironPaxel = new ItemAllToolAA(Item.ToolMaterial.IRON, "ingotIron", "ironPaxel", EnumRarity.rare, 10920613);
+        goldPaxel = new ItemAllToolAA(Item.ToolMaterial.GOLD, "ingotGold", "goldPaxel", EnumRarity.rare, 16770048);
+        diamondPaxel = new ItemAllToolAA(Item.ToolMaterial.EMERALD, "gemDiamond", "diamondPaxel", EnumRarity.epic, 3250376);
+        emeraldPaxel = new ItemAllToolAA(InitToolMaterials.toolMaterialEmerald, "gemEmerald", "emeraldPaxel", EnumRarity.epic, 7723338);
+        obsidianPaxel = new ItemAllToolAA(InitToolMaterials.toolMaterialObsidian, "obsidian", "obsidianPaxel", EnumRarity.epic, 4166);
+        quartzPaxel = new ItemAllToolAA(InitToolMaterials.toolMaterialQuartz, "gemQuartzBlack", "quartzPaxel", EnumRarity.rare, 1710103);
         ItemUtil.registerItems(new Item[]{woodenPaxel, stonePaxel, ironPaxel, goldPaxel, diamondPaxel, emeraldPaxel, obsidianPaxel, quartzPaxel});
     }
 }

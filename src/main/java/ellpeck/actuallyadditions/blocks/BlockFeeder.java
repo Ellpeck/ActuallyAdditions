@@ -5,7 +5,7 @@
  * http://github.com/Ellpeck/ActuallyAdditions/blob/master/README.md
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2015 Ellpeck
+ * Â© 2015 Ellpeck
  */
 
 package ellpeck.actuallyadditions.blocks;
@@ -29,6 +29,7 @@ import net.minecraft.world.World;
 
 public class BlockFeeder extends BlockContainerBase implements IActAddItemOrBlock{
 
+    @SideOnly(Side.CLIENT)
     private IIcon topIcon;
 
     public BlockFeeder(){
@@ -45,6 +46,7 @@ public class BlockFeeder extends BlockContainerBase implements IActAddItemOrBloc
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public IIcon getIcon(int side, int metadata){
         return (side == 0 || side == 1) ? this.topIcon : this.blockIcon;
     }

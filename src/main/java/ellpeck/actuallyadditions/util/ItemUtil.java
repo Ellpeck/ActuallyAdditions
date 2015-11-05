@@ -5,7 +5,7 @@
  * http://github.com/Ellpeck/ActuallyAdditions/blob/master/README.md
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2015 Ellpeck
+ * Â© 2015 Ellpeck
  */
 
 package ellpeck.actuallyadditions.util;
@@ -36,11 +36,7 @@ public class ItemUtil{
     }
 
     public static void register(Item item){
-        register(item, true);
-    }
-
-    public static void register(Item item, boolean addTab){
-        item.setCreativeTab(addTab ? CreativeTab.instance : null);
+        item.setCreativeTab(CreativeTab.instance);
         item.setUnlocalizedName(createUnlocalizedName(item));
         GameRegistry.registerItem(item, ((IActAddItemOrBlock)item).getName());
     }

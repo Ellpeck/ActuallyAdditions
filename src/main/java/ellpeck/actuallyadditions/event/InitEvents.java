@@ -5,7 +5,7 @@
  * http://github.com/Ellpeck/ActuallyAdditions/blob/master/README.md
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2015 Ellpeck
+ * Â© 2015 Ellpeck
  */
 
 package ellpeck.actuallyadditions.event;
@@ -31,13 +31,12 @@ public class InitEvents{
         Util.registerEvent(new EntityLivingEvent());
         Util.registerEvent(new BucketFillEvent());
         Util.registerEvent(new LogoutEvent());
-        Util.registerEvent(new WorldLoadEvent());
+        Util.registerEvent(new WorldLoadingEvents());
         MinecraftForge.TERRAIN_GEN_BUS.register(new WorldDecorationEvent());
     }
 
     public static void initClient(){
         Util.registerEvent(new TooltipEvent());
-        Util.registerEvent(new RenderPlayerEventAA());
 
         if(Loader.isModLoaded("NotEnoughItems")){
             Util.registerEvent(new NeiScreenEvents());

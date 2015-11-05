@@ -64,7 +64,6 @@ tile.actuallyadditions.blockColoredLampLime.name=Lime Lamp
 tile.actuallyadditions.blockColoredLampPink.name=Pink Lamp
 tile.actuallyadditions.blockColoredLampCyan.name=Cyan Lamp
 tile.actuallyadditions.blockColoredLampPurple.name=Purple Lamp
-tile.actuallyadditions.blockOreMagnet.name=Magnetic Miner
 tile.actuallyadditions.blockPhantomface.name=Phantomface
 tile.actuallyadditions.blockPhantomEnergyface.name=Phantom Energyface
 tile.actuallyadditions.blockPhantomLiquiface.name=Phantom Liquiface
@@ -102,10 +101,12 @@ tile.actuallyadditions.blockFlax.name=Flax Plant
 tile.actuallyadditions.blockCoffeeMachine.name=Coffee Machine
 tile.actuallyadditions.blockXPSolidifier.name=Experience Solidifier
 tile.actuallyadditions.blockSmileyCloud.name=Smiley Cloud
-tile.actuallyadditions.blockSmileyCloudValentine.name=Pink Fluffy Unicloud
 tile.actuallyadditions.blockLeafGenerator.name=Leaf-Eating Generator
 tile.actuallyadditions.blockDirectionalBreaker.name=Long-Range Breaker
 tile.actuallyadditions.blockRangedCollector.name=Ranged Collector
+tile.actuallyadditions.blockLaserRelay.name=Laser Relay
+tile.actuallyadditions.blockMiscIronCasing.name=Iron Casing
+tile.actuallyadditions.blockBlackLotus.name=Black Lotus
 
 #ESD
 tile.actuallyadditions.blockInputter.name=ESD
@@ -171,6 +172,11 @@ item.actuallyadditions.paxelMTLapisLazuli.name=MT Lapis Lazuli AIOT
 item.actuallyadditions.paxelMTOsmium.name=MT Osmium AIOT
 item.actuallyadditions.paxelMTBronze.name=MT Bronze AIOT
 item.actuallyadditions.paxelMTSteel.name=MT Steel AIOT
+item.actuallyadditions.paxelSOadamantium.name=SO Adamantium AIOT
+item.actuallyadditions.paxelSOcopper.name=SO Copper AIOT
+item.actuallyadditions.paxelSOtin.name=SO Tin AIOT
+item.actuallyadditions.paxelSOonyx.name=SO Onyx AIOT
+item.actuallyadditions.paxelSOmythril.name=SO Mythril AIOT
 item.actuallyadditions.itemPhantomConnector.name=Phantom Connector
 item.actuallyadditions.itemMiscCup.name=Empty Cup
 item.actuallyadditions.itemCoffee.name=Cup with Coffee
@@ -229,7 +235,7 @@ item.actuallyadditions.itemFoodHamburger.name=Hamburger
 item.actuallyadditions.itemFoodBigCookie.name=Big Cookie
 item.actuallyadditions.itemFoodSubmarineSandwich.name=Submarine Sandwich
 item.actuallyadditions.itemFoodToast.name=Toast
-item.actuallyadditions.itemFoodChocoToast.name=Toast covered in Chocolate
+item.actuallyadditions.itemFoodChocolateToast.name=Toast o' Chocolate
 item.actuallyadditions.itemFoodChocolate.name=Chocolate
 item.actuallyadditions.itemFoodChocolateCake.name=Chocolate Cake
 item.actuallyadditions.itemFoodNoodle.name=Noodle
@@ -272,6 +278,10 @@ item.actuallyadditions.itemChestQuartz.name=Black Quartz Chestplate
 item.actuallyadditions.itemPantsQuartz.name=Black Quartz Pants
 item.actuallyadditions.itemBootsQuartz.name=Black Quartz Boots
 item.actuallyadditions.itemBooklet.name=Actually Additions Manual
+item.actuallyadditions.itemLaserWrench.name=Laser Wrench
+item.actuallyadditions.itemChestToCrateUpgrade.name=Chest To Storage Crate Upgrade
+item.actuallyadditions.itemMiscDrillCore.name=Drill Core
+item.actuallyadditions.itemMiscBlackDye.name=Black Dye
 
 #Tooltips
 tooltip.actuallyadditions.onSuffix.desc=On
@@ -299,6 +309,7 @@ tooltip.actuallyadditions.blockPhantomRange.desc=Range
 tooltip.actuallyadditions.laser.stored.desc=<Laser stored!>
 tooltip.actuallyadditions.laser.connected.desc=<Laser connected!>
 tooltip.actuallyadditions.laser.cantConnect.desc=Can't connect: The relays are either part of the same network, the stored relay doesn't exist anymore or it is too far away!
+tooltip.actuallyadditions.blockBlackLotus.desc=No, not that one, Vaz!
 
 #Gui Information
 info.actuallyadditions.gui.animals=Animals
@@ -353,17 +364,16 @@ container.actuallyadditions.drill.name=Drill
 container.actuallyadditions.energizer.name=Energizer
 container.actuallyadditions.enervator.name=Enervator
 container.actuallyadditions.xpSolidifier.name=Experience Solidifier
-container.actuallyadditions.oreMagnet.name=Magnetic Miner
 container.actuallyadditions.cloud.name=Smiley Cloud
 container.actuallyadditions.directionalBreaker.name=Long-Range Breaker
 container.actuallyadditions.rangedCollector.name=Ranged Collector
 
 #Update Information
-info.actuallyadditions.update.generic.desc=[{"text":"There is an "},{"text":"Update ","bold":"true"},{"text":"for ","bold":"false"},{"text":"Actually Additions ","color":"dark_green","bold":"true"},{"text":"available!","color":"none","bold":"false"}]
-info.actuallyadditions.update.versionComp.desc=[{"text":"You have Version "},{"text":"%s","color":"dark_red","italic":"false"},{"text":", the newest one is ","color":"none","italic":"false"},{"text":"%s","color":"dark_green","underlined":"false"},{"text":"!","color":"none","underlined":"false"}]
-info.actuallyadditions.update.download.desc=[{"text":"Download the newest Version "},{"text":"here! (Click me!)","color":"dark_green","underlined":"true","clickEvent":{"action":"open_url","value":"%s"},"hoverEvent":{"action":"show_text","value":{"text":"","extra":[{"text":"Click here to open your Browser and download the newest Version!"}]}}}]
-info.actuallyadditions.update.failed.desc=[{"text":"The Update Check for "},{"text":"Actually Additions ","color":"dark_green","bold":"true"},{"text":"failed! Check your Internet Connection and the Logs for more Info!","color":"none"}]
-info.actuallyadditions.update.changelog.desc=Updates: %s
+info.actuallyadditions.update.generic=[{"text":"There is an Update for "},{"text":"Actually Additions ","color":"dark_green"},{"text":"available!","color":"none"}]
+info.actuallyadditions.update.versionCompare=[{"text":"Current Version: "},{"text":"%s","color":"dark_red"},{"text":", newest Version: ","color":"none"},{"text":"%s","color":"dark_green"}]
+info.actuallyadditions.update.buttons=[{"text":"["},{"text":"Click for Changelog","color":"green","clickEvent":{"action":"open_url","value":"%s"}},{"text":"] [","color":"none"},{"text":"Click for Download","color":"green","clickEvent":{"action":"open_url","value":"%s"}},{"text":"]","color":"none"}]
+info.actuallyadditions.update.buttonOptions=Click: Changelog, Shift-Click: Download! (In Browser)
+info.actuallyadditions.update.failed=[{"text":"The Update Check for "},{"text":"Actually Additions ","color":"dark_green"},{"text":"failed! Check Logs for more Info!","color":"none"}]
 
 #Achievements
 achievement.actuallyadditions.pickUpSolidXP=Square and yummy!
@@ -423,14 +433,13 @@ booklet.actuallyadditions.chapter.intro.text.4=If you, for some reason, want to 
 
 booklet.actuallyadditions.chapter.craftingIngs.name=Crafting Ingredients
 booklet.actuallyadditions.chapter.craftingIngs.text.1=<imp>Actually Additions<r> has lots of items that use certain <imp>basic crafting items<r> to be crafted. This chapter has all of these basic items <imp>grouped up<r> so that you can see all of them at once.
-booklet.actuallyadditions.chapter.craftingIngs.text.5=This thing is terribly snowy right now. If you put this into your machines, you might make them explode. <n><i>Watch out for that.
 
 booklet.actuallyadditions.chapter.quartz.name=Black Quartz
 booklet.actuallyadditions.chapter.quartz.text.1=<item>Black Quartz<r> is an <imp>Ore<r> that generates in the world <imp>between layer <lowest> and <highest><r>. When broken, it can be <imp>smelted in a furnace<r> or <imp>crushed in a crusher<r> to get broken down into <item>Black Quartz<r>.
 booklet.actuallyadditions.chapter.quartz.text.2=<item>Black Quartz<r> items are used in lots of <imp>Crafting Recipes<r> in <imp>Actually Additions<r>. They are very important for most of the Items and, thus, should be mined when found in the world. They can be crafted into a couple of different <imp>Decorative Blocks<r> shown on the following pages. <n><n><i>Nether Quartz, but deadlier
 
 booklet.actuallyadditions.chapter.cloud.name=Smiley Cloud
-booklet.actuallyadditions.chapter.cloud.text.1=The <item>Smiley Cloud<r> is a magical floating cloud which is getting put to life through the piece of Solidified Experience inside it. It hovers up and down in its place all jolly and fun, and when <imp>right-clicking<r>, you can <imp>give it a name<r>. <n>When giving it certain <imp>special names<r> like <imp>"Ellpeck"<r> or <imp>"AcidBlues<r>, it will have some special items it carries!
+booklet.actuallyadditions.chapter.cloud.text.1=The <item>Smiley Cloud<r> is a magical floating cloud which is getting put to life through the piece of Solidified Experience inside it. It hovers up and down in its place all jolly and fun, and when <imp>right-clicking<r>, you can <imp>give it a name<r>. <n>When giving it certain <imp>special names<r> like <imp>"Ellpeck"<r> or <imp>"AcidBlues"<r>, it will have some special items it carries!
 
 booklet.actuallyadditions.chapter.coalStuff.name=Coal Stuff
 booklet.actuallyadditions.chapter.coalStuff.text.1=Sometimes your <item>Coal<r> just <imp>burns for too long or too short<r>, you know what I mean? <n>For that, you can now craft <item>Tiny Coal<r>, <item>Tiny Charcoal<r> and <item>Blocks of Charcoal<r> for using them in a furnace. <n>While the <item>Block of Charcoal<r> burns for as long as a <item>Block of Coal<r>, the <item>Tiny Coal<r> and <item>Tiny Charcoal<r> will burn for <imp>one eighth of a piece of coal<r>, meaning it will <imp>smelt one item in a normal furnace<r>.
@@ -439,7 +448,8 @@ booklet.actuallyadditions.chapter.lamps.name=Lamps
 booklet.actuallyadditions.chapter.lamps.text.1=<item>Lamps<r> are a block providing lots of light, similar to the mystic Glowstone or Torches, but they can be <imp>dyed with all of the 16 different colors<r> either by <imp>crafting them<r> or by placing them on the ground and <imp>right-clicking them with a piece of dye<r>. <n>When <imp>right-clicking<r> them with an empty hand, they will <imp>turn on and off<r>. If you want them, however, to be toggled using <item>Redstone<r> Power, just place a <item>Lamp Controller<r> next to one.
 
 booklet.actuallyadditions.chapter.treasureChest.name=Treasure Chests
-booklet.actuallyadditions.chapter.treasureChest.text.1=<item>Treasure Chests<r> are a semi-uncommon occurence <imp>in Ocean Biomes<r>. They appear on the bottom of the sea, probably left there by bypassing Ships who threw off or lost some load. These Chests however, <imp>hold some valuable items<r>, if you're lucky. Breaking them won't yield you anything, though, you just have to <imp>right-click them<r> to receive some amazing goodies.
+booklet.actuallyadditions.chapter.treasureChest.text.1=A <item>Treasure Chest<r> found underwater.
+booklet.actuallyadditions.chapter.treasureChest.text.2=<item>Treasure Chests<r> are a semi-uncommon occurence <imp>in Ocean Biomes<r>. They appear on the bottom of the sea, probably left there by bypassing Ships who threw off or lost some load. These Chests however, <imp>hold some valuable items<r>, if you're lucky. Breaking them won't yield you anything, though, you just have to <imp>right-click them<r> to receive some amazing goodies.
 
 booklet.actuallyadditions.chapter.breaker.name=Breakers and Placers
 booklet.actuallyadditions.chapter.breaker.text.1=The <item>Breaker<r>... well.. it breaks blocks in front of it. That's about it. It can be oriented in every direction like a Piston. It can be turned off with Redstone.
@@ -450,7 +460,6 @@ booklet.actuallyadditions.chapter.breaker.text.4=The <item>Liquid Collector<r> w
 booklet.actuallyadditions.chapter.phantomfaces.name=Phantomfaces
 booklet.actuallyadditions.chapter.phantomfaces.text.1=<item>Phantomfaces<r> are a simple way to <imp>connect inventories together<r>, they have a very important twist however: Instead of just connecting two inventories, a <item>Phantomface<r> <imp>simulates the inventory it is connected to<r>, meaning you can put items into and pull out of the Phantomface itself. A <item>Phantomface<r> has a <imp>default range of <range> blocks<r>, but it can be upgraded with a <item>Phantom Booster<r>. <item>Phantomfaces<r> are connected by <imp>right-clicking<r> an inventory with a <item>Phantom Connector<r> and then <imp>right-clicking<r> the <item>Phantomface.
 booklet.actuallyadditions.chapter.phantomfaces.text.2=The default <item>Phantomface<r> works for items, like described on the first page.
-booklet.actuallyadditions.chapter.phantomfaces.text.666=The default <item>Phantomface<r> scares people away by being so terribly creepy. Actually, it just works for items like described on the first page.
 booklet.actuallyadditions.chapter.phantomfaces.text.3=The <item>Phantom Liquiface<r> acts exactly like the normal <item>Phantomface<r>, but it <imp>works for liquid containing blocks<r>. When given a <imp>Redstone Signal<r>, it can be set to <imp>Auto-Output<r>. Be careful with this though, as it <imp>could cause infinte loops and lag<r> under certain conditions!
 booklet.actuallyadditions.chapter.phantomfaces.text.4=The <item>Phantom Energyface<r> acts exactly like the normal <item>Phantomface<r>, but it <imp>works for RF<r>, meaning you can connect it to things like Generators and Crushers.
 booklet.actuallyadditions.chapter.phantomfaces.text.6=The <item>Phantom Booster<r>, as explained on the first page, ups the range of <item>Phantomface<r>s by being placed <imp>on top of them<r>. The maximum amount above one <item>Phantomface<r> is <imp>3<r>.
@@ -479,12 +488,14 @@ booklet.actuallyadditions.chapter.compost.text.3=<item>Mashed Food<r> can be cra
 
 booklet.actuallyadditions.chapter.crate.name=Storage Crates
 booklet.actuallyadditions.chapter.crate.text.1=<item>Storage Crates<r> are big. <imp>Really big<r>. They hold tons of items, more than 4 chests worth of them. <n><n><i>"F-in' gigantic"<rs><n>   -Some Magazine
+booklet.actuallyadditions.chapter.crate.text.2=The <item>Chest To Storage Crate Upgrade<r> allows you to <imp>convert any chest into a Storage Crate<r>, retaining its items! <n>Just <imp>shift-right-click<r> onto the chest to apply it.
 
 booklet.actuallyadditions.chapter.coffeeMachine.name=Coffee Machine
 booklet.actuallyadditions.chapter.coffeeMachine.text.1=The <item>Coffee Machine<r> is a block used to make <item>Coffee<r>, a <imp>potion-like<r> item that gives the user several buffs. <n>To use the coffee machine, you need a <item>Empty Cup<r>, <coffee> <item>Coffee Beans<r>, which can be found in the wild, harvested and <imp>planted on farmland<r> again, <rf> RF/t and <water>mB of Water per cup brewed. <n>On the coffee machine recipe pages at the back, to see what the item does, just hover over the Cup of Coffee.
 booklet.actuallyadditions.chapter.coffeeMachine.text.2=To actually give your coffee some buffs, <imp>put some of the items shown on the later pages into the slots on the right<r>. <n>The more slots are filled up with one item, the higher the <imp>Amplifier<r> of the effect will be. The <imp>Maximum Amplifier<r> is the max amount of items to be put into one coffee. <n>Order matters: When using, for example, <item>Milk<r> (to see what it does exactly, go to a later page), you are going to have to plan the items out inside the <imp>numbered slots<r> in such a way that it brews the coffee you want.
-booklet.actuallyadditions.chapter.coffeeMachine.text.5=<item>Milk<r> is an important item when brewing coffee: It <imp>adds 2 minutes<r> to the effect while <imp>removing 1 amplifier<r>. When the amplifier of an effect is 1, however, it will remove the effect.
-booklet.actuallyadditions.chapter.coffeeMachine.text.6=<i>The fact that you're reading this means that you either have <imp>HarvestCraft<r><i> installed, or that you're looking at the lang file. <rs><n>This does the same thing as <item>Milk<r>, but for veggie guys.
+booklet.actuallyadditions.chapter.coffeeMachine.text.3=This is an example of a recipe making a coffee containing <imp>Fire Resistance 1 for 0:20<r> and <imp>Speed 1 for 2:30<r>.
+booklet.actuallyadditions.chapter.coffeeMachine.text.6=<item>Milk<r> is an important item when brewing coffee: It <imp>adds 2 minutes<r> to all effects of items in slots with lower numbers while <imp>removing 1 amplifier<r>. When the amplifier of an effect is 1, however, it will remove the effect.
+booklet.actuallyadditions.chapter.coffeeMachine.text.7=<i>The fact that you're reading this means that you either have <imp>HarvestCraft<r><i> installed, or that you're looking at the lang file. <rs><n>This does the same thing as <item>Milk<r>, but for veggie guys.
 
 booklet.actuallyadditions.chapter.crusher.name=Crusher and Double Crusher
 booklet.actuallyadditions.chapter.crusher.text.1=The <item>Crusher<r> turns every ore, ingot and gem into its corresponding <imp>dust<r> using <rf1> RF/t. <n>When you put in <imp>Ores<r> however, they will yield <imp>2 pieces of dust<r>. <n>The <item>Double Crusher<r> basically does the same, however it can crush two ores at a time and uses <rf2> RF/t. <n>On the following pages, you can see some additional useful recipes for inside the crusher. <n><n><i>He's my crush
@@ -492,11 +503,8 @@ booklet.actuallyadditions.chapter.crusher.text.1=The <item>Crusher<r> turns ever
 booklet.actuallyadditions.chapter.furnaceDouble.name=Double Furnace
 booklet.actuallyadditions.chapter.furnaceDouble.text.1=The <item>Double Furnace<r> works like a furnace, however, it uses <rf> RF/t and can smelt <imp>two items at a time<r>.
 
-booklet.actuallyadditions.chapter.miner.name=Magnetic Miner
-booklet.actuallyadditions.chapter.miner.text.1=The <item>Magnetic Miner<r> pulls ore blocks out of the ground using <rf> RF/t and <oil> of Oil/block mined. <n>Every place where an ore should be pulled up must have a <item>Casing Block<r> one block lower than the miner. <n>It has a range of <range> blocks.
-
 booklet.actuallyadditions.chapter.lavaFactory.name=Lava Factory
-booklet.actuallyadditions.chapter.lavaFactory.text.1=The <item>Lava Factory<r> can produce blocks of lava given <imp><rf> RF/block<r>. <n>The Block above it has to be surrounded with 4 Casing Blocks (which can be found on the Magnetic Miner Page!), otherwise it won't be able to produce Lava. <n>Right-Clicking on the <item>Lava Factory<r> will show you if it's able to produce Lava in its current setup. <n><n><i>Lava, for a fact. <n>                ory
+booklet.actuallyadditions.chapter.lavaFactory.text.1=The <item>Lava Factory<r> can produce blocks of lava given <imp><rf> RF/block<r>. <n>The Block above it has to be surrounded with 4 Casing Blocks, otherwise it won't be able to produce Lava. <n>Right-Clicking on the <item>Lava Factory<r> will show you if it's able to produce Lava in its current setup. <n><n><i>Lava, for a fact. <n>                ory
 
 booklet.actuallyadditions.chapter.energizer.name=Energizer and Enervator
 booklet.actuallyadditions.chapter.energizer.text.1=The <item>Energizer<r> <imp>charges items that hold RF<r> using its energy supply.
@@ -568,4 +576,12 @@ booklet.actuallyadditions.chapter.rangedCollector.name=Ranged Collector
 booklet.actuallyadditions.chapter.rangedCollector.text.1=The <item>Ranged Collector<r> works much like a hopper, in that it <imp>collects items around it<r>, having the power, however, to pick up items that are in an area of <imp><range> blocks<r> around it. <n>It has a <imp>filter<r> that can be set to <imp>white- or blacklist<r>. <n>This comes with a disadvantage, however: It doesn't auto-output its items.
 
 booklet.actuallyadditions.chapter.hairBalls.name=Ball of Fur-s
-booklet.actuallyadditions.chapter.hairBalls.text.1=<item>Balls of Fur<r> are an item rarely dropped by <imp>cats<r> which have been <imp>tamed<r> by the player. <n>Cats are very mysterious creatures as they <imp>appear to get everything stuck in their fur<r>. <item>Balls of Fur<r> may seem disgusting at first, but when removing all of the hair by <imp>right-clicking<r>, they will reveal some <imp>valuable items<r>. <n>Or just some String. <n><n><n><i>FUURRRRRR!!
+booklet.actuallyadditions.chapter.hairBalls.text.1=<item>Balls of Fur<r> dropped by <imp>live<r> cats. <n>More information on the next page.
+booklet.actuallyadditions.chapter.hairBalls.text.2=<item>Balls of Fur<r> are an item rarely dropped by <imp>cats<r> which have been <imp>tamed<r> by the player. <n>Cats are very mysterious creatures as they <imp>appear to get everything stuck in their fur<r>. <item>Balls of Fur<r> may seem disgusting at first, but when removing all of the hair by <imp>right-clicking<r>, they will reveal some <imp>valuable items<r>. <n>Or just some String. <n><n><n><i>FUURRRRRR!!
+
+booklet.actuallyadditions.chapter.laserRelays.name=Laser Relays
+booklet.actuallyadditions.chapter.laserRelays.text.1=The <item>Laser Relay<r> is a block that can <imp>wirelessly transfer RF<r> just by being connected with a <item>Laser Wrench<r>, generating a network. <n>When placing a Power Generator or Receiver next to the relay, it can receive Power <imp>from any other relay<r> in the network. <n>Two relays can be at most <range> blocks apart. <n>During an energy transfer, they have an <imp>Energy Loss<r> of <loss>%.
+
+booklet.actuallyadditions.chapter.blackLotus.name=Black Lotus
+booklet.actuallyadditions.chapter.blackLotus.text.1=Think of this: <n>You need to craft <imp>black wool<r>, <imp>black clay<r> or anything else that <imp>needs black dye<r> but you are just guilty about killing so many <imp>innocent squids<r>? <n>Well, the <item>Black Lotus<r> is exactly the thing you need! <n>Just look around <imp>in the wild<r> a bit, and you will find one, then being able to craft some <item>Black Dye<r> that can be used <imp>instead of Ink Sacs<r> so that you don't need to kill poor squids and L any longer.
+booklet.actuallyadditions.chapter.blackLotus.text.2=<i>No, not that one, Vaz

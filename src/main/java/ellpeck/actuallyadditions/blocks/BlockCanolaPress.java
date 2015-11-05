@@ -5,7 +5,7 @@
  * http://github.com/Ellpeck/ActuallyAdditions/blob/master/README.md
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2015 Ellpeck
+ * Â© 2015 Ellpeck
  */
 
 package ellpeck.actuallyadditions.blocks;
@@ -29,6 +29,7 @@ import net.minecraft.world.World;
 
 public class BlockCanolaPress extends BlockContainerBase implements IActAddItemOrBlock{
 
+    @SideOnly(Side.CLIENT)
     private IIcon topIcon;
 
     public BlockCanolaPress(){
@@ -45,6 +46,7 @@ public class BlockCanolaPress extends BlockContainerBase implements IActAddItemO
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public IIcon getIcon(int side, int meta){
         return side == 1 || side == 0 ? this.topIcon : this.blockIcon;
     }

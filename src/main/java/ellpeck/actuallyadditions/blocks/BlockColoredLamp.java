@@ -5,7 +5,7 @@
  * http://github.com/Ellpeck/ActuallyAdditions/blob/master/README.md
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2015 Ellpeck
+ * Â© 2015 Ellpeck
  */
 
 package ellpeck.actuallyadditions.blocks;
@@ -37,7 +37,8 @@ public class BlockColoredLamp extends Block implements IActAddItemOrBlock{
 
     public static TheColoredLampColors[] allLampTypes = TheColoredLampColors.values();
     public boolean isOn;
-    private IIcon[] textures = new IIcon[allLampTypes.length];
+    @SideOnly(Side.CLIENT)
+    private IIcon[] textures;
 
     public BlockColoredLamp(boolean isOn){
         super(Material.redstoneLight);
@@ -58,6 +59,7 @@ public class BlockColoredLamp extends Block implements IActAddItemOrBlock{
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public IIcon getIcon(int side, int meta){
         return meta >= allLampTypes.length ? null : textures[meta];
     }
@@ -127,6 +129,7 @@ public class BlockColoredLamp extends Block implements IActAddItemOrBlock{
     @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconReg){
+        this.textures = new IIcon[allLampTypes.length];
         for(int i = 0; i < allLampTypes.length; i++){
             this.textures[i] = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+((IActAddItemOrBlock)InitBlocks.blockColoredLamp).getName()+allLampTypes[i].name+(isOn ? "On" : ""));
         }
@@ -146,11 +149,6 @@ public class BlockColoredLamp extends Block implements IActAddItemOrBlock{
         }
 
         @Override
-        public int getMetadata(int damage){
-            return damage;
-        }
-
-        @Override
         public String getItemStackDisplayName(ItemStack stack){
             if(stack.getItemDamage() >= allLampTypes.length){
                 return null;
@@ -159,14 +157,19 @@ public class BlockColoredLamp extends Block implements IActAddItemOrBlock{
         }
 
         @Override
-        public EnumRarity getRarity(ItemStack stack){
-            EnumRarity rarity = ((IActAddItemOrBlock)this.field_150939_a).getRarity(stack);
-            return rarity == null ? EnumRarity.common : rarity;
+        public String getUnlocalizedName(ItemStack stack){
+            return InitBlocks.blockColoredLamp.getUnlocalizedName()+allLampTypes[stack.getItemDamage()].name;
         }
 
         @Override
-        public String getUnlocalizedName(ItemStack stack){
-            return InitBlocks.blockColoredLamp.getUnlocalizedName()+allLampTypes[stack.getItemDamage()].name;
+        public int getMetadata(int damage){
+            return damage;
+        }
+
+        @Override
+        public EnumRarity getRarity(ItemStack stack){
+            EnumRarity rarity = ((IActAddItemOrBlock)this.field_150939_a).getRarity(stack);
+            return rarity == null ? EnumRarity.common : rarity;
         }
     }
 }

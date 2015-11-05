@@ -5,7 +5,7 @@
  * http://github.com/Ellpeck/ActuallyAdditions/blob/master/README.md
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2015 Ellpeck
+ * Â© 2015 Ellpeck
  */
 
 package ellpeck.actuallyadditions.util;
@@ -18,25 +18,17 @@ import net.minecraft.item.ItemBlock;
 
 public class BlockUtil{
 
-    public static void register(Block block, Class<? extends ItemBlock> itemBlock){
-        register(block, itemBlock, true);
+    public static void register(Block block){
+        register(block, ItemBlockBase.class);
     }
 
-    public static void register(Block block, Class<? extends ItemBlock> itemBlock, boolean addTab){
-        block.setCreativeTab(addTab ? CreativeTab.instance : null);
+    public static void register(Block block, Class<? extends ItemBlock> itemBlock){
+        block.setCreativeTab(CreativeTab.instance);
         block.setBlockName(createUnlocalizedName(block));
         GameRegistry.registerBlock(block, itemBlock, ((IActAddItemOrBlock)block).getName());
     }
 
     public static String createUnlocalizedName(Block block){
         return ModUtil.MOD_ID_LOWER+"."+((IActAddItemOrBlock)block).getName();
-    }
-
-    public static void register(Block block){
-        register(block, ItemBlockBase.class, true);
-    }
-
-    public static void register(Block block, boolean addTab){
-        register(block, ItemBlockBase.class, addTab);
     }
 }

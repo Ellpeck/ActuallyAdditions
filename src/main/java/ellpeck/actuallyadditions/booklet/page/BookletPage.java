@@ -5,7 +5,7 @@
  * http://github.com/Ellpeck/ActuallyAdditions/blob/master/README.md
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2015 Ellpeck
+ * Â© 2015 Ellpeck
  */
 
 package ellpeck.actuallyadditions.booklet.page;
@@ -39,6 +39,21 @@ public class BookletPage{
 
     public BookletPage(int id){
         this.id = id;
+    }
+
+    public void addToPagesWithItemStackData(){
+        if(!InitBooklet.pagesWithItemStackData.contains(this)){
+            ItemStack[] stacks = this.getItemStacksForPage();
+            if(stacks != null && stacks.length > 0){
+                //Ensure that there is at least one ItemStack
+                for(ItemStack stack : stacks){
+                    if(stack != null){
+                        InitBooklet.pagesWithItemStackData.add(this);
+                        break;
+                    }
+                }
+            }
+        }
     }
 
     public static void renderItem(GuiBooklet gui, ItemStack stack, int x, int y, float scale){

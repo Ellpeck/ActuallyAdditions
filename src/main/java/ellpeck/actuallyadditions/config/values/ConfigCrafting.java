@@ -5,7 +5,7 @@
  * http://github.com/Ellpeck/ActuallyAdditions/blob/master/README.md
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2015 Ellpeck
+ * Â© 2015 Ellpeck
  */
 
 package ellpeck.actuallyadditions.config.values;
@@ -18,6 +18,7 @@ public enum ConfigCrafting{
     CLOUD("Smiley Cloud", ConfigCategories.BLOCKS_CRAFTING),
     XP_SOLIDIFIER("Experience Solidifier", ConfigCategories.BLOCKS_CRAFTING),
     WOOD_CASING("Wood Casing", ConfigCategories.BLOCKS_CRAFTING),
+    IRON_CASING("Iron Casing", ConfigCategories.BLOCKS_CRAFTING),
     STONE_CASING("Stone Casing", ConfigCategories.BLOCKS_CRAFTING),
     FISHING_NET("Fishing Net", ConfigCategories.BLOCKS_CRAFTING),
     REPAIRER("Repairer", ConfigCategories.BLOCKS_CRAFTING),
@@ -52,7 +53,7 @@ public enum ConfigCrafting{
     CHOCOLATE("Chocolate", ConfigCategories.FOOD_CRAFTING),
     CHOCOLATE_CAKE("Chocolate Cake", ConfigCategories.FOOD_CRAFTING),
     TOAST("Toast", ConfigCategories.FOOD_CRAFTING),
-    CHOCOTOAST("ChocoToast", ConfigCategories.FOOD_CRAFTING),
+    CHOCOLATE_TOAST("Chocolate Toast", ConfigCategories.FOOD_CRAFTING),
 
     LEAF_BLOWER("Leaf Blower", ConfigCategories.ITEMS_CRAFTING),
     LEAF_BLOWER_ADVANCED("Advanced Leaf Blower", ConfigCategories.ITEMS_CRAFTING),
@@ -146,13 +147,17 @@ public enum ConfigCrafting{
 
     TELE_STAFF("Tele Staff", ConfigCategories.ITEMS_CRAFTING),
     CASING("Casing", ConfigCategories.BLOCKS_CRAFTING),
-    ORE_MAGNET("Ore Magnet", ConfigCategories.BLOCKS_CRAFTING),
 
     MAGNET_RING("Magnet Ring", ConfigCategories.ITEMS_CRAFTING),
     WATER_RING("Water Ring", ConfigCategories.ITEMS_CRAFTING),
     GROWTH_RING("Growth Ring", ConfigCategories.ITEMS_CRAFTING),
     DIRECTIONAL_BREAKER("Long-Range Breaker", ConfigCategories.BLOCKS_CRAFTING),
-    RANGED_COLLECTOR("Ranged Collector", ConfigCategories.BLOCKS_CRAFTING);
+    RANGED_COLLECTOR("Ranged Collector", ConfigCategories.BLOCKS_CRAFTING),
+    LASER_RELAY("Laser Relay", ConfigCategories.BLOCKS_CRAFTING),
+    LASER_WRENCH("Laser Wrench", ConfigCategories.ITEMS_CRAFTING),
+
+    CHEST_TO_CRATE_UPGRADE("Chest To Crate Upgrade", ConfigCategories.ITEMS_CRAFTING),
+    DRILL_CORE("Drill Core", ConfigCategories.ITEMS_CRAFTING);
 
     public final String name;
     public final String category;

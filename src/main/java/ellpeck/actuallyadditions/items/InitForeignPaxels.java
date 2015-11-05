@@ -5,7 +5,7 @@
  * http://github.com/Ellpeck/ActuallyAdditions/blob/master/README.md
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2015 Ellpeck
+ * Â© 2015 Ellpeck
  */
 
 package ellpeck.actuallyadditions.items;
@@ -27,37 +27,74 @@ import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 public class InitForeignPaxels{
 
+    public static final int[] MT_COLORS = new int[]{4166, 2248890, 8882649, 12410135, 11451392, 3684412};
     public static final String[] MT_NAMES = new String[]{"Obsidian", "LapisLazuli", "Osmium", "Bronze", "Glowstone", "Steel"};
-    private static final String THERMAL_FOUNDATION = "ThermalFoundation";
+    public static final int[] TF_COLORS = new int[]{13332762, 5407943, 5407895, 5394789, 12960613, 12960653, 12410135, 2999795, 10143162};
+    public static final int[] SO_COLORS = new int[]{9409450, 2040021, 5714944, 526344, 545032};
+    //MekanismTools
     private static final String MEKANISM_TOOLS = "MekanismTools";
-    private static final String[] TF_NAMES = new String[]{"Copper", "Tin", "Silver", "Lead", "Nickel", "Electrum", "Bronze", "Platinum", "Invar"};
     private static final String[] MT_REPAIR_NAMES = new String[]{"ingotRefinedObsidian", "gemLapis", "ingotOsmium", "ingotBronze", "ingotRefinedGlowstone", "ingotSteel"};
+    //ThermalFoundation
+    private static final String THERMAL_FOUNDATION = "ThermalFoundation";
+    private static final String[] TF_NAMES = new String[]{"Copper", "Tin", "Silver", "Lead", "Nickel", "Electrum", "Bronze", "Platinum", "Invar"};
+    //SimpleOres
+    private static final String SIMPLE_ORES = "simpleores";
+    private static final String[] SO_NAMES = new String[]{"tin", "mythril", "copper", "onyx", "adamantium"};
+    private static final String[] SO_REPAIR_NAMES = new String[]{"ingotTin", "ingotMythril", "ingotCopper", "gemOnyx", "ingotAdamantium"};
     public static Item[] tfPaxels = new Item[9];
+    public static Item[] soPaxels = new Item[5];
     private static Item[] mtPaxels = new Item[6];
 
     public static void init(){
+        //SimpleOres
+        if(ConfigBoolValues.SO_PAXELS.isEnabled()){
+            if(Loader.isModLoaded(SIMPLE_ORES)){
+                ModUtil.LOGGER.info("Initializing "+SIMPLE_ORES+" AIOTs...");
+
+                for(int i = 0; i < soPaxels.length; i++){
+                    Item axe = ItemUtil.getItemFromName(SIMPLE_ORES+":"+SO_NAMES[i]+"_axe");
+                    Item pickaxe = ItemUtil.getItemFromName(SIMPLE_ORES+":"+SO_NAMES[i]+"_pickaxe");
+                    Item hoe = ItemUtil.getItemFromName(SIMPLE_ORES+":"+SO_NAMES[i]+"_hoe");
+                    Item sword = ItemUtil.getItemFromName(SIMPLE_ORES+":"+SO_NAMES[i]+"_sword");
+                    Item shovel = ItemUtil.getItemFromName(SIMPLE_ORES+":"+SO_NAMES[i]+"_shovel");
+
+                    if(axe != null && pickaxe != null && hoe != null && sword != null && shovel != null && axe instanceof ItemTool){
+                        Item.ToolMaterial material = ((ItemTool)axe).func_150913_i();
+                        soPaxels[i] = new ItemAllToolAA(material, SO_REPAIR_NAMES[i], "paxelSO"+SO_NAMES[i], EnumRarity.rare, SO_COLORS[i]);
+                        ItemUtil.register(soPaxels[i]);
+
+                        if(ConfigCrafting.PAXELS.isEnabled()){
+                            GameRegistry.addRecipe(new ShapelessOreRecipe(soPaxels[i], axe, pickaxe, hoe, sword, shovel));
+                            ToolCrafting.recipesPaxels.add(Util.GetRecipes.lastIRecipe());
+                        }
+                    }
+                }
+            }
+            else{
+                ModUtil.LOGGER.info(SIMPLE_ORES+" not loaded, can't initialize Special AIOTs.");
+            }
+        }
+
         //MekanismTools
         if(ConfigBoolValues.MT_PAXELS.isEnabled()){
             if(Loader.isModLoaded(MEKANISM_TOOLS)){
                 ModUtil.LOGGER.info("Initializing "+MEKANISM_TOOLS+" AIOTs...");
 
                 for(int i = 0; i < mtPaxels.length; i++){
-                    if(!(!ConfigBoolValues.DUPLICATE_PAXELS.isEnabled() && (i == 0 || (i == 3 && ConfigBoolValues.TF_PAXELS.isEnabled() && Loader.isModLoaded(THERMAL_FOUNDATION))))){
-                        Item axe = ItemUtil.getItemFromName(MEKANISM_TOOLS+":"+MT_NAMES[i]+"Axe");
-                        Item pickaxe = ItemUtil.getItemFromName(MEKANISM_TOOLS+":"+MT_NAMES[i]+"Pickaxe");
-                        Item hoe = ItemUtil.getItemFromName(MEKANISM_TOOLS+":"+MT_NAMES[i]+"Hoe");
-                        Item sword = ItemUtil.getItemFromName(MEKANISM_TOOLS+":"+MT_NAMES[i]+"Sword");
-                        Item shovel = ItemUtil.getItemFromName(MEKANISM_TOOLS+":"+MT_NAMES[i]+"Shovel");
+                    Item axe = ItemUtil.getItemFromName(MEKANISM_TOOLS+":"+MT_NAMES[i]+"Axe");
+                    Item pickaxe = ItemUtil.getItemFromName(MEKANISM_TOOLS+":"+MT_NAMES[i]+"Pickaxe");
+                    Item hoe = ItemUtil.getItemFromName(MEKANISM_TOOLS+":"+MT_NAMES[i]+"Hoe");
+                    Item sword = ItemUtil.getItemFromName(MEKANISM_TOOLS+":"+MT_NAMES[i]+"Sword");
+                    Item shovel = ItemUtil.getItemFromName(MEKANISM_TOOLS+":"+MT_NAMES[i]+"Shovel");
 
-                        if(axe != null && pickaxe != null && hoe != null && sword != null && shovel != null && axe instanceof ItemTool){
-                            Item.ToolMaterial material = ((ItemTool)axe).func_150913_i();
-                            mtPaxels[i] = new ItemAllToolAA(material, MT_REPAIR_NAMES[i], "paxelMT"+MT_NAMES[i], EnumRarity.rare);
-                            ItemUtil.register(mtPaxels[i]);
+                    if(axe != null && pickaxe != null && hoe != null && sword != null && shovel != null && axe instanceof ItemTool){
+                        Item.ToolMaterial material = ((ItemTool)axe).func_150913_i();
+                        mtPaxels[i] = new ItemAllToolAA(material, MT_REPAIR_NAMES[i], "paxelMT"+MT_NAMES[i], EnumRarity.rare, MT_COLORS[i]);
+                        ItemUtil.register(mtPaxels[i]);
 
-                            if(ConfigCrafting.PAXELS.isEnabled()){
-                                GameRegistry.addRecipe(new ShapelessOreRecipe(mtPaxels[i], axe, pickaxe, hoe, sword, shovel));
-                                ToolCrafting.recipesPaxels.add(Util.GetRecipes.lastIRecipe());
-                            }
+                        if(ConfigCrafting.PAXELS.isEnabled()){
+                            GameRegistry.addRecipe(new ShapelessOreRecipe(mtPaxels[i], axe, pickaxe, hoe, sword, shovel));
+                            ToolCrafting.recipesPaxels.add(Util.GetRecipes.lastIRecipe());
                         }
                     }
                 }
@@ -67,7 +104,7 @@ public class InitForeignPaxels{
             }
         }
 
-        //Thermal Foundation
+        //ThermalFoundation
         if(ConfigBoolValues.TF_PAXELS.isEnabled()){
             if(Loader.isModLoaded(THERMAL_FOUNDATION)){
                 ModUtil.LOGGER.info("Initializing "+THERMAL_FOUNDATION+" AIOTs...");
@@ -81,7 +118,7 @@ public class InitForeignPaxels{
 
                     if(axe != null && pickaxe != null && hoe != null && sword != null && shovel != null && axe instanceof ItemTool){
                         Item.ToolMaterial material = ((ItemTool)axe).func_150913_i();
-                        tfPaxels[i] = new ItemAllToolAA(material, "ingot"+TF_NAMES[i], "paxelTF"+TF_NAMES[i], EnumRarity.rare);
+                        tfPaxels[i] = new ItemAllToolAA(material, "ingot"+TF_NAMES[i], "paxelTF"+TF_NAMES[i], EnumRarity.rare, TF_COLORS[i]);
                         ItemUtil.register(tfPaxels[i]);
 
                         if(ConfigCrafting.PAXELS.isEnabled()){
@@ -104,6 +141,11 @@ public class InitForeignPaxels{
             }
         }
         for(Item item : mtPaxels){
+            if(item != null){
+                CreativeTab.instance.add(item);
+            }
+        }
+        for(Item item : soPaxels){
             if(item != null){
                 CreativeTab.instance.add(item);
             }

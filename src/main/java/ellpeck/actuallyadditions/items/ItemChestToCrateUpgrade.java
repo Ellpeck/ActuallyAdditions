@@ -5,7 +5,7 @@
  * http://github.com/Ellpeck/ActuallyAdditions/blob/master/README.md
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2015 Ellpeck
+ * Â© 2015 Ellpeck
  */
 
 package ellpeck.actuallyadditions.items;
@@ -16,6 +16,7 @@ import ellpeck.actuallyadditions.blocks.InitBlocks;
 import ellpeck.actuallyadditions.tile.TileEntityGiantChest;
 import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import ellpeck.actuallyadditions.util.ModUtil;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockChest;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
@@ -48,6 +49,7 @@ public class ItemChestToCrateUpgrade extends Item implements IActAddItemOrBlock{
                     }
 
                     //Set New Block
+                    world.playAuxSFX(2001, x, y, z, Block.getIdFromBlock(world.getBlock(x, y, z))+(world.getBlockMetadata(x, y, z) << 12));
                     world.setBlock(x, y, z, InitBlocks.blockGiantChest, 0, 2);
 
                     //Copy Items into new Chest
@@ -86,6 +88,7 @@ public class ItemChestToCrateUpgrade extends Item implements IActAddItemOrBlock{
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public IIcon getIcon(ItemStack stack, int pass){
         return this.itemIcon;
     }

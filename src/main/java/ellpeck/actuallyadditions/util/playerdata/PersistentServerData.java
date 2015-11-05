@@ -5,7 +5,7 @@
  * http://github.com/Ellpeck/ActuallyAdditions/blob/master/README.md
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2015 Ellpeck
+ * Â© 2015 Ellpeck
  */
 
 package ellpeck.actuallyadditions.util.playerdata;
@@ -44,17 +44,20 @@ public class PersistentServerData{
             this.theCompound = theCompound;
         }
 
-        public static PlayerSave fromNBT(NBTTagCompound compound, String name){
-            UUID theID = new UUID(compound.getLong(name+"MostSignificant"), compound.getLong(name+"LeastSignificant"));
-            NBTTagCompound theCompound = compound.getCompoundTag(name+"Tag");
+        public static PlayerSave fromNBT(NBTTagCompound compound){
+            UUID theID = new UUID(compound.getLong("MostSignificant"), compound.getLong("LeastSignificant"));
+            NBTTagCompound theCompound = compound.getCompoundTag("Tag");
             return new PlayerSave(theID, theCompound);
         }
 
-        public void toNBT(NBTTagCompound compound, String name){
-            compound.setLong(name+"LeastSignificant", this.thePlayerUUID.getLeastSignificantBits());
-            compound.setLong(name+"MostSignificant", this.thePlayerUUID.getMostSignificantBits());
+        public NBTTagCompound toNBT(){
+            NBTTagCompound compound = new NBTTagCompound();
+            compound.setLong("LeastSignificant", this.thePlayerUUID.getLeastSignificantBits());
+            compound.setLong("MostSignificant", this.thePlayerUUID.getMostSignificantBits());
 
-            compound.setTag(name+"Tag", this.theCompound);
+            compound.setTag("Tag", this.theCompound);
+
+            return compound;
         }
     }
 

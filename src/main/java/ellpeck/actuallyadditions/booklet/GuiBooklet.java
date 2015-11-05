@@ -5,7 +5,7 @@
  * http://github.com/Ellpeck/ActuallyAdditions/blob/master/README.md
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2015 Ellpeck
+ * Â© 2015 Ellpeck
  */
 
 package ellpeck.actuallyadditions.booklet;
@@ -16,10 +16,7 @@ import ellpeck.actuallyadditions.booklet.page.BookletPage;
 import ellpeck.actuallyadditions.config.GuiConfiguration;
 import ellpeck.actuallyadditions.proxy.ClientProxy;
 import ellpeck.actuallyadditions.update.UpdateChecker;
-import ellpeck.actuallyadditions.util.AssetUtil;
-import ellpeck.actuallyadditions.util.ModUtil;
-import ellpeck.actuallyadditions.util.StringUtil;
-import ellpeck.actuallyadditions.util.Util;
+import ellpeck.actuallyadditions.util.*;
 import ellpeck.actuallyadditions.util.playerdata.PersistentClientData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
@@ -27,6 +24,7 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.IChatComponent;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
@@ -35,14 +33,15 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 @SideOnly(Side.CLIENT)
 public class GuiBooklet extends GuiScreen{
 
-    public static final ResourceLocation resLoc = AssetUtil.getGuiLocation("guiBooklet");
-    public static final ResourceLocation resLocHalloween = AssetUtil.getGuiLocation("guiBookletHalloween");
-    public static final ResourceLocation resLocChristmas = AssetUtil.getGuiLocation("guiBookletChristmas");
-    public static final ResourceLocation resLocValentine = AssetUtil.getGuiLocation("guiBookletValentinesDay");
+    public static final ResourceLocation resLoc = AssetUtil.getBookletGuiLocation("guiBooklet");
+    public static final ResourceLocation resLocHalloween = AssetUtil.getBookletGuiLocation("guiBookletHalloween");
+    public static final ResourceLocation resLocChristmas = AssetUtil.getBookletGuiLocation("guiBookletChristmas");
+    public static final ResourceLocation resLocValentine = AssetUtil.getBookletGuiLocation("guiBookletValentinesDay");
     public static final int CHAPTER_BUTTONS_AMOUNT = 13;
     public static final int TOOLTIP_SPLIT_LENGTH = 200;
     public int xSize;
@@ -54,17 +53,17 @@ public class GuiBooklet extends GuiScreen{
     public BookletIndexEntry currentIndexEntry;
     public int pageOpenInIndex;
     public int indexPageAmount;
-    public GuiButton buttonForward;
-    public GuiButton buttonBackward;
-    public GuiButton buttonPreviousScreen;
-    public GuiButton buttonPreviouslyOpenedGui;
-    public GuiButton buttonUpdate;
-    public GuiButton buttonTwitter;
-    public GuiButton buttonForum;
-    public GuiButton buttonAchievements;
-    public GuiButton buttonConfig;
-    public GuiButton[] chapterButtons = new GuiButton[CHAPTER_BUTTONS_AMOUNT];
-    private GuiTextField searchField;
+    private GuiButton buttonForward;
+    private GuiButton buttonBackward;
+    private GuiButton buttonPreviousScreen;
+    private GuiButton buttonPreviouslyOpenedGui;
+    private GuiButton buttonUpdate;
+    private GuiButton buttonTwitter;
+    private GuiButton buttonForum;
+    private GuiButton buttonAchievements;
+    private GuiButton buttonConfig;
+    private GuiButton[] chapterButtons = new GuiButton[CHAPTER_BUTTONS_AMOUNT];
+    public GuiTextField searchField;
     private int ticksElapsed;
     private boolean mousePressed;
 
@@ -149,20 +148,16 @@ public class GuiBooklet extends GuiScreen{
         }
         //Update Checker Hover Text
         if(x >= this.guiLeft-11 && x <= this.guiLeft-11+10 && y >= this.guiTop-11 && y <= this.guiTop-11+10){
-            if(UpdateChecker.doneChecking){
-                ArrayList list = new ArrayList();
-                if(UpdateChecker.checkFailed){
-                    list.add(EnumChatFormatting.DARK_RED+"The Update Check failed!");
-                    list.add("Check your log for more Information!");
-                }
-                else if(UpdateChecker.updateVersion > UpdateChecker.clientVersion){
-                    list.add(EnumChatFormatting.GOLD+"There is an Update available!");
-                    list.add(EnumChatFormatting.ITALIC+"You have: "+ModUtil.VERSION+", Newest: "+UpdateChecker.updateVersionS);
-                    list.addAll(this.fontRendererObj.listFormattedStringToWidth(EnumChatFormatting.ITALIC+"Updates include: "+UpdateChecker.changelog, TOOLTIP_SPLIT_LENGTH));
-                    list.add(EnumChatFormatting.GRAY+"Click this button to visit the download page!");
-                }
-                this.func_146283_a(list, x, y);
+            ArrayList list = new ArrayList();
+            if(UpdateChecker.checkFailed){
+                list.add(IChatComponent.Serializer.func_150699_a(StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".update.failed")).getFormattedText());
             }
+            else if(UpdateChecker.needsUpdateNotify){
+                list.add(IChatComponent.Serializer.func_150699_a(StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".update.generic")).getFormattedText());
+                list.add(IChatComponent.Serializer.func_150699_a(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID_LOWER+".update.versionCompare", ModUtil.VERSION, UpdateChecker.updateVersion)).getFormattedText());
+                list.add(StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".update.buttonOptions"));
+            }
+            this.func_146283_a(list, x, y);
         }
 
         this.fontRendererObj.setUnicodeFlag(unicodeBefore);
@@ -172,31 +167,34 @@ public class GuiBooklet extends GuiScreen{
         }
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public void keyTyped(char theChar, int key){
         if(key != 1 && this.searchField.isFocused()){
             this.searchField.textboxKeyTyped(theChar, key);
-
-            if(this.currentIndexEntry instanceof BookletEntryAllSearch){
-                BookletEntryAllSearch currentEntry = (BookletEntryAllSearch)this.currentIndexEntry;
-                if(this.searchField.getText() != null && !this.searchField.getText().isEmpty()){
-                    currentEntry.chapters.clear();
-
-                    for(BookletChapter chapter : currentEntry.allChapters){
-                        if(chapter.getLocalizedName().toLowerCase().contains(this.searchField.getText().toLowerCase())){
-                            currentEntry.chapters.add(chapter);
-                        }
-                    }
-                }
-                else{
-                    currentEntry.chapters = (ArrayList<BookletChapter>)currentEntry.allChapters.clone();
-                }
-                this.openIndexEntry(this.currentIndexEntry, this.pageOpenInIndex, false);
-            }
+            this.updateSearchBar();
         }
         else{
             super.keyTyped(theChar, key);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public void updateSearchBar(){
+        if(this.currentIndexEntry instanceof BookletEntryAllSearch){
+            BookletEntryAllSearch currentEntry = (BookletEntryAllSearch)this.currentIndexEntry;
+            if(this.searchField.getText() != null && !this.searchField.getText().isEmpty()){
+                currentEntry.chapters.clear();
+
+                for(BookletChapter chapter : currentEntry.allChapters){
+                    if(chapter.getLocalizedName().toLowerCase(Locale.ROOT).contains(this.searchField.getText().toLowerCase(Locale.ROOT))){
+                        currentEntry.chapters.add(chapter);
+                    }
+                }
+            }
+            else{
+                currentEntry.chapters = (ArrayList<BookletChapter>)currentEntry.allChapters.clone();
+            }
+            this.openIndexEntry(this.currentIndexEntry, this.pageOpenInIndex, false);
         }
     }
 
@@ -219,10 +217,15 @@ public class GuiBooklet extends GuiScreen{
             }
         }
         else if(button == this.buttonUpdate){
-            if(UpdateChecker.doneChecking && UpdateChecker.updateVersion > UpdateChecker.clientVersion){
+            if(UpdateChecker.needsUpdateNotify){
                 try{
                     if(Desktop.isDesktopSupported()){
-                        Desktop.getDesktop().browse(new URI(UpdateChecker.DOWNLOAD_LINK));
+                        if(KeyUtil.isShiftPressed()){
+                            Desktop.getDesktop().browse(new URI(UpdateChecker.DOWNLOAD_LINK));
+                        }
+                        else{
+                            Desktop.getDesktop().browse(new URI(UpdateChecker.CHANGELOG_LINK));
+                        }
                     }
                 }
                 catch(Exception e){
@@ -243,7 +246,7 @@ public class GuiBooklet extends GuiScreen{
         else if(button == this.buttonForum){
             try{
                 if(Desktop.isDesktopSupported()){
-                    Desktop.getDesktop().browse(new URI("http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/wip-mods/2374910-actually-additions-a-bunch-of-awesome-gadgets"));
+                    Desktop.getDesktop().browse(new URI("http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/2551118"));
                 }
             }
             catch(Exception e){
@@ -335,7 +338,7 @@ public class GuiBooklet extends GuiScreen{
         this.buttonList.add(this.buttonPreviouslyOpenedGui);
 
         this.buttonUpdate = new TexturedButton(4, this.guiLeft-11, this.guiTop-11, 245, 0, 11, 11);
-        this.buttonUpdate.visible = UpdateChecker.doneChecking && UpdateChecker.updateVersion > UpdateChecker.clientVersion;
+        this.buttonUpdate.visible = UpdateChecker.needsUpdateNotify;
         this.buttonList.add(this.buttonUpdate);
 
         this.buttonTwitter = new TexturedButton(5, this.guiLeft, this.guiTop, 213, 0, 8, 8);
@@ -385,7 +388,7 @@ public class GuiBooklet extends GuiScreen{
             this.currentPage.updateScreen(this.ticksElapsed);
         }
 
-        boolean buttonThere = UpdateChecker.doneChecking && UpdateChecker.updateVersion > UpdateChecker.clientVersion;
+        boolean buttonThere = UpdateChecker.needsUpdateNotify;
         this.buttonUpdate.visible = buttonThere;
         if(buttonThere){
             if(this.ticksElapsed%8 == 0){
@@ -399,7 +402,7 @@ public class GuiBooklet extends GuiScreen{
 
     @Override
     public void onGuiClosed(){
-        PersistentClientData.saveBookPage(this.currentIndexEntry, this.currentChapter, this.currentPage, this.pageOpenInIndex);
+        PersistentClientData.saveBookPage(this.currentIndexEntry, this.currentChapter, this.currentPage, this.pageOpenInIndex, this.searchField.getText());
     }
 
     @Override

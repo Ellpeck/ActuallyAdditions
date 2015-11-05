@@ -5,7 +5,7 @@
  * http://github.com/Ellpeck/ActuallyAdditions/blob/master/README.md
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2015 Ellpeck
+ * Â© 2015 Ellpeck
  */
 
 package ellpeck.actuallyadditions.config.values;
@@ -93,6 +93,7 @@ public enum ConfigIntValues{
     CANOLA_AMOUNT("Canola Amount", ConfigCategories.WORLD_GEN, 10, 1, 50, "The Chance of Canola generating"),
     FLAX_AMOUNT("Flax Amount", ConfigCategories.WORLD_GEN, 8, 1, 50, "The Chance of Flax generating"),
     COFFEE_AMOUNT("Coffee Amount", ConfigCategories.WORLD_GEN, 6, 1, 50, "The Chance of Coffee generating"),
+    BLACK_LOTUS_AMOUNT("Black Lotus Amount", ConfigCategories.WORLD_GEN, 14, 1, 50, "The Chance of the Black Lotus generating"),
     RICE_CHANCE("Rice Chance", ConfigCategories.WORLD_GEN, 50, 1, 3000, "The 1 in X chance for Rice to generate"),
     NORMAL_PLANT_CHANCE("Plant Chance", ConfigCategories.WORLD_GEN, 400, 1, 3000, "The 1 in X chance for Flax, Coffee and Canola to generate"),
     TREASURE_CHEST_CHANCE("Treasure Chest Chance", ConfigCategories.WORLD_GEN, 300, 1, 3000, "The 1 in X chance for a Treasure Chest to generate in an Ocean"),
@@ -171,7 +172,11 @@ public enum ConfigIntValues{
     DIRECTIONAL_BREAKER_RF_PER_BLOCK("Directional Breaker: RF per Block", ConfigCategories.MACHINE_VALUES, 5, 0, 1000, "The amount of RF the Directional Breaker uses to break each block"),
     DIRECTIONAL_BREAKER_RANGE("Directional Breaker: Range", ConfigCategories.MACHINE_VALUES, 8, 1, 1000, "The range of the Directional Breaker"),
 
-    RANGED_COLLECTOR_RANGE("Ranged Collector: Range", ConfigCategories.MACHINE_VALUES, 6, 1, 30, "The range of the Ranged Collector");
+    RANGED_COLLECTOR_RANGE("Ranged Collector: Range", ConfigCategories.MACHINE_VALUES, 6, 1, 30, "The range of the Ranged Collector"),
+
+    LASER_RELAY_LOSS("Laser Relay: Loss", ConfigCategories.MACHINE_VALUES, 5, 0, 80, "The Energy Loss of the Laser Relay per Transfer in Percent"),
+    LASER_RELAY_MAX_DISTANCE("Laser Relay: Max Distance", ConfigCategories.MACHINE_VALUES, 15, 3, 80, "The max distance between two connected Laser Relays"),
+    LASER_RELAY_MAX_TRANSFER("Laser Relay: Max Transfer", ConfigCategories.MACHINE_VALUES, 10000, 100, 1000000, "The max amount of RF a Laser Relay can receive and try to transfer (if it's given 100 RF and can only transfer 50, it will only accept 50, it won't waste any power!)");
 
     public final String name;
     public final String category;

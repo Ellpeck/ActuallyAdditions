@@ -5,7 +5,7 @@
  * http://github.com/Ellpeck/ActuallyAdditions/blob/master/README.md
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2015 Ellpeck
+ * Â© 2015 Ellpeck
  */
 
 package ellpeck.actuallyadditions.creative;
@@ -39,7 +39,7 @@ public class CreativeTab extends CreativeTabs{
 
     @Override
     public Item getTabIconItem(){
-        return Item.getItemFromBlock(InitBlocks.blockPhantomLiquiface);
+        return InitItems.itemLexicon;
     }
 
     @Override
@@ -50,6 +50,7 @@ public class CreativeTab extends CreativeTabs{
         add(InitItems.itemLexicon);
         add(InitBlocks.blockSmileyCloud);
 
+        add(InitBlocks.blockLaserRelay);
         add(InitBlocks.blockPhantomface);
         add(InitBlocks.blockPhantomEnergyface);
         add(InitBlocks.blockPhantomLiquiface);
@@ -60,8 +61,6 @@ public class CreativeTab extends CreativeTabs{
         add(InitBlocks.blockPhantomBooster);
         add(InitBlocks.blockCoffeeMachine);
         add(InitBlocks.blockXPSolidifier);
-
-        add(InitBlocks.blockOreMagnet);
 
         add(InitBlocks.blockGreenhouseGlass);
         add(InitBlocks.blockGrinder);
@@ -104,6 +103,11 @@ public class CreativeTab extends CreativeTabs{
         add(InitBlocks.blockColoredLamp);
         add(InitBlocks.blockLampPowerer);
         add(InitBlocks.blockTreasureChest);
+
+        add(InitBlocks.blockBlackLotus);
+
+        add(InitItems.itemLaserWrench);
+        add(InitItems.itemChestToCrateUpgrade);
 
         add(InitItems.itemDrill);
         add(InitItems.itemDrillUpgradeSpeed);

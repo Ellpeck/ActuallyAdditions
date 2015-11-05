@@ -5,7 +5,7 @@
  * http://github.com/Ellpeck/ActuallyAdditions/blob/master/README.md
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2015 Ellpeck
+ * Â© 2015 Ellpeck
  */
 
 package ellpeck.actuallyadditions.items;
@@ -28,7 +28,8 @@ import java.util.List;
 public class ItemFoods extends ItemFood implements IActAddItemOrBlock{
 
     public static final TheFoods[] allFoods = TheFoods.values();
-    public IIcon[] textures = new IIcon[allFoods.length];
+    @SideOnly(Side.CLIENT)
+    public IIcon[] textures;
 
     public ItemFoods(){
         super(0, 0.0F, false);
@@ -74,6 +75,7 @@ public class ItemFoods extends ItemFood implements IActAddItemOrBlock{
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public IIcon getIconFromDamage(int par1){
         return par1 >= textures.length ? null : textures[par1];
     }
@@ -104,6 +106,7 @@ public class ItemFoods extends ItemFood implements IActAddItemOrBlock{
     @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister iconReg){
+        this.textures = new IIcon[allFoods.length];
         for(int i = 0; i < textures.length; i++){
             textures[i] = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+allFoods[i].name);
         }

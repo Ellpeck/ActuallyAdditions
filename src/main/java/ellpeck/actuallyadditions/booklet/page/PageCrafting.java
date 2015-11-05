@@ -5,14 +5,13 @@
  * http://github.com/Ellpeck/ActuallyAdditions/blob/master/README.md
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2015 Ellpeck
+ * Â© 2015 Ellpeck
  */
 
 package ellpeck.actuallyadditions.booklet.page;
 
 import cpw.mods.fml.relauncher.ReflectionHelper;
 import ellpeck.actuallyadditions.booklet.GuiBooklet;
-import ellpeck.actuallyadditions.booklet.InitBooklet;
 import ellpeck.actuallyadditions.proxy.ClientProxy;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
@@ -40,7 +39,7 @@ public class PageCrafting extends BookletPage{
     public PageCrafting(int id, IRecipe... recipes){
         super(id);
         this.recipes = recipes;
-        InitBooklet.pagesWithItemStackData.add(this);
+        this.addToPagesWithItemStackData();
     }
 
     @Override
@@ -94,7 +93,7 @@ public class PageCrafting extends BookletPage{
                 for(int i = 0; i < shaped.getInput().length; i++){
                     Object input = shaped.getInput()[i];
                     if(input != null){
-                        stacks[i] = input instanceof ItemStack ? (ItemStack)input : ((ArrayList<ItemStack>)input).get(0);
+                        stacks[i] = input instanceof ItemStack ? (ItemStack)input : (((ArrayList<ItemStack>)input).isEmpty() ? null : ((ArrayList<ItemStack>)input).get(0));
                     }
                 }
             }
@@ -102,7 +101,7 @@ public class PageCrafting extends BookletPage{
                 ShapelessOreRecipe shapeless = (ShapelessOreRecipe)recipe;
                 for(int i = 0; i < shapeless.getInput().size(); i++){
                     Object input = shapeless.getInput().get(i);
-                    stacks[i] = input instanceof ItemStack ? (ItemStack)input : ((ArrayList<ItemStack>)input).get(0);
+                    stacks[i] = input instanceof ItemStack ? (ItemStack)input : (((ArrayList<ItemStack>)input).isEmpty() ? null : ((ArrayList<ItemStack>)input).get(0));
                 }
             }
 
@@ -153,7 +152,7 @@ public class PageCrafting extends BookletPage{
 
     @Override
     public ItemStack[] getItemStacksForPage(){
-        if(this.recipes != null && this.recipes.length > 0){
+        if(this.recipes != null && this.recipes.length > 0 && this.recipes[0] != null){
             return new ItemStack[]{this.recipes[0].getRecipeOutput()};
         }
         return null;

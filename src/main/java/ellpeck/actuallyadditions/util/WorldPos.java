@@ -5,7 +5,7 @@
  * http://github.com/Ellpeck/ActuallyAdditions/blob/master/README.md
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2015 Ellpeck
+ * Â© 2015 Ellpeck
  */
 
 package ellpeck.actuallyadditions.util;
@@ -14,6 +14,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
 
@@ -25,10 +26,18 @@ public class WorldPos{
     private int worldID;
 
     public WorldPos(World world, int x, int y, int z){
-        this.worldID = world.provider.dimensionId;
+        this(world.provider.dimensionId, x, y, z);
+    }
+
+    public WorldPos(int worldID, int x, int y, int z){
+        this.worldID = worldID;
         this.x = x;
         this.y = y;
         this.z = z;
+    }
+
+    public int getWorldID(){
+        return this.worldID;
     }
 
     public TileEntity getTileEntity(){
@@ -83,5 +92,9 @@ public class WorldPos{
 
     public String toString(){
         return "["+this.x+", "+this.y+", "+this.z+" in world "+this.worldID+"]";
+    }
+
+    public Vec3 toVec(){
+        return Vec3.createVectorHelper(this.x, this.y, this.z);
     }
 }

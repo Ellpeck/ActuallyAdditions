@@ -5,13 +5,14 @@
  * http://github.com/Ellpeck/ActuallyAdditions/blob/master/README.md
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2015 Ellpeck
+ * Â© 2015 Ellpeck
  */
 
 package ellpeck.actuallyadditions.util;
 
 import net.minecraft.util.StatCollector;
 
+import java.util.Locale;
 import java.util.Objects;
 
 public class StringUtil{
@@ -42,7 +43,7 @@ public class StringUtil{
             return null;
         }
         else{
-            return string.toLowerCase();
+            return string.toLowerCase(Locale.ROOT);
         }
     }
 }

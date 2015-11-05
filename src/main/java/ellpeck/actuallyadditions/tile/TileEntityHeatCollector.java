@@ -5,7 +5,7 @@
  * http://github.com/Ellpeck/ActuallyAdditions/blob/master/README.md
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2015 Ellpeck
+ * Â© 2015 Ellpeck
  */
 
 package ellpeck.actuallyadditions.tile;
@@ -52,9 +52,10 @@ public class TileEntityHeatCollector extends TileEntityBase implements IEnergyPr
                         WorldUtil.breakBlockAtSide(WorldUtil.getDirectionBySidesInOrder(randomSide), worldObj, xCoord, yCoord, zCoord);
                     }
                 }
-                if(this.getEnergyStored(ForgeDirection.UNKNOWN) > 0){
-                    WorldUtil.pushEnergy(worldObj, xCoord, yCoord, zCoord, ForgeDirection.UP, this.storage);
-                }
+            }
+
+            if(this.getEnergyStored(ForgeDirection.UNKNOWN) > 0){
+                WorldUtil.pushEnergy(worldObj, xCoord, yCoord, zCoord, ForgeDirection.UP, this.storage);
             }
         }
     }

@@ -5,7 +5,7 @@
  * http://github.com/Ellpeck/ActuallyAdditions/blob/master/README.md
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2015 Ellpeck
+ * Â© 2015 Ellpeck
  */
 
 package ellpeck.actuallyadditions.items;
@@ -33,6 +33,7 @@ import java.util.List;
 public class ItemJams extends ItemFood implements IActAddItemOrBlock{
 
     public static final TheJams[] allJams = TheJams.values();
+    @SideOnly(Side.CLIENT)
     public IIcon overlayIcon;
 
     public ItemJams(){

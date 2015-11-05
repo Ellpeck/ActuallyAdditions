@@ -5,7 +5,7 @@
  * http://github.com/Ellpeck/ActuallyAdditions/blob/master/README.md
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2015 Ellpeck
+ * Â© 2015 Ellpeck
  */
 
 package ellpeck.actuallyadditions.tile;
@@ -74,7 +74,7 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
                 this.secondSmeltTime = 0;
             }
 
-            if(this.storage.getEnergyStored() >= ConfigIntValues.FURNACE_ENERGY_USED.getValue() && this.firstSmeltTime > 0 || this.secondSmeltTime > 0){
+            if(this.storage.getEnergyStored() >= ConfigIntValues.FURNACE_ENERGY_USED.getValue() && (this.firstSmeltTime > 0 || this.secondSmeltTime > 0)){
                 this.storage.extractEnergy(ConfigIntValues.FURNACE_ENERGY_USED.getValue(), false);
             }
 

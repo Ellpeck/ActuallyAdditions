@@ -5,7 +5,7 @@
  * http://github.com/Ellpeck/ActuallyAdditions/blob/master/README.md
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2015 Ellpeck
+ * Â© 2015 Ellpeck
  */
 
 package ellpeck.actuallyadditions.proxy;
@@ -22,6 +22,7 @@ import ellpeck.actuallyadditions.blocks.render.*;
 import ellpeck.actuallyadditions.config.values.ConfigBoolValues;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.event.InitEvents;
+import ellpeck.actuallyadditions.misc.special.SpecialRenderInit;
 import ellpeck.actuallyadditions.tile.*;
 import ellpeck.actuallyadditions.util.AssetUtil;
 import ellpeck.actuallyadditions.util.ModUtil;
@@ -99,5 +100,7 @@ public class ClientProxy implements IProxy{
     @Override
     public void postInit(FMLPostInitializationEvent event){
         ModUtil.LOGGER.info("PostInitializing ClientProxy...");
+
+        SpecialRenderInit.init();
     }
 }
