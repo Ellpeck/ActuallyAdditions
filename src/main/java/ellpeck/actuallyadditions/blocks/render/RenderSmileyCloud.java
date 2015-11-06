@@ -12,18 +12,23 @@ package ellpeck.actuallyadditions.blocks.render;
 
 import ellpeck.actuallyadditions.misc.cloud.ISmileyCloudEasterEgg;
 import ellpeck.actuallyadditions.misc.cloud.SmileyCloudEasterEggs;
+import ellpeck.actuallyadditions.proxy.ClientProxy;
 import ellpeck.actuallyadditions.tile.TileEntitySmileyCloud;
+import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
 import java.util.Random;
 
 public class RenderSmileyCloud extends RenderTileEntity{
+
+    private static final ResourceLocation resLocValentine = new ResourceLocation(ModUtil.MOD_ID_LOWER, "textures/blocks/models/modelPinkFluffyUnicloud.png");
 
     public RenderSmileyCloud(ModelBaseAA model){
         super(model);
@@ -75,7 +80,12 @@ public class RenderSmileyCloud extends RenderTileEntity{
                     }
                 }
 
-                this.bindTexture(resLoc);
+                if(ClientProxy.bulletForMyValentine || (theCloud.name != null && !theCloud.name.isEmpty() && theCloud.name.equals("Pink Fluffy Unicloud"))){
+                    this.bindTexture(resLocValentine);
+                }
+                else{
+                    this.bindTexture(resLoc);
+                }
 
                 theModel.render(0.0625F);
 

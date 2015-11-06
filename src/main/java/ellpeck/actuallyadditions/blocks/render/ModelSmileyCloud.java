@@ -10,7 +10,6 @@
 
 package ellpeck.actuallyadditions.blocks.render;
 
-import ellpeck.actuallyadditions.proxy.ClientProxy;
 import net.minecraft.client.model.ModelRenderer;
 
 public class ModelSmileyCloud extends ModelBaseAA{
@@ -162,7 +161,7 @@ public class ModelSmileyCloud extends ModelBaseAA{
 
     @Override
     public String getName(){
-        return ClientProxy.bulletForMyValentine ? "modelPinkFluffyUnicloud" : "modelSmileyCloud";
+        return "modelSmileyCloud";
     }
 
     @Override

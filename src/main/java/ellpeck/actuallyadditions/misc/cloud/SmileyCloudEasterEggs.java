@@ -358,6 +358,19 @@ public class SmileyCloudEasterEggs{
                 renderHeadBlock(InitBlocks.blockColoredLampOn, 4, 40F);
             }
         });
+        //AtomSponge
+        register(new ISmileyCloudEasterEgg(){
+            @Override
+            public String[] getTriggerNames(){
+                return new String[]{"sponge", "atomsponge", "atom", "explosions", "explosion"};
+            }
+
+            @Override
+            public void renderExtra(float f){
+                renderHoldingItem(false, new ItemStack(Items.gunpowder));
+                renderHeadBlock(Blocks.sponge, 2, 20F);
+            }
+        });
     }
 
     private static void register(ISmileyCloudEasterEgg egg){
