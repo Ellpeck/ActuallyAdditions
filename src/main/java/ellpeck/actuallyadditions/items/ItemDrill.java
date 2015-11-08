@@ -426,7 +426,7 @@ public class ItemDrill extends ItemEnergy{
         }
 
         //Break Blocks around
-        if(radius > 0){
+        if(radius > 0 && mainHardness >= 0.2F){
             for(int xPos = x-xRange; xPos <= x+xRange; xPos++){
                 for(int yPos = y-yRange; yPos <= y+yRange; yPos++){
                     for(int zPos = z-zRange; zPos <= z+zRange; zPos++){
