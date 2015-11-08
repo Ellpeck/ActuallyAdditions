@@ -82,6 +82,8 @@ public class InitBlocks{
     public static Block blockTestifiBucksWhiteStairs;
     public static Block blockTestifiBucksGreenSlab;
     public static Block blockTestifiBucksWhiteSlab;
+    public static Block blockTestifiBucksGreenFence;
+    public static Block blockTestifiBucksWhiteFence;
 
     public static Block blockColoredLamp;
     public static Block blockColoredLampOn;
@@ -136,6 +138,10 @@ public class InitBlocks{
         BlockUtil.register(blockTestifiBucksGreenSlab, BlockSlabs.TheItemBlock.class);
         blockTestifiBucksWhiteSlab = new BlockSlabs("blockTestifiBucksWhiteSlab", blockTestifiBucksWhiteWall);
         BlockUtil.register(blockTestifiBucksWhiteSlab, BlockSlabs.TheItemBlock.class);
+        blockTestifiBucksGreenFence = new BlockWallAA("blockTestifiBucksGreenFence", blockTestifiBucksGreenWall);
+        BlockUtil.register(blockTestifiBucksGreenFence);
+        blockTestifiBucksWhiteFence = new BlockWallAA("blockTestifiBucksWhiteFence", blockTestifiBucksWhiteWall);
+        BlockUtil.register(blockTestifiBucksWhiteFence);
 
         blockColoredLamp = new BlockColoredLamp(false);
         BlockUtil.register(blockColoredLamp, BlockColoredLamp.TheItemBlock.class);

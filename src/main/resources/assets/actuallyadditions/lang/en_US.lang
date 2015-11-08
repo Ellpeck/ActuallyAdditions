@@ -79,12 +79,12 @@ tile.actuallyadditions.blockWildCanola.name=Wild Canola
 tile.actuallyadditions.blockWildRice.name=Wild Rice
 tile.actuallyadditions.blockWildCoffee.name=Wild Coffee
 tile.actuallyadditions.blockWildFlax.name=Wild Flax
-tile.actuallyadditions.blockTestifiBucksGreenWall.name=Green TestifiBucks Wall
-tile.actuallyadditions.blockTestifiBucksWhiteWall.name=White TestifiBucks Wall
-tile.actuallyadditions.blockTestifiBucksGreenStairs.name=Green TestifiBucks Stairs
-tile.actuallyadditions.blockTestifiBucksWhiteStairs.name=White TestifiBucks Stairs
-tile.actuallyadditions.blockTestifiBucksGreenSlab.name=Green TestifiBucks Slab
-tile.actuallyadditions.blockTestifiBucksWhiteSlab.name=White TestifiBucks Slab
+tile.actuallyadditions.blockTestifiBucksGreenWall.name=Green TB Block
+tile.actuallyadditions.blockTestifiBucksWhiteWall.name=White TB Block
+tile.actuallyadditions.blockTestifiBucksGreenStairs.name=Green TB Stairs
+tile.actuallyadditions.blockTestifiBucksWhiteStairs.name=White TB Stairs
+tile.actuallyadditions.blockTestifiBucksGreenSlab.name=Green TB Slab
+tile.actuallyadditions.blockTestifiBucksWhiteSlab.name=White TB Slab
 tile.actuallyadditions.blockCanola.name=Canola Plant
 tile.actuallyadditions.blockTreasureChest.name=Treasure Chest
 tile.actuallyadditions.blockCanolaPress.name=Canola Press
@@ -107,6 +107,8 @@ tile.actuallyadditions.blockRangedCollector.name=Ranged Collector
 tile.actuallyadditions.blockLaserRelay.name=Laser Relay
 tile.actuallyadditions.blockMiscIronCasing.name=Iron Casing
 tile.actuallyadditions.blockBlackLotus.name=Black Lotus
+tile.actuallyadditions.blockTestifiBucksWhiteFence.name=White TB Wall
+tile.actuallyadditions.blockTestifiBucksGreenFence.name=Green TB Wall
 
 #ESD
 tile.actuallyadditions.blockInputter.name=ESD
