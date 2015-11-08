@@ -68,7 +68,6 @@ public class ActuallyAdditions{
         InitArmorMaterials.init();
         InitBlocks.init();
         InitItems.init();
-        InitVillager.init();
         FuelHandler.init();
         UpdateChecker.init();
         proxy.preInit(event);
@@ -97,6 +96,7 @@ public class ActuallyAdditions{
     public void postInit(FMLPostInitializationEvent event){
         ModUtil.LOGGER.info("Starting PostInitialization Phase...");
 
+        InitVillager.init();
         ItemCoffee.initIngredients();
         CrusherCrafting.init();
         ItemCrafting.initMashedFoodRecipes();
