@@ -10,6 +10,8 @@
 
 package ellpeck.actuallyadditions.blocks.metalists;
 
+import ellpeck.actuallyadditions.util.StringUtil;
+
 public enum TheColoredLampColors{
 
     WHITE("White"),
@@ -39,7 +41,7 @@ public enum TheColoredLampColors{
         if(color.substring(0, 3).equals("dye")){
             String actualName = color.substring(3);
             for(int i = 0; i < values().length; i++){
-                if(values()[i].name.equals(actualName)){
+                if(StringUtil.equalsToLowerCase(values()[i].name, actualName)){
                     return values()[i];
                 }
             }

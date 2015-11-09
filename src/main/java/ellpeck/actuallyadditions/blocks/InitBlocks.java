@@ -101,9 +101,13 @@ public class InitBlocks{
     public static Block blockLaserRelay;
 
     public static Block blockBlackLotus;
+    public static Block blockCrystal;
 
     public static void init(){
         ModUtil.LOGGER.info("Initializing Blocks...");
+
+        blockCrystal = new BlockCrystal();
+        BlockUtil.register(blockCrystal, BlockCrystal.TheItemBlock.class);
 
         blockBlackLotus = new BlockBlackLotus();
         BlockUtil.register(blockBlackLotus);
