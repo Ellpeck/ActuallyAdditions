@@ -144,6 +144,7 @@ public enum ConfigCrafting{
     NICKEL("Nickel Ore -> Nickel Dust + Platinum Dust", ConfigCategories.CRUSHER_RECIPES, "Crusher"),
     IRON("Iron Ore -> Iron Dust + Gold Dust", ConfigCategories.CRUSHER_RECIPES, "Crusher"),
     HORSE_ARMORS("Horse Armor -> Raw Materials", ConfigCategories.CRUSHER_RECIPES, "Crusher"),
+    CRUSHER_MISC("Misc. Crusher Recipes like Bone Meal & Dyes", ConfigCategories.CRUSHER_RECIPES, "Crusher"),
 
     TELE_STAFF("Tele Staff", ConfigCategories.ITEMS_CRAFTING),
     CASING("Casing", ConfigCategories.BLOCKS_CRAFTING),

@@ -15,15 +15,54 @@ import ellpeck.actuallyadditions.recipe.CrusherRecipeRegistry;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.Util;
 
+import java.util.ArrayList;
+
 public class CrusherCrafting{
 
     public static CrusherRecipeRegistry.CrusherRecipe recipeSugar;
     public static CrusherRecipeRegistry.CrusherRecipe recipeIronHorseArmor;
     public static CrusherRecipeRegistry.CrusherRecipe recipeGoldHorseArmor;
     public static CrusherRecipeRegistry.CrusherRecipe recipeDiamondHorseArmor;
+    public static ArrayList<CrusherRecipeRegistry.CrusherRecipe> miscRecipes = new ArrayList<CrusherRecipeRegistry.CrusherRecipe>();
 
     public static void init(){
         ModUtil.LOGGER.info("Initializing Crusher Recipes...");
+
+        if(ConfigCrafting.CRUSHER_MISC.isEnabled()){
+            CrusherRecipeRegistry.addRecipe("itemBone", "boneMeal", 6);
+            miscRecipes.add(Util.GetRecipes.lastCrusherRecipe());
+            CrusherRecipeRegistry.addRecipe("sugarCane", "sugar", 3);
+            miscRecipes.add(Util.GetRecipes.lastCrusherRecipe());
+
+            CrusherRecipeRegistry.addRecipe("flowerDandelion", "dyeYellow", 3);
+            miscRecipes.add(Util.GetRecipes.lastCrusherRecipe());
+            CrusherRecipeRegistry.addRecipe("flowerPoppy", "dyeRed", 3);
+            miscRecipes.add(Util.GetRecipes.lastCrusherRecipe());
+            CrusherRecipeRegistry.addRecipe("flowerOrchid", "dyeLightBlue", 3);
+            miscRecipes.add(Util.GetRecipes.lastCrusherRecipe());
+            CrusherRecipeRegistry.addRecipe("flowerAllium", "dyeMagenta", 3);
+            miscRecipes.add(Util.GetRecipes.lastCrusherRecipe());
+            CrusherRecipeRegistry.addRecipe("flowerBluet", "dyeLightGray", 3);
+            miscRecipes.add(Util.GetRecipes.lastCrusherRecipe());
+            CrusherRecipeRegistry.addRecipe("flowerRedTulip", "dyeRed", 3);
+            miscRecipes.add(Util.GetRecipes.lastCrusherRecipe());
+            CrusherRecipeRegistry.addRecipe("flowerOrangeTulip", "dyeOrange", 3);
+            miscRecipes.add(Util.GetRecipes.lastCrusherRecipe());
+            CrusherRecipeRegistry.addRecipe("flowerWhiteTulip", "dyeLightGray", 3);
+            miscRecipes.add(Util.GetRecipes.lastCrusherRecipe());
+            CrusherRecipeRegistry.addRecipe("flowerPinkTulip", "dyePink", 3);
+            miscRecipes.add(Util.GetRecipes.lastCrusherRecipe());
+            CrusherRecipeRegistry.addRecipe("flowerDaisy", "dyeLightGray", 3);
+            miscRecipes.add(Util.GetRecipes.lastCrusherRecipe());
+            CrusherRecipeRegistry.addRecipe("flowerSunflower", "dyeYellow", 4);
+            miscRecipes.add(Util.GetRecipes.lastCrusherRecipe());
+            CrusherRecipeRegistry.addRecipe("flowerLilac", "dyeMagenta", 4);
+            miscRecipes.add(Util.GetRecipes.lastCrusherRecipe());
+            CrusherRecipeRegistry.addRecipe("flowerRoseBush", "dyeRed", 4);
+            miscRecipes.add(Util.GetRecipes.lastCrusherRecipe());
+            CrusherRecipeRegistry.addRecipe("flowerPeony", "dyePink", 4);
+            miscRecipes.add(Util.GetRecipes.lastCrusherRecipe());
+        }
 
         if(ConfigCrafting.REDSTONE.isEnabled()){
             CrusherRecipeRegistry.addRecipe("oreRedstone", "dustRedstone", 10);

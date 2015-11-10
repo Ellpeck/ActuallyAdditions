@@ -39,6 +39,25 @@ public class InitOreDict{
         addOre(Items.diamond_horse_armor, "armorHorseDiamond");
         addOre(Items.golden_horse_armor, "armorHorseGold");
         addOre(Items.iron_horse_armor, "armorHorseIron");
+        addOre(Items.bone, "itemBone");
+        addOre(Items.dye, 15, "boneMeal");
+        addOre(Items.sugar, "sugar");
+        addOre(Items.reeds, "sugarCane");
+
+        addOre(Blocks.yellow_flower, "flowerDandelion");
+        addOre(Blocks.red_flower, "flowerPoppy");
+        addOre(Blocks.red_flower, 1, "flowerOrchid");
+        addOre(Blocks.red_flower, 2, "flowerAllium");
+        addOre(Blocks.red_flower, 3, "flowerBluet");
+        addOre(Blocks.red_flower, 4, "flowerRedTulip");
+        addOre(Blocks.red_flower, 5, "flowerOrangeTulip");
+        addOre(Blocks.red_flower, 6, "flowerWhiteTulip");
+        addOre(Blocks.red_flower, 7, "flowerPinkTulip");
+        addOre(Blocks.red_flower, 8, "flowerDaisy");
+        addOre(Blocks.double_plant, 0, "flowerSunflower");
+        addOre(Blocks.double_plant, 1, "flowerLilac");
+        addOre(Blocks.double_plant, 4, "flowerRoseBush");
+        addOre(Blocks.double_plant, 5, "flowerPeony");
 
         //My Ores
         addOre(InitItems.itemDust, TheDusts.IRON.ordinal(), "dustIron");

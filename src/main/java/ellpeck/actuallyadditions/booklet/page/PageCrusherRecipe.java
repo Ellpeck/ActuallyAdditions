@@ -26,9 +26,7 @@ public class PageCrusherRecipe extends BookletPage{
 
     public CrusherRecipeRegistry.CrusherRecipe recipe;
 
-    private int inputPos;
-    private int outOnePos;
-    private int outTwoPos;
+    private int recipePos;
 
     public PageCrusherRecipe(int id, CrusherRecipeRegistry.CrusherRecipe recipe){
         super(id);
@@ -71,14 +69,14 @@ public class PageCrusherRecipe extends BookletPage{
                         ItemStack stack;
                         switch(j){
                             case 0:
-                                stack = this.recipe.getRecipeInputs().get(this.inputPos);
+                                stack = this.recipe.getRecipeInputs().get(Math.min(this.recipe.getRecipeInputs().size()-1, this.recipePos));
                                 break;
                             case 1:
-                                stack = this.recipe.getRecipeOutputOnes().get(this.outOnePos);
+                                stack = this.recipe.getRecipeOutputOnes().get(Math.min(this.recipe.getRecipeOutputOnes().size()-1, this.recipePos));
                                 break;
                             default:
                                 ArrayList<ItemStack> outputTwos = this.recipe.getRecipeOutputTwos();
-                                stack = outputTwos == null ? null : outputTwos.get(this.outTwoPos);
+                                stack = outputTwos == null ? null : outputTwos.get(Math.min(outputTwos.size()-1, this.recipePos));
                                 break;
                         }
 
@@ -109,19 +107,12 @@ public class PageCrusherRecipe extends BookletPage{
     @Override
     public void updateScreen(int ticksElapsed){
         if(ticksElapsed%10 == 0){
-            if(this.inputPos+1 < this.recipe.getRecipeInputs().size()){
-                this.inputPos++;
-            }
-            else if(this.outOnePos+1 < this.recipe.getRecipeOutputOnes().size()){
-                this.outOnePos++;
-            }
-            else if(this.recipe.getRecipeOutputTwos() != null && this.outTwoPos+1 < this.recipe.getRecipeOutputTwos().size()){
-                this.outTwoPos++;
+            ArrayList<ItemStack> outputTwos = this.recipe.getRecipeOutputTwos();
+            if(this.recipePos+1 >= Math.max(this.recipe.getRecipeInputs().size(), Math.max(this.recipe.getRecipeOutputOnes().size(), outputTwos == null ? 0 : outputTwos.size()))){
+                this.recipePos = 0;
             }
             else{
-                this.inputPos = 0;
-                this.outOnePos = 0;
-                this.outTwoPos = 0;
+                this.recipePos++;
             }
         }
     }
