@@ -238,20 +238,6 @@ public class SmileyCloudEasterEggs{
                 renderHeadBlock(Blocks.web, 0, 56F);
             }
         });
-        //Lordi
-        register(new ISmileyCloudEasterEgg(){
-            @Override
-            public String[] getTriggerNames(){
-                return new String[]{"lordi", "lordhallo"};
-            }
-
-            @Override
-            public void renderExtra(float f){
-                renderHoldingItem(true, new ItemStack(Items.paper));
-                renderHoldingItem(false, new ItemStack(InitItems.itemMisc, 1, TheMiscItems.RING.ordinal()));
-                renderHeadBlock(Blocks.quartz_block, 0, 17F);
-            }
-        });
         //ShadowNinjaCat
         register(new ISmileyCloudEasterEgg(){
             @Override
