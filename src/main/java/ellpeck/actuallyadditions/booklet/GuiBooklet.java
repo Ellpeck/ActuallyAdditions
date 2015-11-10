@@ -117,6 +117,10 @@ public class GuiBooklet extends GuiScreen{
                 this.drawCenteredString(this.fontRendererObj, this.pageOpenInIndex+"/"+this.indexPageAmount, this.guiLeft+this.xSize/2, this.guiTop+172, StringUtil.DECIMAL_COLOR_WHITE);
             }
         }
+        else{
+            String wordCountString = StringUtil.localizeFormatted("booklet."+ModUtil.MOD_ID_LOWER+".amountOfWords", InitBooklet.wordCount);
+            this.fontRendererObj.drawString(EnumChatFormatting.ITALIC+wordCountString, this.guiLeft+this.xSize-this.fontRendererObj.getStringWidth(wordCountString)-15, this.guiTop+this.ySize-18, 0);
+        }
 
         super.drawScreen(x, y, f);
         this.searchField.drawTextBox();

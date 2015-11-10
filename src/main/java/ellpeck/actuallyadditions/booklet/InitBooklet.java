@@ -30,6 +30,7 @@ public class InitBooklet{
 
     public static ArrayList<BookletIndexEntry> entries = new ArrayList<BookletIndexEntry>();
     public static ArrayList<BookletPage> pagesWithItemStackData = new ArrayList<BookletPage>();
+    public static int wordCount;
 
     public static BookletChapter chapterIntro;
 
@@ -41,7 +42,7 @@ public class InitBooklet{
     public static BookletIndexEntry entryMisc = new BookletIndexEntry("misc");
     public static BookletIndexEntry allAndSearch = new BookletEntryAllSearch("allAndSearch").setImportant();
 
-    static{
+    private static void initChapters(){
         chapterIntro = new BookletChapter("intro", entryMisc, new ItemStack(InitItems.itemLexicon), new PageTextOnly(1), new PageTextOnly(2), new PageTextOnly(3), new PageCrafting(4, ItemCrafting.recipeBook)).setImportant();
 
         //Miscellaneous
@@ -119,5 +120,24 @@ public class InitBooklet{
         new BookletChapter("growthRing", entryItemsRF, new ItemStack(InitItems.itemGrowthRing), new PageCrafting(1, ItemCrafting.recipeGrowthRing));
         new BookletChapter("waterRemovalRing", entryItemsRF, new ItemStack(InitItems.itemWaterRemovalRing), new PageCrafting(1, ItemCrafting.recipeWaterRing));
         new BookletChapter("batteries", entryItemsRF, new ItemStack(InitItems.itemBatteryTriple), new PageTextOnly(1), new PageCrafting(2, ItemCrafting.recipeBattery).setNoText(), new PageCrafting(3, ItemCrafting.recipeBatteryDouble).setNoText(), new PageCrafting(4, ItemCrafting.recipeBatteryTriple).setNoText(), new PageCrafting(5, ItemCrafting.recipeBatteryQuadruple).setNoText(), new PageCrafting(6, ItemCrafting.recipeBatteryQuintuple).setNoText());
+    }
+
+    static{
+        initChapters();
+        countWords();
+    }
+
+    private static void countWords(){
+        for(BookletIndexEntry entry : entries){
+            for(BookletChapter chapter : entry.chapters){
+                for(BookletPage page : chapter.pages){
+                    if(page.getText() != null){
+                        wordCount += page.getText().split(" ").length;
+                    }
+                }
+                wordCount += chapter.getLocalizedName().split(" ").length;
+            }
+            wordCount += entry.getLocalizedName().split(" ").length;
+        }
     }
 }
