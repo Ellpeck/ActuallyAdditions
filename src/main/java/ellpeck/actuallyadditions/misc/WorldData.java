@@ -37,16 +37,22 @@ public class WorldData extends WorldSavedData{
         if(server != null){
             World world = server.getEntityWorld();
             if(!world.isRemote){
-                WorldSavedData savedData = world.loadItemData(WorldData.class, WorldData.DATA_TAG);
+                ModUtil.LOGGER.info("Loading WorldData!");
+
+                WorldData savedData = (WorldData)world.loadItemData(WorldData.class, WorldData.DATA_TAG);
                 //Generate new SavedData
                 if(savedData == null){
+                    ModUtil.LOGGER.info("No WorldData found, creating...");
+
                     savedData = new WorldData(WorldData.DATA_TAG);
                     world.setItemData(WorldData.DATA_TAG, savedData);
                 }
-                //Set the current SavedData to the retreived one
-                if(savedData instanceof WorldData){
-                    WorldData.instance = (WorldData)savedData;
+                else{
+                    ModUtil.LOGGER.info("WorldData sucessfully received!");
                 }
+
+                //Set the current SavedData to the retreived one
+                WorldData.instance = savedData;
             }
         }
     }

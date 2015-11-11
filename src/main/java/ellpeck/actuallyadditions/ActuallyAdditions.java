@@ -47,6 +47,7 @@ import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.Util;
 import ellpeck.actuallyadditions.util.playerdata.PersistentServerData;
 import net.minecraft.init.Items;
+import net.minecraft.server.MinecraftServer;
 
 //                                                                           So that BuildCraft Oil always gets used
 @Mod(modid = ModUtil.MOD_ID, name = ModUtil.NAME, version = ModUtil.VERSION, dependencies = "after:BuildCraft|Energy", canBeDeactivated = false, guiFactory = "ellpeck.actuallyadditions.config.GuiFactory")
@@ -119,8 +120,11 @@ public class ActuallyAdditions{
         Util.registerDispenserHandler(InitItems.itemBucketCanolaOil, new DispenserHandlerEmptyBucket());
         Util.registerDispenserHandler(Items.bucket, new DispenserHandlerFillBucket());
         Util.registerDispenserHandler(InitItems.itemFertilizer, new DispenserHandlerFertilize());
+    }
 
-        WorldData.init(event.getServer());
+    @EventHandler
+    public void serverStarted(FMLServerStartedEvent event){
+        WorldData.init(MinecraftServer.getServer());
     }
 
     @EventHandler
