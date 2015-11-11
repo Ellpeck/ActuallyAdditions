@@ -80,7 +80,7 @@ public class BookletUtils{
      * Pre-renders the booklet page, including
      * -the number of a page and its content (text, crafting recipe etc.)
      * -the number of a page in a chapter
-     * -the amount of words in the index
+     * -the amount of words and chars in the index (Just for teh lulz)
      */
     public static void renderPre(GuiBooklet booklet, int mouseX, int mouseY, int ticksElapsed, boolean mousePressed){
         if(booklet.currentIndexEntry != null){
@@ -94,10 +94,13 @@ public class BookletUtils{
                 booklet.drawCenteredString(booklet.getFontRenderer(), booklet.pageOpenInIndex+"/"+booklet.indexPageAmount, booklet.guiLeft+booklet.xSize/2, booklet.guiTop+172, StringUtil.DECIMAL_COLOR_WHITE);
             }
         }
-        //Renders the amount of words the book has
+        //Renders the amount of words and chars the book has
         else{
             String wordCountString = StringUtil.localizeFormatted("booklet."+ModUtil.MOD_ID_LOWER+".amountOfWords", InitBooklet.wordCount);
-            booklet.getFontRenderer().drawString(EnumChatFormatting.ITALIC+wordCountString, booklet.guiLeft+booklet.xSize-booklet.getFontRenderer().getStringWidth(wordCountString)-15, booklet.guiTop+booklet.ySize-18, 0);
+            booklet.getFontRenderer().drawString(EnumChatFormatting.ITALIC+wordCountString, booklet.guiLeft+booklet.xSize-booklet.getFontRenderer().getStringWidth(wordCountString)-15, booklet.guiTop+booklet.ySize-18-booklet.getFontRenderer().FONT_HEIGHT, 0);
+
+            String charCountString = StringUtil.localizeFormatted("booklet."+ModUtil.MOD_ID_LOWER+".amountOfChars", InitBooklet.charCount);
+            booklet.getFontRenderer().drawString(EnumChatFormatting.ITALIC+charCountString, booklet.guiLeft+booklet.xSize-booklet.getFontRenderer().getStringWidth(charCountString)-15, booklet.guiTop+booklet.ySize-18, 0);
         }
     }
 

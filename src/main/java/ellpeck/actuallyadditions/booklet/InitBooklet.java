@@ -35,7 +35,9 @@ public class InitBooklet{
 
     public static ArrayList<BookletEntry> entries = new ArrayList<BookletEntry>();
     public static ArrayList<BookletPage> pagesWithItemStackData = new ArrayList<BookletPage>();
+
     public static int wordCount;
+    public static int charCount;
 
     public static BookletChapter chapterIntro;
 
@@ -138,11 +140,14 @@ public class InitBooklet{
                 for(BookletPage page : chapter.pages){
                     if(page.getText() != null){
                         wordCount += page.getText().split(" ").length;
+                        charCount += page.getText().length();
                     }
                 }
                 wordCount += chapter.getLocalizedName().split(" ").length;
+                charCount += chapter.getLocalizedName().length();
             }
             wordCount += entry.getLocalizedName().split(" ").length;
+            charCount += entry.getLocalizedName().length();
         }
     }
 }
