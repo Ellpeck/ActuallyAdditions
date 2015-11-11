@@ -128,13 +128,13 @@ public class InitItems{
     public static Item itemChestToCrateUpgrade;
 
     public static Item itemLaserWrench;
-    public static Item itemCrystal;
+    //public static Item itemCrystal;
 
     public static void init(){
         ModUtil.LOGGER.info("Initializing Items...");
 
-        itemCrystal = new ItemCrystal();
-        ItemUtil.register(itemCrystal);
+        //itemCrystal = new ItemCrystal();
+        //ItemUtil.register(itemCrystal);
 
         itemLaserWrench = new ItemLaserWrench();
         ItemUtil.register(itemLaserWrench);

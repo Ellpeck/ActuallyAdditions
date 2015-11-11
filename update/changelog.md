@@ -1,3 +1,14 @@
+# 1.7.10-r4
+- Fixed the Drill not being able to mine Obsidian correctly when its harvest level was set higher than 4
+- AtomSponge Smiley Cloud
+- TB Stairs, Walls, Slabs and Blocks. Unused as of yet, however you can craft and build with them.
+- Moved Villager Registring to PostInit to prevent OreDictionary derpups with items getting changed
+- Drill + Torches = Instant 3x3 Mining? Nope!
+- Misc Crusher Recipes
+- Booklet Word and Character Counter to the booklet. Doesn't do anything, it's just kinda fun
+- Update Smiley Cloud Easter Eggs
+- Hopefully fixed Laser Relay Connections sometimes breaking when quitting a world or server
+
 # 1.7.10-r3
 - Fixed the Heat Collector not outputting power if its internal buffer is full
 - Fixed Crash when the manual was open during a world crash or kick
