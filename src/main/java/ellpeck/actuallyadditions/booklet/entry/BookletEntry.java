@@ -8,21 +8,23 @@
  * © 2015 Ellpeck
  */
 
-package ellpeck.actuallyadditions.booklet;
+package ellpeck.actuallyadditions.booklet.entry;
 
+import ellpeck.actuallyadditions.booklet.InitBooklet;
+import ellpeck.actuallyadditions.booklet.chapter.BookletChapter;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
 import net.minecraft.util.EnumChatFormatting;
 
 import java.util.ArrayList;
 
-public class BookletIndexEntry{
+public class BookletEntry{
 
     private final String unlocalizedName;
     public ArrayList<BookletChapter> chapters = new ArrayList<BookletChapter>();
     private EnumChatFormatting color;
 
-    public BookletIndexEntry(String unlocalizedName){
+    public BookletEntry(String unlocalizedName){
         this.unlocalizedName = unlocalizedName;
         InitBooklet.entries.add(this);
 
@@ -45,12 +47,12 @@ public class BookletIndexEntry{
         return StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".indexEntry."+this.unlocalizedName+".name");
     }
 
-    public BookletIndexEntry setImportant(){
+    public BookletEntry setImportant(){
         this.color = EnumChatFormatting.DARK_GREEN;
         return this;
     }
 
-    public BookletIndexEntry setSpecial(){
+    public BookletEntry setSpecial(){
         this.color = EnumChatFormatting.DARK_PURPLE;
         return this;
     }

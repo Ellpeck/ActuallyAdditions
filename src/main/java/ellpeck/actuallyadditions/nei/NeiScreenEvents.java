@@ -13,6 +13,7 @@ package ellpeck.actuallyadditions.nei;
 import codechicken.nei.recipe.GuiRecipe;
 import codechicken.nei.recipe.IRecipeHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import ellpeck.actuallyadditions.booklet.BookletUtils;
 import ellpeck.actuallyadditions.booklet.GuiBooklet;
 import ellpeck.actuallyadditions.booklet.InitBooklet;
 import ellpeck.actuallyadditions.booklet.page.BookletPage;
@@ -25,7 +26,7 @@ import net.minecraftforge.client.event.GuiScreenEvent;
 public class NeiScreenEvents{
 
     private static final int NEI_BUTTON_ID = 123782;
-    private GuiBooklet.TexturedButton neiButton;
+    private BookletUtils.TexturedButton neiButton;
 
     @SuppressWarnings("unchecked")
     @SubscribeEvent
@@ -38,7 +39,7 @@ public class NeiScreenEvents{
             int guiLeft = (event.gui.width-xSize)/2;
             int guiTop = (event.gui.height-ySize)/2;
 
-            this.neiButton = new GuiBooklet.TexturedButton(NEI_BUTTON_ID, guiLeft+xSize-24, guiTop+127, 146, 154, 20, 20){
+            this.neiButton = new BookletUtils.TexturedButton(NEI_BUTTON_ID, guiLeft+xSize-24, guiTop+127, 146, 154, 20, 20){
                 @Override
                 public void drawButton(Minecraft minecraft, int x, int y){
                     super.drawButton(minecraft, x, y);
@@ -69,8 +70,8 @@ public class NeiScreenEvents{
                     if(ItemUtil.contains(page.getItemStacksForPage(), ((INeiRecipeHandler)handler).getStackForInfo(theGui.page), true)){
                         GuiBooklet book = new GuiBooklet(Minecraft.getMinecraft().currentScreen);
                         Minecraft.getMinecraft().displayGuiScreen(book);
-                        book.openIndexEntry(page.getChapter().entry, InitBooklet.entries.indexOf(page.getChapter().entry)/GuiBooklet.CHAPTER_BUTTONS_AMOUNT+1, true);
-                        book.openChapter(page.getChapter(), page);
+                        BookletUtils.openIndexEntry(book, page.getChapter().entry, InitBooklet.entries.indexOf(page.getChapter().entry)/GuiBooklet.CHAPTER_BUTTONS_AMOUNT+1, true);
+                        BookletUtils.openChapter(book, page.getChapter(), page);
                     }
                 }
             }

@@ -12,10 +12,11 @@ package ellpeck.actuallyadditions.util.playerdata;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ellpeck.actuallyadditions.booklet.BookletChapter;
-import ellpeck.actuallyadditions.booklet.BookletIndexEntry;
+import ellpeck.actuallyadditions.booklet.BookletUtils;
 import ellpeck.actuallyadditions.booklet.GuiBooklet;
 import ellpeck.actuallyadditions.booklet.InitBooklet;
+import ellpeck.actuallyadditions.booklet.chapter.BookletChapter;
+import ellpeck.actuallyadditions.booklet.entry.BookletEntry;
 import ellpeck.actuallyadditions.booklet.page.BookletPage;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.client.Minecraft;
@@ -31,7 +32,7 @@ public class PersistentClientData{
 
     private static File theFile;
 
-    public static void saveBookPage(BookletIndexEntry entry, BookletChapter chapter, BookletPage page, int pageInIndex, String searchWord){
+    public static void saveBookPage(BookletEntry entry, BookletChapter chapter, BookletPage page, int pageInIndex, String searchWord){
         NBTTagCompound baseCompound = getBaseCompound();
         NBTTagCompound worldCompound = getCompoundForWorld(baseCompound);
         if(worldCompound != null){
@@ -97,25 +98,25 @@ public class PersistentClientData{
             int chapter = worldCompound.getInteger("Chapter");
             int page = worldCompound.getInteger("Page");
 
-            BookletIndexEntry currentIndexEntry = entry == -1 ? null : InitBooklet.entries.get(entry);
+            BookletEntry currentIndexEntry = entry == -1 ? null : InitBooklet.entries.get(entry);
             BookletChapter currentChapter = chapter == -1 || entry == -1 || currentIndexEntry.chapters.size() <= chapter ? null : currentIndexEntry.chapters.get(chapter);
             BookletPage currentPage = chapter == -1 || currentChapter == null || currentChapter.pages.length <= page-1 ? null : currentChapter.pages[page-1];
             int pageInIndex = worldCompound.getInteger("PageInIndex");
 
-            gui.openIndexEntry(currentIndexEntry, pageInIndex, true);
+            BookletUtils.openIndexEntry(gui, currentIndexEntry, pageInIndex, true);
             if(currentChapter != null){
-                gui.openChapter(currentChapter, currentPage);
+                BookletUtils.openChapter(gui, currentChapter, currentPage);
             }
 
             String searchText = worldCompound.getString("SearchWord");
             if(!searchText.isEmpty()){
                 gui.searchField.setText(searchText);
-                gui.updateSearchBar();
+                BookletUtils.updateSearchBar(gui);
             }
         }
         else{
             //If everything fails, initialize the front page
-            gui.openIndexEntry(null, 1, true);
+            BookletUtils.openIndexEntry(gui, null, 1, true);
         }
     }
 

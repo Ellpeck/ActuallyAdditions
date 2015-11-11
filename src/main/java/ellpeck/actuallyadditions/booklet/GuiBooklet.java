@@ -12,28 +12,23 @@ package ellpeck.actuallyadditions.booklet;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import ellpeck.actuallyadditions.booklet.chapter.BookletChapter;
+import ellpeck.actuallyadditions.booklet.entry.BookletEntry;
+import ellpeck.actuallyadditions.booklet.entry.BookletEntryAllSearch;
 import ellpeck.actuallyadditions.booklet.page.BookletPage;
 import ellpeck.actuallyadditions.config.GuiConfiguration;
 import ellpeck.actuallyadditions.proxy.ClientProxy;
 import ellpeck.actuallyadditions.update.UpdateChecker;
-import ellpeck.actuallyadditions.util.*;
+import ellpeck.actuallyadditions.util.AssetUtil;
 import ellpeck.actuallyadditions.util.playerdata.PersistentClientData;
-import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
-import net.minecraft.client.renderer.OpenGlHelper;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.IChatComponent;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
-import java.awt.*;
-import java.net.URI;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 
 @SideOnly(Side.CLIENT)
 public class GuiBooklet extends GuiScreen{
@@ -50,24 +45,24 @@ public class GuiBooklet extends GuiScreen{
     public int guiTop;
     public BookletPage currentPage;
     public BookletChapter currentChapter;
-    public BookletIndexEntry currentIndexEntry;
+    public BookletEntry currentIndexEntry;
     public int pageOpenInIndex;
     public int indexPageAmount;
-    private GuiButton buttonForward;
-    private GuiButton buttonBackward;
-    private GuiButton buttonPreviousScreen;
-    private GuiButton buttonPreviouslyOpenedGui;
-    private GuiButton buttonUpdate;
-    private GuiButton buttonTwitter;
-    private GuiButton buttonForum;
-    private GuiButton buttonAchievements;
-    private GuiButton buttonConfig;
-    private GuiButton[] chapterButtons = new GuiButton[CHAPTER_BUTTONS_AMOUNT];
+    public GuiButton buttonForward;
+    public GuiButton buttonBackward;
+    public GuiButton buttonPreviousScreen;
+    public GuiButton buttonPreviouslyOpenedGui;
+    public GuiButton buttonUpdate;
+    public GuiButton buttonTwitter;
+    public GuiButton buttonForum;
+    public GuiButton buttonAchievements;
+    public GuiButton buttonConfig;
+    public GuiButton[] chapterButtons = new GuiButton[CHAPTER_BUTTONS_AMOUNT];
     public GuiTextField searchField;
     private int ticksElapsed;
     private boolean mousePressed;
 
-    private GuiScreen parentScreen;
+    public GuiScreen parentScreen;
 
     public GuiBooklet(GuiScreen parentScreen){
         this.xSize = 146;
@@ -79,93 +74,50 @@ public class GuiBooklet extends GuiScreen{
         super.func_146283_a(list, x, y);
     }
 
-    @SuppressWarnings("unchecked")
+    public FontRenderer getFontRenderer(){
+        return this.fontRendererObj;
+    }
+
     @Override
     public void drawScreen(int x, int y, float f){
+        //Fixes Unicode flag
         boolean unicodeBefore = this.fontRendererObj.getUnicodeFlag();
         this.fontRendererObj.setUnicodeFlag(true);
 
+        //Draws the Background
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(ClientProxy.jingleAllTheWay ? resLocChristmas : (ClientProxy.pumpkinBlurPumpkinBlur ? resLocHalloween : (ClientProxy.bulletForMyValentine ? resLocValentine : resLoc)));
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
         this.mc.getTextureManager().bindTexture(resLoc);
 
+        //Draws the search bar
         if(this.currentIndexEntry instanceof BookletEntryAllSearch && this.currentChapter == null){
             this.drawTexturedModalRect(this.guiLeft+146, this.guiTop+160, 146, 80, 70, 14);
         }
 
+        //Draws the title
         this.fontRendererObj.setUnicodeFlag(false);
-        if(this.currentIndexEntry != null){
-            if(this.currentChapter == null){
-                this.drawCenteredString(this.fontRendererObj, this.currentIndexEntry.getLocalizedName(), this.guiLeft+this.xSize/2, this.guiTop-8, StringUtil.DECIMAL_COLOR_WHITE);
-            }
-            else{
-                this.drawCenteredString(this.fontRendererObj, this.currentChapter.getLocalizedName(), this.guiLeft+this.xSize/2, this.guiTop-8, StringUtil.DECIMAL_COLOR_WHITE);
-            }
-        }
-        else{
-            this.drawCenteredString(this.fontRendererObj, StringUtil.localize("itemGroup."+ModUtil.MOD_ID_LOWER), this.guiLeft+this.xSize/2, this.guiTop-8, StringUtil.DECIMAL_COLOR_WHITE);
-        }
+        BookletUtils.drawTitle(this);
         this.fontRendererObj.setUnicodeFlag(true);
 
-        if(this.currentIndexEntry != null){
-            if(this.currentChapter != null && this.currentPage != null){
-                this.drawCenteredString(this.fontRendererObj, this.currentPage.getID()+"/"+this.currentChapter.pages.length, this.guiLeft+this.xSize/2, this.guiTop+172, StringUtil.DECIMAL_COLOR_WHITE);
-                this.currentPage.renderPre(this, x, y, this.ticksElapsed, this.mousePressed);
-            }
-            else{
-                this.drawCenteredString(this.fontRendererObj, this.pageOpenInIndex+"/"+this.indexPageAmount, this.guiLeft+this.xSize/2, this.guiTop+172, StringUtil.DECIMAL_COLOR_WHITE);
-            }
-        }
-        else{
-            String wordCountString = StringUtil.localizeFormatted("booklet."+ModUtil.MOD_ID_LOWER+".amountOfWords", InitBooklet.wordCount);
-            this.fontRendererObj.drawString(EnumChatFormatting.ITALIC+wordCountString, this.guiLeft+this.xSize-this.fontRendererObj.getStringWidth(wordCountString)-15, this.guiTop+this.ySize-18, 0);
-        }
+        //Pre-Renders the current page's content etc.
+        BookletUtils.renderPre(this, x, y, this.ticksElapsed, this.mousePressed);
 
+        //Does vanilla drawing stuff
         super.drawScreen(x, y, f);
         this.searchField.drawTextBox();
 
+        //Renders the current page's content
         if(this.currentIndexEntry != null && this.currentChapter != null && this.currentPage != null){
             this.currentPage.render(this, x, y, this.ticksElapsed, this.mousePressed);
         }
 
+        //Draws hovering texts for buttons
         this.fontRendererObj.setUnicodeFlag(false);
-        //Achievements Hover Text
-        if(x >= this.guiLeft+138 && x <= this.guiLeft+138+7 && y >= this.guiTop && y <= this.guiTop+7){
-            this.func_146283_a(Collections.singletonList(EnumChatFormatting.GOLD+"Show Achievements"), x, y);
-        }
-        //Config Hover Text
-        if(x >= this.guiLeft+138 && x <= this.guiLeft+138+7 && y >= this.guiTop+10 && y <= this.guiTop+10+7){
-            ArrayList list = new ArrayList();
-            list.add(EnumChatFormatting.GOLD+"Show Configuration GUI");
-            list.addAll(this.fontRendererObj.listFormattedStringToWidth("It is highly recommended that you restart your game after changing anything as that prevents possible bugs occuring!", TOOLTIP_SPLIT_LENGTH));
-            this.func_146283_a(list, x, y);
-
-        }
-        //Twitter Hover Text
-        if(x >= this.guiLeft && x <= this.guiLeft+7 && y >= this.guiTop && y <= this.guiTop+7){
-            this.func_146283_a(Collections.singletonList(EnumChatFormatting.GOLD+"Open @ActAddMod on Twitter in Browser"), x, y);
-        }
-        //Forum Hover Text
-        if(x >= this.guiLeft && x <= this.guiLeft+7 && y >= this.guiTop+10 && y <= this.guiTop+10+7){
-            this.func_146283_a(Collections.singletonList(EnumChatFormatting.GOLD+"Open Minecraft Forum Post in Browser"), x, y);
-        }
-        //Update Checker Hover Text
-        if(x >= this.guiLeft-11 && x <= this.guiLeft-11+10 && y >= this.guiTop-11 && y <= this.guiTop-11+10){
-            ArrayList list = new ArrayList();
-            if(UpdateChecker.checkFailed){
-                list.add(IChatComponent.Serializer.func_150699_a(StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".update.failed")).getFormattedText());
-            }
-            else if(UpdateChecker.needsUpdateNotify){
-                list.add(IChatComponent.Serializer.func_150699_a(StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".update.generic")).getFormattedText());
-                list.add(IChatComponent.Serializer.func_150699_a(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID_LOWER+".update.versionCompare", ModUtil.VERSION, UpdateChecker.updateVersion)).getFormattedText());
-                list.add(StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".update.buttonOptions"));
-            }
-            this.func_146283_a(list, x, y);
-        }
-
+        BookletUtils.doHoverTexts(this, x, y);
         this.fontRendererObj.setUnicodeFlag(unicodeBefore);
 
+        //Resets mouse
         if(this.mousePressed){
             this.mousePressed = false;
         }
@@ -175,151 +127,70 @@ public class GuiBooklet extends GuiScreen{
     public void keyTyped(char theChar, int key){
         if(key != 1 && this.searchField.isFocused()){
             this.searchField.textboxKeyTyped(theChar, key);
-            this.updateSearchBar();
+            BookletUtils.updateSearchBar(this);
         }
         else{
             super.keyTyped(theChar, key);
         }
     }
 
-    @SuppressWarnings("unchecked")
-    public void updateSearchBar(){
-        if(this.currentIndexEntry instanceof BookletEntryAllSearch){
-            BookletEntryAllSearch currentEntry = (BookletEntryAllSearch)this.currentIndexEntry;
-            if(this.searchField.getText() != null && !this.searchField.getText().isEmpty()){
-                currentEntry.chapters.clear();
-
-                for(BookletChapter chapter : currentEntry.allChapters){
-                    if(chapter.getLocalizedName().toLowerCase(Locale.ROOT).contains(this.searchField.getText().toLowerCase(Locale.ROOT))){
-                        currentEntry.chapters.add(chapter);
-                    }
-                }
-            }
-            else{
-                currentEntry.chapters = (ArrayList<BookletChapter>)currentEntry.allChapters.clone();
-            }
-            this.openIndexEntry(this.currentIndexEntry, this.pageOpenInIndex, false);
-        }
-    }
-
     @Override
     protected void mouseClicked(int par1, int par2, int par3){
         this.searchField.mouseClicked(par1, par2, par3);
-
+        //Notifys the booklet of the mouse being pressed
         if(par3 == 0 && this.currentChapter != null){
             this.mousePressed = true;
         }
-
         super.mouseClicked(par1, par2, par3);
     }
 
     @Override
     public void actionPerformed(GuiButton button){
+        //Handles going to the parent GUI
         if(button == this.buttonPreviouslyOpenedGui){
             if(this.parentScreen != null){
                 mc.displayGuiScreen(this.parentScreen);
             }
         }
+        //Handles update
         else if(button == this.buttonUpdate){
             if(UpdateChecker.needsUpdateNotify){
-                try{
-                    if(Desktop.isDesktopSupported()){
-                        if(KeyUtil.isShiftPressed()){
-                            Desktop.getDesktop().browse(new URI(UpdateChecker.DOWNLOAD_LINK));
-                        }
-                        else{
-                            Desktop.getDesktop().browse(new URI(UpdateChecker.CHANGELOG_LINK));
-                        }
-                    }
-                }
-                catch(Exception e){
-                    ModUtil.LOGGER.error("Something bad happened when trying to open a URL!", e);
-                }
+                BookletUtils.openBrowser(UpdateChecker.CHANGELOG_LINK, UpdateChecker.DOWNLOAD_LINK);
             }
         }
+        //Handles Twitter
         else if(button == this.buttonTwitter){
-            try{
-                if(Desktop.isDesktopSupported()){
-                    Desktop.getDesktop().browse(new URI("http://twitter.com/ActAddMod"));
-                }
-            }
-            catch(Exception e){
-                ModUtil.LOGGER.error("Something bad happened when trying to open a URL!", e);
-            }
+            BookletUtils.openBrowser("http://twitter.com/ActAddMod");
         }
+        //Handles forum
         else if(button == this.buttonForum){
-            try{
-                if(Desktop.isDesktopSupported()){
-                    Desktop.getDesktop().browse(new URI("http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/2551118"));
-                }
-            }
-            catch(Exception e){
-                ModUtil.LOGGER.error("Something bad happened when trying to open a URL!", e);
-            }
+            BookletUtils.openBrowser("http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/2551118");
         }
+        //Handles config
         else if(button == this.buttonConfig){
             mc.displayGuiScreen(new GuiConfiguration(this));
         }
+        //Handles achievements
         else if(button == this.buttonAchievements){
             mc.displayGuiScreen(new GuiAAAchievements(this, mc.thePlayer.getStatFileWriter()));
         }
         else if(button == this.buttonForward){
-            if(this.currentIndexEntry != null){
-                if(this.currentPage != null){
-                    BookletPage page = this.getNextPage(this.currentChapter, this.currentPage);
-                    if(page != null){
-                        this.currentPage = page;
-                    }
-
-                    this.buttonForward.visible = this.getNextPage(this.currentChapter, this.currentPage) != null;
-                    this.buttonBackward.visible = this.getPrevPage(this.currentChapter, this.currentPage) != null;
-                }
-                else{
-                    this.openIndexEntry(this.currentIndexEntry, this.pageOpenInIndex+1, !(this.currentIndexEntry instanceof BookletEntryAllSearch));
-                }
-            }
+            BookletUtils.handleNextPage(this);
         }
         else if(button == this.buttonBackward){
-            if(this.currentIndexEntry != null){
-                if(this.currentPage != null){
-                    BookletPage page = this.getPrevPage(this.currentChapter, this.currentPage);
-                    if(page != null){
-                        this.currentPage = page;
-                    }
-
-                    this.buttonForward.visible = this.getNextPage(this.currentChapter, this.currentPage) != null;
-                    this.buttonBackward.visible = this.getPrevPage(this.currentChapter, this.currentPage) != null;
-                }
-                else{
-                    this.openIndexEntry(this.currentIndexEntry, this.pageOpenInIndex-1, !(this.currentIndexEntry instanceof BookletEntryAllSearch));
-                }
-            }
+            BookletUtils.handlePreviousPage(this);
         }
+        //Handles gonig from page to chapter or from chapter to index
         else if(button == this.buttonPreviousScreen){
             if(this.currentChapter != null && this.currentChapter != InitBooklet.chapterIntro){
-                this.openIndexEntry(this.currentIndexEntry, this.pageOpenInIndex, true);
+                BookletUtils.openIndexEntry(this, this.currentIndexEntry, this.pageOpenInIndex, true);
             }
             else{
-                this.openIndexEntry(null, 1, true);
+                BookletUtils.openIndexEntry(this, null, 1, true);
             }
         }
         else{
-            int place = Util.arrayContains(this.chapterButtons, button);
-            if(place >= 0){
-                if(this.currentIndexEntry != null){
-                    if(this.currentChapter == null){
-                        if(place < this.currentIndexEntry.chapters.size()){
-                            BookletChapter chap = currentIndexEntry.chapters.get(place+(this.chapterButtons.length*this.pageOpenInIndex-this.chapterButtons.length));
-                            this.openChapter(chap, chap.pages[0]);
-                        }
-                    }
-                }
-                else{
-                    if(place < InitBooklet.entries.size()){
-                        this.openIndexEntry(InitBooklet.entries.get(place), 1, true);
-                    }
-                }
-            }
+            BookletUtils.handleChapterButtonClick(this, button);
         }
     }
 
@@ -329,36 +200,36 @@ public class GuiBooklet extends GuiScreen{
         this.guiLeft = (this.width-this.xSize)/2;
         this.guiTop = (this.height-this.ySize)/2;
 
-        this.buttonForward = new TexturedButton(0, this.guiLeft+this.xSize, this.guiTop+this.ySize+2, 164, 0, 18, 10);
+        this.buttonForward = new BookletUtils.TexturedButton(0, this.guiLeft+this.xSize, this.guiTop+this.ySize+2, 164, 0, 18, 10);
         this.buttonList.add(this.buttonForward);
 
-        this.buttonBackward = new TexturedButton(1, this.guiLeft-18, this.guiTop+this.ySize+2, 146, 0, 18, 10);
+        this.buttonBackward = new BookletUtils.TexturedButton(1, this.guiLeft-18, this.guiTop+this.ySize+2, 146, 0, 18, 10);
         this.buttonList.add(this.buttonBackward);
 
-        this.buttonPreviousScreen = new TexturedButton(2, this.guiLeft+this.xSize/2-7, this.guiTop+this.ySize+2, 182, 0, 15, 10);
+        this.buttonPreviousScreen = new BookletUtils.TexturedButton(2, this.guiLeft+this.xSize/2-7, this.guiTop+this.ySize+2, 182, 0, 15, 10);
         this.buttonList.add(this.buttonPreviousScreen);
 
-        this.buttonPreviouslyOpenedGui = new TexturedButton(3, this.guiLeft+this.xSize/3, this.guiTop+this.ySize+2, 245, 44, 11, 15);
+        this.buttonPreviouslyOpenedGui = new BookletUtils.TexturedButton(3, this.guiLeft+this.xSize/3, this.guiTop+this.ySize+2, 245, 44, 11, 15);
         this.buttonList.add(this.buttonPreviouslyOpenedGui);
 
-        this.buttonUpdate = new TexturedButton(4, this.guiLeft-11, this.guiTop-11, 245, 0, 11, 11);
+        this.buttonUpdate = new BookletUtils.TexturedButton(4, this.guiLeft-11, this.guiTop-11, 245, 0, 11, 11);
         this.buttonUpdate.visible = UpdateChecker.needsUpdateNotify;
         this.buttonList.add(this.buttonUpdate);
 
-        this.buttonTwitter = new TexturedButton(5, this.guiLeft, this.guiTop, 213, 0, 8, 8);
+        this.buttonTwitter = new BookletUtils.TexturedButton(5, this.guiLeft, this.guiTop, 213, 0, 8, 8);
         this.buttonList.add(this.buttonTwitter);
 
-        this.buttonForum = new TexturedButton(6, this.guiLeft, this.guiTop+10, 221, 0, 8, 8);
+        this.buttonForum = new BookletUtils.TexturedButton(6, this.guiLeft, this.guiTop+10, 221, 0, 8, 8);
         this.buttonList.add(this.buttonForum);
 
-        this.buttonAchievements = new TexturedButton(7, this.guiLeft+138, this.guiTop, 205, 0, 8, 8);
+        this.buttonAchievements = new BookletUtils.TexturedButton(7, this.guiLeft+138, this.guiTop, 205, 0, 8, 8);
         this.buttonList.add(this.buttonAchievements);
 
-        this.buttonConfig = new TexturedButton(8, this.guiLeft+138, this.guiTop+10, 197, 0, 8, 8);
+        this.buttonConfig = new BookletUtils.TexturedButton(8, this.guiLeft+138, this.guiTop+10, 197, 0, 8, 8);
         this.buttonList.add(this.buttonConfig);
 
         for(int i = 0; i < this.chapterButtons.length; i++){
-            this.chapterButtons[i] = new IndexButton(9+i, guiLeft+15, guiTop+10+(i*12), 115, 10, "", this);
+            this.chapterButtons[i] = new BookletUtils.IndexButton(9+i, guiLeft+15, guiTop+10+(i*12), 115, 10, "", this);
             this.buttonList.add(this.chapterButtons[i]);
         }
 
@@ -371,10 +242,10 @@ public class GuiBooklet extends GuiScreen{
         this.currentChapter = null;
         this.currentIndexEntry = null;
 
-        //So that the First Page will still open if used via something like NEI before
+        // So that the First Page will still open if used via something like NEI before
         if(this.parentScreen == null && !PersistentClientData.getBoolean("BookAlreadyOpened")){
-            this.openIndexEntry(InitBooklet.chapterIntro.entry, 1, true);
-            this.openChapter(InitBooklet.chapterIntro, null);
+            BookletUtils.openIndexEntry(this, InitBooklet.chapterIntro.entry, 1, true);
+            BookletUtils.openChapter(this, InitBooklet.chapterIntro, null);
 
             PersistentClientData.setBoolean("BookAlreadyOpened", true);
         }
@@ -396,7 +267,7 @@ public class GuiBooklet extends GuiScreen{
         this.buttonUpdate.visible = buttonThere;
         if(buttonThere){
             if(this.ticksElapsed%8 == 0){
-                TexturedButton button = (TexturedButton)this.buttonUpdate;
+                BookletUtils.TexturedButton button = (BookletUtils.TexturedButton)this.buttonUpdate;
                 button.setTexturePos(245, button.texturePosY == 0 ? 22 : 0);
             }
         }
@@ -412,179 +283,5 @@ public class GuiBooklet extends GuiScreen{
     @Override
     public boolean doesGuiPauseGame(){
         return false;
-    }
-
-    private BookletPage getNextPage(BookletChapter chapter, BookletPage currentPage){
-        for(int i = 0; i < chapter.pages.length; i++){
-            if(chapter.pages[i] == currentPage){
-                if(i+1 < chapter.pages.length){
-                    return chapter.pages[i+1];
-                }
-            }
-        }
-        return null;
-    }
-
-    private BookletPage getPrevPage(BookletChapter chapter, BookletPage currentPage){
-        for(int i = 0; i < chapter.pages.length; i++){
-            if(chapter.pages[i] == currentPage){
-                if(i-1 >= 0){
-                    return chapter.pages[i-1];
-                }
-            }
-        }
-        return null;
-    }
-
-    public void openChapter(BookletChapter chapter, BookletPage page){
-        if(chapter == null){
-            return;
-        }
-
-        this.searchField.setVisible(false);
-        this.searchField.setFocused(false);
-        this.searchField.setText("");
-
-        this.currentChapter = chapter;
-        this.currentPage = page != null && this.hasPage(chapter, page) ? page : chapter.pages[0];
-
-        this.buttonForward.visible = this.getNextPage(chapter, this.currentPage) != null;
-        this.buttonBackward.visible = this.getPrevPage(chapter, this.currentPage) != null;
-        this.buttonPreviousScreen.visible = true;
-        this.buttonPreviouslyOpenedGui.visible = this.parentScreen != null;
-
-        for(GuiButton chapterButton : this.chapterButtons){
-            chapterButton.visible = false;
-        }
-    }
-
-    private boolean hasPage(BookletChapter chapter, BookletPage page){
-        for(BookletPage aPage : chapter.pages){
-            if(aPage == page){
-                return true;
-            }
-        }
-        return false;
-    }
-
-    @SuppressWarnings("unchecked")
-    public void openIndexEntry(BookletIndexEntry entry, int page, boolean resetTextField){
-        this.searchField.setVisible(entry instanceof BookletEntryAllSearch);
-        this.searchField.setFocused(entry instanceof BookletEntryAllSearch);
-        if(resetTextField){
-            this.searchField.setText("");
-            if(entry instanceof BookletEntryAllSearch){
-                entry.chapters = (ArrayList<BookletChapter>)((BookletEntryAllSearch)entry).allChapters.clone();
-            }
-        }
-
-        this.currentPage = null;
-        this.currentChapter = null;
-
-        this.currentIndexEntry = entry;
-        this.indexPageAmount = entry == null ? 1 : entry.chapters.size()/this.chapterButtons.length+1;
-        this.pageOpenInIndex = entry == null ? 1 : (this.indexPageAmount <= page || page <= 0 ? this.indexPageAmount : page);
-
-        this.buttonPreviousScreen.visible = entry != null;
-        this.buttonForward.visible = this.pageOpenInIndex < this.indexPageAmount;
-        this.buttonBackward.visible = this.pageOpenInIndex > 1;
-        this.buttonPreviouslyOpenedGui.visible = this.parentScreen != null;
-
-        for(int i = 0; i < this.chapterButtons.length; i++){
-            IndexButton button = (IndexButton)this.chapterButtons[i];
-            if(entry == null){
-                boolean entryExists = InitBooklet.entries.size() > i;
-                button.visible = entryExists;
-                if(entryExists){
-                    button.displayString = InitBooklet.entries.get(i).getNameWithColor();
-                    button.chap = null;
-                }
-            }
-            else{
-                boolean entryExists = entry.chapters.size() > i+(this.chapterButtons.length*this.pageOpenInIndex-this.chapterButtons.length);
-                button.visible = entryExists;
-                if(entryExists){
-                    BookletChapter chap = entry.chapters.get(i+(this.chapterButtons.length*this.pageOpenInIndex-this.chapterButtons.length));
-                    button.displayString = chap.getNameWithColor();
-                    button.chap = chap;
-                }
-            }
-        }
-    }
-
-    private static class IndexButton extends GuiButton{
-
-        public BookletChapter chap;
-        private GuiBooklet gui;
-
-        public IndexButton(int id, int x, int y, int width, int height, String text, GuiBooklet gui){
-            super(id, x, y, width, height, text);
-            this.gui = gui;
-        }
-
-        @Override
-        public void drawButton(Minecraft minecraft, int mouseX, int mouseY){
-            if(this.visible){
-                GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-                this.field_146123_n = mouseX >= this.xPosition && mouseY >= this.yPosition && mouseX < this.xPosition+this.width && mouseY < this.yPosition+this.height;
-                GL11.glEnable(GL11.GL_BLEND);
-                OpenGlHelper.glBlendFunc(770, 771, 1, 0);
-                GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-                this.mouseDragged(minecraft, mouseX, mouseY);
-
-                int textOffsetX = 0;
-                if(this.chap != null){
-                    if(this.chap.displayStack != null){
-                        GL11.glPushMatrix();
-                        BookletPage.renderItem(this.gui, this.chap.displayStack, this.xPosition-4, this.yPosition, 0.725F);
-                        GL11.glPopMatrix();
-                        textOffsetX = 10;
-                    }
-                }
-
-                if(this.field_146123_n){
-                    GL11.glPushMatrix();
-                    AssetUtil.drawHorizontalGradientRect(this.xPosition+textOffsetX-1, this.yPosition+this.height-1, this.xPosition+this.gui.fontRendererObj.getStringWidth(this.displayString)+textOffsetX+1, this.yPosition+this.height, 0x80 << 24 | 22271, 22271);
-                    GL11.glPopMatrix();
-                }
-
-                this.gui.fontRendererObj.drawString(this.displayString, this.xPosition+textOffsetX, this.yPosition+(this.height-8)/2, 0);
-            }
-        }
-    }
-
-    public static class TexturedButton extends GuiButton{
-
-        public int texturePosX;
-        public int texturePosY;
-
-        public TexturedButton(int id, int x, int y, int texturePosX, int texturePosY, int width, int height){
-            super(id, x, y, width, height, "");
-            this.texturePosX = texturePosX;
-            this.texturePosY = texturePosY;
-        }
-
-        public void setTexturePos(int x, int y){
-            this.texturePosX = x;
-            this.texturePosY = y;
-        }
-
-        @Override
-        public void drawButton(Minecraft minecraft, int x, int y){
-            if(this.visible){
-                minecraft.getTextureManager().bindTexture(resLoc);
-                GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-                this.field_146123_n = x >= this.xPosition && y >= this.yPosition && x < this.xPosition+this.width && y < this.yPosition+this.height;
-                int k = this.getHoverState(this.field_146123_n);
-                if(k == 0){
-                    k = 1;
-                }
-                GL11.glEnable(GL11.GL_BLEND);
-                OpenGlHelper.glBlendFunc(770, 771, 1, 0);
-                GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-                this.drawTexturedModalRect(this.xPosition, this.yPosition, this.texturePosX, this.texturePosY-this.height+k*this.height, this.width, this.height);
-                this.mouseDragged(minecraft, x, y);
-            }
-        }
     }
 }

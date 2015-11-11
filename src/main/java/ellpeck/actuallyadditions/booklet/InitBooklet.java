@@ -13,6 +13,11 @@ package ellpeck.actuallyadditions.booklet;
 import ellpeck.actuallyadditions.blocks.InitBlocks;
 import ellpeck.actuallyadditions.blocks.metalists.TheColoredLampColors;
 import ellpeck.actuallyadditions.blocks.metalists.TheMiscBlocks;
+import ellpeck.actuallyadditions.booklet.chapter.BookletChapter;
+import ellpeck.actuallyadditions.booklet.chapter.BookletChapterCoffee;
+import ellpeck.actuallyadditions.booklet.chapter.BookletChapterCrusher;
+import ellpeck.actuallyadditions.booklet.entry.BookletEntry;
+import ellpeck.actuallyadditions.booklet.entry.BookletEntryAllSearch;
 import ellpeck.actuallyadditions.booklet.page.*;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.crafting.*;
@@ -28,19 +33,19 @@ import java.util.ArrayList;
 
 public class InitBooklet{
 
-    public static ArrayList<BookletIndexEntry> entries = new ArrayList<BookletIndexEntry>();
+    public static ArrayList<BookletEntry> entries = new ArrayList<BookletEntry>();
     public static ArrayList<BookletPage> pagesWithItemStackData = new ArrayList<BookletPage>();
     public static int wordCount;
 
     public static BookletChapter chapterIntro;
 
-    public static BookletIndexEntry entryFunctionalNonRF = new BookletIndexEntry("functionalNoRF");
-    public static BookletIndexEntry entryFunctionalRF = new BookletIndexEntry("functionalRF").setSpecial();
-    public static BookletIndexEntry entryGeneratingRF = new BookletIndexEntry("generatingRF").setSpecial();
-    public static BookletIndexEntry entryItemsNonRF = new BookletIndexEntry("itemsNoRF");
-    public static BookletIndexEntry entryItemsRF = new BookletIndexEntry("itemsRF").setSpecial();
-    public static BookletIndexEntry entryMisc = new BookletIndexEntry("misc");
-    public static BookletIndexEntry allAndSearch = new BookletEntryAllSearch("allAndSearch").setImportant();
+    public static BookletEntry entryFunctionalNonRF = new BookletEntry("functionalNoRF");
+    public static BookletEntry entryFunctionalRF = new BookletEntry("functionalRF").setSpecial();
+    public static BookletEntry entryGeneratingRF = new BookletEntry("generatingRF").setSpecial();
+    public static BookletEntry entryItemsNonRF = new BookletEntry("itemsNoRF");
+    public static BookletEntry entryItemsRF = new BookletEntry("itemsRF").setSpecial();
+    public static BookletEntry entryMisc = new BookletEntry("misc");
+    public static BookletEntry allAndSearch = new BookletEntryAllSearch("allAndSearch").setImportant();
 
     private static void initChapters(){
         chapterIntro = new BookletChapter("intro", entryMisc, new ItemStack(InitItems.itemLexicon), new PageTextOnly(1), new PageTextOnly(2), new PageTextOnly(3), new PageCrafting(4, ItemCrafting.recipeBook)).setImportant();
@@ -128,7 +133,7 @@ public class InitBooklet{
     }
 
     private static void countWords(){
-        for(BookletIndexEntry entry : entries){
+        for(BookletEntry entry : entries){
             for(BookletChapter chapter : entry.chapters){
                 for(BookletPage page : chapter.pages){
                     if(page.getText() != null){

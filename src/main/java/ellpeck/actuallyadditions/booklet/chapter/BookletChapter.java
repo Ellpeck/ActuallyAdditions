@@ -8,8 +8,10 @@
  * © 2015 Ellpeck
  */
 
-package ellpeck.actuallyadditions.booklet;
+package ellpeck.actuallyadditions.booklet.chapter;
 
+import ellpeck.actuallyadditions.booklet.InitBooklet;
+import ellpeck.actuallyadditions.booklet.entry.BookletEntry;
 import ellpeck.actuallyadditions.booklet.page.BookletPage;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
@@ -19,12 +21,12 @@ import net.minecraft.util.EnumChatFormatting;
 public class BookletChapter{
 
     public final BookletPage[] pages;
-    public final BookletIndexEntry entry;
+    public final BookletEntry entry;
     public final ItemStack displayStack;
     private final String unlocalizedName;
     public EnumChatFormatting color;
 
-    public BookletChapter(String unlocalizedName, BookletIndexEntry entry, ItemStack displayStack, BookletPage... pages){
+    public BookletChapter(String unlocalizedName, BookletEntry entry, ItemStack displayStack, BookletPage... pages){
         this.pages = pages.clone();
 
         this.unlocalizedName = unlocalizedName;

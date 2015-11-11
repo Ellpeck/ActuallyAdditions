@@ -8,11 +8,13 @@
  * © 2015 Ellpeck
  */
 
-package ellpeck.actuallyadditions.booklet;
+package ellpeck.actuallyadditions.booklet.entry;
+
+import ellpeck.actuallyadditions.booklet.chapter.BookletChapter;
 
 import java.util.ArrayList;
 
-public class BookletEntryAllSearch extends BookletIndexEntry{
+public class BookletEntryAllSearch extends BookletEntry{
 
     public ArrayList<BookletChapter> allChapters = new ArrayList<BookletChapter>();
 
