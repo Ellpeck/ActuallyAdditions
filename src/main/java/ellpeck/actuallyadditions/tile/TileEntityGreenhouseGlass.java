@@ -18,8 +18,6 @@ import net.minecraft.block.IGrowable;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.IPlantable;
 
-import java.util.Random;
-
 public class TileEntityGreenhouseGlass extends TileEntityBase{
 
     private int timeUntilNextFert;
@@ -42,7 +40,7 @@ public class TileEntityGreenhouseGlass extends TileEntityBase{
                         }
                     }
                     else{
-                        this.timeUntilNextFert = ConfigIntValues.GLASS_TIME_NEEDED.getValue()+new Random().nextInt(ConfigIntValues.GLASS_TIME_NEEDED.getValue());
+                        this.timeUntilNextFert = ConfigIntValues.GLASS_TIME_NEEDED.getValue()+this.worldObj.rand.nextInt(ConfigIntValues.GLASS_TIME_NEEDED.getValue());
                     }
                 }
             }

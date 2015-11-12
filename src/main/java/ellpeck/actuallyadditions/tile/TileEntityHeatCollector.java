@@ -21,7 +21,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public class TileEntityHeatCollector extends TileEntityBase implements IEnergyProvider{
 
@@ -46,9 +45,8 @@ public class TileEntityHeatCollector extends TileEntityBase implements IEnergyPr
                     this.storage.receiveEnergy(ConfigIntValues.HEAT_COLLECTOR_ENERGY_PRODUCED.getValue(), false);
                     this.markDirty();
 
-                    Random rand = new Random();
-                    if(rand.nextInt(ConfigIntValues.HEAT_COLLECTOR_LAVA_CHANCE.getValue()) == 0){
-                        int randomSide = blocksAround.get(rand.nextInt(blocksAround.size()));
+                    if(worldObj.rand.nextInt(ConfigIntValues.HEAT_COLLECTOR_LAVA_CHANCE.getValue()) == 0){
+                        int randomSide = blocksAround.get(worldObj.rand.nextInt(blocksAround.size()));
                         WorldUtil.breakBlockAtSide(WorldUtil.getDirectionBySidesInOrder(randomSide), worldObj, xCoord, yCoord, zCoord);
                     }
                 }

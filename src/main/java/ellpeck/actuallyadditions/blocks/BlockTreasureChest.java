@@ -103,7 +103,7 @@ public class BlockTreasureChest extends Block implements IActAddItemOrBlock{
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9){
         if(!world.isRemote){
-            world.playSoundAtEntity(player, "random.chestopen", 0.2F, new Random().nextFloat()*0.1F+0.9F);
+            world.playSoundAtEntity(player, "random.chestopen", 0.2F, world.rand.nextFloat()*0.1F+0.9F);
             this.dropItems(world, x, y, z);
             player.addStat(TheAchievements.OPEN_TREASURE_CHEST.ach, 1);
             world.setBlockToAir(x, y, z);
@@ -154,23 +154,22 @@ public class BlockTreasureChest extends Block implements IActAddItemOrBlock{
     }
 
     private void dropItems(World world, int x, int y, int z){
-        Random rand = new Random();
-        for(int i = 0; i < MathHelper.getRandomIntegerInRange(rand, 3, 6); i++){
-            TreasureChestHandler.Return theReturn = (TreasureChestHandler.Return)WeightedRandom.getRandomItem(rand, TreasureChestHandler.returns);
+        for(int i = 0; i < MathHelper.getRandomIntegerInRange(world.rand, 3, 6); i++){
+            TreasureChestHandler.Return theReturn = (TreasureChestHandler.Return)WeightedRandom.getRandomItem(world.rand, TreasureChestHandler.returns);
             ItemStack itemStack = theReturn.returnItem.copy();
-            itemStack.stackSize = MathHelper.getRandomIntegerInRange(rand, theReturn.minAmount, theReturn.maxAmount);
+            itemStack.stackSize = MathHelper.getRandomIntegerInRange(world.rand, theReturn.minAmount, theReturn.maxAmount);
 
-            float dX = rand.nextFloat()*0.8F+0.1F;
-            float dY = rand.nextFloat()*0.8F+0.1F;
-            float dZ = rand.nextFloat()*0.8F+0.1F;
+            float dX = world.rand.nextFloat()*0.8F+0.1F;
+            float dY = world.rand.nextFloat()*0.8F+0.1F;
+            float dZ = world.rand.nextFloat()*0.8F+0.1F;
             EntityItem entityItem = new EntityItem(world, x+dX, y+dY, z+dZ, itemStack.copy());
             if(itemStack.hasTagCompound()){
                 entityItem.getEntityItem().setTagCompound((NBTTagCompound)itemStack.getTagCompound().copy());
             }
             float factor = 0.05F;
-            entityItem.motionX = rand.nextGaussian()*factor;
-            entityItem.motionY = rand.nextGaussian()*factor+0.2F;
-            entityItem.motionZ = rand.nextGaussian()*factor;
+            entityItem.motionX = world.rand.nextGaussian()*factor;
+            entityItem.motionY = world.rand.nextGaussian()*factor+0.2F;
+            entityItem.motionZ = world.rand.nextGaussian()*factor;
             world.spawnEntityInWorld(entityItem);
             itemStack.stackSize = 0;
         }

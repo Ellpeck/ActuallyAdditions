@@ -30,7 +30,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public class ItemGrowthRing extends ItemEnergy{
 
@@ -74,7 +73,7 @@ public class ItemGrowthRing extends ItemEnergy{
                 //Fertilizing the Blocks
                 if(!blocks.isEmpty()){
                     for(int i = 0; i < ConfigIntValues.GROWTH_RING_GROWTH_PER_CYCLE.getValue(); i++){
-                        WorldPos pos = blocks.get(new Random().nextInt(blocks.size()));
+                        WorldPos pos = blocks.get(world.rand.nextInt(blocks.size()));
 
                         int metaBefore = pos.getMetadata();
                         pos.getBlock().updateTick(world, pos.getX(), pos.getY(), pos.getZ(), world.rand);

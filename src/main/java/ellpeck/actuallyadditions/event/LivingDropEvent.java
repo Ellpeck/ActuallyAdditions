@@ -23,8 +23,6 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 
-import java.util.Random;
-
 public class LivingDropEvent{
 
     @SubscribeEvent
@@ -34,23 +32,23 @@ public class LivingDropEvent{
             for(int i = 0; i < TheSpecialDrops.values().length; i++){
                 TheSpecialDrops theDrop = TheSpecialDrops.values()[i];
                 if(theDrop.canDrop && theDrop.dropFrom.isAssignableFrom(event.entityLiving.getClass())){
-                    if(new Random().nextInt(100)+1 <= theDrop.chance){
-                        event.entityLiving.entityDropItem(new ItemStack(InitItems.itemSpecialDrop, new Random().nextInt(theDrop.maxAmount)+1, theDrop.ordinal()), 0);
+                    if(event.entityLiving.worldObj.rand.nextInt(100)+1 <= theDrop.chance){
+                        event.entityLiving.entityDropItem(new ItemStack(InitItems.itemSpecialDrop, event.entityLiving.worldObj.rand.nextInt(theDrop.maxAmount)+1, theDrop.ordinal()), 0);
                     }
                 }
             }
 
             //Drop Cobwebs from Spiders
             if(ConfigBoolValues.DO_SPIDER_DROPS.isEnabled() && event.entityLiving instanceof EntitySpider){
-                if(new Random().nextInt(ConfigIntValues.SPIDER_DROP_CHANCE.getValue()) <= 0){
-                    event.entityLiving.entityDropItem(new ItemStack(Blocks.web, new Random().nextInt(2)+1), 0);
+                if(event.entityLiving.worldObj.rand.nextInt(ConfigIntValues.SPIDER_DROP_CHANCE.getValue()) <= 0){
+                    event.entityLiving.entityDropItem(new ItemStack(Blocks.web, event.entityLiving.worldObj.rand.nextInt(2)+1), 0);
                 }
             }
 
             //Drop Wings from Bats
             if(ConfigBoolValues.DO_BAT_DROPS.isEnabled() && event.entityLiving instanceof EntityBat){
-                if(new Random().nextInt(ConfigIntValues.BAT_DROP_CHANCE.getValue()) <= 0){
-                    event.entityLiving.entityDropItem(new ItemStack(InitItems.itemMisc, new Random().nextInt(2)+1, TheMiscItems.BAT_WING.ordinal()), 0);
+                if(event.entityLiving.worldObj.rand.nextInt(ConfigIntValues.BAT_DROP_CHANCE.getValue()) <= 0){
+                    event.entityLiving.entityDropItem(new ItemStack(InitItems.itemMisc, event.entityLiving.worldObj.rand.nextInt(2)+1, TheMiscItems.BAT_WING.ordinal()), 0);
                 }
             }
         }

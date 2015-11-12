@@ -21,8 +21,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
-import java.util.Random;
-
 public abstract class BlockContainerBase extends BlockContainer{
 
     public BlockContainerBase(Material mat){
@@ -44,20 +42,19 @@ public abstract class BlockContainerBase extends BlockContainer{
     }
 
     public void dropSlotFromInventory(int i, TileEntityInventoryBase tile, World world, int x, int y, int z){
-        Random rand = new Random();
         ItemStack stack = tile.getStackInSlot(i);
         if(stack != null && stack.stackSize > 0){
-            float dX = rand.nextFloat()*0.8F+0.1F;
-            float dY = rand.nextFloat()*0.8F+0.1F;
-            float dZ = rand.nextFloat()*0.8F+0.1F;
+            float dX = world.rand.nextFloat()*0.8F+0.1F;
+            float dY = world.rand.nextFloat()*0.8F+0.1F;
+            float dZ = world.rand.nextFloat()*0.8F+0.1F;
             EntityItem entityItem = new EntityItem(world, x+dX, y+dY, z+dZ, stack.copy());
             if(stack.hasTagCompound()){
                 entityItem.getEntityItem().setTagCompound((NBTTagCompound)stack.getTagCompound().copy());
             }
             float factor = 0.05F;
-            entityItem.motionX = rand.nextGaussian()*factor;
-            entityItem.motionY = rand.nextGaussian()*factor+0.2F;
-            entityItem.motionZ = rand.nextGaussian()*factor;
+            entityItem.motionX = world.rand.nextGaussian()*factor;
+            entityItem.motionY = world.rand.nextGaussian()*factor+0.2F;
+            entityItem.motionZ = world.rand.nextGaussian()*factor;
             world.spawnEntityInWorld(entityItem);
         }
         tile.setInventorySlotContents(i, null);

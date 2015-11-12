@@ -104,6 +104,8 @@ public class BlockInputter extends BlockContainerBase implements IActAddItemOrBl
         private long lastSysTime;
         private int toPick;
 
+        private final Random rand = new Random();
+
         public TheItemBlock(Block block){
             super(block);
             this.setHasSubtypes(false);
@@ -128,12 +130,11 @@ public class BlockInputter extends BlockContainerBase implements IActAddItemOrBl
 
         @Override
         public String getItemStackDisplayName(ItemStack stack){
-            Random rand = new Random();
             long sysTime = System.currentTimeMillis();
 
             if(this.lastSysTime+5000 < sysTime){
                 this.lastSysTime = sysTime;
-                this.toPick = rand.nextInt(NAME_FLAVOUR_AMOUNTS)+1;
+                this.toPick = this.rand.nextInt(NAME_FLAVOUR_AMOUNTS)+1;
             }
 
             return StringUtil.localize(this.getUnlocalizedName()+".name")+" ("+StringUtil.localize("tile."+ModUtil.MOD_ID_LOWER+".blockInputter.add."+this.toPick+".name")+")";

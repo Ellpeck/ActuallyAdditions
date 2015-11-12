@@ -21,7 +21,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 
-import java.util.Random;
 import java.util.UUID;
 
 public class EntityLivingEvent{
@@ -32,7 +31,7 @@ public class EntityLivingEvent{
         if(event.entityLiving != null && event.entityLiving.worldObj != null && !event.entityLiving.worldObj.isRemote){
             if((event.entityLiving instanceof EntityOcelot && ((EntityOcelot)event.entityLiving).isTamed()) || (event.entityLiving instanceof EntityPlayer && event.entityLiving.getUniqueID().equals(/*KittyVanCat*/ UUID.fromString("681d4e20-10ef-40c9-a0a5-ba2f1995ef44")))){
                 if(ConfigBoolValues.DO_CAT_DROPS.isEnabled()){
-                    if(new Random().nextInt(ConfigIntValues.CAT_DROP_CHANCE.getValue())+1 == 1){
+                    if(event.entityLiving.worldObj.rand.nextInt(ConfigIntValues.CAT_DROP_CHANCE.getValue())+1 == 1){
                         EntityItem item = new EntityItem(event.entityLiving.worldObj, event.entityLiving.posX+0.5, event.entityLiving.posY+0.5, event.entityLiving.posZ+0.5, new ItemStack(InitItems.itemHairyBall));
                         event.entityLiving.worldObj.spawnEntityInWorld(item);
                     }

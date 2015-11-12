@@ -22,7 +22,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public class TileEntityGrinder extends TileEntityInventoryBase implements IEnergyReceiver{
 
@@ -178,7 +177,7 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
         if(outputTwos != null){
             ItemStack outputTwo = outputTwos.get(0);
             if(outputTwo != null){
-                int rand = new Random().nextInt(100)+1;
+                int rand = this.worldObj.rand.nextInt(100)+1;
                 if(rand <= CrusherRecipeRegistry.getOutputTwoChance(this.slots[theInput])){
                     if(this.slots[theSecondOutput] == null){
                         this.slots[theSecondOutput] = outputTwo.copy();

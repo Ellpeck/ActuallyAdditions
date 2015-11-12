@@ -21,8 +21,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.FishingHooks;
 import net.minecraftforge.common.util.ForgeDirection;
 
-import java.util.Random;
-
 public class TileEntityFishingNet extends TileEntityBase{
 
     public int timeUntilNextDrop;
@@ -42,11 +40,10 @@ public class TileEntityFishingNet extends TileEntityBase{
         if(!worldObj.isRemote){
             if(!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)){
                 if(worldObj.getBlock(xCoord, yCoord-1, zCoord).getMaterial() == Material.water){
-                    Random rand = new Random();
                     if(this.timeUntilNextDrop > 0){
                         this.timeUntilNextDrop--;
                         if(timeUntilNextDrop <= 0){
-                            ItemStack fishable = FishingHooks.getRandomFishable(rand, this.worldObj.rand.nextFloat());
+                            ItemStack fishable = FishingHooks.getRandomFishable(worldObj.rand, this.worldObj.rand.nextFloat());
                             TileEntity tile = worldObj.getTileEntity(xCoord, yCoord+1, zCoord);
                             if(tile != null && tile instanceof IInventory){
                                 this.insertIntoInventory((IInventory)tile, fishable);
@@ -59,7 +56,7 @@ public class TileEntityFishingNet extends TileEntityBase{
                         }
                     }
                     else{
-                        this.timeUntilNextDrop = ConfigIntValues.FISHER_TIME.getValue()+rand.nextInt(ConfigIntValues.FISHER_TIME.getValue()/2);
+                        this.timeUntilNextDrop = ConfigIntValues.FISHER_TIME.getValue()+worldObj.rand.nextInt(ConfigIntValues.FISHER_TIME.getValue()/2);
                     }
                 }
             }

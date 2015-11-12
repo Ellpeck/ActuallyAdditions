@@ -78,8 +78,8 @@ public class BlockGrinder extends BlockContainerBase implements IActAddItemOrBlo
 
         if(meta == 1){
             for(int i = 0; i < 5; i++){
-                double xRand = new Random().nextDouble()/0.75D-0.5D;
-                double zRand = new Random().nextDouble()/0.75D-0.5D;
+                double xRand = rand.nextDouble()/0.75D-0.5D;
+                double zRand = rand.nextDouble()/0.75D-0.5D;
                 world.spawnParticle("crit", (double)x+0.4F, (double)y+0.8F, (double)z+0.4F, xRand, 0.5D, zRand);
             }
             world.spawnParticle(ClientProxy.bulletForMyValentine ? "heart" : "smoke", (double)x+0.5F, (double)y+1.0F, (double)z+0.5F, 0.0D, 0.0D, 0.0D);

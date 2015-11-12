@@ -24,8 +24,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
-import java.util.Random;
-
 public class RenderSmileyCloud extends RenderTileEntity{
 
     private static final ResourceLocation resLocValentine = new ResourceLocation(ModUtil.MOD_ID_LOWER, "textures/blocks/models/modelPinkFluffyUnicloud.png");
@@ -44,7 +42,7 @@ public class RenderSmileyCloud extends RenderTileEntity{
         GL11.glPushMatrix();
         {
             if(theCloud.flyHeight == 0){
-                theCloud.flyHeight = new Random().nextInt(30)+30;
+                theCloud.flyHeight = tile.getWorldObj().rand.nextInt(30)+30;
             }
             int bobHeight = theCloud.flyHeight;
             long theTime = Minecraft.getSystemTime();

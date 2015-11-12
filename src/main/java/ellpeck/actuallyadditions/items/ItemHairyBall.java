@@ -25,27 +25,25 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.WeightedRandom;
 import net.minecraft.world.World;
 
-import java.util.Random;
-
 public class ItemHairyBall extends Item implements IActAddItemOrBlock{
 
     @Override
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player){
         if(!world.isRemote){
-            ItemStack returnItem = this.getRandomReturnItem();
+            ItemStack returnItem = this.getRandomReturnItem(world);
             if(!player.inventory.addItemStackToInventory(returnItem)){
                 EntityItem entityItem = new EntityItem(player.worldObj, player.posX, player.posY, player.posZ, returnItem);
                 entityItem.delayBeforeCanPickup = 0;
                 player.worldObj.spawnEntityInWorld(entityItem);
             }
             stack.stackSize--;
-            world.playSoundAtEntity(player, "random.pop", 0.2F, new Random().nextFloat()*0.1F+0.9F);
+            world.playSoundAtEntity(player, "random.pop", 0.2F, world.rand.nextFloat()*0.1F+0.9F);
         }
         return stack;
     }
 
-    public ItemStack getRandomReturnItem(){
-        return ((HairyBallHandler.Return)WeightedRandom.getRandomItem(new Random(), HairyBallHandler.returns)).returnItem.copy();
+    public ItemStack getRandomReturnItem(World world){
+        return ((HairyBallHandler.Return)WeightedRandom.getRandomItem(world.rand, HairyBallHandler.returns)).returnItem.copy();
     }
 
     @Override

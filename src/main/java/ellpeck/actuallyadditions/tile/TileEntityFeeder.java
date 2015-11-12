@@ -19,7 +19,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
 
 import java.util.List;
-import java.util.Random;
 
 public class TileEntityFeeder extends TileEntityInventoryBase{
 
@@ -45,7 +44,7 @@ public class TileEntityFeeder extends TileEntityInventoryBase{
                         if(this.currentTimer >= ConfigIntValues.FEEDER_TIME.getValue()){
                             this.currentTimer = 0;
                             if(this.slots[0] != null){
-                                EntityAnimal randomAnimal = animals.get(new Random().nextInt(this.currentAnimalAmount));
+                                EntityAnimal randomAnimal = animals.get(worldObj.rand.nextInt(this.currentAnimalAmount));
                                 if(!randomAnimal.isInLove() && randomAnimal.getGrowingAge() == 0 && randomAnimal.isBreedingItem(this.slots[0])){
 
                                     this.feedAnimal(randomAnimal);
@@ -84,12 +83,11 @@ public class TileEntityFeeder extends TileEntityInventoryBase{
 
     public void feedAnimal(EntityAnimal animal){
         animal.func_146082_f(null);
-        Random rand = new Random();
         for(int i = 0; i < 7; i++){
-            double d = rand.nextGaussian()*0.02D;
-            double d1 = rand.nextGaussian()*0.02D;
-            double d2 = rand.nextGaussian()*0.02D;
-            worldObj.spawnParticle("heart", (animal.posX+(double)(rand.nextFloat()*animal.width*2.0F))-animal.width, animal.posY+0.5D+(double)(rand.nextFloat()*animal.height), (animal.posZ+(double)(rand.nextFloat()*animal.width*2.0F))-animal.width, d, d1, d2);
+            double d = animal.worldObj.rand.nextGaussian()*0.02D;
+            double d1 = animal.worldObj.rand.nextGaussian()*0.02D;
+            double d2 = animal.worldObj.rand.nextGaussian()*0.02D;
+            worldObj.spawnParticle("heart", (animal.posX+(double)(animal.worldObj.rand.nextFloat()*animal.width*2.0F))-animal.width, animal.posY+0.5D+(double)(animal.worldObj.rand.nextFloat()*animal.height), (animal.posZ+(double)(animal.worldObj.rand.nextFloat()*animal.width*2.0F))-animal.width, d, d1, d2);
         }
     }
 
