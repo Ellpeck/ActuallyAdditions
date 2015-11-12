@@ -12,6 +12,7 @@ package ellpeck.actuallyadditions.event;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import ellpeck.actuallyadditions.misc.LaserRelayConnectionHandler;
+import ellpeck.actuallyadditions.misc.WorldData;
 import net.minecraftforge.event.world.WorldEvent;
 
 public class WorldLoadingEvents{
@@ -27,5 +28,10 @@ public class WorldLoadingEvents{
     public void onUnload(WorldEvent.Unload event){
         //Clear Data so that it won't be carried over to other worlds
         LaserRelayConnectionHandler.getInstance().networks.clear();
+    }
+
+    @SubscribeEvent
+    public void onSave(WorldEvent.Save event){
+        WorldData.makeDirty();
     }
 }
