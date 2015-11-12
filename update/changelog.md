@@ -1,3 +1,11 @@
+# 1.7.10-r5
+- Fixed some unnecessary performance use when transfering power with laser relays
+- Fixed Laser Relays disconnecting themselves when
+    -they're not edited the entire time a world is loaded
+    -a world is loaded wrongly
+    -a player leaves an area on servers sometimes
+- //Sorry for this update, it's a really important fix though//
+
 # 1.7.10-r4
 - Fixed the Drill not being able to mine Obsidian correctly when its harvest level was set higher than 4
 - AtomSponge Smiley Cloud
