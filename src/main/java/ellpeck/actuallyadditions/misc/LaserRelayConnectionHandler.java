@@ -185,6 +185,11 @@ public class LaserRelayConnectionHandler{
 
                                     transmitted += ((IEnergyReceiver)tile).receiveEnergy(side.getOpposite(), theoreticalReceived-deduct, simulate);
                                     transmitted += deduct;
+
+                                    //If everything that could be transmitted was transmitted
+                                    if(transmitted >= maxTransfer){
+                                        return transmitted;
+                                    }
                                 }
                             }
                         }
