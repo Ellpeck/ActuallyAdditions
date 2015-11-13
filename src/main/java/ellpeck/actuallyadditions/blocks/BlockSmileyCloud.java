@@ -13,6 +13,7 @@ package ellpeck.actuallyadditions.blocks;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.ActuallyAdditions;
+import ellpeck.actuallyadditions.achievement.TheAchievements;
 import ellpeck.actuallyadditions.inventory.GuiHandler;
 import ellpeck.actuallyadditions.tile.TileEntitySmileyCloud;
 import ellpeck.actuallyadditions.util.AssetUtil;
@@ -67,6 +68,8 @@ public class BlockSmileyCloud extends BlockContainerBase implements IActAddItemO
             TileEntity tile = world.getTileEntity(x, y, z);
             if(tile instanceof TileEntitySmileyCloud){
                 player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.CLOUD.ordinal(), world, x, y, z);
+
+                player.triggerAchievement(TheAchievements.NAME_SMILEY_CLOUD.ach);
             }
         }
         return true;

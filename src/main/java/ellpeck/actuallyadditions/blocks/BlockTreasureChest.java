@@ -105,8 +105,9 @@ public class BlockTreasureChest extends Block implements IActAddItemOrBlock{
         if(!world.isRemote){
             world.playSoundAtEntity(player, "random.chestopen", 0.2F, world.rand.nextFloat()*0.1F+0.9F);
             this.dropItems(world, x, y, z);
-            player.addStat(TheAchievements.OPEN_TREASURE_CHEST.ach, 1);
             world.setBlockToAir(x, y, z);
+
+            player.triggerAchievement(TheAchievements.OPEN_TREASURE_CHEST.ach);
         }
         return true;
     }

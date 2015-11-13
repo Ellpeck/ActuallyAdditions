@@ -13,6 +13,7 @@ package ellpeck.actuallyadditions.items;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.ActuallyAdditions;
+import ellpeck.actuallyadditions.achievement.TheAchievements;
 import ellpeck.actuallyadditions.inventory.GuiHandler;
 import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import ellpeck.actuallyadditions.util.ModUtil;
@@ -34,6 +35,10 @@ public class ItemBooklet extends Item implements IActAddItemOrBlock{
     @Override
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player){
         player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.BOOK.ordinal(), world, (int)player.posX, (int)player.posY, (int)player.posZ);
+
+        if(!world.isRemote){
+            player.triggerAchievement(TheAchievements.OPEN_BOOKLET.ach);
+        }
         return stack;
     }
 

@@ -378,34 +378,17 @@ info.actuallyadditions.update.buttonOptions=Click: Changelog, Shift-Click: Downl
 info.actuallyadditions.update.failed=[{"text":"The Update Check for "},{"text":"Actually Additions ","color":"dark_green"},{"text":"failed! Check Logs for more Info!","color":"none"}]
 
 #Achievements
-achievement.actuallyadditions.pickUpSolidXP=Square and yummy!
-achievement.actuallyadditions.pickUpSolidXP.desc=Pick up some Solidified Experience
-achievement.actuallyadditions.craftKnifeBlade=Sharp! So Sharp!
-achievement.actuallyadditions.craftKnifeBlade.desc=Craft a Knife Blade
-achievement.actuallyadditions.craftKnife=Cutcutcutcutcutcutcutcutcutcutcut!
-achievement.actuallyadditions.craftKnife.desc=Craft a Knife
-achievement.actuallyadditions.craftMashedFood=Munch munch munch!
-achievement.actuallyadditions.craftMashedFood.desc=Craft some Mashed Food
-achievement.actuallyadditions.craftWoodenCasing=Hard and sturdy!
-achievement.actuallyadditions.craftWoodenCasing.desc=Craft a Wooden Casing
-achievement.actuallyadditions.craftStoneCasing=Harder and sturdier!
-achievement.actuallyadditions.craftStoneCasing.desc=Craft a Stone Casing
-achievement.actuallyadditions.craftBasicCoil=Transmits.. power.. or something?
-achievement.actuallyadditions.craftBasicCoil.desc=Craft a Basic Coil
-achievement.actuallyadditions.craftAdvancedCoil=Transmits... more power I guess.
-achievement.actuallyadditions.craftAdvancedCoil.desc=Craft an Advanced Coil
-achievement.actuallyadditions.craftESD=From there to there..
-achievement.actuallyadditions.craftESD.desc=Craft an ESD
-achievement.actuallyadditions.craftAdvancedESD=White and Black!
-achievement.actuallyadditions.craftAdvancedESD.desc=Craft an Advanced ESD
-achievement.actuallyadditions.craftPhantomface=Wooo... teleporting!
+achievement.actuallyadditions.openBooklet=Screams of Knowledge
+achievement.actuallyadditions.openBooklet.desc=Open an Actually Additions Manual
+
+achievement.actuallyadditions.nameSmileyCloud=Your best friend
+achievement.actuallyadditions.nameSmileyCloud.desc=Name a Smiley Cloud
+
+achievement.actuallyadditions.craftPhantomface=Zoom, Zoom, Items!
 achievement.actuallyadditions.craftPhantomface.desc=Craft a Phantomface
-achievement.actuallyadditions.craftPhantomLiquiface=Bubbles.. are awesome..
-achievement.actuallyadditions.craftPhantomLiquiface.desc=Craft a Phantom Liquiface
-achievement.actuallyadditions.craftPhantomEnergyface=Watch out! It's powered!
-achievement.actuallyadditions.craftPhantomEnergyface.desc=Craft a Phantom Energyface
-achievement.actuallyadditions.openTreasureChest=You almost drowned!!
-achievement.actuallyadditions.openTreasureChest.desc=Open a Treasure Chest underwater
+
+achievement.actuallyadditions.openTreasureChest=Underwater Dungeon
+achievement.actuallyadditions.openTreasureChest.desc=Open a Treasure Chest
 
 #Booklet Recipe Names
 booklet.actuallyadditions.shapelessRecipe=Shapeless Recipe
