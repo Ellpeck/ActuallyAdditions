@@ -102,6 +102,7 @@ public class GuiBooklet extends GuiScreen{
 
         //Pre-Renders the current page's content etc.
         BookletUtils.renderPre(this, x, y, this.ticksElapsed, this.mousePressed);
+        BookletUtils.drawAchievementInfo(this, true, x, y);
 
         //Does vanilla drawing stuff
         super.drawScreen(x, y, f);
@@ -115,6 +116,7 @@ public class GuiBooklet extends GuiScreen{
         //Draws hovering texts for buttons
         this.fontRendererObj.setUnicodeFlag(false);
         BookletUtils.doHoverTexts(this, x, y);
+        BookletUtils.drawAchievementInfo(this, false, x, y);
         this.fontRendererObj.setUnicodeFlag(unicodeBefore);
 
         //Resets mouse

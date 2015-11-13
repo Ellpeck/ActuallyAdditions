@@ -10,6 +10,7 @@
 
 package ellpeck.actuallyadditions.booklet;
 
+import ellpeck.actuallyadditions.achievement.InitAchievements;
 import ellpeck.actuallyadditions.booklet.chapter.BookletChapter;
 import ellpeck.actuallyadditions.booklet.entry.BookletEntry;
 import ellpeck.actuallyadditions.booklet.entry.BookletEntryAllSearch;
@@ -19,6 +20,8 @@ import ellpeck.actuallyadditions.util.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.OpenGlHelper;
+import net.minecraft.item.ItemStack;
+import net.minecraft.stats.Achievement;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IChatComponent;
 import org.lwjgl.opengl.GL11;
@@ -73,6 +76,45 @@ public class BookletUtils{
         }
         else{
             booklet.drawCenteredString(booklet.getFontRenderer(), StringUtil.localize("itemGroup."+ModUtil.MOD_ID_LOWER), booklet.guiLeft+booklet.xSize/2, booklet.guiTop-8, StringUtil.DECIMAL_COLOR_WHITE);
+        }
+    }
+
+    /**
+     * Draws an Achievement Info if the page has items that trigger achievements
+     * @param pre If the hover info texts or the icon should be drawn
+     */
+    @SuppressWarnings("unchecked")
+    public static void drawAchievementInfo(GuiBooklet booklet, boolean pre, int mouseX, int mouseY){
+        if(booklet.currentPage == null){
+            return;
+        }
+
+        ItemStack[] stacks = booklet.currentPage.getItemStacksForPage();
+        ArrayList list = null;
+
+        for(ItemStack stack : stacks){
+            for(Achievement achievement : InitAchievements.achievementList){
+                if(stack != null && achievement.theItemStack != null && achievement.theItemStack.isItemEqual(stack)){
+                    if(pre){
+                        booklet.drawTexturedModalRect(booklet.guiLeft+booklet.xSize+1, booklet.guiTop-18, 166, 154, 22, 21);
+                        return;
+                    }
+                    else{
+                        if(mouseX >= booklet.guiLeft+booklet.xSize+1 && mouseX < booklet.guiLeft+booklet.xSize+1+22 && mouseY >= booklet.guiTop-18 && mouseY < booklet.guiTop-18+21){
+                            if(list == null){
+                                list = new ArrayList();
+                                list.add(EnumChatFormatting.GOLD+"Achievements related to this page:");
+                            }
+                            list.add("-"+StringUtil.localize(achievement.statId));
+                            list.add(EnumChatFormatting.GRAY+"("+achievement.getDescription()+")");
+                        }
+                    }
+                }
+            }
+        }
+
+        if(list != null){
+            booklet.drawHoveringText(list, mouseX, mouseY);
         }
     }
 
