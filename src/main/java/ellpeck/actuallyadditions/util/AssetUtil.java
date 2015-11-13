@@ -28,13 +28,14 @@ import org.lwjgl.opengl.GL11;
 public class AssetUtil{
 
     public static final ResourceLocation GUI_INVENTORY_LOCATION = getGuiLocation("guiInventory");
-    public static int COMPOST_RENDER_ID;
-    public static int FISHING_NET_RENDER_ID;
-    public static int FURNACE_SOLAR_RENDER_ID;
-    public static int COFFEE_MACHINE_RENDER_ID;
-    public static int PHANTOM_BOOSTER_RENDER_ID;
-    public static int SMILEY_CLOUD_RENDER_ID;
-    public static int LASER_RELAY_RENDER_ID;
+
+    public static int compostRenderId;
+    public static int fishingNetRenderId;
+    public static int furnaceSolarRenderId;
+    public static int coffeeMachineRenderId;
+    public static int phantomBoosterRenderId;
+    public static int smileyCloudRenderId;
+    public static int laserRelayRenderId;
 
     public static ResourceLocation getGuiLocation(String file){
         return new ResourceLocation(ModUtil.MOD_ID_LOWER, "textures/gui/"+file+".png");

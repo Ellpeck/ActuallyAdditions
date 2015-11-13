@@ -47,7 +47,7 @@ public class BlockSmileyCloud extends BlockContainerBase implements IActAddItemO
 
     @Override
     public int getRenderType(){
-        return AssetUtil.SMILEY_CLOUD_RENDER_ID;
+        return AssetUtil.smileyCloudRenderId;
     }
 
     @Override

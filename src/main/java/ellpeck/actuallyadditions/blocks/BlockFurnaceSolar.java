@@ -49,7 +49,7 @@ public class BlockFurnaceSolar extends BlockContainerBase implements IActAddItem
 
     @Override
     public int getRenderType(){
-        return AssetUtil.FURNACE_SOLAR_RENDER_ID;
+        return AssetUtil.furnaceSolarRenderId;
     }
 
     @Override

@@ -17,8 +17,11 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.VillagerRegistry;
-import ellpeck.actuallyadditions.blocks.InitBlocks;
-import ellpeck.actuallyadditions.blocks.render.*;
+import ellpeck.actuallyadditions.blocks.render.RenderInventory;
+import ellpeck.actuallyadditions.blocks.render.RenderLaserRelay;
+import ellpeck.actuallyadditions.blocks.render.RenderSmileyCloud;
+import ellpeck.actuallyadditions.blocks.render.RenderTileEntity;
+import ellpeck.actuallyadditions.blocks.render.model.*;
 import ellpeck.actuallyadditions.config.values.ConfigBoolValues;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.event.InitEvents;
@@ -28,9 +31,8 @@ import ellpeck.actuallyadditions.util.AssetUtil;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.playerdata.PersistentClientData;
 import net.minecraft.client.Minecraft;
-import net.minecraft.item.Item;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.MinecraftForgeClient;
 
 import java.io.File;
 import java.util.Calendar;
@@ -65,34 +67,21 @@ public class ClientProxy implements IProxy{
 
         InitEvents.initClient();
 
-        AssetUtil.COMPOST_RENDER_ID = RenderingRegistry.getNextAvailableRenderId();
-        AssetUtil.FISHING_NET_RENDER_ID = RenderingRegistry.getNextAvailableRenderId();
-        AssetUtil.FURNACE_SOLAR_RENDER_ID = RenderingRegistry.getNextAvailableRenderId();
-        AssetUtil.COFFEE_MACHINE_RENDER_ID = RenderingRegistry.getNextAvailableRenderId();
-        AssetUtil.PHANTOM_BOOSTER_RENDER_ID = RenderingRegistry.getNextAvailableRenderId();
-        AssetUtil.SMILEY_CLOUD_RENDER_ID = RenderingRegistry.getNextAvailableRenderId();
-        AssetUtil.LASER_RELAY_RENDER_ID = RenderingRegistry.getNextAvailableRenderId();
+        AssetUtil.compostRenderId = RenderingRegistry.getNextAvailableRenderId();
+        AssetUtil.fishingNetRenderId = RenderingRegistry.getNextAvailableRenderId();
+        AssetUtil.furnaceSolarRenderId = RenderingRegistry.getNextAvailableRenderId();
+        AssetUtil.coffeeMachineRenderId = RenderingRegistry.getNextAvailableRenderId();
+        AssetUtil.phantomBoosterRenderId = RenderingRegistry.getNextAvailableRenderId();
+        AssetUtil.smileyCloudRenderId = RenderingRegistry.getNextAvailableRenderId();
+        AssetUtil.laserRelayRenderId = RenderingRegistry.getNextAvailableRenderId();
 
-        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCompost.class, new RenderTileEntity(new ModelCompost()));
-        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(InitBlocks.blockCompost), new RenderItems(new ModelCompost()));
-
-        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFishingNet.class, new RenderTileEntity(new ModelFishingNet()));
-        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(InitBlocks.blockFishingNet), new RenderItems(new ModelFishingNet()));
-
-        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFurnaceSolar.class, new RenderTileEntity(new ModelFurnaceSolar()));
-        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(InitBlocks.blockFurnaceSolar), new RenderItems(new ModelFurnaceSolar()));
-
-        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCoffeeMachine.class, new RenderTileEntity(new ModelCoffeeMachine()));
-        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(InitBlocks.blockCoffeeMachine), new RenderItems(new ModelCoffeeMachine()));
-
-        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPhantomBooster.class, new RenderTileEntity(new ModelPhantomBooster()));
-        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(InitBlocks.blockPhantomBooster), new RenderItems(new ModelPhantomBooster()));
-
-        ClientRegistry.bindTileEntitySpecialRenderer(TileEntitySmileyCloud.class, new RenderSmileyCloud(new ModelSmileyCloud()));
-        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(InitBlocks.blockSmileyCloud), new RenderItems(new ModelSmileyCloud()));
-
-        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityLaserRelay.class, new RenderLaserRelay(new ModelLaserRelay()));
-        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(InitBlocks.blockLaserRelay), new RenderItems(new ModelLaserRelay()));
+        registerRenderer(TileEntityCompost.class, new RenderTileEntity(new ModelCompost()), AssetUtil.compostRenderId);
+        registerRenderer(TileEntityFishingNet.class, new RenderTileEntity(new ModelFishingNet()), AssetUtil.fishingNetRenderId);
+        registerRenderer(TileEntityFurnaceSolar.class, new RenderTileEntity(new ModelFurnaceSolar()), AssetUtil.furnaceSolarRenderId);
+        registerRenderer(TileEntityCoffeeMachine.class, new RenderTileEntity(new ModelCoffeeMachine()), AssetUtil.coffeeMachineRenderId);
+        registerRenderer(TileEntityPhantomBooster.class, new RenderTileEntity(new ModelPhantomBooster()), AssetUtil.phantomBoosterRenderId);
+        registerRenderer(TileEntitySmileyCloud.class, new RenderSmileyCloud(new ModelSmileyCloud()), AssetUtil.smileyCloudRenderId);
+        registerRenderer(TileEntityLaserRelay.class, new RenderLaserRelay(new ModelLaserRelay()), AssetUtil.laserRelayRenderId);
 
         VillagerRegistry.instance().registerVillagerSkin(ConfigIntValues.JAM_VILLAGER_ID.getValue(), new ResourceLocation(ModUtil.MOD_ID_LOWER, "textures/entity/villager/jamVillager.png"));
     }
@@ -102,5 +91,10 @@ public class ClientProxy implements IProxy{
         ModUtil.LOGGER.info("PostInitializing ClientProxy...");
 
         SpecialRenderInit.init();
+    }
+
+    private static void registerRenderer(Class<? extends TileEntity> tileClass, RenderTileEntity tileRender, int renderID){
+        ClientRegistry.bindTileEntitySpecialRenderer(tileClass, tileRender);
+        RenderingRegistry.registerBlockHandler(new RenderInventory(tileRender, renderID));
     }
 }

@@ -8,7 +8,7 @@
  * © 2015 Ellpeck
  */
 
-package ellpeck.actuallyadditions.blocks.render;
+package ellpeck.actuallyadditions.blocks.render.model;
 
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.tileentity.TileEntity;

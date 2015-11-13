@@ -50,7 +50,7 @@ public class BlockCoffeeMachine extends BlockContainerBase implements IActAddIte
 
     @Override
     public int getRenderType(){
-        return AssetUtil.COFFEE_MACHINE_RENDER_ID;
+        return AssetUtil.coffeeMachineRenderId;
     }
 
     @Override

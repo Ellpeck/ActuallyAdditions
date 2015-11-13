@@ -41,7 +41,7 @@ public class BlockLaserRelay extends BlockContainerBase implements IActAddItemOr
 
     @Override
     public int getRenderType(){
-        return AssetUtil.LASER_RELAY_RENDER_ID;
+        return AssetUtil.laserRelayRenderId;
     }
 
     @Override

@@ -47,7 +47,7 @@ public class BlockFishingNet extends BlockContainerBase implements IActAddItemOr
 
     @Override
     public int getRenderType(){
-        return AssetUtil.FISHING_NET_RENDER_ID;
+        return AssetUtil.fishingNetRenderId;
     }
 
     @Override

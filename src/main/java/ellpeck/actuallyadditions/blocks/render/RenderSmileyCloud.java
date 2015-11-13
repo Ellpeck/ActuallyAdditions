@@ -10,6 +10,7 @@
 
 package ellpeck.actuallyadditions.blocks.render;
 
+import ellpeck.actuallyadditions.blocks.render.model.ModelBaseAA;
 import ellpeck.actuallyadditions.misc.cloud.ISmileyCloudEasterEgg;
 import ellpeck.actuallyadditions.misc.cloud.SmileyCloudEasterEggs;
 import ellpeck.actuallyadditions.proxy.ClientProxy;

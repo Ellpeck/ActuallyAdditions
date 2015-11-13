@@ -53,7 +53,7 @@ public class BlockCompost extends BlockContainerBase implements IActAddItemOrBlo
 
     @Override
     public int getRenderType(){
-        return AssetUtil.COMPOST_RENDER_ID;
+        return AssetUtil.compostRenderId;
     }
 
     @Override

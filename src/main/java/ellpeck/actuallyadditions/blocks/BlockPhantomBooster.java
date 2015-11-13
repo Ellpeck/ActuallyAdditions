@@ -44,7 +44,7 @@ public class BlockPhantomBooster extends BlockContainerBase implements IActAddIt
 
     @Override
     public int getRenderType(){
-        return AssetUtil.PHANTOM_BOOSTER_RENDER_ID;
+        return AssetUtil.phantomBoosterRenderId;
     }
 
     @Override

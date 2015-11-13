@@ -10,6 +10,7 @@
 
 package ellpeck.actuallyadditions.blocks.render;
 
+import ellpeck.actuallyadditions.blocks.render.model.ModelBaseAA;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
@@ -19,7 +20,7 @@ import org.lwjgl.opengl.GL11;
 public class RenderTileEntity extends TileEntitySpecialRenderer{
 
     public ModelBaseAA theModel;
-    protected ResourceLocation resLoc;
+    public ResourceLocation resLoc;
 
     public RenderTileEntity(ModelBaseAA model){
         this.theModel = model;

@@ -10,6 +10,7 @@
 
 package ellpeck.actuallyadditions.blocks.render;
 
+import ellpeck.actuallyadditions.blocks.render.model.ModelBaseAA;
 import net.minecraft.tileentity.TileEntity;
 import org.lwjgl.opengl.GL11;
 
