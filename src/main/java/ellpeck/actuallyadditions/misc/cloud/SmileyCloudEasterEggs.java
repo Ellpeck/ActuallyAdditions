@@ -354,7 +354,20 @@ public class SmileyCloudEasterEggs{
             @Override
             public void renderExtra(float f){
                 renderHoldingItem(false, new ItemStack(Items.gunpowder));
-                renderHeadBlock(Blocks.sponge, 2, 20F);
+                renderHeadBlock(Blocks.sponge, 0, 20F);
+            }
+        });
+        //Mattzimann
+        register(new ISmileyCloudEasterEgg(){
+            @Override
+            public String[] getTriggerNames(){
+                return new String[]{"mattzimann", "mattziman", "matziman", "marzipan", "mattzi"};
+            }
+
+            @Override
+            public void renderExtra(float f){
+                renderHoldingItem(false, new ItemStack(InitItems.itemSwordEmerald));
+                renderHeadBlock(InitBlocks.blockCoffeeMachine, 0, 35F);
             }
         });
     }
