@@ -48,22 +48,33 @@ public class SpecialRenderInit{
 
     public static void parse(Properties properties){
         for(String key : properties.stringPropertyNames()){
-            String value = properties.getProperty(key);
+            String[] values = properties.getProperty(key).split("@");
+            if(values != null && values.length > 0){
+                String itemName = values[0];
 
-            ItemStack stack = null;
-            //Get the Item from the String
-            if(Item.itemRegistry.containsKey(value)){
-                stack = new ItemStack((Item)Item.itemRegistry.getObject(value));
-            }
-            else{
-                if(Block.blockRegistry.containsKey(value)){
-                    stack = new ItemStack((Block)Block.blockRegistry.getObject(value));
+                int meta;
+                try{
+                    meta = Integer.parseInt(values[1]);
                 }
-            }
+                catch(Exception e){
+                    meta = 0;
+                }
 
-            //Add a new Special Renderer to the list
-            if(stack != null){
-                specialList.put(key, new RenderSpecial(stack));
+                ItemStack stack = null;
+                //Get the Item from the String
+                if(Item.itemRegistry.containsKey(itemName)){
+                    stack = new ItemStack((Item)Item.itemRegistry.getObject(itemName), 1, meta);
+                }
+                else{
+                    if(Block.blockRegistry.containsKey(itemName)){
+                        stack = new ItemStack((Block)Block.blockRegistry.getObject(itemName), 1, meta);
+                    }
+                }
+
+                //Add a new Special Renderer to the list
+                if(stack != null){
+                    specialList.put(key, new RenderSpecial(stack));
+                }
             }
         }
     }
