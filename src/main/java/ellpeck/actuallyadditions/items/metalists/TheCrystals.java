@@ -14,10 +14,11 @@ import net.minecraft.item.EnumRarity;
 
 public enum TheCrystals{
 
-    REDSTONE("Red", EnumRarity.rare, 12595250),
-    LAPIS("Blue", EnumRarity.uncommon, 24983),
-    DIAMOND("LightBlue", EnumRarity.epic, 40140),
-    COAL("Black", EnumRarity.uncommon, 2500135);
+    REDSTONE("Red", EnumRarity.rare, 16318464),
+    LAPIS("Blue", EnumRarity.uncommon, 131437),
+    DIAMOND("LightBlue", EnumRarity.epic, 9211636),
+    COAL("Black", EnumRarity.uncommon, 986895),
+    EMERALD("Green", EnumRarity.epic, 382466);
 
     public final String name;
     public final EnumRarity rarity;

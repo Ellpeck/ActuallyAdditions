@@ -24,6 +24,7 @@ public abstract class TileEntityBase extends TileEntity{
 
     public static void init(){
         ModUtil.LOGGER.info("Registering TileEntities...");
+
         GameRegistry.registerTileEntity(TileEntityCompost.class, ModUtil.MOD_ID_LOWER+":tileEntityCompost");
         GameRegistry.registerTileEntity(TileEntityFeeder.class, ModUtil.MOD_ID_LOWER+":tileEntityFeeder");
         GameRegistry.registerTileEntity(TileEntityGiantChest.class, ModUtil.MOD_ID_LOWER+":tileEntityGiantChest");
@@ -62,6 +63,7 @@ public abstract class TileEntityBase extends TileEntity{
         GameRegistry.registerTileEntity(TileEntityDirectionalBreaker.class, ModUtil.MOD_ID_LOWER+":tileEntityDirectionalBreaker");
         GameRegistry.registerTileEntity(TileEntityRangedCollector.class, ModUtil.MOD_ID_LOWER+":tileEntityRangedCollector");
         GameRegistry.registerTileEntity(TileEntityLaserRelay.class, ModUtil.MOD_ID_LOWER+":tileEntityLaserRelay");
+        GameRegistry.registerTileEntity(TileEntityAtomicReconstructor.class, ModUtil.MOD_ID_LOWER+":tileEntityAtomicReconstructor");
     }
 
     @Override

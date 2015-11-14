@@ -26,6 +26,9 @@ import java.util.List;
 
 public class ItemCrystal extends Item implements IActAddItemOrBlock{
 
+    @SideOnly(Side.CLIENT)
+    public IIcon[] textures;
+
     public ItemCrystal(){
         this.setHasSubtypes(true);
         this.setMaxDamage(0);
@@ -43,19 +46,13 @@ public class ItemCrystal extends Item implements IActAddItemOrBlock{
 
     @Override
     @SideOnly(Side.CLIENT)
-    public int getColorFromItemStack(ItemStack stack, int pass){
-        return stack.getItemDamage() >= BlockCrystal.allCrystals.length ? super.getColorFromItemStack(stack, pass) : BlockCrystal.allCrystals[stack.getItemDamage()].color;
+    public IIcon getIconFromDamage(int par1){
+        return par1 >= this.textures.length ? null : this.textures[par1];
     }
 
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return stack.getItemDamage() >= BlockCrystal.allCrystals.length ? EnumRarity.common : BlockCrystal.allCrystals[stack.getItemDamage()].rarity;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public IIcon getIcon(ItemStack stack, int pass){
-        return this.itemIcon;
     }
 
     @SuppressWarnings("all")
@@ -69,7 +66,10 @@ public class ItemCrystal extends Item implements IActAddItemOrBlock{
     @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister iconReg){
-        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
+        this.textures = new IIcon[BlockCrystal.allCrystals.length];
+        for(int i = 0; i < this.textures.length; i++){
+            this.textures[i] = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+BlockCrystal.allCrystals[i].name);
+        }
     }
 
     @Override

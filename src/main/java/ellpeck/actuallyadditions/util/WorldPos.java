@@ -68,6 +68,12 @@ public class WorldPos{
         return pos != null && this.x == pos.getX() && this.y == pos.getY() && this.z == pos.getZ() && this.getWorld() == pos.getWorld();
     }
 
+    public void setBlock(Block block, int meta, int flag){
+        if(this.getWorld() != null){
+            this.getWorld().setBlock(this.x, this.y, this.z, block, meta, flag);
+        }
+    }
+
     public int getX(){
         return this.x;
     }

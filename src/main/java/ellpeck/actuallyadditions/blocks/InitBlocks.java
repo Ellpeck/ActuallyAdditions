@@ -107,6 +107,9 @@ public class InitBlocks{
     public static void init(){
         ModUtil.LOGGER.info("Initializing Blocks...");
 
+        blockAtomicReconstructor = new BlockAtomicReconstructor();
+        BlockUtil.register(blockAtomicReconstructor);
+
         blockCrystal = new BlockCrystal();
         BlockUtil.register(blockCrystal, BlockCrystal.TheItemBlock.class);
 
