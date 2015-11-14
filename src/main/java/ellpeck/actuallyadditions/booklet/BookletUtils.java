@@ -83,38 +83,38 @@ public class BookletUtils{
      * Draws an Achievement Info if the page has items that trigger achievements
      * @param pre If the hover info texts or the icon should be drawn
      */
-    @SuppressWarnings("unchecked")
     public static void drawAchievementInfo(GuiBooklet booklet, boolean pre, int mouseX, int mouseY){
-        if(booklet.currentPage == null){
+        if(booklet.currentChapter == null){
             return;
         }
 
-        ItemStack[] stacks = booklet.currentPage.getItemStacksForPage();
-        ArrayList list = null;
-
-        for(ItemStack stack : stacks){
-            for(Achievement achievement : InitAchievements.achievementList){
-                if(stack != null && achievement.theItemStack != null && achievement.theItemStack.isItemEqual(stack)){
-                    if(pre){
-                        booklet.drawTexturedModalRect(booklet.guiLeft+booklet.xSize+1, booklet.guiTop-18, 166, 154, 22, 21);
-                        return;
-                    }
-                    else{
-                        if(mouseX >= booklet.guiLeft+booklet.xSize+1 && mouseX < booklet.guiLeft+booklet.xSize+1+22 && mouseY >= booklet.guiTop-18 && mouseY < booklet.guiTop-18+21){
-                            if(list == null){
-                                list = new ArrayList();
-                                list.add(EnumChatFormatting.GOLD+"Achievements related to this page:");
+        ArrayList<String> infoList = null;
+        for(BookletPage page : booklet.currentChapter.pages){
+            for(ItemStack stack : page.getItemStacksForPage()){
+                for(Achievement achievement : InitAchievements.achievementList){
+                    if(stack != null && achievement.theItemStack != null && achievement.theItemStack.isItemEqual(stack)){
+                        if(pre){
+                            booklet.mc.getTextureManager().bindTexture(GuiBooklet.resLoc);
+                            booklet.drawTexturedModalRect(booklet.guiLeft+booklet.xSize+1, booklet.guiTop-18, 166, 154, 22, 21);
+                            return;
+                        }
+                        else{
+                            if(mouseX >= booklet.guiLeft+booklet.xSize+1 && mouseX < booklet.guiLeft+booklet.xSize+1+22 && mouseY >= booklet.guiTop-18 && mouseY < booklet.guiTop-18+21){
+                                if(infoList == null){
+                                    infoList = new ArrayList<String>();
+                                    infoList.add(EnumChatFormatting.GOLD+"Achievements related to this chapter:");
+                                }
+                                infoList.add("-"+StringUtil.localize(achievement.statId));
+                                infoList.add(EnumChatFormatting.GRAY+"("+achievement.getDescription()+")");
                             }
-                            list.add("-"+StringUtil.localize(achievement.statId));
-                            list.add(EnumChatFormatting.GRAY+"("+achievement.getDescription()+")");
                         }
                     }
                 }
             }
         }
 
-        if(list != null){
-            booklet.drawHoveringText(list, mouseX, mouseY);
+        if(infoList != null){
+            booklet.drawHoveringText(infoList, mouseX, mouseY);
         }
     }
 

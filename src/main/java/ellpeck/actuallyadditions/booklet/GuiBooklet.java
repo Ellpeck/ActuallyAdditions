@@ -88,21 +88,23 @@ public class GuiBooklet extends GuiScreen{
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(ClientProxy.jingleAllTheWay ? resLocChristmas : (ClientProxy.pumpkinBlurPumpkinBlur ? resLocHalloween : (ClientProxy.bulletForMyValentine ? resLocValentine : resLoc)));
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
-        this.mc.getTextureManager().bindTexture(resLoc);
 
         //Draws the search bar
         if(this.currentIndexEntry instanceof BookletEntryAllSearch && this.currentChapter == null){
+            this.mc.getTextureManager().bindTexture(resLoc);
             this.drawTexturedModalRect(this.guiLeft+146, this.guiTop+160, 146, 80, 70, 14);
         }
+
+        //Draws Achievement Info
+        BookletUtils.drawAchievementInfo(this, true, x, y);
+
+        //Pre-Renders the current page's content etc.
+        BookletUtils.renderPre(this, x, y, this.ticksElapsed, this.mousePressed);
 
         //Draws the title
         this.fontRendererObj.setUnicodeFlag(false);
         BookletUtils.drawTitle(this);
         this.fontRendererObj.setUnicodeFlag(true);
-
-        //Pre-Renders the current page's content etc.
-        BookletUtils.renderPre(this, x, y, this.ticksElapsed, this.mousePressed);
-        BookletUtils.drawAchievementInfo(this, true, x, y);
 
         //Does vanilla drawing stuff
         super.drawScreen(x, y, f);
