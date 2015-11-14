@@ -25,6 +25,7 @@ import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -34,6 +35,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumRarity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -43,13 +45,44 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @SuppressWarnings("unchecked")
 public class ItemDrill extends ItemEnergy{
 
+    @SideOnly(Side.CLIENT)
+    private IIcon emeraldIcon;
+
     public ItemDrill(){
         super(500000, 5000);
+        this.setMaxDamage(0);
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public IIcon getIconFromDamage(int par1){
+        return par1 == 0 ? this.itemIcon : this.emeraldIcon;
+    }
+
+    @Override
+    public int getMetadata(int damage){
+        return damage;
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    @SideOnly(Side.CLIENT)
+    public void getSubItems(Item item, CreativeTabs tabs, List list){
+        super.getSubItems(item, tabs, list);
+
+        ItemStack stackFull = new ItemStack(this, 1, 1);
+        this.setEnergy(stackFull, this.getMaxEnergyStored(stackFull));
+        list.add(stackFull);
+
+        ItemStack stackEmpty = new ItemStack(this, 1, 1);
+        this.setEnergy(stackEmpty, 0);
+        list.add(stackEmpty);
     }
 
     @Override
@@ -192,6 +225,7 @@ public class ItemDrill extends ItemEnergy{
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister iconReg){
         this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
+        this.emeraldIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Emerald");
     }
 
     @Override
@@ -244,12 +278,6 @@ public class ItemDrill extends ItemEnergy{
             ItemUtil.removeEnchantment(stack, Enchantment.fortune);
         }
         return toReturn;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public IIcon getIcon(ItemStack stack, int pass){
-        return this.itemIcon;
     }
 
     @Override

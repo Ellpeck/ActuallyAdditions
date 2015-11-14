@@ -37,6 +37,7 @@ public class BookletPage{
     protected BookletChapter chapter;
     private HashMap<String, String> textReplacements = new HashMap<String, String>();
     private boolean hasNoText;
+    public boolean arePageStacksWildcard;
 
     public BookletPage(int id){
         this.id = id;
@@ -170,5 +171,10 @@ public class BookletPage{
 
     public void setChapter(BookletChapter chapter){
         this.chapter = chapter;
+    }
+
+    public BookletPage setPageStacksWildcard(){
+        this.arePageStacksWildcard = true;
+        return this;
     }
 }
