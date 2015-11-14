@@ -14,18 +14,24 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.tile.TileEntityAtomicReconstructor;
 import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
+import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.block.BlockPistonBase;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class BlockAtomicReconstructor extends BlockContainerBase implements IActAddItemOrBlock{
+
+    @SideOnly(Side.CLIENT)
+    private IIcon frontIcon;
+    @SideOnly(Side.CLIENT)
+    private IIcon topIcon;
 
     public BlockAtomicReconstructor(){
         super(Material.rock);
@@ -37,14 +43,35 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IAct
 
     @Override
     @SideOnly(Side.CLIENT)
-    public IIcon getIcon(int side, int metadata){
+    public IIcon getIcon(IBlockAccess world, int x, int y, int z, int side){
+        int meta = world.getBlockMetadata(x, y, z);
+        if(side != meta && (side == 0 || side == 1)){
+            return this.topIcon;
+        }
+        if(side == meta){
+            return this.frontIcon;
+        }
+        return this.blockIcon;
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public IIcon getIcon(int side, int meta){
+        if(side == 0 || side == 1){
+            return this.topIcon;
+        }
+        if(side == 3){
+            return this.frontIcon;
+        }
         return this.blockIcon;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconReg){
-        this.blockIcon = Blocks.stone.getIcon(0, 0);
+        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
+        this.frontIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Front");
+        this.topIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Top");
     }
 
     @Override

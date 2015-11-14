@@ -13,10 +13,7 @@ package ellpeck.actuallyadditions.ore;
 import ellpeck.actuallyadditions.blocks.InitBlocks;
 import ellpeck.actuallyadditions.blocks.metalists.TheMiscBlocks;
 import ellpeck.actuallyadditions.items.InitItems;
-import ellpeck.actuallyadditions.items.metalists.TheDusts;
-import ellpeck.actuallyadditions.items.metalists.TheFoods;
-import ellpeck.actuallyadditions.items.metalists.TheMiscItems;
-import ellpeck.actuallyadditions.items.metalists.TheSpecialDrops;
+import ellpeck.actuallyadditions.items.metalists.*;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
@@ -59,7 +56,7 @@ public class InitOreDict{
         addOre(Blocks.double_plant, 4, "flowerRoseBush");
         addOre(Blocks.double_plant, 5, "flowerPeony");
 
-        //My Ores
+        //Ores
         addOre(InitItems.itemDust, TheDusts.IRON.ordinal(), "dustIron");
         addOre(InitItems.itemDust, TheDusts.GOLD.ordinal(), "dustGold");
         addOre(InitItems.itemDust, TheDusts.DIAMOND.ordinal(), "dustDiamond");
@@ -68,6 +65,19 @@ public class InitOreDict{
         addOre(InitItems.itemDust, TheDusts.QUARTZ.ordinal(), "dustQuartz");
         addOre(InitItems.itemDust, TheDusts.COAL.ordinal(), "dustCoal");
         addOre(InitItems.itemDust, TheDusts.QUARTZ_BLACK.ordinal(), "dustQuartzBlack");
+
+        //Crystals
+        addOre(InitItems.itemCrystal, TheCrystals.REDSTONE.ordinal(), "crystalRed");
+        addOre(InitItems.itemCrystal, TheCrystals.LAPIS.ordinal(), "crystalBlue");
+        addOre(InitItems.itemCrystal, TheCrystals.DIAMOND.ordinal(), "crystalLightBlue");
+        addOre(InitItems.itemCrystal, TheCrystals.EMERALD.ordinal(), "crystalGreen");
+        addOre(InitItems.itemCrystal, TheCrystals.COAL.ordinal(), "crystalBlack");
+
+        addOre(InitBlocks.blockCrystal, TheCrystals.REDSTONE.ordinal(), "blockCrystalRed");
+        addOre(InitBlocks.blockCrystal, TheCrystals.LAPIS.ordinal(), "blockCrystalBlue");
+        addOre(InitBlocks.blockCrystal, TheCrystals.DIAMOND.ordinal(), "blockCrystalLightBlue");
+        addOre(InitBlocks.blockCrystal, TheCrystals.EMERALD.ordinal(), "blockCrystalGreen");
+        addOre(InitBlocks.blockCrystal, TheCrystals.COAL.ordinal(), "blockCrystalBlack");
 
         addOre(InitBlocks.blockMisc, TheMiscBlocks.ORE_QUARTZ.ordinal(), "oreQuartzBlack");
 

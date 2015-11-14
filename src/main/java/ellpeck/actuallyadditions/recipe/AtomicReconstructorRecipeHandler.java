@@ -10,33 +10,41 @@
 
 package ellpeck.actuallyadditions.recipe;
 
-import ellpeck.actuallyadditions.blocks.InitBlocks;
-import ellpeck.actuallyadditions.items.metalists.TheCrystals;
-import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class AtomicReconstructorRecipeHandler{
 
     public static ArrayList<Recipe> recipes = new ArrayList<Recipe>();
 
     public static void init(){
-        addRecipe(Blocks.redstone_block, 0, InitBlocks.blockCrystal, TheCrystals.REDSTONE.ordinal());
-        addRecipe(Blocks.lapis_block, 0, InitBlocks.blockCrystal, TheCrystals.LAPIS.ordinal());
-        addRecipe(Blocks.diamond_block, 0, InitBlocks.blockCrystal, TheCrystals.DIAMOND.ordinal());
-        addRecipe(Blocks.coal_block, 0, InitBlocks.blockCrystal, TheCrystals.COAL.ordinal());
-        addRecipe(Blocks.emerald_block, 0, InitBlocks.blockCrystal, TheCrystals.EMERALD.ordinal());
+        addRecipe("blockRedstone", "blockCrystalRed");
+        addRecipe("blockLapis", "blockCrystalBlue");
+        addRecipe("blockDiamond", "blockCrystalLightBlue");
+        addRecipe("blockEmerald", "blockCrystalGreen");
+        addRecipe("blockCoal", "blockCrystalBlack");
+
+        addRecipe("dustRedstone", "crystalRed");
+        addRecipe("gemLapis", "crystalBlue");
+        addRecipe("gemDiamond", "crystalLightBlue");
+        addRecipe("gemEmerald", "crystalGreen");
+        addRecipe("coal", "crystalBlack");
     }
 
-    public static void addRecipe(Block input, int inputMeta, Block output, int outputMeta){
-        recipes.add(new Recipe(input, inputMeta, output, outputMeta));
+    public static void addRecipe(String input, String output){
+        recipes.add(new Recipe(input, output));
     }
 
-    public static Recipe getRecipe(Block input, int inputMeta){
+    public static Recipe getRecipe(ItemStack input){
         for(Recipe recipe : recipes){
-            if(recipe.input == input && recipe.inputMeta == inputMeta){
-                return recipe;
+            int[] ids = OreDictionary.getOreIDs(input);
+            for(int id : ids){
+                if(Objects.equals(OreDictionary.getOreName(id), recipe.input)){
+                    return recipe;
+                }
             }
         }
         return null;
@@ -44,18 +52,21 @@ public class AtomicReconstructorRecipeHandler{
 
     public static class Recipe{
 
-        public Block input;
-        public int inputMeta;
-        public Block output;
-        public int outputMeta;
+        public String input;
+        public String output;
 
-        public Recipe(Block input, int inputMeta, Block output, int outputMeta){
+        public Recipe(String input, String output){
             this.input = input;
-            this.inputMeta = inputMeta;
             this.output = output;
-            this.outputMeta = outputMeta;
         }
 
+        public ItemStack getFirstOutput(){
+            ArrayList<ItemStack> stacks = OreDictionary.getOres(this.output);
+            if(stacks != null && !stacks.isEmpty()){
+                return stacks.get(0);
+            }
+            return null;
+        }
     }
 
 }
