@@ -10,6 +10,8 @@
 
 package ellpeck.actuallyadditions.tile;
 
+import cofh.api.energy.EnergyStorage;
+import cofh.api.energy.IEnergyReceiver;
 import ellpeck.actuallyadditions.recipe.AtomicReconstructorRecipeHandler;
 import ellpeck.actuallyadditions.util.WorldPos;
 import ellpeck.actuallyadditions.util.WorldUtil;
@@ -23,7 +25,9 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 import java.util.ArrayList;
 
-public class TileEntityAtomicReconstructor extends TileEntityBase{
+public class TileEntityAtomicReconstructor extends TileEntityBase implements IEnergyReceiver{
+
+    public EnergyStorage storage = new EnergyStorage(300000);
 
     private int currentTime;
 
@@ -31,7 +35,8 @@ public class TileEntityAtomicReconstructor extends TileEntityBase{
     @SuppressWarnings("unchecked")
     public void updateEntity(){
         if(!this.worldObj.isRemote){
-            if(!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)){
+            int usePerBlock = 1200; //TODO Config
+            if(!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord) && this.storage.getEnergyStored() >= usePerBlock){
                 if(this.currentTime > 0){
                     this.currentTime--;
                     if(this.currentTime <= 0){
@@ -47,18 +52,21 @@ public class TileEntityAtomicReconstructor extends TileEntityBase{
                                     for(int reachX = -range; reachX < range+1; reachX++){
                                         for(int reachZ = -range; reachZ < range+1; reachZ++){
                                             for(int reachY = -range; reachY < range+1; reachY++){
-                                                WorldPos pos = new WorldPos(worldObj, coordsBlock.getX()+reachX, coordsBlock.getY()+reachY, coordsBlock.getZ()+reachZ);
-                                                AtomicReconstructorRecipeHandler.Recipe recipe = AtomicReconstructorRecipeHandler.getRecipe(new ItemStack(pos.getBlock(), pos.getMetadata()));
-                                                if(recipe != null){
-                                                    ItemStack output = recipe.getFirstOutput();
-                                                    if(output != null){
-                                                        if(output.getItem() instanceof ItemBlock){
-                                                            this.worldObj.playAuxSFX(2001, pos.getX(), pos.getY(), pos.getZ(), Block.getIdFromBlock(pos.getBlock())+(pos.getMetadata() << 12));
-                                                            pos.setBlock(Block.getBlockFromItem(output.getItem()), output.getItemDamage(), 2);
-                                                        }
-                                                        else{
-                                                            EntityItem item = new EntityItem(worldObj, pos.getX()+0.5, pos.getY()+0.5, pos.getZ()+0.5, output.copy());
-                                                            worldObj.spawnEntityInWorld(item);
+                                                if(this.storage.getEnergyStored() >= usePerBlock){
+                                                    WorldPos pos = new WorldPos(worldObj, coordsBlock.getX()+reachX, coordsBlock.getY()+reachY, coordsBlock.getZ()+reachZ);
+                                                    AtomicReconstructorRecipeHandler.Recipe recipe = AtomicReconstructorRecipeHandler.getRecipe(new ItemStack(pos.getBlock(), pos.getMetadata()));
+                                                    if(recipe != null){
+                                                        ItemStack output = recipe.getFirstOutput();
+                                                        if(output != null){
+                                                            if(output.getItem() instanceof ItemBlock){
+                                                                this.worldObj.playAuxSFX(2001, pos.getX(), pos.getY(), pos.getZ(), Block.getIdFromBlock(pos.getBlock())+(pos.getMetadata() << 12));
+                                                                pos.setBlock(Block.getBlockFromItem(output.getItem()), output.getItemDamage(), 2);
+                                                            }
+                                                            else{
+                                                                EntityItem item = new EntityItem(worldObj, pos.getX()+0.5, pos.getY()+0.5, pos.getZ()+0.5, output.copy());
+                                                                worldObj.spawnEntityInWorld(item);
+                                                            }
+                                                            this.storage.extractEnergy(usePerBlock, false);
                                                         }
                                                     }
                                                 }
@@ -69,15 +77,19 @@ public class TileEntityAtomicReconstructor extends TileEntityBase{
                                     //Converting the Items
                                     ArrayList<EntityItem> items = (ArrayList<EntityItem>)worldObj.getEntitiesWithinAABB(EntityItem.class, AxisAlignedBB.getBoundingBox(coordsBlock.getX()-range, coordsBlock.getY()-range, coordsBlock.getZ()-range, coordsBlock.getX()+range, coordsBlock.getY()+range, coordsBlock.getZ()+range));
                                     for(EntityItem item : items){
-                                        ItemStack stack = item.getEntityItem();
-                                        if(stack != null){
-                                            AtomicReconstructorRecipeHandler.Recipe recipe = AtomicReconstructorRecipeHandler.getRecipe(stack);
-                                            if(recipe != null){
-                                                ItemStack output = recipe.getFirstOutput();
-                                                if(output != null){
-                                                    ItemStack outputCopy = output.copy();
-                                                    outputCopy.stackSize = stack.stackSize;
-                                                    item.setEntityItemStack(outputCopy);
+                                        if(this.storage.getEnergyStored() >= usePerBlock){
+                                            ItemStack stack = item.getEntityItem();
+                                            if(stack != null){
+                                                AtomicReconstructorRecipeHandler.Recipe recipe = AtomicReconstructorRecipeHandler.getRecipe(stack);
+                                                if(recipe != null){
+                                                    ItemStack output = recipe.getFirstOutput();
+                                                    if(output != null){
+                                                        ItemStack outputCopy = output.copy();
+                                                        outputCopy.stackSize = stack.stackSize;
+                                                        item.setEntityItemStack(outputCopy);
+
+                                                        this.storage.extractEnergy(usePerBlock, false);
+                                                    }
                                                 }
                                             }
                                         }
@@ -108,4 +120,23 @@ public class TileEntityAtomicReconstructor extends TileEntityBase{
         this.currentTime = compound.getInteger("CurrentTime");
     }
 
+    @Override
+    public int receiveEnergy(ForgeDirection from, int maxReceive, boolean simulate){
+        return this.storage.receiveEnergy(maxReceive, simulate);
+    }
+
+    @Override
+    public int getEnergyStored(ForgeDirection from){
+        return this.storage.getEnergyStored();
+    }
+
+    @Override
+    public int getMaxEnergyStored(ForgeDirection from){
+        return this.storage.getMaxEnergyStored();
+    }
+
+    @Override
+    public boolean canConnectEnergy(ForgeDirection from){
+        return true;
+    }
 }
