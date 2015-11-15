@@ -18,7 +18,8 @@ public enum TheCrystals{
     LAPIS("Blue", EnumRarity.uncommon, 131437),
     DIAMOND("LightBlue", EnumRarity.epic, 9211636),
     COAL("Black", EnumRarity.uncommon, 986895),
-    EMERALD("Green", EnumRarity.epic, 382466);
+    EMERALD("Green", EnumRarity.epic, 382466),
+    IRON("White", EnumRarity.rare, 11053224);
 
     public final String name;
     public final EnumRarity rarity;

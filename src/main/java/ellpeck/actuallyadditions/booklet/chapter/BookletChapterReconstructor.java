@@ -12,7 +12,9 @@ package ellpeck.actuallyadditions.booklet.chapter;
 
 import ellpeck.actuallyadditions.booklet.entry.BookletEntry;
 import ellpeck.actuallyadditions.booklet.page.BookletPage;
+import ellpeck.actuallyadditions.booklet.page.PageCrafting;
 import ellpeck.actuallyadditions.booklet.page.PageReconstructor;
+import ellpeck.actuallyadditions.crafting.MiscCrafting;
 import ellpeck.actuallyadditions.recipe.AtomicReconstructorRecipeHandler;
 import net.minecraft.item.ItemStack;
 
@@ -29,6 +31,19 @@ public class BookletChapterReconstructor extends BookletChapter{
     private static BookletPage[] getPages(BookletPage... pages){
         ArrayList<BookletPage> allPages = new ArrayList<BookletPage>();
         allPages.addAll(Arrays.asList(pages));
+
+        allPages.add(new PageCrafting(allPages.size()+1, MiscCrafting.recipesCrystals){
+            @Override
+            public ItemStack[] getItemStacksForPage(){
+                return new ItemStack[0];
+            }
+        }.setNoText());
+        allPages.add(new PageCrafting(allPages.size()+1, MiscCrafting.recipesCrystalBlocks){
+            @Override
+            public ItemStack[] getItemStacksForPage(){
+                return new ItemStack[0];
+            }
+        }.setNoText());
 
         for(AtomicReconstructorRecipeHandler.Recipe recipe : AtomicReconstructorRecipeHandler.recipes){
             BookletPage page = new PageReconstructor(allPages.size()+1, recipe.getFirstOutput()).setNoText();

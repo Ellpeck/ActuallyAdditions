@@ -26,12 +26,14 @@ public class AtomicReconstructorRecipeHandler{
         addRecipe("blockDiamond", "blockCrystalLightBlue");
         addRecipe("blockEmerald", "blockCrystalGreen");
         addRecipe("blockCoal", "blockCrystalBlack");
+        addRecipe("blockIron", "blockCrystalWhite");
 
         addRecipe("dustRedstone", "crystalRed");
         addRecipe("gemLapis", "crystalBlue");
         addRecipe("gemDiamond", "crystalLightBlue");
         addRecipe("gemEmerald", "crystalGreen");
         addRecipe("coal", "crystalBlack");
+        addRecipe("ingotIron", "crystalWhite");
     }
 
     public static void addRecipe(String input, String output){

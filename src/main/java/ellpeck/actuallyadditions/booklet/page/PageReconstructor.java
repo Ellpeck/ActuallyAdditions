@@ -65,6 +65,7 @@ public class PageReconstructor extends BookletPage{
         }
 
         if(input != null){
+            renderItem(gui, new ItemStack(InitBlocks.blockAtomicReconstructor), gui.guiLeft+37+22, gui.guiTop+20+21, 1.0F);
             for(int i = 0; i < 2; i++){
                 for(int x = 0; x < 2; x++){
                     ItemStack stack = x == 0 ? input : this.result;
@@ -85,7 +86,6 @@ public class PageReconstructor extends BookletPage{
                     }
                 }
             }
-            renderItem(gui, new ItemStack(InitBlocks.blockAtomicReconstructor), gui.guiLeft+37+22, gui.guiTop+20+21, 1.0F);
         }
     }
 

@@ -180,7 +180,7 @@ public enum ConfigIntValues{
 
     RECONSTRUCTOR_DISTANCE("Atomic Reconstructor: Distance", ConfigCategories.MACHINE_VALUES, 10, 1, 50, "The max distance the Reconstructor goes forward to find blocks to convert"),
     RECONSTRCUTOR_RANGE("Atomic Reconstructor: Range", ConfigCategories.MACHINE_VALUES, 2, 1, 10, "The range of Converting blocks or items into other blocks or items"),
-    RECONSTRUCTOR_USE_PER_BLOCK("Atomic Reconstructor: Energy Use per Block", ConfigCategories.MACHINE_VALUES, 1000, 0, 100000, "The amount of Energy the Reconstructor uses per Block converted"),
+    RECONSTRUCTOR_USE_PER_BLOCK("Atomic Reconstructor: Energy Use per Block", ConfigCategories.MACHINE_VALUES, 800, 0, 100000, "The amount of Energy the Reconstructor uses per Block converted"),
     RECONSTRUCTOR_COOLDOWN_TIMER("Atomic Reconstrucor: Cooldown Timer", ConfigCategories.MACHINE_VALUES, 100, 0, 10000, "The amount of time the Reconstructor waits between shooting lasers");
 
     public final String name;

@@ -72,6 +72,7 @@ public class NeiScreenEvents{
                         Minecraft.getMinecraft().displayGuiScreen(book);
                         BookletUtils.openIndexEntry(book, page.getChapter().entry, InitBooklet.entries.indexOf(page.getChapter().entry)/GuiBooklet.CHAPTER_BUTTONS_AMOUNT+1, true);
                         BookletUtils.openChapter(book, page.getChapter(), page);
+                        break;
                     }
                 }
             }

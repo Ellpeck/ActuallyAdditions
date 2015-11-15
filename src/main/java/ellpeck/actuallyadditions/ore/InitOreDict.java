@@ -72,12 +72,14 @@ public class InitOreDict{
         addOre(InitItems.itemCrystal, TheCrystals.DIAMOND.ordinal(), "crystalLightBlue");
         addOre(InitItems.itemCrystal, TheCrystals.EMERALD.ordinal(), "crystalGreen");
         addOre(InitItems.itemCrystal, TheCrystals.COAL.ordinal(), "crystalBlack");
+        addOre(InitItems.itemCrystal, TheCrystals.IRON.ordinal(), "crystalWhite");
 
         addOre(InitBlocks.blockCrystal, TheCrystals.REDSTONE.ordinal(), "blockCrystalRed");
         addOre(InitBlocks.blockCrystal, TheCrystals.LAPIS.ordinal(), "blockCrystalBlue");
         addOre(InitBlocks.blockCrystal, TheCrystals.DIAMOND.ordinal(), "blockCrystalLightBlue");
         addOre(InitBlocks.blockCrystal, TheCrystals.EMERALD.ordinal(), "blockCrystalGreen");
         addOre(InitBlocks.blockCrystal, TheCrystals.COAL.ordinal(), "blockCrystalBlack");
+        addOre(InitBlocks.blockCrystal, TheCrystals.IRON.ordinal(), "blockCrystalWhite");
 
         addOre(InitBlocks.blockMisc, TheMiscBlocks.ORE_QUARTZ.ordinal(), "oreQuartzBlack");
 

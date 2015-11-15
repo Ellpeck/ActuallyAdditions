@@ -11,19 +11,35 @@
 package ellpeck.actuallyadditions.crafting;
 
 import cpw.mods.fml.common.registry.GameRegistry;
+import ellpeck.actuallyadditions.blocks.InitBlocks;
 import ellpeck.actuallyadditions.config.values.ConfigCrafting;
 import ellpeck.actuallyadditions.items.InitItems;
+import ellpeck.actuallyadditions.items.metalists.TheCrystals;
 import ellpeck.actuallyadditions.items.metalists.TheFoods;
 import ellpeck.actuallyadditions.items.metalists.TheMiscItems;
 import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 public class MiscCrafting{
 
+    public static IRecipe[] recipesCrystals = new IRecipe[TheCrystals.values().length];
+    public static IRecipe[] recipesCrystalBlocks = new IRecipe[TheCrystals.values().length];
+
     public static void init(){
+
+        //Crystals
+        for(int i = 0; i < TheCrystals.values().length; i++){
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockCrystal, 1, i),
+                    "XXX", "XXX", "XXX",
+                    'X', new ItemStack(InitItems.itemCrystal, 1, i)));
+            recipesCrystalBlocks[i] = Util.GetRecipes.lastIRecipe();
+            GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemCrystal, 9, i), new ItemStack(InitBlocks.blockCrystal, 1, i)));
+            recipesCrystals[i] = Util.GetRecipes.lastIRecipe();
+        }
 
         //Dough
         if(ConfigCrafting.DOUGH.isEnabled()){
