@@ -99,9 +99,11 @@ public class PageReconstructor extends BookletPage{
             ArrayList<ItemStack> stacks = OreDictionary.getOres(recipe.output);
             for(ItemStack stack : stacks){
                 if(output.isItemEqual(stack)){
-                    ArrayList<ItemStack> outputs = OreDictionary.getOres(recipe.input);
-                    if(outputs != null && !outputs.isEmpty()){
-                        return outputs.get(0);
+                    ArrayList<ItemStack> inputs = OreDictionary.getOres(recipe.input);
+                    if(inputs != null && !inputs.isEmpty() && inputs.get(0) != null){
+                        ItemStack input = inputs.get(0).copy();
+                        input.stackSize = 1;
+                        return input;
                     }
                 }
             }

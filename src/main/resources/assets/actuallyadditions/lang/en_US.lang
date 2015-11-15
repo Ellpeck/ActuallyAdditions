@@ -115,6 +115,11 @@ tile.actuallyadditions.blockBlackLotus.name=Black Lotus
 tile.actuallyadditions.blockTestifiBucksWhiteFence.name=White TB Wall
 tile.actuallyadditions.blockTestifiBucksGreenFence.name=Green TB Wall
 tile.actuallyadditions.blockAtomicReconstructor.name=Atomic Reconstructor
+tile.actuallyadditions.blockCrystalRed.name=Restonia Crystal Block
+tile.actuallyadditions.blockCrystalBlue.name=Palis Crystal Block
+tile.actuallyadditions.blockCrystalLightBlue.name=Diamatine Crystal Block
+tile.actuallyadditions.blockCrystalGreen.name=Emeradic Crystal Block
+tile.actuallyadditions.blockCrystalBlack.name=Void Crystal Block
 
 #ESD
 tile.actuallyadditions.blockInputter.name=ESD
@@ -290,6 +295,11 @@ item.actuallyadditions.itemLaserWrench.name=Laser Wrench
 item.actuallyadditions.itemChestToCrateUpgrade.name=Chest To Storage Crate Upgrade
 item.actuallyadditions.itemMiscDrillCore.name=Drill Core
 item.actuallyadditions.itemMiscBlackDye.name=Black Dye
+item.actuallyadditions.itemCrystalRed.name=Restonia Crystal
+item.actuallyadditions.itemCrystalBlue.name=Palis Crystal
+item.actuallyadditions.itemCrystalLightBlue.name=Diamatine Crystal
+item.actuallyadditions.itemCrystalGreen.name=Emeradic Crystal
+item.actuallyadditions.itemCrystalBlack.name=Void Crystal
 
 #Tooltips
 tooltip.actuallyadditions.onSuffix.desc=On
