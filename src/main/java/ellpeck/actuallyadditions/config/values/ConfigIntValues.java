@@ -176,7 +176,12 @@ public enum ConfigIntValues{
 
     LASER_RELAY_LOSS("Laser Relay: Loss", ConfigCategories.MACHINE_VALUES, 5, 0, 80, "The Energy Loss of the Laser Relay per Transfer in Percent"),
     LASER_RELAY_MAX_DISTANCE("Laser Relay: Max Distance", ConfigCategories.MACHINE_VALUES, 15, 3, 80, "The max distance between two connected Laser Relays"),
-    LASER_RELAY_MAX_TRANSFER("Laser Relay: Max Transfer", ConfigCategories.MACHINE_VALUES, 10000, 100, 1000000, "The max amount of RF a Laser Relay can receive and try to transfer (if it's given 100 RF and can only transfer 50, it will only accept 50, it won't waste any power!)");
+    LASER_RELAY_MAX_TRANSFER("Laser Relay: Max Transfer", ConfigCategories.MACHINE_VALUES, 10000, 100, 1000000, "The max amount of RF a Laser Relay can receive and try to transfer (if it's given 100 RF and can only transfer 50, it will only accept 50, it won't waste any power!)"),
+
+    RECONSTRUCTOR_DISTANCE("Atomic Reconstructor: Distance", ConfigCategories.MACHINE_VALUES, 10, 1, 50, "The max distance the Reconstructor goes forward to find blocks to convert"),
+    RECONSTRCUTOR_RANGE("Atomic Reconstructor: Range", ConfigCategories.MACHINE_VALUES, 2, 1, 10, "The range of Converting blocks or items into other blocks or items"),
+    RECONSTRUCTOR_USE_PER_BLOCK("Atomic Reconstructor: Energy Use per Block", ConfigCategories.MACHINE_VALUES, 1200, 0, 100000, "The amount of Energy the Reconstructor uses per Block converted"),
+    RECONSTRUCTOR_COOLDOWN_TIMER("Atomic Reconstrucor: Cooldown Timer", ConfigCategories.MACHINE_VALUES, 100, 0, 10000, "The amount of time the Reconstructor waits between shooting lasers");
 
     public final String name;
     public final String category;

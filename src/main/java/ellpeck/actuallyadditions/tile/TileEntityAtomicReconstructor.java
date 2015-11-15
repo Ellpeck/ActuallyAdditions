@@ -13,6 +13,7 @@ package ellpeck.actuallyadditions.tile;
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
 import cpw.mods.fml.common.network.NetworkRegistry;
+import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.misc.DamageSources;
 import ellpeck.actuallyadditions.network.PacketAtomicReconstructor;
 import ellpeck.actuallyadditions.network.PacketHandler;
@@ -40,16 +41,16 @@ public class TileEntityAtomicReconstructor extends TileEntityBase implements IEn
     @SuppressWarnings("unchecked")
     public void updateEntity(){
         if(!this.worldObj.isRemote){
-            int usePerBlock = 1200; //TODO Config
+            int usePerBlock = ConfigIntValues.RECONSTRUCTOR_USE_PER_BLOCK.getValue();
             if(!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord) && this.storage.getEnergyStored() >= usePerBlock){
                 if(this.currentTime > 0){
                     this.currentTime--;
                     if(this.currentTime <= 0){
                         ForgeDirection sideToManipulate = ForgeDirection.getOrientation(worldObj.getBlockMetadata(xCoord, yCoord, zCoord));
                         //Extract energy for shooting the laser itself too!
-                        this.storage.extractEnergy(usePerBlock*3, false);
+                        this.storage.extractEnergy(usePerBlock*2, false);
 
-                        int distance = 10; //TODO Config
+                        int distance = ConfigIntValues.RECONSTRUCTOR_DISTANCE.getValue();
                         for(int i = 0; i < distance; i++){
                             WorldPos coordsBlock = WorldUtil.getCoordsFromSide(sideToManipulate, worldObj, xCoord, yCoord, zCoord, i);
                             this.damagePlayer(coordsBlock.getX(), coordsBlock.getY(), coordsBlock.getZ());
@@ -58,7 +59,7 @@ public class TileEntityAtomicReconstructor extends TileEntityBase implements IEn
                                 if(!coordsBlock.getBlock().isAir(coordsBlock.getWorld(), coordsBlock.getX(), coordsBlock.getY(), coordsBlock.getZ())){
                                     PacketHandler.theNetwork.sendToAllAround(new PacketAtomicReconstructor(xCoord, yCoord, zCoord, coordsBlock.getX(), coordsBlock.getY(), coordsBlock.getZ()), new NetworkRegistry.TargetPoint(worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 64));
 
-                                    int range = 2; //TODO Config
+                                    int range = ConfigIntValues.RECONSTRCUTOR_RANGE.getValue();
 
                                     //Converting the Blocks
                                     for(int reachX = -range; reachX < range+1; reachX++){
@@ -116,7 +117,7 @@ public class TileEntityAtomicReconstructor extends TileEntityBase implements IEn
                     }
                 }
                 else{
-                    this.currentTime = 80; //TODO Config
+                    this.currentTime = ConfigIntValues.RECONSTRUCTOR_COOLDOWN_TIMER.getValue();
                 }
             }
         }
