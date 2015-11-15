@@ -15,7 +15,7 @@ import ellpeck.actuallyadditions.booklet.page.BookletPage;
 import ellpeck.actuallyadditions.booklet.page.PageCrafting;
 import ellpeck.actuallyadditions.booklet.page.PageReconstructor;
 import ellpeck.actuallyadditions.crafting.MiscCrafting;
-import ellpeck.actuallyadditions.recipe.AtomicReconstructorRecipeHandler;
+import ellpeck.actuallyadditions.recipe.ReconstructorRecipeHandler;
 import net.minecraft.item.ItemStack;
 
 import java.util.ArrayList;
@@ -45,7 +45,7 @@ public class BookletChapterReconstructor extends BookletChapter{
             }
         }.setNoText());
 
-        for(AtomicReconstructorRecipeHandler.Recipe recipe : AtomicReconstructorRecipeHandler.recipes){
+        for(ReconstructorRecipeHandler.Recipe recipe : ReconstructorRecipeHandler.recipes){
             BookletPage page = new PageReconstructor(allPages.size()+1, recipe.getFirstOutput()).setNoText();
             allPages.add(page);
         }

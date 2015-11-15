@@ -56,6 +56,10 @@ public class NEIActuallyAdditionsConfig implements IConfigureNEI{
         API.registerRecipeHandler(coffeeMachineRecipeHandler);
         API.registerUsageHandler(coffeeMachineRecipeHandler);
 
+        AtomicReconstructorRecipeHandler atomicReconstructorRecipeHandler = new AtomicReconstructorRecipeHandler();
+        API.registerRecipeHandler(atomicReconstructorRecipeHandler);
+        API.registerUsageHandler(atomicReconstructorRecipeHandler);
+
         BookletInfoRecipeHandler bookletInfoRecipeHandler = new BookletInfoRecipeHandler();
         API.registerRecipeHandler(bookletInfoRecipeHandler);
         API.registerUsageHandler(bookletInfoRecipeHandler);

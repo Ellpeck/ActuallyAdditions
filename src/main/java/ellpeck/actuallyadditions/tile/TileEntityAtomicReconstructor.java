@@ -17,7 +17,7 @@ import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.misc.DamageSources;
 import ellpeck.actuallyadditions.network.PacketAtomicReconstructor;
 import ellpeck.actuallyadditions.network.PacketHandler;
-import ellpeck.actuallyadditions.recipe.AtomicReconstructorRecipeHandler;
+import ellpeck.actuallyadditions.recipe.ReconstructorRecipeHandler;
 import ellpeck.actuallyadditions.util.WorldPos;
 import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.block.Block;
@@ -67,7 +67,7 @@ public class TileEntityAtomicReconstructor extends TileEntityBase implements IEn
                                             for(int reachY = -range; reachY < range+1; reachY++){
                                                 if(this.storage.getEnergyStored() >= usePerBlock){
                                                     WorldPos pos = new WorldPos(worldObj, coordsBlock.getX()+reachX, coordsBlock.getY()+reachY, coordsBlock.getZ()+reachZ);
-                                                    AtomicReconstructorRecipeHandler.Recipe recipe = AtomicReconstructorRecipeHandler.getRecipe(new ItemStack(pos.getBlock(), pos.getMetadata()));
+                                                    ReconstructorRecipeHandler.Recipe recipe = ReconstructorRecipeHandler.getRecipe(new ItemStack(pos.getBlock(), pos.getMetadata()));
                                                     if(recipe != null){
                                                         ItemStack output = recipe.getFirstOutput();
                                                         if(output != null){
@@ -93,7 +93,7 @@ public class TileEntityAtomicReconstructor extends TileEntityBase implements IEn
                                         if(this.storage.getEnergyStored() >= usePerBlock){
                                             ItemStack stack = item.getEntityItem();
                                             if(stack != null){
-                                                AtomicReconstructorRecipeHandler.Recipe recipe = AtomicReconstructorRecipeHandler.getRecipe(stack);
+                                                ReconstructorRecipeHandler.Recipe recipe = ReconstructorRecipeHandler.getRecipe(stack);
                                                 if(recipe != null){
                                                     ItemStack output = recipe.getFirstOutput();
                                                     if(output != null){

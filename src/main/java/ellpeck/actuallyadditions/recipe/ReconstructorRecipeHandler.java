@@ -16,7 +16,7 @@ import net.minecraftforge.oredict.OreDictionary;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class AtomicReconstructorRecipeHandler{
+public class ReconstructorRecipeHandler{
 
     public static ArrayList<Recipe> recipes = new ArrayList<Recipe>();
 

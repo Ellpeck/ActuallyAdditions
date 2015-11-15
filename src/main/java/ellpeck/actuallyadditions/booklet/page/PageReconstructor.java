@@ -13,7 +13,7 @@ package ellpeck.actuallyadditions.booklet.page;
 import ellpeck.actuallyadditions.blocks.InitBlocks;
 import ellpeck.actuallyadditions.booklet.GuiBooklet;
 import ellpeck.actuallyadditions.proxy.ClientProxy;
-import ellpeck.actuallyadditions.recipe.AtomicReconstructorRecipeHandler;
+import ellpeck.actuallyadditions.recipe.ReconstructorRecipeHandler;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
 import ellpeck.actuallyadditions.util.Util;
@@ -95,7 +95,7 @@ public class PageReconstructor extends BookletPage{
     }
 
     private ItemStack getInputForOutput(ItemStack output){
-        for(AtomicReconstructorRecipeHandler.Recipe recipe : AtomicReconstructorRecipeHandler.recipes){
+        for(ReconstructorRecipeHandler.Recipe recipe : ReconstructorRecipeHandler.recipes){
             ArrayList<ItemStack> stacks = OreDictionary.getOres(recipe.output);
             for(ItemStack stack : stacks){
                 if(output.isItemEqual(stack)){

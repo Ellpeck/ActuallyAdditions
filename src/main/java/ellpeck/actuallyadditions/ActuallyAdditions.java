@@ -35,9 +35,9 @@ import ellpeck.actuallyadditions.misc.*;
 import ellpeck.actuallyadditions.network.PacketHandler;
 import ellpeck.actuallyadditions.ore.InitOreDict;
 import ellpeck.actuallyadditions.proxy.IProxy;
-import ellpeck.actuallyadditions.recipe.AtomicReconstructorRecipeHandler;
 import ellpeck.actuallyadditions.recipe.FuelHandler;
 import ellpeck.actuallyadditions.recipe.HairyBallHandler;
+import ellpeck.actuallyadditions.recipe.ReconstructorRecipeHandler;
 import ellpeck.actuallyadditions.recipe.TreasureChestHandler;
 import ellpeck.actuallyadditions.tile.TileEntityBase;
 import ellpeck.actuallyadditions.update.UpdateChecker;
@@ -100,7 +100,7 @@ public class ActuallyAdditions{
         ItemCrafting.initMashedFoodRecipes();
         HairyBallHandler.init();
         TreasureChestHandler.init();
-        AtomicReconstructorRecipeHandler.init();
+        ReconstructorRecipeHandler.init();
         InitForeignPaxels.init();
         proxy.postInit(event);
 
