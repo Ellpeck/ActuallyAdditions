@@ -26,11 +26,11 @@ public class WorldLoadingEvents{
 
     @SubscribeEvent
     public void onUnload(WorldEvent.Unload event){
-        WorldData.makeDirty(true);
+        WorldData.makeDirty();
     }
 
     @SubscribeEvent
     public void onSave(WorldEvent.Save event){
-        WorldData.makeDirty(false);
+        WorldData.makeDirty();
     }
 }
