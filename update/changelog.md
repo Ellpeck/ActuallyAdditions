@@ -1,3 +1,15 @@
+# 1.7.10-r6
+- Added Atomic Reconstructor
+- Added Crystals replacing Items like Redstone & Iron Ingots in most crafting recipes
+- Seriously fixed Laser Relays disconnecting on their own now, promise! (THE DESPERATION..)
+- Fix memory leaks
+- Fixed Blocks having an Item Renderer in Inventory
+- Updated Smiley Clouds
+- New Cheeves! (More to come!)
+- Achievement Information for the booklet
+- Emerald & Purple Drill
+- Added Dungeon Loot
+
 # 1.7.10-r5
 - Fixed some unnecessary performance use when transfering power with laser relays
 - Fixed Laser Relays disconnecting themselves when

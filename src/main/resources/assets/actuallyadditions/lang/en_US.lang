@@ -330,7 +330,7 @@ tooltip.actuallyadditions.blockPhantomRange.desc=Range
 tooltip.actuallyadditions.laser.stored.desc=<Laser stored!>
 tooltip.actuallyadditions.laser.connected.desc=<Laser connected!>
 tooltip.actuallyadditions.laser.cantConnect.desc=Can't connect: The relays are either part of the same network, the stored relay doesn't exist anymore or it is too far away!
-tooltip.actuallyadditions.itemBooklet.desc=Or "Manual", if you will
+tooltip.actuallyadditions.itemBooklet.desc=Or "Booklet", if you will
 
 #Gui Information
 info.actuallyadditions.gui.animals=Animals
