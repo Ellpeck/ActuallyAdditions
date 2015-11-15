@@ -23,13 +23,16 @@ public class WorldData extends WorldSavedData{
     public static final String DATA_TAG = ModUtil.MOD_ID+"WorldData";
     public static WorldData instance;
 
+    public boolean shouldClearAfterSave;
+
     public WorldData(String tag){
         super(tag);
     }
 
-    public static void makeDirty(){
+    public static void makeDirty(boolean shouldClearAfterSave){
         if(instance != null){
             instance.markDirty();
+            instance.shouldClearAfterSave = shouldClearAfterSave;
         }
     }
 
@@ -90,5 +93,13 @@ public class WorldData extends WorldSavedData{
             playerList.appendTag(theSave.toNBT());
         }
         compound.setTag("PlayerData", playerList);
+
+        if(this.shouldClearAfterSave){
+            ModUtil.LOGGER.info("Clearing WorldData after saving! (Probably because the world is getting unloaded)");
+            this.shouldClearAfterSave = false;
+
+            PersistentServerData.playerSaveData.clear();
+            LaserRelayConnectionHandler.getInstance().networks.clear();
+        }
     }
 }

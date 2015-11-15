@@ -87,7 +87,7 @@ public class LaserRelayConnectionHandler{
             }
             //System.out.println("Removing a Relay from the Network!");
         }
-        WorldData.makeDirty();
+        WorldData.makeDirty(false);
     }
 
     /**
@@ -140,7 +140,7 @@ public class LaserRelayConnectionHandler{
         else if(secondNetwork != null){
             secondNetwork.connections.add(new ConnectionPair(firstRelay, secondRelay));
         }
-        WorldData.makeDirty();
+        WorldData.makeDirty(false);
         //System.out.println("Connected "+firstRelay.toString()+" to "+secondRelay.toString());
         //System.out.println(firstNetwork == null ? secondNetwork.toString() : firstNetwork.toString());
         //System.out.println(this.networks);
@@ -156,7 +156,7 @@ public class LaserRelayConnectionHandler{
             firstNetwork.connections.add(secondPair);
         }
         this.networks.remove(secondNetwork);
-        WorldData.makeDirty();
+        WorldData.makeDirty(false);
         //System.out.println("Merged Two Networks!");
     }
 

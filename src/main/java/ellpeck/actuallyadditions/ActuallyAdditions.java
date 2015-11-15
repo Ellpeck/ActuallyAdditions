@@ -43,7 +43,6 @@ import ellpeck.actuallyadditions.tile.TileEntityBase;
 import ellpeck.actuallyadditions.update.UpdateChecker;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.Util;
-import ellpeck.actuallyadditions.util.playerdata.PersistentServerData;
 import net.minecraft.init.Items;
 import net.minecraft.server.MinecraftServer;
 
@@ -128,11 +127,5 @@ public class ActuallyAdditions{
         }
 
         WorldData.init(MinecraftServer.getServer());
-    }
-
-    @EventHandler
-    public void serverStopped(FMLServerStoppedEvent event){
-        //Clear Data so that it won't be carried over to other worlds
-        PersistentServerData.playerSaveData.clear();
     }
 }

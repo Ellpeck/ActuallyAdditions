@@ -26,12 +26,11 @@ public class WorldLoadingEvents{
 
     @SubscribeEvent
     public void onUnload(WorldEvent.Unload event){
-        //Clear Data so that it won't be carried over to other worlds
-        LaserRelayConnectionHandler.getInstance().networks.clear();
+        WorldData.makeDirty(true);
     }
 
     @SubscribeEvent
     public void onSave(WorldEvent.Save event){
-        WorldData.makeDirty();
+        WorldData.makeDirty(false);
     }
 }
