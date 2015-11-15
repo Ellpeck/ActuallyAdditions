@@ -201,6 +201,9 @@ public class CreativeTab extends CreativeTabs{
         add(InitItems.itemPantsObsidian);
         add(InitItems.itemBootsObsidian);
 
+        add(InitBlocks.blockCrystal);
+        add(InitItems.itemCrystal);
+
         add(InitItems.itemJams);
 
         add(InitItems.itemPotionRing);

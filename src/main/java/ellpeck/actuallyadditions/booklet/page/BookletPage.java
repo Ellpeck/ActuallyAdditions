@@ -19,6 +19,7 @@ import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.item.ItemStack;
@@ -58,7 +59,7 @@ public class BookletPage{
         }
     }
 
-    public static void renderItem(GuiBooklet gui, ItemStack stack, int x, int y, float scale){
+    public static void renderItem(GuiScreen gui, ItemStack stack, int x, int y, float scale){
         GL11.glPushMatrix();
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
@@ -76,7 +77,7 @@ public class BookletPage{
         gui.mc.fontRenderer.setUnicodeFlag(flagBefore);
 
         GL11.glPopMatrix();
-        RenderHelper.disableStandardItemLighting();
+        //RenderHelper.disableStandardItemLighting();
         GL11.glPopMatrix();
 
     }

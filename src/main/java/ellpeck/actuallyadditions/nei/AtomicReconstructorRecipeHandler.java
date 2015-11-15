@@ -15,10 +15,12 @@ import codechicken.nei.PositionedStack;
 import codechicken.nei.recipe.RecipeInfo;
 import codechicken.nei.recipe.TemplateRecipeHandler;
 import ellpeck.actuallyadditions.blocks.InitBlocks;
+import ellpeck.actuallyadditions.booklet.page.BookletPage;
 import ellpeck.actuallyadditions.recipe.ReconstructorRecipeHandler;
 import ellpeck.actuallyadditions.util.ItemUtil;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
@@ -27,6 +29,7 @@ import org.lwjgl.opengl.GL11;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class AtomicReconstructorRecipeHandler extends TemplateRecipeHandler implements INeiRecipeHandler{
 
@@ -89,7 +92,7 @@ public class AtomicReconstructorRecipeHandler extends TemplateRecipeHandler impl
 
     @Override
     public String getGuiTexture(){
-        return ModUtil.MOD_ID_LOWER+":textures/gui/guiNEISimple.png";
+        return ModUtil.MOD_ID_LOWER+":textures/gui/guiNEIAtomicReconstructor.png";
     }
 
     @Override
@@ -110,6 +113,13 @@ public class AtomicReconstructorRecipeHandler extends TemplateRecipeHandler impl
     }
 
     @Override
+    public void drawForeground(int recipe){
+        if(Minecraft.getMinecraft().currentScreen != null){
+            BookletPage.renderItem(Minecraft.getMinecraft().currentScreen, new ItemStack(InitBlocks.blockAtomicReconstructor), 32+34, 19, 1.0F);
+        }
+    }
+
+    @Override
     public int recipiesPerPage(){
         return 2;
     }
@@ -120,8 +130,17 @@ public class AtomicReconstructorRecipeHandler extends TemplateRecipeHandler impl
         public PositionedStack input;
 
         public CachedReconstructorRecipe(String input, String result){
-            this.result = new PositionedStack(OreDictionary.getOres(result, false), 67+32, 19);
-            this.input = new PositionedStack(OreDictionary.getOres(input, false), 5+32, 19);
+            List<ItemStack> outputs = OreDictionary.getOres(result, false);
+            for(ItemStack ore : outputs){
+                ore.stackSize = 1;
+            }
+            List<ItemStack> inputs = OreDictionary.getOres(input, false);
+            for(ItemStack ore : inputs){
+                ore.stackSize = 1;
+            }
+
+            this.result = new PositionedStack(outputs, 67+32, 19);
+            this.input = new PositionedStack(inputs, 5+32, 19);
         }
 
         @Override
