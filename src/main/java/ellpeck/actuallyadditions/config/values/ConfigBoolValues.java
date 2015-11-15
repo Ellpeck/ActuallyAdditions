@@ -58,7 +58,9 @@ public enum ConfigBoolValues{
     GIVE_BOOKLET_ON_FIRST_CRAFT("Give Booklet on First Craft", ConfigCategories.OTHER, true, "If the booklet should be given to the player when he first crafts something from the Mod"),
 
     ENABLE_SEASONAL("Seasonal Mode", ConfigCategories.OTHER, true, "If Seasonal Mode is enabled"),
-    LESS_LASER_RELAY_PARTICLES("Laser Relay: Particles", ConfigCategories.MACHINE_VALUES, false, "If the Laser Relay should have less laser particles to prevent lag");
+    LESS_LASER_RELAY_PARTICLES("Laser Relay: Particles", ConfigCategories.MACHINE_VALUES, false, "If the Laser Relay should have less laser particles to prevent lag"),
+
+    DUNGEON_LOOT("Dungeon Loot", ConfigCategories.OTHER, true, "Should Actually Additions Loot spawn in Dungeons");
 
     public final String name;
     public final String category;

@@ -84,6 +84,7 @@ public class ActuallyAdditions{
         TileEntityBase.init();
         InitEvents.init();
         InitCrafting.init();
+        DungeonLoot.init();
         FMLInterModComms.sendMessage("Waila", "register", "ellpeck.actuallyadditions.waila.WailaDataProvider.register");
         proxy.init(event);
 
