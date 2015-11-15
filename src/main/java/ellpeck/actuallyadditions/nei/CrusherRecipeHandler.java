@@ -172,7 +172,7 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler implements INeiR
         public PositionedStack resultTwo;
         public int secondChance;
 
-        public CachedCrush(ArrayList<ItemStack> in, ArrayList<ItemStack> outOne, ArrayList<ItemStack> outTwo, int secondChance, CrusherRecipeHandler handler){
+        public CachedCrush(List<ItemStack> in, List<ItemStack> outOne, List<ItemStack> outTwo, int secondChance, CrusherRecipeHandler handler){
             boolean isDouble = handler instanceof CrusherDoubleRecipeHandler;
             this.ingredient = new PositionedStack(in, isDouble ? 51 : 80, 21);
             this.resultOne = new PositionedStack(outOne, isDouble ? 38 : 66, 69);

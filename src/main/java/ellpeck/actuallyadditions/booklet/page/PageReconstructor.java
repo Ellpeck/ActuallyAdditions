@@ -21,7 +21,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.oredict.OreDictionary;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class PageReconstructor extends BookletPage{
 
@@ -96,10 +96,10 @@ public class PageReconstructor extends BookletPage{
 
     private ItemStack getInputForOutput(ItemStack output){
         for(ReconstructorRecipeHandler.Recipe recipe : ReconstructorRecipeHandler.recipes){
-            ArrayList<ItemStack> stacks = OreDictionary.getOres(recipe.output);
+            List<ItemStack> stacks = OreDictionary.getOres(recipe.output, false);
             for(ItemStack stack : stacks){
                 if(output.isItemEqual(stack)){
-                    ArrayList<ItemStack> inputs = OreDictionary.getOres(recipe.input);
+                    List<ItemStack> inputs = OreDictionary.getOres(recipe.input, false);
                     if(inputs != null && !inputs.isEmpty() && inputs.get(0) != null){
                         ItemStack input = inputs.get(0).copy();
                         input.stackSize = 1;

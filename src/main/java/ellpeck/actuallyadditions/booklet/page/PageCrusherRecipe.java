@@ -19,7 +19,7 @@ import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 
-import java.util.ArrayList;
+import java.util.List;
 
 
 public class PageCrusherRecipe extends BookletPage{
@@ -75,7 +75,7 @@ public class PageCrusherRecipe extends BookletPage{
                                 stack = this.recipe.getRecipeOutputOnes().get(Math.min(this.recipe.getRecipeOutputOnes().size()-1, this.recipePos));
                                 break;
                             default:
-                                ArrayList<ItemStack> outputTwos = this.recipe.getRecipeOutputTwos();
+                                List<ItemStack> outputTwos = this.recipe.getRecipeOutputTwos();
                                 stack = outputTwos == null ? null : outputTwos.get(Math.min(outputTwos.size()-1, this.recipePos));
                                 break;
                         }
@@ -107,7 +107,7 @@ public class PageCrusherRecipe extends BookletPage{
     @Override
     public void updateScreen(int ticksElapsed){
         if(ticksElapsed%10 == 0){
-            ArrayList<ItemStack> outputTwos = this.recipe.getRecipeOutputTwos();
+            List<ItemStack> outputTwos = this.recipe.getRecipeOutputTwos();
             if(this.recipePos+1 >= Math.max(this.recipe.getRecipeInputs().size(), Math.max(this.recipe.getRecipeOutputOnes().size(), outputTwos == null ? 0 : outputTwos.size()))){
                 this.recipePos = 0;
             }

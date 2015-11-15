@@ -21,7 +21,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class TileEntityGrinder extends TileEntityInventoryBase implements IEnergyReceiver{
 
@@ -136,10 +136,10 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
 
     public boolean canCrushOn(int theInput, int theFirstOutput, int theSecondOutput){
         if(this.slots[theInput] != null){
-            ArrayList<ItemStack> outputOnes = CrusherRecipeRegistry.getOutputOnes(this.slots[theInput]);
+            List<ItemStack> outputOnes = CrusherRecipeRegistry.getOutputOnes(this.slots[theInput]);
             if(outputOnes != null && !outputOnes.isEmpty()){
                 ItemStack outputOne = outputOnes.get(0);
-                ArrayList<ItemStack> outputTwos = CrusherRecipeRegistry.getOutputTwos(this.slots[theInput]);
+                List<ItemStack> outputTwos = CrusherRecipeRegistry.getOutputTwos(this.slots[theInput]);
                 ItemStack outputTwo = outputTwos == null ? null : outputTwos.get(0);
                 if(outputOne != null){
                     if((this.slots[theFirstOutput] == null || (this.slots[theFirstOutput].isItemEqual(outputOne) && this.slots[theFirstOutput].stackSize <= this.slots[theFirstOutput].getMaxStackSize()-outputOne.stackSize)) && (outputTwo == null || (this.slots[theSecondOutput] == null || (this.slots[theSecondOutput].isItemEqual(outputTwo) && this.slots[theSecondOutput].stackSize <= this.slots[theSecondOutput].getMaxStackSize()-outputTwo.stackSize)))){
@@ -160,7 +160,7 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
     }
 
     public void finishCrushing(int theInput, int theFirstOutput, int theSecondOutput){
-        ArrayList<ItemStack> outputOnes = CrusherRecipeRegistry.getOutputOnes(this.slots[theInput]);
+        List<ItemStack> outputOnes = CrusherRecipeRegistry.getOutputOnes(this.slots[theInput]);
         if(outputOnes != null){
             ItemStack outputOne = outputOnes.get(0);
             if(outputOne != null){
@@ -173,7 +173,7 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
             }
         }
 
-        ArrayList<ItemStack> outputTwos = CrusherRecipeRegistry.getOutputTwos(this.slots[theInput]);
+        List<ItemStack> outputTwos = CrusherRecipeRegistry.getOutputTwos(this.slots[theInput]);
         if(outputTwos != null){
             ItemStack outputTwo = outputTwos.get(0);
             if(outputTwo != null){

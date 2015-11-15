@@ -14,6 +14,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class ReconstructorRecipeHandler{
@@ -63,7 +64,7 @@ public class ReconstructorRecipeHandler{
         }
 
         public ItemStack getFirstOutput(){
-            ArrayList<ItemStack> stacks = OreDictionary.getOres(this.output);
+            List<ItemStack> stacks = OreDictionary.getOres(this.output, false);
             if(stacks != null && !stacks.isEmpty()){
                 return stacks.get(0);
             }

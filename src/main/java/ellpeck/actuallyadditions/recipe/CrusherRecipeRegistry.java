@@ -17,6 +17,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class CrusherRecipeRegistry{
@@ -88,7 +89,7 @@ public class CrusherRecipeRegistry{
         recipes.add(new CrusherRecipe(input, outputOne, outputOneAmount, "", 0, 0));
     }
 
-    public static ArrayList<ItemStack> getOutputOnes(ItemStack input){
+    public static List<ItemStack> getOutputOnes(ItemStack input){
         CrusherRecipe recipe = getRecipeFromInput(input);
         return recipe == null ? null : recipe.getRecipeOutputOnes();
     }
@@ -102,7 +103,7 @@ public class CrusherRecipeRegistry{
         return null;
     }
 
-    public static ArrayList<ItemStack> getOutputTwos(ItemStack input){
+    public static List<ItemStack> getOutputTwos(ItemStack input){
         CrusherRecipe recipe = getRecipeFromInput(input);
         return recipe == null ? null : recipe.getRecipeOutputTwos();
     }
@@ -132,36 +133,36 @@ public class CrusherRecipeRegistry{
             this.outputTwoChance = outputTwoChance;
         }
 
-        public ArrayList<ItemStack> getRecipeOutputOnes(){
+        public List<ItemStack> getRecipeOutputOnes(){
             if(this.outputOne == null || this.outputOne.isEmpty()){
                 return null;
             }
 
-            ArrayList<ItemStack> stacks = OreDictionary.getOres(this.outputOne);
+            List<ItemStack> stacks = OreDictionary.getOres(this.outputOne, false);
             for(ItemStack stack : stacks){
                 stack.stackSize = this.outputOneAmount;
             }
             return stacks;
         }
 
-        public ArrayList<ItemStack> getRecipeOutputTwos(){
+        public List<ItemStack> getRecipeOutputTwos(){
             if(this.outputTwo == null || this.outputTwo.isEmpty()){
                 return null;
             }
 
-            ArrayList<ItemStack> stacks = OreDictionary.getOres(this.outputTwo);
+            List<ItemStack> stacks = OreDictionary.getOres(this.outputTwo, false);
             for(ItemStack stack : stacks){
                 stack.stackSize = this.outputTwoAmount;
             }
             return stacks;
         }
 
-        public ArrayList<ItemStack> getRecipeInputs(){
+        public List<ItemStack> getRecipeInputs(){
             if(this.input == null || this.input.isEmpty()){
                 return null;
             }
 
-            ArrayList<ItemStack> stacks = OreDictionary.getOres(this.input);
+            List<ItemStack> stacks = OreDictionary.getOres(this.input, false);
             for(ItemStack stack : stacks){
                 stack.stackSize = 1;
             }

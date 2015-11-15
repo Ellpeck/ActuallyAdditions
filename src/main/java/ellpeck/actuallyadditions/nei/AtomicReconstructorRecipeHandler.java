@@ -69,7 +69,7 @@ public class AtomicReconstructorRecipeHandler extends TemplateRecipeHandler impl
     public void loadCraftingRecipes(ItemStack result){
         ArrayList<ReconstructorRecipeHandler.Recipe> recipes = ReconstructorRecipeHandler.recipes;
         for(ReconstructorRecipeHandler.Recipe recipe : recipes){
-            if(ItemUtil.contains(OreDictionary.getOres(recipe.output), result, true)){
+            if(ItemUtil.contains(OreDictionary.getOres(recipe.output, false), result, true)){
                 arecipes.add(new CachedReconstructorRecipe(recipe.input, recipe.output));
             }
         }
@@ -79,7 +79,7 @@ public class AtomicReconstructorRecipeHandler extends TemplateRecipeHandler impl
     public void loadUsageRecipes(ItemStack ingredient){
         ArrayList<ReconstructorRecipeHandler.Recipe> recipes = ReconstructorRecipeHandler.recipes;
         for(ReconstructorRecipeHandler.Recipe recipe : recipes){
-            if(ItemUtil.contains(OreDictionary.getOres(recipe.input), ingredient, true)){
+            if(ItemUtil.contains(OreDictionary.getOres(recipe.input, false), ingredient, true)){
                 CachedReconstructorRecipe theRecipe = new CachedReconstructorRecipe(recipe.input, recipe.output);
                 theRecipe.setIngredientPermutation(Collections.singletonList(theRecipe.input), ingredient);
                 arecipes.add(theRecipe);
@@ -120,8 +120,8 @@ public class AtomicReconstructorRecipeHandler extends TemplateRecipeHandler impl
         public PositionedStack input;
 
         public CachedReconstructorRecipe(String input, String result){
-            this.result = new PositionedStack(OreDictionary.getOres(result), 67+32, 19);
-            this.input = new PositionedStack(OreDictionary.getOres(input), 5+32, 19);
+            this.result = new PositionedStack(OreDictionary.getOres(result, false), 67+32, 19);
+            this.input = new PositionedStack(OreDictionary.getOres(input, false), 5+32, 19);
         }
 
         @Override
