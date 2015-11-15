@@ -135,12 +135,14 @@ public class TileEntityAtomicReconstructor extends TileEntityBase implements IEn
     public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
         super.writeSyncableNBT(compound, sync);
         compound.setInteger("CurrentTime", this.currentTime);
+        this.storage.writeToNBT(compound);
     }
 
     @Override
     public void readSyncableNBT(NBTTagCompound compound, boolean sync){
         super.readSyncableNBT(compound, sync);
         this.currentTime = compound.getInteger("CurrentTime");
+        this.storage.writeToNBT(compound);
     }
 
     @Override
