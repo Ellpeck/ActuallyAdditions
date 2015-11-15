@@ -51,6 +51,7 @@ public class CreativeTab extends CreativeTabs{
         add(InitBlocks.blockSmileyCloud);
 
         add(InitBlocks.blockLaserRelay);
+        add(InitBlocks.blockAtomicReconstructor);
         add(InitBlocks.blockPhantomface);
         add(InitBlocks.blockPhantomEnergyface);
         add(InitBlocks.blockPhantomLiquiface);

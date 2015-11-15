@@ -16,6 +16,7 @@ import ellpeck.actuallyadditions.blocks.metalists.TheMiscBlocks;
 import ellpeck.actuallyadditions.booklet.chapter.BookletChapter;
 import ellpeck.actuallyadditions.booklet.chapter.BookletChapterCoffee;
 import ellpeck.actuallyadditions.booklet.chapter.BookletChapterCrusher;
+import ellpeck.actuallyadditions.booklet.chapter.BookletChapterReconstructor;
 import ellpeck.actuallyadditions.booklet.entry.BookletEntry;
 import ellpeck.actuallyadditions.booklet.entry.BookletEntryAllSearch;
 import ellpeck.actuallyadditions.booklet.page.*;
@@ -41,19 +42,22 @@ public class InitBooklet{
 
     public static BookletChapter chapterIntro;
 
+    public static BookletEntry entryGettingStarted = new BookletEntry("gettingStarted").setImportant();
     public static BookletEntry entryFunctionalNonRF = new BookletEntry("functionalNoRF");
     public static BookletEntry entryFunctionalRF = new BookletEntry("functionalRF").setSpecial();
     public static BookletEntry entryGeneratingRF = new BookletEntry("generatingRF").setSpecial();
     public static BookletEntry entryItemsNonRF = new BookletEntry("itemsNoRF");
     public static BookletEntry entryItemsRF = new BookletEntry("itemsRF").setSpecial();
     public static BookletEntry entryMisc = new BookletEntry("misc");
-    public static BookletEntry allAndSearch = new BookletEntryAllSearch("allAndSearch").setImportant();
+    public static BookletEntry allAndSearch = new BookletEntryAllSearch("allAndSearch").setSpecial();
 
     private static void initChapters(){
-        chapterIntro = new BookletChapter("intro", entryMisc, new ItemStack(InitItems.itemLexicon), new PageTextOnly(1), new PageTextOnly(2), new PageTextOnly(3), new PageCrafting(4, ItemCrafting.recipeBook)).setImportant();
+        //Getting Started
+        chapterIntro = new BookletChapter("intro", entryGettingStarted, new ItemStack(InitItems.itemLexicon), new PageTextOnly(1), new PageTextOnly(2), new PageTextOnly(3), new PageCrafting(4, ItemCrafting.recipeBook)).setImportant();
+        new BookletChapterReconstructor("crystals", entryGettingStarted, new ItemStack(InitBlocks.blockAtomicReconstructor), new PageTextOnly(1), new PageTextOnly(2).addTextReplacement("<power>", ConfigIntValues.RECONSTRUCTOR_USE_PER_BLOCK.getValue()), new PagePicture(3, "pageAtomicReconstructor", 0).setNoText(), new PageCrafting(4, BlockCrafting.recipeAtomicReconstructor).setNoText()).setSpecial();
+        new BookletChapter("craftingIngs", entryGettingStarted, new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL.ordinal()), new PageTextOnly(1), new PageCrafting(2, ItemCrafting.recipeCoil).setNoText(), new PageCrafting(3, ItemCrafting.recipeCoilAdvanced).setNoText(), new PageCrafting(4, BlockCrafting.recipeCase).setNoText(), new PageCrafting(5, BlockCrafting.recipeStoneCase).setNoText(), new PageCrafting(6, BlockCrafting.recipeEnderPearlBlock).setNoText(), new PageCrafting(7, BlockCrafting.recipeEnderCase).setNoText(), new PageCrafting(8, ItemCrafting.recipeRing).setNoText(), new PageCrafting(9, ItemCrafting.recipeKnifeHandle).setNoText(), new PageCrafting(10, ItemCrafting.recipeKnifeBlade).setNoText(), new PageCrafting(11, ItemCrafting.recipeKnife).setNoText(), new PageCrafting(12, ItemCrafting.recipeDough).setNoText(), new PageCrafting(13, ItemCrafting.recipeRiceDough).setNoText(), new PageCrafting(14, BlockCrafting.recipeIronCase).setNoText()).setImportant();
 
         //Miscellaneous
-        new BookletChapter("craftingIngs", entryMisc, new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL.ordinal()), new PageTextOnly(1), new PageCrafting(2, ItemCrafting.recipeCoil).setNoText(), new PageCrafting(3, ItemCrafting.recipeCoilAdvanced).setNoText(), new PageCrafting(4, BlockCrafting.recipeCase).setNoText(), new PageCrafting(5, BlockCrafting.recipeStoneCase).setNoText(), new PageCrafting(6, BlockCrafting.recipeEnderPearlBlock).setNoText(), new PageCrafting(7, BlockCrafting.recipeEnderCase).setNoText(), new PageCrafting(8, ItemCrafting.recipeRing).setNoText(), new PageCrafting(9, ItemCrafting.recipeKnifeHandle).setNoText(), new PageCrafting(10, ItemCrafting.recipeKnifeBlade).setNoText(), new PageCrafting(11, ItemCrafting.recipeKnife).setNoText(), new PageCrafting(12, ItemCrafting.recipeDough).setNoText(), new PageCrafting(13, ItemCrafting.recipeRiceDough).setNoText(), new PageCrafting(14, BlockCrafting.recipeIronCase).setNoText()).setImportant();
         new BookletChapter("quartz", entryMisc, new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal()), new PageTextOnly(1).setStack(new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.ORE_QUARTZ.ordinal())).addTextReplacement("<lowest>", ConfigIntValues.BLACK_QUARTZ_MIN_HEIGHT.getValue()).addTextReplacement("<highest>", ConfigIntValues.BLACK_QUARTZ_MAX_HEIGHT.getValue()), new PageTextOnly(2).setStack(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal())), new PageCrafting(3, BlockCrafting.recipeQuartzBlock).setNoText(), new PageCrafting(4, BlockCrafting.recipeQuartzPillar).setNoText(), new PageCrafting(5, BlockCrafting.recipeQuartzChiseled).setNoText());
         new BookletChapter("cloud", entryMisc, new ItemStack(InitBlocks.blockSmileyCloud), new PageTextOnly(1), new PageCrafting(2, BlockCrafting.recipeSmileyCloud).setNoText()).setSpecial();
         new BookletChapter("coalStuff", entryMisc, new ItemStack(InitItems.itemMisc, 1, TheMiscItems.TINY_COAL.ordinal()), new PageTextOnly(1), new PageCrafting(2, ItemCrafting.recipeTinyCoal).setNoText(), new PageCrafting(3, ItemCrafting.recipeTinyChar).setNoText(), new PageCrafting(4, BlockCrafting.recipeBlockChar).setNoText());

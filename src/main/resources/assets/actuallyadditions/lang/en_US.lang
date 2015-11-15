@@ -114,6 +114,7 @@ tile.actuallyadditions.blockMiscIronCasing.name=Iron Casing
 tile.actuallyadditions.blockBlackLotus.name=Black Lotus
 tile.actuallyadditions.blockTestifiBucksWhiteFence.name=White TB Wall
 tile.actuallyadditions.blockTestifiBucksGreenFence.name=Green TB Wall
+tile.actuallyadditions.blockAtomicReconstructor.name=Atomic Reconstructor
 
 #ESD
 tile.actuallyadditions.blockInputter.name=ESD
@@ -402,6 +403,7 @@ booklet.actuallyadditions.shapelessOreRecipe=Shapeless OreDictionary Recipe
 booklet.actuallyadditions.shapedOreRecipe=Shaped OreDictionary Recipe
 
 #Booklet Entries
+booklet.actuallyadditions.indexEntry.gettingStarted.name=Getting Started
 booklet.actuallyadditions.indexEntry.misc.name=Miscellaneous
 booklet.actuallyadditions.indexEntry.functionalNoRF.name=Blocks that don't use RF
 booklet.actuallyadditions.indexEntry.allAndSearch.name=All Items and Search
@@ -578,3 +580,7 @@ booklet.actuallyadditions.chapter.laserRelays.text.1=The <item>Laser Relay<r> is
 booklet.actuallyadditions.chapter.blackLotus.name=Black Lotus
 booklet.actuallyadditions.chapter.blackLotus.text.1=Think of this: <n>You need to craft <imp>black wool<r>, <imp>black clay<r> or anything else that <imp>needs black dye<r> but you are just guilty about killing so many <imp>innocent squids<r>? <n>Well, the <item>Black Lotus<r> is exactly the thing you need! <n>Just look around <imp>in the wild<r> a bit, and you will find one, then being able to craft some <item>Black Dye<r> that can be used <imp>instead of Ink Sacs<r> so that you don't need to kill poor squids and L any longer.
 booklet.actuallyadditions.chapter.blackLotus.text.2=<i>No, not that one, Vaz
+
+booklet.actuallyadditions.chapter.crystals.name=Crystals & At. Reconstructor
+booklet.actuallyadditions.chapter.crystals.text.1=For many Crafting Operations in <imp>Actually Additions<r>, you will need <item>Crystals<r> or <item>Crystal Blocks<r>. <n>These can be made using an <item>Atomic Reconstructor<r>. Just place one down facing in any direction and it will <imp>shoot out a red laser<r>. When placing some of the blocks shown on the following pages in front of the laser, they will be <imp>converted into Crystals<r>.
+booklet.actuallyadditions.chapter.crystals.text.2=The way this works is that the laser <imp>searches for a block<r>, and when it finds one, it converts <imp>all blocks and items on the ground<r> in that area into their Crystal forms (if they have one!). <n>During each conversion, it uses <imp><power> RF<r>.

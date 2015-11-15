@@ -78,8 +78,19 @@ public class BlockCrafting{
     public static IRecipe recipeDropper;
     public static IRecipe recipeRangedCollector;
     public static IRecipe recipeLaserRelay;
+    public static IRecipe recipeAtomicReconstructor;
 
     public static void init(){
+
+        //Atomic Reconstructor
+        if(ConfigCrafting.ATOMIC_RECONSTRUCTOR.isEnabled()){
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockAtomicReconstructor),
+                    "IRI", "RCR", "IRI",
+                    'R', "dustRedstone",
+                    'I', "ingotIron",
+                    'C', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.IRON_CASING.ordinal())));
+            recipeAtomicReconstructor = Util.GetRecipes.lastIRecipe();
+        }
 
         //Laser Relay
         if(ConfigCrafting.LASER_RELAY.isEnabled()){
@@ -87,7 +98,7 @@ public class BlockCrafting{
                     "OBO", "RCR", "OBO",
                     'B', new ItemStack(Blocks.redstone_block),
                     'O', new ItemStack(Blocks.obsidian),
-                    'R', new ItemStack(Items.redstone),
+                    'R', "dustRedstone",
                     'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal())));
             recipeLaserRelay = Util.GetRecipes.lastIRecipe();
         }
