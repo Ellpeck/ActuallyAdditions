@@ -12,10 +12,15 @@ package ellpeck.actuallyadditions.tile;
 
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
+import cpw.mods.fml.common.network.NetworkRegistry;
+import ellpeck.actuallyadditions.misc.DamageSources;
+import ellpeck.actuallyadditions.network.PacketAtomicReconstructor;
+import ellpeck.actuallyadditions.network.PacketHandler;
 import ellpeck.actuallyadditions.recipe.AtomicReconstructorRecipeHandler;
 import ellpeck.actuallyadditions.util.WorldPos;
 import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.block.Block;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -41,11 +46,18 @@ public class TileEntityAtomicReconstructor extends TileEntityBase implements IEn
                     this.currentTime--;
                     if(this.currentTime <= 0){
                         ForgeDirection sideToManipulate = ForgeDirection.getOrientation(worldObj.getBlockMetadata(xCoord, yCoord, zCoord));
+                        //Extract energy for shooting the laser itself too!
+                        this.storage.extractEnergy(usePerBlock*3, false);
 
-                        for(int i = 0; i < 10; i++){
+                        int distance = 10; //TODO Config
+                        for(int i = 0; i < distance; i++){
                             WorldPos coordsBlock = WorldUtil.getCoordsFromSide(sideToManipulate, worldObj, xCoord, yCoord, zCoord, i);
+                            this.damagePlayer(coordsBlock.getX(), coordsBlock.getY(), coordsBlock.getZ());
+
                             if(coordsBlock != null){
                                 if(!coordsBlock.getBlock().isAir(coordsBlock.getWorld(), coordsBlock.getX(), coordsBlock.getY(), coordsBlock.getZ())){
+                                    PacketHandler.theNetwork.sendToAllAround(new PacketAtomicReconstructor(xCoord, yCoord, zCoord, coordsBlock.getX(), coordsBlock.getY(), coordsBlock.getZ()), new NetworkRegistry.TargetPoint(worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 64));
+
                                     int range = 2; //TODO Config
 
                                     //Converting the Blocks
@@ -94,17 +106,27 @@ public class TileEntityAtomicReconstructor extends TileEntityBase implements IEn
                                             }
                                         }
                                     }
-
                                     break;
+                                }
+                                if(i >= distance-1){
+                                    PacketHandler.theNetwork.sendToAllAround(new PacketAtomicReconstructor(xCoord, yCoord, zCoord, coordsBlock.getX(), coordsBlock.getY(), coordsBlock.getZ()), new NetworkRegistry.TargetPoint(worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 64));
                                 }
                             }
                         }
                     }
                 }
                 else{
-                    this.currentTime = 40; //TODO Config
+                    this.currentTime = 80; //TODO Config
                 }
             }
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public void damagePlayer(int x, int y, int z){
+        ArrayList<EntityLivingBase> entities = (ArrayList<EntityLivingBase>)worldObj.getEntitiesWithinAABB(EntityLivingBase.class, AxisAlignedBB.getBoundingBox(x, y, z, x+1, y+1, z+1));
+        for(EntityLivingBase entity : entities){
+            entity.attackEntityFrom(DamageSources.DAMAGE_ATOMIC_RECONSTRUCTOR, 16F);
         }
     }
 

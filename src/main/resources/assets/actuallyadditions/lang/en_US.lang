@@ -24,6 +24,11 @@ container.nei.actuallyadditions.booklet.name=ActAdd Manual
 container.nei.actuallyadditions.booklet.header=The <item>Actually Additions Manual<r> reads:
 container.nei.actuallyadditions.booklet.noText=Nothing, apparently! But that doesn't matter. Just click the button on the bottom to see the item inside the booklet and look through its pages to find some fancy stuff!
 
+#Damage Sources
+death.actuallyadditions.atomicReconstructor.1=The Atomic Reconstructor thought %s were a block and accidentally converted them into ashes
+death.actuallyadditions.atomicReconstructor.2=%s stood in an Atomic Reconstructor's sight for too long. The laser killed them.
+death.actuallyadditions.atomicReconstructor.3=This Atomic Reconstructor is now more valuable than the orangs and combined incoms of %s in *subject hometown here*.
+
 #Blocks
 tile.actuallyadditions.blockCompost.name=Compost
 tile.actuallyadditions.blockMiscOreBlackQuartz.name=Black Quartz Ore
