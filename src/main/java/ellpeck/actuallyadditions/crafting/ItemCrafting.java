@@ -43,6 +43,7 @@ public class ItemCrafting{
     public static ArrayList<IRecipe> recipesMashedFood = new ArrayList<IRecipe>();
     public static IRecipe recipeDrill;
     public static IRecipe recipeDrillEmerald;
+    public static IRecipe recipeDrillPurple;
     public static IRecipe recipeDrillSpeedI;
     public static IRecipe recipeDrillSpeedII;
     public static IRecipe recipeDrillSpeedIII;
@@ -152,6 +153,15 @@ public class ItemCrafting{
                     'R', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.DRILL_CORE.ordinal()),
                     'I', "blockCrystalWhite"));
             recipeDrillEmerald = Util.GetRecipes.lastIRecipe();
+
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemDrill, 1, 2),
+                    "DFD", "CRC", "III",
+                    'F', "blockCrystalRed",
+                    'D', "crystalLightBlue",
+                    'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal()),
+                    'R', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.DRILL_CORE.ordinal()),
+                    'I', "blockCrystalWhite"));
+            recipeDrillPurple = Util.GetRecipes.lastIRecipe();
         }
 
         //Drill Core

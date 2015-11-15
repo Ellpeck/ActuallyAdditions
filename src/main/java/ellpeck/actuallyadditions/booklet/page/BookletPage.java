@@ -66,7 +66,6 @@ public class BookletPage{
         RenderHelper.enableGUIStandardItemLighting();
         GL11.glEnable(GL11.GL_DEPTH_TEST);
         GL11.glEnable(GL12.GL_RESCALE_NORMAL);
-        GL11.glPushMatrix();
         GL11.glTranslated(x, y, 0);
         GL11.glScalef(scale, scale, scale);
 
@@ -76,8 +75,10 @@ public class BookletPage{
         RenderItem.getInstance().renderItemOverlayIntoGUI(gui.mc.fontRenderer, gui.mc.getTextureManager(), stack, 0, 0);
         gui.mc.fontRenderer.setUnicodeFlag(flagBefore);
 
-        GL11.glPopMatrix();
-        //RenderHelper.disableStandardItemLighting();
+        //GL+MC+NEI suck
+        if(gui instanceof GuiBooklet){
+            RenderHelper.disableStandardItemLighting();
+        }
         GL11.glPopMatrix();
 
     }

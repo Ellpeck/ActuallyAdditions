@@ -53,6 +53,8 @@ public class ItemDrill extends ItemEnergy{
 
     @SideOnly(Side.CLIENT)
     private IIcon emeraldIcon;
+    @SideOnly(Side.CLIENT)
+    private IIcon purpleIcon;
 
     public ItemDrill(){
         super(500000, 5000);
@@ -62,7 +64,7 @@ public class ItemDrill extends ItemEnergy{
     @Override
     @SideOnly(Side.CLIENT)
     public IIcon getIconFromDamage(int par1){
-        return par1 == 0 ? this.itemIcon : this.emeraldIcon;
+        return par1 == 0 ? this.itemIcon : (par1 == 2 ? this.purpleIcon : this.emeraldIcon);
     }
 
     @Override
@@ -76,11 +78,16 @@ public class ItemDrill extends ItemEnergy{
     public void getSubItems(Item item, CreativeTabs tabs, List list){
         super.getSubItems(item, tabs, list);
 
-        ItemStack stackFull = new ItemStack(this, 1, 1);
+        this.addDrillStack(list, 1);
+        this.addDrillStack(list, 2);
+    }
+
+    private void addDrillStack(List list, int meta){
+        ItemStack stackFull = new ItemStack(this, 1, meta);
         this.setEnergy(stackFull, this.getMaxEnergyStored(stackFull));
         list.add(stackFull);
 
-        ItemStack stackEmpty = new ItemStack(this, 1, 1);
+        ItemStack stackEmpty = new ItemStack(this, 1, meta);
         this.setEnergy(stackEmpty, 0);
         list.add(stackEmpty);
     }
@@ -226,6 +233,7 @@ public class ItemDrill extends ItemEnergy{
     public void registerIcons(IIconRegister iconReg){
         this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
         this.emeraldIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Emerald");
+        this.purpleIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Purple");
     }
 
     @Override
