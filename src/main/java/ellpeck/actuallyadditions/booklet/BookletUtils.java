@@ -66,17 +66,10 @@ public class BookletUtils{
      * Draws the Title of the current chapter, current index entry or just "Actually Additions" if neither is present
      */
     public static void drawTitle(GuiBooklet booklet){
-        if(booklet.currentIndexEntry != null){
-            if(booklet.currentChapter == null){
-                booklet.drawCenteredString(booklet.getFontRenderer(), booklet.currentIndexEntry.getLocalizedName(), booklet.guiLeft+booklet.xSize/2, booklet.guiTop-8, StringUtil.DECIMAL_COLOR_WHITE);
-            }
-            else{
-                booklet.drawCenteredString(booklet.getFontRenderer(), booklet.currentChapter.getLocalizedName(), booklet.guiLeft+booklet.xSize/2, booklet.guiTop-8, StringUtil.DECIMAL_COLOR_WHITE);
-            }
-        }
-        else{
-            booklet.drawCenteredString(booklet.getFontRenderer(), StringUtil.localize("itemGroup."+ModUtil.MOD_ID_LOWER), booklet.guiLeft+booklet.xSize/2, booklet.guiTop-8, StringUtil.DECIMAL_COLOR_WHITE);
-        }
+        booklet.drawTexturedModalRect(booklet.guiLeft+booklet.xSize/2-142/2, booklet.guiTop-12, 0, 240, 142, 12);
+
+        String strg = booklet.currentChapter == null ? (booklet.currentIndexEntry == null ? StringUtil.localize("itemGroup."+ModUtil.MOD_ID_LOWER) : booklet.currentIndexEntry.getLocalizedName()) : booklet.currentChapter.getLocalizedName();
+        booklet.drawCenteredString(booklet.getFontRenderer(), strg, booklet.guiLeft+booklet.xSize/2, booklet.guiTop-9, StringUtil.DECIMAL_COLOR_WHITE);
     }
 
     /**
