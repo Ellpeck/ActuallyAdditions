@@ -492,12 +492,13 @@ public class BookletUtils{
                 GL11.glEnable(GL11.GL_BLEND);
                 OpenGlHelper.glBlendFunc(770, 771, 1, 0);
                 GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-                this.drawTexturedModalRect(this.xPosition, this.yPosition, 120, 180-this.height+k*this.height, this.width, this.height);
+                int renderHeight = 25;
+                this.drawTexturedModalRect(this.xPosition, this.yPosition, 146+(this.assignedEntry == null ? 0 : 16), 194-renderHeight+k*renderHeight, this.width, renderHeight);
                 this.mouseDragged(minecraft, x, y);
 
                 if(this.assignedEntry != null){
                     GL11.glPushMatrix();
-                    BookletPage.renderItem(booklet, this.assignedChapter != null && this.assignedChapter.displayStack != null ? this.assignedChapter.displayStack : new ItemStack(InitItems.itemLexicon), this.xPosition+2, this.yPosition+2, 0.725F);
+                    BookletPage.renderItem(booklet, this.assignedChapter != null && this.assignedChapter.displayStack != null ? this.assignedChapter.displayStack : new ItemStack(InitItems.itemLexicon), this.xPosition+2, this.yPosition+1, 0.725F);
                     GL11.glPopMatrix();
                 }
             }
