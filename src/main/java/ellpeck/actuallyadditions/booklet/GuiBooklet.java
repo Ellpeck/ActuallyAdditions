@@ -196,7 +196,7 @@ public class GuiBooklet extends GuiScreen{
         }
         //Handles gonig from page to chapter or from chapter to index
         else if(button == this.buttonPreviousScreen){
-            if(this.currentChapter != null && this.currentChapter != InitBooklet.chapterIntro){
+            if(this.currentChapter != null){
                 BookletUtils.openIndexEntry(this, this.currentIndexEntry, this.pageOpenInIndex, true);
             }
             else{
@@ -218,16 +218,16 @@ public class GuiBooklet extends GuiScreen{
         this.guiLeft = (this.width-this.xSize)/2;
         this.guiTop = (this.height-this.ySize)/2;
 
-        this.buttonForward = new BookletUtils.TexturedButton(0, this.guiLeft+this.xSize, this.guiTop+this.ySize+2, 164, 0, 18, 10);
+        this.buttonForward = new BookletUtils.TexturedButton(0, this.guiLeft+this.xSize-26, this.guiTop+this.ySize+1, 164, 0, 18, 10);
         this.buttonList.add(this.buttonForward);
 
-        this.buttonBackward = new BookletUtils.TexturedButton(1, this.guiLeft-18, this.guiTop+this.ySize+2, 146, 0, 18, 10);
+        this.buttonBackward = new BookletUtils.TexturedButton(1, this.guiLeft+8, this.guiTop+this.ySize+1, 146, 0, 18, 10);
         this.buttonList.add(this.buttonBackward);
 
-        this.buttonPreviousScreen = new BookletUtils.TexturedButton(2, this.guiLeft+this.xSize/2-7, this.guiTop+this.ySize+20, 182, 0, 15, 10);
+        this.buttonPreviousScreen = new BookletUtils.TexturedButton(2, this.guiLeft+this.xSize/2-7, this.guiTop+this.ySize+1, 182, 0, 15, 10);
         this.buttonList.add(this.buttonPreviousScreen);
 
-        this.buttonPreviouslyOpenedGui = new BookletUtils.TexturedButton(3, this.guiLeft+this.xSize/3, this.guiTop+this.ySize+20, 245, 44, 11, 15);
+        this.buttonPreviouslyOpenedGui = new BookletUtils.TexturedButton(3, this.guiLeft-4, this.guiTop+this.ySize+15, 245, 44, 11, 15);
         this.buttonList.add(this.buttonPreviouslyOpenedGui);
 
         this.buttonUpdate = new BookletUtils.TexturedButton(4, this.guiLeft-11, this.guiTop-11, 245, 0, 11, 11);
@@ -253,7 +253,7 @@ public class GuiBooklet extends GuiScreen{
 
         for(int i = 0; i < this.bookmarkButtons.length; i++){
             int x = this.guiLeft+xSize/2-(this.bookmarkButtons.length/2*16)+(i*16);
-            this.bookmarkButtons[i] = new BookletUtils.BookmarkButton(this.chapterButtons[this.chapterButtons.length-1].id+1+i, x, this.guiTop+this.ySize, this);
+            this.bookmarkButtons[i] = new BookletUtils.BookmarkButton(this.chapterButtons[this.chapterButtons.length-1].id+1+i, x, this.guiTop+this.ySize+13, this);
             this.buttonList.add(this.bookmarkButtons[i]);
         }
 

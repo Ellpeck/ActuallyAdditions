@@ -67,7 +67,10 @@ public class BookletUtils{
      * Draws the Title of the current chapter, current index entry or just "Actually Additions" if neither is present
      */
     public static void drawTitle(GuiBooklet booklet){
+        //Upper title
         booklet.drawTexturedModalRect(booklet.guiLeft+booklet.xSize/2-142/2, booklet.guiTop-12, 0, 240, 142, 12);
+        //Lower title
+        booklet.drawTexturedModalRect(booklet.guiLeft+booklet.xSize/2-142/2, booklet.guiTop+booklet.ySize, 0, 243, 142, 13);
 
         String strg = booklet.currentChapter == null ? (booklet.currentIndexEntry == null ? StringUtil.localize("itemGroup."+ModUtil.MOD_ID_LOWER) : booklet.currentIndexEntry.getLocalizedName()) : booklet.currentChapter.getLocalizedName();
         booklet.drawCenteredString(booklet.getFontRenderer(), strg, booklet.guiLeft+booklet.xSize/2, booklet.guiTop-9, StringUtil.DECIMAL_COLOR_WHITE);
