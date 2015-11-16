@@ -15,6 +15,7 @@ import ellpeck.actuallyadditions.booklet.chapter.BookletChapter;
 import ellpeck.actuallyadditions.booklet.entry.BookletEntry;
 import ellpeck.actuallyadditions.booklet.entry.BookletEntryAllSearch;
 import ellpeck.actuallyadditions.booklet.page.BookletPage;
+import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.update.UpdateChecker;
 import ellpeck.actuallyadditions.util.*;
 import net.minecraft.client.Minecraft;
@@ -83,22 +84,24 @@ public class BookletUtils{
 
         ArrayList<String> infoList = null;
         for(BookletPage page : booklet.currentChapter.pages){
-            for(ItemStack stack : page.getItemStacksForPage()){
-                for(Achievement achievement : InitAchievements.achievementList){
-                    if(stack != null && achievement.theItemStack != null && achievement.theItemStack.isItemEqual(stack)){
-                        if(pre){
-                            booklet.mc.getTextureManager().bindTexture(GuiBooklet.resLoc);
-                            booklet.drawTexturedModalRect(booklet.guiLeft+booklet.xSize+1, booklet.guiTop-18, 166, 154, 22, 21);
-                            return;
-                        }
-                        else{
-                            if(mouseX >= booklet.guiLeft+booklet.xSize+1 && mouseX < booklet.guiLeft+booklet.xSize+1+22 && mouseY >= booklet.guiTop-18 && mouseY < booklet.guiTop-18+21){
-                                if(infoList == null){
-                                    infoList = new ArrayList<String>();
-                                    infoList.add(EnumChatFormatting.GOLD+"Achievements related to this chapter:");
+            if(page != null && page.getItemStacksForPage() != null){
+                for(ItemStack stack : page.getItemStacksForPage()){
+                    for(Achievement achievement : InitAchievements.achievementList){
+                        if(stack != null && achievement.theItemStack != null && achievement.theItemStack.isItemEqual(stack)){
+                            if(pre){
+                                booklet.mc.getTextureManager().bindTexture(GuiBooklet.resLoc);
+                                booklet.drawTexturedModalRect(booklet.guiLeft+booklet.xSize+1, booklet.guiTop-18, 166, 154, 22, 21);
+                                return;
+                            }
+                            else{
+                                if(mouseX >= booklet.guiLeft+booklet.xSize+1 && mouseX < booklet.guiLeft+booklet.xSize+1+22 && mouseY >= booklet.guiTop-18 && mouseY < booklet.guiTop-18+21){
+                                    if(infoList == null){
+                                        infoList = new ArrayList<String>();
+                                        infoList.add(EnumChatFormatting.GOLD+"Achievements related to this chapter:");
+                                    }
+                                    infoList.add("-"+StringUtil.localize(achievement.statId));
+                                    infoList.add(EnumChatFormatting.GRAY+"("+achievement.getDescription()+")");
                                 }
-                                infoList.add("-"+StringUtil.localize(achievement.statId));
-                                infoList.add(EnumChatFormatting.GRAY+"("+achievement.getDescription()+")");
                             }
                         }
                     }
@@ -145,11 +148,11 @@ public class BookletUtils{
     @SuppressWarnings("unchecked")
     public static void doHoverTexts(GuiBooklet booklet, int mouseX, int mouseY){
         //Achievements Hover Text
-        if(mouseX >= booklet.guiLeft+138 && mouseX <= booklet.guiLeft+138+7 && mouseY >= booklet.guiTop && mouseY <= booklet.guiTop+7){
+        if(booklet.buttonAchievements.func_146115_a()){
             booklet.drawHoveringText(Collections.singletonList(EnumChatFormatting.GOLD+"Show Achievements"), mouseX, mouseY);
         }
         //Config Hover Text
-        if(mouseX >= booklet.guiLeft+138 && mouseX <= booklet.guiLeft+138+7 && mouseY >= booklet.guiTop+10 && mouseY <= booklet.guiTop+10+7){
+        else if(booklet.buttonConfig.func_146115_a()){
             ArrayList list = new ArrayList();
             list.add(EnumChatFormatting.GOLD+"Show Configuration GUI");
             list.addAll(booklet.getFontRenderer().listFormattedStringToWidth("It is highly recommended that you restart your game after changing anything as that prevents possible bugs occuring!", GuiBooklet.TOOLTIP_SPLIT_LENGTH));
@@ -157,15 +160,15 @@ public class BookletUtils{
 
         }
         //Twitter Hover Text
-        if(mouseX >= booklet.guiLeft && mouseX <= booklet.guiLeft+7 && mouseY >= booklet.guiTop && mouseY <= booklet.guiTop+7){
+        else if(booklet.buttonTwitter.func_146115_a()){
             booklet.drawHoveringText(Collections.singletonList(EnumChatFormatting.GOLD+"Open @ActAddMod on Twitter in Browser"), mouseX, mouseY);
         }
         //Forum Hover Text
-        if(mouseX >= booklet.guiLeft && mouseX <= booklet.guiLeft+7 && mouseY >= booklet.guiTop+10 && mouseY <= booklet.guiTop+10+7){
+        else if(booklet.buttonForum.func_146115_a()){
             booklet.drawHoveringText(Collections.singletonList(EnumChatFormatting.GOLD+"Open Minecraft Forum Post in Browser"), mouseX, mouseY);
         }
         //Update Checker Hover Text
-        if(mouseX >= booklet.guiLeft-11 && mouseX <= booklet.guiLeft-11+10 && mouseY >= booklet.guiTop-11 && mouseY <= booklet.guiTop-11+10){
+        else if(booklet.buttonUpdate.func_146115_a()){
             ArrayList list = new ArrayList();
             if(UpdateChecker.checkFailed){
                 list.add(IChatComponent.Serializer.func_150699_a(StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".update.failed")).getFormattedText());
@@ -176,6 +179,13 @@ public class BookletUtils{
                 list.add(StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".update.buttonOptions"));
             }
             booklet.drawHoveringText(list, mouseX, mouseY);
+        }
+        else{
+            for(GuiButton button : booklet.bookmarkButtons){
+                if(button instanceof BookmarkButton && button.func_146115_a()){
+                    ((BookmarkButton)button).drawHover(mouseX, mouseY);
+                }
+            }
         }
     }
 
@@ -452,6 +462,73 @@ public class BookletUtils{
                 this.drawTexturedModalRect(this.xPosition, this.yPosition, this.texturePosX, this.texturePosY-this.height+k*this.height, this.width, this.height);
                 this.mouseDragged(minecraft, x, y);
             }
+        }
+    }
+
+    public static class BookmarkButton extends GuiButton{
+
+        public BookletChapter assignedChapter;
+        public BookletPage assignedPage;
+        public BookletEntry assignedEntry;
+        public int assignedPageInIndex;
+
+        private GuiBooklet booklet;
+
+        public BookmarkButton(int id, int x, int y, GuiBooklet booklet){
+            super(id, x, y, 16, 16, "");
+            this.booklet = booklet;
+        }
+
+        @Override
+        public void drawButton(Minecraft minecraft, int x, int y){
+            if(this.visible){
+                minecraft.getTextureManager().bindTexture(GuiBooklet.resLoc);
+                GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+                this.field_146123_n = x >= this.xPosition && y >= this.yPosition && x < this.xPosition+this.width && y < this.yPosition+this.height;
+                int k = this.getHoverState(this.field_146123_n);
+                if(k == 0){
+                    k = 1;
+                }
+                GL11.glEnable(GL11.GL_BLEND);
+                OpenGlHelper.glBlendFunc(770, 771, 1, 0);
+                GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+                this.drawTexturedModalRect(this.xPosition, this.yPosition, 120, 180-this.height+k*this.height, this.width, this.height);
+                this.mouseDragged(minecraft, x, y);
+
+                if(this.assignedEntry != null){
+                    GL11.glPushMatrix();
+                    BookletPage.renderItem(booklet, this.assignedChapter != null && this.assignedChapter.displayStack != null ? this.assignedChapter.displayStack : new ItemStack(InitItems.itemLexicon), this.xPosition+2, this.yPosition+2, 0.725F);
+                    GL11.glPopMatrix();
+                }
+            }
+        }
+
+        public void onPressed(){
+            if(this.assignedEntry != null){
+                if(KeyUtil.isShiftPressed()){
+                    this.assignedEntry = null;
+                    this.assignedChapter = null;
+                    this.assignedPage = null;
+                    this.assignedPageInIndex = 1;
+                }
+                else{
+                    openIndexEntry(this.booklet, this.assignedEntry, this.assignedPageInIndex, true);
+                    openChapter(this.booklet, this.assignedChapter, this.assignedPage);
+                }
+            }
+            else{
+                if(this.booklet.currentIndexEntry != null){
+                    this.assignedEntry = this.booklet.currentIndexEntry;
+                    this.assignedChapter = this.booklet.currentChapter;
+                    this.assignedPage = this.booklet.currentPage;
+                    this.assignedPageInIndex = this.booklet.pageOpenInIndex;
+                }
+            }
+        }
+
+        public void drawHover(int mouseX, int mouseY){
+            String strg = this.assignedChapter == null ? (this.assignedEntry == null ? "None" : (this.assignedEntry.getLocalizedName()+", Page "+this.assignedPageInIndex)) : (this.assignedChapter.getLocalizedName()+", Page "+this.assignedPage.getID());
+            this.booklet.drawHoveringText(Collections.singletonList(strg), mouseX, mouseY);
         }
     }
 }

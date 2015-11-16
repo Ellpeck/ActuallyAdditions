@@ -37,17 +37,22 @@ public class GuiBooklet extends GuiScreen{
     public static final ResourceLocation resLocHalloween = AssetUtil.getBookletGuiLocation("guiBookletHalloween");
     public static final ResourceLocation resLocChristmas = AssetUtil.getBookletGuiLocation("guiBookletChristmas");
     public static final ResourceLocation resLocValentine = AssetUtil.getBookletGuiLocation("guiBookletValentinesDay");
+
     public static final int CHAPTER_BUTTONS_AMOUNT = 13;
     public static final int TOOLTIP_SPLIT_LENGTH = 200;
+
     public int xSize;
     public int ySize;
     public int guiLeft;
     public int guiTop;
+
     public BookletPage currentPage;
     public BookletChapter currentChapter;
     public BookletEntry currentIndexEntry;
+
     public int pageOpenInIndex;
     public int indexPageAmount;
+
     public GuiButton buttonForward;
     public GuiButton buttonBackward;
     public GuiButton buttonPreviousScreen;
@@ -58,7 +63,11 @@ public class GuiBooklet extends GuiScreen{
     public GuiButton buttonAchievements;
     public GuiButton buttonConfig;
     public GuiButton[] chapterButtons = new GuiButton[CHAPTER_BUTTONS_AMOUNT];
+
+    public GuiButton[] bookmarkButtons = new GuiButton[8];
+
     public GuiTextField searchField;
+
     private int ticksElapsed;
     private boolean mousePressed;
 
@@ -194,6 +203,10 @@ public class GuiBooklet extends GuiScreen{
                 BookletUtils.openIndexEntry(this, null, 1, true);
             }
         }
+        //Handles Bookmark button
+        else if(button instanceof BookletUtils.BookmarkButton){
+            ((BookletUtils.BookmarkButton)button).onPressed();
+        }
         else{
             BookletUtils.handleChapterButtonClick(this, button);
         }
@@ -211,10 +224,10 @@ public class GuiBooklet extends GuiScreen{
         this.buttonBackward = new BookletUtils.TexturedButton(1, this.guiLeft-18, this.guiTop+this.ySize+2, 146, 0, 18, 10);
         this.buttonList.add(this.buttonBackward);
 
-        this.buttonPreviousScreen = new BookletUtils.TexturedButton(2, this.guiLeft+this.xSize/2-7, this.guiTop+this.ySize+2, 182, 0, 15, 10);
+        this.buttonPreviousScreen = new BookletUtils.TexturedButton(2, this.guiLeft+this.xSize/2-7, this.guiTop+this.ySize+20, 182, 0, 15, 10);
         this.buttonList.add(this.buttonPreviousScreen);
 
-        this.buttonPreviouslyOpenedGui = new BookletUtils.TexturedButton(3, this.guiLeft+this.xSize/3, this.guiTop+this.ySize+2, 245, 44, 11, 15);
+        this.buttonPreviouslyOpenedGui = new BookletUtils.TexturedButton(3, this.guiLeft+this.xSize/3, this.guiTop+this.ySize+20, 245, 44, 11, 15);
         this.buttonList.add(this.buttonPreviouslyOpenedGui);
 
         this.buttonUpdate = new BookletUtils.TexturedButton(4, this.guiLeft-11, this.guiTop-11, 245, 0, 11, 11);
@@ -236,6 +249,12 @@ public class GuiBooklet extends GuiScreen{
         for(int i = 0; i < this.chapterButtons.length; i++){
             this.chapterButtons[i] = new BookletUtils.IndexButton(9+i, guiLeft+15, guiTop+10+(i*12), 115, 10, "", this);
             this.buttonList.add(this.chapterButtons[i]);
+        }
+
+        for(int i = 0; i < this.bookmarkButtons.length; i++){
+            int x = this.guiLeft+xSize/2-(this.bookmarkButtons.length/2*16)+(i*16);
+            this.bookmarkButtons[i] = new BookletUtils.BookmarkButton(this.chapterButtons[this.chapterButtons.length-1].id+1+i, x, this.guiTop+this.ySize, this);
+            this.buttonList.add(this.bookmarkButtons[i]);
         }
 
         this.searchField = new GuiTextField(this.fontRendererObj, guiLeft+148, guiTop+162, 66, 10);
