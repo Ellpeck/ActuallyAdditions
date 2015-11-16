@@ -301,7 +301,7 @@ public class GuiBooklet extends GuiScreen{
 
     @Override
     public void onGuiClosed(){
-        PersistentClientData.saveBookPage(this.currentIndexEntry, this.currentChapter, this.currentPage, this.pageOpenInIndex, this.searchField.getText());
+        PersistentClientData.saveBookPage(this);
     }
 
     @Override

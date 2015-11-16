@@ -526,9 +526,24 @@ public class BookletUtils{
             }
         }
 
+        @SuppressWarnings("unchecked")
         public void drawHover(int mouseX, int mouseY){
-            String strg = this.assignedChapter == null ? (this.assignedEntry == null ? "None" : (this.assignedEntry.getLocalizedName()+", Page "+this.assignedPageInIndex)) : (this.assignedChapter.getLocalizedName()+", Page "+this.assignedPage.getID());
-            this.booklet.drawHoveringText(Collections.singletonList(strg), mouseX, mouseY);
+            ArrayList list = new ArrayList();
+            if(this.assignedEntry != null){
+                if(this.assignedChapter != null){
+                    list.add(EnumChatFormatting.GOLD+this.assignedChapter.getLocalizedName()+", Page "+this.assignedPage.getID());
+                }
+                else{
+                    list.add(EnumChatFormatting.GOLD+this.assignedEntry.getLocalizedName()+", Page "+this.assignedPageInIndex);
+                }
+                list.add("Click to open");
+                list.add(EnumChatFormatting.ITALIC+"Shift-Click to remove");
+            }
+            else{
+                list.add(EnumChatFormatting.GOLD+"None");
+                list.add("Click to save current page");
+            }
+            this.booklet.drawHoveringText(list, mouseX, mouseY);
         }
     }
 }
