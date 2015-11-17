@@ -155,7 +155,7 @@ public enum ConfigIntValues{
     GROWTH_RING_GROWTH_PER_CYCLE("Growth Ring: Growth Ticks per Cycle", ConfigCategories.MACHINE_VALUES, 45, 1, 200, "The Amount of plants that get ticked per cycle"),
 
     MAGNET_RING_RANGE("Magnet Ring: Range", ConfigCategories.MACHINE_VALUES, 5, 3, 30, "The Range of the Magnet Ring"),
-    MAGNET_RING_ENERGY_USE("Magnet Ring: Energy Used", ConfigCategories.MACHINE_VALUES, 30, 0, 500, "The Amount of Energy the Magnet Ring uses per tick"),
+    MAGNET_RING_ENERGY_USE("Magnet Ring: Energy Used", ConfigCategories.MACHINE_VALUES, 5, 0, 500, "The Amount of Energy the Magnet Ring uses per tick"),
 
     WATER_RING_RANGE("Water Ring: Range", ConfigCategories.MACHINE_VALUES, 3, 1, 10, "The Range of the Water Ring"),
     WATER_RING_ENERGY_USE("Magnet Ring: Energy Used", ConfigCategories.MACHINE_VALUES, 30, 0, 500, "The Amount of Energy the Water Ring uses per Block"),

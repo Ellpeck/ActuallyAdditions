@@ -30,7 +30,7 @@ import java.util.ArrayList;
 public class ItemMagnetRing extends ItemEnergy{
 
     public ItemMagnetRing(){
-        super(3000000, 5000);
+        super(30000000, 5000);
     }
 
     @SuppressWarnings("unchecked")
