@@ -39,7 +39,7 @@ public class ItemGrowthRing extends ItemEnergy{
 
     @Override
     public void onUpdate(ItemStack stack, World world, Entity entity, int par4, boolean par5){
-        if(!(entity instanceof EntityPlayer) || world.isRemote){
+        if(!(entity instanceof EntityPlayer) || world.isRemote || entity.isSneaking()){
             return;
         }
 

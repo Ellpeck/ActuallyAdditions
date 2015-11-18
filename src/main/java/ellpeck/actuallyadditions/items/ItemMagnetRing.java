@@ -36,7 +36,7 @@ public class ItemMagnetRing extends ItemEnergy{
     @SuppressWarnings("unchecked")
     @Override
     public void onUpdate(ItemStack stack, World world, Entity entity, int par4, boolean par5){
-        if(this.getEnergyStored(stack) >= ConfigIntValues.MAGNET_RING_ENERGY_USE.getValue()){
+        if(this.getEnergyStored(stack) >= ConfigIntValues.MAGNET_RING_ENERGY_USE.getValue() && !entity.isSneaking()){
             //Get all the Items in the area
             ArrayList<EntityItem> items = (ArrayList<EntityItem>)world.getEntitiesWithinAABB(EntityItem.class, AxisAlignedBB.getBoundingBox(entity.posX-ConfigIntValues.MAGNET_RING_RANGE.getValue(), entity.posY-ConfigIntValues.MAGNET_RING_RANGE.getValue(), entity.posZ-ConfigIntValues.MAGNET_RING_RANGE.getValue(), entity.posX+ConfigIntValues.MAGNET_RING_RANGE.getValue(), entity.posY+ConfigIntValues.MAGNET_RING_RANGE.getValue(), entity.posZ+ConfigIntValues.MAGNET_RING_RANGE.getValue()));
             if(!items.isEmpty()){
