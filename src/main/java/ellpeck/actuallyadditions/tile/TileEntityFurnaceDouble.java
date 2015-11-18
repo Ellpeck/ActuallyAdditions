@@ -41,6 +41,7 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
     @Override
     @SuppressWarnings("unchecked")
     public void updateEntity(){
+        super.updateEntity();
         if(!worldObj.isRemote){
             boolean flag = this.firstSmeltTime > 0 || this.secondSmeltTime > 0;
 

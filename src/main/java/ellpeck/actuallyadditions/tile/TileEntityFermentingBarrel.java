@@ -37,6 +37,7 @@ public class TileEntityFermentingBarrel extends TileEntityInventoryBase implemen
     @Override
     @SuppressWarnings("unchecked")
     public void updateEntity(){
+        super.updateEntity();
         if(!worldObj.isRemote){
             if(this.canolaTank.getFluidAmount() >= ConfigIntValues.BARREL_MB_PRODUCED.getValue() && ConfigIntValues.BARREL_MB_PRODUCED.getValue() <= this.oilTank.getCapacity()-this.oilTank.getFluidAmount()){
                 this.currentProcessTime++;

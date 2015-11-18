@@ -45,6 +45,7 @@ public class TileEntityLavaFactoryController extends TileEntityBase implements I
     @Override
     @SuppressWarnings("unchecked")
     public void updateEntity(){
+        super.updateEntity();
         if(!worldObj.isRemote){
             if(this.storage.getEnergyStored() >= ConfigIntValues.LAVA_FACTORY_ENERGY_USED.getValue() && this.isMultiblock() == HAS_AIR){
                 this.currentWorkTime++;

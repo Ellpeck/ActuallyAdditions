@@ -24,6 +24,7 @@ public class TileEntityGreenhouseGlass extends TileEntityBase{
 
     @Override
     public void updateEntity(){
+        super.updateEntity();
         if(!worldObj.isRemote){
             if(worldObj.canBlockSeeTheSky(xCoord, yCoord, zCoord) && worldObj.isDaytime()){
                 WorldPos blockToFert = this.blockToFertilize();

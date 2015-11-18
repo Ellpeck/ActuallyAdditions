@@ -37,6 +37,7 @@ public class TileEntityFishingNet extends TileEntityBase{
 
     @Override
     public void updateEntity(){
+        super.updateEntity();
         if(!worldObj.isRemote){
             if(!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)){
                 if(worldObj.getBlock(xCoord, yCoord-1, zCoord).getMaterial() == Material.water){

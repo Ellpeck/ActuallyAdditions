@@ -71,6 +71,7 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
     @Override
     @SuppressWarnings("unchecked")
     public void updateEntity(){
+        super.updateEntity();
         if(!worldObj.isRemote){
             boolean flag = this.firstCrushTime > 0 || this.secondCrushTime > 0;
 

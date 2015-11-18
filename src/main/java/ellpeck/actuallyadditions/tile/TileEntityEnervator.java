@@ -31,6 +31,7 @@ public class TileEntityEnervator extends TileEntityInventoryBase implements IEne
 
     @Override
     public void updateEntity(){
+        super.updateEntity();
         if(!worldObj.isRemote){
             if(this.slots[0] != null && this.slots[0].getItem() instanceof IEnergyContainerItem && this.slots[1] == null){
                 if(((IEnergyContainerItem)this.slots[0].getItem()).getEnergyStored(this.slots[0]) > 0){

@@ -40,6 +40,7 @@ public class TileEntityAtomicReconstructor extends TileEntityBase implements IEn
     @Override
     @SuppressWarnings("unchecked")
     public void updateEntity(){
+        super.updateEntity();
         if(!this.worldObj.isRemote){
             int usePerBlock = ConfigIntValues.RECONSTRUCTOR_USE_PER_BLOCK.getValue();
             if(!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord) && this.storage.getEnergyStored() >= usePerBlock){

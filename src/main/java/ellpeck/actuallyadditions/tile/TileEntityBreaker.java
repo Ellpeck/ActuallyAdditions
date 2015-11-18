@@ -38,6 +38,7 @@ public class TileEntityBreaker extends TileEntityInventoryBase{
     @Override
     @SuppressWarnings("unchecked")
     public void updateEntity(){
+        super.updateEntity();
         if(!worldObj.isRemote){
             if(!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)){
                 if(this.currentTime > 0){

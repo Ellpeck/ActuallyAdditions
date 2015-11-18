@@ -42,6 +42,7 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
 
     @Override
     public void updateEntity(){
+        super.updateEntity();
         if(!worldObj.isRemote){
             this.range = TileEntityPhantomface.upgradeRange(ConfigIntValues.PHANTOM_PLACER_RANGE.getValue(), worldObj, xCoord, yCoord, zCoord);
 

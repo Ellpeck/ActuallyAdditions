@@ -37,6 +37,7 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
     @Override
     @SuppressWarnings("unchecked")
     public void updateEntity(){
+        super.updateEntity();
         if(!worldObj.isRemote){
             boolean flag = this.currentBurnTime > 0;
 

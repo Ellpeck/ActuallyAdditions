@@ -50,6 +50,7 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
 
     @Override
     public void updateEntity(){
+        super.updateEntity();
         if(!worldObj.isRemote){
             this.storeCoffee();
 

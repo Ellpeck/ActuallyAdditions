@@ -31,6 +31,7 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
 
     @Override
     public void updateEntity(){
+        super.updateEntity();
         if(!worldObj.isRemote){
             if(this.amount > 0){
                 if(this.slots[0] == null){

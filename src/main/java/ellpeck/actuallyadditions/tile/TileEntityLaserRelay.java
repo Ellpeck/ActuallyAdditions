@@ -32,6 +32,7 @@ public class TileEntityLaserRelay extends TileEntityBase implements IEnergyRecei
 
     @Override
     public void updateEntity(){
+        super.updateEntity();
         if(this.worldObj.isRemote){
             this.renderParticles();
         }

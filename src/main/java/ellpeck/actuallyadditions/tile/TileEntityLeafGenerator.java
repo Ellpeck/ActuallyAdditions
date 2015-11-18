@@ -41,6 +41,7 @@ public class TileEntityLeafGenerator extends TileEntityBase implements IEnergyPr
     @Override
     @SuppressWarnings("unchecked")
     public void updateEntity(){
+        super.updateEntity();
         if(!worldObj.isRemote){
             if(!this.worldObj.isBlockIndirectlyGettingPowered(this.xCoord, this.yCoord, this.zCoord)){
 

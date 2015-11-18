@@ -30,6 +30,7 @@ public class TileEntityEnergizer extends TileEntityInventoryBase implements IEne
 
     @Override
     public void updateEntity(){
+        super.updateEntity();
         if(!worldObj.isRemote){
             if(this.slots[0] != null && this.slots[0].getItem() instanceof IEnergyContainerItem && this.slots[1] == null){
                 if(this.storage.getEnergyStored() > 0){

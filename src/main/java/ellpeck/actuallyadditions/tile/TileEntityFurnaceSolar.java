@@ -53,6 +53,7 @@ public class TileEntityFurnaceSolar extends TileEntityBase implements IEnergyPro
 
     @Override
     public void updateEntity(){
+        super.updateEntity();
         if(!worldObj.isRemote){
             if(worldObj.canBlockSeeTheSky(xCoord, yCoord, zCoord) && worldObj.isDaytime()){
                 if(ConfigIntValues.FURNACE_SOLAR_ENERGY_PRODUCED.getValue() <= this.getMaxEnergyStored(ForgeDirection.UNKNOWN)-this.getEnergyStored(ForgeDirection.UNKNOWN)){

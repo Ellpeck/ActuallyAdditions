@@ -11,6 +11,7 @@
 package ellpeck.actuallyadditions.tile;
 
 import cpw.mods.fml.common.registry.GameRegistry;
+import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.block.Block;
 import net.minecraft.nbt.NBTTagCompound;
@@ -21,6 +22,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
 public abstract class TileEntityBase extends TileEntity{
+
+    private int ticksElapsed;
 
     public static void init(){
         ModUtil.LOGGER.info("Registering TileEntities...");
@@ -67,6 +70,11 @@ public abstract class TileEntityBase extends TileEntity{
     }
 
     @Override
+    public void updateEntity(){
+        this.ticksElapsed++;
+    }
+
+    @Override
     public final void readFromNBT(NBTTagCompound compound){
         super.readFromNBT(compound);
         this.readSyncableNBT(compound, false);
@@ -104,6 +112,8 @@ public abstract class TileEntityBase extends TileEntity{
     }
 
     protected void sendUpdate(){
-        this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
+        if(this.ticksElapsed % ConfigIntValues.TILE_ENTITY_UPDATE_INTERVAL.getValue() == 0){
+            this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
+        }
     }
 }

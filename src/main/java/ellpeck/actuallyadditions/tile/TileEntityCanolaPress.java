@@ -41,6 +41,7 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IE
     @Override
     @SuppressWarnings("unchecked")
     public void updateEntity(){
+        super.updateEntity();
         if(!worldObj.isRemote){
             if(this.isCanola(0) && ConfigIntValues.PRESS_MB_PRODUCED.getValue() <= this.tank.getCapacity()-this.tank.getFluidAmount()){
                 if(this.storage.getEnergyStored() >= ConfigIntValues.PRESS_ENERGY_USED.getValue()){

@@ -34,6 +34,7 @@ public class TileEntityFeeder extends TileEntityInventoryBase{
     @Override
     @SuppressWarnings("unchecked")
     public void updateEntity(){
+        super.updateEntity();
         if(!worldObj.isRemote){
             boolean theFlag = this.currentTimer > 0;
             List<EntityAnimal> animals = worldObj.getEntitiesWithinAABB(EntityAnimal.class, AxisAlignedBB.getBoundingBox(this.xCoord-ConfigIntValues.FEEDER_REACH.getValue(), this.yCoord-ConfigIntValues.FEEDER_REACH.getValue(), this.zCoord-ConfigIntValues.FEEDER_REACH.getValue(), this.xCoord+ConfigIntValues.FEEDER_REACH.getValue(), this.yCoord+ConfigIntValues.FEEDER_REACH.getValue(), this.zCoord+ConfigIntValues.FEEDER_REACH.getValue()));

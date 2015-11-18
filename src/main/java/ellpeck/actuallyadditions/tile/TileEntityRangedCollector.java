@@ -35,6 +35,7 @@ public class TileEntityRangedCollector extends TileEntityInventoryBase implement
     @Override
     @SuppressWarnings("unchecked")
     public void updateEntity(){
+        super.updateEntity();
         if(!worldObj.isRemote){
             if(!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)){
                 int range = ConfigIntValues.RANGED_COLLECTOR_RANGE.getValue();

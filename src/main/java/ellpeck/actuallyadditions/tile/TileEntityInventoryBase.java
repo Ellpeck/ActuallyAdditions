@@ -80,6 +80,11 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
     }
 
     @Override
+    public void updateEntity(){
+        super.updateEntity();
+    }
+
+    @Override
     public int getInventoryStackLimit(){
         return 64;
     }

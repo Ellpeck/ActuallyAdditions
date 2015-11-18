@@ -28,6 +28,7 @@ public class TileEntityHeatCollector extends TileEntityBase implements IEnergyPr
 
     @Override
     public void updateEntity(){
+        super.updateEntity();
         if(!worldObj.isRemote){
             ArrayList<Integer> blocksAround = new ArrayList<Integer>();
             if(ConfigIntValues.HEAT_COLLECTOR_ENERGY_PRODUCED.getValue() <= this.getMaxEnergyStored(ForgeDirection.UNKNOWN)-this.getEnergyStored(ForgeDirection.UNKNOWN)){

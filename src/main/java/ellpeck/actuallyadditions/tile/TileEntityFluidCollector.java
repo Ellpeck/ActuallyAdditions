@@ -80,6 +80,7 @@ public class TileEntityFluidCollector extends TileEntityInventoryBase implements
     @Override
     @SuppressWarnings("unchecked")
     public void updateEntity(){
+        super.updateEntity();
         if(!worldObj.isRemote){
             if(!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)){
                 if(this.currentTime > 0){

@@ -82,6 +82,7 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
 
     @Override
     public void updateEntity(){
+        super.updateEntity();
         if(!worldObj.isRemote){
             this.initVars();
 

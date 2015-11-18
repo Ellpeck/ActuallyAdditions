@@ -158,12 +158,7 @@ public enum ConfigIntValues{
     MAGNET_RING_ENERGY_USE("Magnet Ring: Energy Used", ConfigCategories.MACHINE_VALUES, 5, 0, 500, "The Amount of Energy the Magnet Ring uses per tick"),
 
     WATER_RING_RANGE("Water Ring: Range", ConfigCategories.MACHINE_VALUES, 3, 1, 10, "The Range of the Water Ring"),
-    WATER_RING_ENERGY_USE("Magnet Ring: Energy Used", ConfigCategories.MACHINE_VALUES, 30, 0, 500, "The Amount of Energy the Water Ring uses per Block"),
-
-    ORE_MAGNET_MAX_TIMER("Ore Magnet: Max Timer", ConfigCategories.MACHINE_VALUES, 20, 1, 2000, "The approximate Time it takes for the Ore Magnet to search for a new block to mine"),
-    ORE_MAGNET_RANGE("Ore Magnet: Range", ConfigCategories.MACHINE_VALUES, 10, 1, 60, "The range of the Ore Magnet"),
-    ORE_MAGNET_OIL_USE("Ore Magnet: Oil Use", ConfigCategories.MACHINE_VALUES, 30, 0, 5000, "The amount of oil the Ore Magnet uses every Block"),
-    ORE_MAGNET_ENERGY_USE("Ore Magnet: Energy USe", ConfigCategories.MACHINE_VALUES, 250, 10, 10000, "The amount of Energy the Ore Magnet uses every tick"),
+    WATER_RING_ENERGY_USE("Water Ring: Energy Used", ConfigCategories.MACHINE_VALUES, 30, 0, 500, "The Amount of Energy the Water Ring uses per Block"),
 
     LEAF_GENERATOR_ENERGY_PRODUCED("Leaf Generator: Energy Produced", ConfigCategories.MACHINE_VALUES, 300, 1, 10000, "How much Energy the Leaf Generator produces per Leaf broken"),
     LEAF_GENERATOR_COOLDOWN_TIME("Leaf Generator: Cooldown Time", ConfigCategories.MACHINE_VALUES, 5, 0, 100, "The amount of ticks that it takes util another Leaf gets proken"),
@@ -181,7 +176,9 @@ public enum ConfigIntValues{
     RECONSTRUCTOR_DISTANCE("Atomic Reconstructor: Distance", ConfigCategories.MACHINE_VALUES, 10, 1, 50, "The max distance the Reconstructor goes forward to find blocks to convert"),
     RECONSTRCUTOR_RANGE("Atomic Reconstructor: Range", ConfigCategories.MACHINE_VALUES, 2, 1, 10, "The range of Converting blocks or items into other blocks or items"),
     RECONSTRUCTOR_USE_PER_BLOCK("Atomic Reconstructor: Energy Use per Block", ConfigCategories.MACHINE_VALUES, 800, 0, 100000, "The amount of Energy the Reconstructor uses per Block converted"),
-    RECONSTRUCTOR_COOLDOWN_TIMER("Atomic Reconstrucor: Cooldown Timer", ConfigCategories.MACHINE_VALUES, 100, 0, 10000, "The amount of time the Reconstructor waits between shooting lasers");
+    RECONSTRUCTOR_COOLDOWN_TIMER("Atomic Reconstrucor: Cooldown Timer", ConfigCategories.MACHINE_VALUES, 100, 0, 10000, "The amount of time the Reconstructor waits between shooting lasers"),
+
+    TILE_ENTITY_UPDATE_INTERVAL("Tile Entities: Update Interval", ConfigCategories.OTHER, 5, 1, 100, "The amount of ticks waited before a TileEntity sends an additional Update to the Client");
 
     public final String name;
     public final String category;

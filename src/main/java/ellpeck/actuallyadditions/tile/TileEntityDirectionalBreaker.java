@@ -39,6 +39,7 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase implem
     @Override
     @SuppressWarnings("unchecked")
     public void updateEntity(){
+        super.updateEntity();
         if(!worldObj.isRemote){
             if(!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)){
                 int usagePerBlock = ConfigIntValues.DIRECTIONAL_BREAKER_RF_PER_BLOCK.getValue();

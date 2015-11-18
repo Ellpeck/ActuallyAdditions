@@ -41,6 +41,7 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
 
     @Override
     public void updateEntity(){
+        super.updateEntity();
         if(!worldObj.isRemote){
             this.range = upgradeRange(ConfigIntValues.PHANTOMFACE_RANGE.getValue(), worldObj, xCoord, yCoord, zCoord);
 
