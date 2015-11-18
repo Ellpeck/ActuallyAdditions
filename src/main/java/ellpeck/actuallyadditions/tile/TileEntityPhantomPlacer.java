@@ -17,6 +17,7 @@ import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -101,20 +102,7 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
 
     @Override
     public boolean isBoundThingInRange(){
-        if(this.hasBoundPosition()){
-            int xDif = this.boundPosition.getX()-this.xCoord;
-            int yDif = this.boundPosition.getY()-this.yCoord;
-            int zDif = this.boundPosition.getZ()-this.zCoord;
-
-            if(xDif >= -this.range && xDif <= this.range){
-                if(yDif >= -this.range && yDif <= this.range){
-                    if(zDif >= -this.range && zDif <= this.range){
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
+        return this.hasBoundPosition() && this.boundPosition.toVec().distanceTo(Vec3.createVectorHelper(xCoord, yCoord, zCoord)) <= this.range;
     }
 
     @Override
