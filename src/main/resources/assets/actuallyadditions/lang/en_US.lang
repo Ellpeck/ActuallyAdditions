@@ -3,8 +3,8 @@ itemGroup.actuallyadditions=Actually Additions
 achievement.page.actuallyadditions=Actually Additions
 
 #Fluids
-fluid.oil=Oil
-fluid.canolaoil=Canola Oil
+fluid.actuallyadditions.oil=Oil
+fluid.actuallyadditions.canolaoil=Canola Oil
 
 #NEI Integration
 container.nei.actuallyadditions.crushing.name=Crusher

@@ -10,11 +10,17 @@
 
 package ellpeck.actuallyadditions.blocks;
 
+import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraftforge.fluids.Fluid;
 
 public class FluidAA extends Fluid{
 
     public FluidAA(String fluidName){
         super(fluidName);
+    }
+
+    @Override
+    public String getUnlocalizedName(){
+        return "fluid."+ModUtil.MOD_ID_LOWER+"."+this.unlocalizedName;
     }
 }
