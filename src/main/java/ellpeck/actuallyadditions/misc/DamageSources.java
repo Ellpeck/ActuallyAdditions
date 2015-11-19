@@ -19,7 +19,7 @@ import net.minecraft.util.IChatComponent;
 
 public class DamageSources extends DamageSource{
 
-    public static final DamageSource DAMAGE_ATOMIC_RECONSTRUCTOR = new DamageSources("atomicReconstructor", 3).setDamageBypassesArmor();
+    public static final DamageSource DAMAGE_ATOMIC_RECONSTRUCTOR = new DamageSources("atomicReconstructor", 5).setDamageBypassesArmor();
 
     private int messageCount;
 
