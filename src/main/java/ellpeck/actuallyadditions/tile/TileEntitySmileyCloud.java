@@ -43,9 +43,8 @@ public class TileEntitySmileyCloud extends TileEntityBase implements IStringReac
     public void updateEntity(){
         super.updateEntity();
         if(!worldObj.isRemote){
-            if(!Objects.equals(this.name, this.nameBefore)){
+            if(!Objects.equals(this.name, this.nameBefore) && this.trySendUpdate()){
                 this.nameBefore = this.name;
-                this.sendUpdate();
                 this.markDirty();
             }
         }

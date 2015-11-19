@@ -58,9 +58,8 @@ public class TileEntityItemRepairer extends TileEntityInventoryBase implements I
                 this.nextRepairTick = 0;
             }
 
-            if(this.lastEnergy != this.storage.getEnergyStored()){
+            if(this.lastEnergy != this.storage.getEnergyStored() && this.trySendUpdate()){
                 this.lastEnergy = this.storage.getEnergyStored();
-                this.sendUpdate();
             }
         }
     }

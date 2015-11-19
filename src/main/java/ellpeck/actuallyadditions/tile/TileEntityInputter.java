@@ -99,7 +99,7 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
             }
 
             //Update the Client
-            if(this.sideToPut != this.lastPutSide || this.sideToPull != this.lastPullSide || this.slotToPullStart != this.lastPullStart || this.slotToPullEnd != this.lastPullEnd || this.slotToPutStart != this.lastPutStart || this.slotToPutEnd != this.lastPutEnd || this.isPullWhitelist != lastPullWhite || this.isPutWhitelist != this.lastPutWhite){
+            if((this.sideToPut != this.lastPutSide || this.sideToPull != this.lastPullSide || this.slotToPullStart != this.lastPullStart || this.slotToPullEnd != this.lastPullEnd || this.slotToPutStart != this.lastPutStart || this.slotToPutEnd != this.lastPutEnd || this.isPullWhitelist != lastPullWhite || this.isPutWhitelist != this.lastPutWhite) && this.trySendUpdate()){
                 this.lastPutSide = this.sideToPut;
                 this.lastPullSide = this.sideToPull;
                 this.lastPullStart = this.slotToPullStart;
@@ -108,7 +108,6 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
                 this.lastPutEnd = this.slotToPutEnd;
                 this.lastPullWhite = this.isPullWhitelist;
                 this.lastPutWhite = this.isPutWhitelist;
-                this.sendUpdate();
             }
         }
     }

@@ -76,11 +76,10 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IE
                 }
             }
 
-            if(this.storage.getEnergyStored() != this.lastEnergyStored || this.tank.getFluidAmount() != this.lastTankAmount | this.currentProcessTime != this.lastProcessTime){
+            if((this.storage.getEnergyStored() != this.lastEnergyStored || this.tank.getFluidAmount() != this.lastTankAmount | this.currentProcessTime != this.lastProcessTime) && this.trySendUpdate()){
                 this.lastEnergyStored = this.storage.getEnergyStored();
                 this.lastProcessTime = this.currentProcessTime;
                 this.lastTankAmount = this.tank.getFluidAmount();
-                this.sendUpdate();
             }
         }
     }

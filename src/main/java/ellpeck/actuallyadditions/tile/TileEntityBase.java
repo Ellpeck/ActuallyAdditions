@@ -111,9 +111,13 @@ public abstract class TileEntityBase extends TileEntity{
 
     }
 
-    protected void sendUpdate(){
+    protected boolean trySendUpdate(){
         if(this.ticksElapsed % ConfigIntValues.TILE_ENTITY_UPDATE_INTERVAL.getValue() == 0){
             this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
+            return true;
+        }
+        else{
+            return false;
         }
     }
 }

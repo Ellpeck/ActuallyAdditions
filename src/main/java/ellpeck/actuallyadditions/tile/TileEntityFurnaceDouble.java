@@ -92,11 +92,10 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
                 }
             }
 
-            if(lastEnergy != this.storage.getEnergyStored() || this.lastFirstSmelt != this.firstSmeltTime || this.lastSecondSmelt != this.secondSmeltTime){
+            if((lastEnergy != this.storage.getEnergyStored() || this.lastFirstSmelt != this.firstSmeltTime || this.lastSecondSmelt != this.secondSmeltTime) && this.trySendUpdate()){
                 this.lastEnergy = this.storage.getEnergyStored();
                 this.lastFirstSmelt = this.firstSmeltTime;
                 this.lastSecondSmelt = this.secondSmeltTime;
-                this.sendUpdate();
             }
         }
     }

@@ -47,9 +47,8 @@ public class TileEntityEnergizer extends TileEntityInventoryBase implements IEne
                 }
             }
 
-            if(lastEnergy != this.storage.getEnergyStored()){
+            if(lastEnergy != this.storage.getEnergyStored() && this.trySendUpdate()){
                 this.lastEnergy = this.storage.getEnergyStored();
-                this.sendUpdate();
             }
         }
     }

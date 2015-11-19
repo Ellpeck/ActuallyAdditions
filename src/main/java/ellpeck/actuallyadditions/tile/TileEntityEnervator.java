@@ -57,9 +57,8 @@ public class TileEntityEnervator extends TileEntityInventoryBase implements IEne
                 WorldUtil.pushEnergy(worldObj, xCoord, yCoord, zCoord, ForgeDirection.WEST, storage);
             }
 
-            if(lastEnergy != this.storage.getEnergyStored()){
+            if(lastEnergy != this.storage.getEnergyStored() && this.trySendUpdate()){
                 this.lastEnergy = this.storage.getEnergyStored();
-                this.sendUpdate();
             }
         }
     }

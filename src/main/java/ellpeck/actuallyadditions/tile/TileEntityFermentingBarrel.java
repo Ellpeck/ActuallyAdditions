@@ -66,11 +66,10 @@ public class TileEntityFermentingBarrel extends TileEntityInventoryBase implemen
                 }
             }
 
-            if(this.canolaTank.getFluidAmount() != this.lastCanola || this.oilTank.getFluidAmount() != this.lastOil || this.currentProcessTime != this.lastProcessTime){
+            if((this.canolaTank.getFluidAmount() != this.lastCanola || this.oilTank.getFluidAmount() != this.lastOil || this.currentProcessTime != this.lastProcessTime) && this.trySendUpdate()){
                 this.lastProcessTime = this.currentProcessTime;
                 this.lastCanola = this.canolaTank.getFluidAmount();
                 this.lastOil = this.oilTank.getFluidAmount();
-                this.sendUpdate();
             }
         }
     }
