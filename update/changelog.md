@@ -1,3 +1,19 @@
+# 1.7.10-r7
+- Made the Atomic Reconstructor save its power
+- Added Automation Tutorial for Atomic Reconstructor
+- Added Background Graphic for current chapter's name in booklet
+- Added Bookmarks
+- Made Magnet Ring Energy balancing better (Might need to reset configs!)
+- Made Phantom Device Range being tested better (Check your Phantomfaces, they might not be in range anymore now!)
+- Sneaking breaks rings' ability now (Magnet Ring, Growth Ring, Water Removal Ring)
+- Made TileEntities update less often to reduce server traffic
+- Made ActAdd Fluid Names not clash with other mods' ones
+- Made Wild Plants not generate on Mycelium and plop off right away
+- Added OreGen and Plant Gen Dimension Blacklist
+- Atomic Reconstructor now uses Energy depending on the recipe
+- Added misc. reconstructor Recipes
+- Added Ethetic Quartz, a decor block and wall, slab & stair variants of them
+
 # 1.7.10-r6
 - Added Atomic Reconstructor
 - Added Crystals replacing Items like Redstone & Iron Ingots in most crafting recipes
