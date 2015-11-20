@@ -14,9 +14,11 @@ import cpw.mods.fml.common.IWorldGenerator;
 import cpw.mods.fml.common.registry.GameRegistry;
 import ellpeck.actuallyadditions.blocks.InitBlocks;
 import ellpeck.actuallyadditions.blocks.metalists.TheMiscBlocks;
+import ellpeck.actuallyadditions.config.ConfigValues;
 import ellpeck.actuallyadditions.config.values.ConfigBoolValues;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.util.ModUtil;
+import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.MathHelper;
@@ -40,15 +42,17 @@ public class OreGen implements IWorldGenerator{
             return;
         }
 
-        switch(world.provider.dimensionId){
-            case -1:
-                generateNether(world, random, chunkX*16, chunkZ*16);
-                //case 0:
-                //   generateSurface(world, random, chunkX*16, chunkZ*16);
-            case 1:
-                generateEnd(world, random, chunkX*16, chunkZ*16);
-            default:
-                generateSurface(world, random, chunkX*16, chunkZ*16);
+        if(Util.arrayContains(ConfigValues.oreGenDimensionBlacklist, world.provider.dimensionId) < 0){
+            switch(world.provider.dimensionId){
+                case -1:
+                    generateNether(world, random, chunkX*16, chunkZ*16);
+                    //case 0:
+                    //   generateSurface(world, random, chunkX*16, chunkZ*16);
+                case 1:
+                    generateEnd(world, random, chunkX*16, chunkZ*16);
+                default:
+                    generateSurface(world, random, chunkX*16, chunkZ*16);
+            }
         }
     }
 
