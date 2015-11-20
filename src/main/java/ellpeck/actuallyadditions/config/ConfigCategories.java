@@ -24,6 +24,7 @@ public enum ConfigCategories{
     FLUIDS("Fluids", "Everything regarding fluids"),
     DRILL_VALUES("Drill Values", "Properties of Drills and their Upgrades"),
     CRUSHER_RECIPES("Crusher Recipes", "Recipes for the Crusher"),
+    RECONSTRUCTOR_RECIPES("Reconstructor Recipes", "Recipes for the Atomic Reconstructor"),
     ARMOR_VALUES("Armor Values", "Values for Armor");
 
     public final String name;

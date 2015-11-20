@@ -146,6 +146,8 @@ public enum ConfigCrafting{
     HORSE_ARMORS("Horse Armor -> Raw Materials", ConfigCategories.CRUSHER_RECIPES, "Crusher"),
     CRUSHER_MISC("Misc. Crusher Recipes like Bone Meal & Dyes", ConfigCategories.CRUSHER_RECIPES, "Crusher"),
 
+    RECONSTRUCTOR_MISC("Misc. Reconstructor Recipes like Soul Sand", ConfigCategories.RECONSTRUCTOR_RECIPES, "Reconstructor"),
+
     TELE_STAFF("Tele Staff", ConfigCategories.ITEMS_CRAFTING),
     CASING("Casing", ConfigCategories.BLOCKS_CRAFTING),
 

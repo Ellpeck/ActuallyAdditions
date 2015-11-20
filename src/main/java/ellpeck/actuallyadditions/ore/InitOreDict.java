@@ -40,6 +40,7 @@ public class InitOreDict{
         addOre(Items.dye, 15, "boneMeal");
         addOre(Items.sugar, "sugar");
         addOre(Items.reeds, "sugarCane");
+        addOre(Blocks.soul_sand, "soulSand");
 
         addOre(Blocks.yellow_flower, "flowerDandelion");
         addOre(Blocks.red_flower, "flowerPoppy");
@@ -104,6 +105,8 @@ public class InitOreDict{
         addOre(InitItems.itemMisc, TheMiscItems.QUARTZ.ordinal(), "gemQuartzBlack");
 
         addOre(InitItems.itemMisc, TheMiscItems.BLACK_DYE.ordinal(), "dyeBlack");
+
+        addOre(InitBlocks.blockTestifiBucksWhiteWall, "blockWhiteBrick");
     }
 
     private static void addOre(ItemStack stack, String name){

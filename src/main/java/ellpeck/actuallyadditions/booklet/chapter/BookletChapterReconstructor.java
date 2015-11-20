@@ -45,9 +45,8 @@ public class BookletChapterReconstructor extends BookletChapter{
             }
         }.setNoText());
 
-        for(ReconstructorRecipeHandler.Recipe recipe : ReconstructorRecipeHandler.recipes){
-            BookletPage page = new PageReconstructor(allPages.size()+1, recipe.getFirstOutput()).setNoText();
-            allPages.add(page);
+        for(int i = 0; i < ReconstructorRecipeHandler.RECIPES_FOR_BOOKLET_PAGE; i++){
+            allPages.add(new PageReconstructor(allPages.size()+1, ReconstructorRecipeHandler.recipes.get(i).getFirstOutput()).setNoText());
         }
 
         return allPages.toArray(new BookletPage[allPages.size()]);

@@ -33,7 +33,7 @@ import java.util.ArrayList;
 
 public class TileEntityAtomicReconstructor extends TileEntityBase implements IEnergyReceiver{
 
-    public EnergyStorage storage = new EnergyStorage(300000);
+    public EnergyStorage storage = new EnergyStorage(3000000);
 
     private int currentTime;
 
@@ -42,7 +42,7 @@ public class TileEntityAtomicReconstructor extends TileEntityBase implements IEn
     public void updateEntity(){
         super.updateEntity();
         if(!this.worldObj.isRemote){
-            int baseUse = ConfigIntValues.RECONSTRUCTOR_USE_PER_BLOCK.getValue();
+            int baseUse = ConfigIntValues.RECONSTRUCTOR_BASE_ENERGY_USE.getValue();
             if(!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord) && this.storage.getEnergyStored() >= baseUse){
                 if(this.currentTime > 0){
                     this.currentTime--;

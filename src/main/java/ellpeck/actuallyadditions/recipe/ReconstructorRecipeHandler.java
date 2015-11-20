@@ -10,6 +10,7 @@
 
 package ellpeck.actuallyadditions.recipe;
 
+import ellpeck.actuallyadditions.config.values.ConfigCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -20,21 +21,27 @@ import java.util.Objects;
 public class ReconstructorRecipeHandler{
 
     public static ArrayList<Recipe> recipes = new ArrayList<Recipe>();
+    public static final int RECIPES_FOR_BOOKLET_PAGE = 12;
 
     public static void init(){
-        addRecipe("blockRedstone", "blockCrystalRed", 200);
-        addRecipe("blockLapis", "blockCrystalBlue", 200);
-        addRecipe("blockDiamond", "blockCrystalLightBlue", 600);
-        addRecipe("blockEmerald", "blockCrystalGreen", 1000);
-        addRecipe("blockCoal", "blockCrystalBlack", 400);
-        addRecipe("blockIron", "blockCrystalWhite", 300);
+        addRecipe("blockRedstone", "blockCrystalRed", 400);
+        addRecipe("blockLapis", "blockCrystalBlue", 400);
+        addRecipe("blockDiamond", "blockCrystalLightBlue", 6000);
+        addRecipe("blockEmerald", "blockCrystalGreen", 10000);
+        addRecipe("blockCoal", "blockCrystalBlack", 600);
+        addRecipe("blockIron", "blockCrystalWhite", 800);
 
-        addRecipe("dustRedstone", "crystalRed", 20);
-        addRecipe("gemLapis", "crystalBlue", 20);
-        addRecipe("gemDiamond", "crystalLightBlue", 60);
-        addRecipe("gemEmerald", "crystalGreen", 100);
-        addRecipe("coal", "crystalBlack", 40);
-        addRecipe("ingotIron", "crystalWhite", 30);
+        addRecipe("dustRedstone", "crystalRed", 40);
+        addRecipe("gemLapis", "crystalBlue", 40);
+        addRecipe("gemDiamond", "crystalLightBlue", 600);
+        addRecipe("gemEmerald", "crystalGreen", 1000);
+        addRecipe("coal", "crystalBlack", 60);
+        addRecipe("ingotIron", "crystalWhite", 80);
+
+        if(ConfigCrafting.RECONSTRUCTOR_MISC.isEnabled()){
+            addRecipe("sand", "soulSand", 20000);
+            addRecipe("blockQuartz", "blockWhiteBrick", 10);
+        }
     }
 
     public static void addRecipe(String input, String output, int energyUse){
