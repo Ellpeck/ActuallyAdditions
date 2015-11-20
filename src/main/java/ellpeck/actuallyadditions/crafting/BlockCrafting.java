@@ -82,6 +82,28 @@ public class BlockCrafting{
 
     public static void init(){
 
+        //White Ethetic Blocks
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockTestifiBucksWhiteFence, 6),
+                "XXX", "XXX",
+                'X', new ItemStack(InitBlocks.blockTestifiBucksWhiteWall)));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockTestifiBucksWhiteSlab, 6),
+                "XXX",
+                'X', new ItemStack(InitBlocks.blockTestifiBucksWhiteWall)));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockTestifiBucksWhiteStairs, 6),
+                "X  ", "XX ", "XXX",
+                'X', new ItemStack(InitBlocks.blockTestifiBucksWhiteWall)));
+
+        //Green Ethetic Blocks
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockTestifiBucksGreenFence, 6),
+                "XXX", "XXX",
+                'X', new ItemStack(InitBlocks.blockTestifiBucksGreenWall)));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockTestifiBucksGreenSlab, 6),
+                "XXX",
+                'X', new ItemStack(InitBlocks.blockTestifiBucksGreenWall)));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockTestifiBucksGreenStairs, 6),
+                "X  ", "XX ", "XXX",
+                'X', new ItemStack(InitBlocks.blockTestifiBucksGreenWall)));
+
         //Atomic Reconstructor
         if(ConfigCrafting.ATOMIC_RECONSTRUCTOR.isEnabled()){
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockAtomicReconstructor),
