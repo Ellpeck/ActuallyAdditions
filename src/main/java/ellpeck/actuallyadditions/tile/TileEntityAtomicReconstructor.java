@@ -68,7 +68,7 @@ public class TileEntityAtomicReconstructor extends TileEntityBase implements IEn
                                             for(int reachY = -range; reachY < range+1; reachY++){
                                                 if(this.storage.getEnergyStored() >= baseUse){
                                                     WorldPos pos = new WorldPos(worldObj, coordsBlock.getX()+reachX, coordsBlock.getY()+reachY, coordsBlock.getZ()+reachZ);
-                                                    ReconstructorRecipeHandler.Recipe recipe = ReconstructorRecipeHandler.getRecipe(new ItemStack(pos.getBlock(), pos.getMetadata()));
+                                                    ReconstructorRecipeHandler.Recipe recipe = ReconstructorRecipeHandler.getRecipe(new ItemStack(pos.getBlock(), 1, pos.getMetadata()));
                                                     if(recipe != null && this.storage.getEnergyStored() >= baseUse+recipe.energyUse){
                                                         ItemStack output = recipe.getFirstOutput();
                                                         if(output != null){
