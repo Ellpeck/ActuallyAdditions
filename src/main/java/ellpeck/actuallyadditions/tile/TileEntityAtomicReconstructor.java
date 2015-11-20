@@ -42,14 +42,14 @@ public class TileEntityAtomicReconstructor extends TileEntityBase implements IEn
     public void updateEntity(){
         super.updateEntity();
         if(!this.worldObj.isRemote){
-            int usePerBlock = ConfigIntValues.RECONSTRUCTOR_USE_PER_BLOCK.getValue();
-            if(!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord) && this.storage.getEnergyStored() >= usePerBlock){
+            int baseUse = ConfigIntValues.RECONSTRUCTOR_USE_PER_BLOCK.getValue();
+            if(!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord) && this.storage.getEnergyStored() >= baseUse){
                 if(this.currentTime > 0){
                     this.currentTime--;
                     if(this.currentTime <= 0){
                         ForgeDirection sideToManipulate = ForgeDirection.getOrientation(worldObj.getBlockMetadata(xCoord, yCoord, zCoord));
                         //Extract energy for shooting the laser itself too!
-                        this.storage.extractEnergy(usePerBlock*2, false);
+                        this.storage.extractEnergy(baseUse, false);
 
                         int distance = ConfigIntValues.RECONSTRUCTOR_DISTANCE.getValue();
                         for(int i = 0; i < distance; i++){
@@ -66,10 +66,10 @@ public class TileEntityAtomicReconstructor extends TileEntityBase implements IEn
                                     for(int reachX = -range; reachX < range+1; reachX++){
                                         for(int reachZ = -range; reachZ < range+1; reachZ++){
                                             for(int reachY = -range; reachY < range+1; reachY++){
-                                                if(this.storage.getEnergyStored() >= usePerBlock){
+                                                if(this.storage.getEnergyStored() >= baseUse){
                                                     WorldPos pos = new WorldPos(worldObj, coordsBlock.getX()+reachX, coordsBlock.getY()+reachY, coordsBlock.getZ()+reachZ);
                                                     ReconstructorRecipeHandler.Recipe recipe = ReconstructorRecipeHandler.getRecipe(new ItemStack(pos.getBlock(), pos.getMetadata()));
-                                                    if(recipe != null){
+                                                    if(recipe != null && this.storage.getEnergyStored() >= baseUse+recipe.energyUse){
                                                         ItemStack output = recipe.getFirstOutput();
                                                         if(output != null){
                                                             if(output.getItem() instanceof ItemBlock){
@@ -80,7 +80,7 @@ public class TileEntityAtomicReconstructor extends TileEntityBase implements IEn
                                                                 EntityItem item = new EntityItem(worldObj, pos.getX()+0.5, pos.getY()+0.5, pos.getZ()+0.5, output.copy());
                                                                 worldObj.spawnEntityInWorld(item);
                                                             }
-                                                            this.storage.extractEnergy(usePerBlock, false);
+                                                            this.storage.extractEnergy(baseUse+recipe.energyUse, false);
                                                         }
                                                     }
                                                 }
@@ -91,7 +91,7 @@ public class TileEntityAtomicReconstructor extends TileEntityBase implements IEn
                                     //Converting the Items
                                     ArrayList<EntityItem> items = (ArrayList<EntityItem>)worldObj.getEntitiesWithinAABB(EntityItem.class, AxisAlignedBB.getBoundingBox(coordsBlock.getX()-range, coordsBlock.getY()-range, coordsBlock.getZ()-range, coordsBlock.getX()+range, coordsBlock.getY()+range, coordsBlock.getZ()+range));
                                     for(EntityItem item : items){
-                                        if(this.storage.getEnergyStored() >= usePerBlock){
+                                        if(this.storage.getEnergyStored() >= baseUse){
                                             ItemStack stack = item.getEntityItem();
                                             if(stack != null){
                                                 ReconstructorRecipeHandler.Recipe recipe = ReconstructorRecipeHandler.getRecipe(stack);
@@ -102,7 +102,7 @@ public class TileEntityAtomicReconstructor extends TileEntityBase implements IEn
                                                         outputCopy.stackSize = stack.stackSize;
                                                         item.setEntityItemStack(outputCopy);
 
-                                                        this.storage.extractEnergy(usePerBlock, false);
+                                                        this.storage.extractEnergy(baseUse, false);
                                                     }
                                                 }
                                             }

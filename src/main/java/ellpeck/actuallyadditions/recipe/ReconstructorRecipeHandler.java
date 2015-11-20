@@ -22,23 +22,23 @@ public class ReconstructorRecipeHandler{
     public static ArrayList<Recipe> recipes = new ArrayList<Recipe>();
 
     public static void init(){
-        addRecipe("blockRedstone", "blockCrystalRed");
-        addRecipe("blockLapis", "blockCrystalBlue");
-        addRecipe("blockDiamond", "blockCrystalLightBlue");
-        addRecipe("blockEmerald", "blockCrystalGreen");
-        addRecipe("blockCoal", "blockCrystalBlack");
-        addRecipe("blockIron", "blockCrystalWhite");
+        addRecipe("blockRedstone", "blockCrystalRed", 200);
+        addRecipe("blockLapis", "blockCrystalBlue", 200);
+        addRecipe("blockDiamond", "blockCrystalLightBlue", 600);
+        addRecipe("blockEmerald", "blockCrystalGreen", 1000);
+        addRecipe("blockCoal", "blockCrystalBlack", 400);
+        addRecipe("blockIron", "blockCrystalWhite", 300);
 
-        addRecipe("dustRedstone", "crystalRed");
-        addRecipe("gemLapis", "crystalBlue");
-        addRecipe("gemDiamond", "crystalLightBlue");
-        addRecipe("gemEmerald", "crystalGreen");
-        addRecipe("coal", "crystalBlack");
-        addRecipe("ingotIron", "crystalWhite");
+        addRecipe("dustRedstone", "crystalRed", 20);
+        addRecipe("gemLapis", "crystalBlue", 20);
+        addRecipe("gemDiamond", "crystalLightBlue", 60);
+        addRecipe("gemEmerald", "crystalGreen", 100);
+        addRecipe("coal", "crystalBlack", 40);
+        addRecipe("ingotIron", "crystalWhite", 30);
     }
 
-    public static void addRecipe(String input, String output){
-        recipes.add(new Recipe(input, output));
+    public static void addRecipe(String input, String output, int energyUse){
+        recipes.add(new Recipe(input, output, energyUse));
     }
 
     public static Recipe getRecipe(ItemStack input){
@@ -57,10 +57,12 @@ public class ReconstructorRecipeHandler{
 
         public String input;
         public String output;
+        public int energyUse;
 
-        public Recipe(String input, String output){
+        public Recipe(String input, String output, int energyUse){
             this.input = input;
             this.output = output;
+            this.energyUse = energyUse;
         }
 
         public ItemStack getFirstOutput(){
