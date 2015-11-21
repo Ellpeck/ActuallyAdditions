@@ -21,21 +21,26 @@ import net.minecraft.util.IChatComponent;
 public class UpdateCheckerClientNotifier{
 
     private static boolean notified = false;
+    private static int ticksElapsedBeforeInfo;
 
     @SubscribeEvent(receiveCanceled = true)
     public void onTick(TickEvent.ClientTickEvent event){
         //Don't notify directly to prevent the Message getting lost in Spam on World Joining
-        if(Minecraft.getSystemTime()%300 == 0 && !notified && Minecraft.getMinecraft().thePlayer != null){
-            EntityPlayer player = Minecraft.getMinecraft().thePlayer;
-            if(UpdateChecker.checkFailed){
-                player.addChatComponentMessage(IChatComponent.Serializer.func_150699_a(StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".update.failed")));
+        if(!notified && Minecraft.getMinecraft().thePlayer != null){
+            ticksElapsedBeforeInfo++;
+            if(ticksElapsedBeforeInfo >= 800){
+                EntityPlayer player = Minecraft.getMinecraft().thePlayer;
+                if(UpdateChecker.checkFailed){
+                    player.addChatComponentMessage(IChatComponent.Serializer.func_150699_a(StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".update.failed")));
+                }
+                else if(UpdateChecker.needsUpdateNotify){
+                    player.addChatComponentMessage(IChatComponent.Serializer.func_150699_a(StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".update.generic")));
+                    player.addChatComponentMessage(IChatComponent.Serializer.func_150699_a(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID_LOWER+".update.versionCompare", ModUtil.VERSION, UpdateChecker.updateVersion)));
+                    player.addChatComponentMessage(IChatComponent.Serializer.func_150699_a(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID_LOWER+".update.buttons", UpdateChecker.CHANGELOG_LINK, UpdateChecker.DOWNLOAD_LINK)));
+                }
+                ticksElapsedBeforeInfo = 0;
+                notified = true;
             }
-            else if(UpdateChecker.needsUpdateNotify){
-                player.addChatComponentMessage(IChatComponent.Serializer.func_150699_a(StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".update.generic")));
-                player.addChatComponentMessage(IChatComponent.Serializer.func_150699_a(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID_LOWER+".update.versionCompare", ModUtil.VERSION, UpdateChecker.updateVersion)));
-                player.addChatComponentMessage(IChatComponent.Serializer.func_150699_a(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID_LOWER+".update.buttons", UpdateChecker.CHANGELOG_LINK, UpdateChecker.DOWNLOAD_LINK)));
-            }
-            notified = true;
         }
     }
 }
