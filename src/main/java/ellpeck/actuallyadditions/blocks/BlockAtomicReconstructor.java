@@ -12,6 +12,7 @@ package ellpeck.actuallyadditions.blocks;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import ellpeck.actuallyadditions.items.IReconstructorLens;
 import ellpeck.actuallyadditions.tile.TileEntityAtomicReconstructor;
 import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import ellpeck.actuallyadditions.util.ModUtil;
@@ -102,9 +103,28 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IAct
         if(!world.isRemote){
             TileEntityAtomicReconstructor reconstructor = (TileEntityAtomicReconstructor)world.getTileEntity(x, y, z);
             if(reconstructor != null){
-                player.addChatComponentMessage(new ChatComponentText(reconstructor.storage.getEnergyStored()+"/"+reconstructor.storage.getMaxEnergyStored()+" RF"));
+                if(!player.isSneaking()){
+                    ItemStack heldItem = player.getCurrentEquippedItem();
+                    if(heldItem != null){
+                        if(heldItem.getItem() instanceof IReconstructorLens && reconstructor.getStackInSlot(0) == null){
+                            ItemStack toPut = heldItem.copy();
+                            toPut.stackSize = 1;
+                            reconstructor.setInventorySlotContents(0, toPut);
+
+                            player.inventory.decrStackSize(player.inventory.currentItem, 1);
+                        }
+                    }
+                    else{
+                        if(reconstructor.getStackInSlot(0) != null){
+                            player.inventory.setInventorySlotContents(player.inventory.currentItem, reconstructor.getStackInSlot(0).copy());
+                            reconstructor.setInventorySlotContents(0, null);
+                        }
+                    }
+                }
+                else{
+                    player.addChatComponentMessage(new ChatComponentText(reconstructor.storage.getEnergyStored()+"/"+reconstructor.storage.getMaxEnergyStored()+" RF"));
+                }
             }
-            return true;
         }
         return true;
     }

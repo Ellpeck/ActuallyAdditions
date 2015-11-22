@@ -14,6 +14,7 @@ import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
+import ellpeck.actuallyadditions.items.IReconstructorLens;
 import ellpeck.actuallyadditions.misc.DamageSources;
 import ellpeck.actuallyadditions.network.PacketAtomicReconstructor;
 import ellpeck.actuallyadditions.network.PacketHandler;
@@ -31,11 +32,15 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 import java.util.ArrayList;
 
-public class TileEntityAtomicReconstructor extends TileEntityBase implements IEnergyReceiver{
+public class TileEntityAtomicReconstructor extends TileEntityInventoryBase implements IEnergyReceiver{
 
     public EnergyStorage storage = new EnergyStorage(3000000);
 
     private int currentTime;
+
+    public TileEntityAtomicReconstructor(){
+        super(1, "reconstructor");
+    }
 
     @Override
     @SuppressWarnings("unchecked")
@@ -51,6 +56,8 @@ public class TileEntityAtomicReconstructor extends TileEntityBase implements IEn
                         //Extract energy for shooting the laser itself too!
                         this.storage.extractEnergy(baseUse, false);
 
+                        //The Lens the Reconstructor currently has installed
+                        ReconstructorRecipeHandler.LensType currentLens = this.getCurrentLens();
                         int distance = ConfigIntValues.RECONSTRUCTOR_DISTANCE.getValue();
                         for(int i = 0; i < distance; i++){
                             WorldPos coordsBlock = WorldUtil.getCoordsFromSide(sideToManipulate, worldObj, xCoord, yCoord, zCoord, i);
@@ -58,7 +65,7 @@ public class TileEntityAtomicReconstructor extends TileEntityBase implements IEn
 
                             if(coordsBlock != null){
                                 if(!coordsBlock.getBlock().isAir(coordsBlock.getWorld(), coordsBlock.getX(), coordsBlock.getY(), coordsBlock.getZ())){
-                                    PacketHandler.theNetwork.sendToAllAround(new PacketAtomicReconstructor(xCoord, yCoord, zCoord, coordsBlock.getX(), coordsBlock.getY(), coordsBlock.getZ()), new NetworkRegistry.TargetPoint(worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 64));
+                                    PacketHandler.theNetwork.sendToAllAround(new PacketAtomicReconstructor(xCoord, yCoord, zCoord, coordsBlock.getX(), coordsBlock.getY(), coordsBlock.getZ(), currentLens), new NetworkRegistry.TargetPoint(worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 64));
 
                                     int range = ConfigIntValues.RECONSTRCUTOR_RANGE.getValue();
 
@@ -69,7 +76,7 @@ public class TileEntityAtomicReconstructor extends TileEntityBase implements IEn
                                                 if(this.storage.getEnergyStored() >= baseUse){
                                                     WorldPos pos = new WorldPos(worldObj, coordsBlock.getX()+reachX, coordsBlock.getY()+reachY, coordsBlock.getZ()+reachZ);
                                                     ReconstructorRecipeHandler.Recipe recipe = ReconstructorRecipeHandler.getRecipe(new ItemStack(pos.getBlock(), 1, pos.getMetadata()));
-                                                    if(recipe != null && this.storage.getEnergyStored() >= baseUse+recipe.energyUse){
+                                                    if(recipe != null && this.storage.getEnergyStored() >= baseUse+recipe.energyUse && recipe.type == currentLens){
                                                         ItemStack output = recipe.getFirstOutput();
                                                         if(output != null){
                                                             if(output.getItem() instanceof ItemBlock){
@@ -95,7 +102,7 @@ public class TileEntityAtomicReconstructor extends TileEntityBase implements IEn
                                             ItemStack stack = item.getEntityItem();
                                             if(stack != null){
                                                 ReconstructorRecipeHandler.Recipe recipe = ReconstructorRecipeHandler.getRecipe(stack);
-                                                if(recipe != null && this.storage.getEnergyStored() >= baseUse+recipe.energyUse){
+                                                if(recipe != null && this.storage.getEnergyStored() >= baseUse+recipe.energyUse && recipe.type == currentLens){
                                                     ItemStack output = recipe.getFirstOutput();
                                                     if(output != null){
                                                         ItemStack outputCopy = output.copy();
@@ -111,7 +118,7 @@ public class TileEntityAtomicReconstructor extends TileEntityBase implements IEn
                                     break;
                                 }
                                 if(i >= distance-1){
-                                    PacketHandler.theNetwork.sendToAllAround(new PacketAtomicReconstructor(xCoord, yCoord, zCoord, coordsBlock.getX(), coordsBlock.getY(), coordsBlock.getZ()), new NetworkRegistry.TargetPoint(worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 64));
+                                    PacketHandler.theNetwork.sendToAllAround(new PacketAtomicReconstructor(xCoord, yCoord, zCoord, coordsBlock.getX(), coordsBlock.getY(), coordsBlock.getZ(), currentLens), new NetworkRegistry.TargetPoint(worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 64));
                                 }
                             }
                         }
@@ -122,6 +129,15 @@ public class TileEntityAtomicReconstructor extends TileEntityBase implements IEn
                 }
             }
         }
+    }
+
+    public ReconstructorRecipeHandler.LensType getCurrentLens(){
+        if(this.slots[0] != null){
+            if(this.slots[0].getItem() instanceof IReconstructorLens){
+                return ((IReconstructorLens)this.slots[0].getItem()).getLensType();
+            }
+        }
+        return ReconstructorRecipeHandler.LensType.NONE;
     }
 
     @SuppressWarnings("unchecked")
@@ -164,5 +180,20 @@ public class TileEntityAtomicReconstructor extends TileEntityBase implements IEn
     @Override
     public boolean canConnectEnergy(ForgeDirection from){
         return true;
+    }
+
+    @Override
+    public boolean canInsertItem(int slot, ItemStack stack, int side){
+        return stack != null && stack.getItem() instanceof IReconstructorLens;
+    }
+
+    @Override
+    public boolean canExtractItem(int slot, ItemStack stack, int side){
+        return true;
+    }
+
+    @Override
+    public int getInventoryStackLimit(){
+        return 1;
     }
 }

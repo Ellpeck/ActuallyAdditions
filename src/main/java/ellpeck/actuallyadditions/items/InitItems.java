@@ -16,6 +16,7 @@ import ellpeck.actuallyadditions.items.metalists.TheMiscItems;
 import ellpeck.actuallyadditions.items.tools.*;
 import ellpeck.actuallyadditions.material.InitArmorMaterials;
 import ellpeck.actuallyadditions.material.InitToolMaterials;
+import ellpeck.actuallyadditions.recipe.ReconstructorRecipeHandler;
 import ellpeck.actuallyadditions.util.CompatUtil;
 import ellpeck.actuallyadditions.util.ItemUtil;
 import ellpeck.actuallyadditions.util.ModUtil;
@@ -129,9 +130,13 @@ public class InitItems{
 
     public static Item itemLaserWrench;
     public static Item itemCrystal;
+    public static Item itemColorLens;
 
     public static void init(){
         ModUtil.LOGGER.info("Initializing Items...");
+
+        itemColorLens = new ItemLens("itemColorLens", ReconstructorRecipeHandler.LensType.COLOR);
+        ItemUtil.register(itemColorLens);
 
         itemCrystal = new ItemCrystal();
         ItemUtil.register(itemCrystal);

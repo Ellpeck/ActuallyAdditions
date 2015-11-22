@@ -22,10 +22,12 @@ import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @SuppressWarnings("unused")
 public class Util{
 
+    public static final Random RANDOM = new Random();
     public static final int WILDCARD = OreDictionary.WILDCARD_VALUE;
 
     public static void registerEvent(Object o){

@@ -11,6 +11,7 @@
 package ellpeck.actuallyadditions.recipe;
 
 import ellpeck.actuallyadditions.config.values.ConfigCrafting;
+import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -45,7 +46,11 @@ public class ReconstructorRecipeHandler{
     }
 
     public static void addRecipe(String input, String output, int energyUse){
-        recipes.add(new Recipe(input, output, energyUse));
+        addRecipe(input, output, energyUse, LensType.NONE);
+    }
+
+    public static void addRecipe(String input, String output, int energyUse, LensType type){
+        recipes.add(new Recipe(input, output, energyUse, type));
     }
 
     public static Recipe getRecipe(ItemStack input){
@@ -65,11 +70,13 @@ public class ReconstructorRecipeHandler{
         public String input;
         public String output;
         public int energyUse;
+        public LensType type;
 
-        public Recipe(String input, String output, int energyUse){
+        public Recipe(String input, String output, int energyUse, LensType type){
             this.input = input;
             this.output = output;
             this.energyUse = energyUse;
+            this.type = type;
         }
 
         public ItemStack getFirstOutput(){
@@ -78,6 +85,33 @@ public class ReconstructorRecipeHandler{
                 return stacks.get(0);
             }
             return null;
+        }
+    }
+
+    public enum LensType{
+
+        NONE,
+        COLOR;
+
+        public float getR(){
+            if(this == COLOR){
+                return Util.RANDOM.nextFloat();
+            }
+            return 27F/255F;
+        }
+
+        public float getG(){
+            if(this == COLOR){
+                return Util.RANDOM.nextFloat();
+            }
+            return 109F/255F;
+        }
+
+        public float getB(){
+            if(this == COLOR){
+                return Util.RANDOM.nextFloat();
+            }
+            return 1F;
         }
     }
 

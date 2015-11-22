@@ -15,6 +15,7 @@ import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import ellpeck.actuallyadditions.recipe.ReconstructorRecipeHandler;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.EntityReddustFX;
@@ -29,19 +30,21 @@ public class PacketAtomicReconstructor implements IMessage{
     private int endX;
     private int endY;
     private int endZ;
+    private int lensTypeOrdinal;
 
     @SuppressWarnings("unused")
     public PacketAtomicReconstructor(){
 
     }
 
-    public PacketAtomicReconstructor(int startX, int startY, int startZ, int endX, int endY, int endZ){
+    public PacketAtomicReconstructor(int startX, int startY, int startZ, int endX, int endY, int endZ, ReconstructorRecipeHandler.LensType type){
         this.startX = startX;
         this.startY = startY;
         this.startZ = startZ;
         this.endX = endX;
         this.endY = endY;
         this.endZ = endZ;
+        this.lensTypeOrdinal = type.ordinal();
     }
 
     @Override
@@ -52,6 +55,7 @@ public class PacketAtomicReconstructor implements IMessage{
         this.endX = buf.readInt();
         this.endY = buf.readInt();
         this.endZ = buf.readInt();
+        this.lensTypeOrdinal = buf.readInt();
     }
 
     @Override
@@ -62,6 +66,7 @@ public class PacketAtomicReconstructor implements IMessage{
         buf.writeInt(this.endX);
         buf.writeInt(this.endY);
         buf.writeInt(this.endZ);
+        buf.writeInt(this.lensTypeOrdinal);
     }
 
     public static class Handler implements IMessageHandler<PacketAtomicReconstructor, IMessage>{
@@ -79,7 +84,8 @@ public class PacketAtomicReconstructor implements IMessage{
 
                 for(int times = 0; times < 5; times++){
                     for(double i = 0; i <= 1; i += 1/(distance*8)){
-                        Minecraft.getMinecraft().effectRenderer.addEffect(new EntityReddustFX(world, (difX*i)+message.endX+0.5, (difY*i)+message.endY+0.5, (difZ*i)+message.endZ+0.5, 2F, 0, 0, 0));
+                        ReconstructorRecipeHandler.LensType type = ReconstructorRecipeHandler.LensType.values()[message.lensTypeOrdinal];
+                        Minecraft.getMinecraft().effectRenderer.addEffect(new EntityReddustFX(world, (difX*i)+message.endX+0.5, (difY*i)+message.endY+0.5, (difZ*i)+message.endZ+0.5, 2F, type.getR(), type.getG(), type.getB()));
                     }
                 }
             }
