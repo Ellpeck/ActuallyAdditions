@@ -29,6 +29,7 @@ public class ItemLens extends Item implements IActAddItemOrBlock, IReconstructor
     public ItemLens(String name, ReconstructorRecipeHandler.LensType type){
         this.name = name;
         this.type = type;
+        this.type.setLens(this);
         this.setMaxStackSize(1);
     }
 

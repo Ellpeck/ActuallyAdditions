@@ -14,6 +14,7 @@ import ellpeck.actuallyadditions.blocks.metalists.TheColoredLampColors;
 import ellpeck.actuallyadditions.config.values.ConfigCrafting;
 import ellpeck.actuallyadditions.util.AssetUtil;
 import ellpeck.actuallyadditions.util.Util;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -55,9 +56,9 @@ public class ReconstructorRecipeHandler{
 
             //Colors
             for(int i = 0; i < TheColoredLampColors.values().length-1; i++){
-                addRecipe("dye"+TheColoredLampColors.values()[i].name, "dye"+TheColoredLampColors.values()[i+1].name, 2000);
+                addRecipe("dye"+TheColoredLampColors.values()[i].name, "dye"+TheColoredLampColors.values()[i+1].name, 2000, LensType.COLOR);
             }
-            addRecipe("dye"+TheColoredLampColors.values()[15].name, "dye"+TheColoredLampColors.values()[0].name, 2000);
+            addRecipe("dye"+TheColoredLampColors.values()[15].name, "dye"+TheColoredLampColors.values()[0].name, 2000, LensType.COLOR);
         }
     }
 
@@ -107,14 +108,10 @@ public class ReconstructorRecipeHandler{
 
     public enum LensType{
 
-        NONE("No Lens"),
-        COLOR("Color Lens");
+        NONE,
+        COLOR;
 
-        public String name;
-
-        LensType(String name){
-            this.name = name;
-        }
+        public ItemStack lens;
 
         public float[] getColor(){
             if(this == COLOR){
@@ -122,6 +119,10 @@ public class ReconstructorRecipeHandler{
                 return new float[]{colors[0]/255F, colors[1]/255F, colors[2]/255F};
             }
             return new float[]{27F/255F, 109F/255F, 1F};
+        }
+
+        public void setLens(Item lens){
+            this.lens = new ItemStack(lens);
         }
     }
 

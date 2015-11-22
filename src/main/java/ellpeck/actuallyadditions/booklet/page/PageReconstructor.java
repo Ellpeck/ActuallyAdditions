@@ -59,7 +59,8 @@ public class PageReconstructor extends BookletPage{
             gui.mc.fontRenderer.drawString(strg, gui.guiLeft+gui.xSize/2-gui.mc.fontRenderer.getStringWidth(strg)/2, gui.guiTop+10, 0);
 
             //Lens
-            strg = this.getRecipeForOutput(this.result).type.name;
+            ItemStack lens = this.getRecipeForOutput(this.result).type.lens;
+            strg = lens == null ? StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".noLens") : lens.getItem().getItemStackDisplayName(lens);
             gui.mc.fontRenderer.drawString(strg, gui.guiLeft+gui.xSize/2-gui.mc.fontRenderer.getStringWidth(strg)/2, gui.guiTop+75, 0);
         }
 
