@@ -109,6 +109,7 @@ public class CreativeTab extends CreativeTabs{
 
         add(InitBlocks.blockBlackLotus);
 
+        add(InitItems.itemColorLens);
         add(InitItems.itemLaserWrench);
         add(InitItems.itemChestToCrateUpgrade);
 

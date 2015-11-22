@@ -11,6 +11,7 @@
 package ellpeck.actuallyadditions.ore;
 
 import ellpeck.actuallyadditions.blocks.InitBlocks;
+import ellpeck.actuallyadditions.blocks.metalists.TheColoredLampColors;
 import ellpeck.actuallyadditions.blocks.metalists.TheMiscBlocks;
 import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.items.metalists.*;
@@ -56,6 +57,12 @@ public class InitOreDict{
         addOre(Blocks.double_plant, 1, "flowerLilac");
         addOre(Blocks.double_plant, 4, "flowerRoseBush");
         addOre(Blocks.double_plant, 5, "flowerPeony");
+
+        //Wool + Clay
+        for(int i = 0; i < TheColoredLampColors.values().length; i++){
+            addOre(Blocks.wool, i, "wool"+TheColoredLampColors.values()[i].name);
+            addOre(Blocks.stained_hardened_clay, i, "clay"+TheColoredLampColors.values()[i].name);
+        }
 
         //Ores
         addOre(InitItems.itemDust, TheDusts.IRON.ordinal(), "dustIron");

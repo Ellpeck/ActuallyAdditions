@@ -57,8 +57,14 @@ public class ReconstructorRecipeHandler{
             //Colors
             for(int i = 0; i < TheColoredLampColors.values().length-1; i++){
                 addRecipe("dye"+TheColoredLampColors.values()[i].name, "dye"+TheColoredLampColors.values()[i+1].name, 2000, LensType.COLOR);
+                addRecipe("wool"+TheColoredLampColors.values()[i].name, "wool"+TheColoredLampColors.values()[i+1].name, 2000, LensType.COLOR);
+                addRecipe("clay"+TheColoredLampColors.values()[i].name, "clay"+TheColoredLampColors.values()[i+1].name, 2000, LensType.COLOR);
+                addRecipe("blockGlass"+TheColoredLampColors.values()[i].name, "blockGlass"+TheColoredLampColors.values()[i+1].name, 2000, LensType.COLOR);
             }
             addRecipe("dye"+TheColoredLampColors.values()[15].name, "dye"+TheColoredLampColors.values()[0].name, 2000, LensType.COLOR);
+            addRecipe("wool"+TheColoredLampColors.values()[15].name, "wool"+TheColoredLampColors.values()[0].name, 2000, LensType.COLOR);
+            addRecipe("clay"+TheColoredLampColors.values()[15].name, "clay"+TheColoredLampColors.values()[0].name, 2000, LensType.COLOR);
+            addRecipe("blockGlass"+TheColoredLampColors.values()[15].name, "blockGlass"+TheColoredLampColors.values()[0].name, 2000, LensType.COLOR);
         }
     }
 
