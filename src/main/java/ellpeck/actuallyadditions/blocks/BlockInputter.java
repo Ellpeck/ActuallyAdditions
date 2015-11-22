@@ -34,7 +34,7 @@ import java.util.Random;
 
 public class BlockInputter extends BlockContainerBase implements IActAddItemOrBlock{
 
-    public static final int NAME_FLAVOUR_AMOUNTS = 15;
+    public static final int NAME_FLAVOR_AMOUNTS = 15;
 
     public boolean isAdvanced;
 
@@ -134,7 +134,7 @@ public class BlockInputter extends BlockContainerBase implements IActAddItemOrBl
 
             if(this.lastSysTime+5000 < sysTime){
                 this.lastSysTime = sysTime;
-                this.toPick = this.rand.nextInt(NAME_FLAVOUR_AMOUNTS)+1;
+                this.toPick = this.rand.nextInt(NAME_FLAVOR_AMOUNTS)+1;
             }
 
             return StringUtil.localize(this.getUnlocalizedName()+".name")+" ("+StringUtil.localize("tile."+ModUtil.MOD_ID_LOWER+".blockInputter.add."+this.toPick+".name")+")";
