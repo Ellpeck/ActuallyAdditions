@@ -95,14 +95,14 @@ public class TileEntityAtomicReconstructor extends TileEntityBase implements IEn
                                             ItemStack stack = item.getEntityItem();
                                             if(stack != null){
                                                 ReconstructorRecipeHandler.Recipe recipe = ReconstructorRecipeHandler.getRecipe(stack);
-                                                if(recipe != null){
+                                                if(recipe != null && this.storage.getEnergyStored() >= baseUse+recipe.energyUse){
                                                     ItemStack output = recipe.getFirstOutput();
                                                     if(output != null){
                                                         ItemStack outputCopy = output.copy();
                                                         outputCopy.stackSize = stack.stackSize;
                                                         item.setEntityItemStack(outputCopy);
 
-                                                        this.storage.extractEnergy(baseUse, false);
+                                                        this.storage.extractEnergy(baseUse+recipe.energyUse, false);
                                                     }
                                                 }
                                             }
