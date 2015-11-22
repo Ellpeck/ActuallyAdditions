@@ -305,6 +305,8 @@ item.actuallyadditions.itemCrystalLightBlue.name=Diamatine Crystal
 item.actuallyadditions.itemCrystalGreen.name=Emeradic Crystal
 item.actuallyadditions.itemCrystalBlack.name=Void Crystal
 item.actuallyadditions.itemCrystalWhite.name=Enori Crystal
+item.actuallyadditions.itemMiscLens.name=Lens
+item.actuallyadditions.itemColorLens.name=Lens: Color
 
 #Tooltips
 tooltip.actuallyadditions.onSuffix.desc=On
@@ -596,8 +598,8 @@ booklet.actuallyadditions.chapter.blackLotus.text.1=Think of this: <n>You need t
 booklet.actuallyadditions.chapter.blackLotus.text.2=<i>No, not that one, Vaz
 
 booklet.actuallyadditions.chapter.crystals.name=Crystals and Reconstructor
-booklet.actuallyadditions.chapter.crystals.text.1=For many Crafting Operations in <imp>Actually Additions<r>, you will need <item>Crystals<r> or <item>Crystal Blocks<r>. <n>These can be made using an <item>Atomic Reconstructor<r>. Just place one down facing in any direction and it will <imp>shoot out a red laser<r>. When placing some of the blocks shown on the following pages in front of the laser, they will be <imp>converted into Crystals<r>. <n>During the shooting of a laser and one conversion, it uses at least <imp><power> RF<r>, but the rate varies depending on the converted block.
-booklet.actuallyadditions.chapter.crystals.text.2=When hitting a block with the Laser, it will <imp>convert the other blocks around it<r>, too. This includes <imp>items on the ground<r>. <n>When trying to power the Reconstructor, you will notice that <imp>many generators require crystals<r>. Not to worry, though, as you can <imp>use<r> <item>Coal Generators<r> to create your first couple of crystals before you can <imp>upgrade to better sources<r>. <n><n>For additional Reconstructor Recipes, see the <imp>"Useful Reconstructor Recipes"<r> Entry.
+booklet.actuallyadditions.chapter.crystals.text.1=The <item>Atomic Reconstructor<r> is used to craft <item>Crystals<r>, which are the main crafting ingredient in most items from <imp>Actually Additions<r>. <n>Upon being supplied with power, it shoots out a Laser. When the Laser hits a block, it will convert all surrounding items and blocks, provided they can be converted. <n>When shooting a laser, it uses <imp><rf> RF<r>, but additional rates vary depending on the conversion.
+booklet.actuallyadditions.chapter.crystals.text.2=The Reconstructor can be <imp>upgraded<r>, however, by the use of <item>Lenses<r>. They can be applied to the Reconstructor by <imp>right-clicking with one in hand<r>, and taken out again when right-clicking with an empty hand. <n>When looking at Recipes, the Lens needed for the operation will also be shown. <n>The Crafting Recipes for the Lenses can also be found on the following pages.
 booklet.actuallyadditions.chapter.crystals.text.4=When you have crafted a couple of items, you might want to find a way to <imp>automate this<r>. <n>There is a very simple way to do accomplish this: <n>Place the <item>Atomic Reconstructor<r> down facing into a <item>Precision Dropper<r> (to find it, look it up in the <imp>All Items and Search<r> Entry!). <n>Next, place a <item>Ranged Collector<r> in the area that has the converted items set as a whitelist. <n>Now you can just chuck your raw materials into the Dropper to convert them!
 
 booklet.actuallyadditions.chapter.bookTutorial.name=Intro to the Manual

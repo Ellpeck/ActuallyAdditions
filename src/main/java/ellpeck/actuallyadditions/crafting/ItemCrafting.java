@@ -77,10 +77,18 @@ public class ItemCrafting{
     public static IRecipe recipeLaserWrench;
     public static IRecipe recipeDrillCore;
     public static IRecipe recipeBlackDye;
+    public static IRecipe recipeLens;
 
     public static void init(){
 
-        //Black Dye
+        //Lens
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.LENS.ordinal()),
+                "GGG", "GBG", "GGG",
+                'G', "blockGlass",
+                'B', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal())));
+        recipeLens = Util.GetRecipes.lastIRecipe();
+
+            //Black Dye
         GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemMisc, 2, TheMiscItems.BLACK_DYE.ordinal()), new ItemStack(InitBlocks.blockBlackLotus)));
         recipeBlackDye = Util.GetRecipes.lastIRecipe();
 

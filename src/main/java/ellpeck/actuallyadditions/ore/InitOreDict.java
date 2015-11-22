@@ -108,6 +108,9 @@ public class InitOreDict{
 
         addOre(InitBlocks.blockTestifiBucksWhiteWall, "blockWhiteBrick");
         addOre(InitBlocks.blockTestifiBucksGreenWall, "blockGreenBrick");
+
+        addOre(InitItems.itemColorLens, "itemColorLens");
+        addOre(InitItems.itemMisc, TheMiscItems.LENS.ordinal(), "itemLens");
     }
 
     private static void addOre(ItemStack stack, String name){

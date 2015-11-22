@@ -10,6 +10,7 @@
 
 package ellpeck.actuallyadditions.recipe;
 
+import ellpeck.actuallyadditions.blocks.metalists.TheColoredLampColors;
 import ellpeck.actuallyadditions.config.values.ConfigCrafting;
 import ellpeck.actuallyadditions.util.AssetUtil;
 import ellpeck.actuallyadditions.util.Util;
@@ -26,6 +27,7 @@ public class ReconstructorRecipeHandler{
     public static final int RECIPES_FOR_BOOKLET_PAGE = 12;
 
     public static void init(){
+        //Crystal Blocks
         addRecipe("blockRedstone", "blockCrystalRed", 400);
         addRecipe("blockLapis", "blockCrystalBlue", 400);
         addRecipe("blockDiamond", "blockCrystalLightBlue", 6000);
@@ -33,6 +35,7 @@ public class ReconstructorRecipeHandler{
         addRecipe("blockCoal", "blockCrystalBlack", 600);
         addRecipe("blockIron", "blockCrystalWhite", 800);
 
+        //Crystal Items
         addRecipe("dustRedstone", "crystalRed", 40);
         addRecipe("gemLapis", "crystalBlue", 40);
         addRecipe("gemDiamond", "crystalLightBlue", 600);
@@ -40,10 +43,21 @@ public class ReconstructorRecipeHandler{
         addRecipe("coal", "crystalBlack", 60);
         addRecipe("ingotIron", "crystalWhite", 80);
 
+        //Lenses
+        addRecipe("itemLens", "itemColorLens", 5000);
+        addRecipe("itemColorLens", "itemLens", 5000);
+
+        //Misc
         if(ConfigCrafting.RECONSTRUCTOR_MISC.isEnabled()){
             addRecipe("sand", "soulSand", 20000);
             addRecipe("blockQuartz", "blockWhiteBrick", 10);
             addRecipe("blockQuartz", "blockGreenBrick", 10, LensType.COLOR);
+
+            //Colors
+            for(int i = 0; i < TheColoredLampColors.values().length-1; i++){
+                addRecipe("dye"+TheColoredLampColors.values()[i].name, "dye"+TheColoredLampColors.values()[i+1].name, 2000);
+            }
+            addRecipe("dye"+TheColoredLampColors.values()[15].name, "dye"+TheColoredLampColors.values()[0].name, 2000);
         }
     }
 
