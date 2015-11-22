@@ -29,8 +29,10 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fluids.*;
 
 import java.util.ArrayList;
@@ -350,6 +352,14 @@ public class WorldUtil{
         //If the Block can be harvested or not
         boolean canHarvest = block.canHarvestBlock(player, meta);
 
+        //Send Block Breaking Event
+        if(player instanceof EntityPlayerMP){
+            BlockEvent.BreakEvent event = ForgeHooks.onBlockBreakEvent(world, ((EntityPlayerMP)player).theItemInWorldManager.getGameType(), (EntityPlayerMP)player, xPos, yPos, zPos);
+            if(event.isCanceled()){
+                return false;
+            }
+        }
+
         if(!world.isRemote){
             //Server-Side only, special cases
             block.onBlockHarvested(world, xPos, yPos, zPos, meta, player);
@@ -381,7 +391,9 @@ public class WorldUtil{
 
         if(!world.isRemote){
             //Update the Client of a Block Change
-            ((EntityPlayerMP)player).playerNetServerHandler.sendPacket(new S23PacketBlockChange(xPos, yPos, zPos, world));
+            if(player instanceof EntityPlayerMP){
+                ((EntityPlayerMP)player).playerNetServerHandler.sendPacket(new S23PacketBlockChange(xPos, yPos, zPos, world));
+            }
         }
         else{
             //Check the Server if a Block that changed on the Client really changed, if not, revert the change
