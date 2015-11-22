@@ -37,6 +37,24 @@ public class AssetUtil{
     public static int smileyCloudRenderId;
     public static int laserRelayRenderId;
 
+    /**
+     * Thanks to xdjackiexd for this, as I couldn't be bothered
+     */
+    public static final float[][] RGB_WOOL_COLORS = {
+            {158F, 43F, 39F}, //Red
+            {234F, 126F, 53F}, //Orange
+            {194F, 181F, 28F}, //Yellow
+            {57F, 186F, 46F}, //Lime Green
+            {54F, 75F, 24F}, //Green
+            {99F, 135F, 210F}, //Light Blue
+            {38F, 113F, 145F}, //Cyan
+            {37F, 49F, 147F}, //Blue
+            {126F, 52F, 191F}, //Purple
+            {190F, 73F, 201F}, //Magenta
+            {217F, 129F, 153F}, //Pink
+            {86F, 51F, 28F}, //Brown
+    };
+
     public static ResourceLocation getGuiLocation(String file){
         return new ResourceLocation(ModUtil.MOD_ID_LOWER, "textures/gui/"+file+".png");
     }

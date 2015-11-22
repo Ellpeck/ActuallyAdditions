@@ -107,6 +107,7 @@ public class InitOreDict{
         addOre(InitItems.itemMisc, TheMiscItems.BLACK_DYE.ordinal(), "dyeBlack");
 
         addOre(InitBlocks.blockTestifiBucksWhiteWall, "blockWhiteBrick");
+        addOre(InitBlocks.blockTestifiBucksGreenWall, "blockGreenBrick");
     }
 
     private static void addOre(ItemStack stack, String name){

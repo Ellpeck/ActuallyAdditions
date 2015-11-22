@@ -16,6 +16,7 @@ import ellpeck.actuallyadditions.items.IReconstructorLens;
 import ellpeck.actuallyadditions.tile.TileEntityAtomicReconstructor;
 import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import ellpeck.actuallyadditions.util.ModUtil;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockPistonBase;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -127,5 +128,11 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IAct
             }
         }
         return true;
+    }
+
+    @Override
+    public void breakBlock(World world, int x, int y, int z, Block block, int par6){
+        this.dropInventory(world, x, y, z);
+        super.breakBlock(world, x, y, z, block, par6);
     }
 }

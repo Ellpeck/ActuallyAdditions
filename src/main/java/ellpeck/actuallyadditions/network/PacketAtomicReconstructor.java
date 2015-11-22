@@ -85,7 +85,8 @@ public class PacketAtomicReconstructor implements IMessage{
                 for(int times = 0; times < 5; times++){
                     for(double i = 0; i <= 1; i += 1/(distance*8)){
                         ReconstructorRecipeHandler.LensType type = ReconstructorRecipeHandler.LensType.values()[message.lensTypeOrdinal];
-                        Minecraft.getMinecraft().effectRenderer.addEffect(new EntityReddustFX(world, (difX*i)+message.endX+0.5, (difY*i)+message.endY+0.5, (difZ*i)+message.endZ+0.5, 2F, type.getR(), type.getG(), type.getB()));
+                        float[] color = type.getColor();
+                        Minecraft.getMinecraft().effectRenderer.addEffect(new EntityReddustFX(world, (difX*i)+message.endX+0.5, (difY*i)+message.endY+0.5, (difZ*i)+message.endZ+0.5, 2F, color[0], color[1], color[2]));
                     }
                 }
             }

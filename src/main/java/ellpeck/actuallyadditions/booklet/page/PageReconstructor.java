@@ -57,6 +57,10 @@ public class PageReconstructor extends BookletPage{
         else{
             String strg = "Atomic Reconstructor";
             gui.mc.fontRenderer.drawString(strg, gui.guiLeft+gui.xSize/2-gui.mc.fontRenderer.getStringWidth(strg)/2, gui.guiTop+10, 0);
+
+            //Lens
+            strg = this.getRecipeForOutput(this.result).type.name;
+            gui.mc.fontRenderer.drawString(strg, gui.guiLeft+gui.xSize/2-gui.mc.fontRenderer.getStringWidth(strg)/2, gui.guiTop+75, 0);
         }
 
         String text = gui.currentPage.getText();
@@ -94,18 +98,26 @@ public class PageReconstructor extends BookletPage{
         return this.result == null ? new ItemStack[0] : new ItemStack[]{this.result};
     }
 
-    private ItemStack getInputForOutput(ItemStack output){
+    private ReconstructorRecipeHandler.Recipe getRecipeForOutput(ItemStack output){
         for(ReconstructorRecipeHandler.Recipe recipe : ReconstructorRecipeHandler.recipes){
             List<ItemStack> stacks = OreDictionary.getOres(recipe.output, false);
             for(ItemStack stack : stacks){
                 if(output.isItemEqual(stack)){
-                    List<ItemStack> inputs = OreDictionary.getOres(recipe.input, false);
-                    if(inputs != null && !inputs.isEmpty() && inputs.get(0) != null){
-                        ItemStack input = inputs.get(0).copy();
-                        input.stackSize = 1;
-                        return input;
-                    }
+                    return recipe;
                 }
+            }
+        }
+        return null;
+    }
+
+    private ItemStack getInputForOutput(ItemStack output){
+        ReconstructorRecipeHandler.Recipe recipe = this.getRecipeForOutput(output);
+        if(recipe != null){
+            List<ItemStack> inputs = OreDictionary.getOres(recipe.input, false);
+            if(inputs != null && !inputs.isEmpty() && inputs.get(0) != null){
+                ItemStack input = inputs.get(0).copy();
+                input.stackSize = 1;
+                return input;
             }
         }
         return null;

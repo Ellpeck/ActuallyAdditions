@@ -60,7 +60,7 @@ public class AtomicReconstructorRecipeHandler extends TemplateRecipeHandler impl
         if(outputId.equals(NAME) && getClass() == AtomicReconstructorRecipeHandler.class){
             ArrayList<ReconstructorRecipeHandler.Recipe> recipes = ReconstructorRecipeHandler.recipes;
             for(ReconstructorRecipeHandler.Recipe recipe : recipes){
-                arecipes.add(new CachedReconstructorRecipe(recipe.input, recipe.output));
+                arecipes.add(new CachedReconstructorRecipe(recipe.input, recipe.output, recipe.type.name));
             }
         }
         else{
@@ -73,7 +73,7 @@ public class AtomicReconstructorRecipeHandler extends TemplateRecipeHandler impl
         ArrayList<ReconstructorRecipeHandler.Recipe> recipes = ReconstructorRecipeHandler.recipes;
         for(ReconstructorRecipeHandler.Recipe recipe : recipes){
             if(ItemUtil.contains(OreDictionary.getOres(recipe.output, false), result, true)){
-                arecipes.add(new CachedReconstructorRecipe(recipe.input, recipe.output));
+                arecipes.add(new CachedReconstructorRecipe(recipe.input, recipe.output, recipe.type.name));
             }
         }
     }
@@ -83,7 +83,7 @@ public class AtomicReconstructorRecipeHandler extends TemplateRecipeHandler impl
         ArrayList<ReconstructorRecipeHandler.Recipe> recipes = ReconstructorRecipeHandler.recipes;
         for(ReconstructorRecipeHandler.Recipe recipe : recipes){
             if(ItemUtil.contains(OreDictionary.getOres(recipe.input, false), ingredient, true)){
-                CachedReconstructorRecipe theRecipe = new CachedReconstructorRecipe(recipe.input, recipe.output);
+                CachedReconstructorRecipe theRecipe = new CachedReconstructorRecipe(recipe.input, recipe.output, recipe.type.name);
                 theRecipe.setIngredientPermutation(Collections.singletonList(theRecipe.input), ingredient);
                 arecipes.add(theRecipe);
             }
@@ -117,6 +117,12 @@ public class AtomicReconstructorRecipeHandler extends TemplateRecipeHandler impl
         if(Minecraft.getMinecraft().currentScreen != null){
             BookletPage.renderItem(Minecraft.getMinecraft().currentScreen, new ItemStack(InitBlocks.blockAtomicReconstructor), 32+34, 19, 1.0F);
         }
+
+        CachedReconstructorRecipe cache = (CachedReconstructorRecipe)this.arecipes.get(recipe);
+        if(cache != null && cache.lens != null){
+            GuiDraw.drawString(cache.lens, 10, 45, StringUtil.DECIMAL_COLOR_GRAY_TEXT, false);
+        }
+
     }
 
     @Override
@@ -128,8 +134,9 @@ public class AtomicReconstructorRecipeHandler extends TemplateRecipeHandler impl
 
         public PositionedStack result;
         public PositionedStack input;
+        public String lens;
 
-        public CachedReconstructorRecipe(String input, String result){
+        public CachedReconstructorRecipe(String input, String result, String lens){
             List<ItemStack> outputs = OreDictionary.getOres(result, false);
             for(ItemStack ore : outputs){
                 ore.stackSize = 1;
@@ -141,6 +148,7 @@ public class AtomicReconstructorRecipeHandler extends TemplateRecipeHandler impl
 
             this.result = new PositionedStack(outputs, 67+32, 19);
             this.input = new PositionedStack(inputs, 5+32, 19);
+            this.lens = lens;
         }
 
         @Override

@@ -75,19 +75,22 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
                                             for(int reachY = -range; reachY < range+1; reachY++){
                                                 if(this.storage.getEnergyStored() >= baseUse){
                                                     WorldPos pos = new WorldPos(worldObj, coordsBlock.getX()+reachX, coordsBlock.getY()+reachY, coordsBlock.getZ()+reachZ);
-                                                    ReconstructorRecipeHandler.Recipe recipe = ReconstructorRecipeHandler.getRecipe(new ItemStack(pos.getBlock(), 1, pos.getMetadata()));
-                                                    if(recipe != null && this.storage.getEnergyStored() >= baseUse+recipe.energyUse && recipe.type == currentLens){
-                                                        ItemStack output = recipe.getFirstOutput();
-                                                        if(output != null){
-                                                            if(output.getItem() instanceof ItemBlock){
-                                                                this.worldObj.playAuxSFX(2001, pos.getX(), pos.getY(), pos.getZ(), Block.getIdFromBlock(pos.getBlock())+(pos.getMetadata() << 12));
-                                                                pos.setBlock(Block.getBlockFromItem(output.getItem()), output.getItemDamage(), 2);
+                                                    ArrayList<ReconstructorRecipeHandler.Recipe> recipes = ReconstructorRecipeHandler.getRecipes(new ItemStack(pos.getBlock(), 1, pos.getMetadata()));
+                                                    for(ReconstructorRecipeHandler.Recipe recipe : recipes){
+                                                        if(recipe != null && this.storage.getEnergyStored() >= baseUse+recipe.energyUse && recipe.type == currentLens){
+                                                            ItemStack output = recipe.getFirstOutput();
+                                                            if(output != null){
+                                                                if(output.getItem() instanceof ItemBlock){
+                                                                    this.worldObj.playAuxSFX(2001, pos.getX(), pos.getY(), pos.getZ(), Block.getIdFromBlock(pos.getBlock())+(pos.getMetadata() << 12));
+                                                                    pos.setBlock(Block.getBlockFromItem(output.getItem()), output.getItemDamage(), 2);
+                                                                }
+                                                                else{
+                                                                    EntityItem item = new EntityItem(worldObj, pos.getX()+0.5, pos.getY()+0.5, pos.getZ()+0.5, output.copy());
+                                                                    worldObj.spawnEntityInWorld(item);
+                                                                }
+                                                                this.storage.extractEnergy(baseUse+recipe.energyUse, false);
+                                                                break;
                                                             }
-                                                            else{
-                                                                EntityItem item = new EntityItem(worldObj, pos.getX()+0.5, pos.getY()+0.5, pos.getZ()+0.5, output.copy());
-                                                                worldObj.spawnEntityInWorld(item);
-                                                            }
-                                                            this.storage.extractEnergy(baseUse+recipe.energyUse, false);
                                                         }
                                                     }
                                                 }
@@ -101,15 +104,18 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
                                         if(this.storage.getEnergyStored() >= baseUse){
                                             ItemStack stack = item.getEntityItem();
                                             if(stack != null){
-                                                ReconstructorRecipeHandler.Recipe recipe = ReconstructorRecipeHandler.getRecipe(stack);
-                                                if(recipe != null && this.storage.getEnergyStored() >= baseUse+recipe.energyUse && recipe.type == currentLens){
-                                                    ItemStack output = recipe.getFirstOutput();
-                                                    if(output != null){
-                                                        ItemStack outputCopy = output.copy();
-                                                        outputCopy.stackSize = stack.stackSize;
-                                                        item.setEntityItemStack(outputCopy);
+                                                ArrayList<ReconstructorRecipeHandler.Recipe> recipes = ReconstructorRecipeHandler.getRecipes(stack);
+                                                for(ReconstructorRecipeHandler.Recipe recipe : recipes){
+                                                    if(recipe != null && this.storage.getEnergyStored() >= baseUse+recipe.energyUse && recipe.type == currentLens){
+                                                        ItemStack output = recipe.getFirstOutput();
+                                                        if(output != null){
+                                                            ItemStack outputCopy = output.copy();
+                                                            outputCopy.stackSize = stack.stackSize;
+                                                            item.setEntityItemStack(outputCopy);
 
-                                                        this.storage.extractEnergy(baseUse+recipe.energyUse, false);
+                                                            this.storage.extractEnergy(baseUse+recipe.energyUse, false);
+                                                            break;
+                                                        }
                                                     }
                                                 }
                                             }
@@ -190,10 +196,5 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
     @Override
     public boolean canExtractItem(int slot, ItemStack stack, int side){
         return true;
-    }
-
-    @Override
-    public int getInventoryStackLimit(){
-        return 1;
     }
 }
