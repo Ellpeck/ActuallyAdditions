@@ -14,6 +14,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.util.ModUtil;
+import ellpeck.actuallyadditions.util.Util;
 import ellpeck.actuallyadditions.util.WorldPos;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockGrass;
@@ -73,10 +74,10 @@ public class ItemGrowthRing extends ItemEnergy{
                 //Fertilizing the Blocks
                 if(!blocks.isEmpty()){
                     for(int i = 0; i < ConfigIntValues.GROWTH_RING_GROWTH_PER_CYCLE.getValue(); i++){
-                        WorldPos pos = blocks.get(world.rand.nextInt(blocks.size()));
+                        WorldPos pos = blocks.get(Util.RANDOM.nextInt(blocks.size()));
 
                         int metaBefore = pos.getMetadata();
-                        pos.getBlock().updateTick(world, pos.getX(), pos.getY(), pos.getZ(), world.rand);
+                        pos.getBlock().updateTick(world, pos.getX(), pos.getY(), pos.getZ(), Util.RANDOM);
 
                         //Show Particles if Metadata changed
                         if(pos.getMetadata() != metaBefore){

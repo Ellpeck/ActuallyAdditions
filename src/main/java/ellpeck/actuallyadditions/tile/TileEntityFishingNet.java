@@ -11,6 +11,7 @@
 package ellpeck.actuallyadditions.tile;
 
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
+import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.inventory.IInventory;
@@ -44,7 +45,7 @@ public class TileEntityFishingNet extends TileEntityBase{
                     if(this.timeUntilNextDrop > 0){
                         this.timeUntilNextDrop--;
                         if(timeUntilNextDrop <= 0){
-                            ItemStack fishable = FishingHooks.getRandomFishable(worldObj.rand, this.worldObj.rand.nextFloat());
+                            ItemStack fishable = FishingHooks.getRandomFishable(Util.RANDOM, Util.RANDOM.nextFloat());
                             TileEntity tile = worldObj.getTileEntity(xCoord, yCoord+1, zCoord);
                             if(tile != null && tile instanceof IInventory){
                                 this.insertIntoInventory((IInventory)tile, fishable);
@@ -57,7 +58,7 @@ public class TileEntityFishingNet extends TileEntityBase{
                         }
                     }
                     else{
-                        this.timeUntilNextDrop = ConfigIntValues.FISHER_TIME.getValue()+worldObj.rand.nextInt(ConfigIntValues.FISHER_TIME.getValue()/2);
+                        this.timeUntilNextDrop = ConfigIntValues.FISHER_TIME.getValue()+Util.RANDOM.nextInt(ConfigIntValues.FISHER_TIME.getValue()/2);
                     }
                 }
             }

@@ -17,6 +17,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.recipe.CrusherRecipeRegistry;
+import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -177,7 +178,7 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
         if(outputTwos != null){
             ItemStack outputTwo = outputTwos.get(0);
             if(outputTwo != null){
-                int rand = this.worldObj.rand.nextInt(100)+1;
+                int rand = Util.RANDOM.nextInt(100)+1;
                 if(rand <= CrusherRecipeRegistry.getOutputTwoChance(this.slots[theInput])){
                     if(this.slots[theSecondOutput] == null){
                         this.slots[theSecondOutput] = outputTwo.copy();

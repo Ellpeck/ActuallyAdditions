@@ -13,6 +13,7 @@ package ellpeck.actuallyadditions.tile;
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyProvider;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
+import ellpeck.actuallyadditions.util.Util;
 import ellpeck.actuallyadditions.util.WorldPos;
 import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.block.Block;
@@ -46,8 +47,8 @@ public class TileEntityHeatCollector extends TileEntityBase implements IEnergyPr
                     this.storage.receiveEnergy(ConfigIntValues.HEAT_COLLECTOR_ENERGY_PRODUCED.getValue(), false);
                     this.markDirty();
 
-                    if(worldObj.rand.nextInt(ConfigIntValues.HEAT_COLLECTOR_LAVA_CHANCE.getValue()) == 0){
-                        int randomSide = blocksAround.get(worldObj.rand.nextInt(blocksAround.size()));
+                    if(Util.RANDOM.nextInt(ConfigIntValues.HEAT_COLLECTOR_LAVA_CHANCE.getValue()) == 0){
+                        int randomSide = blocksAround.get(Util.RANDOM.nextInt(blocksAround.size()));
                         WorldUtil.breakBlockAtSide(WorldUtil.getDirectionBySidesInOrder(randomSide), worldObj, xCoord, yCoord, zCoord);
                     }
                 }

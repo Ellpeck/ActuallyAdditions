@@ -12,6 +12,7 @@ package ellpeck.actuallyadditions.misc;
 
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
+import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.DamageSource;
@@ -30,7 +31,7 @@ public class DamageSources extends DamageSource{
 
     @Override
     public IChatComponent func_151519_b(EntityLivingBase entity){
-        String locTag = "death."+ModUtil.MOD_ID_LOWER+"."+this.damageType+"."+(entity.worldObj.rand.nextInt(this.messageCount)+1);
+        String locTag = "death."+ModUtil.MOD_ID_LOWER+"."+this.damageType+"."+(Util.RANDOM.nextInt(this.messageCount)+1);
         return new ChatComponentText(StringUtil.localizeFormatted(locTag, entity.getCommandSenderName()));
     }
 }

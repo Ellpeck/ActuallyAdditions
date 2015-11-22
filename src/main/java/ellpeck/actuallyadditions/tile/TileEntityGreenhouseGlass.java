@@ -11,6 +11,7 @@
 package ellpeck.actuallyadditions.tile;
 
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
+import ellpeck.actuallyadditions.util.Util;
 import ellpeck.actuallyadditions.util.WorldPos;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockGrass;
@@ -33,7 +34,7 @@ public class TileEntityGreenhouseGlass extends TileEntityBase{
                         this.timeUntilNextFert--;
                         if(timeUntilNextFert <= 0){
                             int metaBefore = blockToFert.getMetadata();
-                            worldObj.getBlock(blockToFert.getX(), blockToFert.getY(), blockToFert.getZ()).updateTick(worldObj, blockToFert.getX(), blockToFert.getY(), blockToFert.getZ(), worldObj.rand);
+                            worldObj.getBlock(blockToFert.getX(), blockToFert.getY(), blockToFert.getZ()).updateTick(worldObj, blockToFert.getX(), blockToFert.getY(), blockToFert.getZ(), Util.RANDOM);
 
                             if(blockToFert.getMetadata() != metaBefore){
                                 worldObj.playAuxSFX(2005, blockToFert.getX(), blockToFert.getY(), blockToFert.getZ(), 0);
@@ -41,7 +42,7 @@ public class TileEntityGreenhouseGlass extends TileEntityBase{
                         }
                     }
                     else{
-                        this.timeUntilNextFert = ConfigIntValues.GLASS_TIME_NEEDED.getValue()+this.worldObj.rand.nextInt(ConfigIntValues.GLASS_TIME_NEEDED.getValue());
+                        this.timeUntilNextFert = ConfigIntValues.GLASS_TIME_NEEDED.getValue()+Util.RANDOM.nextInt(ConfigIntValues.GLASS_TIME_NEEDED.getValue());
                     }
                 }
             }

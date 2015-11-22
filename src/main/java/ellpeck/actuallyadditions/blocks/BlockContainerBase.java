@@ -11,6 +11,7 @@
 package ellpeck.actuallyadditions.blocks;
 
 import ellpeck.actuallyadditions.tile.TileEntityInventoryBase;
+import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.item.EntityItem;
@@ -44,17 +45,17 @@ public abstract class BlockContainerBase extends BlockContainer{
     public void dropSlotFromInventory(int i, TileEntityInventoryBase tile, World world, int x, int y, int z){
         ItemStack stack = tile.getStackInSlot(i);
         if(stack != null && stack.stackSize > 0){
-            float dX = world.rand.nextFloat()*0.8F+0.1F;
-            float dY = world.rand.nextFloat()*0.8F+0.1F;
-            float dZ = world.rand.nextFloat()*0.8F+0.1F;
+            float dX = Util.RANDOM.nextFloat()*0.8F+0.1F;
+            float dY = Util.RANDOM.nextFloat()*0.8F+0.1F;
+            float dZ = Util.RANDOM.nextFloat()*0.8F+0.1F;
             EntityItem entityItem = new EntityItem(world, x+dX, y+dY, z+dZ, stack.copy());
             if(stack.hasTagCompound()){
                 entityItem.getEntityItem().setTagCompound((NBTTagCompound)stack.getTagCompound().copy());
             }
             float factor = 0.05F;
-            entityItem.motionX = world.rand.nextGaussian()*factor;
-            entityItem.motionY = world.rand.nextGaussian()*factor+0.2F;
-            entityItem.motionZ = world.rand.nextGaussian()*factor;
+            entityItem.motionX = Util.RANDOM.nextGaussian()*factor;
+            entityItem.motionY = Util.RANDOM.nextGaussian()*factor+0.2F;
+            entityItem.motionZ = Util.RANDOM.nextGaussian()*factor;
             world.spawnEntityInWorld(entityItem);
         }
         tile.setInventorySlotContents(i, null);

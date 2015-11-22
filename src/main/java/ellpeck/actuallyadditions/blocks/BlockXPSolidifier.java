@@ -19,6 +19,7 @@ import ellpeck.actuallyadditions.items.metalists.TheSpecialDrops;
 import ellpeck.actuallyadditions.tile.TileEntityXPSolidifier;
 import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import ellpeck.actuallyadditions.util.ModUtil;
+import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -147,14 +148,14 @@ public class BlockXPSolidifier extends BlockContainerBase implements IActAddItem
     }
 
     private void spawnItem(World world, int x, int y, int z, ItemStack stack){
-        float dX = world.rand.nextFloat()*0.8F+0.1F;
-        float dY = world.rand.nextFloat()*0.8F+0.1F;
-        float dZ = world.rand.nextFloat()*0.8F+0.1F;
+        float dX = Util.RANDOM.nextFloat()*0.8F+0.1F;
+        float dY = Util.RANDOM.nextFloat()*0.8F+0.1F;
+        float dZ = Util.RANDOM.nextFloat()*0.8F+0.1F;
         EntityItem entityItem = new EntityItem(world, x+dX, y+dY, z+dZ, stack);
         float factor = 0.05F;
-        entityItem.motionX = world.rand.nextGaussian()*factor;
-        entityItem.motionY = world.rand.nextGaussian()*factor+0.2F;
-        entityItem.motionZ = world.rand.nextGaussian()*factor;
+        entityItem.motionX = Util.RANDOM.nextGaussian()*factor;
+        entityItem.motionY = Util.RANDOM.nextGaussian()*factor+0.2F;
+        entityItem.motionZ = Util.RANDOM.nextGaussian()*factor;
         world.spawnEntityInWorld(entityItem);
     }
 }

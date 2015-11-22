@@ -15,6 +15,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.recipe.HairyBallHandler;
 import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import ellpeck.actuallyadditions.util.ModUtil;
+import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -37,13 +38,13 @@ public class ItemHairyBall extends Item implements IActAddItemOrBlock{
                 player.worldObj.spawnEntityInWorld(entityItem);
             }
             stack.stackSize--;
-            world.playSoundAtEntity(player, "random.pop", 0.2F, world.rand.nextFloat()*0.1F+0.9F);
+            world.playSoundAtEntity(player, "random.pop", 0.2F, Util.RANDOM.nextFloat()*0.1F+0.9F);
         }
         return stack;
     }
 
     public ItemStack getRandomReturnItem(World world){
-        return ((HairyBallHandler.Return)WeightedRandom.getRandomItem(world.rand, HairyBallHandler.returns)).returnItem.copy();
+        return ((HairyBallHandler.Return)WeightedRandom.getRandomItem(Util.RANDOM, HairyBallHandler.returns)).returnItem.copy();
     }
 
     @Override

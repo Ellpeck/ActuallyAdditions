@@ -16,6 +16,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.config.values.ConfigBoolValues;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.misc.LaserRelayConnectionHandler;
+import ellpeck.actuallyadditions.util.Util;
 import ellpeck.actuallyadditions.util.WorldPos;
 import ellpeck.actuallyadditions.util.WorldUtil;
 import io.netty.util.internal.ConcurrentSet;
@@ -46,7 +47,7 @@ public class TileEntityLaserRelay extends TileEntityBase implements IEnergyRecei
 
     @SideOnly(Side.CLIENT)
     public void renderParticles(){
-        if(this.worldObj.rand.nextInt(2) == 0){
+        if(Util.RANDOM.nextInt(2) == 0){
             WorldPos thisPos = new WorldPos(this.getWorldObj(), this.xCoord, this.yCoord, this.zCoord);
             LaserRelayConnectionHandler.Network network = LaserRelayConnectionHandler.getInstance().getNetworkFor(thisPos);
             if(network != null){

@@ -20,6 +20,7 @@ import ellpeck.actuallyadditions.tile.TileEntityInventoryBase;
 import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
+import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -29,8 +30,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
-
-import java.util.Random;
 
 public class BlockInputter extends BlockContainerBase implements IActAddItemOrBlock{
 
@@ -104,8 +103,6 @@ public class BlockInputter extends BlockContainerBase implements IActAddItemOrBl
         private long lastSysTime;
         private int toPick;
 
-        private final Random rand = new Random();
-
         public TheItemBlock(Block block){
             super(block);
             this.setHasSubtypes(false);
@@ -134,7 +131,7 @@ public class BlockInputter extends BlockContainerBase implements IActAddItemOrBl
 
             if(this.lastSysTime+5000 < sysTime){
                 this.lastSysTime = sysTime;
-                this.toPick = this.rand.nextInt(NAME_FLAVOR_AMOUNTS)+1;
+                this.toPick = Util.RANDOM.nextInt(NAME_FLAVOR_AMOUNTS)+1;
             }
 
             return StringUtil.localize(this.getUnlocalizedName()+".name")+" ("+StringUtil.localize("tile."+ModUtil.MOD_ID_LOWER+".blockInputter.add."+this.toPick+".name")+")";

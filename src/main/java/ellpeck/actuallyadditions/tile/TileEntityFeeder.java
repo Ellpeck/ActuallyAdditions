@@ -13,6 +13,7 @@ package ellpeck.actuallyadditions.tile;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
+import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -45,7 +46,7 @@ public class TileEntityFeeder extends TileEntityInventoryBase{
                         if(this.currentTimer >= ConfigIntValues.FEEDER_TIME.getValue()){
                             this.currentTimer = 0;
                             if(this.slots[0] != null){
-                                EntityAnimal randomAnimal = animals.get(worldObj.rand.nextInt(this.currentAnimalAmount));
+                                EntityAnimal randomAnimal = animals.get(Util.RANDOM.nextInt(this.currentAnimalAmount));
                                 if(!randomAnimal.isInLove() && randomAnimal.getGrowingAge() == 0 && randomAnimal.isBreedingItem(this.slots[0])){
 
                                     this.feedAnimal(randomAnimal);
@@ -84,10 +85,10 @@ public class TileEntityFeeder extends TileEntityInventoryBase{
     public void feedAnimal(EntityAnimal animal){
         animal.func_146082_f(null);
         for(int i = 0; i < 7; i++){
-            double d = animal.worldObj.rand.nextGaussian()*0.02D;
-            double d1 = animal.worldObj.rand.nextGaussian()*0.02D;
-            double d2 = animal.worldObj.rand.nextGaussian()*0.02D;
-            worldObj.spawnParticle("heart", (animal.posX+(double)(animal.worldObj.rand.nextFloat()*animal.width*2.0F))-animal.width, animal.posY+0.5D+(double)(animal.worldObj.rand.nextFloat()*animal.height), (animal.posZ+(double)(animal.worldObj.rand.nextFloat()*animal.width*2.0F))-animal.width, d, d1, d2);
+            double d = Util.RANDOM.nextGaussian()*0.02D;
+            double d1 = Util.RANDOM.nextGaussian()*0.02D;
+            double d2 = Util.RANDOM.nextGaussian()*0.02D;
+            worldObj.spawnParticle("heart", (animal.posX+(double)(Util.RANDOM.nextFloat()*animal.width*2.0F))-animal.width, animal.posY+0.5D+(double)(Util.RANDOM.nextFloat()*animal.height), (animal.posZ+(double)(Util.RANDOM.nextFloat()*animal.width*2.0F))-animal.width, d, d1, d2);
         }
     }
 
