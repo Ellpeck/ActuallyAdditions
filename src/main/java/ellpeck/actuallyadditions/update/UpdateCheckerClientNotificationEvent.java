@@ -18,7 +18,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.IChatComponent;
 
-public class UpdateCheckerClientNotifier{
+public class UpdateCheckerClientNotificationEvent{
 
     private static boolean notified = false;
     private static int ticksElapsedBeforeInfo;
