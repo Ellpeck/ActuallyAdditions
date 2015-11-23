@@ -15,6 +15,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.items.metalists.TheSpecialDrops;
 import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import ellpeck.actuallyadditions.util.ModUtil;
+import ellpeck.actuallyadditions.util.StringUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.item.EntityXPOrb;
@@ -73,7 +74,7 @@ public class ItemSpecialDrop extends Item implements IActAddItemOrBlock{
 
     @Override
     public String getUnlocalizedName(ItemStack stack){
-        return this.getUnlocalizedName()+(stack.getItemDamage() >= allDrops.length ? " ERROR!" : allDrops[stack.getItemDamage()].name);
+        return stack.getItemDamage() >= allDrops.length ? StringUtil.BUGGED_ITEM_NAME : this.getUnlocalizedName()+allDrops[stack.getItemDamage()].name;
     }
 
     @Override

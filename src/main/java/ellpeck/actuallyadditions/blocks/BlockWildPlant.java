@@ -15,6 +15,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.blocks.metalists.TheWildPlants;
 import ellpeck.actuallyadditions.items.ItemBlockBase;
 import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
+import ellpeck.actuallyadditions.util.StringUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.material.Material;
@@ -106,7 +107,7 @@ public class BlockWildPlant extends BlockBush implements IActAddItemOrBlock{
 
         @Override
         public String getUnlocalizedName(ItemStack stack){
-            return this.getUnlocalizedName()+(stack.getItemDamage() >= allWildPlants.length ? " ERROR!" : allWildPlants[stack.getItemDamage()].name);
+            return stack.getItemDamage() >= allWildPlants.length ? StringUtil.BUGGED_ITEM_NAME : this.getUnlocalizedName()+allWildPlants[stack.getItemDamage()].name;
         }
 
         @Override

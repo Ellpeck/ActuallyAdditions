@@ -15,6 +15,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.items.metalists.TheJams;
 import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import ellpeck.actuallyadditions.util.ModUtil;
+import ellpeck.actuallyadditions.util.StringUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.item.EntityItem;
@@ -49,7 +50,7 @@ public class ItemJams extends ItemFood implements IActAddItemOrBlock{
 
     @Override
     public String getUnlocalizedName(ItemStack stack){
-        return this.getUnlocalizedName()+(stack.getItemDamage() >= allJams.length ? " ERROR!" : allJams[stack.getItemDamage()].name);
+        return stack.getItemDamage() >= allJams.length ? StringUtil.BUGGED_ITEM_NAME : this.getUnlocalizedName()+allJams[stack.getItemDamage()].name;
     }
 
     @Override

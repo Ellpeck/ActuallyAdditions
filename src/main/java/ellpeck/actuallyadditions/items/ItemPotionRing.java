@@ -48,7 +48,7 @@ public class ItemPotionRing extends Item implements IActAddItemOrBlock{
 
     @Override
     public String getUnlocalizedName(ItemStack stack){
-        return this.getUnlocalizedName()+(stack.getItemDamage() >= allRings.length ? " ERROR!" : allRings[stack.getItemDamage()].name.substring("potion".length()));
+        return stack.getItemDamage() >= allRings.length ? StringUtil.BUGGED_ITEM_NAME : this.getUnlocalizedName()+allRings[stack.getItemDamage()].name;
     }
 
     @Override

@@ -15,6 +15,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.items.metalists.TheDusts;
 import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import ellpeck.actuallyadditions.util.ModUtil;
+import ellpeck.actuallyadditions.util.StringUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.EnumRarity;
@@ -39,7 +40,7 @@ public class ItemDust extends Item implements IActAddItemOrBlock{
 
     @Override
     public String getUnlocalizedName(ItemStack stack){
-        return this.getUnlocalizedName()+(stack.getItemDamage() >= allDusts.length ? " ERROR!" : allDusts[stack.getItemDamage()].name);
+        return stack.getItemDamage() >= allDusts.length ? StringUtil.BUGGED_ITEM_NAME : this.getUnlocalizedName()+allDusts[stack.getItemDamage()].name;
     }
 
     @Override

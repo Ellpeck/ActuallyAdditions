@@ -16,6 +16,7 @@ import ellpeck.actuallyadditions.items.ItemBlockBase;
 import ellpeck.actuallyadditions.items.metalists.TheCrystals;
 import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import ellpeck.actuallyadditions.util.ModUtil;
+import ellpeck.actuallyadditions.util.StringUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -96,7 +97,7 @@ public class BlockCrystal extends Block implements IActAddItemOrBlock{
 
         @Override
         public String getUnlocalizedName(ItemStack stack){
-            return this.getUnlocalizedName()+(stack.getItemDamage() >= allCrystals.length ? " ERROR!" : allCrystals[stack.getItemDamage()].name);
+            return stack.getItemDamage() >= allCrystals.length ? StringUtil.BUGGED_ITEM_NAME : this.getUnlocalizedName()+allCrystals[stack.getItemDamage()].name;
         }
 
         @Override

@@ -20,6 +20,8 @@ public class StringUtil{
     public static final int DECIMAL_COLOR_WHITE = 16777215;
     public static final int DECIMAL_COLOR_GRAY_TEXT = 4210752;
 
+    public static final String BUGGED_ITEM_NAME = "lolWutHowUDoDis";
+
     /**
      * Localizes a given String via StatCollector
      */
