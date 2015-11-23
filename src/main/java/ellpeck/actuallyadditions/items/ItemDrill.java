@@ -43,6 +43,7 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeHooks;
 
 import java.util.HashSet;
 import java.util.List;
@@ -502,7 +503,7 @@ public class ItemDrill extends ItemEnergy{
         Block block = world.getBlock(xPos, yPos, zPos);
         float hardness = block.getBlockHardness(world, xPos, yPos, zPos);
         int meta = world.getBlockMetadata(xPos, yPos, zPos);
-        boolean canHarvest = this.canHarvestBlock(block, stack) && (!isExtra || this.getDigSpeed(stack, block, meta) > 1.0F);
+        boolean canHarvest = (ForgeHooks.canHarvestBlock(block, player, meta) || this.canHarvestBlock(block, stack)) && (!isExtra || this.getDigSpeed(stack, block, meta) > 1.0F);
         if(hardness >= 0.0F && (!isExtra || (canHarvest && !block.hasTileEntity(meta)))){
             this.extractEnergy(stack, use, false);
             //Break the Block
