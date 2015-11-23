@@ -14,6 +14,7 @@ import cpw.mods.fml.common.event.FMLInterModComms;
 import ellpeck.actuallyadditions.items.ItemCoffee;
 import ellpeck.actuallyadditions.recipe.CrusherRecipeRegistry;
 import ellpeck.actuallyadditions.recipe.HairyBallHandler;
+import ellpeck.actuallyadditions.recipe.ReconstructorRecipeHandler;
 import ellpeck.actuallyadditions.recipe.TreasureChestHandler;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.item.ItemStack;
@@ -97,6 +98,24 @@ public class InterModCommunications{
                     }
                     else{
                         ModUtil.LOGGER.error("Treasure Chest Recipe that was sent from Mod "+message.getSender()+" could not be registered: It's missing an Output, a Chance or minimum and maximum Amounts!");
+                    }
+                }
+            }
+
+            if(message.key.equalsIgnoreCase("registerReconstructorRecipe")){
+                NBTTagCompound compound = message.getNBTValue();
+                if(compound != null){
+                    String input = compound.getString("input");
+                    String output = compound.getString("output");
+                    int energyUse = compound.getInteger("energyUse");
+                    int lensType = compound.getInteger("lensType");
+
+                    if(ReconstructorRecipeHandler.LensType.values().length > lensType && input != null && output != null){
+                        ReconstructorRecipeHandler.addRecipe(input, output, energyUse, ReconstructorRecipeHandler.LensType.values()[lensType]);
+                        ModUtil.LOGGER.info("Reconstructor Recipe that was sent from Mod "+message.getSender()+" has been registered successfully: "+input+" -> "+output+" @ "+energyUse+" with LensType "+lensType);
+                    }
+                    else{
+                        ModUtil.LOGGER.error("Reconstructor Recipe that was sent from Mod "+message.getSender()+" could not be registered: It's missing an Output, an Input or a LensType!");
                     }
                 }
             }
