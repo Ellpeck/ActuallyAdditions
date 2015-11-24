@@ -14,7 +14,6 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.ActuallyAdditions;
 import ellpeck.actuallyadditions.inventory.GuiHandler;
-import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.tile.TileEntityBookletStand;
 import ellpeck.actuallyadditions.util.AssetUtil;
 import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
@@ -22,6 +21,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -39,7 +39,7 @@ public class BlockBookletStand extends BlockContainerBase implements IActAddItem
         this.setStepSound(soundTypeStone);
 
         float f = 1/16F;
-        this.setBlockBounds(f, 0F, f, 1F-f, 1F-2*f, 1F-f);
+        this.setBlockBounds(f, 0F, f, 1F-f, 1F-4*f, 1F-f);
     }
 
     @Override
@@ -99,7 +99,7 @@ public class BlockBookletStand extends BlockContainerBase implements IActAddItem
     @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconReg){
-        this.blockIcon = InitItems.itemLexicon.getIcon(new ItemStack(InitItems.itemLexicon), 0);
+        this.blockIcon = Blocks.planks.getIcon(0, 0);
     }
 
     @Override

@@ -79,8 +79,13 @@ public class BlockCrafting{
     public static IRecipe recipeRangedCollector;
     public static IRecipe recipeLaserRelay;
     public static IRecipe recipeAtomicReconstructor;
+    public static IRecipe recipeBookStand;
 
     public static void init(){
+
+        //Book Stand
+        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitBlocks.blockBookletStand), new ItemStack(InitItems.itemLexicon), "plankWood"));
+        recipeBookStand = Util.GetRecipes.lastIRecipe();
 
         //White Ethetic Blocks
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockTestifiBucksWhiteFence, 6),
