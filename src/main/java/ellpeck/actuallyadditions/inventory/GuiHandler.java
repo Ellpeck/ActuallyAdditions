@@ -143,7 +143,7 @@ public class GuiHandler implements IGuiHandler{
             case CLOUD:
                 return new GuiSmileyCloud(tile, x, y, z, world);
             case BOOK:
-                return new GuiBooklet(null);
+                return new GuiBooklet(null, true, true);
             case DIRECTIONAL_BREAKER:
                 return new GuiDirectionalBreaker(entityPlayer.inventory, tile);
             case RANGED_COLLECTOR:

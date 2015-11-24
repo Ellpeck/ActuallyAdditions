@@ -68,7 +68,7 @@ public class NeiScreenEvents{
             if(isPage && event.button.id == NEI_BUTTON_ID){
                 for(BookletPage page : InitBooklet.pagesWithItemStackData){
                     if(ItemUtil.contains(page.getItemStacksForPage(), ((INeiRecipeHandler)handler).getStackForInfo(theGui.page), true)){
-                        GuiBooklet book = new GuiBooklet(Minecraft.getMinecraft().currentScreen);
+                        GuiBooklet book = new GuiBooklet(Minecraft.getMinecraft().currentScreen, false, true);
                         Minecraft.getMinecraft().displayGuiScreen(book);
                         BookletUtils.openIndexEntry(book, page.getChapter().entry, InitBooklet.entries.indexOf(page.getChapter().entry)/GuiBooklet.CHAPTER_BUTTONS_AMOUNT+1, true);
                         BookletUtils.openChapter(book, page.getChapter(), page);

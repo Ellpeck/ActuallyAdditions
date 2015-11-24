@@ -72,11 +72,15 @@ public class GuiBooklet extends GuiScreen{
     private boolean mousePressed;
 
     public GuiScreen parentScreen;
+    private boolean tryOpenMainPage;
+    private boolean saveOnClose;
 
-    public GuiBooklet(GuiScreen parentScreen){
+    public GuiBooklet(GuiScreen parentScreen, boolean tryOpenMainPage, boolean saveOnClose){
         this.xSize = 146;
         this.ySize = 180;
         this.parentScreen = parentScreen;
+        this.tryOpenMainPage = tryOpenMainPage;
+        this.saveOnClose = saveOnClose;
     }
 
     public void drawHoveringText(List list, int x, int y){
@@ -266,8 +270,7 @@ public class GuiBooklet extends GuiScreen{
         this.currentChapter = null;
         this.currentIndexEntry = null;
 
-        // So that the First Page will still open if used via something like NEI before
-        if(this.parentScreen == null && !PersistentClientData.getBoolean("BookAlreadyOpened")){
+        if(this.tryOpenMainPage && !PersistentClientData.getBoolean("BookAlreadyOpened")){
             BookletUtils.openIndexEntry(this, InitBooklet.chapterIntro.entry, 1, true);
             BookletUtils.openChapter(this, InitBooklet.chapterIntro, null);
 
@@ -301,7 +304,9 @@ public class GuiBooklet extends GuiScreen{
 
     @Override
     public void onGuiClosed(){
-        PersistentClientData.saveBookPage(this);
+        if(this.saveOnClose){
+            PersistentClientData.saveBookPage(this);
+        }
     }
 
     @Override
