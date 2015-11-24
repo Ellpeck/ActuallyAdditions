@@ -36,6 +36,11 @@ public class GuiBookletStand extends GuiBooklet{
     public void initGui(){
         super.initGui();
 
+        //Remove Bookmark Buttons
+        for(GuiButton bookmarkButton : this.bookmarkButtons){
+            bookmarkButton.visible = false;
+        }
+
         this.buttonSetPage = new GuiButton(-100, this.guiLeft+this.xSize+10, this.guiTop+10, 100, 20, "Set Page"){
             @Override
             public void drawButton(Minecraft mc, int x, int y){
