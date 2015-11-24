@@ -36,6 +36,7 @@ public class AssetUtil{
     public static int phantomBoosterRenderId;
     public static int smileyCloudRenderId;
     public static int laserRelayRenderId;
+    public static int bookletStandRenderId;
 
     /**
      * Thanks to xdjackiexd for this, as I couldn't be bothered

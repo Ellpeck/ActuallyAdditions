@@ -104,8 +104,13 @@ public class InitBlocks{
     public static Block blockCrystal;
     public static Block blockAtomicReconstructor;
 
+    public static Block blockBookletStand;
+
     public static void init(){
         ModUtil.LOGGER.info("Initializing Blocks...");
+
+        blockBookletStand = new BlockBookletStand();
+        BlockUtil.register(blockBookletStand);
 
         blockAtomicReconstructor = new BlockAtomicReconstructor();
         BlockUtil.register(blockAtomicReconstructor);

@@ -29,5 +29,6 @@ public class PacketHandler{
         theNetwork.registerMessage(PacketGuiNumber.Handler.class, PacketGuiNumber.class, 1, Side.SERVER);
         theNetwork.registerMessage(PacketGuiString.Handler.class, PacketGuiString.class, 2, Side.SERVER);
         theNetwork.registerMessage(PacketAtomicReconstructor.Handler.class, PacketAtomicReconstructor.class, 3, Side.CLIENT);
+        theNetwork.registerMessage(PacketBookletStandButton.Handler.class, PacketBookletStandButton.class, 4, Side.SERVER);
     }
 }

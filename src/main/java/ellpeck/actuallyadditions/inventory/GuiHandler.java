@@ -14,6 +14,7 @@ import cpw.mods.fml.common.network.IGuiHandler;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import ellpeck.actuallyadditions.ActuallyAdditions;
 import ellpeck.actuallyadditions.booklet.GuiBooklet;
+import ellpeck.actuallyadditions.booklet.GuiBookletStand;
 import ellpeck.actuallyadditions.inventory.gui.*;
 import ellpeck.actuallyadditions.tile.TileEntityBase;
 import ellpeck.actuallyadditions.util.ModUtil;
@@ -144,6 +145,8 @@ public class GuiHandler implements IGuiHandler{
                 return new GuiSmileyCloud(tile, x, y, z, world);
             case BOOK:
                 return new GuiBooklet(null, true, true);
+            case BOOK_STAND:
+                return new GuiBookletStand(tile);
             case DIRECTIONAL_BREAKER:
                 return new GuiDirectionalBreaker(entityPlayer.inventory, tile);
             case RANGED_COLLECTOR:
@@ -178,6 +181,7 @@ public class GuiHandler implements IGuiHandler{
         XP_SOLIDIFIER,
         CLOUD,
         BOOK(false),
+        BOOK_STAND,
         DIRECTIONAL_BREAKER,
         RANGED_COLLECTOR;
 

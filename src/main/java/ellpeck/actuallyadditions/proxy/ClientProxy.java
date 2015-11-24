@@ -74,6 +74,7 @@ public class ClientProxy implements IProxy{
         AssetUtil.phantomBoosterRenderId = RenderingRegistry.getNextAvailableRenderId();
         AssetUtil.smileyCloudRenderId = RenderingRegistry.getNextAvailableRenderId();
         AssetUtil.laserRelayRenderId = RenderingRegistry.getNextAvailableRenderId();
+        AssetUtil.bookletStandRenderId = RenderingRegistry.getNextAvailableRenderId();
 
         registerRenderer(TileEntityCompost.class, new RenderTileEntity(new ModelCompost()), AssetUtil.compostRenderId);
         registerRenderer(TileEntityFishingNet.class, new RenderTileEntity(new ModelFishingNet()), AssetUtil.fishingNetRenderId);
@@ -82,6 +83,7 @@ public class ClientProxy implements IProxy{
         registerRenderer(TileEntityPhantomBooster.class, new RenderTileEntity(new ModelPhantomBooster()), AssetUtil.phantomBoosterRenderId);
         registerRenderer(TileEntitySmileyCloud.class, new RenderSmileyCloud(new ModelSmileyCloud()), AssetUtil.smileyCloudRenderId);
         registerRenderer(TileEntityLaserRelay.class, new RenderLaserRelay(new ModelLaserRelay()), AssetUtil.laserRelayRenderId);
+        registerRenderer(TileEntityBookletStand.class, new RenderTileEntity(new ModelBookletStand()), AssetUtil.bookletStandRenderId);
 
         VillagerRegistry.instance().registerVillagerSkin(ConfigIntValues.JAM_VILLAGER_ID.getValue(), new ResourceLocation(ModUtil.MOD_ID_LOWER, "textures/entity/villager/jamVillager.png"));
     }
