@@ -140,7 +140,7 @@ public class PageCrafting extends BookletPage{
 
     @Override
     public void updateScreen(int ticksElapsed){
-        if(ticksElapsed%30 == 0){
+        if(ticksElapsed%15 == 0){
             if(this.recipePos+1 >= this.recipes.length){
                 this.recipePos = 0;
             }
@@ -152,18 +152,22 @@ public class PageCrafting extends BookletPage{
 
     @Override
     public ItemStack[] getItemStacksForPage(){
-        if(this.recipes != null && this.recipes.length > 0 && this.recipes[0] != null){
-            ItemStack output = this.recipes[0].getRecipeOutput();
-            if(output != null){
-                if(!this.arePageStacksWildcard){
-                    return new ItemStack[]{output};
-                }
-                else{
-                    ItemStack wildcardOutput = output.copy();
-                    wildcardOutput.setItemDamage(Util.WILDCARD);
-                    return new ItemStack[]{wildcardOutput};
+        if(this.recipes != null){
+            ItemStack[] stacks = new ItemStack[this.recipes.length];
+            for(int i = 0; i < this.recipes.length; i++){
+                ItemStack output = this.recipes[i].getRecipeOutput();
+                if(output != null){
+                    if(!this.arePageStacksWildcard){
+                        stacks[i] = output;
+                    }
+                    else{
+                        ItemStack wildcardOutput = output.copy();
+                        wildcardOutput.setItemDamage(Util.WILDCARD);
+                        stacks[i] = wildcardOutput;
+                    }
                 }
             }
+            return stacks;
         }
         return null;
     }

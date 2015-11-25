@@ -12,6 +12,7 @@ package ellpeck.actuallyadditions.util;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 import ellpeck.actuallyadditions.recipe.CrusherRecipeRegistry;
+import ellpeck.actuallyadditions.recipe.ReconstructorRecipeHandler;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.dispenser.BehaviorDefaultDispenseItem;
 import net.minecraft.item.Item;
@@ -60,6 +61,11 @@ public class Util{
     }
 
     public static class GetRecipes{
+
+        public static ReconstructorRecipeHandler.Recipe lastReconstructorRecipe(){
+            ArrayList<ReconstructorRecipeHandler.Recipe> list = ReconstructorRecipeHandler.recipes;
+            return list.get(list.size()-1);
+        }
 
         public static CrusherRecipeRegistry.CrusherRecipe lastCrusherRecipe(){
             ArrayList<CrusherRecipeRegistry.CrusherRecipe> list = CrusherRecipeRegistry.recipes;

@@ -25,46 +25,76 @@ import java.util.Objects;
 public class ReconstructorRecipeHandler{
 
     public static ArrayList<Recipe> recipes = new ArrayList<Recipe>();
-    public static final int RECIPES_FOR_BOOKLET_PAGE = 12;
+
+    public static ArrayList<Recipe> mainPageRecipes = new ArrayList<Recipe>();
+    public static Recipe recipeColorLens;
+    public static Recipe recipeSoulSand;
+    public static Recipe recipeGreenWall;
+    public static Recipe recipeWhiteWall;
+    public static ArrayList<Recipe> colorConversionRecipes = new ArrayList<Recipe>();
 
     public static void init(){
         //Crystal Blocks
         addRecipe("blockRedstone", "blockCrystalRed", 400);
+        mainPageRecipes.add(Util.GetRecipes.lastReconstructorRecipe());
         addRecipe("blockLapis", "blockCrystalBlue", 400);
+        mainPageRecipes.add(Util.GetRecipes.lastReconstructorRecipe());
         addRecipe("blockDiamond", "blockCrystalLightBlue", 6000);
+        mainPageRecipes.add(Util.GetRecipes.lastReconstructorRecipe());
         addRecipe("blockEmerald", "blockCrystalGreen", 10000);
+        mainPageRecipes.add(Util.GetRecipes.lastReconstructorRecipe());
         addRecipe("blockCoal", "blockCrystalBlack", 600);
+        mainPageRecipes.add(Util.GetRecipes.lastReconstructorRecipe());
         addRecipe("blockIron", "blockCrystalWhite", 800);
+        mainPageRecipes.add(Util.GetRecipes.lastReconstructorRecipe());
 
         //Crystal Items
         addRecipe("dustRedstone", "crystalRed", 40);
+        mainPageRecipes.add(Util.GetRecipes.lastReconstructorRecipe());
         addRecipe("gemLapis", "crystalBlue", 40);
+        mainPageRecipes.add(Util.GetRecipes.lastReconstructorRecipe());
         addRecipe("gemDiamond", "crystalLightBlue", 600);
+        mainPageRecipes.add(Util.GetRecipes.lastReconstructorRecipe());
         addRecipe("gemEmerald", "crystalGreen", 1000);
+        mainPageRecipes.add(Util.GetRecipes.lastReconstructorRecipe());
         addRecipe("coal", "crystalBlack", 60);
+        mainPageRecipes.add(Util.GetRecipes.lastReconstructorRecipe());
         addRecipe("ingotIron", "crystalWhite", 80);
+        mainPageRecipes.add(Util.GetRecipes.lastReconstructorRecipe());
 
         //Lenses
         addRecipe("itemLens", "itemColorLens", 5000);
         addRecipe("itemColorLens", "itemLens", 5000);
+        recipeColorLens = Util.GetRecipes.lastReconstructorRecipe();
 
         //Misc
         if(ConfigCrafting.RECONSTRUCTOR_MISC.isEnabled()){
             addRecipe("sand", "soulSand", 20000);
+            recipeSoulSand = Util.GetRecipes.lastReconstructorRecipe();
             addRecipe("blockQuartz", "blockWhiteBrick", 10);
+            recipeWhiteWall = Util.GetRecipes.lastReconstructorRecipe();
             addRecipe("blockQuartz", "blockGreenBrick", 10, LensType.COLOR);
+            recipeGreenWall = Util.GetRecipes.lastReconstructorRecipe();
 
             //Colors
             for(int i = 0; i < TheColoredLampColors.values().length-1; i++){
                 addRecipe("dye"+TheColoredLampColors.values()[i].name, "dye"+TheColoredLampColors.values()[i+1].name, 2000, LensType.COLOR);
+                colorConversionRecipes.add(Util.GetRecipes.lastReconstructorRecipe());
                 addRecipe("wool"+TheColoredLampColors.values()[i].name, "wool"+TheColoredLampColors.values()[i+1].name, 2000, LensType.COLOR);
+                colorConversionRecipes.add(Util.GetRecipes.lastReconstructorRecipe());
                 addRecipe("clay"+TheColoredLampColors.values()[i].name, "clay"+TheColoredLampColors.values()[i+1].name, 2000, LensType.COLOR);
+                colorConversionRecipes.add(Util.GetRecipes.lastReconstructorRecipe());
                 addRecipe("blockGlass"+TheColoredLampColors.values()[i].name, "blockGlass"+TheColoredLampColors.values()[i+1].name, 2000, LensType.COLOR);
+                colorConversionRecipes.add(Util.GetRecipes.lastReconstructorRecipe());
             }
             addRecipe("dye"+TheColoredLampColors.values()[15].name, "dye"+TheColoredLampColors.values()[0].name, 2000, LensType.COLOR);
+            colorConversionRecipes.add(Util.GetRecipes.lastReconstructorRecipe());
             addRecipe("wool"+TheColoredLampColors.values()[15].name, "wool"+TheColoredLampColors.values()[0].name, 2000, LensType.COLOR);
+            colorConversionRecipes.add(Util.GetRecipes.lastReconstructorRecipe());
             addRecipe("clay"+TheColoredLampColors.values()[15].name, "clay"+TheColoredLampColors.values()[0].name, 2000, LensType.COLOR);
+            colorConversionRecipes.add(Util.GetRecipes.lastReconstructorRecipe());
             addRecipe("blockGlass"+TheColoredLampColors.values()[15].name, "blockGlass"+TheColoredLampColors.values()[0].name, 2000, LensType.COLOR);
+            colorConversionRecipes.add(Util.GetRecipes.lastReconstructorRecipe());
         }
     }
 
@@ -105,8 +135,10 @@ public class ReconstructorRecipeHandler{
 
         public ItemStack getFirstOutput(){
             List<ItemStack> stacks = OreDictionary.getOres(this.output, false);
-            if(stacks != null && !stacks.isEmpty()){
-                return stacks.get(0);
+            if(stacks != null && !stacks.isEmpty() && stacks.get(0) != null){
+                ItemStack stack = stacks.get(0).copy();
+                stack.stackSize = 1;
+                return stack;
             }
             return null;
         }
