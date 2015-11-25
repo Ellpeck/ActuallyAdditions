@@ -26,6 +26,7 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
 import java.util.List;
@@ -56,7 +57,6 @@ public class GuiBooklet extends GuiScreen{
     public GuiButton buttonForward;
     public GuiButton buttonBackward;
     public GuiButton buttonPreviousScreen;
-    public GuiButton buttonPreviouslyOpenedGui;
     public GuiButton buttonUpdate;
     public GuiButton buttonTwitter;
     public GuiButton buttonForum;
@@ -143,7 +143,10 @@ public class GuiBooklet extends GuiScreen{
 
     @Override
     public void keyTyped(char theChar, int key){
-        if(key != 1 && this.searchField.isFocused()){
+        if(key == Keyboard.KEY_ESCAPE && this.parentScreen != null){
+            this.mc.displayGuiScreen(this.parentScreen);
+        }
+        else if(this.searchField.isFocused()){
             this.searchField.textboxKeyTyped(theChar, key);
             BookletUtils.updateSearchBar(this);
         }
@@ -164,14 +167,8 @@ public class GuiBooklet extends GuiScreen{
 
     @Override
     public void actionPerformed(GuiButton button){
-        //Handles going to the parent GUI
-        if(button == this.buttonPreviouslyOpenedGui){
-            if(this.parentScreen != null){
-                mc.displayGuiScreen(this.parentScreen);
-            }
-        }
         //Handles update
-        else if(button == this.buttonUpdate){
+        if(button == this.buttonUpdate){
             if(UpdateChecker.needsUpdateNotify){
                 BookletUtils.openBrowser(UpdateChecker.CHANGELOG_LINK, UpdateChecker.DOWNLOAD_LINK);
             }
@@ -230,9 +227,6 @@ public class GuiBooklet extends GuiScreen{
 
         this.buttonPreviousScreen = new BookletUtils.TexturedButton(2, this.guiLeft+this.xSize/2-7, this.guiTop+this.ySize+1, 182, 0, 15, 10);
         this.buttonList.add(this.buttonPreviousScreen);
-
-        this.buttonPreviouslyOpenedGui = new BookletUtils.TexturedButton(3, this.guiLeft-4, this.guiTop+this.ySize+15, 245, 44, 11, 15);
-        this.buttonList.add(this.buttonPreviouslyOpenedGui);
 
         this.buttonUpdate = new BookletUtils.TexturedButton(4, this.guiLeft-11, this.guiTop-11, 245, 0, 11, 11);
         this.buttonUpdate.visible = UpdateChecker.needsUpdateNotify;

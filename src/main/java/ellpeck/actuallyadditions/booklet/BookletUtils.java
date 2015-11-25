@@ -324,7 +324,6 @@ public class BookletUtils{
         booklet.buttonForward.visible = getNextPage(chapter, booklet.currentPage) != null;
         booklet.buttonBackward.visible = getPrevPage(chapter, booklet.currentPage) != null;
         booklet.buttonPreviousScreen.visible = true;
-        booklet.buttonPreviouslyOpenedGui.visible = booklet.parentScreen != null;
 
         for(GuiButton chapterButton : booklet.chapterButtons){
             chapterButton.visible = false;
@@ -368,7 +367,6 @@ public class BookletUtils{
         booklet.buttonPreviousScreen.visible = entry != null;
         booklet.buttonForward.visible = booklet.pageOpenInIndex < booklet.indexPageAmount;
         booklet.buttonBackward.visible = booklet.pageOpenInIndex > 1;
-        booklet.buttonPreviouslyOpenedGui.visible = booklet.parentScreen != null;
 
         for(int i = 0; i < booklet.chapterButtons.length; i++){
             IndexButton button = (IndexButton)booklet.chapterButtons[i];
