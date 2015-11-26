@@ -1,3 +1,18 @@
+# 1.7.10-r8
+- Added Lens Mechanic for the Reconstructor
+- Added Color Cycling Recipes for wool, stained clay and stained glass for the Reconstructor
+- Added Booklet Stand
+- Made Drill fire block breaking event
+- Fix some blocks not working with the Drill
+- Fixed a bug where items would be deleted when exiting the booklet sometimes
+- Fixed Solar Panel working even though blocked
+- Made text for bugged items less dumb
+- Removed german lang file as it's neither getting used nor updated
+##### (If you want to localize ActAdd in any language yourself, just make a pull request!)
+- Fix Reconstructor not using the right amount of energy for items
+- Made Update Checker show after a certain amount of time
+- Made Drill harvest slowly instead of not at all when out of energy
+
 # 1.7.10-r7
 - Made the Atomic Reconstructor save its power
 - Added Automation Tutorial for Atomic Reconstructor
