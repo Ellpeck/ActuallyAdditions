@@ -51,11 +51,20 @@ public class TileEntityFurnaceSolar extends TileEntityBase implements IEnergyPro
         this.storage.readFromNBT(compound);
     }
 
+    public boolean hasBlockAbove(){
+        for(int y = yCoord+1; y <= worldObj.getHeight(); y++){
+            if(!worldObj.getBlock(xCoord, y, zCoord).isAir(worldObj, xCoord, y, zCoord)){
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Override
     public void updateEntity(){
         super.updateEntity();
         if(!worldObj.isRemote){
-            if(worldObj.canBlockSeeTheSky(xCoord, yCoord, zCoord) && worldObj.isDaytime()){
+            if(!this.hasBlockAbove() && worldObj.isDaytime()){
                 if(ConfigIntValues.FURNACE_SOLAR_ENERGY_PRODUCED.getValue() <= this.getMaxEnergyStored(ForgeDirection.UNKNOWN)-this.getEnergyStored(ForgeDirection.UNKNOWN)){
                     this.storage.receiveEnergy(ConfigIntValues.FURNACE_SOLAR_ENERGY_PRODUCED.getValue(), false);
                     this.markDirty();
