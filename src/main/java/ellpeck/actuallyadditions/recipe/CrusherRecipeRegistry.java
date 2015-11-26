@@ -31,7 +31,6 @@ public class CrusherRecipeRegistry{
 
     public static void registerFinally(){
         ArrayList<String> oresNoResult = new ArrayList<String>();
-        int recipesAdded = 0;
         int recipeStartedAt = recipes.size();
 
         for(String ore : OreDictionary.getOreNames()){
@@ -44,7 +43,6 @@ public class CrusherRecipeRegistry{
                             if(!hasRecipe(ore)){
                                 if(!OreDictionary.getOres(output, false).isEmpty() && !OreDictionary.getOres(ore, false).isEmpty()){
                                     addRecipe(ore, output, theCase.resultAmount);
-                                    recipesAdded++;
                                 }
                                 else{
                                     oresNoResult.add(ore);
@@ -63,7 +61,7 @@ public class CrusherRecipeRegistry{
             CrusherRecipe recipe = recipes.get(i);
             addedRecipes.add(recipe.input+" -> "+recipe.outputOneAmount+"x "+recipe.outputOne);
         }
-        ModUtil.LOGGER.info("Added "+recipesAdded+" Crusher Recipes automatically: "+addedRecipes.toString());
+        ModUtil.LOGGER.info("Added "+addedRecipes.size()+" Crusher Recipes automatically: "+addedRecipes.toString());
         ModUtil.LOGGER.warn("Couldn't add "+oresNoResult.size()+" Crusher Recipes automatically because the inputs were missing outputs: "+oresNoResult.toString());
     }
 
