@@ -91,6 +91,7 @@ public class BlockBookletStand extends BlockContainerBase implements IActAddItem
             //Assign a UUID
             if(tile.assignedPlayerUUID == null){
                 tile.assignedPlayerUUID = player.getUniqueID();
+                tile.markDirty();
                 world.markBlockForUpdate(x, y, z);
             }
         }
