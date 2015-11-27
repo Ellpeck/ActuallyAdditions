@@ -28,41 +28,41 @@ public class NEIActuallyAdditionsConfig implements IConfigureNEI{
         API.registerGuiOverlay(GuiCrafter.class, "crafting");
         API.registerGuiOverlayHandler(GuiCrafter.class, new DefaultOverlayHandler(), "crafting");
 
-        CrusherRecipeHandler crusherRecipeHandler = new CrusherRecipeHandler();
-        API.registerRecipeHandler(crusherRecipeHandler);
-        API.registerUsageHandler(crusherRecipeHandler);
+        NEICrusherRecipe crusherRecipe = new NEICrusherRecipe();
+        API.registerRecipeHandler(crusherRecipe);
+        API.registerUsageHandler(crusherRecipe);
 
-        CrusherRecipeHandler.CrusherDoubleRecipeHandler crusherDoubleRecipeHandler = new CrusherRecipeHandler.CrusherDoubleRecipeHandler();
-        API.registerRecipeHandler(crusherDoubleRecipeHandler);
-        API.registerUsageHandler(crusherDoubleRecipeHandler);
+        NEICrusherRecipe.Double crusherDoubleRecipe = new NEICrusherRecipe.Double();
+        API.registerRecipeHandler(crusherDoubleRecipe);
+        API.registerUsageHandler(crusherDoubleRecipe);
 
-        FurnaceDoubleRecipeHandler furnaceDoubleRecipeHandler = new FurnaceDoubleRecipeHandler();
-        API.registerRecipeHandler(furnaceDoubleRecipeHandler);
-        API.registerUsageHandler(furnaceDoubleRecipeHandler);
+        NEIFurnaceDoubleRecipe furnaceDoubleRecipe = new NEIFurnaceDoubleRecipe();
+        API.registerRecipeHandler(furnaceDoubleRecipe);
+        API.registerUsageHandler(furnaceDoubleRecipe);
 
-        HairyBallRecipeHandler ballRecipeHandler = new HairyBallRecipeHandler();
-        API.registerRecipeHandler(ballRecipeHandler);
-        API.registerUsageHandler(ballRecipeHandler);
+        NEIHairyBallRecipe ballRecipe = new NEIHairyBallRecipe();
+        API.registerRecipeHandler(ballRecipe);
+        API.registerUsageHandler(ballRecipe);
 
-        TreasureChestRecipeHandler treasureRecipeHandler = new TreasureChestRecipeHandler();
-        API.registerRecipeHandler(treasureRecipeHandler);
-        API.registerUsageHandler(treasureRecipeHandler);
+        NEITreasureChestRecipe treasureChestRecipe = new NEITreasureChestRecipe();
+        API.registerRecipeHandler(treasureChestRecipe);
+        API.registerUsageHandler(treasureChestRecipe);
 
-        CompostRecipeHandler compostRecipeHandler = new CompostRecipeHandler();
-        API.registerRecipeHandler(compostRecipeHandler);
-        API.registerUsageHandler(compostRecipeHandler);
+        NEICompostRecipe compostRecipe = new NEICompostRecipe();
+        API.registerRecipeHandler(compostRecipe);
+        API.registerUsageHandler(compostRecipe);
 
-        CoffeeMachineRecipeHandler coffeeMachineRecipeHandler = new CoffeeMachineRecipeHandler();
-        API.registerRecipeHandler(coffeeMachineRecipeHandler);
-        API.registerUsageHandler(coffeeMachineRecipeHandler);
+        NEICoffeeMachineRecipe coffeeMachineRecipe = new NEICoffeeMachineRecipe();
+        API.registerRecipeHandler(coffeeMachineRecipe);
+        API.registerUsageHandler(coffeeMachineRecipe);
 
-        AtomicReconstructorRecipeHandler atomicReconstructorRecipeHandler = new AtomicReconstructorRecipeHandler();
-        API.registerRecipeHandler(atomicReconstructorRecipeHandler);
-        API.registerUsageHandler(atomicReconstructorRecipeHandler);
+        NEIReconstructorRecipe reconstructorRecipe = new NEIReconstructorRecipe();
+        API.registerRecipeHandler(reconstructorRecipe);
+        API.registerUsageHandler(reconstructorRecipe);
 
-        BookletInfoRecipeHandler bookletInfoRecipeHandler = new BookletInfoRecipeHandler();
-        API.registerRecipeHandler(bookletInfoRecipeHandler);
-        API.registerUsageHandler(bookletInfoRecipeHandler);
+        NEIBookletRecipe bookletRecipe = new NEIBookletRecipe();
+        API.registerRecipeHandler(bookletRecipe);
+        API.registerUsageHandler(bookletRecipe);
 
         API.hideItem(new ItemStack(InitBlocks.blockRice));
         API.hideItem(new ItemStack(InitBlocks.blockCanola));

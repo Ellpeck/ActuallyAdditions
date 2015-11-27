@@ -30,11 +30,11 @@ import org.lwjgl.opengl.GL11;
 import java.awt.*;
 import java.util.List;
 
-public class BookletInfoRecipeHandler extends TemplateRecipeHandler implements INeiRecipeHandler{
+public class NEIBookletRecipe extends TemplateRecipeHandler implements INEIRecipeHandler{
 
     public static final String NAME = "actuallyadditions.booklet";
 
-    public BookletInfoRecipeHandler(){
+    public NEIBookletRecipe(){
         RecipeInfo.setGuiOffset(this.getGuiClass(), 0, 0);
     }
 
@@ -51,7 +51,7 @@ public class BookletInfoRecipeHandler extends TemplateRecipeHandler implements I
     @SuppressWarnings("unchecked")
     @Override
     public void loadCraftingRecipes(String outputId, Object... results){
-        if(outputId.equals(NAME) && getClass() == BookletInfoRecipeHandler.class){
+        if(outputId.equals(NAME) && getClass() == NEIBookletRecipe.class){
             for(BookletPage page : InitBooklet.pagesWithItemStackData){
                 for(ItemStack stack : page.getItemStacksForPage()){
                     arecipes.add(new CachedInfoStack(stack));

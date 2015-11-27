@@ -28,11 +28,11 @@ import org.lwjgl.opengl.GL11;
 import java.awt.*;
 import java.util.Collections;
 
-public class CompostRecipeHandler extends TemplateRecipeHandler implements INeiRecipeHandler{
+public class NEICompostRecipe extends TemplateRecipeHandler implements INEIRecipeHandler{
 
     public static final String NAME = "actuallyadditions.compost";
 
-    public CompostRecipeHandler(){
+    public NEICompostRecipe(){
         super();
         RecipeInfo.setGuiOffset(this.getGuiClass(), 0, 0);
     }
@@ -54,7 +54,7 @@ public class CompostRecipeHandler extends TemplateRecipeHandler implements INeiR
 
     @Override
     public void loadCraftingRecipes(String outputId, Object... results){
-        if(outputId.equals(NAME) && getClass() == CompostRecipeHandler.class){
+        if(outputId.equals(NAME) && getClass() == NEICompostRecipe.class){
             arecipes.add(new CachedCompostRecipe(new ItemStack(InitItems.itemMisc, ConfigIntValues.COMPOST_AMOUNT.getValue(), TheMiscItems.MASHED_FOOD.ordinal()), new ItemStack(InitItems.itemFertilizer, ConfigIntValues.COMPOST_AMOUNT.getValue())));
         }
         else{

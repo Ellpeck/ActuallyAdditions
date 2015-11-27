@@ -31,11 +31,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class AtomicReconstructorRecipeHandler extends TemplateRecipeHandler implements INeiRecipeHandler{
+public class NEIReconstructorRecipe extends TemplateRecipeHandler implements INEIRecipeHandler{
 
     public static final String NAME = "actuallyadditions.reconstructor";
 
-    public AtomicReconstructorRecipeHandler(){
+    public NEIReconstructorRecipe(){
         super();
         RecipeInfo.setGuiOffset(this.getGuiClass(), 0, 0);
     }
@@ -57,7 +57,7 @@ public class AtomicReconstructorRecipeHandler extends TemplateRecipeHandler impl
 
     @Override
     public void loadCraftingRecipes(String outputId, Object... results){
-        if(outputId.equals(NAME) && getClass() == AtomicReconstructorRecipeHandler.class){
+        if(outputId.equals(NAME) && getClass() == NEIReconstructorRecipe.class){
             ArrayList<ReconstructorRecipeHandler.Recipe> recipes = ReconstructorRecipeHandler.recipes;
             for(ReconstructorRecipeHandler.Recipe recipe : recipes){
                 arecipes.add(new CachedReconstructorRecipe(recipe.input, recipe.output, recipe.type.lens));

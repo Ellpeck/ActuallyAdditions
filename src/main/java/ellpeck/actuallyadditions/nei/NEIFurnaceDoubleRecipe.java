@@ -29,11 +29,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-public class FurnaceDoubleRecipeHandler extends TemplateRecipeHandler implements INeiRecipeHandler{
+public class NEIFurnaceDoubleRecipe extends TemplateRecipeHandler implements INEIRecipeHandler{
 
     public static final String NAME = "actuallyadditions.furnaceDouble";
 
-    public FurnaceDoubleRecipeHandler(){
+    public NEIFurnaceDoubleRecipe(){
         RecipeInfo.setGuiOffset(this.getGuiClass(), 0, 0);
     }
 
@@ -51,7 +51,7 @@ public class FurnaceDoubleRecipeHandler extends TemplateRecipeHandler implements
     @SuppressWarnings("unchecked")
     @Override
     public void loadCraftingRecipes(String outputId, Object... results){
-        if(outputId.equals(NAME) && getClass() == FurnaceDoubleRecipeHandler.class){
+        if(outputId.equals(NAME) && getClass() == NEIFurnaceDoubleRecipe.class){
             Map<ItemStack, ItemStack> recipes = (Map<ItemStack, ItemStack>)FurnaceRecipes.smelting().getSmeltingList();
             for(Map.Entry<ItemStack, ItemStack> recipe : recipes.entrySet()){
                 arecipes.add(new CachedFurn(recipe.getKey(), recipe.getValue()));

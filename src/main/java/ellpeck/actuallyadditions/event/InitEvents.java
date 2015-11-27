@@ -12,7 +12,7 @@ package ellpeck.actuallyadditions.event;
 
 import cpw.mods.fml.common.Loader;
 import ellpeck.actuallyadditions.config.values.ConfigBoolValues;
-import ellpeck.actuallyadditions.nei.NeiScreenEvents;
+import ellpeck.actuallyadditions.nei.NEIScreenEvents;
 import ellpeck.actuallyadditions.update.UpdateCheckerClientNotificationEvent;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.Util;
@@ -36,7 +36,7 @@ public class InitEvents{
         Util.registerEvent(new TooltipEvent());
 
         if(Loader.isModLoaded("NotEnoughItems")){
-            Util.registerEvent(new NeiScreenEvents());
+            Util.registerEvent(new NEIScreenEvents());
         }
 
         if(ConfigBoolValues.DO_UPDATE_CHECK.isEnabled()){

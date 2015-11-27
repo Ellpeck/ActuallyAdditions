@@ -29,9 +29,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class CrusherRecipeHandler extends TemplateRecipeHandler implements INeiRecipeHandler{
+public class NEICrusherRecipe extends TemplateRecipeHandler implements INEIRecipeHandler{
 
-    public CrusherRecipeHandler(){
+    public NEICrusherRecipe(){
         RecipeInfo.setGuiOffset(this.getGuiClass(), 0, 0);
     }
 
@@ -47,7 +47,7 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler implements INeiR
 
     @Override
     public void loadCraftingRecipes(String outputId, Object... results){
-        if(outputId.equals(this.getName()) && (getClass() == CrusherRecipeHandler.class || getClass() == CrusherDoubleRecipeHandler.class)){
+        if(outputId.equals(this.getName()) && (getClass() == NEICrusherRecipe.class || getClass() == Double.class)){
             for(CrusherRecipeRegistry.CrusherRecipe recipe : CrusherRecipeRegistry.recipes){
                 arecipes.add(new CachedCrush(recipe.getRecipeInputs(), recipe.getRecipeOutputOnes(), recipe.getRecipeOutputTwos(), recipe.outputTwoChance, this));
             }
@@ -120,7 +120,7 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler implements INeiR
     }
 
     protected String getName(){
-        return "actuallyadditions."+(this instanceof CrusherDoubleRecipeHandler ? "crushingDouble" : "crushing");
+        return "actuallyadditions."+(this instanceof Double ? "crushingDouble" : "crushing");
     }
 
     @Override
@@ -128,7 +128,7 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler implements INeiR
         return StringUtil.localize("container.nei."+this.getName()+".name");
     }
 
-    public static class CrusherDoubleRecipeHandler extends CrusherRecipeHandler{
+    public static class Double extends NEICrusherRecipe{
 
         @Override
         public ItemStack getStackForInfo(int page){
@@ -172,8 +172,8 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler implements INeiR
         public PositionedStack resultTwo;
         public int secondChance;
 
-        public CachedCrush(List<ItemStack> in, List<ItemStack> outOne, List<ItemStack> outTwo, int secondChance, CrusherRecipeHandler handler){
-            boolean isDouble = handler instanceof CrusherDoubleRecipeHandler;
+        public CachedCrush(List<ItemStack> in, List<ItemStack> outOne, List<ItemStack> outTwo, int secondChance, NEICrusherRecipe handler){
+            boolean isDouble = handler instanceof Double;
             this.ingredient = new PositionedStack(in, isDouble ? 51 : 80, 21);
             this.resultOne = new PositionedStack(outOne, isDouble ? 38 : 66, 69);
             if(outTwo != null && !outTwo.isEmpty()){

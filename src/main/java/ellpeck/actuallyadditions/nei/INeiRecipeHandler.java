@@ -12,7 +12,7 @@ package ellpeck.actuallyadditions.nei;
 
 import net.minecraft.item.ItemStack;
 
-public interface INeiRecipeHandler{
+public interface INEIRecipeHandler{
 
     ItemStack getStackForInfo(int page);
 }

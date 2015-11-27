@@ -32,11 +32,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class CoffeeMachineRecipeHandler extends TemplateRecipeHandler implements INeiRecipeHandler{
+public class NEICoffeeMachineRecipe extends TemplateRecipeHandler implements INEIRecipeHandler{
 
     public static final String NAME = "actuallyadditions.coffee";
 
-    public CoffeeMachineRecipeHandler(){
+    public NEICoffeeMachineRecipe(){
         super();
         RecipeInfo.setGuiOffset(this.getGuiClass(), 35, 3);
     }
@@ -54,7 +54,7 @@ public class CoffeeMachineRecipeHandler extends TemplateRecipeHandler implements
 
     @Override
     public void loadCraftingRecipes(String outputId, Object... results){
-        if(outputId.equals(NAME) && getClass() == CoffeeMachineRecipeHandler.class){
+        if(outputId.equals(NAME) && getClass() == NEICoffeeMachineRecipe.class){
             ArrayList<ItemCoffee.Ingredient> ingredients = ItemCoffee.ingredients;
             for(ItemCoffee.Ingredient ingredient : ingredients){
                 arecipes.add(new CachedCoffee(ingredient));

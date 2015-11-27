@@ -23,7 +23,7 @@ import ellpeck.actuallyadditions.util.StringUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.event.GuiScreenEvent;
 
-public class NeiScreenEvents{
+public class NEIScreenEvents{
 
     private static final int NEI_BUTTON_ID = 123782;
     private BookletUtils.TexturedButton neiButton;
@@ -52,7 +52,7 @@ public class NeiScreenEvents{
 
             event.buttonList.add(this.neiButton);
             IRecipeHandler handler = theGui.getCurrentRecipeHandlers().get(theGui.recipetype);
-            this.neiButton.visible = handler instanceof INeiRecipeHandler && ((INeiRecipeHandler)handler).getStackForInfo(theGui.page) != null;
+            this.neiButton.visible = handler instanceof INEIRecipeHandler && ((INEIRecipeHandler)handler).getStackForInfo(theGui.page) != null;
         }
     }
 
@@ -62,12 +62,12 @@ public class NeiScreenEvents{
             GuiRecipe theGui = (GuiRecipe)event.gui;
 
             IRecipeHandler handler = theGui.getCurrentRecipeHandlers().get(theGui.recipetype);
-            boolean isPage = handler instanceof INeiRecipeHandler && ((INeiRecipeHandler)handler).getStackForInfo(theGui.page) != null;
+            boolean isPage = handler instanceof INEIRecipeHandler && ((INEIRecipeHandler)handler).getStackForInfo(theGui.page) != null;
             this.neiButton.visible = isPage;
 
             if(isPage && event.button.id == NEI_BUTTON_ID){
                 for(BookletPage page : InitBooklet.pagesWithItemStackData){
-                    if(ItemUtil.contains(page.getItemStacksForPage(), ((INeiRecipeHandler)handler).getStackForInfo(theGui.page), true)){
+                    if(ItemUtil.contains(page.getItemStacksForPage(), ((INEIRecipeHandler)handler).getStackForInfo(theGui.page), true)){
                         GuiBooklet book = new GuiBooklet(Minecraft.getMinecraft().currentScreen, false, true);
                         Minecraft.getMinecraft().displayGuiScreen(book);
                         BookletUtils.openIndexEntry(book, page.getChapter().entry, InitBooklet.entries.indexOf(page.getChapter().entry)/GuiBooklet.CHAPTER_BUTTONS_AMOUNT+1, true);
