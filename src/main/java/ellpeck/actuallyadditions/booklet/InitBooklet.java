@@ -16,7 +16,6 @@ import ellpeck.actuallyadditions.blocks.metalists.TheMiscBlocks;
 import ellpeck.actuallyadditions.booklet.chapter.BookletChapter;
 import ellpeck.actuallyadditions.booklet.chapter.BookletChapterCoffee;
 import ellpeck.actuallyadditions.booklet.chapter.BookletChapterCrusher;
-import ellpeck.actuallyadditions.booklet.chapter.BookletChapterReconstructor;
 import ellpeck.actuallyadditions.booklet.entry.BookletEntry;
 import ellpeck.actuallyadditions.booklet.entry.BookletEntryAllSearch;
 import ellpeck.actuallyadditions.booklet.page.*;
@@ -56,7 +55,7 @@ public class InitBooklet{
         //Getting Started
         chapterIntro = new BookletChapter("intro", entryGettingStarted, new ItemStack(InitItems.itemLexicon), new PageTextOnly(1), new PageTextOnly(2), new PageTextOnly(3));
         new BookletChapter("bookTutorial", entryGettingStarted, new ItemStack(InitItems.itemLexicon), new PageTextOnly(1), new PageTextOnly(2), new PageCrafting(3, ItemCrafting.recipeBook));
-        new BookletChapterReconstructor("crystals", entryGettingStarted, new ItemStack(InitBlocks.blockAtomicReconstructor), new PageTextOnly(1).addTextReplacement("<rf>", ConfigIntValues.RECONSTRUCTOR_BASE_ENERGY_USE.getValue()), new PageTextOnly(2), new PagePicture(3, "pageAtomicReconstructor", 0).setNoText(), new PageTextOnly(4), new PageCrafting(5, BlockCrafting.recipeAtomicReconstructor).setNoText(), new PageCrafting(6, ItemCrafting.recipeLens).setNoText()).setSpecial();
+        new BookletChapter("crystals", entryGettingStarted, new ItemStack(InitBlocks.blockAtomicReconstructor), new PageTextOnly(1).addTextReplacement("<rf>", ConfigIntValues.RECONSTRUCTOR_BASE_ENERGY_USE.getValue()), new PageTextOnly(2), new PagePicture(3, "pageAtomicReconstructor", 0).setNoText(), new PageTextOnly(4), new PageCrafting(5, BlockCrafting.recipeAtomicReconstructor).setNoText(), new PageCrafting(6, ItemCrafting.recipeLens).setNoText(), new PageCrafting(7, MiscCrafting.recipesCrystals).setNoText(), new PageCrafting(8, MiscCrafting.recipesCrystalBlocks).setNoText(), new PageReconstructor(9, ReconstructorRecipeHandler.mainPageRecipes).setNoText()).setSpecial();
         new BookletChapter("coalGen", entryGettingStarted, new ItemStack(InitBlocks.blockCoalGenerator), new PageCrafting(1, BlockCrafting.recipeCoalGen).addTextReplacement("<rf>", ConfigIntValues.COAL_GEN_ENERGY_PRODUCED.getValue()));
         new BookletChapter("craftingIngs", entryGettingStarted, new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL.ordinal()), new PageTextOnly(1), new PageCrafting(2, ItemCrafting.recipeCoil).setNoText(), new PageCrafting(3, ItemCrafting.recipeCoilAdvanced).setNoText(), new PageCrafting(4, BlockCrafting.recipeCase).setNoText(), new PageCrafting(5, BlockCrafting.recipeStoneCase).setNoText(), new PageCrafting(6, BlockCrafting.recipeEnderPearlBlock).setNoText(), new PageCrafting(7, BlockCrafting.recipeEnderCase).setNoText(), new PageCrafting(8, ItemCrafting.recipeRing).setNoText(), new PageCrafting(9, ItemCrafting.recipeKnifeHandle).setNoText(), new PageCrafting(10, ItemCrafting.recipeKnifeBlade).setNoText(), new PageCrafting(11, ItemCrafting.recipeKnife).setNoText(), new PageCrafting(12, ItemCrafting.recipeDough).setNoText(), new PageCrafting(13, ItemCrafting.recipeRiceDough).setNoText(), new PageCrafting(14, BlockCrafting.recipeIronCase).setNoText()).setImportant();
 

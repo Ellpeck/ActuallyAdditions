@@ -431,6 +431,21 @@ public class BookletUtils{
         }
     }
 
+    public static ArrayList<BookletPage> getPagesForStack(ItemStack stack){
+        ArrayList<BookletPage> possiblePages = new ArrayList<BookletPage>();
+        for(BookletPage page : InitBooklet.pagesWithItemStackData){
+            if(ItemUtil.contains(page.getItemStacksForPage(), stack, true)){
+                possiblePages.add(page);
+            }
+        }
+        return possiblePages;
+    }
+
+    public static BookletPage getFirstPageForStack(ItemStack stack){
+        ArrayList<BookletPage> pages = getPagesForStack(stack);
+        return pages.isEmpty() ? null : pages.get(0);
+    }
+
     public static class TexturedButton extends GuiButton{
 
         public int texturePosX;

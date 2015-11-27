@@ -16,6 +16,8 @@ import codechicken.nei.PositionedStack;
 import codechicken.nei.recipe.RecipeInfo;
 import codechicken.nei.recipe.TemplateRecipeHandler;
 import ellpeck.actuallyadditions.blocks.InitBlocks;
+import ellpeck.actuallyadditions.booklet.BookletUtils;
+import ellpeck.actuallyadditions.booklet.page.BookletPage;
 import ellpeck.actuallyadditions.recipe.TreasureChestHandler;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
@@ -37,8 +39,8 @@ public class NEITreasureChestRecipe extends TemplateRecipeHandler implements INE
     }
 
     @Override
-    public ItemStack getStackForInfo(int page){
-        return new ItemStack(InitBlocks.blockTreasureChest);
+    public BookletPage getPageForInfo(int page){
+        return BookletUtils.getFirstPageForStack(new ItemStack(InitBlocks.blockTreasureChest));
     }
 
     @Override

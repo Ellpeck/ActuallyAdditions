@@ -14,6 +14,7 @@ import codechicken.lib.gui.GuiDraw;
 import codechicken.nei.PositionedStack;
 import codechicken.nei.recipe.RecipeInfo;
 import codechicken.nei.recipe.TemplateRecipeHandler;
+import ellpeck.actuallyadditions.booklet.BookletUtils;
 import ellpeck.actuallyadditions.booklet.InitBooklet;
 import ellpeck.actuallyadditions.booklet.chapter.BookletChapter;
 import ellpeck.actuallyadditions.booklet.page.BookletPage;
@@ -28,6 +29,7 @@ import net.minecraft.util.EnumChatFormatting;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class NEIBookletRecipe extends TemplateRecipeHandler implements INEIRecipeHandler{
@@ -39,8 +41,8 @@ public class NEIBookletRecipe extends TemplateRecipeHandler implements INEIRecip
     }
 
     @Override
-    public ItemStack getStackForInfo(int page){
-        return ((CachedInfoStack)this.arecipes.get(page)).theStack;
+    public BookletPage getPageForInfo(int page){
+        return ((CachedInfoStack)this.arecipes.get(page)).thePage;
     }
 
     @Override
@@ -53,8 +55,15 @@ public class NEIBookletRecipe extends TemplateRecipeHandler implements INEIRecip
     public void loadCraftingRecipes(String outputId, Object... results){
         if(outputId.equals(NAME) && getClass() == NEIBookletRecipe.class){
             for(BookletPage page : InitBooklet.pagesWithItemStackData){
-                for(ItemStack stack : page.getItemStacksForPage()){
-                    arecipes.add(new CachedInfoStack(stack));
+                ItemStack[] stacks = page.getItemStacksForPage();
+
+                //So that you don't see things like Mashed Food more than once
+                ArrayList<ItemStack> nonDoubleStacks = new ArrayList<ItemStack>();
+                for(ItemStack stack : stacks){
+                    if(!ItemUtil.contains(nonDoubleStacks, stack, true)){
+                        arecipes.add(new CachedInfoStack(stack, page));
+                        nonDoubleStacks.add(stack);
+                    }
                 }
             }
         }
@@ -66,22 +75,20 @@ public class NEIBookletRecipe extends TemplateRecipeHandler implements INEIRecip
     @SuppressWarnings("unchecked")
     @Override
     public void loadCraftingRecipes(ItemStack result){
-        for(BookletPage page : InitBooklet.pagesWithItemStackData){
-            if(ItemUtil.contains(page.getItemStacksForPage(), result, true)){
-                CachedInfoStack theRecipe = new CachedInfoStack(result);
-                arecipes.add(theRecipe);
-            }
+        ArrayList<BookletPage> allPages = BookletUtils.getPagesForStack(result);
+        for(BookletPage page : allPages){
+            CachedInfoStack theRecipe = new CachedInfoStack(result, page);
+            arecipes.add(theRecipe);
         }
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public void loadUsageRecipes(ItemStack ingredient){
-        for(BookletPage page : InitBooklet.pagesWithItemStackData){
-            if(ItemUtil.contains(page.getItemStacksForPage(), ingredient, true)){
-                CachedInfoStack theRecipe = new CachedInfoStack(ingredient);
-                arecipes.add(theRecipe);
-            }
+        ArrayList<BookletPage> allPages = BookletUtils.getPagesForStack(ingredient);
+        for(BookletPage page : allPages){
+            CachedInfoStack theRecipe = new CachedInfoStack(ingredient, page);
+            arecipes.add(theRecipe);
         }
     }
 
@@ -104,19 +111,15 @@ public class NEIBookletRecipe extends TemplateRecipeHandler implements INEIRecip
                 GuiDraw.drawString((String)header.get(i), 0, 18+i*(Minecraft.getMinecraft().fontRenderer.FONT_HEIGHT+1), 0, false);
             }
 
-            for(BookletPage page : InitBooklet.pagesWithItemStackData){
-                if(ItemUtil.contains(page.getItemStacksForPage(), stack.theStack, true)){
-                    int maxLines = 6;
-
-                    BookletChapter chapter = page.getChapter();
-                    String aText = (chapter.pages[0] instanceof PagePicture && chapter.pages.length > 1 ? chapter.pages[1] : chapter.pages[0]).getText();
-                    List text = Minecraft.getMinecraft().fontRenderer.listFormattedStringToWidth(aText != null ? aText : EnumChatFormatting.DARK_RED+StringUtil.localize("container.nei."+ModUtil.MOD_ID_LOWER+".booklet.noText"), 165);
-                    for(int i = 0; i < Math.min(maxLines, text.size()); i++){
-                        GuiDraw.drawString(text.get(i)+(i == maxLines-1 && text.size() > maxLines ? EnumChatFormatting.RESET+""+EnumChatFormatting.BLACK+"..." : ""), 0, 18+25+i*(Minecraft.getMinecraft().fontRenderer.FONT_HEIGHT+1), 0, false);
-                    }
-                    break;
-                }
+            int maxLines = 5;
+            BookletChapter chapter = stack.thePage.getChapter();
+            String aText = (chapter.pages[0] instanceof PagePicture && chapter.pages.length > 1 ? chapter.pages[1] : chapter.pages[0]).getText();
+            List text = Minecraft.getMinecraft().fontRenderer.listFormattedStringToWidth(aText != null ? aText : EnumChatFormatting.DARK_RED+StringUtil.localize("container.nei."+ModUtil.MOD_ID_LOWER+".booklet.noText"), 165);
+            for(int i = 0; i < Math.min(maxLines, text.size()); i++){
+                GuiDraw.drawString(text.get(i)+(i == maxLines-1 && text.size() > maxLines ? EnumChatFormatting.RESET+""+EnumChatFormatting.BLACK+"..." : ""), 0, 18+25+i*(Minecraft.getMinecraft().fontRenderer.FONT_HEIGHT+1), 0, false);
             }
+            GuiDraw.drawString(EnumChatFormatting.GOLD+chapter.getLocalizedName(), 0, 95, 0, false);
+            GuiDraw.drawString(EnumChatFormatting.GOLD+"Page "+stack.thePage.getID(), 0, 105, 0, false);
         }
     }
 
@@ -150,9 +153,11 @@ public class NEIBookletRecipe extends TemplateRecipeHandler implements INEIRecip
     public class CachedInfoStack extends CachedRecipe{
 
         public ItemStack theStack;
+        public BookletPage thePage;
 
-        public CachedInfoStack(ItemStack theStack){
+        public CachedInfoStack(ItemStack theStack, BookletPage thePage){
             this.theStack = theStack;
+            this.thePage = thePage;
         }
 
         @Override

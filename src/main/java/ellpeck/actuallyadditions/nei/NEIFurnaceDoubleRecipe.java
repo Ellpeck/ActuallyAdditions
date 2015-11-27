@@ -16,6 +16,8 @@ import codechicken.nei.PositionedStack;
 import codechicken.nei.recipe.RecipeInfo;
 import codechicken.nei.recipe.TemplateRecipeHandler;
 import ellpeck.actuallyadditions.blocks.InitBlocks;
+import ellpeck.actuallyadditions.booklet.BookletUtils;
+import ellpeck.actuallyadditions.booklet.page.BookletPage;
 import ellpeck.actuallyadditions.inventory.gui.GuiFurnaceDouble;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
@@ -38,8 +40,8 @@ public class NEIFurnaceDoubleRecipe extends TemplateRecipeHandler implements INE
     }
 
     @Override
-    public ItemStack getStackForInfo(int page){
-        return new ItemStack(InitBlocks.blockFurnaceDouble);
+    public BookletPage getPageForInfo(int page){
+        return BookletUtils.getFirstPageForStack(new ItemStack(InitBlocks.blockFurnaceDouble));
     }
 
     @Override

@@ -16,6 +16,8 @@ import codechicken.nei.PositionedStack;
 import codechicken.nei.recipe.RecipeInfo;
 import codechicken.nei.recipe.TemplateRecipeHandler;
 import ellpeck.actuallyadditions.blocks.InitBlocks;
+import ellpeck.actuallyadditions.booklet.BookletUtils;
+import ellpeck.actuallyadditions.booklet.page.BookletPage;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.inventory.gui.GuiCoffeeMachine;
 import ellpeck.actuallyadditions.items.InitItems;
@@ -42,8 +44,8 @@ public class NEICoffeeMachineRecipe extends TemplateRecipeHandler implements INE
     }
 
     @Override
-    public ItemStack getStackForInfo(int page){
-        return new ItemStack(InitBlocks.blockCoffeeMachine);
+    public BookletPage getPageForInfo(int page){
+        return BookletUtils.getFirstPageForStack(new ItemStack(InitBlocks.blockCoffeeMachine));
     }
 
     @Override

@@ -14,7 +14,6 @@ import ellpeck.actuallyadditions.booklet.BookletUtils;
 import ellpeck.actuallyadditions.booklet.GuiBooklet;
 import ellpeck.actuallyadditions.booklet.InitBooklet;
 import ellpeck.actuallyadditions.booklet.chapter.BookletChapter;
-import ellpeck.actuallyadditions.util.ItemUtil;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
 import net.minecraft.client.Minecraft;
@@ -143,17 +142,14 @@ public class BookletPage{
         }
 
         if(checkAndTransfer){
-            for(BookletPage page : InitBooklet.pagesWithItemStackData){
-                if(ItemUtil.contains(page.getItemStacksForPage(), stack, true)){
-                    list.add(EnumChatFormatting.GOLD+StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".clickToSeeRecipe"));
+            BookletPage page = BookletUtils.getFirstPageForStack(stack);
+            if(page != null){
+                list.add(EnumChatFormatting.GOLD+StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".clickToSeeRecipe"));
 
-                    if(mousePressed){
-                        BookletUtils.openIndexEntry(gui, page.getChapter().entry, InitBooklet.entries.indexOf(page.getChapter().entry)/GuiBooklet.CHAPTER_BUTTONS_AMOUNT+1, true);
-                        BookletUtils.openChapter(gui, page.getChapter(), page);
-                        Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.func_147674_a(new ResourceLocation("gui.button.press"), 1.0F));
-                    }
-
-                    break;
+                if(mousePressed){
+                    BookletUtils.openIndexEntry(gui, page.getChapter().entry, InitBooklet.entries.indexOf(page.getChapter().entry)/GuiBooklet.CHAPTER_BUTTONS_AMOUNT+1, true);
+                    BookletUtils.openChapter(gui, page.getChapter(), page);
+                    Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.func_147674_a(new ResourceLocation("gui.button.press"), 1.0F));
                 }
             }
         }

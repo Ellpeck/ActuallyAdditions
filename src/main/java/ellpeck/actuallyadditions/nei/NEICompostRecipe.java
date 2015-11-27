@@ -16,6 +16,8 @@ import codechicken.nei.PositionedStack;
 import codechicken.nei.recipe.RecipeInfo;
 import codechicken.nei.recipe.TemplateRecipeHandler;
 import ellpeck.actuallyadditions.blocks.InitBlocks;
+import ellpeck.actuallyadditions.booklet.BookletUtils;
+import ellpeck.actuallyadditions.booklet.page.BookletPage;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.items.metalists.TheMiscItems;
@@ -38,8 +40,8 @@ public class NEICompostRecipe extends TemplateRecipeHandler implements INEIRecip
     }
 
     @Override
-    public ItemStack getStackForInfo(int page){
-        return new ItemStack(InitBlocks.blockCompost);
+    public BookletPage getPageForInfo(int page){
+        return BookletUtils.getFirstPageForStack(new ItemStack(InitBlocks.blockCompost));
     }
 
     @Override

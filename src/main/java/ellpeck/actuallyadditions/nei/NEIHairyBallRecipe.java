@@ -15,6 +15,8 @@ import codechicken.nei.NEIServerUtils;
 import codechicken.nei.PositionedStack;
 import codechicken.nei.recipe.RecipeInfo;
 import codechicken.nei.recipe.TemplateRecipeHandler;
+import ellpeck.actuallyadditions.booklet.BookletUtils;
+import ellpeck.actuallyadditions.booklet.page.BookletPage;
 import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.recipe.HairyBallHandler;
 import ellpeck.actuallyadditions.util.ModUtil;
@@ -37,8 +39,8 @@ public class NEIHairyBallRecipe extends TemplateRecipeHandler implements INEIRec
     }
 
     @Override
-    public ItemStack getStackForInfo(int page){
-        return new ItemStack(InitItems.itemHairyBall);
+    public BookletPage getPageForInfo(int page){
+        return BookletUtils.getFirstPageForStack(new ItemStack(InitItems.itemHairyBall));
     }
 
     @Override

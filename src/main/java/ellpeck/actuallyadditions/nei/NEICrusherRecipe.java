@@ -15,6 +15,8 @@ import codechicken.nei.PositionedStack;
 import codechicken.nei.recipe.RecipeInfo;
 import codechicken.nei.recipe.TemplateRecipeHandler;
 import ellpeck.actuallyadditions.blocks.InitBlocks;
+import ellpeck.actuallyadditions.booklet.BookletUtils;
+import ellpeck.actuallyadditions.booklet.page.BookletPage;
 import ellpeck.actuallyadditions.inventory.gui.GuiGrinder;
 import ellpeck.actuallyadditions.recipe.CrusherRecipeRegistry;
 import ellpeck.actuallyadditions.util.ItemUtil;
@@ -36,8 +38,8 @@ public class NEICrusherRecipe extends TemplateRecipeHandler implements INEIRecip
     }
 
     @Override
-    public ItemStack getStackForInfo(int page){
-        return new ItemStack(InitBlocks.blockGrinder);
+    public BookletPage getPageForInfo(int page){
+        return BookletUtils.getFirstPageForStack(new ItemStack(InitBlocks.blockGrinder));
     }
 
     @Override
@@ -131,8 +133,8 @@ public class NEICrusherRecipe extends TemplateRecipeHandler implements INEIRecip
     public static class Double extends NEICrusherRecipe{
 
         @Override
-        public ItemStack getStackForInfo(int page){
-            return new ItemStack(InitBlocks.blockGrinderDouble);
+        public BookletPage getPageForInfo(int page){
+            return BookletUtils.getFirstPageForStack(new ItemStack(InitBlocks.blockGrinderDouble));
         }
 
         @Override
