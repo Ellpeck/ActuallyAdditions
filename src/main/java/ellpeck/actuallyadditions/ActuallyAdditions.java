@@ -17,6 +17,7 @@ import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.*;
 import ellpeck.actuallyadditions.achievement.InitAchievements;
 import ellpeck.actuallyadditions.blocks.InitBlocks;
+import ellpeck.actuallyadditions.booklet.InitBooklet;
 import ellpeck.actuallyadditions.communication.InterModCommunications;
 import ellpeck.actuallyadditions.config.ConfigurationHandler;
 import ellpeck.actuallyadditions.crafting.CrusherCrafting;
@@ -103,6 +104,8 @@ public class ActuallyAdditions{
         TreasureChestHandler.init();
         ReconstructorRecipeHandler.init();
         InitForeignPaxels.init();
+
+        InitBooklet.init();
         proxy.postInit(event);
 
         ModUtil.LOGGER.info("PostInitialization Finished.");
