@@ -70,9 +70,9 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
 
                                         //Detonation
                                         if(currentLens == ReconstructorRecipeHandler.LensType.DETONATION){
-                                            int use = baseUse+800000;
+                                            int use = baseUse+500000;
                                             if(this.storage.getEnergyStored() >= use){
-                                                this.worldObj.newExplosion(null, hitBlock.getX()+0.5, hitBlock.getY()+0.5, hitBlock.getZ()+0.5, 8F, true, true);
+                                                this.worldObj.newExplosion(null, hitBlock.getX()+0.5, hitBlock.getY()+0.5, hitBlock.getZ()+0.5, 10F, true, true);
                                                 this.storage.extractEnergy(use, false);
                                             }
                                         }

@@ -40,8 +40,8 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IAct
     public BlockAtomicReconstructor(){
         super(Material.rock);
         this.setHarvestLevel("pickaxe", 0);
-        this.setHardness(6F);
-        this.setResistance(20F);
+        this.setHardness(10F);
+        this.setResistance(80F);
         this.setStepSound(soundTypeStone);
     }
 
