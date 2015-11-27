@@ -111,8 +111,14 @@ public class InterModCommunications{
                     int lensType = compound.getInteger("lensType");
 
                     if(ReconstructorRecipeHandler.LensType.values().length > lensType && input != null && output != null){
-                        ReconstructorRecipeHandler.addRecipe(input, output, energyUse, ReconstructorRecipeHandler.LensType.values()[lensType]);
-                        ModUtil.LOGGER.info("Reconstructor Recipe that was sent from Mod "+message.getSender()+" has been registered successfully: "+input+" -> "+output+" @ "+energyUse+" with LensType "+lensType);
+                        ReconstructorRecipeHandler.LensType type = ReconstructorRecipeHandler.LensType.values()[lensType];
+                        if(type.canAddRecipesFor){
+                            ReconstructorRecipeHandler.addRecipe(input, output, energyUse, type);
+                            ModUtil.LOGGER.info("Reconstructor Recipe that was sent from Mod "+message.getSender()+" has been registered successfully: "+input+" -> "+output+" @ "+energyUse+" with LensType "+lensType);
+                        }
+                        else{
+                            ModUtil.LOGGER.error("Reconstructor Recipe that was sent from Mod "+message.getSender()+" could not be registered: It's trying to register for a Lens Type ("+lensType+") that can't have recipes added!");
+                        }
                     }
                     else{
                         ModUtil.LOGGER.error("Reconstructor Recipe that was sent from Mod "+message.getSender()+" could not be registered: It's missing an Output, an Input or a LensType!");

@@ -131,12 +131,16 @@ public class InitItems{
     public static Item itemLaserWrench;
     public static Item itemCrystal;
     public static Item itemColorLens;
+    public static Item itemExplosionLens;
 
     public static void init(){
         ModUtil.LOGGER.info("Initializing Items...");
 
         itemColorLens = new ItemLens("itemColorLens", ReconstructorRecipeHandler.LensType.COLOR);
         ItemUtil.register(itemColorLens);
+
+        itemExplosionLens = new ItemLens("itemExplosionLens", ReconstructorRecipeHandler.LensType.DETONATION);
+        ItemUtil.register(itemExplosionLens);
 
         itemCrystal = new ItemCrystal();
         ItemUtil.register(itemCrystal);

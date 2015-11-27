@@ -12,6 +12,7 @@ package ellpeck.actuallyadditions.recipe;
 
 import ellpeck.actuallyadditions.blocks.metalists.TheColoredLampColors;
 import ellpeck.actuallyadditions.config.values.ConfigCrafting;
+import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.util.AssetUtil;
 import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.item.Item;
@@ -31,6 +32,7 @@ public class ReconstructorRecipeHandler{
     public static Recipe recipeSoulSand;
     public static Recipe recipeGreenWall;
     public static Recipe recipeWhiteWall;
+    public static Recipe recipeExplosionLens;
     public static ArrayList<Recipe> colorConversionRecipes = new ArrayList<Recipe>();
 
     public static void init(){
@@ -64,8 +66,10 @@ public class ReconstructorRecipeHandler{
 
         //Lenses
         addRecipe("itemLens", "itemColorLens", 5000);
-        addRecipe("itemColorLens", "itemLens", 5000);
         recipeColorLens = Util.GetRecipes.lastReconstructorRecipe();
+        addRecipe("itemColorLens", "itemExplosionLens", 5000);
+        recipeExplosionLens = Util.GetRecipes.lastReconstructorRecipe();
+        addRecipe("itemExplosionLens", "itemLens", 5000);
 
         //Misc
         if(ConfigCrafting.RECONSTRUCTOR_MISC.isEnabled()){
@@ -103,7 +107,9 @@ public class ReconstructorRecipeHandler{
     }
 
     public static void addRecipe(String input, String output, int energyUse, LensType type){
-        recipes.add(new Recipe(input, output, energyUse, type));
+        if(type.canAddRecipesFor){
+            recipes.add(new Recipe(input, output, energyUse, type));
+        }
     }
 
     public static ArrayList<Recipe> getRecipes(ItemStack input){
@@ -146,21 +152,34 @@ public class ReconstructorRecipeHandler{
 
     public enum LensType{
 
-        NONE,
-        COLOR;
+        NONE(true),
+        COLOR(true),
+        DETONATION(false);
 
         public ItemStack lens;
+        public boolean canAddRecipesFor;
+
+        LensType(boolean canAddRecipesFor){
+            this.canAddRecipesFor = canAddRecipesFor;
+        }
 
         public float[] getColor(){
             if(this == COLOR){
                 float[] colors = AssetUtil.RGB_WOOL_COLORS[Util.RANDOM.nextInt(AssetUtil.RGB_WOOL_COLORS.length)];
                 return new float[]{colors[0]/255F, colors[1]/255F, colors[2]/255F};
             }
-            return new float[]{27F/255F, 109F/255F, 1F};
+            else if(this == DETONATION){
+                return new float[]{158F/255F, 43F/255F, 39F/255F};
+            }
+            else return new float[]{27F/255F, 109F/255F, 1F};
         }
 
         public void setLens(Item lens){
             this.lens = new ItemStack(lens);
+        }
+
+        public int getDistance(){
+            return ConfigIntValues.RECONSTRUCTOR_DISTANCE.getValue()*(this == DETONATION ? 3 : 1);
         }
     }
 

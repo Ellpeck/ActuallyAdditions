@@ -55,76 +55,89 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
                         ForgeDirection sideToManipulate = ForgeDirection.getOrientation(worldObj.getBlockMetadata(xCoord, yCoord, zCoord));
                         //Extract energy for shooting the laser itself too!
                         this.storage.extractEnergy(baseUse, false);
+                        if(this.storage.getEnergyStored() >= baseUse){
 
-                        //The Lens the Reconstructor currently has installed
-                        ReconstructorRecipeHandler.LensType currentLens = this.getCurrentLens();
-                        int distance = ConfigIntValues.RECONSTRUCTOR_DISTANCE.getValue();
-                        for(int i = 0; i < distance; i++){
-                            WorldPos coordsBlock = WorldUtil.getCoordsFromSide(sideToManipulate, worldObj, xCoord, yCoord, zCoord, i);
-                            this.damagePlayer(coordsBlock.getX(), coordsBlock.getY(), coordsBlock.getZ());
+                            //The Lens the Reconstructor currently has installed
+                            ReconstructorRecipeHandler.LensType currentLens = this.getCurrentLens();
+                            int distance = currentLens.getDistance();
+                            for(int i = 0; i < distance; i++){
+                                WorldPos hitBlock = WorldUtil.getCoordsFromSide(sideToManipulate, worldObj, xCoord, yCoord, zCoord, i);
+                                this.damagePlayer(hitBlock.getX(), hitBlock.getY(), hitBlock.getZ());
 
-                            if(coordsBlock != null){
-                                if(!coordsBlock.getBlock().isAir(coordsBlock.getWorld(), coordsBlock.getX(), coordsBlock.getY(), coordsBlock.getZ())){
-                                    PacketHandler.theNetwork.sendToAllAround(new PacketAtomicReconstructor(xCoord, yCoord, zCoord, coordsBlock.getX(), coordsBlock.getY(), coordsBlock.getZ(), currentLens), new NetworkRegistry.TargetPoint(worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 64));
+                                if(hitBlock != null){
+                                    if(!hitBlock.getBlock().isAir(hitBlock.getWorld(), hitBlock.getX(), hitBlock.getY(), hitBlock.getZ())){
+                                        this.shootLaser(hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), currentLens);
 
-                                    int range = ConfigIntValues.RECONSTRCUTOR_RANGE.getValue();
+                                        //Detonation
+                                        if(currentLens == ReconstructorRecipeHandler.LensType.DETONATION){
+                                            int use = baseUse+800000;
+                                            if(this.storage.getEnergyStored() >= use){
+                                                this.worldObj.newExplosion(null, hitBlock.getX()+0.5, hitBlock.getY()+0.5, hitBlock.getZ()+0.5, 8F, true, true);
+                                                this.storage.extractEnergy(use, false);
+                                            }
+                                        }
+                                        //Conversion Recipes
+                                        else{
+                                            int range = ConfigIntValues.RECONSTRCUTOR_RANGE.getValue();
 
-                                    //Converting the Blocks
-                                    for(int reachX = -range; reachX < range+1; reachX++){
-                                        for(int reachZ = -range; reachZ < range+1; reachZ++){
-                                            for(int reachY = -range; reachY < range+1; reachY++){
+                                            //Converting the Blocks
+                                            for(int reachX = -range; reachX < range+1; reachX++){
+                                                for(int reachZ = -range; reachZ < range+1; reachZ++){
+                                                    for(int reachY = -range; reachY < range+1; reachY++){
+                                                        if(this.storage.getEnergyStored() >= baseUse){
+                                                            WorldPos pos = new WorldPos(worldObj, hitBlock.getX()+reachX, hitBlock.getY()+reachY, hitBlock.getZ()+reachZ);
+                                                            ArrayList<ReconstructorRecipeHandler.Recipe> recipes = ReconstructorRecipeHandler.getRecipes(new ItemStack(pos.getBlock(), 1, pos.getMetadata()));
+                                                            for(ReconstructorRecipeHandler.Recipe recipe : recipes){
+                                                                if(recipe != null && this.storage.getEnergyStored() >= baseUse+recipe.energyUse && recipe.type == currentLens){
+                                                                    ItemStack output = recipe.getFirstOutput();
+                                                                    if(output != null){
+                                                                        if(output.getItem() instanceof ItemBlock){
+                                                                            this.worldObj.playAuxSFX(2001, pos.getX(), pos.getY(), pos.getZ(), Block.getIdFromBlock(pos.getBlock())+(pos.getMetadata() << 12));
+                                                                            pos.setBlock(Block.getBlockFromItem(output.getItem()), output.getItemDamage(), 2);
+                                                                        }
+                                                                        else{
+                                                                            EntityItem item = new EntityItem(worldObj, pos.getX()+0.5, pos.getY()+0.5, pos.getZ()+0.5, output.copy());
+                                                                            worldObj.spawnEntityInWorld(item);
+                                                                        }
+                                                                        this.storage.extractEnergy(baseUse+recipe.energyUse, false);
+                                                                        break;
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+
+                                            //Converting the Items
+                                            ArrayList<EntityItem> items = (ArrayList<EntityItem>)worldObj.getEntitiesWithinAABB(EntityItem.class, AxisAlignedBB.getBoundingBox(hitBlock.getX()-range, hitBlock.getY()-range, hitBlock.getZ()-range, hitBlock.getX()+range, hitBlock.getY()+range, hitBlock.getZ()+range));
+                                            for(EntityItem item : items){
                                                 if(this.storage.getEnergyStored() >= baseUse){
-                                                    WorldPos pos = new WorldPos(worldObj, coordsBlock.getX()+reachX, coordsBlock.getY()+reachY, coordsBlock.getZ()+reachZ);
-                                                    ArrayList<ReconstructorRecipeHandler.Recipe> recipes = ReconstructorRecipeHandler.getRecipes(new ItemStack(pos.getBlock(), 1, pos.getMetadata()));
-                                                    for(ReconstructorRecipeHandler.Recipe recipe : recipes){
-                                                        if(recipe != null && this.storage.getEnergyStored() >= baseUse+recipe.energyUse && recipe.type == currentLens){
-                                                            ItemStack output = recipe.getFirstOutput();
-                                                            if(output != null){
-                                                                if(output.getItem() instanceof ItemBlock){
-                                                                    this.worldObj.playAuxSFX(2001, pos.getX(), pos.getY(), pos.getZ(), Block.getIdFromBlock(pos.getBlock())+(pos.getMetadata() << 12));
-                                                                    pos.setBlock(Block.getBlockFromItem(output.getItem()), output.getItemDamage(), 2);
+                                                    ItemStack stack = item.getEntityItem();
+                                                    if(stack != null){
+                                                        ArrayList<ReconstructorRecipeHandler.Recipe> recipes = ReconstructorRecipeHandler.getRecipes(stack);
+                                                        for(ReconstructorRecipeHandler.Recipe recipe : recipes){
+                                                            if(recipe != null && this.storage.getEnergyStored() >= baseUse+recipe.energyUse && recipe.type == currentLens){
+                                                                ItemStack output = recipe.getFirstOutput();
+                                                                if(output != null){
+                                                                    ItemStack outputCopy = output.copy();
+                                                                    outputCopy.stackSize = stack.stackSize;
+                                                                    item.setEntityItemStack(outputCopy);
+
+                                                                    this.storage.extractEnergy(baseUse+recipe.energyUse, false);
+                                                                    break;
                                                                 }
-                                                                else{
-                                                                    EntityItem item = new EntityItem(worldObj, pos.getX()+0.5, pos.getY()+0.5, pos.getZ()+0.5, output.copy());
-                                                                    worldObj.spawnEntityInWorld(item);
-                                                                }
-                                                                this.storage.extractEnergy(baseUse+recipe.energyUse, false);
-                                                                break;
                                                             }
                                                         }
                                                     }
                                                 }
                                             }
                                         }
+                                        break;
                                     }
-
-                                    //Converting the Items
-                                    ArrayList<EntityItem> items = (ArrayList<EntityItem>)worldObj.getEntitiesWithinAABB(EntityItem.class, AxisAlignedBB.getBoundingBox(coordsBlock.getX()-range, coordsBlock.getY()-range, coordsBlock.getZ()-range, coordsBlock.getX()+range, coordsBlock.getY()+range, coordsBlock.getZ()+range));
-                                    for(EntityItem item : items){
-                                        if(this.storage.getEnergyStored() >= baseUse){
-                                            ItemStack stack = item.getEntityItem();
-                                            if(stack != null){
-                                                ArrayList<ReconstructorRecipeHandler.Recipe> recipes = ReconstructorRecipeHandler.getRecipes(stack);
-                                                for(ReconstructorRecipeHandler.Recipe recipe : recipes){
-                                                    if(recipe != null && this.storage.getEnergyStored() >= baseUse+recipe.energyUse && recipe.type == currentLens){
-                                                        ItemStack output = recipe.getFirstOutput();
-                                                        if(output != null){
-                                                            ItemStack outputCopy = output.copy();
-                                                            outputCopy.stackSize = stack.stackSize;
-                                                            item.setEntityItemStack(outputCopy);
-
-                                                            this.storage.extractEnergy(baseUse+recipe.energyUse, false);
-                                                            break;
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
+                                    else if(i >= distance-1){
+                                        this.shootLaser(hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), currentLens);
                                     }
-                                    break;
-                                }
-                                if(i >= distance-1){
-                                    PacketHandler.theNetwork.sendToAllAround(new PacketAtomicReconstructor(xCoord, yCoord, zCoord, coordsBlock.getX(), coordsBlock.getY(), coordsBlock.getZ(), currentLens), new NetworkRegistry.TargetPoint(worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 64));
                                 }
                             }
                         }
@@ -135,6 +148,10 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
                 }
             }
         }
+    }
+
+    private void shootLaser(int endX, int endY, int endZ, ReconstructorRecipeHandler.LensType currentLens){
+        PacketHandler.theNetwork.sendToAllAround(new PacketAtomicReconstructor(xCoord, yCoord, zCoord, endX, endY, endZ, currentLens), new NetworkRegistry.TargetPoint(worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 64));
     }
 
     public ReconstructorRecipeHandler.LensType getCurrentLens(){

@@ -308,7 +308,8 @@ item.actuallyadditions.itemCrystalGreen.name=Emeradic Crystal
 item.actuallyadditions.itemCrystalBlack.name=Void Crystal
 item.actuallyadditions.itemCrystalWhite.name=Enori Crystal
 item.actuallyadditions.itemMiscLens.name=Lens
-item.actuallyadditions.itemColorLens.name=Lens: Color
+item.actuallyadditions.itemColorLens.name=Lens of Color
+item.actuallyadditions.itemExplosionLens.name=Lens of Detonation
 
 #Tooltips
 tooltip.actuallyadditions.onSuffix.desc=On
@@ -612,8 +613,9 @@ booklet.actuallyadditions.chapter.bookTutorial.text.3=If you, for some reason, w
 
 booklet.actuallyadditions.chapter.miscReconstructor.name=Useful Reconstructor Recipes
 booklet.actuallyadditions.chapter.miscReconstructor.text.1=There are some additional recipes for the <item>Atomic Reconstructor<r> that could be very useful to you. <n>These include <imp>decor blocks and items<r> as well as some <imp>useful conversions<r>. Flip through the following pages to see them all.
-booklet.actuallyadditions.chapter.miscReconstructor.text.3=The <item>Ethetic Quartz Blocks<r> are Quartz Blocks spruced up. <n>They can be crafted into <imp>stairs<r>, <imp>slabs<r> and <imp>walls<r> with the same recipes as cobblestone has. <n><n><i>No, not misspelled
-booklet.actuallyadditions.chapter.miscReconstructor.text.5=By firing at <imp>Wool, Stained Clay, Stained Glass and Dye<r> with a <item>Lens: Color<r> multiple times, you can <imp>cycle through<r> all of their colors.
+booklet.actuallyadditions.chapter.miscReconstructor.text.2=The <item>Lens of Detonation<r>, when put into the Reconstructor, will fire out a red laser that will <imp>cause a firey explosion<r> around the block it hits, using a lot of power in the process. <n><i>Be careful. <imp>Seriously.
+booklet.actuallyadditions.chapter.miscReconstructor.text.5=The <item>Ethetic Quartz Blocks<r> are Quartz Blocks spruced up. <n>They can be crafted into <imp>stairs<r>, <imp>slabs<r> and <imp>walls<r> with the same recipes as cobblestone has. <n><n><i>No, not misspelled
+booklet.actuallyadditions.chapter.miscReconstructor.text.7=By firing at <imp>Wool, Stained Clay, Stained Glass and Dye<r> with a <item>Lens of Color<r> multiple times, you can <imp>cycle through<r> all of their colors.
 
 booklet.actuallyadditions.chapter.bookStand.name=Manual Stand
 booklet.actuallyadditions.chapter.bookStand.text.1=The <item>Manual Stand<r> is a block that is supposed to mainly be used on <imp>Servers<r>. <n>You can, provided you are the person who <imp>placed it down<r>, set a page in the GUI that will <imp>open when someone else accesses it<r> by pressing the "Set Page"-button while being on the desired page. <n>The Manual Stand <imp>does not save<r> pages another player navigated to, meaing re-accessing the Stand will cause it to always <imp>end up on the page speficied<r> by the placer.

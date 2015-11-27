@@ -117,6 +117,7 @@ public class InitOreDict{
         addOre(InitBlocks.blockTestifiBucksGreenWall, "blockGreenBrick");
 
         addOre(InitItems.itemColorLens, "itemColorLens");
+        addOre(InitItems.itemExplosionLens, "itemExplosionLens");
         addOre(InitItems.itemMisc, TheMiscItems.LENS.ordinal(), "itemLens");
     }
 
