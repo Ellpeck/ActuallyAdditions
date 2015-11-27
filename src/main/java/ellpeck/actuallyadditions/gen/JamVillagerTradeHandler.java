@@ -52,17 +52,17 @@ public class JamVillagerTradeHandler implements VillagerRegistry.IVillageTradeHa
     @Override
     @SuppressWarnings("all")
     public void manipulateTradesForVillager(EntityVillager villager, MerchantRecipeList recipeList, Random rand){
-        for(int i = 0; i < trades.size(); i++){
-            for(int j = 0; j < trades.get(i).wants.size(); j++){
-                ItemStack wantsTwo = null;
-                ItemStack wantsOne = trades.get(i).wants.get(j);
+        for(int trade = 0; trade < trades.size(); trade++){
+            for(int want = 0; want < trades.get(trade).wants.size(); want++){
+                ItemStack wantsOne = trades.get(trade).wants.get(want);
+                wantsOne.stackSize = MathHelper.getRandomIntegerInRange(rand, trades.get(trade).minStackSize, trades.get(trade).maxStackSize);
 
-                wantsOne.stackSize = MathHelper.getRandomIntegerInRange(rand, trades.get(i).minStackSize, trades.get(i).maxStackSize);
+                ItemStack wantsTwo = null;
                 if(rand.nextInt(3) == 0){
-                    int toGet = rand.nextInt(trades.size());
-                    for(int k = 0; k < trades.get(toGet).wants.size(); k++){
-                        wantsTwo = trades.get(toGet).wants.get(k);
-                        wantsTwo.stackSize = MathHelper.getRandomIntegerInRange(rand, trades.get(k).minStackSize, trades.get(k).maxStackSize);
+                    int randomSecondTrade = rand.nextInt(trades.size());
+                    for(int randomSecondWant = 0; randomSecondWant < trades.get(randomSecondTrade).wants.size(); randomSecondWant++){
+                        wantsTwo = trades.get(randomSecondTrade).wants.get(randomSecondWant);
+                        wantsTwo.stackSize = MathHelper.getRandomIntegerInRange(rand, trades.get(randomSecondTrade).minStackSize, trades.get(randomSecondTrade).maxStackSize);
                     }
                 }
                 if(wantsOne == wantsTwo){
