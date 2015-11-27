@@ -15,6 +15,7 @@ import codechicken.nei.PositionedStack;
 import codechicken.nei.recipe.RecipeInfo;
 import codechicken.nei.recipe.TemplateRecipeHandler;
 import ellpeck.actuallyadditions.blocks.InitBlocks;
+import ellpeck.actuallyadditions.booklet.BookletUtils;
 import ellpeck.actuallyadditions.booklet.page.BookletPage;
 import ellpeck.actuallyadditions.recipe.ReconstructorRecipeHandler;
 import ellpeck.actuallyadditions.util.ItemUtil;
@@ -41,8 +42,8 @@ public class NEIReconstructorRecipe extends TemplateRecipeHandler implements INE
     }
 
     @Override
-    public ItemStack getStackForInfo(int page){
-        return new ItemStack(InitBlocks.blockAtomicReconstructor);
+    public BookletPage getPageForInfo(int page){
+        return BookletUtils.getFirstPageForStack(new ItemStack(InitBlocks.blockAtomicReconstructor));
     }
 
     @Override

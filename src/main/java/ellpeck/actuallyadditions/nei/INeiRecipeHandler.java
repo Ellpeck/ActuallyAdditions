@@ -10,9 +10,9 @@
 
 package ellpeck.actuallyadditions.nei;
 
-import net.minecraft.item.ItemStack;
+import ellpeck.actuallyadditions.booklet.page.BookletPage;
 
 public interface INEIRecipeHandler{
 
-    ItemStack getStackForInfo(int page);
+    BookletPage getPageForInfo(int neiIndex);
 }
