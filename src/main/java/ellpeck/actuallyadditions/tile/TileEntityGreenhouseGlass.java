@@ -27,23 +27,21 @@ public class TileEntityGreenhouseGlass extends TileEntityBase{
         super.updateEntity();
         if(!worldObj.isRemote){
             if(worldObj.canBlockSeeTheSky(xCoord, yCoord, zCoord) && worldObj.isDaytime()){
-                WorldPos blockToFert = this.blockToFertilize();
-                if(blockToFert != null){
-                    if(this.timeUntilNextFert > 0){
-                        this.timeUntilNextFert--;
-                        if(timeUntilNextFert <= 0){
-                            int metaBefore = blockToFert.getMetadata();
-                            worldObj.getBlock(blockToFert.getX(), blockToFert.getY(), blockToFert.getZ()).updateTick(worldObj, blockToFert.getX(), blockToFert.getY(), blockToFert.getZ(), Util.RANDOM);
+                if(this.timeUntilNextFert > 0){
+                    this.timeUntilNextFert--;
+                    if(timeUntilNextFert <= 0){
+                        WorldPos blockToFert = this.blockToFertilize();
+                        int metaBefore = blockToFert.getMetadata();
+                        worldObj.getBlock(blockToFert.getX(), blockToFert.getY(), blockToFert.getZ()).updateTick(worldObj, blockToFert.getX(), blockToFert.getY(), blockToFert.getZ(), Util.RANDOM);
 
-                            if(blockToFert.getMetadata() != metaBefore){
-                                worldObj.playAuxSFX(2005, blockToFert.getX(), blockToFert.getY(), blockToFert.getZ(), 0);
-                            }
+                        if(blockToFert.getMetadata() != metaBefore){
+                            worldObj.playAuxSFX(2005, blockToFert.getX(), blockToFert.getY(), blockToFert.getZ(), 0);
                         }
                     }
-                    else{
-                        int time = 300;
-                        this.timeUntilNextFert = time+Util.RANDOM.nextInt(time);
-                    }
+                }
+                else{
+                    int time = 300;
+                    this.timeUntilNextFert = time+Util.RANDOM.nextInt(time);
                 }
             }
         }
