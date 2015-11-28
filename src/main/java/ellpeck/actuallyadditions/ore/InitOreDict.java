@@ -42,6 +42,8 @@ public class InitOreDict{
         addOre(Items.sugar, "sugar");
         addOre(Items.reeds, "sugarCane");
         addOre(Blocks.soul_sand, "soulSand");
+        addOre(Items.leather, "leather");
+        addOre(Items.rotten_flesh, "flesh");
 
         addOre(Blocks.yellow_flower, "flowerDandelion");
         addOre(Blocks.red_flower, "flowerPoppy");

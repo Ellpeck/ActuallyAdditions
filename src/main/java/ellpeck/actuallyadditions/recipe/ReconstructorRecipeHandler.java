@@ -33,6 +33,7 @@ public class ReconstructorRecipeHandler{
     public static Recipe recipeWhiteWall;
     public static Recipe recipeExplosionLens;
     public static Recipe recipeDamageLens;
+    public static Recipe recipeLeather;
     public static ArrayList<Recipe> colorConversionRecipes = new ArrayList<Recipe>();
 
     public static void init(){
@@ -84,6 +85,8 @@ public class ReconstructorRecipeHandler{
         if(ConfigCrafting.RECONSTRUCTOR_MISC.isEnabled()){
             addRecipe("sand", "soulSand", 20000);
             recipeSoulSand = Util.GetRecipes.lastReconstructorRecipe();
+            addRecipe("flesh", "leather", 8000);
+            recipeLeather = Util.GetRecipes.lastReconstructorRecipe();
             addRecipe("blockQuartz", "blockWhiteBrick", 10);
             recipeWhiteWall = Util.GetRecipes.lastReconstructorRecipe();
             addRecipe("blockQuartz", "blockGreenBrick", 10, LensType.COLOR);
