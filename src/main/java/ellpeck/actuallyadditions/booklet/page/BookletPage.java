@@ -143,7 +143,7 @@ public class BookletPage{
 
         if(checkAndTransfer){
             BookletPage page = BookletUtils.getFirstPageForStack(stack);
-            if(page != null){
+            if(page != null && page != this){
                 list.add(EnumChatFormatting.GOLD+StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".clickToSeeRecipe"));
 
                 if(mousePressed){
