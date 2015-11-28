@@ -67,10 +67,17 @@ public class ReconstructorRecipeHandler{
         //Lenses
         addRecipe("itemLens", "itemColorLens", 5000);
         recipeColorLens = Util.GetRecipes.lastReconstructorRecipe();
-        addRecipe("itemColorLens", "itemExplosionLens", 5000);
-        recipeExplosionLens = Util.GetRecipes.lastReconstructorRecipe();
-        addRecipe("itemExplosionLens", "itemDamageLens", 5000);
+
+        if(ConfigCrafting.RECONSTRUCTOR_EXPLOSION_LENS.isEnabled()){
+            addRecipe("itemColorLens", "itemExplosionLens", 5000);
+            recipeExplosionLens = Util.GetRecipes.lastReconstructorRecipe();
+            addRecipe("itemExplosionLens", "itemDamageLens", 5000);
+        }
+        else{
+            addRecipe("itemColorLens", "itemDamageLens", 5000);
+        }
         recipeDamageLens = Util.GetRecipes.lastReconstructorRecipe();
+
         addRecipe("itemDamageLens", "itemLens", 5000);
 
         //Misc

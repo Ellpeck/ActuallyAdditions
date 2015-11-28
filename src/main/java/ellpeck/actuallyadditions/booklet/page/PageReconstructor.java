@@ -111,7 +111,9 @@ public class PageReconstructor extends BookletPage{
         if(this.recipes != null){
             ItemStack[] stacks = new ItemStack[this.recipes.length];
             for(int i = 0; i < this.recipes.length; i++){
-                stacks[i] = this.recipes[i].getFirstOutput();
+                if(this.recipes[i] != null){
+                    stacks[i] = this.recipes[i].getFirstOutput();
+                }
             }
             return stacks;
         }

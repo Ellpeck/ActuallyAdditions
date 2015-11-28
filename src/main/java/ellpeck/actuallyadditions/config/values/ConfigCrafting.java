@@ -134,6 +134,7 @@ public enum ConfigCrafting{
     HORSE_ARMORS("Horse Armor -> Raw Materials (Crusher)", ConfigCategories.OTHER),
 
     RECONSTRUCTOR_MISC("Misc. Recipes like Soul Sand (Reconstructor)", ConfigCategories.OTHER),
+    RECONSTRUCTOR_EXPLOSION_LENS("Lens of Detonation (Reconstructor)", ConfigCategories.OTHER),
 
     TELE_STAFF("Tele Staff", ConfigCategories.ITEMS_CRAFTING),
     CASING("Casing", ConfigCategories.BLOCKS_CRAFTING),
