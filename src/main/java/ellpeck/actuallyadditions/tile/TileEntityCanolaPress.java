@@ -15,7 +15,6 @@ import cofh.api.energy.IEnergyReceiver;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.blocks.InitBlocks;
-import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.items.metalists.TheMiscItems;
 import ellpeck.actuallyadditions.util.WorldUtil;
@@ -34,6 +33,10 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IE
     private int lastTankAmount;
     private int lastProcessTime;
 
+    public static final int PRODUCE = 100;
+    public static final int ENERGY_USE = 35;
+    private static final int TIME = 30;
+
     public TileEntityCanolaPress(){
         super(3, "canolaPress");
     }
@@ -43,11 +46,11 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IE
     public void updateEntity(){
         super.updateEntity();
         if(!worldObj.isRemote){
-            if(this.isCanola(0) && ConfigIntValues.PRESS_MB_PRODUCED.getValue() <= this.tank.getCapacity()-this.tank.getFluidAmount()){
-                if(this.storage.getEnergyStored() >= ConfigIntValues.PRESS_ENERGY_USED.getValue()){
+            if(this.isCanola(0) && PRODUCE <= this.tank.getCapacity()-this.tank.getFluidAmount()){
+                if(this.storage.getEnergyStored() >= ENERGY_USE){
                     this.currentProcessTime++;
-                    this.storage.extractEnergy(ConfigIntValues.PRESS_ENERGY_USED.getValue(), false);
-                    if(this.currentProcessTime >= ConfigIntValues.PRESS_PROCESSING_TIME.getValue()){
+                    this.storage.extractEnergy(ENERGY_USE, false);
+                    if(this.currentProcessTime >= TIME){
                         this.currentProcessTime = 0;
 
                         this.slots[0].stackSize--;
@@ -55,7 +58,7 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IE
                             this.slots[0] = null;
                         }
 
-                        this.tank.fill(new FluidStack(InitBlocks.fluidCanolaOil, ConfigIntValues.PRESS_MB_PRODUCED.getValue()), true);
+                        this.tank.fill(new FluidStack(InitBlocks.fluidCanolaOil, PRODUCE), true);
                         this.markDirty();
                     }
                 }
@@ -95,7 +98,7 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IE
 
     @SideOnly(Side.CLIENT)
     public int getProcessScaled(int i){
-        return this.currentProcessTime*i/ConfigIntValues.PRESS_PROCESSING_TIME.getValue();
+        return this.currentProcessTime*i/TIME;
     }
 
     @SideOnly(Side.CLIENT)

@@ -12,7 +12,6 @@ package ellpeck.actuallyadditions.event;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import ellpeck.actuallyadditions.config.values.ConfigBoolValues;
-import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.items.metalists.TheMiscItems;
 import ellpeck.actuallyadditions.items.metalists.TheSpecialDrops;
@@ -41,14 +40,14 @@ public class LivingDropEvent{
 
             //Drop Cobwebs from Spiders
             if(ConfigBoolValues.DO_SPIDER_DROPS.isEnabled() && event.entityLiving instanceof EntitySpider){
-                if(Util.RANDOM.nextInt(ConfigIntValues.SPIDER_DROP_CHANCE.getValue()) <= 0){
+                if(Util.RANDOM.nextInt(500) <= 0){
                     event.entityLiving.entityDropItem(new ItemStack(Blocks.web, Util.RANDOM.nextInt(2)+1), 0);
                 }
             }
 
             //Drop Wings from Bats
             if(ConfigBoolValues.DO_BAT_DROPS.isEnabled() && event.entityLiving instanceof EntityBat){
-                if(Util.RANDOM.nextInt(ConfigIntValues.BAT_DROP_CHANCE.getValue()) <= 0){
+                if(Util.RANDOM.nextInt(30) <= 0){
                     event.entityLiving.entityDropItem(new ItemStack(InitItems.itemMisc, Util.RANDOM.nextInt(2)+1, TheMiscItems.BAT_WING.ordinal()), 0);
                 }
             }

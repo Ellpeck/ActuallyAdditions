@@ -20,12 +20,8 @@ public enum ConfigCategories{
     MOB_DROPS("Mob Drops", "Everything regarding Item drops from mobs"),
     WORLD_GEN("World Gen", "Everything regarding World Generation"),
     POTION_RING_CRAFTING("Ring Crafting", "Crafting Recipes for Rings"),
-    OTHER("Other", "Everything else"),
     FLUIDS("Fluids", "Everything regarding fluids"),
-    DRILL_VALUES("Drill Values", "Properties of Drills and their Upgrades"),
-    CRUSHER_RECIPES("Crusher Recipes", "Recipes for the Crusher"),
-    RECONSTRUCTOR_RECIPES("Reconstructor Recipes", "Recipes for the Atomic Reconstructor"),
-    ARMOR_VALUES("Armor Values", "Values for Armor");
+    OTHER("Other", "Everything else");
 
     public final String name;
     public final String comment;

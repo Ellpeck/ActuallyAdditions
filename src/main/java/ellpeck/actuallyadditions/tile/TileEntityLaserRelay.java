@@ -31,6 +31,8 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 public class TileEntityLaserRelay extends TileEntityBase implements IEnergyReceiver{
 
+    public static final int MAX_DISTANCE = 15;
+
     @Override
     public void updateEntity(){
         super.updateEntity();

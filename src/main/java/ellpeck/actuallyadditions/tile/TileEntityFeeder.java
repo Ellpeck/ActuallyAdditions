@@ -12,7 +12,6 @@ package ellpeck.actuallyadditions.tile;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.item.ItemStack;
@@ -28,6 +27,9 @@ public class TileEntityFeeder extends TileEntityInventoryBase{
     private int lastAnimalAmount;
     private int lastTimer;
 
+    public static final int THRESHOLD = 30;
+    private static final int TIME = 100;
+
     public TileEntityFeeder(){
         super(1, "feeder");
     }
@@ -38,12 +40,13 @@ public class TileEntityFeeder extends TileEntityInventoryBase{
         super.updateEntity();
         if(!worldObj.isRemote){
             boolean theFlag = this.currentTimer > 0;
-            List<EntityAnimal> animals = worldObj.getEntitiesWithinAABB(EntityAnimal.class, AxisAlignedBB.getBoundingBox(this.xCoord-ConfigIntValues.FEEDER_REACH.getValue(), this.yCoord-ConfigIntValues.FEEDER_REACH.getValue(), this.zCoord-ConfigIntValues.FEEDER_REACH.getValue(), this.xCoord+ConfigIntValues.FEEDER_REACH.getValue(), this.yCoord+ConfigIntValues.FEEDER_REACH.getValue(), this.zCoord+ConfigIntValues.FEEDER_REACH.getValue()));
+            int range = 5;
+            List<EntityAnimal> animals = worldObj.getEntitiesWithinAABB(EntityAnimal.class, AxisAlignedBB.getBoundingBox(this.xCoord-range, this.yCoord-range, this.zCoord-range, this.xCoord+range, this.yCoord+range, this.zCoord+range));
             if(animals != null){
                 this.currentAnimalAmount = animals.size();
                 if(this.currentAnimalAmount >= 2){
-                    if(this.currentAnimalAmount < ConfigIntValues.FEEDER_THRESHOLD.getValue()){
-                        if(this.currentTimer >= ConfigIntValues.FEEDER_TIME.getValue()){
+                    if(this.currentAnimalAmount < THRESHOLD){
+                        if(this.currentTimer >= TIME){
                             this.currentTimer = 0;
                             if(this.slots[0] != null){
                                 EntityAnimal randomAnimal = animals.get(Util.RANDOM.nextInt(this.currentAnimalAmount));
@@ -94,7 +97,7 @@ public class TileEntityFeeder extends TileEntityInventoryBase{
 
     @SideOnly(Side.CLIENT)
     public int getCurrentTimerToScale(int i){
-        return this.currentTimer*i/ConfigIntValues.FEEDER_TIME.getValue();
+        return this.currentTimer*i/TIME;
     }
 
     @Override

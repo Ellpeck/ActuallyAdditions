@@ -14,7 +14,6 @@ import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
 import ellpeck.actuallyadditions.blocks.InitBlocks;
 import ellpeck.actuallyadditions.blocks.metalists.TheMiscBlocks;
-import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
@@ -29,6 +28,8 @@ public class TileEntityLavaFactoryController extends TileEntityBase implements I
     private static final int[][] CASE_POSITIONS = {{-1, 1, 0}, {1, 1, 0}, {0, 1, -1}, {0, 1, 1}};
     public EnergyStorage storage = new EnergyStorage(3000000);
     private int currentWorkTime;
+
+    public static final int ENERGY_USE = 150000;
 
     @Override
     public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
@@ -47,12 +48,12 @@ public class TileEntityLavaFactoryController extends TileEntityBase implements I
     public void updateEntity(){
         super.updateEntity();
         if(!worldObj.isRemote){
-            if(this.storage.getEnergyStored() >= ConfigIntValues.LAVA_FACTORY_ENERGY_USED.getValue() && this.isMultiblock() == HAS_AIR){
+            if(this.storage.getEnergyStored() >= ENERGY_USE && this.isMultiblock() == HAS_AIR){
                 this.currentWorkTime++;
-                if(this.currentWorkTime >= ConfigIntValues.LAVA_FACTORY_TIME.getValue()){
+                if(this.currentWorkTime >= 200){
                     this.currentWorkTime = 0;
                     worldObj.setBlock(xCoord, yCoord+1, zCoord, Blocks.lava);
-                    this.storage.extractEnergy(ConfigIntValues.LAVA_FACTORY_ENERGY_USED.getValue(), false);
+                    this.storage.extractEnergy(ENERGY_USE, false);
                 }
             }
             else{

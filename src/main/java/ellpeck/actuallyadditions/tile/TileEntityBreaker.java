@@ -10,7 +10,6 @@
 
 package ellpeck.actuallyadditions.tile;
 
-import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.util.WorldPos;
 import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.block.Block;
@@ -72,7 +71,7 @@ public class TileEntityBreaker extends TileEntityInventoryBase{
                     }
                 }
                 else{
-                    this.currentTime = ConfigIntValues.BREAKER_TIME_NEEDED.getValue();
+                    this.currentTime = 15;
                 }
             }
         }

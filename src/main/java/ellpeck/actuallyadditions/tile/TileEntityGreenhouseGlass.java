@@ -10,7 +10,6 @@
 
 package ellpeck.actuallyadditions.tile;
 
-import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.util.Util;
 import ellpeck.actuallyadditions.util.WorldPos;
 import net.minecraft.block.Block;
@@ -42,7 +41,8 @@ public class TileEntityGreenhouseGlass extends TileEntityBase{
                         }
                     }
                     else{
-                        this.timeUntilNextFert = ConfigIntValues.GLASS_TIME_NEEDED.getValue()+Util.RANDOM.nextInt(ConfigIntValues.GLASS_TIME_NEEDED.getValue());
+                        int time = 300;
+                        this.timeUntilNextFert = time+Util.RANDOM.nextInt(time);
                     }
                 }
             }

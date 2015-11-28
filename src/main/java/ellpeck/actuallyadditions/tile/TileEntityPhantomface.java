@@ -14,7 +14,6 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.blocks.BlockPhantom;
 import ellpeck.actuallyadditions.blocks.InitBlocks;
-import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.util.Util;
 import ellpeck.actuallyadditions.util.WorldPos;
 import ellpeck.actuallyadditions.util.WorldUtil;
@@ -36,6 +35,8 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
     private WorldPos boundPosBefore;
     private Block boundBlockBefore;
 
+    public static final int RANGE = 16;
+
     public TileEntityPhantomface(String name){
         super(0, name);
     }
@@ -44,7 +45,7 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
     public void updateEntity(){
         super.updateEntity();
         if(!worldObj.isRemote){
-            this.range = upgradeRange(ConfigIntValues.PHANTOMFACE_RANGE.getValue(), worldObj, xCoord, yCoord, zCoord);
+            this.range = upgradeRange(RANGE, worldObj, xCoord, yCoord, zCoord);
 
             if(!this.hasBoundPosition()){
                 this.boundPosition = null;

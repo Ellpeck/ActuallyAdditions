@@ -14,7 +14,6 @@ import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -27,6 +26,8 @@ public class TileEntityItemRepairer extends TileEntityInventoryBase implements I
     public EnergyStorage storage = new EnergyStorage(300000);
     public int nextRepairTick;
     private int lastEnergy;
+
+    public static final int ENERGY_USE = 1500;
 
     public TileEntityItemRepairer(){
         super(2, "repairer");
@@ -44,10 +45,10 @@ public class TileEntityItemRepairer extends TileEntityInventoryBase implements I
                     this.nextRepairTick = 0;
                 }
                 else{
-                    if(this.storage.getEnergyStored() >= ConfigIntValues.REPAIRER_ENERGY_USED.getValue()){
+                    if(this.storage.getEnergyStored() >= ENERGY_USE){
                         this.nextRepairTick++;
-                        this.storage.extractEnergy(ConfigIntValues.REPAIRER_ENERGY_USED.getValue(), false);
-                        if(this.nextRepairTick >= ConfigIntValues.REPAIRER_SPEED_SLOWDOWN.getValue()){
+                        this.storage.extractEnergy(ENERGY_USE, false);
+                        if(this.nextRepairTick >= 2){
                             this.nextRepairTick = 0;
                             this.slots[SLOT_INPUT].setItemDamage(this.slots[SLOT_INPUT].getItemDamage()-1);
                         }

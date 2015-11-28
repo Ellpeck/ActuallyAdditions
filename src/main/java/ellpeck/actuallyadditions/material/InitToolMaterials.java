@@ -10,8 +10,6 @@
 
 package ellpeck.actuallyadditions.material;
 
-import ellpeck.actuallyadditions.config.values.ConfigFloatValues;
-import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraftforge.common.util.EnumHelper;
@@ -25,9 +23,9 @@ public class InitToolMaterials{
     public static void init(){
         ModUtil.LOGGER.info("Initializing Tool Materials...");
 
-        toolMaterialEmerald = EnumHelper.addToolMaterial("toolMaterialEmerald", ConfigIntValues.EMERALD_HARVEST_LEVEL.getValue(), ConfigIntValues.EMERALD_USES.getValue(), ConfigFloatValues.EMERALD_SPEED.getValue(), ConfigFloatValues.EMERALD_MAX_DAMAGE.getValue(), ConfigIntValues.EMERALD_ENCHANTABILITY.getValue());
-        toolMaterialObsidian = EnumHelper.addToolMaterial("toolMaterialObsidian", ConfigIntValues.OBSIDIAN_HARVEST_LEVEL.getValue(), ConfigIntValues.OBSIDIAN_USES.getValue(), ConfigFloatValues.OBSIDIAN_SPEED.getValue(), ConfigFloatValues.OBSIDIAN_MAX_DAMAGE.getValue(), ConfigIntValues.OBSIDIAN_ENCHANTABILITY.getValue());
-        toolMaterialQuartz = EnumHelper.addToolMaterial("toolMaterialQuartz", ConfigIntValues.QUARTZ_HARVEST_LEVEL.getValue(), ConfigIntValues.QUARTZ_USES.getValue(), ConfigFloatValues.QUARTZ_SPEED.getValue(), ConfigFloatValues.QUARTZ_MAX_DAMAGE.getValue(), ConfigIntValues.QUARTZ_ENCHANTABILITY.getValue());
+        toolMaterialEmerald = EnumHelper.addToolMaterial("toolMaterialEmerald", 3, 2000, 9.0F, 5.0F, 15);
+        toolMaterialObsidian = EnumHelper.addToolMaterial("toolMaterialObsidian", 3, 8000, 4.0F, 2.0F, 15);
+        toolMaterialQuartz = EnumHelper.addToolMaterial("toolMaterialQuartz", 2, 280, 6.5F, 2.0F, 10);
 
     }
 

@@ -12,7 +12,6 @@ package ellpeck.actuallyadditions.items;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
@@ -36,9 +35,11 @@ public class ItemMagnetRing extends ItemEnergy{
     @SuppressWarnings("unchecked")
     @Override
     public void onUpdate(ItemStack stack, World world, Entity entity, int par4, boolean par5){
-        if(this.getEnergyStored(stack) >= ConfigIntValues.MAGNET_RING_ENERGY_USE.getValue() && !entity.isSneaking()){
+        int energyUse = 5;
+        if(this.getEnergyStored(stack) >= energyUse && !entity.isSneaking()){
             //Get all the Items in the area
-            ArrayList<EntityItem> items = (ArrayList<EntityItem>)world.getEntitiesWithinAABB(EntityItem.class, AxisAlignedBB.getBoundingBox(entity.posX-ConfigIntValues.MAGNET_RING_RANGE.getValue(), entity.posY-ConfigIntValues.MAGNET_RING_RANGE.getValue(), entity.posZ-ConfigIntValues.MAGNET_RING_RANGE.getValue(), entity.posX+ConfigIntValues.MAGNET_RING_RANGE.getValue(), entity.posY+ConfigIntValues.MAGNET_RING_RANGE.getValue(), entity.posZ+ConfigIntValues.MAGNET_RING_RANGE.getValue()));
+            int range = 5;
+            ArrayList<EntityItem> items = (ArrayList<EntityItem>)world.getEntitiesWithinAABB(EntityItem.class, AxisAlignedBB.getBoundingBox(entity.posX-range, entity.posY-range, entity.posZ-range, entity.posX+range, entity.posY+range, entity.posZ+range));
             if(!items.isEmpty()){
                 for(EntityItem item : items){
                     //If the Item is near enough to get picked up
@@ -58,7 +59,7 @@ public class ItemMagnetRing extends ItemEnergy{
 
             //Use Energy per tick
             if(!((EntityPlayer)entity).capabilities.isCreativeMode){
-                this.extractEnergy(stack, ConfigIntValues.MAGNET_RING_ENERGY_USE.getValue(), false);
+                this.extractEnergy(stack, energyUse, false);
             }
         }
     }

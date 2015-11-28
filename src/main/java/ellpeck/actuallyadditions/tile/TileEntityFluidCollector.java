@@ -12,7 +12,6 @@ package ellpeck.actuallyadditions.tile;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.util.WorldPos;
 import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.block.Block;
@@ -126,7 +125,7 @@ public class TileEntityFluidCollector extends TileEntityInventoryBase implements
                     }
                 }
                 else{
-                    this.currentTime = ConfigIntValues.BREAKER_TIME_NEEDED.getValue();
+                    this.currentTime = 15;
                 }
             }
 

@@ -15,7 +15,6 @@ import cofh.api.energy.IEnergyProvider;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.blocks.InitBlocks;
-import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -31,6 +30,9 @@ public class TileEntityOilGenerator extends TileEntityInventoryBase implements I
     private int lastTank;
     private int lastBurnTime;
 
+    public static final int ENERGY_PRODUCED = 76;
+    private static final int BURN_TIME = 100;
+
     public TileEntityOilGenerator(){
         super(2, "oilGenerator");
     }
@@ -44,13 +46,14 @@ public class TileEntityOilGenerator extends TileEntityInventoryBase implements I
 
             if(this.currentBurnTime > 0){
                 this.currentBurnTime--;
-                this.storage.receiveEnergy(ConfigIntValues.OIL_GEN_ENERGY_PRODUCED.getValue(), false);
+                this.storage.receiveEnergy(ENERGY_PRODUCED, false);
             }
 
-            if(ConfigIntValues.OIL_GEN_ENERGY_PRODUCED.getValue()*ConfigIntValues.OIL_GEN_BURN_TIME.getValue() <= this.getMaxEnergyStored(ForgeDirection.UNKNOWN)-this.getEnergyStored(ForgeDirection.UNKNOWN)){
-                if(this.currentBurnTime <= 0 && this.tank.getFluidAmount() >= ConfigIntValues.OIL_GEN_FUEL_USED.getValue()){
-                    this.currentBurnTime = ConfigIntValues.OIL_GEN_BURN_TIME.getValue();
-                    this.tank.drain(ConfigIntValues.OIL_GEN_FUEL_USED.getValue(), true);
+            int fuelUsed = 50;
+            if(ENERGY_PRODUCED*BURN_TIME <= this.getMaxEnergyStored(ForgeDirection.UNKNOWN)-this.getEnergyStored(ForgeDirection.UNKNOWN)){
+                if(this.currentBurnTime <= 0 && this.tank.getFluidAmount() >= fuelUsed){
+                    this.currentBurnTime = BURN_TIME;
+                    this.tank.drain(fuelUsed, true);
                 }
             }
 
@@ -69,7 +72,7 @@ public class TileEntityOilGenerator extends TileEntityInventoryBase implements I
                 this.markDirty();
                 int meta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
                 if(meta == 1){
-                    if(!(ConfigIntValues.OIL_GEN_ENERGY_PRODUCED.getValue()*ConfigIntValues.OIL_GEN_BURN_TIME.getValue() <= this.getMaxEnergyStored(ForgeDirection.UNKNOWN)-this.getEnergyStored(ForgeDirection.UNKNOWN) && FluidContainerRegistry.BUCKET_VOLUME <= this.tank.getCapacity()-this.tank.getFluidAmount())){
+                    if(!(ENERGY_PRODUCED*BURN_TIME <= this.getMaxEnergyStored(ForgeDirection.UNKNOWN)-this.getEnergyStored(ForgeDirection.UNKNOWN) && FluidContainerRegistry.BUCKET_VOLUME <= this.tank.getCapacity()-this.tank.getFluidAmount())){
                         worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 0, 2);
                     }
                 }
@@ -98,7 +101,7 @@ public class TileEntityOilGenerator extends TileEntityInventoryBase implements I
 
     @SideOnly(Side.CLIENT)
     public int getBurningScaled(int i){
-        return this.currentBurnTime*i/ConfigIntValues.OIL_GEN_BURN_TIME.getValue();
+        return this.currentBurnTime*i/BURN_TIME;
     }
 
     @Override

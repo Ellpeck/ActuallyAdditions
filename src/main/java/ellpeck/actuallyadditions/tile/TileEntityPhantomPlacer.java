@@ -10,7 +10,6 @@
 
 package ellpeck.actuallyadditions.tile;
 
-import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.inventory.GuiHandler;
 import ellpeck.actuallyadditions.util.WorldPos;
 import ellpeck.actuallyadditions.util.WorldUtil;
@@ -31,6 +30,8 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
     public int range;
     public boolean isBreaker;
 
+    public static final int RANGE = 3;
+
     public TileEntityPhantomPlacer(int slots, String name){
         super(slots, name);
     }
@@ -44,7 +45,7 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
     public void updateEntity(){
         super.updateEntity();
         if(!worldObj.isRemote){
-            this.range = TileEntityPhantomface.upgradeRange(ConfigIntValues.PHANTOM_PLACER_RANGE.getValue(), worldObj, xCoord, yCoord, zCoord);
+            this.range = TileEntityPhantomface.upgradeRange(RANGE, worldObj, xCoord, yCoord, zCoord);
 
             if(!this.hasBoundPosition()){
                 this.boundPosition = null;
@@ -82,7 +83,7 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
                         }
                     }
                     else{
-                        this.currentTime = ConfigIntValues.PHANTOM_PLACER_TIME.getValue();
+                        this.currentTime = 30;
                     }
                 }
             }

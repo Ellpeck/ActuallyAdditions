@@ -10,7 +10,6 @@
 
 package ellpeck.actuallyadditions.tile;
 
-import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.item.EntityItem;
@@ -58,7 +57,8 @@ public class TileEntityFishingNet extends TileEntityBase{
                         }
                     }
                     else{
-                        this.timeUntilNextDrop = ConfigIntValues.FISHER_TIME.getValue()+Util.RANDOM.nextInt(ConfigIntValues.FISHER_TIME.getValue()/2);
+                        int time = 15000;
+                        this.timeUntilNextDrop = time+Util.RANDOM.nextInt(time/2);
                     }
                 }
             }

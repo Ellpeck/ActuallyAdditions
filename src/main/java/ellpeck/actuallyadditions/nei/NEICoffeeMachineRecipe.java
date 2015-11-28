@@ -18,11 +18,11 @@ import codechicken.nei.recipe.TemplateRecipeHandler;
 import ellpeck.actuallyadditions.blocks.InitBlocks;
 import ellpeck.actuallyadditions.booklet.BookletUtils;
 import ellpeck.actuallyadditions.booklet.page.BookletPage;
-import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.inventory.gui.GuiCoffeeMachine;
 import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.items.ItemCoffee;
 import ellpeck.actuallyadditions.items.metalists.TheMiscItems;
+import ellpeck.actuallyadditions.tile.TileEntityCoffeeMachine;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -150,7 +150,7 @@ public class NEICoffeeMachineRecipe extends TemplateRecipeHandler implements INE
 
         public CachedCoffee(ItemCoffee.Ingredient ingredient){
             this.cup = new PositionedStack(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.CUP.ordinal()), 45, 39);
-            this.coffeeBeans = new PositionedStack(new ItemStack(InitItems.itemCoffeeBean, ConfigIntValues.COFFEE_CACHE_USED_PER_ITEM.getValue()), 2, 39);
+            this.coffeeBeans = new PositionedStack(new ItemStack(InitItems.itemCoffeeBean, TileEntityCoffeeMachine.CACHE_USE), 2, 39);
             this.ingredientStack = new PositionedStack(ingredient.ingredient.copy(), 90, 21);
             this.setupResult(ingredient);
             this.extraText = ingredient.getExtraText();

@@ -13,7 +13,6 @@ package ellpeck.actuallyadditions.tile;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.blocks.InitBlocks;
-import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -30,6 +29,8 @@ public class TileEntityFermentingBarrel extends TileEntityInventoryBase implemen
     private int lastOil;
     private int lastProcessTime;
 
+    private static final int PROCESS_TIME = 100;
+
     public TileEntityFermentingBarrel(){
         super(4, "fermentingBarrel");
     }
@@ -39,13 +40,14 @@ public class TileEntityFermentingBarrel extends TileEntityInventoryBase implemen
     public void updateEntity(){
         super.updateEntity();
         if(!worldObj.isRemote){
-            if(this.canolaTank.getFluidAmount() >= ConfigIntValues.BARREL_MB_PRODUCED.getValue() && ConfigIntValues.BARREL_MB_PRODUCED.getValue() <= this.oilTank.getCapacity()-this.oilTank.getFluidAmount()){
+            int produce = 50;
+            if(this.canolaTank.getFluidAmount() >= produce && produce <= this.oilTank.getCapacity()-this.oilTank.getFluidAmount()){
                 this.currentProcessTime++;
-                if(this.currentProcessTime >= ConfigIntValues.BARREL_PROCESSING_TIME.getValue()){
+                if(this.currentProcessTime >= PROCESS_TIME){
                     this.currentProcessTime = 0;
 
-                    this.oilTank.fill(new FluidStack(InitBlocks.fluidOil, ConfigIntValues.BARREL_MB_PRODUCED.getValue()), true);
-                    this.canolaTank.drain(ConfigIntValues.BARREL_MB_PRODUCED.getValue(), true);
+                    this.oilTank.fill(new FluidStack(InitBlocks.fluidOil, produce), true);
+                    this.canolaTank.drain(produce, true);
                     this.markDirty();
                 }
             }
@@ -76,7 +78,7 @@ public class TileEntityFermentingBarrel extends TileEntityInventoryBase implemen
 
     @SideOnly(Side.CLIENT)
     public int getProcessScaled(int i){
-        return this.currentProcessTime*i/ConfigIntValues.BARREL_PROCESSING_TIME.getValue();
+        return this.currentProcessTime*i/PROCESS_TIME;
     }
 
     @Override

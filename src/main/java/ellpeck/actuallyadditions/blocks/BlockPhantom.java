@@ -13,7 +13,6 @@ package ellpeck.actuallyadditions.blocks;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.ActuallyAdditions;
-import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.proxy.ClientProxy;
 import ellpeck.actuallyadditions.tile.*;
 import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
@@ -49,10 +48,10 @@ public class BlockPhantom extends BlockContainerBase implements IActAddItemOrBlo
         this.setStepSound(soundTypeStone);
 
         if(type == Type.FACE || type == Type.LIQUIFACE || type == Type.ENERGYFACE){
-            this.range = ConfigIntValues.PHANTOMFACE_RANGE.getValue();
+            this.range = TileEntityPhantomface.RANGE;
         }
         else if(type == Type.BREAKER || type == Type.PLACER){
-            this.range = ConfigIntValues.PHANTOM_PLACER_RANGE.getValue();
+            this.range = TileEntityPhantomPlacer.RANGE;
         }
     }
 

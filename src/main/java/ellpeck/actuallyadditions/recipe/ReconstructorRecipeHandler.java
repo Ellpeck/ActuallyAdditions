@@ -12,7 +12,6 @@ package ellpeck.actuallyadditions.recipe;
 
 import ellpeck.actuallyadditions.blocks.metalists.TheColoredLampColors;
 import ellpeck.actuallyadditions.config.values.ConfigCrafting;
-import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.util.AssetUtil;
 import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.item.Item;
@@ -179,7 +178,7 @@ public class ReconstructorRecipeHandler{
         }
 
         public int getDistance(){
-            return ConfigIntValues.RECONSTRUCTOR_DISTANCE.getValue()*(this == DETONATION ? 3 : 1);
+            return this == DETONATION ? 30 : 10;
         }
     }
 

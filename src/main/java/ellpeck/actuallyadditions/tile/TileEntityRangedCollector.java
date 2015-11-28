@@ -10,7 +10,6 @@
 
 package ellpeck.actuallyadditions.tile;
 
-import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.network.gui.IButtonReactor;
 import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.entity.item.EntityItem;
@@ -28,6 +27,8 @@ public class TileEntityRangedCollector extends TileEntityInventoryBase implement
     public boolean isWhitelist = true;
     private boolean lastWhitelist;
 
+    public static final int RANGE = 6;
+
     public TileEntityRangedCollector(){
         super(18, "rangedCollector");
     }
@@ -38,8 +39,7 @@ public class TileEntityRangedCollector extends TileEntityInventoryBase implement
         super.updateEntity();
         if(!worldObj.isRemote){
             if(!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)){
-                int range = ConfigIntValues.RANGED_COLLECTOR_RANGE.getValue();
-                ArrayList<EntityItem> items = (ArrayList<EntityItem>)this.worldObj.getEntitiesWithinAABB(EntityItem.class, AxisAlignedBB.getBoundingBox(this.xCoord-range, this.yCoord-range, this.zCoord-range, this.xCoord+range, this.yCoord+range, this.zCoord+range));
+                ArrayList<EntityItem> items = (ArrayList<EntityItem>)this.worldObj.getEntitiesWithinAABB(EntityItem.class, AxisAlignedBB.getBoundingBox(this.xCoord-RANGE, this.yCoord-RANGE, this.zCoord-RANGE, this.xCoord+RANGE, this.yCoord+RANGE, this.zCoord+RANGE));
                 if(!items.isEmpty()){
                     for(EntityItem item : items){
                         if(!item.isDead && item.getEntityItem() != null){

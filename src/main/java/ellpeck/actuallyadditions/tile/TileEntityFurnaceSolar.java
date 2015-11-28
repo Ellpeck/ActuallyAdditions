@@ -12,7 +12,6 @@ package ellpeck.actuallyadditions.tile;
 
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyProvider;
-import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -20,6 +19,8 @@ import net.minecraftforge.common.util.ForgeDirection;
 public class TileEntityFurnaceSolar extends TileEntityBase implements IEnergyProvider{
 
     public EnergyStorage storage = new EnergyStorage(30000);
+
+    public static final int PRODUCE = 10;
 
     @Override
     public int extractEnergy(ForgeDirection from, int maxExtract, boolean simulate){
@@ -65,8 +66,8 @@ public class TileEntityFurnaceSolar extends TileEntityBase implements IEnergyPro
         super.updateEntity();
         if(!worldObj.isRemote){
             if(!this.hasBlockAbove() && worldObj.isDaytime()){
-                if(ConfigIntValues.FURNACE_SOLAR_ENERGY_PRODUCED.getValue() <= this.getMaxEnergyStored(ForgeDirection.UNKNOWN)-this.getEnergyStored(ForgeDirection.UNKNOWN)){
-                    this.storage.receiveEnergy(ConfigIntValues.FURNACE_SOLAR_ENERGY_PRODUCED.getValue(), false);
+                if(PRODUCE <= this.getMaxEnergyStored(ForgeDirection.UNKNOWN)-this.getEnergyStored(ForgeDirection.UNKNOWN)){
+                    this.storage.receiveEnergy(PRODUCE, false);
                     this.markDirty();
                 }
             }

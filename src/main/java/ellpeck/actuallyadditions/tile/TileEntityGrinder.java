@@ -15,7 +15,6 @@ import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.recipe.CrusherRecipeRegistry;
 import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.item.ItemStack;
@@ -83,7 +82,7 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
             }
 
             if(canCrushOnFirst){
-                if(this.storage.getEnergyStored() >= getEnergyUse()){
+                if(this.storage.getEnergyStored() >= getEnergyUse(this.isDouble)){
                     this.firstCrushTime++;
                     if(this.firstCrushTime >= getMaxCrushTime()){
                         this.finishCrushing(SLOT_INPUT_1, SLOT_OUTPUT_1_1, SLOT_OUTPUT_1_2);
@@ -97,7 +96,7 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
 
             if(this.isDouble){
                 if(canCrushOnSecond){
-                    if(this.storage.getEnergyStored() >= getEnergyUse()){
+                    if(this.storage.getEnergyStored() >= getEnergyUse(this.isDouble)){
                         this.secondCrushTime++;
                         if(this.secondCrushTime >= getMaxCrushTime()){
                             this.finishCrushing(SLOT_INPUT_2, SLOT_OUTPUT_2_1, SLOT_OUTPUT_2_2);
@@ -110,8 +109,8 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
                 }
             }
 
-            if(this.storage.getEnergyStored() >= getEnergyUse() && (this.firstCrushTime > 0 || this.secondCrushTime > 0)){
-                this.storage.extractEnergy(getEnergyUse(), false);
+            if(this.storage.getEnergyStored() >= getEnergyUse(this.isDouble) && (this.firstCrushTime > 0 || this.secondCrushTime > 0)){
+                this.storage.extractEnergy(getEnergyUse(this.isDouble), false);
             }
 
             if(flag != (this.firstCrushTime > 0 || this.secondCrushTime > 0)){
@@ -152,12 +151,12 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
         return false;
     }
 
-    private int getEnergyUse(){
-        return this.isDouble ? ConfigIntValues.GRINDER_DOUBLE_ENERGY_USED.getValue() : ConfigIntValues.GRINDER_ENERGY_USED.getValue();
+    public static int getEnergyUse(boolean isDouble){
+        return isDouble ? 60 : 40;
     }
 
     private int getMaxCrushTime(){
-        return this.isDouble ? ConfigIntValues.GRINDER_DOUBLE_CRUSH_TIME.getValue() : ConfigIntValues.GRINDER_CRUSH_TIME.getValue();
+        return this.isDouble ? 150 : 100;
     }
 
     public void finishCrushing(int theInput, int theFirstOutput, int theSecondOutput){

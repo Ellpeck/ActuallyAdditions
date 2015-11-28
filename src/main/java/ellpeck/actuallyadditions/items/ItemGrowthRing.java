@@ -12,7 +12,6 @@ package ellpeck.actuallyadditions.items;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.Util;
 import ellpeck.actuallyadditions.util.WorldPos;
@@ -47,7 +46,8 @@ public class ItemGrowthRing extends ItemEnergy{
         EntityPlayer player = (EntityPlayer)entity;
         ItemStack equipped = player.getCurrentEquippedItem();
 
-        if(equipped != null && equipped == stack && this.getEnergyStored(stack) >= ConfigIntValues.GROWTH_RING_ENERGY_USE.getValue()){
+        int energyUse = 550;
+        if(equipped != null && equipped == stack && this.getEnergyStored(stack) >= energyUse){
             ArrayList<WorldPos> blocks = new ArrayList<WorldPos>();
 
             if(stack.stackTagCompound == null){
@@ -56,10 +56,11 @@ public class ItemGrowthRing extends ItemEnergy{
             int waitTime = stack.stackTagCompound.getInteger("WaitTime");
 
             //Adding all possible Blocks
-            if(waitTime >= ConfigIntValues.GROWTH_RING_COOLDOWN.getValue()){
-                for(int x = -ConfigIntValues.GROWTH_RING_RANGE.getValue(); x < ConfigIntValues.GROWTH_RING_RANGE.getValue()+1; x++){
-                    for(int z = -ConfigIntValues.GROWTH_RING_RANGE.getValue(); z < ConfigIntValues.GROWTH_RING_RANGE.getValue()+1; z++){
-                        for(int y = -ConfigIntValues.GROWTH_RING_RANGE.getValue(); y < ConfigIntValues.GROWTH_RING_RANGE.getValue()+1; y++){
+            if(waitTime >= 30){
+                int range = 3;
+                for(int x = -range; x < range+1; x++){
+                    for(int z = -range; z < range+1; z++){
+                        for(int y = -range; y < range+1; y++){
                             int theX = MathHelper.floor_double(player.posX+x);
                             int theY = MathHelper.floor_double(player.posY+y);
                             int theZ = MathHelper.floor_double(player.posZ+z);
@@ -73,7 +74,7 @@ public class ItemGrowthRing extends ItemEnergy{
 
                 //Fertilizing the Blocks
                 if(!blocks.isEmpty()){
-                    for(int i = 0; i < ConfigIntValues.GROWTH_RING_GROWTH_PER_CYCLE.getValue(); i++){
+                    for(int i = 0; i < 45; i++){
                         WorldPos pos = blocks.get(Util.RANDOM.nextInt(blocks.size()));
 
                         int metaBefore = pos.getMetadata();
@@ -94,7 +95,7 @@ public class ItemGrowthRing extends ItemEnergy{
 
             //Use Energy every tick
             if(!player.capabilities.isCreativeMode){
-                this.extractEnergy(stack, ConfigIntValues.GROWTH_RING_ENERGY_USE.getValue(), false);
+                this.extractEnergy(stack, energyUse, false);
             }
         }
     }

@@ -14,7 +14,6 @@ import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyProvider;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -30,6 +29,8 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
     private int lastBurnTime;
     private int lastCurrentBurnTime;
 
+    public static final int PRODUCE = 30;
+
     public TileEntityCoalGenerator(){
         super(1, "coalGenerator");
     }
@@ -43,12 +44,12 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
 
             if(this.currentBurnTime > 0){
                 this.currentBurnTime--;
-                this.storage.receiveEnergy(ConfigIntValues.COAL_GEN_ENERGY_PRODUCED.getValue(), false);
+                this.storage.receiveEnergy(PRODUCE, false);
             }
 
             if(this.currentBurnTime <= 0 && this.slots[0] != null && TileEntityFurnace.getItemBurnTime(this.slots[0]) > 0){
                 int burnTime = TileEntityFurnace.getItemBurnTime(this.slots[0]);
-                if(ConfigIntValues.COAL_GEN_ENERGY_PRODUCED.getValue()*burnTime <= this.getMaxEnergyStored(ForgeDirection.UNKNOWN)-this.getEnergyStored(ForgeDirection.UNKNOWN)){
+                if(PRODUCE*burnTime <= this.getMaxEnergyStored(ForgeDirection.UNKNOWN)-this.getEnergyStored(ForgeDirection.UNKNOWN)){
                     this.maxBurnTime = burnTime;
                     this.currentBurnTime = burnTime;
                     this.slots[0].stackSize--;
@@ -71,7 +72,7 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
                 this.markDirty();
                 int meta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
                 if(meta == 1){
-                    if(!(this.currentBurnTime <= 0 && this.slots[0] != null && TileEntityFurnace.getItemBurnTime(this.slots[0]) > 0 && ConfigIntValues.COAL_GEN_ENERGY_PRODUCED.getValue()*TileEntityFurnace.getItemBurnTime(this.slots[0]) <= this.getMaxEnergyStored(ForgeDirection.UNKNOWN)-this.getEnergyStored(ForgeDirection.UNKNOWN))){
+                    if(!(this.currentBurnTime <= 0 && this.slots[0] != null && TileEntityFurnace.getItemBurnTime(this.slots[0]) > 0 && PRODUCE*TileEntityFurnace.getItemBurnTime(this.slots[0]) <= this.getMaxEnergyStored(ForgeDirection.UNKNOWN)-this.getEnergyStored(ForgeDirection.UNKNOWN))){
                         worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 0, 2);
                     }
                 }

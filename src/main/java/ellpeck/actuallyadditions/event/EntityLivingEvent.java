@@ -12,7 +12,6 @@ package ellpeck.actuallyadditions.event;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import ellpeck.actuallyadditions.config.values.ConfigBoolValues;
-import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.items.ItemWingsOfTheBats;
 import ellpeck.actuallyadditions.util.Util;
@@ -32,7 +31,7 @@ public class EntityLivingEvent{
         if(event.entityLiving != null && event.entityLiving.worldObj != null && !event.entityLiving.worldObj.isRemote){
             if((event.entityLiving instanceof EntityOcelot && ((EntityOcelot)event.entityLiving).isTamed()) || (event.entityLiving instanceof EntityPlayer && event.entityLiving.getUniqueID().equals(/*KittyVanCat*/ UUID.fromString("681d4e20-10ef-40c9-a0a5-ba2f1995ef44")))){
                 if(ConfigBoolValues.DO_CAT_DROPS.isEnabled()){
-                    if(Util.RANDOM.nextInt(ConfigIntValues.CAT_DROP_CHANCE.getValue())+1 == 1){
+                    if(Util.RANDOM.nextInt(5000)+1 == 1){
                         EntityItem item = new EntityItem(event.entityLiving.worldObj, event.entityLiving.posX+0.5, event.entityLiving.posY+0.5, event.entityLiving.posZ+0.5, new ItemStack(InitItems.itemHairyBall));
                         event.entityLiving.worldObj.spawnEntityInWorld(item);
                     }

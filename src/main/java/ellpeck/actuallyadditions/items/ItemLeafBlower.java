@@ -13,7 +13,6 @@ package ellpeck.actuallyadditions.items;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.config.values.ConfigBoolValues;
-import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.WorldPos;
@@ -95,9 +94,11 @@ public class ItemLeafBlower extends Item implements IActAddItemOrBlock{
     public void breakStuff(World world, int x, int y, int z){
         ArrayList<WorldPos> breakPositions = new ArrayList<WorldPos>();
 
-        for(int reachX = -ConfigIntValues.LEAF_BLOWER_RANGE_SIDES.getValue(); reachX < ConfigIntValues.LEAF_BLOWER_RANGE_SIDES.getValue()+1; reachX++){
-            for(int reachZ = -ConfigIntValues.LEAF_BLOWER_RANGE_SIDES.getValue(); reachZ < ConfigIntValues.LEAF_BLOWER_RANGE_SIDES.getValue()+1; reachZ++){
-                for(int reachY = (this.isAdvanced ? -ConfigIntValues.LEAF_BLOWER_RANGE_SIDES.getValue() : -ConfigIntValues.LEAF_BLOWER_RANGE_UP.getValue()); reachY < (this.isAdvanced ? ConfigIntValues.LEAF_BLOWER_RANGE_SIDES.getValue()+1 : ConfigIntValues.LEAF_BLOWER_RANGE_UP.getValue()+1); reachY++){
+        int rangeSides = 5;
+        int rangeUp = 1;
+        for(int reachX = -rangeSides; reachX < rangeSides+1; reachX++){
+            for(int reachZ = -rangeSides; reachZ < rangeSides+1; reachZ++){
+                for(int reachY = (this.isAdvanced ? -rangeSides : -rangeUp); reachY < (this.isAdvanced ? rangeSides : rangeUp)+1; reachY++){
                     //The current Block to break
                     Block block = world.getBlock(x+reachX, y+reachY, z+reachZ);
                     if(block != null && (block instanceof BlockBush || (this.isAdvanced && block.isLeaves(world, x+reachX, y+reachY, z+reachZ)))){

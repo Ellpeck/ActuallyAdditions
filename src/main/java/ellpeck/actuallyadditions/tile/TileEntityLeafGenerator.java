@@ -12,7 +12,6 @@ package ellpeck.actuallyadditions.tile;
 
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyProvider;
-import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.util.WorldPos;
 import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.block.Block;
@@ -25,6 +24,9 @@ import java.util.Collections;
 public class TileEntityLeafGenerator extends TileEntityBase implements IEnergyProvider{
 
     public EnergyStorage storage = new EnergyStorage(35000);
+
+    public static final int RANGE = 7;
+    public static final int ENERGY_PRODUCED = 300;
 
     private int nextUseCounter;
 
@@ -45,17 +47,15 @@ public class TileEntityLeafGenerator extends TileEntityBase implements IEnergyPr
         if(!worldObj.isRemote){
             if(!this.worldObj.isBlockIndirectlyGettingPowered(this.xCoord, this.yCoord, this.zCoord)){
 
-                if(this.nextUseCounter >= ConfigIntValues.LEAF_GENERATOR_COOLDOWN_TIME.getValue()){
+                if(this.nextUseCounter >= 5){
                     this.nextUseCounter = 0;
 
-                    int energyProducedPerLeaf = ConfigIntValues.LEAF_GENERATOR_ENERGY_PRODUCED.getValue();
-                    if(energyProducedPerLeaf <= this.storage.getMaxEnergyStored()-this.storage.getEnergyStored()){
+                    if(ENERGY_PRODUCED <= this.storage.getMaxEnergyStored()-this.storage.getEnergyStored()){
                         ArrayList<WorldPos> breakPositions = new ArrayList<WorldPos>();
 
-                        int range = ConfigIntValues.LEAF_GENERATOR_RANGE.getValue();
-                        for(int reachX = -range; reachX < range+1; reachX++){
-                            for(int reachZ = -range; reachZ < range+1; reachZ++){
-                                for(int reachY = -range; reachY < range+1; reachY++){
+                        for(int reachX = -RANGE; reachX < RANGE+1; reachX++){
+                            for(int reachZ = -RANGE; reachZ < RANGE+1; reachZ++){
+                                for(int reachY = -RANGE; reachY < RANGE+1; reachY++){
                                     Block block = this.worldObj.getBlock(this.xCoord+reachX, this.yCoord+reachY, this.zCoord+reachZ);
                                     if(block != null && block.isLeaves(this.worldObj, this.xCoord+reachX, this.yCoord+reachY, this.zCoord+reachZ)){
                                         breakPositions.add(new WorldPos(this.worldObj, this.xCoord+reachX, this.yCoord+reachY, this.zCoord+reachZ));
@@ -74,7 +74,7 @@ public class TileEntityLeafGenerator extends TileEntityBase implements IEnergyPr
 
                             this.worldObj.setBlockToAir(theCoord.getX(), theCoord.getY(), theCoord.getZ());
 
-                            this.storage.receiveEnergy(energyProducedPerLeaf, false);
+                            this.storage.receiveEnergy(ENERGY_PRODUCED, false);
                         }
                     }
                 }

@@ -13,7 +13,6 @@ package ellpeck.actuallyadditions.tile;
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
 import cpw.mods.fml.common.network.NetworkRegistry;
-import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.items.IReconstructorLens;
 import ellpeck.actuallyadditions.misc.DamageSources;
 import ellpeck.actuallyadditions.network.PacketAtomicReconstructor;
@@ -38,6 +37,8 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
 
     private int currentTime;
 
+    public static final int ENERGY_USE = 200;
+
     public TileEntityAtomicReconstructor(){
         super(1, "reconstructor");
     }
@@ -47,15 +48,14 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
     public void updateEntity(){
         super.updateEntity();
         if(!this.worldObj.isRemote){
-            int baseUse = ConfigIntValues.RECONSTRUCTOR_BASE_ENERGY_USE.getValue();
-            if(!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord) && this.storage.getEnergyStored() >= baseUse){
+            if(!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord) && this.storage.getEnergyStored() >= ENERGY_USE){
                 if(this.currentTime > 0){
                     this.currentTime--;
                     if(this.currentTime <= 0){
                         ForgeDirection sideToManipulate = ForgeDirection.getOrientation(worldObj.getBlockMetadata(xCoord, yCoord, zCoord));
                         //Extract energy for shooting the laser itself too!
-                        this.storage.extractEnergy(baseUse, false);
-                        if(this.storage.getEnergyStored() >= baseUse){
+                        this.storage.extractEnergy(ENERGY_USE, false);
+                        if(this.storage.getEnergyStored() >= ENERGY_USE){
 
                             //The Lens the Reconstructor currently has installed
                             ReconstructorRecipeHandler.LensType currentLens = this.getCurrentLens();
@@ -70,7 +70,7 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
 
                                         //Detonation
                                         if(currentLens == ReconstructorRecipeHandler.LensType.DETONATION){
-                                            int use = baseUse+500000;
+                                            int use = ENERGY_USE+500000;
                                             if(this.storage.getEnergyStored() >= use){
                                                 this.worldObj.newExplosion(null, hitBlock.getX()+0.5, hitBlock.getY()+0.5, hitBlock.getZ()+0.5, 10F, true, true);
                                                 this.storage.extractEnergy(use, false);
@@ -78,17 +78,17 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
                                         }
                                         //Conversion Recipes
                                         else{
-                                            int range = ConfigIntValues.RECONSTRCUTOR_RANGE.getValue();
+                                            int range = 2;
 
                                             //Converting the Blocks
                                             for(int reachX = -range; reachX < range+1; reachX++){
                                                 for(int reachZ = -range; reachZ < range+1; reachZ++){
                                                     for(int reachY = -range; reachY < range+1; reachY++){
-                                                        if(this.storage.getEnergyStored() >= baseUse){
+                                                        if(this.storage.getEnergyStored() >= ENERGY_USE){
                                                             WorldPos pos = new WorldPos(worldObj, hitBlock.getX()+reachX, hitBlock.getY()+reachY, hitBlock.getZ()+reachZ);
                                                             ArrayList<ReconstructorRecipeHandler.Recipe> recipes = ReconstructorRecipeHandler.getRecipes(new ItemStack(pos.getBlock(), 1, pos.getMetadata()));
                                                             for(ReconstructorRecipeHandler.Recipe recipe : recipes){
-                                                                if(recipe != null && this.storage.getEnergyStored() >= baseUse+recipe.energyUse && recipe.type == currentLens){
+                                                                if(recipe != null && this.storage.getEnergyStored() >= ENERGY_USE+recipe.energyUse && recipe.type == currentLens){
                                                                     ItemStack output = recipe.getFirstOutput();
                                                                     if(output != null){
                                                                         if(output.getItem() instanceof ItemBlock){
@@ -99,7 +99,7 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
                                                                             EntityItem item = new EntityItem(worldObj, pos.getX()+0.5, pos.getY()+0.5, pos.getZ()+0.5, output.copy());
                                                                             worldObj.spawnEntityInWorld(item);
                                                                         }
-                                                                        this.storage.extractEnergy(baseUse+recipe.energyUse, false);
+                                                                        this.storage.extractEnergy(ENERGY_USE+recipe.energyUse, false);
                                                                         break;
                                                                     }
                                                                 }
@@ -112,19 +112,19 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
                                             //Converting the Items
                                             ArrayList<EntityItem> items = (ArrayList<EntityItem>)worldObj.getEntitiesWithinAABB(EntityItem.class, AxisAlignedBB.getBoundingBox(hitBlock.getX()-range, hitBlock.getY()-range, hitBlock.getZ()-range, hitBlock.getX()+range, hitBlock.getY()+range, hitBlock.getZ()+range));
                                             for(EntityItem item : items){
-                                                if(this.storage.getEnergyStored() >= baseUse){
+                                                if(this.storage.getEnergyStored() >= ENERGY_USE){
                                                     ItemStack stack = item.getEntityItem();
                                                     if(stack != null){
                                                         ArrayList<ReconstructorRecipeHandler.Recipe> recipes = ReconstructorRecipeHandler.getRecipes(stack);
                                                         for(ReconstructorRecipeHandler.Recipe recipe : recipes){
-                                                            if(recipe != null && this.storage.getEnergyStored() >= baseUse+recipe.energyUse && recipe.type == currentLens){
+                                                            if(recipe != null && this.storage.getEnergyStored() >= ENERGY_USE+recipe.energyUse && recipe.type == currentLens){
                                                                 ItemStack output = recipe.getFirstOutput();
                                                                 if(output != null){
                                                                     ItemStack outputCopy = output.copy();
                                                                     outputCopy.stackSize = stack.stackSize;
                                                                     item.setEntityItemStack(outputCopy);
 
-                                                                    this.storage.extractEnergy(baseUse+recipe.energyUse, false);
+                                                                    this.storage.extractEnergy(ENERGY_USE+recipe.energyUse, false);
                                                                     break;
                                                                 }
                                                             }
@@ -144,7 +144,7 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
                     }
                 }
                 else{
-                    this.currentTime = ConfigIntValues.RECONSTRUCTOR_COOLDOWN_TIMER.getValue();
+                    this.currentTime = 100;
                 }
             }
         }

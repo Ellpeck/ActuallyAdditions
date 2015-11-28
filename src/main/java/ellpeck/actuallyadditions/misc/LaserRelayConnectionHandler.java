@@ -110,7 +110,7 @@ public class LaserRelayConnectionHandler{
      */
     public boolean addConnection(WorldPos firstRelay, WorldPos secondRelay){
         int distance = (int)firstRelay.toVec().distanceTo(secondRelay.toVec());
-        if(distance > ConfigIntValues.LASER_RELAY_MAX_DISTANCE.getValue() || firstRelay.isEqual(secondRelay) || firstRelay.getWorld() != secondRelay.getWorld()){
+        if(distance > TileEntityLaserRelay.MAX_DISTANCE || firstRelay.isEqual(secondRelay) || firstRelay.getWorld() != secondRelay.getWorld()){
             return false;
         }
 

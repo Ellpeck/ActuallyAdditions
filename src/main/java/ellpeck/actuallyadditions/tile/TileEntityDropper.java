@@ -10,7 +10,6 @@
 
 package ellpeck.actuallyadditions.tile;
 
-import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -41,7 +40,7 @@ public class TileEntityDropper extends TileEntityInventoryBase{
                     }
                 }
                 else{
-                    this.currentTime = ConfigIntValues.DROPPER_TIME_NEEDED.getValue();
+                    this.currentTime = 5;
                 }
             }
         }

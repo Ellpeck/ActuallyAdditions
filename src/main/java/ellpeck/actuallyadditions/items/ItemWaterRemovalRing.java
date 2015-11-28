@@ -12,7 +12,6 @@ package ellpeck.actuallyadditions.items;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
@@ -39,22 +38,24 @@ public class ItemWaterRemovalRing extends ItemEnergy{
         EntityPlayer player = (EntityPlayer)entity;
         ItemStack equipped = player.getCurrentEquippedItem();
 
-        if(equipped != null && equipped == stack && this.getEnergyStored(stack) >= ConfigIntValues.WATER_RING_ENERGY_USE.getValue()){
+        int energyUse = 30;
+        if(equipped != null && equipped == stack && this.getEnergyStored(stack) >= energyUse){
 
             //Setting everything to air
-            for(int x = -ConfigIntValues.WATER_RING_RANGE.getValue(); x < ConfigIntValues.WATER_RING_RANGE.getValue()+1; x++){
-                for(int z = -ConfigIntValues.WATER_RING_RANGE.getValue(); z < ConfigIntValues.WATER_RING_RANGE.getValue()+1; z++){
-                    for(int y = -ConfigIntValues.WATER_RING_RANGE.getValue(); y < ConfigIntValues.WATER_RING_RANGE.getValue()+1; y++){
+            int range = 3;
+            for(int x = -range; x < range+1; x++){
+                for(int z = -range; z < range+1; z++){
+                    for(int y = -range; y < range+1; y++){
                         int theX = MathHelper.floor_double(player.posX+x);
                         int theY = MathHelper.floor_double(player.posY+y);
                         int theZ = MathHelper.floor_double(player.posZ+z);
-                        if(this.getEnergyStored(stack) >= ConfigIntValues.WATER_RING_ENERGY_USE.getValue()){
+                        if(this.getEnergyStored(stack) >= energyUse){
                             //Remove Water
                             if(world.getBlock(theX, theY, theZ) == Blocks.water || world.getBlock(theX, theY, theZ) == Blocks.flowing_water){
                                 world.setBlockToAir(theX, theY, theZ);
 
                                 if(!player.capabilities.isCreativeMode){
-                                    this.extractEnergy(stack, ConfigIntValues.WATER_RING_ENERGY_USE.getValue(), false);
+                                    this.extractEnergy(stack, energyUse, false);
                                 }
                             }
                             //Remove Lava
@@ -62,7 +63,7 @@ public class ItemWaterRemovalRing extends ItemEnergy{
                                 world.setBlockToAir(theX, theY, theZ);
 
                                 if(!player.capabilities.isCreativeMode){
-                                    this.extractEnergy(stack, ConfigIntValues.WATER_RING_ENERGY_USE.getValue()*2, false);
+                                    this.extractEnergy(stack, energyUse*2, false);
                                 }
                             }
                         }

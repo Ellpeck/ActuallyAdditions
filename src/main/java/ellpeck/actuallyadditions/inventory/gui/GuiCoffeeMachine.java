@@ -74,7 +74,7 @@ public class GuiCoffeeMachine extends GuiContainer{
             this.func_146283_a(Collections.singletonList(text3), x, y);
         }
 
-        String text2 = this.machine.coffeeCacheAmount+"/"+this.machine.coffeeCacheMaxAmount+" "+StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.coffee");
+        String text2 = this.machine.coffeeCacheAmount+"/"+TileEntityCoffeeMachine.COFFEE_CACHE_MAX_AMOUNT+" "+StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.coffee");
         if(x >= guiLeft+40 && y >= guiTop+25 && x <= guiLeft+49 && y <= guiTop+56){
             this.func_146283_a(Collections.singletonList(text2), x, y);
         }

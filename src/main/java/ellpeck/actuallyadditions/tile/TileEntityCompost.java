@@ -10,7 +10,6 @@
 
 package ellpeck.actuallyadditions.tile;
 
-import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.items.ItemFertilizer;
 import ellpeck.actuallyadditions.items.ItemMisc;
@@ -21,6 +20,8 @@ import net.minecraft.nbt.NBTTagCompound;
 public class TileEntityCompost extends TileEntityInventoryBase{
 
     public int conversionTime;
+
+    public static final int AMOUNT = 10;
 
     public TileEntityCompost(){
         super(1, "compost");
@@ -44,10 +45,10 @@ public class TileEntityCompost extends TileEntityInventoryBase{
             }
 
             boolean theFlag = this.conversionTime > 0;
-            if(this.slots[0] != null && !(this.slots[0].getItem() instanceof ItemFertilizer) && this.slots[0].stackSize >= ConfigIntValues.COMPOST_AMOUNT.getValue()){
+            if(this.slots[0] != null && !(this.slots[0].getItem() instanceof ItemFertilizer) && this.slots[0].stackSize >= AMOUNT){
                 this.conversionTime++;
-                if(this.conversionTime >= ConfigIntValues.COMPOST_TIME.getValue()){
-                    this.slots[0] = new ItemStack(InitItems.itemFertilizer, ConfigIntValues.COMPOST_AMOUNT.getValue());
+                if(this.conversionTime >= AMOUNT){
+                    this.slots[0] = new ItemStack(InitItems.itemFertilizer, AMOUNT);
                     this.conversionTime = 0;
                 }
             }
@@ -71,7 +72,7 @@ public class TileEntityCompost extends TileEntityInventoryBase{
 
     @Override
     public int getInventoryStackLimit(){
-        return ConfigIntValues.COMPOST_AMOUNT.getValue();
+        return AMOUNT;
     }
 
     @Override

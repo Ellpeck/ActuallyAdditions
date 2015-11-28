@@ -18,9 +18,9 @@ import codechicken.nei.recipe.TemplateRecipeHandler;
 import ellpeck.actuallyadditions.blocks.InitBlocks;
 import ellpeck.actuallyadditions.booklet.BookletUtils;
 import ellpeck.actuallyadditions.booklet.page.BookletPage;
-import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.items.metalists.TheMiscItems;
+import ellpeck.actuallyadditions.tile.TileEntityCompost;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -57,7 +57,7 @@ public class NEICompostRecipe extends TemplateRecipeHandler implements INEIRecip
     @Override
     public void loadCraftingRecipes(String outputId, Object... results){
         if(outputId.equals(NAME) && getClass() == NEICompostRecipe.class){
-            arecipes.add(new CachedCompostRecipe(new ItemStack(InitItems.itemMisc, ConfigIntValues.COMPOST_AMOUNT.getValue(), TheMiscItems.MASHED_FOOD.ordinal()), new ItemStack(InitItems.itemFertilizer, ConfigIntValues.COMPOST_AMOUNT.getValue())));
+            arecipes.add(new CachedCompostRecipe(new ItemStack(InitItems.itemMisc, TileEntityCompost.AMOUNT, TheMiscItems.MASHED_FOOD.ordinal()), new ItemStack(InitItems.itemFertilizer, TileEntityCompost.AMOUNT)));
         }
         else{
             super.loadCraftingRecipes(outputId, results);
@@ -67,14 +67,14 @@ public class NEICompostRecipe extends TemplateRecipeHandler implements INEIRecip
     @Override
     public void loadCraftingRecipes(ItemStack result){
         if(NEIServerUtils.areStacksSameType(new ItemStack(InitItems.itemFertilizer), result)){
-            arecipes.add(new CachedCompostRecipe(new ItemStack(InitItems.itemMisc, ConfigIntValues.COMPOST_AMOUNT.getValue(), TheMiscItems.MASHED_FOOD.ordinal()), new ItemStack(InitItems.itemFertilizer, ConfigIntValues.COMPOST_AMOUNT.getValue())));
+            arecipes.add(new CachedCompostRecipe(new ItemStack(InitItems.itemMisc, TileEntityCompost.AMOUNT, TheMiscItems.MASHED_FOOD.ordinal()), new ItemStack(InitItems.itemFertilizer, TileEntityCompost.AMOUNT)));
         }
     }
 
     @Override
     public void loadUsageRecipes(ItemStack ingredient){
-        if(NEIServerUtils.areStacksSameTypeCrafting(new ItemStack(InitItems.itemMisc, ConfigIntValues.COMPOST_AMOUNT.getValue(), TheMiscItems.MASHED_FOOD.ordinal()), ingredient)){
-            CachedCompostRecipe theRecipe = new CachedCompostRecipe(new ItemStack(InitItems.itemMisc, ConfigIntValues.COMPOST_AMOUNT.getValue(), TheMiscItems.MASHED_FOOD.ordinal()), new ItemStack(InitItems.itemFertilizer, ConfigIntValues.COMPOST_AMOUNT.getValue()));
+        if(NEIServerUtils.areStacksSameTypeCrafting(new ItemStack(InitItems.itemMisc, TileEntityCompost.AMOUNT, TheMiscItems.MASHED_FOOD.ordinal()), ingredient)){
+            CachedCompostRecipe theRecipe = new CachedCompostRecipe(new ItemStack(InitItems.itemMisc, TileEntityCompost.AMOUNT, TheMiscItems.MASHED_FOOD.ordinal()), new ItemStack(InitItems.itemFertilizer, TileEntityCompost.AMOUNT));
             theRecipe.setIngredientPermutation(Collections.singletonList(theRecipe.input), ingredient);
             arecipes.add(theRecipe);
         }

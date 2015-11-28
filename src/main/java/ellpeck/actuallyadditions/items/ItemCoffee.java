@@ -13,7 +13,6 @@ package ellpeck.actuallyadditions.items;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.items.metalists.TheMiscItems;
 import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import ellpeck.actuallyadditions.util.ItemUtil;
@@ -39,7 +38,7 @@ public class ItemCoffee extends ItemFood implements IActAddItemOrBlock{
 
     public ItemCoffee(){
         super(8, 5.0F, false);
-        this.setMaxDamage(ConfigIntValues.COFFEE_DRINK_AMOUNT.getValue()-1);
+        this.setMaxDamage(3);
         this.setAlwaysEdible();
         this.setMaxStackSize(1);
         this.setNoRepair();

@@ -12,7 +12,6 @@ package ellpeck.actuallyadditions.tile;
 
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyProvider;
-import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.util.Util;
 import ellpeck.actuallyadditions.util.WorldPos;
 import ellpeck.actuallyadditions.util.WorldUtil;
@@ -27,12 +26,15 @@ public class TileEntityHeatCollector extends TileEntityBase implements IEnergyPr
 
     public EnergyStorage storage = new EnergyStorage(30000);
 
+    public static final int ENERGY_PRODUCE = 40;
+    public static final int BLOCKS_NEEDED = 4;
+
     @Override
     public void updateEntity(){
         super.updateEntity();
         if(!worldObj.isRemote){
             ArrayList<Integer> blocksAround = new ArrayList<Integer>();
-            if(ConfigIntValues.HEAT_COLLECTOR_ENERGY_PRODUCED.getValue() <= this.getMaxEnergyStored(ForgeDirection.UNKNOWN)-this.getEnergyStored(ForgeDirection.UNKNOWN)){
+            if(ENERGY_PRODUCE <= this.getMaxEnergyStored(ForgeDirection.UNKNOWN)-this.getEnergyStored(ForgeDirection.UNKNOWN)){
                 for(int i = 1; i <= 5; i++){
                     WorldPos coords = WorldUtil.getCoordsFromSide(WorldUtil.getDirectionBySidesInOrder(i), worldObj, xCoord, yCoord, zCoord, 0);
                     if(coords != null){
@@ -43,11 +45,11 @@ public class TileEntityHeatCollector extends TileEntityBase implements IEnergyPr
                     }
                 }
 
-                if(blocksAround.size() >= ConfigIntValues.HEAT_COLLECTOR_BLOCKS.getValue()){
-                    this.storage.receiveEnergy(ConfigIntValues.HEAT_COLLECTOR_ENERGY_PRODUCED.getValue(), false);
+                if(blocksAround.size() >= BLOCKS_NEEDED){
+                    this.storage.receiveEnergy(ENERGY_PRODUCE, false);
                     this.markDirty();
 
-                    if(Util.RANDOM.nextInt(ConfigIntValues.HEAT_COLLECTOR_LAVA_CHANCE.getValue()) == 0){
+                    if(Util.RANDOM.nextInt(10) == 0){
                         int randomSide = blocksAround.get(Util.RANDOM.nextInt(blocksAround.size()));
                         WorldUtil.breakBlockAtSide(WorldUtil.getDirectionBySidesInOrder(randomSide), worldObj, xCoord, yCoord, zCoord);
                     }

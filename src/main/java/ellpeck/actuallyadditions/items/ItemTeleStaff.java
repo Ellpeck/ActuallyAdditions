@@ -12,7 +12,6 @@ package ellpeck.actuallyadditions.items;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -38,7 +37,7 @@ public class ItemTeleStaff extends ItemEnergy{
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player){
         if(!world.isRemote){
             if(this.getWaitTime(stack) <= 0){
-                MovingObjectPosition pos = WorldUtil.getNearestPositionWithAir(world, player, ConfigIntValues.TELE_STAFF_REACH.getValue());
+                MovingObjectPosition pos = WorldUtil.getNearestPositionWithAir(world, player, 100);
                 if(pos != null && (pos.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK || player.rotationPitch >= -5)){
                     int side = pos.sideHit;
                     if(side != -1){
@@ -47,14 +46,15 @@ public class ItemTeleStaff extends ItemEnergy{
                             double x = pos.hitVec.xCoord-(side == 4 ? 0.5 : 0)+(side == 5 ? 0.5 : 0);
                             double y = pos.hitVec.yCoord-(side == 0 ? 2.0 : 0)+(side == 1 ? 0.5 : 0);
                             double z = pos.hitVec.zCoord-(side == 2 ? 0.5 : 0)+(side == 3 ? 0.5 : 0);
-                            int use = ConfigIntValues.TELE_STAFF_ENERGY_USE.getValue()+(int)(ConfigIntValues.TELE_STAFF_ENERGY_USE.getValue()*pos.hitVec.distanceTo(Vec3.createVectorHelper(player.posX, player.posY+(player.getEyeHeight()-player.getDefaultEyeHeight()), player.posZ)));
+                            int baseUse = 200;
+                            int use = baseUse+(int)(baseUse*pos.hitVec.distanceTo(Vec3.createVectorHelper(player.posX, player.posY+(player.getEyeHeight()-player.getDefaultEyeHeight()), player.posZ)));
                             if(this.getEnergyStored(stack) >= use){
                                 ((EntityPlayerMP)player).playerNetServerHandler.setPlayerLocation(x, y, z, player.rotationYaw, player.rotationPitch);
                                 player.mountEntity(null);
                                 world.playSoundAtEntity(player, "mob.endermen.portal", 1.0F, 1.0F);
                                 if(!player.capabilities.isCreativeMode){
                                     this.extractEnergy(stack, use, false);
-                                    this.setWaitTime(stack, ConfigIntValues.TELE_STAFF_WAIT_TIME.getValue());
+                                    this.setWaitTime(stack, 50);
                                 }
                             }
                         }

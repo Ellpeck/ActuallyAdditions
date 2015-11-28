@@ -16,8 +16,6 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.ActuallyAdditions;
 import ellpeck.actuallyadditions.config.ConfigValues;
-import ellpeck.actuallyadditions.config.values.ConfigFloatValues;
-import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.inventory.GuiHandler;
 import ellpeck.actuallyadditions.util.ItemUtil;
 import ellpeck.actuallyadditions.util.ModUtil;
@@ -56,6 +54,8 @@ public class ItemDrill extends ItemEnergy{
     private IIcon emeraldIcon;
     @SideOnly(Side.CLIENT)
     private IIcon purpleIcon;
+
+    private static final int ENERGY_USE = 100;
 
     public ItemDrill(){
         super(500000, 5000);
@@ -245,7 +245,7 @@ public class ItemDrill extends ItemEnergy{
     @Override
     public Multimap getAttributeModifiers(ItemStack stack){
         Multimap map = super.getAttributeModifiers(stack);
-        map.put(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(), new AttributeModifier(field_111210_e, "Drill Modifier", this.getEnergyStored(stack) >= ConfigIntValues.DRILL_ENERGY_USE.getValue() ? 8.0F : 0.1F, 0));
+        map.put(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(), new AttributeModifier(field_111210_e, "Drill Modifier", this.getEnergyStored(stack) >= ENERGY_USE ? 8.0F : 0.1F, 0));
         return map;
     }
 
@@ -291,7 +291,8 @@ public class ItemDrill extends ItemEnergy{
 
     @Override
     public boolean canHarvestBlock(Block block, ItemStack stack){
-        return this.getEnergyStored(stack) >= this.getEnergyUsePerBlock(stack) && (this.hasExtraWhitelist(block) || block.getMaterial().isToolNotRequired() || (block == Blocks.snow_layer || block == Blocks.snow || (block == Blocks.obsidian ? ConfigIntValues.DRILL_HARVEST_LEVEL.getValue() >= 3 : (block != Blocks.diamond_block && block != Blocks.diamond_ore ? (block != Blocks.emerald_ore && block != Blocks.emerald_block ? (block != Blocks.gold_block && block != Blocks.gold_ore ? (block != Blocks.iron_block && block != Blocks.iron_ore ? (block != Blocks.lapis_block && block != Blocks.lapis_ore ? (block != Blocks.redstone_ore && block != Blocks.lit_redstone_ore ? (block.getMaterial() == Material.rock || (block.getMaterial() == Material.iron || block.getMaterial() == Material.anvil)) : ConfigIntValues.DRILL_HARVEST_LEVEL.getValue() >= 2) : ConfigIntValues.DRILL_HARVEST_LEVEL.getValue() >= 1) : ConfigIntValues.DRILL_HARVEST_LEVEL.getValue() >= 1) : ConfigIntValues.DRILL_HARVEST_LEVEL.getValue() >= 2) : ConfigIntValues.DRILL_HARVEST_LEVEL.getValue() >= 2) : ConfigIntValues.DRILL_HARVEST_LEVEL.getValue() >= 2))));
+        int harvestLevel = this.getHarvestLevel(stack, "");
+        return this.getEnergyStored(stack) >= this.getEnergyUsePerBlock(stack) && (this.hasExtraWhitelist(block) || block.getMaterial().isToolNotRequired() || (block == Blocks.snow_layer || block == Blocks.snow || (block == Blocks.obsidian ? harvestLevel >= 3 : (block != Blocks.diamond_block && block != Blocks.diamond_ore ? (block != Blocks.emerald_ore && block != Blocks.emerald_block ? (block != Blocks.gold_block && block != Blocks.gold_ore ? (block != Blocks.iron_block && block != Blocks.iron_ore ? (block != Blocks.lapis_block && block != Blocks.lapis_ore ? (block != Blocks.redstone_ore && block != Blocks.lit_redstone_ore ? (block.getMaterial() == Material.rock || (block.getMaterial() == Material.iron || block.getMaterial() == Material.anvil)) : harvestLevel >= 2) : harvestLevel >= 1) : harvestLevel >= 1) : harvestLevel >= 2) : harvestLevel >= 2) : harvestLevel >= 2))));
     }
 
     @Override
@@ -304,7 +305,7 @@ public class ItemDrill extends ItemEnergy{
 
     @Override
     public int getHarvestLevel(ItemStack stack, String toolClass){
-        return ConfigIntValues.DRILL_HARVEST_LEVEL.getValue();
+        return 4;
     }
 
     /**
@@ -314,37 +315,37 @@ public class ItemDrill extends ItemEnergy{
      * @return The Energy use per Block
      */
     public int getEnergyUsePerBlock(ItemStack stack){
-        int use = ConfigIntValues.DRILL_ENERGY_USE.getValue();
+        int use = ENERGY_USE;
 
         //Speed
         if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SPEED)){
-            use += ConfigIntValues.DRILL_SPEED_EXTRA_USE.getValue();
+            use += 50;
             if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SPEED_II)){
-                use += ConfigIntValues.DRILL_SPEED_II_EXTRA_USE.getValue();
+                use += 75;
                 if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SPEED_III)){
-                    use += ConfigIntValues.DRILL_SPEED_III_EXTRA_USE.getValue();
+                    use += 175;
                 }
             }
         }
 
         //Silk Touch
         if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SILK_TOUCH)){
-            use += ConfigIntValues.DRILL_SILK_EXTRA_USE.getValue();
+            use += 100;
         }
 
         //Fortune
         if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FORTUNE)){
-            use += ConfigIntValues.DRILL_FORTUNE_EXTRA_USE.getValue();
+            use += 40;
             if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FORTUNE_II)){
-                use += ConfigIntValues.DRILL_FORTUNE_II_EXTRA_USE.getValue();
+                use += 80;
             }
         }
 
         //Size
         if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.THREE_BY_THREE)){
-            use += ConfigIntValues.DRILL_THREE_BY_THREE_EXTRA_USE.getValue();
+            use += 10;
             if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FIVE_BY_FIVE)){
-                use += ConfigIntValues.DRILL_FIVE_BY_FIVE_EXTRA_USE.getValue();
+                use += 30;
             }
         }
 
@@ -369,7 +370,7 @@ public class ItemDrill extends ItemEnergy{
      * @return The Mining Speed depending on the Speed Upgrades
      */
     public float getEfficiencyFromUpgrade(ItemStack stack){
-        float efficiency = ConfigFloatValues.DRILL_DAMAGE.getValue();
+        float efficiency = 8.0F;
         if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SPEED)){
             if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SPEED_II)){
                 if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SPEED_III)){

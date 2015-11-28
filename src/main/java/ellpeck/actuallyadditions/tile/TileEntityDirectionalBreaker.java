@@ -14,7 +14,6 @@ import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.util.WorldPos;
 import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.block.Block;
@@ -32,6 +31,9 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase implem
 
     private int currentTime;
 
+    public static final int RANGE = 8;
+    public static final int ENERGY_USE = 5;
+
     public TileEntityDirectionalBreaker(){
         super(9, "directionalBreaker");
     }
@@ -42,15 +44,13 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase implem
         super.updateEntity();
         if(!worldObj.isRemote){
             if(!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)){
-                int usagePerBlock = ConfigIntValues.DIRECTIONAL_BREAKER_RF_PER_BLOCK.getValue();
-                int range = ConfigIntValues.DIRECTIONAL_BREAKER_RANGE.getValue();
-                if(this.storage.getEnergyStored() >= usagePerBlock*range){
+                if(this.storage.getEnergyStored() >= ENERGY_USE*RANGE){
                     if(this.currentTime > 0){
                         this.currentTime--;
                         if(this.currentTime <= 0){
                             ForgeDirection sideToManipulate = ForgeDirection.getOrientation(worldObj.getBlockMetadata(xCoord, yCoord, zCoord));
 
-                            for(int i = 0; i < range; i++){
+                            for(int i = 0; i < RANGE; i++){
                                 WorldPos coordsBlock = WorldUtil.getCoordsFromSide(sideToManipulate, worldObj, xCoord, yCoord, zCoord, i);
                                 if(coordsBlock != null){
                                     Block blockToBreak = worldObj.getBlock(coordsBlock.getX(), coordsBlock.getY(), coordsBlock.getZ());
@@ -63,7 +63,7 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase implem
                                             worldObj.playAuxSFX(2001, coordsBlock.getX(), coordsBlock.getY(), coordsBlock.getZ(), Block.getIdFromBlock(blockToBreak)+(meta << 12));
                                             WorldUtil.breakBlockAtSide(sideToManipulate, worldObj, xCoord, yCoord, zCoord, i);
                                             WorldUtil.addToInventory(this.slots, drops, true);
-                                            this.storage.extractEnergy(usagePerBlock, false);
+                                            this.storage.extractEnergy(ENERGY_USE, false);
                                             this.markDirty();
                                         }
                                     }
@@ -72,7 +72,7 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase implem
                         }
                     }
                     else{
-                        this.currentTime = ConfigIntValues.BREAKER_TIME_NEEDED.getValue();
+                        this.currentTime = 15;
                     }
                 }
             }

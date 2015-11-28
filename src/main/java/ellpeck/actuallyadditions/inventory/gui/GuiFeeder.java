@@ -12,7 +12,6 @@ package ellpeck.actuallyadditions.inventory.gui;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.inventory.ContainerFeeder;
 import ellpeck.actuallyadditions.tile.TileEntityBase;
 import ellpeck.actuallyadditions.tile.TileEntityFeeder;
@@ -43,7 +42,7 @@ public class GuiFeeder extends GuiContainer{
     public void drawScreen(int x, int y, float f){
         super.drawScreen(x, y, f);
         if(x >= guiLeft+69 && y >= guiTop+30 && x <= guiLeft+69+10 && y <= guiTop+30+10){
-            String[] array = new String[]{(this.tileFeeder.currentAnimalAmount+" "+StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.animals")), ((this.tileFeeder.currentAnimalAmount >= 2 && this.tileFeeder.currentAnimalAmount < ConfigIntValues.FEEDER_THRESHOLD.getValue()) ? StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.enoughToBreed") : (this.tileFeeder.currentAnimalAmount >= ConfigIntValues.FEEDER_THRESHOLD.getValue() ? StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.tooMany") : StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.notEnough")))};
+            String[] array = new String[]{(this.tileFeeder.currentAnimalAmount+" "+StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.animals")), ((this.tileFeeder.currentAnimalAmount >= 2 && this.tileFeeder.currentAnimalAmount < TileEntityFeeder.THRESHOLD) ? StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.enoughToBreed") : (this.tileFeeder.currentAnimalAmount >= TileEntityFeeder.THRESHOLD ? StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.tooMany") : StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.notEnough")))};
             this.func_146283_a(Arrays.asList(array), x, y);
         }
     }
@@ -66,11 +65,11 @@ public class GuiFeeder extends GuiContainer{
             this.drawTexturedModalRect(guiLeft+85, guiTop+42-i, 181, 19+19-i, 6, 20);
         }
 
-        if(this.tileFeeder.currentAnimalAmount >= 2 && this.tileFeeder.currentAnimalAmount < ConfigIntValues.FEEDER_THRESHOLD.getValue()){
+        if(this.tileFeeder.currentAnimalAmount >= 2 && this.tileFeeder.currentAnimalAmount < TileEntityFeeder.THRESHOLD){
             this.drawTexturedModalRect(guiLeft+70, guiTop+31, 192, 16, 8, 8);
         }
 
-        if(this.tileFeeder.currentAnimalAmount >= ConfigIntValues.FEEDER_THRESHOLD.getValue()){
+        if(this.tileFeeder.currentAnimalAmount >= TileEntityFeeder.THRESHOLD){
             this.drawTexturedModalRect(guiLeft+70, guiTop+31, 192, 24, 8, 8);
         }
     }
