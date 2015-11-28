@@ -118,6 +118,7 @@ public class InitOreDict{
 
         addOre(InitItems.itemColorLens, "itemColorLens");
         addOre(InitItems.itemExplosionLens, "itemExplosionLens");
+        addOre(InitItems.itemDamageLens, "itemDamageLens");
         addOre(InitItems.itemMisc, TheMiscItems.LENS.ordinal(), "itemLens");
     }
 

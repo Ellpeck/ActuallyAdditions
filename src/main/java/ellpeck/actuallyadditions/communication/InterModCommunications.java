@@ -112,7 +112,7 @@ public class InterModCommunications{
 
                     if(ReconstructorRecipeHandler.LensType.values().length > lensType && input != null && output != null){
                         ReconstructorRecipeHandler.LensType type = ReconstructorRecipeHandler.LensType.values()[lensType];
-                        if(type.canAddRecipesFor){
+                        if(type.hasRecipes){
                             ReconstructorRecipeHandler.addRecipe(input, output, energyUse, type);
                             ModUtil.LOGGER.info("Reconstructor Recipe that was sent from Mod "+message.getSender()+" has been registered successfully: "+input+" -> "+output+" @ "+energyUse+" with LensType "+lensType);
                         }

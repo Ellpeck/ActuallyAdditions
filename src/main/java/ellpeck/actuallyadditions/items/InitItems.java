@@ -132,6 +132,7 @@ public class InitItems{
     public static Item itemCrystal;
     public static Item itemColorLens;
     public static Item itemExplosionLens;
+    public static Item itemDamageLens;
 
     public static void init(){
         ModUtil.LOGGER.info("Initializing Items...");
@@ -141,6 +142,9 @@ public class InitItems{
 
         itemExplosionLens = new ItemLens("itemExplosionLens", ReconstructorRecipeHandler.LensType.DETONATION);
         ItemUtil.register(itemExplosionLens);
+
+        itemDamageLens = new ItemLens("itemDamageLens", ReconstructorRecipeHandler.LensType.JUST_DAMAGE);
+        ItemUtil.register(itemDamageLens);
 
         itemCrystal = new ItemCrystal();
         ItemUtil.register(itemCrystal);

@@ -310,6 +310,7 @@ item.actuallyadditions.itemCrystalWhite.name=Enori Crystal
 item.actuallyadditions.itemMiscLens.name=Lens
 item.actuallyadditions.itemColorLens.name=Lens of Color
 item.actuallyadditions.itemExplosionLens.name=Lens of Detonation
+item.actuallyadditions.itemDamageLens.name=Lens of Certain Death
 
 #Tooltips
 tooltip.actuallyadditions.onSuffix.desc=On
@@ -618,7 +619,8 @@ booklet.actuallyadditions.chapter.bookStand.text.2=<n><n><n><i>Stand on it
 booklet.actuallyadditions.chapter.reconstructorLenses.name=Reconstructor Lenses
 booklet.actuallyadditions.chapter.reconstructorLenses.text.1=The <item>Atomic Reconstructor<r>, by default, can only convert some blocks. <n>This can be changed, however, with <item>Lenses<r>. They can be, once crafted, attached to the Reconstructor via <imp>right-clicking<r> the Reconstructor with them in hand. To remove them, right-click it with an empty hand. <n><item>Lenses<r> have lots of different features and uses, as you can see on <imp>the following pages<r>.
 booklet.actuallyadditions.chapter.reconstructorLenses.text.3=The <item>Lens of Color<r> can mainly be used to change the colors of <item>Wool<r>, <item>Stained Clay<r>, <item>Stained Glass<r> and <item>Dye<r>, as you can see on the following pages. <n>It has some other uses, too, though.
-booklet.actuallyadditions.chapter.reconstructorLenses.text.4=The <item>Lens of Detonation<r> will create a firey explosion <imp>around the block the laser hits<r>. <n>Be careful with this. Seriously. <n>(With this lens, the laser also goes 3 times as far!)
+booklet.actuallyadditions.chapter.reconstructorLenses.text.5=The <item>Lens of Detonation<r> will create a firey explosion <imp>around the block the laser hits<r>. <n>Be careful with this. Seriously. <n>(With this lens, the laser also goes 3 times as far!)
+booklet.actuallyadditions.chapter.reconstructorLenses.text.6=The <item>Lens of Certain Death<r> will, instead of converting or exploding blocks, do nothing to the environment, but <imp>deal lots of damage<r>, enough, in fact, to kill a player <imp>in a single hit<r>.
 
 booklet.actuallyadditions.chapter.miscDecorStuffsAndThings.name=Some Decor
 booklet.actuallyadditions.chapter.miscDecorStuffsAndThings.text.1=Sometimes, when you build, you notice there is just <imp>not enough decor blocks<r>. Well, we present to you: <item>Ethetic Blocks<r>! <n>These are some quartz-like decor blocks with lovely patterns that can also be <imp>converted<r> into <imp>Stairs<r>, <imp>Slabs<r> and <imp>Walls<r> using the usual, well-known recipe patterns.

@@ -32,6 +32,7 @@ public class ReconstructorRecipeHandler{
     public static Recipe recipeGreenWall;
     public static Recipe recipeWhiteWall;
     public static Recipe recipeExplosionLens;
+    public static Recipe recipeDamageLens;
     public static ArrayList<Recipe> colorConversionRecipes = new ArrayList<Recipe>();
 
     public static void init(){
@@ -68,7 +69,9 @@ public class ReconstructorRecipeHandler{
         recipeColorLens = Util.GetRecipes.lastReconstructorRecipe();
         addRecipe("itemColorLens", "itemExplosionLens", 5000);
         recipeExplosionLens = Util.GetRecipes.lastReconstructorRecipe();
-        addRecipe("itemExplosionLens", "itemLens", 5000);
+        addRecipe("itemExplosionLens", "itemDamageLens", 5000);
+        recipeDamageLens = Util.GetRecipes.lastReconstructorRecipe();
+        addRecipe("itemDamageLens", "itemLens", 5000);
 
         //Misc
         if(ConfigCrafting.RECONSTRUCTOR_MISC.isEnabled()){
@@ -106,7 +109,7 @@ public class ReconstructorRecipeHandler{
     }
 
     public static void addRecipe(String input, String output, int energyUse, LensType type){
-        if(type.canAddRecipesFor){
+        if(type.hasRecipes){
             recipes.add(new Recipe(input, output, energyUse, type));
         }
     }
@@ -153,13 +156,14 @@ public class ReconstructorRecipeHandler{
 
         NONE(true),
         COLOR(true),
-        DETONATION(false);
+        DETONATION(false),
+        JUST_DAMAGE(false);
 
         public ItemStack lens;
-        public boolean canAddRecipesFor;
+        public boolean hasRecipes;
 
-        LensType(boolean canAddRecipesFor){
-            this.canAddRecipesFor = canAddRecipesFor;
+        LensType(boolean hasRecipes){
+            this.hasRecipes = hasRecipes;
         }
 
         public float[] getColor(){
@@ -170,6 +174,9 @@ public class ReconstructorRecipeHandler{
             else if(this == DETONATION){
                 return new float[]{158F/255F, 43F/255F, 39F/255F};
             }
+            else if(this == JUST_DAMAGE){
+                return new float[]{188F/255F, 222F/255F, 1F};
+            }
             else return new float[]{27F/255F, 109F/255F, 1F};
         }
 
@@ -178,7 +185,7 @@ public class ReconstructorRecipeHandler{
         }
 
         public int getDistance(){
-            return this == DETONATION ? 30 : 10;
+            return this == DETONATION ? 30 : (this == JUST_DAMAGE ? 15 : 10);
         }
     }
 

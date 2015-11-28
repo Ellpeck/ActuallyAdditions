@@ -62,7 +62,9 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
                             int distance = currentLens.getDistance();
                             for(int i = 0; i < distance; i++){
                                 WorldPos hitBlock = WorldUtil.getCoordsFromSide(sideToManipulate, worldObj, xCoord, yCoord, zCoord, i);
-                                this.damagePlayer(hitBlock.getX(), hitBlock.getY(), hitBlock.getZ());
+
+                                float damage = currentLens == ReconstructorRecipeHandler.LensType.JUST_DAMAGE ? 20F : 5F;
+                                this.damagePlayer(hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), damage);
 
                                 if(hitBlock != null){
                                     if(!hitBlock.getBlock().isAir(hitBlock.getWorld(), hitBlock.getX(), hitBlock.getY(), hitBlock.getZ())){
@@ -77,7 +79,7 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
                                             }
                                         }
                                         //Conversion Recipes
-                                        else{
+                                        else if(currentLens.hasRecipes){
                                             int range = 2;
 
                                             //Converting the Blocks
@@ -164,10 +166,10 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
     }
 
     @SuppressWarnings("unchecked")
-    public void damagePlayer(int x, int y, int z){
+    public void damagePlayer(int x, int y, int z, float damage){
         ArrayList<EntityLivingBase> entities = (ArrayList<EntityLivingBase>)worldObj.getEntitiesWithinAABB(EntityLivingBase.class, AxisAlignedBB.getBoundingBox(x, y, z, x+1, y+1, z+1));
         for(EntityLivingBase entity : entities){
-            entity.attackEntityFrom(DamageSources.DAMAGE_ATOMIC_RECONSTRUCTOR, 16F);
+            entity.attackEntityFrom(DamageSources.DAMAGE_ATOMIC_RECONSTRUCTOR, damage);
         }
     }
 
