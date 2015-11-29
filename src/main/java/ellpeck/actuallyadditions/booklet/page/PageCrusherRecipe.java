@@ -10,6 +10,8 @@
 
 package ellpeck.actuallyadditions.booklet.page;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.booklet.GuiBooklet;
 import ellpeck.actuallyadditions.proxy.ClientProxy;
 import ellpeck.actuallyadditions.recipe.CrusherRecipeRegistry;
@@ -35,6 +37,7 @@ public class PageCrusherRecipe extends BookletPage{
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public void renderPre(GuiBooklet gui, int mouseX, int mouseY, int ticksElapsed, boolean mousePressed){
         if(recipe != null){
             gui.mc.getTextureManager().bindTexture(ClientProxy.bulletForMyValentine ? GuiBooklet.resLocValentine : GuiBooklet.resLoc);
@@ -44,6 +47,7 @@ public class PageCrusherRecipe extends BookletPage{
 
     @SuppressWarnings("unchecked")
     @Override
+    @SideOnly(Side.CLIENT)
     public void render(GuiBooklet gui, int mouseX, int mouseY, int ticksElapsed, boolean mousePressed){
         if(recipe == null){
             gui.mc.fontRenderer.drawSplitString(EnumChatFormatting.DARK_RED+StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".recipeDisabled"), gui.guiLeft+14, gui.guiTop+15, 115, 0);
@@ -105,6 +109,7 @@ public class PageCrusherRecipe extends BookletPage{
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public void updateScreen(int ticksElapsed){
         if(ticksElapsed%10 == 0){
             List<ItemStack> outputTwos = this.recipe.getRecipeOutputTwos();

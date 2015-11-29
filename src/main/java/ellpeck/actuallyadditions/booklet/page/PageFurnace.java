@@ -10,6 +10,8 @@
 
 package ellpeck.actuallyadditions.booklet.page;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.booklet.GuiBooklet;
 import ellpeck.actuallyadditions.proxy.ClientProxy;
 import ellpeck.actuallyadditions.util.ModUtil;
@@ -38,6 +40,7 @@ public class PageFurnace extends BookletPage{
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public void renderPre(GuiBooklet gui, int mouseX, int mouseY, int ticksElapsed, boolean mousePressed){
         if(this.input != null || this.getInputForOutput(this.result) != null){
             gui.mc.getTextureManager().bindTexture(ClientProxy.bulletForMyValentine ? GuiBooklet.resLocValentine : GuiBooklet.resLoc);
@@ -47,6 +50,7 @@ public class PageFurnace extends BookletPage{
 
     @SuppressWarnings("unchecked")
     @Override
+    @SideOnly(Side.CLIENT)
     public void render(GuiBooklet gui, int mouseX, int mouseY, int ticksElapsed, boolean mousePressed){
         ItemStack input = this.input != null ? this.input : this.getInputForOutput(this.result);
         if(input == null){

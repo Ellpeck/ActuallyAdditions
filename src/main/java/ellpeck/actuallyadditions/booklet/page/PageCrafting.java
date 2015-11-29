@@ -11,6 +11,8 @@
 package ellpeck.actuallyadditions.booklet.page;
 
 import cpw.mods.fml.relauncher.ReflectionHelper;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.booklet.GuiBooklet;
 import ellpeck.actuallyadditions.proxy.ClientProxy;
 import ellpeck.actuallyadditions.util.ModUtil;
@@ -43,6 +45,7 @@ public class PageCrafting extends BookletPage{
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public void renderPre(GuiBooklet gui, int mouseX, int mouseY, int ticksElapsed, boolean mousePressed){
         if(this.recipes[this.recipePos] != null){
             gui.mc.getTextureManager().bindTexture(ClientProxy.bulletForMyValentine ? GuiBooklet.resLocValentine : GuiBooklet.resLoc);
@@ -52,6 +55,7 @@ public class PageCrafting extends BookletPage{
 
     @SuppressWarnings("unchecked")
     @Override
+    @SideOnly(Side.CLIENT)
     public void render(GuiBooklet gui, int mouseX, int mouseY, int ticksElapsed, boolean mousePressed){
         IRecipe recipe = this.recipes[this.recipePos];
 
@@ -139,6 +143,7 @@ public class PageCrafting extends BookletPage{
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public void updateScreen(int ticksElapsed){
         if(ticksElapsed%15 == 0){
             if(this.recipePos+1 >= this.recipes.length){

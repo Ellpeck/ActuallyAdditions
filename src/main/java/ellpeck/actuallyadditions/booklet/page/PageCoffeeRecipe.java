@@ -10,6 +10,8 @@
 
 package ellpeck.actuallyadditions.booklet.page;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.booklet.GuiBooklet;
 import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.items.ItemCoffee;
@@ -28,6 +30,7 @@ public class PageCoffeeRecipe extends BookletPage{
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public void renderPre(GuiBooklet gui, int mouseX, int mouseY, int ticksElapsed, boolean mousePressed){
         gui.mc.getTextureManager().bindTexture(ClientProxy.bulletForMyValentine ? GuiBooklet.resLocValentine : GuiBooklet.resLoc);
         gui.drawTexturedModalRect(gui.guiLeft+19, gui.guiTop+20, 146, 94, 99, 60);
@@ -35,6 +38,7 @@ public class PageCoffeeRecipe extends BookletPage{
 
     @SuppressWarnings("unchecked")
     @Override
+    @SideOnly(Side.CLIENT)
     public void render(GuiBooklet gui, int mouseX, int mouseY, int ticksElapsed, boolean mousePressed){
         String strg = "Coffee Machine Recipe";
         gui.mc.fontRenderer.drawString(strg, gui.guiLeft+gui.xSize/2-gui.mc.fontRenderer.getStringWidth(strg)/2, gui.guiTop+10, 0);

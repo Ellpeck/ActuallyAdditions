@@ -19,6 +19,8 @@ import ellpeck.actuallyadditions.tile.TileEntityBookletStand;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 
+import java.util.Objects;
+
 @SideOnly(Side.CLIENT)
 public class GuiBookletStand extends GuiBooklet{
 
@@ -52,7 +54,7 @@ public class GuiBookletStand extends GuiBooklet{
         };
         this.buttonList.add(this.buttonSetPage);
 
-        this.buttonSetPage.visible = Minecraft.getMinecraft().thePlayer.getUniqueID().equals(this.theStand.assignedPlayerUUID);
+        this.buttonSetPage.visible = Objects.equals(Minecraft.getMinecraft().thePlayer.getCommandSenderName(), this.theStand.assignedPlayer);
 
         //Open the pages the book was assigned
         BookletUtils.openIndexEntry(this, this.theStand.assignedEntry, this.theStand.assignedPageInIndex, true);

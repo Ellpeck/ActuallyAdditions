@@ -119,7 +119,7 @@ public class ItemDrill extends ItemEnergy{
                         //Notify the Player and log the Exception
                         catch(Exception e){
                             player.addChatComponentMessage(new ChatComponentText("Ouch! That really hurt! You must have done something wrong, don't do that again please!"));
-                            ModUtil.LOGGER.error("Player "+player.getDisplayName()+" who should place a Block using a Drill at "+player.posX+", "+player.posY+", "+player.posZ+" in World "+world.provider.dimensionId+" threw an Exception! Don't let that happen again!");
+                            ModUtil.LOGGER.error("Player "+player.getCommandSenderName()+" who should place a Block using a Drill at "+player.posX+", "+player.posY+", "+player.posZ+" in World "+world.provider.dimensionId+" threw an Exception! Don't let that happen again!");
                         }
                     }
                     else{

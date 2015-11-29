@@ -24,6 +24,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
 
+import java.util.Objects;
+
 public class PacketBookletStandButton implements IMessage{
 
     private int tileX;
@@ -92,7 +94,7 @@ public class PacketBookletStandButton implements IMessage{
             EntityPlayer player = (EntityPlayer)world.getEntityByID(message.playerID);
 
             if(tile instanceof TileEntityBookletStand){
-                if(player.getUniqueID().equals(((TileEntityBookletStand)tile).assignedPlayerUUID)){
+                if(Objects.equals(player.getCommandSenderName(), ((TileEntityBookletStand)tile).assignedPlayer)){
                     ((TileEntityBookletStand)tile).setEntry(message.entryID, message.chapterID, message.pageID, message.pageInIndex);
                     world.markBlockForUpdate(message.tileX, message.tileY, message.tileZ);
                 }

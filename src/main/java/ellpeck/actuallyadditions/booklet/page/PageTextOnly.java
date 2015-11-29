@@ -10,6 +10,8 @@
 
 package ellpeck.actuallyadditions.booklet.page;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.booklet.GuiBooklet;
 import net.minecraft.item.ItemStack;
 
@@ -28,6 +30,7 @@ public class PageTextOnly extends BookletPage{
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public void renderPre(GuiBooklet gui, int mouseX, int mouseY, int ticksElapsed, boolean mousePressed){
         String text = gui.currentPage.getText();
         if(text != null && !text.isEmpty()){

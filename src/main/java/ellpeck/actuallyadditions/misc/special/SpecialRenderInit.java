@@ -37,7 +37,7 @@ public class SpecialRenderInit{
         if(!specialList.isEmpty()){
             for(Map.Entry<String, RenderSpecial> entry : specialList.entrySet()){
                 //Does the player have one of the names from the list?
-                if(StringUtil.equalsToLowerCase(entry.getKey(), event.entityPlayer.getDisplayName())){
+                if(StringUtil.equalsToLowerCase(entry.getKey(), event.entityPlayer.getCommandSenderName())){
                     //Render the special Item/Block
                     entry.getValue().render(event.entityPlayer);
                     break;

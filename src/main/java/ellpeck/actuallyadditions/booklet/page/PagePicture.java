@@ -10,6 +10,8 @@
 
 package ellpeck.actuallyadditions.booklet.page;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.booklet.GuiBooklet;
 import ellpeck.actuallyadditions.util.AssetUtil;
 import net.minecraft.util.ResourceLocation;
@@ -26,6 +28,7 @@ public class PagePicture extends PageTextOnly{
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public void renderPre(GuiBooklet gui, int mouseX, int mouseY, int ticksElapsed, boolean mousePressed){
         gui.mc.getTextureManager().bindTexture(this.resLoc);
         gui.drawTexturedModalRect(gui.guiLeft, gui.guiTop, 0, 0, gui.xSize, gui.ySize);

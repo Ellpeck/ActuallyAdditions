@@ -16,8 +16,6 @@ import ellpeck.actuallyadditions.booklet.entry.BookletEntry;
 import ellpeck.actuallyadditions.booklet.page.BookletPage;
 import net.minecraft.nbt.NBTTagCompound;
 
-import java.util.UUID;
-
 public class TileEntityBookletStand extends TileEntityBase{
 
     public BookletChapter assignedChapter;
@@ -25,7 +23,7 @@ public class TileEntityBookletStand extends TileEntityBase{
     public BookletEntry assignedEntry;
     public int assignedPageInIndex;
 
-    public UUID assignedPlayerUUID;
+    public String assignedPlayer;
 
     @Override
     public boolean canUpdate(){
@@ -39,9 +37,8 @@ public class TileEntityBookletStand extends TileEntityBase{
         compound.setInteger("Page", this.assignedPage == null ? -1 : this.assignedPage.getID());
         compound.setInteger("PageInIndex", this.assignedPageInIndex);
 
-        if(this.assignedPlayerUUID != null){
-            compound.setLong("PlayerLeastSignificant", this.assignedPlayerUUID.getLeastSignificantBits());
-            compound.setLong("PlayerMostSignificant", this.assignedPlayerUUID.getMostSignificantBits());
+        if(this.assignedPlayer != null){
+            compound.setString("Player", this.assignedPlayer);
         }
     }
 
@@ -49,9 +46,9 @@ public class TileEntityBookletStand extends TileEntityBase{
     public void readSyncableNBT(NBTTagCompound compound, boolean isForSync){
         this.setEntry(compound.getInteger("Entry"), compound.getInteger("Chapter"), compound.getInteger("Page"), compound.getInteger("PageInIndex"));
 
-        long mostSigBits = compound.getLong("PlayerMostSignificant");
-        if(mostSigBits > 0){
-            this.assignedPlayerUUID = new UUID(mostSigBits, compound.getLong("PlayerLeastSignificant"));
+        String player = compound.getString("Player");
+        if(player != null){
+            this.assignedPlayer = player;
         }
     }
 

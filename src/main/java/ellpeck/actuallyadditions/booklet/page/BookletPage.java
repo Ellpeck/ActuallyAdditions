@@ -10,6 +10,8 @@
 
 package ellpeck.actuallyadditions.booklet.page;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.booklet.BookletUtils;
 import ellpeck.actuallyadditions.booklet.GuiBooklet;
 import ellpeck.actuallyadditions.booklet.InitBooklet;
@@ -58,6 +60,7 @@ public class BookletPage{
         }
     }
 
+    @SideOnly(Side.CLIENT)
     public static void renderItem(GuiScreen gui, ItemStack stack, int x, int y, float scale){
         GL11.glPushMatrix();
         GL11.glEnable(GL11.GL_BLEND);
@@ -113,19 +116,23 @@ public class BookletPage{
         return this;
     }
 
+    @SideOnly(Side.CLIENT)
     public void renderPre(GuiBooklet gui, int mouseX, int mouseY, int ticksElapsed, boolean mousePressed){
 
     }
 
+    @SideOnly(Side.CLIENT)
     public void render(GuiBooklet gui, int mouseX, int mouseY, int ticksElapsed, boolean mousePressed){
 
     }
 
+    @SideOnly(Side.CLIENT)
     public void updateScreen(int ticksElapsed){
 
     }
 
     @SuppressWarnings("unchecked")
+    @SideOnly(Side.CLIENT)
     protected void renderTooltipAndTransfer(GuiBooklet gui, ItemStack stack, int x, int y, boolean checkAndTransfer, boolean mousePressed){
         boolean flagBefore = gui.mc.fontRenderer.getUnicodeFlag();
         gui.mc.fontRenderer.setUnicodeFlag(false);
