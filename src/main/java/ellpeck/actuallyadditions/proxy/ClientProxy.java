@@ -17,10 +17,7 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.VillagerRegistry;
-import ellpeck.actuallyadditions.blocks.render.RenderInventory;
-import ellpeck.actuallyadditions.blocks.render.RenderLaserRelay;
-import ellpeck.actuallyadditions.blocks.render.RenderSmileyCloud;
-import ellpeck.actuallyadditions.blocks.render.RenderTileEntity;
+import ellpeck.actuallyadditions.blocks.render.*;
 import ellpeck.actuallyadditions.blocks.render.model.*;
 import ellpeck.actuallyadditions.config.values.ConfigBoolValues;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
@@ -84,6 +81,7 @@ public class ClientProxy implements IProxy{
         registerRenderer(TileEntitySmileyCloud.class, new RenderSmileyCloud(new ModelSmileyCloud()), AssetUtil.smileyCloudRenderId);
         registerRenderer(TileEntityLaserRelay.class, new RenderLaserRelay(new ModelLaserRelay()), AssetUtil.laserRelayRenderId);
         registerRenderer(TileEntityBookletStand.class, new RenderTileEntity(new ModelBookletStand()), AssetUtil.bookletStandRenderId);
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAtomicReconstructor.class, new RenderReconstructorLens());
 
         VillagerRegistry.instance().registerVillagerSkin(ConfigIntValues.JAM_VILLAGER_ID.getValue(), new ResourceLocation(ModUtil.MOD_ID_LOWER, "textures/entity/villager/jamVillager.png"));
     }

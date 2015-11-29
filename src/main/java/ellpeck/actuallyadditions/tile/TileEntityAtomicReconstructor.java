@@ -209,11 +209,33 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
 
     @Override
     public boolean canInsertItem(int slot, ItemStack stack, int side){
-        return stack != null && stack.getItem() instanceof IReconstructorLens;
+        return this.isItemValidForSlot(slot, stack);
     }
 
     @Override
     public boolean canExtractItem(int slot, ItemStack stack, int side){
         return true;
+    }
+
+    @Override
+    public boolean isItemValidForSlot(int i, ItemStack stack){
+        return stack != null && stack.getItem() instanceof IReconstructorLens;
+    }
+
+    @Override
+    public boolean shouldSyncSlots(){
+        return true;
+    }
+
+    @Override
+    public ItemStack decrStackSize(int i, int j){
+        this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
+        return super.decrStackSize(i, j);
+    }
+
+    @Override
+    public void setInventorySlotContents(int i, ItemStack stack){
+        super.setInventorySlotContents(i, stack);
+        this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
     }
 }

@@ -31,18 +31,22 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
         this.slots = new ItemStack[itemAmount];
     }
 
+    public boolean shouldSyncSlots(){
+        return false;
+    }
+
     @Override
     public void writeSyncableNBT(NBTTagCompound compound, boolean isForSync){
-        if(!isForSync){
+        if(!isForSync || this.shouldSyncSlots()){
             if(this.slots.length > 0){
                 NBTTagList tagList = new NBTTagList();
                 for(int currentIndex = 0; currentIndex < slots.length; currentIndex++){
+                    NBTTagCompound tagCompound = new NBTTagCompound();
+                    tagCompound.setByte("Slot", (byte)currentIndex);
                     if(slots[currentIndex] != null){
-                        NBTTagCompound tagCompound = new NBTTagCompound();
-                        tagCompound.setByte("Slot", (byte)currentIndex);
                         slots[currentIndex].writeToNBT(tagCompound);
-                        tagList.appendTag(tagCompound);
                     }
+                    tagList.appendTag(tagCompound);
                 }
                 compound.setTag("Items", tagList);
             }
@@ -51,7 +55,7 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
 
     @Override
     public void readSyncableNBT(NBTTagCompound compound, boolean isForSync){
-        if(!isForSync){
+        if(!isForSync || this.shouldSyncSlots()){
             if(this.slots.length > 0){
                 NBTTagList tagList = compound.getTagList("Items", 10);
                 for(int i = 0; i < tagList.tagCount(); i++){

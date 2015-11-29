@@ -94,6 +94,11 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IAct
     }
 
     @Override
+    public boolean isOpaqueCube(){
+        return false;
+    }
+
+    @Override
     public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack stack){
         int rotation = BlockPistonBase.determineOrientation(world, x, y, z, player);
         world.setBlockMetadataWithNotify(x, y, z, rotation, 2);
@@ -111,7 +116,6 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IAct
                             ItemStack toPut = heldItem.copy();
                             toPut.stackSize = 1;
                             reconstructor.setInventorySlotContents(0, toPut);
-
                             player.inventory.decrStackSize(player.inventory.currentItem, 1);
                         }
                     }

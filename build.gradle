@@ -27,7 +27,7 @@ minecraft {
     runDir = "idea"
 
     replaceIn "ModUtil.java"
-    replace "mod_version", project.version.toString()
+    replace "@VERSION@", project.version.toString()
 }
 
 repositories {
