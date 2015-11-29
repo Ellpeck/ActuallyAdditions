@@ -25,6 +25,9 @@ archivesBaseName = "ActuallyAdditions"
 minecraft {
     version = "1.7.10-10.13.4.1558-1.7.10"
     runDir = "idea"
+
+    replaceIn "ModUtil.java"
+    replace "mod_version", project.version.toString()
 }
 
 repositories {
@@ -45,15 +48,14 @@ dependencies {
     compile "codechicken:NotEnoughItems:1.7.10-1.0.5.110:dev"
 }
 
-processResources{
-
+processResources {
     inputs.property "version", project.version
     inputs.property "mcversion", project.minecraft.version
 
     from(sourceSets.main.resources.srcDirs) {
         include 'mcmod.info'
 
-        expand 'version':project.version, 'mcversion':project.minecraft.version
+        expand 'version': project.version, 'mcversion': project.minecraft.version
     }
 
     from(sourceSets.main.resources.srcDirs) {

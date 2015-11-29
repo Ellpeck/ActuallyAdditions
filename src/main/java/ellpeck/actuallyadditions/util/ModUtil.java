@@ -15,14 +15,12 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.Locale;
 
-public class ModUtil{
-
-    public static final String VERSION = "1.7.10-r8";
+public class ModUtil {
+    public static final String VERSION = "mod_version"; // Will be replaced by gradle
 
     public static final String MOD_ID = "ActuallyAdditions";
     public static final String NAME = "Actually Additions";
     public static final String MOD_ID_LOWER = MOD_ID.toLowerCase(Locale.ROOT);
 
     public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
-
 }
