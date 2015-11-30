@@ -32,11 +32,11 @@ import net.minecraft.world.World;
 public class BlockBookletStand extends BlockContainerBase implements IActAddItemOrBlock{
 
     public BlockBookletStand(){
-        super(Material.rock);
-        this.setHarvestLevel("pickaxe", 0);
-        this.setHardness(1.5F);
-        this.setResistance(10.0F);
-        this.setStepSound(soundTypeStone);
+        super(Material.wood);
+        this.setHarvestLevel("axe", 0);
+        this.setHardness(1.0F);
+        this.setResistance(4.0F);
+        this.setStepSound(soundTypeWood);
 
         float f = 1/16F;
         this.setBlockBounds(f, 0F, f, 1F-f, 1F-4*f, 1F-f);
