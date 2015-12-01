@@ -152,11 +152,6 @@ public class TileEntityFluidCollector extends TileEntityInventoryBase implements
         }
     }
 
-    @SideOnly(Side.CLIENT)
-    public int getTankScaled(int i){
-        return this.tank.getFluidAmount()*i/this.tank.getCapacity();
-    }
-
     @Override
     public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
         super.writeSyncableNBT(compound, sync);
@@ -182,6 +177,11 @@ public class TileEntityFluidCollector extends TileEntityInventoryBase implements
             }
         }
         return false;
+    }
+
+    @SideOnly(Side.CLIENT)
+    public int getTankScaled(int i){
+        return this.tank.getFluidAmount()*i/this.tank.getCapacity();
     }
 
     @Override

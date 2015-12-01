@@ -22,15 +22,27 @@ public class TileEntityItemRepairer extends TileEntityInventoryBase implements I
 
     public static final int SLOT_INPUT = 0;
     public static final int SLOT_OUTPUT = 1;
-
+    public static final int ENERGY_USE = 1500;
     public EnergyStorage storage = new EnergyStorage(300000);
     public int nextRepairTick;
     private int lastEnergy;
 
-    public static final int ENERGY_USE = 1500;
-
     public TileEntityItemRepairer(){
         super(2, "repairer");
+    }
+
+    @Override
+    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
+        compound.setInteger("NextRepairTick", this.nextRepairTick);
+        super.writeSyncableNBT(compound, sync);
+        this.storage.writeToNBT(compound);
+    }
+
+    @Override
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
+        this.nextRepairTick = compound.getInteger("NextRepairTick");
+        super.readSyncableNBT(compound, sync);
+        this.storage.readFromNBT(compound);
     }
 
     @Override
@@ -67,20 +79,6 @@ public class TileEntityItemRepairer extends TileEntityInventoryBase implements I
 
     public static boolean canBeRepaired(ItemStack stack){
         return stack != null && stack.getItem().isRepairable();
-    }
-
-    @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        compound.setInteger("NextRepairTick", this.nextRepairTick);
-        super.writeSyncableNBT(compound, sync);
-        this.storage.writeToNBT(compound);
-    }
-
-    @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        this.nextRepairTick = compound.getInteger("NextRepairTick");
-        super.readSyncableNBT(compound, sync);
-        this.storage.readFromNBT(compound);
     }
 
     @Override

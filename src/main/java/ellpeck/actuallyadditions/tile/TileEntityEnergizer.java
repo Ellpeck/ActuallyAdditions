@@ -29,6 +29,18 @@ public class TileEntityEnergizer extends TileEntityInventoryBase implements IEne
     }
 
     @Override
+    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
+        this.storage.writeToNBT(compound);
+        super.writeSyncableNBT(compound, sync);
+    }
+
+    @Override
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
+        this.storage.readFromNBT(compound);
+        super.readSyncableNBT(compound, sync);
+    }
+
+    @Override
     public void updateEntity(){
         super.updateEntity();
         if(!worldObj.isRemote){
@@ -51,18 +63,6 @@ public class TileEntityEnergizer extends TileEntityInventoryBase implements IEne
                 this.lastEnergy = this.storage.getEnergyStored();
             }
         }
-    }
-
-    @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        this.storage.writeToNBT(compound);
-        super.writeSyncableNBT(compound, sync);
-    }
-
-    @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        this.storage.readFromNBT(compound);
-        super.readSyncableNBT(compound, sync);
     }
 
     @Override

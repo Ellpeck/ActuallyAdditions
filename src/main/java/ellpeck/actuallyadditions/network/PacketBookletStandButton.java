@@ -52,7 +52,7 @@ public class PacketBookletStandButton implements IMessage{
         this.playerID = player.getEntityId();
 
         this.entryID = entry == null ? -1 : InitBooklet.entries.indexOf(entry);
-        this.chapterID =  entry == null || chapter == null ? -1 : entry.chapters.indexOf(chapter);
+        this.chapterID = entry == null || chapter == null ? -1 : entry.chapters.indexOf(chapter);
         this.pageID = page == null ? -1 : page.getID();
         this.pageInIndex = pageInIndex;
     }

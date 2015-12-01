@@ -71,37 +71,8 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IAct
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister iconReg){
-        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
-        this.frontIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Front");
-        this.topIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Top");
-    }
-
-    @Override
-    public String getName(){
-        return "blockAtomicReconstructor";
-    }
-
-    @Override
-    public EnumRarity getRarity(ItemStack stack){
-        return EnumRarity.epic;
-    }
-
-    @Override
-    public TileEntity createNewTileEntity(World world, int i){
-        return new TileEntityAtomicReconstructor();
-    }
-
-    @Override
     public boolean isOpaqueCube(){
         return false;
-    }
-
-    @Override
-    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack stack){
-        int rotation = BlockPistonBase.determineOrientation(world, x, y, z, player);
-        world.setBlockMetadataWithNotify(x, y, z, rotation, 2);
     }
 
     @Override
@@ -132,6 +103,35 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IAct
             }
         }
         return true;
+    }
+
+    @Override
+    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack stack){
+        int rotation = BlockPistonBase.determineOrientation(world, x, y, z, player);
+        world.setBlockMetadataWithNotify(x, y, z, rotation, 2);
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void registerBlockIcons(IIconRegister iconReg){
+        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
+        this.frontIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Front");
+        this.topIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Top");
+    }
+
+    @Override
+    public String getName(){
+        return "blockAtomicReconstructor";
+    }
+
+    @Override
+    public EnumRarity getRarity(ItemStack stack){
+        return EnumRarity.epic;
+    }
+
+    @Override
+    public TileEntity createNewTileEntity(World world, int i){
+        return new TileEntityAtomicReconstructor();
     }
 
     @Override

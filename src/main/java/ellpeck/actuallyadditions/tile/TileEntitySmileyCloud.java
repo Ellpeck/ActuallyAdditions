@@ -28,6 +28,17 @@ public class TileEntitySmileyCloud extends TileEntityBase implements IStringReac
     private String nameBefore;
 
     @Override
+    public void updateEntity(){
+        super.updateEntity();
+        if(!worldObj.isRemote){
+            if(!Objects.equals(this.name, this.nameBefore) && this.sendUpdateWithInterval()){
+                this.nameBefore = this.name;
+                this.markDirty();
+            }
+        }
+    }
+
+    @Override
     public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
         if(this.name != null){
             compound.setString("Name", this.name);
@@ -37,17 +48,6 @@ public class TileEntitySmileyCloud extends TileEntityBase implements IStringReac
     @Override
     public void readSyncableNBT(NBTTagCompound compound, boolean sync){
         this.name = compound.getString("Name");
-    }
-
-    @Override
-    public void updateEntity(){
-        super.updateEntity();
-        if(!worldObj.isRemote){
-            if(!Objects.equals(this.name, this.nameBefore) && this.sendUpdateWithInterval()){
-                this.nameBefore = this.name;
-                this.markDirty();
-            }
-        }
     }
 
     @Override

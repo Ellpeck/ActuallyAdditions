@@ -27,16 +27,6 @@ public class BlockBlackLotus extends BlockBush implements IActAddItemOrBlock{
     }
 
     @Override
-    public String getName(){
-        return "blockBlackLotus";
-    }
-
-    @Override
-    public EnumRarity getRarity(ItemStack stack){
-        return EnumRarity.epic;
-    }
-
-    @Override
     @SideOnly(Side.CLIENT)
     public IIcon getIcon(int side, int meta){
         return this.blockIcon;
@@ -46,5 +36,15 @@ public class BlockBlackLotus extends BlockBush implements IActAddItemOrBlock{
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconReg){
         this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
+    }
+
+    @Override
+    public String getName(){
+        return "blockBlackLotus";
+    }
+
+    @Override
+    public EnumRarity getRarity(ItemStack stack){
+        return EnumRarity.epic;
     }
 }

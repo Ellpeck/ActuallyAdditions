@@ -88,7 +88,7 @@ public class ItemCrafting{
                 'B', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal())));
         recipeLens = Util.GetRecipes.lastIRecipe();
 
-            //Black Dye
+        //Black Dye
         GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemMisc, 2, TheMiscItems.BLACK_DYE.ordinal()), new ItemStack(InitBlocks.blockBlackLotus)));
         recipeBlackDye = Util.GetRecipes.lastIRecipe();
 

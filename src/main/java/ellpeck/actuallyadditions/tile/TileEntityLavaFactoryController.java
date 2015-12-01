@@ -24,24 +24,11 @@ public class TileEntityLavaFactoryController extends TileEntityBase implements I
     public static final int NOT_MULTI = 0;
     public static final int HAS_LAVA = 1;
     public static final int HAS_AIR = 2;
+    public static final int ENERGY_USE = 150000;
     //The Positions the Case Blocks should be in for the Factory to work
     private static final int[][] CASE_POSITIONS = {{-1, 1, 0}, {1, 1, 0}, {0, 1, -1}, {0, 1, 1}};
     public EnergyStorage storage = new EnergyStorage(3000000);
     private int currentWorkTime;
-
-    public static final int ENERGY_USE = 150000;
-
-    @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        this.storage.writeToNBT(compound);
-        compound.setInteger("WorkTime", this.currentWorkTime);
-    }
-
-    @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        this.storage.readFromNBT(compound);
-        this.currentWorkTime = compound.getInteger("WorkTime");
-    }
 
     @Override
     @SuppressWarnings("unchecked")
@@ -60,6 +47,18 @@ public class TileEntityLavaFactoryController extends TileEntityBase implements I
                 this.currentWorkTime = 0;
             }
         }
+    }
+
+    @Override
+    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
+        this.storage.writeToNBT(compound);
+        compound.setInteger("WorkTime", this.currentWorkTime);
+    }
+
+    @Override
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
+        this.storage.readFromNBT(compound);
+        this.currentWorkTime = compound.getInteger("WorkTime");
     }
 
     public int isMultiblock(){

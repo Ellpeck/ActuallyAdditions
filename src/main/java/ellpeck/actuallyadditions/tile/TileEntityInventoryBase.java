@@ -31,8 +31,23 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
         this.slots = new ItemStack[itemAmount];
     }
 
-    public boolean shouldSyncSlots(){
-        return false;
+    @Override
+    public int[] getAccessibleSlotsFromSide(int side){
+        if(this.slots.length > 0){
+            int[] theInt = new int[slots.length];
+            for(int i = 0; i < theInt.length; i++){
+                theInt[i] = i;
+            }
+            return theInt;
+        }
+        else{
+            return new int[0];
+        }
+    }
+
+    @Override
+    public void updateEntity(){
+        super.updateEntity();
     }
 
     @Override
@@ -53,6 +68,10 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
         }
     }
 
+    public boolean shouldSyncSlots(){
+        return false;
+    }
+
     @Override
     public void readSyncableNBT(NBTTagCompound compound, boolean isForSync){
         if(!isForSync || this.shouldSyncSlots()){
@@ -67,25 +86,6 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
                 }
             }
         }
-    }
-
-    @Override
-    public int[] getAccessibleSlotsFromSide(int side){
-        if(this.slots.length > 0){
-            int[] theInt = new int[slots.length];
-            for(int i = 0; i < theInt.length; i++){
-                theInt[i] = i;
-            }
-            return theInt;
-        }
-        else{
-            return new int[0];
-        }
-    }
-
-    @Override
-    public void updateEntity(){
-        super.updateEntity();
     }
 
     @Override

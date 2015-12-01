@@ -47,14 +47,14 @@ public class BlockCrystal extends Block implements IActAddItemOrBlock{
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public int getRenderColor(int meta){
-        return meta >= allCrystals.length ? super.getRenderColor(meta) : allCrystals[meta].color;
+    public int damageDropped(int meta){
+        return meta;
     }
 
     @Override
-    public int damageDropped(int meta){
-        return meta;
+    @SideOnly(Side.CLIENT)
+    public int getRenderColor(int meta){
+        return meta >= allCrystals.length ? super.getRenderColor(meta) : allCrystals[meta].color;
     }
 
     @Override

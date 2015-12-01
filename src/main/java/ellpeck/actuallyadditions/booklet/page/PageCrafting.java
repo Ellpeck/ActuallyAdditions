@@ -45,6 +45,28 @@ public class PageCrafting extends BookletPage{
     }
 
     @Override
+    public ItemStack[] getItemStacksForPage(){
+        if(this.recipes != null){
+            ItemStack[] stacks = new ItemStack[this.recipes.length];
+            for(int i = 0; i < this.recipes.length; i++){
+                ItemStack output = this.recipes[i].getRecipeOutput();
+                if(output != null){
+                    if(!this.arePageStacksWildcard){
+                        stacks[i] = output;
+                    }
+                    else{
+                        ItemStack wildcardOutput = output.copy();
+                        wildcardOutput.setItemDamage(Util.WILDCARD);
+                        stacks[i] = wildcardOutput;
+                    }
+                }
+            }
+            return stacks;
+        }
+        return null;
+    }
+
+    @Override
     @SideOnly(Side.CLIENT)
     public void renderPre(GuiBooklet gui, int mouseX, int mouseY, int ticksElapsed, boolean mousePressed){
         if(this.recipes[this.recipePos] != null){
@@ -153,27 +175,5 @@ public class PageCrafting extends BookletPage{
                 this.recipePos++;
             }
         }
-    }
-
-    @Override
-    public ItemStack[] getItemStacksForPage(){
-        if(this.recipes != null){
-            ItemStack[] stacks = new ItemStack[this.recipes.length];
-            for(int i = 0; i < this.recipes.length; i++){
-                ItemStack output = this.recipes[i].getRecipeOutput();
-                if(output != null){
-                    if(!this.arePageStacksWildcard){
-                        stacks[i] = output;
-                    }
-                    else{
-                        ItemStack wildcardOutput = output.copy();
-                        wildcardOutput.setItemDamage(Util.WILDCARD);
-                        stacks[i] = wildcardOutput;
-                    }
-                }
-            }
-            return stacks;
-        }
-        return null;
     }
 }

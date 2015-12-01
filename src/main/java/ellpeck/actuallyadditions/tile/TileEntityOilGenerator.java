@@ -23,6 +23,8 @@ import net.minecraftforge.fluids.*;
 
 public class TileEntityOilGenerator extends TileEntityInventoryBase implements IEnergyProvider, IFluidHandler{
 
+    public static final int ENERGY_PRODUCED = 76;
+    private static final int BURN_TIME = 100;
     public EnergyStorage storage = new EnergyStorage(50000);
     public FluidTank tank = new FluidTank(2*FluidContainerRegistry.BUCKET_VOLUME);
     public int currentBurnTime;
@@ -30,11 +32,39 @@ public class TileEntityOilGenerator extends TileEntityInventoryBase implements I
     private int lastTank;
     private int lastBurnTime;
 
-    public static final int ENERGY_PRODUCED = 76;
-    private static final int BURN_TIME = 100;
-
     public TileEntityOilGenerator(){
         super(2, "oilGenerator");
+    }
+
+    @SideOnly(Side.CLIENT)
+    public int getEnergyScaled(int i){
+        return this.storage.getEnergyStored()*i/this.storage.getMaxEnergyStored();
+    }
+
+    @SideOnly(Side.CLIENT)
+    public int getTankScaled(int i){
+        return this.tank.getFluidAmount()*i/this.tank.getCapacity();
+    }
+
+    @SideOnly(Side.CLIENT)
+    public int getBurningScaled(int i){
+        return this.currentBurnTime*i/BURN_TIME;
+    }
+
+    @Override
+    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
+        compound.setInteger("BurnTime", this.currentBurnTime);
+        this.storage.writeToNBT(compound);
+        this.tank.writeToNBT(compound);
+        super.writeSyncableNBT(compound, sync);
+    }
+
+    @Override
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
+        this.currentBurnTime = compound.getInteger("BurnTime");
+        this.storage.readFromNBT(compound);
+        this.tank.readFromNBT(compound);
+        super.readSyncableNBT(compound, sync);
     }
 
     @Override
@@ -87,37 +117,6 @@ public class TileEntityOilGenerator extends TileEntityInventoryBase implements I
                 this.lastBurnTime = this.currentBurnTime;
             }
         }
-    }
-
-    @SideOnly(Side.CLIENT)
-    public int getEnergyScaled(int i){
-        return this.storage.getEnergyStored()*i/this.storage.getMaxEnergyStored();
-    }
-
-    @SideOnly(Side.CLIENT)
-    public int getTankScaled(int i){
-        return this.tank.getFluidAmount()*i/this.tank.getCapacity();
-    }
-
-    @SideOnly(Side.CLIENT)
-    public int getBurningScaled(int i){
-        return this.currentBurnTime*i/BURN_TIME;
-    }
-
-    @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        compound.setInteger("BurnTime", this.currentBurnTime);
-        this.storage.writeToNBT(compound);
-        this.tank.writeToNBT(compound);
-        super.writeSyncableNBT(compound, sync);
-    }
-
-    @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        this.currentBurnTime = compound.getInteger("BurnTime");
-        this.storage.readFromNBT(compound);
-        this.tank.readFromNBT(compound);
-        super.readSyncableNBT(compound, sync);
     }
 
     @Override

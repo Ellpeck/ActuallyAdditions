@@ -67,11 +67,9 @@ public class GuiBooklet extends GuiScreen{
     public GuiButton[] bookmarkButtons = new GuiButton[8];
 
     public GuiTextField searchField;
-
+    public GuiScreen parentScreen;
     private int ticksElapsed;
     private boolean mousePressed;
-
-    public GuiScreen parentScreen;
     private boolean tryOpenMainPage;
     private boolean saveOnClose;
 

@@ -41,12 +41,6 @@ public class TileEntityLaserRelay extends TileEntityBase implements IEnergyRecei
         }
     }
 
-    @Override
-    public void invalidate(){
-        super.invalidate();
-        LaserRelayConnectionHandler.getInstance().removeRelayFromNetwork(new WorldPos(this.worldObj, this.xCoord, this.yCoord, this.zCoord));
-    }
-
     @SideOnly(Side.CLIENT)
     public void renderParticles(){
         if(Util.RANDOM.nextInt(2) == 0){
@@ -104,6 +98,12 @@ public class TileEntityLaserRelay extends TileEntityBase implements IEnergyRecei
         else{
             LaserRelayConnectionHandler.getInstance().removeRelayFromNetwork(thisPos);
         }
+    }
+
+    @Override
+    public void invalidate(){
+        super.invalidate();
+        LaserRelayConnectionHandler.getInstance().removeRelayFromNetwork(new WorldPos(this.worldObj, this.xCoord, this.yCoord, this.zCoord));
     }
 
     @Override

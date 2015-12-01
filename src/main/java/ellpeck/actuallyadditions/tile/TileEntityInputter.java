@@ -80,38 +80,6 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
         this.markDirty();
     }
 
-    @Override
-    public void updateEntity(){
-        super.updateEntity();
-        if(!worldObj.isRemote){
-            this.initVars();
-
-            //Is Block not powered by Redstone?
-            if(!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)){
-                if(!(this.sideToPull == this.sideToPut && this.slotToPullStart == this.slotToPutStart && this.slotToPullEnd == this.slotToPutEnd)){
-                    if(sideToPull != -1 && this.placeToPull instanceof IInventory){
-                        this.pull();
-                    }
-                    if(sideToPut != -1 && this.placeToPut instanceof IInventory){
-                        this.put();
-                    }
-                }
-            }
-
-            //Update the Client
-            if((this.sideToPut != this.lastPutSide || this.sideToPull != this.lastPullSide || this.slotToPullStart != this.lastPullStart || this.slotToPullEnd != this.lastPullEnd || this.slotToPutStart != this.lastPutStart || this.slotToPutEnd != this.lastPutEnd || this.isPullWhitelist != lastPullWhite || this.isPutWhitelist != this.lastPutWhite) && this.sendUpdateWithInterval()){
-                this.lastPutSide = this.sideToPut;
-                this.lastPullSide = this.sideToPull;
-                this.lastPullStart = this.slotToPullStart;
-                this.lastPullEnd = this.slotToPullEnd;
-                this.lastPutStart = this.slotToPutStart;
-                this.lastPutEnd = this.slotToPutEnd;
-                this.lastPullWhite = this.isPullWhitelist;
-                this.lastPutWhite = this.isPutWhitelist;
-            }
-        }
-    }
-
     /**
      * Pulls Items from the specified Slots on the specified Side
      */
@@ -424,6 +392,38 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
         this.isPullWhitelist = compound.getBoolean("PullWhitelist");
         this.isPutWhitelist = compound.getBoolean("PutWhitelist");
         super.readSyncableNBT(compound, sync);
+    }
+
+    @Override
+    public void updateEntity(){
+        super.updateEntity();
+        if(!worldObj.isRemote){
+            this.initVars();
+
+            //Is Block not powered by Redstone?
+            if(!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)){
+                if(!(this.sideToPull == this.sideToPut && this.slotToPullStart == this.slotToPutStart && this.slotToPullEnd == this.slotToPutEnd)){
+                    if(sideToPull != -1 && this.placeToPull instanceof IInventory){
+                        this.pull();
+                    }
+                    if(sideToPut != -1 && this.placeToPut instanceof IInventory){
+                        this.put();
+                    }
+                }
+            }
+
+            //Update the Client
+            if((this.sideToPut != this.lastPutSide || this.sideToPull != this.lastPullSide || this.slotToPullStart != this.lastPullStart || this.slotToPullEnd != this.lastPullEnd || this.slotToPutStart != this.lastPutStart || this.slotToPutEnd != this.lastPutEnd || this.isPullWhitelist != lastPullWhite || this.isPutWhitelist != this.lastPutWhite) && this.sendUpdateWithInterval()){
+                this.lastPutSide = this.sideToPut;
+                this.lastPullSide = this.sideToPull;
+                this.lastPullStart = this.slotToPullStart;
+                this.lastPullEnd = this.slotToPullEnd;
+                this.lastPutStart = this.slotToPutStart;
+                this.lastPutEnd = this.slotToPutEnd;
+                this.lastPullWhite = this.isPullWhitelist;
+                this.lastPutWhite = this.isPutWhitelist;
+            }
+        }
     }
 
     @Override

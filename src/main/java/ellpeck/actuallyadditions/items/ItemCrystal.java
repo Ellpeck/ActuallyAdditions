@@ -36,6 +36,12 @@ public class ItemCrystal extends Item implements IActAddItemOrBlock{
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
+    public IIcon getIconFromDamage(int par1){
+        return par1 >= this.textures.length ? null : this.textures[par1];
+    }
+
+    @Override
     public int getMetadata(int damage){
         return damage;
     }
@@ -43,12 +49,6 @@ public class ItemCrystal extends Item implements IActAddItemOrBlock{
     @Override
     public String getUnlocalizedName(ItemStack stack){
         return stack.getItemDamage() >= BlockCrystal.allCrystals.length ? StringUtil.BUGGED_ITEM_NAME : this.getUnlocalizedName()+BlockCrystal.allCrystals[stack.getItemDamage()].name;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public IIcon getIconFromDamage(int par1){
-        return par1 >= this.textures.length ? null : this.textures[par1];
     }
 
     @Override

@@ -51,10 +51,9 @@ import java.util.Set;
 @SuppressWarnings("unchecked")
 public class ItemDrill extends ItemEnergy{
 
+    private static final int ENERGY_USE = 100;
     @SideOnly(Side.CLIENT)
     private IIcon[] allDemDamnIconsMaan;
-
-    private static final int ENERGY_USE = 100;
 
     public ItemDrill(){
         super(500000, 5000);
@@ -66,30 +65,6 @@ public class ItemDrill extends ItemEnergy{
     @SideOnly(Side.CLIENT)
     public IIcon getIconFromDamage(int par1){
         return par1 >= this.allDemDamnIconsMaan.length ? null : this.allDemDamnIconsMaan[par1];
-    }
-
-    @Override
-    public int getMetadata(int damage){
-        return damage;
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    @SideOnly(Side.CLIENT)
-    public void getSubItems(Item item, CreativeTabs tabs, List list){
-        for(int i = 0; i < this.allDemDamnIconsMaan.length; i++){
-            this.addDrillStack(list, i);
-        }
-    }
-
-    private void addDrillStack(List list, int meta){
-        ItemStack stackFull = new ItemStack(this, 1, meta);
-        this.setEnergy(stackFull, this.getMaxEnergyStored(stackFull));
-        list.add(stackFull);
-
-        ItemStack stackEmpty = new ItemStack(this, 1, meta);
-        this.setEnergy(stackEmpty, 0);
-        list.add(stackEmpty);
     }
 
     @Override
@@ -190,6 +165,11 @@ public class ItemDrill extends ItemEnergy{
             player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.DRILL.ordinal(), world, (int)player.posX, (int)player.posY, (int)player.posZ);
         }
         return stack;
+    }
+
+    @Override
+    public int getMetadata(int damage){
+        return damage;
     }
 
     @Override
@@ -361,6 +341,25 @@ public class ItemDrill extends ItemEnergy{
      */
     public boolean getHasUpgrade(ItemStack stack, ItemDrillUpgrade.UpgradeType upgrade){
         return this.getHasUpgradeAsStack(stack, upgrade) != null;
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    @SideOnly(Side.CLIENT)
+    public void getSubItems(Item item, CreativeTabs tabs, List list){
+        for(int i = 0; i < this.allDemDamnIconsMaan.length; i++){
+            this.addDrillStack(list, i);
+        }
+    }
+
+    private void addDrillStack(List list, int meta){
+        ItemStack stackFull = new ItemStack(this, 1, meta);
+        this.setEnergy(stackFull, this.getMaxEnergyStored(stackFull));
+        list.add(stackFull);
+
+        ItemStack stackEmpty = new ItemStack(this, 1, meta);
+        this.setEnergy(stackEmpty, 0);
+        list.add(stackEmpty);
     }
 
     /**

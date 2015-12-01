@@ -18,9 +18,8 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 public class TileEntityFurnaceSolar extends TileEntityBase implements IEnergyProvider{
 
-    public EnergyStorage storage = new EnergyStorage(30000);
-
     public static final int PRODUCE = 10;
+    public EnergyStorage storage = new EnergyStorage(30000);
 
     @Override
     public int extractEnergy(ForgeDirection from, int maxExtract, boolean simulate){
@@ -43,25 +42,6 @@ public class TileEntityFurnaceSolar extends TileEntityBase implements IEnergyPro
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        this.storage.writeToNBT(compound);
-    }
-
-    @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        this.storage.readFromNBT(compound);
-    }
-
-    public boolean hasBlockAbove(){
-        for(int y = yCoord+1; y <= worldObj.getHeight(); y++){
-            if(!worldObj.getBlock(xCoord, y, zCoord).isAir(worldObj, xCoord, y, zCoord)){
-                return true;
-            }
-        }
-        return false;
-    }
-
-    @Override
     public void updateEntity(){
         super.updateEntity();
         if(!worldObj.isRemote){
@@ -80,5 +60,24 @@ public class TileEntityFurnaceSolar extends TileEntityBase implements IEnergyPro
                 WorldUtil.pushEnergy(worldObj, xCoord, yCoord, zCoord, ForgeDirection.WEST, storage);
             }
         }
+    }
+
+    @Override
+    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
+        this.storage.writeToNBT(compound);
+    }
+
+    @Override
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
+        this.storage.readFromNBT(compound);
+    }
+
+    public boolean hasBlockAbove(){
+        for(int y = yCoord+1; y <= worldObj.getHeight(); y++){
+            if(!worldObj.getBlock(xCoord, y, zCoord).isAir(worldObj, xCoord, y, zCoord)){
+                return true;
+            }
+        }
+        return false;
     }
 }

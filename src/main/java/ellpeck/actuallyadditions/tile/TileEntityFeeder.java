@@ -22,16 +22,32 @@ import java.util.List;
 
 public class TileEntityFeeder extends TileEntityInventoryBase{
 
+    public static final int THRESHOLD = 30;
+    private static final int TIME = 100;
     public int currentTimer;
     public int currentAnimalAmount;
     private int lastAnimalAmount;
     private int lastTimer;
 
-    public static final int THRESHOLD = 30;
-    private static final int TIME = 100;
-
     public TileEntityFeeder(){
         super(1, "feeder");
+    }
+
+    @SideOnly(Side.CLIENT)
+    public int getCurrentTimerToScale(int i){
+        return this.currentTimer*i/TIME;
+    }
+
+    @Override
+    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.writeSyncableNBT(compound, sync);
+        compound.setInteger("Timer", this.currentTimer);
+    }
+
+    @Override
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.readSyncableNBT(compound, sync);
+        this.currentTimer = compound.getInteger("Timer");
     }
 
     @Override
@@ -93,23 +109,6 @@ public class TileEntityFeeder extends TileEntityInventoryBase{
             double d2 = Util.RANDOM.nextGaussian()*0.02D;
             worldObj.spawnParticle("heart", (animal.posX+(double)(Util.RANDOM.nextFloat()*animal.width*2.0F))-animal.width, animal.posY+0.5D+(double)(Util.RANDOM.nextFloat()*animal.height), (animal.posZ+(double)(Util.RANDOM.nextFloat()*animal.width*2.0F))-animal.width, d, d1, d2);
         }
-    }
-
-    @SideOnly(Side.CLIENT)
-    public int getCurrentTimerToScale(int i){
-        return this.currentTimer*i/TIME;
-    }
-
-    @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.writeSyncableNBT(compound, sync);
-        compound.setInteger("Timer", this.currentTimer);
-    }
-
-    @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.readSyncableNBT(compound, sync);
-        this.currentTimer = compound.getInteger("Timer");
     }
 
     @Override

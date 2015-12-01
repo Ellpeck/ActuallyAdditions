@@ -136,6 +136,60 @@ public class ReconstructorRecipeHandler{
         return possibleRecipes;
     }
 
+    public enum LensType{
+
+        NONE(true),
+        COLOR(true),
+        DETONATION(false),
+        JUST_DAMAGE(false);
+
+        //Thanks to xdjackiexd for this, as I couldn't be bothered
+        private static final float[][] possibleColorLensColors = {
+                {158F, 43F, 39F}, //Red
+                {234F, 126F, 53F}, //Orange
+                {194F, 181F, 28F}, //Yellow
+                {57F, 186F, 46F}, //Lime Green
+                {54F, 75F, 24F}, //Green
+                {99F, 135F, 210F}, //Light Blue
+                {38F, 113F, 145F}, //Cyan
+                {37F, 49F, 147F}, //Blue
+                {126F, 52F, 191F}, //Purple
+                {190F, 73F, 201F}, //Magenta
+                {217F, 129F, 153F}, //Pink
+                {86F, 51F, 28F}, //Brown
+        };
+        public ItemStack lens;
+        public boolean hasRecipes;
+
+        LensType(boolean hasRecipes){
+            this.hasRecipes = hasRecipes;
+        }
+
+        public float[] getColor(){
+            if(this == COLOR){
+                float[] colors = possibleColorLensColors[Util.RANDOM.nextInt(possibleColorLensColors.length)];
+                return new float[]{colors[0]/255F, colors[1]/255F, colors[2]/255F};
+            }
+            else if(this == DETONATION){
+                return new float[]{158F/255F, 43F/255F, 39F/255F};
+            }
+            else if(this == JUST_DAMAGE){
+                return new float[]{188F/255F, 222F/255F, 1F};
+            }
+            else{
+                return new float[]{27F/255F, 109F/255F, 1F};
+            }
+        }
+
+        public void setLens(Item lens){
+            this.lens = new ItemStack(lens);
+        }
+
+        public int getDistance(){
+            return this == DETONATION ? 30 : (this == JUST_DAMAGE ? 15 : 10);
+        }
+    }
+
     public static class Recipe{
 
         public String input;
@@ -159,59 +213,6 @@ public class ReconstructorRecipeHandler{
             }
             return null;
         }
-    }
-
-    public enum LensType{
-
-        NONE(true),
-        COLOR(true),
-        DETONATION(false),
-        JUST_DAMAGE(false);
-
-        public ItemStack lens;
-        public boolean hasRecipes;
-
-        LensType(boolean hasRecipes){
-            this.hasRecipes = hasRecipes;
-        }
-
-        public float[] getColor(){
-            if(this == COLOR){
-                float[] colors = possibleColorLensColors[Util.RANDOM.nextInt(possibleColorLensColors.length)];
-                return new float[]{colors[0]/255F, colors[1]/255F, colors[2]/255F};
-            }
-            else if(this == DETONATION){
-                return new float[]{158F/255F, 43F/255F, 39F/255F};
-            }
-            else if(this == JUST_DAMAGE){
-                return new float[]{188F/255F, 222F/255F, 1F};
-            }
-            else return new float[]{27F/255F, 109F/255F, 1F};
-        }
-
-        public void setLens(Item lens){
-            this.lens = new ItemStack(lens);
-        }
-
-        public int getDistance(){
-            return this == DETONATION ? 30 : (this == JUST_DAMAGE ? 15 : 10);
-        }
-
-        //Thanks to xdjackiexd for this, as I couldn't be bothered
-        private static final float[][] possibleColorLensColors = {
-                {158F, 43F, 39F}, //Red
-                {234F, 126F, 53F}, //Orange
-                {194F, 181F, 28F}, //Yellow
-                {57F, 186F, 46F}, //Lime Green
-                {54F, 75F, 24F}, //Green
-                {99F, 135F, 210F}, //Light Blue
-                {38F, 113F, 145F}, //Cyan
-                {37F, 49F, 147F}, //Blue
-                {126F, 52F, 191F}, //Purple
-                {190F, 73F, 201F}, //Magenta
-                {217F, 129F, 153F}, //Pink
-                {86F, 51F, 28F}, //Brown
-        };
     }
 
 }

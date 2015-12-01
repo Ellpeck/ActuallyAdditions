@@ -22,14 +22,13 @@ import net.minecraftforge.fluids.*;
 
 public class TileEntityFermentingBarrel extends TileEntityInventoryBase implements IFluidHandler{
 
+    private static final int PROCESS_TIME = 100;
     public FluidTank canolaTank = new FluidTank(2*FluidContainerRegistry.BUCKET_VOLUME);
     public FluidTank oilTank = new FluidTank(2*FluidContainerRegistry.BUCKET_VOLUME);
     public int currentProcessTime;
     private int lastCanola;
     private int lastOil;
     private int lastProcessTime;
-
-    private static final int PROCESS_TIME = 100;
 
     public TileEntityFermentingBarrel(){
         super(4, "fermentingBarrel");
@@ -76,11 +75,6 @@ public class TileEntityFermentingBarrel extends TileEntityInventoryBase implemen
         }
     }
 
-    @SideOnly(Side.CLIENT)
-    public int getProcessScaled(int i){
-        return this.currentProcessTime*i/PROCESS_TIME;
-    }
-
     @Override
     public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
         compound.setInteger("ProcessTime", this.currentProcessTime);
@@ -102,6 +96,11 @@ public class TileEntityFermentingBarrel extends TileEntityInventoryBase implemen
     @Override
     public boolean isItemValidForSlot(int i, ItemStack stack){
         return (i == 0 && FluidContainerRegistry.containsFluid(stack, new FluidStack(InitBlocks.fluidCanolaOil, FluidContainerRegistry.BUCKET_VOLUME))) || (i == 2 && stack.getItem() == Items.bucket);
+    }
+
+    @SideOnly(Side.CLIENT)
+    public int getProcessScaled(int i){
+        return this.currentProcessTime*i/PROCESS_TIME;
     }
 
     @SideOnly(Side.CLIENT)

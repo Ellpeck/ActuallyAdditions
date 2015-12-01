@@ -40,16 +40,6 @@ public class BlockWallAA extends BlockWall implements IActAddItemOrBlock{
         return this.baseBlock.getBlockTextureFromSide(side);
     }
 
-    @Override
-    public String getName(){
-        return this.name;
-    }
-
-    @Override
-    public EnumRarity getRarity(ItemStack stack){
-        return EnumRarity.common;
-    }
-
     @SuppressWarnings("unchecked")
     @Override
     @SideOnly(Side.CLIENT)
@@ -60,5 +50,15 @@ public class BlockWallAA extends BlockWall implements IActAddItemOrBlock{
     @Override
     public int damageDropped(int meta){
         return meta;
+    }
+
+    @Override
+    public String getName(){
+        return this.name;
+    }
+
+    @Override
+    public EnumRarity getRarity(ItemStack stack){
+        return EnumRarity.common;
     }
 }

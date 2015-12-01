@@ -46,16 +46,6 @@ public class PlayerObtainEvents{
         }
     }
 
-    @SubscribeEvent
-    public void onSmeltedEvent(PlayerEvent.ItemSmeltedEvent event){
-        checkAchievements(event.smelting, event.player, InitAchievements.SMELTING_ACH);
-    }
-
-    @SubscribeEvent
-    public void onPickupEvent(PlayerEvent.ItemPickupEvent event){
-        checkAchievements(event.pickedUp.getEntityItem(), event.player, InitAchievements.PICKUP_ACH);
-    }
-
     public static void checkAchievements(ItemStack gotten, EntityPlayer player, int type){
         for(int i = 0; i < TheAchievements.values().length; i++){
             TheAchievements ach = TheAchievements.values()[i];
@@ -67,5 +57,15 @@ public class PlayerObtainEvents{
                 }
             }
         }
+    }
+
+    @SubscribeEvent
+    public void onSmeltedEvent(PlayerEvent.ItemSmeltedEvent event){
+        checkAchievements(event.smelting, event.player, InitAchievements.SMELTING_ACH);
+    }
+
+    @SubscribeEvent
+    public void onPickupEvent(PlayerEvent.ItemPickupEvent event){
+        checkAchievements(event.pickedUp.getEntityItem(), event.player, InitAchievements.PICKUP_ACH);
     }
 }

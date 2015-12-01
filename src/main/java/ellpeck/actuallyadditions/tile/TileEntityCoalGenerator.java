@@ -22,6 +22,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 public class TileEntityCoalGenerator extends TileEntityInventoryBase implements IEnergyProvider{
 
+    public static final int PRODUCE = 30;
     public EnergyStorage storage = new EnergyStorage(60000);
     public int maxBurnTime;
     public int currentBurnTime;
@@ -29,10 +30,34 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
     private int lastBurnTime;
     private int lastCurrentBurnTime;
 
-    public static final int PRODUCE = 30;
-
     public TileEntityCoalGenerator(){
         super(1, "coalGenerator");
+    }
+
+    @SideOnly(Side.CLIENT)
+    public int getEnergyScaled(int i){
+        return this.storage.getEnergyStored()*i/this.storage.getMaxEnergyStored();
+    }
+
+    @SideOnly(Side.CLIENT)
+    public int getBurningScaled(int i){
+        return this.currentBurnTime*i/this.maxBurnTime;
+    }
+
+    @Override
+    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
+        compound.setInteger("BurnTime", this.currentBurnTime);
+        compound.setInteger("MaxBurnTime", this.maxBurnTime);
+        this.storage.writeToNBT(compound);
+        super.writeSyncableNBT(compound, sync);
+    }
+
+    @Override
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
+        this.currentBurnTime = compound.getInteger("BurnTime");
+        this.maxBurnTime = compound.getInteger("MaxBurnTime");
+        this.storage.readFromNBT(compound);
+        super.readSyncableNBT(compound, sync);
     }
 
     @Override
@@ -87,32 +112,6 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
                 this.lastBurnTime = this.currentBurnTime;
             }
         }
-    }
-
-    @SideOnly(Side.CLIENT)
-    public int getEnergyScaled(int i){
-        return this.storage.getEnergyStored()*i/this.storage.getMaxEnergyStored();
-    }
-
-    @SideOnly(Side.CLIENT)
-    public int getBurningScaled(int i){
-        return this.currentBurnTime*i/this.maxBurnTime;
-    }
-
-    @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        compound.setInteger("BurnTime", this.currentBurnTime);
-        compound.setInteger("MaxBurnTime", this.maxBurnTime);
-        this.storage.writeToNBT(compound);
-        super.writeSyncableNBT(compound, sync);
-    }
-
-    @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        this.currentBurnTime = compound.getInteger("BurnTime");
-        this.maxBurnTime = compound.getInteger("MaxBurnTime");
-        this.storage.readFromNBT(compound);
-        super.readSyncableNBT(compound, sync);
     }
 
     @Override

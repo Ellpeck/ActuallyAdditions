@@ -25,7 +25,8 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
     public static final int SLOT_OUTPUT_1 = 1;
     public static final int SLOT_INPUT_2 = 2;
     public static final int SLOT_OUTPUT_2 = 3;
-
+    public static final int ENERGY_USE = 25;
+    private static final int SMELT_TIME = 80;
     public EnergyStorage storage = new EnergyStorage(30000);
     public int firstSmeltTime;
     public int secondSmeltTime;
@@ -33,12 +34,24 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
     private int lastFirstSmelt;
     private int lastSecondSmelt;
 
-    private static final int SMELT_TIME = 80;
-
-    public static final int ENERGY_USE = 25;
-
     public TileEntityFurnaceDouble(){
         super(4, "furnaceDouble");
+    }
+
+    @Override
+    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.writeSyncableNBT(compound, sync);
+        compound.setInteger("FirstSmeltTime", this.firstSmeltTime);
+        compound.setInteger("SecondSmeltTime", this.secondSmeltTime);
+        this.storage.writeToNBT(compound);
+    }
+
+    @Override
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.readSyncableNBT(compound, sync);
+        this.firstSmeltTime = compound.getInteger("FirstSmeltTime");
+        this.secondSmeltTime = compound.getInteger("SecondSmeltTime");
+        this.storage.readFromNBT(compound);
     }
 
     @Override
@@ -129,22 +142,6 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
         if(this.slots[theInput].stackSize <= 0){
             this.slots[theInput] = null;
         }
-    }
-
-    @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.writeSyncableNBT(compound, sync);
-        compound.setInteger("FirstSmeltTime", this.firstSmeltTime);
-        compound.setInteger("SecondSmeltTime", this.secondSmeltTime);
-        this.storage.writeToNBT(compound);
-    }
-
-    @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.readSyncableNBT(compound, sync);
-        this.firstSmeltTime = compound.getInteger("FirstSmeltTime");
-        this.secondSmeltTime = compound.getInteger("SecondSmeltTime");
-        this.storage.readFromNBT(compound);
     }
 
     @Override

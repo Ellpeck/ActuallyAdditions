@@ -26,13 +26,11 @@ import java.util.ArrayList;
 
 public class TileEntityDirectionalBreaker extends TileEntityInventoryBase implements IEnergyReceiver{
 
-    public EnergyStorage storage = new EnergyStorage(10000);
-    private int lastEnergy;
-
-    private int currentTime;
-
     public static final int RANGE = 8;
     public static final int ENERGY_USE = 5;
+    public EnergyStorage storage = new EnergyStorage(10000);
+    private int lastEnergy;
+    private int currentTime;
 
     public TileEntityDirectionalBreaker(){
         super(9, "directionalBreaker");
@@ -83,11 +81,6 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase implem
         }
     }
 
-    @SideOnly(Side.CLIENT)
-    public int getEnergyScaled(int i){
-        return this.storage.getEnergyStored()*i/this.storage.getMaxEnergyStored();
-    }
-
     @Override
     public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
         super.writeSyncableNBT(compound, sync);
@@ -105,6 +98,11 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase implem
     @Override
     public boolean isItemValidForSlot(int i, ItemStack stack){
         return false;
+    }
+
+    @SideOnly(Side.CLIENT)
+    public int getEnergyScaled(int i){
+        return this.storage.getEnergyStored()*i/this.storage.getMaxEnergyStored();
     }
 
     @Override

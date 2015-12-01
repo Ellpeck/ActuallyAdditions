@@ -32,20 +32,6 @@ public class SpecialRenderInit{
         Util.registerEvent(new SpecialRenderInit());
     }
 
-    @SubscribeEvent(priority = EventPriority.HIGHEST)
-    public void onPlayerRender(RenderPlayerEvent.Specials.Pre event){
-        if(!specialList.isEmpty()){
-            for(Map.Entry<String, RenderSpecial> entry : specialList.entrySet()){
-                //Does the player have one of the names from the list?
-                if(StringUtil.equalsToLowerCase(entry.getKey(), event.entityPlayer.getCommandSenderName())){
-                    //Render the special Item/Block
-                    entry.getValue().render(event.entityPlayer);
-                    break;
-                }
-            }
-        }
-    }
-
     public static void parse(Properties properties){
         for(String key : properties.stringPropertyNames()){
             String[] values = properties.getProperty(key).split("@");
@@ -74,6 +60,20 @@ public class SpecialRenderInit{
                 //Add a new Special Renderer to the list
                 if(stack != null){
                     specialList.put(key, new RenderSpecial(stack));
+                }
+            }
+        }
+    }
+
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
+    public void onPlayerRender(RenderPlayerEvent.Specials.Pre event){
+        if(!specialList.isEmpty()){
+            for(Map.Entry<String, RenderSpecial> entry : specialList.entrySet()){
+                //Does the player have one of the names from the list?
+                if(StringUtil.equalsToLowerCase(entry.getKey(), event.entityPlayer.getCommandSenderName())){
+                    //Render the special Item/Block
+                    entry.getValue().render(event.entityPlayer);
+                    break;
                 }
             }
         }

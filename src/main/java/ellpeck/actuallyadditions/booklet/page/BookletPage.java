@@ -35,29 +35,14 @@ import java.util.Map;
 
 public class BookletPage{
 
+    public boolean arePageStacksWildcard;
     protected int id;
     protected BookletChapter chapter;
     private HashMap<String, String> textReplacements = new HashMap<String, String>();
     private boolean hasNoText;
-    public boolean arePageStacksWildcard;
 
     public BookletPage(int id){
         this.id = id;
-    }
-
-    public void addToPagesWithItemStackData(){
-        if(!InitBooklet.pagesWithItemStackData.contains(this)){
-            ItemStack[] stacks = this.getItemStacksForPage();
-            if(stacks != null && stacks.length > 0){
-                //Ensure that there is at least one ItemStack
-                for(ItemStack stack : stacks){
-                    if(stack != null){
-                        InitBooklet.pagesWithItemStackData.add(this);
-                        break;
-                    }
-                }
-            }
-        }
     }
 
     @SideOnly(Side.CLIENT)
@@ -83,6 +68,25 @@ public class BookletPage{
         }
         GL11.glPopMatrix();
 
+    }
+
+    public void addToPagesWithItemStackData(){
+        if(!InitBooklet.pagesWithItemStackData.contains(this)){
+            ItemStack[] stacks = this.getItemStacksForPage();
+            if(stacks != null && stacks.length > 0){
+                //Ensure that there is at least one ItemStack
+                for(ItemStack stack : stacks){
+                    if(stack != null){
+                        InitBooklet.pagesWithItemStackData.add(this);
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    public ItemStack[] getItemStacksForPage(){
+        return null;
     }
 
     public BookletPage setNoText(){
@@ -164,10 +168,6 @@ public class BookletPage{
         gui.drawHoveringText(list, x, y);
 
         gui.mc.fontRenderer.setUnicodeFlag(flagBefore);
-    }
-
-    public ItemStack[] getItemStacksForPage(){
-        return null;
     }
 
     public BookletChapter getChapter(){

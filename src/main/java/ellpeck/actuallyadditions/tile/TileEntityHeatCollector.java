@@ -24,10 +24,9 @@ import java.util.ArrayList;
 
 public class TileEntityHeatCollector extends TileEntityBase implements IEnergyProvider{
 
-    public EnergyStorage storage = new EnergyStorage(30000);
-
     public static final int ENERGY_PRODUCE = 40;
     public static final int BLOCKS_NEEDED = 4;
+    public EnergyStorage storage = new EnergyStorage(30000);
 
     @Override
     public void updateEntity(){
@@ -63,6 +62,16 @@ public class TileEntityHeatCollector extends TileEntityBase implements IEnergyPr
     }
 
     @Override
+    public void writeSyncableNBT(NBTTagCompound compound, boolean isForSync){
+        this.storage.writeToNBT(compound);
+    }
+
+    @Override
+    public void readSyncableNBT(NBTTagCompound compound, boolean isForSync){
+        this.storage.readFromNBT(compound);
+    }
+
+    @Override
     public int extractEnergy(ForgeDirection from, int maxExtract, boolean simulate){
         return this.storage.extractEnergy(maxExtract, simulate);
     }
@@ -80,15 +89,5 @@ public class TileEntityHeatCollector extends TileEntityBase implements IEnergyPr
     @Override
     public boolean canConnectEnergy(ForgeDirection from){
         return from == ForgeDirection.UP;
-    }
-
-    @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean isForSync){
-        this.storage.writeToNBT(compound);
-    }
-
-    @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean isForSync){
-        this.storage.readFromNBT(compound);
     }
 }

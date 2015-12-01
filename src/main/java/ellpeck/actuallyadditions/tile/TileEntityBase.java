@@ -72,11 +72,6 @@ public abstract class TileEntityBase extends TileEntity{
     }
 
     @Override
-    public void updateEntity(){
-        this.ticksElapsed++;
-    }
-
-    @Override
     public final void readFromNBT(NBTTagCompound compound){
         super.readFromNBT(compound);
         this.readSyncableNBT(compound, false);
@@ -88,8 +83,9 @@ public abstract class TileEntityBase extends TileEntity{
         this.writeSyncableNBT(compound, false);
     }
 
-    public void writeSyncableNBT(NBTTagCompound compound, boolean isForSync){
-
+    @Override
+    public void updateEntity(){
+        this.ticksElapsed++;
     }
 
     @Override
@@ -109,12 +105,16 @@ public abstract class TileEntityBase extends TileEntity{
         return !(oldBlock.isAssociatedBlock(newBlock));
     }
 
+    public void writeSyncableNBT(NBTTagCompound compound, boolean isForSync){
+
+    }
+
     public void readSyncableNBT(NBTTagCompound compound, boolean isForSync){
 
     }
 
     protected boolean sendUpdateWithInterval(){
-        if(this.ticksElapsed % ConfigIntValues.TILE_ENTITY_UPDATE_INTERVAL.getValue() == 0){
+        if(this.ticksElapsed%ConfigIntValues.TILE_ENTITY_UPDATE_INTERVAL.getValue() == 0){
             this.sendUpdate();
             return true;
         }

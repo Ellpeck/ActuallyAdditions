@@ -19,12 +19,23 @@ import net.minecraft.nbt.NBTTagCompound;
 
 public class TileEntityCompost extends TileEntityInventoryBase{
 
-    public int conversionTime;
-
     public static final int AMOUNT = 10;
+    public int conversionTime;
 
     public TileEntityCompost(){
         super(1, "compost");
+    }
+
+    @Override
+    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.readSyncableNBT(compound, sync);
+        compound.setInteger("ConversionTime", this.conversionTime);
+    }
+
+    @Override
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.readSyncableNBT(compound, sync);
+        this.conversionTime = compound.getInteger("ConversionTime");
     }
 
     @Override
@@ -56,18 +67,6 @@ public class TileEntityCompost extends TileEntityInventoryBase{
                 this.markDirty();
             }
         }
-    }
-
-    @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.readSyncableNBT(compound, sync);
-        compound.setInteger("ConversionTime", this.conversionTime);
-    }
-
-    @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.readSyncableNBT(compound, sync);
-        this.conversionTime = compound.getInteger("ConversionTime");
     }
 
     @Override

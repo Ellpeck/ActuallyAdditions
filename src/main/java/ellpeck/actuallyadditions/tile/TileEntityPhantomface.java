@@ -24,20 +24,40 @@ import net.minecraft.world.World;
 
 public class TileEntityPhantomface extends TileEntityInventoryBase implements IPhantomTile{
 
+    public static final int RANGE = 16;
     public WorldPos boundPosition;
-
     public BlockPhantom.Type type;
-
     public int range;
-
     private int rangeBefore;
     private WorldPos boundPosBefore;
     private Block boundBlockBefore;
 
-    public static final int RANGE = 16;
-
     public TileEntityPhantomface(String name){
         super(0, name);
+    }
+
+    @Override
+    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.writeSyncableNBT(compound, sync);
+        if(this.boundPosition != null){
+            compound.setInteger("XCoordOfTileStored", boundPosition.getX());
+            compound.setInteger("YCoordOfTileStored", boundPosition.getY());
+            compound.setInteger("ZCoordOfTileStored", boundPosition.getZ());
+            compound.setInteger("WorldOfTileStored", boundPosition.getWorld().provider.dimensionId);
+        }
+    }
+
+    @Override
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.readSyncableNBT(compound, sync);
+        int x = compound.getInteger("XCoordOfTileStored");
+        int y = compound.getInteger("YCoordOfTileStored");
+        int z = compound.getInteger("ZCoordOfTileStored");
+        int world = compound.getInteger("WorldOfTileStored");
+        if(!(x == 0 && y == 0 && z == 0)){
+            this.boundPosition = new WorldPos(world, x, y, z);
+            this.markDirty();
+        }
     }
 
     @Override
@@ -135,30 +155,6 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
     @Override
     public int getRange(){
         return this.range;
-    }
-
-    @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.writeSyncableNBT(compound, sync);
-        if(this.boundPosition != null){
-            compound.setInteger("XCoordOfTileStored", boundPosition.getX());
-            compound.setInteger("YCoordOfTileStored", boundPosition.getY());
-            compound.setInteger("ZCoordOfTileStored", boundPosition.getZ());
-            compound.setInteger("WorldOfTileStored", boundPosition.getWorld().provider.dimensionId);
-        }
-    }
-
-    @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.readSyncableNBT(compound, sync);
-        int x = compound.getInteger("XCoordOfTileStored");
-        int y = compound.getInteger("YCoordOfTileStored");
-        int z = compound.getInteger("ZCoordOfTileStored");
-        int world = compound.getInteger("WorldOfTileStored");
-        if(!(x == 0 && y == 0 && z == 0)){
-            this.boundPosition = new WorldPos(world, x, y, z);
-            this.markDirty();
-        }
     }
 
     @Override

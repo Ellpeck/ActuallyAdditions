@@ -26,6 +26,9 @@ import net.minecraftforge.fluids.*;
 
 public class TileEntityCanolaPress extends TileEntityInventoryBase implements IEnergyReceiver, IFluidHandler{
 
+    public static final int PRODUCE = 100;
+    public static final int ENERGY_USE = 35;
+    private static final int TIME = 30;
     public EnergyStorage storage = new EnergyStorage(40000);
     public FluidTank tank = new FluidTank(2*FluidContainerRegistry.BUCKET_VOLUME);
     public int currentProcessTime;
@@ -33,12 +36,39 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IE
     private int lastTankAmount;
     private int lastProcessTime;
 
-    public static final int PRODUCE = 100;
-    public static final int ENERGY_USE = 35;
-    private static final int TIME = 30;
-
     public TileEntityCanolaPress(){
         super(3, "canolaPress");
+    }
+
+    @SideOnly(Side.CLIENT)
+    public int getTankScaled(int i){
+        return this.tank.getFluidAmount()*i/this.tank.getCapacity();
+    }
+
+    @SideOnly(Side.CLIENT)
+    public int getProcessScaled(int i){
+        return this.currentProcessTime*i/TIME;
+    }
+
+    @SideOnly(Side.CLIENT)
+    public int getEnergyScaled(int i){
+        return this.storage.getEnergyStored()*i/this.storage.getMaxEnergyStored();
+    }
+
+    @Override
+    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
+        compound.setInteger("ProcessTime", this.currentProcessTime);
+        this.storage.writeToNBT(compound);
+        this.tank.writeToNBT(compound);
+        super.writeSyncableNBT(compound, sync);
+    }
+
+    @Override
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
+        this.currentProcessTime = compound.getInteger("ProcessTime");
+        this.storage.readFromNBT(compound);
+        this.tank.readFromNBT(compound);
+        super.readSyncableNBT(compound, sync);
     }
 
     @Override
@@ -89,37 +119,6 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IE
 
     public boolean isCanola(int slot){
         return this.slots[slot] != null && this.slots[slot].getItem() == InitItems.itemMisc && this.slots[slot].getItemDamage() == TheMiscItems.CANOLA.ordinal();
-    }
-
-    @SideOnly(Side.CLIENT)
-    public int getTankScaled(int i){
-        return this.tank.getFluidAmount()*i/this.tank.getCapacity();
-    }
-
-    @SideOnly(Side.CLIENT)
-    public int getProcessScaled(int i){
-        return this.currentProcessTime*i/TIME;
-    }
-
-    @SideOnly(Side.CLIENT)
-    public int getEnergyScaled(int i){
-        return this.storage.getEnergyStored()*i/this.storage.getMaxEnergyStored();
-    }
-
-    @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        compound.setInteger("ProcessTime", this.currentProcessTime);
-        this.storage.writeToNBT(compound);
-        this.tank.writeToNBT(compound);
-        super.writeSyncableNBT(compound, sync);
-    }
-
-    @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        this.currentProcessTime = compound.getInteger("ProcessTime");
-        this.storage.readFromNBT(compound);
-        this.tank.readFromNBT(compound);
-        super.readSyncableNBT(compound, sync);
     }
 
     @Override

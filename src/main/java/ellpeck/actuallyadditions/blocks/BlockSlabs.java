@@ -112,17 +112,6 @@ public class BlockSlabs extends Block implements IActAddItemOrBlock{
         }
 
         @Override
-        public int getMetadata(int meta){
-            return meta;
-        }
-
-        @Override
-        public EnumRarity getRarity(ItemStack stack){
-            EnumRarity rarity = ((IActAddItemOrBlock)this.field_150939_a).getRarity(stack);
-            return rarity == null ? EnumRarity.common : rarity;
-        }
-
-        @Override
         public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ){
             if(world.getBlock(x, y, z) == this.field_150939_a && ((side == 1 && world.getBlockMetadata(x, y, z) == 0) || (side == 0 && world.getBlockMetadata(x, y, z) == 1))){
                 if(world.setBlock(x, y, z, ((BlockSlabs)this.field_150939_a).fullBlock, 0, 3)){
@@ -137,6 +126,17 @@ public class BlockSlabs extends Block implements IActAddItemOrBlock{
         @Override
         public String getUnlocalizedName(ItemStack stack){
             return this.getUnlocalizedName();
+        }
+
+        @Override
+        public int getMetadata(int meta){
+            return meta;
+        }
+
+        @Override
+        public EnumRarity getRarity(ItemStack stack){
+            EnumRarity rarity = ((IActAddItemOrBlock)this.field_150939_a).getRarity(stack);
+            return rarity == null ? EnumRarity.common : rarity;
         }
     }
 }

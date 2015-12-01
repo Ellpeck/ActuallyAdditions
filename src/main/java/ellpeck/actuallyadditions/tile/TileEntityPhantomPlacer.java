@@ -25,12 +25,11 @@ import java.util.ArrayList;
 
 public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements IPhantomTile{
 
+    public static final int RANGE = 3;
     public WorldPos boundPosition;
     public int currentTime;
     public int range;
     public boolean isBreaker;
-
-    public static final int RANGE = 3;
 
     public TileEntityPhantomPlacer(int slots, String name){
         super(slots, name);

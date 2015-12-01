@@ -30,16 +30,16 @@ public class PageTextOnly extends BookletPage{
     }
 
     @Override
+    public ItemStack[] getItemStacksForPage(){
+        return this.stack == null ? new ItemStack[0] : new ItemStack[]{this.stack};
+    }
+
+    @Override
     @SideOnly(Side.CLIENT)
     public void renderPre(GuiBooklet gui, int mouseX, int mouseY, int ticksElapsed, boolean mousePressed){
         String text = gui.currentPage.getText();
         if(text != null && !text.isEmpty()){
             gui.mc.fontRenderer.drawSplitString(text, gui.guiLeft+14, gui.guiTop+9, 115, 0);
         }
-    }
-
-    @Override
-    public ItemStack[] getItemStacksForPage(){
-        return this.stack == null ? new ItemStack[0] : new ItemStack[]{this.stack};
     }
 }

@@ -37,6 +37,11 @@ public class PageCrusherRecipe extends BookletPage{
     }
 
     @Override
+    public ItemStack[] getItemStacksForPage(){
+        return this.recipe == null ? new ItemStack[0] : this.recipe.getRecipeOutputOnes().toArray(new ItemStack[this.recipe.getRecipeOutputOnes().size()]);
+    }
+
+    @Override
     @SideOnly(Side.CLIENT)
     public void renderPre(GuiBooklet gui, int mouseX, int mouseY, int ticksElapsed, boolean mousePressed){
         if(recipe != null){
@@ -120,10 +125,5 @@ public class PageCrusherRecipe extends BookletPage{
                 this.recipePos++;
             }
         }
-    }
-
-    @Override
-    public ItemStack[] getItemStacksForPage(){
-        return this.recipe == null ? new ItemStack[0] : this.recipe.getRecipeOutputOnes().toArray(new ItemStack[this.recipe.getRecipeOutputOnes().size()]);
     }
 }

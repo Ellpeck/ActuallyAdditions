@@ -33,11 +33,9 @@ import java.util.ArrayList;
 
 public class TileEntityAtomicReconstructor extends TileEntityInventoryBase implements IEnergyReceiver{
 
-    public EnergyStorage storage = new EnergyStorage(3000000);
-
-    private int currentTime;
-
     public static final int ENERGY_USE = 200;
+    public EnergyStorage storage = new EnergyStorage(3000000);
+    private int currentTime;
 
     public TileEntityAtomicReconstructor(){
         super(1, "reconstructor");
@@ -152,10 +150,6 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
         }
     }
 
-    private void shootLaser(int endX, int endY, int endZ, ReconstructorRecipeHandler.LensType currentLens){
-        PacketHandler.theNetwork.sendToAllAround(new PacketAtomicReconstructor(xCoord, yCoord, zCoord, endX, endY, endZ, currentLens), new NetworkRegistry.TargetPoint(worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 64));
-    }
-
     public ReconstructorRecipeHandler.LensType getCurrentLens(){
         if(this.slots[0] != null){
             if(this.slots[0].getItem() instanceof IReconstructorLens){
@@ -173,6 +167,10 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
         }
     }
 
+    private void shootLaser(int endX, int endY, int endZ, ReconstructorRecipeHandler.LensType currentLens){
+        PacketHandler.theNetwork.sendToAllAround(new PacketAtomicReconstructor(xCoord, yCoord, zCoord, endX, endY, endZ, currentLens), new NetworkRegistry.TargetPoint(worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 64));
+    }
+
     @Override
     public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
         super.writeSyncableNBT(compound, sync);
@@ -181,10 +179,32 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
     }
 
     @Override
+    public boolean shouldSyncSlots(){
+        return true;
+    }
+
+    @Override
     public void readSyncableNBT(NBTTagCompound compound, boolean sync){
         super.readSyncableNBT(compound, sync);
         this.currentTime = compound.getInteger("CurrentTime");
         this.storage.readFromNBT(compound);
+    }
+
+    @Override
+    public boolean isItemValidForSlot(int i, ItemStack stack){
+        return stack != null && stack.getItem() instanceof IReconstructorLens;
+    }
+
+    @Override
+    public void setInventorySlotContents(int i, ItemStack stack){
+        super.setInventorySlotContents(i, stack);
+        this.sendUpdate();
+    }
+
+    @Override
+    public ItemStack decrStackSize(int i, int j){
+        this.sendUpdate();
+        return super.decrStackSize(i, j);
     }
 
     @Override
@@ -215,27 +235,5 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
     @Override
     public boolean canExtractItem(int slot, ItemStack stack, int side){
         return true;
-    }
-
-    @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
-        return stack != null && stack.getItem() instanceof IReconstructorLens;
-    }
-
-    @Override
-    public boolean shouldSyncSlots(){
-        return true;
-    }
-
-    @Override
-    public ItemStack decrStackSize(int i, int j){
-        this.sendUpdate();
-        return super.decrStackSize(i, j);
-    }
-
-    @Override
-    public void setInventorySlotContents(int i, ItemStack stack){
-        super.setInventorySlotContents(i, stack);
-        this.sendUpdate();
     }
 }

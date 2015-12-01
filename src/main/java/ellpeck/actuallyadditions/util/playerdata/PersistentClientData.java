@@ -71,13 +71,6 @@ public class PersistentClientData{
         }
     }
 
-    private static String getName(){
-        if(Minecraft.getMinecraft().theWorld != null){
-            return Minecraft.getMinecraft().isIntegratedServerRunning() ? Minecraft.getMinecraft().getIntegratedServer().getFolderName() : Minecraft.getMinecraft().func_147104_D().serverIP;
-        }
-        else return "Invalid";
-    }
-
     private static NBTTagCompound getCompoundForWorld(NBTTagCompound mainCompound){
         return mainCompound.getCompoundTag(getName());
     }
@@ -102,6 +95,15 @@ public class PersistentClientData{
             ModUtil.LOGGER.fatal("Couldn't create Persistent Variables file!", e);
         }
         return theFile;
+    }
+
+    private static String getName(){
+        if(Minecraft.getMinecraft().theWorld != null){
+            return Minecraft.getMinecraft().isIntegratedServerRunning() ? Minecraft.getMinecraft().getIntegratedServer().getFolderName() : Minecraft.getMinecraft().func_147104_D().serverIP;
+        }
+        else{
+            return "Invalid";
+        }
     }
 
     public static void setTheFile(File file){

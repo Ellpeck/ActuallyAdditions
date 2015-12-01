@@ -37,7 +37,15 @@ public class BookletUtils{
 
     /**
      * Tries to open a URL in the Browser
-     * @param url The URL
+     */
+    public static void openBrowser(String url){
+        openBrowser(url, url);
+    }
+
+    /**
+     * Tries to open a URL in the Browser
+     *
+     * @param url      The URL
      * @param shiftUrl The URL to open when Shift is held
      */
     public static void openBrowser(String url, String shiftUrl){
@@ -57,13 +65,6 @@ public class BookletUtils{
     }
 
     /**
-     * Tries to open a URL in the Browser
-     */
-    public static void openBrowser(String url){
-        openBrowser(url, url);
-    }
-
-    /**
      * Draws the Title of the current chapter, current index entry or just "Actually Additions" if neither is present
      */
     public static void drawTitle(GuiBooklet booklet){
@@ -78,6 +79,7 @@ public class BookletUtils{
 
     /**
      * Draws an Achievement Info if the page has items that trigger achievements
+     *
      * @param pre If the hover info texts or the icon should be drawn
      */
     public static void drawAchievementInfo(GuiBooklet booklet, boolean pre, int mouseX, int mouseY){
@@ -216,134 +218,8 @@ public class BookletUtils{
     }
 
     /**
-     * Called when one of the buttons to open an index or a chapter is pressed
-     */
-    public static void handleChapterButtonClick(GuiBooklet booklet, GuiButton button){
-        int place = Util.arrayContains(booklet.chapterButtons, button);
-        if(place >= 0){
-            if(booklet.currentIndexEntry != null){
-                if(booklet.currentChapter == null){
-                    if(place < booklet.currentIndexEntry.chapters.size()){
-                        BookletChapter chap = booklet.currentIndexEntry.chapters.get(place+(booklet.chapterButtons.length*booklet.pageOpenInIndex-booklet.chapterButtons.length));
-                        openChapter(booklet, chap, chap.pages[0]);
-                    }
-                }
-            }
-            else{
-                if(place < InitBooklet.entries.size()){
-                    openIndexEntry(booklet, InitBooklet.entries.get(place), 1, true);
-                }
-            }
-        }
-    }
-
-    /**
-     * Called when the "next page"-button is pressed
-     */
-    public static void handleNextPage(GuiBooklet booklet){
-        if(booklet.currentIndexEntry != null){
-            if(booklet.currentPage != null){
-                BookletPage page = getNextPage(booklet.currentChapter, booklet.currentPage);
-                if(page != null){
-                    booklet.currentPage = page;
-                }
-
-                booklet.buttonForward.visible = getNextPage(booklet.currentChapter, booklet.currentPage) != null;
-                booklet.buttonBackward.visible = getPrevPage(booklet.currentChapter, booklet.currentPage) != null;
-            }
-            else{
-                openIndexEntry(booklet, booklet.currentIndexEntry, booklet.pageOpenInIndex+1, !(booklet.currentIndexEntry instanceof BookletEntryAllSearch));
-            }
-        }
-    }
-
-    /**
-     * Called when the "previous page"-button is pressed
-     */
-    public static void handlePreviousPage(GuiBooklet booklet){
-        if(booklet.currentIndexEntry != null){
-            if(booklet.currentPage != null){
-                BookletPage page = getPrevPage(booklet.currentChapter, booklet.currentPage);
-                if(page != null){
-                    booklet.currentPage = page;
-                }
-
-                booklet.buttonForward.visible = getNextPage(booklet.currentChapter, booklet.currentPage) != null;
-                booklet.buttonBackward.visible = getPrevPage(booklet.currentChapter, booklet.currentPage) != null;
-            }
-            else{
-                openIndexEntry(booklet, booklet.currentIndexEntry, booklet.pageOpenInIndex-1, !(booklet.currentIndexEntry instanceof BookletEntryAllSearch));
-            }
-        }
-    }
-
-    /**
-     * Gets the next available page in the booklet (or null if there is none)
-     */
-    private static BookletPage getNextPage(BookletChapter chapter, BookletPage currentPage){
-        for(int i = 0; i < chapter.pages.length; i++){
-            if(chapter.pages[i] == currentPage){
-                if(i+1 < chapter.pages.length){
-                    return chapter.pages[i+1];
-                }
-            }
-        }
-        return null;
-    }
-
-    /**
-     * Gets the previous available page in the booklet (or null if there is none)
-     */
-    private static BookletPage getPrevPage(BookletChapter chapter, BookletPage currentPage){
-        for(int i = 0; i < chapter.pages.length; i++){
-            if(chapter.pages[i] == currentPage){
-                if(i-1 >= 0){
-                    return chapter.pages[i-1];
-                }
-            }
-        }
-        return null;
-    }
-
-    /**
-     * Opens a chapter in the booklet.
-     * Can only be done when the chapter is not null and an index entry is opened in the booklet
-     */
-    public static void openChapter(GuiBooklet booklet, BookletChapter chapter, BookletPage page){
-        if(chapter == null || booklet.currentIndexEntry == null){
-            return;
-        }
-
-        booklet.searchField.setVisible(false);
-        booklet.searchField.setFocused(false);
-        booklet.searchField.setText("");
-
-        booklet.currentChapter = chapter;
-        booklet.currentPage = page != null && doesChapterHavePage(chapter, page) ? page : chapter.pages[0];
-
-        booklet.buttonForward.visible = getNextPage(chapter, booklet.currentPage) != null;
-        booklet.buttonBackward.visible = getPrevPage(chapter, booklet.currentPage) != null;
-        booklet.buttonPreviousScreen.visible = true;
-
-        for(GuiButton chapterButton : booklet.chapterButtons){
-            chapterButton.visible = false;
-        }
-    }
-
-    /**
-     * Checks if a chapter has a certain page
-     */
-    private static boolean doesChapterHavePage(BookletChapter chapter, BookletPage page){
-        for(BookletPage aPage : chapter.pages){
-            if(aPage == page){
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
      * Opens an index entry in the booklet.
+     *
      * @param resetTextField will clear the text in the searchField and reset the search entry's data
      */
     @SuppressWarnings("unchecked")
@@ -390,6 +266,148 @@ public class BookletUtils{
         }
     }
 
+    /**
+     * Called when one of the buttons to open an index or a chapter is pressed
+     */
+    public static void handleChapterButtonClick(GuiBooklet booklet, GuiButton button){
+        int place = Util.arrayContains(booklet.chapterButtons, button);
+        if(place >= 0){
+            if(booklet.currentIndexEntry != null){
+                if(booklet.currentChapter == null){
+                    if(place < booklet.currentIndexEntry.chapters.size()){
+                        BookletChapter chap = booklet.currentIndexEntry.chapters.get(place+(booklet.chapterButtons.length*booklet.pageOpenInIndex-booklet.chapterButtons.length));
+                        openChapter(booklet, chap, chap.pages[0]);
+                    }
+                }
+            }
+            else{
+                if(place < InitBooklet.entries.size()){
+                    openIndexEntry(booklet, InitBooklet.entries.get(place), 1, true);
+                }
+            }
+        }
+    }
+
+    /**
+     * Opens a chapter in the booklet.
+     * Can only be done when the chapter is not null and an index entry is opened in the booklet
+     */
+    public static void openChapter(GuiBooklet booklet, BookletChapter chapter, BookletPage page){
+        if(chapter == null || booklet.currentIndexEntry == null){
+            return;
+        }
+
+        booklet.searchField.setVisible(false);
+        booklet.searchField.setFocused(false);
+        booklet.searchField.setText("");
+
+        booklet.currentChapter = chapter;
+        booklet.currentPage = page != null && doesChapterHavePage(chapter, page) ? page : chapter.pages[0];
+
+        booklet.buttonForward.visible = getNextPage(chapter, booklet.currentPage) != null;
+        booklet.buttonBackward.visible = getPrevPage(chapter, booklet.currentPage) != null;
+        booklet.buttonPreviousScreen.visible = true;
+
+        for(GuiButton chapterButton : booklet.chapterButtons){
+            chapterButton.visible = false;
+        }
+    }
+
+    /**
+     * Checks if a chapter has a certain page
+     */
+    private static boolean doesChapterHavePage(BookletChapter chapter, BookletPage page){
+        for(BookletPage aPage : chapter.pages){
+            if(aPage == page){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Gets the next available page in the booklet (or null if there is none)
+     */
+    private static BookletPage getNextPage(BookletChapter chapter, BookletPage currentPage){
+        for(int i = 0; i < chapter.pages.length; i++){
+            if(chapter.pages[i] == currentPage){
+                if(i+1 < chapter.pages.length){
+                    return chapter.pages[i+1];
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Gets the previous available page in the booklet (or null if there is none)
+     */
+    private static BookletPage getPrevPage(BookletChapter chapter, BookletPage currentPage){
+        for(int i = 0; i < chapter.pages.length; i++){
+            if(chapter.pages[i] == currentPage){
+                if(i-1 >= 0){
+                    return chapter.pages[i-1];
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Called when the "next page"-button is pressed
+     */
+    public static void handleNextPage(GuiBooklet booklet){
+        if(booklet.currentIndexEntry != null){
+            if(booklet.currentPage != null){
+                BookletPage page = getNextPage(booklet.currentChapter, booklet.currentPage);
+                if(page != null){
+                    booklet.currentPage = page;
+                }
+
+                booklet.buttonForward.visible = getNextPage(booklet.currentChapter, booklet.currentPage) != null;
+                booklet.buttonBackward.visible = getPrevPage(booklet.currentChapter, booklet.currentPage) != null;
+            }
+            else{
+                openIndexEntry(booklet, booklet.currentIndexEntry, booklet.pageOpenInIndex+1, !(booklet.currentIndexEntry instanceof BookletEntryAllSearch));
+            }
+        }
+    }
+
+    /**
+     * Called when the "previous page"-button is pressed
+     */
+    public static void handlePreviousPage(GuiBooklet booklet){
+        if(booklet.currentIndexEntry != null){
+            if(booklet.currentPage != null){
+                BookletPage page = getPrevPage(booklet.currentChapter, booklet.currentPage);
+                if(page != null){
+                    booklet.currentPage = page;
+                }
+
+                booklet.buttonForward.visible = getNextPage(booklet.currentChapter, booklet.currentPage) != null;
+                booklet.buttonBackward.visible = getPrevPage(booklet.currentChapter, booklet.currentPage) != null;
+            }
+            else{
+                openIndexEntry(booklet, booklet.currentIndexEntry, booklet.pageOpenInIndex-1, !(booklet.currentIndexEntry instanceof BookletEntryAllSearch));
+            }
+        }
+    }
+
+    public static BookletPage getFirstPageForStack(ItemStack stack){
+        ArrayList<BookletPage> pages = getPagesForStack(stack);
+        return pages.isEmpty() ? null : pages.get(0);
+    }
+
+    public static ArrayList<BookletPage> getPagesForStack(ItemStack stack){
+        ArrayList<BookletPage> possiblePages = new ArrayList<BookletPage>();
+        for(BookletPage page : InitBooklet.pagesWithItemStackData){
+            if(ItemUtil.contains(page.getItemStacksForPage(), stack, true)){
+                possiblePages.add(page);
+            }
+        }
+        return possiblePages;
+    }
+
     public static class IndexButton extends GuiButton{
 
         public BookletChapter chap;
@@ -429,21 +447,6 @@ public class BookletUtils{
                 this.gui.getFontRenderer().drawString(this.displayString, this.xPosition+textOffsetX, this.yPosition+(this.height-8)/2, 0);
             }
         }
-    }
-
-    public static ArrayList<BookletPage> getPagesForStack(ItemStack stack){
-        ArrayList<BookletPage> possiblePages = new ArrayList<BookletPage>();
-        for(BookletPage page : InitBooklet.pagesWithItemStackData){
-            if(ItemUtil.contains(page.getItemStacksForPage(), stack, true)){
-                possiblePages.add(page);
-            }
-        }
-        return possiblePages;
-    }
-
-    public static BookletPage getFirstPageForStack(ItemStack stack){
-        ArrayList<BookletPage> pages = getPagesForStack(stack);
-        return pages.isEmpty() ? null : pages.get(0);
     }
 
     public static class TexturedButton extends GuiButton{
@@ -495,7 +498,28 @@ public class BookletUtils{
             this.booklet = booklet;
         }
 
-        @Override
+        public void onPressed(){
+            if(this.assignedEntry != null){
+                if(KeyUtil.isShiftPressed()){
+                    this.assignedEntry = null;
+                    this.assignedChapter = null;
+                    this.assignedPage = null;
+                    this.assignedPageInIndex = 1;
+                }
+                else{
+                    openIndexEntry(this.booklet, this.assignedEntry, this.assignedPageInIndex, true);
+                    openChapter(this.booklet, this.assignedChapter, this.assignedPage);
+                }
+            }
+            else{
+                if(this.booklet.currentIndexEntry != null){
+                    this.assignedEntry = this.booklet.currentIndexEntry;
+                    this.assignedChapter = this.booklet.currentChapter;
+                    this.assignedPage = this.booklet.currentPage;
+                    this.assignedPageInIndex = this.booklet.pageOpenInIndex;
+                }
+            }
+        }        @Override
         public void drawButton(Minecraft minecraft, int x, int y){
             if(this.visible){
                 minecraft.getTextureManager().bindTexture(GuiBooklet.resLoc);
@@ -520,29 +544,6 @@ public class BookletUtils{
             }
         }
 
-        public void onPressed(){
-            if(this.assignedEntry != null){
-                if(KeyUtil.isShiftPressed()){
-                    this.assignedEntry = null;
-                    this.assignedChapter = null;
-                    this.assignedPage = null;
-                    this.assignedPageInIndex = 1;
-                }
-                else{
-                    openIndexEntry(this.booklet, this.assignedEntry, this.assignedPageInIndex, true);
-                    openChapter(this.booklet, this.assignedChapter, this.assignedPage);
-                }
-            }
-            else{
-                if(this.booklet.currentIndexEntry != null){
-                    this.assignedEntry = this.booklet.currentIndexEntry;
-                    this.assignedChapter = this.booklet.currentChapter;
-                    this.assignedPage = this.booklet.currentPage;
-                    this.assignedPageInIndex = this.booklet.pageOpenInIndex;
-                }
-            }
-        }
-
         @SuppressWarnings("unchecked")
         public void drawHover(int mouseX, int mouseY){
             ArrayList list = new ArrayList();
@@ -562,5 +563,7 @@ public class BookletUtils{
             }
             this.booklet.drawHoveringText(list, mouseX, mouseY);
         }
+
+
     }
 }

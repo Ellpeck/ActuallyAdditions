@@ -53,6 +53,11 @@ public class InitBooklet{
     public static BookletEntry entryMisc = new BookletEntry("misc");
     public static BookletEntry allAndSearch = new BookletEntryAllSearch("allAndSearch").setSpecial();
 
+    public static void init(){
+        initChapters();
+        countWords();
+    }
+
     private static void initChapters(){
         //Getting Started
         chapterIntro = new BookletChapter("intro", entryGettingStarted, new ItemStack(InitItems.itemLexicon), new PageTextOnly(1), new PageTextOnly(2), new PageTextOnly(3));
@@ -137,11 +142,6 @@ public class InitBooklet{
         new BookletChapter("growthRing", entryItemsRF, new ItemStack(InitItems.itemGrowthRing), new PageCrafting(1, ItemCrafting.recipeGrowthRing));
         new BookletChapter("waterRemovalRing", entryItemsRF, new ItemStack(InitItems.itemWaterRemovalRing), new PageCrafting(1, ItemCrafting.recipeWaterRing));
         new BookletChapter("batteries", entryItemsRF, new ItemStack(InitItems.itemBatteryTriple), new PageTextOnly(1), new PageCrafting(2, ItemCrafting.recipeBattery).setNoText(), new PageCrafting(3, ItemCrafting.recipeBatteryDouble).setNoText(), new PageCrafting(4, ItemCrafting.recipeBatteryTriple).setNoText(), new PageCrafting(5, ItemCrafting.recipeBatteryQuadruple).setNoText(), new PageCrafting(6, ItemCrafting.recipeBatteryQuintuple).setNoText());
-    }
-
-    public static void init(){
-        initChapters();
-        countWords();
     }
 
     private static void countWords(){

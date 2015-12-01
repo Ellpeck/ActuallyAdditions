@@ -32,6 +32,11 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
     public static final int SLOT_OUTPUT = 2;
     public static final int SLOT_WATER_INPUT = 11;
     public static final int SLOT_WATER_OUTPUT = 12;
+    public static final int CACHE_USE = 15;
+    public static final int ENERGY_USED = 150;
+    public static final int WATER_USE = 500;
+    public static final int COFFEE_CACHE_MAX_AMOUNT = 300;
+    private static final int TIME_USED = 500;
     public EnergyStorage storage = new EnergyStorage(300000);
     public FluidTank tank = new FluidTank(4*FluidContainerRegistry.BUCKET_VOLUME);
     public int coffeeCacheAmount;
@@ -41,14 +46,46 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
     private int lastCoffeeAmount;
     private int lastBrewTime;
 
-    private static final int TIME_USED = 500;
-    public static final int CACHE_USE = 15;
-    public static final int ENERGY_USED = 150;
-    public static final int WATER_USE = 500;
-    public static final int COFFEE_CACHE_MAX_AMOUNT = 300;
-
     public TileEntityCoffeeMachine(){
         super(13, "coffeeMachine");
+    }
+
+    @SideOnly(Side.CLIENT)
+    public int getCoffeeScaled(int i){
+        return this.coffeeCacheAmount*i/COFFEE_CACHE_MAX_AMOUNT;
+    }
+
+    @SideOnly(Side.CLIENT)
+    public int getWaterScaled(int i){
+        return this.tank.getFluidAmount()*i/this.tank.getCapacity();
+    }
+
+    @SideOnly(Side.CLIENT)
+    public int getEnergyScaled(int i){
+        return this.storage.getEnergyStored()*i/this.storage.getMaxEnergyStored();
+    }
+
+    @SideOnly(Side.CLIENT)
+    public int getBrewScaled(int i){
+        return this.brewTime*i/TIME_USED;
+    }
+
+    @Override
+    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.writeSyncableNBT(compound, sync);
+        this.storage.writeToNBT(compound);
+        this.tank.writeToNBT(compound);
+        compound.setInteger("Cache", this.coffeeCacheAmount);
+        compound.setInteger("Time", this.brewTime);
+    }
+
+    @Override
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.readSyncableNBT(compound, sync);
+        this.storage.readFromNBT(compound);
+        this.tank.readFromNBT(compound);
+        this.coffeeCacheAmount = compound.getInteger("Cache");
+        this.brewTime = compound.getInteger("Time");
     }
 
     @Override
@@ -121,44 +158,6 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
                 this.brewTime = 0;
             }
         }
-    }
-
-    @SideOnly(Side.CLIENT)
-    public int getCoffeeScaled(int i){
-        return this.coffeeCacheAmount*i/COFFEE_CACHE_MAX_AMOUNT;
-    }
-
-    @SideOnly(Side.CLIENT)
-    public int getWaterScaled(int i){
-        return this.tank.getFluidAmount()*i/this.tank.getCapacity();
-    }
-
-    @SideOnly(Side.CLIENT)
-    public int getEnergyScaled(int i){
-        return this.storage.getEnergyStored()*i/this.storage.getMaxEnergyStored();
-    }
-
-    @SideOnly(Side.CLIENT)
-    public int getBrewScaled(int i){
-        return this.brewTime*i/TIME_USED;
-    }
-
-    @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.writeSyncableNBT(compound, sync);
-        this.storage.writeToNBT(compound);
-        this.tank.writeToNBT(compound);
-        compound.setInteger("Cache", this.coffeeCacheAmount);
-        compound.setInteger("Time", this.brewTime);
-    }
-
-    @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.readSyncableNBT(compound, sync);
-        this.storage.readFromNBT(compound);
-        this.tank.readFromNBT(compound);
-        this.coffeeCacheAmount = compound.getInteger("Cache");
-        this.brewTime = compound.getInteger("Time");
     }
 
     @Override

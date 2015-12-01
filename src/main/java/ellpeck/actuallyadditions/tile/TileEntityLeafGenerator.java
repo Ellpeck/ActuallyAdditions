@@ -23,22 +23,10 @@ import java.util.Collections;
 
 public class TileEntityLeafGenerator extends TileEntityBase implements IEnergyProvider{
 
-    public EnergyStorage storage = new EnergyStorage(35000);
-
     public static final int RANGE = 7;
     public static final int ENERGY_PRODUCED = 300;
-
+    public EnergyStorage storage = new EnergyStorage(35000);
     private int nextUseCounter;
-
-    @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        this.storage.writeToNBT(compound);
-    }
-
-    @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        this.storage.readFromNBT(compound);
-    }
 
     @Override
     @SuppressWarnings("unchecked")
@@ -92,6 +80,16 @@ public class TileEntityLeafGenerator extends TileEntityBase implements IEnergyPr
                 WorldUtil.pushEnergy(worldObj, xCoord, yCoord, zCoord, ForgeDirection.WEST, storage);
             }
         }
+    }
+
+    @Override
+    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
+        this.storage.writeToNBT(compound);
+    }
+
+    @Override
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
+        this.storage.readFromNBT(compound);
     }
 
     @Override

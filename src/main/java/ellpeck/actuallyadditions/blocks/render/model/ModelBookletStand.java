@@ -84,6 +84,12 @@ public class ModelBookletStand extends ModelBaseAA{
         setRotation(book4, -0.837758F, 0F, 0F);
     }
 
+    private void setRotation(ModelRenderer model, float x, float y, float z){
+        model.rotateAngleX = x;
+        model.rotateAngleY = y;
+        model.rotateAngleZ = z;
+    }
+
     @Override
     public void render(float f){
         body1.render(f);
@@ -105,11 +111,5 @@ public class ModelBookletStand extends ModelBaseAA{
     @Override
     public boolean doesRotate(){
         return true;
-    }
-
-    private void setRotation(ModelRenderer model, float x, float y, float z){
-        model.rotateAngleX = x;
-        model.rotateAngleY = y;
-        model.rotateAngleZ = z;
     }
 }

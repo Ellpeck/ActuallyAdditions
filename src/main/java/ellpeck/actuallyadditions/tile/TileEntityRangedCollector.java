@@ -23,11 +23,9 @@ import java.util.ArrayList;
 public class TileEntityRangedCollector extends TileEntityInventoryBase implements IButtonReactor{
 
     public static final int WHITELIST_START = 6;
-
+    public static final int RANGE = 6;
     public boolean isWhitelist = true;
     private boolean lastWhitelist;
-
-    public static final int RANGE = 6;
 
     public TileEntityRangedCollector(){
         super(18, "rangedCollector");

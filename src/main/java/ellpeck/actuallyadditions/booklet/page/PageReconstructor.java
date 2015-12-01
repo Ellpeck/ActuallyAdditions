@@ -31,27 +31,28 @@ public class PageReconstructor extends BookletPage{
     private ReconstructorRecipeHandler.Recipe[] recipes;
     private int recipePos;
 
+    public PageReconstructor(int id, ArrayList<ReconstructorRecipeHandler.Recipe> recipes){
+        this(id, recipes.toArray(new ReconstructorRecipeHandler.Recipe[recipes.size()]));
+    }
+
     public PageReconstructor(int id, ReconstructorRecipeHandler.Recipe... recipes){
         super(id);
         this.recipes = recipes;
         this.addToPagesWithItemStackData();
     }
 
-    public PageReconstructor(int id, ArrayList<ReconstructorRecipeHandler.Recipe> recipes){
-        this(id, recipes.toArray(new ReconstructorRecipeHandler.Recipe[recipes.size()]));
-    }
-
     @Override
-    @SideOnly(Side.CLIENT)
-    public void updateScreen(int ticksElapsed){
-        if(ticksElapsed%15 == 0){
-            if(this.recipePos+1 >= this.recipes.length){
-                this.recipePos = 0;
+    public ItemStack[] getItemStacksForPage(){
+        if(this.recipes != null){
+            ItemStack[] stacks = new ItemStack[this.recipes.length];
+            for(int i = 0; i < this.recipes.length; i++){
+                if(this.recipes[i] != null){
+                    stacks[i] = this.recipes[i].getFirstOutput();
+                }
             }
-            else{
-                this.recipePos++;
-            }
+            return stacks;
         }
+        return null;
     }
 
     @Override
@@ -112,17 +113,16 @@ public class PageReconstructor extends BookletPage{
     }
 
     @Override
-    public ItemStack[] getItemStacksForPage(){
-        if(this.recipes != null){
-            ItemStack[] stacks = new ItemStack[this.recipes.length];
-            for(int i = 0; i < this.recipes.length; i++){
-                if(this.recipes[i] != null){
-                    stacks[i] = this.recipes[i].getFirstOutput();
-                }
+    @SideOnly(Side.CLIENT)
+    public void updateScreen(int ticksElapsed){
+        if(ticksElapsed%15 == 0){
+            if(this.recipePos+1 >= this.recipes.length){
+                this.recipePos = 0;
             }
-            return stacks;
+            else{
+                this.recipePos++;
+            }
         }
-        return null;
     }
 
     private ItemStack getInputForRecipe(ReconstructorRecipeHandler.Recipe recipe){

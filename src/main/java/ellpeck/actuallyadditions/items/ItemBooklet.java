@@ -45,6 +45,12 @@ public class ItemBooklet extends Item implements IActAddItemOrBlock{
         return stack;
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean bool){
+        list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+"."+this.getName()+".desc"));
+    }
+
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.epic;
@@ -54,12 +60,6 @@ public class ItemBooklet extends Item implements IActAddItemOrBlock{
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister iconReg){
         this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean bool){
-        list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+"."+this.getName()+".desc"));
     }
 
     @Override
