@@ -29,30 +29,30 @@ public class RenderLaserRelay extends RenderTileEntity{
         GL11.glTranslatef(0.0F, -2.0F, 0.0F);
         this.bindTexture(resLoc);
 
-        if(theModel.doesRotate()){
-            int meta = tile.getWorldObj().getBlockMetadata(tile.xCoord, tile.yCoord, tile.zCoord);
-            if(meta == 0){
-                GL11.glRotatef(180F, 1F, 0F, 0F);
-                GL11.glTranslatef(0F, -2F, 0F);
-            }
-            if(meta == 3){
-                GL11.glRotatef(-90, 1F, 0F, 0F);
-                GL11.glTranslatef(0F, -1F, 1F);
-            }
-            if(meta == 2){
-                GL11.glRotatef(90, 1F, 0F, 0F);
-                GL11.glTranslatef(0F, -1F, -1F);
-            }
-            if(meta == 4){
-                GL11.glRotatef(90, 0F, 0F, 1F);
-                GL11.glTranslatef(1F, -1F, 0F);
-            }
-            if(meta == 5){
-                GL11.glRotatef(90, 0F, 0F, -1F);
-                GL11.glTranslatef(-1F, -1F, 0F);
-            }
+        int meta = tile.getWorldObj().getBlockMetadata(tile.xCoord, tile.yCoord, tile.zCoord);
+        if(meta == 0){
+            GL11.glRotatef(180F, 1F, 0F, 0F);
+            GL11.glTranslatef(0F, -2F, 0F);
+        }
+        else if(meta == 3){
+            GL11.glRotatef(-90, 1F, 0F, 0F);
+            GL11.glTranslatef(0F, -1F, 1F);
+        }
+        else if(meta == 2){
+            GL11.glRotatef(90, 1F, 0F, 0F);
+            GL11.glTranslatef(0F, -1F, -1F);
+        }
+        else if(meta == 4){
+            GL11.glRotatef(90, 0F, 0F, 1F);
+            GL11.glTranslatef(1F, -1F, 0F);
+        }
+        else if(meta == 5){
+            GL11.glRotatef(90, 0F, 0F, -1F);
+            GL11.glTranslatef(-1F, -1F, 0F);
         }
 
+        GL11.glScalef(0.85F, 0.85F, 0.85F);
+        GL11.glTranslatef(0F, 0.2657F, 0F);
         theModel.render(0.0625F);
         GL11.glPopMatrix();
     }

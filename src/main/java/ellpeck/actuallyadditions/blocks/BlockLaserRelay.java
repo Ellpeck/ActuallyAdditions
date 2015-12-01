@@ -22,6 +22,7 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class BlockLaserRelay extends BlockContainerBase implements IActAddItemOrBlock{
@@ -32,6 +33,31 @@ public class BlockLaserRelay extends BlockContainerBase implements IActAddItemOr
         this.setHardness(1.5F);
         this.setResistance(10.0F);
         this.setStepSound(soundTypeStone);
+    }
+
+    @Override
+    public void setBlockBoundsBasedOnState(IBlockAccess world, int x, int y, int z){
+        int meta = world.getBlockMetadata(x, y, z);
+
+        float pixel = 1F/16F;
+        if(meta == 0){
+            this.setBlockBounds(3*pixel, 3*pixel, 3*pixel, 1F-3*pixel, 1F, 1F-3*pixel);
+        }
+        else if(meta == 1){
+            this.setBlockBounds(3*pixel, 0F, 3*pixel, 1F-3*pixel, 1F-3*pixel, 1F-3*pixel);
+        }
+        else if(meta == 2){
+            this.setBlockBounds(3*pixel, 3*pixel, 3*pixel, 1F-3*pixel, 1F-3*pixel, 1F);
+        }
+        else if(meta == 3){
+            this.setBlockBounds(3*pixel, 3*pixel, 0F, 1F-3*pixel, 1F-3*pixel, 1F-3*pixel);
+        }
+        else if(meta == 4){
+            this.setBlockBounds(3*pixel, 3*pixel, 3*pixel, 1F, 1F-3*pixel, 1F-3*pixel);
+        }
+        else if(meta == 5){
+            this.setBlockBounds(0F, 3*pixel, 3*pixel, 1F-3*pixel, 1F-3*pixel, 1F-3*pixel);
+        }
     }
 
     @Override
