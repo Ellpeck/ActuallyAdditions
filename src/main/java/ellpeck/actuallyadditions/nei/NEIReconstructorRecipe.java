@@ -24,13 +24,11 @@ import ellpeck.actuallyadditions.util.StringUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.oredict.OreDictionary;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 public class NEIReconstructorRecipe extends TemplateRecipeHandler implements INEIRecipeHandler{
 
@@ -61,7 +59,7 @@ public class NEIReconstructorRecipe extends TemplateRecipeHandler implements INE
         if(outputId.equals(NAME) && getClass() == NEIReconstructorRecipe.class){
             ArrayList<ReconstructorRecipeHandler.Recipe> recipes = ReconstructorRecipeHandler.recipes;
             for(ReconstructorRecipeHandler.Recipe recipe : recipes){
-                arecipes.add(new CachedReconstructorRecipe(recipe.input, recipe.output, recipe.type.lens));
+                arecipes.add(new CachedReconstructorRecipe(recipe));
             }
         }
         else{
@@ -73,8 +71,8 @@ public class NEIReconstructorRecipe extends TemplateRecipeHandler implements INE
     public void loadCraftingRecipes(ItemStack result){
         ArrayList<ReconstructorRecipeHandler.Recipe> recipes = ReconstructorRecipeHandler.recipes;
         for(ReconstructorRecipeHandler.Recipe recipe : recipes){
-            if(ItemUtil.contains(OreDictionary.getOres(recipe.output, false), result, true)){
-                arecipes.add(new CachedReconstructorRecipe(recipe.input, recipe.output, recipe.type.lens));
+            if(ItemUtil.contains(recipe.getOutputs(), result, true)){
+                arecipes.add(new CachedReconstructorRecipe(recipe));
             }
         }
     }
@@ -83,8 +81,8 @@ public class NEIReconstructorRecipe extends TemplateRecipeHandler implements INE
     public void loadUsageRecipes(ItemStack ingredient){
         ArrayList<ReconstructorRecipeHandler.Recipe> recipes = ReconstructorRecipeHandler.recipes;
         for(ReconstructorRecipeHandler.Recipe recipe : recipes){
-            if(ItemUtil.contains(OreDictionary.getOres(recipe.input, false), ingredient, true)){
-                CachedReconstructorRecipe theRecipe = new CachedReconstructorRecipe(recipe.input, recipe.output, recipe.type.lens);
+            if(ItemUtil.contains(recipe.getInputs(), ingredient, true)){
+                CachedReconstructorRecipe theRecipe = new CachedReconstructorRecipe(recipe);
                 theRecipe.setIngredientPermutation(Collections.singletonList(theRecipe.input), ingredient);
                 arecipes.add(theRecipe);
             }
@@ -134,19 +132,10 @@ public class NEIReconstructorRecipe extends TemplateRecipeHandler implements INE
         public PositionedStack input;
         public ItemStack lens;
 
-        public CachedReconstructorRecipe(String input, String result, ItemStack lens){
-            List<ItemStack> outputs = OreDictionary.getOres(result, false);
-            for(ItemStack ore : outputs){
-                ore.stackSize = 1;
-            }
-            List<ItemStack> inputs = OreDictionary.getOres(input, false);
-            for(ItemStack ore : inputs){
-                ore.stackSize = 1;
-            }
-
-            this.result = new PositionedStack(outputs, 67+32, 19);
-            this.input = new PositionedStack(inputs, 5+32, 19);
-            this.lens = lens;
+        public CachedReconstructorRecipe(ReconstructorRecipeHandler.Recipe recipe){
+            this.result = new PositionedStack(recipe.getOutputs(), 67+32, 19);
+            this.input = new PositionedStack(recipe.getInputs(), 5+32, 19);
+            this.lens = recipe.type.lens;
         }
 
         @Override

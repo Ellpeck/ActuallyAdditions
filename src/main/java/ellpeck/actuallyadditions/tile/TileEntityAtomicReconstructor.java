@@ -30,6 +30,7 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraftforge.common.util.ForgeDirection;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class TileEntityAtomicReconstructor extends TileEntityInventoryBase implements IEnergyReceiver{
 
@@ -89,8 +90,9 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
                                                             ArrayList<ReconstructorRecipeHandler.Recipe> recipes = ReconstructorRecipeHandler.getRecipes(new ItemStack(pos.getBlock(), 1, pos.getMetadata()));
                                                             for(ReconstructorRecipeHandler.Recipe recipe : recipes){
                                                                 if(recipe != null && this.storage.getEnergyStored() >= ENERGY_USE+recipe.energyUse && recipe.type == currentLens){
-                                                                    ItemStack output = recipe.getFirstOutput();
-                                                                    if(output != null){
+                                                                    List<ItemStack> outputs = recipe.getOutputs();
+                                                                    if(outputs != null && !outputs.isEmpty()){
+                                                                        ItemStack output = outputs.get(0);
                                                                         if(output.getItem() instanceof ItemBlock){
                                                                             this.worldObj.playAuxSFX(2001, pos.getX(), pos.getY(), pos.getZ(), Block.getIdFromBlock(pos.getBlock())+(pos.getMetadata() << 12));
                                                                             pos.setBlock(Block.getBlockFromItem(output.getItem()), output.getItemDamage(), 2);
@@ -118,9 +120,9 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
                                                         ArrayList<ReconstructorRecipeHandler.Recipe> recipes = ReconstructorRecipeHandler.getRecipes(stack);
                                                         for(ReconstructorRecipeHandler.Recipe recipe : recipes){
                                                             if(recipe != null && this.storage.getEnergyStored() >= ENERGY_USE+recipe.energyUse && recipe.type == currentLens){
-                                                                ItemStack output = recipe.getFirstOutput();
-                                                                if(output != null){
-                                                                    ItemStack outputCopy = output.copy();
+                                                                List<ItemStack> outputs = recipe.getOutputs();
+                                                                if(outputs != null && !outputs.isEmpty()){
+                                                                    ItemStack outputCopy = outputs.get(0).copy();
                                                                     outputCopy.stackSize = stack.stackSize;
                                                                     item.setEntityItemStack(outputCopy);
 

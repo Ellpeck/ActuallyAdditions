@@ -11,10 +11,12 @@
 package ellpeck.actuallyadditions.ore;
 
 import ellpeck.actuallyadditions.blocks.InitBlocks;
-import ellpeck.actuallyadditions.blocks.metalists.TheColoredLampColors;
 import ellpeck.actuallyadditions.blocks.metalists.TheMiscBlocks;
 import ellpeck.actuallyadditions.items.InitItems;
-import ellpeck.actuallyadditions.items.metalists.*;
+import ellpeck.actuallyadditions.items.metalists.TheDusts;
+import ellpeck.actuallyadditions.items.metalists.TheFoods;
+import ellpeck.actuallyadditions.items.metalists.TheMiscItems;
+import ellpeck.actuallyadditions.items.metalists.TheSpecialDrops;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
@@ -29,44 +31,10 @@ public class InitOreDict{
         ModUtil.LOGGER.info("Initializing OreDictionary Entries...");
 
         //Vanilla Ores
-        addOre(Blocks.obsidian, "obsidian");
         addOre(Items.coal, "coal");
-        addOre(Items.flint, "flint");
-        addOre(Blocks.gravel, "gravel");
-        addOre(Items.sugar, "sugar");
-        addOre(Items.diamond_horse_armor, "armorHorseDiamond");
-        addOre(Items.golden_horse_armor, "armorHorseGold");
-        addOre(Items.iron_horse_armor, "armorHorseIron");
-        addOre(Items.bone, "itemBone");
-        addOre(Items.dye, 15, "boneMeal");
-        addOre(Items.sugar, "sugar");
-        addOre(Items.reeds, "sugarCane");
-        addOre(Blocks.soul_sand, "soulSand");
-        addOre(Items.leather, "leather");
-        addOre(Items.rotten_flesh, "flesh");
+        addOre(Blocks.obsidian, "obsidian");
 
-        addOre(Blocks.yellow_flower, "flowerDandelion");
-        addOre(Blocks.red_flower, "flowerPoppy");
-        addOre(Blocks.red_flower, 1, "flowerOrchid");
-        addOre(Blocks.red_flower, 2, "flowerAllium");
-        addOre(Blocks.red_flower, 3, "flowerBluet");
-        addOre(Blocks.red_flower, 4, "flowerRedTulip");
-        addOre(Blocks.red_flower, 5, "flowerOrangeTulip");
-        addOre(Blocks.red_flower, 6, "flowerWhiteTulip");
-        addOre(Blocks.red_flower, 7, "flowerPinkTulip");
-        addOre(Blocks.red_flower, 8, "flowerDaisy");
-        addOre(Blocks.double_plant, 0, "flowerSunflower");
-        addOre(Blocks.double_plant, 1, "flowerLilac");
-        addOre(Blocks.double_plant, 4, "flowerRoseBush");
-        addOre(Blocks.double_plant, 5, "flowerPeony");
-
-        //Wool + Clay
-        for(int i = 0; i < TheColoredLampColors.values().length; i++){
-            addOre(Blocks.wool, i, "wool"+TheColoredLampColors.values()[i].name);
-            addOre(Blocks.stained_hardened_clay, i, "clay"+TheColoredLampColors.values()[i].name);
-        }
-
-        //Ores
+        //Ores for Pulverizers etc.
         addOre(InitItems.itemDust, TheDusts.IRON.ordinal(), "dustIron");
         addOre(InitItems.itemDust, TheDusts.GOLD.ordinal(), "dustGold");
         addOre(InitItems.itemDust, TheDusts.DIAMOND.ordinal(), "dustDiamond");
@@ -75,53 +43,29 @@ public class InitOreDict{
         addOre(InitItems.itemDust, TheDusts.QUARTZ.ordinal(), "dustQuartz");
         addOre(InitItems.itemDust, TheDusts.COAL.ordinal(), "dustCoal");
         addOre(InitItems.itemDust, TheDusts.QUARTZ_BLACK.ordinal(), "dustQuartzBlack");
-
-        //Crystals
-        addOre(InitItems.itemCrystal, TheCrystals.REDSTONE.ordinal(), "crystalRed");
-        addOre(InitItems.itemCrystal, TheCrystals.LAPIS.ordinal(), "crystalBlue");
-        addOre(InitItems.itemCrystal, TheCrystals.DIAMOND.ordinal(), "crystalLightBlue");
-        addOre(InitItems.itemCrystal, TheCrystals.EMERALD.ordinal(), "crystalGreen");
-        addOre(InitItems.itemCrystal, TheCrystals.COAL.ordinal(), "crystalBlack");
-        addOre(InitItems.itemCrystal, TheCrystals.IRON.ordinal(), "crystalWhite");
-
-        addOre(InitBlocks.blockCrystal, TheCrystals.REDSTONE.ordinal(), "blockCrystalRed");
-        addOre(InitBlocks.blockCrystal, TheCrystals.LAPIS.ordinal(), "blockCrystalBlue");
-        addOre(InitBlocks.blockCrystal, TheCrystals.DIAMOND.ordinal(), "blockCrystalLightBlue");
-        addOre(InitBlocks.blockCrystal, TheCrystals.EMERALD.ordinal(), "blockCrystalGreen");
-        addOre(InitBlocks.blockCrystal, TheCrystals.COAL.ordinal(), "blockCrystalBlack");
-        addOre(InitBlocks.blockCrystal, TheCrystals.IRON.ordinal(), "blockCrystalWhite");
-
         addOre(InitBlocks.blockMisc, TheMiscBlocks.ORE_QUARTZ.ordinal(), "oreQuartzBlack");
+        addOre(InitItems.itemMisc, TheMiscItems.QUARTZ.ordinal(), "gemQuartzBlack");
 
+        //For Thermal Expansion Machine that "grows crops"
         addOre(InitItems.itemCanolaSeed, "seedCanola");
         addOre(InitItems.itemMisc, TheMiscItems.CANOLA.ordinal(), "cropCanola");
-
         addOre(InitItems.itemRiceSeed, "seedRice");
         addOre(InitItems.itemFoods, TheFoods.RICE.ordinal(), "cropRice");
-
         addOre(InitItems.itemFlaxSeed, "seedFlax");
         addOre(Items.string, "cropFlax");
-
         addOre(InitItems.itemCoffeeSeed, "seedCoffee");
         addOre(InitItems.itemCoffeeBean, "cropCoffee");
 
+        //For Crafting
         addOre(InitItems.itemMisc, TheMiscItems.RICE_SLIME.ordinal(), "slimeball");
-        addOre(InitBlocks.blockMisc, TheMiscBlocks.CHARCOAL_BLOCK.ordinal(), "blockCharcoal");
 
+        //For Compat
         addOre(InitItems.itemSpecialDrop, TheSpecialDrops.EMERALD_SHARD.ordinal(), "nuggetEmerald");
         addOre(InitItems.itemSpecialDrop, TheSpecialDrops.PEARL_SHARD.ordinal(), "nuggetEnderpearl");
 
-        addOre(InitItems.itemMisc, TheMiscItems.QUARTZ.ordinal(), "gemQuartzBlack");
-
+        //For Crafting
         addOre(InitItems.itemMisc, TheMiscItems.BLACK_DYE.ordinal(), "dyeBlack");
-
-        addOre(InitBlocks.blockTestifiBucksWhiteWall, "blockWhiteBrick");
-        addOre(InitBlocks.blockTestifiBucksGreenWall, "blockGreenBrick");
-
-        addOre(InitItems.itemColorLens, "itemColorLens");
-        addOre(InitItems.itemExplosionLens, "itemExplosionLens");
-        addOre(InitItems.itemDamageLens, "itemDamageLens");
-        addOre(InitItems.itemMisc, TheMiscItems.LENS.ordinal(), "itemLens");
+        addOre(InitItems.itemMisc, TheMiscItems.GREEN_DYE.ordinal(), "dyeGreen");
     }
 
     private static void addOre(ItemStack stack, String name){

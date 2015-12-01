@@ -17,6 +17,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -40,7 +41,7 @@ public class CrusherRecipeRegistry{
                         if(ore.substring(0, theCase.theCase.length()).equals(theCase.theCase)){
                             String output = theCase.resultPreString+ore.substring(theCase.theCase.length());
 
-                            if(!hasRecipe(ore)){
+                            if(!hasOreRecipe(ore)){
                                 if(!OreDictionary.getOres(output, false).isEmpty() && !OreDictionary.getOres(ore, false).isEmpty()){
                                     addRecipe(ore, output, theCase.resultAmount);
                                 }
@@ -74,17 +75,29 @@ public class CrusherRecipeRegistry{
         return false;
     }
 
-    public static boolean hasRecipe(String input){
+    public static boolean hasOreRecipe(String input){
         for(CrusherRecipe recipe : recipes){
-            if(recipe.input.equals(input)){
+            if(recipe.input != null && recipe.input.equals(input)){
                 return true;
             }
         }
         return false;
     }
 
+    public static void addRecipe(ItemStack input, ItemStack outputOne){
+        addRecipe(input, outputOne, null, 0);
+    }
+
+    public static void addRecipe(ItemStack input, String outputOne, int outputOneAmount){
+        recipes.add(new CrusherRecipe(input, outputOne, outputOneAmount));
+    }
+
+    public static void addRecipe(ItemStack input, ItemStack outputOne, ItemStack outputTwo, int outputTwoChance){
+        recipes.add(new CrusherRecipe(input, outputOne, outputTwo, outputTwoChance));
+    }
+
     public static void addRecipe(String input, String outputOne, int outputOneAmount){
-        recipes.add(new CrusherRecipe(input, outputOne, outputOneAmount, "", 0, 0));
+        addRecipe(input, outputOne, outputOneAmount, "", 0, 0);
     }
 
     public static List<ItemStack> getOutputOnes(ItemStack input){
@@ -113,14 +126,31 @@ public class CrusherRecipeRegistry{
 
     public static class CrusherRecipe{
 
-        public String input;
+        private String input;
 
-        public String outputOne;
-        public int outputOneAmount;
+        private String outputOne;
+        private int outputOneAmount;
 
-        public String outputTwo;
-        public int outputTwoAmount;
+        private String outputTwo;
+        private int outputTwoAmount;
         public int outputTwoChance;
+
+        private ItemStack inputStack;
+        private ItemStack outputOneStack;
+        private ItemStack outputTwoStack;
+
+        public CrusherRecipe(ItemStack input, String outputOne, int outputOneAmount){
+            this.inputStack = input;
+            this.outputOne = outputOne;
+            this.outputOneAmount = outputOneAmount;
+        }
+
+        public CrusherRecipe(ItemStack input, ItemStack outputOne, ItemStack outputTwo, int outputTwoChance){
+            this.inputStack = input;
+            this.outputOneStack = outputOne;
+            this.outputTwoStack = outputTwo;
+            this.outputTwoChance = outputTwoChance;
+        }
 
         public CrusherRecipe(String input, String outputOne, int outputOneAmount, String outputTwo, int outputTwoAmount, int outputTwoChance){
             this.input = input;
@@ -132,6 +162,10 @@ public class CrusherRecipeRegistry{
         }
 
         public List<ItemStack> getRecipeOutputOnes(){
+            if(this.outputOneStack != null){
+                return Collections.singletonList(this.outputOneStack.copy());
+            }
+
             if(this.outputOne == null || this.outputOne.isEmpty()){
                 return null;
             }
@@ -144,6 +178,10 @@ public class CrusherRecipeRegistry{
         }
 
         public List<ItemStack> getRecipeOutputTwos(){
+            if(this.outputTwoStack != null){
+                return Collections.singletonList(this.outputTwoStack.copy());
+            }
+
             if(this.outputTwo == null || this.outputTwo.isEmpty()){
                 return null;
             }
@@ -156,6 +194,10 @@ public class CrusherRecipeRegistry{
         }
 
         public List<ItemStack> getRecipeInputs(){
+            if(this.inputStack != null){
+                return Collections.singletonList(this.inputStack.copy());
+            }
+
             if(this.input == null || this.input.isEmpty()){
                 return null;
             }
