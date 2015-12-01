@@ -229,13 +229,13 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
 
     @Override
     public ItemStack decrStackSize(int i, int j){
-        this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
+        this.sendUpdate();
         return super.decrStackSize(i, j);
     }
 
     @Override
     public void setInventorySlotContents(int i, ItemStack stack){
         super.setInventorySlotContents(i, stack);
-        this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
+        this.sendUpdate();
     }
 }

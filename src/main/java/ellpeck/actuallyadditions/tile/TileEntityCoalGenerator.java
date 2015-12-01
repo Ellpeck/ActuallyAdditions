@@ -81,7 +81,7 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
                 }
             }
 
-            if((this.storage.getEnergyStored() != this.lastEnergy || this.currentBurnTime != this.lastCurrentBurnTime || this.lastBurnTime != this.maxBurnTime) && this.trySendUpdate()){
+            if((this.storage.getEnergyStored() != this.lastEnergy || this.currentBurnTime != this.lastCurrentBurnTime || this.lastBurnTime != this.maxBurnTime) && this.sendUpdateWithInterval()){
                 this.lastEnergy = this.storage.getEnergyStored();
                 this.lastCurrentBurnTime = this.currentBurnTime;
                 this.lastBurnTime = this.currentBurnTime;

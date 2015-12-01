@@ -78,7 +78,7 @@ public class TileEntityFeeder extends TileEntityInventoryBase{
                 this.markDirty();
             }
 
-            if((this.lastAnimalAmount != this.currentAnimalAmount || this.lastTimer != this.currentTimer) && this.trySendUpdate()){
+            if((this.lastAnimalAmount != this.currentAnimalAmount || this.lastTimer != this.currentTimer) && this.sendUpdateWithInterval()){
                 this.lastAnimalAmount = this.currentAnimalAmount;
                 this.lastTimer = this.currentTimer;
             }

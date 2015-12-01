@@ -111,17 +111,6 @@ public class WorldUtil{
         return true;
     }
 
-    public static void updateTileAndTilesAround(TileEntity tile){
-        tile.getWorldObj().markBlockForUpdate(tile.xCoord+1, tile.yCoord, tile.zCoord);
-        tile.getWorldObj().markBlockForUpdate(tile.xCoord-1, tile.yCoord, tile.zCoord);
-        tile.getWorldObj().markBlockForUpdate(tile.xCoord, tile.yCoord+1, tile.zCoord);
-        tile.getWorldObj().markBlockForUpdate(tile.xCoord, tile.yCoord-1, tile.zCoord);
-        tile.getWorldObj().markBlockForUpdate(tile.xCoord, tile.yCoord, tile.zCoord+1);
-        tile.getWorldObj().markBlockForUpdate(tile.xCoord, tile.yCoord, tile.zCoord-1);
-        tile.getWorldObj().markBlockForUpdate(tile.xCoord, tile.yCoord, tile.zCoord);
-        tile.markDirty();
-    }
-
     public static void pushFluid(World world, int x, int y, int z, ForgeDirection side, FluidTank tank){
         TileEntity tile = getTileEntityFromSide(side, world, x, y, z);
         if(tile != null && tank.getFluid() != null && tile instanceof IFluidHandler){

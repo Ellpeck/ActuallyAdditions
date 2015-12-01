@@ -16,7 +16,6 @@ import ellpeck.actuallyadditions.blocks.BlockPhantom;
 import ellpeck.actuallyadditions.blocks.InitBlocks;
 import ellpeck.actuallyadditions.util.Util;
 import ellpeck.actuallyadditions.util.WorldPos;
-import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -55,7 +54,14 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
                 this.rangeBefore = this.range;
                 this.boundPosBefore = this.boundPosition;
                 this.boundBlockBefore = this.boundPosition == null ? null : this.boundPosition.getBlock();
-                WorldUtil.updateTileAndTilesAround(this);
+
+                this.getWorldObj().markBlockForUpdate(this.xCoord+1, this.yCoord, this.zCoord);
+                this.getWorldObj().markBlockForUpdate(this.xCoord-1, this.yCoord, this.zCoord);
+                this.getWorldObj().markBlockForUpdate(this.xCoord, this.yCoord+1, this.zCoord);
+                this.getWorldObj().markBlockForUpdate(this.xCoord, this.yCoord-1, this.zCoord);
+                this.getWorldObj().markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord+1);
+                this.getWorldObj().markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord-1);
+                this.markDirty();
             }
         }
         else{

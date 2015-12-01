@@ -146,7 +146,7 @@ public class TileEntityFluidCollector extends TileEntityInventoryBase implements
                 }
             }
 
-            if(lastTankAmount != this.tank.getFluidAmount() && this.trySendUpdate()){
+            if(lastTankAmount != this.tank.getFluidAmount() && this.sendUpdateWithInterval()){
                 lastTankAmount = this.tank.getFluidAmount();
             }
         }

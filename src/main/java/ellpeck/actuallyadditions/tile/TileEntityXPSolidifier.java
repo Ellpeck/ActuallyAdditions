@@ -47,7 +47,7 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
                 }
             }
 
-            if(this.lastAmount != this.amount && this.trySendUpdate()){
+            if(this.lastAmount != this.amount && this.sendUpdateWithInterval()){
                 this.lastAmount = this.amount;
             }
         }

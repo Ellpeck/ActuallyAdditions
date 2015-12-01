@@ -57,7 +57,7 @@ public class TileEntityRangedCollector extends TileEntityInventoryBase implement
                 }
             }
 
-            if(this.isWhitelist != this.lastWhitelist && this.trySendUpdate()){
+            if(this.isWhitelist != this.lastWhitelist && this.sendUpdateWithInterval()){
                 this.lastWhitelist = this.isWhitelist;
             }
         }

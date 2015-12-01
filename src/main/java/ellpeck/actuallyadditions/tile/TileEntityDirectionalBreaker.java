@@ -77,7 +77,7 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase implem
                 }
             }
 
-            if(this.storage.getEnergyStored() != this.lastEnergy && this.trySendUpdate()){
+            if(this.storage.getEnergyStored() != this.lastEnergy && this.sendUpdateWithInterval()){
                 this.lastEnergy = this.storage.getEnergyStored();
             }
         }

@@ -12,6 +12,7 @@ package ellpeck.actuallyadditions.tile;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
+import ellpeck.actuallyadditions.network.VanillaPacketSyncer;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.block.Block;
 import net.minecraft.nbt.NBTTagCompound;
@@ -112,13 +113,17 @@ public abstract class TileEntityBase extends TileEntity{
 
     }
 
-    protected boolean trySendUpdate(){
+    protected boolean sendUpdateWithInterval(){
         if(this.ticksElapsed % ConfigIntValues.TILE_ENTITY_UPDATE_INTERVAL.getValue() == 0){
-            this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
+            this.sendUpdate();
             return true;
         }
         else{
             return false;
         }
+    }
+
+    public void sendUpdate(){
+        VanillaPacketSyncer.sendTileToNearbyPlayers(this);
     }
 }

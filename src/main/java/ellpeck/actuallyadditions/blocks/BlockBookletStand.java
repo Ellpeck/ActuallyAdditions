@@ -92,7 +92,7 @@ public class BlockBookletStand extends BlockContainerBase implements IActAddItem
             if(tile.assignedPlayer == null){
                 tile.assignedPlayer = player.getCommandSenderName();
                 tile.markDirty();
-                world.markBlockForUpdate(x, y, z);
+                tile.sendUpdate();
             }
         }
     }

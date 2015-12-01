@@ -86,12 +86,6 @@ public class WorldPos{
         return this.z;
     }
 
-    public void update(){
-        if(this.getWorld() != null){
-            this.getWorld().markBlockForUpdate(this.x, this.y, this.z);
-        }
-    }
-
     public WorldPos copy(){
         return new WorldPos(this.getWorld(), this.x, this.y, this.z);
     }

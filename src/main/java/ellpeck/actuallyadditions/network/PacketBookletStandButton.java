@@ -96,7 +96,7 @@ public class PacketBookletStandButton implements IMessage{
             if(tile instanceof TileEntityBookletStand){
                 if(Objects.equals(player.getCommandSenderName(), ((TileEntityBookletStand)tile).assignedPlayer)){
                     ((TileEntityBookletStand)tile).setEntry(message.entryID, message.chapterID, message.pageID, message.pageInIndex);
-                    world.markBlockForUpdate(message.tileX, message.tileY, message.tileZ);
+                    ((TileEntityBookletStand)tile).sendUpdate();
                 }
             }
 
