@@ -29,6 +29,7 @@ import org.lwjgl.opengl.GL11;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class NEIReconstructorRecipe extends TemplateRecipeHandler implements INEIRecipeHandler{
 
@@ -140,12 +141,19 @@ public class NEIReconstructorRecipe extends TemplateRecipeHandler implements INE
 
         @Override
         public PositionedStack getResult(){
-            return result;
+            return null;
         }
 
         @Override
-        public PositionedStack getIngredient(){
-            return input;
+        public List<PositionedStack> getIngredients(){
+            return this.getCycledIngredients(cycleticks/48, Collections.singletonList(this.input));
+        }
+
+        @Override
+        public java.util.List<PositionedStack> getOtherStacks(){
+            ArrayList<PositionedStack> list = new ArrayList<PositionedStack>();
+            list.addAll(this.getCycledIngredients(cycleticks/48, Collections.singletonList(this.result)));
+            return list;
         }
     }
 }

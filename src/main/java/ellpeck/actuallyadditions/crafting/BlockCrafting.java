@@ -174,7 +174,7 @@ public class BlockCrafting{
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockXPSolidifier),
                     "XXX", "DCD", "XXX",
                     'X', new ItemStack(InitItems.itemSpecialDrop, 1, TheSpecialDrops.SOLIDIFIED_EXPERIENCE.ordinal()),
-                    'D', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.DIAMOND.ordinal()),
+                    'D', new ItemStack(InitBlocks.blockCrystal, 1, TheCrystals.DIAMOND.ordinal()),
                     'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal())));
             recipeSolidifier = Util.GetRecipes.lastIRecipe();
         }
@@ -264,7 +264,7 @@ public class BlockCrafting{
                     "SCS", "ISI", "LLL",
                     'C', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.IRON_CASING.ordinal()),
                     'S', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal()),
-                    'I', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.IRON.ordinal()),
+                    'I', new ItemStack(InitBlocks.blockCrystal, 1, TheCrystals.IRON.ordinal()),
                     'L', Items.lava_bucket));
             recipeLavaFactory = Util.GetRecipes.lastIRecipe();
         }
@@ -274,7 +274,7 @@ public class BlockCrafting{
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockMisc, 32, TheMiscBlocks.LAVA_FACTORY_CASE.ordinal()),
                     "ICI",
                     'C', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.IRON_CASING.ordinal()),
-                    'I', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.IRON.ordinal())));
+                    'I', new ItemStack(InitBlocks.blockCrystal, 1, TheCrystals.IRON.ordinal())));
             recipeCasing = Util.GetRecipes.lastIRecipe();
         }
 
@@ -432,7 +432,7 @@ public class BlockCrafting{
         if(ConfigCrafting.REPAIRER.isEnabled()){
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockItemRepairer),
                     "DID", "OCO", "DID",
-                    'D', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.DIAMOND.ordinal()),
+                    'D', new ItemStack(InitBlocks.blockCrystal, 1, TheCrystals.DIAMOND.ordinal()),
                     'I', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.IRON.ordinal()),
                     'O', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL.ordinal()),
                     'C', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.ENDER_CASING.ordinal())));
@@ -443,7 +443,7 @@ public class BlockCrafting{
         if(ConfigCrafting.SOLAR_PANEL.isEnabled()){
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockFurnaceSolar),
                     "IQI", "CDC", "IBI",
-                    'D', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.DIAMOND.ordinal()),
+                    'D', new ItemStack(InitBlocks.blockCrystal, 1, TheCrystals.DIAMOND.ordinal()),
                     'I', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.IRON.ordinal()),
                     'Q', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.IRON_CASING.ordinal()),
                     'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal()),
@@ -556,7 +556,7 @@ public class BlockCrafting{
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockGreenhouseGlass, 3),
                     "GSG", "SDS", "GSG",
                     'G', "blockGlass",
-                    'D', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.LAPIS.ordinal()),
+                    'D', new ItemStack(InitBlocks.blockCrystal, 1, TheCrystals.LAPIS.ordinal()),
                     'S', "treeSapling"));
             recipeGlass = Util.GetRecipes.lastIRecipe();
         }
@@ -567,7 +567,7 @@ public class BlockCrafting{
                     "CCC", "CRP", "CCC",
                     'C', "cobblestone",
                     'R', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL.ordinal()),
-                    'P', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.LAPIS.ordinal())));
+                    'P', new ItemStack(InitBlocks.blockCrystal, 1, TheCrystals.LAPIS.ordinal())));
             recipePlacer = Util.GetRecipes.lastIRecipe();
         }
 
@@ -577,7 +577,7 @@ public class BlockCrafting{
                     "CCC", "CRP", "CCC",
                     'C', "cobblestone",
                     'R', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL.ordinal()),
-                    'P', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.COAL.ordinal())));
+                    'P', new ItemStack(InitBlocks.blockCrystal, 1, TheCrystals.COAL.ordinal())));
             recipeBreaker = Util.GetRecipes.lastIRecipe();
         }
 
@@ -585,7 +585,7 @@ public class BlockCrafting{
         if(ConfigCrafting.DROPPER.isEnabled()){
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockDropper),
                     "CBC", "CDR", "CBC",
-                    'B', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.DIAMOND.ordinal()),
+                    'B', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.LAPIS.ordinal()),
                     'C', "cobblestone",
                     'D', Blocks.dropper,
                     'R', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal())));
@@ -596,7 +596,7 @@ public class BlockCrafting{
             for(int i = 0; i < BlockColoredLamp.allLampTypes.length; i++){
                 GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockColoredLamp, 6, i),
                         "GCG", "DQD", "GCG",
-                        'C', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.DIAMOND.ordinal()),
+                        'C', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.LAPIS.ordinal()),
                         'G', "glowstone",
                         'D', "dye"+BlockColoredLamp.allLampTypes[i].name,
                         'Q', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal())));

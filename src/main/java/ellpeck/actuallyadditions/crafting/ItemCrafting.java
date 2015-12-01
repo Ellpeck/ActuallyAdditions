@@ -152,7 +152,7 @@ public class ItemCrafting{
                     'D', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.DIAMOND.ordinal()),
                     'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal()),
                     'R', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.DRILL_CORE.ordinal()),
-                    'I', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.IRON.ordinal())));
+                    'I', new ItemStack(InitBlocks.blockCrystal, 1, TheCrystals.IRON.ordinal())));
             recipeDrill = Util.GetRecipes.lastIRecipe();
 
             for(int i = 0; i < 16; i++){
@@ -169,7 +169,7 @@ public class ItemCrafting{
                     "ICI", "CRC", "ICI",
                     'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL.ordinal()),
                     'R', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.REDSTONE.ordinal()),
-                    'I', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.IRON.ordinal())));
+                    'I', new ItemStack(InitBlocks.blockCrystal, 1, TheCrystals.IRON.ordinal())));
             recipeDrillCore = Util.GetRecipes.lastIRecipe();
         }
 
@@ -214,7 +214,7 @@ public class ItemCrafting{
                     "ISI", "SRS", "ISI",
                     'I', Blocks.glowstone,
                     'S', Items.redstone,
-                    'R', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.DIAMOND.ordinal())));
+                    'R', new ItemStack(InitBlocks.blockCrystal, 1, TheCrystals.DIAMOND.ordinal())));
             recipeDrillFortuneI = Util.GetRecipes.lastIRecipe();
 
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemDrillUpgradeFortuneII),
@@ -349,7 +349,7 @@ public class ItemCrafting{
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemWingsOfTheBats),
                     "WNW", "WDW", "WNW",
                     'W', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.BAT_WING.ordinal()),
-                    'N', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.DIAMOND.ordinal()),
+                    'N', new ItemStack(InitBlocks.blockCrystal, 1, TheCrystals.DIAMOND.ordinal()),
                     'D', new ItemStack(Items.nether_star)));
             recipeWings = Util.GetRecipes.lastIRecipe();
         }
