@@ -12,7 +12,6 @@ package ellpeck.actuallyadditions.recipe;
 
 import ellpeck.actuallyadditions.blocks.metalists.TheColoredLampColors;
 import ellpeck.actuallyadditions.config.values.ConfigCrafting;
-import ellpeck.actuallyadditions.util.AssetUtil;
 import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -178,7 +177,7 @@ public class ReconstructorRecipeHandler{
 
         public float[] getColor(){
             if(this == COLOR){
-                float[] colors = AssetUtil.RGB_WOOL_COLORS[Util.RANDOM.nextInt(AssetUtil.RGB_WOOL_COLORS.length)];
+                float[] colors = possibleColorLensColors[Util.RANDOM.nextInt(possibleColorLensColors.length)];
                 return new float[]{colors[0]/255F, colors[1]/255F, colors[2]/255F};
             }
             else if(this == DETONATION){
@@ -197,6 +196,22 @@ public class ReconstructorRecipeHandler{
         public int getDistance(){
             return this == DETONATION ? 30 : (this == JUST_DAMAGE ? 15 : 10);
         }
+
+        //Thanks to xdjackiexd for this, as I couldn't be bothered
+        private static final float[][] possibleColorLensColors = {
+                {158F, 43F, 39F}, //Red
+                {234F, 126F, 53F}, //Orange
+                {194F, 181F, 28F}, //Yellow
+                {57F, 186F, 46F}, //Lime Green
+                {54F, 75F, 24F}, //Green
+                {99F, 135F, 210F}, //Light Blue
+                {38F, 113F, 145F}, //Cyan
+                {37F, 49F, 147F}, //Blue
+                {126F, 52F, 191F}, //Purple
+                {190F, 73F, 201F}, //Magenta
+                {217F, 129F, 153F}, //Pink
+                {86F, 51F, 28F}, //Brown
+        };
     }
 
 }

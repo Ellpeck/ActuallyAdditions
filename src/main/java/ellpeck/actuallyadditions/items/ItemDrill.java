@@ -51,21 +51,20 @@ import java.util.Set;
 public class ItemDrill extends ItemEnergy{
 
     @SideOnly(Side.CLIENT)
-    private IIcon emeraldIcon;
-    @SideOnly(Side.CLIENT)
-    private IIcon purpleIcon;
+    private IIcon[] allDemDamnIconsMaan;
 
     private static final int ENERGY_USE = 100;
 
     public ItemDrill(){
         super(500000, 5000);
         this.setMaxDamage(0);
+        this.setHasSubtypes(true);
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public IIcon getIconFromDamage(int par1){
-        return par1 == 0 ? this.itemIcon : (par1 == 2 ? this.purpleIcon : this.emeraldIcon);
+        return par1 >= this.allDemDamnIconsMaan.length ? null : this.allDemDamnIconsMaan[par1];
     }
 
     @Override
@@ -77,10 +76,9 @@ public class ItemDrill extends ItemEnergy{
     @SuppressWarnings("unchecked")
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item item, CreativeTabs tabs, List list){
-        super.getSubItems(item, tabs, list);
-
-        this.addDrillStack(list, 1);
-        this.addDrillStack(list, 2);
+        for(int i = 0; i < this.allDemDamnIconsMaan.length; i++){
+            this.addDrillStack(list, i);
+        }
     }
 
     private void addDrillStack(List list, int meta){
@@ -232,9 +230,10 @@ public class ItemDrill extends ItemEnergy{
     @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister iconReg){
-        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
-        this.emeraldIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Emerald");
-        this.purpleIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Purple");
+        this.allDemDamnIconsMaan = new IIcon[16];
+        for(int i = 0; i < this.allDemDamnIconsMaan.length; i++){
+            this.allDemDamnIconsMaan[i] = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+(i+1));
+        }
     }
 
     @Override

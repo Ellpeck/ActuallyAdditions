@@ -12,6 +12,7 @@ package ellpeck.actuallyadditions.crafting;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import ellpeck.actuallyadditions.blocks.InitBlocks;
+import ellpeck.actuallyadditions.blocks.metalists.TheColoredLampColors;
 import ellpeck.actuallyadditions.blocks.metalists.TheMiscBlocks;
 import ellpeck.actuallyadditions.config.ConfigValues;
 import ellpeck.actuallyadditions.config.values.ConfigCrafting;
@@ -42,8 +43,7 @@ public class ItemCrafting{
     public static IRecipe recipeTinyChar;
     public static ArrayList<IRecipe> recipesMashedFood = new ArrayList<IRecipe>();
     public static IRecipe recipeDrill;
-    public static IRecipe recipeDrillEmerald;
-    public static IRecipe recipeDrillPurple;
+    public static IRecipe[] recipesDrillColoring = new IRecipe[16];
     public static IRecipe recipeDrillSpeedI;
     public static IRecipe recipeDrillSpeedII;
     public static IRecipe recipeDrillSpeedIII;
@@ -146,7 +146,8 @@ public class ItemCrafting{
 
         //Drill
         if(ConfigCrafting.DRILL.isEnabled()){
-            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemDrill),
+            ItemStack lightBlueDrill = new ItemStack(InitItems.itemDrill, 1, TheColoredLampColors.LIGHT_BLUE.ordinal());
+            GameRegistry.addRecipe(new ShapedOreRecipe(lightBlueDrill.copy(),
                     "DDD", "CRC", "III",
                     'D', "crystalLightBlue",
                     'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal()),
@@ -154,22 +155,10 @@ public class ItemCrafting{
                     'I', "blockCrystalWhite"));
             recipeDrill = Util.GetRecipes.lastIRecipe();
 
-            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemDrill, 1, 1),
-                    "DDD", "CRC", "III",
-                    'D', "crystalGreen",
-                    'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal()),
-                    'R', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.DRILL_CORE.ordinal()),
-                    'I', "blockCrystalWhite"));
-            recipeDrillEmerald = Util.GetRecipes.lastIRecipe();
-
-            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemDrill, 1, 2),
-                    "DFD", "CRC", "III",
-                    'F', "blockCrystalRed",
-                    'D', "crystalLightBlue",
-                    'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal()),
-                    'R', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.DRILL_CORE.ordinal()),
-                    'I', "blockCrystalWhite"));
-            recipeDrillPurple = Util.GetRecipes.lastIRecipe();
+            for(int i = 0; i < recipesDrillColoring.length; i++){
+                GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemDrill, 1, i), lightBlueDrill.copy(), "dye"+TheColoredLampColors.values()[i].name));
+                recipesDrillColoring[i] = Util.GetRecipes.lastIRecipe();
+            }
         }
 
         //Drill Core
