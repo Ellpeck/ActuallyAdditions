@@ -43,7 +43,7 @@ public class ItemCrafting{
     public static IRecipe recipeTinyChar;
     public static ArrayList<IRecipe> recipesMashedFood = new ArrayList<IRecipe>();
     public static IRecipe recipeDrill;
-    public static IRecipe[] recipesDrillColoring = new IRecipe[16];
+    public static ArrayList<IRecipe> recipesDrillColoring = new ArrayList<IRecipe>();
     public static IRecipe recipeDrillSpeedI;
     public static IRecipe recipeDrillSpeedII;
     public static IRecipe recipeDrillSpeedIII;
@@ -155,9 +155,11 @@ public class ItemCrafting{
                     'I', "blockCrystalWhite"));
             recipeDrill = Util.GetRecipes.lastIRecipe();
 
-            for(int i = 0; i < recipesDrillColoring.length; i++){
-                GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemDrill, 1, i), lightBlueDrill.copy(), "dye"+TheColoredLampColors.values()[i].name));
-                recipesDrillColoring[i] = Util.GetRecipes.lastIRecipe();
+            for(int i = 0; i < 16; i++){
+                if(i != TheColoredLampColors.LIGHT_BLUE.ordinal()){
+                    GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemDrill, 1, i), lightBlueDrill.copy(), "dye"+TheColoredLampColors.values()[i].name));
+                    recipesDrillColoring.add(Util.GetRecipes.lastIRecipe());
+                }
             }
         }
 
