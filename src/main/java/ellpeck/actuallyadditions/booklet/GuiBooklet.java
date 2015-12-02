@@ -20,7 +20,10 @@ import ellpeck.actuallyadditions.config.GuiConfiguration;
 import ellpeck.actuallyadditions.proxy.ClientProxy;
 import ellpeck.actuallyadditions.update.UpdateChecker;
 import ellpeck.actuallyadditions.util.AssetUtil;
+import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.playerdata.PersistentClientData;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -72,6 +75,9 @@ public class GuiBooklet extends GuiScreen{
     private boolean mousePressed;
     private boolean tryOpenMainPage;
     private boolean saveOnClose;
+
+    private static final int[] AND_HIS_NAME_IS = new int[]{Keyboard.KEY_C, Keyboard.KEY_E, Keyboard.KEY_N, Keyboard.KEY_A};
+    private int hisNameIsAt;
 
     public GuiBooklet(GuiScreen parentScreen, boolean tryOpenMainPage, boolean saveOnClose){
         this.xSize = 146;
@@ -149,7 +155,20 @@ public class GuiBooklet extends GuiScreen{
             BookletUtils.updateSearchBar(this);
         }
         else{
-            super.keyTyped(theChar, key);
+            if(AND_HIS_NAME_IS.length > this.hisNameIsAt && AND_HIS_NAME_IS[this.hisNameIsAt] == key){
+                if(this.hisNameIsAt+1 >= AND_HIS_NAME_IS.length){
+                    Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.func_147673_a(new ResourceLocation(ModUtil.MOD_ID_LOWER, "duhDuhDuhDuuuh")));
+                    ModUtil.LOGGER.info("AND HIS NAME IS JOHN CENA DUH DUH DUH DUUUH");
+                    this.hisNameIsAt = 0;
+                }
+                else{
+                    this.hisNameIsAt++;
+                }
+            }
+            else{
+                this.hisNameIsAt = 0;
+                super.keyTyped(theChar, key);
+            }
         }
     }
 
