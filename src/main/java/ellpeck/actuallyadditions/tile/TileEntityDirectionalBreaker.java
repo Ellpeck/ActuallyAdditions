@@ -41,7 +41,7 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase implem
     public void updateEntity(){
         super.updateEntity();
         if(!worldObj.isRemote){
-            if(!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)){
+            if(!this.isRedstonePowered){
                 if(this.storage.getEnergyStored() >= ENERGY_USE*RANGE){
                     if(this.currentTime > 0){
                         this.currentTime--;

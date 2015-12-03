@@ -94,7 +94,7 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
         if(!worldObj.isRemote){
             this.storeCoffee();
 
-            if(this.brewTime > 0 || this.worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)){
+            if(this.brewTime > 0 || this.isRedstonePowered){
                 this.brew();
             }
 

@@ -31,7 +31,7 @@ public class TileEntityPhantomLiquiface extends TileEntityPhantomface implements
         super.updateEntity();
 
         if(!worldObj.isRemote){
-            if(worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord) && this.isBoundThingInRange() && this.getHandler() != null){
+            if(this.isRedstonePowered && this.isBoundThingInRange() && this.getHandler() != null){
                 this.pushFluid(ForgeDirection.UP);
                 this.pushFluid(ForgeDirection.DOWN);
                 this.pushFluid(ForgeDirection.NORTH);

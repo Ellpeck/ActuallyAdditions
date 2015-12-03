@@ -51,7 +51,7 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
             }
 
             if(this.isBoundThingInRange()){
-                if(!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)){
+                if(!this.isRedstonePowered){
                     if(this.currentTime > 0){
                         this.currentTime--;
                         if(this.currentTime <= 0){

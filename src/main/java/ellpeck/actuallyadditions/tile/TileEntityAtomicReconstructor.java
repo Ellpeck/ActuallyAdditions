@@ -47,7 +47,7 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
     public void updateEntity(){
         super.updateEntity();
         if(!this.worldObj.isRemote){
-            if(!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord) && this.storage.getEnergyStored() >= ENERGY_USE){
+            if(!this.isRedstonePowered && this.storage.getEnergyStored() >= ENERGY_USE){
                 if(this.currentTime > 0){
                     this.currentTime--;
                     if(this.currentTime <= 0){

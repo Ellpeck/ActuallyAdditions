@@ -81,7 +81,7 @@ public class TileEntityFluidCollector extends TileEntityInventoryBase implements
     public void updateEntity(){
         super.updateEntity();
         if(!worldObj.isRemote){
-            if(!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)){
+            if(!this.isRedstonePowered){
                 if(this.currentTime > 0){
                     this.currentTime--;
                     if(this.currentTime <= 0){
@@ -138,7 +138,7 @@ public class TileEntityFluidCollector extends TileEntityInventoryBase implements
 
             if(!this.isPlacer && this.tank.getFluidAmount() > 0){
                 WorldUtil.pushFluid(worldObj, xCoord, yCoord, zCoord, ForgeDirection.DOWN, this.tank);
-                if(!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)){
+                if(!this.isRedstonePowered){
                     WorldUtil.pushFluid(worldObj, xCoord, yCoord, zCoord, ForgeDirection.NORTH, this.tank);
                     WorldUtil.pushFluid(worldObj, xCoord, yCoord, zCoord, ForgeDirection.EAST, this.tank);
                     WorldUtil.pushFluid(worldObj, xCoord, yCoord, zCoord, ForgeDirection.SOUTH, this.tank);

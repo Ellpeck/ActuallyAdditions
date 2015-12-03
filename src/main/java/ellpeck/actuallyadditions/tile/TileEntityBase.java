@@ -24,7 +24,8 @@ import net.minecraft.world.World;
 
 public abstract class TileEntityBase extends TileEntity{
 
-    private int ticksElapsed;
+    protected int ticksElapsed;
+    protected boolean isRedstonePowered;
 
     public static void init(){
         ModUtil.LOGGER.info("Registering TileEntities...");
@@ -86,6 +87,10 @@ public abstract class TileEntityBase extends TileEntity{
     @Override
     public void updateEntity(){
         this.ticksElapsed++;
+    }
+
+    public void setRedstonePowered(boolean powered){
+        this.isRedstonePowered = powered;
     }
 
     @Override

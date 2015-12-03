@@ -36,7 +36,7 @@ public class TileEntityRangedCollector extends TileEntityInventoryBase implement
     public void updateEntity(){
         super.updateEntity();
         if(!worldObj.isRemote){
-            if(!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)){
+            if(!this.isRedstonePowered){
                 ArrayList<EntityItem> items = (ArrayList<EntityItem>)this.worldObj.getEntitiesWithinAABB(EntityItem.class, AxisAlignedBB.getBoundingBox(this.xCoord-RANGE, this.yCoord-RANGE, this.zCoord-RANGE, this.xCoord+RANGE, this.yCoord+RANGE, this.zCoord+RANGE));
                 if(!items.isEmpty()){
                     for(EntityItem item : items){

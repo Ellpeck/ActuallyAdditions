@@ -29,7 +29,7 @@ public class TileEntityFishingNet extends TileEntityBase{
     public void updateEntity(){
         super.updateEntity();
         if(!worldObj.isRemote){
-            if(!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)){
+            if(!this.isRedstonePowered){
                 if(worldObj.getBlock(xCoord, yCoord-1, zCoord).getMaterial() == Material.water){
                     if(this.timeUntilNextDrop > 0){
                         this.timeUntilNextDrop--;

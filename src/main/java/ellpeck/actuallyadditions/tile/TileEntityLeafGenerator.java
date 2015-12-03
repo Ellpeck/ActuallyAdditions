@@ -33,7 +33,7 @@ public class TileEntityLeafGenerator extends TileEntityBase implements IEnergyPr
     public void updateEntity(){
         super.updateEntity();
         if(!worldObj.isRemote){
-            if(!this.worldObj.isBlockIndirectlyGettingPowered(this.xCoord, this.yCoord, this.zCoord)){
+            if(!this.isRedstonePowered){
 
                 if(this.nextUseCounter >= 5){
                     this.nextUseCounter = 0;

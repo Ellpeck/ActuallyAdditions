@@ -10,8 +10,10 @@
 
 package ellpeck.actuallyadditions.blocks;
 
+import ellpeck.actuallyadditions.tile.TileEntityBase;
 import ellpeck.actuallyadditions.tile.TileEntityInventoryBase;
 import ellpeck.actuallyadditions.util.Util;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.item.EntityItem;
@@ -73,5 +75,22 @@ public abstract class BlockContainerBase extends BlockContainer{
             return Container.calcRedstoneFromInventory((IInventory)tile);
         }
         return 0;
+    }
+
+    @Override
+    public void onNeighborBlockChange(World world, int x, int y, int z, Block block){
+        this.updateRedstoneState(world, x, y, z);
+    }
+
+    @Override
+    public void onBlockAdded(World world, int x, int y, int z){
+        this.updateRedstoneState(world, x, y, z);
+    }
+
+    private void updateRedstoneState(World world, int x, int y, int z){
+        TileEntity tile = world.getTileEntity(x, y, z);
+        if(tile instanceof TileEntityBase){
+            ((TileEntityBase)tile).setRedstonePowered(world.isBlockIndirectlyGettingPowered(x, y, z));
+        }
     }
 }

@@ -59,7 +59,7 @@ public class TileEntityFermentingBarrel extends TileEntityInventoryBase implemen
 
             if(this.oilTank.getFluidAmount() > 0){
                 WorldUtil.pushFluid(worldObj, xCoord, yCoord, zCoord, ForgeDirection.DOWN, this.oilTank);
-                if(!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)){
+                if(!this.isRedstonePowered){
                     WorldUtil.pushFluid(worldObj, xCoord, yCoord, zCoord, ForgeDirection.NORTH, this.oilTank);
                     WorldUtil.pushFluid(worldObj, xCoord, yCoord, zCoord, ForgeDirection.EAST, this.oilTank);
                     WorldUtil.pushFluid(worldObj, xCoord, yCoord, zCoord, ForgeDirection.SOUTH, this.oilTank);

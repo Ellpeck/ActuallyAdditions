@@ -401,7 +401,7 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
             this.initVars();
 
             //Is Block not powered by Redstone?
-            if(!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)){
+            if(!this.isRedstonePowered){
                 if(!(this.sideToPull == this.sideToPut && this.slotToPullStart == this.slotToPutStart && this.slotToPullEnd == this.slotToPutEnd)){
                     if(sideToPull != -1 && this.placeToPull instanceof IInventory){
                         this.pull();

@@ -51,7 +51,7 @@ public class TileEntityBreaker extends TileEntityInventoryBase{
     public void updateEntity(){
         super.updateEntity();
         if(!worldObj.isRemote){
-            if(!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)){
+            if(!this.isRedstonePowered){
                 if(this.currentTime > 0){
                     this.currentTime--;
                     if(this.currentTime <= 0){
