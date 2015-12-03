@@ -54,93 +54,92 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
                         ForgeDirection sideToManipulate = ForgeDirection.getOrientation(worldObj.getBlockMetadata(xCoord, yCoord, zCoord));
                         //Extract energy for shooting the laser itself too!
                         this.storage.extractEnergy(ENERGY_USE, false);
-                        if(this.storage.getEnergyStored() >= ENERGY_USE){
 
-                            //The Lens the Reconstructor currently has installed
-                            ReconstructorRecipeHandler.LensType currentLens = this.getCurrentLens();
-                            int distance = currentLens.getDistance();
-                            for(int i = 0; i < distance; i++){
-                                WorldPos hitBlock = WorldUtil.getCoordsFromSide(sideToManipulate, worldObj, xCoord, yCoord, zCoord, i);
+                        //The Lens the Reconstructor currently has installed
+                        ReconstructorRecipeHandler.LensType currentLens = this.getCurrentLens();
+                        int distance = currentLens.getDistance();
+                        for(int i = 0; i < distance; i++){
+                            WorldPos hitBlock = WorldUtil.getCoordsFromSide(sideToManipulate, worldObj, xCoord, yCoord, zCoord, i);
 
-                                float damage = currentLens == ReconstructorRecipeHandler.LensType.JUST_DAMAGE ? 20F : 5F;
-                                this.damagePlayer(hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), damage);
+                            float damage = 5F;
+                            if(currentLens == ReconstructorRecipeHandler.LensType.JUST_DAMAGE){
+                                int use = 150; //Per Block (because it doesn't only activate when something is hit like the other lenses!)
+                                if(this.storage.getEnergyStored() >= use){
+                                    damage = 20F;
+                                    this.storage.extractEnergy(use, false);
+                                }
+                            }
+                            this.damagePlayer(hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), damage);
 
-                                if(hitBlock != null){
-                                    if(!hitBlock.getBlock().isAir(hitBlock.getWorld(), hitBlock.getX(), hitBlock.getY(), hitBlock.getZ())){
-                                        this.shootLaser(hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), currentLens);
+                            if(hitBlock != null && !hitBlock.getBlock().isAir(hitBlock.getWorld(), hitBlock.getX(), hitBlock.getY(), hitBlock.getZ())){
+                                this.shootLaser(hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), currentLens);
 
-                                        //Detonation
-                                        if(currentLens == ReconstructorRecipeHandler.LensType.DETONATION){
-                                            int use = ENERGY_USE+500000;
-                                            if(this.storage.getEnergyStored() >= use){
-                                                this.worldObj.newExplosion(null, hitBlock.getX()+0.5, hitBlock.getY()+0.5, hitBlock.getZ()+0.5, 10F, true, true);
-                                                this.storage.extractEnergy(use, false);
-                                            }
-                                        }
-                                        //Conversion Recipes
-                                        else if(currentLens.hasRecipes){
-                                            int range = 2;
-
-                                            //Converting the Blocks
-                                            for(int reachX = -range; reachX < range+1; reachX++){
-                                                for(int reachZ = -range; reachZ < range+1; reachZ++){
-                                                    for(int reachY = -range; reachY < range+1; reachY++){
-                                                        if(this.storage.getEnergyStored() >= ENERGY_USE){
-                                                            WorldPos pos = new WorldPos(worldObj, hitBlock.getX()+reachX, hitBlock.getY()+reachY, hitBlock.getZ()+reachZ);
-                                                            ArrayList<ReconstructorRecipeHandler.Recipe> recipes = ReconstructorRecipeHandler.getRecipes(new ItemStack(pos.getBlock(), 1, pos.getMetadata()));
-                                                            for(ReconstructorRecipeHandler.Recipe recipe : recipes){
-                                                                if(recipe != null && this.storage.getEnergyStored() >= ENERGY_USE+recipe.energyUse && recipe.type == currentLens){
-                                                                    List<ItemStack> outputs = recipe.getOutputs();
-                                                                    if(outputs != null && !outputs.isEmpty()){
-                                                                        ItemStack output = outputs.get(0);
-                                                                        if(output.getItem() instanceof ItemBlock){
-                                                                            this.worldObj.playAuxSFX(2001, pos.getX(), pos.getY(), pos.getZ(), Block.getIdFromBlock(pos.getBlock())+(pos.getMetadata() << 12));
-                                                                            pos.setBlock(Block.getBlockFromItem(output.getItem()), output.getItemDamage(), 2);
-                                                                        }
-                                                                        else{
-                                                                            EntityItem item = new EntityItem(worldObj, pos.getX()+0.5, pos.getY()+0.5, pos.getZ()+0.5, output.copy());
-                                                                            worldObj.spawnEntityInWorld(item);
-                                                                        }
-                                                                        this.storage.extractEnergy(ENERGY_USE+recipe.energyUse, false);
-                                                                        break;
-                                                                    }
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-
-                                            //Converting the Items
-                                            ArrayList<EntityItem> items = (ArrayList<EntityItem>)worldObj.getEntitiesWithinAABB(EntityItem.class, AxisAlignedBB.getBoundingBox(hitBlock.getX()-range, hitBlock.getY()-range, hitBlock.getZ()-range, hitBlock.getX()+range, hitBlock.getY()+range, hitBlock.getZ()+range));
-                                            for(EntityItem item : items){
-                                                if(this.storage.getEnergyStored() >= ENERGY_USE){
-                                                    ItemStack stack = item.getEntityItem();
-                                                    if(stack != null){
-                                                        ArrayList<ReconstructorRecipeHandler.Recipe> recipes = ReconstructorRecipeHandler.getRecipes(stack);
-                                                        for(ReconstructorRecipeHandler.Recipe recipe : recipes){
-                                                            if(recipe != null && this.storage.getEnergyStored() >= ENERGY_USE+recipe.energyUse && recipe.type == currentLens){
-                                                                List<ItemStack> outputs = recipe.getOutputs();
-                                                                if(outputs != null && !outputs.isEmpty()){
-                                                                    ItemStack outputCopy = outputs.get(0).copy();
-                                                                    outputCopy.stackSize = stack.stackSize;
-                                                                    item.setEntityItemStack(outputCopy);
-
-                                                                    this.storage.extractEnergy(ENERGY_USE+recipe.energyUse, false);
-                                                                    break;
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                        break;
-                                    }
-                                    else if(i >= distance-1){
-                                        this.shootLaser(hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), currentLens);
+                                //Detonation
+                                if(currentLens == ReconstructorRecipeHandler.LensType.DETONATION){
+                                    int use = 500000;
+                                    if(this.storage.getEnergyStored() >= use){
+                                        this.worldObj.newExplosion(null, hitBlock.getX()+0.5, hitBlock.getY()+0.5, hitBlock.getZ()+0.5, 10F, true, true);
+                                        this.storage.extractEnergy(use, false);
                                     }
                                 }
+                                //Conversion Recipes
+                                else if(currentLens.hasRecipes){
+                                    int range = 2;
+
+                                    //Converting the Blocks
+                                    for(int reachX = -range; reachX < range+1; reachX++){
+                                        for(int reachZ = -range; reachZ < range+1; reachZ++){
+                                            for(int reachY = -range; reachY < range+1; reachY++){
+                                                WorldPos pos = new WorldPos(worldObj, hitBlock.getX()+reachX, hitBlock.getY()+reachY, hitBlock.getZ()+reachZ);
+                                                ArrayList<ReconstructorRecipeHandler.Recipe> recipes = ReconstructorRecipeHandler.getRecipes(new ItemStack(pos.getBlock(), 1, pos.getMetadata()));
+                                                for(ReconstructorRecipeHandler.Recipe recipe : recipes){
+                                                    if(recipe != null && this.storage.getEnergyStored() >= recipe.energyUse && recipe.type == currentLens){
+                                                        List<ItemStack> outputs = recipe.getOutputs();
+                                                        if(outputs != null && !outputs.isEmpty()){
+                                                            ItemStack output = outputs.get(0);
+                                                            if(output.getItem() instanceof ItemBlock){
+                                                                this.worldObj.playAuxSFX(2001, pos.getX(), pos.getY(), pos.getZ(), Block.getIdFromBlock(pos.getBlock())+(pos.getMetadata() << 12));
+                                                                pos.setBlock(Block.getBlockFromItem(output.getItem()), output.getItemDamage(), 2);
+                                                            }
+                                                            else{
+                                                                EntityItem item = new EntityItem(worldObj, pos.getX()+0.5, pos.getY()+0.5, pos.getZ()+0.5, output.copy());
+                                                                worldObj.spawnEntityInWorld(item);
+                                                            }
+                                                            this.storage.extractEnergy(recipe.energyUse, false);
+                                                            break;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    //Converting the Items
+                                    ArrayList<EntityItem> items = (ArrayList<EntityItem>)worldObj.getEntitiesWithinAABB(EntityItem.class, AxisAlignedBB.getBoundingBox(hitBlock.getX()-range, hitBlock.getY()-range, hitBlock.getZ()-range, hitBlock.getX()+range, hitBlock.getY()+range, hitBlock.getZ()+range));
+                                    for(EntityItem item : items){
+                                        ItemStack stack = item.getEntityItem();
+                                        if(stack != null){
+                                            ArrayList<ReconstructorRecipeHandler.Recipe> recipes = ReconstructorRecipeHandler.getRecipes(stack);
+                                            for(ReconstructorRecipeHandler.Recipe recipe : recipes){
+                                                if(recipe != null && this.storage.getEnergyStored() >= recipe.energyUse && recipe.type == currentLens){
+                                                    List<ItemStack> outputs = recipe.getOutputs();
+                                                    if(outputs != null && !outputs.isEmpty()){
+                                                        ItemStack outputCopy = outputs.get(0).copy();
+                                                        outputCopy.stackSize = stack.stackSize;
+                                                        item.setEntityItemStack(outputCopy);
+
+                                                        this.storage.extractEnergy(recipe.energyUse, false);
+                                                        break;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                break;
+                            }
+                            else if(i >= distance-1){
+                                this.shootLaser(hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), currentLens);
                             }
                         }
                     }
@@ -150,6 +149,7 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
                 }
             }
         }
+
     }
 
     public ReconstructorRecipeHandler.LensType getCurrentLens(){
