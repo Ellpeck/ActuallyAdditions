@@ -41,10 +41,9 @@ The two Brackets will have to get replaced with one of the parts of Information 
 - To the Compound, add an int with the name "maxAmount" that contains the maximum size of the ItemStack
 - Send the Message with "registerTreasureChestRecipe" as the [X] Argument, the Compound as the [Y] Argument.
 
-##### Reconstructor Recipes
+##### Reconstructor Recipes (For Recipes without a Lens)
 - Create an NBTTagCompound
 - To the Compound, add a String with the name "input" that is the Input's OreDictionary Name
 - To the Compound, add a String with the name "output" that is the Output's OreDictionary Name
 - To the Compound, add an int with the name "energyUse" that is the amount of RF used
-- To the Compound, add an int with the name "lensType" that contains the LensType's ID (found in LensType in ReconstructorRecipeHandler, the ID is the ordinal)
 - Send the Message with "registerReconstructorRecipe" as the [X] Argument, the Compound as the [Y] Argument.

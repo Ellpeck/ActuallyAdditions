@@ -15,7 +15,8 @@ import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ellpeck.actuallyadditions.recipe.ReconstructorRecipeHandler;
+import ellpeck.actuallyadditions.items.lens.Lens;
+import ellpeck.actuallyadditions.items.lens.Lenses;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.EntityReddustFX;
@@ -37,14 +38,14 @@ public class PacketAtomicReconstructor implements IMessage{
 
     }
 
-    public PacketAtomicReconstructor(int startX, int startY, int startZ, int endX, int endY, int endZ, ReconstructorRecipeHandler.LensType type){
+    public PacketAtomicReconstructor(int startX, int startY, int startZ, int endX, int endY, int endZ, Lens type){
         this.startX = startX;
         this.startY = startY;
         this.startZ = startZ;
         this.endX = endX;
         this.endY = endY;
         this.endZ = endZ;
-        this.lensTypeOrdinal = type.ordinal();
+        this.lensTypeOrdinal = Lenses.allLenses.indexOf(type);
     }
 
     @Override
@@ -84,7 +85,7 @@ public class PacketAtomicReconstructor implements IMessage{
 
                 for(int times = 0; times < 5; times++){
                     for(double i = 0; i <= 1; i += 1/(distance*8)){
-                        ReconstructorRecipeHandler.LensType type = ReconstructorRecipeHandler.LensType.values()[message.lensTypeOrdinal];
+                        Lens type = Lenses.allLenses.get(message.lensTypeOrdinal);
                         float[] color = type.getColor();
                         Minecraft.getMinecraft().effectRenderer.addEffect(new EntityReddustFX(world, (difX*i)+message.endX+0.5, (difY*i)+message.endY+0.5, (difZ*i)+message.endZ+0.5, 2F, color[0], color[1], color[2]));
                     }

@@ -1,5 +1,5 @@
 /*
- * This file ("AtomicReconstructorRecipeHandler.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("LensNoneRecipeHandler.java") is part of the Actually Additions Mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
  * http://github.com/Ellpeck/ActuallyAdditions/blob/master/README.md
@@ -8,10 +8,9 @@
  * © 2015 Ellpeck
  */
 
-package ellpeck.actuallyadditions.recipe;
+package ellpeck.actuallyadditions.items.lens;
 
 import ellpeck.actuallyadditions.blocks.InitBlocks;
-import ellpeck.actuallyadditions.blocks.metalists.TheColoredLampColors;
 import ellpeck.actuallyadditions.config.values.ConfigCrafting;
 import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.items.metalists.TheCrystals;
@@ -20,7 +19,6 @@ import ellpeck.actuallyadditions.util.ItemUtil;
 import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -28,7 +26,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class ReconstructorRecipeHandler{
+public class LensNoneRecipeHandler{
 
     public static ArrayList<Recipe> recipes = new ArrayList<Recipe>();
 
@@ -40,7 +38,6 @@ public class ReconstructorRecipeHandler{
     public static Recipe recipeExplosionLens;
     public static Recipe recipeDamageLens;
     public static Recipe recipeLeather;
-    public static ArrayList<Recipe> colorConversionRecipes = new ArrayList<Recipe>();
 
     public static void init(){
         //Crystal Blocks
@@ -94,48 +91,20 @@ public class ReconstructorRecipeHandler{
             recipeLeather = Util.GetRecipes.lastReconstructorRecipe();
             addRecipe(new ItemStack(Blocks.quartz_block), new ItemStack(InitBlocks.blockTestifiBucksWhiteWall), 10);
             recipeWhiteWall = Util.GetRecipes.lastReconstructorRecipe();
-            addRecipe(new ItemStack(Blocks.quartz_block), new ItemStack(InitBlocks.blockTestifiBucksGreenWall), 10, LensType.COLOR);
+            addRecipe(new ItemStack(Blocks.quartz_block, 1, 1), new ItemStack(InitBlocks.blockTestifiBucksGreenWall), 10);
             recipeGreenWall = Util.GetRecipes.lastReconstructorRecipe();
-
-            //Colors
-            for(int i = 0; i < TheColoredLampColors.values().length-1; i++){
-                addRecipe("dye"+TheColoredLampColors.values()[i].name, "dye"+TheColoredLampColors.values()[i+1].name, 2000, LensType.COLOR);
-                colorConversionRecipes.add(Util.GetRecipes.lastReconstructorRecipe());
-                addRecipe(new ItemStack(Blocks.wool, 1, i), new ItemStack(Blocks.wool, 1, i+1), 2000, LensType.COLOR);
-                colorConversionRecipes.add(Util.GetRecipes.lastReconstructorRecipe());
-                addRecipe(new ItemStack(Blocks.stained_hardened_clay, 1, i), new ItemStack(Blocks.stained_hardened_clay, 1, i+1), 2000, LensType.COLOR);
-                colorConversionRecipes.add(Util.GetRecipes.lastReconstructorRecipe());
-                addRecipe("blockGlass"+TheColoredLampColors.values()[i].name, "blockGlass"+TheColoredLampColors.values()[i+1].name, 2000, LensType.COLOR);
-                colorConversionRecipes.add(Util.GetRecipes.lastReconstructorRecipe());
-            }
-            addRecipe("dye"+TheColoredLampColors.values()[15].name, "dye"+TheColoredLampColors.values()[0].name, 2000, LensType.COLOR);
-            colorConversionRecipes.add(Util.GetRecipes.lastReconstructorRecipe());
-            addRecipe(new ItemStack(Blocks.wool, 1, 15), new ItemStack(Blocks.wool, 1, 0), 2000, LensType.COLOR);
-            colorConversionRecipes.add(Util.GetRecipes.lastReconstructorRecipe());
-            addRecipe(new ItemStack(Blocks.stained_hardened_clay, 1, 15), new ItemStack(Blocks.stained_hardened_clay, 1, 0), 2000, LensType.COLOR);
-            colorConversionRecipes.add(Util.GetRecipes.lastReconstructorRecipe());
-            addRecipe("blockGlass"+TheColoredLampColors.values()[15].name, "blockGlass"+TheColoredLampColors.values()[0].name, 2000, LensType.COLOR);
-            colorConversionRecipes.add(Util.GetRecipes.lastReconstructorRecipe());
         }
     }
 
     public static void addRecipe(ItemStack input, ItemStack output, int energyUse){
-        addRecipe(input, output, energyUse, LensType.NONE);
+        recipes.add(new Recipe(input, output, energyUse));
     }
 
-    public static void addRecipe(ItemStack input, ItemStack output, int energyUse, LensType type){
-        if(type.hasRecipes){
-            recipes.add(new Recipe(input, output, energyUse, type));
-        }
+    public static void addRecipe(String input, String output, int energyUse){
+        recipes.add(new Recipe(input, output, energyUse));
     }
 
-    public static void addRecipe(String input, String output, int energyUse, LensType type){
-        if(type.hasRecipes){
-            recipes.add(new Recipe(input, output, energyUse, type));
-        }
-    }
-
-    public static ArrayList<Recipe> getRecipes(ItemStack input){
+    public static ArrayList<Recipe> getRecipesFor(ItemStack input){
         ArrayList<Recipe> possibleRecipes = new ArrayList<Recipe>();
         for(Recipe recipe : recipes){
             if(ItemUtil.contains(recipe.getInputs(), input, true)){
@@ -145,82 +114,25 @@ public class ReconstructorRecipeHandler{
         return possibleRecipes;
     }
 
-    public enum LensType{
-
-        NONE(true),
-        COLOR(true),
-        DETONATION(false),
-        JUST_DAMAGE(false);
-
-        //Thanks to xdjackiexd for this, as I couldn't be bothered
-        private static final float[][] possibleColorLensColors = {
-                {158F, 43F, 39F}, //Red
-                {234F, 126F, 53F}, //Orange
-                {194F, 181F, 28F}, //Yellow
-                {57F, 186F, 46F}, //Lime Green
-                {54F, 75F, 24F}, //Green
-                {99F, 135F, 210F}, //Light Blue
-                {38F, 113F, 145F}, //Cyan
-                {37F, 49F, 147F}, //Blue
-                {126F, 52F, 191F}, //Purple
-                {190F, 73F, 201F}, //Magenta
-                {217F, 129F, 153F}, //Pink
-                {86F, 51F, 28F}, //Brown
-        };
-        public ItemStack lens;
-        public boolean hasRecipes;
-
-        LensType(boolean hasRecipes){
-            this.hasRecipes = hasRecipes;
-        }
-
-        public float[] getColor(){
-            if(this == COLOR){
-                float[] colors = possibleColorLensColors[Util.RANDOM.nextInt(possibleColorLensColors.length)];
-                return new float[]{colors[0]/255F, colors[1]/255F, colors[2]/255F};
-            }
-            else if(this == DETONATION){
-                return new float[]{158F/255F, 43F/255F, 39F/255F};
-            }
-            else if(this == JUST_DAMAGE){
-                return new float[]{188F/255F, 222F/255F, 1F};
-            }
-            else{
-                return new float[]{27F/255F, 109F/255F, 1F};
-            }
-        }
-
-        public void setLens(Item lens){
-            this.lens = new ItemStack(lens);
-        }
-
-        public int getDistance(){
-            return this == DETONATION ? 30 : (this == JUST_DAMAGE ? 15 : 10);
-        }
-    }
-
     public static class Recipe{
 
         private String input;
         private String output;
         public int energyUse;
-        public LensType type;
 
         private ItemStack inputStack;
         private ItemStack outputStack;
 
-        public Recipe(ItemStack input, ItemStack output, int energyUse, LensType type){
+        public Recipe(ItemStack input, ItemStack output, int energyUse){
             this.inputStack = input;
             this.outputStack = output;
             this.energyUse = energyUse;
-            this.type = type;
         }
 
-        public Recipe(String input, String output, int energyUse, LensType type){
+        public Recipe(String input, String output, int energyUse){
             this.input = input;
             this.output = output;
             this.energyUse = energyUse;
-            this.type = type;
         }
 
         public List<ItemStack> getOutputs(){
@@ -255,5 +167,4 @@ public class ReconstructorRecipeHandler{
             return stacks;
         }
     }
-
 }

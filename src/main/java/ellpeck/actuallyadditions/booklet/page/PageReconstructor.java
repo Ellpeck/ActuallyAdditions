@@ -14,8 +14,8 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.blocks.InitBlocks;
 import ellpeck.actuallyadditions.booklet.GuiBooklet;
+import ellpeck.actuallyadditions.items.lens.LensNoneRecipeHandler;
 import ellpeck.actuallyadditions.proxy.ClientProxy;
-import ellpeck.actuallyadditions.recipe.ReconstructorRecipeHandler;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
 import ellpeck.actuallyadditions.util.Util;
@@ -27,14 +27,14 @@ import java.util.List;
 
 public class PageReconstructor extends BookletPage{
 
-    private ReconstructorRecipeHandler.Recipe[] recipes;
+    private LensNoneRecipeHandler.Recipe[] recipes;
     private int recipePos;
 
-    public PageReconstructor(int id, ArrayList<ReconstructorRecipeHandler.Recipe> recipes){
-        this(id, recipes.toArray(new ReconstructorRecipeHandler.Recipe[recipes.size()]));
+    public PageReconstructor(int id, ArrayList<LensNoneRecipeHandler.Recipe> recipes){
+        this(id, recipes.toArray(new LensNoneRecipeHandler.Recipe[recipes.size()]));
     }
 
-    public PageReconstructor(int id, ReconstructorRecipeHandler.Recipe... recipes){
+    public PageReconstructor(int id, LensNoneRecipeHandler.Recipe... recipes){
         super(id);
         this.recipes = recipes;
         this.addToPagesWithItemStackData();
@@ -44,7 +44,7 @@ public class PageReconstructor extends BookletPage{
     public ItemStack[] getItemStacksForPage(){
         if(this.recipes != null){
             ArrayList<ItemStack> stacks = new ArrayList<ItemStack>();
-            for(ReconstructorRecipeHandler.Recipe recipe : this.recipes){
+            for(LensNoneRecipeHandler.Recipe recipe : this.recipes){
                 if(recipe != null){
                     stacks.addAll(recipe.getOutputs());
                 }
@@ -67,18 +67,13 @@ public class PageReconstructor extends BookletPage{
     @Override
     @SideOnly(Side.CLIENT)
     public void render(GuiBooklet gui, int mouseX, int mouseY, int ticksElapsed, boolean mousePressed){
-        ReconstructorRecipeHandler.Recipe recipe = this.recipes[this.recipePos];
+        LensNoneRecipeHandler.Recipe recipe = this.recipes[this.recipePos];
         if(recipe == null){
             gui.mc.fontRenderer.drawSplitString(EnumChatFormatting.DARK_RED+StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".recipeDisabled"), gui.guiLeft+14, gui.guiTop+15, 115, 0);
         }
         else{
             String strg = "Atomic Reconstructor";
             gui.mc.fontRenderer.drawString(strg, gui.guiLeft+gui.xSize/2-gui.mc.fontRenderer.getStringWidth(strg)/2, gui.guiTop+10, 0);
-
-            //Lens
-            ItemStack lens = recipe.type.lens;
-            strg = lens == null ? StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".noLens") : lens.getItem().getItemStackDisplayName(lens);
-            gui.mc.fontRenderer.drawString(strg, gui.guiLeft+gui.xSize/2-gui.mc.fontRenderer.getStringWidth(strg)/2, gui.guiTop+75, 0);
         }
 
         String text = gui.currentPage.getText();

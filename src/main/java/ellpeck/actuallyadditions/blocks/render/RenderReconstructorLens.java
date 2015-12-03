@@ -10,7 +10,7 @@
 
 package ellpeck.actuallyadditions.blocks.render;
 
-import ellpeck.actuallyadditions.items.IReconstructorLens;
+import ellpeck.actuallyadditions.items.lens.ItemLens;
 import ellpeck.actuallyadditions.tile.TileEntityAtomicReconstructor;
 import ellpeck.actuallyadditions.util.AssetUtil;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -27,7 +27,7 @@ public class RenderReconstructorLens extends TileEntitySpecialRenderer{
         }
         ItemStack stack = ((TileEntityAtomicReconstructor)tile).getStackInSlot(0);
 
-        if(stack != null && stack.getItem() instanceof IReconstructorLens){
+        if(stack != null && stack.getItem() instanceof ItemLens){
             GL11.glPushMatrix();
             GL11.glTranslatef((float)x+0.5F, (float)y-0.5F, (float)z+0.5F);
             GL11.glRotatef(180F, 0.0F, 0.0F, 1.0F);

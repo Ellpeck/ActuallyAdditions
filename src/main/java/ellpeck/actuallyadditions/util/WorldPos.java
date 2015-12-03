@@ -64,6 +64,12 @@ public class WorldPos{
         return this.getWorld() != null ? this.getWorld().getBlockMetadata(this.x, this.y, this.z) : 0;
     }
 
+    public void setMetadata(int meta, int flag){
+        if(this.getWorld() != null){
+            this.getWorld().setBlockMetadataWithNotify(this.x, this.y, this.z, meta, flag);
+        }
+    }
+
     public boolean isEqual(WorldPos pos){
         return pos != null && this.x == pos.getX() && this.y == pos.getY() && this.z == pos.getZ() && this.getWorld() == pos.getWorld();
     }

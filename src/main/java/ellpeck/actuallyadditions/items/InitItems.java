@@ -12,11 +12,12 @@ package ellpeck.actuallyadditions.items;
 
 import ellpeck.actuallyadditions.blocks.InitBlocks;
 import ellpeck.actuallyadditions.items.base.*;
+import ellpeck.actuallyadditions.items.lens.ItemLens;
+import ellpeck.actuallyadditions.items.lens.Lenses;
 import ellpeck.actuallyadditions.items.metalists.TheFoods;
 import ellpeck.actuallyadditions.items.metalists.TheMiscItems;
 import ellpeck.actuallyadditions.material.InitArmorMaterials;
 import ellpeck.actuallyadditions.material.InitToolMaterials;
-import ellpeck.actuallyadditions.recipe.ReconstructorRecipeHandler;
 import ellpeck.actuallyadditions.util.CompatUtil;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.init.Items;
@@ -136,9 +137,9 @@ public class InitItems{
     public static void init(){
         ModUtil.LOGGER.info("Initializing Items...");
 
-        itemColorLens = new ItemLens("itemColorLens", ReconstructorRecipeHandler.LensType.COLOR);
-        itemExplosionLens = new ItemLens("itemExplosionLens", ReconstructorRecipeHandler.LensType.DETONATION);
-        itemDamageLens = new ItemLens("itemDamageLens", ReconstructorRecipeHandler.LensType.JUST_DAMAGE);
+        itemColorLens = new ItemLens("itemColorLens", Lenses.LENS_COLOR);
+        itemExplosionLens = new ItemLens("itemExplosionLens", Lenses.LENS_DETONATION);
+        itemDamageLens = new ItemLens("itemDamageLens", Lenses.LENS_DEATH);
         itemCrystal = new ItemCrystal("itemCrystal");
         itemLaserWrench = new ItemLaserWrench("itemLaserWrench");
         itemChestToCrateUpgrade = new ItemChestToCrateUpgrade("itemChestToCrateUpgrade");

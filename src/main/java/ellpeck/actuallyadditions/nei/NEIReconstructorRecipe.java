@@ -17,7 +17,7 @@ import codechicken.nei.recipe.TemplateRecipeHandler;
 import ellpeck.actuallyadditions.blocks.InitBlocks;
 import ellpeck.actuallyadditions.booklet.BookletUtils;
 import ellpeck.actuallyadditions.booklet.page.BookletPage;
-import ellpeck.actuallyadditions.recipe.ReconstructorRecipeHandler;
+import ellpeck.actuallyadditions.items.lens.LensNoneRecipeHandler;
 import ellpeck.actuallyadditions.util.ItemUtil;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
@@ -58,8 +58,8 @@ public class NEIReconstructorRecipe extends TemplateRecipeHandler implements INE
     @Override
     public void loadCraftingRecipes(String outputId, Object... results){
         if(outputId.equals(NAME) && getClass() == NEIReconstructorRecipe.class){
-            ArrayList<ReconstructorRecipeHandler.Recipe> recipes = ReconstructorRecipeHandler.recipes;
-            for(ReconstructorRecipeHandler.Recipe recipe : recipes){
+            ArrayList<LensNoneRecipeHandler.Recipe> recipes = LensNoneRecipeHandler.recipes;
+            for(LensNoneRecipeHandler.Recipe recipe : recipes){
                 arecipes.add(new CachedReconstructorRecipe(recipe));
             }
         }
@@ -70,8 +70,8 @@ public class NEIReconstructorRecipe extends TemplateRecipeHandler implements INE
 
     @Override
     public void loadCraftingRecipes(ItemStack result){
-        ArrayList<ReconstructorRecipeHandler.Recipe> recipes = ReconstructorRecipeHandler.recipes;
-        for(ReconstructorRecipeHandler.Recipe recipe : recipes){
+        ArrayList<LensNoneRecipeHandler.Recipe> recipes = LensNoneRecipeHandler.recipes;
+        for(LensNoneRecipeHandler.Recipe recipe : recipes){
             if(ItemUtil.contains(recipe.getOutputs(), result, true)){
                 arecipes.add(new CachedReconstructorRecipe(recipe));
             }
@@ -80,8 +80,8 @@ public class NEIReconstructorRecipe extends TemplateRecipeHandler implements INE
 
     @Override
     public void loadUsageRecipes(ItemStack ingredient){
-        ArrayList<ReconstructorRecipeHandler.Recipe> recipes = ReconstructorRecipeHandler.recipes;
-        for(ReconstructorRecipeHandler.Recipe recipe : recipes){
+        ArrayList<LensNoneRecipeHandler.Recipe> recipes = LensNoneRecipeHandler.recipes;
+        for(LensNoneRecipeHandler.Recipe recipe : recipes){
             if(ItemUtil.contains(recipe.getInputs(), ingredient, true)){
                 CachedReconstructorRecipe theRecipe = new CachedReconstructorRecipe(recipe);
                 theRecipe.setIngredientPermutation(Collections.singletonList(theRecipe.input), ingredient);
@@ -117,9 +117,6 @@ public class NEIReconstructorRecipe extends TemplateRecipeHandler implements INE
         if(Minecraft.getMinecraft().currentScreen != null){
             BookletPage.renderItem(Minecraft.getMinecraft().currentScreen, new ItemStack(InitBlocks.blockAtomicReconstructor), 32+34, 19, 1.0F);
         }
-
-        CachedReconstructorRecipe cache = (CachedReconstructorRecipe)this.arecipes.get(recipe);
-        GuiDraw.drawString(cache.lens == null ? StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".noLens") : cache.lens.getItem().getItemStackDisplayName(cache.lens), 10, 45, StringUtil.DECIMAL_COLOR_GRAY_TEXT, false);
     }
 
     @Override
@@ -131,12 +128,10 @@ public class NEIReconstructorRecipe extends TemplateRecipeHandler implements INE
 
         public PositionedStack result;
         public PositionedStack input;
-        public ItemStack lens;
 
-        public CachedReconstructorRecipe(ReconstructorRecipeHandler.Recipe recipe){
+        public CachedReconstructorRecipe(LensNoneRecipeHandler.Recipe recipe){
             this.result = new PositionedStack(recipe.getOutputs(), 67+32, 19);
             this.input = new PositionedStack(recipe.getInputs(), 5+32, 19);
-            this.lens = recipe.type.lens;
         }
 
         @Override

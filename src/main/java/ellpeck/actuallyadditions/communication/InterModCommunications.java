@@ -12,9 +12,9 @@ package ellpeck.actuallyadditions.communication;
 
 import cpw.mods.fml.common.event.FMLInterModComms;
 import ellpeck.actuallyadditions.items.ItemCoffee;
+import ellpeck.actuallyadditions.items.lens.LensNoneRecipeHandler;
 import ellpeck.actuallyadditions.recipe.CrusherRecipeRegistry;
 import ellpeck.actuallyadditions.recipe.HairyBallHandler;
-import ellpeck.actuallyadditions.recipe.ReconstructorRecipeHandler;
 import ellpeck.actuallyadditions.recipe.TreasureChestHandler;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.item.ItemStack;
@@ -108,20 +108,13 @@ public class InterModCommunications{
                     String input = compound.getString("input");
                     String output = compound.getString("output");
                     int energyUse = compound.getInteger("energyUse");
-                    int lensType = compound.getInteger("lensType");
 
-                    if(ReconstructorRecipeHandler.LensType.values().length > lensType && input != null && output != null){
-                        ReconstructorRecipeHandler.LensType type = ReconstructorRecipeHandler.LensType.values()[lensType];
-                        if(type.hasRecipes){
-                            ReconstructorRecipeHandler.addRecipe(input, output, energyUse, type);
-                            ModUtil.LOGGER.info("Reconstructor Recipe that was sent from Mod "+message.getSender()+" has been registered successfully: "+input+" -> "+output+" @ "+energyUse+" with LensType "+lensType);
-                        }
-                        else{
-                            ModUtil.LOGGER.error("Reconstructor Recipe that was sent from Mod "+message.getSender()+" could not be registered: It's trying to register for a Lens Type ("+lensType+") that can't have recipes added!");
-                        }
+                    if(input != null && output != null){
+                        LensNoneRecipeHandler.addRecipe(input, output, energyUse);
+                        ModUtil.LOGGER.info("Reconstructor Recipe that was sent from Mod "+message.getSender()+" has been registered successfully: "+input+" -> "+output+" @ "+energyUse+".");
                     }
                     else{
-                        ModUtil.LOGGER.error("Reconstructor Recipe that was sent from Mod "+message.getSender()+" could not be registered: It's missing an Output, an Input or a LensType!");
+                        ModUtil.LOGGER.error("Reconstructor Recipe that was sent from Mod "+message.getSender()+" could not be registered: It's missing an Input or an Output!");
                     }
                 }
             }

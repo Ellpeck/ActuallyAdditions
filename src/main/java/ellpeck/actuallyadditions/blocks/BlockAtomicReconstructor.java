@@ -13,7 +13,7 @@ package ellpeck.actuallyadditions.blocks;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.blocks.base.BlockContainerBase;
-import ellpeck.actuallyadditions.items.IReconstructorLens;
+import ellpeck.actuallyadditions.items.lens.ItemLens;
 import ellpeck.actuallyadditions.tile.TileEntityAtomicReconstructor;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.block.Block;
@@ -82,7 +82,7 @@ public class BlockAtomicReconstructor extends BlockContainerBase{
                 if(!player.isSneaking()){
                     ItemStack heldItem = player.getCurrentEquippedItem();
                     if(heldItem != null){
-                        if(heldItem.getItem() instanceof IReconstructorLens && reconstructor.getStackInSlot(0) == null){
+                        if(heldItem.getItem() instanceof ItemLens && reconstructor.getStackInSlot(0) == null){
                             ItemStack toPut = heldItem.copy();
                             toPut.stackSize = 1;
                             reconstructor.setInventorySlotContents(0, toPut);

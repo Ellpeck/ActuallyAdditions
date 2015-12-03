@@ -8,26 +8,25 @@
  * © 2015 Ellpeck
  */
 
-package ellpeck.actuallyadditions.items;
+package ellpeck.actuallyadditions.items.lens;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.items.base.ItemBase;
-import ellpeck.actuallyadditions.recipe.ReconstructorRecipeHandler;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 
-public class ItemLens extends ItemBase implements IReconstructorLens{
+public class ItemLens extends ItemBase{
 
-    private ReconstructorRecipeHandler.LensType type;
+    private Lens type;
 
-    public ItemLens(String name, ReconstructorRecipeHandler.LensType type){
+    public ItemLens(String name, Lens type){
         super(name);
         this.type = type;
-        this.type.setLens(this);
+        this.type.setLensItem(this);
         this.setMaxStackSize(1);
     }
 
@@ -48,8 +47,7 @@ public class ItemLens extends ItemBase implements IReconstructorLens{
         return this.itemIcon;
     }
 
-    @Override
-    public ReconstructorRecipeHandler.LensType getLensType(){
+    public Lens getLensType(){
         return this.type;
     }
 }

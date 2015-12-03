@@ -11,8 +11,8 @@
 package ellpeck.actuallyadditions.util;
 
 import cpw.mods.fml.common.FMLCommonHandler;
+import ellpeck.actuallyadditions.items.lens.LensNoneRecipeHandler;
 import ellpeck.actuallyadditions.recipe.CrusherRecipeRegistry;
-import ellpeck.actuallyadditions.recipe.ReconstructorRecipeHandler;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.dispenser.BehaviorDefaultDispenseItem;
 import net.minecraft.item.EnumRarity;
@@ -66,8 +66,8 @@ public class Util{
 
     public static class GetRecipes{
 
-        public static ReconstructorRecipeHandler.Recipe lastReconstructorRecipe(){
-            ArrayList<ReconstructorRecipeHandler.Recipe> list = ReconstructorRecipeHandler.recipes;
+        public static LensNoneRecipeHandler.Recipe lastReconstructorRecipe(){
+            ArrayList<LensNoneRecipeHandler.Recipe> list = LensNoneRecipeHandler.recipes;
             return list.get(list.size()-1);
         }
 
