@@ -126,7 +126,7 @@ public class BlockColoredLamp extends BlockBase{
     public void registerBlockIcons(IIconRegister iconReg){
         this.textures = new IIcon[allLampTypes.length];
         for(int i = 0; i < allLampTypes.length; i++){
-            this.textures[i] = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName()+allLampTypes[i].name+(isOn ? "On" : ""));
+            this.textures[i] = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName()+allLampTypes[i].name);
         }
     }
 
