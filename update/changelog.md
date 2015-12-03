@@ -1,3 +1,23 @@
+# 1.7.10-r9
+- Added Explosion Lens
+- Added Lens of Certain Death
+- Lenses now render on the Atomic Reconstructor
+- Rotten Flesh -> Leather in Atomic Reconstructor
+- Added Colorable Drills
+- Added Green Dye made from fern/grass in a Crusher
+- DUH DUH DUH DUUUH
+- Made Laser Relays smaller and gave them a proper bounding box (stop moaning, jackie!)
+- Removed unnecessary things from the OreDict that were added just for crafting recipes
+- Fixed booklet stand not working on servers (Kind of defeated its purpose. Maybe I should've tested it before.)
+- Made booklet stand actually be wooden (Harvestable with axe & wood sounds)
+- Fixed a bug where sometimes NEI would crash when looking at recipes before opening the booklet for the first time in a world
+- Fix some bugs with the NEI Integration of the Booklet
+- Added page display to the NEI Integration of the Booklet
+- Fixed bug with Villager trade handler (how did that even happen in the first place?)
+- Reorganized the booklet a bit
+- Removed lots of config options (yes, really.)
+- Greenhouse Glass Performance improvement
+
 # 1.7.10-r8
 - Added Lens Mechanic for the Reconstructor
 - Added Color Cycling Recipes for wool, stained clay and stained glass for the Reconstructor
