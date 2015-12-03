@@ -12,6 +12,7 @@ package ellpeck.actuallyadditions.items;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import ellpeck.actuallyadditions.items.base.ItemEnergy;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -29,8 +30,8 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 public class ItemTeleStaff extends ItemEnergy{
 
-    public ItemTeleStaff(){
-        super(500000, 10000);
+    public ItemTeleStaff(String name){
+        super(500000, 10000, name);
     }
 
     @Override
@@ -82,12 +83,7 @@ public class ItemTeleStaff extends ItemEnergy{
     @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister iconReg){
-        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
-    }
-
-    @Override
-    public String getName(){
-        return "itemTeleStaff";
+        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName());
     }
 
     @Override

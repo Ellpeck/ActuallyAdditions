@@ -12,22 +12,20 @@ package ellpeck.actuallyadditions.items;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import ellpeck.actuallyadditions.items.base.ItemBase;
 import ellpeck.actuallyadditions.recipe.ReconstructorRecipeHandler;
-import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.item.EnumRarity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 
-public class ItemLens extends Item implements IActAddItemOrBlock, IReconstructorLens{
+public class ItemLens extends ItemBase implements IReconstructorLens{
 
-    private String name;
     private ReconstructorRecipeHandler.LensType type;
 
     public ItemLens(String name, ReconstructorRecipeHandler.LensType type){
-        this.name = name;
+        super(name);
         this.type = type;
         this.type.setLens(this);
         this.setMaxStackSize(1);
@@ -41,18 +39,13 @@ public class ItemLens extends Item implements IActAddItemOrBlock, IReconstructor
     @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister iconReg){
-        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
+        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName());
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public IIcon getIcon(ItemStack stack, int pass){
         return this.itemIcon;
-    }
-
-    @Override
-    public String getName(){
-        return this.name;
     }
 
     @Override

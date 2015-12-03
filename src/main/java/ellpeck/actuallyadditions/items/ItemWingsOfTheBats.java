@@ -12,18 +12,17 @@ package ellpeck.actuallyadditions.items;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
+import ellpeck.actuallyadditions.items.base.ItemBase;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 
 import java.util.ArrayList;
 
-public class ItemWingsOfTheBats extends Item implements IActAddItemOrBlock{
+public class ItemWingsOfTheBats extends ItemBase{
 
     /**
      * A List containing all of the Players that can currently fly
@@ -37,7 +36,8 @@ public class ItemWingsOfTheBats extends Item implements IActAddItemOrBlock{
      */
     public static ArrayList<String> wingedPlayers = new ArrayList<String>();
 
-    public ItemWingsOfTheBats(){
+    public ItemWingsOfTheBats(String name){
+        super(name);
         this.setMaxStackSize(1);
     }
 
@@ -100,17 +100,12 @@ public class ItemWingsOfTheBats extends Item implements IActAddItemOrBlock{
     @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister iconReg){
-        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
+        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName());
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public IIcon getIcon(ItemStack stack, int pass){
         return this.itemIcon;
-    }
-
-    @Override
-    public String getName(){
-        return "itemWingsOfTheBats";
     }
 }

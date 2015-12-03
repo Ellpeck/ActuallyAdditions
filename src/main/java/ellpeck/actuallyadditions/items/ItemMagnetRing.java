@@ -12,6 +12,7 @@ package ellpeck.actuallyadditions.items;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import ellpeck.actuallyadditions.items.base.ItemEnergy;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
@@ -28,8 +29,8 @@ import java.util.ArrayList;
 
 public class ItemMagnetRing extends ItemEnergy{
 
-    public ItemMagnetRing(){
-        super(30000000, 5000);
+    public ItemMagnetRing(String name){
+        super(30000000, 5000, name);
     }
 
     @SuppressWarnings("unchecked")
@@ -72,17 +73,12 @@ public class ItemMagnetRing extends ItemEnergy{
     @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister iconReg){
-        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
+        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName());
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public IIcon getIcon(ItemStack stack, int pass){
         return this.itemIcon;
-    }
-
-    @Override
-    public String getName(){
-        return "itemSuctionRing";
     }
 }

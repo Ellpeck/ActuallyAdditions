@@ -44,12 +44,12 @@ public class NEICrusherRecipe extends TemplateRecipeHandler implements INEIRecip
 
     @Override
     public void loadTransferRects(){
-        transferRects.add(new RecipeTransferRect(new Rectangle(80, 40, 24, 22), this.getName()));
+        transferRects.add(new RecipeTransferRect(new Rectangle(80, 40, 24, 22), this.getBaseName()));
     }
 
     @Override
     public void loadCraftingRecipes(String outputId, Object... results){
-        if(outputId.equals(this.getName()) && (getClass() == NEICrusherRecipe.class || getClass() == Double.class)){
+        if(outputId.equals(this.getBaseName()) && (getClass() == NEICrusherRecipe.class || getClass() == Double.class)){
             for(CrusherRecipeRegistry.CrusherRecipe recipe : CrusherRecipeRegistry.recipes){
                 arecipes.add(new CachedCrush(recipe.getRecipeInputs(), recipe.getRecipeOutputOnes(), recipe.getRecipeOutputTwos(), recipe.outputTwoChance, this));
             }
@@ -86,7 +86,7 @@ public class NEICrusherRecipe extends TemplateRecipeHandler implements INEIRecip
 
     @Override
     public String getOverlayIdentifier(){
-        return this.getName();
+        return this.getBaseName();
     }
 
     @Override
@@ -121,13 +121,13 @@ public class NEICrusherRecipe extends TemplateRecipeHandler implements INEIRecip
         }
     }
 
-    protected String getName(){
+    protected String getBaseName(){
         return "actuallyadditions."+(this instanceof Double ? "crushingDouble" : "crushing");
     }
 
     @Override
     public String getRecipeName(){
-        return StringUtil.localize("container.nei."+this.getName()+".name");
+        return StringUtil.localize("container.nei."+this.getBaseName()+".name");
     }
 
     public static class Double extends NEICrusherRecipe{
@@ -139,8 +139,8 @@ public class NEICrusherRecipe extends TemplateRecipeHandler implements INEIRecip
 
         @Override
         public void loadTransferRects(){
-            transferRects.add(new RecipeTransferRect(new Rectangle(51, 40, 24, 22), this.getName()));
-            transferRects.add(new RecipeTransferRect(new Rectangle(101, 40, 24, 22), this.getName()));
+            transferRects.add(new RecipeTransferRect(new Rectangle(51, 40, 24, 22), this.getBaseName()));
+            transferRects.add(new RecipeTransferRect(new Rectangle(101, 40, 24, 22), this.getBaseName()));
         }
 
         @Override

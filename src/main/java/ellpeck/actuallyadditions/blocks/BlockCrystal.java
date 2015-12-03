@@ -12,9 +12,9 @@ package ellpeck.actuallyadditions.blocks;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ellpeck.actuallyadditions.items.ItemBlockBase;
+import ellpeck.actuallyadditions.blocks.base.BlockBase;
+import ellpeck.actuallyadditions.blocks.base.ItemBlockBase;
 import ellpeck.actuallyadditions.items.metalists.TheCrystals;
-import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
 import net.minecraft.block.Block;
@@ -29,12 +29,12 @@ import net.minecraft.world.IBlockAccess;
 
 import java.util.List;
 
-public class BlockCrystal extends Block implements IActAddItemOrBlock{
+public class BlockCrystal extends BlockBase{
 
     public static final TheCrystals[] allCrystals = TheCrystals.values();
 
-    public BlockCrystal(){
-        super(Material.rock);
+    public BlockCrystal(String name){
+        super(Material.rock, name);
         this.setHardness(1.5F);
         this.setResistance(10.0F);
         this.setHarvestLevel("pickaxe", 1);
@@ -74,17 +74,17 @@ public class BlockCrystal extends Block implements IActAddItemOrBlock{
     @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconReg){
-        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
-    }
-
-    @Override
-    public String getName(){
-        return "blockCrystal";
+        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName());
     }
 
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return stack.getItemDamage() >= allCrystals.length ? EnumRarity.common : allCrystals[stack.getItemDamage()].rarity;
+    }
+
+    @Override
+    public Class<? extends ItemBlockBase> getItemBlock(){
+        return TheItemBlock.class;
     }
 
     public static class TheItemBlock extends ItemBlockBase{
@@ -98,17 +98,6 @@ public class BlockCrystal extends Block implements IActAddItemOrBlock{
         @Override
         public String getUnlocalizedName(ItemStack stack){
             return stack.getItemDamage() >= allCrystals.length ? StringUtil.BUGGED_ITEM_NAME : this.getUnlocalizedName()+allCrystals[stack.getItemDamage()].name;
-        }
-
-        @Override
-        public int getMetadata(int damage){
-            return damage;
-        }
-
-        @Override
-        public EnumRarity getRarity(ItemStack stack){
-            EnumRarity rarity = ((IActAddItemOrBlock)this.field_150939_a).getRarity(stack);
-            return rarity == null ? EnumRarity.common : rarity;
         }
     }
 }

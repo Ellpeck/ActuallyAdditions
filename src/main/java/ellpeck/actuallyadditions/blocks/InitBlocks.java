@@ -10,8 +10,11 @@
 
 package ellpeck.actuallyadditions.blocks;
 
+import ellpeck.actuallyadditions.blocks.base.BlockFluidFlowing;
+import ellpeck.actuallyadditions.blocks.base.BlockPlant;
+import ellpeck.actuallyadditions.blocks.base.BlockStair;
+import ellpeck.actuallyadditions.blocks.base.BlockWallAA;
 import ellpeck.actuallyadditions.config.values.ConfigBoolValues;
-import ellpeck.actuallyadditions.util.BlockUtil;
 import ellpeck.actuallyadditions.util.CompatUtil;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.block.Block;
@@ -109,180 +112,70 @@ public class InitBlocks{
     public static void init(){
         ModUtil.LOGGER.info("Initializing Blocks...");
 
-        blockBookletStand = new BlockBookletStand();
-        BlockUtil.register(blockBookletStand);
-
-        blockAtomicReconstructor = new BlockAtomicReconstructor();
-        BlockUtil.register(blockAtomicReconstructor);
-
-        blockCrystal = new BlockCrystal();
-        BlockUtil.register(blockCrystal, BlockCrystal.TheItemBlock.class);
-
-        blockBlackLotus = new BlockBlackLotus();
-        BlockUtil.register(blockBlackLotus);
-
-        blockLaserRelay = new BlockLaserRelay();
-        BlockUtil.register(blockLaserRelay);
-
-        blockRangedCollector = new BlockRangedCollector();
-        BlockUtil.register(blockRangedCollector);
-
-        blockDirectionalBreaker = new BlockDirectionalBreaker();
-        BlockUtil.register(blockDirectionalBreaker);
-
-        blockLeafGenerator = new BlockLeafGenerator();
-        BlockUtil.register(blockLeafGenerator);
-
-        blockSmileyCloud = new BlockSmileyCloud();
-        BlockUtil.register(blockSmileyCloud);
-
-        blockXPSolidifier = new BlockXPSolidifier();
-        BlockUtil.register(blockXPSolidifier);
-
+        blockBookletStand = new BlockBookletStand("blockBookStand");
+        blockAtomicReconstructor = new BlockAtomicReconstructor("blockAtomicReconstructor");
+        blockCrystal = new BlockCrystal("blockCrystal");
+        blockBlackLotus = new BlockBlackLotus("blockBlackLotus");
+        blockLaserRelay = new BlockLaserRelay("blockLaserRelay");
+        blockRangedCollector = new BlockRangedCollector("blockRangedCollector");
+        blockDirectionalBreaker = new BlockDirectionalBreaker("blockDirectionalBreaker");
+        blockLeafGenerator = new BlockLeafGenerator("blockLeafGenerator");
+        blockSmileyCloud = new BlockSmileyCloud("blockSmileyCloud");
+        blockXPSolidifier = new BlockXPSolidifier("blockXPSolidifier");
         blockTestifiBucksGreenWall = new BlockGeneric("blockTestifiBucksGreenWall");
-        BlockUtil.register(blockTestifiBucksGreenWall);
         blockTestifiBucksWhiteWall = new BlockGeneric("blockTestifiBucksWhiteWall");
-        BlockUtil.register(blockTestifiBucksWhiteWall);
         blockTestifiBucksGreenStairs = new BlockStair(blockTestifiBucksGreenWall, "blockTestifiBucksGreenStairs");
-        BlockUtil.register(blockTestifiBucksGreenStairs);
         blockTestifiBucksWhiteStairs = new BlockStair(blockTestifiBucksWhiteWall, "blockTestifiBucksWhiteStairs");
-        BlockUtil.register(blockTestifiBucksWhiteStairs);
         blockTestifiBucksGreenSlab = new BlockSlabs("blockTestifiBucksGreenSlab", blockTestifiBucksGreenWall);
-        BlockUtil.register(blockTestifiBucksGreenSlab, BlockSlabs.TheItemBlock.class);
         blockTestifiBucksWhiteSlab = new BlockSlabs("blockTestifiBucksWhiteSlab", blockTestifiBucksWhiteWall);
-        BlockUtil.register(blockTestifiBucksWhiteSlab, BlockSlabs.TheItemBlock.class);
         blockTestifiBucksGreenFence = new BlockWallAA("blockTestifiBucksGreenFence", blockTestifiBucksGreenWall);
-        BlockUtil.register(blockTestifiBucksGreenFence);
         blockTestifiBucksWhiteFence = new BlockWallAA("blockTestifiBucksWhiteFence", blockTestifiBucksWhiteWall);
-        BlockUtil.register(blockTestifiBucksWhiteFence);
-
-        blockColoredLamp = new BlockColoredLamp(false);
-        BlockUtil.register(blockColoredLamp, BlockColoredLamp.TheItemBlock.class);
-        blockColoredLampOn = new BlockColoredLamp(true);
-        BlockUtil.register(blockColoredLampOn, BlockColoredLamp.TheItemBlock.class);
-        blockLampPowerer = new BlockLampPowerer();
-        BlockUtil.register(blockLampPowerer);
-
-        blockTreasureChest = new BlockTreasureChest();
-        BlockUtil.register(blockTreasureChest);
-
-        blockEnergizer = new BlockEnergizer(true);
-        BlockUtil.register(blockEnergizer);
-
-        blockEnervator = new BlockEnergizer(false);
-        BlockUtil.register(blockEnervator);
-
-        blockLavaFactoryController = new BlockLavaFactoryController();
-        BlockUtil.register(blockLavaFactoryController);
-
-        blockCanolaPress = new BlockCanolaPress();
-        BlockUtil.register(blockCanolaPress);
-
-        blockPhantomface = new BlockPhantom(BlockPhantom.Type.FACE);
-        BlockUtil.register(blockPhantomface);
-
-        blockPhantomPlacer = new BlockPhantom(BlockPhantom.Type.PLACER);
-        BlockUtil.register(blockPhantomPlacer);
-
-        blockPhantomLiquiface = new BlockPhantom(BlockPhantom.Type.LIQUIFACE);
-        BlockUtil.register(blockPhantomLiquiface);
-
-        blockPhantomEnergyface = new BlockPhantom(BlockPhantom.Type.ENERGYFACE);
-        BlockUtil.register(blockPhantomEnergyface);
-
-        blockPhantomBreaker = new BlockPhantom(BlockPhantom.Type.BREAKER);
-        BlockUtil.register(blockPhantomBreaker);
-
-        blockCoalGenerator = new BlockCoalGenerator();
-        BlockUtil.register(blockCoalGenerator);
-
-        blockOilGenerator = new BlockOilGenerator();
-        BlockUtil.register(blockOilGenerator);
-
-        blockFermentingBarrel = new BlockFermentingBarrel();
-        BlockUtil.register(blockFermentingBarrel);
-
+        blockColoredLamp = new BlockColoredLamp(false, "blockColoredLamp");
+        blockColoredLampOn = new BlockColoredLamp(true, "blockColoredLampOn");
+        blockLampPowerer = new BlockLampPowerer("blockLampPowerer");
+        blockTreasureChest = new BlockTreasureChest("blockTreasureChest");
+        blockEnergizer = new BlockEnergizer(true, "blockEnergizer");
+        blockEnervator = new BlockEnergizer(false, "blockEnervator");
+        blockLavaFactoryController = new BlockLavaFactoryController("blockLavaFactoryController");
+        blockCanolaPress = new BlockCanolaPress("blockCanolaPress");
+        blockPhantomface = new BlockPhantom(BlockPhantom.Type.FACE, "blockPhantomface");
+        blockPhantomPlacer = new BlockPhantom(BlockPhantom.Type.PLACER, "blockPhantomPlacer");
+        blockPhantomLiquiface = new BlockPhantom(BlockPhantom.Type.LIQUIFACE, "blockPhantomLiquiface");
+        blockPhantomEnergyface = new BlockPhantom(BlockPhantom.Type.ENERGYFACE, "blockPhantomEnergyface");
+        blockPhantomBreaker = new BlockPhantom(BlockPhantom.Type.BREAKER, "blockPhantomBreaker");
+        blockCoalGenerator = new BlockCoalGenerator("blockCoalGenerator");
+        blockOilGenerator = new BlockOilGenerator("blockOilGenerator");
+        blockFermentingBarrel = new BlockFermentingBarrel("blockFermentingBarrel");
         blockRice = new BlockPlant("blockRice", 6, 1, 2);
-        BlockUtil.register(blockRice);
         CompatUtil.registerMFRPlant(blockRice);
-
         blockCanola = new BlockPlant("blockCanola", 4, 3, 3);
-        BlockUtil.register(blockCanola);
         CompatUtil.registerMFRPlant(blockCanola);
-
         blockFlax = new BlockPlant("blockFlax", 6, 2, 4);
-        BlockUtil.register(blockFlax);
         CompatUtil.registerMFRPlant(blockFlax);
-
         blockCoffee = new BlockPlant("blockCoffee", 6, 2, 2);
-        BlockUtil.register(blockCoffee);
         CompatUtil.registerMFRPlant(blockCoffee);
-
-        blockCompost = new BlockCompost();
-        BlockUtil.register(blockCompost);
-
-        blockMisc = new BlockMisc();
-        BlockUtil.register(blockMisc, BlockMisc.TheItemBlock.class);
-
-        blockFeeder = new BlockFeeder();
-        BlockUtil.register(blockFeeder);
-
-        blockGiantChest = new BlockGiantChest();
-        BlockUtil.register(blockGiantChest);
-
-        blockGrinder = new BlockGrinder(false);
-        BlockUtil.register(blockGrinder);
-
-        blockGrinderDouble = new BlockGrinder(true);
-        BlockUtil.register(blockGrinderDouble);
-
-        blockFurnaceDouble = new BlockFurnaceDouble();
-        BlockUtil.register(blockFurnaceDouble);
-
-        blockInputter = new BlockInputter(false);
-        BlockUtil.register(blockInputter, BlockInputter.TheItemBlock.class);
-
-        blockInputterAdvanced = new BlockInputter(true);
-        BlockUtil.register(blockInputterAdvanced, BlockInputter.TheItemBlock.class);
-
-        blockFishingNet = new BlockFishingNet();
-        BlockUtil.register(blockFishingNet);
-
-        blockFurnaceSolar = new BlockFurnaceSolar();
-        BlockUtil.register(blockFurnaceSolar);
-
-        blockHeatCollector = new BlockHeatCollector();
-        BlockUtil.register(blockHeatCollector);
-
-        blockItemRepairer = new BlockItemRepairer();
-        BlockUtil.register(blockItemRepairer);
-
-        blockGreenhouseGlass = new BlockGreenhouseGlass();
-        BlockUtil.register(blockGreenhouseGlass);
-
-        blockBreaker = new BlockBreaker(false);
-        BlockUtil.register(blockBreaker);
-
-        blockPlacer = new BlockBreaker(true);
-        BlockUtil.register(blockPlacer);
-
-        blockDropper = new BlockDropper();
-        BlockUtil.register(blockDropper);
-
-        blockFluidPlacer = new BlockFluidCollector(true);
-        BlockUtil.register(blockFluidPlacer);
-
-        blockFluidCollector = new BlockFluidCollector(false);
-        BlockUtil.register(blockFluidCollector);
-
-        blockCoffeeMachine = new BlockCoffeeMachine();
-        BlockUtil.register(blockCoffeeMachine);
-
-        blockPhantomBooster = new BlockPhantomBooster();
-        BlockUtil.register(blockPhantomBooster);
-
-        blockWildPlant = new BlockWildPlant();
-        BlockUtil.register(blockWildPlant, BlockWildPlant.TheItemBlock.class);
+        blockCompost = new BlockCompost("blockCompost");
+        blockMisc = new BlockMisc("blockMisc");
+        blockFeeder = new BlockFeeder("blockFeeder");
+        blockGiantChest = new BlockGiantChest("blockGiantChest");
+        blockGrinder = new BlockGrinder(false, "blockGrinder");
+        blockGrinderDouble = new BlockGrinder(true, "blockGrinderDouble");
+        blockFurnaceDouble = new BlockFurnaceDouble("blockFurnaceDouble");
+        blockInputter = new BlockInputter(false, "blockInputter");
+        blockInputterAdvanced = new BlockInputter(true, "blockInputterAdvanced");
+        blockFishingNet = new BlockFishingNet("blockFishingNet");
+        blockFurnaceSolar = new BlockFurnaceSolar("blockFurnaceSolar");
+        blockHeatCollector = new BlockHeatCollector("blockHeatCollector");
+        blockItemRepairer = new BlockItemRepairer("blockItemRepairer");
+        blockGreenhouseGlass = new BlockGreenhouseGlass("blockGreenhouseGlass");
+        blockBreaker = new BlockBreaker(false, "blockBreaker");
+        blockPlacer = new BlockBreaker(true, "blockPlacer");
+        blockDropper = new BlockDropper("blockDropper");
+        blockFluidPlacer = new BlockFluidCollector(true, "blockFluidPlacer");
+        blockFluidCollector = new BlockFluidCollector(false, "blockFluidCollector");
+        blockCoffeeMachine = new BlockCoffeeMachine("blockCoffeeMachine");
+        blockPhantomBooster = new BlockPhantomBooster("blockPhantomBooster");
+        blockWildPlant = new BlockWildPlant("blockWild");
 
         registerFluids();
     }
@@ -302,7 +195,6 @@ public class InitBlocks{
         //Canola Block
         if(fluidCanolaOil.getBlock() == null || ConfigBoolValues.PREVENT_CANOLA_BLOCK_OVERRIDE.isEnabled()){
             blockCanolaOil = new BlockFluidFlowing(fluidCanolaOil, Material.water, "blockCanolaOil");
-            BlockUtil.register(blockCanolaOil);
         }
         else{
             errorAlreadyRegistered("Canola Oil Block");
@@ -323,7 +215,6 @@ public class InitBlocks{
         //Oil Block
         if(fluidOil.getBlock() == null || ConfigBoolValues.PREVENT_OIL_BLOCK_OVERRIDE.isEnabled()){
             blockOil = new BlockFluidFlowing(fluidOil, Material.water, "blockOil");
-            BlockUtil.register(blockOil);
         }
         else{
             errorAlreadyRegistered("Oil Block");

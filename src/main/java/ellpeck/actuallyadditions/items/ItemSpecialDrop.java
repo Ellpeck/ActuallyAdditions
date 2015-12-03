@@ -12,8 +12,8 @@ package ellpeck.actuallyadditions.items;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import ellpeck.actuallyadditions.items.base.ItemBase;
 import ellpeck.actuallyadditions.items.metalists.TheSpecialDrops;
-import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -28,7 +28,7 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class ItemSpecialDrop extends Item implements IActAddItemOrBlock{
+public class ItemSpecialDrop extends ItemBase{
 
     public static final int SOLID_XP_AMOUNT = 8;
 
@@ -36,7 +36,8 @@ public class ItemSpecialDrop extends Item implements IActAddItemOrBlock{
     @SideOnly(Side.CLIENT)
     public IIcon[] textures;
 
-    public ItemSpecialDrop(){
+    public ItemSpecialDrop(String name){
+        super(name);
         this.setHasSubtypes(true);
     }
 
@@ -95,12 +96,7 @@ public class ItemSpecialDrop extends Item implements IActAddItemOrBlock{
     public void registerIcons(IIconRegister iconReg){
         this.textures = new IIcon[allDrops.length];
         for(int i = 0; i < textures.length; i++){
-            textures[i] = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+allDrops[i].name);
+            textures[i] = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName()+allDrops[i].name);
         }
-    }
-
-    @Override
-    public String getName(){
-        return "itemSpecial";
     }
 }

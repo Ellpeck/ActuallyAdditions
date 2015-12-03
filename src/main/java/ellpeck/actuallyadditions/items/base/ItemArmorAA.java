@@ -8,11 +8,12 @@
  * © 2015 Ellpeck
  */
 
-package ellpeck.actuallyadditions.items;
+package ellpeck.actuallyadditions.items.base;
 
+import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
+import ellpeck.actuallyadditions.creative.CreativeTab;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
@@ -22,7 +23,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraftforge.oredict.OreDictionary;
 
-public class ItemArmorAA extends ItemArmor implements IActAddItemOrBlock{
+public class ItemArmorAA extends ItemArmor{
 
     private String repairItem;
     private String name;
@@ -37,6 +38,24 @@ public class ItemArmorAA extends ItemArmor implements IActAddItemOrBlock{
 
         //Fixes vanilla's weird durability handling
         this.setMaxDamage(material.getDurability(type)/10);
+
+        this.register();
+    }
+
+    private void register(){
+        this.setUnlocalizedName(ModUtil.MOD_ID_LOWER+"."+this.getBaseName());
+        GameRegistry.registerItem(this, this.getBaseName());
+        if(this.shouldAddCreative()){
+            this.setCreativeTab(CreativeTab.instance);
+        }
+    }
+
+    public boolean shouldAddCreative(){
+        return true;
+    }
+
+    protected String getBaseName(){
+        return this.name;
     }
 
     @Override
@@ -69,11 +88,6 @@ public class ItemArmorAA extends ItemArmor implements IActAddItemOrBlock{
     @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister iconReg){
-        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
-    }
-
-    @Override
-    public String getName(){
-        return this.name;
+        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName());
     }
 }

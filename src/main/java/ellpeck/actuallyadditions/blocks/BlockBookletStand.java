@@ -13,10 +13,10 @@ package ellpeck.actuallyadditions.blocks;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.ActuallyAdditions;
+import ellpeck.actuallyadditions.blocks.base.BlockContainerBase;
 import ellpeck.actuallyadditions.inventory.GuiHandler;
 import ellpeck.actuallyadditions.tile.TileEntityBookletStand;
 import ellpeck.actuallyadditions.util.AssetUtil;
-import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
@@ -29,10 +29,10 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
-public class BlockBookletStand extends BlockContainerBase implements IActAddItemOrBlock{
+public class BlockBookletStand extends BlockContainerBase{
 
-    public BlockBookletStand(){
-        super(Material.wood);
+    public BlockBookletStand(String name){
+        super(Material.wood, name);
         this.setHarvestLevel("axe", 0);
         this.setHardness(1.0F);
         this.setResistance(4.0F);
@@ -101,11 +101,6 @@ public class BlockBookletStand extends BlockContainerBase implements IActAddItem
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconReg){
         this.blockIcon = Blocks.planks.getIcon(0, 0);
-    }
-
-    @Override
-    public String getName(){
-        return "blockBookStand";
     }
 
     @Override

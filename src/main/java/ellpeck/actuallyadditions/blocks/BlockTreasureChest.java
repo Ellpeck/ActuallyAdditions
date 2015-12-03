@@ -13,11 +13,10 @@ package ellpeck.actuallyadditions.blocks;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.achievement.TheAchievements;
+import ellpeck.actuallyadditions.blocks.base.BlockBase;
 import ellpeck.actuallyadditions.recipe.TreasureChestHandler;
-import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.Util;
-import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
@@ -35,7 +34,7 @@ import net.minecraft.world.World;
 
 import java.util.Random;
 
-public class BlockTreasureChest extends Block implements IActAddItemOrBlock{
+public class BlockTreasureChest extends BlockBase{
 
     @SideOnly(Side.CLIENT)
     private IIcon topIcon;
@@ -44,8 +43,8 @@ public class BlockTreasureChest extends Block implements IActAddItemOrBlock{
     @SideOnly(Side.CLIENT)
     private IIcon frontIcon;
 
-    public BlockTreasureChest(){
-        super(Material.wood);
+    public BlockTreasureChest(String name){
+        super(Material.wood, name);
         this.setHarvestLevel("axe", 0);
         this.setHardness(300.0F);
         this.setResistance(50.0F);
@@ -139,15 +138,10 @@ public class BlockTreasureChest extends Block implements IActAddItemOrBlock{
     @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconReg){
-        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
-        this.topIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Top");
-        this.bottomIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Bottom");
-        this.frontIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Front");
-    }
-
-    @Override
-    public String getName(){
-        return "blockTreasureChest";
+        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName());
+        this.topIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName()+"Top");
+        this.bottomIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName()+"Bottom");
+        this.frontIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName()+"Front");
     }
 
     @Override

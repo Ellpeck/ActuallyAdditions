@@ -10,8 +10,6 @@
 
 package ellpeck.actuallyadditions.util;
 
-import cpw.mods.fml.common.registry.GameRegistry;
-import ellpeck.actuallyadditions.creative.CreativeTab;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -27,34 +25,6 @@ public class ItemUtil{
             return (Item)Item.itemRegistry.getObject(name);
         }
         return null;
-    }
-
-    public static void registerItems(Item[] items){
-        for(Item item : items){
-            register(item);
-        }
-    }
-
-    public static void register(Item item){
-        item.setCreativeTab(CreativeTab.instance);
-        item.setUnlocalizedName(createUnlocalizedName(item));
-        GameRegistry.registerItem(item, ((IActAddItemOrBlock)item).getName());
-    }
-
-    public static String createUnlocalizedName(Item item){
-        return ModUtil.MOD_ID_LOWER+"."+((IActAddItemOrBlock)item).getName();
-    }
-
-    /**
-     * Returns true if stacksOne contains every ItemStack in stackTwo
-     */
-    public static boolean containsAll(ItemStack[] stacksOne, ItemStack[] stacksTwo, boolean checkWildcard){
-        for(ItemStack stackTwo : stacksTwo){
-            if(!contains(stacksOne, stackTwo, checkWildcard)){
-                return false;
-            }
-        }
-        return true;
     }
 
     /**

@@ -13,22 +13,25 @@ package ellpeck.actuallyadditions.items;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.blocks.InitBlocks;
+import ellpeck.actuallyadditions.items.base.ItemBase;
 import ellpeck.actuallyadditions.tile.TileEntityGiantChest;
-import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockChest;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
-public class ItemChestToCrateUpgrade extends Item implements IActAddItemOrBlock{
+public class ItemChestToCrateUpgrade extends ItemBase{
+
+    public ItemChestToCrateUpgrade(String name){
+        super(name);
+    }
 
     @Override
     public boolean onItemUse(ItemStack heldStack, EntityPlayer player, World world, int x, int y, int z, int par7, float par8, float par9, float par10){
@@ -84,18 +87,13 @@ public class ItemChestToCrateUpgrade extends Item implements IActAddItemOrBlock{
     @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister iconReg){
-        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
+        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName());
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public IIcon getIcon(ItemStack stack, int pass){
         return this.itemIcon;
-    }
-
-    @Override
-    public String getName(){
-        return "itemChestToCrateUpgrade";
     }
 
 }

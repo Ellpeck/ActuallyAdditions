@@ -12,6 +12,7 @@ package ellpeck.actuallyadditions.items;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import ellpeck.actuallyadditions.items.base.ItemEnergy;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.Util;
 import ellpeck.actuallyadditions.util.WorldPos;
@@ -33,8 +34,8 @@ import java.util.ArrayList;
 
 public class ItemGrowthRing extends ItemEnergy{
 
-    public ItemGrowthRing(){
-        super(1000000, 5000);
+    public ItemGrowthRing(String name){
+        super(1000000, 5000, name);
     }
 
     @Override
@@ -108,17 +109,12 @@ public class ItemGrowthRing extends ItemEnergy{
     @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister iconReg){
-        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
+        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName());
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public IIcon getIcon(ItemStack stack, int pass){
         return this.itemIcon;
-    }
-
-    @Override
-    public String getName(){
-        return "itemGrowthRing";
     }
 }

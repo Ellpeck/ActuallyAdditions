@@ -13,7 +13,7 @@ package ellpeck.actuallyadditions.items;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.blocks.BlockCrystal;
-import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
+import ellpeck.actuallyadditions.items.base.ItemBase;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -25,12 +25,13 @@ import net.minecraft.util.IIcon;
 
 import java.util.List;
 
-public class ItemCrystal extends Item implements IActAddItemOrBlock{
+public class ItemCrystal extends ItemBase{
 
     @SideOnly(Side.CLIENT)
     public IIcon[] textures;
 
-    public ItemCrystal(){
+    public ItemCrystal(String name){
+        super(name);
         this.setHasSubtypes(true);
         this.setMaxDamage(0);
     }
@@ -69,12 +70,7 @@ public class ItemCrystal extends Item implements IActAddItemOrBlock{
     public void registerIcons(IIconRegister iconReg){
         this.textures = new IIcon[BlockCrystal.allCrystals.length];
         for(int i = 0; i < this.textures.length; i++){
-            this.textures[i] = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+BlockCrystal.allCrystals[i].name);
+            this.textures[i] = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName()+BlockCrystal.allCrystals[i].name);
         }
-    }
-
-    @Override
-    public String getName(){
-        return "itemCrystal";
     }
 }

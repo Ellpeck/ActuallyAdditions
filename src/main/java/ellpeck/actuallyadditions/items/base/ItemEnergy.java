@@ -8,12 +8,14 @@
  * © 2015 Ellpeck
  */
 
-package ellpeck.actuallyadditions.items;
+package ellpeck.actuallyadditions.items.base;
 
 import cofh.api.energy.ItemEnergyContainer;
+import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
+import ellpeck.actuallyadditions.creative.CreativeTab;
+import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -23,12 +25,33 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public abstract class ItemEnergy extends ItemEnergyContainer implements IActAddItemOrBlock{
+public abstract class ItemEnergy extends ItemEnergyContainer {
 
-    public ItemEnergy(int maxPower, int transfer){
+    private String name;
+
+    public ItemEnergy(int maxPower, int transfer, String name){
         super(maxPower, transfer);
         this.setHasSubtypes(true);
         this.setMaxStackSize(1);
+        this.name = name;
+
+        this.register();
+    }
+
+    private void register(){
+        this.setUnlocalizedName(ModUtil.MOD_ID_LOWER+"."+this.getBaseName());
+        GameRegistry.registerItem(this, this.getBaseName());
+        if(this.shouldAddCreative()){
+            this.setCreativeTab(CreativeTab.instance);
+        }
+    }
+
+    public boolean shouldAddCreative(){
+        return true;
+    }
+
+    protected String getBaseName(){
+        return this.name;
     }
 
     @Override

@@ -13,9 +13,9 @@ package ellpeck.actuallyadditions.blocks;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.ActuallyAdditions;
+import ellpeck.actuallyadditions.blocks.base.BlockContainerBase;
 import ellpeck.actuallyadditions.proxy.ClientProxy;
 import ellpeck.actuallyadditions.tile.*;
-import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
 import net.minecraft.block.Block;
@@ -31,7 +31,7 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
-public class BlockPhantom extends BlockContainerBase implements IActAddItemOrBlock{
+public class BlockPhantom extends BlockContainerBase{
 
     public Type type;
     public int range;
@@ -39,8 +39,8 @@ public class BlockPhantom extends BlockContainerBase implements IActAddItemOrBlo
     @SideOnly(Side.CLIENT)
     private IIcon iconSeasonal;
 
-    public BlockPhantom(Type type){
-        super(Material.rock);
+    public BlockPhantom(Type type, String name){
+        super(Material.rock, name);
         this.type = type;
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(4.5F);
@@ -123,25 +123,9 @@ public class BlockPhantom extends BlockContainerBase implements IActAddItemOrBlo
     @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconReg){
-        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
+        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName());
 
         this.iconSeasonal = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":blockPhantomfacePumpkin");
-    }
-
-    @Override
-    public String getName(){
-        switch(this.type){
-            case PLACER:
-                return "blockPhantomPlacer";
-            case BREAKER:
-                return "blockPhantomBreaker";
-            case LIQUIFACE:
-                return "blockPhantomLiquiface";
-            case ENERGYFACE:
-                return "blockPhantomEnergyface";
-            default:
-                return "blockPhantomface";
-        }
     }
 
     @Override

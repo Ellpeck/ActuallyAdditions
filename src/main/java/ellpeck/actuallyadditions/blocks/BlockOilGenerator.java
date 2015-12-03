@@ -13,10 +13,10 @@ package ellpeck.actuallyadditions.blocks;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.ActuallyAdditions;
+import ellpeck.actuallyadditions.blocks.base.BlockContainerBase;
 import ellpeck.actuallyadditions.inventory.GuiHandler;
 import ellpeck.actuallyadditions.proxy.ClientProxy;
 import ellpeck.actuallyadditions.tile.TileEntityOilGenerator;
-import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -30,15 +30,15 @@ import net.minecraft.world.World;
 
 import java.util.Random;
 
-public class BlockOilGenerator extends BlockContainerBase implements IActAddItemOrBlock{
+public class BlockOilGenerator extends BlockContainerBase{
 
     @SideOnly(Side.CLIENT)
     private IIcon topIcon;
     @SideOnly(Side.CLIENT)
     private IIcon bottomIcon;
 
-    public BlockOilGenerator(){
-        super(Material.rock);
+    public BlockOilGenerator(String name){
+        super(Material.rock, name);
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(1.5F);
         this.setResistance(10.0F);
@@ -84,14 +84,9 @@ public class BlockOilGenerator extends BlockContainerBase implements IActAddItem
     @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconReg){
-        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
-        this.topIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Top");
-        this.bottomIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Bottom");
-    }
-
-    @Override
-    public String getName(){
-        return "blockOilGenerator";
+        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName());
+        this.topIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName()+"Top");
+        this.bottomIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName()+"Bottom");
     }
 
     @Override

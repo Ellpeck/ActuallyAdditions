@@ -13,9 +13,9 @@ package ellpeck.actuallyadditions.blocks;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.ActuallyAdditions;
+import ellpeck.actuallyadditions.blocks.base.BlockContainerBase;
 import ellpeck.actuallyadditions.inventory.GuiHandler;
 import ellpeck.actuallyadditions.tile.TileEntityFermentingBarrel;
-import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -27,13 +27,13 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
-public class BlockFermentingBarrel extends BlockContainerBase implements IActAddItemOrBlock{
+public class BlockFermentingBarrel extends BlockContainerBase{
 
     @SideOnly(Side.CLIENT)
     private IIcon iconTop;
 
-    public BlockFermentingBarrel(){
-        super(Material.wood);
+    public BlockFermentingBarrel(String name){
+        super(Material.wood, name);
         this.setHarvestLevel("axe", 0);
         this.setHardness(0.5F);
         this.setResistance(5.0F);
@@ -72,13 +72,8 @@ public class BlockFermentingBarrel extends BlockContainerBase implements IActAdd
     @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconReg){
-        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
-        this.iconTop = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Top");
-    }
-
-    @Override
-    public String getName(){
-        return "blockFermentingBarrel";
+        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName());
+        this.iconTop = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName()+"Top");
     }
 
     @Override

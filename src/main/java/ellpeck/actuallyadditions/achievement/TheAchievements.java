@@ -18,7 +18,7 @@ import net.minecraft.stats.Achievement;
 
 public enum TheAchievements{
 
-    OPEN_BOOKLET("openBooklet", 0, 0, new ItemStack(InitItems.itemLexicon), null, InitAchievements.MISC_ACH),
+    OPEN_BOOKLET("openBooklet", 0, 0, new ItemStack(InitItems.itemBooklet), null, InitAchievements.MISC_ACH),
     NAME_SMILEY_CLOUD("nameSmileyCloud", 2, 0, new ItemStack(InitBlocks.blockSmileyCloud), OPEN_BOOKLET.ach, InitAchievements.MISC_ACH),
     CRAFT_PHANTOMFACE("craftPhantomface", -2, 0, new ItemStack(InitBlocks.blockPhantomface), OPEN_BOOKLET.ach),
     OPEN_TREASURE_CHEST("openTreasureChest", 0, -2, new ItemStack(InitBlocks.blockTreasureChest), OPEN_BOOKLET.ach, InitAchievements.MISC_ACH);

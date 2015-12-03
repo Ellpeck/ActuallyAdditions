@@ -12,12 +12,12 @@ package ellpeck.actuallyadditions.blocks;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import ellpeck.actuallyadditions.blocks.base.BlockContainerBase;
 import ellpeck.actuallyadditions.items.ItemFertilizer;
 import ellpeck.actuallyadditions.items.ItemMisc;
 import ellpeck.actuallyadditions.items.metalists.TheMiscItems;
 import ellpeck.actuallyadditions.tile.TileEntityCompost;
 import ellpeck.actuallyadditions.util.AssetUtil;
-import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -33,10 +33,10 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class BlockCompost extends BlockContainerBase implements IActAddItemOrBlock{
+public class BlockCompost extends BlockContainerBase{
 
-    public BlockCompost(){
-        super(Material.wood);
+    public BlockCompost(String name){
+        super(Material.wood, name);
         this.setHarvestLevel("axe", 0);
         this.setHardness(0.5F);
         this.setResistance(5.0F);
@@ -135,11 +135,6 @@ public class BlockCompost extends BlockContainerBase implements IActAddItemOrBlo
     public void breakBlock(World world, int x, int y, int z, Block block, int par6){
         this.dropInventory(world, x, y, z);
         super.breakBlock(world, x, y, z, block, par6);
-    }
-
-    @Override
-    public String getName(){
-        return "blockCompost";
     }
 
     @Override

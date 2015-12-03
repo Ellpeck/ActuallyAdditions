@@ -8,11 +8,13 @@
  * © 2015 Ellpeck
  */
 
-package ellpeck.actuallyadditions.blocks;
+package ellpeck.actuallyadditions.blocks.base;
 
+import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
+import ellpeck.actuallyadditions.creative.CreativeTab;
+import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockWall;
 import net.minecraft.creativetab.CreativeTabs;
@@ -23,7 +25,7 @@ import net.minecraft.util.IIcon;
 
 import java.util.List;
 
-public class BlockWallAA extends BlockWall implements IActAddItemOrBlock{
+public class BlockWallAA extends BlockWall {
 
     private String name;
     private Block baseBlock;
@@ -32,6 +34,32 @@ public class BlockWallAA extends BlockWall implements IActAddItemOrBlock{
         super(base);
         this.baseBlock = base;
         this.name = name;
+
+        this.register();
+    }
+
+    private void register(){
+        this.setBlockName(ModUtil.MOD_ID_LOWER+"."+this.getBaseName());
+        GameRegistry.registerBlock(this, this.getItemBlock(), this.getBaseName());
+        if(this.shouldAddCreative()){
+            this.setCreativeTab(CreativeTab.instance);
+        }
+    }
+
+    public boolean shouldAddCreative(){
+        return true;
+    }
+
+    protected String getBaseName(){
+        return this.name;
+    }
+
+    protected Class<? extends ItemBlockBase> getItemBlock(){
+        return ItemBlockBase.class;
+    }
+
+    public EnumRarity getRarity(ItemStack stack){
+        return EnumRarity.common;
     }
 
     @Override
@@ -50,15 +78,5 @@ public class BlockWallAA extends BlockWall implements IActAddItemOrBlock{
     @Override
     public int damageDropped(int meta){
         return meta;
-    }
-
-    @Override
-    public String getName(){
-        return this.name;
-    }
-
-    @Override
-    public EnumRarity getRarity(ItemStack stack){
-        return EnumRarity.common;
     }
 }

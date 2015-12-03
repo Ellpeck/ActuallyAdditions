@@ -12,8 +12,8 @@ package ellpeck.actuallyadditions.items;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import ellpeck.actuallyadditions.items.base.ItemBase;
 import ellpeck.actuallyadditions.items.metalists.TheDusts;
-import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -25,11 +25,12 @@ import net.minecraft.util.IIcon;
 
 import java.util.List;
 
-public class ItemDust extends Item implements IActAddItemOrBlock{
+public class ItemDust extends ItemBase{
 
     public static final TheDusts[] allDusts = TheDusts.values();
 
-    public ItemDust(){
+    public ItemDust(String name){
+        super(name);
         this.setHasSubtypes(true);
     }
 
@@ -65,12 +66,7 @@ public class ItemDust extends Item implements IActAddItemOrBlock{
     @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister iconReg){
-        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
-    }
-
-    @Override
-    public String getName(){
-        return "itemDust";
+        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName());
     }
 
     @Override

@@ -1,5 +1,5 @@
 /*
- * This file ("ItemSwordAA.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("ItemShovelAA.java") is part of the Actually Additions Mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
  * http://github.com/Ellpeck/ActuallyAdditions/blob/master/README.md
@@ -8,32 +8,53 @@
  * © 2015 Ellpeck
  */
 
-package ellpeck.actuallyadditions.items.tools;
+package ellpeck.actuallyadditions.items.base;
 
+import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
+import ellpeck.actuallyadditions.creative.CreativeTab;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.item.EnumRarity;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemSpade;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemSword;
 import net.minecraft.util.IIcon;
 import net.minecraftforge.oredict.OreDictionary;
 
-public class ItemSwordAA extends ItemSword implements IActAddItemOrBlock{
+public class ItemShovelAA extends ItemSpade {
 
     private String name;
-    private String oredictName;
     private EnumRarity rarity;
     private String repairItem;
 
-    public ItemSwordAA(ToolMaterial toolMat, String repairItem, String unlocalizedName, EnumRarity rarity){
+    public ItemShovelAA(Item.ToolMaterial toolMat, String repairItem, String unlocalizedName, EnumRarity rarity){
         super(toolMat);
+
+        this.repairItem = repairItem;
         this.name = unlocalizedName;
         this.rarity = rarity;
-        this.repairItem = repairItem;
-        this.oredictName = name;
+
+        this.setMaxDamage(this.getMaxDamage()*4);
+
+        this.register();
+    }
+
+    private void register(){
+        this.setUnlocalizedName(ModUtil.MOD_ID_LOWER+"."+this.getBaseName());
+        GameRegistry.registerItem(this, this.getBaseName());
+        if(this.shouldAddCreative()){
+            this.setCreativeTab(CreativeTab.instance);
+        }
+    }
+
+    public boolean shouldAddCreative(){
+        return true;
+    }
+
+    protected String getBaseName(){
+        return this.name;
     }
 
     @Override
@@ -55,21 +76,12 @@ public class ItemSwordAA extends ItemSword implements IActAddItemOrBlock{
     @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister iconReg){
-        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
+        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName());
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public IIcon getIcon(ItemStack stack, int pass){
         return this.itemIcon;
-    }
-
-    @Override
-    public String getName(){
-        return name;
-    }
-
-    private String getOredictName(){
-        return oredictName;
     }
 }

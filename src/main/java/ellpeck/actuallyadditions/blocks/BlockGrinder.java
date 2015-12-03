@@ -13,10 +13,10 @@ package ellpeck.actuallyadditions.blocks;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.ActuallyAdditions;
+import ellpeck.actuallyadditions.blocks.base.BlockContainerBase;
 import ellpeck.actuallyadditions.inventory.GuiHandler;
 import ellpeck.actuallyadditions.proxy.ClientProxy;
 import ellpeck.actuallyadditions.tile.TileEntityGrinder;
-import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -31,7 +31,7 @@ import net.minecraft.world.World;
 
 import java.util.Random;
 
-public class BlockGrinder extends BlockContainerBase implements IActAddItemOrBlock{
+public class BlockGrinder extends BlockContainerBase{
 
     private final boolean isDouble;
     @SideOnly(Side.CLIENT)
@@ -41,8 +41,8 @@ public class BlockGrinder extends BlockContainerBase implements IActAddItemOrBlo
     @SideOnly(Side.CLIENT)
     private IIcon bottomIcon;
 
-    public BlockGrinder(boolean isDouble){
-        super(Material.rock);
+    public BlockGrinder(boolean isDouble, String name){
+        super(Material.rock, name);
         this.isDouble = isDouble;
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(1.5F);
@@ -101,7 +101,7 @@ public class BlockGrinder extends BlockContainerBase implements IActAddItemOrBlo
     @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconReg){
-        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
+        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName());
         this.topIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":blockGrinderTop");
         this.onIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":blockGrinderOn");
         this.bottomIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":blockGrinderBottom");
@@ -110,11 +110,6 @@ public class BlockGrinder extends BlockContainerBase implements IActAddItemOrBlo
     @Override
     public int getLightValue(IBlockAccess world, int x, int y, int z){
         return world.getBlockMetadata(x, y, z) == 1 ? 12 : 0;
-    }
-
-    @Override
-    public String getName(){
-        return isDouble ? "blockGrinderDouble" : "blockGrinder";
     }
 
     @Override

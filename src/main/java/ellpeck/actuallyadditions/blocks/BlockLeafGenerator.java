@@ -12,8 +12,8 @@ package ellpeck.actuallyadditions.blocks;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import ellpeck.actuallyadditions.blocks.base.BlockContainerBase;
 import ellpeck.actuallyadditions.tile.TileEntityLeafGenerator;
-import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -26,15 +26,15 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
-public class BlockLeafGenerator extends BlockContainerBase implements IActAddItemOrBlock{
+public class BlockLeafGenerator extends BlockContainerBase{
 
     @SideOnly(Side.CLIENT)
     private IIcon topIcon;
     @SideOnly(Side.CLIENT)
     private IIcon bottomIcon;
 
-    public BlockLeafGenerator(){
-        super(Material.iron);
+    public BlockLeafGenerator(String name){
+        super(Material.iron, name);
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(5.0F);
         this.setResistance(10.0F);
@@ -67,14 +67,9 @@ public class BlockLeafGenerator extends BlockContainerBase implements IActAddIte
     @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconReg){
-        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
-        this.topIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Top");
-        this.bottomIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Bottom");
-    }
-
-    @Override
-    public String getName(){
-        return "blockLeafGenerator";
+        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName());
+        this.topIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName()+"Top");
+        this.bottomIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName()+"Bottom");
     }
 
     @Override

@@ -12,8 +12,8 @@ package ellpeck.actuallyadditions.blocks;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ellpeck.actuallyadditions.items.ItemBlockBase;
-import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
+import ellpeck.actuallyadditions.blocks.base.BlockBase;
+import ellpeck.actuallyadditions.blocks.base.ItemBlockBase;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -28,17 +28,15 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class BlockSlabs extends Block implements IActAddItemOrBlock{
+public class BlockSlabs extends BlockBase{
 
-    private String name;
     private Block fullBlock;
 
     public BlockSlabs(String name, Block fullBlock){
-        super(Material.rock);
+        super(Material.rock, name);
         this.setHardness(1.5F);
         this.setResistance(10.0F);
         this.fullBlock = fullBlock;
-        this.name = name;
     }
 
     @Override
@@ -94,13 +92,13 @@ public class BlockSlabs extends Block implements IActAddItemOrBlock{
     }
 
     @Override
-    public String getName(){
-        return this.name;
+    public EnumRarity getRarity(ItemStack stack){
+        return EnumRarity.common;
     }
 
     @Override
-    public EnumRarity getRarity(ItemStack stack){
-        return EnumRarity.common;
+    public Class<? extends ItemBlockBase> getItemBlock(){
+        return TheItemBlock.class;
     }
 
     public static class TheItemBlock extends ItemBlockBase{
@@ -126,17 +124,6 @@ public class BlockSlabs extends Block implements IActAddItemOrBlock{
         @Override
         public String getUnlocalizedName(ItemStack stack){
             return this.getUnlocalizedName();
-        }
-
-        @Override
-        public int getMetadata(int meta){
-            return meta;
-        }
-
-        @Override
-        public EnumRarity getRarity(ItemStack stack){
-            EnumRarity rarity = ((IActAddItemOrBlock)this.field_150939_a).getRarity(stack);
-            return rarity == null ? EnumRarity.common : rarity;
         }
     }
 }

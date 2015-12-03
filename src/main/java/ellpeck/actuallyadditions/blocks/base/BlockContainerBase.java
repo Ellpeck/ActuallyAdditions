@@ -8,10 +8,13 @@
  * © 2015 Ellpeck
  */
 
-package ellpeck.actuallyadditions.blocks;
+package ellpeck.actuallyadditions.blocks.base;
 
+import cpw.mods.fml.common.registry.GameRegistry;
+import ellpeck.actuallyadditions.creative.CreativeTab;
 import ellpeck.actuallyadditions.tile.TileEntityBase;
 import ellpeck.actuallyadditions.tile.TileEntityInventoryBase;
+import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
@@ -19,6 +22,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -26,8 +30,37 @@ import net.minecraft.world.World;
 
 public abstract class BlockContainerBase extends BlockContainer{
 
-    public BlockContainerBase(Material mat){
-        super(mat);
+    private String name;
+
+    public BlockContainerBase(Material material, String name){
+        super(material);
+        this.name = name;
+
+        this.register();
+    }
+
+    private void register(){
+        this.setBlockName(ModUtil.MOD_ID_LOWER+"."+this.getBaseName());
+        GameRegistry.registerBlock(this, this.getItemBlock(), this.getBaseName());
+        if(this.shouldAddCreative()){
+            this.setCreativeTab(CreativeTab.instance);
+        }
+    }
+
+    public boolean shouldAddCreative(){
+        return true;
+    }
+
+    protected String getBaseName(){
+        return this.name;
+    }
+
+    protected Class<? extends ItemBlockBase> getItemBlock(){
+        return ItemBlockBase.class;
+    }
+
+    public EnumRarity getRarity(ItemStack stack){
+        return EnumRarity.common;
     }
 
     public void dropInventory(World world, int x, int y, int z){

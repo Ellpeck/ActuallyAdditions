@@ -12,10 +12,10 @@ package ellpeck.actuallyadditions.blocks;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import ellpeck.actuallyadditions.blocks.base.BlockBase;
+import ellpeck.actuallyadditions.blocks.base.ItemBlockBase;
 import ellpeck.actuallyadditions.blocks.metalists.TheMiscBlocks;
-import ellpeck.actuallyadditions.items.ItemBlockBase;
 import ellpeck.actuallyadditions.proxy.ClientProxy;
-import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
 import net.minecraft.block.Block;
@@ -29,7 +29,7 @@ import net.minecraft.util.IIcon;
 
 import java.util.List;
 
-public class BlockMisc extends Block implements IActAddItemOrBlock{
+public class BlockMisc extends BlockBase{
 
     public static final TheMiscBlocks[] allMiscBlocks = TheMiscBlocks.values();
     @SideOnly(Side.CLIENT)
@@ -42,8 +42,8 @@ public class BlockMisc extends Block implements IActAddItemOrBlock{
     @SideOnly(Side.CLIENT)
     private IIcon ironCasingSeasonal;
 
-    public BlockMisc(){
-        super(Material.rock);
+    public BlockMisc(String name){
+        super(Material.rock, name);
         this.setHardness(1.5F);
         this.setResistance(10.0F);
         this.setHarvestLevel("pickaxe", 1);
@@ -81,7 +81,7 @@ public class BlockMisc extends Block implements IActAddItemOrBlock{
     public void registerBlockIcons(IIconRegister iconReg){
         this.textures = new IIcon[allMiscBlocks.length];
         for(int i = 0; i < textures.length; i++){
-            textures[i] = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+allMiscBlocks[i].name);
+            textures[i] = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName()+allMiscBlocks[i].name);
         }
 
         this.casingSeasonalTop = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":blockMiscStoneCasingSnowTop");
@@ -90,13 +90,13 @@ public class BlockMisc extends Block implements IActAddItemOrBlock{
     }
 
     @Override
-    public String getName(){
-        return "blockMisc";
+    public EnumRarity getRarity(ItemStack stack){
+        return stack.getItemDamage() >= allMiscBlocks.length ? EnumRarity.common : allMiscBlocks[stack.getItemDamage()].rarity;
     }
 
     @Override
-    public EnumRarity getRarity(ItemStack stack){
-        return stack.getItemDamage() >= allMiscBlocks.length ? EnumRarity.common : allMiscBlocks[stack.getItemDamage()].rarity;
+    public Class<? extends ItemBlockBase> getItemBlock(){
+        return TheItemBlock.class;
     }
 
     public static class TheItemBlock extends ItemBlockBase{
@@ -110,17 +110,6 @@ public class BlockMisc extends Block implements IActAddItemOrBlock{
         @Override
         public String getUnlocalizedName(ItemStack stack){
             return stack.getItemDamage() >= allMiscBlocks.length ? StringUtil.BUGGED_ITEM_NAME : this.getUnlocalizedName()+allMiscBlocks[stack.getItemDamage()].name;
-        }
-
-        @Override
-        public int getMetadata(int damage){
-            return damage;
-        }
-
-        @Override
-        public EnumRarity getRarity(ItemStack stack){
-            EnumRarity rarity = ((IActAddItemOrBlock)this.field_150939_a).getRarity(stack);
-            return rarity == null ? EnumRarity.common : rarity;
         }
     }
 }

@@ -12,7 +12,7 @@ package ellpeck.actuallyadditions.blocks;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
+import ellpeck.actuallyadditions.blocks.base.BlockBase;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.WorldPos;
 import ellpeck.actuallyadditions.util.WorldUtil;
@@ -28,13 +28,13 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
-public class BlockLampPowerer extends Block implements IActAddItemOrBlock{
+public class BlockLampPowerer extends BlockBase{
 
     @SideOnly(Side.CLIENT)
     private IIcon frontIcon;
 
-    public BlockLampPowerer(){
-        super(Material.rock);
+    public BlockLampPowerer(String name){
+        super(Material.rock, name);
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(1.5F);
         this.setResistance(10.0F);
@@ -79,13 +79,8 @@ public class BlockLampPowerer extends Block implements IActAddItemOrBlock{
     @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconReg){
-        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
-        this.frontIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Front");
-    }
-
-    @Override
-    public String getName(){
-        return "blockLampPowerer";
+        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName());
+        this.frontIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName()+"Front");
     }
 
     @Override

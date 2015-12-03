@@ -18,6 +18,7 @@ import ellpeck.actuallyadditions.ActuallyAdditions;
 import ellpeck.actuallyadditions.blocks.metalists.TheColoredLampColors;
 import ellpeck.actuallyadditions.config.ConfigValues;
 import ellpeck.actuallyadditions.inventory.GuiHandler;
+import ellpeck.actuallyadditions.items.base.ItemEnergy;
 import ellpeck.actuallyadditions.util.ItemUtil;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.WorldUtil;
@@ -55,8 +56,8 @@ public class ItemDrill extends ItemEnergy{
     @SideOnly(Side.CLIENT)
     private IIcon[] allDemDamnIconsMaan;
 
-    public ItemDrill(){
-        super(500000, 5000);
+    public ItemDrill(String name){
+        super(500000, 5000, name);
         this.setMaxDamage(0);
         this.setHasSubtypes(true);
     }
@@ -213,13 +214,8 @@ public class ItemDrill extends ItemEnergy{
     public void registerIcons(IIconRegister iconReg){
         this.allDemDamnIconsMaan = new IIcon[16];
         for(int i = 0; i < this.allDemDamnIconsMaan.length; i++){
-            this.allDemDamnIconsMaan[i] = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+TheColoredLampColors.values()[i].name);
+            this.allDemDamnIconsMaan[i] = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName()+TheColoredLampColors.values()[i].name);
         }
-    }
-
-    @Override
-    public String getName(){
-        return "itemDrill";
     }
 
     @Override

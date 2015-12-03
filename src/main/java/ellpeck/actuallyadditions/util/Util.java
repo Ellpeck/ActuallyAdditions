@@ -15,10 +15,13 @@ import ellpeck.actuallyadditions.recipe.CrusherRecipeRegistry;
 import ellpeck.actuallyadditions.recipe.ReconstructorRecipeHandler;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.dispenser.BehaviorDefaultDispenseItem;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
@@ -30,6 +33,7 @@ public class Util{
 
     public static final Random RANDOM = new Random();
     public static final int WILDCARD = OreDictionary.WILDCARD_VALUE;
+    public static final EnumRarity FALLBACK_RARITY = EnumHelper.addRarity(ModUtil.MOD_ID_LOWER+".fallback", EnumChatFormatting.DARK_RED, ModUtil.NAME+" Fallback");
 
     public static void registerEvent(Object o){
         MinecraftForge.EVENT_BUS.register(o);

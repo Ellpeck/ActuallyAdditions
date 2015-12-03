@@ -12,8 +12,8 @@ package ellpeck.actuallyadditions.items;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import ellpeck.actuallyadditions.items.base.ItemBase;
 import ellpeck.actuallyadditions.items.metalists.TheMiscItems;
-import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -25,13 +25,14 @@ import net.minecraft.util.IIcon;
 
 import java.util.List;
 
-public class ItemMisc extends Item implements IActAddItemOrBlock{
+public class ItemMisc extends ItemBase{
 
     public static final TheMiscItems[] allMiscItems = TheMiscItems.values();
     @SideOnly(Side.CLIENT)
     public IIcon[] textures;
 
-    public ItemMisc(){
+    public ItemMisc(String name){
+        super(name);
         this.setHasSubtypes(true);
     }
 
@@ -69,12 +70,7 @@ public class ItemMisc extends Item implements IActAddItemOrBlock{
     public void registerIcons(IIconRegister iconReg){
         this.textures = new IIcon[allMiscItems.length];
         for(int i = 0; i < textures.length; i++){
-            textures[i] = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+allMiscItems[i].name);
+            textures[i] = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName()+allMiscItems[i].name);
         }
-    }
-
-    @Override
-    public String getName(){
-        return "itemMisc";
     }
 }

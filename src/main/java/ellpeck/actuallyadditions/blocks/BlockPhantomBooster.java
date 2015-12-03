@@ -12,9 +12,9 @@ package ellpeck.actuallyadditions.blocks;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import ellpeck.actuallyadditions.blocks.base.BlockContainerBase;
 import ellpeck.actuallyadditions.tile.TileEntityPhantomBooster;
 import ellpeck.actuallyadditions.util.AssetUtil;
-import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.init.Blocks;
@@ -24,10 +24,10 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
-public class BlockPhantomBooster extends BlockContainerBase implements IActAddItemOrBlock{
+public class BlockPhantomBooster extends BlockContainerBase{
 
-    public BlockPhantomBooster(){
-        super(Material.rock);
+    public BlockPhantomBooster(String name){
+        super(Material.rock, name);
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(1.5F);
         this.setResistance(10.0F);
@@ -62,11 +62,6 @@ public class BlockPhantomBooster extends BlockContainerBase implements IActAddIt
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconReg){
         this.blockIcon = Blocks.lapis_block.getIcon(0, 0);
-    }
-
-    @Override
-    public String getName(){
-        return "blockPhantomBooster";
     }
 
     @Override

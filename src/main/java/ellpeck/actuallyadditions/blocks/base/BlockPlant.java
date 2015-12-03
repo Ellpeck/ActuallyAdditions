@@ -8,11 +8,12 @@
  * © 2015 Ellpeck
  */
 
-package ellpeck.actuallyadditions.blocks;
+package ellpeck.actuallyadditions.blocks.base;
 
+import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
+import ellpeck.actuallyadditions.creative.CreativeTab;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.block.BlockCrops;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -26,7 +27,7 @@ import net.minecraftforge.common.EnumPlantType;
 
 import java.util.Random;
 
-public class BlockPlant extends BlockCrops implements IActAddItemOrBlock{
+public class BlockPlant extends BlockCrops {
 
     public Item seedItem;
     public Item returnItem;
@@ -43,6 +44,32 @@ public class BlockPlant extends BlockCrops implements IActAddItemOrBlock{
         this.stages = stages;
         this.minDropAmount = minDropAmount;
         this.addDropAmount = addDropAmount;
+
+        this.register();
+    }
+
+    private void register(){
+        this.setBlockName(ModUtil.MOD_ID_LOWER+"."+this.getBaseName());
+        GameRegistry.registerBlock(this, this.getItemBlock(), this.getBaseName());
+        if(this.shouldAddCreative()){
+            this.setCreativeTab(CreativeTab.instance);
+        }
+    }
+
+    public boolean shouldAddCreative(){
+        return true;
+    }
+
+    protected String getBaseName(){
+        return this.name;
+    }
+
+    protected Class<? extends ItemBlockBase> getItemBlock(){
+        return ItemBlockBase.class;
+    }
+
+    public EnumRarity getRarity(ItemStack stack){
+        return EnumRarity.rare;
     }
 
     @Override
@@ -84,18 +111,8 @@ public class BlockPlant extends BlockCrops implements IActAddItemOrBlock{
     public void registerBlockIcons(IIconRegister iconReg){
         this.textures = new IIcon[this.stages];
         for(int i = 0; i < this.textures.length; i++){
-            textures[i] = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Stage"+(i+1));
+            textures[i] = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName()+"Stage"+(i+1));
         }
-    }
-
-    @Override
-    public String getName(){
-        return this.name;
-    }
-
-    @Override
-    public EnumRarity getRarity(ItemStack stack){
-        return EnumRarity.rare;
     }
 
     @Override

@@ -12,12 +12,12 @@ package ellpeck.actuallyadditions.blocks;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import ellpeck.actuallyadditions.blocks.base.BlockBushBase;
+import ellpeck.actuallyadditions.blocks.base.BlockPlant;
+import ellpeck.actuallyadditions.blocks.base.ItemBlockBase;
 import ellpeck.actuallyadditions.blocks.metalists.TheWildPlants;
-import ellpeck.actuallyadditions.items.ItemBlockBase;
-import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import ellpeck.actuallyadditions.util.StringUtil;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockBush;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
@@ -31,11 +31,12 @@ import net.minecraftforge.common.util.ForgeDirection;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BlockWildPlant extends BlockBush implements IActAddItemOrBlock{
+public class BlockWildPlant extends BlockBushBase{
 
     public static final TheWildPlants[] allWildPlants = TheWildPlants.values();
 
-    public BlockWildPlant(){
+    public BlockWildPlant(String name){
+        super(name);
         this.setStepSound(soundTypeGrass);
     }
 
@@ -82,13 +83,13 @@ public class BlockWildPlant extends BlockBush implements IActAddItemOrBlock{
     }
 
     @Override
-    public String getName(){
-        return "blockWild";
+    public EnumRarity getRarity(ItemStack stack){
+        return stack.getItemDamage() >= allWildPlants.length ? EnumRarity.common : allWildPlants[stack.getItemDamage()].rarity;
     }
 
     @Override
-    public EnumRarity getRarity(ItemStack stack){
-        return stack.getItemDamage() >= allWildPlants.length ? EnumRarity.common : allWildPlants[stack.getItemDamage()].rarity;
+    public Class<? extends ItemBlockBase> getItemBlock(){
+        return TheItemBlock.class;
     }
 
     public static class TheItemBlock extends ItemBlockBase{
@@ -108,17 +109,6 @@ public class BlockWildPlant extends BlockBush implements IActAddItemOrBlock{
         @Override
         public String getUnlocalizedName(ItemStack stack){
             return stack.getItemDamage() >= allWildPlants.length ? StringUtil.BUGGED_ITEM_NAME : this.getUnlocalizedName()+allWildPlants[stack.getItemDamage()].name;
-        }
-
-        @Override
-        public int getMetadata(int damage){
-            return damage;
-        }
-
-        @Override
-        public EnumRarity getRarity(ItemStack stack){
-            EnumRarity rarity = ((IActAddItemOrBlock)this.field_150939_a).getRarity(stack);
-            return rarity == null ? EnumRarity.common : rarity;
         }
     }
 }

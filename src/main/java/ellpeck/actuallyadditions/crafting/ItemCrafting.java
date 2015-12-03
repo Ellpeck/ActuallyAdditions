@@ -93,7 +93,7 @@ public class ItemCrafting{
         recipeBlackDye = Util.GetRecipes.lastIRecipe();
 
         //Booklet
-        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemLexicon), new ItemStack(InitItems.itemCanolaSeed), new ItemStack(Items.paper)));
+        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemBooklet), new ItemStack(InitItems.itemCanolaSeed), new ItemStack(Items.paper)));
         recipeBook = Util.GetRecipes.lastIRecipe();
 
         //Clearing NBT Storage

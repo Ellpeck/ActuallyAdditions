@@ -12,8 +12,8 @@ package ellpeck.actuallyadditions.items;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import ellpeck.actuallyadditions.items.base.ItemBase;
 import ellpeck.actuallyadditions.items.metalists.ThePotionRings;
-import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -29,13 +29,14 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class ItemPotionRing extends Item implements IActAddItemOrBlock{
+public class ItemPotionRing extends ItemBase{
 
     public static final ThePotionRings[] allRings = ThePotionRings.values();
 
     private boolean isAdvanced;
 
-    public ItemPotionRing(boolean isAdvanced){
+    public ItemPotionRing(boolean isAdvanced, String name){
+        super(name);
         this.setHasSubtypes(true);
         this.setMaxStackSize(1);
         this.isAdvanced = isAdvanced;
@@ -108,12 +109,7 @@ public class ItemPotionRing extends Item implements IActAddItemOrBlock{
     @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister iconReg){
-        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
-    }
-
-    @Override
-    public String getName(){
-        return this.isAdvanced ? "itemPotionRingAdvanced" : "itemPotionRing";
+        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName());
     }
 
     @Override

@@ -8,15 +8,18 @@
  * © 2015 Ellpeck
  */
 
-package ellpeck.actuallyadditions.blocks;
+package ellpeck.actuallyadditions.blocks.base;
 
-import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
+
+import cpw.mods.fml.common.registry.GameRegistry;
+import ellpeck.actuallyadditions.creative.CreativeTab;
+import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockStairs;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 
-public class BlockStair extends BlockStairs implements IActAddItemOrBlock{
+public class BlockStair extends BlockStairs{
 
     private String name;
 
@@ -24,14 +27,30 @@ public class BlockStair extends BlockStairs implements IActAddItemOrBlock{
         super(block, 0);
         this.name = name;
         this.setLightOpacity(0);
+
+        this.register();
     }
 
-    @Override
-    public String getName(){
+    private void register(){
+        this.setBlockName(ModUtil.MOD_ID_LOWER+"."+this.getBaseName());
+        GameRegistry.registerBlock(this, this.getItemBlock(), this.getBaseName());
+        if(this.shouldAddCreative()){
+            this.setCreativeTab(CreativeTab.instance);
+        }
+    }
+
+    public boolean shouldAddCreative(){
+        return true;
+    }
+
+    protected String getBaseName(){
         return this.name;
     }
 
-    @Override
+    protected Class<? extends ItemBlockBase> getItemBlock(){
+        return ItemBlockBase.class;
+    }
+
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.common;
     }

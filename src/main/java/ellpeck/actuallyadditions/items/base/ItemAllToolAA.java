@@ -8,14 +8,15 @@
  * © 2015 Ellpeck
  */
 
-package ellpeck.actuallyadditions.items.tools;
+package ellpeck.actuallyadditions.items.base;
 
 import com.google.common.collect.Sets;
 import cpw.mods.fml.common.eventhandler.Event;
+import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.config.ConfigValues;
-import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
+import ellpeck.actuallyadditions.creative.CreativeTab;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -35,7 +36,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @SuppressWarnings("unchecked")
-public class ItemAllToolAA extends ItemTool implements IActAddItemOrBlock{
+public class ItemAllToolAA extends ItemTool {
 
     @SideOnly(Side.CLIENT)
     private IIcon overlayIcon;
@@ -54,6 +55,25 @@ public class ItemAllToolAA extends ItemTool implements IActAddItemOrBlock{
         this.color = color;
 
         this.setMaxDamage(this.getMaxDamage()*4);
+
+        this.register();
+    }
+
+    private void register(){
+        this.setUnlocalizedName(ModUtil.MOD_ID_LOWER+"."+this.getBaseName());
+        GameRegistry.registerItem(this, this.getBaseName());
+
+        if(this.shouldAddCreative()){
+            this.setCreativeTab(CreativeTab.instance);
+        }
+    }
+
+    public boolean shouldAddCreative(){
+        return true;
+    }
+
+    protected String getBaseName(){
+        return this.name;
     }
 
     @Override
@@ -133,11 +153,6 @@ public class ItemAllToolAA extends ItemTool implements IActAddItemOrBlock{
             }
         }
         return false;
-    }
-
-    @Override
-    public String getName(){
-        return name;
     }
 
     @Override

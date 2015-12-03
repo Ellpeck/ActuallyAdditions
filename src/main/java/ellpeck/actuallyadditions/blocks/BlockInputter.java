@@ -13,11 +13,11 @@ package ellpeck.actuallyadditions.blocks;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.ActuallyAdditions;
+import ellpeck.actuallyadditions.blocks.base.BlockContainerBase;
+import ellpeck.actuallyadditions.blocks.base.ItemBlockBase;
 import ellpeck.actuallyadditions.inventory.GuiHandler;
-import ellpeck.actuallyadditions.items.ItemBlockBase;
 import ellpeck.actuallyadditions.tile.TileEntityInputter;
 import ellpeck.actuallyadditions.tile.TileEntityInventoryBase;
-import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
 import ellpeck.actuallyadditions.util.Util;
@@ -31,14 +31,14 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
-public class BlockInputter extends BlockContainerBase implements IActAddItemOrBlock{
+public class BlockInputter extends BlockContainerBase{
 
     public static final int NAME_FLAVOR_AMOUNTS = 15;
 
     public boolean isAdvanced;
 
-    public BlockInputter(boolean isAdvanced){
-        super(Material.rock);
+    public BlockInputter(boolean isAdvanced, String name){
+        super(Material.rock, name);
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(1.5F);
         this.setResistance(10.0F);
@@ -73,12 +73,7 @@ public class BlockInputter extends BlockContainerBase implements IActAddItemOrBl
     @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconReg){
-        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
-    }
-
-    @Override
-    public String getName(){
-        return this.isAdvanced ? "blockInputterAdvanced" : "blockInputter";
+        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName());
     }
 
     @Override
@@ -96,6 +91,11 @@ public class BlockInputter extends BlockContainerBase implements IActAddItemOrBl
             }
         }
         super.breakBlock(world, x, y, z, block, par6);
+    }
+
+    @Override
+    public Class<? extends ItemBlockBase> getItemBlock(){
+        return TheItemBlock.class;
     }
 
     public static class TheItemBlock extends ItemBlockBase{
@@ -117,12 +117,6 @@ public class BlockInputter extends BlockContainerBase implements IActAddItemOrBl
         @Override
         public int getMetadata(int damage){
             return damage;
-        }
-
-        @Override
-        public EnumRarity getRarity(ItemStack stack){
-            EnumRarity rarity = ((IActAddItemOrBlock)this.field_150939_a).getRarity(stack);
-            return rarity == null ? EnumRarity.common : rarity;
         }
 
         @Override

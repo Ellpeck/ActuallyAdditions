@@ -13,10 +13,10 @@ package ellpeck.actuallyadditions.blocks;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.ActuallyAdditions;
+import ellpeck.actuallyadditions.blocks.base.BlockContainerBase;
 import ellpeck.actuallyadditions.inventory.GuiHandler;
 import ellpeck.actuallyadditions.proxy.ClientProxy;
 import ellpeck.actuallyadditions.tile.TileEntityFurnaceDouble;
-import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -33,7 +33,7 @@ import net.minecraft.world.World;
 
 import java.util.Random;
 
-public class BlockFurnaceDouble extends BlockContainerBase implements IActAddItemOrBlock{
+public class BlockFurnaceDouble extends BlockContainerBase{
 
     @SideOnly(Side.CLIENT)
     private IIcon topIcon;
@@ -42,8 +42,8 @@ public class BlockFurnaceDouble extends BlockContainerBase implements IActAddIte
     @SideOnly(Side.CLIENT)
     private IIcon frontIcon;
 
-    public BlockFurnaceDouble(){
-        super(Material.rock);
+    public BlockFurnaceDouble(String name){
+        super(Material.rock, name);
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(1.5F);
         this.setResistance(10.0F);
@@ -152,20 +152,15 @@ public class BlockFurnaceDouble extends BlockContainerBase implements IActAddIte
     @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconReg){
-        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
-        this.topIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Top");
-        this.onIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"On");
-        this.frontIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Front");
+        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName());
+        this.topIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName()+"Top");
+        this.onIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName()+"On");
+        this.frontIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName()+"Front");
     }
 
     @Override
     public int getLightValue(IBlockAccess world, int x, int y, int z){
         return world.getBlockMetadata(x, y, z) > 3 ? 12 : 0;
-    }
-
-    @Override
-    public String getName(){
-        return "blockFurnaceDouble";
     }
 
     @Override

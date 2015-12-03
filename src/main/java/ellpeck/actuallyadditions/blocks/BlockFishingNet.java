@@ -12,9 +12,9 @@ package ellpeck.actuallyadditions.blocks;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import ellpeck.actuallyadditions.blocks.base.BlockContainerBase;
 import ellpeck.actuallyadditions.tile.TileEntityFishingNet;
 import ellpeck.actuallyadditions.util.AssetUtil;
-import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.init.Blocks;
@@ -24,10 +24,10 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
-public class BlockFishingNet extends BlockContainerBase implements IActAddItemOrBlock{
+public class BlockFishingNet extends BlockContainerBase{
 
-    public BlockFishingNet(){
-        super(Material.wood);
+    public BlockFishingNet(String name){
+        super(Material.wood, name);
         this.setHarvestLevel("axe", 0);
         this.setHardness(0.5F);
         this.setResistance(3.0F);
@@ -65,11 +65,6 @@ public class BlockFishingNet extends BlockContainerBase implements IActAddItemOr
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconReg){
         this.blockIcon = Blocks.planks.getIcon(0, 0);
-    }
-
-    @Override
-    public String getName(){
-        return "blockFishingNet";
     }
 
     @Override

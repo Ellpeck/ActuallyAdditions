@@ -12,8 +12,8 @@ package ellpeck.actuallyadditions.items;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import ellpeck.actuallyadditions.items.base.ItemFoodBase;
 import ellpeck.actuallyadditions.items.metalists.TheJams;
-import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -23,7 +23,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.IIcon;
@@ -31,14 +30,14 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class ItemJams extends ItemFood implements IActAddItemOrBlock{
+public class ItemJams extends ItemFoodBase{
 
     public static final TheJams[] allJams = TheJams.values();
     @SideOnly(Side.CLIENT)
     public IIcon overlayIcon;
 
-    public ItemJams(){
-        super(0, 0.0F, false);
+    public ItemJams(String name){
+        super(0, 0.0F, false, name);
         this.setHasSubtypes(true);
         this.setMaxDamage(0);
     }
@@ -86,13 +85,8 @@ public class ItemJams extends ItemFood implements IActAddItemOrBlock{
     @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister iconReg){
-        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
-        this.overlayIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Overlay");
-    }
-
-    @Override
-    public String getName(){
-        return "itemJam";
+        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName());
+        this.overlayIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName()+"Overlay");
     }
 
     @Override

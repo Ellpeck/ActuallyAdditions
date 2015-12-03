@@ -538,7 +538,7 @@ public class BookletUtils{
 
                 if(this.assignedEntry != null){
                     GL11.glPushMatrix();
-                    BookletPage.renderItem(booklet, this.assignedChapter != null && this.assignedChapter.displayStack != null ? this.assignedChapter.displayStack : new ItemStack(InitItems.itemLexicon), this.xPosition+2, this.yPosition+1, 0.725F);
+                    BookletPage.renderItem(booklet, this.assignedChapter != null && this.assignedChapter.displayStack != null ? this.assignedChapter.displayStack : new ItemStack(InitItems.itemBooklet), this.xPosition+2, this.yPosition+1, 0.725F);
                     GL11.glPopMatrix();
                 }
             }

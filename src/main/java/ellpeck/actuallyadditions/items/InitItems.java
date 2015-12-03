@@ -11,14 +11,13 @@
 package ellpeck.actuallyadditions.items;
 
 import ellpeck.actuallyadditions.blocks.InitBlocks;
+import ellpeck.actuallyadditions.items.base.*;
 import ellpeck.actuallyadditions.items.metalists.TheFoods;
 import ellpeck.actuallyadditions.items.metalists.TheMiscItems;
-import ellpeck.actuallyadditions.items.tools.*;
 import ellpeck.actuallyadditions.material.InitArmorMaterials;
 import ellpeck.actuallyadditions.material.InitToolMaterials;
 import ellpeck.actuallyadditions.recipe.ReconstructorRecipeHandler;
 import ellpeck.actuallyadditions.util.CompatUtil;
-import ellpeck.actuallyadditions.util.ItemUtil;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumRarity;
@@ -28,7 +27,7 @@ import net.minecraftforge.fluids.FluidContainerRegistry;
 
 public class InitItems{
 
-    public static Item itemLexicon;
+    public static Item itemBooklet;
 
     public static Item itemFertilizer;
     public static Item itemMisc;
@@ -138,69 +137,35 @@ public class InitItems{
         ModUtil.LOGGER.info("Initializing Items...");
 
         itemColorLens = new ItemLens("itemColorLens", ReconstructorRecipeHandler.LensType.COLOR);
-        ItemUtil.register(itemColorLens);
-
         itemExplosionLens = new ItemLens("itemExplosionLens", ReconstructorRecipeHandler.LensType.DETONATION);
-        ItemUtil.register(itemExplosionLens);
-
         itemDamageLens = new ItemLens("itemDamageLens", ReconstructorRecipeHandler.LensType.JUST_DAMAGE);
-        ItemUtil.register(itemDamageLens);
-
-        itemCrystal = new ItemCrystal();
-        ItemUtil.register(itemCrystal);
-
-        itemLaserWrench = new ItemLaserWrench();
-        ItemUtil.register(itemLaserWrench);
-
-        itemChestToCrateUpgrade = new ItemChestToCrateUpgrade();
-        ItemUtil.register(itemChestToCrateUpgrade);
-
-        itemLexicon = new ItemBooklet();
-        ItemUtil.register(itemLexicon);
-
-        itemGrowthRing = new ItemGrowthRing();
-        ItemUtil.register(itemGrowthRing);
-
-        itemMagnetRing = new ItemMagnetRing();
-        ItemUtil.register(itemMagnetRing);
-
-        itemWaterRemovalRing = new ItemWaterRemovalRing();
-        ItemUtil.register(itemWaterRemovalRing);
-
+        itemCrystal = new ItemCrystal("itemCrystal");
+        itemLaserWrench = new ItemLaserWrench("itemLaserWrench");
+        itemChestToCrateUpgrade = new ItemChestToCrateUpgrade("itemChestToCrateUpgrade");
+        itemBooklet = new ItemBooklet("itemBooklet");
+        itemGrowthRing = new ItemGrowthRing("itemGrowthRing");
+        itemMagnetRing = new ItemMagnetRing("itemSuctionRing");
+        itemWaterRemovalRing = new ItemWaterRemovalRing("itemWaterRemovalRing");
         itemHelmEmerald = new ItemArmorAA("itemHelmEmerald", InitArmorMaterials.armorMaterialEmerald, 0, "gemEmerald", "armorEmerald");
         itemChestEmerald = new ItemArmorAA("itemChestEmerald", InitArmorMaterials.armorMaterialEmerald, 1, "gemEmerald", "armorEmerald");
         itemPantsEmerald = new ItemArmorAA("itemPantsEmerald", InitArmorMaterials.armorMaterialEmerald, 2, "gemEmerald", "armorEmerald");
         itemBootsEmerald = new ItemArmorAA("itemBootsEmerald", InitArmorMaterials.armorMaterialEmerald, 3, "gemEmerald", "armorEmerald");
-        ItemUtil.registerItems(new Item[]{itemHelmEmerald, itemChestEmerald, itemPantsEmerald, itemBootsEmerald});
-
         itemHelmObsidian = new ItemArmorAA("itemHelmObsidian", InitArmorMaterials.armorMaterialObsidian, 0, "obsidian", "armorObsidian");
         itemChestObsidian = new ItemArmorAA("itemChestObsidian", InitArmorMaterials.armorMaterialObsidian, 1, "obsidian", "armorObsidian");
         itemPantsObsidian = new ItemArmorAA("itemPantsObsidian", InitArmorMaterials.armorMaterialObsidian, 2, "obsidian", "armorObsidian");
         itemBootsObsidian = new ItemArmorAA("itemBootsObsidian", InitArmorMaterials.armorMaterialObsidian, 3, "obsidian", "armorObsidian");
-        ItemUtil.registerItems(new Item[]{itemHelmObsidian, itemChestObsidian, itemPantsObsidian, itemBootsObsidian});
-
         itemHelmQuartz = new ItemArmorAA("itemHelmQuartz", InitArmorMaterials.armorMaterialQuartz, 0, "gemQuartzBlack", "armorQuartz");
         itemChestQuartz = new ItemArmorAA("itemChestQuartz", InitArmorMaterials.armorMaterialQuartz, 1, "gemQuartzBlack", "armorQuartz");
         itemPantsQuartz = new ItemArmorAA("itemPantsQuartz", InitArmorMaterials.armorMaterialQuartz, 2, "gemQuartzBlack", "armorQuartz");
         itemBootsQuartz = new ItemArmorAA("itemBootsQuartz", InitArmorMaterials.armorMaterialQuartz, 3, "gemQuartzBlack", "armorQuartz");
-        ItemUtil.registerItems(new Item[]{itemHelmQuartz, itemChestQuartz, itemPantsQuartz, itemBootsQuartz});
-
-        itemTeleStaff = new ItemTeleStaff();
-        ItemUtil.register(itemTeleStaff);
-
-        itemWingsOfTheBats = new ItemWingsOfTheBats();
-        ItemUtil.register(itemWingsOfTheBats);
-
-        itemDrill = new ItemDrill();
-        ItemUtil.register(itemDrill);
-
+        itemTeleStaff = new ItemTeleStaff("itemTeleStaff");
+        itemWingsOfTheBats = new ItemWingsOfTheBats("itemWingsOfTheBats");
+        itemDrill = new ItemDrill("itemDrill");
         itemBattery = new ItemBattery("itemBattery", 1000000, 5000);
         itemBatteryDouble = new ItemBattery("itemBatteryDouble", 2000000, 10000);
         itemBatteryTriple = new ItemBattery("itemBatteryTriple", 3000000, 15000);
         itemBatteryQuadruple = new ItemBattery("itemBatteryQuadruple", 4000000, 20000);
         itemBatteryQuintuple = new ItemBattery("itemBatteryQuintuple", 5000000, 25000);
-        ItemUtil.registerItems(new Item[]{itemBattery, itemBatteryDouble, itemBatteryTriple, itemBatteryQuadruple, itemBatteryQuintuple});
-
         itemDrillUpgradeSpeed = new ItemDrillUpgrade(ItemDrillUpgrade.UpgradeType.SPEED, "itemDrillUpgradeSpeed");
         itemDrillUpgradeSpeedII = new ItemDrillUpgrade(ItemDrillUpgrade.UpgradeType.SPEED_II, "itemDrillUpgradeSpeedII");
         itemDrillUpgradeSpeedIII = new ItemDrillUpgrade(ItemDrillUpgrade.UpgradeType.SPEED_III, "itemDrillUpgradeSpeedIII");
@@ -210,104 +175,50 @@ public class InitItems{
         itemDrillUpgradeThreeByThree = new ItemDrillUpgrade(ItemDrillUpgrade.UpgradeType.THREE_BY_THREE, "itemDrillUpgradeThreeByThree");
         itemDrillUpgradeFiveByFive = new ItemDrillUpgrade(ItemDrillUpgrade.UpgradeType.FIVE_BY_FIVE, "itemDrillUpgradeFiveByFive");
         itemDrillUpgradeBlockPlacing = new ItemDrillUpgrade(ItemDrillUpgrade.UpgradeType.PLACER, "itemDrillUpgradeBlockPlacing");
-        ItemUtil.registerItems(new Item[]{itemDrillUpgradeSpeed, itemDrillUpgradeSpeedII, itemDrillUpgradeSpeedIII, itemDrillUpgradeSilkTouch, itemDrillUpgradeFortune, itemDrillUpgradeFortuneII, itemDrillUpgradeThreeByThree, itemDrillUpgradeFiveByFive, itemDrillUpgradeBlockPlacing});
-
         itemBucketOil = new ItemBucketAA(InitBlocks.blockOil, "itemBucketOil");
-        ItemUtil.register(itemBucketOil);
         FluidContainerRegistry.registerFluidContainer(InitBlocks.fluidOil, new ItemStack(itemBucketOil), FluidContainerRegistry.EMPTY_BUCKET);
-
         itemBucketCanolaOil = new ItemBucketAA(InitBlocks.blockCanolaOil, "itemBucketCanolaOil");
-        ItemUtil.register(itemBucketCanolaOil);
         FluidContainerRegistry.registerFluidContainer(InitBlocks.fluidCanolaOil, new ItemStack(itemBucketCanolaOil), FluidContainerRegistry.EMPTY_BUCKET);
-
-        itemFertilizer = new ItemFertilizer();
-        ItemUtil.register(itemFertilizer);
-
-        itemCoffee = new ItemCoffee();
-        ItemUtil.register(itemCoffee);
-
-        itemPhantomConnector = new ItemPhantomConnector();
-        ItemUtil.register(itemPhantomConnector);
-
-        itemResonantRice = new ItemResonantRice();
-        ItemUtil.register(itemResonantRice);
-
-        itemMisc = new ItemMisc();
-        ItemUtil.register(itemMisc);
-
-        itemFoods = new ItemFoods();
-        ItemUtil.register(itemFoods);
-
-        itemJams = new ItemJams();
-        ItemUtil.register(itemJams);
-
-        itemKnife = new ItemKnife();
-        ItemUtil.register(itemKnife);
-
-        itemCrafterOnAStick = new ItemCrafterOnAStick();
-        ItemUtil.register(itemCrafterOnAStick);
-
-        itemDust = new ItemDust();
-        ItemUtil.register(itemDust);
-
-        itemSpecialDrop = new ItemSpecialDrop();
-        ItemUtil.register(itemSpecialDrop);
-
-        itemLeafBlower = new ItemLeafBlower(false);
-        ItemUtil.register(itemLeafBlower);
-
-        itemLeafBlowerAdvanced = new ItemLeafBlower(true);
-        ItemUtil.register(itemLeafBlowerAdvanced);
-
-        itemPotionRing = new ItemPotionRing(false);
-        ItemUtil.register(itemPotionRing);
-
-        itemPotionRingAdvanced = new ItemPotionRing(true);
-        ItemUtil.register(itemPotionRingAdvanced);
-
-        itemHairyBall = new ItemHairyBall();
-        ItemUtil.register(itemHairyBall);
-
-        itemCoffeeBean = new ItemCoffeeBean();
-        ItemUtil.register(itemCoffeeBean);
-
+        itemFertilizer = new ItemFertilizer("itemFertilizer");
+        itemCoffee = new ItemCoffee("itemCoffee");
+        itemPhantomConnector = new ItemPhantomConnector("itemPhantomConnector");
+        itemResonantRice = new ItemResonantRice("itemResonantRice");
+        itemMisc = new ItemMisc("itemMisc");
+        itemFoods = new ItemFoods("itemFood");
+        itemJams = new ItemJams("itemJam");
+        itemKnife = new ItemKnife("itemKnife");
+        itemCrafterOnAStick = new ItemCrafterOnAStick("itemCrafterOnAStick");
+        itemDust = new ItemDust("itemDust");
+        itemSpecialDrop = new ItemSpecialDrop("itemSpecial");
+        itemLeafBlower = new ItemLeafBlower(false, "itemLeafBlower");
+        itemLeafBlowerAdvanced = new ItemLeafBlower(true, "itemLeafBlowerAdvanced");
+        itemPotionRing = new ItemPotionRing(false, "itemPotionRing");
+        itemPotionRingAdvanced = new ItemPotionRing(true, "itemPotionRingAdvanced");
+        itemHairyBall = new ItemHairyBall("itemHairyBall");
+        itemCoffeeBean = new ItemCoffeeBean("itemCoffeeBeans");
         itemRiceSeed = new ItemSeed("itemRiceSeed", "seedRice", InitBlocks.blockRice, itemFoods, TheFoods.RICE.ordinal());
-        ItemUtil.register(itemRiceSeed);
         CompatUtil.registerMFRSeed(itemRiceSeed);
-
         itemCanolaSeed = new ItemSeed("itemCanolaSeed", "seedCanola", InitBlocks.blockCanola, itemMisc, TheMiscItems.CANOLA.ordinal());
-        ItemUtil.register(itemCanolaSeed);
         CompatUtil.registerMFRSeed(itemCanolaSeed);
-
         itemFlaxSeed = new ItemSeed("itemFlaxSeed", "seedFlax", InitBlocks.blockFlax, Items.string, 0);
-        ItemUtil.register(itemFlaxSeed);
         CompatUtil.registerMFRSeed(itemFlaxSeed);
-
         itemCoffeeSeed = new ItemSeed("itemCoffeeSeed", "seedCoffeeBeans", InitBlocks.blockCoffee, itemCoffeeBean, 0);
-        ItemUtil.register(itemCoffeeSeed);
         CompatUtil.registerMFRSeed(itemCoffeeSeed);
-
         itemPickaxeEmerald = new ItemPickaxeAA(InitToolMaterials.toolMaterialEmerald, "gemEmerald", "itemPickaxeEmerald", EnumRarity.epic);
         itemAxeEmerald = new ItemAxeAA(InitToolMaterials.toolMaterialEmerald, "gemEmerald", "itemAxeEmerald", EnumRarity.epic);
         itemShovelEmerald = new ItemShovelAA(InitToolMaterials.toolMaterialEmerald, "gemEmerald", "itemShovelEmerald", EnumRarity.epic);
         itemSwordEmerald = new ItemSwordAA(InitToolMaterials.toolMaterialEmerald, "gemEmerald", "itemSwordEmerald", EnumRarity.epic);
         itemHoeEmerald = new ItemHoeAA(InitToolMaterials.toolMaterialEmerald, "gemEmerald", "itemHoeEmerald", EnumRarity.epic);
-        ItemUtil.registerItems(new Item[]{itemPickaxeEmerald, itemAxeEmerald, itemShovelEmerald, itemSwordEmerald, itemHoeEmerald});
-
         itemPickaxeObsidian = new ItemPickaxeAA(InitToolMaterials.toolMaterialObsidian, "obsidian", "itemPickaxeObsidian", EnumRarity.uncommon);
         itemAxeObsidian = new ItemAxeAA(InitToolMaterials.toolMaterialObsidian, "obsidian", "itemAxeObsidian", EnumRarity.uncommon);
         itemShovelObsidian = new ItemShovelAA(InitToolMaterials.toolMaterialObsidian, "obsidian", "itemShovelObsidian", EnumRarity.uncommon);
         itemSwordObsidian = new ItemSwordAA(InitToolMaterials.toolMaterialObsidian, "obsidian", "itemSwordObsidian", EnumRarity.uncommon);
         itemHoeObsidian = new ItemHoeAA(InitToolMaterials.toolMaterialObsidian, "obsidian", "itemHoeObsidian", EnumRarity.uncommon);
-        ItemUtil.registerItems(new Item[]{itemPickaxeObsidian, itemAxeObsidian, itemShovelObsidian, itemSwordObsidian, itemHoeObsidian});
-
         itemPickaxeQuartz = new ItemPickaxeAA(InitToolMaterials.toolMaterialQuartz, "gemQuartzBlack", "itemPickaxeQuartz", EnumRarity.rare);
         itemAxeQuartz = new ItemAxeAA(InitToolMaterials.toolMaterialQuartz, "gemQuartzBlack", "itemAxeQuartz", EnumRarity.rare);
         itemShovelQuartz = new ItemShovelAA(InitToolMaterials.toolMaterialQuartz, "gemQuartzBlack", "itemShovelQuartz", EnumRarity.rare);
         itemSwordQuartz = new ItemSwordAA(InitToolMaterials.toolMaterialQuartz, "gemQuartzBlack", "itemSwordQuartz", EnumRarity.rare);
         itemHoeQuartz = new ItemHoeAA(InitToolMaterials.toolMaterialQuartz, "gemQuartzBlack", "itemHoeQuartz", EnumRarity.rare);
-        ItemUtil.registerItems(new Item[]{itemPickaxeQuartz, itemAxeQuartz, itemShovelQuartz, itemSwordQuartz, itemHoeQuartz});
-
         woodenPaxel = new ItemAllToolAA(Item.ToolMaterial.WOOD, "plankWood", "woodenPaxel", EnumRarity.uncommon, 5192733);
         stonePaxel = new ItemAllToolAA(Item.ToolMaterial.STONE, "stone", "stonePaxel", EnumRarity.uncommon, 7040621);
         ironPaxel = new ItemAllToolAA(Item.ToolMaterial.IRON, "ingotIron", "ironPaxel", EnumRarity.rare, 10920613);
@@ -316,6 +227,5 @@ public class InitItems{
         emeraldPaxel = new ItemAllToolAA(InitToolMaterials.toolMaterialEmerald, "gemEmerald", "emeraldPaxel", EnumRarity.epic, 7723338);
         obsidianPaxel = new ItemAllToolAA(InitToolMaterials.toolMaterialObsidian, "obsidian", "obsidianPaxel", EnumRarity.epic, 4166);
         quartzPaxel = new ItemAllToolAA(InitToolMaterials.toolMaterialQuartz, "gemQuartzBlack", "quartzPaxel", EnumRarity.rare, 1710103);
-        ItemUtil.registerItems(new Item[]{woodenPaxel, stonePaxel, ironPaxel, goldPaxel, diamondPaxel, emeraldPaxel, obsidianPaxel, quartzPaxel});
     }
 }

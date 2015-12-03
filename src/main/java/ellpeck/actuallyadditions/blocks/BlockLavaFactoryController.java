@@ -12,8 +12,8 @@ package ellpeck.actuallyadditions.blocks;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import ellpeck.actuallyadditions.blocks.base.BlockContainerBase;
 import ellpeck.actuallyadditions.tile.TileEntityLavaFactoryController;
-import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
 import net.minecraft.block.material.Material;
@@ -26,13 +26,13 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
-public class BlockLavaFactoryController extends BlockContainerBase implements IActAddItemOrBlock{
+public class BlockLavaFactoryController extends BlockContainerBase{
 
     @SideOnly(Side.CLIENT)
     private IIcon topIcon;
 
-    public BlockLavaFactoryController(){
-        super(Material.rock);
+    public BlockLavaFactoryController(String name){
+        super(Material.rock, name);
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(4.5F);
         this.setResistance(20.0F);
@@ -72,13 +72,8 @@ public class BlockLavaFactoryController extends BlockContainerBase implements IA
     @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconReg){
-        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
-        this.topIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Top");
-    }
-
-    @Override
-    public String getName(){
-        return "blockLavaFactoryController";
+        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName());
+        this.topIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName()+"Top");
     }
 
     @Override

@@ -10,10 +10,10 @@
 
 package ellpeck.actuallyadditions.items;
 
+import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ellpeck.actuallyadditions.blocks.BlockPlant;
-import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
+import ellpeck.actuallyadditions.blocks.base.BlockPlant;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -25,7 +25,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 
-public class ItemSeed extends ItemSeeds implements IActAddItemOrBlock{
+public class ItemSeed extends ItemSeeds{
 
     public Block plant;
     public String name;
@@ -39,6 +39,17 @@ public class ItemSeed extends ItemSeeds implements IActAddItemOrBlock{
         ((BlockPlant)this.plant).seedItem = this;
         ((BlockPlant)this.plant).returnItem = returnItem;
         ((BlockPlant)this.plant).returnMeta = returnMeta;
+
+        this.register();
+    }
+
+    private void register(){
+        this.setUnlocalizedName(ModUtil.MOD_ID_LOWER+":"+this.getBaseName());
+        GameRegistry.registerItem(this, this.getBaseName());
+    }
+
+    protected String getBaseName(){
+        return this.name;
     }
 
     @Override
@@ -49,18 +60,13 @@ public class ItemSeed extends ItemSeeds implements IActAddItemOrBlock{
     @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister iconReg){
-        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
+        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName());
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public IIcon getIcon(ItemStack stack, int pass){
         return this.itemIcon;
-    }
-
-    @Override
-    public String getName(){
-        return this.name;
     }
 
     @Override

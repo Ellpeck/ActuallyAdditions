@@ -12,9 +12,9 @@ package ellpeck.actuallyadditions.blocks;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import ellpeck.actuallyadditions.blocks.base.BlockContainerBase;
 import ellpeck.actuallyadditions.tile.TileEntityFurnaceSolar;
 import ellpeck.actuallyadditions.util.AssetUtil;
-import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
@@ -26,10 +26,10 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
-public class BlockFurnaceSolar extends BlockContainerBase implements IActAddItemOrBlock{
+public class BlockFurnaceSolar extends BlockContainerBase{
 
-    public BlockFurnaceSolar(){
-        super(Material.rock);
+    public BlockFurnaceSolar(String name){
+        super(Material.rock, name);
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(1.5F);
         this.setResistance(10.0F);
@@ -79,11 +79,6 @@ public class BlockFurnaceSolar extends BlockContainerBase implements IActAddItem
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconReg){
         this.blockIcon = Blocks.daylight_detector.getIcon(0, 0);
-    }
-
-    @Override
-    public String getName(){
-        return "blockFurnaceSolar";
     }
 
     @Override

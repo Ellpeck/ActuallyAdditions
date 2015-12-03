@@ -12,9 +12,9 @@ package ellpeck.actuallyadditions.blocks;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import ellpeck.actuallyadditions.blocks.base.BlockContainerBase;
 import ellpeck.actuallyadditions.tile.TileEntityLaserRelay;
 import ellpeck.actuallyadditions.util.AssetUtil;
-import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.init.Blocks;
@@ -25,10 +25,10 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockLaserRelay extends BlockContainerBase implements IActAddItemOrBlock{
+public class BlockLaserRelay extends BlockContainerBase{
 
-    public BlockLaserRelay(){
-        super(Material.rock);
+    public BlockLaserRelay(String name){
+        super(Material.rock, name);
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(1.5F);
         this.setResistance(10.0F);
@@ -90,11 +90,6 @@ public class BlockLaserRelay extends BlockContainerBase implements IActAddItemOr
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconReg){
         this.blockIcon = Blocks.stone.getIcon(0, 0);
-    }
-
-    @Override
-    public String getName(){
-        return "blockLaserRelay";
     }
 
     @Override

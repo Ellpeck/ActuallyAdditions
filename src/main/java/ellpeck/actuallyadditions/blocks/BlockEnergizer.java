@@ -13,10 +13,10 @@ package ellpeck.actuallyadditions.blocks;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.ActuallyAdditions;
+import ellpeck.actuallyadditions.blocks.base.BlockContainerBase;
 import ellpeck.actuallyadditions.inventory.GuiHandler;
 import ellpeck.actuallyadditions.tile.TileEntityEnergizer;
 import ellpeck.actuallyadditions.tile.TileEntityEnervator;
-import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -28,7 +28,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
-public class BlockEnergizer extends BlockContainerBase implements IActAddItemOrBlock{
+public class BlockEnergizer extends BlockContainerBase{
 
     @SideOnly(Side.CLIENT)
     private IIcon topIcon;
@@ -36,8 +36,8 @@ public class BlockEnergizer extends BlockContainerBase implements IActAddItemOrB
     private IIcon sideIcon;
     private boolean isEnergizer;
 
-    public BlockEnergizer(boolean isEnergizer){
-        super(Material.rock);
+    public BlockEnergizer(boolean isEnergizer, String name){
+        super(Material.rock, name);
         this.isEnergizer = isEnergizer;
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(2.0F);
@@ -79,14 +79,9 @@ public class BlockEnergizer extends BlockContainerBase implements IActAddItemOrB
     @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconReg){
-        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
-        this.topIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Top");
-        this.sideIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Side");
-    }
-
-    @Override
-    public String getName(){
-        return this.isEnergizer ? "blockEnergizer" : "blockEnervator";
+        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName());
+        this.topIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName()+"Top");
+        this.sideIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName()+"Side");
     }
 
     @Override

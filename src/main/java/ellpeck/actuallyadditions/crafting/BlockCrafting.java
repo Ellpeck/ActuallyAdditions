@@ -85,7 +85,7 @@ public class BlockCrafting{
     public static void init(){
 
         //Book Stand
-        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitBlocks.blockBookletStand), new ItemStack(InitItems.itemLexicon), "plankWood"));
+        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitBlocks.blockBookletStand), new ItemStack(InitItems.itemBooklet), "plankWood"));
         recipeBookStand = Util.GetRecipes.lastIRecipe();
 
         //White Ethetic Blocks

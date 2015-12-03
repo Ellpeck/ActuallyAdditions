@@ -16,7 +16,7 @@ import ellpeck.actuallyadditions.config.values.ConfigBoolValues;
 import ellpeck.actuallyadditions.config.values.ConfigCrafting;
 import ellpeck.actuallyadditions.crafting.ToolCrafting;
 import ellpeck.actuallyadditions.creative.CreativeTab;
-import ellpeck.actuallyadditions.items.tools.ItemAllToolAA;
+import ellpeck.actuallyadditions.items.base.ItemAllToolAA;
 import ellpeck.actuallyadditions.util.ItemUtil;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.Util;
@@ -61,7 +61,6 @@ public class InitForeignPaxels{
                     if(axe != null && pickaxe != null && hoe != null && sword != null && shovel != null && axe instanceof ItemTool){
                         Item.ToolMaterial material = ((ItemTool)axe).func_150913_i();
                         soPaxels[i] = new ItemAllToolAA(material, SO_REPAIR_NAMES[i], "paxelSO"+SO_NAMES[i], EnumRarity.rare, SO_COLORS[i]);
-                        ItemUtil.register(soPaxels[i]);
 
                         if(ConfigCrafting.PAXELS.isEnabled()){
                             GameRegistry.addRecipe(new ShapelessOreRecipe(soPaxels[i], axe, pickaxe, hoe, sword, shovel));
@@ -90,7 +89,6 @@ public class InitForeignPaxels{
                     if(axe != null && pickaxe != null && hoe != null && sword != null && shovel != null && axe instanceof ItemTool){
                         Item.ToolMaterial material = ((ItemTool)axe).func_150913_i();
                         mtPaxels[i] = new ItemAllToolAA(material, MT_REPAIR_NAMES[i], "paxelMT"+MT_NAMES[i], EnumRarity.rare, MT_COLORS[i]);
-                        ItemUtil.register(mtPaxels[i]);
 
                         if(ConfigCrafting.PAXELS.isEnabled()){
                             GameRegistry.addRecipe(new ShapelessOreRecipe(mtPaxels[i], axe, pickaxe, hoe, sword, shovel));
@@ -119,7 +117,6 @@ public class InitForeignPaxels{
                     if(axe != null && pickaxe != null && hoe != null && sword != null && shovel != null && axe instanceof ItemTool){
                         Item.ToolMaterial material = ((ItemTool)axe).func_150913_i();
                         tfPaxels[i] = new ItemAllToolAA(material, "ingot"+TF_NAMES[i], "paxelTF"+TF_NAMES[i], EnumRarity.rare, TF_COLORS[i]);
-                        ItemUtil.register(tfPaxels[i]);
 
                         if(ConfigCrafting.PAXELS.isEnabled()){
                             GameRegistry.addRecipe(new ShapelessOreRecipe(tfPaxels[i], axe, pickaxe, hoe, sword, shovel));

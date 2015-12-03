@@ -12,9 +12,9 @@ package ellpeck.actuallyadditions.blocks;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import ellpeck.actuallyadditions.blocks.base.BlockBase;
+import ellpeck.actuallyadditions.blocks.base.ItemBlockBase;
 import ellpeck.actuallyadditions.blocks.metalists.TheColoredLampColors;
-import ellpeck.actuallyadditions.items.ItemBlockBase;
-import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
 import net.minecraft.block.Block;
@@ -33,24 +33,19 @@ import net.minecraftforge.oredict.OreDictionary;
 import java.util.List;
 import java.util.Random;
 
-public class BlockColoredLamp extends Block implements IActAddItemOrBlock{
+public class BlockColoredLamp extends BlockBase{
 
     public static TheColoredLampColors[] allLampTypes = TheColoredLampColors.values();
     public boolean isOn;
     @SideOnly(Side.CLIENT)
     private IIcon[] textures;
 
-    public BlockColoredLamp(boolean isOn){
-        super(Material.redstoneLight);
+    public BlockColoredLamp(boolean isOn, String name){
+        super(Material.redstoneLight, name);
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(0.5F);
         this.setResistance(3.0F);
         this.isOn = isOn;
-    }
-
-    @Override
-    public String getName(){
-        return this.isOn ? "blockColoredLampOn" : "blockColoredLamp";
     }
 
     @Override
@@ -131,13 +126,18 @@ public class BlockColoredLamp extends Block implements IActAddItemOrBlock{
     public void registerBlockIcons(IIconRegister iconReg){
         this.textures = new IIcon[allLampTypes.length];
         for(int i = 0; i < allLampTypes.length; i++){
-            this.textures[i] = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+((IActAddItemOrBlock)InitBlocks.blockColoredLamp).getName()+allLampTypes[i].name+(isOn ? "On" : ""));
+            this.textures[i] = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName()+allLampTypes[i].name+(isOn ? "On" : ""));
         }
     }
 
     @Override
     public int getLightValue(IBlockAccess world, int x, int y, int z){
         return this.isOn ? 15 : 0;
+    }
+
+    @Override
+    public Class<? extends ItemBlockBase> getItemBlock(){
+        return TheItemBlock.class;
     }
 
     public static class TheItemBlock extends ItemBlockBase{
@@ -159,17 +159,6 @@ public class BlockColoredLamp extends Block implements IActAddItemOrBlock{
         @Override
         public String getUnlocalizedName(ItemStack stack){
             return InitBlocks.blockColoredLamp.getUnlocalizedName()+allLampTypes[stack.getItemDamage()].name;
-        }
-
-        @Override
-        public int getMetadata(int damage){
-            return damage;
-        }
-
-        @Override
-        public EnumRarity getRarity(ItemStack stack){
-            EnumRarity rarity = ((IActAddItemOrBlock)this.field_150939_a).getRarity(stack);
-            return rarity == null ? EnumRarity.common : rarity;
         }
     }
 }

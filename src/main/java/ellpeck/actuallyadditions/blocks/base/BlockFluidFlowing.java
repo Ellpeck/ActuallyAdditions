@@ -8,11 +8,12 @@
  * © 2015 Ellpeck
  */
 
-package ellpeck.actuallyadditions.blocks;
+package ellpeck.actuallyadditions.blocks.base;
 
+import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
+import ellpeck.actuallyadditions.creative.CreativeTab;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -24,12 +25,13 @@ import net.minecraft.world.World;
 import net.minecraftforge.fluids.BlockFluidClassic;
 import net.minecraftforge.fluids.Fluid;
 
-public class BlockFluidFlowing extends BlockFluidClassic implements IActAddItemOrBlock{
+public class BlockFluidFlowing extends BlockFluidClassic{
 
     @SideOnly(Side.CLIENT)
     public IIcon stillIcon;
     @SideOnly(Side.CLIENT)
     public IIcon flowingIcon;
+
     private String name;
 
     public BlockFluidFlowing(Fluid fluid, Material material, String unlocalizedName){
@@ -37,6 +39,28 @@ public class BlockFluidFlowing extends BlockFluidClassic implements IActAddItemO
         this.name = unlocalizedName;
         this.setRenderPass(1);
         displacements.put(this, false);
+
+        this.register();
+    }
+
+    private void register(){
+        this.setBlockName(ModUtil.MOD_ID_LOWER+"."+this.getBaseName());
+        GameRegistry.registerBlock(this, this.getItemBlock(), this.getBaseName());
+        if(this.shouldAddCreative()){
+            this.setCreativeTab(CreativeTab.instance);
+        }
+    }
+
+    public boolean shouldAddCreative(){
+        return true;
+    }
+
+    protected String getBaseName(){
+        return this.name;
+    }
+
+    protected Class<? extends ItemBlockBase> getItemBlock(){
+        return ItemBlockBase.class;
     }
 
     @Override
@@ -58,17 +82,11 @@ public class BlockFluidFlowing extends BlockFluidClassic implements IActAddItemO
     @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconReg){
-        this.stillIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Still");
-        this.flowingIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+"Flowing");
+        this.stillIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName()+"Still");
+        this.flowingIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName()+"Flowing");
         this.definedFluid.setIcons(this.stillIcon, this.flowingIcon);
     }
 
-    @Override
-    public String getName(){
-        return this.name;
-    }
-
-    @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.epic;
     }

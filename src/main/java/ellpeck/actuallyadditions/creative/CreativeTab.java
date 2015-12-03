@@ -39,7 +39,7 @@ public class CreativeTab extends CreativeTabs{
 
     @Override
     public Item getTabIconItem(){
-        return InitItems.itemLexicon;
+        return InitItems.itemBooklet;
     }
 
     @Override
@@ -47,7 +47,7 @@ public class CreativeTab extends CreativeTabs{
     public void displayAllReleventItems(List list){
         this.list = list;
 
-        add(InitItems.itemLexicon);
+        add(InitItems.itemBooklet);
         add(InitBlocks.blockSmileyCloud);
         add(InitBlocks.blockBookletStand);
 

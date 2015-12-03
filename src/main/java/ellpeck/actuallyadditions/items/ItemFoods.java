@@ -12,28 +12,31 @@ package ellpeck.actuallyadditions.items;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import ellpeck.actuallyadditions.items.base.ItemFoodBase;
 import ellpeck.actuallyadditions.items.metalists.TheFoods;
-import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.*;
+import net.minecraft.item.EnumAction;
+import net.minecraft.item.EnumRarity;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
 import java.util.List;
 
-public class ItemFoods extends ItemFood implements IActAddItemOrBlock{
+public class ItemFoods extends ItemFoodBase{
 
     public static final TheFoods[] allFoods = TheFoods.values();
     @SideOnly(Side.CLIENT)
     public IIcon[] textures;
 
-    public ItemFoods(){
-        super(0, 0.0F, false);
+    public ItemFoods(String name){
+        super(0, 0.0F, false, name);
         this.setHasSubtypes(true);
         this.setMaxDamage(0);
         TheFoods.setReturnItems();
@@ -109,12 +112,7 @@ public class ItemFoods extends ItemFood implements IActAddItemOrBlock{
     public void registerIcons(IIconRegister iconReg){
         this.textures = new IIcon[allFoods.length];
         for(int i = 0; i < textures.length; i++){
-            textures[i] = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName()+allFoods[i].name);
+            textures[i] = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName()+allFoods[i].name);
         }
-    }
-
-    @Override
-    public String getName(){
-        return "itemFood";
     }
 }

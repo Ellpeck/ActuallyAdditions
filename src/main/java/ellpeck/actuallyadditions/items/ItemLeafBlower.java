@@ -13,7 +13,7 @@ package ellpeck.actuallyadditions.items;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.config.values.ConfigBoolValues;
-import ellpeck.actuallyadditions.util.IActAddItemOrBlock;
+import ellpeck.actuallyadditions.items.base.ItemBase;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.WorldPos;
 import net.minecraft.block.Block;
@@ -23,7 +23,6 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.EnumRarity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
@@ -32,11 +31,12 @@ import net.minecraft.world.World;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class ItemLeafBlower extends Item implements IActAddItemOrBlock{
+public class ItemLeafBlower extends ItemBase{
 
     private final boolean isAdvanced;
 
-    public ItemLeafBlower(boolean isAdvanced){
+    public ItemLeafBlower(boolean isAdvanced, String name){
+        super(name);
         this.isAdvanced = isAdvanced;
         this.setMaxStackSize(1);
     }
@@ -66,7 +66,7 @@ public class ItemLeafBlower extends Item implements IActAddItemOrBlock{
     @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister iconReg){
-        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getName());
+        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName());
     }
 
     @Override
@@ -135,10 +135,5 @@ public class ItemLeafBlower extends Item implements IActAddItemOrBlock{
     @SideOnly(Side.CLIENT)
     public IIcon getIcon(ItemStack stack, int pass){
         return this.itemIcon;
-    }
-
-    @Override
-    public String getName(){
-        return this.isAdvanced ? "itemLeafBlowerAdvanced" : "itemLeafBlower";
     }
 }
