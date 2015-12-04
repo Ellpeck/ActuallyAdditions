@@ -31,11 +31,13 @@ public class TileEntityGreenhouseGlass extends TileEntityBase{
                     this.timeUntilNextFert--;
                     if(timeUntilNextFert <= 0){
                         WorldPos blockToFert = this.blockToFertilize();
-                        int metaBefore = blockToFert.getMetadata();
-                        worldObj.getBlock(blockToFert.getX(), blockToFert.getY(), blockToFert.getZ()).updateTick(worldObj, blockToFert.getX(), blockToFert.getY(), blockToFert.getZ(), Util.RANDOM);
+                        if(this.blockToFertilize() != null){
+                            int metaBefore = blockToFert.getMetadata();
+                            worldObj.getBlock(blockToFert.getX(), blockToFert.getY(), blockToFert.getZ()).updateTick(worldObj, blockToFert.getX(), blockToFert.getY(), blockToFert.getZ(), Util.RANDOM);
 
-                        if(blockToFert.getMetadata() != metaBefore){
-                            worldObj.playAuxSFX(2005, blockToFert.getX(), blockToFert.getY(), blockToFert.getZ(), 0);
+                            if(blockToFert.getMetadata() != metaBefore){
+                                worldObj.playAuxSFX(2005, blockToFert.getX(), blockToFert.getY(), blockToFert.getZ(), 0);
+                            }
                         }
                     }
                 }
