@@ -168,10 +168,16 @@ public class GuiBooklet extends GuiScreen{
 
     @Override
     public void keyTyped(char theChar, int key){
-        if(key == Keyboard.KEY_ESCAPE && this.parentScreen != null){
-            this.mc.displayGuiScreen(this.parentScreen);
+        if(key == Keyboard.KEY_ESCAPE || key == Minecraft.getMinecraft().gameSettings.keyBindInventory.getKeyCode()){
+            if(this.parentScreen != null){
+                this.mc.displayGuiScreen(this.parentScreen);
+            }
+            else{
+                this.mc.displayGuiScreen(null);
+                this.mc.setIngameFocus();
+            }
         }
-        else if(this.searchField.isFocused() && key != Keyboard.KEY_ESCAPE){
+        else if(this.searchField.isFocused()){
             this.searchField.textboxKeyTyped(theChar, key);
             BookletUtils.updateSearchBar(this);
         }
@@ -188,7 +194,6 @@ public class GuiBooklet extends GuiScreen{
             }
             else{
                 this.hisNameIsAt = 0;
-                super.keyTyped(theChar, key);
             }
         }
     }
