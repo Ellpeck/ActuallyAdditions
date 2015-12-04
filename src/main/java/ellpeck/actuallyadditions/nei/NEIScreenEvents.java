@@ -16,6 +16,7 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import ellpeck.actuallyadditions.booklet.BookletUtils;
 import ellpeck.actuallyadditions.booklet.GuiBooklet;
 import ellpeck.actuallyadditions.booklet.InitBooklet;
+import ellpeck.actuallyadditions.booklet.button.TexturedButton;
 import ellpeck.actuallyadditions.booklet.page.BookletPage;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
@@ -25,7 +26,7 @@ import net.minecraftforge.client.event.GuiScreenEvent;
 public class NEIScreenEvents{
 
     private static final int NEI_BUTTON_ID = 123782;
-    private BookletUtils.TexturedButton neiButton;
+    private TexturedButton neiButton;
 
     @SuppressWarnings("unchecked")
     @SubscribeEvent
@@ -38,7 +39,7 @@ public class NEIScreenEvents{
             int guiLeft = (event.gui.width-xSize)/2;
             int guiTop = (event.gui.height-ySize)/2;
 
-            this.neiButton = new BookletUtils.TexturedButton(NEI_BUTTON_ID, guiLeft+xSize-24, guiTop+127, 146, 154, 20, 20){
+            this.neiButton = new TexturedButton(NEI_BUTTON_ID, guiLeft+xSize-24, guiTop+127, 146, 154, 20, 20){
                 @Override
                 public void drawButton(Minecraft minecraft, int x, int y){
                     super.drawButton(minecraft, x, y);

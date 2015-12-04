@@ -12,7 +12,6 @@ package ellpeck.actuallyadditions.inventory.gui;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ellpeck.actuallyadditions.booklet.GuiBooklet;
 import ellpeck.actuallyadditions.inventory.ContainerInputter;
 import ellpeck.actuallyadditions.network.PacketHandler;
 import ellpeck.actuallyadditions.network.gui.PacketGuiButton;
@@ -125,7 +124,7 @@ public class GuiInputter extends GuiContainer{
         this.whitelistPut.displayString = this.tileInputter.isPutWhitelist ? "O" : "X";
 
         if(this.isAdvanced){
-            List infoList = this.fontRendererObj.listFormattedStringToWidth(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID_LOWER+".inputter.whitelistInfo"), GuiBooklet.TOOLTIP_SPLIT_LENGTH);
+            List infoList = this.fontRendererObj.listFormattedStringToWidth(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID_LOWER+".inputter.whitelistInfo"), 200);
             String text1 = this.tileInputter.isPullWhitelist ? StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.whitelist") : StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.blacklist");
             if(x >= guiLeft+3 && y >= guiTop+16 && x <= guiLeft+18 && y <= guiTop+31){
                 ArrayList list = new ArrayList();
@@ -145,16 +144,16 @@ public class GuiInputter extends GuiContainer{
         int newTopOffset = this.guiTop+(this.isAdvanced ? OFFSET_ADVANCED : 0);
         //Info Mode on!
         if(x >= guiLeft+11 && y >= newTopOffset+65 && x <= guiLeft+11+31 && y <= newTopOffset+65+12){
-            this.func_146283_a(this.fontRendererObj.listFormattedStringToWidth(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID_LOWER+".inputter.info.1").replace("<p>", StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.pull")), GuiBooklet.TOOLTIP_SPLIT_LENGTH), x, y);
+            this.func_146283_a(this.fontRendererObj.listFormattedStringToWidth(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID_LOWER+".inputter.info.1").replace("<p>", StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.pull")), 200), x, y);
         }
         if(x >= guiLeft+96 && y >= newTopOffset+65 && x <= guiLeft+96+31 && y <= newTopOffset+65+12){
-            this.func_146283_a(this.fontRendererObj.listFormattedStringToWidth(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID_LOWER+".inputter.info.1").replace("<p>", StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.put")), GuiBooklet.TOOLTIP_SPLIT_LENGTH), x, y);
+            this.func_146283_a(this.fontRendererObj.listFormattedStringToWidth(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID_LOWER+".inputter.info.1").replace("<p>", StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.put")), 200), x, y);
         }
         if(x >= guiLeft+48 && y >= newTopOffset+65 && x <= guiLeft+48+31 && y <= newTopOffset+65+12){
-            this.func_146283_a(this.fontRendererObj.listFormattedStringToWidth(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID_LOWER+".inputter.info.2").replace("<p>", StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.pull")), GuiBooklet.TOOLTIP_SPLIT_LENGTH), x, y);
+            this.func_146283_a(this.fontRendererObj.listFormattedStringToWidth(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID_LOWER+".inputter.info.2").replace("<p>", StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.pull")), 200), x, y);
         }
         if(x >= guiLeft+133 && y >= newTopOffset+65 && x <= guiLeft+133+31 && y <= newTopOffset+65+12){
-            this.func_146283_a(this.fontRendererObj.listFormattedStringToWidth(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID_LOWER+".inputter.info.2").replace("<p>", StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.put")), GuiBooklet.TOOLTIP_SPLIT_LENGTH), x, y);
+            this.func_146283_a(this.fontRendererObj.listFormattedStringToWidth(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID_LOWER+".inputter.info.2").replace("<p>", StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.put")), 200), x, y);
         }
     }
 

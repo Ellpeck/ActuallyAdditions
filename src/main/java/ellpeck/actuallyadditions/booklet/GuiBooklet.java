@@ -12,6 +12,9 @@ package ellpeck.actuallyadditions.booklet;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import ellpeck.actuallyadditions.booklet.button.BookmarkButton;
+import ellpeck.actuallyadditions.booklet.button.IndexButton;
+import ellpeck.actuallyadditions.booklet.button.TexturedButton;
 import ellpeck.actuallyadditions.booklet.chapter.BookletChapter;
 import ellpeck.actuallyadditions.booklet.entry.BookletEntry;
 import ellpeck.actuallyadditions.booklet.entry.BookletEntryAllSearch;
@@ -20,7 +23,9 @@ import ellpeck.actuallyadditions.config.GuiConfiguration;
 import ellpeck.actuallyadditions.proxy.ClientProxy;
 import ellpeck.actuallyadditions.update.UpdateChecker;
 import ellpeck.actuallyadditions.util.AssetUtil;
+import ellpeck.actuallyadditions.util.KeyUtil;
 import ellpeck.actuallyadditions.util.ModUtil;
+import ellpeck.actuallyadditions.util.StringUtil;
 import ellpeck.actuallyadditions.util.playerdata.PersistentClientData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
@@ -28,10 +33,14 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
+import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.IChatComponent;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @SideOnly(Side.CLIENT)
@@ -43,7 +52,6 @@ public class GuiBooklet extends GuiScreen{
     public static final ResourceLocation resLocValentine = AssetUtil.getBookletGuiLocation("guiBookletValentinesDay");
 
     public static final int CHAPTER_BUTTONS_AMOUNT = 13;
-    public static final int TOOLTIP_SPLIT_LENGTH = 200;
 
     public int xSize;
     public int ySize;
@@ -93,6 +101,10 @@ public class GuiBooklet extends GuiScreen{
 
     public FontRenderer getFontRenderer(){
         return this.fontRendererObj;
+    }
+
+    public List getButtonList(){
+        return this.buttonList;
     }
 
     @Override
@@ -214,61 +226,82 @@ public class GuiBooklet extends GuiScreen{
         }
         //Handles gonig from page to chapter or from chapter to index
         else if(button == this.buttonPreviousScreen){
-            if(this.currentChapter != null){
-                BookletUtils.openIndexEntry(this, this.currentIndexEntry, this.pageOpenInIndex, true);
+            if(KeyUtil.isShiftPressed()){
+                if(this.currentChapter != null){
+                    BookletUtils.openIndexEntry(this, this.currentIndexEntry, this.pageOpenInIndex, true);
+                }
+                else{
+                    BookletUtils.openIndexEntry(this, null, 1, true);
+                }
             }
             else{
-                BookletUtils.openIndexEntry(this, null, 1, true);
+                //TODO History
             }
         }
         //Handles Bookmark button
-        else if(button instanceof BookletUtils.BookmarkButton){
-            ((BookletUtils.BookmarkButton)button).onPressed();
+        else if(button instanceof BookmarkButton){
+            ((BookmarkButton)button).onPressed();
         }
         else{
             BookletUtils.handleChapterButtonClick(this, button);
         }
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "MismatchedQueryAndUpdateOfCollection"})
     @Override
     public void initGui(){
         this.guiLeft = (this.width-this.xSize)/2;
         this.guiTop = (this.height-this.ySize)/2;
 
-        this.buttonForward = new BookletUtils.TexturedButton(0, this.guiLeft+this.xSize-26, this.guiTop+this.ySize+1, 164, 0, 18, 10);
+        this.buttonForward = new TexturedButton(0, this.guiLeft+this.xSize-26, this.guiTop+this.ySize+1, 164, 0, 18, 10, Collections.singletonList(EnumChatFormatting.GOLD+"Next Page"));
         this.buttonList.add(this.buttonForward);
 
-        this.buttonBackward = new BookletUtils.TexturedButton(1, this.guiLeft+8, this.guiTop+this.ySize+1, 146, 0, 18, 10);
+        this.buttonBackward = new TexturedButton(1, this.guiLeft+8, this.guiTop+this.ySize+1, 146, 0, 18, 10, Collections.singletonList(EnumChatFormatting.GOLD+"Previous Page"));
         this.buttonList.add(this.buttonBackward);
 
-        this.buttonPreviousScreen = new BookletUtils.TexturedButton(2, this.guiLeft+this.xSize/2-7, this.guiTop+this.ySize+1, 182, 0, 15, 10);
+        List prevScreenHover = new ArrayList<>();
+        prevScreenHover.add(EnumChatFormatting.GOLD+"Back");
+        prevScreenHover.add("Click for last item in history");
+        prevScreenHover.add(EnumChatFormatting.ITALIC+"Shift-Click for Chapter");
+        this.buttonPreviousScreen = new TexturedButton(2, this.guiLeft+this.xSize/2-7, this.guiTop+this.ySize+1, 182, 0, 15, 10, prevScreenHover);
         this.buttonList.add(this.buttonPreviousScreen);
 
-        this.buttonUpdate = new BookletUtils.TexturedButton(4, this.guiLeft-11, this.guiTop-11, 245, 0, 11, 11);
+        ArrayList updateHover = new ArrayList();
+        if(UpdateChecker.checkFailed){
+            updateHover.add(IChatComponent.Serializer.func_150699_a(StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".update.failed")).getFormattedText());
+        }
+        else if(UpdateChecker.needsUpdateNotify){
+            updateHover.add(IChatComponent.Serializer.func_150699_a(StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".update.generic")).getFormattedText());
+            updateHover.add(IChatComponent.Serializer.func_150699_a(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID_LOWER+".update.versionCompare", ModUtil.VERSION, UpdateChecker.updateVersion)).getFormattedText());
+            updateHover.add(StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".update.buttonOptions"));
+        }
+        this.buttonUpdate = new TexturedButton(4, this.guiLeft-11, this.guiTop-11, 245, 0, 11, 11, updateHover);
         this.buttonUpdate.visible = UpdateChecker.needsUpdateNotify;
         this.buttonList.add(this.buttonUpdate);
 
-        this.buttonTwitter = new BookletUtils.TexturedButton(5, this.guiLeft, this.guiTop, 213, 0, 8, 8);
+        this.buttonTwitter = new TexturedButton(5, this.guiLeft, this.guiTop, 213, 0, 8, 8, Collections.singletonList(EnumChatFormatting.GOLD+"Open @ActAddMod on Twitter in Browser"));
         this.buttonList.add(this.buttonTwitter);
 
-        this.buttonForum = new BookletUtils.TexturedButton(6, this.guiLeft, this.guiTop+10, 221, 0, 8, 8);
+        this.buttonForum = new TexturedButton(6, this.guiLeft, this.guiTop+10, 221, 0, 8, 8, Collections.singletonList(EnumChatFormatting.GOLD+"Open Minecraft Forum Post in Browser"));
         this.buttonList.add(this.buttonForum);
 
-        this.buttonAchievements = new BookletUtils.TexturedButton(7, this.guiLeft+138, this.guiTop, 205, 0, 8, 8);
+        this.buttonAchievements = new TexturedButton(7, this.guiLeft+138, this.guiTop, 205, 0, 8, 8, Collections.singletonList(EnumChatFormatting.GOLD+"Show Achievements"));
         this.buttonList.add(this.buttonAchievements);
 
-        this.buttonConfig = new BookletUtils.TexturedButton(8, this.guiLeft+138, this.guiTop+10, 197, 0, 8, 8);
+        ArrayList configHover = new ArrayList();
+        configHover.add(EnumChatFormatting.GOLD+"Show Configuration GUI");
+        configHover.addAll(this.fontRendererObj.listFormattedStringToWidth("It is highly recommended that you restart your game after changing anything as that prevents possible bugs occuring!", 200));
+        this.buttonConfig = new TexturedButton(8, this.guiLeft+138, this.guiTop+10, 197, 0, 8, 8, configHover);
         this.buttonList.add(this.buttonConfig);
 
         for(int i = 0; i < this.chapterButtons.length; i++){
-            this.chapterButtons[i] = new BookletUtils.IndexButton(9+i, guiLeft+15, guiTop+10+(i*12), 115, 10, "", this);
+            this.chapterButtons[i] = new IndexButton(9+i, guiLeft+15, guiTop+10+(i*12), 115, 10, "", this);
             this.buttonList.add(this.chapterButtons[i]);
         }
 
         for(int i = 0; i < this.bookmarkButtons.length; i++){
             int x = this.guiLeft+xSize/2-(this.bookmarkButtons.length/2*16)+(i*16);
-            this.bookmarkButtons[i] = new BookletUtils.BookmarkButton(this.chapterButtons[this.chapterButtons.length-1].id+1+i, x, this.guiTop+this.ySize+13, this);
+            this.bookmarkButtons[i] = new BookmarkButton(this.chapterButtons[this.chapterButtons.length-1].id+1+i, x, this.guiTop+this.ySize+13, this);
             this.buttonList.add(this.bookmarkButtons[i]);
         }
 
@@ -305,7 +338,7 @@ public class GuiBooklet extends GuiScreen{
         this.buttonUpdate.visible = buttonThere;
         if(buttonThere){
             if(this.ticksElapsed%8 == 0){
-                BookletUtils.TexturedButton button = (BookletUtils.TexturedButton)this.buttonUpdate;
+                TexturedButton button = (TexturedButton)this.buttonUpdate;
                 button.setTexturePos(245, button.texturePosY == 0 ? 22 : 0);
             }
         }

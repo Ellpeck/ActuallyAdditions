@@ -15,6 +15,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.booklet.BookletUtils;
 import ellpeck.actuallyadditions.booklet.GuiBooklet;
 import ellpeck.actuallyadditions.booklet.InitBooklet;
+import ellpeck.actuallyadditions.booklet.button.BookmarkButton;
 import ellpeck.actuallyadditions.booklet.chapter.BookletChapter;
 import ellpeck.actuallyadditions.booklet.entry.BookletEntry;
 import ellpeck.actuallyadditions.booklet.page.BookletPage;
@@ -48,7 +49,7 @@ public class PersistentClientData{
         //Save Bookmarks
         NBTTagList list = new NBTTagList();
         for(int i = 0; i < gui.bookmarkButtons.length; i++){
-            BookletUtils.BookmarkButton button = (BookletUtils.BookmarkButton)gui.bookmarkButtons[i];
+            BookmarkButton button = (BookmarkButton)gui.bookmarkButtons[i];
 
             NBTTagCompound compound = new NBTTagCompound();
             compound.setInteger("Entry", button.assignedEntry == null ? -1 : InitBooklet.entries.indexOf(button.assignedEntry));
@@ -144,7 +145,7 @@ public class PersistentClientData{
             NBTTagList list = worldCompound.getTagList("Bookmarks", 10);
             if(list != null){
                 for(int i = 0; i < list.tagCount(); i++){
-                    BookletUtils.BookmarkButton button = (BookletUtils.BookmarkButton)gui.bookmarkButtons[i];
+                    BookmarkButton button = (BookmarkButton)gui.bookmarkButtons[i];
                     NBTTagCompound compound = list.getCompoundTagAt(i);
 
                     int entry = compound.getInteger("Entry");

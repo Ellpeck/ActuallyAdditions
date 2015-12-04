@@ -11,7 +11,6 @@
 package ellpeck.actuallyadditions.event;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import ellpeck.actuallyadditions.booklet.GuiBooklet;
 import ellpeck.actuallyadditions.config.values.ConfigBoolValues;
 import ellpeck.actuallyadditions.util.KeyUtil;
 import ellpeck.actuallyadditions.util.ModUtil;
@@ -67,7 +66,7 @@ public class TooltipEvent{
                     }
 
                     //Disabling Info
-                    event.toolTip.addAll(Minecraft.getMinecraft().fontRenderer.listFormattedStringToWidth(EnumChatFormatting.ITALIC+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".disablingInfo.desc"), GuiBooklet.TOOLTIP_SPLIT_LENGTH));
+                    event.toolTip.addAll(Minecraft.getMinecraft().fontRenderer.listFormattedStringToWidth(EnumChatFormatting.ITALIC+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".disablingInfo.desc"), 200));
                 }
                 else{
                     if(ConfigBoolValues.CTRL_INFO_FOR_EXTRA_INFO.isEnabled()){

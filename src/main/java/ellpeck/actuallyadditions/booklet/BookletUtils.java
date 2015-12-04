@@ -11,26 +11,22 @@
 package ellpeck.actuallyadditions.booklet;
 
 import ellpeck.actuallyadditions.achievement.InitAchievements;
+import ellpeck.actuallyadditions.booklet.button.BookmarkButton;
+import ellpeck.actuallyadditions.booklet.button.IndexButton;
+import ellpeck.actuallyadditions.booklet.button.TexturedButton;
 import ellpeck.actuallyadditions.booklet.chapter.BookletChapter;
 import ellpeck.actuallyadditions.booklet.entry.BookletEntry;
 import ellpeck.actuallyadditions.booklet.entry.BookletEntryAllSearch;
 import ellpeck.actuallyadditions.booklet.page.BookletPage;
-import ellpeck.actuallyadditions.items.InitItems;
-import ellpeck.actuallyadditions.update.UpdateChecker;
 import ellpeck.actuallyadditions.util.*;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.Achievement;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.IChatComponent;
-import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
 import java.net.URI;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Locale;
 
 public class BookletUtils{
@@ -152,43 +148,14 @@ public class BookletUtils{
      */
     @SuppressWarnings("unchecked")
     public static void doHoverTexts(GuiBooklet booklet, int mouseX, int mouseY){
-        //Achievements Hover Text
-        if(booklet.buttonAchievements.func_146115_a()){
-            booklet.drawHoveringText(Collections.singletonList(EnumChatFormatting.GOLD+"Show Achievements"), mouseX, mouseY);
-        }
-        //Config Hover Text
-        else if(booklet.buttonConfig.func_146115_a()){
-            ArrayList list = new ArrayList();
-            list.add(EnumChatFormatting.GOLD+"Show Configuration GUI");
-            list.addAll(booklet.getFontRenderer().listFormattedStringToWidth("It is highly recommended that you restart your game after changing anything as that prevents possible bugs occuring!", GuiBooklet.TOOLTIP_SPLIT_LENGTH));
-            booklet.drawHoveringText(list, mouseX, mouseY);
-
-        }
-        //Twitter Hover Text
-        else if(booklet.buttonTwitter.func_146115_a()){
-            booklet.drawHoveringText(Collections.singletonList(EnumChatFormatting.GOLD+"Open @ActAddMod on Twitter in Browser"), mouseX, mouseY);
-        }
-        //Forum Hover Text
-        else if(booklet.buttonForum.func_146115_a()){
-            booklet.drawHoveringText(Collections.singletonList(EnumChatFormatting.GOLD+"Open Minecraft Forum Post in Browser"), mouseX, mouseY);
-        }
-        //Update Checker Hover Text
-        else if(booklet.buttonUpdate.func_146115_a()){
-            ArrayList list = new ArrayList();
-            if(UpdateChecker.checkFailed){
-                list.add(IChatComponent.Serializer.func_150699_a(StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".update.failed")).getFormattedText());
-            }
-            else if(UpdateChecker.needsUpdateNotify){
-                list.add(IChatComponent.Serializer.func_150699_a(StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".update.generic")).getFormattedText());
-                list.add(IChatComponent.Serializer.func_150699_a(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID_LOWER+".update.versionCompare", ModUtil.VERSION, UpdateChecker.updateVersion)).getFormattedText());
-                list.add(StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".update.buttonOptions"));
-            }
-            booklet.drawHoveringText(list, mouseX, mouseY);
-        }
-        else{
-            for(GuiButton button : booklet.bookmarkButtons){
-                if(button instanceof BookmarkButton && button.func_146115_a()){
+        //Update all of the buttons' hovering texts
+        for(Object button : booklet.getButtonList()){
+            if(button instanceof GuiButton && ((GuiButton)button).visible && ((GuiButton)button).func_146115_a()){
+                if(button instanceof BookmarkButton){
                     ((BookmarkButton)button).drawHover(mouseX, mouseY);
+                }
+                else if(button instanceof TexturedButton){
+                    booklet.drawHoveringText(((TexturedButton)button).textList, mouseX, mouseY);
                 }
             }
         }
@@ -406,164 +373,5 @@ public class BookletUtils{
             }
         }
         return possiblePages;
-    }
-
-    public static class IndexButton extends GuiButton{
-
-        public BookletChapter chap;
-        private GuiBooklet gui;
-
-        public IndexButton(int id, int x, int y, int width, int height, String text, GuiBooklet gui){
-            super(id, x, y, width, height, text);
-            this.gui = gui;
-        }
-
-        @Override
-        public void drawButton(Minecraft minecraft, int mouseX, int mouseY){
-            if(this.visible){
-                GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-                this.field_146123_n = mouseX >= this.xPosition && mouseY >= this.yPosition && mouseX < this.xPosition+this.width && mouseY < this.yPosition+this.height;
-                GL11.glEnable(GL11.GL_BLEND);
-                OpenGlHelper.glBlendFunc(770, 771, 1, 0);
-                GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-                this.mouseDragged(minecraft, mouseX, mouseY);
-
-                int textOffsetX = 0;
-                if(this.chap != null){
-                    if(this.chap.displayStack != null){
-                        GL11.glPushMatrix();
-                        BookletPage.renderItem(this.gui, this.chap.displayStack, this.xPosition-4, this.yPosition, 0.725F);
-                        GL11.glPopMatrix();
-                        textOffsetX = 10;
-                    }
-                }
-
-                if(this.field_146123_n){
-                    GL11.glPushMatrix();
-                    AssetUtil.drawHorizontalGradientRect(this.xPosition+textOffsetX-1, this.yPosition+this.height-1, this.xPosition+this.gui.getFontRenderer().getStringWidth(this.displayString)+textOffsetX+1, this.yPosition+this.height, 0x80 << 24 | 22271, 22271);
-                    GL11.glPopMatrix();
-                }
-
-                this.gui.getFontRenderer().drawString(this.displayString, this.xPosition+textOffsetX, this.yPosition+(this.height-8)/2, 0);
-            }
-        }
-    }
-
-    public static class TexturedButton extends GuiButton{
-
-        public int texturePosX;
-        public int texturePosY;
-
-        public TexturedButton(int id, int x, int y, int texturePosX, int texturePosY, int width, int height){
-            super(id, x, y, width, height, "");
-            this.texturePosX = texturePosX;
-            this.texturePosY = texturePosY;
-        }
-
-        public void setTexturePos(int x, int y){
-            this.texturePosX = x;
-            this.texturePosY = y;
-        }
-
-        @Override
-        public void drawButton(Minecraft minecraft, int x, int y){
-            if(this.visible){
-                minecraft.getTextureManager().bindTexture(GuiBooklet.resLoc);
-                GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-                this.field_146123_n = x >= this.xPosition && y >= this.yPosition && x < this.xPosition+this.width && y < this.yPosition+this.height;
-                int k = this.getHoverState(this.field_146123_n);
-                if(k == 0){
-                    k = 1;
-                }
-                GL11.glEnable(GL11.GL_BLEND);
-                OpenGlHelper.glBlendFunc(770, 771, 1, 0);
-                GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-                this.drawTexturedModalRect(this.xPosition, this.yPosition, this.texturePosX, this.texturePosY-this.height+k*this.height, this.width, this.height);
-                this.mouseDragged(minecraft, x, y);
-            }
-        }
-    }
-
-    public static class BookmarkButton extends GuiButton{
-
-        public BookletChapter assignedChapter;
-        public BookletPage assignedPage;
-        public BookletEntry assignedEntry;
-        public int assignedPageInIndex;
-
-        private GuiBooklet booklet;
-
-        public BookmarkButton(int id, int x, int y, GuiBooklet booklet){
-            super(id, x, y, 16, 16, "");
-            this.booklet = booklet;
-        }
-
-        public void onPressed(){
-            if(this.assignedEntry != null){
-                if(KeyUtil.isShiftPressed()){
-                    this.assignedEntry = null;
-                    this.assignedChapter = null;
-                    this.assignedPage = null;
-                    this.assignedPageInIndex = 1;
-                }
-                else{
-                    openIndexEntry(this.booklet, this.assignedEntry, this.assignedPageInIndex, true);
-                    openChapter(this.booklet, this.assignedChapter, this.assignedPage);
-                }
-            }
-            else{
-                if(this.booklet.currentIndexEntry != null){
-                    this.assignedEntry = this.booklet.currentIndexEntry;
-                    this.assignedChapter = this.booklet.currentChapter;
-                    this.assignedPage = this.booklet.currentPage;
-                    this.assignedPageInIndex = this.booklet.pageOpenInIndex;
-                }
-            }
-        }        @Override
-        public void drawButton(Minecraft minecraft, int x, int y){
-            if(this.visible){
-                minecraft.getTextureManager().bindTexture(GuiBooklet.resLoc);
-                GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-                this.field_146123_n = x >= this.xPosition && y >= this.yPosition && x < this.xPosition+this.width && y < this.yPosition+this.height;
-                int k = this.getHoverState(this.field_146123_n);
-                if(k == 0){
-                    k = 1;
-                }
-                GL11.glEnable(GL11.GL_BLEND);
-                OpenGlHelper.glBlendFunc(770, 771, 1, 0);
-                GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-                int renderHeight = 25;
-                this.drawTexturedModalRect(this.xPosition, this.yPosition, 146+(this.assignedEntry == null ? 0 : 16), 194-renderHeight+k*renderHeight, this.width, renderHeight);
-                this.mouseDragged(minecraft, x, y);
-
-                if(this.assignedEntry != null){
-                    GL11.glPushMatrix();
-                    BookletPage.renderItem(booklet, this.assignedChapter != null && this.assignedChapter.displayStack != null ? this.assignedChapter.displayStack : new ItemStack(InitItems.itemBooklet), this.xPosition+2, this.yPosition+1, 0.725F);
-                    GL11.glPopMatrix();
-                }
-            }
-        }
-
-        @SuppressWarnings("unchecked")
-        public void drawHover(int mouseX, int mouseY){
-            ArrayList list = new ArrayList();
-            if(this.assignedEntry != null){
-                if(this.assignedChapter != null){
-                    list.add(EnumChatFormatting.GOLD+this.assignedChapter.getLocalizedName()+", Page "+this.assignedPage.getID());
-                }
-                else{
-                    list.add(EnumChatFormatting.GOLD+this.assignedEntry.getLocalizedName()+", Page "+this.assignedPageInIndex);
-                }
-                list.add("Click to open");
-                list.add(EnumChatFormatting.ITALIC+"Shift-Click to remove");
-            }
-            else{
-                list.add(EnumChatFormatting.GOLD+"None");
-                list.add("Click to save current page");
-            }
-            this.booklet.drawHoveringText(list, mouseX, mouseY);
-        }
-
-
     }
 }
