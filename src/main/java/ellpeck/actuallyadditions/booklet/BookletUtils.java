@@ -335,7 +335,9 @@ public class BookletUtils{
                 booklet.buttonBackward.visible = getPrevPage(booklet.currentEntrySet.chapter, booklet.currentEntrySet.page) != null;
             }
             else{
-                openIndexEntry(booklet, booklet.currentEntrySet.entry, booklet.currentEntrySet.pageInIndex+1, !(booklet.currentEntrySet.entry instanceof BookletEntryAllSearch));
+                if(booklet.currentEntrySet.pageInIndex+1 <= booklet.indexPageAmount){
+                    openIndexEntry(booklet, booklet.currentEntrySet.entry, booklet.currentEntrySet.pageInIndex+1, !(booklet.currentEntrySet.entry instanceof BookletEntryAllSearch));
+                }
             }
         }
     }
@@ -355,7 +357,9 @@ public class BookletUtils{
                 booklet.buttonBackward.visible = getPrevPage(booklet.currentEntrySet.chapter, booklet.currentEntrySet.page) != null;
             }
             else{
-                openIndexEntry(booklet, booklet.currentEntrySet.entry, booklet.currentEntrySet.pageInIndex-1, !(booklet.currentEntrySet.entry instanceof BookletEntryAllSearch));
+                if(booklet.currentEntrySet.pageInIndex-1 > 0){
+                    openIndexEntry(booklet, booklet.currentEntrySet.entry, booklet.currentEntrySet.pageInIndex-1, !(booklet.currentEntrySet.entry instanceof BookletEntryAllSearch));
+                }
             }
         }
     }

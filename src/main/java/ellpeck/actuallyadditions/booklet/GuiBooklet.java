@@ -20,7 +20,6 @@ import ellpeck.actuallyadditions.config.GuiConfiguration;
 import ellpeck.actuallyadditions.proxy.ClientProxy;
 import ellpeck.actuallyadditions.update.UpdateChecker;
 import ellpeck.actuallyadditions.util.AssetUtil;
-import ellpeck.actuallyadditions.util.KeyUtil;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
 import ellpeck.actuallyadditions.util.playerdata.PersistentClientData;
@@ -34,6 +33,7 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
 import java.util.ArrayList;
@@ -152,6 +152,21 @@ public class GuiBooklet extends GuiScreen{
     }
 
     @Override
+    //For scrolling through pages
+    public void handleMouseInput(){
+        int wheel = Mouse.getEventDWheel();
+        if(wheel != 0){
+            if(wheel > 0){
+                BookletUtils.handleNextPage(this);
+            }
+            else if(wheel < 0){
+                BookletUtils.handlePreviousPage(this);
+            }
+        }
+        super.handleMouseInput();
+    }
+
+    @Override
     public void keyTyped(char theChar, int key){
         if(key == Keyboard.KEY_ESCAPE && this.parentScreen != null){
             this.mc.displayGuiScreen(this.parentScreen);
@@ -181,9 +196,18 @@ public class GuiBooklet extends GuiScreen{
     @Override
     protected void mouseClicked(int par1, int par2, int par3){
         this.searchField.mouseClicked(par1, par2, par3);
-        //Notifys the booklet of the mouse being pressed
+        //Left mouse button
         if(par3 == 0 && this.currentEntrySet.chapter != null){
             this.mousePressed = true;
+        }
+        //Right mouse button
+        else if(par3 == 1){
+            if(this.currentEntrySet.chapter != null){
+                BookletUtils.openIndexEntry(this, this.currentEntrySet.entry, this.currentEntrySet.pageInIndex, true);
+            }
+            else{
+                BookletUtils.openIndexEntry(this, null, 1, true);
+            }
         }
         super.mouseClicked(par1, par2, par3);
     }
@@ -220,16 +244,11 @@ public class GuiBooklet extends GuiScreen{
         }
         //Handles gonig from page to chapter or from chapter to index
         else if(button == this.buttonPreviousScreen){
-            if(KeyUtil.isShiftPressed()){
-                if(this.currentEntrySet.chapter != null){
-                    BookletUtils.openIndexEntry(this, this.currentEntrySet.entry, this.currentEntrySet.pageInIndex, true);
-                }
-                else{
-                    BookletUtils.openIndexEntry(this, null, 1, true);
-                }
+            if(this.currentEntrySet.chapter != null){
+                BookletUtils.openIndexEntry(this, this.currentEntrySet.entry, this.currentEntrySet.pageInIndex, true);
             }
             else{
-                //TODO History
+                BookletUtils.openIndexEntry(this, null, 1, true);
             }
         }
         //Handles Bookmark button
@@ -253,11 +272,7 @@ public class GuiBooklet extends GuiScreen{
         this.buttonBackward = new TexturedButton(1, this.guiLeft+8, this.guiTop+this.ySize+1, 146, 0, 18, 10, Collections.singletonList(EnumChatFormatting.GOLD+"Previous Page"));
         this.buttonList.add(this.buttonBackward);
 
-        List prevScreenHover = new ArrayList<>();
-        prevScreenHover.add(EnumChatFormatting.GOLD+"Back");
-        prevScreenHover.add("Click for last item in history");
-        prevScreenHover.add(EnumChatFormatting.ITALIC+"Shift-Click for Chapter");
-        this.buttonPreviousScreen = new TexturedButton(2, this.guiLeft+this.xSize/2-7, this.guiTop+this.ySize+1, 182, 0, 15, 10, prevScreenHover);
+        this.buttonPreviousScreen = new TexturedButton(2, this.guiLeft+this.xSize/2-7, this.guiTop+this.ySize+1, 182, 0, 15, 10, Collections.singletonList(EnumChatFormatting.GOLD+"Back"));
         this.buttonList.add(this.buttonPreviousScreen);
 
         ArrayList updateHover = new ArrayList();
