@@ -17,12 +17,16 @@ import codechicken.nei.recipe.TemplateRecipeHandler;
 import ellpeck.actuallyadditions.blocks.InitBlocks;
 import ellpeck.actuallyadditions.booklet.BookletUtils;
 import ellpeck.actuallyadditions.booklet.page.BookletPage;
+import ellpeck.actuallyadditions.items.lens.LensColor;
 import ellpeck.actuallyadditions.items.lens.LensNoneRecipeHandler;
 import ellpeck.actuallyadditions.util.ItemUtil;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
+import ellpeck.actuallyadditions.util.Util;
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import org.lwjgl.opengl.GL11;
 
@@ -58,9 +62,26 @@ public class NEIReconstructorRecipe extends TemplateRecipeHandler implements INE
     @Override
     public void loadCraftingRecipes(String outputId, Object... results){
         if(outputId.equals(NAME) && getClass() == NEIReconstructorRecipe.class){
+            //Default Recipes
             ArrayList<LensNoneRecipeHandler.Recipe> recipes = LensNoneRecipeHandler.recipes;
             for(LensNoneRecipeHandler.Recipe recipe : recipes){
                 arecipes.add(new CachedReconstructorRecipe(recipe));
+            }
+            //Color Recipes
+            for(Object o : LensColor.CONVERTABLE_BLOCKS){
+                ItemStack stack;
+                if(o instanceof Block){
+                    stack = new ItemStack((Block)o);
+                }
+                else{
+                    stack = new ItemStack((Item)o);
+                }
+                for(int i = 0; i < 16; i++){
+                    ItemStack stackCopy = stack.copy();
+                    stackCopy.setItemDamage(i >= 15 ? 0 : i+1);
+                    stack.setItemDamage(i);
+                    arecipes.add(new CachedReconstructorRecipe(new LensNoneRecipeHandler.Recipe(stack, stackCopy, LensColor.ENERGY_USE)));
+                }
             }
         }
         else{
@@ -71,22 +92,38 @@ public class NEIReconstructorRecipe extends TemplateRecipeHandler implements INE
     @Override
     public void loadCraftingRecipes(ItemStack result){
         ArrayList<LensNoneRecipeHandler.Recipe> recipes = LensNoneRecipeHandler.recipes;
+        //Default Recipes
         for(LensNoneRecipeHandler.Recipe recipe : recipes){
             if(ItemUtil.contains(recipe.getOutputs(), result, true)){
                 arecipes.add(new CachedReconstructorRecipe(recipe));
             }
+        }
+        //Color Recipes
+        if(result.getItem() != null && (Util.arrayContains(LensColor.CONVERTABLE_BLOCKS, result.getItem()) >= 0 || Util.arrayContains(LensColor.CONVERTABLE_BLOCKS, Block.getBlockFromItem(result.getItem())) >= 0)){
+            int meta = result.getItemDamage();
+            ItemStack input = result.copy();
+            input.setItemDamage(meta <= 0 ? 15 : meta-1);
+            arecipes.add(new CachedReconstructorRecipe(new LensNoneRecipeHandler.Recipe(input, result, LensColor.ENERGY_USE)));
         }
     }
 
     @Override
     public void loadUsageRecipes(ItemStack ingredient){
         ArrayList<LensNoneRecipeHandler.Recipe> recipes = LensNoneRecipeHandler.recipes;
+        //Default Recipes
         for(LensNoneRecipeHandler.Recipe recipe : recipes){
             if(ItemUtil.contains(recipe.getInputs(), ingredient, true)){
                 CachedReconstructorRecipe theRecipe = new CachedReconstructorRecipe(recipe);
                 theRecipe.setIngredientPermutation(Collections.singletonList(theRecipe.input), ingredient);
                 arecipes.add(theRecipe);
             }
+        }
+        //Color Recipes
+        if(ingredient.getItem() != null && (Util.arrayContains(LensColor.CONVERTABLE_BLOCKS, ingredient.getItem()) >= 0 || Util.arrayContains(LensColor.CONVERTABLE_BLOCKS, Block.getBlockFromItem(ingredient.getItem())) >= 0)){
+            int meta = ingredient.getItemDamage();
+            ItemStack output = ingredient.copy();
+            output.setItemDamage(meta >= 15 ? 0 : meta+1);
+            arecipes.add(new CachedReconstructorRecipe(new LensNoneRecipeHandler.Recipe(ingredient, output, LensColor.ENERGY_USE)));
         }
     }
 

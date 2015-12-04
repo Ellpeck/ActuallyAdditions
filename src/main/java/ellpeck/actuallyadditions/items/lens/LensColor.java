@@ -40,12 +40,15 @@ public class LensColor extends Lens{
             {86F, 51F, 28F}, //Brown
     };
 
-    private static final Object[] CONVERTABLE_BLOCKS = new Object[]{
+    public static final int ENERGY_USE = 200;
+
+    public static final Object[] CONVERTABLE_BLOCKS = new Object[]{
             Items.dye,
             Blocks.wool,
             Blocks.stained_glass,
             Blocks.stained_glass_pane,
             Blocks.stained_hardened_clay,
+            Blocks.carpet,
             InitBlocks.blockColoredLamp,
             InitBlocks.blockColoredLampOn
     };
@@ -54,7 +57,7 @@ public class LensColor extends Lens{
     @Override
     public boolean invoke(WorldPos hitBlock, TileEntityAtomicReconstructor tile){
         if(hitBlock != null){
-            if(Util.arrayContains(CONVERTABLE_BLOCKS, hitBlock.getBlock()) >= 0){
+            if(Util.arrayContains(CONVERTABLE_BLOCKS, hitBlock.getBlock()) >= 0 && tile.storage.getEnergyStored() >= ENERGY_USE){
                 int meta = hitBlock.getMetadata();
                 if(meta >= 15){
                     hitBlock.setMetadata(0, 2);
@@ -62,11 +65,12 @@ public class LensColor extends Lens{
                 else{
                     hitBlock.setMetadata(meta+1, 2);
                 }
+                tile.storage.extractEnergy(ENERGY_USE, false);
             }
 
             ArrayList<EntityItem> items = (ArrayList<EntityItem>)tile.getWorldObj().getEntitiesWithinAABB(EntityItem.class, AxisAlignedBB.getBoundingBox(hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), hitBlock.getX()+1, hitBlock.getY()+1, hitBlock.getZ()+1));
             for(EntityItem item : items){
-                if(item.getEntityItem() != null){
+                if(item.getEntityItem() != null && tile.storage.getEnergyStored() >= ENERGY_USE){
                     if(Util.arrayContains(CONVERTABLE_BLOCKS, item.getEntityItem().getItem()) >= 0 || Util.arrayContains(CONVERTABLE_BLOCKS, Block.getBlockFromItem(item.getEntityItem().getItem())) >= 0){
                         int meta = item.getEntityItem().getItemDamage();
                         if(meta >= 15){
@@ -75,6 +79,7 @@ public class LensColor extends Lens{
                         else{
                             item.getEntityItem().setItemDamage(meta+1);
                         }
+                        tile.storage.extractEnergy(ENERGY_USE, false);
                     }
                 }
             }
