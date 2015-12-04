@@ -36,7 +36,7 @@ public class GuiBookletStand extends GuiBooklet{
     @Override
     public void actionPerformed(GuiButton button){
         if(button == this.buttonSetPage){
-            PacketHandler.theNetwork.sendToServer(new PacketBookletStandButton(this.theStand.xCoord, this.theStand.yCoord, this.theStand.zCoord, this.theStand.getWorldObj(), Minecraft.getMinecraft().thePlayer, this.currentIndexEntry, this.currentChapter, this.currentPage, this.pageOpenInIndex));
+            PacketHandler.theNetwork.sendToServer(new PacketBookletStandButton(this.theStand.xCoord, this.theStand.yCoord, this.theStand.zCoord, this.theStand.getWorldObj(), Minecraft.getMinecraft().thePlayer, this.currentEntrySet));
         }
         super.actionPerformed(button);
     }
@@ -65,7 +65,7 @@ public class GuiBookletStand extends GuiBooklet{
         this.buttonSetPage.visible = Objects.equals(Minecraft.getMinecraft().thePlayer.getCommandSenderName(), this.theStand.assignedPlayer);
 
         //Open the pages the book was assigned
-        BookletUtils.openIndexEntry(this, this.theStand.assignedEntry, this.theStand.assignedPageInIndex, true);
-        BookletUtils.openChapter(this, this.theStand.assignedChapter, this.theStand.assignedPage);
+        BookletUtils.openIndexEntry(this, this.theStand.assignedEntry.entry, this.theStand.assignedEntry.pageInIndex, true);
+        BookletUtils.openChapter(this, this.theStand.assignedEntry.chapter, this.theStand.assignedEntry.page);
     }
 }

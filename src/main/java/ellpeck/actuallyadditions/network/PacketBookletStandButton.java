@@ -13,10 +13,8 @@ package ellpeck.actuallyadditions.network;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
+import ellpeck.actuallyadditions.booklet.EntrySet;
 import ellpeck.actuallyadditions.booklet.InitBooklet;
-import ellpeck.actuallyadditions.booklet.chapter.BookletChapter;
-import ellpeck.actuallyadditions.booklet.entry.BookletEntry;
-import ellpeck.actuallyadditions.booklet.page.BookletPage;
 import ellpeck.actuallyadditions.tile.TileEntityBookletStand;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
@@ -44,17 +42,17 @@ public class PacketBookletStandButton implements IMessage{
 
     }
 
-    public PacketBookletStandButton(int x, int y, int z, World world, EntityPlayer player, BookletEntry entry, BookletChapter chapter, BookletPage page, int pageInIndex){
+    public PacketBookletStandButton(int x, int y, int z, World world, EntityPlayer player, EntrySet set){
         this.tileX = x;
         this.tileY = y;
         this.tileZ = z;
         this.worldID = world.provider.dimensionId;
         this.playerID = player.getEntityId();
 
-        this.entryID = entry == null ? -1 : InitBooklet.entries.indexOf(entry);
-        this.chapterID = entry == null || chapter == null ? -1 : entry.chapters.indexOf(chapter);
-        this.pageID = page == null ? -1 : page.getID();
-        this.pageInIndex = pageInIndex;
+        this.entryID = set.entry == null ? -1 : InitBooklet.entries.indexOf(set.entry);
+        this.chapterID = set.entry == null || set.chapter == null ? -1 : set.entry.chapters.indexOf(set.chapter);
+        this.pageID = set.page == null ? -1 : set.page.getID();
+        this.pageInIndex = set.pageInIndex;
     }
 
     @Override
@@ -95,7 +93,11 @@ public class PacketBookletStandButton implements IMessage{
 
             if(tile instanceof TileEntityBookletStand){
                 if(Objects.equals(player.getCommandSenderName(), ((TileEntityBookletStand)tile).assignedPlayer)){
-                    ((TileEntityBookletStand)tile).setEntry(message.entryID, message.chapterID, message.pageID, message.pageInIndex);
+                    EntrySet theSet = ((TileEntityBookletStand)tile).assignedEntry;
+                    theSet.entry = message.entryID == -1 ? null : InitBooklet.entries.get(message.entryID);
+                    theSet.chapter = message.chapterID == -1 || message.entryID == -1 || theSet.entry.chapters.size() <= message.chapterID ? null : theSet.entry.chapters.get(message.chapterID);
+                    theSet.page = message.chapterID == -1 || theSet.chapter == null || theSet.chapter.pages.length <= message.pageID-1 ? null : theSet.chapter.pages[message.pageID-1];
+                    theSet.pageInIndex = message.pageInIndex;
                     ((TileEntityBookletStand)tile).sendUpdate();
                 }
             }

@@ -37,7 +37,7 @@ public class PageTextOnly extends BookletPage{
     @Override
     @SideOnly(Side.CLIENT)
     public void renderPre(GuiBooklet gui, int mouseX, int mouseY, int ticksElapsed, boolean mousePressed){
-        String text = gui.currentPage.getText();
+        String text = gui.currentEntrySet.page.getText();
         if(text != null && !text.isEmpty()){
             gui.mc.fontRenderer.drawSplitString(text, gui.guiLeft+14, gui.guiTop+9, 115, 0);
         }

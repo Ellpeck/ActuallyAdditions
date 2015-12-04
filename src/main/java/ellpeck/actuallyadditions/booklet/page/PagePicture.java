@@ -33,7 +33,7 @@ public class PagePicture extends PageTextOnly{
         gui.mc.getTextureManager().bindTexture(this.resLoc);
         gui.drawTexturedModalRect(gui.guiLeft, gui.guiTop, 0, 0, gui.xSize, gui.ySize);
 
-        String text = gui.currentPage.getText();
+        String text = gui.currentEntrySet.page.getText();
         if(text != null && !text.isEmpty()){
             gui.mc.fontRenderer.drawSplitString(text, gui.guiLeft+14, gui.guiTop+textStartY, 115, 0);
         }

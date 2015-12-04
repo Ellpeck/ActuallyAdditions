@@ -15,10 +15,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.booklet.button.BookmarkButton;
 import ellpeck.actuallyadditions.booklet.button.IndexButton;
 import ellpeck.actuallyadditions.booklet.button.TexturedButton;
-import ellpeck.actuallyadditions.booklet.chapter.BookletChapter;
-import ellpeck.actuallyadditions.booklet.entry.BookletEntry;
 import ellpeck.actuallyadditions.booklet.entry.BookletEntryAllSearch;
-import ellpeck.actuallyadditions.booklet.page.BookletPage;
 import ellpeck.actuallyadditions.config.GuiConfiguration;
 import ellpeck.actuallyadditions.proxy.ClientProxy;
 import ellpeck.actuallyadditions.update.UpdateChecker;
@@ -58,11 +55,8 @@ public class GuiBooklet extends GuiScreen{
     public int guiLeft;
     public int guiTop;
 
-    public BookletPage currentPage;
-    public BookletChapter currentChapter;
-    public BookletEntry currentIndexEntry;
+    public EntrySet currentEntrySet = new EntrySet(null);
 
-    public int pageOpenInIndex;
     public int indexPageAmount;
 
     public GuiButton buttonForward;
@@ -119,7 +113,7 @@ public class GuiBooklet extends GuiScreen{
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
 
         //Draws the search bar
-        if(this.currentIndexEntry instanceof BookletEntryAllSearch && this.currentChapter == null){
+        if(this.currentEntrySet.entry instanceof BookletEntryAllSearch && this.currentEntrySet.chapter == null){
             this.mc.getTextureManager().bindTexture(resLoc);
             this.drawTexturedModalRect(this.guiLeft+146, this.guiTop+160, 146, 80, 70, 14);
         }
@@ -146,8 +140,8 @@ public class GuiBooklet extends GuiScreen{
         this.fontRendererObj.setUnicodeFlag(true);
 
         //Renders the current page's content
-        if(this.currentIndexEntry != null && this.currentChapter != null && this.currentPage != null){
-            this.currentPage.render(this, x, y, this.ticksElapsed, this.mousePressed);
+        if(this.currentEntrySet.entry != null && this.currentEntrySet.chapter != null && this.currentEntrySet.page != null){
+            this.currentEntrySet.page.render(this, x, y, this.ticksElapsed, this.mousePressed);
         }
         this.fontRendererObj.setUnicodeFlag(unicodeBefore);
 
@@ -162,7 +156,7 @@ public class GuiBooklet extends GuiScreen{
         if(key == Keyboard.KEY_ESCAPE && this.parentScreen != null){
             this.mc.displayGuiScreen(this.parentScreen);
         }
-        else if(this.searchField.isFocused()){
+        else if(this.searchField.isFocused() && key != Keyboard.KEY_ESCAPE){
             this.searchField.textboxKeyTyped(theChar, key);
             BookletUtils.updateSearchBar(this);
         }
@@ -188,7 +182,7 @@ public class GuiBooklet extends GuiScreen{
     protected void mouseClicked(int par1, int par2, int par3){
         this.searchField.mouseClicked(par1, par2, par3);
         //Notifys the booklet of the mouse being pressed
-        if(par3 == 0 && this.currentChapter != null){
+        if(par3 == 0 && this.currentEntrySet.chapter != null){
             this.mousePressed = true;
         }
         super.mouseClicked(par1, par2, par3);
@@ -227,8 +221,8 @@ public class GuiBooklet extends GuiScreen{
         //Handles gonig from page to chapter or from chapter to index
         else if(button == this.buttonPreviousScreen){
             if(KeyUtil.isShiftPressed()){
-                if(this.currentChapter != null){
-                    BookletUtils.openIndexEntry(this, this.currentIndexEntry, this.pageOpenInIndex, true);
+                if(this.currentEntrySet.chapter != null){
+                    BookletUtils.openIndexEntry(this, this.currentEntrySet.entry, this.currentEntrySet.pageInIndex, true);
                 }
                 else{
                     BookletUtils.openIndexEntry(this, null, 1, true);
@@ -310,9 +304,7 @@ public class GuiBooklet extends GuiScreen{
         this.searchField.setEnableBackgroundDrawing(false);
         this.searchField.setCanLoseFocus(false);
 
-        this.currentPage = null;
-        this.currentChapter = null;
-        this.currentIndexEntry = null;
+        this.currentEntrySet.removeEntry();
 
         if(this.tryOpenMainPage && !PersistentClientData.getBoolean("BookAlreadyOpened")){
             BookletUtils.openIndexEntry(this, InitBooklet.chapterIntro.entry, 1, true);
@@ -330,8 +322,8 @@ public class GuiBooklet extends GuiScreen{
         super.updateScreen();
         this.searchField.updateCursorCounter();
 
-        if(this.currentIndexEntry != null && this.currentChapter != null && this.currentPage != null){
-            this.currentPage.updateScreen(this.ticksElapsed);
+        if(this.currentEntrySet.entry != null && this.currentEntrySet.chapter != null && this.currentEntrySet.page != null){
+            this.currentEntrySet.page.updateScreen(this.ticksElapsed);
         }
 
         boolean buttonThere = UpdateChecker.needsUpdateNotify;

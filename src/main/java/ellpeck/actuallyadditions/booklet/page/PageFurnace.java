@@ -66,7 +66,7 @@ public class PageFurnace extends BookletPage{
             gui.mc.fontRenderer.drawString(strg, gui.guiLeft+gui.xSize/2-gui.mc.fontRenderer.getStringWidth(strg)/2, gui.guiTop+10, 0);
         }
 
-        String text = gui.currentPage.getText();
+        String text = gui.currentEntrySet.page.getText();
         if(text != null && !text.isEmpty()){
             gui.mc.fontRenderer.drawSplitString(text, gui.guiLeft+14, gui.guiTop+100, 115, 0);
         }

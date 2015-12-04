@@ -11,9 +11,8 @@
 package ellpeck.actuallyadditions.booklet.button;
 
 import ellpeck.actuallyadditions.booklet.BookletUtils;
+import ellpeck.actuallyadditions.booklet.EntrySet;
 import ellpeck.actuallyadditions.booklet.GuiBooklet;
-import ellpeck.actuallyadditions.booklet.chapter.BookletChapter;
-import ellpeck.actuallyadditions.booklet.entry.BookletEntry;
 import ellpeck.actuallyadditions.booklet.page.BookletPage;
 import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.util.KeyUtil;
@@ -28,10 +27,7 @@ import java.util.ArrayList;
 
 public class BookmarkButton extends GuiButton{
 
-    public BookletChapter assignedChapter;
-    public BookletPage assignedPage;
-    public BookletEntry assignedEntry;
-    public int assignedPageInIndex;
+    public EntrySet assignedEntry = new EntrySet(null);
 
     private GuiBooklet booklet;
 
@@ -41,24 +37,18 @@ public class BookmarkButton extends GuiButton{
     }
 
     public void onPressed(){
-        if(this.assignedEntry != null){
+        if(this.assignedEntry.entry != null){
             if(KeyUtil.isShiftPressed()){
-                this.assignedEntry = null;
-                this.assignedChapter = null;
-                this.assignedPage = null;
-                this.assignedPageInIndex = 1;
+                this.assignedEntry.removeEntry();
             }
             else{
-                BookletUtils.openIndexEntry(this.booklet, this.assignedEntry, this.assignedPageInIndex, true);
-                BookletUtils.openChapter(this.booklet, this.assignedChapter, this.assignedPage);
+                BookletUtils.openIndexEntry(this.booklet, this.assignedEntry.entry, this.assignedEntry.pageInIndex, true);
+                BookletUtils.openChapter(this.booklet, this.assignedEntry.chapter, this.assignedEntry.page);
             }
         }
         else{
-            if(this.booklet.currentIndexEntry != null){
-                this.assignedEntry = this.booklet.currentIndexEntry;
-                this.assignedChapter = this.booklet.currentChapter;
-                this.assignedPage = this.booklet.currentPage;
-                this.assignedPageInIndex = this.booklet.pageOpenInIndex;
+            if(this.booklet.currentEntrySet.entry != null){
+                this.assignedEntry.setEntry(this.booklet.currentEntrySet.page, this.booklet.currentEntrySet.chapter, this.booklet.currentEntrySet.entry, this.booklet.currentEntrySet.pageInIndex);
             }
         }
     }
@@ -78,12 +68,12 @@ public class BookmarkButton extends GuiButton{
             OpenGlHelper.glBlendFunc(770, 771, 1, 0);
             GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
             int renderHeight = 25;
-            this.drawTexturedModalRect(this.xPosition, this.yPosition, 146+(this.assignedEntry == null ? 0 : 16), 194-renderHeight+k*renderHeight, this.width, renderHeight);
+            this.drawTexturedModalRect(this.xPosition, this.yPosition, 146+(this.assignedEntry.entry == null ? 0 : 16), 194-renderHeight+k*renderHeight, this.width, renderHeight);
             this.mouseDragged(minecraft, x, y);
 
-            if(this.assignedEntry != null){
+            if(this.assignedEntry.entry != null){
                 GL11.glPushMatrix();
-                BookletPage.renderItem(booklet, this.assignedChapter != null && this.assignedChapter.displayStack != null ? this.assignedChapter.displayStack : new ItemStack(InitItems.itemBooklet), this.xPosition+2, this.yPosition+1, 0.725F);
+                BookletPage.renderItem(booklet, this.assignedEntry.chapter != null && this.assignedEntry.chapter.displayStack != null ? this.assignedEntry.chapter.displayStack : new ItemStack(InitItems.itemBooklet), this.xPosition+2, this.yPosition+1, 0.725F);
                 GL11.glPopMatrix();
             }
         }
@@ -92,12 +82,12 @@ public class BookmarkButton extends GuiButton{
     @SuppressWarnings("unchecked")
     public void drawHover(int mouseX, int mouseY){
         ArrayList list = new ArrayList();
-        if(this.assignedEntry != null){
-            if(this.assignedChapter != null){
-                list.add(EnumChatFormatting.GOLD+this.assignedChapter.getLocalizedName()+", Page "+this.assignedPage.getID());
+        if(this.assignedEntry.entry != null){
+            if(this.assignedEntry.chapter != null){
+                list.add(EnumChatFormatting.GOLD+this.assignedEntry.chapter.getLocalizedName()+", Page "+this.assignedEntry.page.getID());
             }
             else{
-                list.add(EnumChatFormatting.GOLD+this.assignedEntry.getLocalizedName()+", Page "+this.assignedPageInIndex);
+                list.add(EnumChatFormatting.GOLD+this.assignedEntry.entry.getLocalizedName()+", Page "+this.assignedEntry.pageInIndex);
             }
             list.add("Click to open");
             list.add(EnumChatFormatting.ITALIC+"Shift-Click to remove");
