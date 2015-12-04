@@ -1,3 +1,11 @@
+# 1.7.10-r10
+- Made Redstone power only be determined when something changes (makes performance a lot better)
+- Made the damage lens use more energy
+- Made the color lens use more energy
+- Made the color lens pass through blocks
+- Changed recipe of green ethetic quartz
+- Fixed bug with the booklet crashing if a crafting recipe is turned off
+
 # 1.7.10-r9
 - Added Explosion Lens
 - Added Lens of Certain Death
