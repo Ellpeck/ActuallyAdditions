@@ -31,7 +31,7 @@ public class TileEntityGreenhouseGlass extends TileEntityBase{
                     this.timeUntilNextFert--;
                     if(timeUntilNextFert <= 0){
                         WorldPos blockToFert = this.blockToFertilize();
-                        if(this.blockToFertilize() != null){
+                        if(blockToFert != null){
                             int metaBefore = blockToFert.getMetadata();
                             worldObj.getBlock(blockToFert.getX(), blockToFert.getY(), blockToFert.getZ()).updateTick(worldObj, blockToFert.getX(), blockToFert.getY(), blockToFert.getZ(), Util.RANDOM);
 
