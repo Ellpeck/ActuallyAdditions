@@ -42,12 +42,18 @@ public class TileEntityFeeder extends TileEntityInventoryBase{
     public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
         super.writeSyncableNBT(compound, sync);
         compound.setInteger("Timer", this.currentTimer);
+        if(sync){
+            compound.setInteger("Animals", this.currentAnimalAmount);
+        }
     }
 
     @Override
     public void readSyncableNBT(NBTTagCompound compound, boolean sync){
         super.readSyncableNBT(compound, sync);
         this.currentTimer = compound.getInteger("Timer");
+        if(sync){
+            this.currentAnimalAmount = compound.getInteger("Animals");
+        }
     }
 
     @Override

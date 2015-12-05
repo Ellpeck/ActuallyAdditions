@@ -48,7 +48,7 @@ public class TileEntityHeatCollector extends TileEntityBase implements IEnergyPr
                     this.storage.receiveEnergy(ENERGY_PRODUCE, false);
                     this.markDirty();
 
-                    if(Util.RANDOM.nextInt(10) == 0){
+                    if(Util.RANDOM.nextInt(10000) == 0){
                         int randomSide = blocksAround.get(Util.RANDOM.nextInt(blocksAround.size()));
                         WorldUtil.breakBlockAtSide(WorldUtil.getDirectionBySidesInOrder(randomSide), worldObj, xCoord, yCoord, zCoord);
                     }

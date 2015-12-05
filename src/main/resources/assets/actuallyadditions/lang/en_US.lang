@@ -491,6 +491,7 @@ booklet.actuallyadditions.chapter.xpSolidifier.text.1=The <item>Experience Solid
 
 booklet.actuallyadditions.chapter.greenhouseGlass.name=Greenhouse Glass
 booklet.actuallyadditions.chapter.greenhouseGlass.text.1=<item>Greenhouse Glass<r> is a very effective way to <imp>speed up the growth of your plants<r>! When placed anywhere above the plant, as long as there are no blocks below obstructing the path, and there is sunlight above the glass, it will <imp>significantly speed up the growth of the plant<r>! <n>It obviously has to be daytime, too. Thought that was obvious.
+booklet.actuallyadditions.chapter.greenhouseGlass.text.2=<i>Greenhouse Gas
 
 booklet.actuallyadditions.chapter.fishingNet.name=Fishing Net
 booklet.actuallyadditions.chapter.fishingNet.text.1=The <item>Fishing Net<r> is a block that makes fishing a lot easier! Just <imp>place it above some water<r> and it will, given a little bit of time, automatically catch fish for you! To store the fish, just place a chest above the <item>Fishing Net<r> or let the items spew out of the top and collect them manually. <n><n><i>For the impatient

@@ -44,7 +44,7 @@ public class ItemSeed extends ItemSeeds{
     }
 
     private void register(){
-        this.setUnlocalizedName(ModUtil.MOD_ID_LOWER+":"+this.getBaseName());
+        this.setUnlocalizedName(ModUtil.MOD_ID_LOWER+"."+this.getBaseName());
         GameRegistry.registerItem(this, this.getBaseName());
     }
 

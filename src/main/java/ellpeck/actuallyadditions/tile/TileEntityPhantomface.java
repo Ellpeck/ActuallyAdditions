@@ -81,6 +81,7 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
                 this.getWorldObj().markBlockForUpdate(this.xCoord, this.yCoord-1, this.zCoord);
                 this.getWorldObj().markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord+1);
                 this.getWorldObj().markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord-1);
+                this.sendUpdate();
                 this.markDirty();
             }
         }
