@@ -64,6 +64,7 @@ public class BookletUtils{
      * Draws the Title of the current chapter, current index entry or just "Actually Additions" if neither is present
      */
     public static void drawTitle(GuiBooklet booklet){
+        booklet.mc.getTextureManager().bindTexture(GuiBooklet.resLoc);
         //Upper title
         booklet.drawTexturedModalRect(booklet.guiLeft+booklet.xSize/2-142/2, booklet.guiTop-12, 0, 240, 142, 12);
         //Lower title
