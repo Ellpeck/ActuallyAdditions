@@ -64,6 +64,7 @@ public class CreativeTab extends CreativeTabs{
         add(InitBlocks.blockCoffeeMachine);
         add(InitBlocks.blockXPSolidifier);
 
+        add(InitBlocks.blockMiner);
         add(InitBlocks.blockGreenhouseGlass);
         add(InitBlocks.blockGrinder);
         add(InitBlocks.blockGrinderDouble);

@@ -70,6 +70,7 @@ public abstract class TileEntityBase extends TileEntity{
         GameRegistry.registerTileEntity(TileEntityLaserRelay.class, ModUtil.MOD_ID_LOWER+":tileEntityLaserRelay");
         GameRegistry.registerTileEntity(TileEntityAtomicReconstructor.class, ModUtil.MOD_ID_LOWER+":tileEntityAtomicReconstructor");
         GameRegistry.registerTileEntity(TileEntityBookletStand.class, ModUtil.MOD_ID_LOWER+":tileEntityBookletStand");
+        GameRegistry.registerTileEntity(TileEntityMiner.class, ModUtil.MOD_ID_LOWER+":tileEntityMiner");
     }
 
     @Override
