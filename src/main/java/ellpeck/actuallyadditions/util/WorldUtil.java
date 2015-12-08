@@ -20,6 +20,7 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.client.C07PacketPlayerDigging;
 import net.minecraft.network.play.server.S23PacketBlockChange;
@@ -243,30 +244,27 @@ public class WorldUtil{
         return blocks;
     }
 
-    public static boolean addToInventory(ItemStack[] slots, ArrayList<ItemStack> stacks, boolean actuallyDo){
-        return addToInventory(slots, 0, slots.length, stacks, actuallyDo);
+    public static boolean addToInventory(IInventory inventory, ArrayList<ItemStack> stacks, boolean actuallyDo){
+        return addToInventory(inventory, 0, inventory.getSizeInventory(), stacks, actuallyDo);
     }
 
     /**
      * Add an ArrayList of ItemStacks to an Array of slots
      *
-     * @param slots      The slots to try to put the items into
+     * @param inventory  The inventory to try to put the items into
      * @param stacks     The stacks to be put into the slots (Items don't actually get removed from there!)
      * @param actuallyDo Do it or just test if it works?
      * @return Does it work?
      */
-    public static boolean addToInventory(ItemStack[] slots, int start, int end, ArrayList<ItemStack> stacks, boolean actuallyDo){
-        ItemStack[] theSlots;
-        if(actuallyDo){
-            theSlots = slots;
-        }
-        else{
-            //Create "Test Slots" to put the items into to try if it works out in the end
-            theSlots = new ItemStack[slots.length];
-
-            for(int i = 0; i < theSlots.length; i++){
-                if(slots[i] != null){
-                    theSlots[i] = slots[i].copy();
+    public static boolean addToInventory(IInventory inventory, int start, int end, ArrayList<ItemStack> stacks, boolean actuallyDo){
+        //Copy the slots if just testing to later load them again
+        ItemStack[] backupSlots = null;
+        if(!actuallyDo){
+            backupSlots = new ItemStack[inventory.getSizeInventory()];
+            for(int i = 0; i < backupSlots.length; i++){
+                ItemStack stack = inventory.getStackInSlot(i);
+                if(stack != null){
+                    backupSlots[i] = stack.copy();
                 }
             }
         }
@@ -274,12 +272,13 @@ public class WorldUtil{
         int working = 0;
         for(ItemStack stackToPutIn : stacks){
             for(int i = start; i < end; i++){
-                if(stackToPutIn != null && (theSlots[i] == null || (theSlots[i].isItemEqual(stackToPutIn) && theSlots[i].getMaxStackSize() >= theSlots[i].stackSize+stackToPutIn.stackSize))){
-                    if(theSlots[i] == null){
-                        theSlots[i] = stackToPutIn.copy();
+                ItemStack stackInQuestion = inventory.getStackInSlot(i);
+                if(stackToPutIn != null && (stackInQuestion == null || (stackInQuestion.isItemEqual(stackToPutIn) && stackInQuestion.getMaxStackSize() >= stackInQuestion.stackSize+stackToPutIn.stackSize))){
+                    if(stackInQuestion == null){
+                        inventory.setInventorySlotContents(i, stackToPutIn.copy());
                     }
                     else{
-                        theSlots[i].stackSize += stackToPutIn.stackSize;
+                        stackInQuestion.stackSize += stackToPutIn.stackSize;
                     }
                     working++;
 
@@ -287,6 +286,14 @@ public class WorldUtil{
                 }
             }
         }
+
+        //Load the slots again
+        if(!actuallyDo && backupSlots != null){
+            for(int i = 0; i < backupSlots.length; i++){
+                inventory.setInventorySlotContents(i, backupSlots[i]);
+            }
+        }
+
         return working >= stacks.size();
     }
 

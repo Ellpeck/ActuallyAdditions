@@ -65,10 +65,10 @@ public class TileEntityBreaker extends TileEntityInventoryBase{
                                 int meta = worldObj.getBlockMetadata(coordsBlock.getX(), coordsBlock.getY(), coordsBlock.getZ());
                                 drops.addAll(blockToBreak.getDrops(worldObj, coordsBlock.getX(), coordsBlock.getY(), coordsBlock.getZ(), meta, 0));
 
-                                if(WorldUtil.addToInventory(this.slots, drops, false)){
+                                if(WorldUtil.addToInventory(this, drops, false)){
                                     worldObj.playAuxSFX(2001, coordsBlock.getX(), coordsBlock.getY(), coordsBlock.getZ(), Block.getIdFromBlock(blockToBreak)+(meta << 12));
                                     WorldUtil.breakBlockAtSide(sideToManipulate, worldObj, xCoord, yCoord, zCoord);
-                                    WorldUtil.addToInventory(this.slots, drops, true);
+                                    WorldUtil.addToInventory(this, drops, true);
                                     this.markDirty();
                                 }
                             }

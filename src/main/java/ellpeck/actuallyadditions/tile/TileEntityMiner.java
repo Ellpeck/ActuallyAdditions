@@ -12,6 +12,7 @@ package ellpeck.actuallyadditions.tile;
 
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
+import net.minecraft.block.Block;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 
@@ -20,11 +21,30 @@ public class TileEntityMiner extends TileEntityBase implements IEnergyReceiver{
     public EnergyStorage storage = new EnergyStorage(800000);
 
     @Override
-    @SuppressWarnings("unchecked")
     public void updateEntity(){
         super.updateEntity();
         if(!this.worldObj.isRemote){
+            this.mine(2);
+        }
+    }
 
+    private void mine(int range){
+        for(int anX = -range; anX <= range; anX++){
+            for(int aZ = -range; aZ <= range; aZ++){
+                for(int y = this.yCoord-1; y > 0; y--){
+                    int x = this.xCoord+anX;
+                    int z = this.zCoord+aZ;
+
+                    Block block = this.worldObj.getBlock(x, y, z);
+                    int meta = this.worldObj.getBlockMetadata(x, y, z);
+                    if(block != null && !block.isAir(this.worldObj, x, y, z)){
+                        if(block.getHarvestLevel(meta) <= 3){
+
+                            return;
+                        }
+                    }
+                }
+            }
         }
     }
 

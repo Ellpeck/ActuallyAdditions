@@ -45,8 +45,8 @@ public class TileEntityRangedCollector extends TileEntityInventoryBase implement
                             if(this.checkFilter(toAdd)){
                                 ArrayList<ItemStack> checkList = new ArrayList<ItemStack>();
                                 checkList.add(toAdd);
-                                if(WorldUtil.addToInventory(this.slots, 0, WHITELIST_START, checkList, false)){
-                                    WorldUtil.addToInventory(this.slots, 0, WHITELIST_START, checkList, true);
+                                if(WorldUtil.addToInventory(this, 0, WHITELIST_START, checkList, false)){
+                                    WorldUtil.addToInventory(this, 0, WHITELIST_START, checkList, true);
                                     item.setDead();
                                 }
                             }

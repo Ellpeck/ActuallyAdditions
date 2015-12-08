@@ -62,10 +62,10 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
                                     int meta = boundPosition.getWorld().getBlockMetadata(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ());
                                     drops.addAll(blockToBreak.getDrops(boundPosition.getWorld(), boundPosition.getX(), boundPosition.getY(), boundPosition.getZ(), meta, 0));
 
-                                    if(WorldUtil.addToInventory(this.slots, drops, false)){
+                                    if(WorldUtil.addToInventory(this, drops, false)){
                                         boundPosition.getWorld().playAuxSFX(2001, boundPosition.getX(), boundPosition.getY(), boundPosition.getZ(), Block.getIdFromBlock(blockToBreak)+(meta << 12));
                                         WorldUtil.breakBlockAtSide(ForgeDirection.UNKNOWN, boundPosition.getWorld(), boundPosition.getX(), boundPosition.getY(), boundPosition.getZ());
-                                        WorldUtil.addToInventory(this.slots, drops, true);
+                                        WorldUtil.addToInventory(this, drops, true);
                                         this.markDirty();
                                     }
                                 }
