@@ -16,8 +16,8 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 import ellpeck.actuallyadditions.items.lens.ItemLens;
 import ellpeck.actuallyadditions.items.lens.Lens;
 import ellpeck.actuallyadditions.items.lens.Lenses;
-import ellpeck.actuallyadditions.network.PacketAtomicReconstructor;
 import ellpeck.actuallyadditions.network.PacketHandler;
+import ellpeck.actuallyadditions.network.PacketParticle;
 import ellpeck.actuallyadditions.util.WorldPos;
 import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.item.ItemStack;
@@ -81,7 +81,7 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
     }
 
     private void shootLaser(int endX, int endY, int endZ, Lens currentLens){
-        PacketHandler.theNetwork.sendToAllAround(new PacketAtomicReconstructor(xCoord, yCoord, zCoord, endX, endY, endZ, currentLens), new NetworkRegistry.TargetPoint(worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 64));
+        PacketHandler.theNetwork.sendToAllAround(new PacketParticle(xCoord, yCoord, zCoord, endX, endY, endZ, currentLens.getColor(), 8, 2F), new NetworkRegistry.TargetPoint(worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 64));
     }
 
     @Override

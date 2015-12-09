@@ -15,15 +15,13 @@ import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ellpeck.actuallyadditions.items.lens.Lens;
-import ellpeck.actuallyadditions.items.lens.Lenses;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.EntityReddustFX;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
-public class PacketAtomicReconstructor implements IMessage{
+public class PacketParticle implements IMessage{
 
     private int startX;
     private int startY;
@@ -31,21 +29,25 @@ public class PacketAtomicReconstructor implements IMessage{
     private int endX;
     private int endY;
     private int endZ;
-    private int lensTypeOrdinal;
+    private float[] color;
+    private int particleAmount;
+    private float particleSize;
 
     @SuppressWarnings("unused")
-    public PacketAtomicReconstructor(){
+    public PacketParticle(){
 
     }
 
-    public PacketAtomicReconstructor(int startX, int startY, int startZ, int endX, int endY, int endZ, Lens type){
+    public PacketParticle(int startX, int startY, int startZ, int endX, int endY, int endZ, float[] color, int particleAmount, float particleSize){
         this.startX = startX;
         this.startY = startY;
         this.startZ = startZ;
         this.endX = endX;
         this.endY = endY;
         this.endZ = endZ;
-        this.lensTypeOrdinal = Lenses.allLenses.indexOf(type);
+        this.color = color;
+        this.particleAmount = particleAmount;
+        this.particleSize = particleSize;
     }
 
     @Override
@@ -56,7 +58,13 @@ public class PacketAtomicReconstructor implements IMessage{
         this.endX = buf.readInt();
         this.endY = buf.readInt();
         this.endZ = buf.readInt();
-        this.lensTypeOrdinal = buf.readInt();
+        this.particleAmount = buf.readInt();
+        this.particleSize = buf.readFloat();
+
+        this.color = new float[3];
+        for(int i = 0; i < this.color.length; i++){
+            this.color[i] = buf.readFloat();
+        }
     }
 
     @Override
@@ -67,14 +75,19 @@ public class PacketAtomicReconstructor implements IMessage{
         buf.writeInt(this.endX);
         buf.writeInt(this.endY);
         buf.writeInt(this.endZ);
-        buf.writeInt(this.lensTypeOrdinal);
+        buf.writeInt(this.particleAmount);
+        buf.writeFloat(this.particleSize);
+
+        for(float aColor : this.color){
+            buf.writeFloat(aColor);
+        }
     }
 
-    public static class Handler implements IMessageHandler<PacketAtomicReconstructor, IMessage>{
+    public static class Handler implements IMessageHandler<PacketParticle, IMessage>{
 
         @Override
         @SideOnly(Side.CLIENT)
-        public IMessage onMessage(PacketAtomicReconstructor message, MessageContext ctx){
+        public IMessage onMessage(PacketParticle message, MessageContext ctx){
             World world = Minecraft.getMinecraft().theWorld;
 
             if(Minecraft.getMinecraft().thePlayer.getDistance(message.startX, message.startY, message.startZ) <= 64){
@@ -83,11 +96,9 @@ public class PacketAtomicReconstructor implements IMessage{
                 int difZ = message.startZ-message.endZ;
                 double distance = Vec3.createVectorHelper(message.startX, message.startY, message.startZ).distanceTo(Vec3.createVectorHelper(message.endX, message.endY, message.endZ));
 
-                for(int times = 0; times < 5; times++){
-                    for(double i = 0; i <= 1; i += 1/(distance*8)){
-                        Lens type = Lenses.allLenses.get(message.lensTypeOrdinal);
-                        float[] color = type.getColor();
-                        Minecraft.getMinecraft().effectRenderer.addEffect(new EntityReddustFX(world, (difX*i)+message.endX+0.5, (difY*i)+message.endY+0.5, (difZ*i)+message.endZ+0.5, 2F, color[0], color[1], color[2]));
+                for(int times = 0; times < message.particleAmount/2; times++){
+                    for(double i = 0; i <= 1; i += 1/(distance*message.particleAmount)){
+                        Minecraft.getMinecraft().effectRenderer.addEffect(new EntityReddustFX(world, (difX*i)+message.endX+0.5, (difY*i)+message.endY+0.5, (difZ*i)+message.endZ+0.5, message.particleSize, message.color[0], message.color[1], message.color[2]));
                     }
                 }
             }

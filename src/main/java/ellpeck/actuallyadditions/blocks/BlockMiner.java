@@ -81,10 +81,21 @@ public class BlockMiner extends BlockContainerBase{
         if(!world.isRemote){
             TileEntity tile = world.getTileEntity(x, y, z);
             if(tile != null && tile instanceof TileEntityMiner){
-                player.addChatComponentMessage(new ChatComponentText(((TileEntityMiner)tile).storage.getEnergyStored()+"/"+((TileEntityMiner)tile).storage.getMaxEnergyStored()+" RF"));
-                player.addChatComponentMessage(new ChatComponentText("Mining at Y "+((TileEntityMiner)tile).layerAt+"."));
+                if(player.isSneaking()){
+                    player.addChatComponentMessage(new ChatComponentText(((TileEntityMiner)tile).storage.getEnergyStored()+"/"+((TileEntityMiner)tile).storage.getMaxEnergyStored()+" RF"));
+                    player.addChatComponentMessage(new ChatComponentText("Mining at Y = "+((TileEntityMiner)tile).layerAt+"."));
+                }
+                else{
+                    if(!((TileEntityMiner)tile).onlyMineOres){
+                        player.addChatComponentMessage(new ChatComponentText("Now only mining Ores"));
+                        ((TileEntityMiner)tile).onlyMineOres = true;
+                    }
+                    else{
+                        player.addChatComponentMessage(new ChatComponentText("Now mining everything"));
+                        ((TileEntityMiner)tile).onlyMineOres = false;
+                    }
+                }
             }
-            return true;
         }
         return true;
     }

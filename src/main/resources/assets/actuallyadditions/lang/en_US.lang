@@ -126,6 +126,7 @@ tile.actuallyadditions.blockCrystalGreen.name=Emeradic Crystal Block
 tile.actuallyadditions.blockCrystalBlack.name=Void Crystal Block
 tile.actuallyadditions.blockCrystalWhite.name=Enori Crystal Block
 tile.actuallyadditions.blockBookStand.name=Manual Stand
+tile.actuallyadditions.blockMiner.name=Vertical Digger
 
 #ESD
 tile.actuallyadditions.blockInputter.name=ESD

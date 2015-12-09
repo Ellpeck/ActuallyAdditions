@@ -12,6 +12,9 @@ package ellpeck.actuallyadditions.tile;
 
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
+import cpw.mods.fml.common.network.NetworkRegistry;
+import ellpeck.actuallyadditions.network.PacketHandler;
+import ellpeck.actuallyadditions.network.PacketParticle;
 import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.inventory.IInventory;
@@ -19,6 +22,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
 
@@ -28,6 +32,7 @@ public class TileEntityMiner extends TileEntityBase implements IEnergyReceiver{
     public static final int ENERGY_USE_PER_BLOCK = 300;
 
     public int layerAt;
+    public boolean onlyMineOres;
 
     @Override
     public void updateEntity(){
@@ -47,7 +52,9 @@ public class TileEntityMiner extends TileEntityBase implements IEnergyReceiver{
 
     private boolean mine(int range){
         TileEntity tileAbove = worldObj.getTileEntity(xCoord, yCoord+1, zCoord);
+        boolean shouldContinueMining = true;
         boolean mined = false;
+
         for(int anX = -range; anX <= range; anX++){
             for(int aZ = -range; aZ <= range; aZ++){
                 if(this.storage.getEnergyStored() >= ENERGY_USE_PER_BLOCK){
@@ -58,28 +65,53 @@ public class TileEntityMiner extends TileEntityBase implements IEnergyReceiver{
                     Block block = this.worldObj.getBlock(x, y, z);
                     int meta = this.worldObj.getBlockMetadata(x, y, z);
                     if(block != null && !block.isAir(this.worldObj, x, y, z)){
-                        if(block.getHarvestLevel(meta) <= 3F && block.getHarvestLevel(meta) >= 0F){
+                        if(block.getHarvestLevel(meta) <= 3F && block.getHarvestLevel(meta) >= 0F && this.isMinable(block, meta)){
                             ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
                             drops.addAll(block.getDrops(worldObj, x, y, z, meta, 0));
 
-                            if(tileAbove instanceof IInventory){
-                                if(WorldUtil.addToInventory((IInventory)tileAbove, drops, ForgeDirection.DOWN, false)){
-                                    worldObj.playAuxSFX(2001, x, y, z, Block.getIdFromBlock(block)+(meta << 12));
-                                    worldObj.setBlockToAir(x, y, z);
+                            if(tileAbove instanceof IInventory && WorldUtil.addToInventory((IInventory)tileAbove, drops, ForgeDirection.DOWN, false)){
+                                worldObj.playAuxSFX(2001, x, y, z, Block.getIdFromBlock(block)+(meta << 12));
+                                worldObj.setBlockToAir(x, y, z);
 
-                                    WorldUtil.addToInventory((IInventory)tileAbove, drops, ForgeDirection.DOWN, true);
-                                    tileAbove.markDirty();
+                                WorldUtil.addToInventory((IInventory)tileAbove, drops, ForgeDirection.DOWN, true);
+                                tileAbove.markDirty();
 
-                                    this.storage.extractEnergy(ENERGY_USE_PER_BLOCK, false);
-                                    mined = true;
-                                }
+                                this.storage.extractEnergy(ENERGY_USE_PER_BLOCK, false);
+                                mined = true;
+                            }
+                            else{
+                                shouldContinueMining = false;
                             }
                         }
                     }
                 }
             }
         }
-        return mined;
+        if(mined){
+            this.shootParticles();
+        }
+
+        return shouldContinueMining;
+    }
+
+    private boolean isMinable(Block block, int meta){
+        if(!this.onlyMineOres){
+            return true;
+        }
+        else{
+            int[] ids = OreDictionary.getOreIDs(new ItemStack(block, 1, meta));
+            for(int id : ids){
+                String name = OreDictionary.getOreName(id);
+                if(name.substring(0, 3).equals("ore")){
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
+
+    private void shootParticles(){
+        PacketHandler.theNetwork.sendToAllAround(new PacketParticle(xCoord, yCoord, zCoord, xCoord, this.layerAt, zCoord, new float[]{62F/255F, 163F/255F, 74F/255F}, 5, 2.5F), new NetworkRegistry.TargetPoint(worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 128));
     }
 
     @Override
