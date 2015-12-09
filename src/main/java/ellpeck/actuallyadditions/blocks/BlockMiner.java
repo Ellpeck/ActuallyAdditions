@@ -18,9 +18,11 @@ import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
@@ -72,5 +74,18 @@ public class BlockMiner extends BlockContainerBase{
     public void breakBlock(World world, int x, int y, int z, Block block, int par6){
         this.dropInventory(world, x, y, z);
         super.breakBlock(world, x, y, z, block, par6);
+    }
+
+    @Override
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9){
+        if(!world.isRemote){
+            TileEntity tile = world.getTileEntity(x, y, z);
+            if(tile != null && tile instanceof TileEntityMiner){
+                player.addChatComponentMessage(new ChatComponentText(((TileEntityMiner)tile).storage.getEnergyStored()+"/"+((TileEntityMiner)tile).storage.getMaxEnergyStored()+" RF"));
+                player.addChatComponentMessage(new ChatComponentText("Mining at Y "+((TileEntityMiner)tile).layerAt+"."));
+            }
+            return true;
+        }
+        return true;
     }
 }
