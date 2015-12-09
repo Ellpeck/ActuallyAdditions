@@ -399,6 +399,7 @@ container.actuallyadditions.xpSolidifier.name=Experience Solidifier
 container.actuallyadditions.cloud.name=Smiley Cloud
 container.actuallyadditions.directionalBreaker.name=Long-Range Breaker
 container.actuallyadditions.rangedCollector.name=Ranged Collector
+container.actuallyadditions.miner.name=Vertical Digger
 
 #Update Information
 info.actuallyadditions.update.generic=[{"text":"There is an Update for "},{"text":"Actually Additions ","color":"dark_green"},{"text":"available!","color":"none"}]

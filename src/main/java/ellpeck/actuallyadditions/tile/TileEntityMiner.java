@@ -15,49 +15,52 @@ import cofh.api.energy.IEnergyReceiver;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import ellpeck.actuallyadditions.network.PacketHandler;
 import ellpeck.actuallyadditions.network.PacketParticle;
+import ellpeck.actuallyadditions.network.gui.IButtonReactor;
 import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.block.Block;
-import net.minecraft.inventory.IInventory;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
 
-public class TileEntityMiner extends TileEntityBase implements IEnergyReceiver{
+public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyReceiver, IButtonReactor{
 
     public EnergyStorage storage = new EnergyStorage(1000000);
-    public static final int ENERGY_USE_PER_BLOCK = 300;
+    public static final int ENERGY_USE_PER_BLOCK = 500;
 
-    public int layerAt;
+    public int layerAt = -1;
     public boolean onlyMineOres;
+
+    public TileEntityMiner(){
+        super(9, "miner");
+    }
 
     @Override
     public void updateEntity(){
         super.updateEntity();
         if(!this.worldObj.isRemote){
-            if(this.ticksElapsed%350 == 0){
-                if(this.layerAt <= 0){
+            if(!this.isRedstonePowered && this.ticksElapsed%5 == 0){
+                if(this.layerAt == -1){
                     this.layerAt = this.yCoord-1;
                 }
 
-                if(this.mine(3)){
-                    this.layerAt--;
+                if(this.layerAt > 0){
+                    if(this.mine(TileEntityPhantomface.upgradeRange(2, worldObj, xCoord, yCoord, zCoord))){
+                        this.layerAt--;
+                    }
                 }
             }
         }
     }
 
     private boolean mine(int range){
-        TileEntity tileAbove = worldObj.getTileEntity(xCoord, yCoord+1, zCoord);
-        boolean shouldContinueMining = true;
-        boolean mined = false;
-
         for(int anX = -range; anX <= range; anX++){
             for(int aZ = -range; aZ <= range; aZ++){
-                if(this.storage.getEnergyStored() >= ENERGY_USE_PER_BLOCK){
+                int actualUse = ENERGY_USE_PER_BLOCK*(this.onlyMineOres ? 3 : 1);
+                if(this.storage.getEnergyStored() >= actualUse){
                     int x = this.xCoord+anX;
                     int z = this.zCoord+aZ;
                     int y = this.layerAt;
@@ -65,33 +68,30 @@ public class TileEntityMiner extends TileEntityBase implements IEnergyReceiver{
                     Block block = this.worldObj.getBlock(x, y, z);
                     int meta = this.worldObj.getBlockMetadata(x, y, z);
                     if(block != null && !block.isAir(this.worldObj, x, y, z)){
-                        if(block.getHarvestLevel(meta) <= 3F && block.getHarvestLevel(meta) >= 0F && this.isMinable(block, meta)){
+                        if(block.getHarvestLevel(meta) <= 3F && block.getBlockHardness(this.worldObj, x, y, z) >= 0F && this.isMinable(block, meta)){
                             ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
                             drops.addAll(block.getDrops(worldObj, x, y, z, meta, 0));
 
-                            if(tileAbove instanceof IInventory && WorldUtil.addToInventory((IInventory)tileAbove, drops, ForgeDirection.DOWN, false)){
+                            if(WorldUtil.addToInventory(this, drops, ForgeDirection.UNKNOWN, false)){
                                 worldObj.playAuxSFX(2001, x, y, z, Block.getIdFromBlock(block)+(meta << 12));
                                 worldObj.setBlockToAir(x, y, z);
 
-                                WorldUtil.addToInventory((IInventory)tileAbove, drops, ForgeDirection.DOWN, true);
-                                tileAbove.markDirty();
+                                WorldUtil.addToInventory(this, drops, ForgeDirection.UNKNOWN, true);
+                                this.markDirty();
 
-                                this.storage.extractEnergy(ENERGY_USE_PER_BLOCK, false);
-                                mined = true;
+                                this.storage.extractEnergy(actualUse, false);
+                                this.shootParticles(x, y, z);
                             }
-                            else{
-                                shouldContinueMining = false;
-                            }
+                            return false;
                         }
                     }
                 }
+                else{
+                    return false;
+                }
             }
         }
-        if(mined){
-            this.shootParticles();
-        }
-
-        return shouldContinueMining;
+        return true;
     }
 
     private boolean isMinable(Block block, int meta){
@@ -102,7 +102,7 @@ public class TileEntityMiner extends TileEntityBase implements IEnergyReceiver{
             int[] ids = OreDictionary.getOreIDs(new ItemStack(block, 1, meta));
             for(int id : ids){
                 String name = OreDictionary.getOreName(id);
-                if(name.substring(0, 3).equals("ore")){
+                if(name.startsWith("ore") || name.startsWith("denseore")){
                     return true;
                 }
             }
@@ -110,8 +110,8 @@ public class TileEntityMiner extends TileEntityBase implements IEnergyReceiver{
         }
     }
 
-    private void shootParticles(){
-        PacketHandler.theNetwork.sendToAllAround(new PacketParticle(xCoord, yCoord, zCoord, xCoord, this.layerAt, zCoord, new float[]{62F/255F, 163F/255F, 74F/255F}, 5, 2.5F), new NetworkRegistry.TargetPoint(worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 128));
+    private void shootParticles(int endX, int endY, int endZ){
+        PacketHandler.theNetwork.sendToAllAround(new PacketParticle(xCoord, yCoord, zCoord, endX, endY, endZ, new float[]{62F/255F, 163F/255F, 74F/255F}, 5, 1.0F), new NetworkRegistry.TargetPoint(worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 96));
     }
 
     @Override
@@ -148,5 +148,31 @@ public class TileEntityMiner extends TileEntityBase implements IEnergyReceiver{
     @Override
     public boolean canConnectEnergy(ForgeDirection from){
         return true;
+    }
+
+    @Override
+    public boolean canInsertItem(int slot, ItemStack stack, int side){
+        return this.isItemValidForSlot(slot, stack);
+    }
+
+    @Override
+    public boolean canExtractItem(int slot, ItemStack stack, int side){
+        return true;
+    }
+
+    @Override
+    public boolean isItemValidForSlot(int slot, ItemStack stack){
+        return false;
+    }
+
+    @Override
+    public void onButtonPressed(int buttonID, EntityPlayer player){
+        if(buttonID == 0){
+            this.onlyMineOres = !this.onlyMineOres;
+            this.sendUpdate();
+        }
+        else if(buttonID == 1){
+            this.layerAt = -1;
+        }
     }
 }

@@ -85,6 +85,8 @@ public class GuiHandler implements IGuiHandler{
                 return new ContainerDirectionalBreaker(entityPlayer.inventory, tile);
             case RANGED_COLLECTOR:
                 return new ContainerRangedCollector(entityPlayer.inventory, tile);
+            case MINER:
+                return new ContainerMiner(entityPlayer.inventory, tile);
             default:
                 return null;
         }
@@ -151,6 +153,8 @@ public class GuiHandler implements IGuiHandler{
                 return new GuiDirectionalBreaker(entityPlayer.inventory, tile);
             case RANGED_COLLECTOR:
                 return new GuiRangedCollector(entityPlayer.inventory, tile, x, y, z, world);
+            case MINER:
+                return new GuiMiner(entityPlayer.inventory, tile);
             default:
                 return null;
         }
@@ -183,7 +187,8 @@ public class GuiHandler implements IGuiHandler{
         BOOK(false),
         BOOK_STAND,
         DIRECTIONAL_BREAKER,
-        RANGED_COLLECTOR;
+        RANGED_COLLECTOR,
+        MINER;
 
         public boolean checkTileEntity;
 

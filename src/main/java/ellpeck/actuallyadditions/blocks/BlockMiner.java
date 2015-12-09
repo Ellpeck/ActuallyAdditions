@@ -12,7 +12,9 @@ package ellpeck.actuallyadditions.blocks;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import ellpeck.actuallyadditions.ActuallyAdditions;
 import ellpeck.actuallyadditions.blocks.base.BlockContainerBase;
+import ellpeck.actuallyadditions.inventory.GuiHandler;
 import ellpeck.actuallyadditions.tile.TileEntityMiner;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.block.Block;
@@ -83,17 +85,12 @@ public class BlockMiner extends BlockContainerBase{
             if(tile != null && tile instanceof TileEntityMiner){
                 if(player.isSneaking()){
                     player.addChatComponentMessage(new ChatComponentText(((TileEntityMiner)tile).storage.getEnergyStored()+"/"+((TileEntityMiner)tile).storage.getMaxEnergyStored()+" RF"));
-                    player.addChatComponentMessage(new ChatComponentText("Mining at Y = "+((TileEntityMiner)tile).layerAt+"."));
+
+                    String info = ((TileEntityMiner)tile).layerAt <= 0 ? "Done Mining!" : "Mining at Y = "+((TileEntityMiner)tile).layerAt+".";
+                    player.addChatComponentMessage(new ChatComponentText(info));
                 }
                 else{
-                    if(!((TileEntityMiner)tile).onlyMineOres){
-                        player.addChatComponentMessage(new ChatComponentText("Now only mining Ores"));
-                        ((TileEntityMiner)tile).onlyMineOres = true;
-                    }
-                    else{
-                        player.addChatComponentMessage(new ChatComponentText("Now mining everything"));
-                        ((TileEntityMiner)tile).onlyMineOres = false;
-                    }
+                    player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.MINER.ordinal(), world, x, y, z);
                 }
             }
         }

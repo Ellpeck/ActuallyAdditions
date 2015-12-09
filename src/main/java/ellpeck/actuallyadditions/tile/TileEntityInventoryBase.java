@@ -100,11 +100,6 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
     }
 
     @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
-        return false;
-    }
-
-    @Override
     public ItemStack getStackInSlotOnClosing(int i){
         return getStackInSlot(i);
     }
