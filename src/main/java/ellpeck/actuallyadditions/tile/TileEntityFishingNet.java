@@ -52,7 +52,7 @@ public class TileEntityFishingNet extends TileEntityBase{
                     }
                     else{
                         int time = 15000;
-                        this.timeUntilNextDrop = 10;//time+Util.RANDOM.nextInt(time/2);
+                        this.timeUntilNextDrop = time+Util.RANDOM.nextInt(time/2);
                     }
                 }
             }
