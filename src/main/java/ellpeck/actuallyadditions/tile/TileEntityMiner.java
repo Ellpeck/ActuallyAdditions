@@ -119,6 +119,7 @@ public class TileEntityMiner extends TileEntityBase implements IEnergyReceiver{
         super.writeSyncableNBT(compound, sync);
         this.storage.writeToNBT(compound);
         compound.setInteger("Layer", this.layerAt);
+        compound.setBoolean("OnlyOres", this.onlyMineOres);
     }
 
     @Override
@@ -126,6 +127,7 @@ public class TileEntityMiner extends TileEntityBase implements IEnergyReceiver{
         super.readSyncableNBT(compound, sync);
         this.storage.readFromNBT(compound);
         this.layerAt = compound.getInteger("Layer");
+        this.onlyMineOres = compound.getBoolean("OnlyOres");
     }
 
     @Override
