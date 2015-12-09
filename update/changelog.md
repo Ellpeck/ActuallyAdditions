@@ -1,3 +1,13 @@
+# 1.7.10-r11
+- Added Vertical Digger
+- Added more Achievements
+- Added Mouse Controls to the booklet (last page with right mouse button, flip through pages by scrolling)
+- Rebalanced Reconstructor a bit
+- Made Booklet closable with Inventory Key
+- Fixed a Crash with Greenhouse Glass
+- Fixed a load of little bugs that were put in during changing of a lot of things (I actually discovered all of these while showing the mod to a friend, so thanks friend!)
+- Fixed Christmas seasonal being broken (dang)
+
 # 1.7.10-r10
 - Made Redstone power only be determined when something changes (makes performance a lot better)
 - Made the damage lens use more energy
