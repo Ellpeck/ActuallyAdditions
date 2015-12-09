@@ -419,6 +419,33 @@ achievement.actuallyadditions.craftPhantomface.desc=Craft a Phantomface
 achievement.actuallyadditions.openTreasureChest=Underwater Dungeon
 achievement.actuallyadditions.openTreasureChest.desc=Open a Treasure Chest
 
+achievement.actuallyadditions.craftLiquiface=Zoom, Zoom, Fluids!
+achievement.actuallyadditions.craftLiquiface.desc=Craft a Phantom Liquiface
+
+achievement.actuallyadditions.craftEnergyface=Zoom, Zoom, RF!
+achievement.actuallyadditions.craftEnergyface.desc=Craft a Phantom Energyface
+
+achievement.actuallyadditions.craftCoalGen=Furnace for cools
+achievement.actuallyadditions.craftCoalGen.desc=Craft a Coal Generator
+
+achievement.actuallyadditions.craftLeafGen=Munch, dude!
+achievement.actuallyadditions.craftLeafGen.desc=Craft a Leaf-Eating Generator
+
+achievement.actuallyadditions.craftReconstructor=Bzrrrrt something else
+achievement.actuallyadditions.craftReconstructor.desc=Craft an Atomic Reconstructor
+
+achievement.actuallyadditions.craftLaserRelay=Relayed, not delayed
+achievement.actuallyadditions.craftLaserRelay.desc=Craft a Laser Relay
+
+achievement.actuallyadditions.craftCrusher=Doublin' up!
+achievement.actuallyadditions.craftCrusher.desc=Craft a Crusher
+
+achievement.actuallyadditions.pickUpCoffee=Makes you addicted
+achievement.actuallyadditions.pickUpCoffee.desc=Harvest some coffee
+
+achievement.actuallyadditions.craftCoffeeMachine=Addiction in cups
+achievement.actuallyadditions.craftCoffeeMachine.desc=Craft a Coffee Machine
+
 #Booklet Recipe Names
 booklet.actuallyadditions.shapelessRecipe=Shapeless Recipe
 booklet.actuallyadditions.shapedRecipe=Shaped Recipe

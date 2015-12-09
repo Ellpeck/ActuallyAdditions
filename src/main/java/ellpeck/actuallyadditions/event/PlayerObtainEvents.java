@@ -32,7 +32,7 @@ public class PlayerObtainEvents{
 
     @SubscribeEvent
     public void onCraftedEvent(PlayerEvent.ItemCraftedEvent event){
-        checkAchievements(event.crafting, event.player, InitAchievements.CRAFTING_ACH);
+        checkAchievements(event.crafting, event.player, InitAchievements.Type.CRAFTING);
 
         if(ConfigBoolValues.GIVE_BOOKLET_ON_FIRST_CRAFT.isEnabled()){
             if(!event.player.worldObj.isRemote && event.crafting.getItem() != InitItems.itemBooklet){
@@ -55,7 +55,7 @@ public class PlayerObtainEvents{
         }
     }
 
-    public static void checkAchievements(ItemStack gotten, EntityPlayer player, int type){
+    public static void checkAchievements(ItemStack gotten, EntityPlayer player, InitAchievements.Type type){
         for(int i = 0; i < TheAchievements.values().length; i++){
             TheAchievements ach = TheAchievements.values()[i];
             if(ach.type == type){
@@ -70,11 +70,11 @@ public class PlayerObtainEvents{
 
     @SubscribeEvent
     public void onSmeltedEvent(PlayerEvent.ItemSmeltedEvent event){
-        checkAchievements(event.smelting, event.player, InitAchievements.SMELTING_ACH);
+        checkAchievements(event.smelting, event.player, InitAchievements.Type.SMELTING);
     }
 
     @SubscribeEvent
     public void onPickupEvent(PlayerEvent.ItemPickupEvent event){
-        checkAchievements(event.pickedUp.getEntityItem(), event.player, InitAchievements.PICKUP_ACH);
+        checkAchievements(event.pickedUp.getEntityItem(), event.player, InitAchievements.Type.PICK_UP);
     }
 }
