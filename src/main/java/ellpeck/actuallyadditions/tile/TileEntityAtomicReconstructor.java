@@ -26,7 +26,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 public class TileEntityAtomicReconstructor extends TileEntityInventoryBase implements IEnergyReceiver{
 
-    public static final int ENERGY_USE = 200;
+    public static final int ENERGY_USE = 1000;
     public EnergyStorage storage = new EnergyStorage(3000000);
     private int currentTime;
 

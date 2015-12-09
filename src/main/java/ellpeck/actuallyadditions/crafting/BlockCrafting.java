@@ -114,7 +114,7 @@ public class BlockCrafting{
         if(ConfigCrafting.ATOMIC_RECONSTRUCTOR.isEnabled()){
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockAtomicReconstructor),
                     "IRI", "RCR", "IRI",
-                    'R', "blockRedstone",
+                    'R', "dustRedstone",
                     'I', "ingotIron",
                     'C', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.IRON_CASING.ordinal())));
             recipeAtomicReconstructor = Util.GetRecipes.lastIRecipe();
