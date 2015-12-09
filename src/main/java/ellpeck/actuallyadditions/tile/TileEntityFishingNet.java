@@ -11,15 +11,17 @@
 package ellpeck.actuallyadditions.tile;
 
 import ellpeck.actuallyadditions.util.Util;
+import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.FishingHooks;
 import net.minecraftforge.common.util.ForgeDirection;
+
+import java.util.ArrayList;
 
 public class TileEntityFishingNet extends TileEntityBase{
 
@@ -37,7 +39,9 @@ public class TileEntityFishingNet extends TileEntityBase{
                             ItemStack fishable = FishingHooks.getRandomFishable(Util.RANDOM, Util.RANDOM.nextFloat());
                             TileEntity tile = worldObj.getTileEntity(xCoord, yCoord+1, zCoord);
                             if(tile != null && tile instanceof IInventory){
-                                this.insertIntoInventory((IInventory)tile, fishable);
+                                ArrayList<ItemStack> list = new ArrayList<ItemStack>();
+                                list.add(fishable);
+                                WorldUtil.addToInventory((IInventory)tile, list, ForgeDirection.DOWN, true);
                             }
                             else{
                                 EntityItem item = new EntityItem(worldObj, xCoord+0.5, yCoord+0.5, zCoord+0.5, fishable);
@@ -48,7 +52,7 @@ public class TileEntityFishingNet extends TileEntityBase{
                     }
                     else{
                         int time = 15000;
-                        this.timeUntilNextDrop = time+Util.RANDOM.nextInt(time/2);
+                        this.timeUntilNextDrop = 10;//time+Util.RANDOM.nextInt(time/2);
                     }
                 }
             }
@@ -63,23 +67,5 @@ public class TileEntityFishingNet extends TileEntityBase{
     @Override
     public void readSyncableNBT(NBTTagCompound compound, boolean sync){
         this.timeUntilNextDrop = compound.getInteger("TimeUntilNextDrop");
-    }
-
-    public void insertIntoInventory(IInventory inventory, ItemStack stack){
-        for(int i = 0; i < inventory.getSizeInventory(); i++){
-            if(inventory.isItemValidForSlot(i, stack)){
-                if(!(inventory instanceof ISidedInventory) || ((ISidedInventory)inventory).canInsertItem(i, stack, ForgeDirection.DOWN.flag)){
-                    ItemStack slot = inventory.getStackInSlot(i);
-                    if(slot == null){
-                        inventory.setInventorySlotContents(i, stack);
-                        return;
-                    }
-                    if(slot.isItemEqual(stack) && slot.stackSize <= slot.getMaxStackSize()-stack.stackSize && slot.stackSize <= inventory.getInventoryStackLimit()-stack.stackSize){
-                        slot.stackSize += stack.stackSize;
-                        return;
-                    }
-                }
-            }
-        }
     }
 }

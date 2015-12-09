@@ -21,6 +21,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.client.C07PacketPlayerDigging;
 import net.minecraft.network.play.server.S23PacketBlockChange;
@@ -244,8 +245,16 @@ public class WorldUtil{
         return blocks;
     }
 
+    public static boolean addToInventory(IInventory inventory, int start, int end, ArrayList<ItemStack> stacks, boolean actuallyDo){
+        return addToInventory(inventory, start, end, stacks, ForgeDirection.UNKNOWN, actuallyDo);
+    }
+
     public static boolean addToInventory(IInventory inventory, ArrayList<ItemStack> stacks, boolean actuallyDo){
-        return addToInventory(inventory, 0, inventory.getSizeInventory(), stacks, actuallyDo);
+        return addToInventory(inventory, stacks, ForgeDirection.UNKNOWN, actuallyDo);
+    }
+
+    public static boolean addToInventory(IInventory inventory, ArrayList<ItemStack> stacks, ForgeDirection side, boolean actuallyDo){
+        return addToInventory(inventory, 0, inventory.getSizeInventory(), stacks, side, actuallyDo);
     }
 
     /**
@@ -253,10 +262,11 @@ public class WorldUtil{
      *
      * @param inventory  The inventory to try to put the items into
      * @param stacks     The stacks to be put into the slots (Items don't actually get removed from there!)
+     * @param side       The side to input from (use UNKNOWN if it should always work)
      * @param actuallyDo Do it or just test if it works?
      * @return Does it work?
      */
-    public static boolean addToInventory(IInventory inventory, int start, int end, ArrayList<ItemStack> stacks, boolean actuallyDo){
+    public static boolean addToInventory(IInventory inventory, int start, int end, ArrayList<ItemStack> stacks, ForgeDirection side, boolean actuallyDo){
         //Copy the slots if just testing to later load them again
         ItemStack[] backupSlots = null;
         if(!actuallyDo){
@@ -272,17 +282,19 @@ public class WorldUtil{
         int working = 0;
         for(ItemStack stackToPutIn : stacks){
             for(int i = start; i < end; i++){
-                ItemStack stackInQuestion = inventory.getStackInSlot(i);
-                if(stackToPutIn != null && (stackInQuestion == null || (stackInQuestion.isItemEqual(stackToPutIn) && stackInQuestion.getMaxStackSize() >= stackInQuestion.stackSize+stackToPutIn.stackSize))){
-                    if(stackInQuestion == null){
-                        inventory.setInventorySlotContents(i, stackToPutIn.copy());
-                    }
-                    else{
-                        stackInQuestion.stackSize += stackToPutIn.stackSize;
-                    }
-                    working++;
+                if(side == ForgeDirection.UNKNOWN || ((!(inventory instanceof ISidedInventory) || ((ISidedInventory)inventory).canInsertItem(i, stackToPutIn, side.ordinal())) && inventory.isItemValidForSlot(i, stackToPutIn))){
+                    ItemStack stackInQuestion = inventory.getStackInSlot(i);
+                    if(stackToPutIn != null && (stackInQuestion == null || (stackInQuestion.isItemEqual(stackToPutIn) && stackInQuestion.getMaxStackSize() >= stackInQuestion.stackSize+stackToPutIn.stackSize))){
+                        if(stackInQuestion == null){
+                            inventory.setInventorySlotContents(i, stackToPutIn.copy());
+                        }
+                        else{
+                            stackInQuestion.stackSize += stackToPutIn.stackSize;
+                        }
+                        working++;
 
-                    break;
+                        break;
+                    }
                 }
             }
         }
