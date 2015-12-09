@@ -149,7 +149,8 @@ public enum ConfigCrafting{
 
     CHEST_TO_CRATE_UPGRADE("Chest To Crate Upgrade", ConfigCategories.ITEMS_CRAFTING),
     DRILL_CORE("Drill Core", ConfigCategories.ITEMS_CRAFTING),
-    ATOMIC_RECONSTRUCTOR("Atomic Reconstructor", ConfigCategories.BLOCKS_CRAFTING);
+    ATOMIC_RECONSTRUCTOR("Atomic Reconstructor", ConfigCategories.BLOCKS_CRAFTING),
+    MINER("Miner", ConfigCategories.BLOCKS_CRAFTING);
 
     public final String name;
     public final String category;

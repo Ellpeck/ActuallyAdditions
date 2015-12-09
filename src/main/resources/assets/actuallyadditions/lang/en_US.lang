@@ -655,3 +655,7 @@ booklet.actuallyadditions.chapter.reconstructorLenses.text.5=The <item>Lens of C
 
 booklet.actuallyadditions.chapter.miscDecorStuffsAndThings.name=Some Decor
 booklet.actuallyadditions.chapter.miscDecorStuffsAndThings.text.1=Sometimes, when you build, you notice there is just <imp>not enough decor blocks<r>. Well, we present to you: <item>Ethetic Blocks<r>! <n>These are some quartz-like decor blocks with lovely patterns that can also be <imp>converted<r> into <imp>Stairs<r>, <imp>Slabs<r> and <imp>Walls<r> using the usual, well-known recipe patterns.
+
+booklet.actuallyadditions.chapter.miner.name=Vertical Digger
+booklet.actuallyadditions.chapter.miner.text.1=The <item>Vertical Digger<r> can be used to automatically <imp>mine blocks<r> from the world. <n>It has two modes: It can either <imp>only mine ores<r> or <imp>mine everything<r>. When mining a block, it uses about <rf> RF. <n>Mined items get stored in an internal buffer that can be accessed through right-clicking. Right-clicking while sneaking will show the Digger's status. <n><n>Much like Phantomfaces, the Digger's range can be upgraded by placing 3 or less <item>Phantom Boosters<r> above it.
+booklet.actuallyadditions.chapter.miner.text.2=(Works with any colored Drill) <n><n><n><n><n><i>I dig it

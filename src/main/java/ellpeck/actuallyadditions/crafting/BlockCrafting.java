@@ -81,12 +81,24 @@ public class BlockCrafting{
     public static IRecipe recipeLaserRelay;
     public static IRecipe recipeAtomicReconstructor;
     public static IRecipe recipeBookStand;
+    public static IRecipe recipeMiner;
 
     public static void init(){
 
         //Book Stand
         GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitBlocks.blockBookletStand), new ItemStack(InitItems.itemBooklet), "plankWood"));
         recipeBookStand = Util.GetRecipes.lastIRecipe();
+
+        //Miner
+        if(ConfigCrafting.MINER.isEnabled()){
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockMiner),
+                    "IRI", "RCR", "IDI",
+                    'R', "blockRedstone",
+                    'I', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.IRON_CASING.ordinal()),
+                    'C', new ItemStack(InitBlocks.blockCrystal, 1, TheCrystals.COAL.ordinal()),
+                    'D', new ItemStack(InitItems.itemDrill, 1, Util.WILDCARD)));
+            recipeMiner = Util.GetRecipes.lastIRecipe();
+        }
 
         //White Ethetic Blocks
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockTestifiBucksWhiteFence, 6),
