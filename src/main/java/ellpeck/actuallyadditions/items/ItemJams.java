@@ -40,6 +40,7 @@ public class ItemJams extends ItemFoodBase{
         super(0, 0.0F, false, name);
         this.setHasSubtypes(true);
         this.setMaxDamage(0);
+        this.setAlwaysEdible();
     }
 
     @Override
