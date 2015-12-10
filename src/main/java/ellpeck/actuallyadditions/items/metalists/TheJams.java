@@ -19,7 +19,8 @@ public enum TheJams{
     PL_AP_LE("PlApLe", 6, 0.1F, EnumRarity.rare, 15, 3, 13226009),
     CH_AP_CI("ChApCi", 6, 0.1F, EnumRarity.rare, 10, 1, 13189222),
     HO_ME_KI("HoMeKi", 6, 0.1F, EnumRarity.rare, 10, 14, 2031360),
-    PI_CO("PiCo", 6, 0.1F, EnumRarity.rare, 9, 1, 16056203);
+    PI_CO("PiCo", 6, 0.1F, EnumRarity.rare, 9, 1, 16056203),
+    HO_ME_CO("HoMeCo", 6, 0.1F, EnumRarity.rare, 10, 13, 10462208);
 
     public final String name;
     public final int healAmount;
