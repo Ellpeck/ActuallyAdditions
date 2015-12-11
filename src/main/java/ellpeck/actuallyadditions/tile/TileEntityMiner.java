@@ -18,6 +18,7 @@ import ellpeck.actuallyadditions.network.PacketParticle;
 import ellpeck.actuallyadditions.network.gui.IButtonReactor;
 import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockLiquid;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -68,7 +69,7 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyR
                     Block block = this.worldObj.getBlock(x, y, z);
                     int meta = this.worldObj.getBlockMetadata(x, y, z);
                     if(block != null && !block.isAir(this.worldObj, x, y, z)){
-                        if(block.getHarvestLevel(meta) <= 3F && block.getBlockHardness(this.worldObj, x, y, z) >= 0F && this.isMinable(block, meta)){
+                        if(block.getHarvestLevel(meta) <= 3F && block.getBlockHardness(this.worldObj, x, y, z) >= 0F && !(block instanceof BlockLiquid) && this.isMinable(block, meta)){
                             ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
                             drops.addAll(block.getDrops(worldObj, x, y, z, meta, 0));
 
