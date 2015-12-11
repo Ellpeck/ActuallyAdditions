@@ -23,6 +23,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
@@ -69,7 +70,7 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyR
                     Block block = this.worldObj.getBlock(x, y, z);
                     int meta = this.worldObj.getBlockMetadata(x, y, z);
                     if(block != null && !block.isAir(this.worldObj, x, y, z)){
-                        if(block.getHarvestLevel(meta) <= 3F && block.getBlockHardness(this.worldObj, x, y, z) >= 0F && !(block instanceof BlockLiquid) && this.isMinable(block, meta)){
+                        if(block.getHarvestLevel(meta) <= 3F && block.getBlockHardness(this.worldObj, x, y, z) >= 0F && !(block instanceof BlockLiquid) && !(block instanceof IFluidBlock) && this.isMinable(block, meta)){
                             ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
                             drops.addAll(block.getDrops(worldObj, x, y, z, meta, 0));
 
