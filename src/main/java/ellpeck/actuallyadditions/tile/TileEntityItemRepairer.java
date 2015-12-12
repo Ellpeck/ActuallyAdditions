@@ -18,7 +18,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 
-public class TileEntityItemRepairer extends TileEntityInventoryBase implements IEnergyReceiver{
+public class TileEntityItemRepairer extends TileEntityInventoryBase implements IEnergyReceiver, IEnergySaver{
 
     public static final int SLOT_INPUT = 0;
     public static final int SLOT_OUTPUT = 1;
@@ -127,5 +127,15 @@ public class TileEntityItemRepairer extends TileEntityInventoryBase implements I
     @Override
     public boolean canConnectEnergy(ForgeDirection from){
         return true;
+    }
+
+    @Override
+    public int getEnergy(){
+        return this.storage.getEnergyStored();
+    }
+
+    @Override
+    public void setEnergy(int energy){
+        this.storage.setEnergyStored(energy);
     }
 }

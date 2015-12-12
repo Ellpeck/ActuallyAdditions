@@ -19,7 +19,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 
-public class TileEntityEnergizer extends TileEntityInventoryBase implements IEnergyReceiver{
+public class TileEntityEnergizer extends TileEntityInventoryBase implements IEnergyReceiver, IEnergySaver{
 
     public EnergyStorage storage = new EnergyStorage(500000);
     private int lastEnergy;
@@ -103,5 +103,15 @@ public class TileEntityEnergizer extends TileEntityInventoryBase implements IEne
     @Override
     public boolean canConnectEnergy(ForgeDirection from){
         return true;
+    }
+
+    @Override
+    public int getEnergy(){
+        return this.storage.getEnergyStored();
+    }
+
+    @Override
+    public void setEnergy(int energy){
+        this.storage.setEnergyStored(energy);
     }
 }

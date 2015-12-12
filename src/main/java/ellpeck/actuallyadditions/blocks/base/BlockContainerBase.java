@@ -12,6 +12,7 @@ package ellpeck.actuallyadditions.blocks.base;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import ellpeck.actuallyadditions.creative.CreativeTab;
+import ellpeck.actuallyadditions.tile.IEnergySaver;
 import ellpeck.actuallyadditions.tile.TileEntityBase;
 import ellpeck.actuallyadditions.tile.TileEntityInventoryBase;
 import ellpeck.actuallyadditions.util.ModUtil;
@@ -19,7 +20,9 @@ import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.EnumRarity;
@@ -27,6 +30,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+
+import java.util.ArrayList;
 
 public abstract class BlockContainerBase extends BlockContainer{
 
@@ -126,4 +131,46 @@ public abstract class BlockContainerBase extends BlockContainer{
             ((TileEntityBase)tile).setRedstonePowered(world.isBlockIndirectlyGettingPowered(x, y, z));
         }
     }
+
+    @Override
+    public void onBlockHarvested(World world, int x, int y, int z, int meta, EntityPlayer player){
+        if(!player.capabilities.isCreativeMode){
+            this.dropBlockAsItem(world, x, y, z, meta, 0);
+        }
+    }
+
+    @Override
+    public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune){
+        ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
+
+        TileEntity tile = world.getTileEntity(x, y, z);
+        if(tile != null){
+            ItemStack stack = new ItemStack(this.getItemDropped(metadata, Util.RANDOM, fortune), 1, this.damageDropped(metadata));
+
+            if(tile instanceof IEnergySaver){
+                int energy = ((IEnergySaver)tile).getEnergy();
+                if(energy > 0){
+                    if(stack.getTagCompound() == null){
+                        stack.setTagCompound(new NBTTagCompound());
+                    }
+                    stack.getTagCompound().setInteger("Energy", energy);
+                }
+            }
+
+            drops.add(stack);
+        }
+        
+        return drops;
+    }
+
+    @Override
+    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack){
+        if(stack.getTagCompound() != null){
+            TileEntity tile = world.getTileEntity(x, y, z);
+            if(tile instanceof IEnergySaver){
+                ((IEnergySaver)tile).setEnergy(stack.getTagCompound().getInteger("Energy"));
+            }
+        }
+    }
+
 }

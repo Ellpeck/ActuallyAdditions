@@ -20,7 +20,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraftforge.common.util.ForgeDirection;
 
-public class TileEntityCoalGenerator extends TileEntityInventoryBase implements IEnergyProvider{
+public class TileEntityCoalGenerator extends TileEntityInventoryBase implements IEnergyProvider, IEnergySaver{
 
     public static final int PRODUCE = 30;
     public EnergyStorage storage = new EnergyStorage(60000);
@@ -147,5 +147,15 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
     @Override
     public boolean canConnectEnergy(ForgeDirection from){
         return true;
+    }
+
+    @Override
+    public int getEnergy(){
+        return this.storage.getEnergyStored();
+    }
+
+    @Override
+    public void setEnergy(int energy){
+        this.storage.setEnergyStored(energy);
     }
 }

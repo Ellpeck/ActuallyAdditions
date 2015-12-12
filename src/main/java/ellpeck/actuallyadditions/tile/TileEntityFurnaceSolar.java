@@ -16,7 +16,7 @@ import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 
-public class TileEntityFurnaceSolar extends TileEntityBase implements IEnergyProvider{
+public class TileEntityFurnaceSolar extends TileEntityBase implements IEnergyProvider, IEnergySaver{
 
     public static final int PRODUCE = 10;
     public EnergyStorage storage = new EnergyStorage(30000);
@@ -79,5 +79,15 @@ public class TileEntityFurnaceSolar extends TileEntityBase implements IEnergyPro
             }
         }
         return false;
+    }
+
+    @Override
+    public int getEnergy(){
+        return this.storage.getEnergyStored();
+    }
+
+    @Override
+    public void setEnergy(int energy){
+        this.storage.setEnergyStored(energy);
     }
 }

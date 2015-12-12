@@ -24,7 +24,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 import java.util.ArrayList;
 
-public class TileEntityDirectionalBreaker extends TileEntityInventoryBase implements IEnergyReceiver{
+public class TileEntityDirectionalBreaker extends TileEntityInventoryBase implements IEnergyReceiver, IEnergySaver{
 
     public static final int RANGE = 8;
     public static final int ENERGY_USE = 5;
@@ -133,5 +133,15 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase implem
     @Override
     public boolean canConnectEnergy(ForgeDirection from){
         return true;
+    }
+
+    @Override
+    public int getEnergy(){
+        return this.storage.getEnergyStored();
+    }
+
+    @Override
+    public void setEnergy(int energy){
+        this.storage.setEnergyStored(energy);
     }
 }

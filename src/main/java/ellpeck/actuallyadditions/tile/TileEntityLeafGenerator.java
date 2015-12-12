@@ -21,7 +21,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class TileEntityLeafGenerator extends TileEntityBase implements IEnergyProvider{
+public class TileEntityLeafGenerator extends TileEntityBase implements IEnergyProvider, IEnergySaver{
 
     public static final int RANGE = 7;
     public static final int ENERGY_PRODUCED = 300;
@@ -110,5 +110,15 @@ public class TileEntityLeafGenerator extends TileEntityBase implements IEnergyPr
     @Override
     public boolean canConnectEnergy(ForgeDirection from){
         return true;
+    }
+
+    @Override
+    public int getEnergy(){
+        return this.storage.getEnergyStored();
+    }
+
+    @Override
+    public void setEnergy(int energy){
+        this.storage.setEnergyStored(energy);
     }
 }

@@ -22,7 +22,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 import java.util.ArrayList;
 
-public class TileEntityHeatCollector extends TileEntityBase implements IEnergyProvider{
+public class TileEntityHeatCollector extends TileEntityBase implements IEnergyProvider, IEnergySaver{
 
     public static final int ENERGY_PRODUCE = 40;
     public static final int BLOCKS_NEEDED = 4;
@@ -89,5 +89,15 @@ public class TileEntityHeatCollector extends TileEntityBase implements IEnergyPr
     @Override
     public boolean canConnectEnergy(ForgeDirection from){
         return from == ForgeDirection.UP;
+    }
+
+    @Override
+    public int getEnergy(){
+        return this.storage.getEnergyStored();
+    }
+
+    @Override
+    public void setEnergy(int energy){
+        this.storage.setEnergyStored(energy);
     }
 }

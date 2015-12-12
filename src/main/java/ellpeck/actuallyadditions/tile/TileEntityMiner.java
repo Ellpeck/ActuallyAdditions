@@ -28,7 +28,7 @@ import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
 
-public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyReceiver, IButtonReactor{
+public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyReceiver, IButtonReactor, IEnergySaver{
 
     public EnergyStorage storage = new EnergyStorage(1000000);
     public static final int ENERGY_USE_PER_BLOCK = 500;
@@ -176,5 +176,15 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyR
         else if(buttonID == 1){
             this.layerAt = -1;
         }
+    }
+
+    @Override
+    public int getEnergy(){
+        return this.storage.getEnergyStored();
+    }
+
+    @Override
+    public void setEnergy(int energy){
+        this.storage.setEnergyStored(energy);
     }
 }

@@ -19,7 +19,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 
-public class TileEntityLavaFactoryController extends TileEntityBase implements IEnergyReceiver{
+public class TileEntityLavaFactoryController extends TileEntityBase implements IEnergyReceiver, IEnergySaver{
 
     public static final int NOT_MULTI = 0;
     public static final int HAS_LAVA = 1;
@@ -91,5 +91,15 @@ public class TileEntityLavaFactoryController extends TileEntityBase implements I
     @Override
     public boolean canConnectEnergy(ForgeDirection from){
         return from != ForgeDirection.UP;
+    }
+
+    @Override
+    public int getEnergy(){
+        return this.storage.getEnergyStored();
+    }
+
+    @Override
+    public void setEnergy(int energy){
+        this.storage.setEnergyStored(energy);
     }
 }

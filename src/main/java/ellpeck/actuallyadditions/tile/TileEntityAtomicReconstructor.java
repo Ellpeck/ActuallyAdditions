@@ -24,7 +24,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 
-public class TileEntityAtomicReconstructor extends TileEntityInventoryBase implements IEnergyReceiver{
+public class TileEntityAtomicReconstructor extends TileEntityInventoryBase implements IEnergyReceiver, IEnergySaver{
 
     public static final int ENERGY_USE = 1000;
     public EnergyStorage storage = new EnergyStorage(3000000);
@@ -148,5 +148,15 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
     @Override
     public boolean canExtractItem(int slot, ItemStack stack, int side){
         return true;
+    }
+
+    @Override
+    public int getEnergy(){
+        return this.storage.getEnergyStored();
+    }
+
+    @Override
+    public void setEnergy(int energy){
+        this.storage.setEnergyStored(energy);
     }
 }

@@ -20,7 +20,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 
-public class TileEntityEnervator extends TileEntityInventoryBase implements IEnergyProvider{
+public class TileEntityEnervator extends TileEntityInventoryBase implements IEnergyProvider, IEnergySaver{
 
     public EnergyStorage storage = new EnergyStorage(500000);
     private int lastEnergy;
@@ -113,5 +113,15 @@ public class TileEntityEnervator extends TileEntityInventoryBase implements IEne
     @Override
     public boolean canExtractItem(int slot, ItemStack stack, int side){
         return slot == 1;
+    }
+
+    @Override
+    public int getEnergy(){
+        return this.storage.getEnergyStored();
+    }
+
+    @Override
+    public void setEnergy(int energy){
+        this.storage.setEnergyStored(energy);
     }
 }
