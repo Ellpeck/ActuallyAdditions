@@ -17,6 +17,7 @@ import codechicken.nei.recipe.TemplateRecipeHandler;
 import ellpeck.actuallyadditions.blocks.InitBlocks;
 import ellpeck.actuallyadditions.booklet.BookletUtils;
 import ellpeck.actuallyadditions.booklet.page.BookletPage;
+import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.items.lens.LensColor;
 import ellpeck.actuallyadditions.items.lens.LensNoneRecipeHandler;
 import ellpeck.actuallyadditions.util.ItemUtil;
@@ -65,7 +66,7 @@ public class NEIReconstructorRecipe extends TemplateRecipeHandler implements INE
             //Default Recipes
             ArrayList<LensNoneRecipeHandler.Recipe> recipes = LensNoneRecipeHandler.recipes;
             for(LensNoneRecipeHandler.Recipe recipe : recipes){
-                arecipes.add(new CachedReconstructorRecipe(recipe));
+                arecipes.add(new CachedReconstructorRecipe(recipe, false));
             }
             //Color Recipes
             for(Object o : LensColor.CONVERTABLE_BLOCKS){
@@ -80,7 +81,7 @@ public class NEIReconstructorRecipe extends TemplateRecipeHandler implements INE
                     ItemStack stackCopy = stack.copy();
                     stackCopy.setItemDamage(i >= 15 ? 0 : i+1);
                     stack.setItemDamage(i);
-                    arecipes.add(new CachedReconstructorRecipe(new LensNoneRecipeHandler.Recipe(stack, stackCopy, LensColor.ENERGY_USE)));
+                    arecipes.add(new CachedReconstructorRecipe(new LensNoneRecipeHandler.Recipe(stack, stackCopy, LensColor.ENERGY_USE), true));
                 }
             }
         }
@@ -95,7 +96,7 @@ public class NEIReconstructorRecipe extends TemplateRecipeHandler implements INE
         //Default Recipes
         for(LensNoneRecipeHandler.Recipe recipe : recipes){
             if(ItemUtil.contains(recipe.getOutputs(), result, true)){
-                arecipes.add(new CachedReconstructorRecipe(recipe));
+                arecipes.add(new CachedReconstructorRecipe(recipe, false));
             }
         }
         //Color Recipes
@@ -103,7 +104,7 @@ public class NEIReconstructorRecipe extends TemplateRecipeHandler implements INE
             int meta = result.getItemDamage();
             ItemStack input = result.copy();
             input.setItemDamage(meta <= 0 ? 15 : meta-1);
-            arecipes.add(new CachedReconstructorRecipe(new LensNoneRecipeHandler.Recipe(input, result, LensColor.ENERGY_USE)));
+            arecipes.add(new CachedReconstructorRecipe(new LensNoneRecipeHandler.Recipe(input, result, LensColor.ENERGY_USE), true));
         }
     }
 
@@ -113,7 +114,7 @@ public class NEIReconstructorRecipe extends TemplateRecipeHandler implements INE
         //Default Recipes
         for(LensNoneRecipeHandler.Recipe recipe : recipes){
             if(ItemUtil.contains(recipe.getInputs(), ingredient, true)){
-                CachedReconstructorRecipe theRecipe = new CachedReconstructorRecipe(recipe);
+                CachedReconstructorRecipe theRecipe = new CachedReconstructorRecipe(recipe, false);
                 theRecipe.setIngredientPermutation(Collections.singletonList(theRecipe.input), ingredient);
                 arecipes.add(theRecipe);
             }
@@ -123,7 +124,7 @@ public class NEIReconstructorRecipe extends TemplateRecipeHandler implements INE
             int meta = ingredient.getItemDamage();
             ItemStack output = ingredient.copy();
             output.setItemDamage(meta >= 15 ? 0 : meta+1);
-            arecipes.add(new CachedReconstructorRecipe(new LensNoneRecipeHandler.Recipe(ingredient, output, LensColor.ENERGY_USE)));
+            arecipes.add(new CachedReconstructorRecipe(new LensNoneRecipeHandler.Recipe(ingredient, output, LensColor.ENERGY_USE), true));
         }
     }
 
@@ -154,6 +155,10 @@ public class NEIReconstructorRecipe extends TemplateRecipeHandler implements INE
         if(Minecraft.getMinecraft().currentScreen != null){
             BookletPage.renderItem(Minecraft.getMinecraft().currentScreen, new ItemStack(InitBlocks.blockAtomicReconstructor), 32+34, 19, 1.0F);
         }
+        if(((CachedReconstructorRecipe)this.arecipes.get(recipe)).showColorLens){
+            String text = InitItems.itemColorLens.getItemStackDisplayName(new ItemStack(InitItems.itemColorLens));
+            GuiDraw.drawString(text, 0, 44, StringUtil.DECIMAL_COLOR_GRAY_TEXT, false);
+        }
     }
 
     @Override
@@ -165,10 +170,12 @@ public class NEIReconstructorRecipe extends TemplateRecipeHandler implements INE
 
         public PositionedStack result;
         public PositionedStack input;
+        public boolean showColorLens;
 
-        public CachedReconstructorRecipe(LensNoneRecipeHandler.Recipe recipe){
+        public CachedReconstructorRecipe(LensNoneRecipeHandler.Recipe recipe, boolean showColorLens){
             this.result = new PositionedStack(recipe.getOutputs(), 67+32, 19);
             this.input = new PositionedStack(recipe.getInputs(), 5+32, 19);
+            this.showColorLens = showColorLens;
         }
 
         @Override
