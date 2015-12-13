@@ -1,3 +1,11 @@
+# 1.7.10-r12
+- Crusher, Coffee Machine & Reconstructor SOUNDS! \o/
+- Added HoMeCo Jam
+- Made Blocks store their energy when broken
+- Made Miner usable by making it ignore liquids (Whoops)
+- Reconstructor NEI Handler now shows you that you need a lens of color when you do
+- Made Jam always edible
+
 # 1.7.10-r11
 - Added Vertical Digger
 - Added more Achievements
