@@ -16,6 +16,7 @@ import cofh.api.energy.IEnergyReceiver;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.recipe.CrusherRecipeRegistry;
+import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -97,8 +98,13 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
                 canCrushOnSecond = this.canCrushOn(SLOT_INPUT_2, SLOT_OUTPUT_2_1, SLOT_OUTPUT_2_2);
             }
 
+            boolean shouldPlaySound = false;
+
             if(canCrushOnFirst){
                 if(this.storage.getEnergyStored() >= getEnergyUse(this.isDouble)){
+                    if(this.firstCrushTime%30 == 0){
+                        shouldPlaySound = true;
+                    }
                     this.firstCrushTime++;
                     if(this.firstCrushTime >= getMaxCrushTime()){
                         this.finishCrushing(SLOT_INPUT_1, SLOT_OUTPUT_1_1, SLOT_OUTPUT_1_2);
@@ -113,6 +119,9 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
             if(this.isDouble){
                 if(canCrushOnSecond){
                     if(this.storage.getEnergyStored() >= getEnergyUse(this.isDouble)){
+                        if(this.secondCrushTime%30 == 0){
+                            shouldPlaySound = true;
+                        }
                         this.secondCrushTime++;
                         if(this.secondCrushTime >= getMaxCrushTime()){
                             this.finishCrushing(SLOT_INPUT_2, SLOT_OUTPUT_2_1, SLOT_OUTPUT_2_2);
@@ -146,6 +155,10 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
                 this.lastEnergy = this.storage.getEnergyStored();
                 this.lastFirstCrush = this.firstCrushTime;
                 this.lastSecondCrush = this.secondCrushTime;
+            }
+
+            if(shouldPlaySound){
+                this.worldObj.playSoundEffect(xCoord, yCoord, zCoord, ModUtil.MOD_ID_LOWER+":crusher", 0.25F, 1.0F);
             }
         }
     }

@@ -18,6 +18,7 @@ import ellpeck.actuallyadditions.items.lens.Lens;
 import ellpeck.actuallyadditions.items.lens.Lenses;
 import ellpeck.actuallyadditions.network.PacketHandler;
 import ellpeck.actuallyadditions.network.PacketParticle;
+import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.WorldPos;
 import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.item.ItemStack;
@@ -81,6 +82,7 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
     }
 
     private void shootLaser(int endX, int endY, int endZ, Lens currentLens){
+        this.worldObj.playSoundEffect(xCoord, yCoord, zCoord, ModUtil.MOD_ID_LOWER+":reconstructor", 0.35F, 1.0F);
         PacketHandler.theNetwork.sendToAllAround(new PacketParticle(xCoord, yCoord, zCoord, endX, endY, endZ, currentLens.getColor(), 8, 2F), new NetworkRegistry.TargetPoint(worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 64));
     }
 
