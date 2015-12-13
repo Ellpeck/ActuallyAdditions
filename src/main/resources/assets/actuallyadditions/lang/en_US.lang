@@ -660,3 +660,7 @@ booklet.actuallyadditions.chapter.miscDecorStuffsAndThings.text.1=Sometimes, whe
 booklet.actuallyadditions.chapter.miner.name=Vertical Digger
 booklet.actuallyadditions.chapter.miner.text.1=The <item>Vertical Digger<r> can be used to automatically <imp>mine blocks<r> from the world. <n>It has two modes: It can either <imp>only mine ores<r> or <imp>mine everything<r>. When mining a block, it uses about <rf> RF. <n>Mined items get stored in an internal buffer that can be accessed through right-clicking. Right-clicking while sneaking will show the Digger's status. <n><n>Much like Phantomfaces, the Digger's range can be upgraded by placing 3 or less <item>Phantom Boosters<r> above it.
 booklet.actuallyadditions.chapter.miner.text.2=(Works with any colored Drill) <n><n><n><n><n><i>I dig it
+
+booklet.actuallyadditions.chapter.fireworkBox.name=Firework Box
+booklet.actuallyadditions.chapter.fireworkBox.text.1=The <item>Firework Box<r> is a perfect thing for New Year's! When placed down and supplied with some <imp>RF<r>, it will shoot out some <imp>randomly generated<r> <item>Fireworks<r> around it. <n>For each shot, it uses <rf> RF. <n><n><i>You know, Vanilla Fireworks are just too bloody annoying to craft, but too awesome not to use. So here's the solution.
+booklet.actuallyadditions.chapter.fireworkBox.text.2=<n><n><n><i>Keep it safe. <n>It won't explode.

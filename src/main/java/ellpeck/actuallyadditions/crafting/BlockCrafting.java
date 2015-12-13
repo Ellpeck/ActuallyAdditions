@@ -82,12 +82,23 @@ public class BlockCrafting{
     public static IRecipe recipeAtomicReconstructor;
     public static IRecipe recipeBookStand;
     public static IRecipe recipeMiner;
+    public static IRecipe recipeFireworkBox;
 
     public static void init(){
 
         //Book Stand
         GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitBlocks.blockBookletStand), new ItemStack(InitItems.itemBooklet), "plankWood"));
         recipeBookStand = Util.GetRecipes.lastIRecipe();
+
+        //Firework Box
+        if(ConfigCrafting.FIREWORK_BOX.isEnabled()){
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockFireworkBox),
+                    "GGG", "SSS", "CCC",
+                    'G', new ItemStack(Items.gunpowder),
+                    'S', new ItemStack(Items.stick),
+                    'C', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.IRON.ordinal())));
+            recipeFireworkBox = Util.GetRecipes.lastIRecipe();
+        }
 
         //Miner
         if(ConfigCrafting.MINER.isEnabled()){
