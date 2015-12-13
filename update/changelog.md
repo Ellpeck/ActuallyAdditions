@@ -1,6 +1,7 @@
 # 1.7.10-r12
 - Crusher, Coffee Machine & Reconstructor SOUNDS! \o/
 - Added HoMeCo Jam
+- Made TileEntities save if they're redstone powered so that they won't be unpowered on re-entering chunks
 - Made Blocks store their energy when broken
 - Made Miner usable by making it ignore liquids (Whoops)
 - Reconstructor NEI Handler now shows you that you need a lens of color when you do
