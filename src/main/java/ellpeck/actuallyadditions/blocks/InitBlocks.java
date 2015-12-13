@@ -110,9 +110,12 @@ public class InitBlocks{
     public static Block blockBookletStand;
     public static Block blockMiner;
 
+    public static Block blockFireworkBox;
+
     public static void init(){
         ModUtil.LOGGER.info("Initializing Blocks...");
 
+        blockFireworkBox = new BlockFireworkBox("blockFireworkBox");
         blockMiner = new BlockMiner("blockMiner");
         blockBookletStand = new BlockBookletStand("blockBookStand");
         blockAtomicReconstructor = new BlockAtomicReconstructor("blockAtomicReconstructor");
