@@ -30,8 +30,6 @@ public class BlockFireworkBox extends BlockContainerBase{
 
     @SideOnly(Side.CLIENT)
     private IIcon topIcon;
-    @SideOnly(Side.CLIENT)
-    private IIcon bottomIcon;
 
     public BlockFireworkBox(String name){
         super(Material.rock, name);
@@ -49,7 +47,7 @@ public class BlockFireworkBox extends BlockContainerBase{
     @Override
     @SideOnly(Side.CLIENT)
     public IIcon getIcon(int side, int meta){
-        return side <= 1 ? (side == 0 ? this.bottomIcon : this.topIcon) : this.blockIcon;
+        return side == 1 ? this.topIcon : this.blockIcon;
     }
 
     @Override
@@ -69,7 +67,6 @@ public class BlockFireworkBox extends BlockContainerBase{
     public void registerBlockIcons(IIconRegister iconReg){
         this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName());
         this.topIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName()+"Top");
-        this.bottomIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName()+"Bottom");
     }
 
     @Override
