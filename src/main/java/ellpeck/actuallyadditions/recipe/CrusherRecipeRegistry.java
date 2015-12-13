@@ -27,7 +27,7 @@ public class CrusherRecipeRegistry{
     public static ArrayList<SearchCase> searchCases = new ArrayList<SearchCase>();
 
     public static void addRecipe(String input, String outputOne, int outputOneAmount, String outputTwo, int outputTwoAmount, int outputTwoChance){
-        if(!OreDictionary.getOres(input).isEmpty() && !OreDictionary.getOres(outputOne).isEmpty() && (outputTwo == null || outputTwo.isEmpty() || !OreDictionary.getOres(outputTwo).isEmpty())){
+        if(!OreDictionary.getOres(input, false).isEmpty() && !OreDictionary.getOres(outputOne, false).isEmpty() && (outputTwo == null || outputTwo.isEmpty() || !OreDictionary.getOres(outputTwo, false).isEmpty())){
             recipes.add(new CrusherRecipe(input, outputOne, outputOneAmount, outputTwo, outputTwoAmount, outputTwoChance));
         }
     }
@@ -91,7 +91,7 @@ public class CrusherRecipeRegistry{
     }
 
     public static void addRecipe(ItemStack input, String outputOne, int outputOneAmount){
-        if(!OreDictionary.getOres(outputOne).isEmpty()){
+        if(!OreDictionary.getOres(outputOne, false).isEmpty()){
             recipes.add(new CrusherRecipe(input, outputOne, outputOneAmount));
         }
     }
