@@ -127,6 +127,7 @@ tile.actuallyadditions.blockCrystalBlack.name=Void Crystal Block
 tile.actuallyadditions.blockCrystalWhite.name=Enori Crystal Block
 tile.actuallyadditions.blockBookStand.name=Manual Stand
 tile.actuallyadditions.blockMiner.name=Vertical Digger
+tile.actuallyadditions.blockFireworkBox.name=Firework Box
 
 #ESD
 tile.actuallyadditions.blockInputter.name=ESD
