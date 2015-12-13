@@ -40,6 +40,10 @@ public class Util{
         FMLCommonHandler.instance().bus().register(o);
     }
 
+    public static boolean isDevVersion(){
+        return ModUtil.VERSION.equals("@VERSION@");
+    }
+
     public static void registerDispenserHandler(Item item, BehaviorDefaultDispenseItem handler){
         BlockDispenser.dispenseBehaviorRegistry.putObject(item, handler);
     }

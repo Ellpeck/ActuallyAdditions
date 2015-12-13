@@ -12,6 +12,7 @@ package ellpeck.actuallyadditions.update;
 
 import ellpeck.actuallyadditions.config.values.ConfigBoolValues;
 import ellpeck.actuallyadditions.util.ModUtil;
+import ellpeck.actuallyadditions.util.Util;
 
 public class UpdateChecker{
 
@@ -22,7 +23,7 @@ public class UpdateChecker{
     public static String updateVersion;
 
     public static void init(){
-        if(ConfigBoolValues.DO_UPDATE_CHECK.isEnabled()){
+        if(ConfigBoolValues.DO_UPDATE_CHECK.isEnabled() && !Util.isDevVersion()){
             ModUtil.LOGGER.info("Initializing Update Checker...");
             new ThreadUpdateChecker();
         }

@@ -39,7 +39,7 @@ public class InitEvents{
             Util.registerEvent(new NEIScreenEvents());
         }
 
-        if(ConfigBoolValues.DO_UPDATE_CHECK.isEnabled()){
+        if(ConfigBoolValues.DO_UPDATE_CHECK.isEnabled() && !Util.isDevVersion()){
             Util.registerEvent(new UpdateCheckerClientNotificationEvent());
         }
     }
