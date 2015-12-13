@@ -125,10 +125,11 @@ public abstract class BlockContainerBase extends BlockContainer{
         this.updateRedstoneState(world, x, y, z);
     }
 
-    private void updateRedstoneState(World world, int x, int y, int z){
+    public void updateRedstoneState(World world, int x, int y, int z){
         TileEntity tile = world.getTileEntity(x, y, z);
         if(tile instanceof TileEntityBase){
             ((TileEntityBase)tile).setRedstonePowered(world.isBlockIndirectlyGettingPowered(x, y, z));
+            tile.markDirty();
         }
     }
 

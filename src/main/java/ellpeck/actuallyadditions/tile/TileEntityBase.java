@@ -76,12 +76,14 @@ public abstract class TileEntityBase extends TileEntity{
     @Override
     public final void readFromNBT(NBTTagCompound compound){
         super.readFromNBT(compound);
+        this.isRedstonePowered = compound.getBoolean("Redstone");
         this.readSyncableNBT(compound, false);
     }
 
     @Override
     public final void writeToNBT(NBTTagCompound compound){
         super.writeToNBT(compound);
+        compound.setBoolean("Redstone", this.isRedstonePowered);
         this.writeSyncableNBT(compound, false);
     }
 
