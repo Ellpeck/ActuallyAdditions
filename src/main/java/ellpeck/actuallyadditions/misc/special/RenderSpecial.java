@@ -38,7 +38,7 @@ public class RenderSpecial{
 
         boolean isBlock = this.theThingToRender.getItem() instanceof ItemBlock;
         float size = isBlock ? 0.3F : 0.4F;
-        float offsetUp = isBlock ? 0F : 0.2F;
+        double offsetUp = isBlock ? 0F : 0.2F;
 
         if(ClientProxy.pumpkinBlurPumpkinBlur){
             this.theThingToRender = new ItemStack(Calendar.getInstance().get(Calendar.DAY_OF_MONTH)%2 == 0 ? Blocks.lit_pumpkin : Blocks.pumpkin);
@@ -46,9 +46,9 @@ public class RenderSpecial{
             offsetUp = 0;
         }
 
-        int bobHeight = 70;
-        long theTime = Minecraft.getSystemTime();
-        long time = theTime/50;
+        double bobHeight = 70;
+        double theTime = Minecraft.getSystemTime();
+        double time = theTime/50;
 
         if(time-bobHeight >= lastTimeForBobbing){
             this.lastTimeForBobbing = time;
@@ -60,13 +60,13 @@ public class RenderSpecial{
         GL11.glScalef(size, size, size);
 
         if(time-(bobHeight/2) >= lastTimeForBobbing){
-            GL11.glTranslated(0, ((double)time-this.lastTimeForBobbing)/100, 0);
+            GL11.glTranslated(0, (time-this.lastTimeForBobbing)/100, 0);
         }
         else{
-            GL11.glTranslated(0, -((double)time-lastTimeForBobbing)/100+(double)bobHeight/100, 0);
+            GL11.glTranslated(0, -(time-lastTimeForBobbing)/100+bobHeight/100, 0);
         }
 
-        GL11.glRotated((double)theTime/20, 0, 1, 0);
+        GL11.glRotated(theTime/20, 0, 1, 0);
 
         GL11.glDisable(GL11.GL_LIGHTING);
         if(this.theThingToRender != null){
