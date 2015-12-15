@@ -74,13 +74,12 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
 
             if(this.currentBurnTime <= 0 && this.slots[0] != null && TileEntityFurnace.getItemBurnTime(this.slots[0]) > 0){
                 int burnTime = TileEntityFurnace.getItemBurnTime(this.slots[0]);
-                if(PRODUCE*burnTime <= this.getMaxEnergyStored(ForgeDirection.UNKNOWN)-this.getEnergyStored(ForgeDirection.UNKNOWN)){
-                    this.maxBurnTime = burnTime;
-                    this.currentBurnTime = burnTime;
-                    this.slots[0].stackSize--;
-                    if(this.slots[0].stackSize == 0){
-                        this.slots[0] = this.slots[0].getItem().getContainerItem(this.slots[0]);
-                    }
+                this.maxBurnTime = burnTime;
+                this.currentBurnTime = burnTime;
+
+                this.slots[0].stackSize--;
+                if(this.slots[0].stackSize == 0){
+                    this.slots[0] = this.slots[0].getItem().getContainerItem(this.slots[0]);
                 }
             }
 
