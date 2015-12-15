@@ -196,16 +196,19 @@ public abstract class BlockContainerBase extends BlockContainer{
 
             if(tile instanceof IFluidSaver){
                 int amount = stack.getTagCompound().getInteger("FluidAmount");
-                FluidStack[] fluids = new FluidStack[amount];
 
-                for(int i = 0; i < amount; i++){
-                    NBTTagCompound compound = stack.getTagCompound().getCompoundTag("Fluid"+i);
-                    if(compound != null){
-                        fluids[i] = FluidStack.loadFluidStackFromNBT(compound);
+                if(amount > 0){
+                    FluidStack[] fluids = new FluidStack[amount];
+
+                    for(int i = 0; i < amount; i++){
+                        NBTTagCompound compound = stack.getTagCompound().getCompoundTag("Fluid"+i);
+                        if(compound != null){
+                            fluids[i] = FluidStack.loadFluidStackFromNBT(compound);
+                        }
                     }
-                }
 
-                ((IFluidSaver)tile).setFluids(fluids);
+                    ((IFluidSaver)tile).setFluids(fluids);
+                }
             }
         }
     }
