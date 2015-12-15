@@ -24,7 +24,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.*;
 
-public class TileEntityCanolaPress extends TileEntityInventoryBase implements IEnergyReceiver, IFluidHandler, IEnergySaver{
+public class TileEntityCanolaPress extends TileEntityInventoryBase implements IEnergyReceiver, IFluidHandler, IEnergySaver, IFluidSaver{
 
     public static final int PRODUCE = 100;
     public static final int ENERGY_USE = 35;
@@ -197,5 +197,15 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IE
     @Override
     public void setEnergy(int energy){
         this.storage.setEnergyStored(energy);
+    }
+
+    @Override
+    public FluidStack[] getFluids(){
+        return new FluidStack[]{this.tank.getFluid()};
+    }
+
+    @Override
+    public void setFluids(FluidStack[] fluids){
+        this.tank.setFluid(fluids[0]);
     }
 }

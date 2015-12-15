@@ -21,7 +21,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.*;
 
-public class TileEntityFluidCollector extends TileEntityInventoryBase implements IFluidHandler{
+public class TileEntityFluidCollector extends TileEntityInventoryBase implements IFluidHandler, IFluidSaver{
 
     public FluidTank tank = new FluidTank(8*FluidContainerRegistry.BUCKET_VOLUME);
     public boolean isPlacer;
@@ -192,6 +192,16 @@ public class TileEntityFluidCollector extends TileEntityInventoryBase implements
     @Override
     public boolean canExtractItem(int slot, ItemStack stack, int side){
         return slot == 1;
+    }
+
+    @Override
+    public FluidStack[] getFluids(){
+        return new FluidStack[]{this.tank.getFluid()};
+    }
+
+    @Override
+    public void setFluids(FluidStack[] fluids){
+        this.tank.setFluid(fluids[0]);
     }
 
     public static class TileEntityFluidPlacer extends TileEntityFluidCollector{

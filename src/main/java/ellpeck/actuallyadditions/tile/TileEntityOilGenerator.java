@@ -21,7 +21,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.*;
 
-public class TileEntityOilGenerator extends TileEntityInventoryBase implements IEnergyProvider, IFluidHandler, IEnergySaver{
+public class TileEntityOilGenerator extends TileEntityInventoryBase implements IEnergyProvider, IFluidHandler, IEnergySaver, IFluidSaver{
 
     public static final int ENERGY_PRODUCED = 76;
     private static final int BURN_TIME = 100;
@@ -195,5 +195,15 @@ public class TileEntityOilGenerator extends TileEntityInventoryBase implements I
     @Override
     public void setEnergy(int energy){
         this.storage.setEnergyStored(energy);
+    }
+
+    @Override
+    public FluidStack[] getFluids(){
+        return new FluidStack[]{this.tank.getFluid()};
+    }
+
+    @Override
+    public void setFluids(FluidStack[] fluids){
+        this.tank.setFluid(fluids[0]);
     }
 }

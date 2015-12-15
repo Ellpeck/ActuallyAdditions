@@ -13,6 +13,7 @@ package ellpeck.actuallyadditions.blocks.base;
 import cpw.mods.fml.common.registry.GameRegistry;
 import ellpeck.actuallyadditions.creative.CreativeTab;
 import ellpeck.actuallyadditions.tile.IEnergySaver;
+import ellpeck.actuallyadditions.tile.IFluidSaver;
 import ellpeck.actuallyadditions.tile.TileEntityBase;
 import ellpeck.actuallyadditions.tile.TileEntityInventoryBase;
 import ellpeck.actuallyadditions.util.ModUtil;
@@ -30,6 +31,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.FluidStack;
 
 import java.util.ArrayList;
 
@@ -158,6 +160,25 @@ public abstract class BlockContainerBase extends BlockContainer{
                 }
             }
 
+            if(tile instanceof IFluidSaver){
+                FluidStack[] fluids = ((IFluidSaver)tile).getFluids();
+
+                if(fluids != null && fluids.length > 0){
+                    if(stack.getTagCompound() == null){
+                        stack.setTagCompound(new NBTTagCompound());
+                    }
+
+                    stack.getTagCompound().setInteger("FluidAmount", fluids.length);
+                    for(int i = 0; i < fluids.length; i++){
+                        if(fluids[i] != null && fluids[i].amount > 0){
+                            NBTTagCompound compound = new NBTTagCompound();
+                            fluids[i].writeToNBT(compound);
+                            stack.getTagCompound().setTag("Fluid"+i, compound);
+                        }
+                    }
+                }
+            }
+
             drops.add(stack);
         }
         
@@ -168,8 +189,23 @@ public abstract class BlockContainerBase extends BlockContainer{
     public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack){
         if(stack.getTagCompound() != null){
             TileEntity tile = world.getTileEntity(x, y, z);
+
             if(tile instanceof IEnergySaver){
                 ((IEnergySaver)tile).setEnergy(stack.getTagCompound().getInteger("Energy"));
+            }
+
+            if(tile instanceof IFluidSaver){
+                int amount = stack.getTagCompound().getInteger("FluidAmount");
+                FluidStack[] fluids = new FluidStack[amount];
+
+                for(int i = 0; i < amount; i++){
+                    NBTTagCompound compound = stack.getTagCompound().getCompoundTag("Fluid"+i);
+                    if(compound != null){
+                        fluids[i] = FluidStack.loadFluidStackFromNBT(compound);
+                    }
+                }
+
+                ((IFluidSaver)tile).setFluids(fluids);
             }
         }
     }

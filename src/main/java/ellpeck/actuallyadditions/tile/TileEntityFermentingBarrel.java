@@ -20,7 +20,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.*;
 
-public class TileEntityFermentingBarrel extends TileEntityInventoryBase implements IFluidHandler{
+public class TileEntityFermentingBarrel extends TileEntityInventoryBase implements IFluidHandler, IFluidSaver{
 
     private static final int PROCESS_TIME = 100;
     public FluidTank canolaTank = new FluidTank(2*FluidContainerRegistry.BUCKET_VOLUME);
@@ -157,5 +157,16 @@ public class TileEntityFermentingBarrel extends TileEntityInventoryBase implemen
     @Override
     public FluidTankInfo[] getTankInfo(ForgeDirection from){
         return new FluidTankInfo[]{this.canolaTank.getInfo(), this.oilTank.getInfo()};
+    }
+
+    @Override
+    public FluidStack[] getFluids(){
+        return new FluidStack[]{this.oilTank.getFluid(), this.canolaTank.getFluid()};
+    }
+
+    @Override
+    public void setFluids(FluidStack[] fluids){
+        this.oilTank.setFluid(fluids[0]);
+        this.canolaTank.setFluid(fluids[1]);
     }
 }
