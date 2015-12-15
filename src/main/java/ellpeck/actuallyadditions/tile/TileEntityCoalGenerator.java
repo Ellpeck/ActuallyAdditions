@@ -96,7 +96,7 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
                 this.markDirty();
                 int meta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
                 if(meta == 1){
-                    if(!(this.currentBurnTime <= 0 && this.slots[0] != null && TileEntityFurnace.getItemBurnTime(this.slots[0]) > 0 && PRODUCE*TileEntityFurnace.getItemBurnTime(this.slots[0]) <= this.getMaxEnergyStored(ForgeDirection.UNKNOWN)-this.getEnergyStored(ForgeDirection.UNKNOWN))){
+                    if(!(this.currentBurnTime <= 0 && this.slots[0] != null && TileEntityFurnace.getItemBurnTime(this.slots[0]) > 0)){
                         worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 0, 2);
                     }
                 }
