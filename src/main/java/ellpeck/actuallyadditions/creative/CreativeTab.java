@@ -116,6 +116,7 @@ public class CreativeTab extends CreativeTabs{
         add(InitItems.itemExplosionLens);
         add(InitItems.itemDamageLens);
         add(InitItems.itemLaserWrench);
+        add(InitItems.itemCrateKeeper);
         add(InitItems.itemChestToCrateUpgrade);
 
         add(InitItems.itemDrill);

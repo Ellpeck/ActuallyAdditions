@@ -78,6 +78,7 @@ public class ItemCrafting{
     public static IRecipe recipeDrillCore;
     public static IRecipe recipeBlackDye;
     public static IRecipe recipeLens;
+    public static IRecipe recipeCrateKeeper;
 
     public static void init(){
 
@@ -107,6 +108,16 @@ public class ItemCrafting{
                     'C', new ItemStack(Blocks.chest),
                     'W', "plankWood"));
             recipeChestToCrateUpgrade = Util.GetRecipes.lastIRecipe();
+        }
+
+        //Crate Keeper
+        if(ConfigCrafting.CRATE_KEEPER.isEnabled()){
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemCrateKeeper),
+                    "WIW", "IQI", "WIW",
+                    'I', "ingotIron",
+                    'W', "plankWood",
+                    'Q', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal())));
+            recipeCrateKeeper = Util.GetRecipes.lastIRecipe();
         }
 
         //Laser Wrench

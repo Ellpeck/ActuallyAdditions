@@ -96,7 +96,7 @@ public class InitBooklet{
         new BookletChapter("fishingNet", entryFunctionalNonRF, new ItemStack(InitBlocks.blockFishingNet), new PageTextOnly(1), new PageCrafting(2, BlockCrafting.recipeFisher).setNoText());
         new BookletChapter("feeder", entryFunctionalNonRF, new ItemStack(InitBlocks.blockFeeder), new PageTextOnly(1), new PageCrafting(2, BlockCrafting.recipeFeeder).setNoText());
         new BookletChapter("compost", entryFunctionalNonRF, new ItemStack(InitBlocks.blockCompost), new PageTextOnly(1).setStack(new ItemStack(InitItems.itemFertilizer)).addTextReplacement("<num>", TileEntityCompost.AMOUNT), new PageCrafting(2, BlockCrafting.recipeCompost).setNoText(), new PageCrafting(3, ItemCrafting.recipesMashedFood));
-        new BookletChapter("crate", entryFunctionalNonRF, new ItemStack(InitBlocks.blockGiantChest), new PageCrafting(1, BlockCrafting.recipeCrate), new PageCrafting(2, ItemCrafting.recipeChestToCrateUpgrade));
+        new BookletChapter("crate", entryFunctionalNonRF, new ItemStack(InitBlocks.blockGiantChest), new PageCrafting(1, BlockCrafting.recipeCrate), new PageCrafting(2, ItemCrafting.recipeCrateKeeper), new PageCrafting(3, ItemCrafting.recipeChestToCrateUpgrade));
         new BookletChapter("rangedCollector", entryFunctionalNonRF, new ItemStack(InitBlocks.blockRangedCollector), new PageTextOnly(1).addTextReplacement("<range>", TileEntityRangedCollector.RANGE), new PageCrafting(2, BlockCrafting.recipeRangedCollector).setNoText());
 
         //RF Using Blocks

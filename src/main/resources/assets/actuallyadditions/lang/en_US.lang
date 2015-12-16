@@ -315,6 +315,7 @@ item.actuallyadditions.itemMiscLens.name=Lens
 item.actuallyadditions.itemColorLens.name=Lens of Color
 item.actuallyadditions.itemExplosionLens.name=Lens of Detonation
 item.actuallyadditions.itemDamageLens.name=Lens of Certain Death
+item.actuallyadditions.itemCrateKeeper.name=Storage Crate Keeper
 
 #Tooltips
 tooltip.actuallyadditions.onSuffix.desc=On
@@ -535,8 +536,9 @@ booklet.actuallyadditions.chapter.compost.text.1=The <item>Compost<r> is used to
 booklet.actuallyadditions.chapter.compost.text.3=<item>Mashed Food<r> can be crafted from <imp>any type of food or plantable item<r>.
 
 booklet.actuallyadditions.chapter.crate.name=Storage Crates
-booklet.actuallyadditions.chapter.crate.text.1=<item>Storage Crates<r> are big. <imp>Really big<r>. They hold tons of items, more than 4 chests worth of them. <n><n><i>"F-in' gigantic"<rs><n>   -Some Magazine
-booklet.actuallyadditions.chapter.crate.text.2=The <item>Chest To Storage Crate Upgrade<r> allows you to <imp>convert any chest into a Storage Crate<r>, retaining its items! <n>Just <imp>shift-right-click<r> onto the chest to apply it.
+booklet.actuallyadditions.chapter.crate.text.1=<item>Storage Crates<r> are big. <imp>Really big<r>. They hold tons of items, more than 4 chests worth of them.
+booklet.actuallyadditions.chapter.crate.text.2=Placing a <item>Storage Crate Keeper<r> inside the Storage Crate before breaking it will cause it to <imp>keep all of its items<r>, however the Keeper will be destroyed upon placing the Crate back down.
+booklet.actuallyadditions.chapter.crate.text.3=The <item>Chest To Storage Crate Upgrade<r> allows you to <imp>convert any chest into a Storage Crate<r>, retaining its items! <n>Just <imp>shift-right-click<r> onto the chest to apply it.
 
 booklet.actuallyadditions.chapter.coffeeMachine.name=Coffee Machine
 booklet.actuallyadditions.chapter.coffeeMachine.text.1=The <item>Coffee Machine<r> is a block used to make <item>Coffee<r>, a <imp>potion-like<r> item that gives the user several buffs. <n>To use the coffee machine, you need a <item>Empty Cup<r>, <coffee> <item>Coffee Beans<r>, which can be found in the wild, harvested and <imp>planted on farmland<r> again, <rf> RF/t and <water>mB of Water per cup brewed. <n>On the coffee machine recipe pages at the back, to see what the item does, just hover over the Cup of Coffee.
