@@ -21,7 +21,7 @@ public class EntityColoredParticleFX extends EntityReddustFX{
     public EntityColoredParticleFX(World world, double x, double y, double z, float size, float r, float g, float b, int ageMulti){
         super(world, x, y, z, size, r, g, b);
         //To work around Reddust particles resetting the color to red if it's 0 (which is really stupid to be honest)
-        this.particleRed = ((float)(Math.random()*0.20000000298023224D)+0.8F)*r*(float)Math.random()*0.4F+0.6F;
+        this.particleRed = ((float)(Math.random()*0.20000000298023224D)+0.8F)*r*((float)Math.random()*0.4F+0.6F);
         this.particleMaxAge = (int)(8.0D/(Math.random()*0.8D+0.2D))*ageMulti;
     }
 }
