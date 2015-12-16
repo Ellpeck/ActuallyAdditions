@@ -42,6 +42,7 @@ import ellpeck.actuallyadditions.recipe.HairyBallHandler;
 import ellpeck.actuallyadditions.recipe.TreasureChestHandler;
 import ellpeck.actuallyadditions.tile.TileEntityBase;
 import ellpeck.actuallyadditions.update.UpdateChecker;
+import ellpeck.actuallyadditions.util.FakePlayerUtil;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.init.Items;
@@ -109,6 +110,8 @@ public class ActuallyAdditions{
         proxy.postInit(event);
 
         ModUtil.LOGGER.info("PostInitialization Finished.");
+
+        FakePlayerUtil.info();
     }
 
     @EventHandler

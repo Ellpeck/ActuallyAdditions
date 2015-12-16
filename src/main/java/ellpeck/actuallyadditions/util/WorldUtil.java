@@ -149,7 +149,7 @@ public class WorldUtil{
 
             try{
                 //Blocks
-                stack.tryPlaceItemIntoWorld(FakePlayerUtil.newFakePlayer(world), world, x, y, z, side == ForgeDirection.UNKNOWN ? 0 : side.ordinal(), 0, 0, 0);
+                stack.tryPlaceItemIntoWorld(FakePlayerUtil.getFakePlayer(world), world, x, y, z, side == ForgeDirection.UNKNOWN ? 0 : side.ordinal(), 0, 0, 0);
                 return stack;
             }
             catch(Exception e){

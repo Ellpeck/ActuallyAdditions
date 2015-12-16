@@ -19,14 +19,18 @@ import java.util.UUID;
 
 public class FakePlayerUtil{
 
-    private static final String fakeName = "EllpecksActuallyAdditionsFakePlayer";
-    private static GameProfile fakeProfile = new GameProfile(UUID.nameUUIDFromBytes(fakeName.getBytes()), fakeName);
+    private static final String FAKE_NAME = "EllpecksActuallyAdditionsFakePlayer";
+    private static final GameProfile FAKE_PROFILE = new GameProfile(UUID.nameUUIDFromBytes(FAKE_NAME.getBytes()), FAKE_NAME);
     private static FakePlayer theFakePlayer;
 
-    public static FakePlayer newFakePlayer(World world){
+    public static void info(){
+        ModUtil.LOGGER.info(ModUtil.NAME+"' Fake Player: '"+FAKE_PROFILE.getName()+"', UUID: "+FAKE_PROFILE.getId());
+    }
+
+    public static FakePlayer getFakePlayer(World world){
         if(world instanceof WorldServer){
             if(theFakePlayer == null){
-                theFakePlayer = new FakePlayer((WorldServer)world, fakeProfile);
+                theFakePlayer = new FakePlayer((WorldServer)world, FAKE_PROFILE);
             }
             return theFakePlayer;
         }
