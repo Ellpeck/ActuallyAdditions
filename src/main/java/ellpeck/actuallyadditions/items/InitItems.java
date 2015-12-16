@@ -127,6 +127,7 @@ public class InitItems{
     public static Item itemWaterRemovalRing;
 
     public static Item itemChestToCrateUpgrade;
+    public static Item itemCrateKeeper;
 
     public static Item itemLaserWrench;
     public static Item itemCrystal;
@@ -137,6 +138,7 @@ public class InitItems{
     public static void init(){
         ModUtil.LOGGER.info("Initializing Items...");
 
+        itemCrateKeeper = new ItemGeneric("itemCrateKeeper");
         itemColorLens = new ItemLens("itemColorLens", Lenses.LENS_COLOR);
         itemExplosionLens = new ItemLens("itemExplosionLens", Lenses.LENS_DETONATION);
         itemDamageLens = new ItemLens("itemDamageLens", Lenses.LENS_DEATH);

@@ -15,17 +15,24 @@ import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.ActuallyAdditions;
 import ellpeck.actuallyadditions.blocks.base.BlockContainerBase;
 import ellpeck.actuallyadditions.inventory.GuiHandler;
+import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.tile.TileEntityGiantChest;
+import ellpeck.actuallyadditions.util.ItemUtil;
 import ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
+
+import java.util.ArrayList;
 
 public class BlockGiantChest extends BlockContainerBase{
 
@@ -80,7 +87,64 @@ public class BlockGiantChest extends BlockContainerBase{
 
     @Override
     public void breakBlock(World world, int x, int y, int z, Block block, int par6){
-        this.dropInventory(world, x, y, z);
+        TileEntity tile = world.getTileEntity(x, y, z);
+        if(tile instanceof TileEntityGiantChest){
+            if(!ItemUtil.contains(((TileEntityGiantChest)tile).slots, new ItemStack(InitItems.itemCrateKeeper), false)){
+                this.dropInventory(world, x, y, z);
+            }
+        }
+
         super.breakBlock(world, x, y, z, block, par6);
+    }
+
+    @Override
+    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack){
+        if(stack.getTagCompound() != null){
+            TileEntity tile = world.getTileEntity(x, y, z);
+            if(tile instanceof TileEntityGiantChest){
+                NBTTagList list = stack.getTagCompound().getTagList("Items", 10);
+                ItemStack[] slots = ((TileEntityGiantChest)tile).slots;
+
+                for(int i = 0; i < list.tagCount(); i++){
+                    slots[i] = ItemStack.loadItemStackFromNBT(list.getCompoundTagAt(i));
+                }
+            }
+        }
+
+        super.onBlockPlacedBy(world, x, y, z, entity, stack);
+    }
+
+    @Override
+    public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune){
+        ArrayList<ItemStack> drops = super.getDrops(world, x, y, z, metadata, fortune);
+
+        TileEntity tile = world.getTileEntity(x, y, z);
+        if(tile instanceof TileEntityGiantChest){
+            ItemStack[] slots = ((TileEntityGiantChest)tile).slots;
+            int place = ItemUtil.getPlaceAt(slots, new ItemStack(InitItems.itemCrateKeeper), false);
+            if(place >= 0){
+                NBTTagList list = new NBTTagList();
+                for(int i = 0; i < slots.length; i++){
+                    //Destroy the keeper
+                    if(i != place){
+                        if(slots[i] != null){
+                            list.appendTag(slots[i].writeToNBT(new NBTTagCompound()));
+                        }
+                    }
+                }
+
+                if(list.tagCount() > 0){
+                    ItemStack stackInQuestion = drops.get(0);
+                    if(stackInQuestion != null){
+                        if(stackInQuestion.getTagCompound() == null){
+                            stackInQuestion.setTagCompound(new NBTTagCompound());
+                        }
+                        stackInQuestion.getTagCompound().setTag("Items", list);
+                    }
+                }
+            }
+        }
+
+        return drops;
     }
 }
