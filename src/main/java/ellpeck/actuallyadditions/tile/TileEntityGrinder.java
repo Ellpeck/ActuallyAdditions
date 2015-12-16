@@ -171,6 +171,12 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
                 List<ItemStack> outputTwos = CrusherRecipeRegistry.getOutputTwos(this.slots[theInput]);
                 ItemStack outputTwo = outputTwos == null ? null : outputTwos.get(0);
                 if(outputOne != null){
+                    if(outputOne.getItemDamage() == Util.WILDCARD){
+                        outputOne.setItemDamage(0);
+                    }
+                    if(outputTwo != null && outputTwo.getItemDamage() == Util.WILDCARD){
+                        outputTwo.setItemDamage(0);
+                    }
                     if((this.slots[theFirstOutput] == null || (this.slots[theFirstOutput].isItemEqual(outputOne) && this.slots[theFirstOutput].stackSize <= this.slots[theFirstOutput].getMaxStackSize()-outputOne.stackSize)) && (outputTwo == null || (this.slots[theSecondOutput] == null || (this.slots[theSecondOutput].isItemEqual(outputTwo) && this.slots[theSecondOutput].stackSize <= this.slots[theSecondOutput].getMaxStackSize()-outputTwo.stackSize)))){
                         return true;
                     }
@@ -193,6 +199,9 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
         if(outputOnes != null){
             ItemStack outputOne = outputOnes.get(0);
             if(outputOne != null){
+                if(outputOne.getItemDamage() == Util.WILDCARD){
+                    outputOne.setItemDamage(0);
+                }
                 if(this.slots[theFirstOutput] == null){
                     this.slots[theFirstOutput] = outputOne.copy();
                 }
@@ -206,6 +215,9 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
         if(outputTwos != null){
             ItemStack outputTwo = outputTwos.get(0);
             if(outputTwo != null){
+                if(outputTwo.getItemDamage() == Util.WILDCARD){
+                    outputTwo.setItemDamage(0);
+                }
                 int rand = Util.RANDOM.nextInt(100)+1;
                 if(rand <= CrusherRecipeRegistry.getOutputTwoChance(this.slots[theInput])){
                     if(this.slots[theSecondOutput] == null){

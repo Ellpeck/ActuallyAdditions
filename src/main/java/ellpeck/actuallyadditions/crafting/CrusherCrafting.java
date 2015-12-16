@@ -77,7 +77,7 @@ public class CrusherCrafting{
         CrusherRecipeRegistry.addRecipe(new ItemStack(Blocks.gravel), new ItemStack(Items.flint), new ItemStack(Items.flint), 50);
         CrusherRecipeRegistry.addRecipe("stone", "cobblestone", 1);
 
-        CrusherRecipeRegistry.addRecipe(new ItemStack(InitItems.itemFoods, 1, TheFoods.RICE.ordinal()), new ItemStack(Items.sugar, 1, 2));
+        CrusherRecipeRegistry.addRecipe(new ItemStack(InitItems.itemFoods, 1, TheFoods.RICE.ordinal()), new ItemStack(Items.sugar, 2));
         miscRecipes.add(Util.GetRecipes.lastCrusherRecipe());
 
         CrusherRecipeRegistry.addRecipe(new ItemStack(Blocks.tallgrass, 1, Util.WILDCARD), new ItemStack(InitItems.itemMisc, 1, TheMiscItems.GREEN_DYE.ordinal()));
