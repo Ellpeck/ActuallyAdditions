@@ -14,6 +14,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.items.base.ItemBase;
 import ellpeck.actuallyadditions.tile.IPhantomTile;
+import ellpeck.actuallyadditions.tile.TileEntityBase;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
 import ellpeck.actuallyadditions.util.WorldPos;
@@ -48,6 +49,9 @@ public class ItemPhantomConnector extends ItemBase{
                 if(tile instanceof IPhantomTile){
                     if(this.checkHasConnection(stack, player, tile)){
                         ((IPhantomTile)tile).setBoundPosition(getStoredPosition(stack));
+                        if(tile instanceof TileEntityBase){
+                            ((TileEntityBase)tile).sendUpdate();
+                        }
                         clearStorage(stack);
                         player.addChatComponentMessage(new ChatComponentText(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.connected.desc")));
                         return true;

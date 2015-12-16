@@ -14,6 +14,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.blocks.BlockPhantom;
 import ellpeck.actuallyadditions.blocks.InitBlocks;
+import ellpeck.actuallyadditions.network.PacketParticle;
 import ellpeck.actuallyadditions.util.Util;
 import ellpeck.actuallyadditions.util.WorldPos;
 import net.minecraft.block.Block;
@@ -31,6 +32,8 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
     private int rangeBefore;
     private WorldPos boundPosBefore;
     private Block boundBlockBefore;
+
+    public static final float[] COLORS = new float[]{93F/255F, 43F/255F, 181F/255F};
 
     public TileEntityPhantomface(String name){
         super(0, name);
@@ -130,6 +133,10 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
             double d0 = (double)this.boundPosition.getX()+0.5D+0.25D*(double)i1;
             double d3 = (double)(Util.RANDOM.nextFloat()*1.0F*(float)i1);
             worldObj.spawnParticle("portal", d0, d1, d2, d3, d4, d5);
+        }
+
+        if(this.ticksElapsed%80 == 0){
+            PacketParticle.renderParticlesFromAToB(xCoord, yCoord, zCoord, boundPosition.getX(), boundPosition.getY(), boundPosition.getZ(), 2, 0.35F, COLORS, 3);
         }
     }
 

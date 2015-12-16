@@ -15,9 +15,9 @@ import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import ellpeck.actuallyadditions.misc.EntityColoredParticleFX;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.particle.EntityReddustFX;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
@@ -88,22 +88,26 @@ public class PacketParticle implements IMessage{
         @Override
         @SideOnly(Side.CLIENT)
         public IMessage onMessage(PacketParticle message, MessageContext ctx){
-            World world = Minecraft.getMinecraft().theWorld;
+            renderParticlesFromAToB(message.startX, message.startY, message.startZ, message.endX, message.endY, message.endZ, message.particleAmount, message.particleSize, message.color, 1);
+            return null;
+        }
+    }
 
-            if(Minecraft.getMinecraft().thePlayer.getDistance(message.startX, message.startY, message.startZ) <= 64){
-                int difX = message.startX-message.endX;
-                int difY = message.startY-message.endY;
-                int difZ = message.startZ-message.endZ;
-                double distance = Vec3.createVectorHelper(message.startX, message.startY, message.startZ).distanceTo(Vec3.createVectorHelper(message.endX, message.endY, message.endZ));
+    public static void renderParticlesFromAToB(int startX, int startY, int startZ, int endX, int endY, int endZ, int particleAmount, float particleSize, float[] color, int ageMultiplier){
+        World world = Minecraft.getMinecraft().theWorld;
 
-                for(int times = 0; times < message.particleAmount/2; times++){
-                    for(double i = 0; i <= 1; i += 1/(distance*message.particleAmount)){
-                        Minecraft.getMinecraft().effectRenderer.addEffect(new EntityReddustFX(world, (difX*i)+message.endX+0.5, (difY*i)+message.endY+0.5, (difZ*i)+message.endZ+0.5, message.particleSize, message.color[0], message.color[1], message.color[2]));
-                    }
+        if(Minecraft.getMinecraft().thePlayer.getDistance(startX, startY, startZ) <= 64){
+            int difX = startX-endX;
+            int difY = startY-endY;
+            int difZ = startZ-endZ;
+            double distance = Vec3.createVectorHelper(startX, startY, startZ).distanceTo(Vec3.createVectorHelper(endX, endY, endZ));
+
+            for(int times = 0; times < particleAmount/2; times++){
+                for(double i = 0; i <= 1; i += 1/(distance*particleAmount)){
+                    EntityColoredParticleFX fx = new EntityColoredParticleFX(world, (difX*i)+endX+0.5, (difY*i)+endY+0.5, (difZ*i)+endZ+0.5, particleSize, color[0], color[1], color[2], ageMultiplier);
+                    Minecraft.getMinecraft().effectRenderer.addEffect(fx);
                 }
             }
-
-            return null;
         }
     }
 }

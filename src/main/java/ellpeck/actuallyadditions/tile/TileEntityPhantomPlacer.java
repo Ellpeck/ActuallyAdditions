@@ -13,6 +13,7 @@ package ellpeck.actuallyadditions.tile;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.inventory.GuiHandler;
+import ellpeck.actuallyadditions.network.PacketParticle;
 import ellpeck.actuallyadditions.util.Util;
 import ellpeck.actuallyadditions.util.WorldPos;
 import ellpeck.actuallyadditions.util.WorldUtil;
@@ -20,8 +21,6 @@ import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.Vec3;
-import net.minecraft.world.World;
-import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.util.ForgeDirection;
 
 import java.util.ArrayList;
@@ -110,6 +109,10 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
             double d3 = (double)(Util.RANDOM.nextFloat()*1.0F*(float)i1);
             worldObj.spawnParticle("portal", d0, d1, d2, d3, d4, d5);
         }
+
+        if(this.ticksElapsed%80 == 0){
+            PacketParticle.renderParticlesFromAToB(xCoord, yCoord, zCoord, boundPosition.getX(), boundPosition.getY(), boundPosition.getZ(), 2, 0.35F, TileEntityPhantomface.COLORS, 3);
+        }
     }
 
     @Override
@@ -152,8 +155,7 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
     @Override
     public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
         super.writeSyncableNBT(compound, sync);
-        compound.setInteger("Time", currentTime);
-        if(this.hasBoundPosition()){
+        if(this.boundPosition != null){
             compound.setInteger("XCoordOfTileStored", boundPosition.getX());
             compound.setInteger("YCoordOfTileStored", boundPosition.getY());
             compound.setInteger("ZCoordOfTileStored", boundPosition.getZ());
@@ -167,8 +169,8 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
         int x = compound.getInteger("XCoordOfTileStored");
         int y = compound.getInteger("YCoordOfTileStored");
         int z = compound.getInteger("ZCoordOfTileStored");
-        World world = DimensionManager.getWorld(compound.getInteger("WorldOfTileStored"));
-        if(x != 0 && y != 0 && z != 0 && world != null){
+        int world = compound.getInteger("WorldOfTileStored");
+        if(!(x == 0 && y == 0 && z == 0)){
             this.boundPosition = new WorldPos(world, x, y, z);
             this.markDirty();
         }

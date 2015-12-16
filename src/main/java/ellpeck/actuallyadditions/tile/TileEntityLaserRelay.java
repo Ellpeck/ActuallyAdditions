@@ -16,12 +16,11 @@ import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.config.values.ConfigBoolValues;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.misc.LaserRelayConnectionHandler;
+import ellpeck.actuallyadditions.network.PacketParticle;
 import ellpeck.actuallyadditions.util.Util;
 import ellpeck.actuallyadditions.util.WorldPos;
 import ellpeck.actuallyadditions.util.WorldUtil;
 import io.netty.util.internal.ConcurrentSet;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.particle.EntityReddustFX;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
@@ -32,6 +31,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 public class TileEntityLaserRelay extends TileEntityBase implements IEnergyReceiver{
 
     public static final int MAX_DISTANCE = 15;
+    private static final float[] COLOR = new float[]{1F, 0F, 0F};
 
     @Override
     public void updateEntity(){
@@ -49,16 +49,7 @@ public class TileEntityLaserRelay extends TileEntityBase implements IEnergyRecei
             if(network != null){
                 for(LaserRelayConnectionHandler.ConnectionPair aPair : network.connections){
                     if(aPair.contains(thisPos) && thisPos.isEqual(aPair.firstRelay)){
-                        if(Minecraft.getMinecraft().thePlayer.getDistance(aPair.firstRelay.getX(), aPair.firstRelay.getY(), aPair.firstRelay.getZ()) <= 64){
-                            int difX = aPair.firstRelay.getX()-aPair.secondRelay.getX();
-                            int difY = aPair.firstRelay.getY()-aPair.secondRelay.getY();
-                            int difZ = aPair.firstRelay.getZ()-aPair.secondRelay.getZ();
-
-                            double distance = aPair.firstRelay.toVec().distanceTo(aPair.secondRelay.toVec());
-                            for(double i = 0; i <= 1; i += 1/(distance*(ConfigBoolValues.LESS_LASER_RELAY_PARTICLES.isEnabled() ? 1 : 5))){
-                                Minecraft.getMinecraft().effectRenderer.addEffect(new EntityReddustFX(this.worldObj, (difX*i)+aPair.secondRelay.getX()+0.5, (difY*i)+aPair.secondRelay.getY()+0.5, (difZ*i)+aPair.secondRelay.getZ()+0.5, 0.75F, 0, 0, 0));
-                            }
-                        }
+                        PacketParticle.renderParticlesFromAToB(aPair.firstRelay.getX(), aPair.firstRelay.getY(), aPair.firstRelay.getZ(), aPair.secondRelay.getX(), aPair.secondRelay.getY(), aPair.secondRelay.getZ(), ConfigBoolValues.LESS_LASER_RELAY_PARTICLES.isEnabled() ? 1 : 5, 0.75F, COLOR, 1);
                     }
                 }
             }
