@@ -58,7 +58,7 @@ public class TileEntityCompost extends TileEntityInventoryBase{
             boolean theFlag = this.conversionTime > 0;
             if(this.slots[0] != null && !(this.slots[0].getItem() instanceof ItemFertilizer) && this.slots[0].stackSize >= AMOUNT){
                 this.conversionTime++;
-                if(this.conversionTime >= AMOUNT){
+                if(this.conversionTime >= 2000){
                     this.slots[0] = new ItemStack(InitItems.itemFertilizer, AMOUNT);
                     this.conversionTime = 0;
                 }
