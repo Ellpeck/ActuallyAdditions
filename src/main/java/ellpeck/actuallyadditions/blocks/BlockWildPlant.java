@@ -46,6 +46,11 @@ public class BlockWildPlant extends BlockBushBase{
     }
 
     @Override
+    public boolean shouldAddCreative(){
+        return false;
+    }
+
+    @Override
     @SideOnly(Side.CLIENT)
     public IIcon getIcon(int side, int metadata){
         return metadata >= allWildPlants.length ? null : allWildPlants[metadata].wildVersionOf.getIcon(0, 7);
