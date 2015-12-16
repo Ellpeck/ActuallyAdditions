@@ -93,7 +93,7 @@ public class PacketParticle implements IMessage{
         }
     }
 
-    public static void renderParticlesFromAToB(int startX, int startY, int startZ, int endX, int endY, int endZ, int particleAmount, float particleSize, float[] color, int ageMultiplier){
+    public static void renderParticlesFromAToB(int startX, int startY, int startZ, int endX, int endY, int endZ, int particleAmount, float particleSize, float[] color, float ageMultiplier){
         World world = Minecraft.getMinecraft().theWorld;
 
         if(Minecraft.getMinecraft().thePlayer.getDistance(startX, startY, startZ) <= 64 || Minecraft.getMinecraft().thePlayer.getDistance(endX, endY, endZ) <= 64){
