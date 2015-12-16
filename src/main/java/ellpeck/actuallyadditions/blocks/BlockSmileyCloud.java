@@ -18,6 +18,7 @@ import ellpeck.actuallyadditions.blocks.base.BlockContainerBase;
 import ellpeck.actuallyadditions.inventory.GuiHandler;
 import ellpeck.actuallyadditions.tile.TileEntitySmileyCloud;
 import ellpeck.actuallyadditions.util.AssetUtil;
+import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -32,6 +33,8 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+import java.util.Random;
+
 public class BlockSmileyCloud extends BlockContainerBase{
 
     public BlockSmileyCloud(String name){
@@ -39,6 +42,7 @@ public class BlockSmileyCloud extends BlockContainerBase{
         this.setHardness(0.5F);
         this.setResistance(5.0F);
         this.setStepSound(soundTypeCloth);
+        this.setTickRandomly(true);
     }
 
     @Override
@@ -129,6 +133,19 @@ public class BlockSmileyCloud extends BlockContainerBase{
     public void breakBlock(World world, int x, int y, int z, Block block, int par6){
         this.dropInventory(world, x, y, z);
         super.breakBlock(world, x, y, z, block, par6);
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void randomDisplayTick(World world, int x, int y, int z, Random rand){
+        if(Util.RANDOM.nextInt(30) == 0){
+            for(int i = 0; i < 2; i++){
+                double d = Util.RANDOM.nextGaussian()*0.02D;
+                double d1 = Util.RANDOM.nextGaussian()*0.02D;
+                double d2 = Util.RANDOM.nextGaussian()*0.02D;
+                world.spawnParticle("heart", x+Util.RANDOM.nextFloat(), y+0.65+Util.RANDOM.nextFloat(), z+Util.RANDOM.nextFloat(), d, d1, d2);
+            }
+        }
     }
 
     @Override
