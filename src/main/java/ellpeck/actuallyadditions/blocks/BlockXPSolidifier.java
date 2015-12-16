@@ -107,6 +107,8 @@ public class BlockXPSolidifier extends BlockContainerBase{
         if(rotation == 3){
             world.setBlockMetadataWithNotify(x, y, z, 2, 2);
         }
+
+        super.onBlockPlacedBy(world, x, y, z, player, stack);
     }
 
     @Override

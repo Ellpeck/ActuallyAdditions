@@ -95,6 +95,8 @@ public class BlockBookletStand extends BlockContainerBase{
                 tile.sendUpdate();
             }
         }
+
+        super.onBlockPlacedBy(world, x, y, z, player, stack);
     }
 
     @Override

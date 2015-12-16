@@ -92,6 +92,8 @@ public class BlockCoffeeMachine extends BlockContainerBase{
         if(rotation == 3){
             world.setBlockMetadataWithNotify(x, y, z, 3, 2);
         }
+
+        super.onBlockPlacedBy(world, x, y, z, player, stack);
     }
 
     @Override
