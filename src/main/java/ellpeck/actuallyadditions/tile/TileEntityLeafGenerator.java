@@ -12,6 +12,9 @@ package ellpeck.actuallyadditions.tile;
 
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyProvider;
+import cpw.mods.fml.common.network.NetworkRegistry;
+import ellpeck.actuallyadditions.network.PacketHandler;
+import ellpeck.actuallyadditions.network.PacketParticle;
 import ellpeck.actuallyadditions.util.WorldPos;
 import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.block.Block;
@@ -63,6 +66,8 @@ public class TileEntityLeafGenerator extends TileEntityBase implements IEnergyPr
                             this.worldObj.setBlockToAir(theCoord.getX(), theCoord.getY(), theCoord.getZ());
 
                             this.storage.receiveEnergy(ENERGY_PRODUCED, false);
+
+                            PacketHandler.theNetwork.sendToAllAround(new PacketParticle(xCoord, yCoord, zCoord, theCoord.getX(), theCoord.getY(), theCoord.getZ(), new float[]{62F/255F, 163F/255F, 74F/255F}, 5, 1.0F), new NetworkRegistry.TargetPoint(worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 64));
                         }
                     }
                 }
