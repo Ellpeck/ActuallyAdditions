@@ -1,3 +1,27 @@
+# 1.7.10-r13
+- Added Firework Box which shoots out random fireworks
+- Added Crate Keeper which allows you to keep items in a Crate you break
+- Added Glowstone/Redstone conversion recipes to Reconstructor
+- Added a Redstone Pulse Responding mode to some machines
+- New Booklet Main Page design
+- Ignore missing mappings for foreign paxels when removed
+- Fix some bugs with the crusher
+- Phantom Placers now have particles
+- More Phantom Device particles and animation
+- Leaf Gen Particles
+- Fixed the compost taking seconds to convert
+- Smiley Cloud hearts
+- Made Seeds not show up in the misc tab but where they actually should
+- Made Fluids save in blocks when breaking them
+- Made some animations more smooth
+- Made the coal generator more wasteful
+- Inform console about fake player
+- Fixed some blocks not respecting energy and fluid saving
+- Made Tooltips render over main text in booklet (duh)
+- Black Quartz decor blocks
+- New Changelog (it's awesome, but you won't see it until the next update :()
+##### Another reminder: If you want to localize anything in ActAdd, just feel free to submit a pull request on github at https://github.com/Ellpeck/ActuallyAdditions
+
 # 1.7.10-r12
 - Crusher, Coffee Machine & Reconstructor SOUNDS! \o/
 - Added HoMeCo Jam
