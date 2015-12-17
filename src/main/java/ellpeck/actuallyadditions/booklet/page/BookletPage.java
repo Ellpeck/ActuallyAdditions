@@ -18,6 +18,7 @@ import ellpeck.actuallyadditions.booklet.InitBooklet;
 import ellpeck.actuallyadditions.booklet.chapter.BookletChapter;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
+import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.gui.GuiScreen;
@@ -36,13 +37,13 @@ import java.util.Map;
 public class BookletPage{
 
     public boolean arePageStacksWildcard;
-    protected int id;
+    protected int localizationKey;
     protected BookletChapter chapter;
     private HashMap<String, String> textReplacements = new HashMap<String, String>();
     private boolean hasNoText;
 
-    public BookletPage(int id){
-        this.id = id;
+    public BookletPage(int localizationKey){
+        this.localizationKey = localizationKey;
     }
 
     @SideOnly(Side.CLIENT)
@@ -95,7 +96,7 @@ public class BookletPage{
     }
 
     public int getID(){
-        return this.id;
+        return Util.arrayContains(this.chapter.pages, this)+1;
     }
 
     public final String getText(){
@@ -103,7 +104,7 @@ public class BookletPage{
             return null;
         }
 
-        String base = StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".chapter."+this.chapter.getUnlocalizedName()+".text."+this.id).replaceAll("<imp>", EnumChatFormatting.DARK_GREEN+"").replaceAll("<item>", EnumChatFormatting.BLUE+"").replaceAll("<r>", EnumChatFormatting.BLACK+"").replaceAll("<n>", "\n").replaceAll("<i>", EnumChatFormatting.ITALIC+"").replaceAll("<rs>", EnumChatFormatting.RESET+"");
+        String base = StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".chapter."+this.chapter.getUnlocalizedName()+".text."+this.localizationKey).replaceAll("<imp>", EnumChatFormatting.DARK_GREEN+"").replaceAll("<item>", EnumChatFormatting.BLUE+"").replaceAll("<r>", EnumChatFormatting.BLACK+"").replaceAll("<n>", "\n").replaceAll("<i>", EnumChatFormatting.ITALIC+"").replaceAll("<rs>", EnumChatFormatting.RESET+"");
         for(Object o : this.textReplacements.entrySet()){
             Map.Entry e = (Map.Entry)o;
             base = base.replaceAll((String)e.getKey(), (String)e.getValue());
