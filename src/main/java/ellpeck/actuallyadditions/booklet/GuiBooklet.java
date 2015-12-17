@@ -133,16 +133,17 @@ public class GuiBooklet extends GuiScreen{
         super.drawScreen(x, y, f);
         this.searchField.drawTextBox();
 
+        //Renders the current page's content
+        if(this.currentEntrySet.entry != null && this.currentEntrySet.chapter != null && this.currentEntrySet.page != null){
+            this.currentEntrySet.page.render(this, x, y, this.ticksElapsed, this.mousePressed);
+        }
+
         //Draws hovering texts for buttons
         this.fontRendererObj.setUnicodeFlag(false);
         BookletUtils.doHoverTexts(this, x, y);
         BookletUtils.drawAchievementInfo(this, false, x, y);
         this.fontRendererObj.setUnicodeFlag(true);
 
-        //Renders the current page's content
-        if(this.currentEntrySet.entry != null && this.currentEntrySet.chapter != null && this.currentEntrySet.page != null){
-            this.currentEntrySet.page.render(this, x, y, this.ticksElapsed, this.mousePressed);
-        }
         this.fontRendererObj.setUnicodeFlag(unicodeBefore);
 
         //Resets mouse
