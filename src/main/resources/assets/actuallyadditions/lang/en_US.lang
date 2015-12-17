@@ -378,6 +378,9 @@ info.actuallyadditions.inputter.info.1=This is the first Slot in the connected I
 info.actuallyadditions.inputter.info.2=This is the slot after the last Slot in the connected Inventory to <p> at. What that means: If you, for example, write 2 in the field to the left and 5 in this one, it will <p> at Slot 2, 3, and 4.
 info.actuallyadditions.inputter.whitelistInfo=This applies for this part of the white-/blacklist. The other side applies as well, so you can have some Items whitelisted and some blacklisted. Note that, if you have an empty blacklist or an item whitelisted on at least one side, it will always go through.
 info.actuallyadditions.noLens=No Lens
+info.actuallyadditions.booklet.manualName.1=Actually Additions
+info.actuallyadditions.booklet.manualName.2=Manual
+info.actuallyadditions.booklet.edition=Edition
 
 #Container Names
 container.actuallyadditions.inputter.name=ESD

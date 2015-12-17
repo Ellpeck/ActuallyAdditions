@@ -19,6 +19,7 @@ import ellpeck.actuallyadditions.booklet.entry.BookletEntry;
 import ellpeck.actuallyadditions.booklet.entry.BookletEntryAllSearch;
 import ellpeck.actuallyadditions.booklet.page.BookletPage;
 import ellpeck.actuallyadditions.util.*;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.Achievement;
@@ -69,6 +70,30 @@ public class BookletUtils{
         booklet.drawTexturedModalRect(booklet.guiLeft+booklet.xSize/2-142/2, booklet.guiTop-12, 0, 240, 142, 12);
         //Lower title
         booklet.drawTexturedModalRect(booklet.guiLeft+booklet.xSize/2-142/2, booklet.guiTop+booklet.ySize, 0, 243, 142, 13);
+
+        //Draw No Entry title
+        if(booklet.currentEntrySet.entry == null){
+            String strg = EnumChatFormatting.DARK_GREEN+StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".booklet.manualName.1");
+            booklet.getFontRenderer().drawString(strg, booklet.guiLeft+booklet.xSize/2-booklet.getFontRenderer().getStringWidth(strg)/2-3, booklet.guiTop+12, 0);
+            strg = EnumChatFormatting.DARK_GREEN+StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".booklet.manualName.2");
+            booklet.getFontRenderer().drawString(strg, booklet.guiLeft+booklet.xSize/2-booklet.getFontRenderer().getStringWidth(strg)/2-3, booklet.guiTop+12+booklet.getFontRenderer().FONT_HEIGHT, 0);
+
+            String version;
+            if(Minecraft.getMinecraft().thePlayer.getCommandSenderName().equals("dqmhose")){
+                version = "Pants Edition";
+            }
+            else if(Minecraft.getMinecraft().thePlayer.getCommandSenderName().equals("KittyVanCat")){
+                version = "Cat's Edition";
+            }
+            else if(Util.isDevVersion()){
+                version = "Dev's Edition";
+            }
+            else{
+                version = StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".booklet.edition")+" "+ModUtil.VERSION.substring(ModUtil.VERSION.indexOf("r")+1);
+            }
+            strg = EnumChatFormatting.GOLD+EnumChatFormatting.ITALIC.toString()+"-"+version+"-";
+            booklet.getFontRenderer().drawString(strg, booklet.guiLeft+booklet.xSize/2-booklet.getFontRenderer().getStringWidth(strg)/2-3, booklet.guiTop+33, 0);
+        }
 
         String strg = booklet.currentEntrySet.chapter == null ? (booklet.currentEntrySet.entry == null ? StringUtil.localize("itemGroup."+ModUtil.MOD_ID_LOWER) : booklet.currentEntrySet.entry.getLocalizedName()) : booklet.currentEntrySet.chapter.getLocalizedName();
         booklet.drawCenteredString(booklet.getFontRenderer(), strg, booklet.guiLeft+booklet.xSize/2, booklet.guiTop-9, StringUtil.DECIMAL_COLOR_WHITE);
@@ -215,11 +240,16 @@ public class BookletUtils{
         for(int i = 0; i < booklet.chapterButtons.length; i++){
             IndexButton button = (IndexButton)booklet.chapterButtons[i];
             if(entry == null){
-                boolean entryExists = InitBooklet.entries.size() > i;
-                button.visible = entryExists;
-                if(entryExists){
-                    button.displayString = InitBooklet.entries.get(i).getNameWithColor();
-                    button.chap = null;
+                if(i >= GuiBooklet.INDEX_BUTTONS_OFFSET){
+                    boolean entryExists = InitBooklet.entries.size() > i-GuiBooklet.INDEX_BUTTONS_OFFSET;
+                    button.visible = entryExists;
+                    if(entryExists){
+                        button.displayString = InitBooklet.entries.get(i-GuiBooklet.INDEX_BUTTONS_OFFSET).getNameWithColor();
+                        button.chap = null;
+                    }
+                }
+                else{
+                    button.visible = false;
                 }
             }
             else{
@@ -249,8 +279,8 @@ public class BookletUtils{
                 }
             }
             else{
-                if(place < InitBooklet.entries.size()){
-                    openIndexEntry(booklet, InitBooklet.entries.get(place), 1, true);
+                if(place-GuiBooklet.INDEX_BUTTONS_OFFSET < InitBooklet.entries.size()){
+                    openIndexEntry(booklet, InitBooklet.entries.get(place-GuiBooklet.INDEX_BUTTONS_OFFSET), 1, true);
                 }
             }
         }

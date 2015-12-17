@@ -49,6 +49,7 @@ public class GuiBooklet extends GuiScreen{
     public static final ResourceLocation resLocValentine = AssetUtil.getBookletGuiLocation("guiBookletValentinesDay");
 
     public static final int CHAPTER_BUTTONS_AMOUNT = 13;
+    public static final int INDEX_BUTTONS_OFFSET = 3;
 
     public int xSize;
     public int ySize;
