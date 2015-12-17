@@ -135,4 +135,14 @@ public class ActuallyAdditions{
 
         WorldData.init(MinecraftServer.getServer());
     }
+
+    @EventHandler
+    public void missingMapping(FMLMissingMappingsEvent event){
+        for(FMLMissingMappingsEvent.MissingMapping mapping : event.get()){
+            //Ignore removal of foreign paxels
+            if(mapping.name != null && mapping.name.contains("paxel")){
+                mapping.ignore();
+            }
+        }
+    }
 }
