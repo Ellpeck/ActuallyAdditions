@@ -15,7 +15,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 
-public class TileEntityDropper extends TileEntityInventoryBase{
+public class TileEntityDropper extends TileEntityInventoryBase implements IRedstoneToggle{
 
     private int currentTime;
 
@@ -40,21 +40,25 @@ public class TileEntityDropper extends TileEntityInventoryBase{
     public void updateEntity(){
         super.updateEntity();
         if(!worldObj.isRemote){
-            if(!this.isRedstonePowered){
+            if(!this.isRedstonePowered && !this.activateOnceWithSignal){
                 if(this.currentTime > 0){
                     this.currentTime--;
                     if(this.currentTime <= 0){
-                        if(this.removeFromInventory(false) != null){
-                            ItemStack stack = this.removeFromInventory(true);
-                            stack.stackSize = 1;
-                            WorldUtil.dropItemAtSide(ForgeDirection.getOrientation(worldObj.getBlockMetadata(xCoord, yCoord, zCoord)), worldObj, xCoord, yCoord, zCoord, stack);
-                        }
+                        this.doWork();
                     }
                 }
                 else{
                     this.currentTime = 5;
                 }
             }
+        }
+    }
+
+    private void doWork(){
+        if(this.removeFromInventory(false) != null){
+            ItemStack stack = this.removeFromInventory(true);
+            stack.stackSize = 1;
+            WorldUtil.dropItemAtSide(ForgeDirection.getOrientation(worldObj.getBlockMetadata(xCoord, yCoord, zCoord)), worldObj, xCoord, yCoord, zCoord, stack);
         }
     }
 
@@ -89,4 +93,20 @@ public class TileEntityDropper extends TileEntityInventoryBase{
         return true;
     }
 
+    private boolean activateOnceWithSignal;
+
+    @Override
+    public boolean toggle(){
+        return this.activateOnceWithSignal = !this.activateOnceWithSignal;
+    }
+
+    @Override
+    public boolean isRightMode(){
+        return this.activateOnceWithSignal;
+    }
+
+    @Override
+    public void activateOnPulse(){
+        this.doWork();
+    }
 }

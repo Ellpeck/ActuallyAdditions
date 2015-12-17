@@ -12,14 +12,12 @@ package ellpeck.actuallyadditions.blocks.base;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import ellpeck.actuallyadditions.creative.CreativeTab;
-import ellpeck.actuallyadditions.tile.IEnergySaver;
-import ellpeck.actuallyadditions.tile.IFluidSaver;
-import ellpeck.actuallyadditions.tile.TileEntityBase;
-import ellpeck.actuallyadditions.tile.TileEntityInventoryBase;
+import ellpeck.actuallyadditions.tile.*;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
+import net.minecraft.block.BlockRedstoneTorch;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
@@ -30,6 +28,7 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -129,9 +128,15 @@ public abstract class BlockContainerBase extends BlockContainer{
 
     public void updateRedstoneState(World world, int x, int y, int z){
         TileEntity tile = world.getTileEntity(x, y, z);
+        boolean powered = world.isBlockIndirectlyGettingPowered(x, y, z);
         if(tile instanceof TileEntityBase){
-            ((TileEntityBase)tile).setRedstonePowered(world.isBlockIndirectlyGettingPowered(x, y, z));
+            ((TileEntityBase)tile).setRedstonePowered(powered);
             tile.markDirty();
+        }
+        if(tile instanceof IRedstoneToggle){
+            if(((IRedstoneToggle)tile).isRightMode() && powered){
+                ((IRedstoneToggle)tile).activateOnPulse();
+            }
         }
     }
 
@@ -140,6 +145,26 @@ public abstract class BlockContainerBase extends BlockContainer{
         if(!player.capabilities.isCreativeMode){
             this.dropBlockAsItem(world, x, y, z, meta, 0);
         }
+    }
+
+    public boolean tryToggleRedstone(World world, int x, int y, int z, EntityPlayer player){
+        ItemStack stack = player.getCurrentEquippedItem();
+        if(stack != null && Block.getBlockFromItem(stack.getItem()) instanceof BlockRedstoneTorch){
+            TileEntity tile = world.getTileEntity(x, y, z);
+            if(tile instanceof IRedstoneToggle){
+                if(!world.isRemote){
+
+                    if(((IRedstoneToggle)tile).toggle()){
+                        player.addChatComponentMessage(new ChatComponentText("Changed to Redstone Pulse Mode"));
+                    }
+                    else{
+                        player.addChatComponentMessage(new ChatComponentText("Changed to Redstone Deactivation Mode"));
+                    }
+                }
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override

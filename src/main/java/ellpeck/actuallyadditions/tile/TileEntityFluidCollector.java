@@ -21,7 +21,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.*;
 
-public class TileEntityFluidCollector extends TileEntityInventoryBase implements IFluidHandler, IFluidSaver{
+public class TileEntityFluidCollector extends TileEntityInventoryBase implements IFluidHandler, IFluidSaver, IRedstoneToggle{
 
     public FluidTank tank = new FluidTank(8*FluidContainerRegistry.BUCKET_VOLUME);
     public boolean isPlacer;
@@ -30,6 +30,23 @@ public class TileEntityFluidCollector extends TileEntityInventoryBase implements
 
     public TileEntityFluidCollector(int slots, String name){
         super(slots, name);
+    }
+
+    private boolean activateOnceWithSignal;
+
+    @Override
+    public boolean toggle(){
+        return this.activateOnceWithSignal = !this.activateOnceWithSignal;
+    }
+
+    @Override
+    public boolean isRightMode(){
+        return this.activateOnceWithSignal;
+    }
+
+    @Override
+    public void activateOnPulse(){
+        this.doWork();
     }
 
     public TileEntityFluidCollector(){
@@ -76,52 +93,56 @@ public class TileEntityFluidCollector extends TileEntityInventoryBase implements
         return new FluidTankInfo[]{this.tank.getInfo()};
     }
 
+    private void doWork(){
+        ForgeDirection sideToManipulate = ForgeDirection.getOrientation(worldObj.getBlockMetadata(xCoord, yCoord, zCoord));
+
+        WorldPos coordsBlock = WorldUtil.getCoordsFromSide(sideToManipulate, worldObj, xCoord, yCoord, zCoord, 0);
+        if(coordsBlock != null){
+            Block blockToBreak = worldObj.getBlock(coordsBlock.getX(), coordsBlock.getY(), coordsBlock.getZ());
+            if(!this.isPlacer && blockToBreak != null && worldObj.getBlockMetadata(coordsBlock.getX(), coordsBlock.getY(), coordsBlock.getZ()) == 0 && FluidContainerRegistry.BUCKET_VOLUME <= this.tank.getCapacity()-this.tank.getFluidAmount()){
+                if(blockToBreak instanceof IFluidBlock && ((IFluidBlock)blockToBreak).getFluid() != null){
+                    if(this.tank.fill(new FluidStack(((IFluidBlock)blockToBreak).getFluid(), FluidContainerRegistry.BUCKET_VOLUME), false) >= FluidContainerRegistry.BUCKET_VOLUME){
+                        this.tank.fill(new FluidStack(((IFluidBlock)blockToBreak).getFluid(), FluidContainerRegistry.BUCKET_VOLUME), true);
+                        WorldUtil.breakBlockAtSide(sideToManipulate, worldObj, xCoord, yCoord, zCoord);
+                    }
+                }
+                else if(blockToBreak == Blocks.lava || blockToBreak == Blocks.flowing_lava){
+                    if(this.tank.fill(new FluidStack(FluidRegistry.LAVA, FluidContainerRegistry.BUCKET_VOLUME), false) >= FluidContainerRegistry.BUCKET_VOLUME){
+                        this.tank.fill(new FluidStack(FluidRegistry.LAVA, FluidContainerRegistry.BUCKET_VOLUME), true);
+                        WorldUtil.breakBlockAtSide(sideToManipulate, worldObj, xCoord, yCoord, zCoord);
+                    }
+                }
+                else if(blockToBreak == Blocks.water || blockToBreak == Blocks.flowing_water){
+                    if(this.tank.fill(new FluidStack(FluidRegistry.WATER, FluidContainerRegistry.BUCKET_VOLUME), false) >= FluidContainerRegistry.BUCKET_VOLUME){
+                        this.tank.fill(new FluidStack(FluidRegistry.WATER, FluidContainerRegistry.BUCKET_VOLUME), true);
+                        WorldUtil.breakBlockAtSide(sideToManipulate, worldObj, xCoord, yCoord, zCoord);
+                    }
+                }
+            }
+            else if(this.isPlacer && worldObj.getBlock(coordsBlock.getX(), coordsBlock.getY(), coordsBlock.getZ()).isReplaceable(worldObj, coordsBlock.getX(), coordsBlock.getY(), coordsBlock.getZ())){
+                if(this.tank.getFluidAmount() >= FluidContainerRegistry.BUCKET_VOLUME){
+                    if(this.tank.getFluid().getFluid().getBlock() != null){
+                        Block block = worldObj.getBlock(xCoord+sideToManipulate.offsetX, yCoord+sideToManipulate.offsetY, zCoord+sideToManipulate.offsetZ);
+                        if(!(block instanceof IFluidBlock) && block != Blocks.lava && block != Blocks.water && block != Blocks.flowing_lava && block != Blocks.flowing_water){
+                            WorldUtil.placeBlockAtSide(sideToManipulate, worldObj, xCoord, yCoord, zCoord, new ItemStack(this.tank.getFluid().getFluid().getBlock()));
+                            this.tank.drain(FluidContainerRegistry.BUCKET_VOLUME, true);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     @Override
     @SuppressWarnings("unchecked")
     public void updateEntity(){
         super.updateEntity();
         if(!worldObj.isRemote){
-            if(!this.isRedstonePowered){
+            if(!this.isRedstonePowered && !this.activateOnceWithSignal){
                 if(this.currentTime > 0){
                     this.currentTime--;
                     if(this.currentTime <= 0){
-                        ForgeDirection sideToManipulate = ForgeDirection.getOrientation(worldObj.getBlockMetadata(xCoord, yCoord, zCoord));
-
-                        WorldPos coordsBlock = WorldUtil.getCoordsFromSide(sideToManipulate, worldObj, xCoord, yCoord, zCoord, 0);
-                        if(coordsBlock != null){
-                            Block blockToBreak = worldObj.getBlock(coordsBlock.getX(), coordsBlock.getY(), coordsBlock.getZ());
-                            if(!this.isPlacer && blockToBreak != null && worldObj.getBlockMetadata(coordsBlock.getX(), coordsBlock.getY(), coordsBlock.getZ()) == 0 && FluidContainerRegistry.BUCKET_VOLUME <= this.tank.getCapacity()-this.tank.getFluidAmount()){
-                                if(blockToBreak instanceof IFluidBlock && ((IFluidBlock)blockToBreak).getFluid() != null){
-                                    if(this.tank.fill(new FluidStack(((IFluidBlock)blockToBreak).getFluid(), FluidContainerRegistry.BUCKET_VOLUME), false) >= FluidContainerRegistry.BUCKET_VOLUME){
-                                        this.tank.fill(new FluidStack(((IFluidBlock)blockToBreak).getFluid(), FluidContainerRegistry.BUCKET_VOLUME), true);
-                                        WorldUtil.breakBlockAtSide(sideToManipulate, worldObj, xCoord, yCoord, zCoord);
-                                    }
-                                }
-                                else if(blockToBreak == Blocks.lava || blockToBreak == Blocks.flowing_lava){
-                                    if(this.tank.fill(new FluidStack(FluidRegistry.LAVA, FluidContainerRegistry.BUCKET_VOLUME), false) >= FluidContainerRegistry.BUCKET_VOLUME){
-                                        this.tank.fill(new FluidStack(FluidRegistry.LAVA, FluidContainerRegistry.BUCKET_VOLUME), true);
-                                        WorldUtil.breakBlockAtSide(sideToManipulate, worldObj, xCoord, yCoord, zCoord);
-                                    }
-                                }
-                                else if(blockToBreak == Blocks.water || blockToBreak == Blocks.flowing_water){
-                                    if(this.tank.fill(new FluidStack(FluidRegistry.WATER, FluidContainerRegistry.BUCKET_VOLUME), false) >= FluidContainerRegistry.BUCKET_VOLUME){
-                                        this.tank.fill(new FluidStack(FluidRegistry.WATER, FluidContainerRegistry.BUCKET_VOLUME), true);
-                                        WorldUtil.breakBlockAtSide(sideToManipulate, worldObj, xCoord, yCoord, zCoord);
-                                    }
-                                }
-                            }
-                            else if(this.isPlacer && worldObj.getBlock(coordsBlock.getX(), coordsBlock.getY(), coordsBlock.getZ()).isReplaceable(worldObj, coordsBlock.getX(), coordsBlock.getY(), coordsBlock.getZ())){
-                                if(this.tank.getFluidAmount() >= FluidContainerRegistry.BUCKET_VOLUME){
-                                    if(this.tank.getFluid().getFluid().getBlock() != null){
-                                        Block block = worldObj.getBlock(xCoord+sideToManipulate.offsetX, yCoord+sideToManipulate.offsetY, zCoord+sideToManipulate.offsetZ);
-                                        if(!(block instanceof IFluidBlock) && block != Blocks.lava && block != Blocks.water && block != Blocks.flowing_lava && block != Blocks.flowing_water){
-                                            WorldUtil.placeBlockAtSide(sideToManipulate, worldObj, xCoord, yCoord, zCoord, new ItemStack(this.tank.getFluid().getFluid().getBlock()));
-                                            this.tank.drain(FluidContainerRegistry.BUCKET_VOLUME, true);
-                                        }
-                                    }
-                                }
-                            }
-                        }
+                        this.doWork();
                     }
                 }
                 else{

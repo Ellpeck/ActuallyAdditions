@@ -24,7 +24,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 import java.util.ArrayList;
 
-public class TileEntityDirectionalBreaker extends TileEntityInventoryBase implements IEnergyReceiver, IEnergySaver{
+public class TileEntityDirectionalBreaker extends TileEntityInventoryBase implements IEnergyReceiver, IEnergySaver, IRedstoneToggle{
 
     public static final int RANGE = 8;
     public static final int ENERGY_USE = 5;
@@ -41,32 +41,12 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase implem
     public void updateEntity(){
         super.updateEntity();
         if(!worldObj.isRemote){
-            if(!this.isRedstonePowered){
+            if(!this.isRedstonePowered && !this.activateOnceWithSignal){
                 if(this.storage.getEnergyStored() >= ENERGY_USE*RANGE){
                     if(this.currentTime > 0){
                         this.currentTime--;
                         if(this.currentTime <= 0){
-                            ForgeDirection sideToManipulate = ForgeDirection.getOrientation(worldObj.getBlockMetadata(xCoord, yCoord, zCoord));
-
-                            for(int i = 0; i < RANGE; i++){
-                                WorldPos coordsBlock = WorldUtil.getCoordsFromSide(sideToManipulate, worldObj, xCoord, yCoord, zCoord, i);
-                                if(coordsBlock != null){
-                                    Block blockToBreak = worldObj.getBlock(coordsBlock.getX(), coordsBlock.getY(), coordsBlock.getZ());
-                                    if(blockToBreak != null && !(blockToBreak instanceof BlockAir) && blockToBreak.getBlockHardness(worldObj, coordsBlock.getX(), coordsBlock.getY(), coordsBlock.getZ()) > -1.0F){
-                                        ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-                                        int meta = worldObj.getBlockMetadata(coordsBlock.getX(), coordsBlock.getY(), coordsBlock.getZ());
-                                        drops.addAll(blockToBreak.getDrops(worldObj, coordsBlock.getX(), coordsBlock.getY(), coordsBlock.getZ(), meta, 0));
-
-                                        if(WorldUtil.addToInventory(this, drops, false)){
-                                            worldObj.playAuxSFX(2001, coordsBlock.getX(), coordsBlock.getY(), coordsBlock.getZ(), Block.getIdFromBlock(blockToBreak)+(meta << 12));
-                                            WorldUtil.breakBlockAtSide(sideToManipulate, worldObj, xCoord, yCoord, zCoord, i);
-                                            WorldUtil.addToInventory(this, drops, true);
-                                            this.storage.extractEnergy(ENERGY_USE, false);
-                                            this.markDirty();
-                                        }
-                                    }
-                                }
-                            }
+                            this.doWork();
                         }
                     }
                     else{
@@ -77,6 +57,30 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase implem
 
             if(this.storage.getEnergyStored() != this.lastEnergy && this.sendUpdateWithInterval()){
                 this.lastEnergy = this.storage.getEnergyStored();
+            }
+        }
+    }
+
+    private void doWork(){
+        ForgeDirection sideToManipulate = ForgeDirection.getOrientation(worldObj.getBlockMetadata(xCoord, yCoord, zCoord));
+
+        for(int i = 0; i < RANGE; i++){
+            WorldPos coordsBlock = WorldUtil.getCoordsFromSide(sideToManipulate, worldObj, xCoord, yCoord, zCoord, i);
+            if(coordsBlock != null){
+                Block blockToBreak = worldObj.getBlock(coordsBlock.getX(), coordsBlock.getY(), coordsBlock.getZ());
+                if(blockToBreak != null && !(blockToBreak instanceof BlockAir) && blockToBreak.getBlockHardness(worldObj, coordsBlock.getX(), coordsBlock.getY(), coordsBlock.getZ()) > -1.0F){
+                    ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
+                    int meta = worldObj.getBlockMetadata(coordsBlock.getX(), coordsBlock.getY(), coordsBlock.getZ());
+                    drops.addAll(blockToBreak.getDrops(worldObj, coordsBlock.getX(), coordsBlock.getY(), coordsBlock.getZ(), meta, 0));
+
+                    if(WorldUtil.addToInventory(this, drops, false)){
+                        worldObj.playAuxSFX(2001, coordsBlock.getX(), coordsBlock.getY(), coordsBlock.getZ(), Block.getIdFromBlock(blockToBreak)+(meta << 12));
+                        WorldUtil.breakBlockAtSide(sideToManipulate, worldObj, xCoord, yCoord, zCoord, i);
+                        WorldUtil.addToInventory(this, drops, true);
+                        this.storage.extractEnergy(ENERGY_USE, false);
+                        this.markDirty();
+                    }
+                }
             }
         }
     }
@@ -143,5 +147,22 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase implem
     @Override
     public void setEnergy(int energy){
         this.storage.setEnergyStored(energy);
+    }
+
+    private boolean activateOnceWithSignal;
+
+    @Override
+    public boolean toggle(){
+        return this.activateOnceWithSignal = !this.activateOnceWithSignal;
+    }
+
+    @Override
+    public boolean isRightMode(){
+        return this.activateOnceWithSignal;
+    }
+
+    @Override
+    public void activateOnPulse(){
+        this.doWork();
     }
 }

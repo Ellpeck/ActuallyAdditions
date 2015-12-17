@@ -87,6 +87,9 @@ public class BlockPhantom extends BlockContainerBase{
 
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int hitSide, float hitX, float hitY, float hitZ){
+        if(this.tryToggleRedstone(world, x, y, z, player)){
+            return true;
+        }
         if(!world.isRemote){
             TileEntity tile = world.getTileEntity(x, y, z);
             if(tile != null){
