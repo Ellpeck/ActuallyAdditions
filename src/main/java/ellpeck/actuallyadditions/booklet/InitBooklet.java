@@ -34,12 +34,12 @@ public class InitBooklet{
     public static BookletChapter chapterIntro;
 
     public static BookletIndexEntry entryFunctionalNonRF = new BookletIndexEntry("functionalNoRF");
-    public static BookletIndexEntry entryFunctionalRF = new BookletIndexEntry("functionalRF");
-    public static BookletIndexEntry entryGeneratingRF = new BookletIndexEntry("generatingRF");
+    public static BookletIndexEntry entryFunctionalRF = new BookletIndexEntry("functionalRF").setSpecial();
+    public static BookletIndexEntry entryGeneratingRF = new BookletIndexEntry("generatingRF").setSpecial();
     public static BookletIndexEntry entryItemsNonRF = new BookletIndexEntry("itemsNoRF");
-    public static BookletIndexEntry entryItemsRF = new BookletIndexEntry("itemsRF");
+    public static BookletIndexEntry entryItemsRF = new BookletIndexEntry("itemsRF").setSpecial();
     public static BookletIndexEntry entryMisc = new BookletIndexEntry("misc");
-    public static BookletIndexEntry allAndSearch = new BookletEntryAllSearch("allAndSearch").setSpecial();
+    public static BookletIndexEntry allAndSearch = new BookletEntryAllSearch("allAndSearch").setImportant();
 
     static{
         chapterIntro = new BookletChapter("intro", entryMisc, new ItemStack(InitItems.itemLexicon), new PageTextOnly(1), new PageTextOnly(2), new PageTextOnly(3), new PageCrafting(4, ItemCrafting.recipeBook)).setImportant();
@@ -58,6 +58,7 @@ public class InitBooklet{
         new BookletChapter("lamps", entryMisc, new ItemStack(InitBlocks.blockColoredLampOn, 1, TheColoredLampColors.GREEN.ordinal()), lampPages.toArray(new BookletPage[lampPages.size()]));
 
         new BookletChapter("treasureChest", entryMisc, new ItemStack(InitBlocks.blockTreasureChest), new PageTextOnly(1).setStack(new ItemStack(InitBlocks.blockTreasureChest))).setSpecial();
+        new BookletChapter("hairBalls", entryMisc, new ItemStack(InitItems.itemHairyBall), new PageTextOnly(1).setStack(new ItemStack(InitItems.itemHairyBall))).setSpecial();
 
         //No RF Using Blocks
         new BookletChapter("breaker", entryFunctionalNonRF, new ItemStack(InitBlocks.blockBreaker), new PageCrafting(1, BlockCrafting.recipeBreaker), new PageCrafting(2, BlockCrafting.recipePlacer), new PageCrafting(3, BlockCrafting.recipeLiquidPlacer), new PageCrafting(4, BlockCrafting.recipeLiquidCollector));

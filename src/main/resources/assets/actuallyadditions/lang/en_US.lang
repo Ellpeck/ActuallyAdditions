@@ -9,7 +9,7 @@ fluid.canolaoil=Canola Oil
 #NEI Integration
 container.nei.actuallyadditions.crushing.name=Crusher
 container.nei.actuallyadditions.crushingDouble.name=Double Crusher
-container.nei.actuallyadditions.ballOfHair.name=Ball Of Hair Usage
+container.nei.actuallyadditions.ballOfHair.name=Ball Of Fur Usage
 container.nei.actuallyadditions.compost.name=Compost
 container.nei.actuallyadditions.furnaceDouble.name=Double Furnace
 container.nei.actuallyadditions.treasureChest.name=Treasure Chest
@@ -202,7 +202,7 @@ item.actuallyadditions.itemJamPlApLe.name=PlApLe-Jam
 item.actuallyadditions.itemJamChApCi.name=ChApCi-Jam
 item.actuallyadditions.itemJamHoMeKi.name=HoMeKi-Jam
 item.actuallyadditions.itemJamPiCo.name=PiCo-Jam
-item.actuallyadditions.itemHairyBall.name=Ball of Hair
+item.actuallyadditions.itemHairyBall.name=Ball of Fur
 item.actuallyadditions.itemLeafBlower.name=Leaf Blower
 item.actuallyadditions.itemLeafBlowerAdvanced.name=Advanced Leaf Blower
 item.actuallyadditions.itemKnife.name=Knife
@@ -562,3 +562,6 @@ booklet.actuallyadditions.chapter.dropper.text.1=The <item>Automatic Precision D
 
 booklet.actuallyadditions.chapter.rangedCollector.name=Ranged Collector
 booklet.actuallyadditions.chapter.rangedCollector.text.1=The <item>Ranged Collector<r> works much like a hopper, in that it <imp>collects items around it<r>, having the power, however, to pick up items that are in an area of <imp><range> blocks<r> around it. <n>It has a <imp>filter<r> that can be set to <imp>white- or blacklist<r>. <n>This comes with a disadvantage, however: It doesn't auto-output its items.
+
+booklet.actuallyadditions.chapter.hairBalls.name=Ball of Fur-s
+booklet.actuallyadditions.chapter.hairBalls.text.1=<item>Balls of Fur<r> are an item rarely dropped by <imp>cats<r> which have been <imp>tamed<r> by the player. <n>Cats are very mysterious creatures as they <imp>appear to get everything stuck in their fur<r>. <item>Balls of Fur<r> may seem disgusting at first, but when removing all of the hair by <imp>right-clicking<r>, they will reveal some <imp>valuable items<r>. <n>Or just some String. <n><n><n><i>FUURRRRRR!!

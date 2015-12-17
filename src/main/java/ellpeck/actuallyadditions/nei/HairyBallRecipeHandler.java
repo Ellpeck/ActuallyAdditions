@@ -15,6 +15,7 @@ import codechicken.nei.NEIServerUtils;
 import codechicken.nei.PositionedStack;
 import codechicken.nei.recipe.RecipeInfo;
 import codechicken.nei.recipe.TemplateRecipeHandler;
+import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.recipe.HairyBallHandler;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
@@ -37,8 +38,7 @@ public class HairyBallRecipeHandler extends TemplateRecipeHandler implements INe
 
     @Override
     public ItemStack getStackForInfo(int page){
-        //TODO Add Hairy Ball Page
-        return null;
+        return new ItemStack(InitItems.itemHairyBall);
     }
 
     @Override

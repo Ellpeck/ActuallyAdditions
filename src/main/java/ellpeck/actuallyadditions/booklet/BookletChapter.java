@@ -58,7 +58,7 @@ public class BookletChapter{
     }
 
     public BookletChapter setSpecial(){
-        this.color = EnumChatFormatting.GOLD;
+        this.color = EnumChatFormatting.DARK_PURPLE;
         return this;
     }
 }

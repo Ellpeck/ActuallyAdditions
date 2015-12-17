@@ -51,7 +51,7 @@ public class BookletIndexEntry{
     }
 
     public BookletIndexEntry setSpecial(){
-        this.color = EnumChatFormatting.GOLD;
+        this.color = EnumChatFormatting.DARK_PURPLE;
         return this;
     }
 
