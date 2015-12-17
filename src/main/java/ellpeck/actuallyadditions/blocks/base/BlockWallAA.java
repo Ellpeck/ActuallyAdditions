@@ -29,13 +29,19 @@ public class BlockWallAA extends BlockWall {
 
     private String name;
     private Block baseBlock;
+    private int meta;
 
-    public BlockWallAA(String name, Block base){
+    public BlockWallAA(String name, Block base, int meta){
         super(base);
         this.baseBlock = base;
         this.name = name;
+        this.meta = meta;
 
         this.register();
+    }
+
+    public BlockWallAA(String name, Block base){
+        this(name, base, 0);
     }
 
     private void register(){
@@ -65,7 +71,7 @@ public class BlockWallAA extends BlockWall {
     @Override
     @SideOnly(Side.CLIENT)
     public IIcon getIcon(int side, int meta){
-        return this.baseBlock.getBlockTextureFromSide(side);
+        return this.baseBlock.getIcon(side, this.meta);
     }
 
     @SuppressWarnings("unchecked")

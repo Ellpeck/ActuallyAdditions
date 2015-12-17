@@ -14,6 +14,7 @@ import ellpeck.actuallyadditions.blocks.base.BlockFluidFlowing;
 import ellpeck.actuallyadditions.blocks.base.BlockPlant;
 import ellpeck.actuallyadditions.blocks.base.BlockStair;
 import ellpeck.actuallyadditions.blocks.base.BlockWallAA;
+import ellpeck.actuallyadditions.blocks.metalists.TheMiscBlocks;
 import ellpeck.actuallyadditions.config.values.ConfigBoolValues;
 import ellpeck.actuallyadditions.util.CompatUtil;
 import ellpeck.actuallyadditions.util.ModUtil;
@@ -111,6 +112,16 @@ public class InitBlocks{
     public static Block blockMiner;
 
     public static Block blockFireworkBox;
+    
+    public static Block blockQuartzWall;
+    public static Block blockQuartzStair;
+    public static Block blockQuartzSlab;
+    public static Block blockChiseledQuartzWall;
+    public static Block blockChiseledQuartzStair;
+    public static Block blockChiseledQuartzSlab;
+    public static Block blockPillarQuartzWall;
+    public static Block blockPillarQuartzStair;
+    public static Block blockPillarQuartzSlab;
 
     public static void init(){
         ModUtil.LOGGER.info("Initializing Blocks...");
@@ -181,6 +192,15 @@ public class InitBlocks{
         blockCoffeeMachine = new BlockCoffeeMachine("blockCoffeeMachine");
         blockPhantomBooster = new BlockPhantomBooster("blockPhantomBooster");
         blockWildPlant = new BlockWildPlant("blockWild");
+        blockQuartzWall = new BlockWallAA("blockQuartzWall", blockMisc, TheMiscBlocks.QUARTZ.ordinal());
+        blockChiseledQuartzWall = new BlockWallAA("blockChiseledQuartzWall", blockMisc, TheMiscBlocks.QUARTZ_CHISELED.ordinal());
+        blockPillarQuartzWall = new BlockWallAA("blockPillarQuartzWall", blockMisc, TheMiscBlocks.QUARTZ_PILLAR.ordinal());
+        blockQuartzStair = new BlockStair(blockMisc, "blockQuartzStair", TheMiscBlocks.QUARTZ.ordinal());
+        blockChiseledQuartzStair = new BlockStair(blockMisc, "blockChiseledQuartzStair", TheMiscBlocks.QUARTZ_CHISELED.ordinal());
+        blockPillarQuartzStair = new BlockStair(blockMisc, "blockPillarQuartzStair", TheMiscBlocks.QUARTZ_PILLAR.ordinal());
+        blockQuartzSlab = new BlockSlabs("blockQuartzSlab", blockMisc, TheMiscBlocks.QUARTZ.ordinal());
+        blockChiseledQuartzSlab = new BlockSlabs("blockChiseledQuartzSlab", blockMisc, TheMiscBlocks.QUARTZ_CHISELED.ordinal());
+        blockPillarQuartzSlab = new BlockSlabs("blockPillarQuartzSlab", blockMisc, TheMiscBlocks.QUARTZ_PILLAR.ordinal());
 
         registerFluids();
     }

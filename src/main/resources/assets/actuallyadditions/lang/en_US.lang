@@ -128,6 +128,15 @@ tile.actuallyadditions.blockCrystalWhite.name=Enori Crystal Block
 tile.actuallyadditions.blockBookStand.name=Manual Stand
 tile.actuallyadditions.blockMiner.name=Vertical Digger
 tile.actuallyadditions.blockFireworkBox.name=Firework Box
+tile.actuallyadditions.blockQuartzWall.name=Black Quartz Wall
+tile.actuallyadditions.blockQuartzStair.name=Black Quartz Stairs
+tile.actuallyadditions.blockQuartzSlab.name=Black Quartz Slab
+tile.actuallyadditions.blockChiseledQuartzWall.name=Chiseled Black Quartz Wall
+tile.actuallyadditions.blockChiseledQuartzStair.name=Chiseled Black Quartz Stairs
+tile.actuallyadditions.blockChiseledQuartzSlab.name=Chiseled Black Quartz Slab
+tile.actuallyadditions.blockPillarQuartzWall.name=Black Quartz Pillar Wall
+tile.actuallyadditions.blockPillarQuartzStair.name=Black Quartz Pillar Stairs
+tile.actuallyadditions.blockPillarQuartzSlab.name=Black Quartz Pillar Slab
 
 #ESD
 tile.actuallyadditions.blockInputter.name=ESD
@@ -484,7 +493,7 @@ booklet.actuallyadditions.chapter.craftingIngs.text.1=<imp>Actually Additions<r>
 
 booklet.actuallyadditions.chapter.quartz.name=Black Quartz
 booklet.actuallyadditions.chapter.quartz.text.1=<item>Black Quartz<r> is an <imp>Ore<r> that generates in the world <imp>between layer <lowest> and <highest><r>. When broken, it can be <imp>smelted in a furnace<r> or <imp>crushed in a crusher<r> to get broken down into <item>Black Quartz<r>.
-booklet.actuallyadditions.chapter.quartz.text.2=<item>Black Quartz<r> items are used in lots of <imp>Crafting Recipes<r> in <imp>Actually Additions<r>. They are very important for most of the Items and, thus, should be mined when found in the world. They can be crafted into a couple of different <imp>Decorative Blocks<r> shown on the following pages. <n><n><i>Nether Quartz, but deadlier
+booklet.actuallyadditions.chapter.quartz.text.2=<item>Black Quartz<r> items are used in lots of <imp>Crafting Recipes<r> in <imp>Actually Additions<r>. They are very important for most of the Items and, thus, should be mined when found in the world. They can be crafted into a couple of different <imp>Decorative Blocks<r> shown on the following pages. <n>Every variant can also be crafted into <imp>Stairs, Slabs and Walls<r> using the well-known recipes. <n><n><i>Nether Quartz, but deadlier
 
 booklet.actuallyadditions.chapter.cloud.name=Smiley Cloud
 booklet.actuallyadditions.chapter.cloud.text.1=The <item>Smiley Cloud<r> is a magical floating cloud which is getting put to life through the piece of Solidified Experience inside it. It hovers up and down in its place all jolly and fun, and when <imp>right-clicking<r>, you can <imp>give it a name<r>. <n>When giving it certain <imp>special names<r> like <imp>"Ellpeck"<r> or <imp>"AcidBlues"<r>, it will have some special items it carries!

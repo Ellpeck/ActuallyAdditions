@@ -111,6 +111,39 @@ public class BlockCrafting{
             recipeMiner = Util.GetRecipes.lastIRecipe();
         }
 
+        //Quartz
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockQuartzWall, 6),
+                "XXX", "XXX",
+                'X', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.QUARTZ.ordinal())));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockQuartzSlab, 6),
+                "XXX",
+                'X', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.QUARTZ.ordinal())));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockQuartzStair, 6),
+                "X  ", "XX ", "XXX",
+                'X', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.QUARTZ.ordinal())));
+
+        //PillarQuartz
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockPillarQuartzWall, 6),
+                "XXX", "XXX",
+                'X', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.QUARTZ_PILLAR.ordinal())));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockPillarQuartzSlab, 6),
+                "XXX",
+                'X', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.QUARTZ_PILLAR.ordinal())));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockPillarQuartzStair, 6),
+                "X  ", "XX ", "XXX",
+                'X', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.QUARTZ_PILLAR.ordinal())));
+
+        //ChiseledQuartz
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockChiseledQuartzWall, 6),
+                "XXX", "XXX",
+                'X', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.QUARTZ_CHISELED.ordinal())));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockChiseledQuartzSlab, 6),
+                "XXX",
+                'X', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.QUARTZ_CHISELED.ordinal())));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockChiseledQuartzStair, 6),
+                "X  ", "XX ", "XXX",
+                'X', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.QUARTZ_CHISELED.ordinal())));
+
         //White Ethetic Blocks
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockTestifiBucksWhiteFence, 6),
                 "XXX", "XXX",

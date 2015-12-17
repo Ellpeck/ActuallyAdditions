@@ -23,12 +23,16 @@ public class BlockStair extends BlockStairs{
 
     private String name;
 
-    public BlockStair(Block block, String name){
-        super(block, 0);
+    public BlockStair(Block block, String name, int meta){
+        super(block, meta);
         this.name = name;
         this.setLightOpacity(0);
 
         this.register();
+    }
+
+    public BlockStair(Block block, String name){
+        this(block, name, 0);
     }
 
     private void register(){

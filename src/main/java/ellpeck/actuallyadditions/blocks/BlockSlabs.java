@@ -15,7 +15,6 @@ import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.blocks.base.BlockBase;
 import ellpeck.actuallyadditions.blocks.base.ItemBlockBase;
 import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -31,12 +30,18 @@ import java.util.List;
 public class BlockSlabs extends BlockBase{
 
     private Block fullBlock;
+    private int meta;
 
-    public BlockSlabs(String name, Block fullBlock){
-        super(Material.rock, name);
+    public BlockSlabs(String name, Block fullBlock, int meta){
+        super(fullBlock.getMaterial(), name);
         this.setHardness(1.5F);
         this.setResistance(10.0F);
         this.fullBlock = fullBlock;
+        this.meta = meta;
+    }
+
+    public BlockSlabs(String name, Block fullBlock){
+        this(name, fullBlock, 0);
     }
 
     @Override
@@ -47,7 +52,7 @@ public class BlockSlabs extends BlockBase{
     @Override
     @SideOnly(Side.CLIENT)
     public IIcon getIcon(int side, int meta){
-        return this.fullBlock.getIcon(0, 0);
+        return this.fullBlock.getIcon(side, this.meta);
     }
 
     @Override
