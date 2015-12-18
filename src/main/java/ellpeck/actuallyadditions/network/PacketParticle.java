@@ -93,6 +93,7 @@ public class PacketParticle implements IMessage{
         }
     }
 
+    @SideOnly(Side.CLIENT)
     public static void renderParticlesFromAToB(int startX, int startY, int startZ, int endX, int endY, int endZ, int particleAmount, float particleSize, float[] color, float ageMultiplier){
         World world = Minecraft.getMinecraft().theWorld;
 
