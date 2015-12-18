@@ -63,6 +63,6 @@ public class EntrySet{
 
             return new EntrySet(currentPage, currentChapter, currentEntry, pageInIndex);
         }
-        return null;
+        return new EntrySet(null);
     }
 }
