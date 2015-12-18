@@ -40,7 +40,7 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
     public void updateEntity(){
         super.updateEntity();
         if(!this.worldObj.isRemote){
-            if(!this.isRedstonePowered && this.storage.getEnergyStored() >= ENERGY_USE){
+            if(!this.isRedstonePowered){
                 if(this.currentTime > 0){
                     this.currentTime--;
                     if(this.currentTime <= 0){
@@ -56,22 +56,24 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
     }
 
     private void doWork(){
-        ForgeDirection sideToManipulate = ForgeDirection.getOrientation(worldObj.getBlockMetadata(xCoord, yCoord, zCoord));
-        //Extract energy for shooting the laser itself too!
-        this.storage.extractEnergy(ENERGY_USE, false);
+        if(this.storage.getEnergyStored() >= ENERGY_USE){
+            ForgeDirection sideToManipulate = ForgeDirection.getOrientation(worldObj.getBlockMetadata(xCoord, yCoord, zCoord));
+            //Extract energy for shooting the laser itself too!
+            this.storage.extractEnergy(ENERGY_USE, false);
 
-        //The Lens the Reconstructor currently has installed
-        Lens currentLens = this.getCurrentLens();
-        int distance = currentLens.getDistance();
-        for(int i = 0; i < distance; i++){
-            WorldPos hitBlock = WorldUtil.getCoordsFromSide(sideToManipulate, worldObj, xCoord, yCoord, zCoord, i);
+            //The Lens the Reconstructor currently has installed
+            Lens currentLens = this.getCurrentLens();
+            int distance = currentLens.getDistance();
+            for(int i = 0; i < distance; i++){
+                WorldPos hitBlock = WorldUtil.getCoordsFromSide(sideToManipulate, worldObj, xCoord, yCoord, zCoord, i);
 
-            if(currentLens.invoke(hitBlock, this)){
-                this.shootLaser(hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), currentLens);
-                break;
-            }
-            else if(i >= distance-1){
-                this.shootLaser(hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), currentLens);
+                if(currentLens.invoke(hitBlock, this)){
+                    this.shootLaser(hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), currentLens);
+                    break;
+                }
+                else if(i >= distance-1){
+                    this.shootLaser(hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), currentLens);
+                }
             }
         }
     }

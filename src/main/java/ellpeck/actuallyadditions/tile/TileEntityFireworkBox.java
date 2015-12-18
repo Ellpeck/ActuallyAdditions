@@ -22,7 +22,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.MathHelper;
 import net.minecraftforge.common.util.ForgeDirection;
 
-public class TileEntityFireworkBox extends TileEntityBase implements IEnergyReceiver{
+public class TileEntityFireworkBox extends TileEntityBase implements IEnergyReceiver, IRedstoneToggle{
 
     public EnergyStorage storage = new EnergyStorage(20000);
 
@@ -35,24 +35,30 @@ public class TileEntityFireworkBox extends TileEntityBase implements IEnergyRece
         if(!this.worldObj.isRemote && !this.isRedstonePowered){
             if(this.timeUntilNextFirework > 0){
                 this.timeUntilNextFirework--;
-                if(this.timeUntilNextFirework <= 0 && this.storage.getEnergyStored() >= USE_PER_SHOT){
-                    int range = 4;
-                    int amount = Util.RANDOM.nextInt(5)+1;
-                    for(int i = 0; i < amount; i++){
-                        ItemStack firework = this.makeFirework();
-
-                        double x = this.xCoord+MathHelper.getRandomDoubleInRange(Util.RANDOM, 0, range*2)-range;
-                        double z = this.zCoord+MathHelper.getRandomDoubleInRange(Util.RANDOM, 0, range*2)-range;
-                        EntityFireworkRocket rocket = new EntityFireworkRocket(this.worldObj, x, this.yCoord+0.5, z, firework);
-                        this.worldObj.spawnEntityInWorld(rocket);
-                    }
-
-                    this.storage.extractEnergy(USE_PER_SHOT, false);
+                if(this.timeUntilNextFirework <= 0){
+                    this.doWork();
                 }
             }
             else{
                 this.timeUntilNextFirework = 100;
             }
+        }
+    }
+
+    private void doWork(){
+        if(this.storage.getEnergyStored() >= USE_PER_SHOT){
+            int range = 4;
+            int amount = Util.RANDOM.nextInt(5)+1;
+            for(int i = 0; i < amount; i++){
+                ItemStack firework = this.makeFirework();
+
+                double x = this.xCoord+MathHelper.getRandomDoubleInRange(Util.RANDOM, 0, range*2)-range;
+                double z = this.zCoord+MathHelper.getRandomDoubleInRange(Util.RANDOM, 0, range*2)-range;
+                EntityFireworkRocket rocket = new EntityFireworkRocket(this.worldObj, x, this.yCoord+0.5, z, firework);
+                this.worldObj.spawnEntityInWorld(rocket);
+            }
+
+            this.storage.extractEnergy(USE_PER_SHOT, false);
         }
     }
 
@@ -117,5 +123,22 @@ public class TileEntityFireworkBox extends TileEntityBase implements IEnergyRece
     @Override
     public boolean canConnectEnergy(ForgeDirection from){
         return true;
+    }
+
+    private boolean activateOnceWithSignal;
+
+    @Override
+    public boolean toggle(){
+        return this.activateOnceWithSignal = !this.activateOnceWithSignal;
+    }
+
+    @Override
+    public boolean isRightMode(){
+        return this.activateOnceWithSignal;
+    }
+
+    @Override
+    public void activateOnPulse(){
+        this.doWork();
     }
 }
