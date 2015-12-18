@@ -82,6 +82,9 @@ public class BlockAtomicReconstructor extends BlockContainerBase{
 
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9){
+        if(this.tryToggleRedstone(world, x, y, z, player)){
+            return true;
+        }
         if(!world.isRemote){
             TileEntityAtomicReconstructor reconstructor = (TileEntityAtomicReconstructor)world.getTileEntity(x, y, z);
             if(reconstructor != null){

@@ -25,7 +25,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 
-public class TileEntityAtomicReconstructor extends TileEntityInventoryBase implements IEnergyReceiver, IEnergySaver{
+public class TileEntityAtomicReconstructor extends TileEntityInventoryBase implements IEnergyReceiver, IEnergySaver, IRedstoneToggle{
 
     public static final int ENERGY_USE = 1000;
     public EnergyStorage storage = new EnergyStorage(3000000);
@@ -44,24 +44,7 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
                 if(this.currentTime > 0){
                     this.currentTime--;
                     if(this.currentTime <= 0){
-                        ForgeDirection sideToManipulate = ForgeDirection.getOrientation(worldObj.getBlockMetadata(xCoord, yCoord, zCoord));
-                        //Extract energy for shooting the laser itself too!
-                        this.storage.extractEnergy(ENERGY_USE, false);
-
-                        //The Lens the Reconstructor currently has installed
-                        Lens currentLens = this.getCurrentLens();
-                        int distance = currentLens.getDistance();
-                        for(int i = 0; i < distance; i++){
-                            WorldPos hitBlock = WorldUtil.getCoordsFromSide(sideToManipulate, worldObj, xCoord, yCoord, zCoord, i);
-
-                            if(currentLens.invoke(hitBlock, this)){
-                                this.shootLaser(hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), currentLens);
-                                break;
-                            }
-                            else if(i >= distance-1){
-                                this.shootLaser(hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), currentLens);
-                            }
-                        }
+                        this.doWork();
                     }
                 }
                 else{
@@ -70,6 +53,27 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
             }
         }
 
+    }
+
+    private void doWork(){
+        ForgeDirection sideToManipulate = ForgeDirection.getOrientation(worldObj.getBlockMetadata(xCoord, yCoord, zCoord));
+        //Extract energy for shooting the laser itself too!
+        this.storage.extractEnergy(ENERGY_USE, false);
+
+        //The Lens the Reconstructor currently has installed
+        Lens currentLens = this.getCurrentLens();
+        int distance = currentLens.getDistance();
+        for(int i = 0; i < distance; i++){
+            WorldPos hitBlock = WorldUtil.getCoordsFromSide(sideToManipulate, worldObj, xCoord, yCoord, zCoord, i);
+
+            if(currentLens.invoke(hitBlock, this)){
+                this.shootLaser(hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), currentLens);
+                break;
+            }
+            else if(i >= distance-1){
+                this.shootLaser(hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), currentLens);
+            }
+        }
     }
 
     public Lens getCurrentLens(){
@@ -160,5 +164,22 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
     @Override
     public void setEnergy(int energy){
         this.storage.setEnergyStored(energy);
+    }
+
+    private boolean activateOnceWithSignal;
+
+    @Override
+    public boolean toggle(){
+        return this.activateOnceWithSignal = !this.activateOnceWithSignal;
+    }
+
+    @Override
+    public boolean isRightMode(){
+        return this.activateOnceWithSignal;
+    }
+
+    @Override
+    public void activateOnPulse(){
+        this.doWork();
     }
 }
