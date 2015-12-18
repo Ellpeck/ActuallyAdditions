@@ -79,13 +79,14 @@ public class BookletUtils{
             booklet.getFontRenderer().drawString(strg, booklet.guiLeft+booklet.xSize/2-booklet.getFontRenderer().getStringWidth(strg)/2-3, booklet.guiTop+12+booklet.getFontRenderer().FONT_HEIGHT, 0);
 
             String version;
-            if(Minecraft.getMinecraft().thePlayer.getCommandSenderName().equals("dqmhose")){
+            String playerName = Minecraft.getMinecraft().thePlayer.getCommandSenderName();
+            if(playerName.equals("dqmhose")){
                 version = "Pants Edition";
             }
-            else if(Minecraft.getMinecraft().thePlayer.getCommandSenderName().equals("KittyVanCat")){
+            else if(playerName.equals("KittyVanCat")){
                 version = "Cat's Edition";
             }
-            else if(Util.isDevVersion()){
+            else if(playerName.equals("Ellpeck") || Util.isDevVersion()){
                 version = "Dev's Edition";
             }
             else{
