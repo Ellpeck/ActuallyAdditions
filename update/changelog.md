@@ -1,3 +1,9 @@
+# 1.7.10-r14
+- Fixed servers crashing if using anything with particles (Damn.)
+- Made Reconstructor react to redstone mode changing
+- Made Firework Box react to redstone mode changing
+- Fixed Booklet Stands crashing if they are loaded without an entry (duh)
+
 # 1.7.10-r13
 - Added Firework Box which shoots out random fireworks
 - Added Crate Keeper which allows you to keep items in a Crate you break
