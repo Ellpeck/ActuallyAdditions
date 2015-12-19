@@ -679,3 +679,6 @@ booklet.actuallyadditions.chapter.miner.text.2=(Works with any colored Drill) <n
 booklet.actuallyadditions.chapter.fireworkBox.name=Firework Box
 booklet.actuallyadditions.chapter.fireworkBox.text.1=The <item>Firework Box<r> is a perfect thing for New Year's! When placed down and supplied with some <imp>RF<r>, it will shoot out some <imp>randomly generated<r> <item>Fireworks<r> around it. <n>For each shot, it uses <rf> RF. <n><n><i>You know, Vanilla Fireworks are just too bloody annoying to craft, but too awesome not to use. So here's the solution.
 booklet.actuallyadditions.chapter.fireworkBox.text.2=When right-clicking it with a <item>Redstone Torch<r> in hand, it will change between a mode where it <imp>gets deactivated by Redstone<r> and a mode where it <imp>responds to pulses<r>.
+
+booklet.actuallyadditions.chapter.rf.name=RF (Redstone Flux)
+booklet.actuallyadditions.chapter.rf.text.1=For anyone who hasn't used much of a mod that uses <imp>RF<r> yet, here's a quick explanation. <n><imp>Redstone Flux<r>, or RF for short, is a power system used by many mods. <n>The basic concept is is that lots of machines generate or use it <imp>every game tick<r>. That's what <imp>RF/t<r> means. <n>To connect a power generating (thus, outputting) machine to one that needs (thus, receives) power, just <imp>place it next to it<r>. <n><n><i>What's a fourth wall?
