@@ -46,11 +46,6 @@ public class TileEntityPhantomItemface extends TileEntityPhantomface{
     }
 
     @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
-        return this.isBoundThingInRange() && this.getInventory().isItemValidForSlot(i, stack);
-    }
-
-    @Override
     public ItemStack getStackInSlotOnClosing(int i){
         return this.isBoundThingInRange() ? this.getInventory().getStackInSlotOnClosing(i) : null;
     }
@@ -110,6 +105,11 @@ public class TileEntityPhantomItemface extends TileEntityPhantomface{
     @Override
     public boolean canExtractItem(int slot, ItemStack stack, int side){
         return this.isBoundThingInRange() && (this.getSided() == null || this.getSided().canExtractItem(slot, stack, side));
+    }
+
+    @Override
+    public boolean isItemValidForSlot(int i, ItemStack stack){
+        return this.isBoundThingInRange() && this.getInventory().isItemValidForSlot(i, stack);
     }
 
 }

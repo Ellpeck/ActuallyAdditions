@@ -45,22 +45,6 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        compound.setInteger("BurnTime", this.currentBurnTime);
-        compound.setInteger("MaxBurnTime", this.maxBurnTime);
-        this.storage.writeToNBT(compound);
-        super.writeSyncableNBT(compound, sync);
-    }
-
-    @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        this.currentBurnTime = compound.getInteger("BurnTime");
-        this.maxBurnTime = compound.getInteger("MaxBurnTime");
-        this.storage.readFromNBT(compound);
-        super.readSyncableNBT(compound, sync);
-    }
-
-    @Override
     @SuppressWarnings("unchecked")
     public void updateEntity(){
         super.updateEntity();
@@ -114,13 +98,29 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
     }
 
     @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
-        return TileEntityFurnace.getItemBurnTime(stack) > 0;
+    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
+        compound.setInteger("BurnTime", this.currentBurnTime);
+        compound.setInteger("MaxBurnTime", this.maxBurnTime);
+        this.storage.writeToNBT(compound);
+        super.writeSyncableNBT(compound, sync);
+    }
+
+    @Override
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
+        this.currentBurnTime = compound.getInteger("BurnTime");
+        this.maxBurnTime = compound.getInteger("MaxBurnTime");
+        this.storage.readFromNBT(compound);
+        super.readSyncableNBT(compound, sync);
     }
 
     @Override
     public boolean canInsertItem(int slot, ItemStack stack, int side){
         return this.isItemValidForSlot(slot, stack);
+    }
+
+    @Override
+    public boolean isItemValidForSlot(int i, ItemStack stack){
+        return TileEntityFurnace.getItemBurnTime(stack) > 0;
     }
 
     @Override

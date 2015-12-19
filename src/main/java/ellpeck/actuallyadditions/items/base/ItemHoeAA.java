@@ -23,7 +23,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraftforge.oredict.OreDictionary;
 
-public class ItemHoeAA extends ItemHoe {
+public class ItemHoeAA extends ItemHoe{
 
     private String name;
     private EnumRarity rarity;
@@ -49,12 +49,12 @@ public class ItemHoeAA extends ItemHoe {
         }
     }
 
-    public boolean shouldAddCreative(){
-        return true;
-    }
-
     protected String getBaseName(){
         return this.name;
+    }
+
+    public boolean shouldAddCreative(){
+        return true;
     }
 
     @Override

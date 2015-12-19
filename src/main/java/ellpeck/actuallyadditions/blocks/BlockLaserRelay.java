@@ -36,31 +36,6 @@ public class BlockLaserRelay extends BlockContainerBase{
     }
 
     @Override
-    public void setBlockBoundsBasedOnState(IBlockAccess world, int x, int y, int z){
-        int meta = world.getBlockMetadata(x, y, z);
-
-        float pixel = 1F/16F;
-        if(meta == 0){
-            this.setBlockBounds(3*pixel, 3*pixel, 3*pixel, 1F-3*pixel, 1F, 1F-3*pixel);
-        }
-        else if(meta == 1){
-            this.setBlockBounds(3*pixel, 0F, 3*pixel, 1F-3*pixel, 1F-3*pixel, 1F-3*pixel);
-        }
-        else if(meta == 2){
-            this.setBlockBounds(3*pixel, 3*pixel, 3*pixel, 1F-3*pixel, 1F-3*pixel, 1F);
-        }
-        else if(meta == 3){
-            this.setBlockBounds(3*pixel, 3*pixel, 0F, 1F-3*pixel, 1F-3*pixel, 1F-3*pixel);
-        }
-        else if(meta == 4){
-            this.setBlockBounds(3*pixel, 3*pixel, 3*pixel, 1F, 1F-3*pixel, 1F-3*pixel);
-        }
-        else if(meta == 5){
-            this.setBlockBounds(0F, 3*pixel, 3*pixel, 1F-3*pixel, 1F-3*pixel, 1F-3*pixel);
-        }
-    }
-
-    @Override
     public boolean renderAsNormalBlock(){
         return false;
     }
@@ -84,6 +59,31 @@ public class BlockLaserRelay extends BlockContainerBase{
     @Override
     public int onBlockPlaced(World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int metadata){
         return side;
+    }
+
+    @Override
+    public void setBlockBoundsBasedOnState(IBlockAccess world, int x, int y, int z){
+        int meta = world.getBlockMetadata(x, y, z);
+
+        float pixel = 1F/16F;
+        if(meta == 0){
+            this.setBlockBounds(3*pixel, 3*pixel, 3*pixel, 1F-3*pixel, 1F, 1F-3*pixel);
+        }
+        else if(meta == 1){
+            this.setBlockBounds(3*pixel, 0F, 3*pixel, 1F-3*pixel, 1F-3*pixel, 1F-3*pixel);
+        }
+        else if(meta == 2){
+            this.setBlockBounds(3*pixel, 3*pixel, 3*pixel, 1F-3*pixel, 1F-3*pixel, 1F);
+        }
+        else if(meta == 3){
+            this.setBlockBounds(3*pixel, 3*pixel, 0F, 1F-3*pixel, 1F-3*pixel, 1F-3*pixel);
+        }
+        else if(meta == 4){
+            this.setBlockBounds(3*pixel, 3*pixel, 3*pixel, 1F, 1F-3*pixel, 1F-3*pixel);
+        }
+        else if(meta == 5){
+            this.setBlockBounds(0F, 3*pixel, 3*pixel, 1F-3*pixel, 1F-3*pixel, 1F-3*pixel);
+        }
     }
 
     @Override

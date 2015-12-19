@@ -112,7 +112,7 @@ public class InitBlocks{
     public static Block blockMiner;
 
     public static Block blockFireworkBox;
-    
+
     public static Block blockQuartzWall;
     public static Block blockQuartzStair;
     public static Block blockQuartzSlab;

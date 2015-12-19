@@ -78,13 +78,13 @@ public class BlockCrystal extends BlockBase{
     }
 
     @Override
-    public EnumRarity getRarity(ItemStack stack){
-        return stack.getItemDamage() >= allCrystals.length ? EnumRarity.common : allCrystals[stack.getItemDamage()].rarity;
+    public Class<? extends ItemBlockBase> getItemBlock(){
+        return TheItemBlock.class;
     }
 
     @Override
-    public Class<? extends ItemBlockBase> getItemBlock(){
-        return TheItemBlock.class;
+    public EnumRarity getRarity(ItemStack stack){
+        return stack.getItemDamage() >= allCrystals.length ? EnumRarity.common : allCrystals[stack.getItemDamage()].rarity;
     }
 
     public static class TheItemBlock extends ItemBlockBase{

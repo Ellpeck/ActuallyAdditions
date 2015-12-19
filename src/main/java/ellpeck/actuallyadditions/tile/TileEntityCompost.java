@@ -27,18 +27,6 @@ public class TileEntityCompost extends TileEntityInventoryBase{
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.readSyncableNBT(compound, sync);
-        compound.setInteger("ConversionTime", this.conversionTime);
-    }
-
-    @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.readSyncableNBT(compound, sync);
-        this.conversionTime = compound.getInteger("ConversionTime");
-    }
-
-    @Override
     public void updateEntity(){
         super.updateEntity();
         if(!worldObj.isRemote){
@@ -70,18 +58,30 @@ public class TileEntityCompost extends TileEntityInventoryBase{
     }
 
     @Override
+    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.readSyncableNBT(compound, sync);
+        compound.setInteger("ConversionTime", this.conversionTime);
+    }
+
+    @Override
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.readSyncableNBT(compound, sync);
+        this.conversionTime = compound.getInteger("ConversionTime");
+    }
+
+    @Override
     public int getInventoryStackLimit(){
         return AMOUNT;
     }
 
     @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
-        return stack.getItem() instanceof ItemMisc && stack.getItemDamage() == TheMiscItems.MASHED_FOOD.ordinal();
+    public boolean canInsertItem(int slot, ItemStack stack, int side){
+        return this.isItemValidForSlot(slot, stack);
     }
 
     @Override
-    public boolean canInsertItem(int slot, ItemStack stack, int side){
-        return this.isItemValidForSlot(slot, stack);
+    public boolean isItemValidForSlot(int i, ItemStack stack){
+        return stack.getItem() instanceof ItemMisc && stack.getItemDamage() == TheMiscItems.MASHED_FOOD.ordinal();
     }
 
     @Override

@@ -25,7 +25,7 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public abstract class ItemEnergy extends ItemEnergyContainer {
+public abstract class ItemEnergy extends ItemEnergyContainer{
 
     private String name;
 
@@ -46,12 +46,12 @@ public abstract class ItemEnergy extends ItemEnergyContainer {
         }
     }
 
-    public boolean shouldAddCreative(){
-        return true;
-    }
-
     protected String getBaseName(){
         return this.name;
+    }
+
+    public boolean shouldAddCreative(){
+        return true;
     }
 
     @Override

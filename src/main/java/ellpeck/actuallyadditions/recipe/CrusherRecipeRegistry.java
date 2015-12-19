@@ -26,12 +26,6 @@ public class CrusherRecipeRegistry{
     public static ArrayList<CrusherRecipe> recipes = new ArrayList<CrusherRecipe>();
     public static ArrayList<SearchCase> searchCases = new ArrayList<SearchCase>();
 
-    public static void addRecipe(String input, String outputOne, int outputOneAmount, String outputTwo, int outputTwoAmount, int outputTwoChance){
-        if(!OreDictionary.getOres(input, false).isEmpty() && !OreDictionary.getOres(outputOne, false).isEmpty() && (outputTwo == null || outputTwo.isEmpty() || !OreDictionary.getOres(outputTwo, false).isEmpty())){
-            recipes.add(new CrusherRecipe(input, outputOne, outputOneAmount, outputTwo, outputTwoAmount, outputTwoChance));
-        }
-    }
-
     public static void registerFinally(){
         ArrayList<String> oresNoResult = new ArrayList<String>();
         int recipeStartedAt = recipes.size();
@@ -86,22 +80,28 @@ public class CrusherRecipeRegistry{
         return false;
     }
 
-    public static void addRecipe(ItemStack input, ItemStack outputOne){
-        addRecipe(input, outputOne, null, 0);
+    public static void addRecipe(String input, String outputOne, int outputOneAmount){
+        addRecipe(input, outputOne, outputOneAmount, "", 0, 0);
     }
 
-    public static void addRecipe(ItemStack input, String outputOne, int outputOneAmount){
-        if(!OreDictionary.getOres(outputOne, false).isEmpty()){
-            recipes.add(new CrusherRecipe(input, outputOne, outputOneAmount));
+    public static void addRecipe(String input, String outputOne, int outputOneAmount, String outputTwo, int outputTwoAmount, int outputTwoChance){
+        if(!OreDictionary.getOres(input, false).isEmpty() && !OreDictionary.getOres(outputOne, false).isEmpty() && (outputTwo == null || outputTwo.isEmpty() || !OreDictionary.getOres(outputTwo, false).isEmpty())){
+            recipes.add(new CrusherRecipe(input, outputOne, outputOneAmount, outputTwo, outputTwoAmount, outputTwoChance));
         }
+    }
+
+    public static void addRecipe(ItemStack input, ItemStack outputOne){
+        addRecipe(input, outputOne, null, 0);
     }
 
     public static void addRecipe(ItemStack input, ItemStack outputOne, ItemStack outputTwo, int outputTwoChance){
         recipes.add(new CrusherRecipe(input, outputOne, outputTwo, outputTwoChance));
     }
 
-    public static void addRecipe(String input, String outputOne, int outputOneAmount){
-        addRecipe(input, outputOne, outputOneAmount, "", 0, 0);
+    public static void addRecipe(ItemStack input, String outputOne, int outputOneAmount){
+        if(!OreDictionary.getOres(outputOne, false).isEmpty()){
+            recipes.add(new CrusherRecipe(input, outputOne, outputOneAmount));
+        }
     }
 
     public static List<ItemStack> getOutputOnes(ItemStack input){
@@ -130,15 +130,12 @@ public class CrusherRecipeRegistry{
 
     public static class CrusherRecipe{
 
+        public int outputTwoChance;
         private String input;
-
         private String outputOne;
         private int outputOneAmount;
-
         private String outputTwo;
         private int outputTwoAmount;
-        public int outputTwoChance;
-
         private ItemStack inputStack;
         private ItemStack outputOneStack;
         private ItemStack outputTwoStack;

@@ -22,7 +22,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraftforge.oredict.OreDictionary;
 
-public class ItemAxeAA extends ItemAxe {
+public class ItemAxeAA extends ItemAxe{
 
     private String name;
     private EnumRarity rarity;
@@ -48,12 +48,12 @@ public class ItemAxeAA extends ItemAxe {
         }
     }
 
-    public boolean shouldAddCreative(){
-        return true;
-    }
-
     protected String getBaseName(){
         return this.name;
+    }
+
+    public boolean shouldAddCreative(){
+        return true;
     }
 
     @Override

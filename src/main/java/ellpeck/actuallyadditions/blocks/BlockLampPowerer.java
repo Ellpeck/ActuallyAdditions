@@ -83,11 +83,6 @@ public class BlockLampPowerer extends BlockBase{
         this.frontIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName()+"Front");
     }
 
-    @Override
-    public EnumRarity getRarity(ItemStack stack){
-        return EnumRarity.rare;
-    }
-
     private void updateLamp(World world, int x, int y, int z){
         if(!world.isRemote){
             WorldPos coords = WorldUtil.getCoordsFromSide(ForgeDirection.getOrientation(world.getBlockMetadata(x, y, z)), world, x, y, z, 0);
@@ -104,5 +99,10 @@ public class BlockLampPowerer extends BlockBase{
                 }
             }
         }
+    }
+
+    @Override
+    public EnumRarity getRarity(ItemStack stack){
+        return EnumRarity.rare;
     }
 }

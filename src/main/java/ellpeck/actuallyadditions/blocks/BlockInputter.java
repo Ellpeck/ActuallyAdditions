@@ -77,11 +77,6 @@ public class BlockInputter extends BlockContainerBase{
     }
 
     @Override
-    public EnumRarity getRarity(ItemStack stack){
-        return EnumRarity.epic;
-    }
-
-    @Override
     public void breakBlock(World world, int x, int y, int z, Block block, int par6){
         if(!world.isRemote){
             TileEntity aTile = world.getTileEntity(x, y, z);
@@ -96,6 +91,11 @@ public class BlockInputter extends BlockContainerBase{
     @Override
     public Class<? extends ItemBlockBase> getItemBlock(){
         return TheItemBlock.class;
+    }
+
+    @Override
+    public EnumRarity getRarity(ItemStack stack){
+        return EnumRarity.epic;
     }
 
     public static class TheItemBlock extends ItemBlockBase{

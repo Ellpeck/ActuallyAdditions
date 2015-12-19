@@ -39,24 +39,6 @@ public class TileEntityFeeder extends TileEntityInventoryBase{
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.writeSyncableNBT(compound, sync);
-        compound.setInteger("Timer", this.currentTimer);
-        if(sync){
-            compound.setInteger("Animals", this.currentAnimalAmount);
-        }
-    }
-
-    @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.readSyncableNBT(compound, sync);
-        this.currentTimer = compound.getInteger("Timer");
-        if(sync){
-            this.currentAnimalAmount = compound.getInteger("Animals");
-        }
-    }
-
-    @Override
     @SuppressWarnings("unchecked")
     public void updateEntity(){
         super.updateEntity();
@@ -107,6 +89,24 @@ public class TileEntityFeeder extends TileEntityInventoryBase{
         }
     }
 
+    @Override
+    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.writeSyncableNBT(compound, sync);
+        compound.setInteger("Timer", this.currentTimer);
+        if(sync){
+            compound.setInteger("Animals", this.currentAnimalAmount);
+        }
+    }
+
+    @Override
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.readSyncableNBT(compound, sync);
+        this.currentTimer = compound.getInteger("Timer");
+        if(sync){
+            this.currentAnimalAmount = compound.getInteger("Animals");
+        }
+    }
+
     public void feedAnimal(EntityAnimal animal){
         animal.func_146082_f(null);
         for(int i = 0; i < 7; i++){
@@ -118,13 +118,13 @@ public class TileEntityFeeder extends TileEntityInventoryBase{
     }
 
     @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
-        return true;
+    public boolean canInsertItem(int slot, ItemStack stack, int side){
+        return this.isItemValidForSlot(slot, stack);
     }
 
     @Override
-    public boolean canInsertItem(int slot, ItemStack stack, int side){
-        return this.isItemValidForSlot(slot, stack);
+    public boolean isItemValidForSlot(int i, ItemStack stack){
+        return true;
     }
 
     @Override

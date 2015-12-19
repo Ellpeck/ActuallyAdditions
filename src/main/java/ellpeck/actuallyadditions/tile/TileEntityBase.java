@@ -93,10 +93,6 @@ public abstract class TileEntityBase extends TileEntity{
         this.ticksElapsed++;
     }
 
-    public void setRedstonePowered(boolean powered){
-        this.isRedstonePowered = powered;
-    }
-
     @Override
     public Packet getDescriptionPacket(){
         NBTTagCompound tag = new NBTTagCompound();
@@ -120,6 +116,10 @@ public abstract class TileEntityBase extends TileEntity{
 
     public void readSyncableNBT(NBTTagCompound compound, boolean isForSync){
 
+    }
+
+    public void setRedstonePowered(boolean powered){
+        this.isRedstonePowered = powered;
     }
 
     protected boolean sendUpdateWithInterval(){

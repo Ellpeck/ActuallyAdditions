@@ -51,16 +51,16 @@ public class BlockFluidFlowing extends BlockFluidClassic{
         }
     }
 
-    public boolean shouldAddCreative(){
-        return true;
-    }
-
     protected String getBaseName(){
         return this.name;
     }
 
     protected Class<? extends ItemBlockBase> getItemBlock(){
         return ItemBlockBase.class;
+    }
+
+    public boolean shouldAddCreative(){
+        return true;
     }
 
     @Override

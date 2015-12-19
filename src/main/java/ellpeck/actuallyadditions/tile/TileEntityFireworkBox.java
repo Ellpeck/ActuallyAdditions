@@ -24,11 +24,10 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 public class TileEntityFireworkBox extends TileEntityBase implements IEnergyReceiver, IRedstoneToggle{
 
-    public EnergyStorage storage = new EnergyStorage(20000);
-
-    private int timeUntilNextFirework;
-
     public static final int USE_PER_SHOT = 300;
+    public EnergyStorage storage = new EnergyStorage(20000);
+    private int timeUntilNextFirework;
+    private boolean activateOnceWithSignal;
 
     @Override
     public void updateEntity(){
@@ -124,8 +123,6 @@ public class TileEntityFireworkBox extends TileEntityBase implements IEnergyRece
     public boolean canConnectEnergy(ForgeDirection from){
         return true;
     }
-
-    private boolean activateOnceWithSignal;
 
     @Override
     public boolean toggle(){

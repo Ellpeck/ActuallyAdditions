@@ -23,7 +23,7 @@ import net.minecraft.item.ItemSword;
 import net.minecraft.util.IIcon;
 import net.minecraftforge.oredict.OreDictionary;
 
-public class ItemSwordAA extends ItemSword {
+public class ItemSwordAA extends ItemSword{
 
     private String name;
     private EnumRarity rarity;
@@ -49,12 +49,12 @@ public class ItemSwordAA extends ItemSword {
         }
     }
 
-    public boolean shouldAddCreative(){
-        return true;
-    }
-
     protected String getBaseName(){
         return this.name;
+    }
+
+    public boolean shouldAddCreative(){
+        return true;
     }
 
     protected Class<? extends ItemBlockBase> getItemBlock(){

@@ -249,14 +249,6 @@ public class WorldUtil{
         return addToInventory(inventory, start, end, stacks, ForgeDirection.UNKNOWN, actuallyDo);
     }
 
-    public static boolean addToInventory(IInventory inventory, ArrayList<ItemStack> stacks, boolean actuallyDo){
-        return addToInventory(inventory, stacks, ForgeDirection.UNKNOWN, actuallyDo);
-    }
-
-    public static boolean addToInventory(IInventory inventory, ArrayList<ItemStack> stacks, ForgeDirection side, boolean actuallyDo){
-        return addToInventory(inventory, 0, inventory.getSizeInventory(), stacks, side, actuallyDo);
-    }
-
     /**
      * Add an ArrayList of ItemStacks to an Array of slots
      *
@@ -307,6 +299,14 @@ public class WorldUtil{
         }
 
         return working >= stacks.size();
+    }
+
+    public static boolean addToInventory(IInventory inventory, ArrayList<ItemStack> stacks, boolean actuallyDo){
+        return addToInventory(inventory, stacks, ForgeDirection.UNKNOWN, actuallyDo);
+    }
+
+    public static boolean addToInventory(IInventory inventory, ArrayList<ItemStack> stacks, ForgeDirection side, boolean actuallyDo){
+        return addToInventory(inventory, 0, inventory.getSizeInventory(), stacks, side, actuallyDo);
     }
 
     public static int findFirstFilledSlot(ItemStack[] slots){

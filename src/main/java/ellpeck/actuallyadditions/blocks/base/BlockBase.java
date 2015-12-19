@@ -37,16 +37,16 @@ public class BlockBase extends Block{
         }
     }
 
-    public boolean shouldAddCreative(){
-        return true;
-    }
-
     protected String getBaseName(){
         return this.name;
     }
 
     protected Class<? extends ItemBlockBase> getItemBlock(){
         return ItemBlockBase.class;
+    }
+
+    public boolean shouldAddCreative(){
+        return true;
     }
 
     public EnumRarity getRarity(ItemStack stack){

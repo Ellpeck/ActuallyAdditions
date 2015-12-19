@@ -39,22 +39,6 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.writeSyncableNBT(compound, sync);
-        compound.setInteger("FirstSmeltTime", this.firstSmeltTime);
-        compound.setInteger("SecondSmeltTime", this.secondSmeltTime);
-        this.storage.writeToNBT(compound);
-    }
-
-    @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.readSyncableNBT(compound, sync);
-        this.firstSmeltTime = compound.getInteger("FirstSmeltTime");
-        this.secondSmeltTime = compound.getInteger("SecondSmeltTime");
-        this.storage.readFromNBT(compound);
-    }
-
-    @Override
     @SuppressWarnings("unchecked")
     public void updateEntity(){
         super.updateEntity();
@@ -115,6 +99,22 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
         }
     }
 
+    @Override
+    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.writeSyncableNBT(compound, sync);
+        compound.setInteger("FirstSmeltTime", this.firstSmeltTime);
+        compound.setInteger("SecondSmeltTime", this.secondSmeltTime);
+        this.storage.writeToNBT(compound);
+    }
+
+    @Override
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.readSyncableNBT(compound, sync);
+        this.firstSmeltTime = compound.getInteger("FirstSmeltTime");
+        this.secondSmeltTime = compound.getInteger("SecondSmeltTime");
+        this.storage.readFromNBT(compound);
+    }
+
     public boolean canSmeltOn(int theInput, int theOutput){
         if(this.slots[theInput] != null){
             ItemStack output = FurnaceRecipes.smelting().getSmeltingResult(this.slots[theInput]);
@@ -144,11 +144,6 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
         }
     }
 
-    @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
-        return (i == SLOT_INPUT_1 || i == SLOT_INPUT_2) && FurnaceRecipes.smelting().getSmeltingResult(stack) != null;
-    }
-
     @SideOnly(Side.CLIENT)
     public int getEnergyScaled(int i){
         return this.storage.getEnergyStored()*i/this.storage.getMaxEnergyStored();
@@ -167,6 +162,11 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
     @Override
     public boolean canInsertItem(int slot, ItemStack stack, int side){
         return this.isItemValidForSlot(slot, stack);
+    }
+
+    @Override
+    public boolean isItemValidForSlot(int i, ItemStack stack){
+        return (i == SLOT_INPUT_1 || i == SLOT_INPUT_2) && FurnaceRecipes.smelting().getSmeltingResult(stack) != null;
     }
 
     @Override

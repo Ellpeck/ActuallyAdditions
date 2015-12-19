@@ -50,16 +50,13 @@ public class GuiBooklet extends GuiScreen{
 
     public static final int CHAPTER_BUTTONS_AMOUNT = 13;
     public static final int INDEX_BUTTONS_OFFSET = 3;
-
+    private static final int[] AND_HIS_NAME_IS = new int[]{Keyboard.KEY_C, Keyboard.KEY_E, Keyboard.KEY_N, Keyboard.KEY_A};
     public int xSize;
     public int ySize;
     public int guiLeft;
     public int guiTop;
-
     public EntrySet currentEntrySet = new EntrySet(null);
-
     public int indexPageAmount;
-
     public GuiButton buttonForward;
     public GuiButton buttonBackward;
     public GuiButton buttonPreviousScreen;
@@ -69,17 +66,13 @@ public class GuiBooklet extends GuiScreen{
     public GuiButton buttonAchievements;
     public GuiButton buttonConfig;
     public GuiButton[] chapterButtons = new GuiButton[CHAPTER_BUTTONS_AMOUNT];
-
     public GuiButton[] bookmarkButtons = new GuiButton[8];
-
     public GuiTextField searchField;
     public GuiScreen parentScreen;
     private int ticksElapsed;
     private boolean mousePressed;
     private boolean tryOpenMainPage;
     private boolean saveOnClose;
-
-    private static final int[] AND_HIS_NAME_IS = new int[]{Keyboard.KEY_C, Keyboard.KEY_E, Keyboard.KEY_N, Keyboard.KEY_A};
     private int hisNameIsAt;
 
     public GuiBooklet(GuiScreen parentScreen, boolean tryOpenMainPage, boolean saveOnClose){
@@ -151,21 +144,6 @@ public class GuiBooklet extends GuiScreen{
         if(this.mousePressed){
             this.mousePressed = false;
         }
-    }
-
-    @Override
-    //For scrolling through pages
-    public void handleMouseInput(){
-        int wheel = Mouse.getEventDWheel();
-        if(wheel != 0){
-            if(wheel > 0){
-                BookletUtils.handleNextPage(this);
-            }
-            else if(wheel < 0){
-                BookletUtils.handlePreviousPage(this);
-            }
-        }
-        super.handleMouseInput();
     }
 
     @Override
@@ -337,6 +315,21 @@ public class GuiBooklet extends GuiScreen{
         else{
             PersistentClientData.openLastBookPage(this);
         }
+    }
+
+    @Override
+    //For scrolling through pages
+    public void handleMouseInput(){
+        int wheel = Mouse.getEventDWheel();
+        if(wheel != 0){
+            if(wheel > 0){
+                BookletUtils.handleNextPage(this);
+            }
+            else if(wheel < 0){
+                BookletUtils.handlePreviousPage(this);
+            }
+        }
+        super.handleMouseInput();
     }
 
     @Override

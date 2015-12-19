@@ -32,20 +32,6 @@ public class TileEntityItemRepairer extends TileEntityInventoryBase implements I
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        compound.setInteger("NextRepairTick", this.nextRepairTick);
-        super.writeSyncableNBT(compound, sync);
-        this.storage.writeToNBT(compound);
-    }
-
-    @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        this.nextRepairTick = compound.getInteger("NextRepairTick");
-        super.readSyncableNBT(compound, sync);
-        this.storage.readFromNBT(compound);
-    }
-
-    @Override
     @SuppressWarnings("unchecked")
     public void updateEntity(){
         super.updateEntity();
@@ -77,13 +63,22 @@ public class TileEntityItemRepairer extends TileEntityInventoryBase implements I
         }
     }
 
-    public static boolean canBeRepaired(ItemStack stack){
-        return stack != null && stack.getItem().isRepairable();
+    @Override
+    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
+        compound.setInteger("NextRepairTick", this.nextRepairTick);
+        super.writeSyncableNBT(compound, sync);
+        this.storage.writeToNBT(compound);
     }
 
     @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
-        return i == SLOT_INPUT;
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
+        this.nextRepairTick = compound.getInteger("NextRepairTick");
+        super.readSyncableNBT(compound, sync);
+        this.storage.readFromNBT(compound);
+    }
+
+    public static boolean canBeRepaired(ItemStack stack){
+        return stack != null && stack.getItem().isRepairable();
     }
 
     @SideOnly(Side.CLIENT)
@@ -102,6 +97,11 @@ public class TileEntityItemRepairer extends TileEntityInventoryBase implements I
     @Override
     public boolean canInsertItem(int slot, ItemStack stack, int side){
         return this.isItemValidForSlot(slot, stack);
+    }
+
+    @Override
+    public boolean isItemValidForSlot(int i, ItemStack stack){
+        return i == SLOT_INPUT;
     }
 
     @Override

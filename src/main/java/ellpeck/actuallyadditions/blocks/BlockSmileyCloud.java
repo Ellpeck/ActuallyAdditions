@@ -67,6 +67,19 @@ public class BlockSmileyCloud extends BlockContainerBase{
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
+    public void randomDisplayTick(World world, int x, int y, int z, Random rand){
+        if(Util.RANDOM.nextInt(30) == 0){
+            for(int i = 0; i < 2; i++){
+                double d = Util.RANDOM.nextGaussian()*0.02D;
+                double d1 = Util.RANDOM.nextGaussian()*0.02D;
+                double d2 = Util.RANDOM.nextGaussian()*0.02D;
+                world.spawnParticle("heart", x+Util.RANDOM.nextFloat(), y+0.65+Util.RANDOM.nextFloat(), z+Util.RANDOM.nextFloat(), d, d1, d2);
+            }
+        }
+    }
+
+    @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int f6, float f7, float f8, float f9){
         if(!world.isRemote){
             TileEntity tile = world.getTileEntity(x, y, z);
@@ -99,26 +112,6 @@ public class BlockSmileyCloud extends BlockContainerBase{
     }
 
     @Override
-    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack stack){
-        int rotation = MathHelper.floor_double((double)(player.rotationYaw*4.0F/360.0F)+0.5D) & 3;
-
-        if(rotation == 0){
-            world.setBlockMetadataWithNotify(x, y, z, 2, 2);
-        }
-        if(rotation == 1){
-            world.setBlockMetadataWithNotify(x, y, z, 1, 2);
-        }
-        if(rotation == 2){
-            world.setBlockMetadataWithNotify(x, y, z, 0, 2);
-        }
-        if(rotation == 3){
-            world.setBlockMetadataWithNotify(x, y, z, 3, 2);
-        }
-
-        super.onBlockPlacedBy(world, x, y, z, player, stack);
-    }
-
-    @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconReg){
         this.blockIcon = Blocks.wool.getIcon(0, 0);
@@ -136,20 +129,27 @@ public class BlockSmileyCloud extends BlockContainerBase{
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void randomDisplayTick(World world, int x, int y, int z, Random rand){
-        if(Util.RANDOM.nextInt(30) == 0){
-            for(int i = 0; i < 2; i++){
-                double d = Util.RANDOM.nextGaussian()*0.02D;
-                double d1 = Util.RANDOM.nextGaussian()*0.02D;
-                double d2 = Util.RANDOM.nextGaussian()*0.02D;
-                world.spawnParticle("heart", x+Util.RANDOM.nextFloat(), y+0.65+Util.RANDOM.nextFloat(), z+Util.RANDOM.nextFloat(), d, d1, d2);
-            }
-        }
+    public EnumRarity getRarity(ItemStack stack){
+        return EnumRarity.rare;
     }
 
     @Override
-    public EnumRarity getRarity(ItemStack stack){
-        return EnumRarity.rare;
+    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack stack){
+        int rotation = MathHelper.floor_double((double)(player.rotationYaw*4.0F/360.0F)+0.5D) & 3;
+
+        if(rotation == 0){
+            world.setBlockMetadataWithNotify(x, y, z, 2, 2);
+        }
+        if(rotation == 1){
+            world.setBlockMetadataWithNotify(x, y, z, 1, 2);
+        }
+        if(rotation == 2){
+            world.setBlockMetadataWithNotify(x, y, z, 0, 2);
+        }
+        if(rotation == 3){
+            world.setBlockMetadataWithNotify(x, y, z, 3, 2);
+        }
+
+        super.onBlockPlacedBy(world, x, y, z, player, stack);
     }
 }

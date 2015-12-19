@@ -94,14 +94,6 @@ public class BlockFluidCollector extends BlockContainerBase{
     }
 
     @Override
-    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack stack){
-        int rotation = BlockPistonBase.determineOrientation(world, x, y, z, player);
-        world.setBlockMetadataWithNotify(x, y, z, rotation, 2);
-
-        super.onBlockPlacedBy(world, x, y, z, player, stack);
-    }
-
-    @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconReg){
         this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName());
@@ -112,6 +104,14 @@ public class BlockFluidCollector extends BlockContainerBase{
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.rare;
+    }
+
+    @Override
+    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack stack){
+        int rotation = BlockPistonBase.determineOrientation(world, x, y, z, player);
+        world.setBlockMetadataWithNotify(x, y, z, rotation, 2);
+
+        super.onBlockPlacedBy(world, x, y, z, player, stack);
     }
 
     @Override

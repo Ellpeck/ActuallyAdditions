@@ -22,16 +22,12 @@ public class EntrySet{
     public BookletEntry entry;
     public int pageInIndex;
 
-    public EntrySet(BookletPage page, BookletChapter chapter, BookletEntry entry, int pageInIndex){
-        this.setEntry(page, chapter, entry, pageInIndex);
-    }
-
     public EntrySet(BookletEntry entry){
         this(null, null, entry, 1);
     }
 
-    public void removeEntry(){
-        this.setEntry(null, null, null, 1);
+    public EntrySet(BookletPage page, BookletChapter chapter, BookletEntry entry, int pageInIndex){
+        this.setEntry(page, chapter, entry, pageInIndex);
     }
 
     public void setEntry(BookletPage page, BookletChapter chapter, BookletEntry entry, int pageInIndex){
@@ -39,15 +35,6 @@ public class EntrySet{
         this.chapter = chapter;
         this.entry = entry;
         this.pageInIndex = pageInIndex;
-    }
-
-    public NBTTagCompound writeToNBT(){
-        NBTTagCompound compound = new NBTTagCompound();
-        compound.setInteger("Entry", entry == null ? -1 : InitBooklet.entries.indexOf(entry));
-        compound.setInteger("Chapter", entry == null || chapter == null ? -1 : entry.chapters.indexOf(chapter));
-        compound.setInteger("Page", page == null ? -1 : page.getID());
-        compound.setInteger("PageInIndex", pageInIndex);
-        return compound;
     }
 
     public static EntrySet readFromNBT(NBTTagCompound compound){
@@ -64,5 +51,18 @@ public class EntrySet{
             return new EntrySet(currentPage, currentChapter, currentEntry, pageInIndex);
         }
         return new EntrySet(null);
+    }
+
+    public void removeEntry(){
+        this.setEntry(null, null, null, 1);
+    }
+
+    public NBTTagCompound writeToNBT(){
+        NBTTagCompound compound = new NBTTagCompound();
+        compound.setInteger("Entry", entry == null ? -1 : InitBooklet.entries.indexOf(entry));
+        compound.setInteger("Chapter", entry == null || chapter == null ? -1 : entry.chapters.indexOf(chapter));
+        compound.setInteger("Page", page == null ? -1 : page.getID());
+        compound.setInteger("PageInIndex", pageInIndex);
+        return compound;
     }
 }

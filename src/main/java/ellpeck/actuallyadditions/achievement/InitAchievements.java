@@ -19,15 +19,7 @@ import java.util.ArrayList;
 
 public class InitAchievements{
 
-    public enum Type{
-        CRAFTING,
-        SMELTING,
-        PICK_UP,
-        MISC
-    }
-
     public static int pageNumber;
-
     public static AchievementPage theAchievementPage;
     public static ArrayList<Achievement> achievementList = new ArrayList<Achievement>();
 
@@ -41,6 +33,13 @@ public class InitAchievements{
         theAchievementPage = new AchievementPage(StringUtil.localize("achievement.page."+ModUtil.MOD_ID_LOWER), achievementList.toArray(new Achievement[achievementList.size()]));
         pageNumber = AchievementPage.getAchievementPages().size();
         AchievementPage.registerAchievementPage(theAchievementPage);
+    }
+
+    public enum Type{
+        CRAFTING,
+        SMELTING,
+        PICK_UP,
+        MISC
     }
 
 }

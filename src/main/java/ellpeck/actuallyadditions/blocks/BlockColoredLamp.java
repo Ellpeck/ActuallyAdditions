@@ -49,11 +49,6 @@ public class BlockColoredLamp extends BlockBase{
     }
 
     @Override
-    public EnumRarity getRarity(ItemStack stack){
-        return EnumRarity.rare;
-    }
-
-    @Override
     @SideOnly(Side.CLIENT)
     public IIcon getIcon(int side, int meta){
         return meta >= allLampTypes.length ? null : textures[meta];
@@ -138,6 +133,11 @@ public class BlockColoredLamp extends BlockBase{
     @Override
     public Class<? extends ItemBlockBase> getItemBlock(){
         return TheItemBlock.class;
+    }
+
+    @Override
+    public EnumRarity getRarity(ItemStack stack){
+        return EnumRarity.rare;
     }
 
     public static class TheItemBlock extends ItemBlockBase{

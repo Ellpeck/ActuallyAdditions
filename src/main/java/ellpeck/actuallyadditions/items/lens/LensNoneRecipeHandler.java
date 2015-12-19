@@ -122,10 +122,9 @@ public class LensNoneRecipeHandler{
 
     public static class Recipe{
 
+        public int energyUse;
         private String input;
         private String output;
-        public int energyUse;
-
         private ItemStack inputStack;
         private ItemStack outputStack;
 

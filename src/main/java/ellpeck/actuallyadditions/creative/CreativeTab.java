@@ -116,7 +116,7 @@ public class CreativeTab extends CreativeTabs{
         add(InitBlocks.blockPillarQuartzWall);
         add(InitBlocks.blockPillarQuartzStair);
         add(InitBlocks.blockPillarQuartzSlab);
-        
+
         add(InitBlocks.blockColoredLamp);
         add(InitBlocks.blockLampPowerer);
         add(InitBlocks.blockTreasureChest);

@@ -32,16 +32,16 @@ public class BlockSlabs extends BlockBase{
     private Block fullBlock;
     private int meta;
 
+    public BlockSlabs(String name, Block fullBlock){
+        this(name, fullBlock, 0);
+    }
+
     public BlockSlabs(String name, Block fullBlock, int meta){
         super(fullBlock.getMaterial(), name);
         this.setHardness(1.5F);
         this.setResistance(10.0F);
         this.fullBlock = fullBlock;
         this.meta = meta;
-    }
-
-    public BlockSlabs(String name, Block fullBlock){
-        this(name, fullBlock, 0);
     }
 
     @Override
@@ -97,13 +97,13 @@ public class BlockSlabs extends BlockBase{
     }
 
     @Override
-    public EnumRarity getRarity(ItemStack stack){
-        return EnumRarity.common;
+    public Class<? extends ItemBlockBase> getItemBlock(){
+        return TheItemBlock.class;
     }
 
     @Override
-    public Class<? extends ItemBlockBase> getItemBlock(){
-        return TheItemBlock.class;
+    public EnumRarity getRarity(ItemStack stack){
+        return EnumRarity.common;
     }
 
     public static class TheItemBlock extends ItemBlockBase{

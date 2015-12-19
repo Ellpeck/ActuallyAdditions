@@ -36,7 +36,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @SuppressWarnings("unchecked")
-public class ItemAllToolAA extends ItemTool {
+public class ItemAllToolAA extends ItemTool{
 
     @SideOnly(Side.CLIENT)
     private IIcon overlayIcon;
@@ -68,12 +68,12 @@ public class ItemAllToolAA extends ItemTool {
         }
     }
 
-    public boolean shouldAddCreative(){
-        return true;
-    }
-
     protected String getBaseName(){
         return this.name;
+    }
+
+    public boolean shouldAddCreative(){
+        return true;
     }
 
     @Override

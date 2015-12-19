@@ -144,11 +144,6 @@ public class BlockTreasureChest extends BlockBase{
         this.frontIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName()+"Front");
     }
 
-    @Override
-    public EnumRarity getRarity(ItemStack stack){
-        return EnumRarity.epic;
-    }
-
     private void dropItems(World world, int x, int y, int z){
         for(int i = 0; i < MathHelper.getRandomIntegerInRange(Util.RANDOM, 3, 6); i++){
             TreasureChestHandler.Return theReturn = (TreasureChestHandler.Return)WeightedRandom.getRandomItem(Util.RANDOM, TreasureChestHandler.returns);
@@ -169,5 +164,10 @@ public class BlockTreasureChest extends BlockBase{
             world.spawnEntityInWorld(entityItem);
             itemStack.stackSize = 0;
         }
+    }
+
+    @Override
+    public EnumRarity getRarity(ItemStack stack){
+        return EnumRarity.epic;
     }
 }

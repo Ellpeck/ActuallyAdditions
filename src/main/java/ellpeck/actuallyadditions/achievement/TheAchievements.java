@@ -39,10 +39,6 @@ public enum TheAchievements{
         this(name, x, y, displayStack, hasToHaveBefore, InitAchievements.Type.CRAFTING, false);
     }
 
-    TheAchievements(String name, int x, int y, ItemStack displayStack, TheAchievements hasToHaveBefore, InitAchievements.Type type){
-        this(name, x, y, displayStack, hasToHaveBefore, type, false);
-    }
-
     TheAchievements(String name, int x, int y, ItemStack displayStack, TheAchievements hasToHaveBefore, InitAchievements.Type type, boolean special){
         this.ach = new Achievement("achievement."+ModUtil.MOD_ID_LOWER+"."+name, ModUtil.MOD_ID_LOWER+"."+name, x, y, displayStack, hasToHaveBefore == null ? null : hasToHaveBefore.ach);
         if(hasToHaveBefore == null){
@@ -53,5 +49,9 @@ public enum TheAchievements{
         }
         this.ach.registerStat();
         this.type = type;
+    }
+
+    TheAchievements(String name, int x, int y, ItemStack displayStack, TheAchievements hasToHaveBefore, InitAchievements.Type type){
+        this(name, x, y, displayStack, hasToHaveBefore, type, false);
     }
 }

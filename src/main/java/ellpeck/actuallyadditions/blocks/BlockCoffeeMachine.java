@@ -77,26 +77,6 @@ public class BlockCoffeeMachine extends BlockContainerBase{
     }
 
     @Override
-    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack stack){
-        int rotation = MathHelper.floor_double((double)(player.rotationYaw*4.0F/360.0F)+0.5D) & 3;
-
-        if(rotation == 0){
-            world.setBlockMetadataWithNotify(x, y, z, 2, 2);
-        }
-        if(rotation == 1){
-            world.setBlockMetadataWithNotify(x, y, z, 1, 2);
-        }
-        if(rotation == 2){
-            world.setBlockMetadataWithNotify(x, y, z, 0, 2);
-        }
-        if(rotation == 3){
-            world.setBlockMetadataWithNotify(x, y, z, 3, 2);
-        }
-
-        super.onBlockPlacedBy(world, x, y, z, player, stack);
-    }
-
-    @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconReg){
         this.blockIcon = Blocks.coal_block.getIcon(0, 0);
@@ -116,5 +96,25 @@ public class BlockCoffeeMachine extends BlockContainerBase{
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.epic;
+    }
+
+    @Override
+    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack stack){
+        int rotation = MathHelper.floor_double((double)(player.rotationYaw*4.0F/360.0F)+0.5D) & 3;
+
+        if(rotation == 0){
+            world.setBlockMetadataWithNotify(x, y, z, 2, 2);
+        }
+        if(rotation == 1){
+            world.setBlockMetadataWithNotify(x, y, z, 1, 2);
+        }
+        if(rotation == 2){
+            world.setBlockMetadataWithNotify(x, y, z, 0, 2);
+        }
+        if(rotation == 3){
+            world.setBlockMetadataWithNotify(x, y, z, 3, 2);
+        }
+
+        super.onBlockPlacedBy(world, x, y, z, player, stack);
     }
 }

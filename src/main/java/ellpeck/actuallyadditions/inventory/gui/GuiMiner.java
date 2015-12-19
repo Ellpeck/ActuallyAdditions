@@ -39,6 +39,18 @@ public class GuiMiner extends GuiContainer{
         this.ySize = 93+86;
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public void initGui(){
+        super.initGui();
+
+        GuiButton buttonMode = new GuiButton(0, guiLeft+xSize/2-51, guiTop+75, 50, 20, "Mode");
+        this.buttonList.add(buttonMode);
+
+        GuiButton buttonReset = new GuiButton(1, guiLeft+xSize/2+1, guiTop+75, 50, 20, "Reset");
+        this.buttonList.add(buttonReset);
+    }
+
     @Override
     public void drawScreen(int x, int y, float f){
         super.drawScreen(x, y, f);
@@ -61,18 +73,6 @@ public class GuiMiner extends GuiContainer{
 
         String mining = this.miner.onlyMineOres ? "Only Mining Ores" : "Mining Everything";
         this.fontRendererObj.drawString(mining, this.guiLeft+this.xSize/2-fontRendererObj.getStringWidth(mining)/2, guiTop+8, StringUtil.DECIMAL_COLOR_GRAY_TEXT);
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public void initGui(){
-        super.initGui();
-
-        GuiButton buttonMode = new GuiButton(0, guiLeft+xSize/2-51, guiTop+75, 50, 20, "Mode");
-        this.buttonList.add(buttonMode);
-
-        GuiButton buttonReset = new GuiButton(1, guiLeft+xSize/2+1, guiTop+75, 50, 20, "Reset");
-        this.buttonList.add(buttonReset);
     }
 
     @Override

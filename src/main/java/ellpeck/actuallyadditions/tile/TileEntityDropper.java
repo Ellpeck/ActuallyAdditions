@@ -18,21 +18,10 @@ import net.minecraftforge.common.util.ForgeDirection;
 public class TileEntityDropper extends TileEntityInventoryBase implements IRedstoneToggle{
 
     private int currentTime;
+    private boolean activateOnceWithSignal;
 
     public TileEntityDropper(){
         super(9, "dropper");
-    }
-
-    @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.writeSyncableNBT(compound, sync);
-        compound.setInteger("CurrentTime", this.currentTime);
-    }
-
-    @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.readSyncableNBT(compound, sync);
-        this.currentTime = compound.getInteger("CurrentTime");
     }
 
     @Override
@@ -52,6 +41,18 @@ public class TileEntityDropper extends TileEntityInventoryBase implements IRedst
                 }
             }
         }
+    }
+
+    @Override
+    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.writeSyncableNBT(compound, sync);
+        compound.setInteger("CurrentTime", this.currentTime);
+    }
+
+    @Override
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.readSyncableNBT(compound, sync);
+        this.currentTime = compound.getInteger("CurrentTime");
     }
 
     private void doWork(){
@@ -79,21 +80,19 @@ public class TileEntityDropper extends TileEntityInventoryBase implements IRedst
     }
 
     @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
-        return true;
+    public boolean canInsertItem(int slot, ItemStack stack, int side){
+        return this.isItemValidForSlot(slot, stack);
     }
 
     @Override
-    public boolean canInsertItem(int slot, ItemStack stack, int side){
-        return this.isItemValidForSlot(slot, stack);
+    public boolean isItemValidForSlot(int i, ItemStack stack){
+        return true;
     }
 
     @Override
     public boolean canExtractItem(int slot, ItemStack stack, int side){
         return true;
     }
-
-    private boolean activateOnceWithSignal;
 
     @Override
     public boolean toggle(){

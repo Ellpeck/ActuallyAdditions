@@ -32,6 +32,7 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
     public int currentTime;
     public int range;
     public boolean isBreaker;
+    private boolean activateOnceWithSignal;
 
     public TileEntityPhantomPlacer(int slots, String name){
         super(slots, name);
@@ -40,33 +41,6 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
     public TileEntityPhantomPlacer(){
         super(9, "phantomPlacer");
         this.isBreaker = false;
-    }
-
-    private void doWork(){
-        if(this.isBreaker){
-            Block blockToBreak = boundPosition.getWorld().getBlock(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ());
-            if(blockToBreak != null && blockToBreak.getBlockHardness(boundPosition.getWorld(), boundPosition.getX(), boundPosition.getY(), boundPosition.getZ()) > -1.0F){
-                ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-                int meta = boundPosition.getWorld().getBlockMetadata(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ());
-                drops.addAll(blockToBreak.getDrops(boundPosition.getWorld(), boundPosition.getX(), boundPosition.getY(), boundPosition.getZ(), meta, 0));
-
-                if(WorldUtil.addToInventory(this, drops, false)){
-                    boundPosition.getWorld().playAuxSFX(2001, boundPosition.getX(), boundPosition.getY(), boundPosition.getZ(), Block.getIdFromBlock(blockToBreak)+(meta << 12));
-                    WorldUtil.breakBlockAtSide(ForgeDirection.UNKNOWN, boundPosition.getWorld(), boundPosition.getX(), boundPosition.getY(), boundPosition.getZ());
-                    WorldUtil.addToInventory(this, drops, true);
-                    this.markDirty();
-                }
-            }
-        }
-        else{
-            if(boundPosition.getWorld().getBlock(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ()).isReplaceable(boundPosition.getWorld(), boundPosition.getX(), boundPosition.getY(), boundPosition.getZ())){
-                int theSlot = WorldUtil.findFirstFilledSlot(this.slots);
-                this.setInventorySlotContents(theSlot, WorldUtil.placeBlockAtSide(ForgeDirection.UNKNOWN, boundPosition.getWorld(), boundPosition.getX(), boundPosition.getY(), boundPosition.getZ(), this.slots[theSlot]));
-                if(this.slots[theSlot] != null && this.slots[theSlot].stackSize <= 0){
-                    this.slots[theSlot] = null;
-                }
-            }
-        }
     }
 
     @Override
@@ -100,6 +74,45 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
         }
     }
 
+    @Override
+    public boolean hasBoundPosition(){
+        if(this.boundPosition != null && this.boundPosition.getWorld() != null){
+            if(this.boundPosition.getWorld().getTileEntity(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ()) instanceof IPhantomTile || (this.xCoord == this.boundPosition.getX() && this.yCoord == this.boundPosition.getY() && this.zCoord == this.boundPosition.getZ() && this.worldObj == this.boundPosition.getWorld())){
+                this.boundPosition = null;
+                return false;
+            }
+            return this.boundPosition.getWorld() == this.worldObj;
+        }
+        return false;
+    }
+
+    private void doWork(){
+        if(this.isBreaker){
+            Block blockToBreak = boundPosition.getWorld().getBlock(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ());
+            if(blockToBreak != null && blockToBreak.getBlockHardness(boundPosition.getWorld(), boundPosition.getX(), boundPosition.getY(), boundPosition.getZ()) > -1.0F){
+                ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
+                int meta = boundPosition.getWorld().getBlockMetadata(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ());
+                drops.addAll(blockToBreak.getDrops(boundPosition.getWorld(), boundPosition.getX(), boundPosition.getY(), boundPosition.getZ(), meta, 0));
+
+                if(WorldUtil.addToInventory(this, drops, false)){
+                    boundPosition.getWorld().playAuxSFX(2001, boundPosition.getX(), boundPosition.getY(), boundPosition.getZ(), Block.getIdFromBlock(blockToBreak)+(meta << 12));
+                    WorldUtil.breakBlockAtSide(ForgeDirection.UNKNOWN, boundPosition.getWorld(), boundPosition.getX(), boundPosition.getY(), boundPosition.getZ());
+                    WorldUtil.addToInventory(this, drops, true);
+                    this.markDirty();
+                }
+            }
+        }
+        else{
+            if(boundPosition.getWorld().getBlock(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ()).isReplaceable(boundPosition.getWorld(), boundPosition.getX(), boundPosition.getY(), boundPosition.getZ())){
+                int theSlot = WorldUtil.findFirstFilledSlot(this.slots);
+                this.setInventorySlotContents(theSlot, WorldUtil.placeBlockAtSide(ForgeDirection.UNKNOWN, boundPosition.getWorld(), boundPosition.getX(), boundPosition.getY(), boundPosition.getZ(), this.slots[theSlot]));
+                if(this.slots[theSlot] != null && this.slots[theSlot].stackSize <= 0){
+                    this.slots[theSlot] = null;
+                }
+            }
+        }
+    }
+
     @SideOnly(Side.CLIENT)
     public void renderParticles(){
         if(Util.RANDOM.nextInt(2) == 0){
@@ -117,18 +130,6 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
         if(this.ticksElapsed%80 == 0){
             PacketParticle.renderParticlesFromAToB(xCoord, yCoord, zCoord, boundPosition.getX(), boundPosition.getY(), boundPosition.getZ(), 2, 0.35F, TileEntityPhantomface.COLORS, 3);
         }
-    }
-
-    @Override
-    public boolean hasBoundPosition(){
-        if(this.boundPosition != null && this.boundPosition.getWorld() != null){
-            if(this.boundPosition.getWorld().getTileEntity(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ()) instanceof IPhantomTile || (this.xCoord == this.boundPosition.getX() && this.yCoord == this.boundPosition.getY() && this.zCoord == this.boundPosition.getZ() && this.worldObj == this.boundPosition.getWorld())){
-                this.boundPosition = null;
-                return false;
-            }
-            return this.boundPosition.getWorld() == this.worldObj;
-        }
-        return false;
     }
 
     @Override
@@ -181,21 +182,19 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
     }
 
     @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
-        return !this.isBreaker;
+    public boolean canInsertItem(int slot, ItemStack stack, int side){
+        return this.isItemValidForSlot(slot, stack);
     }
 
     @Override
-    public boolean canInsertItem(int slot, ItemStack stack, int side){
-        return this.isItemValidForSlot(slot, stack);
+    public boolean isItemValidForSlot(int i, ItemStack stack){
+        return !this.isBreaker;
     }
 
     @Override
     public boolean canExtractItem(int slot, ItemStack stack, int side){
         return this.isBreaker;
     }
-
-    private boolean activateOnceWithSignal;
 
     @Override
     public boolean toggle(){

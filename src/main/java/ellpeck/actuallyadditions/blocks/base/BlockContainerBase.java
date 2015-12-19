@@ -53,16 +53,16 @@ public abstract class BlockContainerBase extends BlockContainer{
         }
     }
 
-    public boolean shouldAddCreative(){
-        return true;
-    }
-
     protected String getBaseName(){
         return this.name;
     }
 
     protected Class<? extends ItemBlockBase> getItemBlock(){
         return ItemBlockBase.class;
+    }
+
+    public boolean shouldAddCreative(){
+        return true;
     }
 
     public EnumRarity getRarity(ItemStack stack){
@@ -103,26 +103,7 @@ public abstract class BlockContainerBase extends BlockContainer{
     }
 
     @Override
-    public boolean hasComparatorInputOverride(){
-        return true;
-    }
-
-    @Override
-    public int getComparatorInputOverride(World world, int x, int y, int z, int meta){
-        TileEntity tile = world.getTileEntity(x, y, z);
-        if(tile instanceof IInventory){
-            return Container.calcRedstoneFromInventory((IInventory)tile);
-        }
-        return 0;
-    }
-
-    @Override
     public void onNeighborBlockChange(World world, int x, int y, int z, Block block){
-        this.updateRedstoneState(world, x, y, z);
-    }
-
-    @Override
-    public void onBlockAdded(World world, int x, int y, int z){
         this.updateRedstoneState(world, x, y, z);
     }
 
@@ -141,30 +122,52 @@ public abstract class BlockContainerBase extends BlockContainer{
     }
 
     @Override
+    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack){
+        if(stack.getTagCompound() != null){
+            TileEntity tile = world.getTileEntity(x, y, z);
+
+            if(tile instanceof IEnergySaver){
+                ((IEnergySaver)tile).setEnergy(stack.getTagCompound().getInteger("Energy"));
+            }
+
+            if(tile instanceof IFluidSaver){
+                int amount = stack.getTagCompound().getInteger("FluidAmount");
+
+                if(amount > 0){
+                    FluidStack[] fluids = new FluidStack[amount];
+
+                    for(int i = 0; i < amount; i++){
+                        NBTTagCompound compound = stack.getTagCompound().getCompoundTag("Fluid"+i);
+                        if(compound != null){
+                            fluids[i] = FluidStack.loadFluidStackFromNBT(compound);
+                        }
+                    }
+
+                    ((IFluidSaver)tile).setFluids(fluids);
+                }
+            }
+        }
+    }
+
+    @Override
     public void onBlockHarvested(World world, int x, int y, int z, int meta, EntityPlayer player){
         if(!player.capabilities.isCreativeMode){
             this.dropBlockAsItem(world, x, y, z, meta, 0);
         }
     }
 
-    public boolean tryToggleRedstone(World world, int x, int y, int z, EntityPlayer player){
-        ItemStack stack = player.getCurrentEquippedItem();
-        if(stack != null && Block.getBlockFromItem(stack.getItem()) instanceof BlockRedstoneTorch){
-            TileEntity tile = world.getTileEntity(x, y, z);
-            if(tile instanceof IRedstoneToggle){
-                if(!world.isRemote){
+    @Override
+    public boolean hasComparatorInputOverride(){
+        return true;
+    }
 
-                    if(((IRedstoneToggle)tile).toggle()){
-                        player.addChatComponentMessage(new ChatComponentText("Changed to Redstone Pulse Mode"));
-                    }
-                    else{
-                        player.addChatComponentMessage(new ChatComponentText("Changed to Redstone Deactivation Mode"));
-                    }
-                }
-                return true;
-            }
+    @Override
+    public int getComparatorInputOverride(World world, int x, int y, int z, int meta){
+        TileEntity tile = world.getTileEntity(x, y, z);
+        if(tile instanceof IInventory){
+            return Container.calcRedstoneFromInventory((IInventory)tile);
         }
-        return false;
+        return 0;
     }
 
     @Override
@@ -206,36 +209,33 @@ public abstract class BlockContainerBase extends BlockContainer{
 
             drops.add(stack);
         }
-        
+
         return drops;
     }
 
     @Override
-    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack){
-        if(stack.getTagCompound() != null){
+    public void onBlockAdded(World world, int x, int y, int z){
+        this.updateRedstoneState(world, x, y, z);
+    }
+
+    public boolean tryToggleRedstone(World world, int x, int y, int z, EntityPlayer player){
+        ItemStack stack = player.getCurrentEquippedItem();
+        if(stack != null && Block.getBlockFromItem(stack.getItem()) instanceof BlockRedstoneTorch){
             TileEntity tile = world.getTileEntity(x, y, z);
+            if(tile instanceof IRedstoneToggle){
+                if(!world.isRemote){
 
-            if(tile instanceof IEnergySaver){
-                ((IEnergySaver)tile).setEnergy(stack.getTagCompound().getInteger("Energy"));
-            }
-
-            if(tile instanceof IFluidSaver){
-                int amount = stack.getTagCompound().getInteger("FluidAmount");
-
-                if(amount > 0){
-                    FluidStack[] fluids = new FluidStack[amount];
-
-                    for(int i = 0; i < amount; i++){
-                        NBTTagCompound compound = stack.getTagCompound().getCompoundTag("Fluid"+i);
-                        if(compound != null){
-                            fluids[i] = FluidStack.loadFluidStackFromNBT(compound);
-                        }
+                    if(((IRedstoneToggle)tile).toggle()){
+                        player.addChatComponentMessage(new ChatComponentText("Changed to Redstone Pulse Mode"));
                     }
-
-                    ((IFluidSaver)tile).setFluids(fluids);
+                    else{
+                        player.addChatComponentMessage(new ChatComponentText("Changed to Redstone Deactivation Mode"));
+                    }
                 }
+                return true;
             }
         }
+        return false;
     }
 
 }

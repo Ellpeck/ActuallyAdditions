@@ -30,6 +30,7 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
     public static final int ENERGY_USE = 1000;
     public EnergyStorage storage = new EnergyStorage(3000000);
     private int currentTime;
+    private boolean activateOnceWithSignal;
 
     public TileEntityAtomicReconstructor(){
         super(1, "reconstructor");
@@ -112,11 +113,6 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
     }
 
     @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
-        return stack != null && stack.getItem() instanceof ItemLens;
-    }
-
-    @Override
     public void setInventorySlotContents(int i, ItemStack stack){
         super.setInventorySlotContents(i, stack);
         this.sendUpdate();
@@ -154,6 +150,11 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
     }
 
     @Override
+    public boolean isItemValidForSlot(int i, ItemStack stack){
+        return stack != null && stack.getItem() instanceof ItemLens;
+    }
+
+    @Override
     public boolean canExtractItem(int slot, ItemStack stack, int side){
         return true;
     }
@@ -167,8 +168,6 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
     public void setEnergy(int energy){
         this.storage.setEnergyStored(energy);
     }
-
-    private boolean activateOnceWithSignal;
 
     @Override
     public boolean toggle(){

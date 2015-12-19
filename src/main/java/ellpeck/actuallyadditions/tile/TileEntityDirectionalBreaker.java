@@ -31,6 +31,7 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase implem
     public EnergyStorage storage = new EnergyStorage(10000);
     private int lastEnergy;
     private int currentTime;
+    private boolean activateOnceWithSignal;
 
     public TileEntityDirectionalBreaker(){
         super(9, "directionalBreaker");
@@ -99,11 +100,6 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase implem
         this.currentTime = compound.getInteger("CurrentTime");
     }
 
-    @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
-        return false;
-    }
-
     @SideOnly(Side.CLIENT)
     public int getEnergyScaled(int i){
         return this.storage.getEnergyStored()*i/this.storage.getMaxEnergyStored();
@@ -112,6 +108,11 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase implem
     @Override
     public boolean canInsertItem(int slot, ItemStack stack, int side){
         return this.isItemValidForSlot(slot, stack);
+    }
+
+    @Override
+    public boolean isItemValidForSlot(int i, ItemStack stack){
+        return false;
     }
 
     @Override
@@ -148,8 +149,6 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase implem
     public void setEnergy(int energy){
         this.storage.setEnergyStored(energy);
     }
-
-    private boolean activateOnceWithSignal;
 
     @Override
     public boolean toggle(){

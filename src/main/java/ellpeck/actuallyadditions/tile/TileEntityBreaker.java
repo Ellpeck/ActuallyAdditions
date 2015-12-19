@@ -24,6 +24,7 @@ public class TileEntityBreaker extends TileEntityInventoryBase implements IRedst
 
     public boolean isPlacer;
     private int currentTime;
+    private boolean activateOnceWithSignal;
 
     public TileEntityBreaker(int slots, String name){
         super(slots, name);
@@ -32,18 +33,6 @@ public class TileEntityBreaker extends TileEntityInventoryBase implements IRedst
     public TileEntityBreaker(){
         super(9, "breaker");
         this.isPlacer = false;
-    }
-
-    @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.writeSyncableNBT(compound, sync);
-        compound.setInteger("CurrentTime", this.currentTime);
-    }
-
-    @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.readSyncableNBT(compound, sync);
-        this.currentTime = compound.getInteger("CurrentTime");
     }
 
     @Override
@@ -63,6 +52,18 @@ public class TileEntityBreaker extends TileEntityInventoryBase implements IRedst
                 }
             }
         }
+    }
+
+    @Override
+    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.writeSyncableNBT(compound, sync);
+        compound.setInteger("CurrentTime", this.currentTime);
+    }
+
+    @Override
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.readSyncableNBT(compound, sync);
+        this.currentTime = compound.getInteger("CurrentTime");
     }
 
     private void doWork(){
@@ -94,13 +95,13 @@ public class TileEntityBreaker extends TileEntityInventoryBase implements IRedst
     }
 
     @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
-        return this.isPlacer;
+    public boolean canInsertItem(int slot, ItemStack stack, int side){
+        return this.isItemValidForSlot(slot, stack);
     }
 
     @Override
-    public boolean canInsertItem(int slot, ItemStack stack, int side){
-        return this.isItemValidForSlot(slot, stack);
+    public boolean isItemValidForSlot(int i, ItemStack stack){
+        return this.isPlacer;
     }
 
     @Override
@@ -108,21 +109,19 @@ public class TileEntityBreaker extends TileEntityInventoryBase implements IRedst
         return true;
     }
 
-    private boolean activateOnceWithSignal;
-
     @Override
     public boolean toggle(){
         return this.activateOnceWithSignal = !this.activateOnceWithSignal;
     }
 
     @Override
-    public void activateOnPulse(){
-        this.doWork();
+    public boolean isRightMode(){
+        return this.activateOnceWithSignal;
     }
 
     @Override
-    public boolean isRightMode(){
-        return this.activateOnceWithSignal;
+    public void activateOnPulse(){
+        this.doWork();
     }
 
     public static class TileEntityPlacer extends TileEntityBreaker{

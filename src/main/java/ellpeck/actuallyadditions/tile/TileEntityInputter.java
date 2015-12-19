@@ -369,32 +369,6 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.writeSyncableNBT(compound, sync);
-        compound.setInteger("SideToPut", this.sideToPut);
-        compound.setInteger("SlotToPut", this.slotToPutStart);
-        compound.setInteger("SlotToPutEnd", this.slotToPutEnd);
-        compound.setInteger("SideToPull", this.sideToPull);
-        compound.setInteger("SlotToPull", this.slotToPullStart);
-        compound.setInteger("SlotToPullEnd", this.slotToPullEnd);
-        compound.setBoolean("PullWhitelist", this.isPullWhitelist);
-        compound.setBoolean("PutWhitelist", this.isPutWhitelist);
-    }
-
-    @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        this.sideToPut = compound.getInteger("SideToPut");
-        this.slotToPutStart = compound.getInteger("SlotToPut");
-        this.slotToPutEnd = compound.getInteger("SlotToPutEnd");
-        this.sideToPull = compound.getInteger("SideToPull");
-        this.slotToPullStart = compound.getInteger("SlotToPull");
-        this.slotToPullEnd = compound.getInteger("SlotToPullEnd");
-        this.isPullWhitelist = compound.getBoolean("PullWhitelist");
-        this.isPutWhitelist = compound.getBoolean("PutWhitelist");
-        super.readSyncableNBT(compound, sync);
-    }
-
-    @Override
     public void updateEntity(){
         super.updateEntity();
         if(!worldObj.isRemote){
@@ -427,13 +401,39 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
     }
 
     @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
-        return i == 0;
+    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.writeSyncableNBT(compound, sync);
+        compound.setInteger("SideToPut", this.sideToPut);
+        compound.setInteger("SlotToPut", this.slotToPutStart);
+        compound.setInteger("SlotToPutEnd", this.slotToPutEnd);
+        compound.setInteger("SideToPull", this.sideToPull);
+        compound.setInteger("SlotToPull", this.slotToPullStart);
+        compound.setInteger("SlotToPullEnd", this.slotToPullEnd);
+        compound.setBoolean("PullWhitelist", this.isPullWhitelist);
+        compound.setBoolean("PutWhitelist", this.isPutWhitelist);
+    }
+
+    @Override
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
+        this.sideToPut = compound.getInteger("SideToPut");
+        this.slotToPutStart = compound.getInteger("SlotToPut");
+        this.slotToPutEnd = compound.getInteger("SlotToPutEnd");
+        this.sideToPull = compound.getInteger("SideToPull");
+        this.slotToPullStart = compound.getInteger("SlotToPull");
+        this.slotToPullEnd = compound.getInteger("SlotToPullEnd");
+        this.isPullWhitelist = compound.getBoolean("PullWhitelist");
+        this.isPutWhitelist = compound.getBoolean("PutWhitelist");
+        super.readSyncableNBT(compound, sync);
     }
 
     @Override
     public boolean canInsertItem(int slot, ItemStack stack, int side){
         return this.isItemValidForSlot(slot, stack);
+    }
+
+    @Override
+    public boolean isItemValidForSlot(int i, ItemStack stack){
+        return i == 0;
     }
 
     @Override

@@ -26,16 +26,16 @@ public class TexturedButton extends GuiButton{
 
     public List textList = new ArrayList();
 
+    public TexturedButton(int id, int x, int y, int texturePosX, int texturePosY, int width, int height){
+        this(id, x, y, texturePosX, texturePosY, width, height, new ArrayList());
+    }
+
     @SuppressWarnings("unchecked")
     public TexturedButton(int id, int x, int y, int texturePosX, int texturePosY, int width, int height, List hoverTextList){
         super(id, x, y, width, height, "");
         this.texturePosX = texturePosX;
         this.texturePosY = texturePosY;
         this.textList.addAll(hoverTextList);
-    }
-
-    public TexturedButton(int id, int x, int y, int texturePosX, int texturePosY, int width, int height){
-        this(id, x, y, texturePosX, texturePosY, width, height, new ArrayList());
     }
 
     public void setTexturePos(int x, int y){

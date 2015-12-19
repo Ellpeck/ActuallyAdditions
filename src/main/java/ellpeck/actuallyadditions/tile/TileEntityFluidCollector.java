@@ -27,12 +27,16 @@ public class TileEntityFluidCollector extends TileEntityInventoryBase implements
     public boolean isPlacer;
     private int lastTankAmount;
     private int currentTime;
+    private boolean activateOnceWithSignal;
 
     public TileEntityFluidCollector(int slots, String name){
         super(slots, name);
     }
 
-    private boolean activateOnceWithSignal;
+    public TileEntityFluidCollector(){
+        super(2, "fluidCollector");
+        this.isPlacer = false;
+    }
 
     @Override
     public boolean toggle(){
@@ -47,50 +51,6 @@ public class TileEntityFluidCollector extends TileEntityInventoryBase implements
     @Override
     public void activateOnPulse(){
         this.doWork();
-    }
-
-    public TileEntityFluidCollector(){
-        super(2, "fluidCollector");
-        this.isPlacer = false;
-    }
-
-    @Override
-    public int fill(ForgeDirection from, FluidStack resource, boolean doFill){
-        if(this.isPlacer){
-            return this.tank.fill(resource, doFill);
-        }
-        return 0;
-    }
-
-    @Override
-    public FluidStack drain(ForgeDirection from, FluidStack resource, boolean doDrain){
-        if(!this.isPlacer){
-            return this.tank.drain(resource.amount, doDrain);
-        }
-        return null;
-    }
-
-    @Override
-    public FluidStack drain(ForgeDirection from, int maxDrain, boolean doDrain){
-        if(!this.isPlacer){
-            return this.tank.drain(maxDrain, doDrain);
-        }
-        return null;
-    }
-
-    @Override
-    public boolean canFill(ForgeDirection from, Fluid fluid){
-        return this.isPlacer;
-    }
-
-    @Override
-    public boolean canDrain(ForgeDirection from, Fluid fluid){
-        return !this.isPlacer;
-    }
-
-    @Override
-    public FluidTankInfo[] getTankInfo(ForgeDirection from){
-        return new FluidTankInfo[]{this.tank.getInfo()};
     }
 
     private void doWork(){
@@ -131,6 +91,45 @@ public class TileEntityFluidCollector extends TileEntityInventoryBase implements
                 }
             }
         }
+    }
+
+    @Override
+    public int fill(ForgeDirection from, FluidStack resource, boolean doFill){
+        if(this.isPlacer){
+            return this.tank.fill(resource, doFill);
+        }
+        return 0;
+    }
+
+    @Override
+    public FluidStack drain(ForgeDirection from, FluidStack resource, boolean doDrain){
+        if(!this.isPlacer){
+            return this.tank.drain(resource.amount, doDrain);
+        }
+        return null;
+    }
+
+    @Override
+    public FluidStack drain(ForgeDirection from, int maxDrain, boolean doDrain){
+        if(!this.isPlacer){
+            return this.tank.drain(maxDrain, doDrain);
+        }
+        return null;
+    }
+
+    @Override
+    public boolean canFill(ForgeDirection from, Fluid fluid){
+        return this.isPlacer;
+    }
+
+    @Override
+    public boolean canDrain(ForgeDirection from, Fluid fluid){
+        return !this.isPlacer;
+    }
+
+    @Override
+    public FluidTankInfo[] getTankInfo(ForgeDirection from){
+        return new FluidTankInfo[]{this.tank.getInfo()};
     }
 
     @Override
@@ -187,6 +186,16 @@ public class TileEntityFluidCollector extends TileEntityInventoryBase implements
         this.tank.readFromNBT(compound);
     }
 
+    @SideOnly(Side.CLIENT)
+    public int getTankScaled(int i){
+        return this.tank.getFluidAmount()*i/this.tank.getCapacity();
+    }
+
+    @Override
+    public boolean canInsertItem(int slot, ItemStack stack, int side){
+        return this.isItemValidForSlot(slot, stack);
+    }
+
     @Override
     public boolean isItemValidForSlot(int i, ItemStack stack){
         if(i == 0){
@@ -198,16 +207,6 @@ public class TileEntityFluidCollector extends TileEntityInventoryBase implements
             }
         }
         return false;
-    }
-
-    @SideOnly(Side.CLIENT)
-    public int getTankScaled(int i){
-        return this.tank.getFluidAmount()*i/this.tank.getCapacity();
-    }
-
-    @Override
-    public boolean canInsertItem(int slot, ItemStack stack, int side){
-        return this.isItemValidForSlot(slot, stack);
     }
 
     @Override

@@ -27,7 +27,7 @@ import net.minecraftforge.common.EnumPlantType;
 
 import java.util.Random;
 
-public class BlockPlant extends BlockCrops {
+public class BlockPlant extends BlockCrops{
 
     public Item seedItem;
     public Item returnItem;
@@ -56,16 +56,16 @@ public class BlockPlant extends BlockCrops {
         }
     }
 
-    public boolean shouldAddCreative(){
-        return true;
-    }
-
     protected String getBaseName(){
         return this.name;
     }
 
     protected Class<? extends ItemBlockBase> getItemBlock(){
         return ItemBlockBase.class;
+    }
+
+    public boolean shouldAddCreative(){
+        return true;
     }
 
     public EnumRarity getRarity(ItemStack stack){

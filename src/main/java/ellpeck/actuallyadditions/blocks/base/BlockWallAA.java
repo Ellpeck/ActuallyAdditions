@@ -25,11 +25,15 @@ import net.minecraft.util.IIcon;
 
 import java.util.List;
 
-public class BlockWallAA extends BlockWall {
+public class BlockWallAA extends BlockWall{
 
     private String name;
     private Block baseBlock;
     private int meta;
+
+    public BlockWallAA(String name, Block base){
+        this(name, base, 0);
+    }
 
     public BlockWallAA(String name, Block base, int meta){
         super(base);
@@ -40,10 +44,6 @@ public class BlockWallAA extends BlockWall {
         this.register();
     }
 
-    public BlockWallAA(String name, Block base){
-        this(name, base, 0);
-    }
-
     private void register(){
         this.setBlockName(ModUtil.MOD_ID_LOWER+"."+this.getBaseName());
         GameRegistry.registerBlock(this, this.getItemBlock(), this.getBaseName());
@@ -52,16 +52,16 @@ public class BlockWallAA extends BlockWall {
         }
     }
 
-    public boolean shouldAddCreative(){
-        return true;
-    }
-
     protected String getBaseName(){
         return this.name;
     }
 
     protected Class<? extends ItemBlockBase> getItemBlock(){
         return ItemBlockBase.class;
+    }
+
+    public boolean shouldAddCreative(){
+        return true;
     }
 
     public EnumRarity getRarity(ItemStack stack){

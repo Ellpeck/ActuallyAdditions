@@ -30,9 +30,8 @@ import java.util.ArrayList;
 
 public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyReceiver, IButtonReactor, IEnergySaver{
 
-    public EnergyStorage storage = new EnergyStorage(1000000);
     public static final int ENERGY_USE_PER_BLOCK = 500;
-
+    public EnergyStorage storage = new EnergyStorage(1000000);
     public int layerAt = -1;
     public boolean onlyMineOres;
 

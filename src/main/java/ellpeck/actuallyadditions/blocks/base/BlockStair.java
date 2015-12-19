@@ -23,16 +23,16 @@ public class BlockStair extends BlockStairs{
 
     private String name;
 
+    public BlockStair(Block block, String name){
+        this(block, name, 0);
+    }
+
     public BlockStair(Block block, String name, int meta){
         super(block, meta);
         this.name = name;
         this.setLightOpacity(0);
 
         this.register();
-    }
-
-    public BlockStair(Block block, String name){
-        this(block, name, 0);
     }
 
     private void register(){
@@ -43,16 +43,16 @@ public class BlockStair extends BlockStairs{
         }
     }
 
-    public boolean shouldAddCreative(){
-        return true;
-    }
-
     protected String getBaseName(){
         return this.name;
     }
 
     protected Class<? extends ItemBlockBase> getItemBlock(){
         return ItemBlockBase.class;
+    }
+
+    public boolean shouldAddCreative(){
+        return true;
     }
 
     public EnumRarity getRarity(ItemStack stack){

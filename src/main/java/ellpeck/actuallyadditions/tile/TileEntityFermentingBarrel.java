@@ -93,11 +93,6 @@ public class TileEntityFermentingBarrel extends TileEntityInventoryBase implemen
         super.readSyncableNBT(compound, sync);
     }
 
-    @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
-        return (i == 0 && FluidContainerRegistry.containsFluid(stack, new FluidStack(InitBlocks.fluidCanolaOil, FluidContainerRegistry.BUCKET_VOLUME))) || (i == 2 && stack.getItem() == Items.bucket);
-    }
-
     @SideOnly(Side.CLIENT)
     public int getProcessScaled(int i){
         return this.currentProcessTime*i/PROCESS_TIME;
@@ -116,6 +111,11 @@ public class TileEntityFermentingBarrel extends TileEntityInventoryBase implemen
     @Override
     public boolean canInsertItem(int slot, ItemStack stack, int side){
         return this.isItemValidForSlot(slot, stack);
+    }
+
+    @Override
+    public boolean isItemValidForSlot(int i, ItemStack stack){
+        return (i == 0 && FluidContainerRegistry.containsFluid(stack, new FluidStack(InitBlocks.fluidCanolaOil, FluidContainerRegistry.BUCKET_VOLUME))) || (i == 2 && stack.getItem() == Items.bucket);
     }
 
     @Override

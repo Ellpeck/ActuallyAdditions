@@ -70,22 +70,6 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        compound.setInteger("FirstCrushTime", this.firstCrushTime);
-        compound.setInteger("SecondCrushTime", this.secondCrushTime);
-        this.storage.writeToNBT(compound);
-        super.writeSyncableNBT(compound, sync);
-    }
-
-    @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        this.firstCrushTime = compound.getInteger("FirstCrushTime");
-        this.secondCrushTime = compound.getInteger("SecondCrushTime");
-        this.storage.readFromNBT(compound);
-        super.readSyncableNBT(compound, sync);
-    }
-
-    @Override
     @SuppressWarnings("unchecked")
     public void updateEntity(){
         super.updateEntity();
@@ -163,6 +147,22 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
         }
     }
 
+    @Override
+    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
+        compound.setInteger("FirstCrushTime", this.firstCrushTime);
+        compound.setInteger("SecondCrushTime", this.secondCrushTime);
+        this.storage.writeToNBT(compound);
+        super.writeSyncableNBT(compound, sync);
+    }
+
+    @Override
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
+        this.firstCrushTime = compound.getInteger("FirstCrushTime");
+        this.secondCrushTime = compound.getInteger("SecondCrushTime");
+        this.storage.readFromNBT(compound);
+        super.readSyncableNBT(compound, sync);
+    }
+
     public boolean canCrushOn(int theInput, int theFirstOutput, int theSecondOutput){
         if(this.slots[theInput] != null){
             List<ItemStack> outputOnes = CrusherRecipeRegistry.getOutputOnes(this.slots[theInput]);
@@ -236,11 +236,6 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
         }
     }
 
-    @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
-        return (i == SLOT_INPUT_1 || i == SLOT_INPUT_2) && CrusherRecipeRegistry.getRecipeFromInput(stack) != null;
-    }
-
     @SideOnly(Side.CLIENT)
     public int getEnergyScaled(int i){
         return this.storage.getEnergyStored()*i/this.storage.getMaxEnergyStored();
@@ -259,6 +254,11 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
     @Override
     public boolean canInsertItem(int slot, ItemStack stack, int side){
         return this.isItemValidForSlot(slot, stack);
+    }
+
+    @Override
+    public boolean isItemValidForSlot(int i, ItemStack stack){
+        return (i == SLOT_INPUT_1 || i == SLOT_INPUT_2) && CrusherRecipeRegistry.getRecipeFromInput(stack) != null;
     }
 
     @Override

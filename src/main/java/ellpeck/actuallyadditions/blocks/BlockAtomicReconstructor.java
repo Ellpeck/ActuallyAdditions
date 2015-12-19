@@ -51,6 +51,14 @@ public class BlockAtomicReconstructor extends BlockContainerBase{
     }
 
     @Override
+    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack stack){
+        int rotation = BlockPistonBase.determineOrientation(world, x, y, z, player);
+        world.setBlockMetadataWithNotify(x, y, z, rotation, 2);
+
+        super.onBlockPlacedBy(world, x, y, z, player, stack);
+    }
+
+    @Override
     @SideOnly(Side.CLIENT)
     public IIcon getIcon(IBlockAccess world, int x, int y, int z, int side){
         int meta = world.getBlockMetadata(x, y, z);
@@ -111,14 +119,6 @@ public class BlockAtomicReconstructor extends BlockContainerBase{
             }
         }
         return true;
-    }
-
-    @Override
-    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack stack){
-        int rotation = BlockPistonBase.determineOrientation(world, x, y, z, player);
-        world.setBlockMetadataWithNotify(x, y, z, rotation, 2);
-
-        super.onBlockPlacedBy(world, x, y, z, player, stack);
     }
 
     @Override

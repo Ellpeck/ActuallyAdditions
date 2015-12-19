@@ -24,6 +24,17 @@ import java.util.ArrayList;
 
 public class LensColor extends Lens{
 
+    public static final int ENERGY_USE = 200;
+    public static final Object[] CONVERTABLE_BLOCKS = new Object[]{
+            Items.dye,
+            Blocks.wool,
+            Blocks.stained_glass,
+            Blocks.stained_glass_pane,
+            Blocks.stained_hardened_clay,
+            Blocks.carpet,
+            InitBlocks.blockColoredLamp,
+            InitBlocks.blockColoredLampOn
+    };
     //Thanks to xdjackiexd for this, as I couldn't be bothered
     private static final float[][] possibleColorLensColors = {
             {158F, 43F, 39F}, //Red
@@ -38,19 +49,6 @@ public class LensColor extends Lens{
             {190F, 73F, 201F}, //Magenta
             {217F, 129F, 153F}, //Pink
             {86F, 51F, 28F}, //Brown
-    };
-
-    public static final int ENERGY_USE = 200;
-
-    public static final Object[] CONVERTABLE_BLOCKS = new Object[]{
-            Items.dye,
-            Blocks.wool,
-            Blocks.stained_glass,
-            Blocks.stained_glass_pane,
-            Blocks.stained_hardened_clay,
-            Blocks.carpet,
-            InitBlocks.blockColoredLamp,
-            InitBlocks.blockColoredLampOn
     };
 
     @SuppressWarnings("unchecked")
