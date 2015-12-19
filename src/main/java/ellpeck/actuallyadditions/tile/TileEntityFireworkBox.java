@@ -32,7 +32,7 @@ public class TileEntityFireworkBox extends TileEntityBase implements IEnergyRece
 
     @Override
     public void updateEntity(){
-        if(!this.worldObj.isRemote && !this.isRedstonePowered){
+        if(!this.worldObj.isRemote && !this.isRedstonePowered && !this.activateOnceWithSignal){
             if(this.timeUntilNextFirework > 0){
                 this.timeUntilNextFirework--;
                 if(this.timeUntilNextFirework <= 0){
