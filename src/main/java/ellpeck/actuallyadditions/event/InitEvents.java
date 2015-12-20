@@ -11,13 +11,11 @@
 package ellpeck.actuallyadditions.event;
 
 import cpw.mods.fml.common.Loader;
-import ellpeck.actuallyadditions.ActuallyAdditions;
 import ellpeck.actuallyadditions.config.values.ConfigBoolValues;
 import ellpeck.actuallyadditions.nei.NEIScreenEvents;
 import ellpeck.actuallyadditions.update.UpdateCheckerClientNotificationEvent;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.Util;
-import ellpeck.actuallyadditions.world.ActAddCavesEvents;
 import net.minecraftforge.common.MinecraftForge;
 
 public class InitEvents{
@@ -33,9 +31,6 @@ public class InitEvents{
         Util.registerEvent(new WorldLoadingEvents());
         MinecraftForge.TERRAIN_GEN_BUS.register(new WorldDecorationEvent());
 
-        if(ActuallyAdditions.isCaveMode){
-            Util.registerEvent(new ActAddCavesEvents());
-        }
     }
 
     public static void initClient(){

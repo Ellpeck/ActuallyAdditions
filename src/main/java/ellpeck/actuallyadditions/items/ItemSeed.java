@@ -37,9 +37,12 @@ public class ItemSeed extends ItemSeeds{
         this.name = name;
         this.oredictName = oredictName;
         this.plant = plant;
-        ((BlockPlant)this.plant).seedItem = this;
-        ((BlockPlant)this.plant).returnItem = returnItem;
-        ((BlockPlant)this.plant).returnMeta = returnMeta;
+
+        if(plant instanceof BlockPlant){
+            ((BlockPlant)this.plant).seedItem = this;
+            ((BlockPlant)this.plant).returnItem = returnItem;
+            ((BlockPlant)this.plant).returnMeta = returnMeta;
+        }
 
         this.register();
     }

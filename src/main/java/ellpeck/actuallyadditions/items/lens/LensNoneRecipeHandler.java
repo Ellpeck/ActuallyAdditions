@@ -10,6 +10,7 @@
 
 package ellpeck.actuallyadditions.items.lens;
 
+import ellpeck.actuallyadditions.ActuallyAdditions;
 import ellpeck.actuallyadditions.blocks.InitBlocks;
 import ellpeck.actuallyadditions.config.values.ConfigCrafting;
 import ellpeck.actuallyadditions.items.InitItems;
@@ -99,6 +100,11 @@ public class LensNoneRecipeHandler{
             recipesGlowstoneRedstone[0] = Util.GetRecipes.lastReconstructorRecipe();
             addRecipe(new ItemStack(Items.glowstone_dust), new ItemStack(Items.redstone), 4000);
             recipesGlowstoneRedstone[1] = Util.GetRecipes.lastReconstructorRecipe();
+        }
+
+        if(ActuallyAdditions.isCaveMode){
+            addRecipe(new ItemStack(Blocks.dirt), new ItemStack(Blocks.grass), 50000);
+            addRecipe(new ItemStack(Blocks.grass), new ItemStack(Blocks.tallgrass), 50000);
         }
     }
 

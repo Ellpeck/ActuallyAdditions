@@ -10,6 +10,7 @@
 
 package ellpeck.actuallyadditions.items;
 
+import ellpeck.actuallyadditions.ActuallyAdditions;
 import ellpeck.actuallyadditions.blocks.InitBlocks;
 import ellpeck.actuallyadditions.items.base.*;
 import ellpeck.actuallyadditions.items.lens.ItemLens;
@@ -20,6 +21,7 @@ import ellpeck.actuallyadditions.material.InitArmorMaterials;
 import ellpeck.actuallyadditions.material.InitToolMaterials;
 import ellpeck.actuallyadditions.util.CompatUtil;
 import ellpeck.actuallyadditions.util.ModUtil;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
@@ -135,8 +137,16 @@ public class InitItems{
     public static Item itemExplosionLens;
     public static Item itemDamageLens;
 
+    public static Item itemPotatoSeeds;
+    public static Item itemCarrotSeeds;
+
     public static void init(){
         ModUtil.LOGGER.info("Initializing Items...");
+
+        if(ActuallyAdditions.isCaveMode){
+            itemPotatoSeeds = new ItemSeed("itemPotatoSeeds", "seedPotato", Blocks.potatoes, null, 0);
+            itemCarrotSeeds = new ItemSeed("itemCarrotSeeds", "seedCarrot", Blocks.carrots, null, 0);
+        }
 
         itemCrateKeeper = new ItemGeneric("itemCrateKeeper");
         itemColorLens = new ItemLens("itemColorLens", Lenses.LENS_COLOR);
