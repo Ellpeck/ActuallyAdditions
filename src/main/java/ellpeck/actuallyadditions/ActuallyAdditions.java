@@ -45,12 +45,15 @@ import ellpeck.actuallyadditions.update.UpdateChecker;
 import ellpeck.actuallyadditions.util.FakePlayerUtil;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.Util;
+import ellpeck.actuallyadditions.world.WorldTypeActAddCaves;
 import net.minecraft.init.Items;
 import net.minecraft.server.MinecraftServer;
 
 //                                                                           So that BuildCraft Oil always gets used
 @Mod(modid = ModUtil.MOD_ID, name = ModUtil.NAME, version = ModUtil.VERSION, dependencies = "after:BuildCraft|Energy", canBeDeactivated = false, guiFactory = "ellpeck.actuallyadditions.config.GuiFactory")
 public class ActuallyAdditions{
+
+    public static boolean isCaveMode = true; //TODO
 
     @Instance(ModUtil.MOD_ID)
     public static ActuallyAdditions instance;
@@ -70,6 +73,9 @@ public class ActuallyAdditions{
         InitItems.init();
         FuelHandler.init();
         UpdateChecker.init();
+        if(isCaveMode){
+            new WorldTypeActAddCaves();
+        }
         proxy.preInit(event);
 
         ModUtil.LOGGER.info("PreInitialization Finished.");

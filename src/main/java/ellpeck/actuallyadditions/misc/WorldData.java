@@ -12,6 +12,7 @@ package ellpeck.actuallyadditions.misc;
 
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.playerdata.PersistentServerData;
+import ellpeck.actuallyadditions.world.ActAddCavesEvents;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.server.MinecraftServer;
@@ -61,9 +62,15 @@ public class WorldData extends WorldSavedData{
     public static void clearOldData(){
         if(!LaserRelayConnectionHandler.getInstance().networks.isEmpty()){
             ModUtil.LOGGER.info("Clearing leftover Laser Relay Connection Data from other worlds!");
+            LaserRelayConnectionHandler.getInstance().networks.clear();
         }
         if(!PersistentServerData.playerSaveData.isEmpty()){
             ModUtil.LOGGER.info("Clearing leftover Persistent Server Data from other worlds!");
+            PersistentServerData.playerSaveData.clear();
+        }
+        if(!ActAddCavesEvents.cavesData.hasNoTags()){
+            ModUtil.LOGGER.info("Clearing leftover Cave World Data from other worlds!");
+            ActAddCavesEvents.cavesData = new NBTTagCompound();
         }
     }
 
@@ -82,6 +89,9 @@ public class WorldData extends WorldSavedData{
             PersistentServerData.PlayerSave aSave = PersistentServerData.PlayerSave.fromNBT(playerList.getCompoundTagAt(i));
             PersistentServerData.playerSaveData.add(aSave);
         }
+
+        //Cave Data
+        ActAddCavesEvents.cavesData = compound.getCompoundTag("CaveData");
     }
 
     @Override
@@ -100,5 +110,8 @@ public class WorldData extends WorldSavedData{
             playerList.appendTag(theSave.toNBT());
         }
         compound.setTag("PlayerData", playerList);
+
+        //Cave Data
+        compound.setTag("CaveData", ActAddCavesEvents.cavesData);
     }
 }
