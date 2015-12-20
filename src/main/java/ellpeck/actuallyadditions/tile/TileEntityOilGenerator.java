@@ -86,7 +86,7 @@ public class TileEntityOilGenerator extends TileEntityInventoryBase implements I
                 this.markDirty();
                 int meta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
                 if(meta == 1){
-                    if(!(ENERGY_PRODUCED*BURN_TIME <= this.getMaxEnergyStored(ForgeDirection.UNKNOWN)-this.getEnergyStored(ForgeDirection.UNKNOWN) && FluidContainerRegistry.BUCKET_VOLUME <= this.tank.getCapacity()-this.tank.getFluidAmount())){
+                    if(!(ENERGY_PRODUCED*BURN_TIME <= this.getMaxEnergyStored(ForgeDirection.UNKNOWN)-this.getEnergyStored(ForgeDirection.UNKNOWN) && this.currentBurnTime <= 0 && this.tank.getFluidAmount() >= fuelUsed)){
                         worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 0, 2);
                     }
                 }

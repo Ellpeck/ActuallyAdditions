@@ -56,7 +56,7 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
                 this.storage.receiveEnergy(PRODUCE, false);
             }
 
-            if(this.currentBurnTime <= 0 && this.slots[0] != null && TileEntityFurnace.getItemBurnTime(this.slots[0]) > 0){
+            if(this.currentBurnTime <= 0 && this.slots[0] != null && TileEntityFurnace.getItemBurnTime(this.slots[0]) > 0 && this.storage.getEnergyStored() < this.storage.getMaxEnergyStored()){
                 int burnTime = TileEntityFurnace.getItemBurnTime(this.slots[0]);
                 this.maxBurnTime = burnTime;
                 this.currentBurnTime = burnTime;
@@ -80,7 +80,7 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
                 this.markDirty();
                 int meta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
                 if(meta == 1){
-                    if(!(this.currentBurnTime <= 0 && this.slots[0] != null && TileEntityFurnace.getItemBurnTime(this.slots[0]) > 0)){
+                    if(!(this.currentBurnTime <= 0 && this.slots[0] != null && TileEntityFurnace.getItemBurnTime(this.slots[0]) > 0 && this.storage.getEnergyStored() < this.storage.getMaxEnergyStored())){
                         worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 0, 2);
                     }
                 }
