@@ -32,6 +32,9 @@ public class ItemBase extends Item{
         if(this.shouldAddCreative()){
             this.setCreativeTab(CreativeTab.instance);
         }
+        else{
+            this.setCreativeTab(null);
+        }
     }
 
     protected String getBaseName(){

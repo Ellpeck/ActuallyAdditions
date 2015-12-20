@@ -47,6 +47,9 @@ public class ItemSwordAA extends ItemSword{
         if(this.shouldAddCreative()){
             this.setCreativeTab(CreativeTab.instance);
         }
+        else{
+            this.setCreativeTab(null);
+        }
     }
 
     protected String getBaseName(){

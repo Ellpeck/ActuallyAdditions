@@ -66,6 +66,9 @@ public class ItemAllToolAA extends ItemTool{
         if(this.shouldAddCreative()){
             this.setCreativeTab(CreativeTab.instance);
         }
+        else{
+            this.setCreativeTab(null);
+        }
     }
 
     protected String getBaseName(){

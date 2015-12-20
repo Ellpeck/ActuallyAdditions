@@ -48,6 +48,9 @@ public class ItemArmorAA extends ItemArmor{
         if(this.shouldAddCreative()){
             this.setCreativeTab(CreativeTab.instance);
         }
+        else{
+            this.setCreativeTab(null);
+        }
     }
 
     protected String getBaseName(){

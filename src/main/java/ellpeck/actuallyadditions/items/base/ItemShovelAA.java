@@ -47,6 +47,9 @@ public class ItemShovelAA extends ItemSpade{
         if(this.shouldAddCreative()){
             this.setCreativeTab(CreativeTab.instance);
         }
+        else{
+            this.setCreativeTab(null);
+        }
     }
 
     protected String getBaseName(){

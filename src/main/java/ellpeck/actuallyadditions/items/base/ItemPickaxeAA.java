@@ -46,6 +46,9 @@ public class ItemPickaxeAA extends ItemPickaxe{
         if(this.shouldAddCreative()){
             this.setCreativeTab(CreativeTab.instance);
         }
+        else{
+            this.setCreativeTab(null);
+        }
     }
 
     protected String getBaseName(){

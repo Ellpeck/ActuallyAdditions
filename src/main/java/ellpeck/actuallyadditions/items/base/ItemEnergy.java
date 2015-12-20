@@ -44,6 +44,9 @@ public abstract class ItemEnergy extends ItemEnergyContainer{
         if(this.shouldAddCreative()){
             this.setCreativeTab(CreativeTab.instance);
         }
+        else{
+            this.setCreativeTab(null);
+        }
     }
 
     protected String getBaseName(){

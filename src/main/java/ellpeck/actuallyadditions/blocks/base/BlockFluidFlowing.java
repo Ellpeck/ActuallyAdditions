@@ -49,6 +49,9 @@ public class BlockFluidFlowing extends BlockFluidClassic{
         if(this.shouldAddCreative()){
             this.setCreativeTab(CreativeTab.instance);
         }
+        else{
+            this.setCreativeTab(null);
+        }
     }
 
     protected String getBaseName(){
@@ -60,7 +63,7 @@ public class BlockFluidFlowing extends BlockFluidClassic{
     }
 
     public boolean shouldAddCreative(){
-        return true;
+        return false;
     }
 
     @Override
