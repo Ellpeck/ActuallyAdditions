@@ -28,7 +28,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 public class TileEntityAtomicReconstructor extends TileEntityInventoryBase implements IEnergyReceiver, IEnergySaver, IRedstoneToggle{
 
     public static final int ENERGY_USE = 1000;
-    public EnergyStorage storage = new EnergyStorage(3000000);
+    public EnergyStorage storage = new EnergyStorage(300000);
     private int currentTime;
     private boolean activateOnceWithSignal;
 
