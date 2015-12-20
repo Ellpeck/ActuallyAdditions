@@ -31,19 +31,19 @@ public class DungeonLoot{
             ChestGenHooks blacksmith = ChestGenHooks.getInfo(ChestGenHooks.VILLAGE_BLACKSMITH);
 
             for(int i = 0; i < TheCrystals.values().length; i++){
-                WeightedRandomChestContent item = new WeightedRandomChestContent(new ItemStack(InitItems.itemCrystal, 1, i), 2, 4, 15);
-                WeightedRandomChestContent block = new WeightedRandomChestContent(new ItemStack(InitBlocks.blockCrystal, 1, i), 1, 3, 5);
+                WeightedRandomChestContent item = new WeightedRandomChestContent(new ItemStack(InitItems.itemCrystal, 1, i), 2, 4, 5);
+                WeightedRandomChestContent block = new WeightedRandomChestContent(new ItemStack(InitBlocks.blockCrystal, 1, i), 1, 3, 1);
                 dungeon.addItem(item);
                 dungeon.addItem(block);
                 mineshaft.addItem(item);
                 mineshaft.addItem(block);
             }
-            WeightedRandomChestContent drillCore = new WeightedRandomChestContent(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.DRILL_CORE.ordinal()), 1, 1, 40);
+            WeightedRandomChestContent drillCore = new WeightedRandomChestContent(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.DRILL_CORE.ordinal()), 1, 1, 3);
             dungeon.addItem(drillCore);
             mineshaft.addItem(drillCore);
             blacksmith.addItem(drillCore);
 
-            WeightedRandomChestContent quartz = new WeightedRandomChestContent(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal()), 3, 4, 50);
+            WeightedRandomChestContent quartz = new WeightedRandomChestContent(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal()), 3, 4, 30);
             dungeon.addItem(quartz);
             blacksmith.addItem(quartz);
         }
