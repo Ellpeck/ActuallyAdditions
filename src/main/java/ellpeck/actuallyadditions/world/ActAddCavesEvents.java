@@ -11,12 +11,9 @@
 package ellpeck.actuallyadditions.world;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.util.Util;
-import ellpeck.actuallyadditions.util.playerdata.PersistentServerData;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.MathHelper;
@@ -40,17 +37,13 @@ public class ActAddCavesEvents{
                 cavesData.setBoolean("CavesCreated", true);
             }
 
-            //Spawn the player
-            NBTTagCompound playerData = PersistentServerData.getDataFromPlayer(player);
-            if(!playerData.getBoolean("SpawnedInCaves")){
-                int x = cavesData.getInteger("StartX");
-                int y = cavesData.getInteger("StartY");
-                int z = cavesData.getInteger("StartZ");
-                player.setSpawnChunk(new ChunkCoordinates(x, y, z), true);
-                player.setPositionAndUpdate(x+0.5, y+1, z+0.5);
-                player.inventory.addItemStackToInventory(new ItemStack(InitItems.itemBooklet));
+            int x = cavesData.getInteger("StartX");
+            int y = cavesData.getInteger("StartY");
+            int z = cavesData.getInteger("StartZ");
 
-                playerData.setBoolean("SpawnedInCaves", true);
+            //Fix the player's location upon respawn
+            if(player.posY >= 255){
+                player.setPositionAndUpdate(x+0.5, y+1, z+0.5);
             }
         }
     }
