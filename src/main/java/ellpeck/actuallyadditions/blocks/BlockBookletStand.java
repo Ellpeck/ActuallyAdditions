@@ -14,22 +14,31 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.ActuallyAdditions;
 import ellpeck.actuallyadditions.blocks.base.BlockContainerBase;
+import ellpeck.actuallyadditions.booklet.EntrySet;
+import ellpeck.actuallyadditions.booklet.page.BookletPage;
 import ellpeck.actuallyadditions.inventory.GuiHandler;
+import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.tile.TileEntityBookletStand;
 import ellpeck.actuallyadditions.util.AssetUtil;
+import ellpeck.actuallyadditions.util.StringUtil;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.profiler.Profiler;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
-public class BlockBookletStand extends BlockContainerBase{
+public class BlockBookletStand extends BlockContainerBase implements IHudDisplay{
 
     public BlockBookletStand(String name){
         super(Material.wood, name);
@@ -113,5 +122,32 @@ public class BlockBookletStand extends BlockContainerBase{
     @Override
     public TileEntity createNewTileEntity(World world, int i){
         return new TileEntityBookletStand();
+    }
+
+    @Override
+    public void displayHud(Minecraft minecraft, EntityPlayer player, ItemStack stack, MovingObjectPosition posHit, Profiler profiler, ScaledResolution resolution){
+        TileEntity tile = minecraft.theWorld.getTileEntity(posHit.blockX, posHit.blockY, posHit.blockZ);
+        if(tile instanceof TileEntityBookletStand){
+            EntrySet set = ((TileEntityBookletStand)tile).assignedEntry;
+
+            String strg1;
+            String strg2;
+            if(set.entry == null){
+                strg1 = "No entry saved! Save one if";
+                strg2 = "you are the player who placed it!";
+            }
+            else if(set.chapter == null){
+                strg1 = set.entry.getLocalizedName();
+                strg2 = "Page "+set.pageInIndex;
+            }
+            else{
+                strg1 = set.chapter.getLocalizedName();
+                strg2 = "Page "+set.page.getID();
+
+                BookletPage.renderItem(null, set.chapter.displayStack != null ? set.chapter.displayStack : new ItemStack(InitItems.itemBooklet), resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2+10, 1F);
+            }
+            minecraft.fontRenderer.drawStringWithShadow(EnumChatFormatting.YELLOW+""+EnumChatFormatting.ITALIC+strg1, resolution.getScaledWidth()/2+25, resolution.getScaledHeight()/2+8, StringUtil.DECIMAL_COLOR_WHITE);
+            minecraft.fontRenderer.drawStringWithShadow(EnumChatFormatting.YELLOW+""+EnumChatFormatting.ITALIC+strg2, resolution.getScaledWidth()/2+25, resolution.getScaledHeight()/2+18, StringUtil.DECIMAL_COLOR_WHITE);
+        }
     }
 }

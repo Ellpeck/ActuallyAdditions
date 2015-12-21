@@ -21,6 +21,7 @@ import net.minecraft.block.BlockRedstoneTorch;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.profiler.Profiler;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumChatFormatting;
@@ -31,12 +32,13 @@ public class HudEvent{
 
     @SubscribeEvent
     public void onGameOverlay(RenderGameOverlayEvent.Post event){
-        if(event.type == RenderGameOverlayEvent.ElementType.ALL){
+        if(event.type == RenderGameOverlayEvent.ElementType.ALL && Minecraft.getMinecraft().currentScreen == null){
             Minecraft minecraft = Minecraft.getMinecraft();
             Profiler profiler = minecraft.mcProfiler;
             EntityPlayer player = minecraft.thePlayer;
             MovingObjectPosition posHit = minecraft.objectMouseOver;
             FontRenderer font = minecraft.fontRenderer;
+            ItemStack stack = player.getCurrentEquippedItem();
 
             profiler.startSection(ModUtil.MOD_ID+"Hud");
 
@@ -46,21 +48,22 @@ public class HudEvent{
 
                 if(blockHit instanceof IHudDisplay){
                     profiler.startSection("BlockHudDisplay");
-                    ((IHudDisplay)blockHit).displayHud(minecraft, player, player.getCurrentEquippedItem(), posHit, profiler, event.resolution);
+                    ((IHudDisplay)blockHit).displayHud(minecraft, player, stack, posHit, profiler, event.resolution);
                     profiler.endSection();
                 }
 
                 if(tileHit instanceof IRedstoneToggle){
-                    if(player.getCurrentEquippedItem() != null && Block.getBlockFromItem(player.getCurrentEquippedItem().getItem()) instanceof BlockRedstoneTorch){
-                        profiler.startSection("RedstoneToggleHudDisplay");
+                    profiler.startSection("RedstoneToggleHudDisplay");
 
-                        String strg = "Redstone Mode: "+EnumChatFormatting.DARK_RED+(((IRedstoneToggle)tileHit).isPulseMode() ? "Pulse" : "Deactivation")+EnumChatFormatting.RESET;
-                        String expl = "Right-Click to toggle!";
-                        font.drawStringWithShadow(strg, event.resolution.getScaledWidth()/2+5, event.resolution.getScaledHeight()/2+5, StringUtil.DECIMAL_COLOR_WHITE);
+                    String strg = "Redstone Mode: "+EnumChatFormatting.DARK_RED+(((IRedstoneToggle)tileHit).isPulseMode() ? "Pulse" : "Deactivation")+EnumChatFormatting.RESET;
+                    font.drawStringWithShadow(strg, event.resolution.getScaledWidth()/2+5, event.resolution.getScaledHeight()/2+5, StringUtil.DECIMAL_COLOR_WHITE);
+
+                    if(stack != null && Block.getBlockFromItem(stack.getItem()) instanceof BlockRedstoneTorch){
+                        String expl = EnumChatFormatting.GREEN+"Right-Click to toggle!";
                         font.drawStringWithShadow(expl, event.resolution.getScaledWidth()/2+5, event.resolution.getScaledHeight()/2+15, StringUtil.DECIMAL_COLOR_WHITE);
-
-                        profiler.endSection();
                     }
+
+                    profiler.endSection();
                 }
 
                 if(tileHit instanceof IEnergyDisplay){
