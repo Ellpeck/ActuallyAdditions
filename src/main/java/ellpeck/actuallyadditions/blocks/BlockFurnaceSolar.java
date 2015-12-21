@@ -17,12 +17,10 @@ import ellpeck.actuallyadditions.tile.TileEntityFurnaceSolar;
 import ellpeck.actuallyadditions.util.AssetUtil;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
@@ -61,18 +59,6 @@ public class BlockFurnaceSolar extends BlockContainerBase{
     @Override
     public boolean isOpaqueCube(){
         return false;
-    }
-
-    @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9){
-        if(!world.isRemote){
-            TileEntityFurnaceSolar generator = (TileEntityFurnaceSolar)world.getTileEntity(x, y, z);
-            if(generator != null){
-                player.addChatComponentMessage(new ChatComponentText(generator.storage.getEnergyStored()+"/"+generator.storage.getMaxEnergyStored()+" RF"));
-            }
-            return true;
-        }
-        return true;
     }
 
     @Override

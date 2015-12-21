@@ -22,11 +22,12 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 import java.util.ArrayList;
 
-public class TileEntityHeatCollector extends TileEntityBase implements IEnergyProvider, IEnergySaver{
+public class TileEntityHeatCollector extends TileEntityBase implements IEnergyProvider, IEnergySaver, IEnergyDisplay{
 
     public static final int ENERGY_PRODUCE = 40;
     public static final int BLOCKS_NEEDED = 4;
     public EnergyStorage storage = new EnergyStorage(30000);
+    private int oldEnergy;
 
     @Override
     public void updateEntity(){
@@ -58,16 +59,22 @@ public class TileEntityHeatCollector extends TileEntityBase implements IEnergyPr
             if(this.getEnergyStored(ForgeDirection.UNKNOWN) > 0){
                 WorldUtil.pushEnergy(worldObj, xCoord, yCoord, zCoord, ForgeDirection.UP, this.storage);
             }
+
+            if(this.oldEnergy != this.storage.getEnergyStored() && this.sendUpdateWithInterval()){
+                this.oldEnergy = this.storage.getEnergyStored();
+            }
         }
     }
 
     @Override
     public void writeSyncableNBT(NBTTagCompound compound, boolean isForSync){
+        super.writeSyncableNBT(compound, isForSync);
         this.storage.writeToNBT(compound);
     }
 
     @Override
     public void readSyncableNBT(NBTTagCompound compound, boolean isForSync){
+        super.readSyncableNBT(compound, isForSync);
         this.storage.readFromNBT(compound);
     }
 
@@ -94,6 +101,11 @@ public class TileEntityHeatCollector extends TileEntityBase implements IEnergyPr
     @Override
     public int getEnergy(){
         return this.storage.getEnergyStored();
+    }
+
+    @Override
+    public int getMaxEnergy(){
+        return this.storage.getMaxEnergyStored();
     }
 
     @Override

@@ -39,12 +39,12 @@ public class TileEntityFluidCollector extends TileEntityInventoryBase implements
     }
 
     @Override
-    public boolean toggle(){
-        return this.activateOnceWithSignal = !this.activateOnceWithSignal;
+    public void toggle(boolean to){
+        this.activateOnceWithSignal = to;
     }
 
     @Override
-    public boolean isRightMode(){
+    public boolean isPulseMode(){
         return this.activateOnceWithSignal;
     }
 

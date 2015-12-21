@@ -16,10 +16,11 @@ import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 
-public class TileEntityFurnaceSolar extends TileEntityBase implements IEnergyProvider, IEnergySaver{
+public class TileEntityFurnaceSolar extends TileEntityBase implements IEnergyProvider, IEnergySaver, IEnergyDisplay{
 
     public static final int PRODUCE = 10;
     public EnergyStorage storage = new EnergyStorage(30000);
+    private int oldEnergy;
 
     @Override
     public int extractEnergy(ForgeDirection from, int maxExtract, boolean simulate){
@@ -59,16 +60,22 @@ public class TileEntityFurnaceSolar extends TileEntityBase implements IEnergyPro
                 WorldUtil.pushEnergy(worldObj, xCoord, yCoord, zCoord, ForgeDirection.SOUTH, storage);
                 WorldUtil.pushEnergy(worldObj, xCoord, yCoord, zCoord, ForgeDirection.WEST, storage);
             }
+
+            if(this.oldEnergy != this.storage.getEnergyStored() && this.sendUpdateWithInterval()){
+                this.oldEnergy = this.storage.getEnergyStored();
+            }
         }
     }
 
     @Override
     public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.writeSyncableNBT(compound, sync);
         this.storage.writeToNBT(compound);
     }
 
     @Override
     public void readSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.readSyncableNBT(compound, sync);
         this.storage.readFromNBT(compound);
     }
 
@@ -84,6 +91,11 @@ public class TileEntityFurnaceSolar extends TileEntityBase implements IEnergyPro
     @Override
     public int getEnergy(){
         return this.storage.getEnergyStored();
+    }
+
+    @Override
+    public int getMaxEnergy(){
+        return this.storage.getMaxEnergyStored();
     }
 
     @Override

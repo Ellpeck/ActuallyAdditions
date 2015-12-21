@@ -25,6 +25,7 @@ public class TileEntityBookletStand extends TileEntityBase{
 
     @Override
     public void writeSyncableNBT(NBTTagCompound compound, boolean isForSync){
+        super.writeSyncableNBT(compound, isForSync);
         compound.setTag("SavedEntry", this.assignedEntry.writeToNBT());
 
         if(this.assignedPlayer != null){
@@ -34,6 +35,7 @@ public class TileEntityBookletStand extends TileEntityBase{
 
     @Override
     public void readSyncableNBT(NBTTagCompound compound, boolean isForSync){
+        super.readSyncableNBT(compound, isForSync);
         this.assignedEntry = EntrySet.readFromNBT(compound.getCompoundTag("SavedEntry"));
 
         String player = compound.getString("Player");

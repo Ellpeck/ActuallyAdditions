@@ -24,12 +24,13 @@ import net.minecraftforge.common.util.ForgeDirection;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class TileEntityLeafGenerator extends TileEntityBase implements IEnergyProvider, IEnergySaver{
+public class TileEntityLeafGenerator extends TileEntityBase implements IEnergyProvider, IEnergySaver, IEnergyDisplay{
 
     public static final int RANGE = 7;
     public static final int ENERGY_PRODUCED = 300;
     public EnergyStorage storage = new EnergyStorage(35000);
     private int nextUseCounter;
+    private int oldEnergy;
 
     @Override
     @SuppressWarnings("unchecked")
@@ -84,16 +85,22 @@ public class TileEntityLeafGenerator extends TileEntityBase implements IEnergyPr
                 WorldUtil.pushEnergy(worldObj, xCoord, yCoord, zCoord, ForgeDirection.SOUTH, storage);
                 WorldUtil.pushEnergy(worldObj, xCoord, yCoord, zCoord, ForgeDirection.WEST, storage);
             }
+
+            if(this.oldEnergy != this.storage.getEnergyStored() && this.sendUpdateWithInterval()){
+                this.oldEnergy = this.storage.getEnergyStored();
+            }
         }
     }
 
     @Override
     public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.writeSyncableNBT(compound, sync);
         this.storage.writeToNBT(compound);
     }
 
     @Override
     public void readSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.readSyncableNBT(compound, sync);
         this.storage.readFromNBT(compound);
     }
 
@@ -120,6 +127,11 @@ public class TileEntityLeafGenerator extends TileEntityBase implements IEnergyPr
     @Override
     public int getEnergy(){
         return this.storage.getEnergyStored();
+    }
+
+    @Override
+    public int getMaxEnergy(){
+        return this.storage.getMaxEnergyStored();
     }
 
     @Override

@@ -35,6 +35,7 @@ public class InitEvents{
 
     public static void initClient(){
         Util.registerEvent(new TooltipEvent());
+        Util.registerEvent(new HudEvent());
 
         if(Loader.isModLoaded("NotEnoughItems")){
             Util.registerEvent(new NEIScreenEvents());

@@ -19,7 +19,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 
-public class TileEntityLavaFactoryController extends TileEntityBase implements IEnergyReceiver, IEnergySaver{
+public class TileEntityLavaFactoryController extends TileEntityBase implements IEnergyReceiver, IEnergySaver, IEnergyDisplay{
 
     public static final int NOT_MULTI = 0;
     public static final int HAS_LAVA = 1;
@@ -51,12 +51,14 @@ public class TileEntityLavaFactoryController extends TileEntityBase implements I
 
     @Override
     public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.writeSyncableNBT(compound, sync);
         this.storage.writeToNBT(compound);
         compound.setInteger("WorkTime", this.currentWorkTime);
     }
 
     @Override
     public void readSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.readSyncableNBT(compound, sync);
         this.storage.readFromNBT(compound);
         this.currentWorkTime = compound.getInteger("WorkTime");
     }
@@ -96,6 +98,11 @@ public class TileEntityLavaFactoryController extends TileEntityBase implements I
     @Override
     public int getEnergy(){
         return this.storage.getEnergyStored();
+    }
+
+    @Override
+    public int getMaxEnergy(){
+        return this.storage.getMaxEnergyStored();
     }
 
     @Override

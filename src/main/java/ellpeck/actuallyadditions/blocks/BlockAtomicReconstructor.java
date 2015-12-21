@@ -25,7 +25,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -96,25 +95,20 @@ public class BlockAtomicReconstructor extends BlockContainerBase{
         if(!world.isRemote){
             TileEntityAtomicReconstructor reconstructor = (TileEntityAtomicReconstructor)world.getTileEntity(x, y, z);
             if(reconstructor != null){
-                if(!player.isSneaking()){
-                    ItemStack heldItem = player.getCurrentEquippedItem();
-                    if(heldItem != null){
-                        if(heldItem.getItem() instanceof ItemLens && reconstructor.getStackInSlot(0) == null){
-                            ItemStack toPut = heldItem.copy();
-                            toPut.stackSize = 1;
-                            reconstructor.setInventorySlotContents(0, toPut);
-                            player.inventory.decrStackSize(player.inventory.currentItem, 1);
-                        }
-                    }
-                    else{
-                        if(reconstructor.getStackInSlot(0) != null){
-                            player.inventory.setInventorySlotContents(player.inventory.currentItem, reconstructor.getStackInSlot(0).copy());
-                            reconstructor.setInventorySlotContents(0, null);
-                        }
+                ItemStack heldItem = player.getCurrentEquippedItem();
+                if(heldItem != null){
+                    if(heldItem.getItem() instanceof ItemLens && reconstructor.getStackInSlot(0) == null){
+                        ItemStack toPut = heldItem.copy();
+                        toPut.stackSize = 1;
+                        reconstructor.setInventorySlotContents(0, toPut);
+                        player.inventory.decrStackSize(player.inventory.currentItem, 1);
                     }
                 }
                 else{
-                    player.addChatComponentMessage(new ChatComponentText(reconstructor.storage.getEnergyStored()+"/"+reconstructor.storage.getMaxEnergyStored()+" RF"));
+                    if(reconstructor.getStackInSlot(0) != null){
+                        player.inventory.setInventorySlotContents(player.inventory.currentItem, reconstructor.getStackInSlot(0).copy());
+                        reconstructor.setInventorySlotContents(0, null);
+                    }
                 }
             }
         }

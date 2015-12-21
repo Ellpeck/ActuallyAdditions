@@ -28,12 +28,14 @@ import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
 
-public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyReceiver, IButtonReactor, IEnergySaver{
+public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyReceiver, IButtonReactor, IEnergySaver, IEnergyDisplay{
 
     public static final int ENERGY_USE_PER_BLOCK = 500;
     public EnergyStorage storage = new EnergyStorage(1000000);
     public int layerAt = -1;
     public boolean onlyMineOres;
+    private int oldLayerAt;
+    private int oldEnergy;
 
     public TileEntityMiner(){
         super(9, "miner");
@@ -43,16 +45,22 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyR
     public void updateEntity(){
         super.updateEntity();
         if(!this.worldObj.isRemote){
+            if(this.layerAt == -1){
+                this.layerAt = this.yCoord-1;
+            }
+
             if(!this.isRedstonePowered && this.ticksElapsed%5 == 0){
-                if(this.layerAt == -1){
-                    this.layerAt = this.yCoord-1;
-                }
 
                 if(this.layerAt > 0){
                     if(this.mine(TileEntityPhantomface.upgradeRange(2, worldObj, xCoord, yCoord, zCoord))){
                         this.layerAt--;
                     }
                 }
+            }
+
+            if((this.oldEnergy != this.storage.getEnergyStored() || this.oldLayerAt != this.layerAt) && this.sendUpdateWithInterval()){
+                this.oldEnergy = this.storage.getEnergyStored();
+                this.oldLayerAt = this.layerAt;
             }
         }
     }
@@ -180,6 +188,11 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyR
     @Override
     public int getEnergy(){
         return this.storage.getEnergyStored();
+    }
+
+    @Override
+    public int getMaxEnergy(){
+        return this.storage.getMaxEnergyStored();
     }
 
     @Override

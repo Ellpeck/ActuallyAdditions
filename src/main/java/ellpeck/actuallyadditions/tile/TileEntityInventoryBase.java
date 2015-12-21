@@ -52,6 +52,7 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
 
     @Override
     public void writeSyncableNBT(NBTTagCompound compound, boolean isForSync){
+        super.writeSyncableNBT(compound, isForSync);
         if(!isForSync || this.shouldSyncSlots()){
             if(this.slots.length > 0){
                 NBTTagList tagList = new NBTTagList();
@@ -74,6 +75,7 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
 
     @Override
     public void readSyncableNBT(NBTTagCompound compound, boolean isForSync){
+        super.readSyncableNBT(compound, isForSync);
         if(!isForSync || this.shouldSyncSlots()){
             if(this.slots.length > 0){
                 NBTTagList tagList = compound.getTagList("Items", 10);

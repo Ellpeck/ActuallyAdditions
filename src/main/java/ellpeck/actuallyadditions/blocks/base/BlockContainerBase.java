@@ -28,7 +28,6 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -118,7 +117,7 @@ public abstract class BlockContainerBase extends BlockContainer{
             tile.markDirty();
         }
         if(tile instanceof IRedstoneToggle){
-            if(((IRedstoneToggle)tile).isRightMode() && powered){
+            if(((IRedstoneToggle)tile).isPulseMode() && powered){
                 ((IRedstoneToggle)tile).activateOnPulse();
             }
         }
@@ -227,12 +226,10 @@ public abstract class BlockContainerBase extends BlockContainer{
             TileEntity tile = world.getTileEntity(x, y, z);
             if(tile instanceof IRedstoneToggle){
                 if(!world.isRemote){
+                    ((IRedstoneToggle)tile).toggle(!((IRedstoneToggle)tile).isPulseMode());
 
-                    if(((IRedstoneToggle)tile).toggle()){
-                        player.addChatComponentMessage(new ChatComponentText("Changed to Redstone Pulse Mode"));
-                    }
-                    else{
-                        player.addChatComponentMessage(new ChatComponentText("Changed to Redstone Deactivation Mode"));
+                    if(tile instanceof TileEntityBase){
+                        ((TileEntityBase)tile).sendUpdate();
                     }
                 }
                 return true;

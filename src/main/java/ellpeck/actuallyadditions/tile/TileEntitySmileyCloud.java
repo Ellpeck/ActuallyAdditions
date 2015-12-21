@@ -40,6 +40,7 @@ public class TileEntitySmileyCloud extends TileEntityBase implements IStringReac
 
     @Override
     public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.writeSyncableNBT(compound, sync);
         if(this.name != null){
             compound.setString("Name", this.name);
         }
@@ -47,6 +48,7 @@ public class TileEntitySmileyCloud extends TileEntityBase implements IStringReac
 
     @Override
     public void readSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.readSyncableNBT(compound, sync);
         this.name = compound.getString("Name");
     }
 

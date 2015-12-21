@@ -111,11 +111,15 @@ public abstract class TileEntityBase extends TileEntity{
     }
 
     public void writeSyncableNBT(NBTTagCompound compound, boolean isForSync){
-
+        if(this instanceof IRedstoneToggle){
+            compound.setBoolean("IsPulseMode", ((IRedstoneToggle)this).isPulseMode());
+        }
     }
 
     public void readSyncableNBT(NBTTagCompound compound, boolean isForSync){
-
+        if(this instanceof IRedstoneToggle){
+            ((IRedstoneToggle)this).toggle(compound.getBoolean("IsPulseMode"));
+        }
     }
 
     public void setRedstonePowered(boolean powered){

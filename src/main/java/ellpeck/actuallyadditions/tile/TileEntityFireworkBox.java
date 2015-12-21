@@ -22,24 +22,31 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.MathHelper;
 import net.minecraftforge.common.util.ForgeDirection;
 
-public class TileEntityFireworkBox extends TileEntityBase implements IEnergyReceiver, IRedstoneToggle{
+public class TileEntityFireworkBox extends TileEntityBase implements IEnergyReceiver, IRedstoneToggle, IEnergyDisplay, IEnergySaver{
 
     public static final int USE_PER_SHOT = 300;
     public EnergyStorage storage = new EnergyStorage(20000);
     private int timeUntilNextFirework;
     private boolean activateOnceWithSignal;
+    private int oldEnergy;
 
     @Override
     public void updateEntity(){
-        if(!this.worldObj.isRemote && !this.isRedstonePowered && !this.activateOnceWithSignal){
-            if(this.timeUntilNextFirework > 0){
-                this.timeUntilNextFirework--;
-                if(this.timeUntilNextFirework <= 0){
-                    this.doWork();
+        if(!this.worldObj.isRemote){
+            if(!this.isRedstonePowered && !this.activateOnceWithSignal){
+                if(this.timeUntilNextFirework > 0){
+                    this.timeUntilNextFirework--;
+                    if(this.timeUntilNextFirework <= 0){
+                        this.doWork();
+                    }
+                }
+                else{
+                    this.timeUntilNextFirework = 100;
                 }
             }
-            else{
-                this.timeUntilNextFirework = 100;
+
+            if(this.oldEnergy != this.storage.getEnergyStored() && this.sendUpdateWithInterval()){
+                this.oldEnergy = this.storage.getEnergyStored();
             }
         }
     }
@@ -105,6 +112,18 @@ public class TileEntityFireworkBox extends TileEntityBase implements IEnergyRece
     }
 
     @Override
+    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.writeSyncableNBT(compound, sync);
+        this.storage.writeToNBT(compound);
+    }
+
+    @Override
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.readSyncableNBT(compound, sync);
+        this.storage.readFromNBT(compound);
+    }
+
+    @Override
     public int receiveEnergy(ForgeDirection from, int maxReceive, boolean simulate){
         return this.storage.receiveEnergy(maxReceive, simulate);
     }
@@ -125,17 +144,32 @@ public class TileEntityFireworkBox extends TileEntityBase implements IEnergyRece
     }
 
     @Override
-    public boolean toggle(){
-        return this.activateOnceWithSignal = !this.activateOnceWithSignal;
+    public void toggle(boolean to){
+        this.activateOnceWithSignal = to;
     }
 
     @Override
-    public boolean isRightMode(){
+    public boolean isPulseMode(){
         return this.activateOnceWithSignal;
     }
 
     @Override
     public void activateOnPulse(){
         this.doWork();
+    }
+
+    @Override
+    public int getEnergy(){
+        return this.storage.getEnergyStored();
+    }
+
+    @Override
+    public void setEnergy(int energy){
+        this.storage.setEnergyStored(energy);
+    }
+
+    @Override
+    public int getMaxEnergy(){
+        return this.storage.getMaxEnergyStored();
     }
 }

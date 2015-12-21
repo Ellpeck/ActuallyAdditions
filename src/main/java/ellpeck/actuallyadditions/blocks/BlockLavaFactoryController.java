@@ -17,16 +17,19 @@ import ellpeck.actuallyadditions.tile.TileEntityLavaFactoryController;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.profiler.Profiler;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
-public class BlockLavaFactoryController extends BlockContainerBase{
+public class BlockLavaFactoryController extends BlockContainerBase implements IHudDisplay{
 
     @SideOnly(Side.CLIENT)
     private IIcon topIcon;
@@ -51,25 +54,6 @@ public class BlockLavaFactoryController extends BlockContainerBase{
     }
 
     @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9){
-        if(!world.isRemote){
-            TileEntityLavaFactoryController factory = (TileEntityLavaFactoryController)world.getTileEntity(x, y, z);
-            if(factory != null){
-                int state = factory.isMultiblock();
-                if(state == TileEntityLavaFactoryController.NOT_MULTI){
-                    player.addChatComponentMessage(new ChatComponentText(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".factory.notPart.desc")));
-                }
-                if(state == TileEntityLavaFactoryController.HAS_AIR || state == TileEntityLavaFactoryController.HAS_LAVA){
-                    player.addChatComponentMessage(new ChatComponentText(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".factory.works.desc")));
-                }
-                player.addChatComponentMessage(new ChatComponentText(factory.storage.getEnergyStored()+"/"+factory.storage.getMaxEnergyStored()+" RF"));
-            }
-            return true;
-        }
-        return true;
-    }
-
-    @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconReg){
         this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName());
@@ -79,5 +63,19 @@ public class BlockLavaFactoryController extends BlockContainerBase{
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.rare;
+    }
+
+    @Override
+    public void displayHud(Minecraft minecraft, EntityPlayer player, ItemStack stack, MovingObjectPosition posHit, Profiler profiler, ScaledResolution resolution){
+        TileEntityLavaFactoryController factory = (TileEntityLavaFactoryController)minecraft.theWorld.getTileEntity(posHit.blockX, posHit.blockY, posHit.blockZ);
+        if(factory != null){
+            int state = factory.isMultiblock();
+            if(state == TileEntityLavaFactoryController.NOT_MULTI){
+                minecraft.fontRenderer.drawSplitString(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".factory.notPart.desc"), resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2+5, 200, StringUtil.DECIMAL_COLOR_WHITE);
+            }
+            else if(state == TileEntityLavaFactoryController.HAS_AIR || state == TileEntityLavaFactoryController.HAS_LAVA){
+                minecraft.fontRenderer.drawSplitString(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".factory.works.desc"), resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2+5, 200, StringUtil.DECIMAL_COLOR_WHITE);
+            }
+        }
     }
 }

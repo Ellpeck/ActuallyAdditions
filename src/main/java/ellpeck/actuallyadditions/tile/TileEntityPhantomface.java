@@ -73,6 +73,7 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
     @Override
     public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
         super.writeSyncableNBT(compound, sync);
+        compound.setInteger("Range", this.range);
         if(this.boundPosition != null){
             compound.setInteger("XCoordOfTileStored", boundPosition.getX());
             compound.setInteger("YCoordOfTileStored", boundPosition.getY());
@@ -88,6 +89,7 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
         int y = compound.getInteger("YCoordOfTileStored");
         int z = compound.getInteger("ZCoordOfTileStored");
         int world = compound.getInteger("WorldOfTileStored");
+        this.range = compound.getInteger("Range");
         if(!(x == 0 && y == 0 && z == 0)){
             this.boundPosition = new WorldPos(world, x, y, z);
             this.markDirty();
@@ -111,11 +113,11 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
     @Override
     public boolean hasBoundPosition(){
         if(this.boundPosition != null && this.boundPosition.getWorld() != null){
-            if(this.boundPosition.getWorld().getTileEntity(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ()) instanceof IPhantomTile || (this.xCoord == this.boundPosition.getX() && this.yCoord == this.boundPosition.getY() && this.zCoord == this.boundPosition.getZ() && this.worldObj == this.boundPosition.getWorld())){
+            if(this.boundPosition.getWorld().getTileEntity(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ()) instanceof IPhantomTile || (this.xCoord == this.boundPosition.getX() && this.yCoord == this.boundPosition.getY() && this.zCoord == this.boundPosition.getZ() && this.worldObj.provider.dimensionId == this.boundPosition.getWorld().provider.dimensionId)){
                 this.boundPosition = null;
                 return false;
             }
-            return this.boundPosition.getWorld() == this.worldObj;
+            return this.worldObj.provider.dimensionId == this.boundPosition.getWorld().provider.dimensionId;
         }
         return false;
     }

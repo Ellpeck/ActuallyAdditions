@@ -1,5 +1,5 @@
 /*
- * This file ("IRedstoneToggle.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("IEnergyDisplay.java") is part of the Actually Additions Mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
  * http://github.com/Ellpeck/ActuallyAdditions/blob/master/README.md
@@ -10,11 +10,9 @@
 
 package ellpeck.actuallyadditions.tile;
 
-public interface IRedstoneToggle{
+public interface IEnergyDisplay{
 
-    void toggle(boolean to);
+    int getEnergy();
 
-    boolean isPulseMode();
-
-    void activateOnPulse();
+    int getMaxEnergy();
 }

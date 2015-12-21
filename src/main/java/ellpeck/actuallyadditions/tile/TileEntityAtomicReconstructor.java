@@ -25,12 +25,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 
-public class TileEntityAtomicReconstructor extends TileEntityInventoryBase implements IEnergyReceiver, IEnergySaver, IRedstoneToggle{
+public class TileEntityAtomicReconstructor extends TileEntityInventoryBase implements IEnergyReceiver, IEnergySaver, IRedstoneToggle, IEnergyDisplay{
 
     public static final int ENERGY_USE = 1000;
     public EnergyStorage storage = new EnergyStorage(300000);
     private int currentTime;
     private boolean activateOnceWithSignal;
+    private int oldEnergy;
 
     public TileEntityAtomicReconstructor(){
         super(1, "reconstructor");
@@ -51,6 +52,10 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
                 else{
                     this.currentTime = 100;
                 }
+            }
+
+            if(this.oldEnergy != this.storage.getEnergyStored() && this.sendUpdateWithInterval()){
+                this.oldEnergy = this.storage.getEnergyStored();
             }
         }
 
@@ -165,17 +170,22 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
     }
 
     @Override
+    public int getMaxEnergy(){
+        return this.storage.getMaxEnergyStored();
+    }
+
+    @Override
     public void setEnergy(int energy){
         this.storage.setEnergyStored(energy);
     }
 
     @Override
-    public boolean toggle(){
-        return this.activateOnceWithSignal = !this.activateOnceWithSignal;
+    public void toggle(boolean to){
+        this.activateOnceWithSignal = to;
     }
 
     @Override
-    public boolean isRightMode(){
+    public boolean isPulseMode(){
         return this.activateOnceWithSignal;
     }
 
