@@ -57,18 +57,18 @@ public class BookletPage{
         GL11.glTranslated(x, y, 0);
         GL11.glScalef(scale, scale, scale);
 
-        boolean flagBefore = gui.mc.fontRenderer.getUnicodeFlag();
-        gui.mc.fontRenderer.setUnicodeFlag(false);
-        RenderItem.getInstance().renderItemAndEffectIntoGUI(gui.mc.fontRenderer, gui.mc.getTextureManager(), stack, 0, 0);
-        RenderItem.getInstance().renderItemOverlayIntoGUI(gui.mc.fontRenderer, gui.mc.getTextureManager(), stack, 0, 0);
-        gui.mc.fontRenderer.setUnicodeFlag(flagBefore);
+        Minecraft mc = Minecraft.getMinecraft();
+        boolean flagBefore = mc.fontRenderer.getUnicodeFlag();
+        mc.fontRenderer.setUnicodeFlag(false);
+        RenderItem.getInstance().renderItemAndEffectIntoGUI(mc.fontRenderer, mc.getTextureManager(), stack, 0, 0);
+        RenderItem.getInstance().renderItemOverlayIntoGUI(mc.fontRenderer, mc.getTextureManager(), stack, 0, 0);
+        mc.fontRenderer.setUnicodeFlag(flagBefore);
 
         //GL+MC+NEI suck
         if(gui instanceof GuiBooklet){
             RenderHelper.disableStandardItemLighting();
         }
         GL11.glPopMatrix();
-
     }
 
     public void addToPagesWithItemStackData(){
