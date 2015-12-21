@@ -10,8 +10,10 @@
 
 package ellpeck.actuallyadditions.blocks.render.model;
 
+import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.tile.TileEntityCompost;
 import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 
 public class ModelCompost extends ModelBaseAA{
@@ -70,17 +72,21 @@ public class ModelCompost extends ModelBaseAA{
 
     @Override
     public void renderExtra(float f, TileEntity tile){
-        int meta = tile.getWorldObj().getBlockMetadata(tile.xCoord, tile.yCoord, tile.zCoord);
-        if(meta > 0 && meta <= TileEntityCompost.AMOUNT){
-            int heightToDisplay = meta*13/TileEntityCompost.AMOUNT;
-            if(heightToDisplay > 13){
-                heightToDisplay = 13;
-            }
+        if(tile instanceof TileEntityCompost){
+            ItemStack stack = ((TileEntityCompost)tile).getStackInSlot(0);
+            if(stack != null){
+                if(stack.getItem() == InitItems.itemFertilizer){
+                    this.innerDone.render(f);
+                }
+                else{
+                    int heightToDisplay = stack.stackSize*13/TileEntityCompost.AMOUNT;
+                    if(heightToDisplay > 13){
+                        heightToDisplay = 13;
+                    }
 
-            this.innerRawList[heightToDisplay-1].render(f);
-        }
-        else if(meta == TileEntityCompost.AMOUNT+1){
-            this.innerDone.render(f);
+                    this.innerRawList[heightToDisplay-1].render(f);
+                }
+            }
         }
     }
 }

@@ -13,27 +13,34 @@ package ellpeck.actuallyadditions.blocks;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.blocks.base.BlockContainerBase;
+import ellpeck.actuallyadditions.booklet.page.BookletPage;
 import ellpeck.actuallyadditions.items.ItemFertilizer;
 import ellpeck.actuallyadditions.items.ItemMisc;
 import ellpeck.actuallyadditions.items.metalists.TheMiscItems;
 import ellpeck.actuallyadditions.tile.TileEntityCompost;
 import ellpeck.actuallyadditions.util.AssetUtil;
+import ellpeck.actuallyadditions.util.StringUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.profiler.Profiler;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
 import java.util.List;
 
-public class BlockCompost extends BlockContainerBase{
+public class BlockCompost extends BlockContainerBase implements IHudDisplay{
 
     public BlockCompost(String name){
         super(Material.wood, name);
@@ -98,6 +105,7 @@ public class BlockCompost extends BlockContainerBase{
                 if(!player.capabilities.isCreativeMode){
                     player.inventory.getCurrentItem().stackSize--;
                 }
+                tile.sendUpdate();
             }
 
             //Add Fertilizer to player's inventory
@@ -109,6 +117,7 @@ public class BlockCompost extends BlockContainerBase{
                     player.getCurrentEquippedItem().stackSize += tile.slots[0].stackSize;
                 }
                 tile.slots[0] = null;
+                tile.sendUpdate();
             }
         }
         return true;
@@ -140,5 +149,23 @@ public class BlockCompost extends BlockContainerBase{
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.uncommon;
+    }
+
+    @Override
+    public void displayHud(Minecraft minecraft, EntityPlayer player, ItemStack stack, MovingObjectPosition posHit, Profiler profiler, ScaledResolution resolution){
+        TileEntity tile = minecraft.theWorld.getTileEntity(posHit.blockX, posHit.blockY, posHit.blockZ);
+        if(tile instanceof TileEntityCompost){
+            ItemStack slot = ((TileEntityCompost)tile).getStackInSlot(0);
+            String strg;
+            if(slot == null){
+                strg = "Empty";
+            }
+            else{
+                strg = slot.getItem().getItemStackDisplayName(slot);
+
+                BookletPage.renderItem(null, slot, resolution.getScaledWidth()/2+15, resolution.getScaledHeight()/2-29, 1F);
+            }
+            minecraft.fontRenderer.drawStringWithShadow(EnumChatFormatting.YELLOW+""+EnumChatFormatting.ITALIC+strg, resolution.getScaledWidth()/2+35, resolution.getScaledHeight()/2-25, StringUtil.DECIMAL_COLOR_WHITE);
+        }
     }
 }

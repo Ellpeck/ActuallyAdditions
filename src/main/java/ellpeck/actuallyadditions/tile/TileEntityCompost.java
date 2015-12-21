@@ -30,19 +30,6 @@ public class TileEntityCompost extends TileEntityInventoryBase{
     public void updateEntity(){
         super.updateEntity();
         if(!worldObj.isRemote){
-
-            if(this.slots[0] != null && this.slots[0].stackSize > 0){
-                int toSet = this.slots[0].stackSize+(this.slots[0].getItem() instanceof ItemFertilizer ? 1 : 0);
-                if(worldObj.getBlockMetadata(xCoord, yCoord, zCoord) != toSet){
-                    worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, toSet, 2);
-                }
-            }
-            else{
-                if(worldObj.getBlockMetadata(xCoord, yCoord, zCoord) != 0){
-                    worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 0, 2);
-                }
-            }
-
             boolean theFlag = this.conversionTime > 0;
             if(this.slots[0] != null && !(this.slots[0].getItem() instanceof ItemFertilizer) && this.slots[0].stackSize >= AMOUNT){
                 this.conversionTime++;
@@ -58,8 +45,13 @@ public class TileEntityCompost extends TileEntityInventoryBase{
     }
 
     @Override
+    public boolean shouldSyncSlots(){
+        return true;
+    }
+
+    @Override
     public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.readSyncableNBT(compound, sync);
+        super.writeSyncableNBT(compound, sync);
         compound.setInteger("ConversionTime", this.conversionTime);
     }
 
