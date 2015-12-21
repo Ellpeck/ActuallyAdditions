@@ -12,6 +12,8 @@ package ellpeck.actuallyadditions.tile;
 
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyProvider;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.util.Util;
 import ellpeck.actuallyadditions.util.WorldPos;
 import ellpeck.actuallyadditions.util.WorldUtil;
@@ -104,6 +106,7 @@ public class TileEntityHeatCollector extends TileEntityBase implements IEnergyPr
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public int getMaxEnergy(){
         return this.storage.getMaxEnergyStored();
     }

@@ -13,6 +13,8 @@ package ellpeck.actuallyadditions.tile;
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyProvider;
 import cpw.mods.fml.common.network.NetworkRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.network.PacketHandler;
 import ellpeck.actuallyadditions.network.PacketParticle;
 import ellpeck.actuallyadditions.util.WorldPos;
@@ -130,6 +132,7 @@ public class TileEntityLeafGenerator extends TileEntityBase implements IEnergyPr
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public int getMaxEnergy(){
         return this.storage.getMaxEnergyStored();
     }

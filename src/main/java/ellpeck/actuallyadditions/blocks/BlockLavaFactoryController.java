@@ -66,6 +66,7 @@ public class BlockLavaFactoryController extends BlockContainerBase implements IH
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public void displayHud(Minecraft minecraft, EntityPlayer player, ItemStack stack, MovingObjectPosition posHit, Profiler profiler, ScaledResolution resolution){
         TileEntityLavaFactoryController factory = (TileEntityLavaFactoryController)minecraft.theWorld.getTileEntity(posHit.blockX, posHit.blockY, posHit.blockZ);
         if(factory != null){

@@ -10,9 +10,14 @@
 
 package ellpeck.actuallyadditions.tile;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public interface IEnergyDisplay{
 
+    @SideOnly(Side.CLIENT)
     int getEnergy();
 
+    @SideOnly(Side.CLIENT)
     int getMaxEnergy();
 }

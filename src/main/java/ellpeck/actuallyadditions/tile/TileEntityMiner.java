@@ -13,6 +13,8 @@ package ellpeck.actuallyadditions.tile;
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
 import cpw.mods.fml.common.network.NetworkRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.network.PacketHandler;
 import ellpeck.actuallyadditions.network.PacketParticle;
 import ellpeck.actuallyadditions.network.gui.IButtonReactor;
@@ -191,6 +193,7 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyR
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public int getMaxEnergy(){
         return this.storage.getMaxEnergyStored();
     }

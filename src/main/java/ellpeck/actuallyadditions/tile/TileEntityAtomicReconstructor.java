@@ -13,6 +13,8 @@ package ellpeck.actuallyadditions.tile;
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
 import cpw.mods.fml.common.network.NetworkRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.items.lens.ItemLens;
 import ellpeck.actuallyadditions.items.lens.Lens;
 import ellpeck.actuallyadditions.items.lens.Lenses;
@@ -170,6 +172,7 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public int getMaxEnergy(){
         return this.storage.getMaxEnergyStored();
     }
