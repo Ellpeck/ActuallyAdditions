@@ -106,13 +106,13 @@ public class TileEntityHeatCollector extends TileEntityBase implements IEnergyPr
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public int getMaxEnergy(){
-        return this.storage.getMaxEnergyStored();
+    public void setEnergy(int energy){
+        this.storage.setEnergyStored(energy);
     }
 
     @Override
-    public void setEnergy(int energy){
-        this.storage.setEnergyStored(energy);
+    @SideOnly(Side.CLIENT)
+    public int getMaxEnergy(){
+        return this.storage.getMaxEnergyStored();
     }
 }

@@ -86,6 +86,23 @@ public class BlockGiantChest extends BlockContainerBase{
     }
 
     @Override
+    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack){
+        if(stack.getTagCompound() != null){
+            TileEntity tile = world.getTileEntity(x, y, z);
+            if(tile instanceof TileEntityGiantChest){
+                NBTTagList list = stack.getTagCompound().getTagList("Items", 10);
+                ItemStack[] slots = ((TileEntityGiantChest)tile).slots;
+
+                for(int i = 0; i < list.tagCount(); i++){
+                    slots[i] = ItemStack.loadItemStackFromNBT(list.getCompoundTagAt(i));
+                }
+            }
+        }
+
+        super.onBlockPlacedBy(world, x, y, z, entity, stack);
+    }
+
+    @Override
     public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune){
         ArrayList<ItemStack> drops = super.getDrops(world, x, y, z, metadata, fortune);
 
@@ -117,23 +134,6 @@ public class BlockGiantChest extends BlockContainerBase{
         }
 
         return drops;
-    }
-
-    @Override
-    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack){
-        if(stack.getTagCompound() != null){
-            TileEntity tile = world.getTileEntity(x, y, z);
-            if(tile instanceof TileEntityGiantChest){
-                NBTTagList list = stack.getTagCompound().getTagList("Items", 10);
-                ItemStack[] slots = ((TileEntityGiantChest)tile).slots;
-
-                for(int i = 0; i < list.tagCount(); i++){
-                    slots[i] = ItemStack.loadItemStackFromNBT(list.getCompoundTagAt(i));
-                }
-            }
-        }
-
-        super.onBlockPlacedBy(world, x, y, z, entity, stack);
     }
 
     @Override

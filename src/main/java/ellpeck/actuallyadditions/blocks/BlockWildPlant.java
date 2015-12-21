@@ -46,13 +46,13 @@ public class BlockWildPlant extends BlockBushBase{
     }
 
     @Override
-    public boolean shouldAddCreative(){
-        return false;
+    public Class<? extends ItemBlockBase> getItemBlock(){
+        return TheItemBlock.class;
     }
 
     @Override
-    public Class<? extends ItemBlockBase> getItemBlock(){
-        return TheItemBlock.class;
+    public boolean shouldAddCreative(){
+        return false;
     }
 
     @Override
