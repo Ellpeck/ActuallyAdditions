@@ -16,20 +16,26 @@ import ellpeck.actuallyadditions.blocks.base.BlockContainerBase;
 import ellpeck.actuallyadditions.items.lens.ItemLens;
 import ellpeck.actuallyadditions.tile.TileEntityAtomicReconstructor;
 import ellpeck.actuallyadditions.util.ModUtil;
+import ellpeck.actuallyadditions.util.StringUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockPistonBase;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.profiler.Profiler;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockAtomicReconstructor extends BlockContainerBase{
+public class BlockAtomicReconstructor extends BlockContainerBase implements IHudDisplay{
 
     @SideOnly(Side.CLIENT)
     private IIcon frontIcon;
@@ -132,5 +138,21 @@ public class BlockAtomicReconstructor extends BlockContainerBase{
     public void breakBlock(World world, int x, int y, int z, Block block, int par6){
         this.dropInventory(world, x, y, z);
         super.breakBlock(world, x, y, z, block, par6);
+    }
+
+    @Override
+    public void displayHud(Minecraft minecraft, EntityPlayer player, ItemStack stack, MovingObjectPosition posHit, Profiler profiler, ScaledResolution resolution){
+        TileEntity tile = minecraft.theWorld.getTileEntity(posHit.blockX, posHit.blockY, posHit.blockZ);
+        if(tile instanceof TileEntityAtomicReconstructor){
+            ItemStack slot = ((TileEntityAtomicReconstructor)tile).getStackInSlot(0);
+            String strg;
+            if(slot == null){
+                strg = StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".noLens");
+            }
+            else{
+                strg = slot.getItem().getItemStackDisplayName(slot);
+            }
+            minecraft.fontRenderer.drawStringWithShadow(EnumChatFormatting.GOLD+""+EnumChatFormatting.ITALIC+strg, resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2+25, StringUtil.DECIMAL_COLOR_WHITE);
+        }
     }
 }
