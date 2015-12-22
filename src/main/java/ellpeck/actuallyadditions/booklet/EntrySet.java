@@ -38,17 +38,19 @@ public class EntrySet{
     }
 
     public static EntrySet readFromNBT(NBTTagCompound compound){
-        if(compound.hasKey("Entry")){
-            int entry = compound.getInteger("Entry");
-            int chapter = compound.getInteger("Chapter");
-            int page = compound.getInteger("Page");
+        if(compound != null){
+            if(compound.hasKey("Entry")){
+                int entry = compound.getInteger("Entry");
+                int chapter = compound.getInteger("Chapter");
+                int page = compound.getInteger("Page");
 
-            BookletEntry currentEntry = entry == -1 ? null : InitBooklet.entries.get(entry);
-            BookletChapter currentChapter = chapter == -1 || entry == -1 || currentEntry.chapters.size() <= chapter ? null : currentEntry.chapters.get(chapter);
-            BookletPage currentPage = chapter == -1 || currentChapter == null || currentChapter.pages.length <= page-1 ? null : currentChapter.pages[page-1];
-            int pageInIndex = compound.getInteger("PageInIndex");
+                BookletEntry currentEntry = entry == -1 ? null : InitBooklet.entries.get(entry);
+                BookletChapter currentChapter = chapter == -1 || entry == -1 || currentEntry.chapters.size() <= chapter ? null : currentEntry.chapters.get(chapter);
+                BookletPage currentPage = chapter == -1 || currentChapter == null || currentChapter.pages.length <= page-1 ? null : currentChapter.pages[page-1];
+                int pageInIndex = compound.getInteger("PageInIndex");
 
-            return new EntrySet(currentPage, currentChapter, currentEntry, pageInIndex);
+                return new EntrySet(currentPage, currentChapter, currentEntry, pageInIndex);
+            }
         }
         return new EntrySet(null);
     }
