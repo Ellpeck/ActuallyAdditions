@@ -131,10 +131,10 @@ public class BlockPhantom extends BlockContainerBase implements IHudDisplay{
                     minecraft.fontRenderer.drawSplitString(StringUtil.localizeFormatted("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.blockInfo.desc", name, phantom.getBoundPosition().getX(), phantom.getBoundPosition().getY(), phantom.getBoundPosition().getZ(), distance), resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2-30, 200, StringUtil.DECIMAL_COLOR_WHITE);
 
                     if(phantom.isBoundThingInRange()){
-                        minecraft.fontRenderer.drawSplitString(EnumChatFormatting.DARK_GREEN+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.connectedRange.desc"), resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2+5, 200, StringUtil.DECIMAL_COLOR_WHITE);
+                        minecraft.fontRenderer.drawSplitString(EnumChatFormatting.DARK_GREEN+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.connectedRange.desc"), resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2+15, 200, StringUtil.DECIMAL_COLOR_WHITE);
                     }
                     else{
-                        minecraft.fontRenderer.drawSplitString(EnumChatFormatting.DARK_RED+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.connectedNoRange.desc"), resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2+5, 200, StringUtil.DECIMAL_COLOR_WHITE);
+                        minecraft.fontRenderer.drawSplitString(EnumChatFormatting.DARK_RED+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.connectedNoRange.desc"), resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2+15, 200, StringUtil.DECIMAL_COLOR_WHITE);
                     }
                 }
                 else{

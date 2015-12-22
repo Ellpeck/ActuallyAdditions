@@ -125,6 +125,7 @@ public class BlockBookletStand extends BlockContainerBase implements IHudDisplay
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public void displayHud(Minecraft minecraft, EntityPlayer player, ItemStack stack, MovingObjectPosition posHit, Profiler profiler, ScaledResolution resolution){
         TileEntity tile = minecraft.theWorld.getTileEntity(posHit.blockX, posHit.blockY, posHit.blockZ);
         if(tile instanceof TileEntityBookletStand){
