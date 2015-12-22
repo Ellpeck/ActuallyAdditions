@@ -67,7 +67,7 @@ public class RenderReconstructorLens extends TileEntitySpecialRenderer{
             }
 
             GL11.glScalef(0.5F, 0.5F, 0.5F);
-            AssetUtil.renderItem(stack, 0);
+            AssetUtil.renderItemInWorld(stack, 0);
 
             GL11.glPopMatrix();
         }

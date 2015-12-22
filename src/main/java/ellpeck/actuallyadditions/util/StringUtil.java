@@ -10,8 +10,11 @@
 
 package ellpeck.actuallyadditions.util;
 
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.util.StatCollector;
 
+import java.util.Iterator;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -46,6 +49,14 @@ public class StringUtil{
         }
         else{
             return string.toLowerCase(Locale.ROOT);
+        }
+    }
+
+    public static void drawSplitStringWithShadow(FontRenderer renderer, String strg, int x, int y, int width, int color){
+        List list = renderer.listFormattedStringToWidth(strg, width);
+        for(Iterator iterator = list.iterator(); iterator.hasNext(); y += renderer.FONT_HEIGHT){
+            String s1 = (String)iterator.next();
+            renderer.drawString(s1, x, y, color, true);
         }
     }
 }

@@ -385,7 +385,7 @@ public class SmileyCloudEasterEggs{
         GL11.glTranslatef(-0.5F, 0.2F, leftHand ? 0.55F : -0.5F);
         GL11.glScalef(0.75F, 0.75F, 0.75F);
 
-        AssetUtil.renderItem(stack, 0);
+        AssetUtil.renderItemInWorld(stack, 0);
 
         GL11.glPopMatrix();
     }
@@ -398,7 +398,7 @@ public class SmileyCloudEasterEggs{
         GL11.glRotatef(180F, 1F, 0F, 0F);
         GL11.glRotatef(rotation, 0F, 1F, 0F);
 
-        AssetUtil.renderBlock(block, meta);
+        AssetUtil.renderBlockInWorld(block, meta);
 
         GL11.glEnable(GL11.GL_LIGHTING);
         GL11.glPopMatrix();

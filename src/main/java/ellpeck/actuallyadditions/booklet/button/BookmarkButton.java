@@ -13,8 +13,8 @@ package ellpeck.actuallyadditions.booklet.button;
 import ellpeck.actuallyadditions.booklet.BookletUtils;
 import ellpeck.actuallyadditions.booklet.EntrySet;
 import ellpeck.actuallyadditions.booklet.GuiBooklet;
-import ellpeck.actuallyadditions.booklet.page.BookletPage;
 import ellpeck.actuallyadditions.items.InitItems;
+import ellpeck.actuallyadditions.util.AssetUtil;
 import ellpeck.actuallyadditions.util.KeyUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
@@ -73,7 +73,7 @@ public class BookmarkButton extends GuiButton{
 
             if(this.assignedEntry.entry != null){
                 GL11.glPushMatrix();
-                BookletPage.renderItem(booklet, this.assignedEntry.chapter != null && this.assignedEntry.chapter.displayStack != null ? this.assignedEntry.chapter.displayStack : new ItemStack(InitItems.itemBooklet), this.xPosition+2, this.yPosition+1, 0.725F);
+                AssetUtil.renderStackToGui(this.assignedEntry.chapter != null && this.assignedEntry.chapter.displayStack != null ? this.assignedEntry.chapter.displayStack : new ItemStack(InitItems.itemBooklet), this.xPosition+2, this.yPosition+1, 0.725F);
                 GL11.glPopMatrix();
             }
         }

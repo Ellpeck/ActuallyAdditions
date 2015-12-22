@@ -12,18 +12,18 @@ package ellpeck.actuallyadditions.util;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import ellpeck.actuallyadditions.booklet.GuiBooklet;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.renderer.ItemRenderer;
-import net.minecraft.client.renderer.OpenGlHelper;
-import net.minecraft.client.renderer.RenderBlocks;
-import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL12;
 
 public class AssetUtil{
 
@@ -52,7 +52,7 @@ public class AssetUtil{
     }
 
     @SideOnly(Side.CLIENT)
-    public static void renderItem(ItemStack stack, int renderPass){
+    public static void renderItemInWorld(ItemStack stack, int renderPass){
         IIcon icon = stack.getItem().getIcon(stack, renderPass);
         float f = icon.getMinU();
         float f1 = icon.getMaxU();
@@ -63,9 +63,34 @@ public class AssetUtil{
     }
 
     @SideOnly(Side.CLIENT)
-    public static void renderBlock(Block block, int meta){
+    public static void renderBlockInWorld(Block block, int meta){
         Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.locationBlocksTexture);
         RenderBlocks.getInstance().renderBlockAsItem(block, meta, 1F);
+    }
+
+    @SideOnly(Side.CLIENT)
+    public static void renderStackToGui(ItemStack stack, int x, int y, float scale){
+        GL11.glPushMatrix();
+        GL11.glEnable(GL11.GL_BLEND);
+        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+        RenderHelper.enableGUIStandardItemLighting();
+        GL11.glEnable(GL11.GL_DEPTH_TEST);
+        GL11.glEnable(GL12.GL_RESCALE_NORMAL);
+        GL11.glTranslated(x, y, 0);
+        GL11.glScalef(scale, scale, scale);
+
+        Minecraft mc = Minecraft.getMinecraft();
+        boolean flagBefore = mc.fontRenderer.getUnicodeFlag();
+        mc.fontRenderer.setUnicodeFlag(false);
+        RenderItem.getInstance().renderItemAndEffectIntoGUI(mc.fontRenderer, mc.getTextureManager(), stack, 0, 0);
+        RenderItem.getInstance().renderItemOverlayIntoGUI(mc.fontRenderer, mc.getTextureManager(), stack, 0, 0);
+        mc.fontRenderer.setUnicodeFlag(flagBefore);
+
+        //GL+MC+NEI suck
+        if(mc.currentScreen instanceof GuiBooklet){
+            RenderHelper.disableStandardItemLighting();
+        }
+        GL11.glPopMatrix();
     }
 
     //Copied from Gui.class and changed

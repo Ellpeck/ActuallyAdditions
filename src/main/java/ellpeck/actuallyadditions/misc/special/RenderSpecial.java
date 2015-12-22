@@ -71,11 +71,11 @@ public class RenderSpecial{
         GL11.glDisable(GL11.GL_LIGHTING);
         if(this.theThingToRender != null){
             if(isBlock){
-                AssetUtil.renderBlock(Block.getBlockFromItem(this.theThingToRender.getItem()), this.theThingToRender.getItemDamage());
+                AssetUtil.renderBlockInWorld(Block.getBlockFromItem(this.theThingToRender.getItem()), this.theThingToRender.getItemDamage());
             }
             else{
                 GL11.glTranslatef(-0.5F, 0F, 0F);
-                AssetUtil.renderItem(this.theThingToRender, 0);
+                AssetUtil.renderItemInWorld(this.theThingToRender, 0);
             }
         }
         GL11.glEnable(GL11.GL_LIGHTING);

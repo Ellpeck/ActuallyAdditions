@@ -15,6 +15,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.booklet.GuiBooklet;
 import ellpeck.actuallyadditions.proxy.ClientProxy;
+import ellpeck.actuallyadditions.util.AssetUtil;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
 import ellpeck.actuallyadditions.util.Util;
@@ -135,7 +136,7 @@ public class PageCrafting extends BookletPage{
 
             int xShowOutput = gui.guiLeft+27+82;
             int yShowOutput = gui.guiTop+20+22;
-            renderItem(gui, recipe.getRecipeOutput(), xShowOutput, yShowOutput, 1.0F);
+            AssetUtil.renderStackToGui(recipe.getRecipeOutput(), xShowOutput, yShowOutput, 1.0F);
             for(int i = 0; i < 2; i++){
                 boolean tooltip = i == 1;
                 for(int x = 0; x < width; x++){
@@ -149,7 +150,7 @@ public class PageCrafting extends BookletPage{
                             int xShow = gui.guiLeft+27+4+x*18;
                             int yShow = gui.guiTop+20+4+y*18;
                             if(!tooltip){
-                                renderItem(gui, stack, xShow, yShow, 1.0F);
+                                AssetUtil.renderStackToGui(stack, xShow, yShow, 1.0F);
                             }
                             else{
                                 if(mouseX >= xShow && mouseX <= xShow+16 && mouseY >= yShow && mouseY <= yShow+16){

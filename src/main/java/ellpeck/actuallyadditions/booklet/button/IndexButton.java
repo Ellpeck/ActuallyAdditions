@@ -12,7 +12,6 @@ package ellpeck.actuallyadditions.booklet.button;
 
 import ellpeck.actuallyadditions.booklet.GuiBooklet;
 import ellpeck.actuallyadditions.booklet.chapter.BookletChapter;
-import ellpeck.actuallyadditions.booklet.page.BookletPage;
 import ellpeck.actuallyadditions.util.AssetUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
@@ -43,7 +42,7 @@ public class IndexButton extends GuiButton{
             if(this.chap != null){
                 if(this.chap.displayStack != null){
                     GL11.glPushMatrix();
-                    BookletPage.renderItem(this.gui, this.chap.displayStack, this.xPosition-4, this.yPosition, 0.725F);
+                    AssetUtil.renderStackToGui(this.chap.displayStack, this.xPosition-4, this.yPosition, 0.725F);
                     GL11.glPopMatrix();
                     textOffsetX = 10;
                 }

@@ -21,14 +21,9 @@ import ellpeck.actuallyadditions.util.StringUtil;
 import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.ResourceLocation;
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12;
 
 import java.util.HashMap;
 import java.util.List;
@@ -44,31 +39,6 @@ public class BookletPage{
 
     public BookletPage(int localizationKey){
         this.localizationKey = localizationKey;
-    }
-
-    @SideOnly(Side.CLIENT)
-    public static void renderItem(GuiScreen gui, ItemStack stack, int x, int y, float scale){
-        GL11.glPushMatrix();
-        GL11.glEnable(GL11.GL_BLEND);
-        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-        RenderHelper.enableGUIStandardItemLighting();
-        GL11.glEnable(GL11.GL_DEPTH_TEST);
-        GL11.glEnable(GL12.GL_RESCALE_NORMAL);
-        GL11.glTranslated(x, y, 0);
-        GL11.glScalef(scale, scale, scale);
-
-        Minecraft mc = Minecraft.getMinecraft();
-        boolean flagBefore = mc.fontRenderer.getUnicodeFlag();
-        mc.fontRenderer.setUnicodeFlag(false);
-        RenderItem.getInstance().renderItemAndEffectIntoGUI(mc.fontRenderer, mc.getTextureManager(), stack, 0, 0);
-        RenderItem.getInstance().renderItemOverlayIntoGUI(mc.fontRenderer, mc.getTextureManager(), stack, 0, 0);
-        mc.fontRenderer.setUnicodeFlag(flagBefore);
-
-        //GL+MC+NEI suck
-        if(gui instanceof GuiBooklet){
-            RenderHelper.disableStandardItemLighting();
-        }
-        GL11.glPopMatrix();
     }
 
     public void addToPagesWithItemStackData(){
