@@ -26,7 +26,7 @@ import net.minecraftforge.fluids.*;
 
 public class TileEntityCanolaPress extends TileEntityInventoryBase implements IEnergyReceiver, IFluidHandler, IEnergySaver, IFluidSaver{
 
-    public static final int PRODUCE = 100;
+    public static final int PRODUCE = 120;
     public static final int ENERGY_USE = 35;
     private static final int TIME = 30;
     public EnergyStorage storage = new EnergyStorage(40000);

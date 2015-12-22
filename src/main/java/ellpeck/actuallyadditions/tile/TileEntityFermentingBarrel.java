@@ -39,7 +39,7 @@ public class TileEntityFermentingBarrel extends TileEntityInventoryBase implemen
     public void updateEntity(){
         super.updateEntity();
         if(!worldObj.isRemote){
-            int produce = 50;
+            int produce = 80;
             if(this.canolaTank.getFluidAmount() >= produce && produce <= this.oilTank.getCapacity()-this.oilTank.getFluidAmount()){
                 this.currentProcessTime++;
                 if(this.currentProcessTime >= PROCESS_TIME){

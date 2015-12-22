@@ -164,7 +164,7 @@ public class InitBlocks{
         blockFermentingBarrel = new BlockFermentingBarrel("blockFermentingBarrel");
         blockRice = new BlockPlant("blockRice", 6, 1, 2);
         CompatUtil.registerMFRPlant(blockRice);
-        blockCanola = new BlockPlant("blockCanola", 4, 3, 3);
+        blockCanola = new BlockPlant("blockCanola", 4, 5, 5);
         CompatUtil.registerMFRPlant(blockCanola);
         blockFlax = new BlockPlant("blockFlax", 6, 2, 4);
         CompatUtil.registerMFRPlant(blockFlax);
