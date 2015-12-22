@@ -42,6 +42,7 @@ import java.util.List;
 
 public class ItemBooklet extends ItemBase implements IHudDisplay{
 
+    @SideOnly(Side.CLIENT)
     public static EntrySet forcedEntry;
 
     public ItemBooklet(String name){
