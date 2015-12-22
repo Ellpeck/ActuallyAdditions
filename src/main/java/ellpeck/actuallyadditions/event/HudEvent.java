@@ -42,6 +42,14 @@ public class HudEvent{
 
             profiler.startSection(ModUtil.MOD_ID+"Hud");
 
+            if(stack != null){
+                if(stack.getItem() instanceof IHudDisplay){
+                    profiler.startSection("ItemHudDisplay");
+                    ((IHudDisplay)stack.getItem()).displayHud(minecraft, player, stack, posHit, profiler, event.resolution);
+                    profiler.endSection();
+                }
+            }
+
             if(posHit != null){
                 Block blockHit = minecraft.theWorld.getBlock(posHit.blockX, posHit.blockY, posHit.blockZ);
                 TileEntity tileHit = minecraft.theWorld.getTileEntity(posHit.blockX, posHit.blockY, posHit.blockZ);

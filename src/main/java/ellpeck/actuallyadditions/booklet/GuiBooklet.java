@@ -17,6 +17,7 @@ import ellpeck.actuallyadditions.booklet.button.IndexButton;
 import ellpeck.actuallyadditions.booklet.button.TexturedButton;
 import ellpeck.actuallyadditions.booklet.entry.BookletEntryAllSearch;
 import ellpeck.actuallyadditions.config.GuiConfiguration;
+import ellpeck.actuallyadditions.items.ItemBooklet;
 import ellpeck.actuallyadditions.proxy.ClientProxy;
 import ellpeck.actuallyadditions.update.UpdateChecker;
 import ellpeck.actuallyadditions.util.AssetUtil;
@@ -306,14 +307,23 @@ public class GuiBooklet extends GuiScreen{
 
         this.currentEntrySet.removeEntry();
 
-        if(this.tryOpenMainPage && !PersistentClientData.getBoolean("BookAlreadyOpened")){
-            BookletUtils.openIndexEntry(this, InitBooklet.chapterIntro.entry, 1, true);
-            BookletUtils.openChapter(this, InitBooklet.chapterIntro, null);
+        if(ItemBooklet.forcedEntry == null){
+            //Open last entry or introductory entry
+            if(this.tryOpenMainPage && !PersistentClientData.getBoolean("BookAlreadyOpened")){
+                BookletUtils.openIndexEntry(this, InitBooklet.chapterIntro.entry, 1, true);
+                BookletUtils.openChapter(this, InitBooklet.chapterIntro, null);
 
-            PersistentClientData.setBoolean("BookAlreadyOpened", true);
+                PersistentClientData.setBoolean("BookAlreadyOpened", true);
+            }
+            else{
+                PersistentClientData.openLastBookPage(this);
+            }
         }
         else{
-            PersistentClientData.openLastBookPage(this);
+            //Open forced entry
+            BookletUtils.openIndexEntry(this, ItemBooklet.forcedEntry.entry, ItemBooklet.forcedEntry.pageInIndex, true);
+            BookletUtils.openChapter(this, ItemBooklet.forcedEntry.chapter, ItemBooklet.forcedEntry.page);
+            ItemBooklet.forcedEntry = null;
         }
     }
 
