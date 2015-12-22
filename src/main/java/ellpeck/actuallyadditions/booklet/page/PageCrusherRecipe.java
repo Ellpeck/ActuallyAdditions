@@ -15,6 +15,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.booklet.GuiBooklet;
 import ellpeck.actuallyadditions.proxy.ClientProxy;
 import ellpeck.actuallyadditions.recipe.CrusherRecipeRegistry;
+import ellpeck.actuallyadditions.util.AssetUtil;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
 import ellpeck.actuallyadditions.util.Util;
@@ -99,7 +100,7 @@ public class PageCrusherRecipe extends BookletPage{
                             int xShow = gui.guiLeft+37+(j == 0 ? 1 : (j == 1 ? 43 : (j == 2 ? 43 : 0)));
                             int yShow = gui.guiTop+20+(j == 0 ? 21 : (j == 1 ? 11 : (j == 2 ? 29 : 0)));
                             if(!tooltip){
-                                renderItem(gui, stack, xShow, yShow, 1.0F);
+                                AssetUtil.renderStackToGui(stack, xShow, yShow, 1.0F);
                             }
                             else{
                                 if(mouseX >= xShow && mouseX <= xShow+16 && mouseY >= yShow && mouseY <= yShow+16){

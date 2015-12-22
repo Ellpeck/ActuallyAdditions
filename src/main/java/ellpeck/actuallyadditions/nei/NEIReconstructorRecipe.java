@@ -20,10 +20,7 @@ import ellpeck.actuallyadditions.booklet.page.BookletPage;
 import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.items.lens.LensColor;
 import ellpeck.actuallyadditions.items.lens.LensNoneRecipeHandler;
-import ellpeck.actuallyadditions.util.ItemUtil;
-import ellpeck.actuallyadditions.util.ModUtil;
-import ellpeck.actuallyadditions.util.StringUtil;
-import ellpeck.actuallyadditions.util.Util;
+import ellpeck.actuallyadditions.util.*;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -153,7 +150,7 @@ public class NEIReconstructorRecipe extends TemplateRecipeHandler implements INE
     @Override
     public void drawForeground(int recipe){
         if(Minecraft.getMinecraft().currentScreen != null){
-            BookletPage.renderItem(Minecraft.getMinecraft().currentScreen, new ItemStack(InitBlocks.blockAtomicReconstructor), 32+34, 19, 1.0F);
+            AssetUtil.renderStackToGui(new ItemStack(InitBlocks.blockAtomicReconstructor), 32+34, 19, 1.0F);
         }
         if(((CachedReconstructorRecipe)this.arecipes.get(recipe)).showColorLens){
             String text = InitItems.itemColorLens.getItemStackDisplayName(new ItemStack(InitItems.itemColorLens));

@@ -13,9 +13,9 @@ package ellpeck.actuallyadditions.blocks;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.blocks.base.BlockContainerBase;
-import ellpeck.actuallyadditions.booklet.page.BookletPage;
 import ellpeck.actuallyadditions.items.lens.ItemLens;
 import ellpeck.actuallyadditions.tile.TileEntityAtomicReconstructor;
+import ellpeck.actuallyadditions.util.AssetUtil;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.StringUtil;
 import net.minecraft.block.Block;
@@ -154,7 +154,7 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
             else{
                 strg = slot.getItem().getItemStackDisplayName(slot);
 
-                BookletPage.renderItem(null, slot, resolution.getScaledWidth()/2+15, resolution.getScaledHeight()/2-29, 1F);
+                AssetUtil.renderStackToGui(slot, resolution.getScaledWidth()/2+15, resolution.getScaledHeight()/2-29, 1F);
             }
             minecraft.fontRenderer.drawStringWithShadow(EnumChatFormatting.YELLOW+""+EnumChatFormatting.ITALIC+strg, resolution.getScaledWidth()/2+35, resolution.getScaledHeight()/2-25, StringUtil.DECIMAL_COLOR_WHITE);
         }

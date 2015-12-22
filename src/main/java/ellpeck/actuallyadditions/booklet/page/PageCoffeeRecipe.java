@@ -17,6 +17,7 @@ import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.items.ItemCoffee;
 import ellpeck.actuallyadditions.items.metalists.TheMiscItems;
 import ellpeck.actuallyadditions.proxy.ClientProxy;
+import ellpeck.actuallyadditions.util.AssetUtil;
 import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.item.ItemStack;
 
@@ -92,7 +93,7 @@ public class PageCoffeeRecipe extends BookletPage{
                     int xShow = gui.guiLeft+19+coordsOffsetX;
                     int yShow = gui.guiTop+20+coordsOffsetY;
                     if(!tooltip){
-                        renderItem(gui, stack, xShow, yShow, 1.0F);
+                        AssetUtil.renderStackToGui(stack, xShow, yShow, 1.0F);
                     }
                     else{
                         if(mouseX >= xShow && mouseX <= xShow+16 && mouseY >= yShow && mouseY <= yShow+16){
