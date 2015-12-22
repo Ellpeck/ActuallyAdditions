@@ -110,6 +110,7 @@ public class ItemBooklet extends ItemBase implements IHudDisplay{
             if(block != null && !block.isAir(minecraft.theWorld, posHit.blockX, posHit.blockY, posHit.blockZ)){
                 ItemStack blockStack = new ItemStack(block, 1, minecraft.theWorld.getBlockMetadata(posHit.blockX, posHit.blockY, posHit.blockZ));
                 if(blockStack != null){
+                    int height = resolution.getScaledHeight()/5*3;
                     if(player.isSneaking()){
                         BookletPage page = BookletUtils.getFirstPageForStack(blockStack);
                         if(page != null){
@@ -117,19 +118,19 @@ public class ItemBooklet extends ItemBase implements IHudDisplay{
                             String strg2 = "Page "+page.getID();
                             String strg3 = "Right-Click to open...";
 
-                            AssetUtil.renderStackToGui(page.getChapter().displayStack != null ? page.getChapter().displayStack : new ItemStack(InitItems.itemBooklet), resolution.getScaledWidth()/2-10, resolution.getScaledHeight()/2+41, 1F);
-                            minecraft.fontRenderer.drawStringWithShadow(EnumChatFormatting.YELLOW+""+EnumChatFormatting.ITALIC+strg1, resolution.getScaledWidth()/2-minecraft.fontRenderer.getStringWidth(strg1)/2, resolution.getScaledHeight()/2+20, StringUtil.DECIMAL_COLOR_WHITE);
-                            minecraft.fontRenderer.drawStringWithShadow(EnumChatFormatting.YELLOW+""+EnumChatFormatting.ITALIC+strg2, resolution.getScaledWidth()/2-minecraft.fontRenderer.getStringWidth(strg2)/2, resolution.getScaledHeight()/2+30, StringUtil.DECIMAL_COLOR_WHITE);
-                            minecraft.fontRenderer.drawStringWithShadow(EnumChatFormatting.GOLD+strg3, resolution.getScaledWidth()/2-minecraft.fontRenderer.getStringWidth(strg3)/2, resolution.getScaledHeight()/2+60, StringUtil.DECIMAL_COLOR_WHITE);
+                            AssetUtil.renderStackToGui(page.getChapter().displayStack != null ? page.getChapter().displayStack : new ItemStack(InitItems.itemBooklet), resolution.getScaledWidth()/2-10, height+41, 1F);
+                            minecraft.fontRenderer.drawStringWithShadow(EnumChatFormatting.YELLOW+""+EnumChatFormatting.ITALIC+strg1, resolution.getScaledWidth()/2-minecraft.fontRenderer.getStringWidth(strg1)/2, height+20, StringUtil.DECIMAL_COLOR_WHITE);
+                            minecraft.fontRenderer.drawStringWithShadow(EnumChatFormatting.YELLOW+""+EnumChatFormatting.ITALIC+strg2, resolution.getScaledWidth()/2-minecraft.fontRenderer.getStringWidth(strg2)/2, height+30, StringUtil.DECIMAL_COLOR_WHITE);
+                            minecraft.fontRenderer.drawStringWithShadow(EnumChatFormatting.GOLD+strg3, resolution.getScaledWidth()/2-minecraft.fontRenderer.getStringWidth(strg3)/2, height+60, StringUtil.DECIMAL_COLOR_WHITE);
                         }
                         else{
                             String strg = EnumChatFormatting.DARK_RED+"No Info available! Sorry :(";
-                            minecraft.fontRenderer.drawStringWithShadow(strg, resolution.getScaledWidth()/2-minecraft.fontRenderer.getStringWidth(strg)/2, resolution.getScaledHeight()/2+60, StringUtil.DECIMAL_COLOR_WHITE);
+                            minecraft.fontRenderer.drawStringWithShadow(strg, resolution.getScaledWidth()/2-minecraft.fontRenderer.getStringWidth(strg)/2, height+60, StringUtil.DECIMAL_COLOR_WHITE);
                         }
                     }
                     else{
                         String strg = EnumChatFormatting.DARK_GREEN+""+EnumChatFormatting.ITALIC+"Sneak!";
-                        minecraft.fontRenderer.drawStringWithShadow(strg, resolution.getScaledWidth()/2-minecraft.fontRenderer.getStringWidth(strg)/2, resolution.getScaledHeight()/2+60, StringUtil.DECIMAL_COLOR_WHITE);
+                        minecraft.fontRenderer.drawStringWithShadow(strg, resolution.getScaledWidth()/2-minecraft.fontRenderer.getStringWidth(strg)/2, height+60, StringUtil.DECIMAL_COLOR_WHITE);
                     }
                 }
             }

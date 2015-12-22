@@ -404,7 +404,7 @@ public class BookletUtils{
     public static ArrayList<BookletPage> getPagesForStack(ItemStack stack){
         ArrayList<BookletPage> possiblePages = new ArrayList<BookletPage>();
         for(BookletPage page : InitBooklet.pagesWithItemStackData){
-            if(ItemUtil.contains(page.getItemStacksForPage(), stack, true)){
+            if(ItemUtil.contains(page.getItemStacksForPage(), stack, page.arePageStacksWildcard)){
                 possiblePages.add(page);
             }
         }
