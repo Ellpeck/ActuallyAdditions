@@ -32,8 +32,7 @@ public enum TheMiscItems{
     BAT_WING("BatWing", EnumRarity.rare),
     DRILL_CORE("DrillCore", EnumRarity.uncommon),
     BLACK_DYE("BlackDye", EnumRarity.epic),
-    LENS("Lens", EnumRarity.uncommon),
-    GREEN_DYE("GreenDye", EnumRarity.epic);
+    LENS("Lens", EnumRarity.uncommon);
 
     public final String name;
     public final EnumRarity rarity;

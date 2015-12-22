@@ -13,7 +13,6 @@ package ellpeck.actuallyadditions.crafting;
 import ellpeck.actuallyadditions.config.values.ConfigCrafting;
 import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.items.metalists.TheFoods;
-import ellpeck.actuallyadditions.items.metalists.TheMiscItems;
 import ellpeck.actuallyadditions.recipe.CrusherRecipeRegistry;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.Util;
@@ -78,9 +77,6 @@ public class CrusherCrafting{
         CrusherRecipeRegistry.addRecipe("stone", "cobblestone", 1);
 
         CrusherRecipeRegistry.addRecipe(new ItemStack(InitItems.itemFoods, 1, TheFoods.RICE.ordinal()), new ItemStack(Items.sugar, 2));
-        miscRecipes.add(Util.GetRecipes.lastCrusherRecipe());
-
-        CrusherRecipeRegistry.addRecipe(new ItemStack(Blocks.tallgrass, 1, Util.WILDCARD), new ItemStack(InitItems.itemMisc, 1, TheMiscItems.GREEN_DYE.ordinal()));
         miscRecipes.add(Util.GetRecipes.lastCrusherRecipe());
 
         CrusherRecipeRegistry.addRecipe("oreNickel", "dustNickel", 2, "dustPlatinum", 1, 15);

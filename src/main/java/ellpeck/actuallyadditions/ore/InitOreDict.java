@@ -65,7 +65,6 @@ public class InitOreDict{
 
         //For Crafting
         addOre(InitItems.itemMisc, TheMiscItems.BLACK_DYE.ordinal(), "dyeBlack");
-        addOre(InitItems.itemMisc, TheMiscItems.GREEN_DYE.ordinal(), "dyeGreen");
     }
 
     private static void addOre(ItemStack stack, String name){
