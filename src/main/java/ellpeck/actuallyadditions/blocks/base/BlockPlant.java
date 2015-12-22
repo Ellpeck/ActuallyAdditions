@@ -120,7 +120,7 @@ public class BlockPlant extends BlockCrops{
 
     @Override
     public int damageDropped(int meta){
-        return this.returnMeta;
+        return meta >= 7 ? this.returnMeta : 0;
     }
 
     @Override
