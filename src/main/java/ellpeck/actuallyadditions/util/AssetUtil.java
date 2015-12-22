@@ -87,7 +87,7 @@ public class AssetUtil{
         mc.fontRenderer.setUnicodeFlag(flagBefore);
 
         //GL+MC+NEI suck
-        if(mc.currentScreen instanceof GuiBooklet){
+        if(mc.currentScreen instanceof GuiBooklet || mc.currentScreen == null){
             RenderHelper.disableStandardItemLighting();
         }
         GL11.glPopMatrix();
