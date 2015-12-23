@@ -14,6 +14,8 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import ellpeck.actuallyadditions.util.ModUtil;
+import net.minecraft.world.World;
+import net.minecraftforge.common.DimensionManager;
 
 @SuppressWarnings("unused")
 public class ServerProxy implements IProxy{
@@ -31,5 +33,10 @@ public class ServerProxy implements IProxy{
     @Override
     public void postInit(FMLPostInitializationEvent event){
         ModUtil.LOGGER.info("PostInitializing ServerProxy...");
+    }
+
+    @Override
+    public World getWorld(int worldID){
+        return DimensionManager.getWorld(worldID);
     }
 }

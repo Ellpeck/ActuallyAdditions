@@ -10,13 +10,13 @@
 
 package ellpeck.actuallyadditions.util;
 
+import ellpeck.actuallyadditions.ActuallyAdditions;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
-import net.minecraftforge.common.DimensionManager;
 
 public class WorldPos{
 
@@ -45,7 +45,7 @@ public class WorldPos{
     }
 
     public World getWorld(){
-        return DimensionManager.getWorld(this.worldID);
+        return ActuallyAdditions.proxy.getWorld(this.worldID);
     }
 
     public Material getMaterial(){
