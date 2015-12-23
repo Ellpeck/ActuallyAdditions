@@ -18,6 +18,7 @@ import ellpeck.actuallyadditions.items.ItemCoffee;
 import ellpeck.actuallyadditions.items.metalists.TheMiscItems;
 import ellpeck.actuallyadditions.proxy.ClientProxy;
 import ellpeck.actuallyadditions.util.AssetUtil;
+import ellpeck.actuallyadditions.util.StringUtil;
 import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.item.ItemStack;
 
@@ -46,7 +47,7 @@ public class PageCoffeeRecipe extends BookletPage{
 
         String text = gui.currentEntrySet.page.getText();
         if(text != null && !text.isEmpty()){
-            gui.mc.fontRenderer.drawSplitString(text, gui.guiLeft+14, gui.guiTop+100, 115, 0);
+            StringUtil.drawSplitString(gui.mc.fontRenderer, text, gui.guiLeft+14, gui.guiTop+100, 115, 0, false);
         }
 
         if(this.ingredient.maxAmplifier > 0){

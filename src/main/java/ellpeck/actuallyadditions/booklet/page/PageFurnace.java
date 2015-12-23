@@ -60,7 +60,7 @@ public class PageFurnace extends BookletPage{
     public void render(GuiBooklet gui, int mouseX, int mouseY, int ticksElapsed, boolean mousePressed){
         ItemStack input = this.input != null ? this.input : this.getInputForOutput(this.result);
         if(input == null){
-            gui.mc.fontRenderer.drawSplitString(EnumChatFormatting.DARK_RED+StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".recipeDisabled"), gui.guiLeft+14, gui.guiTop+15, 115, 0);
+            StringUtil.drawSplitString(gui.mc.fontRenderer, EnumChatFormatting.DARK_RED+StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".recipeDisabled"), gui.guiLeft+14, gui.guiTop+15, 115, 0, false);
         }
         else{
             String strg = "Furnace Recipe";
@@ -69,7 +69,7 @@ public class PageFurnace extends BookletPage{
 
         String text = gui.currentEntrySet.page.getText();
         if(text != null && !text.isEmpty()){
-            gui.mc.fontRenderer.drawSplitString(text, gui.guiLeft+14, gui.guiTop+100, 115, 0);
+            StringUtil.drawSplitString(gui.mc.fontRenderer, text, gui.guiLeft+14, gui.guiTop+100, 115, 0, false);
         }
 
         if(input != null){

@@ -70,7 +70,7 @@ public class PageReconstructor extends BookletPage{
     public void render(GuiBooklet gui, int mouseX, int mouseY, int ticksElapsed, boolean mousePressed){
         LensNoneRecipeHandler.Recipe recipe = this.recipes[this.recipePos];
         if(recipe == null){
-            gui.mc.fontRenderer.drawSplitString(EnumChatFormatting.DARK_RED+StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".recipeDisabled"), gui.guiLeft+14, gui.guiTop+15, 115, 0);
+            StringUtil.drawSplitString(gui.mc.fontRenderer, EnumChatFormatting.DARK_RED+StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".recipeDisabled"), gui.guiLeft+14, gui.guiTop+15, 115, 0, false);
         }
         else{
             String strg = "Atomic Reconstructor";
@@ -79,7 +79,7 @@ public class PageReconstructor extends BookletPage{
 
         String text = gui.currentEntrySet.page.getText();
         if(text != null && !text.isEmpty()){
-            gui.mc.fontRenderer.drawSplitString(text, gui.guiLeft+14, gui.guiTop+100, 115, 0);
+            StringUtil.drawSplitString(gui.mc.fontRenderer, text, gui.guiLeft+14, gui.guiTop+100, 115, 0, false);
         }
 
         if(recipe != null){

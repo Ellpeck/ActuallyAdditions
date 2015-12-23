@@ -14,6 +14,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.booklet.GuiBooklet;
 import ellpeck.actuallyadditions.util.AssetUtil;
+import ellpeck.actuallyadditions.util.StringUtil;
 import net.minecraft.util.ResourceLocation;
 
 public class PagePicture extends PageTextOnly{
@@ -35,7 +36,7 @@ public class PagePicture extends PageTextOnly{
 
         String text = gui.currentEntrySet.page.getText();
         if(text != null && !text.isEmpty()){
-            gui.mc.fontRenderer.drawSplitString(text, gui.guiLeft+14, gui.guiTop+textStartY, 115, 0);
+            StringUtil.drawSplitString(gui.mc.fontRenderer, text, gui.guiLeft+14, gui.guiTop+textStartY, 115, 0, false);
         }
     }
 }
