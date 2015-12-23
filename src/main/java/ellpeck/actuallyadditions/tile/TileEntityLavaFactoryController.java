@@ -31,6 +31,7 @@ public class TileEntityLavaFactoryController extends TileEntityBase implements I
     private static final int[][] CASE_POSITIONS = {{-1, 1, 0}, {1, 1, 0}, {0, 1, -1}, {0, 1, 1}};
     public EnergyStorage storage = new EnergyStorage(3000000);
     private int currentWorkTime;
+    private int oldEnergy;
 
     @Override
     @SuppressWarnings("unchecked")
@@ -47,6 +48,10 @@ public class TileEntityLavaFactoryController extends TileEntityBase implements I
             }
             else{
                 this.currentWorkTime = 0;
+            }
+
+            if(this.oldEnergy != this.storage.getEnergyStored() && this.sendUpdateWithInterval()){
+                this.oldEnergy = this.storage.getEnergyStored();
             }
         }
     }
