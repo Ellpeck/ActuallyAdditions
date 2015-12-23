@@ -29,7 +29,7 @@ public class FakePlayerUtil{
 
     public static FakePlayer getFakePlayer(World world){
         if(world instanceof WorldServer){
-            if(theFakePlayer == null){
+            if(theFakePlayer == null || theFakePlayer.worldObj != world){
                 theFakePlayer = new FakePlayer((WorldServer)world, FAKE_PROFILE);
             }
             return theFakePlayer;

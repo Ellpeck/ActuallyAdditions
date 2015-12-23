@@ -20,6 +20,7 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
@@ -137,23 +138,29 @@ public class WorldUtil{
                 }
             }
 
+            //Redstone
+            else if(stack.getItem() == Items.redstone){
+                world.setBlock(x+side.offsetX, y+side.offsetY, z+side.offsetZ, Blocks.redstone_wire);
+                stack.stackSize--;
+            }
+
             //Plants
-            if(stack.getItem() instanceof IPlantable){
+            else if(stack.getItem() instanceof IPlantable){
                 if(((IPlantable)stack.getItem()).getPlant(world, x, y, z).canPlaceBlockAt(world, x+side.offsetX, y+side.offsetY, z+side.offsetZ)){
                     if(world.setBlock(x+side.offsetX, y+side.offsetY, z+side.offsetZ, ((IPlantable)stack.getItem()).getPlant(world, x, y, z))){
                         stack.stackSize--;
-                        return stack;
                     }
                 }
             }
-
-            try{
-                //Blocks
-                stack.tryPlaceItemIntoWorld(FakePlayerUtil.getFakePlayer(world), world, x, y, z, side == ForgeDirection.UNKNOWN ? 0 : side.ordinal(), 0, 0, 0);
-                return stack;
-            }
-            catch(Exception e){
-                ModUtil.LOGGER.error("Something that places Blocks at "+x+", "+y+", "+z+" in World "+world.provider.dimensionId+" threw an Exception! Don't let that happen again!");
+            else{
+                try{
+                    //Blocks
+                    stack.tryPlaceItemIntoWorld(FakePlayerUtil.getFakePlayer(world), world, x, y, z, side == ForgeDirection.UNKNOWN ? 0 : side.ordinal(), 0, 0, 0);
+                    return stack;
+                }
+                catch(Exception e){
+                    ModUtil.LOGGER.error("Something that places Blocks at "+x+", "+y+", "+z+" in World "+world.provider.dimensionId+" threw an Exception! Don't let that happen again!");
+                }
             }
         }
         return stack;
