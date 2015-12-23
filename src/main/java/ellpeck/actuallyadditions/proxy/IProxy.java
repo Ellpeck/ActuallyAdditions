@@ -13,7 +13,6 @@ package ellpeck.actuallyadditions.proxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import net.minecraft.world.World;
 
 public interface IProxy{
 
@@ -22,6 +21,4 @@ public interface IProxy{
     void init(FMLInitializationEvent event);
 
     void postInit(FMLPostInitializationEvent event);
-
-    World getWorld(int worldID);
 }

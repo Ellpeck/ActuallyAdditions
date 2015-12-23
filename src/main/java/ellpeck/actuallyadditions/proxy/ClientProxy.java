@@ -30,8 +30,6 @@ import ellpeck.actuallyadditions.util.playerdata.PersistentClientData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
-import net.minecraftforge.common.DimensionManager;
 
 import java.io.File;
 import java.util.Calendar;
@@ -93,12 +91,6 @@ public class ClientProxy implements IProxy{
         ModUtil.LOGGER.info("PostInitializing ClientProxy...");
 
         SpecialRenderInit.init();
-    }
-
-    @Override
-    public World getWorld(int worldID){
-        World world = DimensionManager.getWorld(worldID);
-        return world == null ? Minecraft.getMinecraft().theWorld : world;
     }
 
     private static void registerRenderer(Class<? extends TileEntity> tileClass, RenderTileEntity tileRender, int renderID){
