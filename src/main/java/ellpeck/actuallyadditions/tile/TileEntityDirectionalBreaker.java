@@ -162,7 +162,6 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase implem
 
     @Override
     public void activateOnPulse(){
-        System.out.println("ACT");
         this.doWork();
     }
 }
