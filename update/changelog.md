@@ -1,3 +1,18 @@
+# 1.7.10-r15
+- Added a fancy hud display instead of chat messages to Reconstructor, Phantomfaces, Manual Stand, Composts and more
+- Sneak-Right-Clicking the booklet on an ActAdd block will now open its chapter
+- Rebalanced canola to produce more oil
+- Fixed Plants sometimes dropping completely nonsensical seed metas
+- Added a Page to the Booklet explaining Redstone Flux
+- Fixed Reconstructor and Firework Box Redstone Mode
+- Added a Disclaimer to the Phantomface Chapter because I was annoyed people were calling it "Short-Range Tesseracts"
+- Made Dungeon Loot less common
+- Made Reconstructor store less power
+- Fixed Coal Generator using infinite resources even when full
+- Fix things appearing on Creative Tabs they shouldn't appear on
+- Removed Green Dye. It wasn't used and even I had forgotten it existed.
+###### This update is also known as the "Sorry that I'm such an idiot asie and everybody else on BTM"-update.
+
 # 1.7.10-r14
 - Fixed servers crashing if using anything with particles (Damn.)
 - Made Reconstructor react to redstone mode changing
