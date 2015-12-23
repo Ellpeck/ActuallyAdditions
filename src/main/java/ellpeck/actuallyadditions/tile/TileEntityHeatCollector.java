@@ -14,8 +14,8 @@ import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyProvider;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import ellpeck.actuallyadditions.util.Position;
 import ellpeck.actuallyadditions.util.Util;
-import ellpeck.actuallyadditions.util.WorldPos;
 import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -38,7 +38,7 @@ public class TileEntityHeatCollector extends TileEntityBase implements IEnergyPr
             ArrayList<Integer> blocksAround = new ArrayList<Integer>();
             if(ENERGY_PRODUCE <= this.getMaxEnergyStored(ForgeDirection.UNKNOWN)-this.getEnergyStored(ForgeDirection.UNKNOWN)){
                 for(int i = 1; i <= 5; i++){
-                    WorldPos coords = WorldUtil.getCoordsFromSide(WorldUtil.getDirectionBySidesInOrder(i), worldObj, xCoord, yCoord, zCoord, 0);
+                    Position coords = WorldUtil.getCoordsFromSide(WorldUtil.getDirectionBySidesInOrder(i), xCoord, yCoord, zCoord, 0);
                     if(coords != null){
                         Block block = worldObj.getBlock(coords.getX(), coords.getY(), coords.getZ());
                         if(block != null && block.getMaterial() == Material.lava && worldObj.getBlockMetadata(coords.getX(), coords.getY(), coords.getZ()) == 0){

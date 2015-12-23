@@ -14,8 +14,8 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.items.base.ItemEnergy;
 import ellpeck.actuallyadditions.util.ModUtil;
+import ellpeck.actuallyadditions.util.Position;
 import ellpeck.actuallyadditions.util.Util;
-import ellpeck.actuallyadditions.util.WorldPos;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockGrass;
 import net.minecraft.block.IGrowable;
@@ -49,7 +49,7 @@ public class ItemGrowthRing extends ItemEnergy{
 
         int energyUse = 550;
         if(equipped != null && equipped == stack && this.getEnergyStored(stack) >= energyUse){
-            ArrayList<WorldPos> blocks = new ArrayList<WorldPos>();
+            ArrayList<Position> blocks = new ArrayList<Position>();
 
             if(stack.stackTagCompound == null){
                 stack.setTagCompound(new NBTTagCompound());
@@ -67,7 +67,7 @@ public class ItemGrowthRing extends ItemEnergy{
                             int theZ = MathHelper.floor_double(player.posZ+z);
                             Block theBlock = world.getBlock(theX, theY, theZ);
                             if((theBlock instanceof IGrowable || theBlock instanceof IPlantable) && !(theBlock instanceof BlockGrass)){
-                                blocks.add(new WorldPos(world, theX, theY, theZ));
+                                blocks.add(new Position(theX, theY, theZ));
                             }
                         }
                     }
@@ -76,14 +76,14 @@ public class ItemGrowthRing extends ItemEnergy{
                 //Fertilizing the Blocks
                 if(!blocks.isEmpty()){
                     for(int i = 0; i < 45; i++){
-                        WorldPos pos = blocks.get(Util.RANDOM.nextInt(blocks.size()));
+                        Position pos = blocks.get(Util.RANDOM.nextInt(blocks.size()));
 
-                        int metaBefore = pos.getMetadata();
-                        pos.getBlock().updateTick(world, pos.getX(), pos.getY(), pos.getZ(), Util.RANDOM);
+                        int metaBefore = pos.getMetadata(world);
+                        pos.getBlock(world).updateTick(world, pos.getX(), pos.getY(), pos.getZ(), Util.RANDOM);
 
                         //Show Particles if Metadata changed
-                        if(pos.getMetadata() != metaBefore){
-                            pos.getWorld().playAuxSFX(2005, pos.getX(), pos.getY(), pos.getZ(), 0);
+                        if(pos.getMetadata(world) != metaBefore){
+                            world.playAuxSFX(2005, pos.getX(), pos.getY(), pos.getZ(), 0);
                         }
                     }
                 }

@@ -126,8 +126,8 @@ public class BlockPhantom extends BlockContainerBase implements IHudDisplay{
                 minecraft.fontRenderer.drawStringWithShadow(EnumChatFormatting.GOLD+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".blockPhantomRange.desc")+": "+phantom.getRange(), resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2-40, StringUtil.DECIMAL_COLOR_WHITE);
                 if(phantom.hasBoundPosition()){
                     int distance = (int)Vec3.createVectorHelper(posHit.blockX, posHit.blockY, posHit.blockZ).distanceTo(Vec3.createVectorHelper(phantom.getBoundPosition().getX(), phantom.getBoundPosition().getY(), phantom.getBoundPosition().getZ()));
-                    Item item = phantom.getBoundPosition().getItemBlock();
-                    String name = item == null ? "Absolutely Nothing" : item.getItemStackDisplayName(new ItemStack(phantom.getBoundPosition().getBlock(), 1, phantom.getBoundPosition().getMetadata()));
+                    Item item = phantom.getBoundPosition().getItemBlock(minecraft.theWorld);
+                    String name = item == null ? "Absolutely Nothing" : item.getItemStackDisplayName(new ItemStack(phantom.getBoundPosition().getBlock(minecraft.theWorld), 1, phantom.getBoundPosition().getMetadata(minecraft.theWorld)));
                     StringUtil.drawSplitStringWithShadow(minecraft.fontRenderer, StringUtil.localizeFormatted("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.blockInfo.desc", name, phantom.getBoundPosition().getX(), phantom.getBoundPosition().getY(), phantom.getBoundPosition().getZ(), distance), resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2-30, 200, StringUtil.DECIMAL_COLOR_WHITE);
 
                     if(phantom.isBoundThingInRange()){

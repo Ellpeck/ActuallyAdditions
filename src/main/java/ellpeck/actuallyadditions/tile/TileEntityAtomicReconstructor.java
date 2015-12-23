@@ -21,7 +21,7 @@ import ellpeck.actuallyadditions.items.lens.Lenses;
 import ellpeck.actuallyadditions.network.PacketHandler;
 import ellpeck.actuallyadditions.network.PacketParticle;
 import ellpeck.actuallyadditions.util.ModUtil;
-import ellpeck.actuallyadditions.util.WorldPos;
+import ellpeck.actuallyadditions.util.Position;
 import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -73,7 +73,7 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
             Lens currentLens = this.getCurrentLens();
             int distance = currentLens.getDistance();
             for(int i = 0; i < distance; i++){
-                WorldPos hitBlock = WorldUtil.getCoordsFromSide(sideToManipulate, worldObj, xCoord, yCoord, zCoord, i);
+                Position hitBlock = WorldUtil.getCoordsFromSide(sideToManipulate, xCoord, yCoord, zCoord, i);
 
                 if(currentLens.invoke(hitBlock, this)){
                     this.shootLaser(hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), currentLens);

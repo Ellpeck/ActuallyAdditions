@@ -14,8 +14,8 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.inventory.GuiHandler;
 import ellpeck.actuallyadditions.network.PacketParticle;
+import ellpeck.actuallyadditions.util.Position;
 import ellpeck.actuallyadditions.util.Util;
-import ellpeck.actuallyadditions.util.WorldPos;
 import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
@@ -28,7 +28,7 @@ import java.util.ArrayList;
 public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements IPhantomTile, IRedstoneToggle{
 
     public static final int RANGE = 3;
-    public WorldPos boundPosition;
+    public Position boundPosition;
     public int currentTime;
     public int range;
     public boolean isBreaker;
@@ -83,36 +83,36 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
 
     @Override
     public boolean hasBoundPosition(){
-        if(this.boundPosition != null && this.boundPosition.getWorld() != null){
-            if(this.boundPosition.getWorld().getTileEntity(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ()) instanceof IPhantomTile || (this.xCoord == this.boundPosition.getX() && this.yCoord == this.boundPosition.getY() && this.zCoord == this.boundPosition.getZ() && this.worldObj.provider.dimensionId == this.boundPosition.getWorld().provider.dimensionId)){
+        if(this.boundPosition != null){
+            if(this.worldObj.getTileEntity(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ()) instanceof IPhantomTile || (this.xCoord == this.boundPosition.getX() && this.yCoord == this.boundPosition.getY() && this.zCoord == this.boundPosition.getZ() && this.worldObj.provider.dimensionId == this.worldObj.provider.dimensionId)){
                 this.boundPosition = null;
                 return false;
             }
-            return this.worldObj.provider.dimensionId == this.boundPosition.getWorld().provider.dimensionId;
+            return this.worldObj.provider.dimensionId == this.worldObj.provider.dimensionId;
         }
         return false;
     }
 
     private void doWork(){
         if(this.isBreaker){
-            Block blockToBreak = boundPosition.getWorld().getBlock(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ());
-            if(blockToBreak != null && blockToBreak.getBlockHardness(boundPosition.getWorld(), boundPosition.getX(), boundPosition.getY(), boundPosition.getZ()) > -1.0F){
+            Block blockToBreak = worldObj.getBlock(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ());
+            if(blockToBreak != null && blockToBreak.getBlockHardness(worldObj, boundPosition.getX(), boundPosition.getY(), boundPosition.getZ()) > -1.0F){
                 ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-                int meta = boundPosition.getWorld().getBlockMetadata(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ());
-                drops.addAll(blockToBreak.getDrops(boundPosition.getWorld(), boundPosition.getX(), boundPosition.getY(), boundPosition.getZ(), meta, 0));
+                int meta = worldObj.getBlockMetadata(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ());
+                drops.addAll(blockToBreak.getDrops(worldObj, boundPosition.getX(), boundPosition.getY(), boundPosition.getZ(), meta, 0));
 
                 if(WorldUtil.addToInventory(this, drops, false)){
-                    boundPosition.getWorld().playAuxSFX(2001, boundPosition.getX(), boundPosition.getY(), boundPosition.getZ(), Block.getIdFromBlock(blockToBreak)+(meta << 12));
-                    WorldUtil.breakBlockAtSide(ForgeDirection.UNKNOWN, boundPosition.getWorld(), boundPosition.getX(), boundPosition.getY(), boundPosition.getZ());
+                    worldObj.playAuxSFX(2001, boundPosition.getX(), boundPosition.getY(), boundPosition.getZ(), Block.getIdFromBlock(blockToBreak)+(meta << 12));
+                    WorldUtil.breakBlockAtSide(ForgeDirection.UNKNOWN, worldObj, boundPosition.getX(), boundPosition.getY(), boundPosition.getZ());
                     WorldUtil.addToInventory(this, drops, true);
                     this.markDirty();
                 }
             }
         }
         else{
-            if(boundPosition.getWorld().getBlock(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ()).isReplaceable(boundPosition.getWorld(), boundPosition.getX(), boundPosition.getY(), boundPosition.getZ())){
+            if(worldObj.getBlock(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ()).isReplaceable(worldObj, boundPosition.getX(), boundPosition.getY(), boundPosition.getZ())){
                 int theSlot = WorldUtil.findFirstFilledSlot(this.slots);
-                this.setInventorySlotContents(theSlot, WorldUtil.placeBlockAtSide(ForgeDirection.UNKNOWN, boundPosition.getWorld(), boundPosition.getX(), boundPosition.getY(), boundPosition.getZ(), this.slots[theSlot]));
+                this.setInventorySlotContents(theSlot, WorldUtil.placeBlockAtSide(ForgeDirection.UNKNOWN, worldObj, boundPosition.getX(), boundPosition.getY(), boundPosition.getZ(), this.slots[theSlot]));
                 if(this.slots[theSlot] != null && this.slots[theSlot].stackSize <= 0){
                     this.slots[theSlot] = null;
                 }
@@ -145,12 +145,12 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
     }
 
     @Override
-    public WorldPos getBoundPosition(){
+    public Position getBoundPosition(){
         return this.boundPosition;
     }
 
     @Override
-    public void setBoundPosition(WorldPos pos){
+    public void setBoundPosition(Position pos){
         this.boundPosition = pos == null ? null : pos.copy();
     }
 
@@ -172,7 +172,6 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
             compound.setInteger("XCoordOfTileStored", boundPosition.getX());
             compound.setInteger("YCoordOfTileStored", boundPosition.getY());
             compound.setInteger("ZCoordOfTileStored", boundPosition.getZ());
-            compound.setInteger("WorldOfTileStored", boundPosition.getWorld().provider.dimensionId);
         }
     }
 
@@ -182,10 +181,9 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
         int x = compound.getInteger("XCoordOfTileStored");
         int y = compound.getInteger("YCoordOfTileStored");
         int z = compound.getInteger("ZCoordOfTileStored");
-        int world = compound.getInteger("WorldOfTileStored");
         this.range = compound.getInteger("Range");
         if(!(x == 0 && y == 0 && z == 0)){
-            this.boundPosition = new WorldPos(world, x, y, z);
+            this.boundPosition = new Position(x, y, z);
             this.markDirty();
         }
     }

@@ -15,8 +15,8 @@ import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.blocks.BlockPhantom;
 import ellpeck.actuallyadditions.blocks.InitBlocks;
 import ellpeck.actuallyadditions.network.PacketParticle;
+import ellpeck.actuallyadditions.util.Position;
 import ellpeck.actuallyadditions.util.Util;
-import ellpeck.actuallyadditions.util.WorldPos;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -27,11 +27,11 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
 
     public static final int RANGE = 16;
     public static final float[] COLORS = new float[]{93F/255F, 43F/255F, 181F/255F};
-    public WorldPos boundPosition;
+    public Position boundPosition;
     public BlockPhantom.Type type;
     public int range;
     private int rangeBefore;
-    private WorldPos boundPosBefore;
+    private Position boundPosBefore;
     private Block boundBlockBefore;
 
     public TileEntityPhantomface(String name){
@@ -48,10 +48,10 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
                 this.boundPosition = null;
             }
 
-            if(this.boundPosition != this.boundPosBefore || (this.boundPosition != null && this.boundPosition.getBlock() != this.boundBlockBefore) || this.rangeBefore != this.range){
+            if(this.boundPosition != this.boundPosBefore || (this.boundPosition != null && this.boundPosition.getBlock(worldObj) != this.boundBlockBefore) || this.rangeBefore != this.range){
                 this.rangeBefore = this.range;
                 this.boundPosBefore = this.boundPosition;
-                this.boundBlockBefore = this.boundPosition == null ? null : this.boundPosition.getBlock();
+                this.boundBlockBefore = this.boundPosition == null ? null : this.boundPosition.getBlock(worldObj);
 
                 this.getWorldObj().markBlockForUpdate(this.xCoord+1, this.yCoord, this.zCoord);
                 this.getWorldObj().markBlockForUpdate(this.xCoord-1, this.yCoord, this.zCoord);
@@ -78,7 +78,6 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
             compound.setInteger("XCoordOfTileStored", boundPosition.getX());
             compound.setInteger("YCoordOfTileStored", boundPosition.getY());
             compound.setInteger("ZCoordOfTileStored", boundPosition.getZ());
-            compound.setInteger("WorldOfTileStored", boundPosition.getWorld().provider.dimensionId);
         }
     }
 
@@ -91,7 +90,7 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
         int world = compound.getInteger("WorldOfTileStored");
         this.range = compound.getInteger("Range");
         if(!(x == 0 && y == 0 && z == 0)){
-            this.boundPosition = new WorldPos(world, x, y, z);
+            this.boundPosition = new Position(x, y, z);
             this.markDirty();
         }
     }
@@ -112,12 +111,12 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
 
     @Override
     public boolean hasBoundPosition(){
-        if(this.boundPosition != null && this.boundPosition.getWorld() != null){
-            if(this.boundPosition.getWorld().getTileEntity(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ()) instanceof IPhantomTile || (this.xCoord == this.boundPosition.getX() && this.yCoord == this.boundPosition.getY() && this.zCoord == this.boundPosition.getZ() && this.worldObj.provider.dimensionId == this.boundPosition.getWorld().provider.dimensionId)){
+        if(this.boundPosition != null){
+            if(worldObj.getTileEntity(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ()) instanceof IPhantomTile || (this.xCoord == this.boundPosition.getX() && this.yCoord == this.boundPosition.getY() && this.zCoord == this.boundPosition.getZ())){
                 this.boundPosition = null;
                 return false;
             }
-            return this.worldObj.provider.dimensionId == this.boundPosition.getWorld().provider.dimensionId;
+            return true;
         }
         return false;
     }
@@ -147,12 +146,12 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
     }
 
     @Override
-    public WorldPos getBoundPosition(){
+    public Position getBoundPosition(){
         return this.boundPosition;
     }
 
     @Override
-    public void setBoundPosition(WorldPos pos){
+    public void setBoundPosition(Position pos){
         this.boundPosition = pos == null ? null : pos.copy();
     }
 

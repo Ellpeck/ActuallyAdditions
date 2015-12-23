@@ -15,7 +15,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.config.values.ConfigBoolValues;
 import ellpeck.actuallyadditions.items.base.ItemBase;
 import ellpeck.actuallyadditions.util.ModUtil;
-import ellpeck.actuallyadditions.util.WorldPos;
+import ellpeck.actuallyadditions.util.Position;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -92,7 +92,7 @@ public class ItemLeafBlower extends ItemBase{
      * @param z     The Z Position of the Player
      */
     public void breakStuff(World world, int x, int y, int z){
-        ArrayList<WorldPos> breakPositions = new ArrayList<WorldPos>();
+        ArrayList<Position> breakPositions = new ArrayList<Position>();
 
         int rangeSides = 5;
         int rangeUp = 1;
@@ -102,7 +102,7 @@ public class ItemLeafBlower extends ItemBase{
                     //The current Block to break
                     Block block = world.getBlock(x+reachX, y+reachY, z+reachZ);
                     if(block != null && (block instanceof BlockBush || (this.isAdvanced && block.isLeaves(world, x+reachX, y+reachY, z+reachZ)))){
-                        breakPositions.add(new WorldPos(world, x+reachX, y+reachY, z+reachZ));
+                        breakPositions.add(new Position(x+reachX, y+reachY, z+reachZ));
                     }
                 }
             }
@@ -111,7 +111,7 @@ public class ItemLeafBlower extends ItemBase{
         if(!breakPositions.isEmpty()){
             Collections.shuffle(breakPositions);
 
-            WorldPos theCoord = breakPositions.get(0);
+            Position theCoord = breakPositions.get(0);
             Block theBlock = world.getBlock(theCoord.getX(), theCoord.getY(), theCoord.getZ());
 
             ArrayList<ItemStack> drops = new ArrayList<ItemStack>();

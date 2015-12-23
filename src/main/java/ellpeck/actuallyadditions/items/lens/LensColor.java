@@ -12,8 +12,8 @@ package ellpeck.actuallyadditions.items.lens;
 
 import ellpeck.actuallyadditions.blocks.InitBlocks;
 import ellpeck.actuallyadditions.tile.TileEntityAtomicReconstructor;
+import ellpeck.actuallyadditions.util.Position;
 import ellpeck.actuallyadditions.util.Util;
-import ellpeck.actuallyadditions.util.WorldPos;
 import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Blocks;
@@ -53,15 +53,15 @@ public class LensColor extends Lens{
 
     @SuppressWarnings("unchecked")
     @Override
-    public boolean invoke(WorldPos hitBlock, TileEntityAtomicReconstructor tile){
+    public boolean invoke(Position hitBlock, TileEntityAtomicReconstructor tile){
         if(hitBlock != null){
-            if(Util.arrayContains(CONVERTABLE_BLOCKS, hitBlock.getBlock()) >= 0 && tile.storage.getEnergyStored() >= ENERGY_USE){
-                int meta = hitBlock.getMetadata();
+            if(Util.arrayContains(CONVERTABLE_BLOCKS, hitBlock.getBlock(tile.getWorldObj())) >= 0 && tile.storage.getEnergyStored() >= ENERGY_USE){
+                int meta = hitBlock.getMetadata(tile.getWorldObj());
                 if(meta >= 15){
-                    hitBlock.setMetadata(0, 2);
+                    hitBlock.setMetadata(tile.getWorldObj(), 0, 2);
                 }
                 else{
-                    hitBlock.setMetadata(meta+1, 2);
+                    hitBlock.setMetadata(tile.getWorldObj(), meta+1, 2);
                 }
                 tile.storage.extractEnergy(ENERGY_USE, false);
             }

@@ -330,7 +330,6 @@ tooltip.actuallyadditions.onSuffix.desc=On
 tooltip.actuallyadditions.phantom.connected.desc=<Block connected!>
 tooltip.actuallyadditions.phantom.stored.desc=<Block stored to this Connector!>
 tooltip.actuallyadditions.phantom.unbound.desc=The Connection was cleared!
-tooltip.actuallyadditions.inWorld.desc=In World
 tooltip.actuallyadditions.boundTo.desc=Bound to
 tooltip.actuallyadditions.clearStorage.desc=Place in Crafting Grid to clear storage!
 tooltip.actuallyadditions.phantom.connectedRange.desc=The Connection is fine and working.

@@ -14,7 +14,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.blocks.base.BlockBase;
 import ellpeck.actuallyadditions.util.ModUtil;
-import ellpeck.actuallyadditions.util.WorldPos;
+import ellpeck.actuallyadditions.util.Position;
 import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockPistonBase;
@@ -85,15 +85,15 @@ public class BlockLampPowerer extends BlockBase{
 
     private void updateLamp(World world, int x, int y, int z){
         if(!world.isRemote){
-            WorldPos coords = WorldUtil.getCoordsFromSide(ForgeDirection.getOrientation(world.getBlockMetadata(x, y, z)), world, x, y, z, 0);
-            if(coords != null && coords.getBlock() instanceof BlockColoredLamp){
+            Position coords = WorldUtil.getCoordsFromSide(ForgeDirection.getOrientation(world.getBlockMetadata(x, y, z)), x, y, z, 0);
+            if(coords != null && coords.getBlock(world) instanceof BlockColoredLamp){
                 if(world.isBlockIndirectlyGettingPowered(x, y, z)){
-                    if(!((BlockColoredLamp)coords.getBlock()).isOn){
+                    if(!((BlockColoredLamp)coords.getBlock(world)).isOn){
                         world.setBlock(coords.getX(), coords.getY(), coords.getZ(), InitBlocks.blockColoredLampOn, world.getBlockMetadata(coords.getX(), coords.getY(), coords.getZ()), 2);
                     }
                 }
                 else{
-                    if(((BlockColoredLamp)coords.getBlock()).isOn){
+                    if(((BlockColoredLamp)coords.getBlock(world)).isOn){
                         world.setBlock(coords.getX(), coords.getY(), coords.getZ(), InitBlocks.blockColoredLamp, world.getBlockMetadata(coords.getX(), coords.getY(), coords.getZ()), 2);
                     }
                 }

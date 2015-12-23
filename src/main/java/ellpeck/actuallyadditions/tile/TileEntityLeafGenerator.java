@@ -17,7 +17,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.network.PacketHandler;
 import ellpeck.actuallyadditions.network.PacketParticle;
-import ellpeck.actuallyadditions.util.WorldPos;
+import ellpeck.actuallyadditions.util.Position;
 import ellpeck.actuallyadditions.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.nbt.NBTTagCompound;
@@ -45,14 +45,14 @@ public class TileEntityLeafGenerator extends TileEntityBase implements IEnergyPr
                     this.nextUseCounter = 0;
 
                     if(ENERGY_PRODUCED <= this.storage.getMaxEnergyStored()-this.storage.getEnergyStored()){
-                        ArrayList<WorldPos> breakPositions = new ArrayList<WorldPos>();
+                        ArrayList<Position> breakPositions = new ArrayList<Position>();
 
                         for(int reachX = -RANGE; reachX < RANGE+1; reachX++){
                             for(int reachZ = -RANGE; reachZ < RANGE+1; reachZ++){
                                 for(int reachY = -RANGE; reachY < RANGE+1; reachY++){
                                     Block block = this.worldObj.getBlock(this.xCoord+reachX, this.yCoord+reachY, this.zCoord+reachZ);
                                     if(block != null && block.isLeaves(this.worldObj, this.xCoord+reachX, this.yCoord+reachY, this.zCoord+reachZ)){
-                                        breakPositions.add(new WorldPos(this.worldObj, this.xCoord+reachX, this.yCoord+reachY, this.zCoord+reachZ));
+                                        breakPositions.add(new Position(this.xCoord+reachX, this.yCoord+reachY, this.zCoord+reachZ));
                                     }
                                 }
                             }
@@ -60,7 +60,7 @@ public class TileEntityLeafGenerator extends TileEntityBase implements IEnergyPr
 
                         if(!breakPositions.isEmpty()){
                             Collections.shuffle(breakPositions);
-                            WorldPos theCoord = breakPositions.get(0);
+                            Position theCoord = breakPositions.get(0);
 
                             Block theBlock = this.worldObj.getBlock(theCoord.getX(), theCoord.getY(), theCoord.getZ());
                             int meta = this.worldObj.getBlockMetadata(theCoord.getX(), theCoord.getY(), theCoord.getZ());

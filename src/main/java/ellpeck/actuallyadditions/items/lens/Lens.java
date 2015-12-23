@@ -11,14 +11,14 @@
 package ellpeck.actuallyadditions.items.lens;
 
 import ellpeck.actuallyadditions.tile.TileEntityAtomicReconstructor;
-import ellpeck.actuallyadditions.util.WorldPos;
+import ellpeck.actuallyadditions.util.Position;
 import net.minecraft.item.Item;
 
 public abstract class Lens{
 
     protected Item lensItem;
 
-    public abstract boolean invoke(WorldPos hitBlock, TileEntityAtomicReconstructor tile);
+    public abstract boolean invoke(Position hitBlock, TileEntityAtomicReconstructor tile);
 
     public abstract float[] getColor();
 

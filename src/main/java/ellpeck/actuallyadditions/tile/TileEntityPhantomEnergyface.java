@@ -62,8 +62,8 @@ public class TileEntityPhantomEnergyface extends TileEntityPhantomface implement
     }
 
     public IEnergyProvider getProvider(){
-        if(this.boundPosition != null && this.boundPosition.getWorld() != null){
-            TileEntity tile = boundPosition.getWorld().getTileEntity(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ());
+        if(this.boundPosition != null){
+            TileEntity tile = worldObj.getTileEntity(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ());
             if(tile instanceof IEnergyProvider){
                 return (IEnergyProvider)tile;
             }
@@ -72,8 +72,8 @@ public class TileEntityPhantomEnergyface extends TileEntityPhantomface implement
     }
 
     public IEnergyReceiver getReceiver(){
-        if(this.boundPosition != null && this.boundPosition.getWorld() != null){
-            TileEntity tile = boundPosition.getWorld().getTileEntity(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ());
+        if(this.boundPosition != null){
+            TileEntity tile = worldObj.getTileEntity(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ());
             if(tile instanceof IEnergyReceiver){
                 return (IEnergyReceiver)tile;
             }
@@ -99,7 +99,7 @@ public class TileEntityPhantomEnergyface extends TileEntityPhantomface implement
 
     @Override
     public boolean isBoundThingInRange(){
-        return super.isBoundThingInRange() && (this.boundPosition.getWorld().getTileEntity(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ()) instanceof IEnergyReceiver || this.boundPosition.getWorld().getTileEntity(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ()) instanceof IEnergyProvider);
+        return super.isBoundThingInRange() && (worldObj.getTileEntity(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ()) instanceof IEnergyReceiver || worldObj.getTileEntity(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ()) instanceof IEnergyProvider);
     }
 
     private void pushEnergy(ForgeDirection side){

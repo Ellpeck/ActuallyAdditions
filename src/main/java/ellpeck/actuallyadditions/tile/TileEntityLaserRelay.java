@@ -17,8 +17,8 @@ import ellpeck.actuallyadditions.config.values.ConfigBoolValues;
 import ellpeck.actuallyadditions.config.values.ConfigIntValues;
 import ellpeck.actuallyadditions.misc.LaserRelayConnectionHandler;
 import ellpeck.actuallyadditions.network.PacketParticle;
+import ellpeck.actuallyadditions.util.Position;
 import ellpeck.actuallyadditions.util.Util;
-import ellpeck.actuallyadditions.util.WorldPos;
 import ellpeck.actuallyadditions.util.WorldUtil;
 import io.netty.util.internal.ConcurrentSet;
 import net.minecraft.nbt.NBTTagCompound;
@@ -44,7 +44,7 @@ public class TileEntityLaserRelay extends TileEntityBase implements IEnergyRecei
     @SideOnly(Side.CLIENT)
     public void renderParticles(){
         if(Util.RANDOM.nextInt(2) == 0){
-            WorldPos thisPos = new WorldPos(this.getWorldObj(), this.xCoord, this.yCoord, this.zCoord);
+            Position thisPos = new Position(this.xCoord, this.yCoord, this.zCoord);
             LaserRelayConnectionHandler.Network network = LaserRelayConnectionHandler.getInstance().getNetworkFor(thisPos);
             if(network != null){
                 for(LaserRelayConnectionHandler.ConnectionPair aPair : network.connections){
@@ -60,7 +60,7 @@ public class TileEntityLaserRelay extends TileEntityBase implements IEnergyRecei
     public Packet getDescriptionPacket(){
         NBTTagCompound compound = new NBTTagCompound();
 
-        WorldPos thisPos = new WorldPos(this.worldObj, this.xCoord, this.yCoord, this.zCoord);
+        Position thisPos = new Position(this.xCoord, this.yCoord, this.zCoord);
         ConcurrentSet<LaserRelayConnectionHandler.ConnectionPair> connections = LaserRelayConnectionHandler.getInstance().getConnectionsFor(thisPos);
 
         if(connections != null){
@@ -76,7 +76,7 @@ public class TileEntityLaserRelay extends TileEntityBase implements IEnergyRecei
 
     @Override
     public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt){
-        WorldPos thisPos = new WorldPos(this.worldObj, this.xCoord, this.yCoord, this.zCoord);
+        Position thisPos = new Position(this.xCoord, this.yCoord, this.zCoord);
         if(pkt != null && pkt.func_148857_g() != null){
             LaserRelayConnectionHandler.getInstance().removeRelayFromNetwork(thisPos);
 
@@ -94,12 +94,12 @@ public class TileEntityLaserRelay extends TileEntityBase implements IEnergyRecei
     @Override
     public void invalidate(){
         super.invalidate();
-        LaserRelayConnectionHandler.getInstance().removeRelayFromNetwork(new WorldPos(this.worldObj, this.xCoord, this.yCoord, this.zCoord));
+        LaserRelayConnectionHandler.getInstance().removeRelayFromNetwork(new Position(this.xCoord, this.yCoord, this.zCoord));
     }
 
     @Override
     public int receiveEnergy(ForgeDirection from, int maxReceive, boolean simulate){
-        return this.transmitEnergy(WorldUtil.getCoordsFromSide(from, worldObj, xCoord, yCoord, zCoord, 0), maxReceive, simulate);
+        return this.transmitEnergy(WorldUtil.getCoordsFromSide(from, xCoord, yCoord, zCoord, 0), maxReceive, simulate);
     }
 
     @Override
@@ -112,12 +112,12 @@ public class TileEntityLaserRelay extends TileEntityBase implements IEnergyRecei
         return 0;
     }
 
-    public int transmitEnergy(WorldPos blockFrom, int maxTransmit, boolean simulate){
+    public int transmitEnergy(Position blockFrom, int maxTransmit, boolean simulate){
         int transmitted = 0;
         if(maxTransmit > 0){
-            LaserRelayConnectionHandler.Network network = LaserRelayConnectionHandler.getInstance().getNetworkFor(new WorldPos(this.worldObj, this.xCoord, this.yCoord, this.zCoord));
+            LaserRelayConnectionHandler.Network network = LaserRelayConnectionHandler.getInstance().getNetworkFor(new Position(this.xCoord, this.yCoord, this.zCoord));
             if(network != null){
-                transmitted = LaserRelayConnectionHandler.getInstance().transferEnergyToReceiverInNeed(blockFrom, network, Math.min(ConfigIntValues.LASER_RELAY_MAX_TRANSFER.getValue(), maxTransmit), simulate);
+                transmitted = LaserRelayConnectionHandler.getInstance().transferEnergyToReceiverInNeed(worldObj, blockFrom, network, Math.min(ConfigIntValues.LASER_RELAY_MAX_TRANSFER.getValue(), maxTransmit), simulate);
             }
         }
         return transmitted;

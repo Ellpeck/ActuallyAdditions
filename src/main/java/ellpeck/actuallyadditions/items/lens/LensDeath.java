@@ -12,7 +12,7 @@ package ellpeck.actuallyadditions.items.lens;
 
 import ellpeck.actuallyadditions.misc.DamageSources;
 import ellpeck.actuallyadditions.tile.TileEntityAtomicReconstructor;
-import ellpeck.actuallyadditions.util.WorldPos;
+import ellpeck.actuallyadditions.util.Position;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.AxisAlignedBB;
 
@@ -22,7 +22,7 @@ public class LensDeath extends Lens{
 
     @SuppressWarnings("unchecked")
     @Override
-    public boolean invoke(WorldPos hitBlock, TileEntityAtomicReconstructor tile){
+    public boolean invoke(Position hitBlock, TileEntityAtomicReconstructor tile){
         int use = 150; //Per Block (because it doesn't only activate when something is hit like the other lenses!)
         if(tile.storage.getEnergyStored() >= use){
             tile.storage.extractEnergy(use, false);
@@ -33,7 +33,7 @@ public class LensDeath extends Lens{
             }
         }
 
-        return hitBlock != null && !hitBlock.getBlock().isAir(hitBlock.getWorld(), hitBlock.getX(), hitBlock.getY(), hitBlock.getZ());
+        return hitBlock != null && !hitBlock.getBlock(tile.getWorldObj()).isAir(tile.getWorldObj(), hitBlock.getX(), hitBlock.getY(), hitBlock.getZ());
     }
 
     @Override

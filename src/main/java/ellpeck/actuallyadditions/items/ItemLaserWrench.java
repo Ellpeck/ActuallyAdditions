@@ -16,8 +16,8 @@ import ellpeck.actuallyadditions.items.base.ItemBase;
 import ellpeck.actuallyadditions.misc.LaserRelayConnectionHandler;
 import ellpeck.actuallyadditions.tile.TileEntityLaserRelay;
 import ellpeck.actuallyadditions.util.ModUtil;
+import ellpeck.actuallyadditions.util.Position;
 import ellpeck.actuallyadditions.util.StringUtil;
-import ellpeck.actuallyadditions.util.WorldPos;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -48,13 +48,13 @@ public class ItemLaserWrench extends ItemBase{
                     player.addChatComponentMessage(new ChatComponentText(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".laser.stored.desc")));
                 }
                 else{
-                    WorldPos savedPos = ItemPhantomConnector.getStoredPosition(stack);
-                    WorldPos otherPos = new WorldPos(world, x, y, z);
-                    if(savedPos.getTileEntity() instanceof TileEntityLaserRelay && LaserRelayConnectionHandler.getInstance().addConnection(savedPos, otherPos)){
+                    Position savedPos = ItemPhantomConnector.getStoredPosition(stack);
+                    Position otherPos = new Position(x, y, z);
+                    if(ItemPhantomConnector.getStoredWorld(stack) == world && savedPos.getTileEntity(world) instanceof TileEntityLaserRelay && LaserRelayConnectionHandler.getInstance().addConnection(savedPos, otherPos)){
                         ItemPhantomConnector.clearStorage(stack);
 
-                        ((TileEntityLaserRelay)savedPos.getTileEntity()).sendUpdate();
-                        ((TileEntityLaserRelay)otherPos.getTileEntity()).sendUpdate();
+                        ((TileEntityLaserRelay)savedPos.getTileEntity(world)).sendUpdate();
+                        ((TileEntityLaserRelay)otherPos.getTileEntity(world)).sendUpdate();
 
                         player.addChatComponentMessage(new ChatComponentText(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".laser.connected.desc")));
                     }
@@ -84,13 +84,12 @@ public class ItemLaserWrench extends ItemBase{
     @SuppressWarnings("unchecked")
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld){
-        WorldPos coords = ItemPhantomConnector.getStoredPosition(stack);
+        Position coords = ItemPhantomConnector.getStoredPosition(stack);
         if(coords != null){
             list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".boundTo.desc")+":");
             list.add("X: "+coords.getX());
             list.add("Y: "+coords.getY());
             list.add("Z: "+coords.getZ());
-            list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".inWorld.desc")+" "+coords.getWorldID());
             list.add(EnumChatFormatting.ITALIC+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".clearStorage.desc"));
         }
     }

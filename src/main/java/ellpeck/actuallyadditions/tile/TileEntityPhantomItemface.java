@@ -80,7 +80,7 @@ public class TileEntityPhantomItemface extends TileEntityPhantomface{
 
     @Override
     public boolean isBoundThingInRange(){
-        return super.isBoundThingInRange() && this.boundPosition.getWorld().getTileEntity(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ()) instanceof IInventory;
+        return super.isBoundThingInRange() && worldObj.getTileEntity(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ()) instanceof IInventory;
     }
 
     public ISidedInventory getSided(){
@@ -88,8 +88,8 @@ public class TileEntityPhantomItemface extends TileEntityPhantomface{
     }
 
     public IInventory getInventory(){
-        if(this.boundPosition != null && this.boundPosition.getWorld() != null){
-            TileEntity tile = boundPosition.getWorld().getTileEntity(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ());
+        if(this.boundPosition != null){
+            TileEntity tile = worldObj.getTileEntity(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ());
             if(tile instanceof IInventory){
                 return (IInventory)tile;
             }

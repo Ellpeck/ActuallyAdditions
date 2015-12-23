@@ -10,7 +10,7 @@
 
 package ellpeck.actuallyadditions.tile;
 
-import ellpeck.actuallyadditions.util.WorldPos;
+import ellpeck.actuallyadditions.util.Position;
 
 public interface IPhantomTile{
 
@@ -27,9 +27,9 @@ public interface IPhantomTile{
     /**
      * @return The position this tile is bound to
      */
-    WorldPos getBoundPosition();
+    Position getBoundPosition();
 
-    void setBoundPosition(WorldPos pos);
+    void setBoundPosition(Position pos);
 
     /**
      * @return The ID of the GUI it opens, -1 if none

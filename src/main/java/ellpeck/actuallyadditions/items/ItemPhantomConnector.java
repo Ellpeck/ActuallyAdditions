@@ -16,8 +16,8 @@ import ellpeck.actuallyadditions.items.base.ItemBase;
 import ellpeck.actuallyadditions.tile.IPhantomTile;
 import ellpeck.actuallyadditions.tile.TileEntityBase;
 import ellpeck.actuallyadditions.util.ModUtil;
+import ellpeck.actuallyadditions.util.Position;
 import ellpeck.actuallyadditions.util.StringUtil;
-import ellpeck.actuallyadditions.util.WorldPos;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -29,6 +29,7 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
+import net.minecraftforge.common.DimensionManager;
 
 import java.util.List;
 
@@ -47,7 +48,7 @@ public class ItemPhantomConnector extends ItemBase{
             if(tile != null){
                 //Passing to Phantom
                 if(tile instanceof IPhantomTile){
-                    if(this.checkHasConnection(stack, player, tile)){
+                    if(this.checkHasConnection(stack, player, tile) && getStoredWorld(stack) == world){
                         ((IPhantomTile)tile).setBoundPosition(getStoredPosition(stack));
                         if(tile instanceof TileEntityBase){
                             ((TileEntityBase)tile).sendUpdate();
@@ -79,16 +80,23 @@ public class ItemPhantomConnector extends ItemBase{
         }
     }
 
-    public static WorldPos getStoredPosition(ItemStack stack){
+    public static Position getStoredPosition(ItemStack stack){
         NBTTagCompound tag = stack.getTagCompound();
         if(tag != null){
             int x = tag.getInteger("XCoordOfTileStored");
             int y = tag.getInteger("YCoordOfTileStored");
             int z = tag.getInteger("ZCoordOfTileStored");
-            int world = tag.getInteger("WorldOfTileStored");
             if(!(x == 0 && y == 0 && z == 0)){
-                return new WorldPos(world, x, y, z);
+                return new Position(x, y, z);
             }
+        }
+        return null;
+    }
+
+    public static World getStoredWorld(ItemStack stack){
+        NBTTagCompound tag = stack.getTagCompound();
+        if(tag != null){
+            return DimensionManager.getWorld(tag.getInteger("WorldOfTileStored"));
         }
         return null;
     }
@@ -127,13 +135,12 @@ public class ItemPhantomConnector extends ItemBase{
     @SuppressWarnings("unchecked")
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld){
-        WorldPos coords = getStoredPosition(stack);
+        Position coords = getStoredPosition(stack);
         if(coords != null){
             list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".boundTo.desc")+":");
             list.add("X: "+coords.getX());
             list.add("Y: "+coords.getY());
             list.add("Z: "+coords.getZ());
-            list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".inWorld.desc")+" "+coords.getWorldID());
             list.add(EnumChatFormatting.ITALIC+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".clearStorage.desc"));
         }
     }

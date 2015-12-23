@@ -11,7 +11,7 @@
 package ellpeck.actuallyadditions.items.lens;
 
 import ellpeck.actuallyadditions.tile.TileEntityAtomicReconstructor;
-import ellpeck.actuallyadditions.util.WorldPos;
+import ellpeck.actuallyadditions.util.Position;
 import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemBlock;
@@ -25,24 +25,24 @@ public class LensNone extends Lens{
 
     @SuppressWarnings("unchecked")
     @Override
-    public boolean invoke(WorldPos hitBlock, TileEntityAtomicReconstructor tile){
-        if(hitBlock != null && !hitBlock.getBlock().isAir(hitBlock.getWorld(), hitBlock.getX(), hitBlock.getY(), hitBlock.getZ())){
+    public boolean invoke(Position hitBlock, TileEntityAtomicReconstructor tile){
+        if(hitBlock != null && !hitBlock.getBlock(tile.getWorldObj()).isAir(tile.getWorldObj(), hitBlock.getX(), hitBlock.getY(), hitBlock.getZ())){
             int range = 2;
 
             //Converting the Blocks
             for(int reachX = -range; reachX < range+1; reachX++){
                 for(int reachZ = -range; reachZ < range+1; reachZ++){
                     for(int reachY = -range; reachY < range+1; reachY++){
-                        WorldPos pos = new WorldPos(tile.getWorldObj(), hitBlock.getX()+reachX, hitBlock.getY()+reachY, hitBlock.getZ()+reachZ);
-                        ArrayList<LensNoneRecipeHandler.Recipe> recipes = LensNoneRecipeHandler.getRecipesFor(new ItemStack(pos.getBlock(), 1, pos.getMetadata()));
+                        Position pos = new Position(hitBlock.getX()+reachX, hitBlock.getY()+reachY, hitBlock.getZ()+reachZ);
+                        ArrayList<LensNoneRecipeHandler.Recipe> recipes = LensNoneRecipeHandler.getRecipesFor(new ItemStack(pos.getBlock(tile.getWorldObj()), 1, pos.getMetadata(tile.getWorldObj())));
                         for(LensNoneRecipeHandler.Recipe recipe : recipes){
                             if(recipe != null && tile.storage.getEnergyStored() >= recipe.energyUse){
                                 List<ItemStack> outputs = recipe.getOutputs();
                                 if(outputs != null && !outputs.isEmpty()){
                                     ItemStack output = outputs.get(0);
                                     if(output.getItem() instanceof ItemBlock){
-                                        tile.getWorldObj().playAuxSFX(2001, pos.getX(), pos.getY(), pos.getZ(), Block.getIdFromBlock(pos.getBlock())+(pos.getMetadata() << 12));
-                                        pos.setBlock(Block.getBlockFromItem(output.getItem()), output.getItemDamage(), 2);
+                                        tile.getWorldObj().playAuxSFX(2001, pos.getX(), pos.getY(), pos.getZ(), Block.getIdFromBlock(pos.getBlock(tile.getWorldObj()))+(pos.getMetadata(tile.getWorldObj()) << 12));
+                                        pos.setBlock(tile.getWorldObj(), Block.getBlockFromItem(output.getItem()), output.getItemDamage(), 2);
                                     }
                                     else{
                                         EntityItem item = new EntityItem(tile.getWorldObj(), pos.getX()+0.5, pos.getY()+0.5, pos.getZ()+0.5, output.copy());

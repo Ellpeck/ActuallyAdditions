@@ -11,13 +11,13 @@
 package ellpeck.actuallyadditions.items.lens;
 
 import ellpeck.actuallyadditions.tile.TileEntityAtomicReconstructor;
-import ellpeck.actuallyadditions.util.WorldPos;
+import ellpeck.actuallyadditions.util.Position;
 
 public class LensDetonation extends Lens{
 
     @Override
-    public boolean invoke(WorldPos hitBlock, TileEntityAtomicReconstructor tile){
-        if(hitBlock != null && !hitBlock.getBlock().isAir(hitBlock.getWorld(), hitBlock.getX(), hitBlock.getY(), hitBlock.getZ())){
+    public boolean invoke(Position hitBlock, TileEntityAtomicReconstructor tile){
+        if(hitBlock != null && !hitBlock.getBlock(tile.getWorldObj()).isAir(tile.getWorldObj(), hitBlock.getX(), hitBlock.getY(), hitBlock.getZ())){
             int use = 500000;
             if(tile.storage.getEnergyStored() >= use){
                 tile.getWorldObj().newExplosion(null, hitBlock.getX()+0.5, hitBlock.getY()+0.5, hitBlock.getZ()+0.5, 10F, true, true);
