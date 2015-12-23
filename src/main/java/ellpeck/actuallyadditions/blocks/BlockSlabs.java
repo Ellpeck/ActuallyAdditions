@@ -117,7 +117,7 @@ public class BlockSlabs extends BlockBase{
         @Override
         public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ){
             if(world.getBlock(x, y, z) == this.field_150939_a && ((side == 1 && world.getBlockMetadata(x, y, z) == 0) || (side == 0 && world.getBlockMetadata(x, y, z) == 1))){
-                if(world.setBlock(x, y, z, ((BlockSlabs)this.field_150939_a).fullBlock, 0, 3)){
+                if(world.setBlock(x, y, z, ((BlockSlabs)this.field_150939_a).fullBlock, ((BlockSlabs)this.field_150939_a).meta, 3)){
                     world.playSoundEffect(x+0.5F, y+0.5F, z+0.5F, this.field_150939_a.stepSound.getBreakSound(), (this.field_150939_a.stepSound.getVolume()+1.0F)/2.0F, this.field_150939_a.stepSound.getPitch()*0.8F);
                     stack.stackSize--;
                     return true;
