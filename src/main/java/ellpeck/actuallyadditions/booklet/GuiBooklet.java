@@ -159,7 +159,7 @@ public class GuiBooklet extends GuiScreen{
 
     @Override
     public void keyTyped(char theChar, int key){
-        if(key == Keyboard.KEY_ESCAPE || (!this.searchField.isFocused() && key == Minecraft.getMinecraft().gameSettings.keyBindInventory.getKeyCode())){
+        if(key == Keyboard.KEY_ESCAPE){
             if(this.parentScreen != null){
                 this.mc.displayGuiScreen(this.parentScreen);
             }
