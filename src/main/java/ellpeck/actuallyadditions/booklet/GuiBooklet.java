@@ -102,7 +102,7 @@ public class GuiBooklet extends GuiScreen{
         boolean unicodeBefore = this.fontRendererObj.getUnicodeFlag();
         this.fontRendererObj.setUnicodeFlag(true);
 
-        //This poem is dedicated to Player:
+        //To Player:
         //
         //FastCraft's a must, definitely
         //But the bigger unicode option sucks real
