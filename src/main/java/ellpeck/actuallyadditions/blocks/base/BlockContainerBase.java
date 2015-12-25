@@ -116,7 +116,6 @@ public abstract class BlockContainerBase extends BlockContainer{
             boolean powered = world.isBlockIndirectlyGettingPowered(x, y, z);
             if(tile instanceof TileEntityBase){
                 ((TileEntityBase)tile).setRedstonePowered(powered);
-                tile.markDirty();
             }
             if(tile instanceof IRedstoneToggle){
                 if(((IRedstoneToggle)tile).isPulseMode() && powered){
