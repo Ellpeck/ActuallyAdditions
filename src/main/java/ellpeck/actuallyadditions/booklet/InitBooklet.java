@@ -130,7 +130,7 @@ public class InitBooklet{
         }
         new BookletChapter("aiots", entryItemsNonRF, new ItemStack(InitItems.emeraldPaxel), aiotPages.toArray(new BookletPage[aiotPages.size()])).setImportant();
 
-        new BookletChapter("jams", entryItemsNonRF, new ItemStack(InitItems.itemJams), new PageTextOnly(1).setStack(new ItemStack(InitItems.itemJams, 1, Util.WILDCARD)), new PageTextOnly(2));
+        new BookletChapter("jams", entryItemsNonRF, new ItemStack(InitItems.itemJams), new PageTextOnly(1).setStack(new ItemStack(InitItems.itemJams, 1, Util.WILDCARD)), new PagePicture(2, "pageJamHouse", 150), new PageTextOnly(3));
 
         ArrayList<BookletPage> potionRingPages = new ArrayList<BookletPage>();
         potionRingPages.add(new PageTextOnly(potionRingPages.size()+1));
