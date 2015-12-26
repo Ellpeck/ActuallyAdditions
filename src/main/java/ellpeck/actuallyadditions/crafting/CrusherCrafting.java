@@ -79,6 +79,9 @@ public class CrusherCrafting{
         CrusherRecipeRegistry.addRecipe(new ItemStack(InitItems.itemFoods, 1, TheFoods.RICE.ordinal()), new ItemStack(Items.sugar, 2));
         miscRecipes.add(Util.GetRecipes.lastCrusherRecipe());
 
+        CrusherRecipeRegistry.addRecipe(new ItemStack(Blocks.glowstone), new ItemStack(Items.glowstone_dust, 4));
+        miscRecipes.add(Util.GetRecipes.lastCrusherRecipe());
+
         CrusherRecipeRegistry.addRecipe("oreNickel", "dustNickel", 2, "dustPlatinum", 1, 15);
         CrusherRecipeRegistry.addRecipe("oreIron", "dustIron", 2, "dustGold", 1, 20);
 

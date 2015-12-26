@@ -95,9 +95,9 @@ public class LensNoneRecipeHandler{
             addRecipe(new ItemStack(Blocks.quartz_block, 1, 1), new ItemStack(InitBlocks.blockTestifiBucksGreenWall), 10);
             recipeGreenWall = Util.GetRecipes.lastReconstructorRecipe();
 
-            addRecipe(new ItemStack(Items.redstone), new ItemStack(Items.glowstone_dust), 4000);
+            addRecipe(new ItemStack(Blocks.redstone_block), new ItemStack(Blocks.glowstone), 60000);
             recipesGlowstoneRedstone[0] = Util.GetRecipes.lastReconstructorRecipe();
-            addRecipe(new ItemStack(Items.glowstone_dust), new ItemStack(Items.redstone), 4000);
+            addRecipe(new ItemStack(Blocks.glowstone), new ItemStack(Blocks.redstone_block), 60000);
             recipesGlowstoneRedstone[1] = Util.GetRecipes.lastReconstructorRecipe();
         }
     }
