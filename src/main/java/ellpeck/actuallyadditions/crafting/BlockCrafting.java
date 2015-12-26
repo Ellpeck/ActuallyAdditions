@@ -623,7 +623,7 @@ public class BlockCrafting{
                     "CCC", "CRP", "CCC",
                     'C', "cobblestone",
                     'R', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL.ordinal()),
-                    'P', new ItemStack(InitBlocks.blockCrystal, 1, TheCrystals.LAPIS.ordinal())));
+                    'P', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.LAPIS.ordinal())));
             recipePlacer = Util.GetRecipes.lastIRecipe();
         }
 
@@ -633,7 +633,7 @@ public class BlockCrafting{
                     "CCC", "CRP", "CCC",
                     'C', "cobblestone",
                     'R', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL.ordinal()),
-                    'P', new ItemStack(InitBlocks.blockCrystal, 1, TheCrystals.COAL.ordinal())));
+                    'P', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.COAL.ordinal())));
             recipeBreaker = Util.GetRecipes.lastIRecipe();
         }
 
