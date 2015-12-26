@@ -38,7 +38,6 @@ public class LensNoneRecipeHandler{
     public static Recipe recipeExplosionLens;
     public static Recipe recipeDamageLens;
     public static Recipe recipeLeather;
-    public static Recipe[] recipesGlowstoneRedstone = new Recipe[2];
 
     public static void init(){
         //Crystal Blocks
@@ -94,11 +93,6 @@ public class LensNoneRecipeHandler{
             recipeWhiteWall = Util.GetRecipes.lastReconstructorRecipe();
             addRecipe(new ItemStack(Blocks.quartz_block, 1, 1), new ItemStack(InitBlocks.blockTestifiBucksGreenWall), 10);
             recipeGreenWall = Util.GetRecipes.lastReconstructorRecipe();
-
-            addRecipe(new ItemStack(Blocks.redstone_block), new ItemStack(Blocks.glowstone), 60000);
-            recipesGlowstoneRedstone[0] = Util.GetRecipes.lastReconstructorRecipe();
-            addRecipe(new ItemStack(Blocks.glowstone), new ItemStack(Blocks.redstone_block), 60000);
-            recipesGlowstoneRedstone[1] = Util.GetRecipes.lastReconstructorRecipe();
         }
     }
 
