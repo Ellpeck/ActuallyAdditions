@@ -80,7 +80,6 @@ public class BookletPage{
         base = base.replaceAll("<r>", EnumChatFormatting.BLACK+"");
         base = base.replaceAll("<n>", "\n");
         base = base.replaceAll("<i>", EnumChatFormatting.ITALIC+"");
-        base = base.replaceAll("<rs>", EnumChatFormatting.RESET+"");
         base = base.replaceAll("<tifisgrin>", EnumChatFormatting.DARK_RED+""+EnumChatFormatting.UNDERLINE); //This is fucking important so go read it now
 
         for(Object o : this.textReplacements.entrySet()){
