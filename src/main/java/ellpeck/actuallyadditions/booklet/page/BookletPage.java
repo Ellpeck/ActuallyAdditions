@@ -74,7 +74,14 @@ public class BookletPage{
             return null;
         }
 
-        String base = StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".chapter."+this.chapter.getUnlocalizedName()+".text."+this.localizationKey).replaceAll("<imp>", EnumChatFormatting.DARK_GREEN+"").replaceAll("<item>", EnumChatFormatting.BLUE+"").replaceAll("<r>", EnumChatFormatting.BLACK+"").replaceAll("<n>", "\n").replaceAll("<i>", EnumChatFormatting.ITALIC+"").replaceAll("<rs>", EnumChatFormatting.RESET+"");
+        String base = StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".chapter."+this.chapter.getUnlocalizedName()+".text."+this.localizationKey);
+        base = base.replaceAll("<imp>", EnumChatFormatting.DARK_GREEN+"");
+        base = base.replaceAll("<item>", EnumChatFormatting.BLUE+"");
+        base = base.replaceAll("<r>", EnumChatFormatting.BLACK+"");
+        base = base.replaceAll("<n>", "\n");
+        base = base.replaceAll("<i>", EnumChatFormatting.ITALIC+"");
+        base = base.replaceAll("<tifisgrin>", EnumChatFormatting.DARK_RED+""+EnumChatFormatting.UNDERLINE); //This is fucking important so go read it now
+
         for(Object o : this.textReplacements.entrySet()){
             Map.Entry e = (Map.Entry)o;
             base = base.replaceAll((String)e.getKey(), (String)e.getValue());

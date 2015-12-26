@@ -124,6 +124,7 @@ public abstract class TileEntityBase extends TileEntity{
 
     public void setRedstonePowered(boolean powered){
         this.isRedstonePowered = powered;
+        this.markDirty();
     }
 
     protected boolean sendUpdateWithInterval(){

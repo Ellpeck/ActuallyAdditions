@@ -13,6 +13,7 @@ package ellpeck.actuallyadditions.booklet.page;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ellpeck.actuallyadditions.booklet.GuiBooklet;
+import ellpeck.actuallyadditions.util.StringUtil;
 import net.minecraft.item.ItemStack;
 
 public class PageTextOnly extends BookletPage{
@@ -39,7 +40,7 @@ public class PageTextOnly extends BookletPage{
     public void renderPre(GuiBooklet gui, int mouseX, int mouseY, int ticksElapsed, boolean mousePressed){
         String text = gui.currentEntrySet.page.getText();
         if(text != null && !text.isEmpty()){
-            gui.mc.fontRenderer.drawSplitString(text, gui.guiLeft+14, gui.guiTop+9, 115, 0);
+            StringUtil.drawSplitString(gui.mc.fontRenderer, text, gui.guiLeft+14, gui.guiTop+9, 115, 0, false);
         }
     }
 }

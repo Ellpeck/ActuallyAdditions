@@ -102,6 +102,16 @@ public class GuiBooklet extends GuiScreen{
         boolean unicodeBefore = this.fontRendererObj.getUnicodeFlag();
         this.fontRendererObj.setUnicodeFlag(true);
 
+        //To Player:
+        //
+        //FastCraft's a must, definitely
+        //But the bigger unicode option sucks real
+        //It screws with my book and makes me feel ill
+        //So don't fuck with everything unintentionally
+        //
+        //(This fixes your fuckery)
+        GL11.glScalef(1.0F, 1.0F, 1.0F);
+
         //Draws the Background
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(ClientProxy.jingleAllTheWay ? resLocChristmas : (ClientProxy.pumpkinBlurPumpkinBlur ? resLocHalloween : (ClientProxy.bulletForMyValentine ? resLocValentine : resLoc)));
@@ -149,7 +159,7 @@ public class GuiBooklet extends GuiScreen{
 
     @Override
     public void keyTyped(char theChar, int key){
-        if(key == Keyboard.KEY_ESCAPE || (!this.searchField.isFocused() && key == Minecraft.getMinecraft().gameSettings.keyBindInventory.getKeyCode())){
+        if(key == Keyboard.KEY_ESCAPE){
             if(this.parentScreen != null){
                 this.mc.displayGuiScreen(this.parentScreen);
             }

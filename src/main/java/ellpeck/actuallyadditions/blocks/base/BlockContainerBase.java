@@ -32,6 +32,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public abstract class BlockContainerBase extends BlockContainer{
 
@@ -110,14 +111,25 @@ public abstract class BlockContainerBase extends BlockContainer{
     }
 
     public void updateRedstoneState(World world, int x, int y, int z){
-        TileEntity tile = world.getTileEntity(x, y, z);
-        boolean powered = world.isBlockIndirectlyGettingPowered(x, y, z);
-        if(tile instanceof TileEntityBase){
-            ((TileEntityBase)tile).setRedstonePowered(powered);
-            tile.markDirty();
+        if(!world.isRemote){
+            TileEntity tile = world.getTileEntity(x, y, z);
+            boolean powered = world.isBlockIndirectlyGettingPowered(x, y, z);
+            if(tile instanceof TileEntityBase){
+                ((TileEntityBase)tile).setRedstonePowered(powered);
+            }
+            if(tile instanceof IRedstoneToggle){
+                if(((IRedstoneToggle)tile).isPulseMode() && powered){
+                    world.scheduleBlockUpdate(x, y, z, this, this.tickRate(world));
+                }
+            }
         }
-        if(tile instanceof IRedstoneToggle){
-            if(((IRedstoneToggle)tile).isPulseMode() && powered){
+    }
+
+    @Override
+    public void updateTick(World world, int x, int y, int z, Random random){
+        if(!world.isRemote){
+            TileEntity tile = world.getTileEntity(x, y, z);
+            if(tile instanceof IRedstoneToggle && ((IRedstoneToggle)tile).isPulseMode()){
                 ((IRedstoneToggle)tile).activateOnPulse();
             }
         }
@@ -227,6 +239,7 @@ public abstract class BlockContainerBase extends BlockContainer{
             if(tile instanceof IRedstoneToggle){
                 if(!world.isRemote){
                     ((IRedstoneToggle)tile).toggle(!((IRedstoneToggle)tile).isPulseMode());
+                    tile.markDirty();
 
                     if(tile instanceof TileEntityBase){
                         ((TileEntityBase)tile).sendUpdate();

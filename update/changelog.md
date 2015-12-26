@@ -1,3 +1,16 @@
+# 1.7.10-r16
+##### THE GREAT BTM HOTFIX UPDATE ~ ~ ~
+- Fixed FastCraft fucking up the booklet if the "bigger unicode font" option is enabled
+- #BlameShadowfacts (Seriously, he is to blame.)
+- Fixed blocks activating too often in redstone pulse mode
+- Fixed Fake Player
+- Placers can now place redstone
+- Fixed Smiley Cloud's and Laser Relay's Bounding Box sometimes messing up
+- Made Laser Relay's particles render less heavily - but also look a bit less good :(
+- Made Slabs become right double slabs >_>
+- Made Lava Factory update RF properly
+- Made the compost update when putting in things with automation (damn.)
+
 # 1.7.10-r15
 - Added a fancy hud display instead of chat messages to Reconstructor, Phantomfaces, Manual Stand, Composts and more
 - Sneak-Right-Clicking the booklet on an ActAdd block will now open its chapter

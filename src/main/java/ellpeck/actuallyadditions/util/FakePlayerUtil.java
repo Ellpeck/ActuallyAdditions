@@ -14,6 +14,7 @@ import com.mojang.authlib.GameProfile;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.FakePlayer;
+import net.minecraftforge.common.util.FakePlayerFactory;
 
 import java.util.UUID;
 
@@ -30,7 +31,7 @@ public class FakePlayerUtil{
     public static FakePlayer getFakePlayer(World world){
         if(world instanceof WorldServer){
             if(theFakePlayer == null){
-                theFakePlayer = new FakePlayer((WorldServer)world, FAKE_PROFILE);
+                theFakePlayer = FakePlayerFactory.get((WorldServer)world, FAKE_PROFILE);
             }
             return theFakePlayer;
         }

@@ -12,9 +12,11 @@ package ellpeck.actuallyadditions.blocks.render.model;
 
 import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.tile.TileEntityCompost;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import org.lwjgl.opengl.GL11;
 
 public class ModelCompost extends ModelBaseAA{
 
@@ -72,6 +74,11 @@ public class ModelCompost extends ModelBaseAA{
 
     @Override
     public void renderExtra(float f, TileEntity tile){
+        //Hehe
+        if("ShadowfactsDev".equals(Minecraft.getMinecraft().thePlayer.getCommandSenderName())){
+            GL11.glTranslatef(0F, 1F, 0F);
+        }
+
         if(tile instanceof TileEntityCompost){
             ItemStack stack = ((TileEntityCompost)tile).getStackInSlot(0);
             if(stack != null){
