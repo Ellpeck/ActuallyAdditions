@@ -19,7 +19,6 @@ public enum TheMiscBlocks{
     QUARTZ("BlackQuartz", EnumRarity.rare),
     ORE_QUARTZ("OreBlackQuartz", EnumRarity.epic),
     WOOD_CASING("WoodCasing", EnumRarity.common),
-    STONE_CASING("StoneCasing", EnumRarity.uncommon),
     CHARCOAL_BLOCK("Charcoal", EnumRarity.common),
     ENDERPEARL_BLOCK("Enderpearl", EnumRarity.rare),
     LAVA_FACTORY_CASE("LavaFactoryCase", EnumRarity.uncommon),

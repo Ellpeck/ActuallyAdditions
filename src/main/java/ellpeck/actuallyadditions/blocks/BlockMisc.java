@@ -36,9 +36,7 @@ public class BlockMisc extends BlockBase{
     public IIcon[] textures;
 
     @SideOnly(Side.CLIENT)
-    private IIcon casingSeasonalTop;
-    @SideOnly(Side.CLIENT)
-    private IIcon stoneCasingSeasonal;
+    private IIcon ironCasingSeasonalTop;
     @SideOnly(Side.CLIENT)
     private IIcon ironCasingSeasonal;
 
@@ -53,11 +51,8 @@ public class BlockMisc extends BlockBase{
     @SideOnly(Side.CLIENT)
     public IIcon getIcon(int side, int metadata){
         if(ClientProxy.jingleAllTheWay && side != 0){
-            if(metadata == TheMiscBlocks.STONE_CASING.ordinal()){
-                return side == 1 ? this.casingSeasonalTop : this.stoneCasingSeasonal;
-            }
-            else if(metadata == TheMiscBlocks.IRON_CASING.ordinal()){
-                return side == 1 ? this.casingSeasonalTop : this.ironCasingSeasonal;
+            if(metadata == TheMiscBlocks.IRON_CASING.ordinal()){
+                return side == 1 ? this.ironCasingSeasonalTop : this.ironCasingSeasonal;
             }
         }
         return metadata >= textures.length ? null : textures[metadata];
@@ -84,8 +79,7 @@ public class BlockMisc extends BlockBase{
             textures[i] = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName()+allMiscBlocks[i].name);
         }
 
-        this.casingSeasonalTop = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":blockMiscStoneCasingSnowTop");
-        this.stoneCasingSeasonal = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":blockMiscStoneCasingSnow");
+        this.ironCasingSeasonalTop = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":blockMiscIronCasingSnowTop");
         this.ironCasingSeasonal = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":blockMiscIronCasingSnow");
     }
 
