@@ -33,6 +33,7 @@ import java.util.ArrayList;
 public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyReceiver, IButtonReactor, IEnergySaver, IEnergyDisplay{
 
     public static final int ENERGY_USE_PER_BLOCK = 500;
+    public static final int DEFAULT_RANGE = 2;
     public EnergyStorage storage = new EnergyStorage(1000000);
     public int layerAt = -1;
     public boolean onlyMineOres = true;
@@ -54,7 +55,7 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyR
             if(!this.isRedstonePowered && this.ticksElapsed%5 == 0){
 
                 if(this.layerAt > 0){
-                    if(this.mine(TileEntityPhantomface.upgradeRange(2, worldObj, xCoord, yCoord, zCoord))){
+                    if(this.mine(TileEntityPhantomface.upgradeRange(DEFAULT_RANGE, worldObj, xCoord, yCoord, zCoord))){
                         this.layerAt--;
                     }
                 }
