@@ -30,6 +30,9 @@ public class ConfigValues{
     public static int[] oreGenDimensionBlacklist;
     public static int[] plantDimensionBlacklist;
 
+    public static String[] minerExtraWhitelist;
+    public static String[] minerBlacklist;
+
     public static void defineConfigValues(Configuration config){
 
         for(ConfigCrafting currConf : craftingConfig){
@@ -48,5 +51,7 @@ public class ConfigValues{
         drillExtraminingWhitelist = config.get(ConfigCategories.TOOL_VALUES.name, "Drill Extra Whitelist", new String[]{"TConstruct:GravelOre"}, "By default, the Drill can mine certain blocks. If there is one that it can't mine, but should be able to, put its REGISTRY NAME here. These are the actual registered Item Names, the ones you use, for example, when using the /give Command.").getStringList();
         oreGenDimensionBlacklist = config.get(ConfigCategories.WORLD_GEN.name, "OreGen Dimension Blacklist", new int[0], "The IDs of the dimensions that Actually Additions OreGen (Black Quartz for example) is banned in").getIntList();
         plantDimensionBlacklist = config.get(ConfigCategories.WORLD_GEN.name, "Plant Blacklist", new int[0], "The IDs of the dimensions that Actually Additions Plants (Rice for example) are banned in").getIntList();
+        minerExtraWhitelist = config.get(ConfigCategories.MACHINE_VALUES.name, "Vertical Digger Extra Whitelist", new String[0], "By default, the Vertical Digger mines everything that starts with 'ore' in the OreDictionary. If there is one that it can't mine, but should be able to, put its REGISTRY NAME here. These are the actual registered Item Names, the ones you use, for example, when using the /give Command. This Config Option only applies if the miner is in Ores Only Mode.").getStringList();
+        minerBlacklist = config.get(ConfigCategories.MACHINE_VALUES.name, "Vertical Digger Blacklist", new String[0], "By default, the Vertical Digger mines everything that starts with 'ore' in the OreDictionary. If there is one that it can mine, but shouldn't be able to, put its REGISTRY NAME here. These are the actual registered Item Names, the ones you use, for example, when using the /give Command. This Config Option will apply in both modes.").getStringList();
     }
 }

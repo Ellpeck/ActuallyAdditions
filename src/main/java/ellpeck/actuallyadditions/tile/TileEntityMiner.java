@@ -15,6 +15,7 @@ import cofh.api.energy.IEnergyReceiver;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import ellpeck.actuallyadditions.config.ConfigValues;
 import ellpeck.actuallyadditions.network.PacketHandler;
 import ellpeck.actuallyadditions.network.PacketParticle;
 import ellpeck.actuallyadditions.network.gui.IButtonReactor;
@@ -107,19 +108,44 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyR
     }
 
     private boolean isMinable(Block block, int meta){
-        if(!this.onlyMineOres){
-            return true;
+        if(!this.isBlacklisted(block)){
+            if(!this.onlyMineOres){
+                return true;
+            }
+            else{
+                int[] ids = OreDictionary.getOreIDs(new ItemStack(block, 1, meta));
+                for(int id : ids){
+                    String name = OreDictionary.getOreName(id);
+                    if(name.startsWith("ore") || name.startsWith("denseore")){
+                        return true;
+                    }
+                }
+
+                String reg = Block.blockRegistry.getNameForObject(block);
+                if(reg != null && !reg.isEmpty()){
+                    for(String string : ConfigValues.minerExtraWhitelist){
+                        if(reg.equals(string)){
+                            return true;
+                        }
+                    }
+                }
+
+                return false;
+            }
         }
-        else{
-            int[] ids = OreDictionary.getOreIDs(new ItemStack(block, 1, meta));
-            for(int id : ids){
-                String name = OreDictionary.getOreName(id);
-                if(name.startsWith("ore") || name.startsWith("denseore")){
+        return false;
+    }
+
+    private boolean isBlacklisted(Block block){
+        String reg = Block.blockRegistry.getNameForObject(block);
+        if(reg != null && !reg.isEmpty()){
+            for(String string : ConfigValues.minerBlacklist){
+                if(reg.equals(string)){
                     return true;
                 }
             }
-            return false;
         }
+        return false;
     }
 
     private void shootParticles(int endX, int endY, int endZ){
