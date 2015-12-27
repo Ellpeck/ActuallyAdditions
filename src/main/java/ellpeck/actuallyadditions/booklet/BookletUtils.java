@@ -83,6 +83,9 @@ public class BookletUtils{
             if(playerName.equals("dqmhose")){
                 version = "Pants Edition";
             }
+            else if(playerName.equals("TwoOfEight")){
+                version = "Illustrator's Edition";
+            }
             else if(playerName.equals("KittyVanCat")){
                 version = "Cat's Edition";
             }
