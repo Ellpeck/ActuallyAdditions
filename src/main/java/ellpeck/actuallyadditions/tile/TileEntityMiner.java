@@ -35,7 +35,7 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyR
     public static final int ENERGY_USE_PER_BLOCK = 500;
     public EnergyStorage storage = new EnergyStorage(1000000);
     public int layerAt = -1;
-    public boolean onlyMineOres;
+    public boolean onlyMineOres = true;
     private int oldLayerAt;
     private int oldEnergy;
 
