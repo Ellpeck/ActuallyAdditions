@@ -8,7 +8,7 @@
  * © 2015 Ellpeck
  */
 
-package ellpeck.actuallyadditions.util;
+package ellpeck.actuallyadditions.util.compat;
 
 import cpw.mods.fml.common.event.FMLInterModComms;
 import ellpeck.actuallyadditions.items.ItemSeed;
