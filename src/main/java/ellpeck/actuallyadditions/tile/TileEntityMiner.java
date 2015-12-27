@@ -129,8 +129,6 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyR
                         }
                     }
                 }
-
-                return false;
             }
         }
         return false;
