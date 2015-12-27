@@ -12,6 +12,7 @@ package ellpeck.actuallyadditions.util;
 
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.util.StatCollector;
+import net.minecraftforge.fluids.FluidTank;
 
 import java.util.List;
 import java.util.Locale;
@@ -57,5 +58,9 @@ public class StringUtil{
             String s1 = (String)list.get(i);
             renderer.drawString(s1, x, y+(i*renderer.FONT_HEIGHT), color, shadow);
         }
+    }
+
+    public static String getFluidInfo(FluidTank tank){
+        return tank.getFluid() == null || tank.getFluid().getFluid() == null ? "0/"+tank.getCapacity()+" mB" : tank.getFluidAmount()+"/"+tank.getCapacity()+" mB "+tank.getFluid().getLocalizedName();
     }
 }

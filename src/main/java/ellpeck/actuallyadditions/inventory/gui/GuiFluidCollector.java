@@ -16,6 +16,7 @@ import ellpeck.actuallyadditions.inventory.ContainerFluidCollector;
 import ellpeck.actuallyadditions.tile.TileEntityBase;
 import ellpeck.actuallyadditions.tile.TileEntityFluidCollector;
 import ellpeck.actuallyadditions.util.AssetUtil;
+import ellpeck.actuallyadditions.util.StringUtil;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -40,7 +41,7 @@ public class GuiFluidCollector extends GuiContainer{
     public void drawScreen(int x, int y, float f){
         super.drawScreen(x, y, f);
 
-        String text2 = this.collector.tank.getFluidAmount()+"/"+this.collector.tank.getCapacity()+" mB "+(this.collector.tank.getFluidAmount() > 0 ? this.collector.tank.getFluid().getLocalizedName() : "");
+        String text2 = StringUtil.getFluidInfo(this.collector.tank);
         if(x >= guiLeft+68 && y >= guiTop+6 && x <= guiLeft+83 && y <= guiTop+88){
             this.func_146283_a(Collections.singletonList(text2), x, y);
         }

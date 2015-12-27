@@ -12,11 +12,11 @@ package ellpeck.actuallyadditions.inventory.gui;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ellpeck.actuallyadditions.blocks.InitBlocks;
 import ellpeck.actuallyadditions.inventory.ContainerOilGenerator;
 import ellpeck.actuallyadditions.tile.TileEntityBase;
 import ellpeck.actuallyadditions.tile.TileEntityOilGenerator;
 import ellpeck.actuallyadditions.util.AssetUtil;
+import ellpeck.actuallyadditions.util.StringUtil;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -44,7 +44,7 @@ public class GuiOilGenerator extends GuiContainer{
         if(x >= guiLeft+43 && y >= guiTop+6 && x <= guiLeft+58 && y <= guiTop+88){
             this.func_146283_a(Collections.singletonList(text1), x, y);
         }
-        String text2 = this.generator.tank.getFluidAmount()+"/"+this.generator.tank.getCapacity()+" mB "+InitBlocks.fluidOil.getLocalizedName();
+        String text2 = StringUtil.getFluidInfo(this.generator.tank);
         if(x >= guiLeft+117 && y >= guiTop+6 && x <= guiLeft+132 && y <= guiTop+88){
             this.func_146283_a(Collections.singletonList(text2), x, y);
         }

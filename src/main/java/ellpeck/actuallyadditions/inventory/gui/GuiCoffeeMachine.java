@@ -26,7 +26,6 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import net.minecraftforge.fluids.FluidRegistry;
 import org.lwjgl.opengl.GL11;
 
 import java.util.Collections;
@@ -69,7 +68,7 @@ public class GuiCoffeeMachine extends GuiContainer{
         if(x >= guiLeft+16 && y >= guiTop+5 && x <= guiLeft+23 && y <= guiTop+89){
             this.func_146283_a(Collections.singletonList(text1), x, y);
         }
-        String text3 = this.machine.tank.getFluidAmount()+"/"+this.machine.tank.getCapacity()+" mB "+FluidRegistry.WATER.getLocalizedName(this.machine.tank.getFluid());
+        String text3 = StringUtil.getFluidInfo(this.machine.tank);
         if(x >= guiLeft+27 && y >= guiTop+5 && x <= guiLeft+33 && y <= guiTop+70){
             this.func_146283_a(Collections.singletonList(text3), x, y);
         }
