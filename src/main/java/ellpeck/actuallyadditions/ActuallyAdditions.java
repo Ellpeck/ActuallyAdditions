@@ -18,7 +18,6 @@ import cpw.mods.fml.common.event.*;
 import ellpeck.actuallyadditions.achievement.InitAchievements;
 import ellpeck.actuallyadditions.blocks.InitBlocks;
 import ellpeck.actuallyadditions.booklet.InitBooklet;
-import ellpeck.actuallyadditions.communication.InterModCommunications;
 import ellpeck.actuallyadditions.config.ConfigurationHandler;
 import ellpeck.actuallyadditions.crafting.CrusherCrafting;
 import ellpeck.actuallyadditions.crafting.InitCrafting;
@@ -49,7 +48,7 @@ import net.minecraft.init.Items;
 import net.minecraft.server.MinecraftServer;
 
 //                                                                           So that BuildCraft Oil always gets used
-@Mod(modid = ModUtil.MOD_ID, name = ModUtil.NAME, version = ModUtil.VERSION, dependencies = "after:BuildCraft|Energy", canBeDeactivated = false, guiFactory = "ellpeck.actuallyadditions.config.GuiFactory")
+@Mod(modid = ModUtil.MOD_ID, name = ModUtil.NAME, version = ModUtil.VERSION, dependencies = "after:BuildCraft|Energy", guiFactory = "ellpeck.actuallyadditions.config.GuiFactory")
 public class ActuallyAdditions{
 
     @Instance(ModUtil.MOD_ID)
@@ -109,13 +108,7 @@ public class ActuallyAdditions{
         proxy.postInit(event);
 
         ModUtil.LOGGER.info("PostInitialization Finished.");
-
         FakePlayerUtil.info();
-    }
-
-    @EventHandler
-    public void onIMCReceived(FMLInterModComms.IMCEvent event){
-        InterModCommunications.processIMC(event.getMessages());
     }
 
     @EventHandler
