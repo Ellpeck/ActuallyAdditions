@@ -47,6 +47,8 @@ import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.init.Items;
 import net.minecraft.server.MinecraftServer;
 
+import java.util.Locale;
+
 //                                                                           So that BuildCraft Oil always gets used
 @Mod(modid = ModUtil.MOD_ID, name = ModUtil.NAME, version = ModUtil.VERSION, dependencies = "after:BuildCraft|Energy", guiFactory = "ellpeck.actuallyadditions.config.GuiFactory")
 public class ActuallyAdditions{
@@ -132,9 +134,10 @@ public class ActuallyAdditions{
     public void missingMapping(FMLMissingMappingsEvent event){
         for(FMLMissingMappingsEvent.MissingMapping mapping : event.get()){
             //Ignore removal of foreign paxels
-            if(mapping.name != null){
+            if(mapping.name != null && mapping.name.toLowerCase(Locale.ROOT).startsWith(ModUtil.MOD_ID_LOWER+":")){
                 if(mapping.name.contains("paxel") || mapping.name.contains("itemSpecial")){
                     mapping.ignore();
+                    ModUtil.LOGGER.info("Missing Mapping "+mapping.name+" is getting ignored. This is intentional.");
                 }
             }
         }
