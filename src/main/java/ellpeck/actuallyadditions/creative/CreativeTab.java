@@ -172,7 +172,7 @@ public class CreativeTab extends CreativeTabs{
         add(InitItems.itemKnife);
         add(InitItems.itemCrafterOnAStick);
         add(InitItems.itemDust);
-        add(InitItems.itemSpecialDrop);
+        add(InitItems.itemSolidifiedExperience);
         add(InitItems.itemLeafBlower);
         add(InitItems.itemLeafBlowerAdvanced);
 

@@ -18,7 +18,6 @@ import ellpeck.actuallyadditions.config.values.ConfigCrafting;
 import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.items.metalists.TheCrystals;
 import ellpeck.actuallyadditions.items.metalists.TheMiscItems;
-import ellpeck.actuallyadditions.items.metalists.TheSpecialDrops;
 import ellpeck.actuallyadditions.util.Util;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -211,7 +210,7 @@ public class BlockCrafting{
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockSmileyCloud),
                     " W ", "WXW", " W ",
                     'W', new ItemStack(Blocks.wool, 1, Util.WILDCARD),
-                    'X', new ItemStack(InitItems.itemSpecialDrop, 1, TheSpecialDrops.SOLIDIFIED_EXPERIENCE.ordinal())));
+                    'X', new ItemStack(InitItems.itemSolidifiedExperience)));
             recipeSmileyCloud = Util.GetRecipes.lastIRecipe();
         }
 
@@ -228,7 +227,7 @@ public class BlockCrafting{
         if(ConfigCrafting.XP_SOLIDIFIER.isEnabled()){
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockXPSolidifier),
                     "XXX", "DCD", "XXX",
-                    'X', new ItemStack(InitItems.itemSpecialDrop, 1, TheSpecialDrops.SOLIDIFIED_EXPERIENCE.ordinal()),
+                    'X', new ItemStack(InitItems.itemSolidifiedExperience),
                     'D', new ItemStack(InitBlocks.blockCrystal, 1, TheCrystals.DIAMOND.ordinal()),
                     'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal())));
             recipeSolidifier = Util.GetRecipes.lastIRecipe();

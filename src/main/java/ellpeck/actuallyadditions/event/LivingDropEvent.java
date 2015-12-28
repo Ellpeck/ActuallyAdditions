@@ -14,8 +14,8 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import ellpeck.actuallyadditions.config.values.ConfigBoolValues;
 import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.items.metalists.TheMiscItems;
-import ellpeck.actuallyadditions.items.metalists.TheSpecialDrops;
 import ellpeck.actuallyadditions.util.Util;
+import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.monster.EntitySpider;
 import net.minecraft.entity.passive.EntityBat;
 import net.minecraft.entity.player.EntityPlayer;
@@ -28,13 +28,10 @@ public class LivingDropEvent{
     @SubscribeEvent
     public void onEntityDropEvent(LivingDropsEvent event){
         if(event.source.getEntity() instanceof EntityPlayer){
-            //Drop Special Items (Solidified Experience, Pearl Shards etc.)
-            for(int i = 0; i < TheSpecialDrops.values().length; i++){
-                TheSpecialDrops theDrop = TheSpecialDrops.values()[i];
-                if(theDrop.canDrop && theDrop.dropFrom.isAssignableFrom(event.entityLiving.getClass())){
-                    if(Util.RANDOM.nextInt(100)+1 <= theDrop.chance){
-                        event.entityLiving.entityDropItem(new ItemStack(InitItems.itemSpecialDrop, Util.RANDOM.nextInt(theDrop.maxAmount)+1, theDrop.ordinal()), 0);
-                    }
+            //Drop Solidified XP
+            if(event.entityLiving instanceof EntityCreature){
+                if(Util.RANDOM.nextInt(15) <= 0){
+                    event.entityLiving.entityDropItem(new ItemStack(InitItems.itemSolidifiedExperience, Util.RANDOM.nextInt(2)+1), 0);
                 }
             }
 

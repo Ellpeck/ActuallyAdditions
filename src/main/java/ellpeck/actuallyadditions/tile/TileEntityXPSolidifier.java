@@ -12,8 +12,7 @@ package ellpeck.actuallyadditions.tile;
 
 
 import ellpeck.actuallyadditions.items.InitItems;
-import ellpeck.actuallyadditions.items.ItemSpecialDrop;
-import ellpeck.actuallyadditions.items.metalists.TheSpecialDrops;
+import ellpeck.actuallyadditions.items.ItemSolidifiedExperience;
 import ellpeck.actuallyadditions.network.gui.IButtonReactor;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -36,7 +35,7 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
             if(this.amount > 0){
                 if(this.slots[0] == null){
                     int toSet = this.amount > 64 ? 64 : this.amount;
-                    this.slots[0] = new ItemStack(InitItems.itemSpecialDrop, toSet, TheSpecialDrops.SOLIDIFIED_EXPERIENCE.ordinal());
+                    this.slots[0] = new ItemStack(InitItems.itemSolidifiedExperience, toSet);
                     this.amount -= toSet;
                 }
                 else if(this.slots[0].stackSize < 64){
@@ -84,9 +83,9 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
     public void onButtonPressed(int buttonID, EntityPlayer player){
         if(buttonID < this.buttonAmounts.length){
             if(this.getPlayerXP(player) > 0){
-                int xp = this.buttonAmounts[buttonID] == -999 ? this.getPlayerXP(player)/ItemSpecialDrop.SOLID_XP_AMOUNT : this.buttonAmounts[buttonID];
-                if(this.amount < Short.MAX_VALUE-xp && this.getPlayerXP(player) >= ItemSpecialDrop.SOLID_XP_AMOUNT*xp){
-                    this.addPlayerXP(player, -(ItemSpecialDrop.SOLID_XP_AMOUNT*xp));
+                int xp = this.buttonAmounts[buttonID] == -999 ? this.getPlayerXP(player)/ItemSolidifiedExperience.SOLID_XP_AMOUNT : this.buttonAmounts[buttonID];
+                if(this.amount < Short.MAX_VALUE-xp && this.getPlayerXP(player) >= ItemSolidifiedExperience.SOLID_XP_AMOUNT*xp){
+                    this.addPlayerXP(player, -(ItemSolidifiedExperience.SOLID_XP_AMOUNT*xp));
                     if(!worldObj.isRemote){
                         this.amount += xp;
                     }

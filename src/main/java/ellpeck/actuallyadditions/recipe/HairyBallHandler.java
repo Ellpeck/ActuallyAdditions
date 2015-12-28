@@ -11,7 +11,6 @@
 package ellpeck.actuallyadditions.recipe;
 
 import ellpeck.actuallyadditions.items.InitItems;
-import ellpeck.actuallyadditions.items.metalists.TheSpecialDrops;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -47,9 +46,7 @@ public class HairyBallHandler{
         addReturn(new ItemStack(Blocks.sand), 50);
         addReturn(new ItemStack(Blocks.vine), 30);
         addReturn(new ItemStack(Blocks.web), 4);
-        addReturn(new ItemStack(InitItems.itemSpecialDrop, 1, TheSpecialDrops.SOLIDIFIED_EXPERIENCE.ordinal()), 20);
-        addReturn(new ItemStack(InitItems.itemSpecialDrop, 1, TheSpecialDrops.EMERALD_SHARD.ordinal()), 10);
-        addReturn(new ItemStack(InitItems.itemSpecialDrop, 1, TheSpecialDrops.PEARL_SHARD.ordinal()), 10);
+        addReturn(new ItemStack(InitItems.itemSolidifiedExperience), 20);
     }
 
     public static void addReturn(ItemStack stack, int chance){

@@ -405,16 +405,6 @@ public class ItemCrafting{
             recipeCoilAdvanced = Util.GetRecipes.lastIRecipe();
         }
 
-        //Ender Pearl
-        GameRegistry.addRecipe(new ItemStack(Items.ender_pearl),
-                "XXX", "XXX", "XXX",
-                'X', new ItemStack(InitItems.itemSpecialDrop, 1, TheSpecialDrops.PEARL_SHARD.ordinal()));
-
-        //Emerald
-        GameRegistry.addRecipe(new ItemStack(Items.emerald),
-                "XXX", "XXX", "XXX",
-                'X', new ItemStack(InitItems.itemSpecialDrop, 1, TheSpecialDrops.EMERALD_SHARD.ordinal()));
-
         //Advanced Leaf Blower
         if(ConfigCrafting.LEAF_BLOWER_ADVANCED.isEnabled()){
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemLeafBlowerAdvanced),

@@ -37,7 +37,7 @@ public class InitItems{
     public static Item itemKnife;
     public static Item itemCrafterOnAStick;
     public static Item itemDust;
-    public static Item itemSpecialDrop;
+    public static Item itemSolidifiedExperience;
     public static Item itemLeafBlower;
     public static Item itemLeafBlowerAdvanced;
 
@@ -192,7 +192,7 @@ public class InitItems{
         itemKnife = new ItemKnife("itemKnife");
         itemCrafterOnAStick = new ItemCrafterOnAStick("itemCrafterOnAStick");
         itemDust = new ItemDust("itemDust");
-        itemSpecialDrop = new ItemSpecialDrop("itemSpecial");
+        itemSolidifiedExperience = new ItemSolidifiedExperience("itemSolidifiedExperience");
         itemLeafBlower = new ItemLeafBlower(false, "itemLeafBlower");
         itemLeafBlowerAdvanced = new ItemLeafBlower(true, "itemLeafBlowerAdvanced");
         itemPotionRing = new ItemPotionRing(false, "itemPotionRing");

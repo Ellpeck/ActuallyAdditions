@@ -13,7 +13,6 @@ package ellpeck.actuallyadditions.recipe;
 import ellpeck.actuallyadditions.blocks.InitBlocks;
 import ellpeck.actuallyadditions.items.InitItems;
 import ellpeck.actuallyadditions.items.metalists.TheJams;
-import ellpeck.actuallyadditions.items.metalists.TheSpecialDrops;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.WeightedRandom;
@@ -32,7 +31,7 @@ public class TreasureChestHandler{
         addReturn(new ItemStack(Items.ender_pearl), 10, 1, 2);
         addReturn(new ItemStack(Items.emerald), 3, 1, 1);
         addReturn(new ItemStack(Items.experience_bottle), 5, 3, 6);
-        addReturn(new ItemStack(InitItems.itemSpecialDrop, 1, TheSpecialDrops.SOLIDIFIED_EXPERIENCE.ordinal()), 15, 3, 6);
+        addReturn(new ItemStack(InitItems.itemSolidifiedExperience), 15, 3, 6);
         addReturn(new ItemStack(Items.record_11), 1, 1, 1);
         addReturn(new ItemStack(Items.record_13), 1, 1, 1);
         addReturn(new ItemStack(Items.record_blocks), 1, 1, 1);

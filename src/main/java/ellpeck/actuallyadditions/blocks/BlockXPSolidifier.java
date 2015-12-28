@@ -16,7 +16,6 @@ import ellpeck.actuallyadditions.ActuallyAdditions;
 import ellpeck.actuallyadditions.blocks.base.BlockContainerBase;
 import ellpeck.actuallyadditions.inventory.GuiHandler;
 import ellpeck.actuallyadditions.items.InitItems;
-import ellpeck.actuallyadditions.items.metalists.TheSpecialDrops;
 import ellpeck.actuallyadditions.tile.TileEntityXPSolidifier;
 import ellpeck.actuallyadditions.util.ModUtil;
 import ellpeck.actuallyadditions.util.Util;
@@ -134,9 +133,9 @@ public class BlockXPSolidifier extends BlockContainerBase{
                 int stacks = solidifier.amount/64;
                 int rest = solidifier.amount%64;
                 for(int i = 0; i < stacks; i++){
-                    this.spawnItem(world, x, y, z, new ItemStack(InitItems.itemSpecialDrop, 64, TheSpecialDrops.SOLIDIFIED_EXPERIENCE.ordinal()));
+                    this.spawnItem(world, x, y, z, new ItemStack(InitItems.itemSolidifiedExperience, 64));
                 }
-                this.spawnItem(world, x, y, z, new ItemStack(InitItems.itemSpecialDrop, rest, TheSpecialDrops.SOLIDIFIED_EXPERIENCE.ordinal()));
+                this.spawnItem(world, x, y, z, new ItemStack(InitItems.itemSolidifiedExperience, rest));
                 solidifier.amount = 0;
             }
         }
