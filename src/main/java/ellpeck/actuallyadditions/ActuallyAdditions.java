@@ -132,8 +132,10 @@ public class ActuallyAdditions{
     public void missingMapping(FMLMissingMappingsEvent event){
         for(FMLMissingMappingsEvent.MissingMapping mapping : event.get()){
             //Ignore removal of foreign paxels
-            if(mapping.name != null && mapping.name.contains("paxel")){
-                mapping.ignore();
+            if(mapping.name != null){
+                if(mapping.name.contains("paxel") || mapping.name.contains("itemSpecial")){
+                    mapping.ignore();
+                }
             }
         }
     }
