@@ -40,7 +40,7 @@ public class LivingDropEvent{
 
             //Drop Cobwebs from Spiders
             if(ConfigBoolValues.DO_SPIDER_DROPS.isEnabled() && event.entityLiving instanceof EntitySpider){
-                if(Util.RANDOM.nextInt(500) <= 0){
+                if(Util.RANDOM.nextInt(80) <= 0){
                     event.entityLiving.entityDropItem(new ItemStack(Blocks.web, Util.RANDOM.nextInt(2)+1), 0);
                 }
             }
