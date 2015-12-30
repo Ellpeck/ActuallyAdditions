@@ -19,7 +19,7 @@ apply plugin: 'forge'
 apply plugin: 'maven'
 
 version = "1.7.10-r16"
-group = "ellpeck.actuallyadditions"
+group = "de.ellpeck.actuallyadditions"
 archivesBaseName = "ActuallyAdditions"
 
 minecraft {
