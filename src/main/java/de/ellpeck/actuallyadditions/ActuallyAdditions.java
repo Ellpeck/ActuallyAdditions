@@ -50,13 +50,13 @@ import net.minecraft.server.MinecraftServer;
 import java.util.Locale;
 
 //                                                                           So that BuildCraft Oil always gets used
-@Mod(modid = ModUtil.MOD_ID, name = ModUtil.NAME, version = ModUtil.VERSION, dependencies = "after:BuildCraft|Energy", guiFactory = "GuiFactory")
+@Mod(modid = ModUtil.MOD_ID, name = ModUtil.NAME, version = ModUtil.VERSION, dependencies = "after:BuildCraft|Energy", guiFactory = "de.ellpeck.actuallyadditions.config.GuiFactory")
 public class ActuallyAdditions{
 
     @Instance(ModUtil.MOD_ID)
     public static ActuallyAdditions instance;
 
-    @SidedProxy(clientSide = "ClientProxy", serverSide = "ServerProxy")
+    @SidedProxy(clientSide = "de.ellpeck.actuallyadditions.proxy.ClientProxy", serverSide = "de.ellpeck.actuallyadditions.proxy.ServerProxy")
     public static IProxy proxy;
 
     @EventHandler

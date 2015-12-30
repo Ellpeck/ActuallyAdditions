@@ -66,6 +66,7 @@ public class GuiBooklet extends GuiScreen{
     public GuiButton buttonForum;
     public GuiButton buttonAchievements;
     public GuiButton buttonConfig;
+    public GuiButton buttonWebsite;
     public GuiButton[] chapterButtons = new GuiButton[CHAPTER_BUTTONS_AMOUNT];
     public GuiButton[] bookmarkButtons = new GuiButton[8];
     public GuiTextField searchField;
@@ -216,6 +217,10 @@ public class GuiBooklet extends GuiScreen{
                 BookletUtils.openBrowser(UpdateChecker.CHANGELOG_LINK, UpdateChecker.DOWNLOAD_LINK);
             }
         }
+        //Handles Website
+        else if(button == this.buttonWebsite){
+            BookletUtils.openBrowser("http://ellpeck.de");
+        }
         //Handles Twitter
         else if(button == this.buttonTwitter){
             BookletUtils.openBrowser("http://twitter.com/ActAddMod");
@@ -292,6 +297,13 @@ public class GuiBooklet extends GuiScreen{
 
         this.buttonAchievements = new TexturedButton(7, this.guiLeft+138, this.guiTop, 205, 0, 8, 8, Collections.singletonList(EnumChatFormatting.GOLD+"Show Achievements"));
         this.buttonList.add(this.buttonAchievements);
+
+        ArrayList websiteHover = new ArrayList();
+        websiteHover.add(EnumChatFormatting.GOLD+"Open Author's Website");
+        websiteHover.add("(There's some cool stuff there!)");
+        websiteHover.add(EnumChatFormatting.GRAY+""+EnumChatFormatting.ITALIC+"Would you call this Product Placement?");
+        this.buttonWebsite = new TexturedButton(-99, this.guiLeft, this.guiTop+20, 228, 0, 8, 8, websiteHover);
+        this.buttonList.add(this.buttonWebsite);
 
         ArrayList configHover = new ArrayList();
         configHover.add(EnumChatFormatting.GOLD+"Show Configuration GUI");
