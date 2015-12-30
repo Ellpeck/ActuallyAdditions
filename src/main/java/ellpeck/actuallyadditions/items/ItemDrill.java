@@ -53,6 +53,7 @@ import java.util.Set;
 public class ItemDrill extends ItemEnergy{
 
     private static final int ENERGY_USE = 100;
+    private static final int HARVEST_LEVEL = 4;
     @SideOnly(Side.CLIENT)
     private IIcon[] allDemDamnIconsMaan;
 
@@ -60,6 +61,15 @@ public class ItemDrill extends ItemEnergy{
         super(500000, 5000, name);
         this.setMaxDamage(0);
         this.setHasSubtypes(true);
+
+        //For Iguana Tweaks author
+        //
+        //You know what? It's bad, when you know
+        //There is already getHarvestLevel(), yo
+        //But then Iguana comes and fucks with you
+        //So that you need to use setHarvestLevel() too.
+        this.setHarvestLevel("shovel", HARVEST_LEVEL);
+        this.setHarvestLevel("pickaxe", HARVEST_LEVEL);
     }
 
     @Override
@@ -281,7 +291,7 @@ public class ItemDrill extends ItemEnergy{
 
     @Override
     public int getHarvestLevel(ItemStack stack, String toolClass){
-        return 4;
+        return HARVEST_LEVEL;
     }
 
     /**
