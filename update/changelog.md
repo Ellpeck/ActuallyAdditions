@@ -196,6 +196,3 @@
 - AIOT Integration for SimpleOres 2
 - Changed Ball Of Hair Name to "Ball Of Fur", added Booklet Page
 - Added Iron Casing & Drill Core
-
-#### View me on GitHub: https://github.com/Ellpeck/ActuallyAdditions/blob/master/update/changelog.md
-#### View me while I look awesome: https://cdn.rawgit.com/XDjackieXD/ActuallyChangelogs/0.9/changelog.html
