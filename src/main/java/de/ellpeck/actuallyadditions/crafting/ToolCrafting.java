@@ -13,10 +13,12 @@ package de.ellpeck.actuallyadditions.crafting;
 import cpw.mods.fml.common.registry.GameRegistry;
 import de.ellpeck.actuallyadditions.config.values.ConfigCrafting;
 import de.ellpeck.actuallyadditions.items.InitItems;
+import de.ellpeck.actuallyadditions.items.metalists.TheCrystals;
 import de.ellpeck.actuallyadditions.items.metalists.TheMiscItems;
 import de.ellpeck.actuallyadditions.util.Util;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.oredict.ShapedOreRecipe;
@@ -31,159 +33,24 @@ public class ToolCrafting{
     public static void init(){
 
         if(ConfigCrafting.TOOL_EMERALD.isEnabled()){
-            //Pickaxe
-            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemPickaxeEmerald),
-                    "EEE", " S ", " S ",
-                    'E', "gemEmerald",
-                    'S', new ItemStack(Items.stick)));
-
-            //Sword
-            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemSwordEmerald),
-                    "E", "E", "S",
-                    'E', "gemEmerald",
-                    'S', new ItemStack(Items.stick)));
-
-            //Axe
-            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemAxeEmerald),
-                    "EE", "ES", " S",
-                    'E', "gemEmerald",
-                    'S', new ItemStack(Items.stick)));
-
-            //Shovel
-            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemShovelEmerald),
-                    "E", "S", "S",
-                    'E', "gemEmerald",
-                    'S', new ItemStack(Items.stick)));
-
-            //Hoe
-            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemHoeEmerald),
-                    "EE", " S", " S",
-                    'E', "gemEmerald",
-                    'S', new ItemStack(Items.stick)));
-
-            //Helm
-            GameRegistry.addRecipe(new ItemStack(InitItems.itemHelmEmerald),
-                    "OOO", "O O",
-                    'O', new ItemStack(Items.emerald));
-
-            //Chest
-            GameRegistry.addRecipe(new ItemStack(InitItems.itemChestEmerald),
-                    "O O", "OOO", "OOO",
-                    'O', new ItemStack(Items.emerald));
-
-            //Legs
-            GameRegistry.addRecipe(new ItemStack(InitItems.itemPantsEmerald),
-                    "OOO", "O O", "O O",
-                    'O', new ItemStack(Items.emerald));
-
-            //Boots
-            GameRegistry.addRecipe(new ItemStack(InitItems.itemBootsEmerald),
-                    "O O", "O O",
-                    'O', new ItemStack(Items.emerald));
+            addToolAndArmorRecipes(new ItemStack(Items.emerald), InitItems.itemPickaxeEmerald, InitItems.itemSwordEmerald, InitItems.itemAxeEmerald, InitItems.itemShovelEmerald, InitItems.itemHoeEmerald, InitItems.itemHelmEmerald, InitItems.itemChestEmerald, InitItems.itemPantsEmerald, InitItems.itemBootsEmerald);
         }
 
         if(ConfigCrafting.TOOL_QUARTZ.isEnabled()){
-            //Pickaxe
-            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemPickaxeQuartz),
-                    "EEE", " S ", " S ",
-                    'E', "gemQuartzBlack",
-                    'S', new ItemStack(Items.stick)));
-
-            //Sword
-            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemSwordQuartz),
-                    "E", "E", "S",
-                    'E', "gemQuartzBlack",
-                    'S', new ItemStack(Items.stick)));
-
-            //Axe
-            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemAxeQuartz),
-                    "EE", "ES", " S",
-                    'E', "gemQuartzBlack",
-                    'S', new ItemStack(Items.stick)));
-
-            //Shovel
-            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemShovelQuartz),
-                    "E", "S", "S",
-                    'E', "gemQuartzBlack",
-                    'S', new ItemStack(Items.stick)));
-
-            //Hoe
-            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemHoeQuartz),
-                    "EE", " S", " S",
-                    'E', "gemQuartzBlack",
-                    'S', new ItemStack(Items.stick)));
-
-            //Helm
-            GameRegistry.addRecipe(new ItemStack(InitItems.itemHelmQuartz),
-                    "OOO", "O O",
-                    'O', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal()));
-
-            //Chest
-            GameRegistry.addRecipe(new ItemStack(InitItems.itemChestQuartz),
-                    "O O", "OOO", "OOO",
-                    'O', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal()));
-
-            //Legs
-            GameRegistry.addRecipe(new ItemStack(InitItems.itemPantsQuartz),
-                    "OOO", "O O", "O O",
-                    'O', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal()));
-
-            //Boots
-            GameRegistry.addRecipe(new ItemStack(InitItems.itemBootsQuartz),
-                    "O O", "O O",
-                    'O', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal()));
+            addToolAndArmorRecipes(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal()), InitItems.itemPickaxeQuartz, InitItems.itemSwordQuartz, InitItems.itemAxeQuartz, InitItems.itemShovelQuartz, InitItems.itemHoeQuartz, InitItems.itemHelmQuartz, InitItems.itemChestQuartz, InitItems.itemPantsQuartz, InitItems.itemBootsQuartz);
         }
 
         if(ConfigCrafting.TOOL_OBSIDIAN.isEnabled()){
-            //Pickaxe
-            GameRegistry.addRecipe(new ItemStack(InitItems.itemPickaxeObsidian),
-                    "EEE", " S ", " S ",
-                    'E', new ItemStack(Blocks.obsidian),
-                    'S', new ItemStack(Items.stick));
+            addToolAndArmorRecipes(new ItemStack(Blocks.obsidian), InitItems.itemPickaxeObsidian, InitItems.itemSwordObsidian, InitItems.itemAxeObsidian, InitItems.itemShovelObsidian, InitItems.itemHoeObsidian, InitItems.itemHelmObsidian, InitItems.itemChestObsidian, InitItems.itemPantsObsidian, InitItems.itemBootsObsidian);
+        }
 
-            //Sword
-            GameRegistry.addRecipe(new ItemStack(InitItems.itemSwordObsidian),
-                    "E", "E", "S",
-                    'E', new ItemStack(Blocks.obsidian),
-                    'S', new ItemStack(Items.stick));
-
-            //Axe
-            GameRegistry.addRecipe(new ItemStack(InitItems.itemAxeObsidian),
-                    "EE", "ES", " S",
-                    'E', new ItemStack(Blocks.obsidian),
-                    'S', new ItemStack(Items.stick));
-
-            //Shovel
-            GameRegistry.addRecipe(new ItemStack(InitItems.itemShovelObsidian),
-                    "E", "S", "S",
-                    'E', new ItemStack(Blocks.obsidian),
-                    'S', new ItemStack(Items.stick));
-
-            //Hoe
-            GameRegistry.addRecipe(new ItemStack(InitItems.itemHoeObsidian),
-                    "EE", " S", " S",
-                    'E', new ItemStack(Blocks.obsidian),
-                    'S', new ItemStack(Items.stick));
-
-            //Helm
-            GameRegistry.addRecipe(new ItemStack(InitItems.itemHelmObsidian),
-                    "OOO", "O O",
-                    'O', new ItemStack(Blocks.obsidian));
-
-            //Chest
-            GameRegistry.addRecipe(new ItemStack(InitItems.itemChestObsidian),
-                    "O O", "OOO", "OOO",
-                    'O', new ItemStack(Blocks.obsidian));
-
-            //Legs
-            GameRegistry.addRecipe(new ItemStack(InitItems.itemPantsObsidian),
-                    "OOO", "O O", "O O",
-                    'O', new ItemStack(Blocks.obsidian));
-
-            //Boots
-            GameRegistry.addRecipe(new ItemStack(InitItems.itemBootsObsidian),
-                    "O O", "O O",
-                    'O', new ItemStack(Blocks.obsidian));
+        if(ConfigCrafting.TOOL_CRYSTALS.isEnabled()){
+            addToolAndArmorRecipes(new ItemStack(InitItems.itemCrystal, 1, TheCrystals.REDSTONE.ordinal()), InitItems.itemPickaxeCrystalRed, InitItems.itemSwordCrystalRed, InitItems.itemAxeCrystalRed, InitItems.itemShovelCrystalRed, InitItems.itemHoeCrystalRed, InitItems.itemHelmCrystalRed, InitItems.itemChestCrystalRed, InitItems.itemPantsCrystalRed, InitItems.itemBootsCrystalRed);
+            addToolAndArmorRecipes(new ItemStack(InitItems.itemCrystal, 1, TheCrystals.EMERALD.ordinal()), InitItems.itemPickaxeCrystalGreen, InitItems.itemSwordCrystalGreen, InitItems.itemAxeCrystalGreen, InitItems.itemShovelCrystalGreen, InitItems.itemHoeCrystalGreen, InitItems.itemHelmCrystalGreen, InitItems.itemChestCrystalGreen, InitItems.itemPantsCrystalGreen, InitItems.itemBootsCrystalGreen);
+            addToolAndArmorRecipes(new ItemStack(InitItems.itemCrystal, 1, TheCrystals.IRON.ordinal()), InitItems.itemPickaxeCrystalWhite, InitItems.itemSwordCrystalWhite, InitItems.itemAxeCrystalWhite, InitItems.itemShovelCrystalWhite, InitItems.itemHoeCrystalWhite, InitItems.itemHelmCrystalWhite, InitItems.itemChestCrystalWhite, InitItems.itemPantsCrystalWhite, InitItems.itemBootsCrystalWhite);
+            addToolAndArmorRecipes(new ItemStack(InitItems.itemCrystal, 1, TheCrystals.DIAMOND.ordinal()), InitItems.itemPickaxeCrystalLightBlue, InitItems.itemSwordCrystalLightBlue, InitItems.itemAxeCrystalLightBlue, InitItems.itemShovelCrystalLightBlue, InitItems.itemHoeCrystalLightBlue, InitItems.itemHelmCrystalLightBlue, InitItems.itemChestCrystalLightBlue, InitItems.itemPantsCrystalLightBlue, InitItems.itemBootsCrystalLightBlue);
+            addToolAndArmorRecipes(new ItemStack(InitItems.itemCrystal, 1, TheCrystals.LAPIS.ordinal()), InitItems.itemPickaxeCrystalBlue, InitItems.itemSwordCrystalBlue, InitItems.itemAxeCrystalBlue, InitItems.itemShovelCrystalBlue, InitItems.itemHoeCrystalBlue, InitItems.itemHelmCrystalBlue, InitItems.itemChestCrystalBlue, InitItems.itemPantsCrystalBlue, InitItems.itemBootsCrystalBlue);
+            addToolAndArmorRecipes(new ItemStack(InitItems.itemCrystal, 1, TheCrystals.COAL.ordinal()), InitItems.itemPickaxeCrystalBlack, InitItems.itemSwordCrystalBlack, InitItems.itemAxeCrystalBlack, InitItems.itemShovelCrystalBlack, InitItems.itemHoeCrystalBlack, InitItems.itemHelmCrystalBlack, InitItems.itemChestCrystalBlack, InitItems.itemPantsCrystalBlack, InitItems.itemBootsCrystalBlack);
         }
 
         //Paxels
@@ -247,4 +114,55 @@ public class ToolCrafting{
         }
     }
 
+    public static void addToolAndArmorRecipes(ItemStack base, Item pickaxe, Item sword, Item axe, Item shovel, Item hoe, Item helm, Item chest, Item pants, Item boots){
+        //Pickaxe
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(pickaxe),
+                "EEE", " S ", " S ",
+                'E', base,
+                'S', new ItemStack(Items.stick)));
+
+        //Sword
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(sword),
+                "E", "E", "S",
+                'E', base,
+                'S', new ItemStack(Items.stick)));
+
+        //Axe
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(axe),
+                "EE", "ES", " S",
+                'E', base,
+                'S', new ItemStack(Items.stick)));
+
+        //Shovel
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(shovel),
+                "E", "S", "S",
+                'E', base,
+                'S', new ItemStack(Items.stick)));
+
+        //Hoe
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(hoe),
+                "EE", " S", " S",
+                'E', base,
+                'S', new ItemStack(Items.stick)));
+
+        //Helm
+        GameRegistry.addRecipe(new ItemStack(helm),
+                "OOO", "O O",
+                'O', base);
+
+        //Chest
+        GameRegistry.addRecipe(new ItemStack(chest),
+                "O O", "OOO", "OOO",
+                'O', base);
+
+        //Legs
+        GameRegistry.addRecipe(new ItemStack(pants),
+                "OOO", "O O", "O O",
+                'O', base);
+
+        //Boots
+        GameRegistry.addRecipe(new ItemStack(boots),
+                "O O", "O O",
+                'O', base);
+    }
 }

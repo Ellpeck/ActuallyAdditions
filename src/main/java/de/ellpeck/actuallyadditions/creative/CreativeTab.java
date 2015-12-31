@@ -185,6 +185,14 @@ public class CreativeTab extends CreativeTabs{
         add(InitItems.obsidianPaxel);
         add(InitItems.quartzPaxel);
         InitForeignPaxels.addToCreativeTab();
+        
+        add(InitBlocks.blockCrystal);
+        add(InitItems.itemCrystal);
+
+        add(InitItems.itemJams);
+
+        add(InitItems.itemPotionRing);
+        add(InitItems.itemPotionRingAdvanced);
 
         add(InitItems.itemPickaxeQuartz);
         add(InitItems.itemSwordQuartz);
@@ -219,13 +227,65 @@ public class CreativeTab extends CreativeTabs{
         add(InitItems.itemPantsObsidian);
         add(InitItems.itemBootsObsidian);
 
-        add(InitBlocks.blockCrystal);
-        add(InitItems.itemCrystal);
+        add(InitItems.itemPickaxeCrystalRed);
+        add(InitItems.itemAxeCrystalRed);
+        add(InitItems.itemShovelCrystalRed);
+        add(InitItems.itemSwordCrystalRed);
+        add(InitItems.itemHoeCrystalRed);
+        add(InitItems.itemHelmCrystalRed);
+        add(InitItems.itemChestCrystalRed);
+        add(InitItems.itemPantsCrystalRed);
+        add(InitItems.itemBootsCrystalRed);
 
-        add(InitItems.itemJams);
+        add(InitItems.itemPickaxeCrystalBlue);
+        add(InitItems.itemAxeCrystalBlue);
+        add(InitItems.itemShovelCrystalBlue);
+        add(InitItems.itemSwordCrystalBlue);
+        add(InitItems.itemHoeCrystalBlue);
+        add(InitItems.itemHelmCrystalBlue);
+        add(InitItems.itemChestCrystalBlue);
+        add(InitItems.itemPantsCrystalBlue);
+        add(InitItems.itemBootsCrystalBlue);
 
-        add(InitItems.itemPotionRing);
-        add(InitItems.itemPotionRingAdvanced);
+        add(InitItems.itemPickaxeCrystalLightBlue);
+        add(InitItems.itemAxeCrystalLightBlue);
+        add(InitItems.itemShovelCrystalLightBlue);
+        add(InitItems.itemSwordCrystalLightBlue);
+        add(InitItems.itemHoeCrystalLightBlue);
+        add(InitItems.itemHelmCrystalLightBlue);
+        add(InitItems.itemChestCrystalLightBlue);
+        add(InitItems.itemPantsCrystalLightBlue);
+        add(InitItems.itemBootsCrystalLightBlue);
+
+        add(InitItems.itemPickaxeCrystalBlack);
+        add(InitItems.itemAxeCrystalBlack);
+        add(InitItems.itemShovelCrystalBlack);
+        add(InitItems.itemSwordCrystalBlack);
+        add(InitItems.itemHoeCrystalBlack);
+        add(InitItems.itemHelmCrystalBlack);
+        add(InitItems.itemChestCrystalBlack);
+        add(InitItems.itemPantsCrystalBlack);
+        add(InitItems.itemBootsCrystalBlack);
+
+        add(InitItems.itemPickaxeCrystalGreen);
+        add(InitItems.itemAxeCrystalGreen);
+        add(InitItems.itemShovelCrystalGreen);
+        add(InitItems.itemSwordCrystalGreen);
+        add(InitItems.itemHoeCrystalGreen);
+        add(InitItems.itemHelmCrystalGreen);
+        add(InitItems.itemChestCrystalGreen);
+        add(InitItems.itemPantsCrystalGreen);
+        add(InitItems.itemBootsCrystalGreen);
+
+        add(InitItems.itemPickaxeCrystalWhite);
+        add(InitItems.itemAxeCrystalWhite);
+        add(InitItems.itemShovelCrystalWhite);
+        add(InitItems.itemSwordCrystalWhite);
+        add(InitItems.itemHoeCrystalWhite);
+        add(InitItems.itemHelmCrystalWhite);
+        add(InitItems.itemChestCrystalWhite);
+        add(InitItems.itemPantsCrystalWhite);
+        add(InitItems.itemBootsCrystalWhite);
     }
 
     public void add(Item item){

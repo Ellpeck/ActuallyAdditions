@@ -81,6 +81,7 @@ public enum ConfigCrafting{
     TOOL_EMERALD("Emerald Tools", ConfigCategories.ITEMS_CRAFTING),
     TOOL_OBSIDIAN("Obsidian Tools", ConfigCategories.ITEMS_CRAFTING),
     TOOL_QUARTZ("Obsidian Tools", ConfigCategories.ITEMS_CRAFTING),
+    TOOL_CRYSTALS("Crystal Tools", ConfigCategories.ITEMS_CRAFTING),
     RICE_BREAD("Rice Bread", ConfigCategories.FOOD_CRAFTING),
     RICE_DOUGH("Rice Dough", ConfigCategories.FOOD_CRAFTING),
 

@@ -14,6 +14,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import de.ellpeck.actuallyadditions.creative.CreativeTab;
+import de.ellpeck.actuallyadditions.util.ItemUtil;
 import de.ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
@@ -21,23 +22,19 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
-import net.minecraftforge.oredict.OreDictionary;
 
 public class ItemArmorAA extends ItemArmor{
 
-    private String repairItem;
+    private ItemStack repairItem;
     private String name;
     private String[] textures;
 
-    public ItemArmorAA(String name, ArmorMaterial material, int type, String repairItem, String textureBase){
+    public ItemArmorAA(String name, ArmorMaterial material, int type, ItemStack repairItem, String textureBase){
         super(material, 0, type);
         this.repairItem = repairItem;
         this.name = name;
         String texture = ModUtil.MOD_ID_LOWER+":textures/armor/"+textureBase;
         textures = new String[]{texture+"1.png", texture+"2.png"};
-
-        //Fixes vanilla's weird durability handling
-        this.setMaxDamage(material.getDurability(type)/10);
 
         this.register();
     }
@@ -79,13 +76,7 @@ public class ItemArmorAA extends ItemArmor{
 
     @Override
     public boolean getIsRepairable(ItemStack itemToRepair, ItemStack stack){
-        int[] idsStack = OreDictionary.getOreIDs(stack);
-        for(int id : idsStack){
-            if(OreDictionary.getOreName(id).equals(repairItem)){
-                return true;
-            }
-        }
-        return false;
+        return ItemUtil.areItemsEqual(this.repairItem, stack, false);
     }
 
     @Override

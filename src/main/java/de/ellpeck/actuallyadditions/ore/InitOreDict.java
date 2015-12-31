@@ -13,12 +13,12 @@ package de.ellpeck.actuallyadditions.ore;
 import de.ellpeck.actuallyadditions.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.blocks.metalists.TheMiscBlocks;
 import de.ellpeck.actuallyadditions.items.InitItems;
+import de.ellpeck.actuallyadditions.items.metalists.TheCrystals;
 import de.ellpeck.actuallyadditions.items.metalists.TheDusts;
 import de.ellpeck.actuallyadditions.items.metalists.TheFoods;
 import de.ellpeck.actuallyadditions.items.metalists.TheMiscItems;
 import de.ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -31,7 +31,6 @@ public class InitOreDict{
 
         //Vanilla Ores
         addOre(Items.coal, "coal");
-        addOre(Blocks.obsidian, "obsidian");
 
         //Ores for Pulverizers etc.
         addOre(InitItems.itemDust, TheDusts.IRON.ordinal(), "dustIron");
@@ -60,6 +59,9 @@ public class InitOreDict{
 
         //For Crafting
         addOre(InitItems.itemMisc, TheMiscItems.BLACK_DYE.ordinal(), "dyeBlack");
+
+        //For Repairing
+        addOre(InitItems.itemCrystal, TheCrystals.REDSTONE.ordinal(), "actAddCrystalRed");
     }
 
     private static void addOre(ItemStack stack, String name){

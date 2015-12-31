@@ -17,6 +17,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import de.ellpeck.actuallyadditions.config.ConfigValues;
 import de.ellpeck.actuallyadditions.creative.CreativeTab;
+import de.ellpeck.actuallyadditions.util.ItemUtil;
 import de.ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -44,9 +45,10 @@ public class ItemAllToolAA extends ItemTool{
 
     private String name;
     private EnumRarity rarity;
-    private String repairItem;
+    private ItemStack repairItem;
+    private String repairOredict;
 
-    public ItemAllToolAA(ToolMaterial toolMat, String repairItem, String unlocalizedName, EnumRarity rarity, int color){
+    public ItemAllToolAA(ToolMaterial toolMat, ItemStack repairItem, String unlocalizedName, EnumRarity rarity, int color){
         super(4.0F, toolMat, Sets.newHashSet());
 
         this.repairItem = repairItem;
@@ -57,6 +59,11 @@ public class ItemAllToolAA extends ItemTool{
         this.setMaxDamage(this.getMaxDamage()*4);
 
         this.register();
+    }
+
+    public ItemAllToolAA(ToolMaterial toolMat, String repairItem, String unlocalizedName, EnumRarity rarity, int color){
+        this(toolMat, (ItemStack)null, unlocalizedName, rarity, color);
+        this.repairOredict = repairItem;
     }
 
     private void register(){
@@ -160,10 +167,15 @@ public class ItemAllToolAA extends ItemTool{
 
     @Override
     public boolean getIsRepairable(ItemStack itemToRepair, ItemStack stack){
-        int[] idsStack = OreDictionary.getOreIDs(stack);
-        for(int id : idsStack){
-            if(OreDictionary.getOreName(id).equals(repairItem)){
-                return true;
+        if(this.repairItem != null){
+            return ItemUtil.areItemsEqual(this.repairItem, stack, false);
+        }
+        else if(this.repairOredict != null){
+            int[] idsStack = OreDictionary.getOreIDs(stack);
+            for(int id : idsStack){
+                if(OreDictionary.getOreName(id).equals(this.repairOredict)){
+                    return true;
+                }
             }
         }
         return false;

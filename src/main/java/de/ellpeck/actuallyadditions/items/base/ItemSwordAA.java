@@ -15,28 +15,26 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import de.ellpeck.actuallyadditions.blocks.base.ItemBlockBase;
 import de.ellpeck.actuallyadditions.creative.CreativeTab;
+import de.ellpeck.actuallyadditions.util.ItemUtil;
 import de.ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.util.IIcon;
-import net.minecraftforge.oredict.OreDictionary;
 
 public class ItemSwordAA extends ItemSword{
 
     private String name;
     private EnumRarity rarity;
-    private String repairItem;
+    private ItemStack repairItem;
 
-    public ItemSwordAA(ToolMaterial toolMat, String repairItem, String unlocalizedName, EnumRarity rarity){
+    public ItemSwordAA(ToolMaterial toolMat, ItemStack repairItem, String unlocalizedName, EnumRarity rarity){
         super(toolMat);
 
         this.repairItem = repairItem;
         this.name = unlocalizedName;
         this.rarity = rarity;
-
-        this.setMaxDamage(this.getMaxDamage()*4);
 
         this.register();
     }
@@ -66,13 +64,7 @@ public class ItemSwordAA extends ItemSword{
 
     @Override
     public boolean getIsRepairable(ItemStack itemToRepair, ItemStack stack){
-        int[] idsStack = OreDictionary.getOreIDs(stack);
-        for(int id : idsStack){
-            if(OreDictionary.getOreName(id).equals(repairItem)){
-                return true;
-            }
-        }
-        return false;
+        return ItemUtil.areItemsEqual(this.repairItem, stack, false);
     }
 
     @Override

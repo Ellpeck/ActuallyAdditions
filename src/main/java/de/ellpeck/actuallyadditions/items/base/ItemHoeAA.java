@@ -14,6 +14,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import de.ellpeck.actuallyadditions.creative.CreativeTab;
+import de.ellpeck.actuallyadditions.util.ItemUtil;
 import de.ellpeck.actuallyadditions.util.ModUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.item.EnumRarity;
@@ -21,22 +22,19 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemHoe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
-import net.minecraftforge.oredict.OreDictionary;
 
 public class ItemHoeAA extends ItemHoe{
 
     private String name;
     private EnumRarity rarity;
-    private String repairItem;
+    private ItemStack repairItem;
 
-    public ItemHoeAA(Item.ToolMaterial toolMat, String repairItem, String unlocalizedName, EnumRarity rarity){
+    public ItemHoeAA(Item.ToolMaterial toolMat, ItemStack repairItem, String unlocalizedName, EnumRarity rarity){
         super(toolMat);
 
         this.repairItem = repairItem;
         this.name = unlocalizedName;
         this.rarity = rarity;
-
-        this.setMaxDamage(this.getMaxDamage()*4);
 
         this.register();
     }
@@ -67,13 +65,7 @@ public class ItemHoeAA extends ItemHoe{
 
     @Override
     public boolean getIsRepairable(ItemStack itemToRepair, ItemStack stack){
-        int[] idsStack = OreDictionary.getOreIDs(stack);
-        for(int id : idsStack){
-            if(OreDictionary.getOreName(id).equals(repairItem)){
-                return true;
-            }
-        }
-        return false;
+        return ItemUtil.areItemsEqual(this.repairItem, stack, false);
     }
 
     @Override
