@@ -89,11 +89,12 @@ public class LensNoneRecipeHandler{
             recipeSoulSand = Util.GetRecipes.lastReconstructorRecipe();
             addRecipe(new ItemStack(Items.rotten_flesh), new ItemStack(Items.leather), 8000);
             recipeLeather = Util.GetRecipes.lastReconstructorRecipe();
-            addRecipe(new ItemStack(Blocks.quartz_block), new ItemStack(InitBlocks.blockTestifiBucksWhiteWall), 10);
-            recipeWhiteWall = Util.GetRecipes.lastReconstructorRecipe();
-            addRecipe(new ItemStack(Blocks.quartz_block, 1, 1), new ItemStack(InitBlocks.blockTestifiBucksGreenWall), 10);
-            recipeGreenWall = Util.GetRecipes.lastReconstructorRecipe();
         }
+
+        addRecipe(new ItemStack(Blocks.quartz_block), new ItemStack(InitBlocks.blockTestifiBucksWhiteWall), 10);
+        recipeWhiteWall = Util.GetRecipes.lastReconstructorRecipe();
+        addRecipe(new ItemStack(Blocks.quartz_block, 1, 1), new ItemStack(InitBlocks.blockTestifiBucksGreenWall), 10);
+        recipeGreenWall = Util.GetRecipes.lastReconstructorRecipe();
     }
 
     public static void addRecipe(ItemStack input, ItemStack output, int energyUse){
