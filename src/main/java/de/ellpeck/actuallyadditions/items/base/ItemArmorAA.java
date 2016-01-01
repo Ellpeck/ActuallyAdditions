@@ -28,8 +28,9 @@ public class ItemArmorAA extends ItemArmor{
     private ItemStack repairItem;
     private String name;
     private String[] textures;
+    private EnumRarity rarity;
 
-    public ItemArmorAA(String name, ArmorMaterial material, int type, ItemStack repairItem, String textureBase){
+    public ItemArmorAA(String name, ArmorMaterial material, int type, ItemStack repairItem, String textureBase, EnumRarity rarity){
         super(material, 0, type);
         this.repairItem = repairItem;
         this.name = name;
@@ -37,6 +38,10 @@ public class ItemArmorAA extends ItemArmor{
         textures = new String[]{texture+"1.png", texture+"2.png"};
 
         this.register();
+    }
+
+    public ItemArmorAA(String name, ArmorMaterial material, int type, ItemStack repairItem, String textureBase){
+        this(name, material, type, repairItem, textureBase, EnumRarity.rare);
     }
 
     private void register(){
@@ -60,7 +65,7 @@ public class ItemArmorAA extends ItemArmor{
 
     @Override
     public EnumRarity getRarity(ItemStack stack){
-        return EnumRarity.rare;
+        return this.rarity;
     }
 
     @Override

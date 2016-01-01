@@ -10,16 +10,17 @@
 
 package de.ellpeck.actuallyadditions.items.metalists;
 
+import de.ellpeck.actuallyadditions.util.Util;
 import net.minecraft.item.EnumRarity;
 
 public enum TheCrystals{
 
-    REDSTONE("Red", EnumRarity.rare, 16318464),
-    LAPIS("Blue", EnumRarity.uncommon, 131437),
-    DIAMOND("LightBlue", EnumRarity.epic, 9211636),
-    COAL("Black", EnumRarity.uncommon, 986895),
-    EMERALD("Green", EnumRarity.epic, 382466),
-    IRON("White", EnumRarity.rare, 11053224);
+    REDSTONE("Red", Util.CRYSTAL_RED_RARITY, 16318464),
+    LAPIS("Blue", Util.CRYSTAL_BLUE_RARITY, 131437),
+    DIAMOND("LightBlue", Util.CRYSTAL_LIGHT_BLUE_RARITY, 9211636),
+    COAL("Black", Util.CRYSTAL_BLACK_RARITY, 986895),
+    EMERALD("Green", Util.CRYSTAL_GREEN_RARITY, 382466),
+    IRON("White", Util.CRYSTAL_WHITE_RARITY, 11053224);
 
     public final String name;
     public final EnumRarity rarity;

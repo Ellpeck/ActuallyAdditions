@@ -33,7 +33,15 @@ public class Util{
 
     public static final Random RANDOM = new Random();
     public static final int WILDCARD = OreDictionary.WILDCARD_VALUE;
-    public static final EnumRarity FALLBACK_RARITY = EnumHelper.addRarity(ModUtil.MOD_ID_LOWER+".fallback", EnumChatFormatting.DARK_RED, ModUtil.NAME+" Fallback");
+
+    public static final EnumRarity CRYSTAL_RED_RARITY = EnumHelper.addRarity(ModUtil.MOD_ID_LOWER+"crystalRed", EnumChatFormatting.DARK_RED, ModUtil.NAME+" Red Crystal");
+    public static final EnumRarity CRYSTAL_BLUE_RARITY = EnumHelper.addRarity(ModUtil.MOD_ID_LOWER+"crystalBlue", EnumChatFormatting.DARK_BLUE, ModUtil.NAME+" Blue Crystal");
+    public static final EnumRarity CRYSTAL_LIGHT_BLUE_RARITY = EnumHelper.addRarity(ModUtil.MOD_ID_LOWER+"crystalLightBlue", EnumChatFormatting.BLUE, ModUtil.NAME+" Light Blue Crystal");
+    public static final EnumRarity CRYSTAL_BLACK_RARITY = EnumHelper.addRarity(ModUtil.MOD_ID_LOWER+"crystalBlack", EnumChatFormatting.DARK_GRAY, ModUtil.NAME+" Black Crystal");
+    public static final EnumRarity CRYSTAL_GREEN_RARITY = EnumHelper.addRarity(ModUtil.MOD_ID_LOWER+"crystalGreen", EnumChatFormatting.DARK_GREEN, ModUtil.NAME+" Green Crystal");
+    public static final EnumRarity CRYSTAL_WHITE_RARITY = EnumHelper.addRarity(ModUtil.MOD_ID_LOWER+"crystalWhite", EnumChatFormatting.GRAY, ModUtil.NAME+" White Crystal");
+
+    public static final EnumRarity FALLBACK_RARITY = EnumHelper.addRarity(ModUtil.MOD_ID_LOWER+".fallback", EnumChatFormatting.STRIKETHROUGH, ModUtil.NAME+" Fallback");
 
     public static void registerEvent(Object o){
         MinecraftForge.EVENT_BUS.register(o);
