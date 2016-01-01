@@ -36,6 +36,7 @@ public class ItemArmorAA extends ItemArmor{
         this.name = name;
         String texture = ModUtil.MOD_ID_LOWER+":textures/armor/"+textureBase;
         textures = new String[]{texture+"1.png", texture+"2.png"};
+        this.rarity = rarity;
 
         this.register();
     }
