@@ -184,6 +184,12 @@ public class CreativeTab extends CreativeTabs{
         add(InitItems.emeraldPaxel);
         add(InitItems.obsidianPaxel);
         add(InitItems.quartzPaxel);
+        add(InitItems.itemPaxelCrystalRed);
+        add(InitItems.itemPaxelCrystalBlue);
+        add(InitItems.itemPaxelCrystalLightBlue);
+        add(InitItems.itemPaxelCrystalBlack);
+        add(InitItems.itemPaxelCrystalGreen);
+        add(InitItems.itemPaxelCrystalWhite);
         InitForeignPaxels.addToCreativeTab();
         
         add(InitBlocks.blockCrystal);

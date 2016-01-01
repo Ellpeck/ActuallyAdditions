@@ -146,6 +146,7 @@ public class InitItems{
     public static Item itemChestCrystalRed;
     public static Item itemPantsCrystalRed;
     public static Item itemBootsCrystalRed;
+    public static Item itemPaxelCrystalRed;
 
     public static Item itemPickaxeCrystalBlue;
     public static Item itemAxeCrystalBlue;
@@ -156,6 +157,7 @@ public class InitItems{
     public static Item itemChestCrystalBlue;
     public static Item itemPantsCrystalBlue;
     public static Item itemBootsCrystalBlue;
+    public static Item itemPaxelCrystalBlue;
 
     public static Item itemPickaxeCrystalLightBlue;
     public static Item itemAxeCrystalLightBlue;
@@ -166,6 +168,7 @@ public class InitItems{
     public static Item itemChestCrystalLightBlue;
     public static Item itemPantsCrystalLightBlue;
     public static Item itemBootsCrystalLightBlue;
+    public static Item itemPaxelCrystalLightBlue;
     
     public static Item itemPickaxeCrystalBlack;
     public static Item itemAxeCrystalBlack;
@@ -176,6 +179,7 @@ public class InitItems{
     public static Item itemChestCrystalBlack;
     public static Item itemPantsCrystalBlack;
     public static Item itemBootsCrystalBlack;
+    public static Item itemPaxelCrystalBlack;
 
     public static Item itemPickaxeCrystalGreen;
     public static Item itemAxeCrystalGreen;
@@ -186,6 +190,7 @@ public class InitItems{
     public static Item itemChestCrystalGreen;
     public static Item itemPantsCrystalGreen;
     public static Item itemBootsCrystalGreen;
+    public static Item itemPaxelCrystalGreen;
 
     public static Item itemPickaxeCrystalWhite;
     public static Item itemAxeCrystalWhite;
@@ -196,6 +201,7 @@ public class InitItems{
     public static Item itemChestCrystalWhite;
     public static Item itemPantsCrystalWhite;
     public static Item itemBootsCrystalWhite;
+    public static Item itemPaxelCrystalWhite;
     
     public static void init(){
         ModUtil.LOGGER.info("Initializing Items...");
@@ -302,7 +308,8 @@ public class InitItems{
         itemChestCrystalRed = new ItemArmorAA("itemChestCrystalRed", InitArmorMaterials.armorMaterialCrystalRed, 1, new ItemStack(InitItems.itemCrystal, 1, TheCrystals.REDSTONE.ordinal()), "armorCrystalRed");
         itemPantsCrystalRed = new ItemArmorAA("itemPantsCrystalRed", InitArmorMaterials.armorMaterialCrystalRed, 2, new ItemStack(InitItems.itemCrystal, 1, TheCrystals.REDSTONE.ordinal()), "armorCrystalRed");
         itemBootsCrystalRed = new ItemArmorAA("itemBootsCrystalRed", InitArmorMaterials.armorMaterialCrystalRed, 3, new ItemStack(InitItems.itemCrystal, 1, TheCrystals.REDSTONE.ordinal()), "armorCrystalRed");
-        
+        itemPaxelCrystalRed = new ItemAllToolAA(InitToolMaterials.toolMaterialCrystalRed, new ItemStack(InitItems.itemCrystal, 1, TheCrystals.REDSTONE.ordinal()), "itemPaxelCrystalRed", EnumRarity.rare, 16711689);
+
         itemPickaxeCrystalBlue = new ItemPickaxeAA(InitToolMaterials.toolMaterialCrystalBlue, new ItemStack(InitItems.itemCrystal, 1, TheCrystals.LAPIS.ordinal()), "itemPickaxeCrystalBlue", EnumRarity.uncommon);
         itemAxeCrystalBlue = new ItemAxeAA(InitToolMaterials.toolMaterialCrystalBlue, new ItemStack(InitItems.itemCrystal, 1, TheCrystals.LAPIS.ordinal()), "itemAxeCrystalBlue", EnumRarity.uncommon);
         itemShovelCrystalBlue = new ItemShovelAA(InitToolMaterials.toolMaterialCrystalBlue, new ItemStack(InitItems.itemCrystal, 1, TheCrystals.LAPIS.ordinal()), "itemShovelCrystalBlue", EnumRarity.uncommon);
@@ -312,6 +319,7 @@ public class InitItems{
         itemChestCrystalBlue = new ItemArmorAA("itemChestCrystalBlue", InitArmorMaterials.armorMaterialCrystalBlue, 1, new ItemStack(InitItems.itemCrystal, 1, TheCrystals.LAPIS.ordinal()), "armorCrystalBlue");
         itemPantsCrystalBlue = new ItemArmorAA("itemPantsCrystalBlue", InitArmorMaterials.armorMaterialCrystalBlue, 2, new ItemStack(InitItems.itemCrystal, 1, TheCrystals.LAPIS.ordinal()), "armorCrystalBlue");
         itemBootsCrystalBlue = new ItemArmorAA("itemBootsCrystalBlue", InitArmorMaterials.armorMaterialCrystalBlue, 3, new ItemStack(InitItems.itemCrystal, 1, TheCrystals.LAPIS.ordinal()), "armorCrystalBlue");
+        itemPaxelCrystalBlue = new ItemAllToolAA(InitToolMaterials.toolMaterialCrystalBlue, new ItemStack(InitItems.itemCrystal, 1, TheCrystals.LAPIS.ordinal()), "itemPaxelCrystalBlue", EnumRarity.rare, 3014911);
 
         itemPickaxeCrystalLightBlue = new ItemPickaxeAA(InitToolMaterials.toolMaterialCrystalLightBlue, new ItemStack(InitItems.itemCrystal, 1, TheCrystals.DIAMOND.ordinal()), "itemPickaxeCrystalLightBlue", EnumRarity.uncommon);
         itemAxeCrystalLightBlue = new ItemAxeAA(InitToolMaterials.toolMaterialCrystalLightBlue, new ItemStack(InitItems.itemCrystal, 1, TheCrystals.DIAMOND.ordinal()), "itemAxeCrystalLightBlue", EnumRarity.uncommon);
@@ -322,6 +330,7 @@ public class InitItems{
         itemChestCrystalLightBlue = new ItemArmorAA("itemChestCrystalLightBlue", InitArmorMaterials.armorMaterialCrystalLightBlue, 1, new ItemStack(InitItems.itemCrystal, 1, TheCrystals.DIAMOND.ordinal()), "armorCrystalLightBlue");
         itemPantsCrystalLightBlue = new ItemArmorAA("itemPantsCrystalLightBlue", InitArmorMaterials.armorMaterialCrystalLightBlue, 2, new ItemStack(InitItems.itemCrystal, 1, TheCrystals.DIAMOND.ordinal()), "armorCrystalLightBlue");
         itemBootsCrystalLightBlue = new ItemArmorAA("itemBootsCrystalLightBlue", InitArmorMaterials.armorMaterialCrystalLightBlue, 3, new ItemStack(InitItems.itemCrystal, 1, TheCrystals.DIAMOND.ordinal()), "armorCrystalLightBlue");
+        itemPaxelCrystalLightBlue = new ItemAllToolAA(InitToolMaterials.toolMaterialCrystalLightBlue, new ItemStack(InitItems.itemCrystal, 1, TheCrystals.DIAMOND.ordinal()), "itemPaxelCrystalLightBlue", EnumRarity.rare, 4093108);
 
         itemPickaxeCrystalBlack = new ItemPickaxeAA(InitToolMaterials.toolMaterialCrystalBlack, new ItemStack(InitItems.itemCrystal, 1, TheCrystals.COAL.ordinal()), "itemPickaxeCrystalBlack", EnumRarity.uncommon);
         itemAxeCrystalBlack = new ItemAxeAA(InitToolMaterials.toolMaterialCrystalBlack, new ItemStack(InitItems.itemCrystal, 1, TheCrystals.COAL.ordinal()), "itemAxeCrystalBlack", EnumRarity.uncommon);
@@ -332,6 +341,7 @@ public class InitItems{
         itemChestCrystalBlack = new ItemArmorAA("itemChestCrystalBlack", InitArmorMaterials.armorMaterialCrystalBlack, 1, new ItemStack(InitItems.itemCrystal, 1, TheCrystals.COAL.ordinal()), "armorCrystalBlack");
         itemPantsCrystalBlack = new ItemArmorAA("itemPantsCrystalBlack", InitArmorMaterials.armorMaterialCrystalBlack, 2, new ItemStack(InitItems.itemCrystal, 1, TheCrystals.COAL.ordinal()), "armorCrystalBlack");
         itemBootsCrystalBlack = new ItemArmorAA("itemBootsCrystalBlack", InitArmorMaterials.armorMaterialCrystalBlack, 3, new ItemStack(InitItems.itemCrystal, 1, TheCrystals.COAL.ordinal()), "armorCrystalBlack");
+        itemPaxelCrystalBlack = new ItemAllToolAA(InitToolMaterials.toolMaterialCrystalBlack, new ItemStack(InitItems.itemCrystal, 1, TheCrystals.COAL.ordinal()), "itemPaxelCrystalBlack", EnumRarity.rare, 2631982);
 
         itemPickaxeCrystalGreen = new ItemPickaxeAA(InitToolMaterials.toolMaterialCrystalGreen, new ItemStack(InitItems.itemCrystal, 1, TheCrystals.EMERALD.ordinal()), "itemPickaxeCrystalGreen", EnumRarity.uncommon);
         itemAxeCrystalGreen = new ItemAxeAA(InitToolMaterials.toolMaterialCrystalGreen, new ItemStack(InitItems.itemCrystal, 1, TheCrystals.EMERALD.ordinal()), "itemAxeCrystalGreen", EnumRarity.uncommon);
@@ -342,6 +352,7 @@ public class InitItems{
         itemChestCrystalGreen = new ItemArmorAA("itemChestCrystalGreen", InitArmorMaterials.armorMaterialCrystalGreen, 1, new ItemStack(InitItems.itemCrystal, 1, TheCrystals.EMERALD.ordinal()), "armorCrystalGreen");
         itemPantsCrystalGreen = new ItemArmorAA("itemPantsCrystalGreen", InitArmorMaterials.armorMaterialCrystalGreen, 2, new ItemStack(InitItems.itemCrystal, 1, TheCrystals.EMERALD.ordinal()), "armorCrystalGreen");
         itemBootsCrystalGreen = new ItemArmorAA("itemBootsCrystalGreen", InitArmorMaterials.armorMaterialCrystalGreen, 3, new ItemStack(InitItems.itemCrystal, 1, TheCrystals.EMERALD.ordinal()), "armorCrystalGreen");
+        itemPaxelCrystalGreen = new ItemAllToolAA(InitToolMaterials.toolMaterialCrystalGreen, new ItemStack(InitItems.itemCrystal, 1, TheCrystals.EMERALD.ordinal()), "itemPaxelCrystalGreen", EnumRarity.rare, 46848);
 
         itemPickaxeCrystalWhite = new ItemPickaxeAA(InitToolMaterials.toolMaterialCrystalWhite, new ItemStack(InitItems.itemCrystal, 1, TheCrystals.IRON.ordinal()), "itemPickaxeCrystalWhite", EnumRarity.uncommon);
         itemAxeCrystalWhite = new ItemAxeAA(InitToolMaterials.toolMaterialCrystalWhite, new ItemStack(InitItems.itemCrystal, 1, TheCrystals.IRON.ordinal()), "itemAxeCrystalWhite", EnumRarity.uncommon);
@@ -352,6 +363,6 @@ public class InitItems{
         itemChestCrystalWhite = new ItemArmorAA("itemChestCrystalWhite", InitArmorMaterials.armorMaterialCrystalWhite, 1, new ItemStack(InitItems.itemCrystal, 1, TheCrystals.IRON.ordinal()), "armorCrystalWhite");
         itemPantsCrystalWhite = new ItemArmorAA("itemPantsCrystalWhite", InitArmorMaterials.armorMaterialCrystalWhite, 2, new ItemStack(InitItems.itemCrystal, 1, TheCrystals.IRON.ordinal()), "armorCrystalWhite");
         itemBootsCrystalWhite = new ItemArmorAA("itemBootsCrystalWhite", InitArmorMaterials.armorMaterialCrystalWhite, 3, new ItemStack(InitItems.itemCrystal, 1, TheCrystals.IRON.ordinal()), "armorCrystalWhite");
-
+        itemPaxelCrystalWhite = new ItemAllToolAA(InitToolMaterials.toolMaterialCrystalWhite, new ItemStack(InitItems.itemCrystal, 1, TheCrystals.IRON.ordinal()), "itemPaxelCrystalWhite", EnumRarity.rare, 14606302);
     }
 }

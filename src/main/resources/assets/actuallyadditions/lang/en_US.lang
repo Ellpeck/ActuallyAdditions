@@ -372,6 +372,12 @@ item.actuallyadditions.itemHelmCrystalWhite.name=Enori Crystal Helmet
 item.actuallyadditions.itemChestCrystalWhite.name=Enori Crystal Chest
 item.actuallyadditions.itemPantsCrystalWhite.name=Enori Crystal Pants
 item.actuallyadditions.itemBootsCrystalWhite.name=Enori Crystal Boots
+item.actuallyadditions.itemPaxelCrystalRed.name=Restonia Crystal AIOT
+item.actuallyadditions.itemPaxelCrystalBlue.name=Palis Crystal AIOT
+item.actuallyadditions.itemPaxelCrystalLightBlue.name=Diamatine Crystal AIOT
+item.actuallyadditions.itemPaxelCrystalBlack.name=Void Crystal AIOT
+item.actuallyadditions.itemPaxelCrystalWhite.name=Enori Crystal AIOT
+item.actuallyadditions.itemPaxelCrystalGreen.name=Emeradic Crystal AIOT
 
 #Tooltips
 tooltip.actuallyadditions.onSuffix.desc=On

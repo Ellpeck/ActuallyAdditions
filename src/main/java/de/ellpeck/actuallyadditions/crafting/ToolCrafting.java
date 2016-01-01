@@ -111,6 +111,49 @@ public class ToolCrafting{
                     new ItemStack(InitItems.itemShovelQuartz),
                     new ItemStack(InitItems.itemHoeQuartz)));
             recipesPaxels.add(Util.GetRecipes.lastIRecipe());
+
+            GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemPaxelCrystalRed),
+                    new ItemStack(InitItems.itemAxeCrystalRed),
+                    new ItemStack(InitItems.itemPickaxeCrystalRed),
+                    new ItemStack(InitItems.itemSwordCrystalRed),
+                    new ItemStack(InitItems.itemShovelCrystalRed),
+                    new ItemStack(InitItems.itemHoeCrystalRed)));
+            recipesPaxels.add(Util.GetRecipes.lastIRecipe());
+            GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemPaxelCrystalGreen),
+                    new ItemStack(InitItems.itemAxeCrystalGreen),
+                    new ItemStack(InitItems.itemPickaxeCrystalGreen),
+                    new ItemStack(InitItems.itemSwordCrystalGreen),
+                    new ItemStack(InitItems.itemShovelCrystalGreen),
+                    new ItemStack(InitItems.itemHoeCrystalGreen)));
+            recipesPaxels.add(Util.GetRecipes.lastIRecipe());
+            GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemPaxelCrystalBlue),
+                    new ItemStack(InitItems.itemAxeCrystalBlue),
+                    new ItemStack(InitItems.itemPickaxeCrystalBlue),
+                    new ItemStack(InitItems.itemSwordCrystalBlue),
+                    new ItemStack(InitItems.itemShovelCrystalBlue),
+                    new ItemStack(InitItems.itemHoeCrystalBlue)));
+            recipesPaxels.add(Util.GetRecipes.lastIRecipe());
+            GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemPaxelCrystalLightBlue),
+                    new ItemStack(InitItems.itemAxeCrystalLightBlue),
+                    new ItemStack(InitItems.itemPickaxeCrystalLightBlue),
+                    new ItemStack(InitItems.itemSwordCrystalLightBlue),
+                    new ItemStack(InitItems.itemShovelCrystalLightBlue),
+                    new ItemStack(InitItems.itemHoeCrystalLightBlue)));
+            recipesPaxels.add(Util.GetRecipes.lastIRecipe());
+            GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemPaxelCrystalBlack),
+                    new ItemStack(InitItems.itemAxeCrystalBlack),
+                    new ItemStack(InitItems.itemPickaxeCrystalBlack),
+                    new ItemStack(InitItems.itemSwordCrystalBlack),
+                    new ItemStack(InitItems.itemShovelCrystalBlack),
+                    new ItemStack(InitItems.itemHoeCrystalBlack)));
+            recipesPaxels.add(Util.GetRecipes.lastIRecipe());
+            GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemPaxelCrystalWhite),
+                    new ItemStack(InitItems.itemAxeCrystalWhite),
+                    new ItemStack(InitItems.itemPickaxeCrystalWhite),
+                    new ItemStack(InitItems.itemSwordCrystalWhite),
+                    new ItemStack(InitItems.itemShovelCrystalWhite),
+                    new ItemStack(InitItems.itemHoeCrystalWhite)));
+            recipesPaxels.add(Util.GetRecipes.lastIRecipe());
         }
     }
 
