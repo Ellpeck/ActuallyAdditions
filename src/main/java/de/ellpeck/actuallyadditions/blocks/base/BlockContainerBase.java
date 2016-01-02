@@ -131,7 +131,6 @@ public abstract class BlockContainerBase extends BlockContainer{
 
     @Override
     public void updateTick(World world, int x, int y, int z, Random random){
-        System.out.println("UPDATE!!");
         if(!world.isRemote){
             TileEntity tile = world.getTileEntity(x, y, z);
             if(tile instanceof IRedstoneToggle && ((IRedstoneToggle)tile).isPulseMode()){
