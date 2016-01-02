@@ -1,4 +1,4 @@
-##### All Rights Reserved
+#### All Rights Reserved
 
 The things listed below are special cases and exceptions from the above. They have to be respected in addition to the above.
 Everything that is not listed below applies to the above.
