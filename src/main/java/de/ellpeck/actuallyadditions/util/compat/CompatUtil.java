@@ -5,10 +5,10 @@
  * http://github.com/Ellpeck/ActuallyAdditions/blob/master/README.md
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2015 Ellpeck
+ * © 2016 Ellpeck
  */
 
-package de.ellpeck.actuallyadditions.util;
+package de.ellpeck.actuallyadditions.util.compat;
 
 import cpw.mods.fml.common.event.FMLInterModComms;
 import de.ellpeck.actuallyadditions.items.ItemSeed;
