@@ -39,4 +39,4 @@ Everything that is not listed below applies to the above.
 - Almost all of the Assets used in this Mod are made by Glenthor and are owned by me. You are not allowed to copy them for any other Project.
 - Parts of this License, especially restrictive ones, can be ignored with Personal Permission. Said Permission, however, will only be given to people I know or someone who has a very good reason for needing it. If you don't, don't ask.
 
-© 2015 Ellpeck
+© 2016 Ellpeck
