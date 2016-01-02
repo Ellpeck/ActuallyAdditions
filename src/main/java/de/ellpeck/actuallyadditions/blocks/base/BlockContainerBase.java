@@ -113,13 +113,17 @@ public abstract class BlockContainerBase extends BlockContainer{
     public void updateRedstoneState(World world, int x, int y, int z){
         if(!world.isRemote){
             TileEntity tile = world.getTileEntity(x, y, z);
-            boolean powered = world.isBlockIndirectlyGettingPowered(x, y, z);
             if(tile instanceof TileEntityBase){
-                ((TileEntityBase)tile).setRedstonePowered(powered);
-            }
-            if(tile instanceof IRedstoneToggle){
-                if(((IRedstoneToggle)tile).isPulseMode() && powered){
-                    world.scheduleBlockUpdate(x, y, z, this, this.tickRate(world));
+                boolean powered = world.isBlockIndirectlyGettingPowered(x, y, z);
+                boolean wasPowered = ((TileEntityBase)tile).isRedstonePowered;
+                if(powered && !wasPowered){
+                    if(tile instanceof IRedstoneToggle && ((IRedstoneToggle)tile).isPulseMode()){
+                        world.scheduleBlockUpdate(x, y, z, this, this.tickRate(world));
+                    }
+                    ((TileEntityBase)tile).setRedstonePowered(true);
+                }
+                else if(!powered && wasPowered){
+                    ((TileEntityBase)tile).setRedstonePowered(false);
                 }
             }
         }
@@ -127,6 +131,7 @@ public abstract class BlockContainerBase extends BlockContainer{
 
     @Override
     public void updateTick(World world, int x, int y, int z, Random random){
+        System.out.println("UPDATE!!");
         if(!world.isRemote){
             TileEntity tile = world.getTileEntity(x, y, z);
             if(tile instanceof IRedstoneToggle && ((IRedstoneToggle)tile).isPulseMode()){

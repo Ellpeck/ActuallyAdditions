@@ -25,7 +25,7 @@ import net.minecraft.world.World;
 public abstract class TileEntityBase extends TileEntity{
 
     protected int ticksElapsed;
-    protected boolean isRedstonePowered;
+    public boolean isRedstonePowered;
 
     public static void init(){
         ModUtil.LOGGER.info("Registering TileEntities...");

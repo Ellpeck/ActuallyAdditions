@@ -44,7 +44,6 @@ import de.ellpeck.actuallyadditions.update.UpdateChecker;
 import de.ellpeck.actuallyadditions.util.FakePlayerUtil;
 import de.ellpeck.actuallyadditions.util.ModUtil;
 import de.ellpeck.actuallyadditions.util.Util;
-import de.ellpeck.actuallyadditions.util.compat.minetweaker.MineTweaker;
 import net.minecraft.init.Items;
 import net.minecraft.server.MinecraftServer;
 
@@ -106,7 +105,6 @@ public class ActuallyAdditions{
         TreasureChestHandler.init();
         LensNoneRecipeHandler.init();
         InitForeignPaxels.init();
-        MineTweaker.init();
 
         InitBooklet.init();
         proxy.postInit(event);
