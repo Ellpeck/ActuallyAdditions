@@ -1,3 +1,26 @@
+# 1.7.10-r17
+* Changed Laser Relay particle rate yet again
+* Fixed booklet achievement info not showing for some items in some occasions
+* Fixed a problem with OreDict entries getting added for items with stack sizes bigger than 1
+* Fix pulsable blocks being block update detectors (xdjackiexd)
+* Fixed Quartz and Obsidian Tools being the same in the config
+* Fixed green and white decor blocks being turnoffable in the config
+* Added armor & tools for every gem
+* Fix Iguana Tweaks fucking everything up
+* Removed special drops and added Solid XP as its own item (That means all solid XP will be gone from your world. I'm very sorry for that.)
+* Made Spiders dropping cobwebs less rare (I've never seen that happen before and it's been in the mod from the start!)
+* Miner Blacklist and whitelist config
+* Booklet Info for Miner's range
+* Miner is now in Ores Mode by default so that it doesn't wreck as much when you place it down while it has power
+* Removed InterModComms
+* Reworked a lot of textures
+## At this point, I want to thank Glenthor again. He does all of the awesome textures for ActAdd without actually wanting anything back for it. Thank you so much for that <3
+* Made Breakers and Placers cheaper
+* Added a Jam House Info Page to the booklet
+* Added a disclaimer for noobs about lenses
+* Removed the Stone Casing
+* Removed ability to close booklet with inventory key - it made John Cena unhappy
+
 # 1.7.10-r16
 ##### THE GREAT BTM HOTFIX UPDATE ~ ~ ~
 * Fixed FastCraft fucking up the booklet if the "bigger unicode font" option is enabled
