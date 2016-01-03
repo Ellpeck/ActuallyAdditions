@@ -145,10 +145,18 @@ public class LensNoneRecipeHandler{
             }
 
             List<ItemStack> stacks = OreDictionary.getOres(this.output, false);
-            for(ItemStack stack : stacks){
-                stack.stackSize = 1;
+            if(stacks != null && !stacks.isEmpty()){
+                List<ItemStack> stacksCopy = new ArrayList<ItemStack>();
+                for(ItemStack stack : stacks){
+                    if(stack != null){
+                        ItemStack stackCopy = stack.copy();
+                        stackCopy.stackSize = 1;
+                        stacksCopy.add(stackCopy);
+                    }
+                }
+                return stacksCopy;
             }
-            return stacks;
+            return null;
         }
 
         public List<ItemStack> getInputs(){
@@ -161,10 +169,18 @@ public class LensNoneRecipeHandler{
             }
 
             List<ItemStack> stacks = OreDictionary.getOres(this.input, false);
-            for(ItemStack stack : stacks){
-                stack.stackSize = 1;
+            if(stacks != null && !stacks.isEmpty()){
+                List<ItemStack> stacksCopy = new ArrayList<ItemStack>();
+                for(ItemStack stack : stacks){
+                    if(stack != null){
+                        ItemStack stackCopy = stack.copy();
+                        stackCopy.stackSize = 1;
+                        stacksCopy.add(stackCopy);
+                    }
+                }
+                return stacksCopy;
             }
-            return stacks;
+            return null;
         }
     }
 }

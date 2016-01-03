@@ -172,10 +172,18 @@ public class CrusherRecipeRegistry{
             }
 
             List<ItemStack> stacks = OreDictionary.getOres(this.outputOne, false);
-            for(ItemStack stack : stacks){
-                stack.stackSize = this.outputOneAmount;
+            if(stacks != null && !stacks.isEmpty()){
+                List<ItemStack> stacksCopy = new ArrayList<ItemStack>();
+                for(ItemStack stack : stacks){
+                    if(stack != null){
+                        ItemStack stackCopy = stack.copy();
+                        stackCopy.stackSize = this.outputOneAmount;
+                        stacksCopy.add(stackCopy);
+                    }
+                }
+                return stacksCopy;
             }
-            return stacks;
+            return null;
         }
 
         public List<ItemStack> getRecipeOutputTwos(){
@@ -188,10 +196,18 @@ public class CrusherRecipeRegistry{
             }
 
             List<ItemStack> stacks = OreDictionary.getOres(this.outputTwo, false);
-            for(ItemStack stack : stacks){
-                stack.stackSize = this.outputTwoAmount;
+            if(stacks != null && !stacks.isEmpty()){
+                List<ItemStack> stacksCopy = new ArrayList<ItemStack>();
+                for(ItemStack stack : stacks){
+                    if(stack != null){
+                        ItemStack stackCopy = stack.copy();
+                        stackCopy.stackSize = this.outputTwoAmount;
+                        stacksCopy.add(stackCopy);
+                    }
+                }
+                return stacksCopy;
             }
-            return stacks;
+            return null;
         }
 
         public List<ItemStack> getRecipeInputs(){
@@ -204,10 +220,18 @@ public class CrusherRecipeRegistry{
             }
 
             List<ItemStack> stacks = OreDictionary.getOres(this.input, false);
-            for(ItemStack stack : stacks){
-                stack.stackSize = 1;
+            if(stacks != null && !stacks.isEmpty()){
+                List<ItemStack> stacksCopy = new ArrayList<ItemStack>();
+                for(ItemStack stack : stacks){
+                    if(stack != null){
+                        ItemStack stackCopy = stack.copy();
+                        stackCopy.stackSize = 1;
+                        stacksCopy.add(stackCopy);
+                    }
+                }
+                return stacksCopy;
             }
-            return stacks;
+            return null;
         }
     }
 
