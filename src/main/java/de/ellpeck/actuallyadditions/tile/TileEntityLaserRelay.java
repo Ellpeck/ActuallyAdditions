@@ -43,7 +43,7 @@ public class TileEntityLaserRelay extends TileEntityBase implements IEnergyRecei
 
     @SideOnly(Side.CLIENT)
     public void renderParticles(){
-        if(Util.RANDOM.nextInt(8) == 0){
+        if(Util.RANDOM.nextInt(ConfigBoolValues.LESS_LASER_RELAY_PARTICLES.isEnabled() ? 15 : 8) == 0){
             Position thisPos = new Position(this.xCoord, this.yCoord, this.zCoord);
             LaserRelayConnectionHandler.Network network = LaserRelayConnectionHandler.getInstance().getNetworkFor(thisPos);
             if(network != null){
