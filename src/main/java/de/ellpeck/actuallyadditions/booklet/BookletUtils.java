@@ -117,21 +117,23 @@ public class BookletUtils{
         for(BookletPage page : booklet.currentEntrySet.chapter.pages){
             if(page != null && page.getItemStacksForPage() != null){
                 for(ItemStack stack : page.getItemStacksForPage()){
-                    for(Achievement achievement : InitAchievements.achievementList){
-                        if(stack != null && achievement.theItemStack != null && achievement.theItemStack.isItemEqual(stack)){
-                            if(pre){
-                                booklet.mc.getTextureManager().bindTexture(GuiBooklet.resLoc);
-                                booklet.drawTexturedModalRect(booklet.guiLeft+booklet.xSize+1, booklet.guiTop-18, 166, 154, 22, 21);
-                                return;
-                            }
-                            else{
-                                if(mouseX >= booklet.guiLeft+booklet.xSize+1 && mouseX < booklet.guiLeft+booklet.xSize+1+22 && mouseY >= booklet.guiTop-18 && mouseY < booklet.guiTop-18+21){
-                                    if(infoList == null){
-                                        infoList = new ArrayList<String>();
-                                        infoList.add(EnumChatFormatting.GOLD+"Achievements related to this chapter:");
+                    if(stack != null){
+                        for(Achievement achievement : InitAchievements.achievementList){
+                            if(achievement.theItemStack != null && ItemUtil.areItemsEqual(stack, achievement.theItemStack, true)){
+                                if(pre){
+                                    booklet.mc.getTextureManager().bindTexture(GuiBooklet.resLoc);
+                                    booklet.drawTexturedModalRect(booklet.guiLeft+booklet.xSize+1, booklet.guiTop-18, 166, 154, 22, 21);
+                                    return;
+                                }
+                                else{
+                                    if(mouseX >= booklet.guiLeft+booklet.xSize+1 && mouseX < booklet.guiLeft+booklet.xSize+1+22 && mouseY >= booklet.guiTop-18 && mouseY < booklet.guiTop-18+21){
+                                        if(infoList == null){
+                                            infoList = new ArrayList<String>();
+                                            infoList.add(EnumChatFormatting.GOLD+"Achievements related to this chapter:");
+                                        }
+                                        infoList.add("-"+StringUtil.localize(achievement.statId));
+                                        infoList.add(EnumChatFormatting.GRAY+"("+achievement.getDescription()+")");
                                     }
-                                    infoList.add("-"+StringUtil.localize(achievement.statId));
-                                    infoList.add(EnumChatFormatting.GRAY+"("+achievement.getDescription()+")");
                                 }
                             }
                         }

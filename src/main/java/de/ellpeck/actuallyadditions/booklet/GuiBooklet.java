@@ -261,7 +261,7 @@ public class GuiBooklet extends GuiScreen{
         }
     }
 
-    @SuppressWarnings({"unchecked", "MismatchedQueryAndUpdateOfCollection"})
+    @SuppressWarnings("unchecked")
     @Override
     public void initGui(){
         this.guiLeft = (this.width-this.xSize)/2;
