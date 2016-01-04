@@ -16,6 +16,7 @@ import de.ellpeck.actuallyadditions.items.base.ItemFoodBase;
 import de.ellpeck.actuallyadditions.items.metalists.TheFoods;
 import de.ellpeck.actuallyadditions.util.ModUtil;
 import de.ellpeck.actuallyadditions.util.StringUtil;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.item.EntityItem;
@@ -34,6 +35,10 @@ public class ItemFoods extends ItemFoodBase{
     public static final TheFoods[] allFoods = TheFoods.values();
     @SideOnly(Side.CLIENT)
     public IIcon[] textures;
+    @SideOnly(Side.CLIENT)
+    private IIcon iconEllspeck;
+
+    private static final String ELLSPECK = "ellspeck";
 
     public ItemFoods(String name){
         super(0, 0.0F, false, name);
@@ -79,9 +84,20 @@ public class ItemFoods extends ItemFoodBase{
     }
 
     @Override
+    public IIcon getIcon(ItemStack stack, int pass){
+        return getIconIndex(stack);
+    }
+
+    @Override
     @SideOnly(Side.CLIENT)
-    public IIcon getIconFromDamage(int par1){
-        return par1 >= textures.length ? null : textures[par1];
+    public IIcon getIconIndex(ItemStack stack){
+        int damage = stack.getItemDamage();
+        if(damage == TheFoods.BACON.ordinal() && StringUtil.equalsToLowerCase(stack.getDisplayName(), ELLSPECK)){
+            return this.iconEllspeck;
+        }
+        else{
+            return damage >= textures.length ? null : textures[damage];
+        }
     }
 
     @Override
@@ -113,6 +129,15 @@ public class ItemFoods extends ItemFoodBase{
         this.textures = new IIcon[allFoods.length];
         for(int i = 0; i < textures.length; i++){
             textures[i] = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName()+allFoods[i].name);
+        }
+        this.iconEllspeck = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":itemEllspeck");
+    }
+
+    @Override
+    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean bool){
+        if(stack.getItemDamage() == TheFoods.BACON.ordinal() && StringUtil.equalsToLowerCase(stack.getDisplayName(), ELLSPECK)){
+            String strg = "Yes, this is an ugly texture of bacon with its legs behind its head. This is an homage to Ellpeck, the mod author, being able to put his legs behind his head. Wasn't my idea, so don't judge me.";
+            list.addAll(Minecraft.getMinecraft().fontRenderer.listFormattedStringToWidth(strg, 200));
         }
     }
 }

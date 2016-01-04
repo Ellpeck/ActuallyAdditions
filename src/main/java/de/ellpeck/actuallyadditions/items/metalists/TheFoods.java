@@ -36,7 +36,8 @@ public enum TheFoods{
     RICE("Rice", 2, 1F, false, 10, EnumRarity.uncommon),
     RICE_BREAD("RiceBread", 8, 3F, false, 25, EnumRarity.uncommon),
     DOUGHNUT("Doughnut", 4, 0.5F, false, 10, EnumRarity.epic),
-    CHOCOLATE_TOAST("ChocolateToast", 8, 1.4F, false, 40, EnumRarity.rare);
+    CHOCOLATE_TOAST("ChocolateToast", 8, 1.4F, false, 40, EnumRarity.rare),
+    BACON("Bacon", 4, 0.5F, false, 30, EnumRarity.common);
 
     public final String name;
     public final int healAmount;
