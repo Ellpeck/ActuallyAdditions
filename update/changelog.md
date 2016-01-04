@@ -14,7 +14,7 @@
 * Miner is now in Ores Mode by default so that it doesn't wreck as much when you place it down while it has power
 * Removed InterModComms
 * Reworked a lot of textures
-## At this point, I want to thank Glenthor again. He does all of the awesome textures for ActAdd without actually wanting anything back for it. Thank you so much for that <3
+### At this point, I want to thank Glenthor again. He does all of the awesome textures for ActAdd without actually wanting anything back for it. Thank you so much for that <3
 * Made Breakers and Placers cheaper
 * Added a Jam House Info Page to the booklet
 * Added a disclaimer for noobs about lenses
