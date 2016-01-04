@@ -134,6 +134,7 @@ public class ItemFoods extends ItemFoodBase{
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean bool){
         if(stack.getItemDamage() == TheFoods.BACON.ordinal() && StringUtil.equalsToLowerCase(stack.getDisplayName(), ELLSPECK)){
             String strg = "Yes, this is an ugly texture of bacon with its legs behind its head. This is an homage to Ellpeck, the mod author, being able to put his legs behind his head. Wasn't my idea, so don't judge me.";
