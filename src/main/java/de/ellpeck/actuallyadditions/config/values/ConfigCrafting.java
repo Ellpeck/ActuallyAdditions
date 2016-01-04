@@ -84,6 +84,7 @@ public enum ConfigCrafting{
     TOOL_CRYSTALS("Crystal Tools", ConfigCategories.ITEMS_CRAFTING),
     RICE_BREAD("Rice Bread", ConfigCategories.FOOD_CRAFTING),
     RICE_DOUGH("Rice Dough", ConfigCategories.FOOD_CRAFTING),
+    BACON("Bacon", ConfigCategories.FOOD_CRAFTING),
 
     RICE_GADGETS("Rice Gadgets", ConfigCategories.ITEMS_CRAFTING),
     RESONANT_RICE("Resonant Rice", ConfigCategories.ITEMS_CRAFTING),

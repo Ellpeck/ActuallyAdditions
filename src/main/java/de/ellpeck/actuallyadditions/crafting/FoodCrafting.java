@@ -41,6 +41,7 @@ public class FoodCrafting{
     public static IRecipe recipeChocolateCake;
     public static IRecipe recipeToast;
     public static IRecipe recipeChocolateToast;
+    public static IRecipe recipeBacon;
 
     public static void init(){
 
@@ -50,6 +51,13 @@ public class FoodCrafting{
         if(ConfigCrafting.RICE_BREAD.isEnabled()){
             GameRegistry.addSmelting(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.RICE_DOUGH.ordinal()),
                     new ItemStack(InitItems.itemFoods, 1, TheFoods.RICE_BREAD.ordinal()), 1F);
+        }
+
+        //Bacon
+        if(ConfigCrafting.BACON.isEnabled()){
+            GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemFoods, 3, TheFoods.BACON.ordinal()),
+                    knifeStack, new ItemStack(Items.cooked_porkchop)));
+            recipeBacon = Util.GetRecipes.lastIRecipe();
         }
 
         //Baguette
