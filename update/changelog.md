@@ -1,3 +1,13 @@
+# 1.7.10-r18
+* Added Bacon (Don't name it Ellspeck. Just don't.)
+* Added an API.
+* [API] Increased version to 2
+* [API] Added Crusher Recipe adding
+* [API] Added Treasure Chest Recipe adding
+* [API] Added Ball Of Fur Recipe adding
+* [API] Added Booklet Page/Chapter/Entry adding
+* [API] Added Lens adding
+
 # 1.7.10-r17
 * Changed Laser Relay particle rate yet again
 * Fixed booklet achievement info not showing for some items in some occasions
