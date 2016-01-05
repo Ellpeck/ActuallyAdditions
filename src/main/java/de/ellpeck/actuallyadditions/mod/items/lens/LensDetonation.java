@@ -19,7 +19,7 @@ public class LensDetonation extends Lens{
     @Override
     public boolean invoke(Position hitBlock, IAtomicReconstructor tile){
         if(hitBlock != null && !hitBlock.getBlock(tile.getWorldObj()).isAir(tile.getWorldObj(), hitBlock.getX(), hitBlock.getY(), hitBlock.getZ())){
-            int use = 500000;
+            int use = 250000;
             if(tile.getEnergy() >= use){
                 tile.getWorldObj().newExplosion(null, hitBlock.getX()+0.5, hitBlock.getY()+0.5, hitBlock.getZ()+0.5, 10F, true, true);
                 tile.extractEnergy(use);
