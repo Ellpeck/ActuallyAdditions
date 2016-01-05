@@ -13,11 +13,12 @@ package de.ellpeck.actuallyadditions.mod.nei;
 import codechicken.nei.recipe.GuiRecipe;
 import codechicken.nei.recipe.IRecipeHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
+import de.ellpeck.actuallyadditions.api.booklet.BookletPage;
+import de.ellpeck.actuallyadditions.api.booklet.INEIRecipeHandler;
 import de.ellpeck.actuallyadditions.mod.booklet.BookletUtils;
 import de.ellpeck.actuallyadditions.mod.booklet.GuiBooklet;
-import de.ellpeck.actuallyadditions.mod.booklet.InitBooklet;
 import de.ellpeck.actuallyadditions.mod.booklet.button.TexturedButton;
-import de.ellpeck.actuallyadditions.mod.booklet.page.BookletPage;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.Minecraft;
@@ -70,7 +71,7 @@ public class NEIScreenEvents{
                 if(page != null){
                     GuiBooklet book = new GuiBooklet(Minecraft.getMinecraft().currentScreen, false, true);
                     Minecraft.getMinecraft().displayGuiScreen(book);
-                    BookletUtils.openIndexEntry(book, page.getChapter().entry, InitBooklet.entries.indexOf(page.getChapter().entry)/GuiBooklet.CHAPTER_BUTTONS_AMOUNT+1, true);
+                    BookletUtils.openIndexEntry(book, page.getChapter().getEntry(), ActuallyAdditionsAPI.bookletEntries.indexOf(page.getChapter().getEntry())/GuiBooklet.CHAPTER_BUTTONS_AMOUNT+1, true);
                     BookletUtils.openChapter(book, page.getChapter(), page);
                 }
             }

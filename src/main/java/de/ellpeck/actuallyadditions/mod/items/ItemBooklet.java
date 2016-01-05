@@ -12,14 +12,14 @@ package de.ellpeck.actuallyadditions.mod.items;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.block.IHudDisplay;
+import de.ellpeck.actuallyadditions.api.booklet.BookletPage;
+import de.ellpeck.actuallyadditions.api.internal.EntrySet;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.achievement.TheAchievements;
 import de.ellpeck.actuallyadditions.mod.booklet.BookletUtils;
-import de.ellpeck.actuallyadditions.mod.booklet.EntrySet;
 import de.ellpeck.actuallyadditions.mod.booklet.GuiBooklet;
-import de.ellpeck.actuallyadditions.mod.booklet.InitBooklet;
-import de.ellpeck.actuallyadditions.mod.booklet.page.BookletPage;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
@@ -70,7 +70,7 @@ public class ItemBooklet extends ItemBase implements IHudDisplay{
                 BookletPage page = BookletUtils.getFirstPageForStack(blockStack);
                 if(page != null){
                     if(world.isRemote){
-                        forcedEntry = new EntrySet(page, page.getChapter(), page.getChapter().entry, InitBooklet.entries.indexOf(page.getChapter().entry)/GuiBooklet.CHAPTER_BUTTONS_AMOUNT+1);
+                        forcedEntry = new EntrySet(page, page.getChapter(), page.getChapter().getEntry(), ActuallyAdditionsAPI.bookletEntries.indexOf(page.getChapter().getEntry())/GuiBooklet.CHAPTER_BUTTONS_AMOUNT+1);
                     }
                     this.onItemRightClick(stack, world, player);
                     return true;
@@ -118,7 +118,7 @@ public class ItemBooklet extends ItemBase implements IHudDisplay{
                             String strg2 = "Page "+page.getID();
                             String strg3 = "Right-Click to open...";
 
-                            AssetUtil.renderStackToGui(page.getChapter().displayStack != null ? page.getChapter().displayStack : new ItemStack(InitItems.itemBooklet), resolution.getScaledWidth()/2-10, height+41, 1F);
+                            AssetUtil.renderStackToGui(page.getChapter().getDisplayItemStack() != null ? page.getChapter().getDisplayItemStack() : new ItemStack(InitItems.itemBooklet), resolution.getScaledWidth()/2-10, height+41, 1F);
                             minecraft.fontRenderer.drawStringWithShadow(EnumChatFormatting.YELLOW+""+EnumChatFormatting.ITALIC+strg1, resolution.getScaledWidth()/2-minecraft.fontRenderer.getStringWidth(strg1)/2, height+20, StringUtil.DECIMAL_COLOR_WHITE);
                             minecraft.fontRenderer.drawStringWithShadow(EnumChatFormatting.YELLOW+""+EnumChatFormatting.ITALIC+strg2, resolution.getScaledWidth()/2-minecraft.fontRenderer.getStringWidth(strg2)/2, height+30, StringUtil.DECIMAL_COLOR_WHITE);
                             minecraft.fontRenderer.drawStringWithShadow(EnumChatFormatting.GOLD+strg3, resolution.getScaledWidth()/2-minecraft.fontRenderer.getStringWidth(strg3)/2, height+60, StringUtil.DECIMAL_COLOR_WHITE);

@@ -10,6 +10,8 @@
 
 package de.ellpeck.actuallyadditions.api;
 
+import de.ellpeck.actuallyadditions.api.booklet.BookletPage;
+import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
 import de.ellpeck.actuallyadditions.api.recipe.BallOfFurReturn;
 import de.ellpeck.actuallyadditions.api.recipe.CrusherRecipe;
@@ -30,6 +32,19 @@ public class ActuallyAdditionsAPI{
     public static List<Lens> reconstructorLenses = new ArrayList<Lens>();
     public static List<LensNoneRecipe> reconstructorLensNoneRecipes = new ArrayList<LensNoneRecipe>();
     public static List<CoffeeIngredient> coffeeMachineIngredients = new ArrayList<CoffeeIngredient>();
+
+    public static List<IBookletEntry> bookletEntries = new ArrayList<IBookletEntry>();
+    public static List<BookletPage> bookletPagesWithItemStackData = new ArrayList<BookletPage>();
+
+    //These are getting initlized in Actually Additions' PreInit phase
+    public static IBookletEntry entryGettingStarted;
+    public static IBookletEntry entryFunctionalNonRF;
+    public static IBookletEntry entryFunctionalRF;
+    public static IBookletEntry entryGeneratingRF;
+    public static IBookletEntry entryItemsNonRF;
+    public static IBookletEntry entryItemsRF;
+    public static IBookletEntry entryMisc;
+    public static IBookletEntry allAndSearch;
 
     /**
      * Adds a Recipe to the Crusher Recipe Registry
@@ -144,9 +159,29 @@ public class ActuallyAdditionsAPI{
 
     /**
      * Adds an ingredient to the Coffee Machine ingredient list
+     *
      * @param ingredient The ingredient to add
      */
     public static void addCoffeeMachineIngredient(CoffeeIngredient ingredient){
         coffeeMachineIngredients.add(ingredient);
+    }
+
+    /**
+     * Adds a booklet entry to the list of entries
+     *
+     * @param entry The entry to add
+     */
+    public static void addBookletEntry(IBookletEntry entry){
+        bookletEntries.add(entry);
+    }
+
+    /**
+     * Adds a page to the pages with ItemStack data
+     * This should be done with every page that uses getItemStacksForPage()
+     *
+     * @param page The page to add
+     */
+    public static void addPageWithItemStackData(BookletPage page){
+        bookletPagesWithItemStackData.add(page);
     }
 }

@@ -10,28 +10,29 @@
 
 package de.ellpeck.actuallyadditions.mod.booklet.chapter;
 
-import de.ellpeck.actuallyadditions.mod.booklet.InitBooklet;
-import de.ellpeck.actuallyadditions.mod.booklet.entry.BookletEntry;
-import de.ellpeck.actuallyadditions.mod.booklet.page.BookletPage;
+import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
+import de.ellpeck.actuallyadditions.api.booklet.BookletPage;
+import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
+import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 
-public class BookletChapter{
+public class BookletChapter implements IBookletChapter{
 
     public final BookletPage[] pages;
-    public final BookletEntry entry;
+    public final IBookletEntry entry;
     public final ItemStack displayStack;
     private final String unlocalizedName;
     public EnumChatFormatting color;
 
-    public BookletChapter(String unlocalizedName, BookletEntry entry, ItemStack displayStack, BookletPage... pages){
+    public BookletChapter(String unlocalizedName, IBookletEntry entry, ItemStack displayStack, BookletPage... pages){
         this.pages = pages.clone();
 
         this.unlocalizedName = unlocalizedName;
         entry.addChapter(this);
-        InitBooklet.allAndSearch.addChapter(this);
+        ActuallyAdditionsAPI.allAndSearch.addChapter(this);
         this.entry = entry;
         this.displayStack = displayStack;
 
@@ -42,16 +43,34 @@ public class BookletChapter{
         this.color = EnumChatFormatting.RESET;
     }
 
+    @Override
+    public BookletPage[] getPages(){
+        return this.pages;
+    }
+
+    @Override
     public String getUnlocalizedName(){
         return this.unlocalizedName;
     }
 
-    public String getNameWithColor(){
+    @Override
+    public String getLocalizedName(){
+        return StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".chapter."+this.unlocalizedName+".name");
+    }
+
+    @Override
+    public String getLocalizedNameWithFormatting(){
         return this.color+this.getLocalizedName();
     }
 
-    public String getLocalizedName(){
-        return StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".chapter."+this.unlocalizedName+".name");
+    @Override
+    public IBookletEntry getEntry(){
+        return this.entry;
+    }
+
+    @Override
+    public ItemStack getDisplayItemStack(){
+        return this.displayStack;
     }
 
     public BookletChapter setImportant(){

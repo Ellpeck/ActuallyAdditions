@@ -10,8 +10,8 @@
 
 package de.ellpeck.actuallyadditions.mod.booklet.button;
 
+import de.ellpeck.actuallyadditions.api.internal.EntrySet;
 import de.ellpeck.actuallyadditions.mod.booklet.BookletUtils;
-import de.ellpeck.actuallyadditions.mod.booklet.EntrySet;
 import de.ellpeck.actuallyadditions.mod.booklet.GuiBooklet;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
@@ -73,7 +73,7 @@ public class BookmarkButton extends GuiButton{
 
             if(this.assignedEntry.entry != null){
                 GL11.glPushMatrix();
-                AssetUtil.renderStackToGui(this.assignedEntry.chapter != null && this.assignedEntry.chapter.displayStack != null ? this.assignedEntry.chapter.displayStack : new ItemStack(InitItems.itemBooklet), this.xPosition+2, this.yPosition+1, 0.725F);
+                AssetUtil.renderStackToGui(this.assignedEntry.chapter != null && this.assignedEntry.chapter.getDisplayItemStack() != null ? this.assignedEntry.chapter.getDisplayItemStack() : new ItemStack(InitItems.itemBooklet), this.xPosition+2, this.yPosition+1, 0.725F);
                 GL11.glPopMatrix();
             }
         }

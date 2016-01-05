@@ -8,29 +8,30 @@
  * © 2016 Ellpeck
  */
 
-package de.ellpeck.actuallyadditions.mod.booklet;
+package de.ellpeck.actuallyadditions.api.internal;
 
-import de.ellpeck.actuallyadditions.mod.booklet.chapter.BookletChapter;
-import de.ellpeck.actuallyadditions.mod.booklet.entry.BookletEntry;
-import de.ellpeck.actuallyadditions.mod.booklet.page.BookletPage;
+import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
+import de.ellpeck.actuallyadditions.api.booklet.BookletPage;
+import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
+import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class EntrySet{
 
     public BookletPage page;
-    public BookletChapter chapter;
-    public BookletEntry entry;
+    public IBookletChapter chapter;
+    public IBookletEntry entry;
     public int pageInIndex;
 
-    public EntrySet(BookletEntry entry){
+    public EntrySet(IBookletEntry entry){
         this(null, null, entry, 1);
     }
 
-    public EntrySet(BookletPage page, BookletChapter chapter, BookletEntry entry, int pageInIndex){
+    public EntrySet(BookletPage page, IBookletChapter chapter, IBookletEntry entry, int pageInIndex){
         this.setEntry(page, chapter, entry, pageInIndex);
     }
 
-    public void setEntry(BookletPage page, BookletChapter chapter, BookletEntry entry, int pageInIndex){
+    public void setEntry(BookletPage page, IBookletChapter chapter, IBookletEntry entry, int pageInIndex){
         this.page = page;
         this.chapter = chapter;
         this.entry = entry;
@@ -44,9 +45,9 @@ public class EntrySet{
                 int chapter = compound.getInteger("Chapter");
                 int page = compound.getInteger("Page");
 
-                BookletEntry currentEntry = entry == -1 ? null : InitBooklet.entries.get(entry);
-                BookletChapter currentChapter = chapter == -1 || entry == -1 || currentEntry.chapters.size() <= chapter ? null : currentEntry.chapters.get(chapter);
-                BookletPage currentPage = chapter == -1 || currentChapter == null || currentChapter.pages.length <= page-1 ? null : currentChapter.pages[page-1];
+                IBookletEntry currentEntry = entry == -1 ? null : ActuallyAdditionsAPI.bookletEntries.get(entry);
+                IBookletChapter currentChapter = chapter == -1 || entry == -1 || currentEntry.getChapters().size() <= chapter ? null : currentEntry.getChapters().get(chapter);
+                BookletPage currentPage = chapter == -1 || currentChapter == null || currentChapter.getPages().length <= page-1 ? null : currentChapter.getPages()[page-1];
                 int pageInIndex = compound.getInteger("PageInIndex");
 
                 return new EntrySet(currentPage, currentChapter, currentEntry, pageInIndex);
@@ -61,8 +62,8 @@ public class EntrySet{
 
     public NBTTagCompound writeToNBT(){
         NBTTagCompound compound = new NBTTagCompound();
-        compound.setInteger("Entry", entry == null ? -1 : InitBooklet.entries.indexOf(entry));
-        compound.setInteger("Chapter", entry == null || chapter == null ? -1 : entry.chapters.indexOf(chapter));
+        compound.setInteger("Entry", entry == null ? -1 : ActuallyAdditionsAPI.bookletEntries.indexOf(entry));
+        compound.setInteger("Chapter", entry == null || chapter == null ? -1 : entry.getChapters().indexOf(chapter));
         compound.setInteger("Page", page == null ? -1 : page.getID());
         compound.setInteger("PageInIndex", pageInIndex);
         return compound;

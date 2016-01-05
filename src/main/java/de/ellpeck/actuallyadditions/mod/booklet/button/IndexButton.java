@@ -10,8 +10,8 @@
 
 package de.ellpeck.actuallyadditions.mod.booklet.button;
 
+import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
 import de.ellpeck.actuallyadditions.mod.booklet.GuiBooklet;
-import de.ellpeck.actuallyadditions.mod.booklet.chapter.BookletChapter;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
@@ -20,7 +20,7 @@ import org.lwjgl.opengl.GL11;
 
 public class IndexButton extends GuiButton{
 
-    public BookletChapter chap;
+    public IBookletChapter chap;
     private GuiBooklet gui;
 
     public IndexButton(int id, int x, int y, int width, int height, String text, GuiBooklet gui){
@@ -40,9 +40,9 @@ public class IndexButton extends GuiButton{
 
             int textOffsetX = 0;
             if(this.chap != null){
-                if(this.chap.displayStack != null){
+                if(this.chap.getDisplayItemStack() != null){
                     GL11.glPushMatrix();
-                    AssetUtil.renderStackToGui(this.chap.displayStack, this.xPosition-4, this.yPosition, 0.725F);
+                    AssetUtil.renderStackToGui(this.chap.getDisplayItemStack(), this.xPosition-4, this.yPosition, 0.725F);
                     GL11.glPopMatrix();
                     textOffsetX = 10;
                 }

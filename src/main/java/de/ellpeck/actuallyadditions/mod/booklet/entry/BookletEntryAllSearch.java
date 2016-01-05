@@ -10,13 +10,15 @@
 
 package de.ellpeck.actuallyadditions.mod.booklet.entry;
 
+import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
 import de.ellpeck.actuallyadditions.mod.booklet.chapter.BookletChapter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class BookletEntryAllSearch extends BookletEntry{
 
-    public ArrayList<BookletChapter> allChapters = new ArrayList<BookletChapter>();
+    public ArrayList<IBookletChapter> allChapters = new ArrayList<IBookletChapter>();
 
     public BookletEntryAllSearch(String unlocalizedName){
         super(unlocalizedName);
@@ -26,6 +28,11 @@ public class BookletEntryAllSearch extends BookletEntry{
     @Override
     public void addChapter(BookletChapter chapter){
         this.allChapters.add(chapter);
-        this.chapters = (ArrayList<BookletChapter>)this.allChapters.clone();
+        this.chapters = (ArrayList<IBookletChapter>)this.allChapters.clone();
+    }
+
+    @Override
+    public void setChapters(List<IBookletChapter> chapters){
+        this.allChapters = (ArrayList<IBookletChapter>)chapters;
     }
 }

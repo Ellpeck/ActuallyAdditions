@@ -12,6 +12,10 @@ package de.ellpeck.actuallyadditions.mod.booklet;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
+import de.ellpeck.actuallyadditions.api.booklet.BookletPage;
+import de.ellpeck.actuallyadditions.api.internal.EntrySet;
+import de.ellpeck.actuallyadditions.api.internal.IBookletGui;
 import de.ellpeck.actuallyadditions.mod.booklet.button.BookmarkButton;
 import de.ellpeck.actuallyadditions.mod.booklet.button.IndexButton;
 import de.ellpeck.actuallyadditions.mod.booklet.button.TexturedButton;
@@ -30,6 +34,7 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.util.ResourceLocation;
@@ -42,7 +47,7 @@ import java.util.Collections;
 import java.util.List;
 
 @SideOnly(Side.CLIENT)
-public class GuiBooklet extends GuiScreen{
+public class GuiBooklet extends GuiScreen implements IBookletGui{
 
     public static final ResourceLocation resLoc = AssetUtil.getBookletGuiLocation("guiBooklet");
     public static final ResourceLocation resLocHalloween = AssetUtil.getBookletGuiLocation("guiBookletHalloween");
@@ -395,5 +400,64 @@ public class GuiBooklet extends GuiScreen{
     @Override
     public boolean doesGuiPauseGame(){
         return false;
+    }
+
+    @Override
+    public void renderTooltipAndTransferButton(BookletPage from, ItemStack stack, int x, int y, boolean renderTransferButton, boolean mousePressed){
+        boolean flagBefore = this.mc.fontRenderer.getUnicodeFlag();
+        this.mc.fontRenderer.setUnicodeFlag(false);
+
+        List list = stack.getTooltip(this.mc.thePlayer, this.mc.gameSettings.advancedItemTooltips);
+
+        for(int k = 0; k < list.size(); ++k){
+            if(k == 0){
+                list.set(k, stack.getRarity().rarityColor+(String)list.get(k));
+            }
+            else{
+                list.set(k, EnumChatFormatting.GRAY+(String)list.get(k));
+            }
+        }
+
+        if(renderTransferButton){
+            BookletPage page = BookletUtils.getFirstPageForStack(stack);
+            if(page != null && page != from){
+                list.add(from.getClickToSeeRecipeString());
+
+                if(mousePressed){
+                    BookletUtils.openIndexEntry(this, page.getChapter().getEntry(), ActuallyAdditionsAPI.bookletEntries.indexOf(page.getChapter().getEntry())/GuiBooklet.CHAPTER_BUTTONS_AMOUNT+1, true);
+                    BookletUtils.openChapter(this, page.getChapter(), page);
+                    Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.func_147674_a(new ResourceLocation("gui.button.press"), 1.0F));
+                }
+            }
+        }
+
+        this.drawHoveringText(list, x, y);
+
+        this.mc.fontRenderer.setUnicodeFlag(flagBefore);
+    }
+
+    @Override
+    public int getXSize(){
+        return this.xSize;
+    }
+
+    @Override
+    public int getYSize(){
+        return this.ySize;
+    }
+
+    @Override
+    public int getGuiLeft(){
+        return this.guiLeft;
+    }
+
+    @Override
+    public int getGuiTop(){
+        return this.guiTop;
+    }
+
+    @Override
+    public EntrySet getCurrentEntrySet(){
+        return this.currentEntrySet;
     }
 }

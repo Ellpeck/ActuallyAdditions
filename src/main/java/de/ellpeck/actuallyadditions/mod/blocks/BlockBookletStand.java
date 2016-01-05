@@ -13,9 +13,9 @@ package de.ellpeck.actuallyadditions.mod.blocks;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import de.ellpeck.actuallyadditions.api.block.IHudDisplay;
+import de.ellpeck.actuallyadditions.api.internal.EntrySet;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
-import de.ellpeck.actuallyadditions.mod.booklet.EntrySet;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBookletStand;
@@ -145,7 +145,7 @@ public class BlockBookletStand extends BlockContainerBase implements IHudDisplay
                 strg1 = set.chapter.getLocalizedName();
                 strg2 = "Page "+set.page.getID();
 
-                AssetUtil.renderStackToGui(set.chapter.displayStack != null ? set.chapter.displayStack : new ItemStack(InitItems.itemBooklet), resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2+10, 1F);
+                AssetUtil.renderStackToGui(set.chapter.getDisplayItemStack() != null ? set.chapter.getDisplayItemStack() : new ItemStack(InitItems.itemBooklet), resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2+10, 1F);
             }
             minecraft.fontRenderer.drawStringWithShadow(EnumChatFormatting.YELLOW+""+EnumChatFormatting.ITALIC+strg1, resolution.getScaledWidth()/2+25, resolution.getScaledHeight()/2+8, StringUtil.DECIMAL_COLOR_WHITE);
             minecraft.fontRenderer.drawStringWithShadow(EnumChatFormatting.YELLOW+""+EnumChatFormatting.ITALIC+strg2, resolution.getScaledWidth()/2+25, resolution.getScaledHeight()/2+18, StringUtil.DECIMAL_COLOR_WHITE);

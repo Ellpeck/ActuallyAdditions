@@ -71,6 +71,7 @@ public class ActuallyAdditions{
         InitItems.init();
         FuelHandler.init();
         UpdateChecker.init();
+        InitBooklet.preInit();
         proxy.preInit(event);
 
         ModUtil.LOGGER.info("PreInitialization Finished.");
@@ -106,7 +107,7 @@ public class ActuallyAdditions{
         LensNoneRecipeHandler.init();
         InitForeignPaxels.init();
 
-        InitBooklet.init();
+        InitBooklet.postInit();
         proxy.postInit(event);
 
         ModUtil.LOGGER.info("PostInitialization Finished.");

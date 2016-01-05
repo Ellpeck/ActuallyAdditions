@@ -10,7 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import de.ellpeck.actuallyadditions.mod.booklet.EntrySet;
+import de.ellpeck.actuallyadditions.api.internal.EntrySet;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class TileEntityBookletStand extends TileEntityBase{

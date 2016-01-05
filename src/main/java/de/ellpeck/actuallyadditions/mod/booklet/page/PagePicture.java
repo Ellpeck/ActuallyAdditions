@@ -12,9 +12,10 @@ package de.ellpeck.actuallyadditions.mod.booklet.page;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import de.ellpeck.actuallyadditions.mod.booklet.GuiBooklet;
+import de.ellpeck.actuallyadditions.api.internal.IBookletGui;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
+import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 
 public class PagePicture extends PageTextOnly{
@@ -30,13 +31,13 @@ public class PagePicture extends PageTextOnly{
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void renderPre(GuiBooklet gui, int mouseX, int mouseY, int ticksElapsed, boolean mousePressed){
-        gui.mc.getTextureManager().bindTexture(this.resLoc);
-        gui.drawTexturedModalRect(gui.guiLeft, gui.guiTop, 0, 0, gui.xSize, gui.ySize);
+    public void renderPre(IBookletGui gui, int mouseX, int mouseY, int ticksElapsed, boolean mousePressed){
+        Minecraft.getMinecraft().getTextureManager().bindTexture(this.resLoc);
+        gui.drawTexturedModalRect(gui.getGuiLeft(), gui.getGuiTop(), 0, 0, gui.getXSize(), gui.getYSize());
 
-        String text = gui.currentEntrySet.page.getText();
+        String text = gui.getCurrentEntrySet().page.getText();
         if(text != null && !text.isEmpty()){
-            StringUtil.drawSplitString(gui.mc.fontRenderer, text, gui.guiLeft+14, gui.guiTop+textStartY, 115, 0, false);
+            StringUtil.drawSplitString(Minecraft.getMinecraft().fontRenderer, text, gui.getGuiLeft()+14, gui.getGuiTop()+textStartY, 115, 0, false);
         }
     }
 }

@@ -8,13 +8,15 @@
  * © 2016 Ellpeck
  */
 
-package de.ellpeck.actuallyadditions.api.lens;
+package de.ellpeck.actuallyadditions.api.internal;
 
 import net.minecraft.world.World;
 
 /**
  * This is a helper interface for Lens' invoke() method.
  * This is not supposed to be implemented.
+ * <p>
+ * Can be cast to TileEntity.
  */
 public interface IAtomicReconstructor{
 

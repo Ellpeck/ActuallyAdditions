@@ -10,39 +10,60 @@
 
 package de.ellpeck.actuallyadditions.mod.booklet.entry;
 
-import de.ellpeck.actuallyadditions.mod.booklet.InitBooklet;
+import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
+import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
+import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
 import de.ellpeck.actuallyadditions.mod.booklet.chapter.BookletChapter;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.util.EnumChatFormatting;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class BookletEntry{
+public class BookletEntry implements IBookletEntry{
 
     private final String unlocalizedName;
-    public ArrayList<BookletChapter> chapters = new ArrayList<BookletChapter>();
+    public List<IBookletChapter> chapters = new ArrayList<IBookletChapter>();
     private EnumChatFormatting color;
 
     public BookletEntry(String unlocalizedName){
         this.unlocalizedName = unlocalizedName;
-        InitBooklet.entries.add(this);
+        ActuallyAdditionsAPI.addBookletEntry(this);
 
         this.color = EnumChatFormatting.RESET;
     }
 
+    @Override
     public String getUnlocalizedName(){
         return this.unlocalizedName;
+    }
+
+    @Override
+    public List<IBookletChapter> getChapters(){
+        return this.chapters;
     }
 
     public void addChapter(BookletChapter chapter){
         this.chapters.add(chapter);
     }
 
-    public String getNameWithColor(){
+    @Override
+    public String getLocalizedNameWithFormatting(){
         return this.color+this.getLocalizedName();
     }
 
+    @Override
+    public void setChapters(List<IBookletChapter> chapters){
+        this.chapters = chapters;
+    }
+
+    @Override
+    public void addChapter(IBookletChapter chapter){
+        this.chapters.add(chapter);
+    }
+
+    @Override
     public String getLocalizedName(){
         return StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".indexEntry."+this.unlocalizedName+".name");
     }

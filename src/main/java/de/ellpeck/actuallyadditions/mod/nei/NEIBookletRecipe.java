@@ -14,10 +14,11 @@ import codechicken.lib.gui.GuiDraw;
 import codechicken.nei.PositionedStack;
 import codechicken.nei.recipe.RecipeInfo;
 import codechicken.nei.recipe.TemplateRecipeHandler;
+import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
+import de.ellpeck.actuallyadditions.api.booklet.BookletPage;
+import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
+import de.ellpeck.actuallyadditions.api.booklet.INEIRecipeHandler;
 import de.ellpeck.actuallyadditions.mod.booklet.BookletUtils;
-import de.ellpeck.actuallyadditions.mod.booklet.InitBooklet;
-import de.ellpeck.actuallyadditions.mod.booklet.chapter.BookletChapter;
-import de.ellpeck.actuallyadditions.mod.booklet.page.BookletPage;
 import de.ellpeck.actuallyadditions.mod.booklet.page.PagePicture;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
@@ -54,7 +55,7 @@ public class NEIBookletRecipe extends TemplateRecipeHandler implements INEIRecip
     @Override
     public void loadCraftingRecipes(String outputId, Object... results){
         if(outputId.equals(NAME) && getClass() == NEIBookletRecipe.class){
-            for(BookletPage page : InitBooklet.pagesWithItemStackData){
+            for(BookletPage page : ActuallyAdditionsAPI.bookletPagesWithItemStackData){
                 ItemStack[] stacks = page.getItemStacksForPage();
 
                 //So that you don't see things like Mashed Food more than once
@@ -112,8 +113,8 @@ public class NEIBookletRecipe extends TemplateRecipeHandler implements INEIRecip
             }
 
             int maxLines = 5;
-            BookletChapter chapter = stack.thePage.getChapter();
-            String aText = (chapter.pages[0] instanceof PagePicture && chapter.pages.length > 1 ? chapter.pages[1] : chapter.pages[0]).getText();
+            IBookletChapter chapter = stack.thePage.getChapter();
+            String aText = (chapter.getPages()[0] instanceof PagePicture && chapter.getPages().length > 1 ? chapter.getPages()[1] : chapter.getPages()[0]).getText();
             List text = Minecraft.getMinecraft().fontRenderer.listFormattedStringToWidth(aText != null ? aText : EnumChatFormatting.DARK_RED+StringUtil.localize("container.nei."+ModUtil.MOD_ID_LOWER+".booklet.noText"), 165);
             for(int i = 0; i < Math.min(maxLines, text.size()); i++){
                 GuiDraw.drawString(text.get(i)+(i == maxLines-1 && text.size() > maxLines ? EnumChatFormatting.RESET+""+EnumChatFormatting.BLACK+"..." : ""), 0, 18+25+i*(Minecraft.getMinecraft().fontRenderer.FONT_HEIGHT+1), 0, false);

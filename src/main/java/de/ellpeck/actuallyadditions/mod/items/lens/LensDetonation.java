@@ -11,7 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.items.lens;
 
 import de.ellpeck.actuallyadditions.api.Position;
-import de.ellpeck.actuallyadditions.api.lens.IAtomicReconstructor;
+import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
 
 public class LensDetonation extends Lens{

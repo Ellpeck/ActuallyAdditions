@@ -11,9 +11,10 @@
 package de.ellpeck.actuallyadditions.mod.booklet.chapter;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
+import de.ellpeck.actuallyadditions.api.booklet.BookletPage;
+import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
 import de.ellpeck.actuallyadditions.api.recipe.coffee.CoffeeIngredient;
-import de.ellpeck.actuallyadditions.mod.booklet.entry.BookletEntry;
-import de.ellpeck.actuallyadditions.mod.booklet.page.BookletPage;
+import de.ellpeck.actuallyadditions.mod.booklet.page.BookletPageAA;
 import de.ellpeck.actuallyadditions.mod.booklet.page.PageCoffeeRecipe;
 import de.ellpeck.actuallyadditions.mod.items.ItemCoffee;
 import net.minecraft.item.ItemStack;
@@ -23,7 +24,7 @@ import java.util.Arrays;
 
 public class BookletChapterCoffee extends BookletChapter{
 
-    public BookletChapterCoffee(String unlocalizedName, BookletEntry entry, ItemStack displayStack, BookletPage... pages){
+    public BookletChapterCoffee(String unlocalizedName, IBookletEntry entry, ItemStack displayStack, BookletPage... pages){
         super(unlocalizedName, entry, displayStack, getPages(pages));
     }
 
@@ -33,7 +34,7 @@ public class BookletChapterCoffee extends BookletChapter{
         allPages.addAll(Arrays.asList(pages));
 
         for(CoffeeIngredient ingredient : ActuallyAdditionsAPI.coffeeMachineIngredients){
-            BookletPage page = new PageCoffeeRecipe(allPages.size()+1, ingredient);
+            BookletPageAA page = new PageCoffeeRecipe(allPages.size()+1, ingredient);
             if(!(ingredient instanceof ItemCoffee.MilkIngredient)){
                 page.setNoText();
             }

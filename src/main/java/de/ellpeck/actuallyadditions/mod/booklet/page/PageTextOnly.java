@@ -12,11 +12,12 @@ package de.ellpeck.actuallyadditions.mod.booklet.page;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import de.ellpeck.actuallyadditions.mod.booklet.GuiBooklet;
+import de.ellpeck.actuallyadditions.api.internal.IBookletGui;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
+import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 
-public class PageTextOnly extends BookletPage{
+public class PageTextOnly extends BookletPageAA{
 
     private ItemStack stack;
 
@@ -37,10 +38,10 @@ public class PageTextOnly extends BookletPage{
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void renderPre(GuiBooklet gui, int mouseX, int mouseY, int ticksElapsed, boolean mousePressed){
-        String text = gui.currentEntrySet.page.getText();
+    public void renderPre(IBookletGui gui, int mouseX, int mouseY, int ticksElapsed, boolean mousePressed){
+        String text = gui.getCurrentEntrySet().page.getText();
         if(text != null && !text.isEmpty()){
-            StringUtil.drawSplitString(gui.mc.fontRenderer, text, gui.guiLeft+14, gui.guiTop+9, 115, 0, false);
+            StringUtil.drawSplitString(Minecraft.getMinecraft().fontRenderer, text, gui.getGuiLeft()+14, gui.getGuiTop()+9, 115, 0, false);
         }
     }
 }
