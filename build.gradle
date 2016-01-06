@@ -63,14 +63,17 @@ processResources {
     }
 }
 
-sourceSets {
-    main {
-        output.resourcesDir = output.classesDir
-    }
-}
-
 // Why is OpenComputers one of the only mods that has a readable build.gradle? (Thank you Sangar!) :D
+jar {}
+
 task deobfJar(type: Jar) {
     from sourceSets.main.output
     classifier = 'dev'
+}
+
+task apiJar(type: Jar) {
+    from sourceSets.main.output
+    from sourceSets.main.java
+    classifier = 'api'
+    include 'de/ellpeck/actuallyadditions/api/**'
 }
