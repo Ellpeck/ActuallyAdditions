@@ -1,3 +1,8 @@
+# 1.7.10-r19
+* Added API and Dev version as seperate jars
+* Fixed a nasty bug with obfuscation causing some booklet pages to crash the game
+* [API] Increased version to 3
+
 # 1.7.10-r18
 * Added Bacon (Don't name it Ellspeck. Just don't.)
 * Added an API.

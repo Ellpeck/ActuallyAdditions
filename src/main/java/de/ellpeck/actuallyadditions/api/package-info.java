@@ -7,7 +7,7 @@
  *
  * © 2016 Ellpeck
  */
-@API(owner = "ActuallyAdditions", apiVersion = "2", provides = "ActuallyAdditionsAPI")
+@API(owner = "ActuallyAdditions", apiVersion = "3", provides = "ActuallyAdditionsAPI")
 package de.ellpeck.actuallyadditions.api;
 
 import cpw.mods.fml.common.API;
