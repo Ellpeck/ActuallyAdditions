@@ -68,3 +68,9 @@ sourceSets {
         output.resourcesDir = output.classesDir
     }
 }
+
+// Why is OpenComputers one of the only mods that has a readable build.gradle? (Thank you Sangar!) :D
+task deobfJar(type: Jar) {
+    from sourceSets.main.output
+    classifier = 'dev'
+}
