@@ -41,7 +41,7 @@ public interface IBookletGui{
 
     int getGuiTop();
 
-    void drawTexturedModalRect(int startX, int startY, int u, int v, int xSize, int ySize);
+    void drawRect(int startX, int startY, int u, int v, int xSize, int ySize);
 
     EntrySet getCurrentEntrySet();
 }

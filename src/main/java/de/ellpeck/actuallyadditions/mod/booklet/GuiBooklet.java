@@ -457,6 +457,11 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
     }
 
     @Override
+    public void drawRect(int startX, int startY, int u, int v, int xSize, int ySize){
+        this.drawTexturedModalRect(startX, startY, u, v, xSize, ySize);
+    }
+
+    @Override
     public EntrySet getCurrentEntrySet(){
         return this.currentEntrySet;
     }

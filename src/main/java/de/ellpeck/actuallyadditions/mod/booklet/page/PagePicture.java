@@ -33,7 +33,7 @@ public class PagePicture extends PageTextOnly{
     @SideOnly(Side.CLIENT)
     public void renderPre(IBookletGui gui, int mouseX, int mouseY, int ticksElapsed, boolean mousePressed){
         Minecraft.getMinecraft().getTextureManager().bindTexture(this.resLoc);
-        gui.drawTexturedModalRect(gui.getGuiLeft(), gui.getGuiTop(), 0, 0, gui.getXSize(), gui.getYSize());
+        gui.drawRect(gui.getGuiLeft(), gui.getGuiTop(), 0, 0, gui.getXSize(), gui.getYSize());
 
         String text = gui.getCurrentEntrySet().page.getText();
         if(text != null && !text.isEmpty()){

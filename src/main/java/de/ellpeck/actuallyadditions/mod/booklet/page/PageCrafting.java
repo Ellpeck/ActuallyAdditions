@@ -76,7 +76,7 @@ public class PageCrafting extends BookletPageAA{
     public void renderPre(IBookletGui gui, int mouseX, int mouseY, int ticksElapsed, boolean mousePressed){
         if(this.recipes[this.recipePos] != null){
             Minecraft.getMinecraft().getTextureManager().bindTexture(ClientProxy.bulletForMyValentine ? GuiBooklet.resLocValentine : GuiBooklet.resLoc);
-            gui.drawTexturedModalRect(gui.getGuiLeft()+27, gui.getGuiTop()+20, 146, 20, 99, 60);
+            gui.drawRect(gui.getGuiLeft()+27, gui.getGuiTop()+20, 146, 20, 99, 60);
         }
     }
 

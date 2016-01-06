@@ -38,7 +38,7 @@ public class PageCoffeeRecipe extends BookletPageAA{
     @SideOnly(Side.CLIENT)
     public void renderPre(IBookletGui gui, int mouseX, int mouseY, int ticksElapsed, boolean mousePressed){
         Minecraft.getMinecraft().getTextureManager().bindTexture(ClientProxy.bulletForMyValentine ? GuiBooklet.resLocValentine : GuiBooklet.resLoc);
-        gui.drawTexturedModalRect(gui.getGuiLeft()+19, gui.getGuiTop()+20, 146, 94, 99, 60);
+        gui.drawRect(gui.getGuiLeft()+19, gui.getGuiTop()+20, 146, 94, 99, 60);
     }
 
     @SuppressWarnings("unchecked")
