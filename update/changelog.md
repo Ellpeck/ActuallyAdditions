@@ -1,3 +1,6 @@
+# 1.7.10-r20
+* Fixed another stupid obfuscation bug. Great. /shrugs
+
 # 1.7.10-r19
 * Added API and Dev version as seperate jars
 * Fixed a nasty bug with obfuscation causing some booklet pages to crash the game
