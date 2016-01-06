@@ -28,7 +28,7 @@ public class LensNone extends Lens{
     @SuppressWarnings("unchecked")
     @Override
     public boolean invoke(Position hitBlock, IAtomicReconstructor tile){
-        if(hitBlock != null && !hitBlock.getBlock(tile.getWorldObj()).isAir(tile.getWorldObj(), hitBlock.getX(), hitBlock.getY(), hitBlock.getZ())){
+        if(hitBlock != null && !hitBlock.getBlock(tile.getWorld()).isAir(tile.getWorld(), hitBlock.getX(), hitBlock.getY(), hitBlock.getZ())){
             int range = 2;
 
             //Converting the Blocks
@@ -36,19 +36,19 @@ public class LensNone extends Lens{
                 for(int reachZ = -range; reachZ < range+1; reachZ++){
                     for(int reachY = -range; reachY < range+1; reachY++){
                         Position pos = new Position(hitBlock.getX()+reachX, hitBlock.getY()+reachY, hitBlock.getZ()+reachZ);
-                        List<LensNoneRecipe> recipes = LensNoneRecipeHandler.getRecipesFor(new ItemStack(pos.getBlock(tile.getWorldObj()), 1, pos.getMetadata(tile.getWorldObj())));
+                        List<LensNoneRecipe> recipes = LensNoneRecipeHandler.getRecipesFor(new ItemStack(pos.getBlock(tile.getWorld()), 1, pos.getMetadata(tile.getWorld())));
                         for(LensNoneRecipe recipe : recipes){
                             if(recipe != null && tile.getEnergy() >= recipe.energyUse){
                                 List<ItemStack> outputs = recipe.getOutputs();
                                 if(outputs != null && !outputs.isEmpty()){
                                     ItemStack output = outputs.get(0);
                                     if(output.getItem() instanceof ItemBlock){
-                                        tile.getWorldObj().playAuxSFX(2001, pos.getX(), pos.getY(), pos.getZ(), Block.getIdFromBlock(pos.getBlock(tile.getWorldObj()))+(pos.getMetadata(tile.getWorldObj()) << 12));
-                                        pos.setBlock(tile.getWorldObj(), Block.getBlockFromItem(output.getItem()), output.getItemDamage(), 2);
+                                        tile.getWorld().playAuxSFX(2001, pos.getX(), pos.getY(), pos.getZ(), Block.getIdFromBlock(pos.getBlock(tile.getWorld()))+(pos.getMetadata(tile.getWorld()) << 12));
+                                        pos.setBlock(tile.getWorld(), Block.getBlockFromItem(output.getItem()), output.getItemDamage(), 2);
                                     }
                                     else{
-                                        EntityItem item = new EntityItem(tile.getWorldObj(), pos.getX()+0.5, pos.getY()+0.5, pos.getZ()+0.5, output.copy());
-                                        tile.getWorldObj().spawnEntityInWorld(item);
+                                        EntityItem item = new EntityItem(tile.getWorld(), pos.getX()+0.5, pos.getY()+0.5, pos.getZ()+0.5, output.copy());
+                                        tile.getWorld().spawnEntityInWorld(item);
                                     }
                                     tile.extractEnergy(recipe.energyUse);
                                     break;
@@ -60,7 +60,7 @@ public class LensNone extends Lens{
             }
 
             //Converting the Items
-            ArrayList<EntityItem> items = (ArrayList<EntityItem>)tile.getWorldObj().getEntitiesWithinAABB(EntityItem.class, AxisAlignedBB.getBoundingBox(hitBlock.getX()-range, hitBlock.getY()-range, hitBlock.getZ()-range, hitBlock.getX()+range, hitBlock.getY()+range, hitBlock.getZ()+range));
+            ArrayList<EntityItem> items = (ArrayList<EntityItem>)tile.getWorld().getEntitiesWithinAABB(EntityItem.class, AxisAlignedBB.getBoundingBox(hitBlock.getX()-range, hitBlock.getY()-range, hitBlock.getZ()-range, hitBlock.getX()+range, hitBlock.getY()+range, hitBlock.getZ()+range));
             for(EntityItem item : items){
                 ItemStack stack = item.getEntityItem();
                 if(stack != null){

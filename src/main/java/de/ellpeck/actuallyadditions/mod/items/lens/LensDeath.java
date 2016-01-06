@@ -28,13 +28,13 @@ public class LensDeath extends Lens{
         if(tile.getEnergy() >= use){
             tile.extractEnergy(use);
 
-            ArrayList<EntityLivingBase> entities = (ArrayList<EntityLivingBase>)tile.getWorldObj().getEntitiesWithinAABB(EntityLivingBase.class, AxisAlignedBB.getBoundingBox(hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), hitBlock.getX()+1, hitBlock.getY()+1, hitBlock.getZ()+1));
+            ArrayList<EntityLivingBase> entities = (ArrayList<EntityLivingBase>)tile.getWorld().getEntitiesWithinAABB(EntityLivingBase.class, AxisAlignedBB.getBoundingBox(hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), hitBlock.getX()+1, hitBlock.getY()+1, hitBlock.getZ()+1));
             for(EntityLivingBase entity : entities){
                 entity.attackEntityFrom(DamageSources.DAMAGE_ATOMIC_RECONSTRUCTOR, 20F);
             }
         }
 
-        return hitBlock != null && !hitBlock.getBlock(tile.getWorldObj()).isAir(tile.getWorldObj(), hitBlock.getX(), hitBlock.getY(), hitBlock.getZ());
+        return hitBlock != null && !hitBlock.getBlock(tile.getWorld()).isAir(tile.getWorld(), hitBlock.getX(), hitBlock.getY(), hitBlock.getZ());
     }
 
     @Override

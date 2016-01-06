@@ -27,6 +27,7 @@ import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
 public class TileEntityAtomicReconstructor extends TileEntityInventoryBase implements IEnergyReceiver, IEnergySaver, IRedstoneToggle, IEnergyDisplay, IAtomicReconstructor{
@@ -181,6 +182,11 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
     @Override
     public int getZ(){
         return this.zCoord;
+    }
+
+    @Override
+    public World getWorld(){
+        return this.getWorldObj();
     }
 
     @Override
