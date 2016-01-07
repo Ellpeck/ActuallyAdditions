@@ -61,6 +61,9 @@ public class ItemMagnetRing extends ItemEnergy{
                             }
                         }
                     }
+                    else{
+                        break;
+                    }
                 }
             }
         }

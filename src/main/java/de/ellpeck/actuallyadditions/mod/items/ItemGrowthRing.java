@@ -47,7 +47,7 @@ public class ItemGrowthRing extends ItemEnergy{
         EntityPlayer player = (EntityPlayer)entity;
         ItemStack equipped = player.getCurrentEquippedItem();
 
-        int energyUse = 550;
+        int energyUse = 50;
         if(equipped != null && equipped == stack && this.getEnergyStored(stack) >= energyUse){
             ArrayList<Position> blocks = new ArrayList<Position>();
 
@@ -76,14 +76,23 @@ public class ItemGrowthRing extends ItemEnergy{
                 //Fertilizing the Blocks
                 if(!blocks.isEmpty()){
                     for(int i = 0; i < 45; i++){
-                        Position pos = blocks.get(Util.RANDOM.nextInt(blocks.size()));
+                        if(this.getEnergyStored(stack) >= energyUse){
+                            Position pos = blocks.get(Util.RANDOM.nextInt(blocks.size()));
 
-                        int metaBefore = pos.getMetadata(world);
-                        pos.getBlock(world).updateTick(world, pos.getX(), pos.getY(), pos.getZ(), Util.RANDOM);
+                            int metaBefore = pos.getMetadata(world);
+                            pos.getBlock(world).updateTick(world, pos.getX(), pos.getY(), pos.getZ(), Util.RANDOM);
 
-                        //Show Particles if Metadata changed
-                        if(pos.getMetadata(world) != metaBefore){
-                            world.playAuxSFX(2005, pos.getX(), pos.getY(), pos.getZ(), 0);
+                            //Show Particles if Metadata changed
+                            if(pos.getMetadata(world) != metaBefore){
+                                world.playAuxSFX(2005, pos.getX(), pos.getY(), pos.getZ(), 0);
+                            }
+
+                            if(!player.capabilities.isCreativeMode){
+                                this.extractEnergy(stack, energyUse, false);
+                            }
+                        }
+                        else{
+                            break;
                         }
                     }
                 }
@@ -92,11 +101,6 @@ public class ItemGrowthRing extends ItemEnergy{
             }
             else{
                 stack.stackTagCompound.setInteger("WaitTime", waitTime+1);
-            }
-
-            //Use Energy every tick
-            if(!player.capabilities.isCreativeMode){
-                this.extractEnergy(stack, energyUse, false);
             }
         }
     }
