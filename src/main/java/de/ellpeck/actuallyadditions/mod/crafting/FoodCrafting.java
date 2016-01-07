@@ -73,7 +73,7 @@ public class FoodCrafting{
                     'D', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.DOUGH.ordinal()),
                     'M', new ItemStack(Blocks.brown_mushroom),
                     'C', "cropCarrot",
-                    'F', new ItemStack(Items.cooked_fished, 1, Util.WILDCARD),
+                    'F', new ItemStack(Items.cooked_fish, 1, Util.WILDCARD),
                     'K', knifeStack,
                     'H', new ItemStack(InitItems.itemFoods, 1, TheFoods.CHEESE.ordinal())));
             recipePizza = Util.GetRecipes.lastIRecipe();
@@ -105,7 +105,7 @@ public class FoodCrafting{
                     "KCP", "FB ", "PCP",
                     'P', new ItemStack(Items.paper),
                     'C', new ItemStack(InitItems.itemFoods, 1, TheFoods.CHEESE.ordinal()),
-                    'F', new ItemStack(Items.cooked_fished, 1, Util.WILDCARD),
+                    'F', new ItemStack(Items.cooked_fish, 1, Util.WILDCARD),
                     'B', new ItemStack(InitItems.itemFoods, 1, TheFoods.BAGUETTE.ordinal()),
                     'K', knifeStack));
             recipeSubSandwich = Util.GetRecipes.lastIRecipe();
@@ -132,7 +132,7 @@ public class FoodCrafting{
         if(ConfigCrafting.FISH_N_CHIPS.isEnabled()){
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemFoods, 1, TheFoods.FISH_N_CHIPS.ordinal()),
                     "FIF", " P ",
-                    'I', new ItemStack(Items.cooked_fished, 1, Util.WILDCARD),
+                    'I', new ItemStack(Items.cooked_fish, 1, Util.WILDCARD),
                     'P', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.PAPER_CONE.ordinal()),
                     'F', new ItemStack(InitItems.itemFoods, 1, TheFoods.FRENCH_FRY.ordinal())));
             recipeFishNChips = Util.GetRecipes.lastIRecipe();

@@ -15,6 +15,7 @@ import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -48,12 +49,13 @@ public class SpecialRenderInit{
 
                 ItemStack stack = null;
                 //Get the Item from the String
-                if(Item.itemRegistry.containsKey(itemName)){
-                    stack = new ItemStack((Item)Item.itemRegistry.getObject(itemName), 1, meta);
+                ResourceLocation resLoc = new ResourceLocation(itemName);
+                if(Item.itemRegistry.containsKey(resLoc)){
+                    stack = new ItemStack(Item.itemRegistry.getObject(resLoc), 1, meta);
                 }
                 else{
-                    if(Block.blockRegistry.containsKey(itemName)){
-                        stack = new ItemStack((Block)Block.blockRegistry.getObject(itemName), 1, meta);
+                    if(Block.blockRegistry.containsKey(resLoc)){
+                        stack = new ItemStack(Block.blockRegistry.getObject(resLoc), 1, meta);
                     }
                 }
 
@@ -70,7 +72,7 @@ public class SpecialRenderInit{
         if(!specialList.isEmpty()){
             for(Map.Entry<String, RenderSpecial> entry : specialList.entrySet()){
                 //Does the player have one of the names from the list?
-                if(StringUtil.equalsToLowerCase(entry.getKey(), event.entityPlayer.getCommandSenderName())){
+                if(StringUtil.equalsToLowerCase(entry.getKey(), event.entityPlayer.getName())){
                     //Render the special Item/Block
                     entry.getValue().render(event.entityPlayer);
                     break;

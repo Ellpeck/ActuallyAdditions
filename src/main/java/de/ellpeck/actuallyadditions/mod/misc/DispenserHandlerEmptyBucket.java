@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.misc;
 
+import de.ellpeck.actuallyadditions.api.Position;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.dispenser.BehaviorDefaultDispenseItem;
 import net.minecraft.dispenser.IBlockSource;
@@ -22,12 +23,13 @@ public class DispenserHandlerEmptyBucket extends BehaviorDefaultDispenseItem{
 
     @Override
     public ItemStack dispenseStack(IBlockSource source, ItemStack bucket){
-        EnumFacing facing = BlockDispenser.func_149937_b(source.getBlockMetadata());
-        int x = source.getXInt()+facing.getFrontOffsetX();
-        int y = source.getYInt()+facing.getFrontOffsetY();
-        int z = source.getZInt()+facing.getFrontOffsetZ();
+        EnumFacing facing = BlockDispenser.getFacing(source.getBlockMetadata());
+        int x = source.getBlockTileEntity().getPos().getX()+facing.getFrontOffsetX();
+        int y = source.getBlockTileEntity().getPos().getY()+facing.getFrontOffsetY();
+        int z = source.getBlockTileEntity().getPos().getZ()+facing.getFrontOffsetZ();
+        Position pos = new Position(x, y, z);
 
-        if(source.getWorld().isAirBlock(x, y, z) && !source.getWorld().getBlock(x, y, z).getMaterial().isSolid() && ((ItemBucket)bucket.getItem()).tryPlaceContainedLiquid(source.getWorld(), x, y, z)){
+        if(source.getWorld().isAirBlock(pos) && !pos.getMaterial(source.getWorld()).isSolid() && ((ItemBucket)bucket.getItem()).tryPlaceContainedLiquid(source.getWorld(), pos)){
             return new ItemStack(Items.bucket);
         }
 

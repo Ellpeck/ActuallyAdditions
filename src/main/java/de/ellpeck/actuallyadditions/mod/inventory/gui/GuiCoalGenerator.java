@@ -41,13 +41,13 @@ public class GuiCoalGenerator extends GuiContainer{
         super.drawScreen(x, y, f);
         String text1 = this.generator.storage.getEnergyStored()+"/"+this.generator.storage.getMaxEnergyStored()+" RF";
         if(x >= guiLeft+43 && y >= guiTop+6 && x <= guiLeft+58 && y <= guiTop+88){
-            this.func_146283_a(Collections.singletonList(text1), x, y);
+            this.drawHoveringText(Collections.singletonList(text1), x, y);
         }
     }
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y){
-        AssetUtil.displayNameString(this.fontRendererObj, xSize, -10, this.generator.getInventoryName());
+        AssetUtil.displayNameString(this.fontRendererObj, xSize, -10, this.generator.getName());
     }
 
     @Override

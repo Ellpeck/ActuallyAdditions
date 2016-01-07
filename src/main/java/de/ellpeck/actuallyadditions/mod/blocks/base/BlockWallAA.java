@@ -14,11 +14,11 @@ import de.ellpeck.actuallyadditions.mod.creative.CreativeTab;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockWall;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIcon;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -45,7 +45,7 @@ public class BlockWallAA extends BlockWall{
     }
 
     private void register(){
-        this.setBlockName(ModUtil.MOD_ID_LOWER+"."+this.getBaseName());
+        this.setUnlocalizedName(ModUtil.MOD_ID_LOWER+"."+this.getBaseName());
         GameRegistry.registerBlock(this, this.getItemBlock(), this.getBaseName());
         if(this.shouldAddCreative()){
             this.setCreativeTab(CreativeTab.instance);
@@ -68,13 +68,7 @@ public class BlockWallAA extends BlockWall{
     }
 
     public EnumRarity getRarity(ItemStack stack){
-        return EnumRarity.common;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public IIcon getIcon(int side, int meta){
-        return this.baseBlock.getIcon(side, this.meta);
+        return EnumRarity.COMMON;
     }
 
     @SuppressWarnings("unchecked")
@@ -85,7 +79,7 @@ public class BlockWallAA extends BlockWall{
     }
 
     @Override
-    public int damageDropped(int meta){
-        return meta;
+    public int damageDropped(IBlockState state){
+        return this.getMetaFromState(state);
     }
 }

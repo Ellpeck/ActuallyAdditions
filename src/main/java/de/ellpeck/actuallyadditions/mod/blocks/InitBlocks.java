@@ -209,7 +209,7 @@ public class InitBlocks{
         //Canola Fluid
         String canolaOil = "canolaoil";
         if(!FluidRegistry.isFluidRegistered(canolaOil) || ConfigBoolValues.PREVENT_CANOLA_OVERRIDE.isEnabled()){
-            fluidCanolaOil = new FluidAA(canolaOil).setRarity(EnumRarity.uncommon);
+            fluidCanolaOil = new FluidAA(canolaOil, "blockCanolaOil").setRarity(EnumRarity.UNCOMMON);
             FluidRegistry.registerFluid(fluidCanolaOil);
         }
         else{
@@ -229,7 +229,7 @@ public class InitBlocks{
         //Oil Fluid
         String oil = "oil";
         if(!FluidRegistry.isFluidRegistered(oil) || ConfigBoolValues.PREVENT_OIL_OVERRIDE.isEnabled()){
-            fluidOil = new FluidAA(oil).setRarity(EnumRarity.uncommon);
+            fluidOil = new FluidAA(oil, "blockOil").setRarity(EnumRarity.UNCOMMON);
             FluidRegistry.registerFluid(fluidOil);
         }
         else{

@@ -89,7 +89,7 @@ public class PersistentClientData{
 
     private static String getName(){
         if(Minecraft.getMinecraft().theWorld != null){
-            return Minecraft.getMinecraft().isIntegratedServerRunning() ? Minecraft.getMinecraft().getIntegratedServer().getFolderName() : Minecraft.getMinecraft().func_147104_D().serverIP;
+            return Minecraft.getMinecraft().isIntegratedServerRunning() ? Minecraft.getMinecraft().getIntegratedServer().getFolderName() : Minecraft.getMinecraft().getCurrentServerData().serverIP;
         }
         else{
             return "Invalid";

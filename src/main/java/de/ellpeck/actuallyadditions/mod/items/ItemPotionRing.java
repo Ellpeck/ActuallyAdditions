@@ -12,9 +12,7 @@ package de.ellpeck.actuallyadditions.mod.items;
 
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.items.metalists.ThePotionRings;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -22,7 +20,6 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -72,11 +69,11 @@ public class ItemPotionRing extends ItemBase{
                 if(!effect.needsWaitBeforeActivating || !thePlayer.isPotionActive(effect.effectID)){
                     if(!((ItemPotionRing)stack.getItem()).isAdvanced){
                         if(equippedStack != null && stack == equippedStack){
-                            thePlayer.addPotionEffect(new PotionEffect(effect.effectID, effect.activeTime, effect.normalAmplifier, true));
+                            thePlayer.addPotionEffect(new PotionEffect(effect.effectID, effect.activeTime, effect.normalAmplifier, true, false));
                         }
                     }
                     else{
-                        thePlayer.addPotionEffect(new PotionEffect(effect.effectID, effect.activeTime, effect.advancedAmplifier, true));
+                        thePlayer.addPotionEffect(new PotionEffect(effect.effectID, effect.activeTime, effect.advancedAmplifier, true, false));
                     }
                 }
             }
@@ -95,7 +92,7 @@ public class ItemPotionRing extends ItemBase{
 
     @Override
     public EnumRarity getRarity(ItemStack stack){
-        return stack.getItemDamage() >= allRings.length ? EnumRarity.common : allRings[stack.getItemDamage()].rarity;
+        return stack.getItemDamage() >= allRings.length ? EnumRarity.COMMON : allRings[stack.getItemDamage()].rarity;
     }
 
     @SuppressWarnings("all")
@@ -104,17 +101,5 @@ public class ItemPotionRing extends ItemBase{
         for(int j = 0; j < allRings.length; j++){
             list.add(new ItemStack(this, 1, j));
         }
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister iconReg){
-        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName());
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public IIcon getIcon(ItemStack stack, int pass){
-        return this.itemIcon;
     }
 }

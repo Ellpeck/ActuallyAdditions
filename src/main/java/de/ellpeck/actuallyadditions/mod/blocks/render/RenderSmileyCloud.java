@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks.render;
 
+import de.ellpeck.actuallyadditions.api.Position;
 import de.ellpeck.actuallyadditions.mod.blocks.render.model.ModelBaseAA;
 import de.ellpeck.actuallyadditions.mod.misc.cloud.ISmileyCloudEasterEgg;
 import de.ellpeck.actuallyadditions.mod.misc.cloud.SmileyCloudEasterEggs;
@@ -19,8 +20,6 @@ import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
@@ -34,7 +33,7 @@ public class RenderSmileyCloud extends RenderTileEntity{
     }
 
     @Override
-    public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float par5){
+    public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float par5, int partial){
         if(!(tile instanceof TileEntitySmileyCloud)){
             return;
         }
@@ -43,7 +42,7 @@ public class RenderSmileyCloud extends RenderTileEntity{
         GL11.glPushMatrix();
         {
             if(theCloud.flyHeight == 0){
-                theCloud.flyHeight = tile.getWorldObj().rand.nextInt(30)+30;
+                theCloud.flyHeight = tile.getWorld().rand.nextInt(30)+30;
             }
             int bobHeight = theCloud.flyHeight;
             double theTime = Minecraft.getSystemTime();
@@ -67,7 +66,7 @@ public class RenderSmileyCloud extends RenderTileEntity{
             GL11.glPushMatrix();
             {
                 if(theModel.doesRotate()){
-                    int meta = tile.getWorldObj().getBlockMetadata(tile.xCoord, tile.yCoord, tile.zCoord);
+                    int meta = Position.fromTileEntity(tile).getMetadata(tile.getWorld());
                     if(meta == 0){
                         GL11.glRotatef(180F, 0F, 1F, 0F);
                     }
@@ -113,8 +112,8 @@ public class RenderSmileyCloud extends RenderTileEntity{
                     GL11.glRotatef(180F, 1F, 0F, 0F);
                     GL11.glRotatef(180F, 0F, 1F, 0F);
 
-                    GL11.glRotatef(-RenderManager.instance.playerViewY, 0.0F, 1.0F, 0.0F);
-                    GL11.glRotatef(RenderManager.instance.playerViewX, 1.0F, 0.0F, 0.0F);
+                    GL11.glRotatef(-Minecraft.getMinecraft().getRenderManager().playerViewY, 0.0F, 1.0F, 0.0F);
+                    GL11.glRotatef(Minecraft.getMinecraft().getRenderManager().playerViewX, 1.0F, 0.0F, 0.0F);
                     float f = 1.6F;
                     float f1 = 0.016666668F*f;
                     GL11.glScalef(-f1, -f1, f1);
@@ -123,20 +122,21 @@ public class RenderSmileyCloud extends RenderTileEntity{
                     GL11.glDepthMask(false);
                     GL11.glEnable(GL11.GL_BLEND);
                     OpenGlHelper.glBlendFunc(770, 771, 1, 0);
-                    Tessellator tessellator = Tessellator.instance;
+                    //TODO Fix nameplate with Smiley Cloud
+                    /*Tessellator tessellator = Tessellator.getInstance();
                     GL11.glDisable(GL11.GL_TEXTURE_2D);
                     tessellator.startDrawingQuads();
-                    int i = Minecraft.getMinecraft().fontRenderer.getStringWidth(theCloud.name)/2;
+                    int i = Minecraft.getMinecraft().fontRendererObj.getStringWidth(theCloud.name)/2;
                     tessellator.setColorRGBA_F(0.0F, 0.0F, 0.0F, 0.25F);
                     tessellator.addVertex(-i-1, -1.0D, 0.0D);
                     tessellator.addVertex(-i-1, 8.0D, 0.0D);
                     tessellator.addVertex(i+1, 8.0D, 0.0D);
                     tessellator.addVertex(i+1, -1.0D, 0.0D);
                     tessellator.draw();
-                    GL11.glEnable(GL11.GL_TEXTURE_2D);
+                    GL11.glEnable(GL11.GL_TEXTURE_2D);*/
                     GL11.glDepthMask(true);
 
-                    Minecraft.getMinecraft().fontRenderer.drawString(theCloud.name, -Minecraft.getMinecraft().fontRenderer.getStringWidth(theCloud.name)/2, 0, StringUtil.DECIMAL_COLOR_WHITE);
+                    Minecraft.getMinecraft().fontRendererObj.drawString(theCloud.name, -Minecraft.getMinecraft().fontRendererObj.getStringWidth(theCloud.name)/2, 0, StringUtil.DECIMAL_COLOR_WHITE);
 
                     GL11.glEnable(GL11.GL_LIGHTING);
                     GL11.glDisable(GL11.GL_BLEND);

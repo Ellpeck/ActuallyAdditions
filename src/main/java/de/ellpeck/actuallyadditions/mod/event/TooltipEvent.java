@@ -66,7 +66,7 @@ public class TooltipEvent{
                     }
 
                     //Disabling Info
-                    event.toolTip.addAll(Minecraft.getMinecraft().fontRenderer.listFormattedStringToWidth(EnumChatFormatting.ITALIC+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".disablingInfo.desc"), 200));
+                    event.toolTip.addAll(Minecraft.getMinecraft().fontRendererObj.listFormattedStringToWidth(EnumChatFormatting.ITALIC+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".disablingInfo.desc"), 200));
                 }
                 else{
                     if(ConfigBoolValues.CTRL_INFO_FOR_EXTRA_INFO.isEnabled()){

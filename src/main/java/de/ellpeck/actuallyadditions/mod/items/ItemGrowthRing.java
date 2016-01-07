@@ -60,7 +60,7 @@ public class ItemGrowthRing extends ItemEnergy{
                             int theX = MathHelper.floor_double(player.posX+x);
                             int theY = MathHelper.floor_double(player.posY+y);
                             int theZ = MathHelper.floor_double(player.posZ+z);
-                            Block theBlock = world.getBlock(theX, theY, theZ);
+                            Block theBlock = new Position(theX, theY, theZ).getBlock(world);
                             if((theBlock instanceof IGrowable || theBlock instanceof IPlantable) && !(theBlock instanceof BlockGrass)){
                                 blocks.add(new Position(theX, theY, theZ));
                             }
@@ -75,11 +75,11 @@ public class ItemGrowthRing extends ItemEnergy{
                             Position pos = blocks.get(Util.RANDOM.nextInt(blocks.size()));
 
                             int metaBefore = pos.getMetadata(world);
-                            pos.getBlock(world).updateTick(world, pos.getX(), pos.getY(), pos.getZ(), Util.RANDOM);
+                            pos.getBlock(world).updateTick(world, pos, pos.getBlockState(world), Util.RANDOM);
 
                             //Show Particles if Metadata changed
                             if(pos.getMetadata(world) != metaBefore){
-                                world.playAuxSFX(2005, pos.getX(), pos.getY(), pos.getZ(), 0);
+                                world.playAuxSFX(2005, pos, 0);
                             }
 
                             if(!player.capabilities.isCreativeMode){

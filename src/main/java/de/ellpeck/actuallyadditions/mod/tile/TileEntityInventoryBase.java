@@ -167,7 +167,9 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
 
     @Override
     public ItemStack removeStackFromSlot(int index){
-        return this.slots[index] = null;
+        ItemStack stack = this.slots[index];
+        this.slots[index] = null;
+        return stack;
     }
 
     @Override

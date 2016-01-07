@@ -10,20 +10,21 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
+import de.ellpeck.actuallyadditions.api.Position;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.proxy.ClientProxy;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityOilGenerator;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
-import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.IIcon;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -31,11 +32,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.Random;
 
 public class BlockOilGenerator extends BlockContainerBase{
-
-    @SideOnly(Side.CLIENT)
-    private IIcon topIcon;
-    @SideOnly(Side.CLIENT)
-    private IIcon bottomIcon;
 
     public BlockOilGenerator(String name){
         super(Material.rock, name);
@@ -53,28 +49,20 @@ public class BlockOilGenerator extends BlockContainerBase{
 
     @Override
     @SideOnly(Side.CLIENT)
-    public IIcon getIcon(int side, int meta){
-        return side <= 1 ? (side == 0 ? this.bottomIcon : this.topIcon) : this.blockIcon;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void randomDisplayTick(World world, int x, int y, int z, Random rand){
-        int meta = world.getBlockMetadata(x, y, z);
-
-        if(meta == 1){
+    public void randomDisplayTick(World world, BlockPos pos, IBlockState state, Random rand){
+        if(Position.fromBlockPos(pos).getMetadata(world) == 1){
             for(int i = 0; i < 5; i++){
-                world.spawnParticle(ClientProxy.bulletForMyValentine ? "heart" : "smoke", (double)x+0.5F, (double)y+1.0F, (double)z+0.5F, 0.0D, 0.0D, 0.0D);
+                world.spawnParticle(ClientProxy.bulletForMyValentine ? EnumParticleTypes.HEART : EnumParticleTypes.SMOKE_NORMAL, (double)pos.getX()+0.5F, (double)pos.getY()+1.0F, (double)pos.getZ()+0.5F, 0.0D, 0.0D, 0.0D);
             }
         }
     }
 
     @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9){
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing par6, float par7, float par8, float par9){
         if(!world.isRemote){
-            TileEntityOilGenerator generator = (TileEntityOilGenerator)world.getTileEntity(x, y, z);
+            TileEntityOilGenerator generator = (TileEntityOilGenerator)world.getTileEntity(pos);
             if(generator != null){
-                player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.OIL_GENERATOR.ordinal(), world, x, y, z);
+                player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.OIL_GENERATOR.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
             }
             return true;
         }
@@ -82,21 +70,13 @@ public class BlockOilGenerator extends BlockContainerBase{
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister iconReg){
-        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName());
-        this.topIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName()+"Top");
-        this.bottomIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName()+"Bottom");
-    }
-
-    @Override
     public EnumRarity getRarity(ItemStack stack){
-        return EnumRarity.rare;
+        return EnumRarity.RARE;
     }
 
     @Override
-    public void breakBlock(World world, int x, int y, int z, Block block, int par6){
-        this.dropInventory(world, x, y, z);
-        super.breakBlock(world, x, y, z, block, par6);
+    public void breakBlock(World world, BlockPos pos, IBlockState state){
+        this.dropInventory(world, Position.fromBlockPos(pos));
+        super.breakBlock(world, pos, state);
     }
 }

@@ -42,13 +42,13 @@ public class GuiDirectionalBreaker extends GuiContainer{
 
         String text1 = this.breaker.storage.getEnergyStored()+"/"+this.breaker.storage.getMaxEnergyStored()+" RF";
         if(x >= guiLeft+43 && y >= guiTop+6 && x <= guiLeft+58 && y <= guiTop+88){
-            this.func_146283_a(Collections.singletonList(text1), x, y);
+            this.drawHoveringText(Collections.singletonList(text1), x, y);
         }
     }
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y){
-        AssetUtil.displayNameString(this.fontRendererObj, xSize, -10, this.breaker.getInventoryName());
+        AssetUtil.displayNameString(this.fontRendererObj, xSize, -10, this.breaker.getName());
     }
 
     @Override

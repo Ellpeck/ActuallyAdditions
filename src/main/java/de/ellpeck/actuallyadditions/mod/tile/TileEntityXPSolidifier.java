@@ -17,6 +17,7 @@ import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumFacing;
 
 public class TileEntityXPSolidifier extends TileEntityInventoryBase implements IButtonReactor{
 
@@ -65,7 +66,7 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
     }
 
     @Override
-    public boolean canInsertItem(int slot, ItemStack stack, int side){
+    public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
         return this.isItemValidForSlot(slot, stack);
     }
 
@@ -75,7 +76,7 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
     }
 
     @Override
-    public boolean canExtractItem(int slot, ItemStack stack, int side){
+    public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
         return true;
     }
 

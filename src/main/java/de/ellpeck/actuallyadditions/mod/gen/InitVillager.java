@@ -11,16 +11,8 @@
 package de.ellpeck.actuallyadditions.mod.gen;
 
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
-import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
-import de.ellpeck.actuallyadditions.mod.items.InitItems;
-import de.ellpeck.actuallyadditions.mod.items.metalists.TheJams;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.WeightedRandomChestContent;
 import net.minecraft.world.gen.structure.MapGenStructureIO;
-import net.minecraftforge.common.ChestGenHooks;
-import net.minecraftforge.fml.common.registry.VillagerRegistry;
 
 public class InitVillager{
 
@@ -38,7 +30,8 @@ public class InitVillager{
     }
 
     private static void initJamVillagePart(){
-        int jamID = ConfigIntValues.JAM_VILLAGER_ID.getValue();
+        //TODO Fix villager
+        /*int jamID = ConfigIntValues.JAM_VILLAGER_ID.getValue();
         VillagerRegistry.instance().registerVillagerId(jamID);
         VillagerRegistry.instance().registerVillageTradeHandler(jamID, new JamVillagerTradeHandler());
 
@@ -52,12 +45,13 @@ public class InitVillager{
         ChestGenHooks.addItem(JAM_HOUSE_CHEST_NAME, new WeightedRandomChestContent(new ItemStack(Items.potionitem), 1, 1, 20));
 
         VillagerRegistry.instance().registerVillageCreationHandler(new VillageJamHouseHandler());
-        MapGenStructureIO.func_143031_a(VillageComponentJamHouse.class, ModUtil.MOD_ID_LOWER+":jamHouseStructure");
+        MapGenStructureIO.func_143031_a(VillageComponentJamHouse.class, ModUtil.MOD_ID_LOWER+":jamHouseStructure");*/
     }
 
     private static void initCustomCropFieldPart(){
-        VillagerRegistry.instance().registerVillageCreationHandler(new VillageCustomCropFieldHandler());
-        MapGenStructureIO.func_143031_a(VillageComponentCustomCropField.class, ModUtil.MOD_ID_LOWER+":customCropFieldStructure");
+        //TODO Fix village
+        //VillagerRegistry.instance().registerVillageCreationHandler(new VillageCustomCropFieldHandler());
+        MapGenStructureIO.registerStructureComponent(VillageComponentCustomCropField.class, ModUtil.MOD_ID_LOWER+":customCropFieldStructure");
     }
 
 }

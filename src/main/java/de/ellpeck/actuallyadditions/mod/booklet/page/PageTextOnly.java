@@ -41,7 +41,7 @@ public class PageTextOnly extends BookletPageAA{
     public void renderPre(IBookletGui gui, int mouseX, int mouseY, int ticksElapsed, boolean mousePressed){
         String text = gui.getCurrentEntrySet().page.getText();
         if(text != null && !text.isEmpty()){
-            StringUtil.drawSplitString(Minecraft.getMinecraft().fontRenderer, text, gui.getGuiLeft()+14, gui.getGuiTop()+9, 115, 0, false);
+            StringUtil.drawSplitString(Minecraft.getMinecraft().fontRendererObj, text, gui.getGuiLeft()+14, gui.getGuiTop()+9, 115, 0, false);
         }
     }
 }

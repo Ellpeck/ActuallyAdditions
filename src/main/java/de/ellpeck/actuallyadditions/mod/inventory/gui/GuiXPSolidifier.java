@@ -81,7 +81,7 @@ public class GuiXPSolidifier extends GuiContainer{
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y){
-        AssetUtil.displayNameString(this.fontRendererObj, xSize, -10, this.solidifier.getInventoryName());
+        AssetUtil.displayNameString(this.fontRendererObj, xSize, -10, this.solidifier.getName());
     }
 
     @Override

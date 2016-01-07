@@ -58,7 +58,7 @@ public class GuiMiner extends GuiContainer{
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y){
-        AssetUtil.displayNameString(this.fontRendererObj, xSize, -10, this.miner.getInventoryName());
+        AssetUtil.displayNameString(this.fontRendererObj, xSize, -10, this.miner.getName());
     }
 
     @Override
@@ -77,6 +77,6 @@ public class GuiMiner extends GuiContainer{
 
     @Override
     public void actionPerformed(GuiButton button){
-        PacketHandler.theNetwork.sendToServer(new PacketGuiButton(miner.xCoord, miner.yCoord, miner.zCoord, miner.getWorldObj(), button.id, Minecraft.getMinecraft().thePlayer));
+        PacketHandler.theNetwork.sendToServer(new PacketGuiButton(miner.getPos().getX(), miner.getPos().getY(), miner.getPos().getZ(), miner.getWorld(), button.id, Minecraft.getMinecraft().thePlayer));
     }
 }

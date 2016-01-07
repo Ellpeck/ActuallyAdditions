@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.gen;
 
+import de.ellpeck.actuallyadditions.api.Position;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheMiscBlocks;
 import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
@@ -17,6 +18,7 @@ import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.pattern.BlockHelper;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
@@ -40,8 +42,8 @@ public class OreGen implements IWorldGenerator{
 
     @Override
     public void generate(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider){
-        if(world.provider.terrainType != WorldType.FLAT && Util.arrayContains(ConfigValues.oreGenDimensionBlacklist, world.provider.dimensionId) < 0){
-            switch(world.provider.dimensionId){
+        if(world.getWorldType() != WorldType.FLAT && Util.arrayContains(ConfigValues.oreGenDimensionBlacklist, world.provider.getDimensionId()) < 0){
+            switch(world.provider.getDimensionId()){
                 case -1:
                     generateNether(world, random, chunkX*16, chunkZ*16);
                     //case 0:
@@ -77,7 +79,7 @@ public class OreGen implements IWorldGenerator{
                 int posX = blockXPos+random.nextInt(16);
                 int posY = minY+random.nextInt(yDiff);
                 int posZ = blockZPos+random.nextInt(16);
-                new WorldGenMinable(block, meta, maxVeinSize, blockIn).generate(world, random, posX, posY, posZ);
+                new WorldGenMinable(block.getStateFromMeta(meta), maxVeinSize, BlockHelper.forBlock(blockIn)).generate(world, random, new Position(posX, posY, posZ));
             }
         }
         else{

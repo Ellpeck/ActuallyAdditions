@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
+import de.ellpeck.actuallyadditions.api.Position;
 import de.ellpeck.actuallyadditions.api.tile.IEnergyDisplay;
 import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
@@ -57,7 +58,7 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyR
             if(!this.isRedstonePowered && this.ticksElapsed%5 == 0){
 
                 if(this.layerAt > 0){
-                    if(this.mine(TileEntityPhantomface.upgradeRange(DEFAULT_RANGE, worldObj, xCoord, yCoord, zCoord))){
+                    if(this.mine(TileEntityPhantomface.upgradeRange(DEFAULT_RANGE, worldObj, Position.fromTileEntity(this)))){
                         this.layerAt--;
                     }
                 }
@@ -75,26 +76,24 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyR
             for(int aZ = -range; aZ <= range; aZ++){
                 int actualUse = ENERGY_USE_PER_BLOCK*(this.onlyMineOres ? 3 : 1);
                 if(this.storage.getEnergyStored() >= actualUse){
-                    int x = this.xCoord+anX;
-                    int z = this.zCoord+aZ;
-                    int y = this.layerAt;
+                    Position pos = new Position(this.pos.getX()+anX, this.layerAt, this.pos.getZ()+aZ);
 
-                    Block block = this.worldObj.getBlock(x, y, z);
-                    int meta = this.worldObj.getBlockMetadata(x, y, z);
-                    if(block != null && !block.isAir(this.worldObj, x, y, z)){
-                        if(block.getHarvestLevel(meta) <= 3F && block.getBlockHardness(this.worldObj, x, y, z) >= 0F && !(block instanceof BlockLiquid) && !(block instanceof IFluidBlock) && this.isMinable(block, meta)){
+                    Block block = pos.getBlock(worldObj);
+                    int meta = pos.getMetadata(worldObj);
+                    if(block != null && !block.isAir(this.worldObj, pos)){
+                        if(block.getHarvestLevel(pos.getBlockState(worldObj)) <= 3F && block.getBlockHardness(this.worldObj, pos) >= 0F && !(block instanceof BlockLiquid) && !(block instanceof IFluidBlock) && this.isMinable(block, meta)){
                             ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-                            drops.addAll(block.getDrops(worldObj, x, y, z, meta, 0));
+                            drops.addAll(block.getDrops(worldObj, pos, pos.getBlockState(worldObj), 0));
 
-                            if(WorldUtil.addToInventory(this, drops, ForgeDirection.UNKNOWN, false)){
-                                worldObj.playAuxSFX(2001, x, y, z, Block.getIdFromBlock(block)+(meta << 12));
-                                worldObj.setBlockToAir(x, y, z);
+                            if(WorldUtil.addToInventory(this, drops, false, true)){
+                                worldObj.playAuxSFX(2001, pos, Block.getIdFromBlock(block)+(meta << 12));
+                                worldObj.setBlockToAir(pos);
 
                                 WorldUtil.addToInventory(this, drops, true, true);
                                 this.markDirty();
 
                                 this.storage.extractEnergy(actualUse, false);
-                                this.shootParticles(x, y, z);
+                                this.shootParticles(pos.getX(), pos.getY(), pos.getZ());
                             }
                             return false;
                         }

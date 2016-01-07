@@ -10,17 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.gen;
 
-import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
-import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
-import net.minecraft.util.MathHelper;
-import net.minecraft.world.World;
-import net.minecraft.world.gen.structure.StructureBoundingBox;
-import net.minecraft.world.gen.structure.StructureComponent;
 import net.minecraft.world.gen.structure.StructureVillagePieces;
-
-import java.util.List;
-import java.util.Random;
 
 public class VillageComponentCustomCropField extends StructureVillagePieces.House1{
 
@@ -35,7 +25,8 @@ public class VillageComponentCustomCropField extends StructureVillagePieces.Hous
 
     }
 
-    public VillageComponentCustomCropField(StructureBoundingBox boundingBox, int par5){
+    //TODO Fix village
+    /*public VillageComponentCustomCropField(StructureBoundingBox boundingBox, int par5){
         this.coordBaseMode = par5;
         this.boundingBox = boundingBox;
     }
@@ -108,5 +99,5 @@ public class VillageComponentCustomCropField extends StructureVillagePieces.Hous
             default:
                 return InitBlocks.blockCanola;
         }
-    }
+    }*/
 }

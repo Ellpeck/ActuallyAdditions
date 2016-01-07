@@ -32,7 +32,7 @@ public class IndexButton extends GuiButton{
     public void drawButton(Minecraft minecraft, int mouseX, int mouseY){
         if(this.visible){
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-            this.field_146123_n = mouseX >= this.xPosition && mouseY >= this.yPosition && mouseX < this.xPosition+this.width && mouseY < this.yPosition+this.height;
+            this.hovered = mouseX >= this.xPosition && mouseY >= this.yPosition && mouseX < this.xPosition+this.width && mouseY < this.yPosition+this.height;
             GL11.glEnable(GL11.GL_BLEND);
             OpenGlHelper.glBlendFunc(770, 771, 1, 0);
             GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
@@ -48,9 +48,9 @@ public class IndexButton extends GuiButton{
                 }
             }
 
-            if(this.field_146123_n){
+            if(this.hovered){
                 GL11.glPushMatrix();
-                AssetUtil.drawHorizontalGradientRect(this.xPosition+textOffsetX-1, this.yPosition+this.height-1, this.xPosition+this.gui.getFontRenderer().getStringWidth(this.displayString)+textOffsetX+1, this.yPosition+this.height, 0x80 << 24 | 22271, 22271);
+                AssetUtil.drawHorizontalGradientRect(this.xPosition+textOffsetX-1, this.yPosition+this.height-1, this.xPosition+this.gui.getFontRenderer().getStringWidth(this.displayString)+textOffsetX+1, this.yPosition+this.height, 0x80 << 24 | 22271, 22271, this.zLevel);
                 GL11.glPopMatrix();
             }
 

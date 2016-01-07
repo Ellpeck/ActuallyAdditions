@@ -48,13 +48,13 @@ public class GuiGrinder extends GuiContainer{
         super.drawScreen(x, y, f);
         String text = this.tileGrinder.storage.getEnergyStored()+"/"+this.tileGrinder.storage.getMaxEnergyStored()+" RF";
         if((this.isDouble && x >= guiLeft+14 && y >= guiTop+6 && x <= guiLeft+29 && y <= guiTop+88) || (!this.isDouble && x >= guiLeft+43 && y >= guiTop+6 && x <= guiLeft+58 && y <= guiTop+88)){
-            this.func_146283_a(Collections.singletonList(text), x, y);
+            this.drawHoveringText(Collections.singletonList(text), x, y);
         }
     }
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y){
-        AssetUtil.displayNameString(this.fontRendererObj, xSize, -10, this.tileGrinder.getInventoryName());
+        AssetUtil.displayNameString(this.fontRendererObj, xSize, -10, this.tileGrinder.getName());
     }
 
     @Override

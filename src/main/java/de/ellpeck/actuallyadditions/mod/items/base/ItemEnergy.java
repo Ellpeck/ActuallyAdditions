@@ -100,7 +100,7 @@ public abstract class ItemEnergy extends ItemEnergyContainer{
 
     @Override
     @SideOnly(Side.CLIENT)
-    public boolean hasEffect(ItemStack stack, int pass){
+    public boolean hasEffect(ItemStack stack){
         return false;
     }
 

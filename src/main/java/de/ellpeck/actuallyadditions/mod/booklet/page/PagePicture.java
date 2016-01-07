@@ -37,7 +37,7 @@ public class PagePicture extends PageTextOnly{
 
         String text = gui.getCurrentEntrySet().page.getText();
         if(text != null && !text.isEmpty()){
-            StringUtil.drawSplitString(Minecraft.getMinecraft().fontRenderer, text, gui.getGuiLeft()+14, gui.getGuiTop()+textStartY, 115, 0, false);
+            StringUtil.drawSplitString(Minecraft.getMinecraft().fontRendererObj, text, gui.getGuiLeft()+14, gui.getGuiTop()+textStartY, 115, 0, false);
         }
     }
 }

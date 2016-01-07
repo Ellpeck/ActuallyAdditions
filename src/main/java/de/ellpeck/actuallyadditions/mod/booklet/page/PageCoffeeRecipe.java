@@ -46,15 +46,15 @@ public class PageCoffeeRecipe extends BookletPageAA{
     @SideOnly(Side.CLIENT)
     public void render(IBookletGui gui, int mouseX, int mouseY, int ticksElapsed, boolean mousePressed){
         String strg = "Coffee Machine Recipe";
-        Minecraft.getMinecraft().fontRenderer.drawString(strg, gui.getGuiLeft()+gui.getXSize()/2-Minecraft.getMinecraft().fontRenderer.getStringWidth(strg)/2, gui.getGuiTop()+10, 0);
+        Minecraft.getMinecraft().fontRendererObj.drawString(strg, gui.getGuiLeft()+gui.getXSize()/2-Minecraft.getMinecraft().fontRendererObj.getStringWidth(strg)/2, gui.getGuiTop()+10, 0);
 
         String text = gui.getCurrentEntrySet().page.getText();
         if(text != null && !text.isEmpty()){
-            StringUtil.drawSplitString(Minecraft.getMinecraft().fontRenderer, text, gui.getGuiLeft()+14, gui.getGuiTop()+100, 115, 0, false);
+            StringUtil.drawSplitString(Minecraft.getMinecraft().fontRendererObj, text, gui.getGuiLeft()+14, gui.getGuiTop()+100, 115, 0, false);
         }
 
         if(this.ingredient.maxAmplifier > 0){
-            Minecraft.getMinecraft().fontRenderer.drawString("Maximum Amplifier: "+this.ingredient.maxAmplifier, gui.getGuiLeft()+19+5, gui.getGuiTop()+20+60, 0);
+            Minecraft.getMinecraft().fontRendererObj.drawString("Maximum Amplifier: "+this.ingredient.maxAmplifier, gui.getGuiLeft()+19+5, gui.getGuiTop()+20+60, 0);
         }
 
         for(int i = 0; i < 2; i++){

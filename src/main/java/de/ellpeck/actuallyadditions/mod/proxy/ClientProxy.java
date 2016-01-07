@@ -11,7 +11,10 @@
 package de.ellpeck.actuallyadditions.mod.proxy;
 
 
-import de.ellpeck.actuallyadditions.mod.blocks.render.*;
+import de.ellpeck.actuallyadditions.mod.blocks.render.RenderLaserRelay;
+import de.ellpeck.actuallyadditions.mod.blocks.render.RenderReconstructorLens;
+import de.ellpeck.actuallyadditions.mod.blocks.render.RenderSmileyCloud;
+import de.ellpeck.actuallyadditions.mod.blocks.render.RenderTileEntity;
 import de.ellpeck.actuallyadditions.mod.blocks.render.model.*;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
@@ -25,7 +28,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -64,15 +66,6 @@ public class ClientProxy implements IProxy{
 
         InitEvents.initClient();
 
-        AssetUtil.compostRenderId = RenderingRegistry.getNextAvailableRenderId();
-        AssetUtil.fishingNetRenderId = RenderingRegistry.getNextAvailableRenderId();
-        AssetUtil.furnaceSolarRenderId = RenderingRegistry.getNextAvailableRenderId();
-        AssetUtil.coffeeMachineRenderId = RenderingRegistry.getNextAvailableRenderId();
-        AssetUtil.phantomBoosterRenderId = RenderingRegistry.getNextAvailableRenderId();
-        AssetUtil.smileyCloudRenderId = RenderingRegistry.getNextAvailableRenderId();
-        AssetUtil.laserRelayRenderId = RenderingRegistry.getNextAvailableRenderId();
-        AssetUtil.bookletStandRenderId = RenderingRegistry.getNextAvailableRenderId();
-
         registerRenderer(TileEntityCompost.class, new RenderTileEntity(new ModelCompost()), AssetUtil.compostRenderId);
         registerRenderer(TileEntityFishingNet.class, new RenderTileEntity(new ModelFishingNet()), AssetUtil.fishingNetRenderId);
         registerRenderer(TileEntityFurnaceSolar.class, new RenderTileEntity(new ModelFurnaceSolar()), AssetUtil.furnaceSolarRenderId);
@@ -95,6 +88,7 @@ public class ClientProxy implements IProxy{
 
     private static void registerRenderer(Class<? extends TileEntity> tileClass, RenderTileEntity tileRender, int renderID){
         ClientRegistry.bindTileEntitySpecialRenderer(tileClass, tileRender);
-        RenderingRegistry.registerBlockHandler(new RenderInventory(tileRender, renderID));
+        //TODO Fix inventory rendering
+        //RenderingRegistry.registerBlockHandler(new RenderInventory(tileRender, renderID));
     }
 }

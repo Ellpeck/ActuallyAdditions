@@ -24,7 +24,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -44,7 +44,7 @@ public class TileEntityLaserRelay extends TileEntityBase implements IEnergyRecei
     @SideOnly(Side.CLIENT)
     public void renderParticles(){
         if(Util.RANDOM.nextInt(ConfigBoolValues.LESS_LASER_RELAY_PARTICLES.isEnabled() ? 15 : 8) == 0){
-            Position thisPos = new Position(this.xCoord, this.yCoord, this.zCoord);
+            Position thisPos = Position.fromTileEntity(this);
             LaserRelayConnectionHandler.Network network = LaserRelayConnectionHandler.getInstance().getNetworkFor(thisPos);
             if(network != null){
                 for(LaserRelayConnectionHandler.ConnectionPair aPair : network.connections){
@@ -60,7 +60,7 @@ public class TileEntityLaserRelay extends TileEntityBase implements IEnergyRecei
     public Packet getDescriptionPacket(){
         NBTTagCompound compound = new NBTTagCompound();
 
-        Position thisPos = new Position(this.xCoord, this.yCoord, this.zCoord);
+        Position thisPos = Position.fromTileEntity(this);
         ConcurrentSet<LaserRelayConnectionHandler.ConnectionPair> connections = LaserRelayConnectionHandler.getInstance().getConnectionsFor(thisPos);
 
         if(connections != null){
@@ -69,18 +69,18 @@ public class TileEntityLaserRelay extends TileEntityBase implements IEnergyRecei
                 list.appendTag(pair.writeToNBT());
             }
             compound.setTag("Connections", list);
-            return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord, 3, compound);
+            return new S35PacketUpdateTileEntity(thisPos, 3, compound);
         }
         return null;
     }
 
     @Override
     public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt){
-        Position thisPos = new Position(this.xCoord, this.yCoord, this.zCoord);
-        if(pkt != null && pkt.func_148857_g() != null){
+        Position thisPos = Position.fromTileEntity(this);
+        if(pkt != null && pkt.getNbtCompound() != null){
             LaserRelayConnectionHandler.getInstance().removeRelayFromNetwork(thisPos);
 
-            NBTTagList list = pkt.func_148857_g().getTagList("Connections", 10);
+            NBTTagList list = pkt.getNbtCompound().getTagList("Connections", 10);
             for(int i = 0; i < list.tagCount(); i++){
                 LaserRelayConnectionHandler.ConnectionPair pair = LaserRelayConnectionHandler.ConnectionPair.readFromNBT(list.getCompoundTagAt(i));
                 LaserRelayConnectionHandler.getInstance().addConnection(pair.firstRelay, pair.secondRelay);
@@ -94,28 +94,28 @@ public class TileEntityLaserRelay extends TileEntityBase implements IEnergyRecei
     @Override
     public void invalidate(){
         super.invalidate();
-        LaserRelayConnectionHandler.getInstance().removeRelayFromNetwork(new Position(this.xCoord, this.yCoord, this.zCoord));
+        LaserRelayConnectionHandler.getInstance().removeRelayFromNetwork(Position.fromTileEntity(this));
     }
 
     @Override
-    public int receiveEnergy(ForgeDirection from, int maxReceive, boolean simulate){
-        return this.transmitEnergy(WorldUtil.getCoordsFromSide(from, xCoord, yCoord, zCoord, 0), maxReceive, simulate);
+    public int receiveEnergy(EnumFacing from, int maxReceive, boolean simulate){
+        return this.transmitEnergy(WorldUtil.getCoordsFromSide(from, Position.fromTileEntity(this), 0), maxReceive, simulate);
     }
 
     @Override
-    public int getEnergyStored(ForgeDirection from){
+    public int getEnergyStored(EnumFacing from){
         return 0;
     }
 
     @Override
-    public int getMaxEnergyStored(ForgeDirection from){
+    public int getMaxEnergyStored(EnumFacing from){
         return 0;
     }
 
     public int transmitEnergy(Position blockFrom, int maxTransmit, boolean simulate){
         int transmitted = 0;
         if(maxTransmit > 0){
-            LaserRelayConnectionHandler.Network network = LaserRelayConnectionHandler.getInstance().getNetworkFor(new Position(this.xCoord, this.yCoord, this.zCoord));
+            LaserRelayConnectionHandler.Network network = LaserRelayConnectionHandler.getInstance().getNetworkFor(Position.fromTileEntity(this));
             if(network != null){
                 transmitted = LaserRelayConnectionHandler.getInstance().transferEnergyToReceiverInNeed(worldObj, blockFrom, network, Math.min(ConfigIntValues.LASER_RELAY_MAX_TRANSFER.getValue(), maxTransmit), simulate);
             }
@@ -124,7 +124,7 @@ public class TileEntityLaserRelay extends TileEntityBase implements IEnergyRecei
     }
 
     @Override
-    public boolean canConnectEnergy(ForgeDirection from){
+    public boolean canConnectEnergy(EnumFacing from){
         return true;
     }
 }

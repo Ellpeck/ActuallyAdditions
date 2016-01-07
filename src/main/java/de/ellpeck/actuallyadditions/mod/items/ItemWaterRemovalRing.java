@@ -10,19 +10,16 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
+import de.ellpeck.actuallyadditions.api.Position;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemEnergy;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
-import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemWaterRemovalRing extends ItemEnergy{
 
@@ -52,16 +49,18 @@ public class ItemWaterRemovalRing extends ItemEnergy{
                         int theZ = MathHelper.floor_double(player.posZ+z);
                         if(this.getEnergyStored(stack) >= energyUse){
                             //Remove Water
-                            if(world.getBlock(theX, theY, theZ) == Blocks.water || world.getBlock(theX, theY, theZ) == Blocks.flowing_water){
-                                world.setBlockToAir(theX, theY, theZ);
+                            Position pos = new Position(theX, theY, theZ);
+                            Block block = pos.getBlock(world);
+                            if(block == Blocks.water || block == Blocks.flowing_water){
+                                world.setBlockToAir(pos);
 
                                 if(!player.capabilities.isCreativeMode){
                                     this.extractEnergy(stack, energyUse, false);
                                 }
                             }
                             //Remove Lava
-                            else if(world.getBlock(theX, theY, theZ) == Blocks.lava || world.getBlock(theX, theY, theZ) == Blocks.flowing_lava){
-                                world.setBlockToAir(theX, theY, theZ);
+                            else if(block == Blocks.lava || block == Blocks.flowing_lava){
+                                world.setBlockToAir(pos);
 
                                 if(!player.capabilities.isCreativeMode){
                                     this.extractEnergy(stack, energyUse*2, false);
@@ -76,18 +75,6 @@ public class ItemWaterRemovalRing extends ItemEnergy{
 
     @Override
     public EnumRarity getRarity(ItemStack stack){
-        return EnumRarity.epic;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister iconReg){
-        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName());
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public IIcon getIcon(ItemStack stack, int pass){
-        return this.itemIcon;
+        return EnumRarity.EPIC;
     }
 }

@@ -19,11 +19,6 @@ public class TileEntityBookletStand extends TileEntityBase{
     public String assignedPlayer;
 
     @Override
-    public boolean canUpdate(){
-        return false;
-    }
-
-    @Override
     public void writeSyncableNBT(NBTTagCompound compound, boolean isForSync){
         super.writeSyncableNBT(compound, isForSync);
         compound.setTag("SavedEntry", this.assignedEntry.writeToNBT());

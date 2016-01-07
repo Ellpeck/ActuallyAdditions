@@ -30,7 +30,7 @@ public class BlockBase extends Block{
     }
 
     private void register(){
-        this.setBlockName(ModUtil.MOD_ID_LOWER+"."+this.getBaseName());
+        this.setUnlocalizedName(ModUtil.MOD_ID_LOWER+"."+this.getBaseName());
         GameRegistry.registerBlock(this, this.getItemBlock(), this.getBaseName());
         if(this.shouldAddCreative()){
             this.setCreativeTab(CreativeTab.instance);
@@ -53,6 +53,6 @@ public class BlockBase extends Block{
     }
 
     public EnumRarity getRarity(ItemStack stack){
-        return EnumRarity.common;
+        return EnumRarity.COMMON;
     }
 }

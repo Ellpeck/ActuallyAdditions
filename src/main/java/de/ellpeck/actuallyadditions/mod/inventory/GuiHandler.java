@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory;
 
+import de.ellpeck.actuallyadditions.api.Position;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.booklet.GuiBooklet;
 import de.ellpeck.actuallyadditions.mod.booklet.GuiBookletStand;
@@ -32,7 +33,7 @@ public class GuiHandler implements IGuiHandler{
     public Object getServerGuiElement(int id, EntityPlayer entityPlayer, World world, int x, int y, int z){
         TileEntityBase tile = null;
         if(GuiTypes.values()[id].checkTileEntity){
-            tile = (TileEntityBase)world.getTileEntity(x, y, z);
+            tile = (TileEntityBase)world.getTileEntity(new Position(x, y, z));
         }
         switch(GuiTypes.values()[id]){
             case FEEDER:
@@ -96,7 +97,7 @@ public class GuiHandler implements IGuiHandler{
     public Object getClientGuiElement(int id, EntityPlayer entityPlayer, World world, int x, int y, int z){
         TileEntityBase tile = null;
         if(GuiTypes.values()[id].checkTileEntity){
-            tile = (TileEntityBase)world.getTileEntity(x, y, z);
+            tile = (TileEntityBase)world.getTileEntity(new Position(x, y, z));
         }
         switch(GuiTypes.values()[id]){
             case FEEDER:

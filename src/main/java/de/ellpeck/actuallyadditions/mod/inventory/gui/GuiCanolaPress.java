@@ -42,18 +42,18 @@ public class GuiCanolaPress extends GuiContainer{
         super.drawScreen(x, y, f);
         String text1 = this.press.storage.getEnergyStored()+"/"+this.press.storage.getMaxEnergyStored()+" RF";
         if(x >= guiLeft+43 && y >= guiTop+6 && x <= guiLeft+58 && y <= guiTop+88){
-            this.func_146283_a(Collections.singletonList(text1), x, y);
+            this.drawHoveringText(Collections.singletonList(text1), x, y);
         }
 
         String text2 = StringUtil.getFluidInfo(this.press.tank);
         if(x >= guiLeft+117 && y >= guiTop+6 && x <= guiLeft+132 && y <= guiTop+88){
-            this.func_146283_a(Collections.singletonList(text2), x, y);
+            this.drawHoveringText(Collections.singletonList(text2), x, y);
         }
     }
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y){
-        AssetUtil.displayNameString(this.fontRendererObj, xSize, -10, this.press.getInventoryName());
+        AssetUtil.displayNameString(this.fontRendererObj, xSize, -10, this.press.getName());
     }
 
     @Override

@@ -70,21 +70,21 @@ public class BlockBookletStand extends BlockContainerBase implements IHudDisplay
     }
 
     @Override
-    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack stack){
+    public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase player, ItemStack stack){
         int rotation = MathHelper.floor_double((double)(player.rotationYaw*4.0F/360.0F)+0.5D) & 3;
-        Position pos = new Position(x, y, z);
+        Position thePos = Position.fromBlockPos(pos);
 
         if(rotation == 0){
-            pos.setMetadata(world, 2, 2);
+            thePos.setMetadata(world, 2, 2);
         }
         if(rotation == 1){
-            pos.setMetadata(world, 1, 2);
+            thePos.setMetadata(world, 1, 2);
         }
         if(rotation == 2){
-            pos.setMetadata(world, 0, 2);
+            thePos.setMetadata(world, 0, 2);
         }
         if(rotation == 3){
-            pos.setMetadata(world, 3, 2);
+            thePos.setMetadata(world, 3, 2);
         }
 
         TileEntityBookletStand tile = (TileEntityBookletStand)world.getTileEntity(pos);
@@ -97,7 +97,7 @@ public class BlockBookletStand extends BlockContainerBase implements IHudDisplay
             }
         }
 
-        super.onBlockPlacedBy(world, x, y, z, player, stack);
+        super.onBlockPlacedBy(world, pos, state, player, stack);
     }
 
     @Override

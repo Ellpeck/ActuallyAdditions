@@ -28,7 +28,7 @@ public class BlockStair extends BlockStairs{
     }
 
     public BlockStair(Block block, String name, int meta){
-        super(block, meta);
+        super(block.getStateFromMeta(meta));
         this.name = name;
         this.setLightOpacity(0);
 
@@ -36,7 +36,7 @@ public class BlockStair extends BlockStairs{
     }
 
     private void register(){
-        this.setBlockName(ModUtil.MOD_ID_LOWER+"."+this.getBaseName());
+        this.setUnlocalizedName(ModUtil.MOD_ID_LOWER+"."+this.getBaseName());
         GameRegistry.registerBlock(this, this.getItemBlock(), this.getBaseName());
         if(this.shouldAddCreative()){
             this.setCreativeTab(CreativeTab.instance);
@@ -59,6 +59,6 @@ public class BlockStair extends BlockStairs{
     }
 
     public EnumRarity getRarity(ItemStack stack){
-        return EnumRarity.common;
+        return EnumRarity.COMMON;
     }
 }

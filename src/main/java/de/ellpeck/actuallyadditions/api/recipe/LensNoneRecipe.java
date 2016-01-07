@@ -46,7 +46,7 @@ public class LensNoneRecipe{
             return null;
         }
 
-        List<ItemStack> stacks = OreDictionary.getOres(this.output, false);
+        List<ItemStack> stacks = OreDictionary.getOres(this.output);
         if(stacks != null && !stacks.isEmpty()){
             List<ItemStack> stacksCopy = new ArrayList<ItemStack>();
             for(ItemStack stack : stacks){
@@ -70,7 +70,7 @@ public class LensNoneRecipe{
             return null;
         }
 
-        List<ItemStack> stacks = OreDictionary.getOres(this.input, false);
+        List<ItemStack> stacks = OreDictionary.getOres(this.input);
         if(stacks != null && !stacks.isEmpty()){
             List<ItemStack> stacksCopy = new ArrayList<ItemStack>();
             for(ItemStack stack : stacks){

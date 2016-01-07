@@ -36,7 +36,7 @@ public class GuiBookletStand extends GuiBooklet{
     @Override
     public void actionPerformed(GuiButton button){
         if(button == this.buttonSetPage){
-            PacketHandler.theNetwork.sendToServer(new PacketBookletStandButton(this.theStand.xCoord, this.theStand.yCoord, this.theStand.zCoord, this.theStand.getWorldObj(), Minecraft.getMinecraft().thePlayer, this.currentEntrySet));
+            PacketHandler.theNetwork.sendToServer(new PacketBookletStandButton(this.theStand.getPos().getX(), this.theStand.getPos().getY(), this.theStand.getPos().getZ(), this.theStand.getWorld(), Minecraft.getMinecraft().thePlayer, this.currentEntrySet));
         }
         super.actionPerformed(button);
     }
@@ -54,15 +54,15 @@ public class GuiBookletStand extends GuiBooklet{
         this.buttonSetPage = new GuiButton(-100, this.guiLeft+this.xSize+10, this.guiTop+10, 100, 20, "Set Page"){
             @Override
             public void drawButton(Minecraft mc, int x, int y){
-                boolean unicodeBefore = mc.fontRenderer.getUnicodeFlag();
-                mc.fontRenderer.setUnicodeFlag(false);
+                boolean unicodeBefore = mc.fontRendererObj.getUnicodeFlag();
+                mc.fontRendererObj.setUnicodeFlag(false);
                 super.drawButton(mc, x, y);
-                mc.fontRenderer.setUnicodeFlag(unicodeBefore);
+                mc.fontRendererObj.setUnicodeFlag(unicodeBefore);
             }
         };
         this.buttonList.add(this.buttonSetPage);
 
-        this.buttonSetPage.visible = Objects.equals(Minecraft.getMinecraft().thePlayer.getCommandSenderName(), this.theStand.assignedPlayer);
+        this.buttonSetPage.visible = Objects.equals(Minecraft.getMinecraft().thePlayer.getName(), this.theStand.assignedPlayer);
 
         //Open the pages the book was assigned
         BookletUtils.openIndexEntry(this, this.theStand.assignedEntry.entry, this.theStand.assignedEntry.pageInIndex, true);

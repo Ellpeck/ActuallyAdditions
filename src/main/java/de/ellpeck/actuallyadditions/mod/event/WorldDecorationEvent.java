@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.event;
 
+import de.ellpeck.actuallyadditions.api.Position;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheWildPlants;
 import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
@@ -18,6 +19,7 @@ import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockBush;
 import net.minecraft.block.material.Material;
 import net.minecraft.world.biome.BiomeGenOcean;
 import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
@@ -31,7 +33,7 @@ public class WorldDecorationEvent{
     @SubscribeEvent
     public void onWorldDecoration(DecorateBiomeEvent.Decorate event){
         if((event.getResult() == Event.Result.ALLOW || event.getResult() == Event.Result.DEFAULT)){
-            if(Util.arrayContains(ConfigValues.plantDimensionBlacklist, event.world.provider.dimensionId) < 0){
+            if(Util.arrayContains(ConfigValues.plantDimensionBlacklist, event.world.provider.getDimensionId()) < 0){
                 this.generateRice(event);
                 this.genPlantNormally(InitBlocks.blockWildPlant, TheWildPlants.CANOLA.ordinal(), ConfigIntValues.CANOLA_AMOUNT.getValue(), ConfigBoolValues.DO_CANOLA_GEN.isEnabled(), Material.grass, event);
                 this.genPlantNormally(InitBlocks.blockWildPlant, TheWildPlants.FLAX.ordinal(), ConfigIntValues.FLAX_AMOUNT.getValue(), ConfigBoolValues.DO_FLAX_GEN.isEnabled(), Material.grass, event);
@@ -42,15 +44,14 @@ public class WorldDecorationEvent{
             //Generate Treasure Chests
             if(ConfigBoolValues.DO_TREASURE_CHEST_GEN.isEnabled()){
                 if(event.rand.nextInt(300) == 0){
-                    int genX = event.chunkX+event.rand.nextInt(16)+8;
-                    int genZ = event.chunkZ+event.rand.nextInt(16)+8;
-                    int genY = event.world.getTopSolidOrLiquidBlock(genX, genZ);
+                    Position randomPos = new Position(event.pos.getX()+event.rand.nextInt(16)+8, 0, event.pos.getZ()+event.rand.nextInt(16)+8);
+                    randomPos = Position.fromBlockPos(event.world.getTopSolidOrLiquidBlock(randomPos));
 
-                    if(event.world.getBiomeGenForCoords(genX, genZ) instanceof BiomeGenOcean){
-                        if(genY >= 25 && genY <= 45){
-                            if(event.world.getBlock(genX, genY, genZ).getMaterial() == Material.water){
-                                if(event.world.getBlock(genX, genY-1, genZ).getMaterial().isSolid()){
-                                    event.world.setBlock(genX, genY, genZ, InitBlocks.blockTreasureChest, event.rand.nextInt(4), 2);
+                    if(event.world.getBiomeGenForCoords(randomPos) instanceof BiomeGenOcean){
+                        if(randomPos.getY() >= 25 && randomPos.getY() <= 45){
+                            if(randomPos.getBlock(event.world).getMaterial() == Material.water){
+                                if(randomPos.getOffsetPosition(0, -1, 0).getMaterial(event.world).isSolid()){
+                                    randomPos.setBlock(event.world, InitBlocks.blockTreasureChest, event.rand.nextInt(4), 2);
                                 }
                             }
                         }
@@ -64,16 +65,15 @@ public class WorldDecorationEvent{
         if(ConfigBoolValues.DO_RICE_GEN.isEnabled()){
             for(int i = 0; i < ConfigIntValues.RICE_AMOUNT.getValue(); i++){
                 if(event.rand.nextInt(50) == 0){
-                    int genX = event.chunkX+event.rand.nextInt(16)+8;
-                    int genZ = event.chunkZ+event.rand.nextInt(16)+8;
-                    int genY = event.world.getTopSolidOrLiquidBlock(genX, genZ);
+                    Position randomPos = new Position(event.pos.getX()+event.rand.nextInt(16)+8, 0, event.pos.getZ()+event.rand.nextInt(16)+8);
+                    randomPos = Position.fromBlockPos(event.world.getTopSolidOrLiquidBlock(randomPos));
 
-                    if(event.world.getBlock(genX, genY, genZ).getMaterial() == Material.water){
-                        ArrayList<Material> blocksAroundBottom = WorldUtil.getMaterialsAround(event.world, genX, genY, genZ);
-                        ArrayList<Material> blocksAroundTop = WorldUtil.getMaterialsAround(event.world, genX, genY+1, genZ);
+                    if(randomPos.getMaterial(event.world) == Material.water){
+                        ArrayList<Material> blocksAroundBottom = WorldUtil.getMaterialsAround(event.world, randomPos);
+                        ArrayList<Material> blocksAroundTop = WorldUtil.getMaterialsAround(event.world, randomPos.getOffsetPosition(0, 1, 0));
                         if(blocksAroundBottom.contains(Material.grass) || blocksAroundBottom.contains(Material.ground) || blocksAroundBottom.contains(Material.rock) || blocksAroundBottom.contains(Material.sand)){
-                            if(!blocksAroundTop.contains(Material.water) && event.world.getBlock(genX, genY+1, genZ).getMaterial() == Material.air){
-                                event.world.setBlock(genX, genY+1, genZ, InitBlocks.blockWildPlant, TheWildPlants.RICE.ordinal(), 2);
+                            if(!blocksAroundTop.contains(Material.water) && randomPos.getMaterial(event.world) == Material.air){
+                                randomPos.getOffsetPosition(0, 1, 0).setBlock(event.world, InitBlocks.blockWildPlant, TheWildPlants.RICE.ordinal(), 2);
                             }
                         }
                     }
@@ -86,14 +86,14 @@ public class WorldDecorationEvent{
         if(doIt){
             for(int i = 0; i < amount; i++){
                 if(event.rand.nextInt(400) == 0){
-                    int genX = event.chunkX+event.rand.nextInt(16)+8;
-                    int genZ = event.chunkZ+event.rand.nextInt(16)+8;
-                    int genY = event.world.getTopSolidOrLiquidBlock(genX, genZ)-1;
+                    Position randomPos = new Position(event.pos.getX()+event.rand.nextInt(16)+8, 0, event.pos.getZ()+event.rand.nextInt(16)+8);
+                    randomPos = Position.fromBlockPos(event.world.getTopSolidOrLiquidBlock(randomPos));
 
-                    if(event.world.getBlock(genX, genY, genZ).getMaterial() == blockBelow){
-                        event.world.setBlock(genX, genY+1, genZ, plant, meta, 2);
-                        if(!plant.canBlockStay(event.world, genX, genY+1, genZ)){
-                            event.world.setBlockToAir(genX, genY+1, genZ);
+                    if(randomPos.getMaterial(event.world) == blockBelow){
+                        Position top = randomPos.getOffsetPosition(0, 1, 0);
+                        top.setBlock(event.world, plant, meta, 2);
+                        if(plant instanceof BlockBush && !((BlockBush)plant).canBlockStay(event.world, top, top.getBlockState(event.world))){
+                            event.world.setBlockToAir(top);
                         }
                     }
                 }

@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.misc;
 
+import de.ellpeck.actuallyadditions.api.Position;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.dispenser.BehaviorDefaultDispenseItem;
@@ -26,10 +27,10 @@ public class DispenserHandlerFillBucket extends BehaviorDefaultDispenseItem{
 
     @Override
     public ItemStack dispenseStack(IBlockSource source, ItemStack emptyBucket){
-        EnumFacing facing = BlockDispenser.func_149937_b(source.getBlockMetadata());
-        int x = source.getXInt()+facing.getFrontOffsetX();
-        int y = source.getYInt()+facing.getFrontOffsetY();
-        int z = source.getZInt()+facing.getFrontOffsetZ();
+        EnumFacing facing = BlockDispenser.getFacing(source.getBlockMetadata());
+        int x = source.getBlockTileEntity().getPos().getX()+facing.getFrontOffsetX();
+        int y = source.getBlockTileEntity().getPos().getY()+facing.getFrontOffsetY();
+        int z = source.getBlockTileEntity().getPos().getZ()+facing.getFrontOffsetZ();
 
         ItemStack filledBucket = this.tryFillBucket(source, x, y, z, emptyBucket);
 
@@ -44,7 +45,7 @@ public class DispenserHandlerFillBucket extends BehaviorDefaultDispenseItem{
             emptyBucket = filledBucket.copy();
         }
         //Not enough space for the bucket in the inventory?
-        else if(((TileEntityDispenser)source.getBlockTileEntity()).func_146019_a(filledBucket.copy()) < 0){
+        else if(((TileEntityDispenser)source.getBlockTileEntity()).addItemStack(filledBucket.copy()) < 0){
             new BehaviorDefaultDispenseItem().dispense(source, filledBucket.copy());
         }
         //Filled Bucket or Empty Buckets because either they weren't filled or the full one was dispensed out because of missing space
@@ -52,24 +53,25 @@ public class DispenserHandlerFillBucket extends BehaviorDefaultDispenseItem{
     }
 
     private ItemStack tryFillBucket(IBlockSource source, int x, int y, int z, ItemStack bucket){
-        Block block = source.getWorld().getBlock(x, y, z);
+        Position pos = new Position(x, y, z);
+        Block block = pos.getBlock(source.getWorld());
 
         if(block == Blocks.water || block == Blocks.flowing_water){
-            if(source.getWorld().getBlockMetadata(x, y, z) == 0){
-                source.getWorld().setBlockToAir(x, y, z);
+            if(pos.getMetadata(source.getWorld()) == 0){
+                source.getWorld().setBlockToAir(pos);
                 return new ItemStack(Items.water_bucket);
             }
         }
         else if(block == Blocks.lava || block == Blocks.flowing_lava){
-            if(source.getWorld().getBlockMetadata(x, y, z) == 0){
-                source.getWorld().setBlockToAir(x, y, z);
+            if(pos.getMetadata(source.getWorld()) == 0){
+                source.getWorld().setBlockToAir(pos);
                 return new ItemStack(Items.lava_bucket);
             }
         }
-        else if(block instanceof IFluidBlock && ((IFluidBlock)block).canDrain(source.getWorld(), x, y, z)){
-            ItemStack stack = FluidContainerRegistry.fillFluidContainer(((IFluidBlock)block).drain(source.getWorld(), x, y, z, false), bucket);
+        else if(block instanceof IFluidBlock && ((IFluidBlock)block).canDrain(source.getWorld(), pos)){
+            ItemStack stack = FluidContainerRegistry.fillFluidContainer(((IFluidBlock)block).drain(source.getWorld(), pos, false), bucket);
             if(stack != null){
-                ((IFluidBlock)block).drain(source.getWorld(), x, y, z, true);
+                ((IFluidBlock)block).drain(source.getWorld(), pos, true);
                 return stack;
             }
         }

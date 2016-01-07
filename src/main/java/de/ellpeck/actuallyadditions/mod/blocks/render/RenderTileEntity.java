@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks.render;
 
+import de.ellpeck.actuallyadditions.api.Position;
 import de.ellpeck.actuallyadditions.mod.blocks.render.model.ModelBaseAA;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -28,7 +29,7 @@ public class RenderTileEntity extends TileEntitySpecialRenderer{
     }
 
     @Override
-    public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float par5){
+    public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float par5, int i){
         GL11.glPushMatrix();
         GL11.glTranslatef((float)x+0.5F, (float)y-0.5F, (float)z+0.5F);
         GL11.glRotatef(180F, 0.0F, 0.0F, 1.0F);
@@ -36,7 +37,7 @@ public class RenderTileEntity extends TileEntitySpecialRenderer{
         this.bindTexture(resLoc);
 
         if(theModel.doesRotate()){
-            int meta = tile.getWorldObj().getBlockMetadata(tile.xCoord, tile.yCoord, tile.zCoord);
+            int meta = Position.fromTileEntity(tile).getMetadata(tile.getWorld());
             if(meta == 0){
                 GL11.glRotatef(180F, 0F, 1F, 0F);
             }

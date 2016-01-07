@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.network.gui;
 
+import de.ellpeck.actuallyadditions.api.Position;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
@@ -38,7 +39,7 @@ public class PacketGuiNumber implements IMessage{
         this.tileX = x;
         this.tileY = y;
         this.tileZ = z;
-        this.worldID = world.provider.dimensionId;
+        this.worldID = world.provider.getDimensionId();
         this.text = text;
         this.textID = textID;
         this.playerID = player.getEntityId();
@@ -71,7 +72,7 @@ public class PacketGuiNumber implements IMessage{
         @Override
         public IMessage onMessage(PacketGuiNumber message, MessageContext ctx){
             World world = DimensionManager.getWorld(message.worldID);
-            TileEntity tile = world.getTileEntity(message.tileX, message.tileY, message.tileZ);
+            TileEntity tile = world.getTileEntity(new Position(message.tileX, message.tileY, message.tileZ));
 
             if(tile instanceof INumberReactor){
                 INumberReactor reactor = (INumberReactor)tile;

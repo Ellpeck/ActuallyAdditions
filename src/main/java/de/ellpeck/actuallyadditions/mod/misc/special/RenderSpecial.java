@@ -15,6 +15,7 @@ import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EnumPlayerModelParts;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -32,7 +33,7 @@ public class RenderSpecial{
     }
 
     public void render(EntityPlayer player){
-        if(player.isInvisible() || player.getHideCape()){
+        if(player.isInvisible() || player.isWearing(EnumPlayerModelParts.CAPE)){
             return;
         }
 

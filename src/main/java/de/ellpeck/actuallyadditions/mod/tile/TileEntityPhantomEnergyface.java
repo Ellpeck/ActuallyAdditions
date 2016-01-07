@@ -64,7 +64,7 @@ public class TileEntityPhantomEnergyface extends TileEntityPhantomface implement
 
     public IEnergyProvider getProvider(){
         if(this.boundPosition != null){
-            TileEntity tile = worldObj.getTileEntity(boundPosition.toBlockPos());
+            TileEntity tile = worldObj.getTileEntity(boundPosition);
             if(tile instanceof IEnergyProvider){
                 return (IEnergyProvider)tile;
             }
@@ -74,7 +74,7 @@ public class TileEntityPhantomEnergyface extends TileEntityPhantomface implement
 
     public IEnergyReceiver getReceiver(){
         if(this.boundPosition != null){
-            TileEntity tile = worldObj.getTileEntity(boundPosition.toBlockPos());
+            TileEntity tile = worldObj.getTileEntity(boundPosition);
             if(tile instanceof IEnergyReceiver){
                 return (IEnergyReceiver)tile;
             }
@@ -100,7 +100,7 @@ public class TileEntityPhantomEnergyface extends TileEntityPhantomface implement
 
     @Override
     public boolean isBoundThingInRange(){
-        return super.isBoundThingInRange() && (worldObj.getTileEntity(boundPosition.toBlockPos()) instanceof IEnergyReceiver || worldObj.getTileEntity(boundPosition.toBlockPos()) instanceof IEnergyProvider);
+        return super.isBoundThingInRange() && (worldObj.getTileEntity(boundPosition) instanceof IEnergyReceiver || worldObj.getTileEntity(boundPosition) instanceof IEnergyProvider);
     }
 
     private void pushEnergy(EnumFacing side){

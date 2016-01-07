@@ -12,7 +12,6 @@ package de.ellpeck.actuallyadditions.mod.config;
 
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.ConfigElement;
 import net.minecraftforge.fml.client.config.GuiConfig;
 import net.minecraftforge.fml.client.config.IConfigElement;
@@ -31,7 +30,7 @@ public class GuiConfiguration extends GuiConfig{
         for(int i = 0; i < ConfigCategories.values().length; i++){
             ConfigCategories cat = ConfigCategories.values()[i];
             ConfigurationHandler.config.setCategoryComment(cat.name, cat.comment);
-            list.add(new ConfigElement<ConfigCategory>(ConfigurationHandler.config.getCategory(cat.name)));
+            list.add(new ConfigElement(ConfigurationHandler.config.getCategory(cat.name)));
         }
         return list;
     }

@@ -12,13 +12,14 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
+import de.ellpeck.actuallyadditions.api.Position;
 import de.ellpeck.actuallyadditions.api.tile.IEnergyDisplay;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheMiscBlocks;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -28,8 +29,6 @@ public class TileEntityLavaFactoryController extends TileEntityBase implements I
     public static final int HAS_LAVA = 1;
     public static final int HAS_AIR = 2;
     public static final int ENERGY_USE = 150000;
-    //The Positions the Case Blocks should be in for the Factory to work
-    private static final int[][] CASE_POSITIONS = {{-1, 1, 0}, {1, 1, 0}, {0, 1, -1}, {0, 1, 1}};
     public EnergyStorage storage = new EnergyStorage(3000000);
     private int currentWorkTime;
     private int oldEnergy;
@@ -43,7 +42,7 @@ public class TileEntityLavaFactoryController extends TileEntityBase implements I
                 this.currentWorkTime++;
                 if(this.currentWorkTime >= 200){
                     this.currentWorkTime = 0;
-                    worldObj.setBlock(xCoord, yCoord+1, zCoord, Blocks.lava);
+                    Position.fromTileEntity(this).getOffsetPosition(0, 1, 0).setBlock(worldObj, Blocks.lava, 0, 2);
                     this.storage.extractEnergy(ENERGY_USE, false);
                 }
             }
@@ -72,11 +71,20 @@ public class TileEntityLavaFactoryController extends TileEntityBase implements I
     }
 
     public int isMultiblock(){
-        if(WorldUtil.hasBlocksInPlacesGiven(CASE_POSITIONS, InitBlocks.blockMisc, TheMiscBlocks.LAVA_FACTORY_CASE.ordinal(), worldObj, xCoord, yCoord, zCoord)){
-            if(worldObj.getBlock(xCoord, yCoord+1, zCoord) == Blocks.lava || worldObj.getBlock(xCoord, yCoord+1, zCoord) == Blocks.flowing_lava){
+        Position thisPos = Position.fromTileEntity(this);
+        Position[] positions = new Position[]{
+                thisPos.getOffsetPosition(1, 1, 0),
+                thisPos.getOffsetPosition(-1, 1, 0),
+                thisPos.getOffsetPosition(0, 1, 1),
+                thisPos.getOffsetPosition(0, 1, -1)
+        };
+
+        if(WorldUtil.hasBlocksInPlacesGiven(positions, InitBlocks.blockMisc, TheMiscBlocks.LAVA_FACTORY_CASE.ordinal(), worldObj)){
+            Position pos = thisPos.getOffsetPosition(0, 1, 0);
+            if(pos.getBlock(worldObj) == Blocks.lava || pos.getBlock(worldObj) == Blocks.flowing_lava){
                 return HAS_LAVA;
             }
-            if(worldObj.getBlock(xCoord, yCoord+1, zCoord) == null || worldObj.isAirBlock(xCoord, yCoord+1, zCoord)){
+            if(pos.getBlock(worldObj) == null || worldObj.isAirBlock(pos)){
                 return HAS_AIR;
             }
         }
@@ -84,23 +92,23 @@ public class TileEntityLavaFactoryController extends TileEntityBase implements I
     }
 
     @Override
-    public int receiveEnergy(ForgeDirection from, int maxExtract, boolean simulate){
-        return from != ForgeDirection.UP ? this.storage.receiveEnergy(maxExtract, simulate) : 0;
+    public int receiveEnergy(EnumFacing from, int maxExtract, boolean simulate){
+        return from != EnumFacing.UP ? this.storage.receiveEnergy(maxExtract, simulate) : 0;
     }
 
     @Override
-    public int getEnergyStored(ForgeDirection from){
-        return from != ForgeDirection.UP ? this.storage.getEnergyStored() : 0;
+    public int getEnergyStored(EnumFacing from){
+        return from != EnumFacing.UP ? this.storage.getEnergyStored() : 0;
     }
 
     @Override
-    public int getMaxEnergyStored(ForgeDirection from){
-        return from != ForgeDirection.UP ? this.storage.getMaxEnergyStored() : 0;
+    public int getMaxEnergyStored(EnumFacing from){
+        return from != EnumFacing.UP ? this.storage.getMaxEnergyStored() : 0;
     }
 
     @Override
-    public boolean canConnectEnergy(ForgeDirection from){
-        return from != ForgeDirection.UP;
+    public boolean canConnectEnergy(EnumFacing from){
+        return from != EnumFacing.UP;
     }
 
     @Override

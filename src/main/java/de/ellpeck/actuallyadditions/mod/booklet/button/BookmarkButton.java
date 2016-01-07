@@ -58,8 +58,8 @@ public class BookmarkButton extends GuiButton{
         if(this.visible){
             minecraft.getTextureManager().bindTexture(GuiBooklet.resLoc);
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-            this.field_146123_n = x >= this.xPosition && y >= this.yPosition && x < this.xPosition+this.width && y < this.yPosition+this.height;
-            int k = this.getHoverState(this.field_146123_n);
+            this.hovered = x >= this.xPosition && y >= this.yPosition && x < this.xPosition+this.width && y < this.yPosition+this.height;
+            int k = this.getHoverState(this.hovered);
             if(k == 0){
                 k = 1;
             }

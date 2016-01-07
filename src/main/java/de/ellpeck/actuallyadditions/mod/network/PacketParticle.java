@@ -58,7 +58,7 @@ public class PacketParticle implements IMessage{
             int difX = startX-endX;
             int difY = startY-endY;
             int difZ = startZ-endZ;
-            double distance = Vec3.createVectorHelper(startX, startY, startZ).distanceTo(Vec3.createVectorHelper(endX, endY, endZ));
+            double distance = new Vec3(startX, startY, startZ).distanceTo(new Vec3(endX, endY, endZ));
 
             for(int times = 0; times < particleAmount/2; times++){
                 for(double i = 0; i <= 1; i += 1/(distance*particleAmount)){
