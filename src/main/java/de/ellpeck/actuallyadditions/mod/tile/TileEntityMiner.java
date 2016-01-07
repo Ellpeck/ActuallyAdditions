@@ -23,7 +23,7 @@ import net.minecraft.block.BlockLiquid;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.relauncher.Side;
@@ -51,7 +51,7 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyR
         super.updateEntity();
         if(!this.worldObj.isRemote){
             if(this.layerAt == -1){
-                this.layerAt = this.yCoord-1;
+                this.layerAt = this.getPos().getY()-1;
             }
 
             if(!this.isRedstonePowered && this.ticksElapsed%5 == 0){
@@ -90,7 +90,7 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyR
                                 worldObj.playAuxSFX(2001, x, y, z, Block.getIdFromBlock(block)+(meta << 12));
                                 worldObj.setBlockToAir(x, y, z);
 
-                                WorldUtil.addToInventory(this, drops, ForgeDirection.UNKNOWN, true);
+                                WorldUtil.addToInventory(this, drops, true, true);
                                 this.markDirty();
 
                                 this.storage.extractEnergy(actualUse, false);
@@ -122,7 +122,7 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyR
                     }
                 }
 
-                String reg = Block.blockRegistry.getNameForObject(block);
+                String reg = block.getRegistryName();
                 if(reg != null && !reg.isEmpty()){
                     for(String string : ConfigValues.minerExtraWhitelist){
                         if(reg.equals(string)){
@@ -136,7 +136,7 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyR
     }
 
     private boolean isBlacklisted(Block block){
-        String reg = Block.blockRegistry.getNameForObject(block);
+        String reg = block.getRegistryName();
         if(reg != null && !reg.isEmpty()){
             for(String string : ConfigValues.minerBlacklist){
                 if(reg.equals(string)){
@@ -148,7 +148,7 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyR
     }
 
     private void shootParticles(int endX, int endY, int endZ){
-        PacketHandler.theNetwork.sendToAllAround(new PacketParticle(xCoord, yCoord, zCoord, endX, endY, endZ, new float[]{62F/255F, 163F/255F, 74F/255F}, 5, 1.0F), new NetworkRegistry.TargetPoint(worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 96));
+        PacketHandler.theNetwork.sendToAllAround(new PacketParticle(this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), endX, endY, endZ, new float[]{62F/255F, 163F/255F, 74F/255F}, 5, 1.0F), new NetworkRegistry.TargetPoint(worldObj.provider.getDimensionId(), this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), 96));
     }
 
     @Override
@@ -168,32 +168,32 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyR
     }
 
     @Override
-    public int receiveEnergy(ForgeDirection from, int maxReceive, boolean simulate){
+    public int receiveEnergy(EnumFacing from, int maxReceive, boolean simulate){
         return this.storage.receiveEnergy(maxReceive, simulate);
     }
 
     @Override
-    public int getEnergyStored(ForgeDirection from){
+    public int getEnergyStored(EnumFacing from){
         return this.storage.getEnergyStored();
     }
 
     @Override
-    public int getMaxEnergyStored(ForgeDirection from){
+    public int getMaxEnergyStored(EnumFacing from){
         return this.storage.getMaxEnergyStored();
     }
 
     @Override
-    public boolean canConnectEnergy(ForgeDirection from){
+    public boolean canConnectEnergy(EnumFacing from){
         return true;
     }
 
     @Override
-    public boolean canInsertItem(int slot, ItemStack stack, int side){
+    public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
         return this.isItemValidForSlot(slot, stack);
     }
 
     @Override
-    public boolean canExtractItem(int slot, ItemStack stack, int side){
+    public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
         return true;
     }
 

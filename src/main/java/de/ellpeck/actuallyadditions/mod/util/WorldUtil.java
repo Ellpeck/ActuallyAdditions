@@ -259,10 +259,6 @@ public class WorldUtil{
         return blocks;
     }
 
-    public static boolean addToInventory(IInventory inventory, int start, int end, ArrayList<ItemStack> stacks, boolean actuallyDo){
-        return addToInventory(inventory, start, end, stacks, EnumFacing.UP, actuallyDo, true);
-    }
-
     /**
      * Add an ArrayList of ItemStacks to an Array of slots
      *
@@ -315,12 +311,12 @@ public class WorldUtil{
         return working >= stacks.size();
     }
 
-    public static boolean addToInventory(IInventory inventory, ArrayList<ItemStack> stacks, boolean actuallyDo){
-        return addToInventory(inventory, stacks, EnumFacing.UP, actuallyDo);
+    public static boolean addToInventory(IInventory inventory, ArrayList<ItemStack> stacks, boolean actuallyDo, boolean shouldAlwaysWork){
+        return addToInventory(inventory, stacks, EnumFacing.UP, actuallyDo, shouldAlwaysWork);
     }
 
-    public static boolean addToInventory(IInventory inventory, ArrayList<ItemStack> stacks, EnumFacing side, boolean actuallyDo){
-        return addToInventory(inventory, 0, inventory.getSizeInventory(), stacks, side, actuallyDo, false);
+    public static boolean addToInventory(IInventory inventory, ArrayList<ItemStack> stacks, EnumFacing side, boolean actuallyDo, boolean shouldAlwaysWork){
+        return addToInventory(inventory, 0, inventory.getSizeInventory(), stacks, side, actuallyDo, shouldAlwaysWork);
     }
 
     public static int findFirstFilledSlot(ItemStack[] slots){
@@ -369,11 +365,11 @@ public class WorldUtil{
         Block block = pos.getBlock(world);
         int meta = pos.getMetadata(world);
         //If the Block can be harvested or not
-        boolean canHarvest = block.canHarvestBlock(world, pos.toBlockPos(), player);
+        boolean canHarvest = block.canHarvestBlock(world, pos, player);
 
         //Send Block Breaking Event
         if(player instanceof EntityPlayerMP){
-            int event = ForgeHooks.onBlockBreakEvent(world, ((EntityPlayerMP)player).theItemInWorldManager.getGameType(), (EntityPlayerMP)player, pos.toBlockPos());
+            int event = ForgeHooks.onBlockBreakEvent(world, ((EntityPlayerMP)player).theItemInWorldManager.getGameType(), (EntityPlayerMP)player, pos);
             if(event == -1){
                 return false;
             }
@@ -381,29 +377,29 @@ public class WorldUtil{
 
         if(!world.isRemote){
             //Server-Side only, special cases
-            block.onBlockHarvested(world, pos.toBlockPos(), pos.getBlockState(world), player);
+            block.onBlockHarvested(world, pos, pos.getBlockState(world), player);
         }
         else{
             //Shows the Harvest Particles and plays the Block's Sound
-            world.playAuxSFX(2001, pos.toBlockPos(), Block.getIdFromBlock(block)+(meta << 12));
+            world.playAuxSFX(2001, pos, Block.getIdFromBlock(block)+(meta << 12));
         }
 
         //If the Block was actually "removed", meaning it will drop an Item
-        boolean removed = block.removedByPlayer(world, pos.toBlockPos(), player, canHarvest);
+        boolean removed = block.removedByPlayer(world, pos, player, canHarvest);
         //Actually removes the Block from the World
         if(removed){
             //Before the Block is destroyed, special cases
-            block.onBlockDestroyedByPlayer(world, pos.toBlockPos(), pos.getBlockState(world));
+            block.onBlockDestroyedByPlayer(world, pos, pos.getBlockState(world));
 
             if(!world.isRemote && !player.capabilities.isCreativeMode){
                 //Actually drops the Block's Items etc.
                 if(canHarvest){
-                    block.harvestBlock(world, player, pos.toBlockPos(), pos.getBlockState(world), pos.getTileEntity(world));
+                    block.harvestBlock(world, player, pos, pos.getBlockState(world), pos.getTileEntity(world));
                 }
                 //Only drop XP when no Silk Touch is applied
                 if(!EnchantmentHelper.getSilkTouchModifier(player)){
                     //Drop XP depending on Fortune Level
-                    block.dropXpOnBlockBreak(world, pos.toBlockPos(), block.getExpDrop(world, pos.toBlockPos(), EnchantmentHelper.getFortuneModifier(player)));
+                    block.dropXpOnBlockBreak(world, pos, block.getExpDrop(world, pos, EnchantmentHelper.getFortuneModifier(player)));
                 }
             }
         }
@@ -411,7 +407,7 @@ public class WorldUtil{
         if(!world.isRemote){
             //Update the Client of a Block Change
             if(player instanceof EntityPlayerMP){
-                ((EntityPlayerMP)player).playerNetServerHandler.sendPacket(new S23PacketBlockChange(world, pos.toBlockPos()));
+                ((EntityPlayerMP)player).playerNetServerHandler.sendPacket(new S23PacketBlockChange(world, pos));
             }
         }
         else{

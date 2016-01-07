@@ -10,20 +10,21 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
+import de.ellpeck.actuallyadditions.api.Position;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockBase;
 import de.ellpeck.actuallyadditions.mod.blocks.base.ItemBlockBase;
 import net.minecraft.block.Block;
-import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.IIcon;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
@@ -45,20 +46,9 @@ public class BlockSlabs extends BlockBase{
     }
 
     @Override
-    public boolean renderAsNormalBlock(){
-        return false;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public IIcon getIcon(int side, int meta){
-        return this.fullBlock.getIcon(side, this.meta);
-    }
-
-    @Override
-    public void addCollisionBoxesToList(World world, int x, int y, int z, AxisAlignedBB axis, List list, Entity entity){
-        this.setBlockBoundsBasedOnState(world, x, y, z);
-        super.addCollisionBoxesToList(world, x, y, z, axis, list, entity);
+    public void addCollisionBoxesToList(World world, BlockPos pos, IBlockState state, AxisAlignedBB axis, List list, Entity entity){
+        this.setBlockBoundsBasedOnState(world, pos);
+        super.addCollisionBoxesToList(world, pos, state, axis, list, entity);
     }
 
     @Override
@@ -67,19 +57,19 @@ public class BlockSlabs extends BlockBase{
     }
 
     @Override
-    public int onBlockPlaced(World par1World, int blockX, int blockY, int blockZ, int side, float hitX, float hitY, float hitZ, int meta){
-        if(side == 1){
-            return meta;
+    public IBlockState onBlockPlaced(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer){
+        if(facing.ordinal() == 1){
+            return this.getStateFromMeta(meta);
         }
-        if(side == 0 || hitY >= 0.5F){
-            return meta+1;
+        if(facing.ordinal() == 0 || hitY >= 0.5F){
+            return this.getStateFromMeta(meta+1);
         }
-        return meta;
+        return this.getStateFromMeta(meta);
     }
 
     @Override
-    public void setBlockBoundsBasedOnState(IBlockAccess world, int x, int y, int z){
-        int meta = world.getBlockMetadata(x, y, z);
+    public void setBlockBoundsBasedOnState(IBlockAccess world, BlockPos pos){
+        int meta = Position.fromBlockPos(pos).getMetadata(world);
         float minY = meta == 1 ? 0.5F : 0.0F;
         float maxY = meta == 1 ? 1.0F : 0.5F;
         this.setBlockBounds(0.0F, minY, 0F, 1.0F, maxY, 1.0F);
@@ -91,19 +81,13 @@ public class BlockSlabs extends BlockBase{
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister iconReg){
-
-    }
-
-    @Override
     public Class<? extends ItemBlockBase> getItemBlock(){
         return TheItemBlock.class;
     }
 
     @Override
     public EnumRarity getRarity(ItemStack stack){
-        return EnumRarity.common;
+        return EnumRarity.COMMON;
     }
 
     public static class TheItemBlock extends ItemBlockBase{
@@ -115,15 +99,16 @@ public class BlockSlabs extends BlockBase{
         }
 
         @Override
-        public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ){
-            if(world.getBlock(x, y, z) == this.field_150939_a && ((side == 1 && world.getBlockMetadata(x, y, z) == 0) || (side == 0 && world.getBlockMetadata(x, y, z) == 1))){
-                if(world.setBlock(x, y, z, ((BlockSlabs)this.field_150939_a).fullBlock, ((BlockSlabs)this.field_150939_a).meta, 3)){
-                    world.playSoundEffect(x+0.5F, y+0.5F, z+0.5F, this.field_150939_a.stepSound.getBreakSound(), (this.field_150939_a.stepSound.getVolume()+1.0F)/2.0F, this.field_150939_a.stepSound.getPitch()*0.8F);
+        public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ){
+            Position thePos = Position.fromBlockPos(pos);
+            if(thePos.getBlock(world) == this.block && ((side.ordinal() == 1 && thePos.getMetadata(world) == 0) || (side.ordinal() == 0 && thePos.getMetadata(world) == 1))){
+                if(thePos.setBlock(world, ((BlockSlabs)this.block).fullBlock, ((BlockSlabs)this.block).meta, 3)){
+                    world.playSoundEffect(thePos.getX()+0.5F, thePos.getY()+0.5F, thePos.getZ()+0.5F, this.block.stepSound.getBreakSound(), (this.block.stepSound.getVolume()+1.0F)/2.0F, this.block.stepSound.frequency*0.8F);
                     stack.stackSize--;
                     return true;
                 }
             }
-            return super.onItemUse(stack, player, world, x, y, z, side, hitX, hitY, hitZ);
+            return super.onItemUse(stack, player, world, pos, side, hitX, hitY, hitZ);
         }
 
         @Override

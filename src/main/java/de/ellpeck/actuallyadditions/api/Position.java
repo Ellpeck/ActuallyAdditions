@@ -18,6 +18,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.Vec3;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 /**
@@ -29,11 +30,11 @@ public class Position extends BlockPos{
         super(x, y, z);
     }
 
-    public TileEntity getTileEntity(World world){
+    public TileEntity getTileEntity(IBlockAccess world){
         return world != null ? world.getTileEntity(this) : null;
     }
 
-    public Material getMaterial(World world){
+    public Material getMaterial(IBlockAccess world){
         if(world != null){
             Block block = this.getBlock(world);
             if(block != null){
@@ -43,11 +44,11 @@ public class Position extends BlockPos{
         return null;
     }
 
-    public Item getItemBlock(World world){
+    public Item getItemBlock(IBlockAccess world){
         return world != null ? Item.getItemFromBlock(this.getBlock(world)) : null;
     }
 
-    public Block getBlock(World world){
+    public Block getBlock(IBlockAccess world){
         if(world != null){
             IBlockState state = this.getBlockState(world);
             if(state != null){
@@ -57,12 +58,12 @@ public class Position extends BlockPos{
         return null;
     }
 
-    public int getMetadata(World world){
+    public int getMetadata(IBlockAccess world){
         //TODO Fix meta
         return /*world != null ? world.getBlockMetadata(this.x, this.y, this.z) : */0;
     }
 
-    public void setMetadata(World world, int meta, int flag){
+    public void setMetadata(IBlockAccess world, int meta, int flag){
         //TODO Fix meta
         /*if(world != null){
             world.setBlockMetadataWithNotify(this.x, this.y, this.z, meta, flag);
@@ -95,7 +96,7 @@ public class Position extends BlockPos{
         return new Vec3(this.getX(), this.getY(), this.getZ());
     }
 
-    public IBlockState getBlockState(World world){
+    public IBlockState getBlockState(IBlockAccess world){
         return world != null ? world.getBlockState(this) : null;
     }
 
@@ -103,9 +104,12 @@ public class Position extends BlockPos{
         return new Position(this.getX()+side.getFrontOffsetX(), this.getY()+side.getFrontOffsetY(), this.getZ()+side.getFrontOffsetZ());
     }
 
+    public Position getOffsetPosition(int x, int y, int z){
+        return new Position(this.getX()+x, this.getY()+y, this.getZ()+z);
+    }
+
     public static Position fromTileEntity(TileEntity tile){
-        BlockPos pos = tile.getPos();
-        return new Position(pos.getX(), pos.getY(), pos.getZ());
+        return fromBlockPos(tile.getPos());
     }
 
     public static Position fromBlockPos(BlockPos pos){

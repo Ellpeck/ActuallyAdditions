@@ -30,6 +30,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -110,18 +111,18 @@ public abstract class BlockContainerBase extends BlockContainer{
 
     @Override
     public void onNeighborBlockChange(World world, BlockPos pos, IBlockState state, Block neighborBlock){
-        this.updateRedstoneState(world, pos);
+        this.updateRedstoneState(world, Position.fromBlockPos(pos));
     }
 
     public void updateRedstoneState(World world, Position pos){
         if(!world.isRemote){
-            TileEntity tile = world.getTileEntity(x, y, z);
+            TileEntity tile = world.getTileEntity(pos);
             if(tile instanceof TileEntityBase){
-                boolean powered = world.isBlockIndirectlyGettingPowered(x, y, z);
+                boolean powered = world.isBlockIndirectlyGettingPowered(pos) > 0;
                 boolean wasPowered = ((TileEntityBase)tile).isRedstonePowered;
                 if(powered && !wasPowered){
                     if(tile instanceof IRedstoneToggle && ((IRedstoneToggle)tile).isPulseMode()){
-                        world.scheduleBlockUpdate(x, y, z, this, this.tickRate(world));
+                        world.scheduleUpdate(pos, this, this.tickRate(world));
                     }
                     ((TileEntityBase)tile).setRedstonePowered(true);
                 }
@@ -133,9 +134,9 @@ public abstract class BlockContainerBase extends BlockContainer{
     }
 
     @Override
-    public void updateTick(World world, int x, int y, int z, Random random){
+    public void updateTick(World world, BlockPos pos, IBlockState state, Random random){
         if(!world.isRemote){
-            TileEntity tile = world.getTileEntity(x, y, z);
+            TileEntity tile = world.getTileEntity(pos);
             if(tile instanceof IRedstoneToggle && ((IRedstoneToggle)tile).isPulseMode()){
                 ((IRedstoneToggle)tile).activateOnPulse();
             }
@@ -143,9 +144,9 @@ public abstract class BlockContainerBase extends BlockContainer{
     }
 
     @Override
-    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack){
+    public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase entity, ItemStack stack){
         if(stack.getTagCompound() != null){
-            TileEntity tile = world.getTileEntity(x, y, z);
+            TileEntity tile = world.getTileEntity(pos);
 
             if(tile instanceof IEnergySaver){
                 ((IEnergySaver)tile).setEnergy(stack.getTagCompound().getInteger("Energy"));
@@ -171,9 +172,9 @@ public abstract class BlockContainerBase extends BlockContainer{
     }
 
     @Override
-    public void onBlockHarvested(World world, int x, int y, int z, int meta, EntityPlayer player){
+    public void onBlockHarvested(World world, BlockPos pos, IBlockState state, EntityPlayer player){
         if(!player.capabilities.isCreativeMode){
-            this.dropBlockAsItem(world, x, y, z, meta, 0);
+            this.dropBlockAsItem(world, pos, state, 0);
         }
     }
 
@@ -183,8 +184,8 @@ public abstract class BlockContainerBase extends BlockContainer{
     }
 
     @Override
-    public int getComparatorInputOverride(World world, int x, int y, int z, int meta){
-        TileEntity tile = world.getTileEntity(x, y, z);
+    public int getComparatorInputOverride(World world, BlockPos pos){
+        TileEntity tile = world.getTileEntity(pos);
         if(tile instanceof IInventory){
             return Container.calcRedstoneFromInventory((IInventory)tile);
         }
@@ -192,12 +193,12 @@ public abstract class BlockContainerBase extends BlockContainer{
     }
 
     @Override
-    public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune){
+    public ArrayList<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune){
         ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
 
-        TileEntity tile = world.getTileEntity(x, y, z);
+        TileEntity tile = world.getTileEntity(pos);
         if(tile != null){
-            ItemStack stack = new ItemStack(this.getItemDropped(metadata, Util.RANDOM, fortune), 1, this.damageDropped(metadata));
+            ItemStack stack = new ItemStack(this.getItemDropped(state, Util.RANDOM, fortune), 1, this.damageDropped(state));
 
             if(tile instanceof IEnergySaver){
                 int energy = ((IEnergySaver)tile).getEnergy();
@@ -236,7 +237,7 @@ public abstract class BlockContainerBase extends BlockContainer{
 
     @Override
     public void onBlockAdded(World world, BlockPos pos, IBlockState state){
-        this.updateRedstoneState(world, pos);
+        this.updateRedstoneState(world, Position.fromBlockPos(pos));
     }
 
     public boolean tryToggleRedstone(World world, Position pos, EntityPlayer player){
