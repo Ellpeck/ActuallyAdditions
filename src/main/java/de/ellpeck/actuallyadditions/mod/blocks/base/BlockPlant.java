@@ -13,17 +13,15 @@ package de.ellpeck.actuallyadditions.mod.blocks.base;
 import de.ellpeck.actuallyadditions.mod.creative.CreativeTab;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.block.BlockCrops;
-import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIcon;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.EnumPlantType;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.Random;
 
@@ -32,8 +30,6 @@ public class BlockPlant extends BlockCrops{
     public Item seedItem;
     public Item returnItem;
     public int returnMeta;
-    @SideOnly(Side.CLIENT)
-    private IIcon[] textures;
     private int stages;
     private String name;
     private int minDropAmount;
@@ -49,7 +45,7 @@ public class BlockPlant extends BlockCrops{
     }
 
     private void register(){
-        this.setBlockName(ModUtil.MOD_ID_LOWER+"."+this.getBaseName());
+        this.setUnlocalizedName(ModUtil.MOD_ID_LOWER+"."+this.getBaseName());
         GameRegistry.registerBlock(this, this.getItemBlock(), this.getBaseName());
         if(this.shouldAddCreative()){
             this.setCreativeTab(CreativeTab.instance);
@@ -72,64 +68,41 @@ public class BlockPlant extends BlockCrops{
     }
 
     public EnumRarity getRarity(ItemStack stack){
-        return EnumRarity.rare;
+        return EnumRarity.RARE;
     }
 
     @Override
-    public EnumPlantType getPlantType(IBlockAccess world, int x, int y, int z){
+    public EnumPlantType getPlantType(IBlockAccess world, BlockPos pos){
         return EnumPlantType.Crop;
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public IIcon getIcon(int side, int meta){
-        if(meta < 7){
-            if(meta == 6){
-                meta = 5;
-            }
-            return this.textures[meta >> 1];
-        }
-        else{
-            return this.textures[this.textures.length-1];
-        }
-    }
-
-    @Override
-    public Item func_149866_i(){
+    public Item getSeed(){
         return this.seedItem;
     }
 
     @Override
-    public Item func_149865_P(){
+    public Item getCrop(){
         return this.returnItem;
     }
 
     @Override
-    public Item getItemDropped(int meta, Random rand, int par3){
-        return meta >= 7 ? this.func_149865_P() : this.func_149866_i();
+    public Item getItemDropped(IBlockState state, Random rand, int par3){
+        return this.getMetaFromState(state) >= 7 ? this.getCrop() : this.getSeed();
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister iconReg){
-        this.textures = new IIcon[this.stages];
-        for(int i = 0; i < this.textures.length; i++){
-            textures[i] = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName()+"Stage"+(i+1));
-        }
+    public int damageDropped(IBlockState state){
+        return this.getMetaFromState(state) >= 7 ? this.returnMeta : 0;
     }
 
     @Override
-    public int damageDropped(int meta){
-        return meta >= 7 ? this.returnMeta : 0;
-    }
-
-    @Override
-    public int getDamageValue(World world, int x, int y, int z){
+    public int getDamageValue(World world, BlockPos pos){
         return 0;
     }
 
     @Override
-    public int quantityDropped(int meta, int fortune, Random random){
-        return meta >= 7 ? random.nextInt(addDropAmount)+minDropAmount : super.quantityDropped(meta, fortune, random);
+    public int quantityDropped(IBlockState state, int fortune, Random random){
+        return this.getMetaFromState(state) >= 7 ? random.nextInt(addDropAmount)+minDropAmount : super.quantityDropped(state, fortune, random);
     }
 }

@@ -18,13 +18,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
 import net.minecraft.village.MerchantRecipe;
 import net.minecraft.village.MerchantRecipeList;
-import net.minecraftforge.fml.common.registry.VillagerRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-public class JamVillagerTradeHandler implements VillagerRegistry.IVillageTradeHandler{
+//TODO Fix the villager
+public class JamVillagerTradeHandler{
 
     private ArrayList<Trade> trades = new ArrayList<Trade>();
 
@@ -41,7 +41,7 @@ public class JamVillagerTradeHandler implements VillagerRegistry.IVillageTradeHa
     }
 
     public void addWants(String oredictName, int minSize, int maxSize){
-        ArrayList<ItemStack> stacks = (ArrayList<ItemStack>)OreDictionary.getOres(oredictName, false);
+        ArrayList<ItemStack> stacks = (ArrayList<ItemStack>)OreDictionary.getOres(oredictName);
         trades.add(new Trade(stacks, minSize, maxSize));
     }
 
@@ -49,7 +49,8 @@ public class JamVillagerTradeHandler implements VillagerRegistry.IVillageTradeHa
         trades.add(new Trade(stack, minSize, maxSize));
     }
 
-    @Override
+    //TODO Fix the Villager
+    //@Override
     @SuppressWarnings("all")
     public void manipulateTradesForVillager(EntityVillager villager, MerchantRecipeList recipeList, Random rand){
         for(int trade = 0; trade < trades.size(); trade++){

@@ -15,7 +15,7 @@ import cofh.api.energy.IEnergyContainerItem;
 import cofh.api.energy.IEnergyReceiver;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -66,7 +66,7 @@ public class TileEntityEnergizer extends TileEntityInventoryBase implements IEne
     }
 
     @Override
-    public boolean canInsertItem(int slot, ItemStack stack, int side){
+    public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
         return this.isItemValidForSlot(slot, stack);
     }
 
@@ -76,7 +76,7 @@ public class TileEntityEnergizer extends TileEntityInventoryBase implements IEne
     }
 
     @Override
-    public boolean canExtractItem(int slot, ItemStack stack, int side){
+    public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
         return slot == 1;
     }
 
@@ -86,22 +86,22 @@ public class TileEntityEnergizer extends TileEntityInventoryBase implements IEne
     }
 
     @Override
-    public int receiveEnergy(ForgeDirection from, int maxReceive, boolean simulate){
+    public int receiveEnergy(EnumFacing from, int maxReceive, boolean simulate){
         return this.storage.receiveEnergy(maxReceive, simulate);
     }
 
     @Override
-    public int getEnergyStored(ForgeDirection from){
+    public int getEnergyStored(EnumFacing from){
         return this.storage.getEnergyStored();
     }
 
     @Override
-    public int getMaxEnergyStored(ForgeDirection from){
+    public int getMaxEnergyStored(EnumFacing from){
         return this.storage.getMaxEnergyStored();
     }
 
     @Override
-    public boolean canConnectEnergy(ForgeDirection from){
+    public boolean canConnectEnergy(EnumFacing from){
         return true;
     }
 

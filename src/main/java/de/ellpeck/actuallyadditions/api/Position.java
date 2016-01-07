@@ -59,29 +59,21 @@ public class Position extends BlockPos{
     }
 
     public int getMetadata(IBlockAccess world){
-        //TODO Fix meta
-        return /*world != null ? world.getBlockMetadata(this.x, this.y, this.z) : */0;
+        return this.getBlock(world).getMetaFromState(this.getBlockState(world));
     }
 
-    public void setMetadata(IBlockAccess world, int meta, int flag){
-        //TODO Fix meta
-        /*if(world != null){
-            world.setBlockMetadataWithNotify(this.x, this.y, this.z, meta, flag);
-        }*/
+    public void setMetadata(World world, int meta, int flag){
+        if(world != null){
+            world.setBlockState(this, this.getBlock(world).getStateFromMeta(meta), flag);
+        }
+    }
+
+    public boolean setBlock(World world, Block block, int meta, int flag){
+        return world.setBlockState(this, block.getStateFromMeta(meta), flag);
     }
 
     public boolean isEqual(Position pos){
         return pos != null && this.getX() == pos.getX() && this.getY() == pos.getY() && this.getZ() == pos.getZ();
-    }
-
-    public boolean setBlock(World world, Block block, int meta, int flag){
-        //TODO Fix meta
-        return world != null && this.setBlockState(world, block.getDefaultState(), meta, flag);
-    }
-
-    public boolean setBlockState(World world, IBlockState state, int meta, int flag){
-        //TODO Fix meta
-        return world.setBlockState(this, state, flag);
     }
 
     public Position copy(){
@@ -114,5 +106,9 @@ public class Position extends BlockPos{
 
     public static Position fromBlockPos(BlockPos pos){
         return (Position)pos;
+    }
+
+    public boolean setBlockState(World world, IBlockState state, int flag){
+        return world.setBlockState(this, state, flag);
     }
 }

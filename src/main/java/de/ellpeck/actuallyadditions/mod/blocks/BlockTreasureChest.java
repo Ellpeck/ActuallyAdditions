@@ -11,13 +11,13 @@
 package de.ellpeck.actuallyadditions.mod.blocks;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
+import de.ellpeck.actuallyadditions.api.Position;
 import de.ellpeck.actuallyadditions.api.recipe.TreasureChestLoot;
 import de.ellpeck.actuallyadditions.mod.achievement.TheAchievements;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockBase;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -25,10 +25,7 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.IIcon;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.WeightedRandom;
-import net.minecraft.world.IBlockAccess;
+import net.minecraft.util.*;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -36,13 +33,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.Random;
 
 public class BlockTreasureChest extends BlockBase{
-
-    @SideOnly(Side.CLIENT)
-    private IIcon topIcon;
-    @SideOnly(Side.CLIENT)
-    private IIcon bottomIcon;
-    @SideOnly(Side.CLIENT)
-    private IIcon frontIcon;
 
     public BlockTreasureChest(String name){
         super(Material.wood, name);
@@ -55,58 +45,27 @@ public class BlockTreasureChest extends BlockBase{
 
     @Override
     @SideOnly(Side.CLIENT)
-    public IIcon getIcon(IBlockAccess world, int x, int y, int z, int side){
-        int meta = world.getBlockMetadata(x, y, z);
-        if(side == 1){
-            return this.topIcon;
-        }
-        if(side == meta+2){
-            return this.frontIcon;
-        }
-        if(side == 0){
-            return this.bottomIcon;
-        }
-        return this.blockIcon;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public IIcon getIcon(int side, int meta){
-        if(side == 1){
-            return this.topIcon;
-        }
-        if(side == 0){
-            return this.bottomIcon;
-        }
-        if(side == 3){
-            return this.frontIcon;
-        }
-        return this.blockIcon;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void randomDisplayTick(World world, int x, int y, int z, Random rand){
+    public void randomDisplayTick(World world, BlockPos pos, IBlockState state, Random rand){
         for(int i = 0; i < 2; i++){
             for(float f = 0; f <= 3; f += 0.5){
                 float particleX = rand.nextFloat();
                 float particleZ = rand.nextFloat();
-                world.spawnParticle("bubble", (double)x+particleX, (double)y+f+1, (double)z+particleZ, 0.0D, 0.2D, 0.0D);
+                world.spawnParticle(EnumParticleTypes.WATER_BUBBLE, (double)pos.getX()+particleX, (double)pos.getY()+f+1, (double)pos.getZ()+particleZ, 0.0D, 0.2D, 0.0D);
             }
         }
     }
 
     @Override
-    public Item getItemDropped(int par1, Random rand, int par3){
+    public Item getItemDropped(IBlockState state, Random rand, int par3){
         return null;
     }
 
     @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9){
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing par6, float par7, float par8, float par9){
         if(!world.isRemote){
             world.playSoundAtEntity(player, "random.chestopen", 0.2F, Util.RANDOM.nextFloat()*0.1F+0.9F);
-            this.dropItems(world, x, y, z);
-            world.setBlockToAir(x, y, z);
+            this.dropItems(world, Position.fromBlockPos(pos));
+            world.setBlockToAir(pos);
 
             player.triggerAchievement(TheAchievements.OPEN_TREASURE_CHEST.ach);
         }
@@ -119,42 +78,34 @@ public class BlockTreasureChest extends BlockBase{
     }
 
     @Override
-    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack stack){
+    public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase player, ItemStack stack){
         int rotation = MathHelper.floor_double((double)(player.rotationYaw*4.0F/360.0F)+0.5D) & 3;
+        Position thePos = Position.fromBlockPos(pos);
 
         if(rotation == 0){
-            world.setBlockMetadataWithNotify(x, y, z, 0, 2);
+            thePos.setMetadata(world, 0, 2);
         }
         if(rotation == 1){
-            world.setBlockMetadataWithNotify(x, y, z, 3, 2);
+            thePos.setMetadata(world, 3, 2);
         }
         if(rotation == 2){
-            world.setBlockMetadataWithNotify(x, y, z, 1, 2);
+            thePos.setMetadata(world, 1, 2);
         }
         if(rotation == 3){
-            world.setBlockMetadataWithNotify(x, y, z, 2, 2);
+            thePos.setMetadata(world, 2, 2);
         }
     }
 
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister iconReg){
-        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName());
-        this.topIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName()+"Top");
-        this.bottomIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName()+"Bottom");
-        this.frontIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName()+"Front");
-    }
-
-    private void dropItems(World world, int x, int y, int z){
+    private void dropItems(World world, Position pos){
         for(int i = 0; i < MathHelper.getRandomIntegerInRange(Util.RANDOM, 3, 6); i++){
-            TreasureChestLoot theReturn = (TreasureChestLoot)WeightedRandom.getRandomItem(Util.RANDOM, ActuallyAdditionsAPI.treasureChestLoot);
+            TreasureChestLoot theReturn = WeightedRandom.getRandomItem(Util.RANDOM, ActuallyAdditionsAPI.treasureChestLoot);
             ItemStack itemStack = theReturn.returnItem.copy();
             itemStack.stackSize = MathHelper.getRandomIntegerInRange(Util.RANDOM, theReturn.minAmount, theReturn.maxAmount);
 
             float dX = Util.RANDOM.nextFloat()*0.8F+0.1F;
             float dY = Util.RANDOM.nextFloat()*0.8F+0.1F;
             float dZ = Util.RANDOM.nextFloat()*0.8F+0.1F;
-            EntityItem entityItem = new EntityItem(world, x+dX, y+dY, z+dZ, itemStack.copy());
+            EntityItem entityItem = new EntityItem(world, pos.getX()+dX, pos.getY()+dY, pos.getZ()+dZ, itemStack.copy());
             if(itemStack.hasTagCompound()){
                 entityItem.getEntityItem().setTagCompound((NBTTagCompound)itemStack.getTagCompound().copy());
             }
@@ -169,6 +120,6 @@ public class BlockTreasureChest extends BlockBase{
 
     @Override
     public EnumRarity getRarity(ItemStack stack){
-        return EnumRarity.epic;
+        return EnumRarity.EPIC;
     }
 }

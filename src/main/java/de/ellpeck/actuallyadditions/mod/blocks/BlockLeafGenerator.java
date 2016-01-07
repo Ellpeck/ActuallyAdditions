@@ -10,26 +10,18 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
+import de.ellpeck.actuallyadditions.api.Position;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityLeafGenerator;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
-import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.IIcon;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockLeafGenerator extends BlockContainerBase{
-
-    @SideOnly(Side.CLIENT)
-    private IIcon topIcon;
-    @SideOnly(Side.CLIENT)
-    private IIcon bottomIcon;
 
     public BlockLeafGenerator(String name){
         super(Material.iron, name);
@@ -45,27 +37,13 @@ public class BlockLeafGenerator extends BlockContainerBase{
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public IIcon getIcon(int side, int meta){
-        return side <= 1 ? (side == 0 ? this.bottomIcon : this.topIcon) : this.blockIcon;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister iconReg){
-        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName());
-        this.topIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName()+"Top");
-        this.bottomIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName()+"Bottom");
-    }
-
-    @Override
     public EnumRarity getRarity(ItemStack stack){
-        return EnumRarity.epic;
+        return EnumRarity.EPIC;
     }
 
     @Override
-    public void breakBlock(World world, int x, int y, int z, Block block, int par6){
-        this.dropInventory(world, x, y, z);
-        super.breakBlock(world, x, y, z, block, par6);
+    public void breakBlock(World world, BlockPos pos, IBlockState state){
+        this.dropInventory(world, Position.fromBlockPos(pos));
+        super.breakBlock(world, pos, state);
     }
 }

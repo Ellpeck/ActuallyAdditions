@@ -11,11 +11,6 @@
 package de.ellpeck.actuallyadditions.mod.blocks;
 
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockBushBase;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
-import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.util.IIcon;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockBlackLotus extends BlockBushBase{
 
@@ -23,15 +18,4 @@ public class BlockBlackLotus extends BlockBushBase{
         super(name);
     }
 
-    @Override
-    @SideOnly(Side.CLIENT)
-    public IIcon getIcon(int side, int meta){
-        return this.blockIcon;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister iconReg){
-        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName());
-    }
 }

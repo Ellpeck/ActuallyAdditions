@@ -13,18 +13,13 @@ package de.ellpeck.actuallyadditions.mod.items;
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.recipe.BallOfFurReturn;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIcon;
 import net.minecraft.util.WeightedRandom;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemHairyBall extends ItemBase{
 
@@ -38,7 +33,7 @@ public class ItemHairyBall extends ItemBase{
             ItemStack returnItem = this.getRandomReturnItem();
             if(!player.inventory.addItemStackToInventory(returnItem)){
                 EntityItem entityItem = new EntityItem(player.worldObj, player.posX, player.posY, player.posZ, returnItem);
-                entityItem.delayBeforeCanPickup = 0;
+                entityItem.setPickupDelay(0);
                 player.worldObj.spawnEntityInWorld(entityItem);
             }
             stack.stackSize--;
@@ -53,18 +48,6 @@ public class ItemHairyBall extends ItemBase{
 
     @Override
     public EnumRarity getRarity(ItemStack stack){
-        return EnumRarity.epic;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister iconReg){
-        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName());
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public IIcon getIcon(ItemStack stack, int pass){
-        return this.itemIcon;
+        return EnumRarity.EPIC;
     }
 }

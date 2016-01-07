@@ -47,7 +47,7 @@ public class BlockLaserRelay extends BlockContainerBase{
 
     @Override
     public int getRenderType(){
-        return AssetUtil.laserRelayRenderId;
+        return AssetUtil.TESR_RENDER_ID;
     }
 
     @Override

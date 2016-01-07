@@ -49,7 +49,7 @@ public class WorldUtil{
     public static void breakBlockAtSide(EnumFacing side, World world, Position pos, int offset){
         Position c = getCoordsFromSide(side, pos, offset);
         if(c != null){
-            world.setBlockToAir(pos.toBlockPos());
+            world.setBlockToAir(pos);
         }
     }
 
@@ -79,7 +79,7 @@ public class WorldUtil{
     public static TileEntity getTileEntityFromSide(EnumFacing side, World world, Position pos){
         Position c = getCoordsFromSide(side, pos, 0);
         if(c != null){
-            return world.getTileEntity(pos.toBlockPos());
+            return world.getTileEntity(pos);
         }
         return null;
     }
@@ -118,7 +118,7 @@ public class WorldUtil{
 
             //Fluids
             FluidStack fluid = FluidContainerRegistry.getFluidForFilledItem(stack);
-            if(fluid != null && fluid.getFluid().getBlock() != null && fluid.getFluid().getBlock().canPlaceBlockAt(world, offsetPos.toBlockPos())){
+            if(fluid != null && fluid.getFluid().getBlock() != null && fluid.getFluid().getBlock().canPlaceBlockAt(world, offsetPos)){
                 Block block = offsetPos.getBlock(world);
                 if(!(block instanceof IFluidBlock) && block != Blocks.lava && block != Blocks.water && block != Blocks.flowing_lava && block != Blocks.flowing_water){
                     if(offsetPos.setBlock(world, fluid.getFluid().getBlock(), 0, 2)){
@@ -135,8 +135,8 @@ public class WorldUtil{
 
             //Plants
             else if(stack.getItem() instanceof IPlantable){
-                if(((IPlantable)stack.getItem()).getPlant(world, offsetPos.toBlockPos()).getBlock().canPlaceBlockAt(world, offsetPos.toBlockPos())){
-                    if(offsetPos.setBlockState(world, ((IPlantable)stack.getItem()).getPlant(world, offsetPos.toBlockPos()), 0, 2)){
+                if(((IPlantable)stack.getItem()).getPlant(world, offsetPos).getBlock().canPlaceBlockAt(world, offsetPos)){
+                    if(offsetPos.setBlockState(world, ((IPlantable)stack.getItem()).getPlant(world, offsetPos), 2)){
                         stack.stackSize--;
                     }
                 }
@@ -144,7 +144,7 @@ public class WorldUtil{
             else{
                 try{
                     //Blocks
-                    stack.onItemUse(FakePlayerUtil.getFakePlayer(world), world, pos.toBlockPos(), side, 0, 0, 0);
+                    stack.onItemUse(FakePlayerUtil.getFakePlayer(world), world, pos, side, 0, 0, 0);
                     return stack;
                 }
                 catch(Exception e){
@@ -413,7 +413,7 @@ public class WorldUtil{
         else{
             //Check the Server if a Block that changed on the Client really changed, if not, revert the change
             //TODO Check if this is the right action
-            Minecraft.getMinecraft().getNetHandler().addToSendQueue(new C07PacketPlayerDigging(C07PacketPlayerDigging.Action.START_DESTROY_BLOCK, pos.toBlockPos(), Minecraft.getMinecraft().objectMouseOver.sideHit));
+            Minecraft.getMinecraft().getNetHandler().addToSendQueue(new C07PacketPlayerDigging(C07PacketPlayerDigging.Action.START_DESTROY_BLOCK, pos, Minecraft.getMinecraft().objectMouseOver.sideHit));
         }
         return removed;
     }

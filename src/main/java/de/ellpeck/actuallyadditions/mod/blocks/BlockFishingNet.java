@@ -47,7 +47,7 @@ public class BlockFishingNet extends BlockContainerBase{
 
     @Override
     public int getRenderType(){
-        return AssetUtil.fishingNetRenderId;
+        return AssetUtil.TESR_RENDER_ID;
     }
 
     @Override

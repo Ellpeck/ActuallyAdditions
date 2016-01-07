@@ -14,14 +14,12 @@ import de.ellpeck.actuallyadditions.mod.booklet.GuiBooklet;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.renderer.ItemRenderer;
-import net.minecraft.client.renderer.OpenGlHelper;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.entity.RenderItem;
-import net.minecraft.client.renderer.texture.TextureMap;
+import net.minecraft.client.renderer.WorldRenderer;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -33,14 +31,14 @@ public class AssetUtil{
     public static final ResourceLocation GUI_INVENTORY_LOCATION = getGuiLocation("guiInventory");
     public static final int TESR_RENDER_ID = 2;
 
-    public static int compostRenderId;
+    /*public static int compostRenderId;
     public static int fishingNetRenderId;
     public static int furnaceSolarRenderId;
     public static int coffeeMachineRenderId;
     public static int phantomBoosterRenderId;
     public static int smileyCloudRenderId;
     public static int laserRelayRenderId;
-    public static int bookletStandRenderId;
+    public static int bookletStandRenderId;*/
 
     public static ResourceLocation getGuiLocation(String file){
         return new ResourceLocation(ModUtil.MOD_ID_LOWER, "textures/gui/"+file+".png");
@@ -57,19 +55,21 @@ public class AssetUtil{
 
     @SideOnly(Side.CLIENT)
     public static void renderItemInWorld(ItemStack stack, int renderPass){
-        IIcon icon = stack.getItem().getIcon(stack, renderPass);
+        //TODO Fix rendering items in world
+        /*IIcon icon = stack.getItem().getIcon(stack, renderPass);
         float f = icon.getMinU();
         float f1 = icon.getMaxU();
         float f2 = icon.getMinV();
         float f3 = icon.getMaxV();
         Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.locationItemsTexture);
-        ItemRenderer.renderItemIn2D(Tessellator.instance, f1, f2, f, f3, icon.getIconWidth(), icon.getIconHeight(), 1F/16F);
+        ItemRenderer.renderItemIn2D(Tessellator.instance, f1, f2, f, f3, icon.getIconWidth(), icon.getIconHeight(), 1F/16F);*/
     }
 
     @SideOnly(Side.CLIENT)
     public static void renderBlockInWorld(Block block, int meta){
-        Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.locationBlocksTexture);
-        RenderBlocks.getInstance().renderBlockAsItem(block, meta, 1F);
+        //TODO Fix rendering blocks in world
+        /*Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.locationBlocksTexture);
+        RenderBlocks.getInstance().renderBlockAsItem(block, meta, 1F);*/
     }
 
     @SideOnly(Side.CLIENT)
@@ -84,11 +84,11 @@ public class AssetUtil{
         GL11.glScalef(scale, scale, scale);
 
         Minecraft mc = Minecraft.getMinecraft();
-        boolean flagBefore = mc.fontRenderer.getUnicodeFlag();
-        mc.fontRenderer.setUnicodeFlag(false);
-        RenderItem.getInstance().renderItemAndEffectIntoGUI(mc.fontRenderer, mc.getTextureManager(), stack, 0, 0);
-        RenderItem.getInstance().renderItemOverlayIntoGUI(mc.fontRenderer, mc.getTextureManager(), stack, 0, 0);
-        mc.fontRenderer.setUnicodeFlag(flagBefore);
+        boolean flagBefore = mc.fontRendererObj.getUnicodeFlag();
+        mc.fontRendererObj.setUnicodeFlag(false);
+        Minecraft.getMinecraft().getRenderItem().renderItemAndEffectIntoGUI(stack, 0, 0);
+        Minecraft.getMinecraft().getRenderItem().renderItemOverlayIntoGUI(mc.fontRendererObj, stack, 0, 0, null);
+        mc.fontRendererObj.setUnicodeFlag(flagBefore);
 
         //GL+MC+NEI suck
         if(mc.currentScreen instanceof GuiBooklet || mc.currentScreen == null){
@@ -98,32 +98,31 @@ public class AssetUtil{
     }
 
     //Copied from Gui.class and changed
-    public static void drawHorizontalGradientRect(int startX, int startY, int endX, int endY, int firstColor, int secondColor){
-        float f = (float)(firstColor >> 24 & 255)/255.0F;
-        float f1 = (float)(firstColor >> 16 & 255)/255.0F;
-        float f2 = (float)(firstColor >> 8 & 255)/255.0F;
-        float f3 = (float)(firstColor & 255)/255.0F;
-        float f4 = (float)(secondColor >> 24 & 255)/255.0F;
-        float f5 = (float)(secondColor >> 16 & 255)/255.0F;
-        float f6 = (float)(secondColor >> 8 & 255)/255.0F;
-        float f7 = (float)(secondColor & 255)/255.0F;
-        GL11.glDisable(GL11.GL_TEXTURE_2D);
-        GL11.glEnable(GL11.GL_BLEND);
-        GL11.glDisable(GL11.GL_ALPHA_TEST);
-        OpenGlHelper.glBlendFunc(770, 771, 1, 0);
-        GL11.glShadeModel(GL11.GL_SMOOTH);
-        Tessellator tessellator = Tessellator.instance;
-        tessellator.startDrawingQuads();
-        tessellator.setColorRGBA_F(f1, f2, f3, f);
-        tessellator.addVertex((double)startX, (double)startY, 0);
-        tessellator.addVertex((double)startX, (double)endY, 0);
-        tessellator.setColorRGBA_F(f5, f6, f7, f4);
-        tessellator.addVertex((double)endX, (double)endY, 0);
-        tessellator.addVertex((double)endX, (double)startY, 0);
+    public static void drawHorizontalGradientRect(int left, int top, int right, int bottom, int startColor, int endColor, float zLevel){
+        float f = (float)(startColor >> 24 & 255)/255.0F;
+        float f1 = (float)(startColor >> 16 & 255)/255.0F;
+        float f2 = (float)(startColor >> 8 & 255)/255.0F;
+        float f3 = (float)(startColor & 255)/255.0F;
+        float f4 = (float)(endColor >> 24 & 255)/255.0F;
+        float f5 = (float)(endColor >> 16 & 255)/255.0F;
+        float f6 = (float)(endColor >> 8 & 255)/255.0F;
+        float f7 = (float)(endColor & 255)/255.0F;
+        GlStateManager.disableTexture2D();
+        GlStateManager.enableBlend();
+        GlStateManager.disableAlpha();
+        GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+        GlStateManager.shadeModel(7425);
+        Tessellator tessellator = Tessellator.getInstance();
+        WorldRenderer worldrenderer = tessellator.getWorldRenderer();
+        worldrenderer.begin(7, DefaultVertexFormats.POSITION_COLOR);
+        worldrenderer.pos((double)right, (double)top, (double)zLevel).color(f1, f2, f3, f).endVertex();
+        worldrenderer.pos((double)left, (double)top, (double)zLevel).color(f1, f2, f3, f).endVertex();
+        worldrenderer.pos((double)left, (double)bottom, (double)zLevel).color(f5, f6, f7, f4).endVertex();
+        worldrenderer.pos((double)right, (double)bottom, (double)zLevel).color(f5, f6, f7, f4).endVertex();
         tessellator.draw();
-        GL11.glShadeModel(GL11.GL_FLAT);
-        GL11.glDisable(GL11.GL_BLEND);
-        GL11.glEnable(GL11.GL_ALPHA_TEST);
-        GL11.glEnable(GL11.GL_TEXTURE_2D);
+        GlStateManager.shadeModel(7424);
+        GlStateManager.disableBlend();
+        GlStateManager.enableAlpha();
+        GlStateManager.enableTexture2D();
     }
 }

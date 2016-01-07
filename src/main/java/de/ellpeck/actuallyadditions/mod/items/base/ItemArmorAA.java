@@ -13,15 +13,11 @@ package de.ellpeck.actuallyadditions.mod.items.base;
 import de.ellpeck.actuallyadditions.mod.creative.CreativeTab;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIcon;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemArmorAA extends ItemArmor{
 
@@ -42,7 +38,7 @@ public class ItemArmorAA extends ItemArmor{
     }
 
     public ItemArmorAA(String name, ArmorMaterial material, int type, ItemStack repairItem, String textureBase){
-        this(name, material, type, repairItem, textureBase, EnumRarity.rare);
+        this(name, material, type, repairItem, textureBase, EnumRarity.RARE);
     }
 
     private void register(){
@@ -70,12 +66,6 @@ public class ItemArmorAA extends ItemArmor{
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public IIcon getIcon(ItemStack stack, int pass){
-        return this.itemIcon;
-    }
-
-    @Override
     public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type){
         return this.textures[slot == 2 ? 1 : 0];
     }
@@ -83,11 +73,5 @@ public class ItemArmorAA extends ItemArmor{
     @Override
     public boolean getIsRepairable(ItemStack itemToRepair, ItemStack stack){
         return ItemUtil.areItemsEqual(this.repairItem, stack, false);
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister iconReg){
-        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName());
     }
 }

@@ -13,15 +13,11 @@ package de.ellpeck.actuallyadditions.mod.items.base;
 import de.ellpeck.actuallyadditions.mod.creative.CreativeTab;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.block.Block;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemBucket;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIcon;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemBucketAA extends ItemBucket{
 
@@ -56,18 +52,6 @@ public class ItemBucketAA extends ItemBucket{
 
     @Override
     public EnumRarity getRarity(ItemStack stack){
-        return EnumRarity.uncommon;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister iconReg){
-        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName());
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public IIcon getIcon(ItemStack stack, int pass){
-        return this.itemIcon;
+        return EnumRarity.UNCOMMON;
     }
 }

@@ -19,7 +19,7 @@ import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -37,12 +37,12 @@ public class TileEntityHeatCollector extends TileEntityBase implements IEnergyPr
         super.updateEntity();
         if(!worldObj.isRemote){
             ArrayList<Integer> blocksAround = new ArrayList<Integer>();
-            if(ENERGY_PRODUCE <= this.getMaxEnergyStored(ForgeDirection.UNKNOWN)-this.getEnergyStored(ForgeDirection.UNKNOWN)){
+            if(ENERGY_PRODUCE <= this.storage.getMaxEnergyStored()-this.storage.getEnergyStored()){
                 for(int i = 1; i <= 5; i++){
-                    Position coords = WorldUtil.getCoordsFromSide(WorldUtil.getDirectionBySidesInOrder(i), xCoord, yCoord, zCoord, 0);
+                    Position coords = WorldUtil.getCoordsFromSide(WorldUtil.getDirectionBySidesInOrder(i), Position.fromTileEntity(this), 0);
                     if(coords != null){
-                        Block block = worldObj.getBlock(coords.getX(), coords.getY(), coords.getZ());
-                        if(block != null && block.getMaterial() == Material.lava && worldObj.getBlockMetadata(coords.getX(), coords.getY(), coords.getZ()) == 0){
+                        Block block = coords.getBlock(worldObj);
+                        if(block != null && block.getMaterial() == Material.lava && coords.getMetadata(worldObj) == 0){
                             blocksAround.add(i);
                         }
                     }
@@ -54,13 +54,13 @@ public class TileEntityHeatCollector extends TileEntityBase implements IEnergyPr
 
                     if(Util.RANDOM.nextInt(10000) == 0){
                         int randomSide = blocksAround.get(Util.RANDOM.nextInt(blocksAround.size()));
-                        WorldUtil.breakBlockAtSide(WorldUtil.getDirectionBySidesInOrder(randomSide), worldObj, xCoord, yCoord, zCoord);
+                        WorldUtil.breakBlockAtSide(WorldUtil.getDirectionBySidesInOrder(randomSide), worldObj, Position.fromTileEntity(this));
                     }
                 }
             }
 
-            if(this.getEnergyStored(ForgeDirection.UNKNOWN) > 0){
-                WorldUtil.pushEnergy(worldObj, xCoord, yCoord, zCoord, ForgeDirection.UP, this.storage);
+            if(this.storage.getEnergyStored() > 0){
+                WorldUtil.pushEnergy(worldObj, Position.fromTileEntity(this), EnumFacing.UP, this.storage);
             }
 
             if(this.oldEnergy != this.storage.getEnergyStored() && this.sendUpdateWithInterval()){
@@ -82,23 +82,23 @@ public class TileEntityHeatCollector extends TileEntityBase implements IEnergyPr
     }
 
     @Override
-    public int extractEnergy(ForgeDirection from, int maxExtract, boolean simulate){
+    public int extractEnergy(EnumFacing from, int maxExtract, boolean simulate){
         return this.storage.extractEnergy(maxExtract, simulate);
     }
 
     @Override
-    public int getEnergyStored(ForgeDirection from){
+    public int getEnergyStored(EnumFacing from){
         return this.storage.getEnergyStored();
     }
 
     @Override
-    public int getMaxEnergyStored(ForgeDirection from){
+    public int getMaxEnergyStored(EnumFacing from){
         return this.storage.getMaxEnergyStored();
     }
 
     @Override
-    public boolean canConnectEnergy(ForgeDirection from){
-        return from == ForgeDirection.UP;
+    public boolean canConnectEnergy(EnumFacing from){
+        return from == EnumFacing.UP;
     }
 
     @Override

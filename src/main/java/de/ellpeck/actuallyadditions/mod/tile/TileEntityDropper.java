@@ -10,10 +10,11 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import de.ellpeck.actuallyadditions.api.Position;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraft.util.EnumFacing;
 
 public class TileEntityDropper extends TileEntityInventoryBase implements IRedstoneToggle{
 
@@ -59,7 +60,7 @@ public class TileEntityDropper extends TileEntityInventoryBase implements IRedst
         if(this.removeFromInventory(false) != null){
             ItemStack stack = this.removeFromInventory(true);
             stack.stackSize = 1;
-            WorldUtil.dropItemAtSide(ForgeDirection.getOrientation(worldObj.getBlockMetadata(xCoord, yCoord, zCoord)), worldObj, xCoord, yCoord, zCoord, stack);
+            WorldUtil.dropItemAtSide(WorldUtil.getDirectionByPistonRotation(Position.fromTileEntity(this).getMetadata(worldObj)), worldObj, Position.fromTileEntity(this), stack);
         }
     }
 
@@ -80,7 +81,7 @@ public class TileEntityDropper extends TileEntityInventoryBase implements IRedst
     }
 
     @Override
-    public boolean canInsertItem(int slot, ItemStack stack, int side){
+    public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
         return this.isItemValidForSlot(slot, stack);
     }
 
@@ -90,7 +91,7 @@ public class TileEntityDropper extends TileEntityInventoryBase implements IRedst
     }
 
     @Override
-    public boolean canExtractItem(int slot, ItemStack stack, int side){
+    public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
         return true;
     }
 

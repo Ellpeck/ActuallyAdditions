@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks.render;
 
+import de.ellpeck.actuallyadditions.api.Position;
 import de.ellpeck.actuallyadditions.api.lens.ILensItem;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityAtomicReconstructor;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
@@ -21,7 +22,7 @@ import org.lwjgl.opengl.GL11;
 public class RenderReconstructorLens extends TileEntitySpecialRenderer{
 
     @Override
-    public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float par5){
+    public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float par5, int par6){
         if(!(tile instanceof TileEntityAtomicReconstructor)){
             return;
         }
@@ -32,7 +33,7 @@ public class RenderReconstructorLens extends TileEntitySpecialRenderer{
             GL11.glTranslatef((float)x+0.5F, (float)y-0.5F, (float)z+0.5F);
             GL11.glRotatef(180F, 0.0F, 0.0F, 1.0F);
 
-            int meta = tile.getWorldObj().getBlockMetadata(tile.xCoord, tile.yCoord, tile.zCoord);
+            int meta = Position.fromTileEntity(tile).getMetadata(getWorld());
             if(meta == 0){
                 GL11.glTranslatef(0F, -0.5F, 0F);
                 GL11.glTranslatef(-0.25F, 0F, -0.25F);

@@ -13,10 +13,11 @@ package de.ellpeck.actuallyadditions.mod.tile;
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyContainerItem;
 import cofh.api.energy.IEnergyProvider;
+import de.ellpeck.actuallyadditions.api.Position;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -48,13 +49,8 @@ public class TileEntityEnervator extends TileEntityInventoryBase implements IEne
                 }
             }
 
-            if(this.getEnergyStored(ForgeDirection.UNKNOWN) > 0){
-                WorldUtil.pushEnergy(worldObj, xCoord, yCoord, zCoord, ForgeDirection.UP, storage);
-                WorldUtil.pushEnergy(worldObj, xCoord, yCoord, zCoord, ForgeDirection.DOWN, storage);
-                WorldUtil.pushEnergy(worldObj, xCoord, yCoord, zCoord, ForgeDirection.NORTH, storage);
-                WorldUtil.pushEnergy(worldObj, xCoord, yCoord, zCoord, ForgeDirection.EAST, storage);
-                WorldUtil.pushEnergy(worldObj, xCoord, yCoord, zCoord, ForgeDirection.SOUTH, storage);
-                WorldUtil.pushEnergy(worldObj, xCoord, yCoord, zCoord, ForgeDirection.WEST, storage);
+            if(this.storage.getEnergyStored() > 0){
+                WorldUtil.pushEnergyToAllSides(worldObj, Position.fromTileEntity(this), this.storage);
             }
 
             if(lastEnergy != this.storage.getEnergyStored() && this.sendUpdateWithInterval()){
@@ -76,22 +72,22 @@ public class TileEntityEnervator extends TileEntityInventoryBase implements IEne
     }
 
     @Override
-    public int extractEnergy(ForgeDirection from, int maxExtract, boolean simulate){
+    public int extractEnergy(EnumFacing from, int maxExtract, boolean simulate){
         return this.storage.extractEnergy(maxExtract, simulate);
     }
 
     @Override
-    public int getEnergyStored(ForgeDirection from){
+    public int getEnergyStored(EnumFacing from){
         return this.storage.getEnergyStored();
     }
 
     @Override
-    public int getMaxEnergyStored(ForgeDirection from){
+    public int getMaxEnergyStored(EnumFacing from){
         return this.storage.getMaxEnergyStored();
     }
 
     @Override
-    public boolean canConnectEnergy(ForgeDirection from){
+    public boolean canConnectEnergy(EnumFacing from){
         return true;
     }
 
@@ -101,7 +97,7 @@ public class TileEntityEnervator extends TileEntityInventoryBase implements IEne
     }
 
     @Override
-    public boolean canInsertItem(int slot, ItemStack stack, int side){
+    public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
         return this.isItemValidForSlot(slot, stack);
     }
 
@@ -111,7 +107,7 @@ public class TileEntityEnervator extends TileEntityInventoryBase implements IEne
     }
 
     @Override
-    public boolean canExtractItem(int slot, ItemStack stack, int side){
+    public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
         return slot == 1;
     }
 

@@ -12,15 +12,11 @@ package de.ellpeck.actuallyadditions.mod.blocks;
 
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityGreenhouseGlass;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Facing;
-import net.minecraft.util.IIcon;
-import net.minecraft.world.IBlockAccess;
+import net.minecraft.util.EnumWorldBlockLayer;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -36,21 +32,9 @@ public class BlockGreenhouseGlass extends BlockContainerBase{
     }
 
     @Override
-    public boolean renderAsNormalBlock(){
-        return false;
-    }
-
-    @Override
     @SideOnly(Side.CLIENT)
-    public boolean shouldSideBeRendered(IBlockAccess world, int x, int y, int z, int meta){
-        return world.getBlockMetadata(x, y, z) != world.getBlockMetadata(x-Facing.offsetsXForSide[meta], y-Facing.offsetsYForSide[meta], z-Facing.offsetsZForSide[meta]) || (world.getBlock(x, y, z) != this && super.shouldSideBeRendered(world, x, y, z, meta));
-
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public IIcon getIcon(int side, int metadata){
-        return this.blockIcon;
+    public EnumWorldBlockLayer getBlockLayer(){
+        return EnumWorldBlockLayer.CUTOUT;
     }
 
     @Override
@@ -59,20 +43,8 @@ public class BlockGreenhouseGlass extends BlockContainerBase{
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public int getRenderBlockPass(){
-        return 0;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister iconReg){
-        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName());
-    }
-
-    @Override
     public EnumRarity getRarity(ItemStack stack){
-        return EnumRarity.epic;
+        return EnumRarity.EPIC;
     }
 
     @Override

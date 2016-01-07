@@ -13,16 +13,15 @@ package de.ellpeck.actuallyadditions.mod.blocks;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockBase;
 import de.ellpeck.actuallyadditions.mod.blocks.base.ItemBlockBase;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheCrystals;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIcon;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -41,26 +40,21 @@ public class BlockCrystal extends BlockBase{
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public IIcon getIcon(int side, int metadata){
-        return this.blockIcon;
-    }
-
-    @Override
-    public int damageDropped(int meta){
-        return meta;
+    public int damageDropped(IBlockState state){
+        return this.getMetaFromState(state);
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public int getRenderColor(int meta){
-        return meta >= allCrystals.length ? super.getRenderColor(meta) : allCrystals[meta].color;
+    public int getRenderColor(IBlockState state){
+        int meta = this.getMetaFromState(state);
+        return meta >= allCrystals.length ? super.getRenderColor(state) : allCrystals[meta].color;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public int colorMultiplier(IBlockAccess world, int x, int y, int z){
-        return this.getRenderColor(world.getBlockMetadata(x, y, z));
+    public int colorMultiplier(IBlockAccess world, BlockPos pos, int renderPass){
+        return this.getRenderColor(world.getBlockState(pos));
     }
 
     @SuppressWarnings("all")
@@ -72,19 +66,13 @@ public class BlockCrystal extends BlockBase{
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister iconReg){
-        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName());
-    }
-
-    @Override
     public Class<? extends ItemBlockBase> getItemBlock(){
         return TheItemBlock.class;
     }
 
     @Override
     public EnumRarity getRarity(ItemStack stack){
-        return stack.getItemDamage() >= allCrystals.length ? EnumRarity.common : allCrystals[stack.getItemDamage()].rarity;
+        return stack.getItemDamage() >= allCrystals.length ? EnumRarity.COMMON : allCrystals[stack.getItemDamage()].rarity;
     }
 
     public static class TheItemBlock extends ItemBlockBase{

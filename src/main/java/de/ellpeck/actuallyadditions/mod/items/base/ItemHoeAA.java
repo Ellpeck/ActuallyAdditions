@@ -13,15 +13,11 @@ package de.ellpeck.actuallyadditions.mod.items.base;
 import de.ellpeck.actuallyadditions.mod.creative.CreativeTab;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemHoe;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIcon;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemHoeAA extends ItemHoe{
 
@@ -66,17 +62,5 @@ public class ItemHoeAA extends ItemHoe{
     @Override
     public boolean getIsRepairable(ItemStack itemToRepair, ItemStack stack){
         return ItemUtil.areItemsEqual(this.repairItem, stack, false);
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister iconReg){
-        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName());
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public IIcon getIcon(ItemStack stack, int pass){
-        return this.itemIcon;
     }
 }

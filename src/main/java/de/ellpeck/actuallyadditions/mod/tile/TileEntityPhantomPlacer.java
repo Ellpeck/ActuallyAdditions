@@ -19,8 +19,9 @@ import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.Vec3;
-import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -49,7 +50,7 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
     public void updateEntity(){
         super.updateEntity();
         if(!worldObj.isRemote){
-            this.range = TileEntityPhantomface.upgradeRange(RANGE, worldObj, xCoord, yCoord, zCoord);
+            this.range = TileEntityPhantomface.upgradeRange(RANGE, worldObj, Position.fromTileEntity(this));
 
             if(!this.hasBoundPosition()){
                 this.boundPosition = null;
@@ -85,11 +86,11 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
     @Override
     public boolean hasBoundPosition(){
         if(this.boundPosition != null){
-            if(this.worldObj.getTileEntity(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ()) instanceof IPhantomTile || (this.xCoord == this.boundPosition.getX() && this.yCoord == this.boundPosition.getY() && this.zCoord == this.boundPosition.getZ() && this.worldObj.provider.dimensionId == this.worldObj.provider.dimensionId)){
+            if(this.worldObj.getTileEntity(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ()) instanceof IPhantomTile || (this.getPos().getX() == this.boundPosition.getX() && this.getPos().getY() == this.boundPosition.getY() && this.getPos().getZ() == this.boundPosition.getZ() && this.worldObj.provider.getDimensionId() == this.worldObj.provider.getDimensionId())){
                 this.boundPosition = null;
                 return false;
             }
-            return this.worldObj.provider.dimensionId == this.worldObj.provider.dimensionId;
+            return this.worldObj.provider.getDimensionId() == this.worldObj.provider.getDimensionId();
         }
         return false;
     }
@@ -103,9 +104,9 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
                 drops.addAll(blockToBreak.getDrops(worldObj, boundPosition.getX(), boundPosition.getY(), boundPosition.getZ(), meta, 0));
 
                 if(WorldUtil.addToInventory(this, drops, false)){
-                    worldObj.playAuxSFX(2001, boundPosition.getX(), boundPosition.getY(), boundPosition.getZ(), Block.getIdFromBlock(blockToBreak)+(meta << 12));
-                    WorldUtil.breakBlockAtSide(ForgeDirection.UNKNOWN, worldObj, boundPosition.getX(), boundPosition.getY(), boundPosition.getZ());
-                    WorldUtil.addToInventory(this, drops, true);
+                    worldObj.playAuxSFX(2001, this.boundPosition, Block.getIdFromBlock(blockToBreak)+(meta << 12));
+                    worldObj.setBlockToAir(this.boundPosition);
+                    WorldUtil.addToInventory(this, drops, true, true);
                     this.markDirty();
                 }
             }
@@ -132,17 +133,17 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
             double d5 = (double)(Util.RANDOM.nextFloat()*1.0F*(float)j1);
             double d0 = (double)this.boundPosition.getX()+0.5D+0.25D*(double)i1;
             double d3 = (double)(Util.RANDOM.nextFloat()*1.0F*(float)i1);
-            worldObj.spawnParticle("portal", d0, d1, d2, d3, d4, d5);
+            worldObj.spawnParticle(EnumParticleTypes.PORTAL, d0, d1, d2, d3, d4, d5);
         }
 
         if(this.ticksElapsed%80 == 0){
-            PacketParticle.renderParticlesFromAToB(xCoord, yCoord, zCoord, boundPosition.getX(), boundPosition.getY(), boundPosition.getZ(), 2, 0.35F, TileEntityPhantomface.COLORS, 3);
+            PacketParticle.renderParticlesFromAToB(this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), boundPosition.getX(), boundPosition.getY(), boundPosition.getZ(), 2, 0.35F, TileEntityPhantomface.COLORS, 3);
         }
     }
 
     @Override
     public boolean isBoundThingInRange(){
-        return this.hasBoundPosition() && this.boundPosition.toVec().distanceTo(Vec3.createVectorHelper(xCoord, yCoord, zCoord)) <= this.range;
+        return this.hasBoundPosition() && this.boundPosition.toVec().distanceTo(new Vec3(this.getPos().getX(), this.getPos().getY(), this.getPos().getZ())) <= this.range;
     }
 
     @Override
@@ -190,7 +191,7 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
     }
 
     @Override
-    public boolean canInsertItem(int slot, ItemStack stack, int side){
+    public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
         return this.isItemValidForSlot(slot, stack);
     }
 
@@ -200,7 +201,7 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
     }
 
     @Override
-    public boolean canExtractItem(int slot, ItemStack stack, int side){
+    public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
         return this.isBreaker;
     }
 

@@ -13,20 +13,15 @@ package de.ellpeck.actuallyadditions.mod.items;
 import de.ellpeck.actuallyadditions.api.Position;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -49,7 +44,7 @@ public class ItemLeafBlower extends ItemBase{
 
     @Override
     public EnumAction getItemUseAction(ItemStack stack){
-        return EnumAction.bow;
+        return EnumAction.BOW;
     }
 
     @Override
@@ -60,13 +55,7 @@ public class ItemLeafBlower extends ItemBase{
 
     @Override
     public EnumRarity getRarity(ItemStack stack){
-        return this.isAdvanced ? EnumRarity.epic : EnumRarity.rare;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister iconReg){
-        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName());
+        return this.isAdvanced ? EnumRarity.EPIC : EnumRarity.RARE;
     }
 
     @Override
@@ -100,9 +89,10 @@ public class ItemLeafBlower extends ItemBase{
             for(int reachZ = -rangeSides; reachZ < rangeSides+1; reachZ++){
                 for(int reachY = (this.isAdvanced ? -rangeSides : -rangeUp); reachY < (this.isAdvanced ? rangeSides : rangeUp)+1; reachY++){
                     //The current Block to break
-                    Block block = world.getBlock(x+reachX, y+reachY, z+reachZ);
-                    if(block != null && (block instanceof BlockBush || (this.isAdvanced && block.isLeaves(world, x+reachX, y+reachY, z+reachZ)))){
-                        breakPositions.add(new Position(x+reachX, y+reachY, z+reachZ));
+                    Position pos = new Position(x+reachX, y+reachY, z+reachZ);
+                    Block block = pos.getBlock(world);
+                    if(block != null && (block instanceof BlockBush || (this.isAdvanced && block.isLeaves(world, pos)))){
+                        breakPositions.add(pos);
                     }
                 }
             }
@@ -112,28 +102,22 @@ public class ItemLeafBlower extends ItemBase{
             Collections.shuffle(breakPositions);
 
             Position theCoord = breakPositions.get(0);
-            Block theBlock = world.getBlock(theCoord.getX(), theCoord.getY(), theCoord.getZ());
+            Block theBlock = theCoord.getBlock(world);
 
             ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-            int meta = world.getBlockMetadata(theCoord.getX(), theCoord.getY(), theCoord.getZ());
+            int meta = theCoord.getMetadata(world);
             //Gets all of the Drops the Block should have
-            drops.addAll(theBlock.getDrops(world, theCoord.getX(), theCoord.getY(), theCoord.getZ(), meta, 0));
+            drops.addAll(theBlock.getDrops(world, theCoord, theCoord.getBlockState(world), 0));
 
             //Deletes the Block
-            world.setBlockToAir(theCoord.getX(), theCoord.getY(), theCoord.getZ());
+            world.setBlockToAir(theCoord);
             //Plays the Breaking Sound
-            world.playAuxSFX(2001, theCoord.getX(), theCoord.getY(), theCoord.getZ(), Block.getIdFromBlock(theBlock)+(meta << 12));
+            world.playAuxSFX(2001, theCoord, Block.getIdFromBlock(theBlock)+(meta << 12));
 
             for(ItemStack theDrop : drops){
                 //Drops the Items into the World
                 world.spawnEntityInWorld(new EntityItem(world, theCoord.getX()+0.5, theCoord.getY()+0.5, theCoord.getZ()+0.5, theDrop));
             }
         }
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public IIcon getIcon(ItemStack stack, int pass){
-        return this.itemIcon;
     }
 }

@@ -21,7 +21,6 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIcon;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -61,8 +60,8 @@ public class ContainerEnervator extends Container{
 
                 @Override
                 @SideOnly(Side.CLIENT)
-                public IIcon getBackgroundIconIndex(){
-                    return ItemArmor.func_94602_b(finalI);
+                public String getSlotTexture(){
+                    return ItemArmor.EMPTY_SLOT_NAMES[finalI];
                 }
             });
         }

@@ -10,14 +10,8 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks.render;
 
-import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.RenderBlocks;
-import net.minecraft.world.IBlockAccess;
-import net.minecraftforge.fml.client.registry.ISimpleBlockRenderingHandler;
-import org.lwjgl.opengl.GL11;
-
-public class RenderInventory implements ISimpleBlockRenderingHandler{
+//TODO Fix the rendering handler
+public class RenderInventory{
 
     private RenderTileEntity tileRender;
     private int renderID;
@@ -27,7 +21,7 @@ public class RenderInventory implements ISimpleBlockRenderingHandler{
         this.renderID = renderID;
     }
 
-    @Override
+    /*@Override
     public void renderInventoryBlock(Block block, int metadata, int modelId, RenderBlocks renderer){
         GL11.glPushMatrix();
         Minecraft.getMinecraft().renderEngine.bindTexture(this.tileRender.resLoc);
@@ -50,5 +44,5 @@ public class RenderInventory implements ISimpleBlockRenderingHandler{
     @Override
     public int getRenderId(){
         return this.renderID;
-    }
+    }*/
 }

@@ -16,16 +16,16 @@ import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.IIcon;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.relauncher.Side;
@@ -41,10 +41,10 @@ public class ItemPhantomConnector extends ItemBase{
     }
 
     @Override
-    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int par7, float par8, float par9, float par10){
+    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing par7, float par8, float par9, float par10){
         if(!world.isRemote){
             //Passing Data to Phantoms
-            TileEntity tile = world.getTileEntity(x, y, z);
+            TileEntity tile = world.getTileEntity(pos);
             if(tile != null){
                 //Passing to Phantom
                 if(tile instanceof IPhantomTile){
@@ -61,7 +61,7 @@ public class ItemPhantomConnector extends ItemBase{
                 }
             }
             //Storing Connections
-            storeConnection(stack, x, y, z, world);
+            storeConnection(stack, pos.getX(), pos.getY(), pos.getZ(), world);
             player.addChatComponentMessage(new ChatComponentText(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.stored.desc")));
         }
         return true;
@@ -114,7 +114,7 @@ public class ItemPhantomConnector extends ItemBase{
         tag.setInteger("XCoordOfTileStored", x);
         tag.setInteger("YCoordOfTileStored", y);
         tag.setInteger("ZCoordOfTileStored", z);
-        tag.setInteger("WorldOfTileStored", world.provider.dimensionId);
+        tag.setInteger("WorldOfTileStored", world.provider.getDimensionId());
 
         stack.setTagCompound(tag);
     }
@@ -147,18 +147,6 @@ public class ItemPhantomConnector extends ItemBase{
 
     @Override
     public EnumRarity getRarity(ItemStack stack){
-        return EnumRarity.epic;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister iconReg){
-        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName());
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public IIcon getIcon(ItemStack stack, int pass){
-        return this.itemIcon;
+        return EnumRarity.EPIC;
     }
 }

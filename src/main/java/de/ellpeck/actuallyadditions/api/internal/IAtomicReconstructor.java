@@ -38,7 +38,7 @@ public interface IAtomicReconstructor{
     /**
      * Returns the world of the reconstructor
      */
-    World getWorld();
+    World getWorldObject();
 
     /**
      * Extracts a specified amount of energy from the Reconstructor's RF storage

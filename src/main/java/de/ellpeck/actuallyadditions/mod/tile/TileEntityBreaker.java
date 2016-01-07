@@ -16,7 +16,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockAir;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraft.util.EnumFacing;
 
 import java.util.ArrayList;
 
@@ -67,26 +67,26 @@ public class TileEntityBreaker extends TileEntityInventoryBase implements IRedst
     }
 
     private void doWork(){
-        ForgeDirection sideToManipulate = ForgeDirection.getOrientation(worldObj.getBlockMetadata(xCoord, yCoord, zCoord));
+        EnumFacing sideToManipulate = WorldUtil.getDirectionByPistonRotation(Position.fromTileEntity(this).getMetadata(worldObj));
 
-        Position coordsBlock = WorldUtil.getCoordsFromSide(sideToManipulate, xCoord, yCoord, zCoord, 0);
+        Position coordsBlock = WorldUtil.getCoordsFromSide(sideToManipulate, Position.fromTileEntity(this), 0);
         if(coordsBlock != null){
-            Block blockToBreak = worldObj.getBlock(coordsBlock.getX(), coordsBlock.getY(), coordsBlock.getZ());
-            if(!this.isPlacer && blockToBreak != null && !(blockToBreak instanceof BlockAir) && blockToBreak.getBlockHardness(worldObj, coordsBlock.getX(), coordsBlock.getY(), coordsBlock.getZ()) > -1.0F){
+            Block blockToBreak = coordsBlock.getBlock(worldObj);
+            if(!this.isPlacer && blockToBreak != null && !(blockToBreak instanceof BlockAir) && blockToBreak.getBlockHardness(worldObj, coordsBlock) > -1.0F){
                 ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-                int meta = worldObj.getBlockMetadata(coordsBlock.getX(), coordsBlock.getY(), coordsBlock.getZ());
-                drops.addAll(blockToBreak.getDrops(worldObj, coordsBlock.getX(), coordsBlock.getY(), coordsBlock.getZ(), meta, 0));
+                int meta = coordsBlock.getMetadata(worldObj);
+                drops.addAll(blockToBreak.getDrops(worldObj, coordsBlock, coordsBlock.getBlockState(worldObj), 0));
 
-                if(WorldUtil.addToInventory(this, drops, false)){
-                    worldObj.playAuxSFX(2001, coordsBlock.getX(), coordsBlock.getY(), coordsBlock.getZ(), Block.getIdFromBlock(blockToBreak)+(meta << 12));
-                    WorldUtil.breakBlockAtSide(sideToManipulate, worldObj, xCoord, yCoord, zCoord);
-                    WorldUtil.addToInventory(this, drops, true);
+                if(WorldUtil.addToInventory(this, drops, false, true)){
+                    worldObj.playAuxSFX(2001, coordsBlock, Block.getIdFromBlock(blockToBreak)+(meta << 12));
+                    WorldUtil.breakBlockAtSide(sideToManipulate, worldObj, Position.fromTileEntity(this));
+                    WorldUtil.addToInventory(this, drops, true, true);
                     this.markDirty();
                 }
             }
-            else if(this.isPlacer && worldObj.getBlock(coordsBlock.getX(), coordsBlock.getY(), coordsBlock.getZ()).isReplaceable(worldObj, coordsBlock.getX(), coordsBlock.getY(), coordsBlock.getZ())){
+            else if(this.isPlacer && coordsBlock.getBlock(worldObj).isReplaceable(worldObj, coordsBlock)){
                 int theSlot = WorldUtil.findFirstFilledSlot(this.slots);
-                this.setInventorySlotContents(theSlot, WorldUtil.placeBlockAtSide(sideToManipulate, worldObj, xCoord, yCoord, zCoord, this.slots[theSlot]));
+                this.setInventorySlotContents(theSlot, WorldUtil.placeBlockAtSide(sideToManipulate, worldObj, Position.fromTileEntity(this), this.slots[theSlot]));
                 if(this.slots[theSlot] != null && this.slots[theSlot].stackSize <= 0){
                     this.slots[theSlot] = null;
                 }
@@ -95,7 +95,7 @@ public class TileEntityBreaker extends TileEntityInventoryBase implements IRedst
     }
 
     @Override
-    public boolean canInsertItem(int slot, ItemStack stack, int side){
+    public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
         return this.isItemValidForSlot(slot, stack);
     }
 
@@ -105,7 +105,7 @@ public class TileEntityBreaker extends TileEntityInventoryBase implements IRedst
     }
 
     @Override
-    public boolean canExtractItem(int slot, ItemStack stack, int side){
+    public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
         return true;
     }
 
