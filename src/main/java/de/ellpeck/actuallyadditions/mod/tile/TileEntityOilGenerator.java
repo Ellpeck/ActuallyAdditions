@@ -12,11 +12,12 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyProvider;
+import de.ellpeck.actuallyadditions.api.Position;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fluids.*;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -64,7 +65,7 @@ public class TileEntityOilGenerator extends TileEntityInventoryBase implements I
             }
 
             int fuelUsed = 50;
-            if(ENERGY_PRODUCED*BURN_TIME <= this.getMaxEnergyStored(ForgeDirection.UNKNOWN)-this.getEnergyStored(ForgeDirection.UNKNOWN)){
+            if(ENERGY_PRODUCED*BURN_TIME <= this.storage.getMaxEnergyStored()-this.storage.getEnergyStored()){
                 if(this.currentBurnTime <= 0 && this.tank.getFluidAmount() >= fuelUsed){
                     this.currentBurnTime = BURN_TIME;
                     this.tank.drain(fuelUsed, true);
@@ -73,25 +74,21 @@ public class TileEntityOilGenerator extends TileEntityInventoryBase implements I
 
             WorldUtil.emptyBucket(tank, slots, 0, 1, InitBlocks.fluidOil);
 
-            if(this.getEnergyStored(ForgeDirection.UNKNOWN) > 0){
-                WorldUtil.pushEnergy(worldObj, xCoord, yCoord, zCoord, ForgeDirection.UP, storage);
-                WorldUtil.pushEnergy(worldObj, xCoord, yCoord, zCoord, ForgeDirection.DOWN, storage);
-                WorldUtil.pushEnergy(worldObj, xCoord, yCoord, zCoord, ForgeDirection.NORTH, storage);
-                WorldUtil.pushEnergy(worldObj, xCoord, yCoord, zCoord, ForgeDirection.EAST, storage);
-                WorldUtil.pushEnergy(worldObj, xCoord, yCoord, zCoord, ForgeDirection.SOUTH, storage);
-                WorldUtil.pushEnergy(worldObj, xCoord, yCoord, zCoord, ForgeDirection.WEST, storage);
+            if(this.storage.getEnergyStored() > 0){
+                WorldUtil.pushEnergyToAllSides(worldObj, Position.fromTileEntity(this), this.storage);
             }
 
             if(flag != this.currentBurnTime > 0){
                 this.markDirty();
-                int meta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
+                Position thisPos = Position.fromTileEntity(this);
+                int meta = thisPos.getMetadata(worldObj);
                 if(meta == 1){
-                    if(!(ENERGY_PRODUCED*BURN_TIME <= this.getMaxEnergyStored(ForgeDirection.UNKNOWN)-this.getEnergyStored(ForgeDirection.UNKNOWN) && this.currentBurnTime <= 0 && this.tank.getFluidAmount() >= fuelUsed)){
-                        worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 0, 2);
+                    if(!(ENERGY_PRODUCED*BURN_TIME <= this.storage.getMaxEnergyStored()-this.storage.getEnergyStored() && this.currentBurnTime <= 0 && this.tank.getFluidAmount() >= fuelUsed)){
+                        thisPos.setMetadata(worldObj, 0, 2);
                     }
                 }
                 else{
-                    worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 1, 2);
+                    thisPos.setMetadata(worldObj, 1, 2);
                 }
             }
 
@@ -120,7 +117,7 @@ public class TileEntityOilGenerator extends TileEntityInventoryBase implements I
     }
 
     @Override
-    public boolean canInsertItem(int slot, ItemStack stack, int side){
+    public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
         return this.isItemValidForSlot(slot, stack);
     }
 
@@ -130,32 +127,32 @@ public class TileEntityOilGenerator extends TileEntityInventoryBase implements I
     }
 
     @Override
-    public boolean canExtractItem(int slot, ItemStack stack, int side){
+    public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
         return slot == 1;
     }
 
     @Override
-    public int extractEnergy(ForgeDirection from, int maxExtract, boolean simulate){
+    public int extractEnergy(EnumFacing from, int maxExtract, boolean simulate){
         return this.storage.extractEnergy(maxExtract, simulate);
     }
 
     @Override
-    public int getEnergyStored(ForgeDirection from){
+    public int getEnergyStored(EnumFacing from){
         return this.storage.getEnergyStored();
     }
 
     @Override
-    public int getMaxEnergyStored(ForgeDirection from){
+    public int getMaxEnergyStored(EnumFacing from){
         return this.storage.getMaxEnergyStored();
     }
 
     @Override
-    public boolean canConnectEnergy(ForgeDirection from){
+    public boolean canConnectEnergy(EnumFacing from){
         return true;
     }
 
     @Override
-    public int fill(ForgeDirection from, FluidStack resource, boolean doFill){
+    public int fill(EnumFacing from, FluidStack resource, boolean doFill){
         if(resource.getFluid() == InitBlocks.fluidOil){
             return this.tank.fill(resource, doFill);
         }
@@ -163,27 +160,27 @@ public class TileEntityOilGenerator extends TileEntityInventoryBase implements I
     }
 
     @Override
-    public FluidStack drain(ForgeDirection from, FluidStack resource, boolean doDrain){
+    public FluidStack drain(EnumFacing from, FluidStack resource, boolean doDrain){
         return null;
     }
 
     @Override
-    public FluidStack drain(ForgeDirection from, int maxDrain, boolean doDrain){
+    public FluidStack drain(EnumFacing from, int maxDrain, boolean doDrain){
         return null;
     }
 
     @Override
-    public boolean canFill(ForgeDirection from, Fluid fluid){
-        return from != ForgeDirection.DOWN && fluid == InitBlocks.fluidOil;
+    public boolean canFill(EnumFacing from, Fluid fluid){
+        return from != EnumFacing.DOWN && fluid == InitBlocks.fluidOil;
     }
 
     @Override
-    public boolean canDrain(ForgeDirection from, Fluid fluid){
+    public boolean canDrain(EnumFacing from, Fluid fluid){
         return false;
     }
 
     @Override
-    public FluidTankInfo[] getTankInfo(ForgeDirection from){
+    public FluidTankInfo[] getTankInfo(EnumFacing from){
         return new FluidTankInfo[]{this.tank.getInfo()};
     }
 

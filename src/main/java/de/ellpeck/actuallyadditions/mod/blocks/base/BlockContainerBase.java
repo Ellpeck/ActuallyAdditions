@@ -109,11 +109,11 @@ public abstract class BlockContainerBase extends BlockContainer{
     }
 
     @Override
-    public void onNeighborBlockChange(World world, BlockPos pos, IBlockState state){
-        this.updateRedstoneState(world, x, y, z);
+    public void onNeighborBlockChange(World world, BlockPos pos, IBlockState state, Block neighborBlock){
+        this.updateRedstoneState(world, pos);
     }
 
-    public void updateRedstoneState(World world, int x, int y, int z){
+    public void updateRedstoneState(World world, Position pos){
         if(!world.isRemote){
             TileEntity tile = world.getTileEntity(x, y, z);
             if(tile instanceof TileEntityBase){
@@ -235,14 +235,14 @@ public abstract class BlockContainerBase extends BlockContainer{
     }
 
     @Override
-    public void onBlockAdded(World world, int x, int y, int z){
-        this.updateRedstoneState(world, x, y, z);
+    public void onBlockAdded(World world, BlockPos pos, IBlockState state){
+        this.updateRedstoneState(world, pos);
     }
 
-    public boolean tryToggleRedstone(World world, int x, int y, int z, EntityPlayer player){
+    public boolean tryToggleRedstone(World world, Position pos, EntityPlayer player){
         ItemStack stack = player.getCurrentEquippedItem();
         if(stack != null && Block.getBlockFromItem(stack.getItem()) instanceof BlockRedstoneTorch){
-            TileEntity tile = world.getTileEntity(x, y, z);
+            TileEntity tile = pos.getTileEntity(world);
             if(tile instanceof IRedstoneToggle){
                 if(!world.isRemote){
                     ((IRedstoneToggle)tile).toggle(!((IRedstoneToggle)tile).isPulseMode());

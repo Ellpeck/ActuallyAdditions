@@ -10,10 +10,11 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import de.ellpeck.actuallyadditions.api.Position;
 import de.ellpeck.actuallyadditions.mod.blocks.BlockPhantom;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTankInfo;
@@ -32,19 +33,19 @@ public class TileEntityPhantomLiquiface extends TileEntityPhantomface implements
 
         if(!worldObj.isRemote){
             if(this.isRedstonePowered && this.isBoundThingInRange() && this.getHandler() != null){
-                this.pushFluid(ForgeDirection.UP);
-                this.pushFluid(ForgeDirection.DOWN);
-                this.pushFluid(ForgeDirection.NORTH);
-                this.pushFluid(ForgeDirection.EAST);
-                this.pushFluid(ForgeDirection.SOUTH);
-                this.pushFluid(ForgeDirection.WEST);
+                this.pushFluid(EnumFacing.UP);
+                this.pushFluid(EnumFacing.DOWN);
+                this.pushFluid(EnumFacing.NORTH);
+                this.pushFluid(EnumFacing.EAST);
+                this.pushFluid(EnumFacing.SOUTH);
+                this.pushFluid(EnumFacing.WEST);
             }
         }
     }
 
     public IFluidHandler getHandler(){
         if(this.boundPosition != null){
-            TileEntity tile = worldObj.getTileEntity(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ());
+            TileEntity tile = boundPosition.getTileEntity(worldObj);
             if(tile instanceof IFluidHandler){
                 return (IFluidHandler)tile;
             }
@@ -52,8 +53,8 @@ public class TileEntityPhantomLiquiface extends TileEntityPhantomface implements
         return null;
     }
 
-    private void pushFluid(ForgeDirection side){
-        TileEntity tile = WorldUtil.getTileEntityFromSide(side, worldObj, xCoord, yCoord, zCoord);
+    private void pushFluid(EnumFacing side){
+        TileEntity tile = WorldUtil.getTileEntityFromSide(side, worldObj, Position.fromTileEntity(this));
         if(tile != null && tile instanceof IFluidHandler && this.getTankInfo(side) != null && this.getTankInfo(side).length > 0 && ((IFluidHandler)tile).getTankInfo(side.getOpposite()) != null && ((IFluidHandler)tile).getTankInfo(side.getOpposite()).length > 0){
             for(FluidTankInfo myInfo : this.getTankInfo(side)){
                 for(FluidTankInfo hisInfo : ((IFluidHandler)tile).getTankInfo(side.getOpposite())){
@@ -73,11 +74,11 @@ public class TileEntityPhantomLiquiface extends TileEntityPhantomface implements
 
     @Override
     public boolean isBoundThingInRange(){
-        return super.isBoundThingInRange() && worldObj.getTileEntity(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ()) instanceof IFluidHandler;
+        return super.isBoundThingInRange() && boundPosition.getTileEntity(worldObj) instanceof IFluidHandler;
     }
 
     @Override
-    public int fill(ForgeDirection from, FluidStack resource, boolean doFill){
+    public int fill(EnumFacing from, FluidStack resource, boolean doFill){
         if(this.isBoundThingInRange()){
             return this.getHandler().fill(from, resource, doFill);
         }
@@ -85,7 +86,7 @@ public class TileEntityPhantomLiquiface extends TileEntityPhantomface implements
     }
 
     @Override
-    public FluidStack drain(ForgeDirection from, FluidStack resource, boolean doDrain){
+    public FluidStack drain(EnumFacing from, FluidStack resource, boolean doDrain){
         if(this.isBoundThingInRange()){
             return this.getHandler().drain(from, resource, doDrain);
         }
@@ -93,7 +94,7 @@ public class TileEntityPhantomLiquiface extends TileEntityPhantomface implements
     }
 
     @Override
-    public FluidStack drain(ForgeDirection from, int maxDrain, boolean doDrain){
+    public FluidStack drain(EnumFacing from, int maxDrain, boolean doDrain){
         if(this.isBoundThingInRange()){
             return this.getHandler().drain(from, maxDrain, doDrain);
         }
@@ -101,17 +102,17 @@ public class TileEntityPhantomLiquiface extends TileEntityPhantomface implements
     }
 
     @Override
-    public boolean canFill(ForgeDirection from, Fluid fluid){
+    public boolean canFill(EnumFacing from, Fluid fluid){
         return this.isBoundThingInRange() && this.getHandler().canFill(from, fluid);
     }
 
     @Override
-    public boolean canDrain(ForgeDirection from, Fluid fluid){
+    public boolean canDrain(EnumFacing from, Fluid fluid){
         return this.isBoundThingInRange() && this.getHandler().canDrain(from, fluid);
     }
 
     @Override
-    public FluidTankInfo[] getTankInfo(ForgeDirection from){
+    public FluidTankInfo[] getTankInfo(EnumFacing from){
         if(this.isBoundThingInRange()){
             return this.getHandler().getTankInfo(from);
         }

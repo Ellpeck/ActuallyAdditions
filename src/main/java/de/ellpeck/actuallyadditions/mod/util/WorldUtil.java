@@ -56,6 +56,15 @@ public class WorldUtil{
     public static Position getCoordsFromSide(EnumFacing side, Position pos, int offset){
         return new Position(pos.getX()+side.getFrontOffsetX()*(offset+1), pos.getY()+side.getFrontOffsetY()*(offset+1), pos.getZ()+side.getFrontOffsetZ()*(offset+1));
     }
+    
+    public static void pushEnergyToAllSides(World world, Position pos, EnergyStorage storage){
+        WorldUtil.pushEnergy(world, pos, EnumFacing.UP, storage);
+        WorldUtil.pushEnergy(world, pos, EnumFacing.DOWN, storage);
+        WorldUtil.pushEnergy(world, pos, EnumFacing.NORTH, storage);
+        WorldUtil.pushEnergy(world, pos, EnumFacing.EAST, storage);
+        WorldUtil.pushEnergy(world, pos, EnumFacing.SOUTH, storage);
+        WorldUtil.pushEnergy(world, pos, EnumFacing.WEST, storage);
+    }
 
     public static void pushEnergy(World world, Position pos, EnumFacing side, EnergyStorage storage){
         TileEntity tile = getTileEntityFromSide(side, world, pos);
@@ -209,6 +218,23 @@ public class WorldUtil{
 
     public static EnumFacing getDirectionBySidesInOrder(int side){
         switch(side){
+            case 0:
+                return EnumFacing.UP;
+            case 1:
+                return EnumFacing.DOWN;
+            case 2:
+                return EnumFacing.NORTH;
+            case 3:
+                return EnumFacing.EAST;
+            case 4:
+                return EnumFacing.SOUTH;
+            default:
+                return EnumFacing.WEST;
+        }
+    }
+
+    public static EnumFacing getDirectionByPistonRotation(int meta){
+        switch(meta){
             case 0:
                 return EnumFacing.UP;
             case 1:

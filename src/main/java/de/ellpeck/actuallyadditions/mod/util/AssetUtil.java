@@ -31,6 +31,7 @@ import org.lwjgl.opengl.GL12;
 public class AssetUtil{
 
     public static final ResourceLocation GUI_INVENTORY_LOCATION = getGuiLocation("guiInventory");
+    public static final int TESR_RENDER_ID = 2;
 
     public static int compostRenderId;
     public static int fishingNetRenderId;

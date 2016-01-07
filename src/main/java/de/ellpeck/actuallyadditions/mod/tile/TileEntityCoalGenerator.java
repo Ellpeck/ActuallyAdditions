@@ -12,11 +12,12 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyProvider;
+import de.ellpeck.actuallyadditions.api.Position;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntityFurnace;
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -67,25 +68,21 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
                 }
             }
 
-            if(this.getEnergyStored(ForgeDirection.UNKNOWN) > 0){
-                WorldUtil.pushEnergy(worldObj, xCoord, yCoord, zCoord, ForgeDirection.UP, storage);
-                WorldUtil.pushEnergy(worldObj, xCoord, yCoord, zCoord, ForgeDirection.DOWN, storage);
-                WorldUtil.pushEnergy(worldObj, xCoord, yCoord, zCoord, ForgeDirection.NORTH, storage);
-                WorldUtil.pushEnergy(worldObj, xCoord, yCoord, zCoord, ForgeDirection.EAST, storage);
-                WorldUtil.pushEnergy(worldObj, xCoord, yCoord, zCoord, ForgeDirection.SOUTH, storage);
-                WorldUtil.pushEnergy(worldObj, xCoord, yCoord, zCoord, ForgeDirection.WEST, storage);
+            if(this.storage.getEnergyStored() > 0){
+                WorldUtil.pushEnergyToAllSides(worldObj, Position.fromTileEntity(this), this.storage);
             }
 
             if(flag != this.currentBurnTime > 0){
                 this.markDirty();
-                int meta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
+                Position thisPos = Position.fromTileEntity(this);
+                int meta = thisPos.getMetadata(worldObj);
                 if(meta == 1){
                     if(!(this.currentBurnTime <= 0 && this.slots[0] != null && TileEntityFurnace.getItemBurnTime(this.slots[0]) > 0 && this.storage.getEnergyStored() < this.storage.getMaxEnergyStored())){
-                        worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 0, 2);
+                        thisPos.setMetadata(worldObj, 0, 2);
                     }
                 }
                 else{
-                    worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 1, 2);
+                    thisPos.setMetadata(worldObj, 1, 2);
                 }
             }
 
@@ -114,7 +111,7 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
     }
 
     @Override
-    public boolean canInsertItem(int slot, ItemStack stack, int side){
+    public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
         return this.isItemValidForSlot(slot, stack);
     }
 
@@ -124,27 +121,27 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
     }
 
     @Override
-    public boolean canExtractItem(int slot, ItemStack stack, int side){
+    public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
         return false;
     }
 
     @Override
-    public int extractEnergy(ForgeDirection from, int maxReceive, boolean simulate){
+    public int extractEnergy(EnumFacing from, int maxReceive, boolean simulate){
         return this.storage.extractEnergy(maxReceive, simulate);
     }
 
     @Override
-    public int getEnergyStored(ForgeDirection from){
+    public int getEnergyStored(EnumFacing from){
         return this.storage.getEnergyStored();
     }
 
     @Override
-    public int getMaxEnergyStored(ForgeDirection from){
+    public int getMaxEnergyStored(EnumFacing from){
         return this.storage.getMaxEnergyStored();
     }
 
     @Override
-    public boolean canConnectEnergy(ForgeDirection from){
+    public boolean canConnectEnergy(EnumFacing from){
         return true;
     }
 

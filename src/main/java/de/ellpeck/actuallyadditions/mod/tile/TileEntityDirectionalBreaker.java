@@ -18,7 +18,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockAir;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -63,20 +63,21 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase implem
     }
 
     private void doWork(){
-        ForgeDirection sideToManipulate = ForgeDirection.getOrientation(worldObj.getBlockMetadata(xCoord, yCoord, zCoord));
+        Position pos = Position.fromTileEntity(this);
+        EnumFacing sideToManipulate = WorldUtil.getDirectionByPistonRotation(pos.getMetadata(worldObj));
 
         for(int i = 0; i < RANGE; i++){
-            Position coordsBlock = WorldUtil.getCoordsFromSide(sideToManipulate, xCoord, yCoord, zCoord, i);
+            Position coordsBlock = WorldUtil.getCoordsFromSide(sideToManipulate, pos, i);
             if(coordsBlock != null){
-                Block blockToBreak = worldObj.getBlock(coordsBlock.getX(), coordsBlock.getY(), coordsBlock.getZ());
-                if(blockToBreak != null && !(blockToBreak instanceof BlockAir) && blockToBreak.getBlockHardness(worldObj, coordsBlock.getX(), coordsBlock.getY(), coordsBlock.getZ()) > -1.0F){
+                Block blockToBreak = coordsBlock.getBlock(worldObj);
+                if(blockToBreak != null && !(blockToBreak instanceof BlockAir) && blockToBreak.getBlockHardness(worldObj, pos) > -1.0F){
                     ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-                    int meta = worldObj.getBlockMetadata(coordsBlock.getX(), coordsBlock.getY(), coordsBlock.getZ());
-                    drops.addAll(blockToBreak.getDrops(worldObj, coordsBlock.getX(), coordsBlock.getY(), coordsBlock.getZ(), meta, 0));
+                    int meta = coordsBlock.getMetadata(worldObj);
+                    drops.addAll(blockToBreak.getDrops(worldObj, coordsBlock, coordsBlock.getBlockState(worldObj), 0));
 
                     if(WorldUtil.addToInventory(this, drops, false)){
-                        worldObj.playAuxSFX(2001, coordsBlock.getX(), coordsBlock.getY(), coordsBlock.getZ(), Block.getIdFromBlock(blockToBreak)+(meta << 12));
-                        WorldUtil.breakBlockAtSide(sideToManipulate, worldObj, xCoord, yCoord, zCoord, i);
+                        worldObj.playAuxSFX(2001, this.getPos(), Block.getIdFromBlock(blockToBreak)+(meta << 12));
+                        WorldUtil.breakBlockAtSide(sideToManipulate, worldObj, Position.fromTileEntity(this), i);
                         WorldUtil.addToInventory(this, drops, true);
                         this.storage.extractEnergy(ENERGY_USE, false);
                         this.markDirty();
@@ -106,7 +107,7 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase implem
     }
 
     @Override
-    public boolean canInsertItem(int slot, ItemStack stack, int side){
+    public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
         return this.isItemValidForSlot(slot, stack);
     }
 
@@ -116,27 +117,27 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase implem
     }
 
     @Override
-    public boolean canExtractItem(int slot, ItemStack stack, int side){
+    public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
         return true;
     }
 
     @Override
-    public int receiveEnergy(ForgeDirection from, int maxReceive, boolean simulate){
+    public int receiveEnergy(EnumFacing from, int maxReceive, boolean simulate){
         return this.storage.receiveEnergy(maxReceive, simulate);
     }
 
     @Override
-    public int getEnergyStored(ForgeDirection from){
+    public int getEnergyStored(EnumFacing from){
         return this.storage.getEnergyStored();
     }
 
     @Override
-    public int getMaxEnergyStored(ForgeDirection from){
+    public int getMaxEnergyStored(EnumFacing from){
         return this.storage.getMaxEnergyStored();
     }
 
     @Override
-    public boolean canConnectEnergy(ForgeDirection from){
+    public boolean canConnectEnergy(EnumFacing from){
         return true;
     }
 

@@ -100,7 +100,7 @@ public class TileEntityPhantomEnergyface extends TileEntityPhantomface implement
 
     @Override
     public boolean isBoundThingInRange(){
-        return super.isBoundThingInRange() && (worldObj.getTileEntity(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ()) instanceof IEnergyReceiver || worldObj.getTileEntity(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ()) instanceof IEnergyProvider);
+        return super.isBoundThingInRange() && (worldObj.getTileEntity(boundPosition.toBlockPos()) instanceof IEnergyReceiver || worldObj.getTileEntity(boundPosition.toBlockPos()) instanceof IEnergyProvider);
     }
 
     private void pushEnergy(EnumFacing side){
