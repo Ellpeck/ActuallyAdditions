@@ -10,9 +10,9 @@
 
 package de.ellpeck.actuallyadditions.mod.event;
 
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.gameevent.PlayerEvent;
 import de.ellpeck.actuallyadditions.mod.items.ItemWingsOfTheBats;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 
 public class LogoutEvent{
 

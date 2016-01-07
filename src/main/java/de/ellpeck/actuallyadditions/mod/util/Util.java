@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.util;
 
-import cpw.mods.fml.common.FMLCommonHandler;
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.recipe.CrusherRecipe;
 import de.ellpeck.actuallyadditions.api.recipe.LensNoneRecipe;
@@ -23,6 +22,7 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.EnumHelper;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.List;

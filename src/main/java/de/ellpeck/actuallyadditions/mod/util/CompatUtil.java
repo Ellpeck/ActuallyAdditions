@@ -10,12 +10,12 @@
 
 package de.ellpeck.actuallyadditions.mod.util;
 
-import cpw.mods.fml.common.event.FMLInterModComms;
 import de.ellpeck.actuallyadditions.mod.items.ItemSeed;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.fml.common.event.FMLInterModComms;
 
 public class CompatUtil{
 

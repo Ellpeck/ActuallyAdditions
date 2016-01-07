@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.gen;
 
-import cpw.mods.fml.common.registry.VillagerRegistry;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
@@ -21,6 +20,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.WeightedRandomChestContent;
 import net.minecraft.world.gen.structure.MapGenStructureIO;
 import net.minecraftforge.common.ChestGenHooks;
+import net.minecraftforge.fml.common.registry.VillagerRegistry;
 
 public class InitVillager{
 

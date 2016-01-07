@@ -10,13 +10,13 @@
 
 package de.ellpeck.actuallyadditions.mod.network;
 
-import cpw.mods.fml.common.network.NetworkRegistry;
-import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
-import cpw.mods.fml.relauncher.Side;
 import de.ellpeck.actuallyadditions.mod.network.gui.PacketGuiButton;
 import de.ellpeck.actuallyadditions.mod.network.gui.PacketGuiNumber;
 import de.ellpeck.actuallyadditions.mod.network.gui.PacketGuiString;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
+import net.minecraftforge.fml.relauncher.Side;
 
 public class PacketHandler{
 

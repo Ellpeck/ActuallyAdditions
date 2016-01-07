@@ -10,8 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import de.ellpeck.actuallyadditions.api.block.IHudDisplay;
 import de.ellpeck.actuallyadditions.api.tile.IPhantomTile;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
@@ -20,30 +18,28 @@ import de.ellpeck.actuallyadditions.mod.proxy.ClientProxy;
 import de.ellpeck.actuallyadditions.mod.tile.*;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
-import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.profiler.Profiler;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.IIcon;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockPhantom extends BlockContainerBase implements IHudDisplay{
 
     public Type type;
     public int range;
-
-    @SideOnly(Side.CLIENT)
-    private IIcon iconSeasonal;
 
     public BlockPhantom(Type type, String name){
         super(Material.rock, name);
@@ -62,11 +58,11 @@ public class BlockPhantom extends BlockContainerBase implements IHudDisplay{
     }
 
     @Override
-    public void breakBlock(World world, int x, int y, int z, Block block, int par6){
+    public void breakBlock(World world, BlockPos pos, IBlockState state){
         if(this.type == Type.PLACER || this.type == Type.BREAKER){
-            this.dropInventory(world, x, y, z);
+            this.dropInventory(world, pos);
         }
-        super.breakBlock(world, x, y, z, block, par6);
+        super.breakBlock(world, pos, state);
     }
 
     @Override

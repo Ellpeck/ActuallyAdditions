@@ -19,8 +19,8 @@ import io.netty.util.internal.ConcurrentSet;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
 
 public class LaserRelayConnectionHandler{
 
@@ -171,9 +171,9 @@ public class LaserRelayConnectionHandler{
                 if(relay != null){
                     //Get every side of the relay
                     for(int i = 0; i <= 5; i++){
-                        ForgeDirection side = ForgeDirection.getOrientation(i);
+                        EnumFacing side = WorldUtil.getDirectionBySidesInOrder(i);
                         //Get the Position at the side
-                        Position pos = WorldUtil.getCoordsFromSide(side, relay.getX(), relay.getY(), relay.getZ(), 0);
+                        Position pos = WorldUtil.getCoordsFromSide(side, relay, 0);
                         if(!pos.isEqual(energyGottenFrom)){
                             TileEntity tile = pos.getTileEntity(world);
                             if(tile instanceof IEnergyReceiver && !(tile instanceof TileEntityLaserRelay)){

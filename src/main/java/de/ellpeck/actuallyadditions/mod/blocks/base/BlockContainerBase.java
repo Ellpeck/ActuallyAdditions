@@ -10,7 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks.base;
 
-import cpw.mods.fml.common.registry.GameRegistry;
+import de.ellpeck.actuallyadditions.api.Position;
 import de.ellpeck.actuallyadditions.mod.creative.CreativeTab;
 import de.ellpeck.actuallyadditions.mod.tile.*;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
@@ -19,6 +19,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.BlockRedstoneTorch;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -28,8 +29,10 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -46,7 +49,7 @@ public abstract class BlockContainerBase extends BlockContainer{
     }
 
     private void register(){
-        this.setBlockName(ModUtil.MOD_ID_LOWER+"."+this.getBaseName());
+        this.setUnlocalizedName(ModUtil.MOD_ID_LOWER+"."+this.getBaseName());
         GameRegistry.registerBlock(this, this.getItemBlock(), this.getBaseName());
         if(this.shouldAddCreative()){
             this.setCreativeTab(CreativeTab.instance);
@@ -69,30 +72,30 @@ public abstract class BlockContainerBase extends BlockContainer{
     }
 
     public EnumRarity getRarity(ItemStack stack){
-        return EnumRarity.common;
+        return EnumRarity.COMMON;
     }
 
-    public void dropInventory(World world, int x, int y, int z){
+    public void dropInventory(World world, Position position){
         if(!world.isRemote){
-            TileEntity aTile = world.getTileEntity(x, y, z);
+            TileEntity aTile = position.getTileEntity(world);
             if(aTile instanceof TileEntityInventoryBase){
                 TileEntityInventoryBase tile = (TileEntityInventoryBase)aTile;
                 if(tile.getSizeInventory() > 0){
                     for(int i = 0; i < tile.getSizeInventory(); i++){
-                        this.dropSlotFromInventory(i, tile, world, x, y, z);
+                        this.dropSlotFromInventory(i, tile, world, position);
                     }
                 }
             }
         }
     }
 
-    public void dropSlotFromInventory(int i, TileEntityInventoryBase tile, World world, int x, int y, int z){
+    public void dropSlotFromInventory(int i, TileEntityInventoryBase tile, World world, Position pos){
         ItemStack stack = tile.getStackInSlot(i);
         if(stack != null && stack.stackSize > 0){
             float dX = Util.RANDOM.nextFloat()*0.8F+0.1F;
             float dY = Util.RANDOM.nextFloat()*0.8F+0.1F;
             float dZ = Util.RANDOM.nextFloat()*0.8F+0.1F;
-            EntityItem entityItem = new EntityItem(world, x+dX, y+dY, z+dZ, stack.copy());
+            EntityItem entityItem = new EntityItem(world, pos.getX()+dX, pos.getY()+dY, pos.getZ()+dZ, stack.copy());
             if(stack.hasTagCompound()){
                 entityItem.getEntityItem().setTagCompound((NBTTagCompound)stack.getTagCompound().copy());
             }
@@ -106,7 +109,7 @@ public abstract class BlockContainerBase extends BlockContainer{
     }
 
     @Override
-    public void onNeighborBlockChange(World world, int x, int y, int z, Block block){
+    public void onNeighborBlockChange(World world, BlockPos pos, IBlockState state){
         this.updateRedstoneState(world, x, y, z);
     }
 

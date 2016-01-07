@@ -12,8 +12,11 @@ package de.ellpeck.actuallyadditions.api;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
@@ -33,11 +36,17 @@ public class Position{
     }
 
     public TileEntity getTileEntity(World world){
-        return world != null ? world.getTileEntity(this.x, this.y, this.z) : null;
+        return world != null ? world.getTileEntity(this.toBlockPos()) : null;
     }
 
     public Material getMaterial(World world){
-        return world != null ? world.getBlock(this.x, this.y, this.z).getMaterial() : null;
+        if(world != null){
+            Block block = this.getBlock(world);
+            if(block != null){
+                return block.getMaterial();
+            }
+        }
+        return null;
     }
 
     public Item getItemBlock(World world){
@@ -45,17 +54,25 @@ public class Position{
     }
 
     public Block getBlock(World world){
-        return world != null ? world.getBlock(this.x, this.y, this.z) : null;
+        if(world != null){
+            IBlockState state = this.getBlockState(world);
+            if(state != null){
+                return state.getBlock();
+            }
+        }
+        return null;
     }
 
     public int getMetadata(World world){
-        return world != null ? world.getBlockMetadata(this.x, this.y, this.z) : 0;
+        //TODO Fix meta
+        return /*world != null ? world.getBlockMetadata(this.x, this.y, this.z) : */0;
     }
 
     public void setMetadata(World world, int meta, int flag){
-        if(world != null){
+        //TODO Fix meta
+        /*if(world != null){
             world.setBlockMetadataWithNotify(this.x, this.y, this.z, meta, flag);
-        }
+        }*/
     }
 
     public boolean isEqual(Position pos){
@@ -74,10 +91,14 @@ public class Position{
         return this.z;
     }
 
-    public void setBlock(World world, Block block, int meta, int flag){
-        if(world != null){
-            world.setBlock(this.x, this.y, this.z, block, meta, flag);
-        }
+    public boolean setBlock(World world, Block block, int meta, int flag){
+        //TODO Fix meta
+        return world != null && this.setBlockState(world, block.getDefaultState(), meta, flag);
+    }
+
+    public boolean setBlockState(World world, IBlockState state, int meta, int flag){
+        //TODO Fix meta
+        return world.setBlockState(this.toBlockPos(), state, flag);
     }
 
     public Position copy(){
@@ -89,6 +110,23 @@ public class Position{
     }
 
     public Vec3 toVec(){
-        return Vec3.createVectorHelper(this.x, this.y, this.z);
+        return new Vec3(this.x, this.y, this.z);
+    }
+
+    public BlockPos toBlockPos(){
+        return new BlockPos(this.x, this.y, this.z);
+    }
+
+    public IBlockState getBlockState(World world){
+        return world != null ? world.getBlockState(this.toBlockPos()) : null;
+    }
+
+    public Position getOffsetPosition(EnumFacing side){
+        return new Position(this.x+side.getFrontOffsetX(), this.y+side.getFrontOffsetY(), this.z+side.getFrontOffsetZ());
+    }
+
+    public static Position fromTileEntity(TileEntity tile){
+        BlockPos pos = tile.getPos();
+        return new Position(pos.getX(), pos.getY(), pos.getZ());
     }
 }

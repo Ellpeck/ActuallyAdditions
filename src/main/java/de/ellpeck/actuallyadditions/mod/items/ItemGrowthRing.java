@@ -10,22 +10,17 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import de.ellpeck.actuallyadditions.api.Position;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemEnergy;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockGrass;
 import net.minecraft.block.IGrowable;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
@@ -51,10 +46,10 @@ public class ItemGrowthRing extends ItemEnergy{
         if(equipped != null && equipped == stack && this.getEnergyStored(stack) >= energyUse){
             ArrayList<Position> blocks = new ArrayList<Position>();
 
-            if(stack.stackTagCompound == null){
+            if(stack.getTagCompound() == null){
                 stack.setTagCompound(new NBTTagCompound());
             }
-            int waitTime = stack.stackTagCompound.getInteger("WaitTime");
+            int waitTime = stack.getTagCompound().getInteger("WaitTime");
 
             //Adding all possible Blocks
             if(waitTime >= 30){
@@ -97,28 +92,16 @@ public class ItemGrowthRing extends ItemEnergy{
                     }
                 }
 
-                stack.stackTagCompound.setInteger("WaitTime", 0);
+                stack.getTagCompound().setInteger("WaitTime", 0);
             }
             else{
-                stack.stackTagCompound.setInteger("WaitTime", waitTime+1);
+                stack.getTagCompound().setInteger("WaitTime", waitTime+1);
             }
         }
     }
 
     @Override
     public EnumRarity getRarity(ItemStack stack){
-        return EnumRarity.epic;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister iconReg){
-        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName());
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public IIcon getIcon(ItemStack stack, int pass){
-        return this.itemIcon;
+        return EnumRarity.EPIC;
     }
 }

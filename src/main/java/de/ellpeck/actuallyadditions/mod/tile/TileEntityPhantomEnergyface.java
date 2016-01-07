@@ -13,10 +13,11 @@ package de.ellpeck.actuallyadditions.mod.tile;
 import cofh.api.energy.IEnergyHandler;
 import cofh.api.energy.IEnergyProvider;
 import cofh.api.energy.IEnergyReceiver;
+import de.ellpeck.actuallyadditions.api.Position;
 import de.ellpeck.actuallyadditions.mod.blocks.BlockPhantom;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraft.util.EnumFacing;
 
 public class TileEntityPhantomEnergyface extends TileEntityPhantomface implements IEnergyHandler{
 
@@ -26,17 +27,17 @@ public class TileEntityPhantomEnergyface extends TileEntityPhantomface implement
     }
 
     @Override
-    public int receiveEnergy(ForgeDirection from, int maxReceive, boolean simulate){
+    public int receiveEnergy(EnumFacing from, int maxReceive, boolean simulate){
         return this.isBoundThingInRange() && this.getReceiver() != null ? this.getReceiver().receiveEnergy(from, maxReceive, simulate) : 0;
     }
 
     @Override
-    public int extractEnergy(ForgeDirection from, int maxExtract, boolean simulate){
+    public int extractEnergy(EnumFacing from, int maxExtract, boolean simulate){
         return this.isBoundThingInRange() && this.getProvider() != null ? this.getProvider().extractEnergy(from, maxExtract, simulate) : 0;
     }
 
     @Override
-    public int getEnergyStored(ForgeDirection from){
+    public int getEnergyStored(EnumFacing from){
         if(this.isBoundThingInRange()){
             if(this.getProvider() != null){
                 return this.getProvider().getEnergyStored(from);
@@ -49,7 +50,7 @@ public class TileEntityPhantomEnergyface extends TileEntityPhantomface implement
     }
 
     @Override
-    public int getMaxEnergyStored(ForgeDirection from){
+    public int getMaxEnergyStored(EnumFacing from){
         if(this.isBoundThingInRange()){
             if(this.getProvider() != null){
                 return this.getProvider().getMaxEnergyStored(from);
@@ -63,7 +64,7 @@ public class TileEntityPhantomEnergyface extends TileEntityPhantomface implement
 
     public IEnergyProvider getProvider(){
         if(this.boundPosition != null){
-            TileEntity tile = worldObj.getTileEntity(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ());
+            TileEntity tile = worldObj.getTileEntity(boundPosition.toBlockPos());
             if(tile instanceof IEnergyProvider){
                 return (IEnergyProvider)tile;
             }
@@ -73,7 +74,7 @@ public class TileEntityPhantomEnergyface extends TileEntityPhantomface implement
 
     public IEnergyReceiver getReceiver(){
         if(this.boundPosition != null){
-            TileEntity tile = worldObj.getTileEntity(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ());
+            TileEntity tile = worldObj.getTileEntity(boundPosition.toBlockPos());
             if(tile instanceof IEnergyReceiver){
                 return (IEnergyReceiver)tile;
             }
@@ -87,12 +88,12 @@ public class TileEntityPhantomEnergyface extends TileEntityPhantomface implement
 
         if(!worldObj.isRemote){
             if(this.isBoundThingInRange() && this.getProvider() != null){
-                this.pushEnergy(ForgeDirection.UP);
-                this.pushEnergy(ForgeDirection.DOWN);
-                this.pushEnergy(ForgeDirection.NORTH);
-                this.pushEnergy(ForgeDirection.EAST);
-                this.pushEnergy(ForgeDirection.SOUTH);
-                this.pushEnergy(ForgeDirection.WEST);
+                this.pushEnergy(EnumFacing.UP);
+                this.pushEnergy(EnumFacing.DOWN);
+                this.pushEnergy(EnumFacing.NORTH);
+                this.pushEnergy(EnumFacing.EAST);
+                this.pushEnergy(EnumFacing.SOUTH);
+                this.pushEnergy(EnumFacing.WEST);
             }
         }
     }
@@ -102,11 +103,11 @@ public class TileEntityPhantomEnergyface extends TileEntityPhantomface implement
         return super.isBoundThingInRange() && (worldObj.getTileEntity(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ()) instanceof IEnergyReceiver || worldObj.getTileEntity(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ()) instanceof IEnergyProvider);
     }
 
-    private void pushEnergy(ForgeDirection side){
-        TileEntity tile = WorldUtil.getTileEntityFromSide(side, worldObj, xCoord, yCoord, zCoord);
-        if(tile != null && tile instanceof IEnergyReceiver && this.getProvider().getEnergyStored(ForgeDirection.UNKNOWN) > 0){
+    private void pushEnergy(EnumFacing side){
+        TileEntity tile = WorldUtil.getTileEntityFromSide(side, worldObj, Position.fromTileEntity(this));
+        if(tile != null && tile instanceof IEnergyReceiver && this.getProvider().getEnergyStored(side.getOpposite()) > 0){
             if(((IEnergyReceiver)tile).canConnectEnergy(side.getOpposite()) && this.canConnectEnergy(side)){
-                int receive = this.extractEnergy(side, Math.min(((IEnergyReceiver)tile).getMaxEnergyStored(ForgeDirection.UNKNOWN)-((IEnergyReceiver)tile).getEnergyStored(ForgeDirection.UNKNOWN), this.getEnergyStored(ForgeDirection.UNKNOWN)), true);
+                int receive = this.extractEnergy(side, Math.min(((IEnergyReceiver)tile).getMaxEnergyStored(side.getOpposite())-((IEnergyReceiver)tile).getEnergyStored(side.getOpposite()), this.getEnergyStored(side)), true);
                 int actualReceive = ((IEnergyReceiver)tile).receiveEnergy(side.getOpposite(), receive, false);
                 this.extractEnergy(side, actualReceive, false);
             }
@@ -114,7 +115,7 @@ public class TileEntityPhantomEnergyface extends TileEntityPhantomface implement
     }
 
     @Override
-    public boolean canConnectEnergy(ForgeDirection from){
+    public boolean canConnectEnergy(EnumFacing from){
         if(this.isBoundThingInRange()){
             if(this.getProvider() != null){
                 return this.getProvider().canConnectEnergy(from);

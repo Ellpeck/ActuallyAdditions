@@ -10,4 +10,4 @@
 @API(owner = "ActuallyAdditions", apiVersion = "3", provides = "ActuallyAdditionsAPI")
 package de.ellpeck.actuallyadditions.api;
 
-import cpw.mods.fml.common.API;
+import net.minecraftforge.fml.common.API;

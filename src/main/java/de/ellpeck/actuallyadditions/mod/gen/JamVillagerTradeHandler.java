@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.gen;
 
-import cpw.mods.fml.common.registry.VillagerRegistry;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheJams;
 import net.minecraft.entity.passive.EntityVillager;
@@ -19,6 +18,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
 import net.minecraft.village.MerchantRecipe;
 import net.minecraft.village.MerchantRecipeList;
+import net.minecraftforge.fml.common.registry.VillagerRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;

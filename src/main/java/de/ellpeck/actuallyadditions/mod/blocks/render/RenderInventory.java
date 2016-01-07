@@ -10,11 +10,11 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks.render;
 
-import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.world.IBlockAccess;
+import net.minecraftforge.fml.client.registry.ISimpleBlockRenderingHandler;
 import org.lwjgl.opengl.GL11;
 
 public class RenderInventory implements ISimpleBlockRenderingHandler{

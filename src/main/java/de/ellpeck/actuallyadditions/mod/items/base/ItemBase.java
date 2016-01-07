@@ -10,10 +10,10 @@
 
 package de.ellpeck.actuallyadditions.mod.items.base;
 
-import cpw.mods.fml.common.registry.GameRegistry;
 import de.ellpeck.actuallyadditions.mod.creative.CreativeTab;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.item.Item;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 
 public class ItemBase extends Item{
