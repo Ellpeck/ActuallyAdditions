@@ -47,7 +47,7 @@ public class ItemGrowthRing extends ItemEnergy{
         EntityPlayer player = (EntityPlayer)entity;
         ItemStack equipped = player.getCurrentEquippedItem();
 
-        int energyUse = 50;
+        int energyUse = 300;
         if(equipped != null && equipped == stack && this.getEnergyStored(stack) >= energyUse){
             ArrayList<Position> blocks = new ArrayList<Position>();
 
