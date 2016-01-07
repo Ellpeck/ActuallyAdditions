@@ -21,7 +21,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 public class TileEntityFurnaceSolar extends TileEntityBase implements IEnergyProvider, IEnergySaver, IEnergyDisplay{
 
-    public static final int PRODUCE = 10;
+    public static final int PRODUCE = 8;
     public EnergyStorage storage = new EnergyStorage(30000);
     private int oldEnergy;
 
