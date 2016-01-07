@@ -30,13 +30,13 @@ import java.util.ArrayList;
 public class ItemMagnetRing extends ItemEnergy{
 
     public ItemMagnetRing(String name){
-        super(30000000, 5000, name);
+        super(3000000, 5000, name);
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public void onUpdate(ItemStack stack, World world, Entity entity, int par4, boolean par5){
-        int energyUse = 20;
+        int energyUse = 10;
         if(!entity.isSneaking()){
             //Get all the Items in the area
             int range = 5;
