@@ -12,7 +12,6 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
-import de.ellpeck.actuallyadditions.api.Position;
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.lens.ILensItem;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
@@ -21,9 +20,11 @@ import de.ellpeck.actuallyadditions.mod.items.lens.Lenses;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
 import de.ellpeck.actuallyadditions.mod.network.PacketParticle;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
@@ -68,8 +69,7 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
 
     private void doWork(){
         if(this.storage.getEnergyStored() >= ENERGY_USE){
-            Position thisPos = Position.fromTileEntity(this);
-            EnumFacing sideToManipulate = WorldUtil.getDirectionByPistonRotation(thisPos.getMetadata(worldObj));
+            EnumFacing sideToManipulate = WorldUtil.getDirectionByPistonRotation(PosUtil.getMetadata(this.pos, worldObj));
             //Extract energy for shooting the laser itself too!
             this.storage.extractEnergy(ENERGY_USE, false);
 
@@ -77,7 +77,7 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
             Lens currentLens = this.getCurrentLens();
             int distance = currentLens.getDistance();
             for(int i = 0; i < distance; i++){
-                Position hitBlock = WorldUtil.getCoordsFromSide(sideToManipulate, thisPos, i);
+                BlockPos hitBlock = WorldUtil.getCoordsFromSide(sideToManipulate, this.pos, i);
 
                 if(currentLens.invoke(hitBlock, this)){
                     this.shootLaser(hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), currentLens);

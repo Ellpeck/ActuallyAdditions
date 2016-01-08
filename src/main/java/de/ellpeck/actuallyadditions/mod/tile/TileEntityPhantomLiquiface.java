@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import de.ellpeck.actuallyadditions.api.Position;
 import de.ellpeck.actuallyadditions.mod.blocks.BlockPhantom;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.tileentity.TileEntity;
@@ -45,7 +44,7 @@ public class TileEntityPhantomLiquiface extends TileEntityPhantomface implements
 
     public IFluidHandler getHandler(){
         if(this.boundPosition != null){
-            TileEntity tile = boundPosition.getTileEntity(worldObj);
+            TileEntity tile = worldObj.getTileEntity(boundPosition);
             if(tile instanceof IFluidHandler){
                 return (IFluidHandler)tile;
             }
@@ -54,7 +53,7 @@ public class TileEntityPhantomLiquiface extends TileEntityPhantomface implements
     }
 
     private void pushFluid(EnumFacing side){
-        TileEntity tile = WorldUtil.getTileEntityFromSide(side, worldObj, Position.fromTileEntity(this));
+        TileEntity tile = WorldUtil.getTileEntityFromSide(side, worldObj, this.pos);
         if(tile != null && tile instanceof IFluidHandler && this.getTankInfo(side) != null && this.getTankInfo(side).length > 0 && ((IFluidHandler)tile).getTankInfo(side.getOpposite()) != null && ((IFluidHandler)tile).getTankInfo(side.getOpposite()).length > 0){
             for(FluidTankInfo myInfo : this.getTankInfo(side)){
                 for(FluidTankInfo hisInfo : ((IFluidHandler)tile).getTankInfo(side.getOpposite())){
@@ -74,7 +73,7 @@ public class TileEntityPhantomLiquiface extends TileEntityPhantomface implements
 
     @Override
     public boolean isBoundThingInRange(){
-        return super.isBoundThingInRange() && boundPosition.getTileEntity(worldObj) instanceof IFluidHandler;
+        return super.isBoundThingInRange() && worldObj.getTileEntity(boundPosition) instanceof IFluidHandler;
     }
 
     @Override

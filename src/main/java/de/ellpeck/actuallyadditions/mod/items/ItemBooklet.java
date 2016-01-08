@@ -11,7 +11,6 @@
 package de.ellpeck.actuallyadditions.mod.items;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
-import de.ellpeck.actuallyadditions.api.Position;
 import de.ellpeck.actuallyadditions.api.block.IHudDisplay;
 import de.ellpeck.actuallyadditions.api.booklet.BookletPage;
 import de.ellpeck.actuallyadditions.api.internal.EntrySet;
@@ -23,6 +22,7 @@ import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -65,8 +65,8 @@ public class ItemBooklet extends ItemBase implements IHudDisplay{
     @Override
     public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing face, float hitX, float hitY, float hitZ){
         if(player.isSneaking()){
-            Block block = Position.fromBlockPos(pos).getBlock(world);
-            ItemStack blockStack = new ItemStack(block, 1, Position.fromBlockPos(pos).getMetadata(world));
+            Block block = PosUtil.getBlock(pos, world);
+            ItemStack blockStack = new ItemStack(block, 1, PosUtil.getMetadata(pos, world));
             if(blockStack != null){
                 BookletPage page = BookletUtils.getFirstPageForStack(blockStack);
                 if(page != null){
@@ -95,9 +95,9 @@ public class ItemBooklet extends ItemBase implements IHudDisplay{
     @Override
     public void displayHud(Minecraft minecraft, EntityPlayer player, ItemStack stack, MovingObjectPosition posHit, Profiler profiler, ScaledResolution resolution){
         if(posHit != null){
-            Block block = Position.fromBlockPos(posHit.getBlockPos()).getBlock(minecraft.theWorld);
+            Block block = PosUtil.getBlock(posHit.getBlockPos(), minecraft.theWorld);
             if(block != null && !block.isAir(minecraft.theWorld, posHit.getBlockPos())){
-                ItemStack blockStack = new ItemStack(block, 1, Position.fromBlockPos(posHit.getBlockPos()).getMetadata(minecraft.theWorld));
+                ItemStack blockStack = new ItemStack(block, 1, PosUtil.getMetadata(posHit.getBlockPos(), minecraft.theWorld));
                 if(blockStack != null){
                     int height = resolution.getScaledHeight()/5*3;
                     if(player.isSneaking()){

@@ -10,12 +10,12 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
-import de.ellpeck.actuallyadditions.api.Position;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityCoffeeMachine;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
+import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
@@ -70,7 +70,7 @@ public class BlockCoffeeMachine extends BlockContainerBase{
 
     @Override
     public void breakBlock(World world, BlockPos pos, IBlockState state){
-        this.dropInventory(world, Position.fromBlockPos(pos));
+        this.dropInventory(world, pos);
         super.breakBlock(world, pos, state);
     }
 
@@ -82,19 +82,18 @@ public class BlockCoffeeMachine extends BlockContainerBase{
     @Override
     public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase player, ItemStack stack){
         int rotation = MathHelper.floor_double((double)(player.rotationYaw*4.0F/360.0F)+0.5D) & 3;
-        Position thePos = Position.fromBlockPos(pos);
 
         if(rotation == 0){
-            thePos.setMetadata(world, 0, 2);
+            PosUtil.setMetadata(pos, world, 0, 2);
         }
         if(rotation == 1){
-            thePos.setMetadata(world, 3, 2);
+            PosUtil.setMetadata(pos, world, 3, 2);
         }
         if(rotation == 2){
-            thePos.setMetadata(world, 1, 2);
+            PosUtil.setMetadata(pos, world, 1, 2);
         }
         if(rotation == 3){
-            thePos.setMetadata(world, 2, 2);
+            PosUtil.setMetadata(pos, world, 2, 2);
         }
 
         super.onBlockPlacedBy(world, pos, state, player, stack);

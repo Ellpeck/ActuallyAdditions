@@ -10,16 +10,15 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks.base;
 
-import de.ellpeck.actuallyadditions.api.Position;
 import de.ellpeck.actuallyadditions.mod.creative.CreativeTab;
 import de.ellpeck.actuallyadditions.mod.tile.*;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.BlockRedstoneTorch;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
@@ -78,9 +77,9 @@ public abstract class BlockContainerBase extends BlockContainer{
         return EnumRarity.COMMON;
     }
 
-    public void dropInventory(World world, Position position){
+    public void dropInventory(World world, BlockPos position){
         if(!world.isRemote){
-            TileEntity aTile = position.getTileEntity(world);
+            TileEntity aTile = world.getTileEntity(position);
             if(aTile instanceof TileEntityInventoryBase){
                 TileEntityInventoryBase tile = (TileEntityInventoryBase)aTile;
                 if(tile.getSizeInventory() > 0){
@@ -92,7 +91,7 @@ public abstract class BlockContainerBase extends BlockContainer{
         }
     }
 
-    public void dropSlotFromInventory(int i, TileEntityInventoryBase tile, World world, Position pos){
+    public void dropSlotFromInventory(int i, TileEntityInventoryBase tile, World world, BlockPos pos){
         ItemStack stack = tile.getStackInSlot(i);
         if(stack != null && stack.stackSize > 0){
             float dX = Util.RANDOM.nextFloat()*0.8F+0.1F;
@@ -113,10 +112,10 @@ public abstract class BlockContainerBase extends BlockContainer{
 
     @Override
     public void onNeighborBlockChange(World world, BlockPos pos, IBlockState state, Block neighborBlock){
-        this.updateRedstoneState(world, Position.fromBlockPos(pos));
+        this.updateRedstoneState(world, pos);
     }
 
-    public void updateRedstoneState(World world, Position pos){
+    public void updateRedstoneState(World world, BlockPos pos){
         if(!world.isRemote){
             TileEntity tile = world.getTileEntity(pos);
             if(tile instanceof TileEntityBase){
@@ -239,13 +238,13 @@ public abstract class BlockContainerBase extends BlockContainer{
 
     @Override
     public void onBlockAdded(World world, BlockPos pos, IBlockState state){
-        this.updateRedstoneState(world, Position.fromBlockPos(pos));
+        this.updateRedstoneState(world, pos);
     }
 
-    public boolean tryToggleRedstone(World world, Position pos, EntityPlayer player){
+    public boolean tryToggleRedstone(World world, BlockPos pos, EntityPlayer player){
         ItemStack stack = player.getCurrentEquippedItem();
         if(stack != null && Block.getBlockFromItem(stack.getItem()) instanceof BlockRedstoneTorch){
-            TileEntity tile = pos.getTileEntity(world);
+            TileEntity tile = world.getTileEntity(pos);
             if(tile instanceof IRedstoneToggle){
                 if(!world.isRemote){
                     ((IRedstoneToggle)tile).toggle(!((IRedstoneToggle)tile).isPulseMode());
@@ -261,20 +260,18 @@ public abstract class BlockContainerBase extends BlockContainer{
         return false;
     }
 
-    public static final PropertyInteger META = PropertyInteger.create("metadata", 0, 15);
-
     @Override
     protected BlockState createBlockState(){
-        return new BlockState(this, META);
+        return new BlockState(this, PosUtil.META);
     }
 
     @Override
     public IBlockState getStateFromMeta(int meta){
-        return getDefaultState().withProperty(META, meta);
+        return getDefaultState().withProperty(PosUtil.META, meta);
     }
 
     @Override
     public int getMetaFromState(IBlockState state){
-        return state.getValue(META);
+        return state.getValue(PosUtil.META);
     }
 }

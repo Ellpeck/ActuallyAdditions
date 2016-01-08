@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
-import de.ellpeck.actuallyadditions.api.Position;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.misc.LaserRelayConnectionHandler;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelay;
@@ -48,13 +47,12 @@ public class ItemLaserWrench extends ItemBase{
                     player.addChatComponentMessage(new ChatComponentText(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".laser.stored.desc")));
                 }
                 else{
-                    Position savedPos = ItemPhantomConnector.getStoredPosition(stack);
-                    Position otherPos = Position.fromBlockPos(pos);
-                    if(ItemPhantomConnector.getStoredWorld(stack) == world && savedPos.getTileEntity(world) instanceof TileEntityLaserRelay && LaserRelayConnectionHandler.getInstance().addConnection(savedPos, otherPos)){
+                    BlockPos savedPos = ItemPhantomConnector.getStoredPosition(stack);
+                    if(ItemPhantomConnector.getStoredWorld(stack) == world && world.getTileEntity(savedPos) instanceof TileEntityLaserRelay && LaserRelayConnectionHandler.getInstance().addConnection(savedPos, pos)){
                         ItemPhantomConnector.clearStorage(stack);
 
-                        ((TileEntityLaserRelay)savedPos.getTileEntity(world)).sendUpdate();
-                        ((TileEntityLaserRelay)otherPos.getTileEntity(world)).sendUpdate();
+                        ((TileEntityLaserRelay)world.getTileEntity(savedPos)).sendUpdate();
+                        ((TileEntityLaserRelay)world.getTileEntity(pos)).sendUpdate();
 
                         player.addChatComponentMessage(new ChatComponentText(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".laser.connected.desc")));
                     }
@@ -84,7 +82,7 @@ public class ItemLaserWrench extends ItemBase{
     @SuppressWarnings("unchecked")
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld){
-        Position coords = ItemPhantomConnector.getStoredPosition(stack);
+        BlockPos coords = ItemPhantomConnector.getStoredPosition(stack);
         if(coords != null){
             list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".boundTo.desc")+":");
             list.add("X: "+coords.getX());

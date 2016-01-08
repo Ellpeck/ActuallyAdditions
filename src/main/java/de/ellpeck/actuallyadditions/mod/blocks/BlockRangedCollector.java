@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
-import de.ellpeck.actuallyadditions.api.Position;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
@@ -64,7 +63,7 @@ public class BlockRangedCollector extends BlockContainerBase{
             if(aTile instanceof TileEntityRangedCollector){
                 TileEntityRangedCollector tile = (TileEntityRangedCollector)aTile;
                 for(int i = 0; i < TileEntityRangedCollector.WHITELIST_START; i++){
-                    this.dropSlotFromInventory(i, tile, world, Position.fromBlockPos(pos));
+                    this.dropSlotFromInventory(i, tile, world, pos);
                 }
             }
         }

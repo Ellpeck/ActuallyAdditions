@@ -10,7 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
-import de.ellpeck.actuallyadditions.api.Position;
+
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityFireworkBox;
 import net.minecraft.block.material.Material;
@@ -40,7 +40,7 @@ public class BlockFireworkBox extends BlockContainerBase{
 
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing par6, float par7, float par8, float par9){
-        return this.tryToggleRedstone(world, Position.fromBlockPos(pos), player);
+        return this.tryToggleRedstone(world, pos, player);
     }
 
     @Override
@@ -50,7 +50,7 @@ public class BlockFireworkBox extends BlockContainerBase{
 
     @Override
     public void breakBlock(World world, BlockPos pos, IBlockState state){
-        this.dropInventory(world, Position.fromBlockPos(pos));
+        this.dropInventory(world, pos);
         super.breakBlock(world, pos, state);
     }
 }

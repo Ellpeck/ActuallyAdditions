@@ -10,10 +10,10 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
-import de.ellpeck.actuallyadditions.api.Position;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityGiantChest;
+import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockChest;
 import net.minecraft.entity.player.EntityPlayer;
@@ -35,7 +35,7 @@ public class ItemChestToCrateUpgrade extends ItemBase{
     public boolean onItemUse(ItemStack heldStack, EntityPlayer player, World world, BlockPos pos, EnumFacing facing, float par8, float par9, float par10){
         if(player.isSneaking()){
             TileEntity tileHit = world.getTileEntity(pos);
-            Block block = Position.fromBlockPos(pos).getBlock(world);
+            Block block = PosUtil.getBlock(pos, world);
             if(block instanceof BlockChest && tileHit instanceof TileEntityChest){
                 if(!world.isRemote){
                     TileEntityChest chest = (TileEntityChest)tileHit;
@@ -51,8 +51,8 @@ public class ItemChestToCrateUpgrade extends ItemBase{
                     }
 
                     //Set New Block
-                    world.playAuxSFX(2001, pos, Block.getIdFromBlock(block)+(Position.fromBlockPos(pos).getMetadata(world) << 12));
-                    Position.fromBlockPos(pos).setBlock(world, InitBlocks.blockGiantChest, 0, 2);
+                    world.playAuxSFX(2001, pos, Block.getIdFromBlock(block)+(PosUtil.getMetadata(pos, world) << 12));
+                    PosUtil.setBlock(pos, world, InitBlocks.blockGiantChest, 0, 2);
 
                     //Copy Items into new Chest
                     TileEntity newTileHit = world.getTileEntity(pos);

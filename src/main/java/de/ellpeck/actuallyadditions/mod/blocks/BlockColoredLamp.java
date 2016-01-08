@@ -10,11 +10,12 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
-import de.ellpeck.actuallyadditions.api.Position;
+
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockBase;
 import de.ellpeck.actuallyadditions.mod.blocks.base.ItemBlockBase;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheColoredLampColors;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -63,7 +64,7 @@ public class BlockColoredLamp extends BlockBase{
         //Turning On
         if(player.isSneaking()){
             if(!world.isRemote){
-                Position.fromBlockPos(pos).setBlock(world, this.isOn ? InitBlocks.blockColoredLamp : InitBlocks.blockColoredLampOn, Position.fromBlockPos(pos).getMetadata(world), 2);
+                PosUtil.setBlock(pos, world, this.isOn ? InitBlocks.blockColoredLamp : InitBlocks.blockColoredLampOn, PosUtil.getMetadata(pos, world), 2);
             }
             return true;
         }
@@ -75,9 +76,9 @@ public class BlockColoredLamp extends BlockBase{
                 String name = OreDictionary.getOreName(oreID);
                 TheColoredLampColors color = TheColoredLampColors.getColorFromDyeName(name);
                 if(color != null){
-                    if(Position.fromBlockPos(pos).getMetadata(world) != color.ordinal()){
+                    if(PosUtil.getMetadata(pos, world) != color.ordinal()){
                         if(!world.isRemote){
-                            Position.fromBlockPos(pos).setMetadata(world, color.ordinal(), 2);
+                            PosUtil.setMetadata(pos, world, color.ordinal(), 2);
                             if(!player.capabilities.isCreativeMode){
                                 player.inventory.decrStackSize(player.inventory.currentItem, 1);
                             }

@@ -13,9 +13,9 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
-import de.ellpeck.actuallyadditions.api.Position;
 import de.ellpeck.actuallyadditions.mod.recipe.CrusherRecipeRegistry;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -125,15 +125,14 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
 
             if(flag != (this.firstCrushTime > 0 || this.secondCrushTime > 0)){
                 this.markDirty();
-                Position thisPos = Position.fromTileEntity(this);
-                int meta = thisPos.getMetadata(worldObj);
+                int meta = PosUtil.getMetadata(this.pos, worldObj);
                 if(meta == 1){
                     if(!this.canCrushOn(SLOT_INPUT_1, SLOT_OUTPUT_1_1, SLOT_OUTPUT_1_2) && (!this.isDouble || !this.canCrushOn(SLOT_INPUT_2, SLOT_OUTPUT_2_1, SLOT_OUTPUT_2_2))){
-                        thisPos.setMetadata(worldObj, 0, 2);
+                        PosUtil.setMetadata(this.pos, worldObj, 0, 2);
                     }
                 }
                 else{
-                    thisPos.setMetadata(worldObj, 1, 2);
+                    PosUtil.setMetadata(this.pos, worldObj, 1, 2);
                 }
             }
 

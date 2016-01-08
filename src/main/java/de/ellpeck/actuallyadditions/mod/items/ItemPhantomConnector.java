@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
-import de.ellpeck.actuallyadditions.api.Position;
 import de.ellpeck.actuallyadditions.api.tile.IPhantomTile;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
@@ -80,14 +79,14 @@ public class ItemPhantomConnector extends ItemBase{
         }
     }
 
-    public static Position getStoredPosition(ItemStack stack){
+    public static BlockPos getStoredPosition(ItemStack stack){
         NBTTagCompound tag = stack.getTagCompound();
         if(tag != null){
             int x = tag.getInteger("XCoordOfTileStored");
             int y = tag.getInteger("YCoordOfTileStored");
             int z = tag.getInteger("ZCoordOfTileStored");
             if(!(x == 0 && y == 0 && z == 0)){
-                return new Position(x, y, z);
+                return new BlockPos(x, y, z);
             }
         }
         return null;
@@ -135,7 +134,7 @@ public class ItemPhantomConnector extends ItemBase{
     @SuppressWarnings("unchecked")
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld){
-        Position coords = getStoredPosition(stack);
+        BlockPos coords = getStoredPosition(stack);
         if(coords != null){
             list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".boundTo.desc")+":");
             list.add("X: "+coords.getX());

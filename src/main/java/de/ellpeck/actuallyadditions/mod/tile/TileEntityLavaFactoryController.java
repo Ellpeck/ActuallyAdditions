@@ -12,13 +12,14 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
-import de.ellpeck.actuallyadditions.api.Position;
 import de.ellpeck.actuallyadditions.api.tile.IEnergyDisplay;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheMiscBlocks;
+import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -42,7 +43,7 @@ public class TileEntityLavaFactoryController extends TileEntityBase implements I
                 this.currentWorkTime++;
                 if(this.currentWorkTime >= 200){
                     this.currentWorkTime = 0;
-                    Position.fromTileEntity(this).getOffsetPosition(0, 1, 0).setBlock(worldObj, Blocks.lava, 0, 2);
+                    PosUtil.setBlock(PosUtil.offset(this.pos, 0, 1, 0), worldObj, Blocks.lava, 0, 2);
                     this.storage.extractEnergy(ENERGY_USE, false);
                 }
             }
@@ -71,20 +72,20 @@ public class TileEntityLavaFactoryController extends TileEntityBase implements I
     }
 
     public int isMultiblock(){
-        Position thisPos = Position.fromTileEntity(this);
-        Position[] positions = new Position[]{
-                thisPos.getOffsetPosition(1, 1, 0),
-                thisPos.getOffsetPosition(-1, 1, 0),
-                thisPos.getOffsetPosition(0, 1, 1),
-                thisPos.getOffsetPosition(0, 1, -1)
+        BlockPos thisPos = this.pos;
+        BlockPos[] positions = new BlockPos[]{
+                PosUtil.offset(thisPos, 1, 1, 0),
+                PosUtil.offset(thisPos, -1, 1, 0),
+                PosUtil.offset(thisPos, 0, 1, 1),
+                PosUtil.offset(thisPos, 0, 1, -1)
         };
 
         if(WorldUtil.hasBlocksInPlacesGiven(positions, InitBlocks.blockMisc, TheMiscBlocks.LAVA_FACTORY_CASE.ordinal(), worldObj)){
-            Position pos = thisPos.getOffsetPosition(0, 1, 0);
-            if(pos.getBlock(worldObj) == Blocks.lava || pos.getBlock(worldObj) == Blocks.flowing_lava){
+            BlockPos pos = PosUtil.offset(thisPos, 0, 1, 0);
+            if(PosUtil.getBlock(pos, worldObj) == Blocks.lava || PosUtil.getBlock(pos, worldObj) == Blocks.flowing_lava){
                 return HAS_LAVA;
             }
-            if(pos.getBlock(worldObj) == null || worldObj.isAirBlock(pos)){
+            if(PosUtil.getBlock(pos, worldObj) == null || worldObj.isAirBlock(pos)){
                 return HAS_AIR;
             }
         }

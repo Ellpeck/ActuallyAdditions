@@ -10,12 +10,13 @@
 
 package de.ellpeck.actuallyadditions.mod.misc;
 
-import de.ellpeck.actuallyadditions.api.Position;
+
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.dispenser.BehaviorDefaultDispenseItem;
 import net.minecraft.dispenser.IBlockSource;
 import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 
 public class DispenserHandlerFertilize extends BehaviorDefaultDispenseItem{
@@ -26,7 +27,7 @@ public class DispenserHandlerFertilize extends BehaviorDefaultDispenseItem{
         int x = source.getBlockTileEntity().getPos().getX()+facing.getFrontOffsetX();
         int y = source.getBlockTileEntity().getPos().getY()+facing.getFrontOffsetY();
         int z = source.getBlockTileEntity().getPos().getZ()+facing.getFrontOffsetZ();
-        Position pos = new Position(x, y, z);
+        BlockPos pos = new BlockPos(x, y, z);
 
         if(ItemDye.applyBonemeal(stack, source.getWorld(), pos, null)){
             source.getWorld().playAuxSFX(2005, pos, 0);

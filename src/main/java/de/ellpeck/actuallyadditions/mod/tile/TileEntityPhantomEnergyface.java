@@ -13,7 +13,6 @@ package de.ellpeck.actuallyadditions.mod.tile;
 import cofh.api.energy.IEnergyHandler;
 import cofh.api.energy.IEnergyProvider;
 import cofh.api.energy.IEnergyReceiver;
-import de.ellpeck.actuallyadditions.api.Position;
 import de.ellpeck.actuallyadditions.mod.blocks.BlockPhantom;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.tileentity.TileEntity;
@@ -104,7 +103,7 @@ public class TileEntityPhantomEnergyface extends TileEntityPhantomface implement
     }
 
     private void pushEnergy(EnumFacing side){
-        TileEntity tile = WorldUtil.getTileEntityFromSide(side, worldObj, Position.fromTileEntity(this));
+        TileEntity tile = WorldUtil.getTileEntityFromSide(side, worldObj, this.getPos());
         if(tile != null && tile instanceof IEnergyReceiver && this.getProvider().getEnergyStored(side.getOpposite()) > 0){
             if(((IEnergyReceiver)tile).canConnectEnergy(side.getOpposite()) && this.canConnectEnergy(side)){
                 int receive = this.extractEnergy(side, Math.min(((IEnergyReceiver)tile).getMaxEnergyStored(side.getOpposite())-((IEnergyReceiver)tile).getEnergyStored(side.getOpposite()), this.getEnergyStored(side)), true);

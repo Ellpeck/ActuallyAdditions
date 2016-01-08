@@ -12,7 +12,6 @@ package de.ellpeck.actuallyadditions.mod.util;
 
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
-import de.ellpeck.actuallyadditions.api.Position;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -29,10 +28,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.client.C07PacketPlayerDigging;
 import net.minecraft.network.play.server.S23PacketBlockChange;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.*;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.ForgeHooks;
@@ -43,22 +39,22 @@ import java.util.ArrayList;
 
 public class WorldUtil{
 
-    public static void breakBlockAtSide(EnumFacing side, World world, Position pos){
+    public static void breakBlockAtSide(EnumFacing side, World world, BlockPos pos){
         breakBlockAtSide(side, world, pos, 0);
     }
 
-    public static void breakBlockAtSide(EnumFacing side, World world, Position pos, int offset){
-        Position c = getCoordsFromSide(side, pos, offset);
+    public static void breakBlockAtSide(EnumFacing side, World world, BlockPos pos, int offset){
+        BlockPos c = getCoordsFromSide(side, pos, offset);
         if(c != null){
             world.setBlockToAir(pos);
         }
     }
 
-    public static Position getCoordsFromSide(EnumFacing side, Position pos, int offset){
-        return new Position(pos.getX()+side.getFrontOffsetX()*(offset+1), pos.getY()+side.getFrontOffsetY()*(offset+1), pos.getZ()+side.getFrontOffsetZ()*(offset+1));
+    public static BlockPos getCoordsFromSide(EnumFacing side, BlockPos pos, int offset){
+        return new BlockPos(pos.getX()+side.getFrontOffsetX()*(offset+1), pos.getY()+side.getFrontOffsetY()*(offset+1), pos.getZ()+side.getFrontOffsetZ()*(offset+1));
     }
     
-    public static void pushEnergyToAllSides(World world, Position pos, EnergyStorage storage){
+    public static void pushEnergyToAllSides(World world, BlockPos pos, EnergyStorage storage){
         WorldUtil.pushEnergy(world, pos, EnumFacing.UP, storage);
         WorldUtil.pushEnergy(world, pos, EnumFacing.DOWN, storage);
         WorldUtil.pushEnergy(world, pos, EnumFacing.NORTH, storage);
@@ -67,7 +63,7 @@ public class WorldUtil{
         WorldUtil.pushEnergy(world, pos, EnumFacing.WEST, storage);
     }
 
-    public static void pushEnergy(World world, Position pos, EnumFacing side, EnergyStorage storage){
+    public static void pushEnergy(World world, BlockPos pos, EnumFacing side, EnergyStorage storage){
         TileEntity tile = getTileEntityFromSide(side, world, pos);
         if(tile != null && tile instanceof IEnergyReceiver && storage.getEnergyStored() > 0){
             if(((IEnergyReceiver)tile).canConnectEnergy(side.getOpposite())){
@@ -77,8 +73,8 @@ public class WorldUtil{
         }
     }
 
-    public static TileEntity getTileEntityFromSide(EnumFacing side, World world, Position pos){
-        Position c = getCoordsFromSide(side, pos, 0);
+    public static TileEntity getTileEntityFromSide(EnumFacing side, World world, BlockPos pos){
+        BlockPos c = getCoordsFromSide(side, pos, 0);
         if(c != null){
             return world.getTileEntity(pos);
         }
@@ -94,16 +90,16 @@ public class WorldUtil{
      * @param world     The World
      * @return Is every block present?
      */
-    public static boolean hasBlocksInPlacesGiven(Position[] positions, Block block, int meta, World world){
-        for(Position pos : positions){
-            if(!(pos.getBlock(world) == block && pos.getMetadata(world) == meta)){
+    public static boolean hasBlocksInPlacesGiven(BlockPos[] positions, Block block, int meta, World world){
+        for(BlockPos pos : positions){
+            if(!(PosUtil.getBlock(pos, world) == block && PosUtil.getMetadata(pos, world) == meta)){
                 return false;
             }
         }
         return true;
     }
 
-    public static void pushFluid(World world, Position pos, EnumFacing side, FluidTank tank){
+    public static void pushFluid(World world, BlockPos pos, EnumFacing side, FluidTank tank){
         TileEntity tile = getTileEntityFromSide(side, world, pos);
         if(tile != null && tank.getFluid() != null && tile instanceof IFluidHandler){
             if(((IFluidHandler)tile).canFill(side.getOpposite(), tank.getFluid().getFluid())){
@@ -113,16 +109,16 @@ public class WorldUtil{
         }
     }
 
-    public static ItemStack placeBlockAtSide(EnumFacing side, World world, Position pos, ItemStack stack){
+    public static ItemStack placeBlockAtSide(EnumFacing side, World world, BlockPos pos, ItemStack stack){
         if(world instanceof WorldServer && stack != null && stack.getItem() != null){
-            Position offsetPos = pos.getOffsetPosition(side);
+            BlockPos offsetPos = pos.offset(side);
 
             //Fluids
             FluidStack fluid = FluidContainerRegistry.getFluidForFilledItem(stack);
             if(fluid != null && fluid.getFluid().getBlock() != null && fluid.getFluid().getBlock().canPlaceBlockAt(world, offsetPos)){
-                Block block = offsetPos.getBlock(world);
+                Block block = PosUtil.getBlock(offsetPos, world);
                 if(!(block instanceof IFluidBlock) && block != Blocks.lava && block != Blocks.water && block != Blocks.flowing_lava && block != Blocks.flowing_water){
-                    if(offsetPos.setBlock(world, fluid.getFluid().getBlock(), 0, 2)){
+                    if(PosUtil.setBlock(pos, world, fluid.getFluid().getBlock(), 0, 2)){
                         return stack.getItem().getContainerItem(stack);
                     }
                 }
@@ -130,14 +126,14 @@ public class WorldUtil{
 
             //Redstone
             else if(stack.getItem() == Items.redstone){
-                offsetPos.setBlock(world, Blocks.redstone_wire, 0, 2);
+                PosUtil.setBlock(pos, world, Blocks.redstone_wire, 0, 2);
                 stack.stackSize--;
             }
 
             //Plants
             else if(stack.getItem() instanceof IPlantable){
                 if(((IPlantable)stack.getItem()).getPlant(world, offsetPos).getBlock().canPlaceBlockAt(world, offsetPos)){
-                    if(offsetPos.setBlockState(world, ((IPlantable)stack.getItem()).getPlant(world, offsetPos), 2)){
+                    if(world.setBlockState(offsetPos, ((IPlantable)stack.getItem()).getPlant(world, offsetPos), 2)){
                         stack.stackSize--;
                     }
                 }
@@ -156,8 +152,8 @@ public class WorldUtil{
         return stack;
     }
 
-    public static void dropItemAtSide(EnumFacing side, World world, Position pos, ItemStack stack){
-        Position coords = getCoordsFromSide(side, pos, 0);
+    public static void dropItemAtSide(EnumFacing side, World world, BlockPos pos, ItemStack stack){
+        BlockPos coords = getCoordsFromSide(side, pos, 0);
         if(coords != null){
             EntityItem item = new EntityItem(world, coords.getX()+0.5, coords.getY()+0.5, coords.getZ()+0.5, stack);
             item.motionX = 0;
@@ -235,28 +231,15 @@ public class WorldUtil{
     }
 
     public static EnumFacing getDirectionByPistonRotation(int meta){
-        switch(meta){
-            case 0:
-                return EnumFacing.UP;
-            case 1:
-                return EnumFacing.DOWN;
-            case 2:
-                return EnumFacing.NORTH;
-            case 3:
-                return EnumFacing.EAST;
-            case 4:
-                return EnumFacing.SOUTH;
-            default:
-                return EnumFacing.WEST;
-        }
+        return EnumFacing.values()[meta];
     }
 
-    public static ArrayList<Material> getMaterialsAround(World world, Position pos){
+    public static ArrayList<Material> getMaterialsAround(World world, BlockPos pos){
         ArrayList<Material> blocks = new ArrayList<Material>();
-        blocks.add(pos.getOffsetPosition(EnumFacing.NORTH).getMaterial(world));
-        blocks.add(pos.getOffsetPosition(EnumFacing.EAST).getMaterial(world));
-        blocks.add(pos.getOffsetPosition(EnumFacing.SOUTH).getMaterial(world));
-        blocks.add(pos.getOffsetPosition(EnumFacing.WEST).getMaterial(world));
+        blocks.add(PosUtil.getMaterial(pos.offset(EnumFacing.NORTH), world));
+        blocks.add(PosUtil.getMaterial(pos.offset(EnumFacing.EAST), world));
+        blocks.add(PosUtil.getMaterial(pos.offset(EnumFacing.SOUTH), world));
+        blocks.add(PosUtil.getMaterial(pos.offset(EnumFacing.WEST), world));
         return blocks;
     }
 
@@ -362,10 +345,11 @@ public class WorldUtil{
      * @param player The Player
      * @return If the Block could be harvested normally (so that it drops an item)
      */
-    public static boolean playerHarvestBlock(World world, Position pos, EntityPlayer player){
-        Block block = pos.getBlock(world);
-        IBlockState state = pos.getBlockState(world);
-        int meta = pos.getMetadata(world);
+    public static boolean playerHarvestBlock(World world, BlockPos pos, EntityPlayer player){
+        Block block = PosUtil.getBlock(pos, world);
+        IBlockState state = world.getBlockState(pos);
+        int meta = PosUtil.getMetadata(pos, world);
+        TileEntity tile = world.getTileEntity(pos);
         //If the Block can be harvested or not
         boolean canHarvest = block.canHarvestBlock(world, pos, player);
 
@@ -396,7 +380,7 @@ public class WorldUtil{
             if(!world.isRemote && !player.capabilities.isCreativeMode){
                 //Actually drops the Block's Items etc.
                 if(canHarvest){
-                    block.harvestBlock(world, player, pos, state, pos.getTileEntity(world));
+                    block.harvestBlock(world, player, pos, state, tile);
                 }
                 //Only drop XP when no Silk Touch is applied
                 if(!EnchantmentHelper.getSilkTouchModifier(player)){

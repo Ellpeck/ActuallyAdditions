@@ -10,8 +10,9 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
-import de.ellpeck.actuallyadditions.api.Position;
+
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockBase;
+import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockPistonBase;
@@ -35,34 +36,34 @@ public class BlockLampPowerer extends BlockBase{
 
     @Override
     public void onNeighborBlockChange(World world, BlockPos pos, IBlockState state, Block neighborBlock){
-        this.updateLamp(world, Position.fromBlockPos(pos));
+        this.updateLamp(world, pos);
     }
 
     @Override
     public void onBlockAdded(World world, BlockPos pos, IBlockState state){
-        this.updateLamp(world, Position.fromBlockPos(pos));
+        this.updateLamp(world, pos);
     }
 
     @Override
     public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase player, ItemStack stack){
         int rotation = BlockPistonBase.getFacingFromEntity(world, pos, player).ordinal();
-        Position.fromBlockPos(pos).setMetadata(world, rotation, 2);
+        PosUtil.setMetadata(pos, world, rotation, 2);
 
         super.onBlockPlacedBy(world, pos, state, player, stack);
     }
 
-    private void updateLamp(World world, Position pos){
+    private void updateLamp(World world, BlockPos pos){
         if(!world.isRemote){
-            Position coords = WorldUtil.getCoordsFromSide(WorldUtil.getDirectionByPistonRotation(pos.getMetadata(world)), pos, 0);
-            if(coords != null && coords.getBlock(world) instanceof BlockColoredLamp){
+            BlockPos coords = WorldUtil.getCoordsFromSide(WorldUtil.getDirectionByPistonRotation(PosUtil.getMetadata(pos, world)), pos, 0);
+            if(coords != null && PosUtil.getBlock(coords, world) instanceof BlockColoredLamp){
                 if(world.isBlockIndirectlyGettingPowered(pos) > 0){
-                    if(!((BlockColoredLamp)coords.getBlock(world)).isOn){
-                        pos.setBlock(world, InitBlocks.blockColoredLampOn, coords.getMetadata(world), 2);
+                    if(!((BlockColoredLamp)PosUtil.getBlock(coords, world)).isOn){
+                        PosUtil.setBlock(coords, world, InitBlocks.blockColoredLampOn, PosUtil.getMetadata(coords, world), 2);
                     }
                 }
                 else{
-                    if(((BlockColoredLamp)coords.getBlock(world)).isOn){
-                        pos.setBlock(world, InitBlocks.blockColoredLamp, coords.getMetadata(world), 2);
+                    if(((BlockColoredLamp)PosUtil.getBlock(coords, world)).isOn){
+                        PosUtil.setBlock(coords, world, InitBlocks.blockColoredLamp, PosUtil.getMetadata(coords, world), 2);
                     }
                 }
             }

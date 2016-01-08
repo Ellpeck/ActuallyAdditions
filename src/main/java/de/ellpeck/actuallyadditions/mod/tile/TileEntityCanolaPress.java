@@ -12,7 +12,6 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
-import de.ellpeck.actuallyadditions.api.Position;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
@@ -85,12 +84,12 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IE
             WorldUtil.fillBucket(tank, slots, 1, 2);
 
             if(this.tank.getFluidAmount() > 0){
-                WorldUtil.pushFluid(worldObj, Position.fromTileEntity(this), EnumFacing.DOWN, this.tank);
+                WorldUtil.pushFluid(worldObj, this.pos, EnumFacing.DOWN, this.tank);
                 if(!this.isRedstonePowered){
-                    WorldUtil.pushFluid(worldObj, Position.fromTileEntity(this), EnumFacing.NORTH, this.tank);
-                    WorldUtil.pushFluid(worldObj, Position.fromTileEntity(this), EnumFacing.EAST, this.tank);
-                    WorldUtil.pushFluid(worldObj, Position.fromTileEntity(this), EnumFacing.SOUTH, this.tank);
-                    WorldUtil.pushFluid(worldObj, Position.fromTileEntity(this), EnumFacing.WEST, this.tank);
+                    WorldUtil.pushFluid(worldObj, this.pos, EnumFacing.NORTH, this.tank);
+                    WorldUtil.pushFluid(worldObj, this.pos, EnumFacing.EAST, this.tank);
+                    WorldUtil.pushFluid(worldObj, this.pos, EnumFacing.SOUTH, this.tank);
+                    WorldUtil.pushFluid(worldObj, this.pos, EnumFacing.WEST, this.tank);
                 }
             }
 

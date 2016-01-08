@@ -10,7 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
-import de.ellpeck.actuallyadditions.api.Position;
+
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.blocks.base.ItemBlockBase;
@@ -70,7 +70,7 @@ public class BlockInputter extends BlockContainerBase{
             TileEntity aTile = world.getTileEntity(pos);
             if(aTile instanceof TileEntityInventoryBase){
                 TileEntityInventoryBase tile = (TileEntityInventoryBase)aTile;
-                this.dropSlotFromInventory(0, tile, world, Position.fromBlockPos(pos));
+                this.dropSlotFromInventory(0, tile, world, pos);
             }
         }
         super.breakBlock(world, pos, state);

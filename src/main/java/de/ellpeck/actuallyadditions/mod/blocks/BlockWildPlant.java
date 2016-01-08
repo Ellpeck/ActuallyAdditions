@@ -10,11 +10,12 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
-import de.ellpeck.actuallyadditions.api.Position;
+
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockBushBase;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockPlant;
 import de.ellpeck.actuallyadditions.mod.blocks.base.ItemBlockBase;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheWildPlants;
+import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -44,9 +45,8 @@ public class BlockWildPlant extends BlockBushBase{
 
     @Override
     public boolean canBlockStay(World world, BlockPos pos, IBlockState state){
-        Position thePos = Position.fromBlockPos(pos);
-        Position offset = thePos.getOffsetPosition(0, -1, 0);
-        return thePos.getMetadata(world) == TheWildPlants.RICE.ordinal() ? offset.getMaterial(world) == Material.water : offset.getBlock(world).canSustainPlant(world, offset, EnumFacing.UP, this);
+        BlockPos offset = PosUtil.offset(pos, 0, -1, 0);
+        return PosUtil.getMetadata(pos, world) == TheWildPlants.RICE.ordinal() ? PosUtil.getMaterial(offset, world) == Material.water : PosUtil.getBlock(offset, world).canSustainPlant(world, offset, EnumFacing.UP, this);
     }
 
     @Override
@@ -72,8 +72,8 @@ public class BlockWildPlant extends BlockBushBase{
     @Override
     @SideOnly(Side.CLIENT)
     public Item getItem(World world, BlockPos pos){
-        int meta = Position.fromBlockPos(pos).getMetadata(world);
-        return meta >= allWildPlants.length ? null : ((BlockPlant)allWildPlants[meta].wildVersionOf).seedItem;
+        int metadata = PosUtil.getMetadata(pos, world);
+        return metadata >= allWildPlants.length ? null : ((BlockPlant)allWildPlants[metadata].wildVersionOf).seedItem;
     }
 
     @SuppressWarnings("all")
@@ -86,7 +86,7 @@ public class BlockWildPlant extends BlockBushBase{
 
     @Override
     public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune){
-        int metadata = Position.fromBlockPos(pos).getMetadata(world);
+        int metadata = PosUtil.getMetadata(pos, world);
         return metadata >= allWildPlants.length ? null : allWildPlants[metadata].wildVersionOf.getDrops(world, pos, allWildPlants[metadata].wildVersionOf.getStateFromMeta(7), fortune);
     }
 

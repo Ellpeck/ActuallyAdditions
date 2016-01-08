@@ -11,12 +11,12 @@
 package de.ellpeck.actuallyadditions.mod.network;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
-import de.ellpeck.actuallyadditions.api.Position;
 import de.ellpeck.actuallyadditions.api.internal.EntrySet;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBookletStand;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -89,7 +89,7 @@ public class PacketBookletStandButton implements IMessage{
         @Override
         public IMessage onMessage(PacketBookletStandButton message, MessageContext ctx){
             World world = DimensionManager.getWorld(message.worldID);
-            TileEntity tile = world.getTileEntity(new Position(message.tileX, message.tileY, message.tileZ));
+            TileEntity tile = world.getTileEntity(new BlockPos(message.tileX, message.tileY, message.tileZ));
             EntityPlayer player = (EntityPlayer)world.getEntityByID(message.playerID);
 
             if(tile instanceof TileEntityBookletStand){

@@ -12,7 +12,7 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyProvider;
-import de.ellpeck.actuallyadditions.api.Position;
+import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -69,20 +69,19 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
             }
 
             if(this.storage.getEnergyStored() > 0){
-                WorldUtil.pushEnergyToAllSides(worldObj, Position.fromTileEntity(this), this.storage);
+                WorldUtil.pushEnergyToAllSides(worldObj, this.pos, this.storage);
             }
 
             if(flag != this.currentBurnTime > 0){
                 this.markDirty();
-                Position thisPos = Position.fromTileEntity(this);
-                int meta = thisPos.getMetadata(worldObj);
+                int meta = PosUtil.getMetadata(this.getPos(), worldObj);
                 if(meta == 1){
                     if(!(this.currentBurnTime <= 0 && this.slots[0] != null && TileEntityFurnace.getItemBurnTime(this.slots[0]) > 0 && this.storage.getEnergyStored() < this.storage.getMaxEnergyStored())){
-                        thisPos.setMetadata(worldObj, 0, 2);
+                        PosUtil.setMetadata(this.pos, worldObj, 0, 2);
                     }
                 }
                 else{
-                    thisPos.setMetadata(worldObj, 1, 2);
+                    PosUtil.setMetadata(this.pos, worldObj, 1, 2);
                 }
             }
 

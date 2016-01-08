@@ -12,7 +12,7 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
-import de.ellpeck.actuallyadditions.api.Position;
+import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.nbt.NBTTagCompound;
@@ -81,15 +81,14 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
 
             if(flag != (this.firstSmeltTime > 0 || this.secondSmeltTime > 0)){
                 this.markDirty();
-                Position thisPos = Position.fromTileEntity(this);
-                int meta = thisPos.getMetadata(worldObj);
+                int meta = PosUtil.getMetadata(this.pos, worldObj);
                 if(meta > 3){
                     if(!this.canSmeltOn(SLOT_INPUT_1, SLOT_OUTPUT_1) && !this.canSmeltOn(SLOT_INPUT_2, SLOT_OUTPUT_2)){
-                        thisPos.setMetadata(worldObj, meta-4, 2);
+                        PosUtil.setMetadata(this.pos, worldObj, meta-4, 2);
                     }
                 }
                 else{
-                    thisPos.setMetadata(worldObj, meta+4, 2);
+                    PosUtil.setMetadata(this.pos, worldObj, meta+4, 2);
                 }
             }
 

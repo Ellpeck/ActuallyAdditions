@@ -12,10 +12,11 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyProvider;
-import de.ellpeck.actuallyadditions.api.Position;
 import de.ellpeck.actuallyadditions.api.tile.IEnergyDisplay;
+import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -58,7 +59,7 @@ public class TileEntityFurnaceSolar extends TileEntityBase implements IEnergyPro
             }
 
             if(this.storage.getEnergyStored() > 0){
-                WorldUtil.pushEnergyToAllSides(worldObj, Position.fromTileEntity(this), this.storage);
+                WorldUtil.pushEnergyToAllSides(worldObj, this.pos, this.storage);
             }
 
             if(this.oldEnergy != this.storage.getEnergyStored() && this.sendUpdateWithInterval()){
@@ -80,10 +81,9 @@ public class TileEntityFurnaceSolar extends TileEntityBase implements IEnergyPro
     }
 
     public boolean hasBlockAbove(){
-        Position pos = Position.fromTileEntity(this);
         for(int y = 1; y <= worldObj.getHeight(); y++){
-            Position offset = pos.getOffsetPosition(0, y, 0);
-            if(!offset.getBlock(worldObj).isAir(worldObj, offset)){
+            BlockPos offset = PosUtil.offset(this.pos, 0, y, 0);
+            if(!PosUtil.getBlock(offset, worldObj).isAir(worldObj, offset)){
                 return true;
             }
         }

@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import de.ellpeck.actuallyadditions.api.Position;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.init.Items;
@@ -59,12 +58,12 @@ public class TileEntityFermentingBarrel extends TileEntityInventoryBase implemen
             WorldUtil.fillBucket(oilTank, slots, 2, 3);
 
             if(this.oilTank.getFluidAmount() > 0){
-                WorldUtil.pushFluid(worldObj, Position.fromTileEntity(this), EnumFacing.DOWN, this.oilTank);
+                WorldUtil.pushFluid(worldObj, this.pos, EnumFacing.DOWN, this.oilTank);
                 if(!this.isRedstonePowered){
-                    WorldUtil.pushFluid(worldObj, Position.fromTileEntity(this), EnumFacing.NORTH, this.oilTank);
-                    WorldUtil.pushFluid(worldObj, Position.fromTileEntity(this), EnumFacing.EAST, this.oilTank);
-                    WorldUtil.pushFluid(worldObj, Position.fromTileEntity(this), EnumFacing.SOUTH, this.oilTank);
-                    WorldUtil.pushFluid(worldObj, Position.fromTileEntity(this), EnumFacing.WEST, this.oilTank);
+                    WorldUtil.pushFluid(worldObj, this.pos, EnumFacing.NORTH, this.oilTank);
+                    WorldUtil.pushFluid(worldObj, this.pos, EnumFacing.EAST, this.oilTank);
+                    WorldUtil.pushFluid(worldObj, this.pos, EnumFacing.SOUTH, this.oilTank);
+                    WorldUtil.pushFluid(worldObj, this.pos, EnumFacing.WEST, this.oilTank);
                 }
             }
 

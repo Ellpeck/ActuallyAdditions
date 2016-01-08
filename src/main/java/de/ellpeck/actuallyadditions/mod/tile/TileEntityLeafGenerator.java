@@ -12,13 +12,14 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyProvider;
-import de.ellpeck.actuallyadditions.api.Position;
 import de.ellpeck.actuallyadditions.api.tile.IEnergyDisplay;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
 import de.ellpeck.actuallyadditions.mod.network.PacketParticle;
+import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.relauncher.Side;
@@ -46,13 +47,13 @@ public class TileEntityLeafGenerator extends TileEntityBase implements IEnergyPr
                     this.nextUseCounter = 0;
 
                     if(ENERGY_PRODUCED <= this.storage.getMaxEnergyStored()-this.storage.getEnergyStored()){
-                        ArrayList<Position> breakPositions = new ArrayList<Position>();
+                        ArrayList<BlockPos> breakPositions = new ArrayList<BlockPos>();
 
                         for(int reachX = -RANGE; reachX < RANGE+1; reachX++){
                             for(int reachZ = -RANGE; reachZ < RANGE+1; reachZ++){
                                 for(int reachY = -RANGE; reachY < RANGE+1; reachY++){
-                                    Position pos = new Position(this.pos.getX()+reachX, this.pos.getY()+reachY, this.pos.getZ()+reachZ);
-                                    Block block = pos.getBlock(worldObj);
+                                    BlockPos pos = PosUtil.offset(this.pos, reachX, reachY, reachZ);
+                                    Block block = PosUtil.getBlock(pos, worldObj);
                                     if(block != null && block.isLeaves(this.worldObj, pos)){
                                         breakPositions.add(pos);
                                     }
@@ -62,10 +63,10 @@ public class TileEntityLeafGenerator extends TileEntityBase implements IEnergyPr
 
                         if(!breakPositions.isEmpty()){
                             Collections.shuffle(breakPositions);
-                            Position theCoord = breakPositions.get(0);
+                            BlockPos theCoord = breakPositions.get(0);
 
-                            Block theBlock = theCoord.getBlock(worldObj);
-                            int meta = theCoord.getMetadata(worldObj);
+                            Block theBlock = PosUtil.getBlock(theCoord, worldObj);
+                            int meta = PosUtil.getMetadata(theCoord, worldObj);
                             this.worldObj.playAuxSFX(2001, theCoord, Block.getIdFromBlock(theBlock)+(meta << 12));
 
                             this.worldObj.setBlockToAir(this.getPos());
@@ -82,7 +83,7 @@ public class TileEntityLeafGenerator extends TileEntityBase implements IEnergyPr
             }
 
             if(this.storage.getEnergyStored() > 0){
-                WorldUtil.pushEnergyToAllSides(worldObj, Position.fromTileEntity(this), this.storage);
+                WorldUtil.pushEnergyToAllSides(worldObj, this.pos, this.storage);
             }
 
             if(this.oldEnergy != this.storage.getEnergyStored() && this.sendUpdateWithInterval()){

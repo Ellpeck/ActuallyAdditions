@@ -10,7 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import de.ellpeck.actuallyadditions.api.Position;
+import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -60,7 +60,7 @@ public class TileEntityDropper extends TileEntityInventoryBase implements IRedst
         if(this.removeFromInventory(false) != null){
             ItemStack stack = this.removeFromInventory(true);
             stack.stackSize = 1;
-            WorldUtil.dropItemAtSide(WorldUtil.getDirectionByPistonRotation(Position.fromTileEntity(this).getMetadata(worldObj)), worldObj, Position.fromTileEntity(this), stack);
+            WorldUtil.dropItemAtSide(WorldUtil.getDirectionByPistonRotation(PosUtil.getMetadata(this.pos, worldObj)), worldObj, this.pos, stack);
         }
     }
 

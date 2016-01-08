@@ -10,13 +10,14 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
-import de.ellpeck.actuallyadditions.api.Position;
+
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.achievement.TheAchievements;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntitySmileyCloud;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
+import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -89,7 +90,7 @@ public class BlockSmileyCloud extends BlockContainerBase{
 
     @Override
     public void setBlockBoundsBasedOnState(IBlockAccess world, BlockPos pos){
-        int meta = Position.fromBlockPos(pos).getMetadata(world);
+        int meta = PosUtil.getMetadata(pos, world);
         float f = 0.0625F;
 
         if(meta == 0){
@@ -113,7 +114,7 @@ public class BlockSmileyCloud extends BlockContainerBase{
 
     @Override
     public void breakBlock(World world, BlockPos pos, IBlockState state){
-        this.dropInventory(world, Position.fromBlockPos(pos));
+        this.dropInventory(world, pos);
         super.breakBlock(world, pos, state);
     }
 
@@ -125,19 +126,18 @@ public class BlockSmileyCloud extends BlockContainerBase{
     @Override
     public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase player, ItemStack stack){
         int rotation = MathHelper.floor_double((double)(player.rotationYaw*4.0F/360.0F)+0.5D) & 3;
-        Position thePos = Position.fromBlockPos(pos);
 
         if(rotation == 0){
-            thePos.setMetadata(world, 0, 2);
+            PosUtil.setMetadata(pos, world, 0, 2);
         }
         if(rotation == 1){
-            thePos.setMetadata(world, 3, 2);
+            PosUtil.setMetadata(pos, world, 3, 2);
         }
         if(rotation == 2){
-            thePos.setMetadata(world, 1, 2);
+            PosUtil.setMetadata(pos, world, 1, 2);
         }
         if(rotation == 3){
-            thePos.setMetadata(world, 2, 2);
+            PosUtil.setMetadata(pos, world, 2, 2);
         }
 
         super.onBlockPlacedBy(world, pos, state, player, stack);

@@ -10,15 +10,16 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import de.ellpeck.actuallyadditions.api.Position;
 import de.ellpeck.actuallyadditions.api.tile.IPhantomTile;
 import de.ellpeck.actuallyadditions.mod.blocks.BlockPhantom;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.network.PacketParticle;
+import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
@@ -29,11 +30,11 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
 
     public static final int RANGE = 16;
     public static final float[] COLORS = new float[]{93F/255F, 43F/255F, 181F/255F};
-    public Position boundPosition;
+    public BlockPos boundPosition;
     public BlockPhantom.Type type;
     public int range;
     private int rangeBefore;
-    private Position boundPosBefore;
+    private BlockPos boundPosBefore;
     private Block boundBlockBefore;
 
     public TileEntityPhantomface(String name){
@@ -44,23 +45,23 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
     public void updateEntity(){
         super.updateEntity();
         if(!worldObj.isRemote){
-            this.range = upgradeRange(RANGE, worldObj, Position.fromBlockPos(this.getPos()));
+            this.range = upgradeRange(RANGE, worldObj, this.getPos());
 
             if(!this.hasBoundPosition()){
                 this.boundPosition = null;
             }
 
-            if(this.boundPosition != this.boundPosBefore || (this.boundPosition != null && this.boundPosition.getBlock(worldObj) != this.boundBlockBefore) || this.rangeBefore != this.range){
+            if(this.boundPosition != this.boundPosBefore || (this.boundPosition != null && PosUtil.getBlock(this.boundPosition, worldObj) != this.boundBlockBefore) || this.rangeBefore != this.range){
                 this.rangeBefore = this.range;
                 this.boundPosBefore = this.boundPosition;
-                this.boundBlockBefore = this.boundPosition == null ? null : this.boundPosition.getBlock(worldObj);
+                this.boundBlockBefore = this.boundPosition == null ? null : PosUtil.getBlock(this.boundPosition, this.worldObj);
 
-                this.worldObj.markBlockForUpdate(new Position(this.getPos().getX()+1, this.getPos().getY(), this.getPos().getZ()));
-                this.worldObj.markBlockForUpdate(new Position(this.getPos().getX()-1, this.getPos().getY(), this.getPos().getZ()));
-                this.worldObj.markBlockForUpdate(new Position(this.getPos().getX(), this.getPos().getY()+1, this.getPos().getZ()));
-                this.worldObj.markBlockForUpdate(new Position(this.getPos().getX(), this.getPos().getY()-1, this.getPos().getZ()));
-                this.worldObj.markBlockForUpdate(new Position(this.getPos().getX(), this.getPos().getY(), this.getPos().getZ()+1));
-                this.worldObj.markBlockForUpdate(new Position(this.getPos().getX(), this.getPos().getY(), this.getPos().getZ()-1));
+                this.worldObj.markBlockForUpdate(PosUtil.offset(this.pos, 1, 0, 0));
+                this.worldObj.markBlockForUpdate(PosUtil.offset(this.pos, -1, 0, 0));
+                this.worldObj.markBlockForUpdate(PosUtil.offset(this.pos, 0, 1, 0));
+                this.worldObj.markBlockForUpdate(PosUtil.offset(this.pos, 0, -1, 0));
+                this.worldObj.markBlockForUpdate(PosUtil.offset(this.pos, 0, 0, 1));
+                this.worldObj.markBlockForUpdate(PosUtil.offset(this.pos, 0, 0, -1));
                 this.sendUpdate();
                 this.markDirty();
             }
@@ -89,18 +90,17 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
         int x = compound.getInteger("XCoordOfTileStored");
         int y = compound.getInteger("YCoordOfTileStored");
         int z = compound.getInteger("ZCoordOfTileStored");
-        int world = compound.getInteger("WorldOfTileStored");
         this.range = compound.getInteger("Range");
         if(!(x == 0 && y == 0 && z == 0)){
-            this.boundPosition = new Position(x, y, z);
+            this.boundPosition = new BlockPos(x, y, z);
             this.markDirty();
         }
     }
 
-    public static int upgradeRange(int defaultRange, World world, Position pos){
+    public static int upgradeRange(int defaultRange, World world, BlockPos pos){
         int newRange = defaultRange;
         for(int i = 0; i < 3; i++){
-            Block block = pos.getOffsetPosition(0, 1+i, 0).getBlock(world);
+            Block block = PosUtil.getBlock(PosUtil.offset(pos, 0, 1+i, 0), world);
             if(block == InitBlocks.blockPhantomBooster){
                 newRange = newRange*2;
             }
@@ -144,17 +144,17 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
 
     @Override
     public boolean isBoundThingInRange(){
-        return this.hasBoundPosition() && this.boundPosition.toVec().distanceTo(Position.fromBlockPos(this.getPos()).toVec()) <= this.range;
+        return this.hasBoundPosition() && PosUtil.toVec(this.boundPosition).distanceTo(PosUtil.toVec(this.getPos())) <= this.range;
     }
 
     @Override
-    public Position getBoundPosition(){
+    public BlockPos getBoundPosition(){
         return this.boundPosition;
     }
 
     @Override
-    public void setBoundPosition(Position pos){
-        this.boundPosition = pos == null ? null : pos.copy();
+    public void setBoundPosition(BlockPos pos){
+        this.boundPosition = pos == null ? null : PosUtil.copyPos(pos);
     }
 
     @Override

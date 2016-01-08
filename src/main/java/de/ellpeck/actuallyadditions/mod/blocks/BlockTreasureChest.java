@@ -11,10 +11,10 @@
 package de.ellpeck.actuallyadditions.mod.blocks;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
-import de.ellpeck.actuallyadditions.api.Position;
 import de.ellpeck.actuallyadditions.api.recipe.TreasureChestLoot;
 import de.ellpeck.actuallyadditions.mod.achievement.TheAchievements;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockBase;
+import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -64,7 +64,7 @@ public class BlockTreasureChest extends BlockBase{
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing par6, float par7, float par8, float par9){
         if(!world.isRemote){
             world.playSoundAtEntity(player, "random.chestopen", 0.2F, Util.RANDOM.nextFloat()*0.1F+0.9F);
-            this.dropItems(world, Position.fromBlockPos(pos));
+            this.dropItems(world, pos);
             world.setBlockToAir(pos);
 
             player.triggerAchievement(TheAchievements.OPEN_TREASURE_CHEST.ach);
@@ -80,23 +80,22 @@ public class BlockTreasureChest extends BlockBase{
     @Override
     public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase player, ItemStack stack){
         int rotation = MathHelper.floor_double((double)(player.rotationYaw*4.0F/360.0F)+0.5D) & 3;
-        Position thePos = Position.fromBlockPos(pos);
 
         if(rotation == 0){
-            thePos.setMetadata(world, 0, 2);
+            PosUtil.setMetadata(pos, world, 0, 2);
         }
         if(rotation == 1){
-            thePos.setMetadata(world, 3, 2);
+            PosUtil.setMetadata(pos, world, 3, 2);
         }
         if(rotation == 2){
-            thePos.setMetadata(world, 1, 2);
+            PosUtil.setMetadata(pos, world, 1, 2);
         }
         if(rotation == 3){
-            thePos.setMetadata(world, 2, 2);
+            PosUtil.setMetadata(pos, world, 2, 2);
         }
     }
 
-    private void dropItems(World world, Position pos){
+    private void dropItems(World world, BlockPos pos){
         for(int i = 0; i < MathHelper.getRandomIntegerInRange(Util.RANDOM, 3, 6); i++){
             TreasureChestLoot theReturn = WeightedRandom.getRandomItem(Util.RANDOM, ActuallyAdditionsAPI.treasureChestLoot);
             ItemStack itemStack = theReturn.returnItem.copy();

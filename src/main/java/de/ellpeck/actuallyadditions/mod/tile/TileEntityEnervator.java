@@ -13,7 +13,6 @@ package de.ellpeck.actuallyadditions.mod.tile;
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyContainerItem;
 import cofh.api.energy.IEnergyProvider;
-import de.ellpeck.actuallyadditions.api.Position;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -50,7 +49,7 @@ public class TileEntityEnervator extends TileEntityInventoryBase implements IEne
             }
 
             if(this.storage.getEnergyStored() > 0){
-                WorldUtil.pushEnergyToAllSides(worldObj, Position.fromTileEntity(this), this.storage);
+                WorldUtil.pushEnergyToAllSides(worldObj, this.pos, this.storage);
             }
 
             if(lastEnergy != this.storage.getEnergyStored() && this.sendUpdateWithInterval()){

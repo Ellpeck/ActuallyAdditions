@@ -10,14 +10,16 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
-import de.ellpeck.actuallyadditions.api.Position;
+
 import de.ellpeck.actuallyadditions.mod.items.base.ItemEnergy;
+import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
@@ -49,8 +51,8 @@ public class ItemWaterRemovalRing extends ItemEnergy{
                         int theZ = MathHelper.floor_double(player.posZ+z);
                         if(this.getEnergyStored(stack) >= energyUse){
                             //Remove Water
-                            Position pos = new Position(theX, theY, theZ);
-                            Block block = pos.getBlock(world);
+                            BlockPos pos = new BlockPos(theX, theY, theZ);
+                            Block block = PosUtil.getBlock(pos, world);
                             if(block == Blocks.water || block == Blocks.flowing_water){
                                 world.setBlockToAir(pos);
 

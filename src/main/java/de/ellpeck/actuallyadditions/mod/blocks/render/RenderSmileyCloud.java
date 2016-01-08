@@ -10,13 +10,13 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks.render;
 
-import de.ellpeck.actuallyadditions.api.Position;
 import de.ellpeck.actuallyadditions.mod.blocks.render.model.ModelBaseAA;
 import de.ellpeck.actuallyadditions.mod.misc.cloud.ISmileyCloudEasterEgg;
 import de.ellpeck.actuallyadditions.mod.misc.cloud.SmileyCloudEasterEggs;
 import de.ellpeck.actuallyadditions.mod.proxy.ClientProxy;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntitySmileyCloud;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
@@ -66,7 +66,7 @@ public class RenderSmileyCloud extends RenderTileEntity{
             GL11.glPushMatrix();
             {
                 if(theModel.doesRotate()){
-                    int meta = Position.fromTileEntity(tile).getMetadata(tile.getWorld());
+                    int meta = PosUtil.getMetadata(tile.getPos(), tile.getWorld());
                     if(meta == 0){
                         GL11.glRotatef(180F, 0F, 1F, 0F);
                     }

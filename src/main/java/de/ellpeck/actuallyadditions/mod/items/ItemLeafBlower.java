@@ -10,9 +10,9 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
-import de.ellpeck.actuallyadditions.api.Position;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
+import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
 import net.minecraft.entity.item.EntityItem;
@@ -20,6 +20,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
@@ -81,7 +82,7 @@ public class ItemLeafBlower extends ItemBase{
      * @param z     The Z Position of the Player
      */
     public void breakStuff(World world, int x, int y, int z){
-        ArrayList<Position> breakPositions = new ArrayList<Position>();
+        ArrayList<BlockPos> breakPositions = new ArrayList<BlockPos>();
 
         int rangeSides = 5;
         int rangeUp = 1;
@@ -89,8 +90,8 @@ public class ItemLeafBlower extends ItemBase{
             for(int reachZ = -rangeSides; reachZ < rangeSides+1; reachZ++){
                 for(int reachY = (this.isAdvanced ? -rangeSides : -rangeUp); reachY < (this.isAdvanced ? rangeSides : rangeUp)+1; reachY++){
                     //The current Block to break
-                    Position pos = new Position(x+reachX, y+reachY, z+reachZ);
-                    Block block = pos.getBlock(world);
+                    BlockPos pos = new BlockPos(x+reachX, y+reachY, z+reachZ);
+                    Block block = PosUtil.getBlock(pos, world);
                     if(block != null && (block instanceof BlockBush || (this.isAdvanced && block.isLeaves(world, pos)))){
                         breakPositions.add(pos);
                     }
@@ -101,13 +102,13 @@ public class ItemLeafBlower extends ItemBase{
         if(!breakPositions.isEmpty()){
             Collections.shuffle(breakPositions);
 
-            Position theCoord = breakPositions.get(0);
-            Block theBlock = theCoord.getBlock(world);
+            BlockPos theCoord = breakPositions.get(0);
+            Block theBlock = PosUtil.getBlock(theCoord, world);
 
             ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-            int meta = theCoord.getMetadata(world);
+            int meta = PosUtil.getMetadata(theCoord, world);
             //Gets all of the Drops the Block should have
-            drops.addAll(theBlock.getDrops(world, theCoord, theCoord.getBlockState(world), 0));
+            drops.addAll(theBlock.getDrops(world, theCoord, world.getBlockState(theCoord), 0));
 
             //Deletes the Block
             world.setBlockToAir(theCoord);

@@ -12,12 +12,13 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
-import de.ellpeck.actuallyadditions.api.Position;
+import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockAir;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -63,21 +64,20 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase implem
     }
 
     private void doWork(){
-        Position pos = Position.fromTileEntity(this);
-        EnumFacing sideToManipulate = WorldUtil.getDirectionByPistonRotation(pos.getMetadata(worldObj));
+        EnumFacing sideToManipulate = WorldUtil.getDirectionByPistonRotation(PosUtil.getMetadata(this.pos, worldObj));
 
         for(int i = 0; i < RANGE; i++){
-            Position coordsBlock = WorldUtil.getCoordsFromSide(sideToManipulate, pos, i);
+            BlockPos coordsBlock = WorldUtil.getCoordsFromSide(sideToManipulate, pos, i);
             if(coordsBlock != null){
-                Block blockToBreak = coordsBlock.getBlock(worldObj);
+                Block blockToBreak = PosUtil.getBlock(coordsBlock, worldObj);
                 if(blockToBreak != null && !(blockToBreak instanceof BlockAir) && blockToBreak.getBlockHardness(worldObj, pos) > -1.0F){
                     ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-                    int meta = coordsBlock.getMetadata(worldObj);
-                    drops.addAll(blockToBreak.getDrops(worldObj, coordsBlock, coordsBlock.getBlockState(worldObj), 0));
+                    int meta = PosUtil.getMetadata(coordsBlock, worldObj);
+                    drops.addAll(blockToBreak.getDrops(worldObj, coordsBlock, worldObj.getBlockState(coordsBlock), 0));
 
                     if(WorldUtil.addToInventory(this, drops, false, true)){
                         worldObj.playAuxSFX(2001, this.getPos(), Block.getIdFromBlock(blockToBreak)+(meta << 12));
-                        WorldUtil.breakBlockAtSide(sideToManipulate, worldObj, Position.fromTileEntity(this), i);
+                        WorldUtil.breakBlockAtSide(sideToManipulate, worldObj, this.getPos(), i);
                         WorldUtil.addToInventory(this, drops, true, true);
                         this.storage.extractEnergy(ENERGY_USE, false);
                         this.markDirty();

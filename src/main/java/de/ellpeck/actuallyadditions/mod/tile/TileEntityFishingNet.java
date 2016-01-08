@@ -10,7 +10,8 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import de.ellpeck.actuallyadditions.api.Position;
+
+import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.material.Material;
@@ -33,13 +34,12 @@ public class TileEntityFishingNet extends TileEntityBase{
         super.updateEntity();
         if(!worldObj.isRemote){
             if(!this.isRedstonePowered){
-                Position pos = Position.fromTileEntity(this);
-                if(pos.getOffsetPosition(0, -1, 0).getMaterial(worldObj) == Material.water){
+                if(PosUtil.getMaterial(PosUtil.offset(this.pos, 0, -1, 0), this.worldObj) == Material.water){
                     if(this.timeUntilNextDrop > 0){
                         this.timeUntilNextDrop--;
                         if(timeUntilNextDrop <= 0){
                             ItemStack fishable = FishingHooks.getRandomFishable(Util.RANDOM, Util.RANDOM.nextFloat());
-                            TileEntity tile = pos.getOffsetPosition(0, 1, 0).getTileEntity(worldObj);
+                            TileEntity tile = worldObj.getTileEntity(PosUtil.offset(pos, 0, 1, 0));
                             if(tile != null && tile instanceof IInventory){
                                 ArrayList<ItemStack> list = new ArrayList<ItemStack>();
                                 list.add(fishable);

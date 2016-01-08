@@ -10,13 +10,13 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
-import de.ellpeck.actuallyadditions.api.Position;
 import de.ellpeck.actuallyadditions.api.block.IHudDisplay;
 import de.ellpeck.actuallyadditions.api.lens.ILensItem;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityAtomicReconstructor;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.BlockPistonBase;
 import net.minecraft.block.material.Material;
@@ -55,7 +55,7 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
     @Override
     public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase player, ItemStack stack){
         int rotation = BlockPistonBase.getFacingFromEntity(world, pos, player).ordinal();
-        Position.fromBlockPos(pos).setMetadata(world, rotation, 2);
+        PosUtil.setMetadata(pos, world, rotation, 2);
 
         super.onBlockPlacedBy(world, pos, state, player, stack);
     }
@@ -67,7 +67,7 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
 
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing par6, float par7, float par8, float par9){
-        if(this.tryToggleRedstone(world, Position.fromBlockPos(pos), player)){
+        if(this.tryToggleRedstone(world, pos, player)){
             return true;
         }
         if(!world.isRemote){
@@ -100,7 +100,7 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
 
     @Override
     public void breakBlock(World world, BlockPos pos, IBlockState state){
-        this.dropInventory(world, Position.fromBlockPos(pos));
+        this.dropInventory(world, pos);
         super.breakBlock(world, pos, state);
     }
 

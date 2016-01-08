@@ -10,12 +10,13 @@
 
 package de.ellpeck.actuallyadditions.mod.items.lens;
 
-import de.ellpeck.actuallyadditions.api.Position;
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
 import de.ellpeck.actuallyadditions.mod.misc.DamageSources;
+import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.BlockPos;
 
 import java.util.ArrayList;
 
@@ -23,7 +24,7 @@ public class LensDeath extends Lens{
 
     @SuppressWarnings("unchecked")
     @Override
-    public boolean invoke(Position hitBlock, IAtomicReconstructor tile){
+    public boolean invoke(BlockPos hitBlock, IAtomicReconstructor tile){
         int use = 150; //Per Block (because it doesn't only activate when something is hit like the other lenses!)
         if(tile.getEnergy() >= use){
             tile.extractEnergy(use);
@@ -34,7 +35,7 @@ public class LensDeath extends Lens{
             }
         }
 
-        return hitBlock != null && !hitBlock.getBlock(tile.getWorldObject()).isAir(tile.getWorldObject(), hitBlock);
+        return hitBlock != null && !PosUtil.getBlock(hitBlock, tile.getWorldObject()).isAir(tile.getWorldObject(), hitBlock);
     }
 
     @Override

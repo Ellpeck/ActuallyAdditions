@@ -10,7 +10,8 @@
 
 package de.ellpeck.actuallyadditions.mod.misc;
 
-import de.ellpeck.actuallyadditions.api.Position;
+
+import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.dispenser.BehaviorDefaultDispenseItem;
@@ -19,6 +20,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityDispenser;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.IFluidBlock;
@@ -53,17 +55,17 @@ public class DispenserHandlerFillBucket extends BehaviorDefaultDispenseItem{
     }
 
     private ItemStack tryFillBucket(IBlockSource source, int x, int y, int z, ItemStack bucket){
-        Position pos = new Position(x, y, z);
-        Block block = pos.getBlock(source.getWorld());
+        BlockPos pos = new BlockPos(x, y, z);
+        Block block = PosUtil.getBlock(pos, source.getWorld());
 
         if(block == Blocks.water || block == Blocks.flowing_water){
-            if(pos.getMetadata(source.getWorld()) == 0){
+            if(PosUtil.getMetadata(pos, source.getWorld()) == 0){
                 source.getWorld().setBlockToAir(pos);
                 return new ItemStack(Items.water_bucket);
             }
         }
         else if(block == Blocks.lava || block == Blocks.flowing_lava){
-            if(pos.getMetadata(source.getWorld()) == 0){
+            if(PosUtil.getMetadata(pos, source.getWorld()) == 0){
                 source.getWorld().setBlockToAir(pos);
                 return new ItemStack(Items.lava_bucket);
             }

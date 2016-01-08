@@ -10,9 +10,10 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks.base;
 
-import de.ellpeck.actuallyadditions.api.Position;
+
 import de.ellpeck.actuallyadditions.mod.creative.CreativeTab;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
@@ -60,12 +61,12 @@ public class BlockFluidFlowing extends BlockFluidClassic{
 
     @Override
     public boolean canDisplace(IBlockAccess world, BlockPos pos){
-        return !Position.fromBlockPos(pos).getMaterial(world).isLiquid() && super.canDisplace(world, pos);
+        return !PosUtil.getMaterial(pos, world).isLiquid() && super.canDisplace(world, pos);
     }
 
     @Override
     public boolean displaceIfPossible(World world, BlockPos pos){
-        return !Position.fromBlockPos(pos).getMaterial(world).isLiquid() && super.displaceIfPossible(world, pos);
+        return !PosUtil.getMaterial(pos, world).isLiquid() && super.displaceIfPossible(world, pos);
     }
 
     public EnumRarity getRarity(ItemStack stack){

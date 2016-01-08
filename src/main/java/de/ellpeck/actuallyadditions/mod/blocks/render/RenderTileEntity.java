@@ -10,9 +10,9 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks.render;
 
-import de.ellpeck.actuallyadditions.api.Position;
 import de.ellpeck.actuallyadditions.mod.blocks.render.model.ModelBaseAA;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
@@ -37,7 +37,7 @@ public class RenderTileEntity extends TileEntitySpecialRenderer{
         this.bindTexture(resLoc);
 
         if(theModel.doesRotate()){
-            int meta = Position.fromTileEntity(tile).getMetadata(tile.getWorld());
+            int meta = PosUtil.getMetadata(tile.getPos(), tile.getWorld());
             if(meta == 0){
                 GL11.glRotatef(180F, 0F, 1F, 0F);
             }

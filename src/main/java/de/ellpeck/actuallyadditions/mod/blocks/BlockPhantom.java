@@ -10,13 +10,13 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
-import de.ellpeck.actuallyadditions.api.Position;
 import de.ellpeck.actuallyadditions.api.block.IHudDisplay;
 import de.ellpeck.actuallyadditions.api.tile.IPhantomTile;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.tile.*;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -57,7 +57,7 @@ public class BlockPhantom extends BlockContainerBase implements IHudDisplay{
     @Override
     public void breakBlock(World world, BlockPos pos, IBlockState state){
         if(this.type == Type.PLACER || this.type == Type.BREAKER){
-            this.dropInventory(world, Position.fromBlockPos(pos));
+            this.dropInventory(world, pos);
         }
         super.breakBlock(world, pos, state);
     }
@@ -80,7 +80,7 @@ public class BlockPhantom extends BlockContainerBase implements IHudDisplay{
 
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ){
-        if(this.tryToggleRedstone(world, Position.fromBlockPos(pos), player)){
+        if(this.tryToggleRedstone(world, pos, player)){
             return true;
         }
         if(!world.isRemote){
@@ -107,8 +107,8 @@ public class BlockPhantom extends BlockContainerBase implements IHudDisplay{
                 minecraft.fontRendererObj.drawStringWithShadow(EnumChatFormatting.GOLD+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".blockPhantomRange.desc")+": "+phantom.getRange(), resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2-40, StringUtil.DECIMAL_COLOR_WHITE);
                 if(phantom.hasBoundPosition()){
                     int distance = (int)new Vec3(posHit.getBlockPos()).distanceTo(new Vec3(phantom.getBoundPosition()));
-                    Item item = phantom.getBoundPosition().getItemBlock(minecraft.theWorld);
-                    String name = item == null ? "Absolutely Nothing" : item.getItemStackDisplayName(new ItemStack(phantom.getBoundPosition().getBlock(minecraft.theWorld), 1, phantom.getBoundPosition().getMetadata(minecraft.theWorld)));
+                    Item item = PosUtil.getItemBlock(phantom.getBoundPosition(), minecraft.theWorld);
+                    String name = item == null ? "Absolutely Nothing" : item.getItemStackDisplayName(new ItemStack(PosUtil.getBlock(phantom.getBoundPosition(), minecraft.theWorld), 1, PosUtil.getMetadata(phantom.getBoundPosition(), minecraft.theWorld)));
                     StringUtil.drawSplitString(minecraft.fontRendererObj, StringUtil.localizeFormatted("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.blockInfo.desc", name, phantom.getBoundPosition().getX(), phantom.getBoundPosition().getY(), phantom.getBoundPosition().getZ(), distance), resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2-30, 200, StringUtil.DECIMAL_COLOR_WHITE, true);
 
                     if(phantom.isBoundThingInRange()){

@@ -10,12 +10,14 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import de.ellpeck.actuallyadditions.api.Position;
+
+import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockAir;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 
 import java.util.ArrayList;
@@ -67,26 +69,26 @@ public class TileEntityBreaker extends TileEntityInventoryBase implements IRedst
     }
 
     private void doWork(){
-        EnumFacing sideToManipulate = WorldUtil.getDirectionByPistonRotation(Position.fromTileEntity(this).getMetadata(worldObj));
+        EnumFacing sideToManipulate = WorldUtil.getDirectionByPistonRotation(PosUtil.getMetadata(this.pos, worldObj));
 
-        Position coordsBlock = WorldUtil.getCoordsFromSide(sideToManipulate, Position.fromTileEntity(this), 0);
+        BlockPos coordsBlock = WorldUtil.getCoordsFromSide(sideToManipulate, this.pos, 0);
         if(coordsBlock != null){
-            Block blockToBreak = coordsBlock.getBlock(worldObj);
+            Block blockToBreak = PosUtil.getBlock(coordsBlock, worldObj);
             if(!this.isPlacer && blockToBreak != null && !(blockToBreak instanceof BlockAir) && blockToBreak.getBlockHardness(worldObj, coordsBlock) > -1.0F){
                 ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-                int meta = coordsBlock.getMetadata(worldObj);
-                drops.addAll(blockToBreak.getDrops(worldObj, coordsBlock, coordsBlock.getBlockState(worldObj), 0));
+                int meta = PosUtil.getMetadata(coordsBlock, worldObj);
+                drops.addAll(blockToBreak.getDrops(worldObj, coordsBlock, worldObj.getBlockState(coordsBlock), 0));
 
                 if(WorldUtil.addToInventory(this, drops, false, true)){
                     worldObj.playAuxSFX(2001, coordsBlock, Block.getIdFromBlock(blockToBreak)+(meta << 12));
-                    WorldUtil.breakBlockAtSide(sideToManipulate, worldObj, Position.fromTileEntity(this));
+                    WorldUtil.breakBlockAtSide(sideToManipulate, worldObj, this.pos);
                     WorldUtil.addToInventory(this, drops, true, true);
                     this.markDirty();
                 }
             }
-            else if(this.isPlacer && coordsBlock.getBlock(worldObj).isReplaceable(worldObj, coordsBlock)){
+            else if(this.isPlacer && PosUtil.getBlock(coordsBlock, worldObj).isReplaceable(worldObj, coordsBlock)){
                 int theSlot = WorldUtil.findFirstFilledSlot(this.slots);
-                this.setInventorySlotContents(theSlot, WorldUtil.placeBlockAtSide(sideToManipulate, worldObj, Position.fromTileEntity(this), this.slots[theSlot]));
+                this.setInventorySlotContents(theSlot, WorldUtil.placeBlockAtSide(sideToManipulate, worldObj, this.pos, this.slots[theSlot]));
                 if(this.slots[theSlot] != null && this.slots[theSlot].stackSize <= 0){
                     this.slots[theSlot] = null;
                 }

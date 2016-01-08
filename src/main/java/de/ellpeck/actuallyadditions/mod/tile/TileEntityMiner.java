@@ -12,18 +12,19 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
-import de.ellpeck.actuallyadditions.api.Position;
 import de.ellpeck.actuallyadditions.api.tile.IEnergyDisplay;
 import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
 import de.ellpeck.actuallyadditions.mod.network.PacketParticle;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
+import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
@@ -58,7 +59,7 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyR
             if(!this.isRedstonePowered && this.ticksElapsed%5 == 0){
 
                 if(this.layerAt > 0){
-                    if(this.mine(TileEntityPhantomface.upgradeRange(DEFAULT_RANGE, worldObj, Position.fromTileEntity(this)))){
+                    if(this.mine(TileEntityPhantomface.upgradeRange(DEFAULT_RANGE, worldObj, this.pos))){
                         this.layerAt--;
                     }
                 }
@@ -76,14 +77,14 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyR
             for(int aZ = -range; aZ <= range; aZ++){
                 int actualUse = ENERGY_USE_PER_BLOCK*(this.onlyMineOres ? 3 : 1);
                 if(this.storage.getEnergyStored() >= actualUse){
-                    Position pos = new Position(this.pos.getX()+anX, this.layerAt, this.pos.getZ()+aZ);
+                    BlockPos pos = new BlockPos(this.pos.getX()+anX, this.layerAt, this.pos.getZ()+aZ);
 
-                    Block block = pos.getBlock(worldObj);
-                    int meta = pos.getMetadata(worldObj);
+                    Block block = PosUtil.getBlock(pos, worldObj);
+                    int meta = PosUtil.getMetadata(pos, worldObj);
                     if(block != null && !block.isAir(this.worldObj, pos)){
-                        if(block.getHarvestLevel(pos.getBlockState(worldObj)) <= 3F && block.getBlockHardness(this.worldObj, pos) >= 0F && !(block instanceof BlockLiquid) && !(block instanceof IFluidBlock) && this.isMinable(block, meta)){
+                        if(block.getHarvestLevel(worldObj.getBlockState(pos)) <= 3F && block.getBlockHardness(this.worldObj, pos) >= 0F && !(block instanceof BlockLiquid) && !(block instanceof IFluidBlock) && this.isMinable(block, meta)){
                             ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-                            drops.addAll(block.getDrops(worldObj, pos, pos.getBlockState(worldObj), 0));
+                            drops.addAll(block.getDrops(worldObj, pos, worldObj.getBlockState(pos), 0));
 
                             if(WorldUtil.addToInventory(this, drops, false, true)){
                                 worldObj.playAuxSFX(2001, pos, Block.getIdFromBlock(block)+(meta << 12));

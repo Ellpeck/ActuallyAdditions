@@ -10,7 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import de.ellpeck.actuallyadditions.api.Position;
+
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.network.gui.INumberReactor;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
@@ -303,8 +303,8 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
     public void initVars(){
 
         //Gets the Place to put and Pull
-        this.placeToPull = WorldUtil.getTileEntityFromSide(WorldUtil.getDirectionBySidesInOrder(this.sideToPull), this.worldObj, Position.fromTileEntity(this));
-        this.placeToPut = WorldUtil.getTileEntityFromSide(WorldUtil.getDirectionBySidesInOrder(this.sideToPut), this.worldObj, Position.fromTileEntity(this));
+        this.placeToPull = WorldUtil.getTileEntityFromSide(WorldUtil.getDirectionBySidesInOrder(this.sideToPull), this.worldObj, this.pos);
+        this.placeToPut = WorldUtil.getTileEntityFromSide(WorldUtil.getDirectionBySidesInOrder(this.sideToPut), this.worldObj, this.pos);
 
         //Resets the Variables
         if(this.placeToPull instanceof IInventory){

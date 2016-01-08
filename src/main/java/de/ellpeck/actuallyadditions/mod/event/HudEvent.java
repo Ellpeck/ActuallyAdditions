@@ -10,11 +10,11 @@
 
 package de.ellpeck.actuallyadditions.mod.event;
 
-import de.ellpeck.actuallyadditions.api.Position;
 import de.ellpeck.actuallyadditions.api.block.IHudDisplay;
 import de.ellpeck.actuallyadditions.api.tile.IEnergyDisplay;
 import de.ellpeck.actuallyadditions.mod.tile.IRedstoneToggle;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRedstoneTorch;
@@ -52,7 +52,7 @@ public class HudEvent{
             }
 
             if(posHit != null){
-                Block blockHit = Position.fromBlockPos(posHit.getBlockPos()).getBlock(minecraft.theWorld);
+                Block blockHit = PosUtil.getBlock(posHit.getBlockPos(), minecraft.theWorld);
                 TileEntity tileHit = minecraft.theWorld.getTileEntity(posHit.getBlockPos());
 
                 if(blockHit instanceof IHudDisplay){

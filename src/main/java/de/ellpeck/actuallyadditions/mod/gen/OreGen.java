@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.gen;
 
-import de.ellpeck.actuallyadditions.api.Position;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheMiscBlocks;
 import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
@@ -20,6 +19,7 @@ import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.pattern.BlockHelper;
 import net.minecraft.init.Blocks;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldType;
@@ -79,7 +79,7 @@ public class OreGen implements IWorldGenerator{
                 int posX = blockXPos+random.nextInt(16);
                 int posY = minY+random.nextInt(yDiff);
                 int posZ = blockZPos+random.nextInt(16);
-                new WorldGenMinable(block.getStateFromMeta(meta), maxVeinSize, BlockHelper.forBlock(blockIn)).generate(world, random, new Position(posX, posY, posZ));
+                new WorldGenMinable(block.getStateFromMeta(meta), maxVeinSize, BlockHelper.forBlock(blockIn)).generate(world, random, new BlockPos(posX, posY, posZ));
             }
         }
         else{

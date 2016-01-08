@@ -10,17 +10,19 @@
 
 package de.ellpeck.actuallyadditions.mod.event;
 
-import de.ellpeck.actuallyadditions.api.Position;
+
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheWildPlants;
 import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
+import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.material.Material;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.biome.BiomeGenOcean;
 import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
@@ -44,14 +46,14 @@ public class WorldDecorationEvent{
             //Generate Treasure Chests
             if(ConfigBoolValues.DO_TREASURE_CHEST_GEN.isEnabled()){
                 if(event.rand.nextInt(300) == 0){
-                    Position randomPos = new Position(event.pos.getX()+event.rand.nextInt(16)+8, 0, event.pos.getZ()+event.rand.nextInt(16)+8);
-                    randomPos = Position.fromBlockPos(event.world.getTopSolidOrLiquidBlock(randomPos));
+                    BlockPos randomPos = new BlockPos(event.pos.getX()+event.rand.nextInt(16)+8, 0, event.pos.getZ()+event.rand.nextInt(16)+8);
+                    randomPos = event.world.getTopSolidOrLiquidBlock(randomPos);
 
                     if(event.world.getBiomeGenForCoords(randomPos) instanceof BiomeGenOcean){
                         if(randomPos.getY() >= 25 && randomPos.getY() <= 45){
-                            if(randomPos.getBlock(event.world).getMaterial() == Material.water){
-                                if(randomPos.getOffsetPosition(0, -1, 0).getMaterial(event.world).isSolid()){
-                                    randomPos.setBlock(event.world, InitBlocks.blockTreasureChest, event.rand.nextInt(4), 2);
+                            if(PosUtil.getBlock(randomPos, event.world).getMaterial() == Material.water){
+                                if(PosUtil.getMaterial(PosUtil.offset(randomPos, 0, -1, 0), event.world).isSolid()){
+                                    PosUtil.setBlock(randomPos, event.world, InitBlocks.blockTreasureChest, event.rand.nextInt(4), 2);
                                 }
                             }
                         }
@@ -65,15 +67,15 @@ public class WorldDecorationEvent{
         if(ConfigBoolValues.DO_RICE_GEN.isEnabled()){
             for(int i = 0; i < ConfigIntValues.RICE_AMOUNT.getValue(); i++){
                 if(event.rand.nextInt(50) == 0){
-                    Position randomPos = new Position(event.pos.getX()+event.rand.nextInt(16)+8, 0, event.pos.getZ()+event.rand.nextInt(16)+8);
-                    randomPos = Position.fromBlockPos(event.world.getTopSolidOrLiquidBlock(randomPos));
+                    BlockPos randomPos = new BlockPos(event.pos.getX()+event.rand.nextInt(16)+8, 0, event.pos.getZ()+event.rand.nextInt(16)+8);
+                    randomPos = event.world.getTopSolidOrLiquidBlock(randomPos);
 
-                    if(randomPos.getMaterial(event.world) == Material.water){
+                    if(PosUtil.getMaterial(randomPos, event.world) == Material.water){
                         ArrayList<Material> blocksAroundBottom = WorldUtil.getMaterialsAround(event.world, randomPos);
-                        ArrayList<Material> blocksAroundTop = WorldUtil.getMaterialsAround(event.world, randomPos.getOffsetPosition(0, 1, 0));
+                        ArrayList<Material> blocksAroundTop = WorldUtil.getMaterialsAround(event.world, PosUtil.offset(randomPos, 0, 1, 0));
                         if(blocksAroundBottom.contains(Material.grass) || blocksAroundBottom.contains(Material.ground) || blocksAroundBottom.contains(Material.rock) || blocksAroundBottom.contains(Material.sand)){
-                            if(!blocksAroundTop.contains(Material.water) && randomPos.getMaterial(event.world) == Material.air){
-                                randomPos.getOffsetPosition(0, 1, 0).setBlock(event.world, InitBlocks.blockWildPlant, TheWildPlants.RICE.ordinal(), 2);
+                            if(!blocksAroundTop.contains(Material.water) && PosUtil.getMaterial(randomPos, event.world) == Material.air){
+                                PosUtil.setBlock(PosUtil.offset(randomPos, 0, 1, 0), event.world, InitBlocks.blockWildPlant, TheWildPlants.RICE.ordinal(), 2);
                             }
                         }
                     }
@@ -86,13 +88,13 @@ public class WorldDecorationEvent{
         if(doIt){
             for(int i = 0; i < amount; i++){
                 if(event.rand.nextInt(400) == 0){
-                    Position randomPos = new Position(event.pos.getX()+event.rand.nextInt(16)+8, 0, event.pos.getZ()+event.rand.nextInt(16)+8);
-                    randomPos = Position.fromBlockPos(event.world.getTopSolidOrLiquidBlock(randomPos));
+                    BlockPos randomPos = new BlockPos(event.pos.getX()+event.rand.nextInt(16)+8, 0, event.pos.getZ()+event.rand.nextInt(16)+8);
+                    randomPos = event.world.getTopSolidOrLiquidBlock(randomPos);
 
-                    if(randomPos.getMaterial(event.world) == blockBelow){
-                        Position top = randomPos.getOffsetPosition(0, 1, 0);
-                        top.setBlock(event.world, plant, meta, 2);
-                        if(plant instanceof BlockBush && !((BlockBush)plant).canBlockStay(event.world, top, top.getBlockState(event.world))){
+                    if(PosUtil.getMaterial(randomPos, event.world) == blockBelow){
+                        BlockPos top = PosUtil.offset(randomPos, 0, 1, 0);
+                        PosUtil.setBlock(top, event.world, plant, meta, 2);
+                        if(plant instanceof BlockBush && !((BlockBush)plant).canBlockStay(event.world, top, event.world.getBlockState(top))){
                             event.world.setBlockToAir(top);
                         }
                     }

@@ -28,7 +28,6 @@ import java.util.List;
 public class BlockWallAA extends BlockWall{
 
     private String name;
-    private Block baseBlock;
     private int meta;
 
     public BlockWallAA(String name, Block base){
@@ -37,7 +36,6 @@ public class BlockWallAA extends BlockWall{
 
     public BlockWallAA(String name, Block base, int meta){
         super(base);
-        this.baseBlock = base;
         this.name = name;
         this.meta = meta;
 
@@ -80,6 +78,6 @@ public class BlockWallAA extends BlockWall{
 
     @Override
     public int damageDropped(IBlockState state){
-        return this.getMetaFromState(state);
+        return meta;
     }
 }

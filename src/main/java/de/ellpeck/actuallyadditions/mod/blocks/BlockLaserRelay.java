@@ -10,10 +10,10 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
-import de.ellpeck.actuallyadditions.api.Position;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelay;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
+import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -62,7 +62,7 @@ public class BlockLaserRelay extends BlockContainerBase{
 
     @Override
     public void setBlockBoundsBasedOnState(IBlockAccess world, BlockPos pos){
-        int meta = Position.fromBlockPos(pos).getMetadata(world);
+        int meta = PosUtil.getMetadata(pos, world);
 
         float pixel = 1F/16F;
         if(meta == 0){

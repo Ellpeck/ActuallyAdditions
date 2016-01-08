@@ -12,13 +12,13 @@ package de.ellpeck.actuallyadditions.mod.items;
 
 import cofh.api.energy.IEnergyContainerItem;
 import com.google.common.collect.Multimap;
-import de.ellpeck.actuallyadditions.api.Position;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemEnergy;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -436,12 +436,12 @@ public class ItemDrill extends ItemEnergy{
         }
 
         //Not defined later because main Block is getting broken below
-        float mainHardness = Position.fromBlockPos(aPos).getBlock(world).getBlockHardness(world, aPos);
+        float mainHardness = PosUtil.getBlock(aPos, world).getBlockHardness(world, aPos);
 
         //Break Middle Block first
         int use = this.getEnergyUsePerBlock(stack);
         if(this.getEnergyStored(stack) >= use){
-            if(!this.tryHarvestBlock(world, Position.fromBlockPos(aPos), false, stack, player, use)){
+            if(!this.tryHarvestBlock(world, aPos, false, stack, player, use)){
                 return false;
             }
         }
@@ -457,8 +457,8 @@ public class ItemDrill extends ItemEnergy{
                         if(!(aPos.getX() == xPos && aPos.getY() == yPos && aPos.getZ() == zPos)){
                             if(this.getEnergyStored(stack) >= use){
                                 //Only break Blocks around that are (about) as hard or softer
-                                Position thePos = new Position(xPos, yPos, zPos);
-                                if(thePos.getBlock(world).getBlockHardness(world, thePos) <= mainHardness+5.0F){
+                                BlockPos thePos = new BlockPos(xPos, yPos, zPos);
+                                if(PosUtil.getBlock(thePos, world).getBlockHardness(world, thePos) <= mainHardness+5.0F){
                                     this.tryHarvestBlock(world, thePos, true, stack, player, use);
                                 }
                             }
@@ -484,12 +484,11 @@ public class ItemDrill extends ItemEnergy{
      * @param player  The Player breaking the Blocks
      * @param use     The Energy that should be extracted per Block
      */
-    private boolean tryHarvestBlock(World world, Position pos, boolean isExtra, ItemStack stack, EntityPlayer player, int use){
-        Block block = pos.getBlock(world);
+    private boolean tryHarvestBlock(World world, BlockPos pos, boolean isExtra, ItemStack stack, EntityPlayer player, int use){
+        Block block = PosUtil.getBlock(pos, world);
         float hardness = block.getBlockHardness(world, pos);
-        int meta = pos.getMetadata(world);
-        boolean canHarvest = (ForgeHooks.canHarvestBlock(block, player, world, pos) || this.canHarvestBlock(block, stack)) && (!isExtra || this.getDigSpeed(stack, pos.getBlockState(world)) > 1.0F);
-        if(hardness >= 0.0F && (!isExtra || (canHarvest && !block.hasTileEntity(pos.getBlockState(world))))){
+        boolean canHarvest = (ForgeHooks.canHarvestBlock(block, player, world, pos) || this.canHarvestBlock(block, stack)) && (!isExtra || this.getDigSpeed(stack, world.getBlockState(pos)) > 1.0F);
+        if(hardness >= 0.0F && (!isExtra || (canHarvest && !block.hasTileEntity(world.getBlockState(pos))))){
             this.extractEnergy(stack, use, false);
             //Break the Block
             return WorldUtil.playerHarvestBlock(world, pos, player);

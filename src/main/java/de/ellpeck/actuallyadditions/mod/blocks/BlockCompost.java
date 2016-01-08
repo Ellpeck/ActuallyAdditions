@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
-import de.ellpeck.actuallyadditions.api.Position;
 import de.ellpeck.actuallyadditions.api.block.IHudDisplay;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.items.ItemFertilizer;
@@ -121,7 +120,7 @@ public class BlockCompost extends BlockContainerBase implements IHudDisplay{
 
     @Override
     public void breakBlock(World world, BlockPos pos, IBlockState state){
-        this.dropInventory(world, Position.fromBlockPos(pos));
+        this.dropInventory(world, pos);
         super.breakBlock(world, pos, state);
     }
 

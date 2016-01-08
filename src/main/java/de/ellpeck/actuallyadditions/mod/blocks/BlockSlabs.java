@@ -10,9 +10,9 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
-import de.ellpeck.actuallyadditions.api.Position;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockBase;
 import de.ellpeck.actuallyadditions.mod.blocks.base.ItemBlockBase;
+import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -69,7 +69,7 @@ public class BlockSlabs extends BlockBase{
 
     @Override
     public void setBlockBoundsBasedOnState(IBlockAccess world, BlockPos pos){
-        int meta = Position.fromBlockPos(pos).getMetadata(world);
+        int meta = PosUtil.getMetadata(pos, world);
         float minY = meta == 1 ? 0.5F : 0.0F;
         float maxY = meta == 1 ? 1.0F : 0.5F;
         this.setBlockBounds(0.0F, minY, 0F, 1.0F, maxY, 1.0F);
@@ -100,10 +100,9 @@ public class BlockSlabs extends BlockBase{
 
         @Override
         public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ){
-            Position thePos = Position.fromBlockPos(pos);
-            if(thePos.getBlock(world) == this.block && ((side.ordinal() == 1 && thePos.getMetadata(world) == 0) || (side.ordinal() == 0 && thePos.getMetadata(world) == 1))){
-                if(thePos.setBlock(world, ((BlockSlabs)this.block).fullBlock, ((BlockSlabs)this.block).meta, 3)){
-                    world.playSoundEffect(thePos.getX()+0.5F, thePos.getY()+0.5F, thePos.getZ()+0.5F, this.block.stepSound.getBreakSound(), (this.block.stepSound.getVolume()+1.0F)/2.0F, this.block.stepSound.frequency*0.8F);
+            if(PosUtil.getBlock(pos, world) == this.block && ((side.ordinal() == 1 && PosUtil.getMetadata(pos, world) == 0) || (side.ordinal() == 0 && PosUtil.getMetadata(pos, world) == 1))){
+                if(PosUtil.setBlock(pos, world, ((BlockSlabs)this.block).fullBlock, ((BlockSlabs)this.block).meta, 3)){
+                    world.playSoundEffect(pos.getX()+0.5F, pos.getY()+0.5F, pos.getZ()+0.5F, this.block.stepSound.getBreakSound(), (this.block.stepSound.getVolume()+1.0F)/2.0F, this.block.stepSound.frequency*0.8F);
                     stack.stackSize--;
                     return true;
                 }

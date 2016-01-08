@@ -10,10 +10,11 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks.render;
 
-import de.ellpeck.actuallyadditions.api.Position;
+
 import de.ellpeck.actuallyadditions.api.lens.ILensItem;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityAtomicReconstructor;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
+import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -33,7 +34,7 @@ public class RenderReconstructorLens extends TileEntitySpecialRenderer{
             GL11.glTranslatef((float)x+0.5F, (float)y-0.5F, (float)z+0.5F);
             GL11.glRotatef(180F, 0.0F, 0.0F, 1.0F);
 
-            int meta = Position.fromTileEntity(tile).getMetadata(getWorld());
+            int meta = PosUtil.getMetadata(tile.getPos(), tile.getWorld());
             if(meta == 0){
                 GL11.glTranslatef(0F, -0.5F, 0F);
                 GL11.glTranslatef(-0.25F, 0F, -0.25F);

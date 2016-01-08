@@ -10,16 +10,18 @@
 
 package de.ellpeck.actuallyadditions.mod.items.lens;
 
-import de.ellpeck.actuallyadditions.api.Position;
+
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
+import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.BlockPos;
 
 import java.util.ArrayList;
 
@@ -54,15 +56,15 @@ public class LensColor extends Lens{
 
     @SuppressWarnings("unchecked")
     @Override
-    public boolean invoke(Position hitBlock, IAtomicReconstructor tile){
+    public boolean invoke(BlockPos hitBlock, IAtomicReconstructor tile){
         if(hitBlock != null){
-            if(Util.arrayContains(CONVERTABLE_BLOCKS, hitBlock.getBlock(tile.getWorldObject())) >= 0 && tile.getEnergy() >= ENERGY_USE){
-                int meta = hitBlock.getMetadata(tile.getWorldObject());
+            if(Util.arrayContains(CONVERTABLE_BLOCKS, PosUtil.getBlock(hitBlock, tile.getWorldObject())) >= 0 && tile.getEnergy() >= ENERGY_USE){
+                int meta = PosUtil.getMetadata(hitBlock, tile.getWorldObject());
                 if(meta >= 15){
-                    hitBlock.setMetadata(tile.getWorldObject(), 0, 2);
+                    PosUtil.setMetadata(hitBlock, tile.getWorldObject(), 0, 2);
                 }
                 else{
-                    hitBlock.setMetadata(tile.getWorldObject(), meta+1, 2);
+                    PosUtil.setMetadata(hitBlock, tile.getWorldObject(), meta+1, 2);
                 }
                 tile.extractEnergy(ENERGY_USE);
             }

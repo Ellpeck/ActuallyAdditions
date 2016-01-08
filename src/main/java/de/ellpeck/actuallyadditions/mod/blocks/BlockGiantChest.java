@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
-import de.ellpeck.actuallyadditions.api.Position;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
@@ -121,7 +120,7 @@ public class BlockGiantChest extends BlockContainerBase{
         TileEntity tile = world.getTileEntity(pos);
         if(tile instanceof TileEntityGiantChest){
             if(!ItemUtil.contains(((TileEntityGiantChest)tile).slots, new ItemStack(InitItems.itemCrateKeeper), false)){
-                this.dropInventory(world, Position.fromBlockPos(pos));
+                this.dropInventory(world, pos);
             }
         }
 

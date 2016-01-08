@@ -12,13 +12,14 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyProvider;
-import de.ellpeck.actuallyadditions.api.Position;
 import de.ellpeck.actuallyadditions.api.tile.IEnergyDisplay;
+import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -39,10 +40,10 @@ public class TileEntityHeatCollector extends TileEntityBase implements IEnergyPr
             ArrayList<Integer> blocksAround = new ArrayList<Integer>();
             if(ENERGY_PRODUCE <= this.storage.getMaxEnergyStored()-this.storage.getEnergyStored()){
                 for(int i = 1; i <= 5; i++){
-                    Position coords = WorldUtil.getCoordsFromSide(WorldUtil.getDirectionBySidesInOrder(i), Position.fromTileEntity(this), 0);
+                    BlockPos coords = WorldUtil.getCoordsFromSide(WorldUtil.getDirectionBySidesInOrder(i), this.pos, 0);
                     if(coords != null){
-                        Block block = coords.getBlock(worldObj);
-                        if(block != null && block.getMaterial() == Material.lava && coords.getMetadata(worldObj) == 0){
+                        Block block = PosUtil.getBlock(coords, worldObj);
+                        if(block != null && block.getMaterial() == Material.lava && PosUtil.getMetadata(coords, worldObj) == 0){
                             blocksAround.add(i);
                         }
                     }
@@ -54,13 +55,13 @@ public class TileEntityHeatCollector extends TileEntityBase implements IEnergyPr
 
                     if(Util.RANDOM.nextInt(10000) == 0){
                         int randomSide = blocksAround.get(Util.RANDOM.nextInt(blocksAround.size()));
-                        WorldUtil.breakBlockAtSide(WorldUtil.getDirectionBySidesInOrder(randomSide), worldObj, Position.fromTileEntity(this));
+                        WorldUtil.breakBlockAtSide(WorldUtil.getDirectionBySidesInOrder(randomSide), worldObj, this.pos);
                     }
                 }
             }
 
             if(this.storage.getEnergyStored() > 0){
-                WorldUtil.pushEnergy(worldObj, Position.fromTileEntity(this), EnumFacing.UP, this.storage);
+                WorldUtil.pushEnergy(worldObj, this.pos, EnumFacing.UP, this.storage);
             }
 
             if(this.oldEnergy != this.storage.getEnergyStored() && this.sendUpdateWithInterval()){

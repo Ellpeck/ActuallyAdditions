@@ -10,12 +10,12 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
-import de.ellpeck.actuallyadditions.api.Position;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.proxy.ClientProxy;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityGrinder;
+import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -54,8 +54,7 @@ public class BlockGrinder extends BlockContainerBase{
     @Override
     @SideOnly(Side.CLIENT)
     public void randomDisplayTick(World world, BlockPos pos, IBlockState state, Random rand){
-        Position thePos = Position.fromBlockPos(pos);
-        int meta = thePos.getMetadata(world);
+        int meta = PosUtil.getMetadata(pos, world);
 
         if(meta == 1){
             for(int i = 0; i < 5; i++){
@@ -81,7 +80,7 @@ public class BlockGrinder extends BlockContainerBase{
 
     @Override
     public int getLightValue(IBlockAccess world, BlockPos pos){
-        return Position.fromBlockPos(pos).getMetadata(world) == 1 ? 12 : 0;
+        return PosUtil.getMetadata(pos, world) == 1 ? 12 : 0;
     }
 
     @Override
@@ -91,7 +90,7 @@ public class BlockGrinder extends BlockContainerBase{
 
     @Override
     public void breakBlock(World world, BlockPos pos, IBlockState state){
-        this.dropInventory(world, Position.fromBlockPos(pos));
+        this.dropInventory(world, pos);
         super.breakBlock(world, pos, state);
     }
 }

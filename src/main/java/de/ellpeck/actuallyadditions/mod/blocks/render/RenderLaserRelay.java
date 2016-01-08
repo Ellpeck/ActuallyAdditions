@@ -10,8 +10,8 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks.render;
 
-import de.ellpeck.actuallyadditions.api.Position;
 import de.ellpeck.actuallyadditions.mod.blocks.render.model.ModelBaseAA;
+import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import net.minecraft.tileentity.TileEntity;
 import org.lwjgl.opengl.GL11;
 
@@ -30,7 +30,7 @@ public class RenderLaserRelay extends RenderTileEntity{
         GL11.glTranslatef(0.0F, -2.0F, 0.0F);
         this.bindTexture(resLoc);
 
-        int meta = Position.fromTileEntity(tile).getMetadata(tile.getWorld());
+        int meta = PosUtil.getMetadata(tile.getPos(), tile.getWorld());
         if(meta == 0){
             GL11.glRotatef(180F, 1F, 0F, 0F);
             GL11.glTranslatef(0F, -2F, 0F);
