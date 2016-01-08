@@ -69,7 +69,7 @@ public class RenderReconstructorLens extends TileEntitySpecialRenderer{
             }
 
             GlStateManager.scale(0.5F, 0.5F, 0.5F);
-            AssetUtil.renderItemInWorld(stack, 0);
+            AssetUtil.renderItemInWorld(stack);
 
             GlStateManager.popMatrix();
         }

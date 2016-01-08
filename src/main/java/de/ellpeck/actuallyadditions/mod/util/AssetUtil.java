@@ -18,6 +18,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
+import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -53,22 +54,21 @@ public class AssetUtil{
     }
 
     @SideOnly(Side.CLIENT)
-    public static void renderItemInWorld(ItemStack stack, int renderPass){
-        //TODO Fix rendering items in world
-        /*IIcon icon = stack.getItem().getIcon(stack, renderPass);
-        float f = icon.getMinU();
-        float f1 = icon.getMaxU();
-        float f2 = icon.getMinV();
-        float f3 = icon.getMaxV();
-        Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.locationItemsTexture);
-        ItemRenderer.renderItemIn2D(Tessellator.instance, f1, f2, f, f3, icon.getIconWidth(), icon.getIconHeight(), 1F/16F);*/
+    public static void renderItemInWorld(ItemStack stack){
+        GlStateManager.pushMatrix();
+        GlStateManager.disableLighting();
+        GlStateManager.pushAttrib();
+        RenderHelper.enableStandardItemLighting();
+        Minecraft.getMinecraft().getRenderItem().renderItem(stack, TransformType.FIXED);
+        RenderHelper.disableStandardItemLighting();
+        GlStateManager.popAttrib();
+        GlStateManager.enableLighting();
+        GlStateManager.popMatrix();
     }
 
     @SideOnly(Side.CLIENT)
     public static void renderBlockInWorld(Block block, int meta){
-        //TODO Fix rendering blocks in world
-        /*Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.locationBlocksTexture);
-        RenderBlocks.getInstance().renderBlockAsItem(block, meta, 1F);*/
+        renderItemInWorld(new ItemStack(block, 1, meta));
     }
 
     @SideOnly(Side.CLIENT)

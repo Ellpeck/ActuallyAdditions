@@ -20,6 +20,7 @@ import net.minecraft.entity.player.EnumPlayerModelParts;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.Vec3;
 
 import java.util.Calendar;
 
@@ -32,18 +33,18 @@ public class RenderSpecial{
         this.theThingToRender = stack;
     }
 
-    public void render(EntityPlayer player){
-        if(player.isInvisible() || player.isWearing(EnumPlayerModelParts.CAPE)){
+    public void render(EntityPlayer player, float partialTicks){
+        if(player.isInvisible() || !player.isWearing(EnumPlayerModelParts.CAPE)){
             return;
         }
 
         boolean isBlock = this.theThingToRender.getItem() instanceof ItemBlock;
-        float size = isBlock ? 0.3F : 0.4F;
+        float size = isBlock ? 0.5F : 0.6F;
         double offsetUp = isBlock ? 0F : 0.2F;
 
         if(ClientProxy.pumpkinBlurPumpkinBlur){
             this.theThingToRender = new ItemStack(Calendar.getInstance().get(Calendar.DAY_OF_MONTH)%2 == 0 ? Blocks.lit_pumpkin : Blocks.pumpkin);
-            size = 0.3F;
+            size = 0.5F;
             offsetUp = 0;
         }
 
@@ -56,15 +57,20 @@ public class RenderSpecial{
         }
 
         GlStateManager.pushMatrix();
-        GlStateManager.translate(0D, -0.775D+offsetUp, 0D);
+
+        Vec3 currentPos = Minecraft.getMinecraft().thePlayer.getPositionEyes(partialTicks);
+        Vec3 playerPos = player.getPositionEyes(partialTicks);
+        GlStateManager.translate(playerPos.xCoord-currentPos.xCoord, playerPos.yCoord-currentPos.yCoord-(player.isSneaking() || Minecraft.getMinecraft().thePlayer.isSneaking() ? 0.125D : 0D), playerPos.zCoord-currentPos.zCoord);
+
+        GlStateManager.translate(0D, 2.535D+offsetUp, 0D);
         GlStateManager.rotate(180F, 1.0F, 0.0F, 1.0F);
         GlStateManager.scale(size, size, size);
 
         if(time-(bobHeight/2) >= lastTimeForBobbing){
-            GlStateManager.translate(0, (time-this.lastTimeForBobbing)/100, 0);
+            GlStateManager.translate(0D, (time-this.lastTimeForBobbing)/100D, 0D);
         }
         else{
-            GlStateManager.translate(0, -(time-lastTimeForBobbing)/100+bobHeight/100, 0);
+            GlStateManager.translate(0D, -(time-lastTimeForBobbing)/100D+bobHeight/100D, 0D);
         }
 
         GlStateManager.rotate((float)(theTime/20), 0, 1, 0);
@@ -75,8 +81,8 @@ public class RenderSpecial{
                 AssetUtil.renderBlockInWorld(Block.getBlockFromItem(this.theThingToRender.getItem()), this.theThingToRender.getItemDamage());
             }
             else{
-                GlStateManager.translate(-0.5F, 0F, 0F);
-                AssetUtil.renderItemInWorld(this.theThingToRender, 0);
+                GlStateManager.translate(-0.5D, 0D, 0D);
+                AssetUtil.renderItemInWorld(this.theThingToRender);
             }
         }
         GlStateManager.enableLighting();
