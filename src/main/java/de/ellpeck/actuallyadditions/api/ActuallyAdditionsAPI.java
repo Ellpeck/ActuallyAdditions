@@ -26,6 +26,10 @@ import java.util.List;
 
 public class ActuallyAdditionsAPI{
 
+    public static final String MOD_ID = "ActuallyAdditions";
+    public static final String API_ID = MOD_ID+"API";
+    public static final String API_VERSION = "4";
+
     public static List<CrusherRecipe> crusherRecipes = new ArrayList<CrusherRecipe>();
     public static List<BallOfFurReturn> ballOfFurReturnItems = new ArrayList<BallOfFurReturn>();
     public static List<TreasureChestLoot> treasureChestLoot = new ArrayList<TreasureChestLoot>();
