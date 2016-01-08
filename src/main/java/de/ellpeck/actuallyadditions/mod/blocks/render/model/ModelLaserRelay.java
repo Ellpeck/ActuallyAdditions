@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.blocks.render.model;
 
 import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.client.renderer.GlStateManager;
 import org.lwjgl.opengl.GL11;
 
 /**
@@ -153,8 +154,8 @@ public class ModelLaserRelay extends ModelBaseAA{
 
     @Override
     public void render(float f){
-        GL11.glEnable(GL11.GL_BLEND);
-        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+        GlStateManager.enableBlend();
+        GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         bottom.render(f);
         laserPillar.render(f);
         laserBase.render(f);

@@ -13,12 +13,12 @@ package de.ellpeck.actuallyadditions.mod.blocks.base;
 import de.ellpeck.actuallyadditions.mod.creative.CreativeTab;
 import de.ellpeck.actuallyadditions.mod.tile.*;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
-import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.BlockRedstoneTorch;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
@@ -262,16 +262,20 @@ public abstract class BlockContainerBase extends BlockContainer{
 
     @Override
     protected BlockState createBlockState(){
-        return new BlockState(this, PosUtil.META);
+        return this.getMetaProperty() == null ? super.createBlockState() : new BlockState(this, this.getMetaProperty());
     }
 
     @Override
     public IBlockState getStateFromMeta(int meta){
-        return getDefaultState().withProperty(PosUtil.META, meta);
+        return this.getMetaProperty() == null ? super.getStateFromMeta(meta) : this.getDefaultState().withProperty(this.getMetaProperty(), meta);
     }
 
     @Override
     public int getMetaFromState(IBlockState state){
-        return state.getValue(PosUtil.META);
+        return this.getMetaProperty() == null ? super.getMetaFromState(state) : state.getValue(this.getMetaProperty());
+    }
+
+    protected PropertyInteger getMetaProperty(){
+        return null;
     }
 }

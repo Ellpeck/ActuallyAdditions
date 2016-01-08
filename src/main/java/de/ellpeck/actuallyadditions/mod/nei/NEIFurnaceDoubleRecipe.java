@@ -23,9 +23,9 @@ import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiFurnaceDouble;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
-import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
 import java.util.Collections;
@@ -111,7 +111,7 @@ public class NEIFurnaceDoubleRecipe extends TemplateRecipeHandler implements INE
 
     @Override
     public void drawBackground(int recipeIndex){
-        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         GuiDraw.changeTexture(getGuiTexture());
         GuiDraw.drawTexturedModalRect(46, 20, 46, 20, 84, 70);
     }

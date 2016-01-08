@@ -17,6 +17,7 @@ import de.ellpeck.actuallyadditions.mod.proxy.ClientProxy;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityFurnaceDouble;
 import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -36,6 +37,8 @@ import java.util.Random;
 
 public class BlockFurnaceDouble extends BlockContainerBase{
 
+    private static final PropertyInteger META = PropertyInteger.create("meta", 0, 7);
+
     public BlockFurnaceDouble(String name){
         super(Material.rock, name);
         this.setHarvestLevel("pickaxe", 0);
@@ -43,6 +46,11 @@ public class BlockFurnaceDouble extends BlockContainerBase{
         this.setResistance(10.0F);
         this.setStepSound(soundTypeStone);
         this.setTickRandomly(true);
+    }
+
+    @Override
+    protected PropertyInteger getMetaProperty(){
+        return META;
     }
 
     @Override

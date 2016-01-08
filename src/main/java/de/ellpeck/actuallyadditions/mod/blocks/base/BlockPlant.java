@@ -30,14 +30,12 @@ public class BlockPlant extends BlockCrops{
     public Item seedItem;
     public Item returnItem;
     public int returnMeta;
-    private int stages;
     private String name;
     private int minDropAmount;
     private int addDropAmount;
 
-    public BlockPlant(String name, int stages, int minDropAmount, int addDropAmount){
+    public BlockPlant(String name, int minDropAmount, int addDropAmount){
         this.name = name;
-        this.stages = stages;
         this.minDropAmount = minDropAmount;
         this.addDropAmount = addDropAmount;
 

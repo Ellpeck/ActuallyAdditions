@@ -14,12 +14,12 @@ import de.ellpeck.actuallyadditions.mod.proxy.ClientProxy;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EnumPlayerModelParts;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import org.lwjgl.opengl.GL11;
 
 import java.util.Calendar;
 
@@ -55,33 +55,33 @@ public class RenderSpecial{
             this.lastTimeForBobbing = time;
         }
 
-        GL11.glPushMatrix();
-        GL11.glTranslated(0D, -0.775D+offsetUp, 0D);
-        GL11.glRotatef(180F, 1.0F, 0.0F, 1.0F);
-        GL11.glScalef(size, size, size);
+        GlStateManager.pushMatrix();
+        GlStateManager.translate(0D, -0.775D+offsetUp, 0D);
+        GlStateManager.rotate(180F, 1.0F, 0.0F, 1.0F);
+        GlStateManager.scale(size, size, size);
 
         if(time-(bobHeight/2) >= lastTimeForBobbing){
-            GL11.glTranslated(0, (time-this.lastTimeForBobbing)/100, 0);
+            GlStateManager.translate(0, (time-this.lastTimeForBobbing)/100, 0);
         }
         else{
-            GL11.glTranslated(0, -(time-lastTimeForBobbing)/100+bobHeight/100, 0);
+            GlStateManager.translate(0, -(time-lastTimeForBobbing)/100+bobHeight/100, 0);
         }
 
-        GL11.glRotated(theTime/20, 0, 1, 0);
+        GlStateManager.rotate((float)(theTime/20), 0, 1, 0);
 
-        GL11.glDisable(GL11.GL_LIGHTING);
+        GlStateManager.disableLighting();
         if(this.theThingToRender != null){
             if(isBlock){
                 AssetUtil.renderBlockInWorld(Block.getBlockFromItem(this.theThingToRender.getItem()), this.theThingToRender.getItemDamage());
             }
             else{
-                GL11.glTranslatef(-0.5F, 0F, 0F);
+                GlStateManager.translate(-0.5F, 0F, 0F);
                 AssetUtil.renderItemInWorld(this.theThingToRender, 0);
             }
         }
-        GL11.glEnable(GL11.GL_LIGHTING);
+        GlStateManager.enableLighting();
 
-        GL11.glPopMatrix();
+        GlStateManager.popMatrix();
     }
 
 }

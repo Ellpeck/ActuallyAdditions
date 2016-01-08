@@ -24,7 +24,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12;
 
 public class AssetUtil{
 
@@ -74,14 +73,14 @@ public class AssetUtil{
 
     @SideOnly(Side.CLIENT)
     public static void renderStackToGui(ItemStack stack, int x, int y, float scale){
-        GL11.glPushMatrix();
-        GL11.glEnable(GL11.GL_BLEND);
-        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+        GlStateManager.pushMatrix();
+        GlStateManager.enableBlend();
+        GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         RenderHelper.enableGUIStandardItemLighting();
-        GL11.glEnable(GL11.GL_DEPTH_TEST);
-        GL11.glEnable(GL12.GL_RESCALE_NORMAL);
-        GL11.glTranslated(x, y, 0);
-        GL11.glScalef(scale, scale, scale);
+        GlStateManager.enableDepth();
+        GlStateManager.enableRescaleNormal();
+        GlStateManager.translate(x, y, 0);
+        GlStateManager.scale(scale, scale, scale);
 
         Minecraft mc = Minecraft.getMinecraft();
         boolean flagBefore = mc.fontRendererObj.getUnicodeFlag();
@@ -94,7 +93,7 @@ public class AssetUtil{
         if(mc.currentScreen instanceof GuiBooklet || mc.currentScreen == null){
             RenderHelper.disableStandardItemLighting();
         }
-        GL11.glPopMatrix();
+        GlStateManager.popMatrix();
     }
 
     //Copied from Gui.class and changed
@@ -115,10 +114,10 @@ public class AssetUtil{
         Tessellator tessellator = Tessellator.getInstance();
         WorldRenderer worldrenderer = tessellator.getWorldRenderer();
         worldrenderer.begin(7, DefaultVertexFormats.POSITION_COLOR);
-        worldrenderer.pos((double)right, (double)top, (double)zLevel).color(f1, f2, f3, f).endVertex();
         worldrenderer.pos((double)left, (double)top, (double)zLevel).color(f1, f2, f3, f).endVertex();
-        worldrenderer.pos((double)left, (double)bottom, (double)zLevel).color(f5, f6, f7, f4).endVertex();
+        worldrenderer.pos((double)left, (double)bottom, (double)zLevel).color(f1, f2, f3, f).endVertex();
         worldrenderer.pos((double)right, (double)bottom, (double)zLevel).color(f5, f6, f7, f4).endVertex();
+        worldrenderer.pos((double)right, (double)top, (double)zLevel).color(f5, f6, f7, f4).endVertex();
         tessellator.draw();
         GlStateManager.shadeModel(7424);
         GlStateManager.disableBlend();

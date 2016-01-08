@@ -18,6 +18,7 @@ import de.ellpeck.actuallyadditions.mod.proxy.ClientProxy;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityCoalGenerator;
 import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
@@ -34,6 +35,8 @@ import java.util.Random;
 
 public class BlockCoalGenerator extends BlockContainerBase{
 
+    private static final PropertyInteger META = PropertyInteger.create("meta", 0, 1);
+
     public BlockCoalGenerator(String name){
         super(Material.rock, name);
         this.setHarvestLevel("pickaxe", 0);
@@ -41,6 +44,11 @@ public class BlockCoalGenerator extends BlockContainerBase{
         this.setResistance(10.0F);
         this.setStepSound(soundTypeStone);
         this.setTickRandomly(true);
+    }
+
+    @Override
+    protected PropertyInteger getMetaProperty(){
+        return META;
     }
 
     @Override

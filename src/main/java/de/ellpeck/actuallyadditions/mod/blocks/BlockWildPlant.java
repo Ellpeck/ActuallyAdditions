@@ -19,6 +19,7 @@ import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -37,10 +38,16 @@ import java.util.List;
 public class BlockWildPlant extends BlockBushBase{
 
     public static final TheWildPlants[] allWildPlants = TheWildPlants.values();
+    private static final PropertyInteger META = PropertyInteger.create("meta", 0, allWildPlants.length-1);
 
     public BlockWildPlant(String name){
         super(name);
         this.setStepSound(soundTypeGrass);
+    }
+
+    @Override
+    protected PropertyInteger getMetaProperty(){
+        return META;
     }
 
     @Override

@@ -13,8 +13,7 @@ package de.ellpeck.actuallyadditions.mod.booklet.button;
 import de.ellpeck.actuallyadditions.mod.booklet.GuiBooklet;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.renderer.OpenGlHelper;
-import org.lwjgl.opengl.GL11;
+import net.minecraft.client.renderer.GlStateManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,16 +46,16 @@ public class TexturedButton extends GuiButton{
     public void drawButton(Minecraft minecraft, int x, int y){
         if(this.visible){
             minecraft.getTextureManager().bindTexture(GuiBooklet.resLoc);
-            GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             this.hovered = x >= this.xPosition && y >= this.yPosition && x < this.xPosition+this.width && y < this.yPosition+this.height;
             int k = this.getHoverState(this.hovered);
             if(k == 0){
                 k = 1;
             }
 
-            GL11.glEnable(GL11.GL_BLEND);
-            OpenGlHelper.glBlendFunc(770, 771, 1, 0);
-            GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+            GlStateManager.enableBlend();
+            GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+            GlStateManager.blendFunc(770, 771);
             this.drawTexturedModalRect(this.xPosition, this.yPosition, this.texturePosX, this.texturePosY-this.height+k*this.height, this.width, this.height);
             this.mouseDragged(minecraft, x, y);
         }

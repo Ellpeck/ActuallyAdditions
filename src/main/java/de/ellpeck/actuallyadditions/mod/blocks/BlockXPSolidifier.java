@@ -19,6 +19,7 @@ import de.ellpeck.actuallyadditions.mod.tile.TileEntityXPSolidifier;
 import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
@@ -33,12 +34,19 @@ import net.minecraft.world.World;
 
 public class BlockXPSolidifier extends BlockContainerBase{
 
+    private static final PropertyInteger META = PropertyInteger.create("meta", 0, 3);
+
     public BlockXPSolidifier(String name){
         super(Material.rock, name);
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(2.5F);
         this.setResistance(10.0F);
         this.setStepSound(soundTypeStone);
+    }
+
+    @Override
+    protected PropertyInteger getMetaProperty(){
+        return META;
     }
 
     @Override

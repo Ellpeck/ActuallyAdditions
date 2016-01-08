@@ -20,6 +20,7 @@ import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.BlockPistonBase;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
@@ -39,12 +40,19 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockAtomicReconstructor extends BlockContainerBase implements IHudDisplay{
 
+    private static final PropertyInteger META = PropertyInteger.create("meta", 0, 5);
+
     public BlockAtomicReconstructor(String name){
         super(Material.rock, name);
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(10F);
         this.setResistance(80F);
         this.setStepSound(soundTypeStone);
+    }
+
+    @Override
+    protected PropertyInteger getMetaProperty(){
+        return META;
     }
 
     @Override

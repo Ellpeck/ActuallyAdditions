@@ -69,7 +69,7 @@ public class TileEntityLeafGenerator extends TileEntityBase implements IEnergyPr
                             int meta = PosUtil.getMetadata(theCoord, worldObj);
                             this.worldObj.playAuxSFX(2001, theCoord, Block.getIdFromBlock(theBlock)+(meta << 12));
 
-                            this.worldObj.setBlockToAir(this.getPos());
+                            this.worldObj.setBlockToAir(theCoord);
 
                             this.storage.receiveEnergy(ENERGY_PRODUCED, false);
 

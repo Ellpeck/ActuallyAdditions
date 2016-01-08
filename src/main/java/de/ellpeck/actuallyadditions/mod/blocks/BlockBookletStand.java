@@ -21,6 +21,7 @@ import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
@@ -37,6 +38,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockBookletStand extends BlockContainerBase implements IHudDisplay{
 
+    private static final PropertyInteger META = PropertyInteger.create("meta", 0, 3);
+
     public BlockBookletStand(String name){
         super(Material.wood, name);
         this.setHarvestLevel("axe", 0);
@@ -46,6 +49,11 @@ public class BlockBookletStand extends BlockContainerBase implements IHudDisplay
 
         float f = 1/16F;
         this.setBlockBounds(f, 0F, f, 1F-f, 1F-4*f, 1F-f);
+    }
+
+    @Override
+    protected PropertyInteger getMetaProperty(){
+        return META;
     }
 
     @Override

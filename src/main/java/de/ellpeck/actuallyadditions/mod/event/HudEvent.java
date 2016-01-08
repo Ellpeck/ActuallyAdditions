@@ -51,7 +51,7 @@ public class HudEvent{
                 }
             }
 
-            if(posHit != null){
+            if(posHit != null && posHit.getBlockPos() != null){
                 Block blockHit = PosUtil.getBlock(posHit.getBlockPos(), minecraft.theWorld);
                 TileEntity tileHit = minecraft.theWorld.getTileEntity(posHit.getBlockPos());
 

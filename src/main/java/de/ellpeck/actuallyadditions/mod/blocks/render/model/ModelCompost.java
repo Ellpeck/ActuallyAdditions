@@ -14,9 +14,9 @@ import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityCompost;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import org.lwjgl.opengl.GL11;
 
 public class ModelCompost extends ModelBaseAA{
 
@@ -76,7 +76,7 @@ public class ModelCompost extends ModelBaseAA{
     public void renderExtra(float f, TileEntity tile){
         //Hehe
         if("ShadowfactsDev".equals(Minecraft.getMinecraft().thePlayer.getName())){
-            GL11.glTranslatef(0F, 1F, 0F);
+            GlStateManager.translate(0F, 1F, 0F);
         }
 
         if(tile instanceof TileEntityCompost){

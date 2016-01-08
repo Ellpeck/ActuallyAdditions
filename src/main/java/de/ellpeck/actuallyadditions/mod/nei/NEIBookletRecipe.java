@@ -25,9 +25,9 @@ import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
-import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -136,8 +136,8 @@ public class NEIBookletRecipe extends TemplateRecipeHandler implements INEIRecip
 
     @Override
     public void drawForeground(int recipe){
-        GL11.glColor4f(1F, 1F, 1F, 1F);
-        GL11.glDisable(GL11.GL_LIGHTING);
+        GlStateManager.color(1F, 1F, 1F, 1F);
+        GlStateManager.disableLighting();
         this.drawExtras(recipe);
     }
 

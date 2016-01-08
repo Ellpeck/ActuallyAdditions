@@ -19,6 +19,7 @@ import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -39,6 +40,7 @@ import java.util.Random;
 public class BlockColoredLamp extends BlockBase{
 
     public static TheColoredLampColors[] allLampTypes = TheColoredLampColors.values();
+    private static final PropertyInteger META = PropertyInteger.create("meta", 0, allLampTypes.length-1);
     public boolean isOn;
 
     public BlockColoredLamp(boolean isOn, String name){
@@ -47,6 +49,11 @@ public class BlockColoredLamp extends BlockBase{
         this.setHardness(0.5F);
         this.setResistance(3.0F);
         this.isOn = isOn;
+    }
+
+    @Override
+    protected PropertyInteger getMetaProperty(){
+        return META;
     }
 
     @Override

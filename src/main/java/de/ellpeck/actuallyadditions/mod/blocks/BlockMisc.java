@@ -16,6 +16,7 @@ import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheMiscBlocks;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.EnumRarity;
@@ -29,12 +30,18 @@ import java.util.List;
 public class BlockMisc extends BlockBase{
 
     public static final TheMiscBlocks[] allMiscBlocks = TheMiscBlocks.values();
+    private static final PropertyInteger META = PropertyInteger.create("meta", 0, allMiscBlocks.length-1);
 
     public BlockMisc(String name){
         super(Material.rock, name);
         this.setHardness(1.5F);
         this.setResistance(10.0F);
         this.setHarvestLevel("pickaxe", 1);
+    }
+
+    @Override
+    protected PropertyInteger getMetaProperty(){
+        return META;
     }
 
     @Override

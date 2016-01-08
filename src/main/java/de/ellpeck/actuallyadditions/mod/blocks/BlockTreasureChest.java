@@ -17,6 +17,7 @@ import de.ellpeck.actuallyadditions.mod.blocks.base.BlockBase;
 import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
@@ -34,6 +35,8 @@ import java.util.Random;
 
 public class BlockTreasureChest extends BlockBase{
 
+    private static final PropertyInteger META = PropertyInteger.create("meta", 0, 3);
+
     public BlockTreasureChest(String name){
         super(Material.wood, name);
         this.setHarvestLevel("axe", 0);
@@ -41,6 +44,11 @@ public class BlockTreasureChest extends BlockBase{
         this.setResistance(50.0F);
         this.setStepSound(soundTypeWood);
         this.setTickRandomly(true);
+    }
+
+    @Override
+    protected PropertyInteger getMetaProperty(){
+        return META;
     }
 
     @Override

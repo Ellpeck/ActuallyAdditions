@@ -12,7 +12,7 @@ package de.ellpeck.actuallyadditions.mod.util;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.PropertyInteger;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.BlockPos;
@@ -22,10 +22,14 @@ import net.minecraft.world.World;
 
 public class PosUtil{
 
-    public static final PropertyInteger META = PropertyInteger.create("meta", 0, 15);
-
     public static Block getBlock(BlockPos pos, IBlockAccess world){
-        return world.getBlockState(pos).getBlock();
+        if(pos != null){
+            IBlockState state = world.getBlockState(pos);
+            if(state != null){
+                return state.getBlock();
+            }
+        }
+        return null;
     }
 
     public static Material getMaterial(BlockPos pos, IBlockAccess world){

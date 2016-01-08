@@ -17,6 +17,7 @@ import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockPistonBase;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.EnumRarity;
@@ -26,12 +27,19 @@ import net.minecraft.world.World;
 
 public class BlockLampPowerer extends BlockBase{
 
+    private static final PropertyInteger META = PropertyInteger.create("meta", 0, 5);
+
     public BlockLampPowerer(String name){
         super(Material.rock, name);
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(1.5F);
         this.setResistance(10.0F);
         this.setStepSound(soundTypeStone);
+    }
+
+    @Override
+    protected PropertyInteger getMetaProperty(){
+        return META;
     }
 
     @Override

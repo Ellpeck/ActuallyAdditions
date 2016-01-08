@@ -55,12 +55,12 @@ public class WorldUtil{
     }
     
     public static void pushEnergyToAllSides(World world, BlockPos pos, EnergyStorage storage){
-        WorldUtil.pushEnergy(world, pos, EnumFacing.UP, storage);
-        WorldUtil.pushEnergy(world, pos, EnumFacing.DOWN, storage);
-        WorldUtil.pushEnergy(world, pos, EnumFacing.NORTH, storage);
-        WorldUtil.pushEnergy(world, pos, EnumFacing.EAST, storage);
-        WorldUtil.pushEnergy(world, pos, EnumFacing.SOUTH, storage);
-        WorldUtil.pushEnergy(world, pos, EnumFacing.WEST, storage);
+        pushEnergy(world, pos, EnumFacing.UP, storage);
+        pushEnergy(world, pos, EnumFacing.DOWN, storage);
+        pushEnergy(world, pos, EnumFacing.NORTH, storage);
+        pushEnergy(world, pos, EnumFacing.EAST, storage);
+        pushEnergy(world, pos, EnumFacing.SOUTH, storage);
+        pushEnergy(world, pos, EnumFacing.WEST, storage);
     }
 
     public static void pushEnergy(World world, BlockPos pos, EnumFacing side, EnergyStorage storage){
@@ -76,7 +76,7 @@ public class WorldUtil{
     public static TileEntity getTileEntityFromSide(EnumFacing side, World world, BlockPos pos){
         BlockPos c = getCoordsFromSide(side, pos, 0);
         if(c != null){
-            return world.getTileEntity(pos);
+            return world.getTileEntity(c);
         }
         return null;
     }
@@ -399,7 +399,7 @@ public class WorldUtil{
         else{
             //Check the Server if a Block that changed on the Client really changed, if not, revert the change
             //TODO Check if this is the right action
-            Minecraft.getMinecraft().getNetHandler().addToSendQueue(new C07PacketPlayerDigging(C07PacketPlayerDigging.Action.START_DESTROY_BLOCK, pos, Minecraft.getMinecraft().objectMouseOver.sideHit));
+            Minecraft.getMinecraft().getNetHandler().addToSendQueue(new C07PacketPlayerDigging(C07PacketPlayerDigging.Action.STOP_DESTROY_BLOCK, pos, Minecraft.getMinecraft().objectMouseOver.sideHit));
         }
         return removed;
     }

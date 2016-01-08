@@ -162,13 +162,13 @@ public class InitBlocks{
         blockCoalGenerator = new BlockCoalGenerator("blockCoalGenerator");
         blockOilGenerator = new BlockOilGenerator("blockOilGenerator");
         blockFermentingBarrel = new BlockFermentingBarrel("blockFermentingBarrel");
-        blockRice = new BlockPlant("blockRice", 6, 1, 2);
+        blockRice = new BlockPlant("blockRice", 1, 2);
         CompatUtil.registerMFRPlant(blockRice);
-        blockCanola = new BlockPlant("blockCanola", 4, 5, 5);
+        blockCanola = new BlockPlant("blockCanola", 5, 5);
         CompatUtil.registerMFRPlant(blockCanola);
-        blockFlax = new BlockPlant("blockFlax", 6, 2, 4);
+        blockFlax = new BlockPlant("blockFlax", 2, 4);
         CompatUtil.registerMFRPlant(blockFlax);
-        blockCoffee = new BlockPlant("blockCoffee", 6, 2, 2);
+        blockCoffee = new BlockPlant("blockCoffee", 2, 2);
         CompatUtil.registerMFRPlant(blockCoffee);
         blockCompost = new BlockCompost("blockCompost");
         blockMisc = new BlockMisc("blockMisc");

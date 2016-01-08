@@ -15,8 +15,7 @@ import de.ellpeck.actuallyadditions.mod.booklet.GuiBooklet;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.renderer.OpenGlHelper;
-import org.lwjgl.opengl.GL11;
+import net.minecraft.client.renderer.GlStateManager;
 
 public class IndexButton extends GuiButton{
 
@@ -31,27 +30,27 @@ public class IndexButton extends GuiButton{
     @Override
     public void drawButton(Minecraft minecraft, int mouseX, int mouseY){
         if(this.visible){
-            GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             this.hovered = mouseX >= this.xPosition && mouseY >= this.yPosition && mouseX < this.xPosition+this.width && mouseY < this.yPosition+this.height;
-            GL11.glEnable(GL11.GL_BLEND);
-            OpenGlHelper.glBlendFunc(770, 771, 1, 0);
-            GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+            GlStateManager.enableBlend();
+            GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+            GlStateManager.blendFunc(770, 771);
             this.mouseDragged(minecraft, mouseX, mouseY);
 
             int textOffsetX = 0;
             if(this.chap != null){
                 if(this.chap.getDisplayItemStack() != null){
-                    GL11.glPushMatrix();
+                    GlStateManager.pushMatrix();
                     AssetUtil.renderStackToGui(this.chap.getDisplayItemStack(), this.xPosition-4, this.yPosition, 0.725F);
-                    GL11.glPopMatrix();
+                    GlStateManager.popMatrix();
                     textOffsetX = 10;
                 }
             }
 
             if(this.hovered){
-                GL11.glPushMatrix();
+                GlStateManager.pushMatrix();
                 AssetUtil.drawHorizontalGradientRect(this.xPosition+textOffsetX-1, this.yPosition+this.height-1, this.xPosition+this.gui.getFontRenderer().getStringWidth(this.displayString)+textOffsetX+1, this.yPosition+this.height, 0x80 << 24 | 22271, 22271, this.zLevel);
-                GL11.glPopMatrix();
+                GlStateManager.popMatrix();
             }
 
             this.gui.getFontRenderer().drawString(this.displayString, this.xPosition+textOffsetX, this.yPosition+(this.height-8)/2, 0);

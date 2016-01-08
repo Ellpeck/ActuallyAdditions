@@ -18,6 +18,7 @@ import de.ellpeck.actuallyadditions.mod.tile.TileEntityBreaker;
 import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import net.minecraft.block.BlockPistonBase;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -31,6 +32,7 @@ import net.minecraft.world.World;
 public class BlockBreaker extends BlockContainerBase{
 
     private boolean isPlacer;
+    private static final PropertyInteger META = PropertyInteger.create("meta", 0, 5);
 
     public BlockBreaker(boolean isPlacer, String name){
         super(Material.rock, name);
@@ -39,6 +41,11 @@ public class BlockBreaker extends BlockContainerBase{
         this.setHardness(1.5F);
         this.setResistance(10.0F);
         this.setStepSound(soundTypeStone);
+    }
+
+    @Override
+    protected PropertyInteger getMetaProperty(){
+        return META;
     }
 
     @Override

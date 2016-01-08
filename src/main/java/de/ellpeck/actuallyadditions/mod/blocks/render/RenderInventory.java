@@ -23,12 +23,12 @@ public class RenderInventory{
 
     /*@Override
     public void renderInventoryBlock(Block block, int metadata, int modelId, RenderBlocks renderer){
-        GL11.glPushMatrix();
+        GlStateManager.glPushMatrix();
         Minecraft.getMinecraft().renderEngine.bindTexture(this.tileRender.resLoc);
-        GL11.glTranslatef(0F, 1F, 0F);
-        GL11.glRotatef(180F, 1F, 0F, 0F);
+        GlStateManager.glTranslatef(0F, 1F, 0F);
+        GlStateManager.glRotatef(180F, 1F, 0F, 0F);
         this.tileRender.theModel.render(0.0625F);
-        GL11.glPopMatrix();
+        GlStateManager.glPopMatrix();
     }
 
     @Override

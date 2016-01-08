@@ -17,6 +17,7 @@ import de.ellpeck.actuallyadditions.mod.tile.TileEntityCoffeeMachine;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -30,6 +31,8 @@ import net.minecraft.world.World;
 
 public class BlockCoffeeMachine extends BlockContainerBase{
 
+    private static final PropertyInteger META = PropertyInteger.create("meta", 0, 3);
+
     public BlockCoffeeMachine(String name){
         super(Material.rock, name);
         this.setHarvestLevel("pickaxe", 0);
@@ -39,6 +42,11 @@ public class BlockCoffeeMachine extends BlockContainerBase{
 
         float f = 1/16F;
         this.setBlockBounds(f, 0F, f, 1F-f, 1F-2*f, 1F-f);
+    }
+
+    @Override
+    protected PropertyInteger getMetaProperty(){
+        return META;
     }
 
     @Override

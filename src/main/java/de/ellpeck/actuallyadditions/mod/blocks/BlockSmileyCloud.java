@@ -20,6 +20,7 @@ import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -38,12 +39,18 @@ import java.util.Random;
 
 public class BlockSmileyCloud extends BlockContainerBase{
 
+    private static final PropertyInteger META = PropertyInteger.create("meta", 0, 3);
+
     public BlockSmileyCloud(String name){
         super(Material.cloth, name);
         this.setHardness(0.5F);
         this.setResistance(5.0F);
         this.setStepSound(soundTypeCloth);
         this.setTickRandomly(true);
+    }
+    @Override
+    protected PropertyInteger getMetaProperty(){
+        return META;
     }
 
     @Override

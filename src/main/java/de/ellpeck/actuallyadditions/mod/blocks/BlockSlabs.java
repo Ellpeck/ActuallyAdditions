@@ -14,6 +14,7 @@ import de.ellpeck.actuallyadditions.mod.blocks.base.BlockBase;
 import de.ellpeck.actuallyadditions.mod.blocks.base.ItemBlockBase;
 import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import net.minecraft.block.Block;
+import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -37,12 +38,19 @@ public class BlockSlabs extends BlockBase{
         this(name, fullBlock, 0);
     }
 
+    private static final PropertyInteger META = PropertyInteger.create("meta", 0, 1);
+
     public BlockSlabs(String name, Block fullBlock, int meta){
         super(fullBlock.getMaterial(), name);
         this.setHardness(1.5F);
         this.setResistance(10.0F);
         this.fullBlock = fullBlock;
         this.meta = meta;
+    }
+
+    @Override
+    protected PropertyInteger getMetaProperty(){
+        return META;
     }
 
     @Override

@@ -15,10 +15,10 @@ import de.ellpeck.actuallyadditions.api.lens.ILensItem;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityAtomicReconstructor;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.PosUtil;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import org.lwjgl.opengl.GL11;
 
 public class RenderReconstructorLens extends TileEntitySpecialRenderer{
 
@@ -30,48 +30,48 @@ public class RenderReconstructorLens extends TileEntitySpecialRenderer{
         ItemStack stack = ((TileEntityAtomicReconstructor)tile).getStackInSlot(0);
 
         if(stack != null && stack.getItem() instanceof ILensItem){
-            GL11.glPushMatrix();
-            GL11.glTranslatef((float)x+0.5F, (float)y-0.5F, (float)z+0.5F);
-            GL11.glRotatef(180F, 0.0F, 0.0F, 1.0F);
+            GlStateManager.pushMatrix();
+            GlStateManager.translate((float)x+0.5F, (float)y-0.5F, (float)z+0.5F);
+            GlStateManager.rotate(180F, 0.0F, 0.0F, 1.0F);
 
             int meta = PosUtil.getMetadata(tile.getPos(), tile.getWorld());
             if(meta == 0){
-                GL11.glTranslatef(0F, -0.5F, 0F);
-                GL11.glTranslatef(-0.25F, 0F, -0.25F);
-                GL11.glRotatef(90F, 1F, 0F, 0F);
+                GlStateManager.translate(0F, -0.5F, 0F);
+                GlStateManager.translate(-0.25F, 0F, -0.25F);
+                GlStateManager.rotate(90F, 1F, 0F, 0F);
             }
             if(meta == 1){
-                GL11.glTranslatef(0F, -1.5F-0.5F/16F, 0F);
-                GL11.glTranslatef(-0.25F, 0F, -0.25F);
-                GL11.glRotatef(90F, 1F, 0F, 0F);
+                GlStateManager.translate(0F, -1.5F-0.5F/16F, 0F);
+                GlStateManager.translate(-0.25F, 0F, -0.25F);
+                GlStateManager.rotate(90F, 1F, 0F, 0F);
             }
             if(meta == 2){
-                GL11.glTranslatef(0F, -1F, 0F);
-                GL11.glTranslatef(0F, 0F, -0.5F);
-                GL11.glTranslatef(-0.25F, -0.25F, 0F);
+                GlStateManager.translate(0F, -1F, 0F);
+                GlStateManager.translate(0F, 0F, -0.5F);
+                GlStateManager.translate(-0.25F, -0.25F, 0F);
             }
             if(meta == 3){
-                GL11.glTranslatef(0F, -1F, 0F);
-                GL11.glTranslatef(0F, 0F, 0.5F+0.5F/16F);
-                GL11.glTranslatef(-0.25F, -0.25F, 0F);
+                GlStateManager.translate(0F, -1F, 0F);
+                GlStateManager.translate(0F, 0F, 0.5F+0.5F/16F);
+                GlStateManager.translate(-0.25F, -0.25F, 0F);
             }
             if(meta == 4){
-                GL11.glTranslatef(0F, -1F, 0F);
-                GL11.glTranslatef(0.5F+0.5F/16F, 0F, 0F);
-                GL11.glTranslatef(0F, -0.25F, 0.25F);
-                GL11.glRotatef(90F, 0F, 1F, 0F);
+                GlStateManager.translate(0F, -1F, 0F);
+                GlStateManager.translate(0.5F+0.5F/16F, 0F, 0F);
+                GlStateManager.translate(0F, -0.25F, 0.25F);
+                GlStateManager.rotate(90F, 0F, 1F, 0F);
             }
             if(meta == 5){
-                GL11.glTranslatef(0F, -1F, 0F);
-                GL11.glTranslatef(-0.5F, 0F, 0F);
-                GL11.glTranslatef(0F, -0.25F, 0.25F);
-                GL11.glRotatef(90F, 0F, 1F, 0F);
+                GlStateManager.translate(0F, -1F, 0F);
+                GlStateManager.translate(-0.5F, 0F, 0F);
+                GlStateManager.translate(0F, -0.25F, 0.25F);
+                GlStateManager.rotate(90F, 0F, 1F, 0F);
             }
 
-            GL11.glScalef(0.5F, 0.5F, 0.5F);
+            GlStateManager.scale(0.5F, 0.5F, 0.5F);
             AssetUtil.renderItemInWorld(stack, 0);
 
-            GL11.glPopMatrix();
+            GlStateManager.popMatrix();
         }
     }
 }
