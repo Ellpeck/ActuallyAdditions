@@ -15,6 +15,7 @@ import cofh.api.energy.IEnergyReceiver;
 import de.ellpeck.actuallyadditions.api.Position;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.item.EntityItem;
@@ -363,6 +364,7 @@ public class WorldUtil{
      */
     public static boolean playerHarvestBlock(World world, Position pos, EntityPlayer player){
         Block block = pos.getBlock(world);
+        IBlockState state = pos.getBlockState(world);
         int meta = pos.getMetadata(world);
         //If the Block can be harvested or not
         boolean canHarvest = block.canHarvestBlock(world, pos, player);
@@ -377,7 +379,7 @@ public class WorldUtil{
 
         if(!world.isRemote){
             //Server-Side only, special cases
-            block.onBlockHarvested(world, pos, pos.getBlockState(world), player);
+            block.onBlockHarvested(world, pos, state, player);
         }
         else{
             //Shows the Harvest Particles and plays the Block's Sound
@@ -389,12 +391,12 @@ public class WorldUtil{
         //Actually removes the Block from the World
         if(removed){
             //Before the Block is destroyed, special cases
-            block.onBlockDestroyedByPlayer(world, pos, pos.getBlockState(world));
+            block.onBlockDestroyedByPlayer(world, pos, state);
 
             if(!world.isRemote && !player.capabilities.isCreativeMode){
                 //Actually drops the Block's Items etc.
                 if(canHarvest){
-                    block.harvestBlock(world, player, pos, pos.getBlockState(world), pos.getTileEntity(world));
+                    block.harvestBlock(world, player, pos, state, pos.getTileEntity(world));
                 }
                 //Only drop XP when no Silk Touch is applied
                 if(!EnchantmentHelper.getSilkTouchModifier(player)){

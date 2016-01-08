@@ -68,6 +68,7 @@ public class SpecialRenderInit{
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
+    //TODO Fix floating item
     public void onPlayerRender(RenderPlayerEvent.Pre event){
         if(!specialList.isEmpty()){
             for(Map.Entry<String, RenderSpecial> entry : specialList.entrySet()){
