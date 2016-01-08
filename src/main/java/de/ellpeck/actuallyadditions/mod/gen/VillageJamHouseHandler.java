@@ -13,10 +13,10 @@ package de.ellpeck.actuallyadditions.mod.gen;
 import net.minecraft.world.gen.structure.StructureVillagePieces;
 import net.minecraftforge.fml.common.registry.VillagerRegistry;
 
-import java.util.List;
 import java.util.Random;
 
-public class VillageJamHouseHandler implements VillagerRegistry.IVillageCreationHandler{
+//TODO Fix village
+public abstract class VillageJamHouseHandler implements VillagerRegistry.IVillageCreationHandler{
 
     @Override
     public StructureVillagePieces.PieceWeight getVillagePieceWeight(Random random, int i){
@@ -28,8 +28,8 @@ public class VillageJamHouseHandler implements VillagerRegistry.IVillageCreation
         return VillageComponentJamHouse.class;
     }
 
-    @Override
+    /*@Override
     public Object buildComponent(StructureVillagePieces.PieceWeight villagePiece, StructureVillagePieces.Start startPiece, List pieces, Random random, int p1, int p2, int p3, int p4, int p5){
         return VillageComponentJamHouse.buildComponent(pieces, p1, p2, p3, p4);
-    }
+    }*/
 }

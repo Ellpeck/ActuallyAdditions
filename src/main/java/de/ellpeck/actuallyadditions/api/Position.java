@@ -105,7 +105,8 @@ public class Position extends BlockPos{
     }
 
     public static Position fromBlockPos(BlockPos pos){
-        return (Position)pos;
+        //TODO Make this less object creaty (Typecasting doesn't work?)
+        return new Position(pos.getX(), pos.getY(), pos.getZ());
     }
 
     public boolean setBlockState(World world, IBlockState state, int flag){

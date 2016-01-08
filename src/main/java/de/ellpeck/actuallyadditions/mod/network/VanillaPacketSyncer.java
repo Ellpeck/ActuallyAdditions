@@ -18,7 +18,7 @@ import java.util.List;
 public class VanillaPacketSyncer{
 
     public static void sendTileToNearbyPlayers(TileEntity tile){
-        List allPlayers = tile.getWorldObj().playerEntities;
+        List allPlayers = tile.getWorld().playerEntities;
         for(Object player : allPlayers){
             if(player instanceof EntityPlayerMP){
                 sendTileToPlayer(tile, (EntityPlayerMP)player, 64);
@@ -27,7 +27,7 @@ public class VanillaPacketSyncer{
     }
 
     public static void sendTileToPlayer(TileEntity tile, EntityPlayerMP player, int maxDistance){
-        if(player.getDistance(tile.xCoord, tile.yCoord, tile.zCoord) <= maxDistance){
+        if(player.getDistance(tile.getPos().getX(), tile.getPos().getY(), tile.getPos().getZ()) <= maxDistance){
             sendTileToPlayer(tile, player);
         }
     }

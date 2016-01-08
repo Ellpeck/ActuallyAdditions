@@ -68,7 +68,7 @@ public class SpecialRenderInit{
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
-    public void onPlayerRender(RenderPlayerEvent.Specials.Pre event){
+    public void onPlayerRender(RenderPlayerEvent.Pre event){
         if(!specialList.isEmpty()){
             for(Map.Entry<String, RenderSpecial> entry : specialList.entrySet()){
                 //Does the player have one of the names from the list?

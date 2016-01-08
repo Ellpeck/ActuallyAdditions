@@ -81,7 +81,7 @@ public class BookletUtils{
             booklet.getFontRenderer().drawString(strg, booklet.guiLeft+booklet.xSize/2-booklet.getFontRenderer().getStringWidth(strg)/2-3, booklet.guiTop+12+booklet.getFontRenderer().FONT_HEIGHT, 0);
 
             String version;
-            String playerName = Minecraft.getMinecraft().thePlayer.getCommandSenderName();
+            String playerName = Minecraft.getMinecraft().thePlayer.getName();
             if(playerName.equals("dqmhose")){
                 version = "Pants Edition";
             }
@@ -184,7 +184,7 @@ public class BookletUtils{
     public static void doHoverTexts(GuiBooklet booklet, int mouseX, int mouseY){
         //Update all of the buttons' hovering texts
         for(Object button : booklet.getButtonList()){
-            if(button instanceof GuiButton && ((GuiButton)button).visible && ((GuiButton)button).func_146115_a()){
+            if(button instanceof GuiButton && ((GuiButton)button).visible && ((GuiButton)button).isMouseOver()){
                 if(button instanceof BookmarkButton){
                     ((BookmarkButton)button).drawHover(mouseX, mouseY);
                 }

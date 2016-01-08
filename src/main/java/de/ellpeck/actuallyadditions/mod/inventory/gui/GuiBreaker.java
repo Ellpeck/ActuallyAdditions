@@ -41,7 +41,7 @@ public class GuiBreaker extends GuiContainer{
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y){
-        AssetUtil.displayNameString(this.fontRendererObj, xSize, -10, this.breaker.getInventoryName());
+        AssetUtil.displayNameString(this.fontRendererObj, xSize, -10, this.breaker.getName());
     }
 
     @Override

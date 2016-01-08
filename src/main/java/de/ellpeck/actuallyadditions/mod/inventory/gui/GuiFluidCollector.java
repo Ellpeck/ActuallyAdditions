@@ -43,13 +43,13 @@ public class GuiFluidCollector extends GuiContainer{
 
         String text2 = StringUtil.getFluidInfo(this.collector.tank);
         if(x >= guiLeft+68 && y >= guiTop+6 && x <= guiLeft+83 && y <= guiTop+88){
-            this.func_146283_a(Collections.singletonList(text2), x, y);
+            this.drawHoveringText(Collections.singletonList(text2), x, y);
         }
     }
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y){
-        AssetUtil.displayNameString(this.fontRendererObj, xSize, -10, this.collector.getInventoryName());
+        AssetUtil.displayNameString(this.fontRendererObj, xSize, -10, this.collector.getName());
     }
 
     @Override

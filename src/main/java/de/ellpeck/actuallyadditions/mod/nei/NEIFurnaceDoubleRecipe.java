@@ -55,7 +55,7 @@ public class NEIFurnaceDoubleRecipe extends TemplateRecipeHandler implements INE
     @Override
     public void loadCraftingRecipes(String outputId, Object... results){
         if(outputId.equals(NAME) && getClass() == NEIFurnaceDoubleRecipe.class){
-            Map<ItemStack, ItemStack> recipes = (Map<ItemStack, ItemStack>)FurnaceRecipes.smelting().getSmeltingList();
+            Map<ItemStack, ItemStack> recipes = FurnaceRecipes.instance().getSmeltingList();
             for(Map.Entry<ItemStack, ItemStack> recipe : recipes.entrySet()){
                 arecipes.add(new CachedFurn(recipe.getKey(), recipe.getValue()));
             }
@@ -68,7 +68,7 @@ public class NEIFurnaceDoubleRecipe extends TemplateRecipeHandler implements INE
     @SuppressWarnings("unchecked")
     @Override
     public void loadCraftingRecipes(ItemStack result){
-        Map<ItemStack, ItemStack> recipes = (Map<ItemStack, ItemStack>)FurnaceRecipes.smelting().getSmeltingList();
+        Map<ItemStack, ItemStack> recipes = FurnaceRecipes.instance().getSmeltingList();
         for(Map.Entry<ItemStack, ItemStack> recipe : recipes.entrySet()){
             if(NEIServerUtils.areStacksSameType(recipe.getValue(), result)){
                 arecipes.add(new CachedFurn(recipe.getKey(), recipe.getValue()));
@@ -79,7 +79,7 @@ public class NEIFurnaceDoubleRecipe extends TemplateRecipeHandler implements INE
     @SuppressWarnings("unchecked")
     @Override
     public void loadUsageRecipes(ItemStack ingredient){
-        Map<ItemStack, ItemStack> recipes = (Map<ItemStack, ItemStack>)FurnaceRecipes.smelting().getSmeltingList();
+        Map<ItemStack, ItemStack> recipes = FurnaceRecipes.instance().getSmeltingList();
         for(Map.Entry<ItemStack, ItemStack> recipe : recipes.entrySet()){
             if(NEIServerUtils.areStacksSameTypeCrafting(recipe.getKey(), ingredient)){
                 CachedFurn theRecipe = new CachedFurn(recipe.getKey(), recipe.getValue());

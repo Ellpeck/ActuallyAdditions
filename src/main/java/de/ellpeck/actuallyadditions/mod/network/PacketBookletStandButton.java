@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.network;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
+import de.ellpeck.actuallyadditions.api.Position;
 import de.ellpeck.actuallyadditions.api.internal.EntrySet;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBookletStand;
 import io.netty.buffer.ByteBuf;
@@ -46,7 +47,7 @@ public class PacketBookletStandButton implements IMessage{
         this.tileX = x;
         this.tileY = y;
         this.tileZ = z;
-        this.worldID = world.provider.dimensionId;
+        this.worldID = world.provider.getDimensionId();
         this.playerID = player.getEntityId();
 
         this.entryID = set.entry == null ? -1 : ActuallyAdditionsAPI.bookletEntries.indexOf(set.entry);
@@ -88,11 +89,11 @@ public class PacketBookletStandButton implements IMessage{
         @Override
         public IMessage onMessage(PacketBookletStandButton message, MessageContext ctx){
             World world = DimensionManager.getWorld(message.worldID);
-            TileEntity tile = world.getTileEntity(message.tileX, message.tileY, message.tileZ);
+            TileEntity tile = world.getTileEntity(new Position(message.tileX, message.tileY, message.tileZ));
             EntityPlayer player = (EntityPlayer)world.getEntityByID(message.playerID);
 
             if(tile instanceof TileEntityBookletStand){
-                if(Objects.equals(player.getCommandSenderName(), ((TileEntityBookletStand)tile).assignedPlayer)){
+                if(Objects.equals(player.getName(), ((TileEntityBookletStand)tile).assignedPlayer)){
                     EntrySet theSet = ((TileEntityBookletStand)tile).assignedEntry;
                     theSet.entry = message.entryID == -1 ? null : ActuallyAdditionsAPI.bookletEntries.get(message.entryID);
                     theSet.chapter = message.chapterID == -1 || message.entryID == -1 || theSet.entry.getChapters().size() <= message.chapterID ? null : theSet.entry.getChapters().get(message.chapterID);

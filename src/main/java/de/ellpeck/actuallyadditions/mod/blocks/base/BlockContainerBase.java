@@ -19,6 +19,8 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.BlockRedstoneTorch;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.PropertyInteger;
+import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
@@ -259,4 +261,20 @@ public abstract class BlockContainerBase extends BlockContainer{
         return false;
     }
 
+    public static final PropertyInteger META = PropertyInteger.create("metadata", 0, 15);
+
+    @Override
+    protected BlockState createBlockState(){
+        return new BlockState(this, META);
+    }
+
+    @Override
+    public IBlockState getStateFromMeta(int meta){
+        return getDefaultState().withProperty(META, meta);
+    }
+
+    @Override
+    public int getMetaFromState(IBlockState state){
+        return state.getValue(META);
+    }
 }

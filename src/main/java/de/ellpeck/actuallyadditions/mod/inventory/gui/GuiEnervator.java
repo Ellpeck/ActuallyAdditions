@@ -41,13 +41,13 @@ public class GuiEnervator extends GuiContainer{
         super.drawScreen(x, y, f);
         String text1 = this.enervator.storage.getEnergyStored()+"/"+this.enervator.storage.getMaxEnergyStored()+" RF";
         if(x >= guiLeft+57 && y >= guiTop+6 && x <= guiLeft+72 && y <= guiTop+88){
-            this.func_146283_a(Collections.singletonList(text1), x, y);
+            this.drawHoveringText(Collections.singletonList(text1), x, y);
         }
     }
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y){
-        AssetUtil.displayNameString(this.fontRendererObj, xSize, -10, this.enervator.getInventoryName());
+        AssetUtil.displayNameString(this.fontRendererObj, xSize, -10, this.enervator.getName());
     }
 
     @Override

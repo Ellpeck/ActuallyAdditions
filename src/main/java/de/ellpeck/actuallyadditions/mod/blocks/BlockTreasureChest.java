@@ -73,7 +73,7 @@ public class BlockTreasureChest extends BlockBase{
     }
 
     @Override
-    public boolean canSilkHarvest(){
+    public boolean canSilkHarvest(World world, BlockPos pos, IBlockState state, EntityPlayer player){
         return false;
     }
 

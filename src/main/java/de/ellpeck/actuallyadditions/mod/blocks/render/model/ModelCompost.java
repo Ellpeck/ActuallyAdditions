@@ -75,7 +75,7 @@ public class ModelCompost extends ModelBaseAA{
     @Override
     public void renderExtra(float f, TileEntity tile){
         //Hehe
-        if("ShadowfactsDev".equals(Minecraft.getMinecraft().thePlayer.getCommandSenderName())){
+        if("ShadowfactsDev".equals(Minecraft.getMinecraft().thePlayer.getName())){
             GL11.glTranslatef(0F, 1F, 0F);
         }
 

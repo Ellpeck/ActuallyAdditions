@@ -24,6 +24,7 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
 public class BlockFluidCollector extends BlockContainerBase{
@@ -45,14 +46,14 @@ public class BlockFluidCollector extends BlockContainerBase{
     }
 
     @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9){
-        if(this.tryToggleRedstone(world, x, y, z, player)){
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing par6, float par7, float par8, float par9){
+        if(this.tryToggleRedstone(world, Position.fromBlockPos(pos), player)){
             return true;
         }
         if(!world.isRemote){
-            TileEntityFluidCollector collector = (TileEntityFluidCollector)world.getTileEntity(x, y, z);
+            TileEntityFluidCollector collector = (TileEntityFluidCollector)world.getTileEntity(pos);
             if(collector != null){
-                player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.FLUID_COLLECTOR.ordinal(), world, x, y, z);
+                player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.FLUID_COLLECTOR.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
             }
             return true;
         }

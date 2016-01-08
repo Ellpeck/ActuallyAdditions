@@ -17,7 +17,6 @@ import de.ellpeck.actuallyadditions.mod.blocks.render.RenderSmileyCloud;
 import de.ellpeck.actuallyadditions.mod.blocks.render.RenderTileEntity;
 import de.ellpeck.actuallyadditions.mod.blocks.render.model.*;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
-import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.event.InitEvents;
 import de.ellpeck.actuallyadditions.mod.misc.special.SpecialRenderInit;
 import de.ellpeck.actuallyadditions.mod.tile.*;
@@ -26,12 +25,10 @@ import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.playerdata.PersistentClientData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.registry.VillagerRegistry;
 
 import java.io.File;
 import java.util.Calendar;
@@ -76,7 +73,8 @@ public class ClientProxy implements IProxy{
         registerRenderer(TileEntityBookletStand.class, new RenderTileEntity(new ModelBookletStand()), AssetUtil.bookletStandRenderId);
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAtomicReconstructor.class, new RenderReconstructorLens());
 
-        VillagerRegistry.instance().registerVillagerSkin(ConfigIntValues.JAM_VILLAGER_ID.getValue(), new ResourceLocation(ModUtil.MOD_ID_LOWER, "textures/entity/villager/jamVillager.png"));
+        //TODO Fix villager
+        //VillagerRegistry.instance().registerVillagerSkin(ConfigIntValues.JAM_VILLAGER_ID.getValue(), new ResourceLocation(ModUtil.MOD_ID_LOWER, "textures/entity/villager/jamVillager.png"));
     }
 
     @Override

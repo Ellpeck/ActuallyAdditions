@@ -13,7 +13,6 @@ package de.ellpeck.actuallyadditions.mod.items.base;
 import de.ellpeck.actuallyadditions.mod.creative.CreativeTab;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
-import net.minecraft.entity.Entity;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
@@ -23,15 +22,12 @@ public class ItemArmorAA extends ItemArmor{
 
     private ItemStack repairItem;
     private String name;
-    private String[] textures;
     private EnumRarity rarity;
 
     public ItemArmorAA(String name, ArmorMaterial material, int type, ItemStack repairItem, String textureBase, EnumRarity rarity){
         super(material, 0, type);
         this.repairItem = repairItem;
         this.name = name;
-        String texture = ModUtil.MOD_ID_LOWER+":textures/armor/"+textureBase;
-        textures = new String[]{texture+"1.png", texture+"2.png"};
         this.rarity = rarity;
 
         this.register();
@@ -63,11 +59,6 @@ public class ItemArmorAA extends ItemArmor{
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return this.rarity;
-    }
-
-    @Override
-    public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type){
-        return this.textures[slot == 2 ? 1 : 0];
     }
 
     @Override

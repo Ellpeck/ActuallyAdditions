@@ -29,6 +29,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
+import java.io.IOException;
+
 @SideOnly(Side.CLIENT)
 public class GuiSmileyCloud extends GuiContainer{
 
@@ -59,7 +61,7 @@ public class GuiSmileyCloud extends GuiContainer{
     public void initGui(){
         super.initGui();
 
-        this.nameField = new GuiTextField(this.fontRendererObj, guiLeft+5, guiTop+6, 114, 8);
+        this.nameField = new GuiTextField(4000, this.fontRendererObj, guiLeft+5, guiTop+6, 114, 8);
         this.nameField.setMaxStringLength(20);
         this.nameField.setEnableBackgroundDrawing(false);
         this.nameField.setFocused(true);
@@ -89,13 +91,13 @@ public class GuiSmileyCloud extends GuiContainer{
     }
 
     @Override
-    protected void mouseClicked(int par1, int par2, int par3){
+    protected void mouseClicked(int par1, int par2, int par3) throws IOException{
         this.nameField.mouseClicked(par1, par2, par3);
         super.mouseClicked(par1, par2, par3);
     }
 
     @Override
-    public void keyTyped(char theChar, int key){
+    public void keyTyped(char theChar, int key) throws IOException{
         if(key != 1 && this.nameField.isFocused()){
             if(key == Keyboard.KEY_RETURN || key == Keyboard.KEY_NUMPADENTER){
                 this.setVariable(this.nameField);

@@ -13,6 +13,9 @@ package de.ellpeck.actuallyadditions.mod.blocks.base;
 import de.ellpeck.actuallyadditions.mod.creative.CreativeTab;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.block.BlockBush;
+import net.minecraft.block.properties.PropertyInteger;
+import net.minecraft.block.state.BlockState;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -53,5 +56,22 @@ public class BlockBushBase extends BlockBush{
 
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.COMMON;
+    }
+
+    public static final PropertyInteger META = PropertyInteger.create("metadata", 0, 15);
+
+    @Override
+    protected BlockState createBlockState(){
+        return new BlockState(this, META);
+    }
+
+    @Override
+    public IBlockState getStateFromMeta(int meta){
+        return getDefaultState().withProperty(META, meta);
+    }
+
+    @Override
+    public int getMetaFromState(IBlockState state){
+        return state.getValue(META);
     }
 }

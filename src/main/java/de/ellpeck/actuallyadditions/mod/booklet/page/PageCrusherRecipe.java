@@ -58,21 +58,21 @@ public class PageCrusherRecipe extends BookletPageAA{
     @SideOnly(Side.CLIENT)
     public void render(IBookletGui gui, int mouseX, int mouseY, int ticksElapsed, boolean mousePressed){
         if(recipe == null){
-            StringUtil.drawSplitString(Minecraft.getMinecraft().fontRenderer, EnumChatFormatting.DARK_RED+StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".recipeDisabled"), gui.getGuiLeft()+14, gui.getGuiTop()+15, 115, 0, false);
+            StringUtil.drawSplitString(Minecraft.getMinecraft().fontRendererObj, EnumChatFormatting.DARK_RED+StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".recipeDisabled"), gui.getGuiLeft()+14, gui.getGuiTop()+15, 115, 0, false);
         }
         else{
             String strg = "Crusher Recipe";
-            Minecraft.getMinecraft().fontRenderer.drawString(strg, gui.getGuiLeft()+gui.getXSize()/2-Minecraft.getMinecraft().fontRenderer.getStringWidth(strg)/2, gui.getGuiTop()+10, 0);
+            Minecraft.getMinecraft().fontRendererObj.drawString(strg, gui.getGuiLeft()+gui.getXSize()/2-Minecraft.getMinecraft().fontRendererObj.getStringWidth(strg)/2, gui.getGuiTop()+10, 0);
         }
 
         String text = gui.getCurrentEntrySet().page.getText();
         if(text != null && !text.isEmpty()){
-            StringUtil.drawSplitString(Minecraft.getMinecraft().fontRenderer, text, gui.getGuiLeft()+14, gui.getGuiTop()+100, 115, 0, false);
+            StringUtil.drawSplitString(Minecraft.getMinecraft().fontRendererObj, text, gui.getGuiLeft()+14, gui.getGuiTop()+100, 115, 0, false);
         }
 
         if(recipe != null){
             if(recipe.outputTwoChance > 0){
-                Minecraft.getMinecraft().fontRenderer.drawString(recipe.outputTwoChance+"%", gui.getGuiLeft()+37+62, gui.getGuiTop()+20+33, 0);
+                Minecraft.getMinecraft().fontRendererObj.drawString(recipe.outputTwoChance+"%", gui.getGuiLeft()+37+62, gui.getGuiTop()+20+33, 0);
             }
 
             if(recipe.getRecipeOutputOnes() != null){

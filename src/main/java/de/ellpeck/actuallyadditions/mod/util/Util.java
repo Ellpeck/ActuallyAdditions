@@ -22,7 +22,6 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.EnumHelper;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.List;
@@ -45,7 +44,6 @@ public class Util{
 
     public static void registerEvent(Object o){
         MinecraftForge.EVENT_BUS.register(o);
-        FMLCommonHandler.instance().bus().register(o);
     }
 
     public static boolean isDevVersion(){

@@ -391,7 +391,7 @@ public class ItemCrafting{
         }
 
         //Resonant Rice
-        if(ConfigCrafting.RESONANT_RICE.isEnabled() && !OreDictionary.getOres("nuggetEnderium", false).isEmpty()){
+        if(ConfigCrafting.RESONANT_RICE.isEnabled() && !OreDictionary.getOres("nuggetEnderium").isEmpty()){
             GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemResonantRice),
                     new ItemStack(InitItems.itemFoods, 1, TheFoods.RICE.ordinal()), "nuggetEnderium", Items.gunpowder));
         }
@@ -533,10 +533,10 @@ public class ItemCrafting{
 
     public static void initMashedFoodRecipes(){
         if(ConfigCrafting.MASHED_FOOD.isEnabled()){
-            for(Object item : Item.itemRegistry){
+            for(Item item : Item.itemRegistry){
                 if(item instanceof ItemFood || item instanceof IPlantable || item instanceof IGrowable){
                     if(!isBlacklisted(item)){
-                        ItemStack ingredient = new ItemStack((Item)item, 1, Util.WILDCARD);
+                        ItemStack ingredient = new ItemStack(item, 1, Util.WILDCARD);
                         GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemMisc, 8, TheMiscItems.MASHED_FOOD.ordinal()), ingredient, ingredient, ingredient, ingredient, new ItemStack(InitItems.itemKnife, 1, Util.WILDCARD));
                         recipesMashedFood.add(Util.GetRecipes.lastIRecipe());
                     }
@@ -545,9 +545,9 @@ public class ItemCrafting{
         }
     }
 
-    private static boolean isBlacklisted(Object item){
+    private static boolean isBlacklisted(Item item){
         for(String except : ConfigValues.mashedFoodCraftingExceptions){
-            if(Item.itemRegistry.getNameForObject(item).equals(except)){
+            if(item.getRegistryName().equals(except)){
                 return true;
             }
         }

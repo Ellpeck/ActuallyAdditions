@@ -10,20 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.gen;
 
-import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
-import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityChest;
-import net.minecraft.util.WeightedRandomChestContent;
-import net.minecraft.world.World;
-import net.minecraft.world.gen.structure.StructureBoundingBox;
-import net.minecraft.world.gen.structure.StructureComponent;
 import net.minecraft.world.gen.structure.StructureVillagePieces;
-import net.minecraftforge.common.ChestGenHooks;
-
-import java.util.List;
-import java.util.Random;
 
 public class VillageComponentJamHouse extends StructureVillagePieces.House1{
 
@@ -38,7 +25,8 @@ public class VillageComponentJamHouse extends StructureVillagePieces.House1{
 
     }
 
-    public VillageComponentJamHouse(StructureBoundingBox boundingBox, int par5){
+    //TODO Fix village
+    /*public VillageComponentJamHouse(StructureBoundingBox boundingBox, int par5){
         this.coordBaseMode = par5;
         this.boundingBox = boundingBox;
     }
@@ -200,5 +188,5 @@ public class VillageComponentJamHouse extends StructureVillagePieces.House1{
     @Override
     protected int getVillagerType(int par1){
         return ConfigIntValues.JAM_VILLAGER_ID.getValue();
-    }
+    }*/
 }

@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.event;
 
+import de.ellpeck.actuallyadditions.api.Position;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import net.minecraft.block.Block;
@@ -28,9 +29,9 @@ public class BucketFillEvent{
     }
 
     private void fillBucket(FillBucketEvent event, Item item, Block fluid){
-        Block block = event.world.getBlock(event.target.blockX, event.target.blockY, event.target.blockZ);
+        Block block = Position.fromBlockPos(event.target.getBlockPos()).getBlock(event.world);
         if(block == fluid){
-            event.world.setBlockToAir(event.target.blockX, event.target.blockY, event.target.blockZ);
+            event.world.setBlockToAir(event.target.getBlockPos());
             event.result = new ItemStack(item);
             event.setResult(Event.Result.ALLOW);
         }

@@ -23,14 +23,14 @@ public class CompatUtil{
         FMLInterModComms.sendMessage("MineFactoryReloaded", "registerHarvestable_Crop", new ItemStack(block, 1, 7));
 
         NBTTagCompound compound = new NBTTagCompound();
-        compound.setString("plant", Block.blockRegistry.getNameForObject(block));
+        compound.setString("plant", block.getRegistryName());
         FMLInterModComms.sendMessage("MineFactoryReloaded", "registerFertilizable_Crop", compound);
     }
 
     public static void registerMFRSeed(Item item){
         NBTTagCompound compound = new NBTTagCompound();
-        compound.setString("seed", Item.itemRegistry.getNameForObject(item));
-        compound.setString("crop", Block.blockRegistry.getNameForObject(((ItemSeed)item).plant));
+        compound.setString("seed", item.getRegistryName());
+        compound.setString("crop", ((ItemSeed)item).plant.getRegistryName());
         FMLInterModComms.sendMessage("MineFactoryReloaded", "registerPlantable_Crop", compound);
     }
 

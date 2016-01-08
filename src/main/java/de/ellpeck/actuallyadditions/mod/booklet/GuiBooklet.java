@@ -42,6 +42,7 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -197,7 +198,7 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
     }
 
     @Override
-    protected void mouseClicked(int par1, int par2, int par3){
+    protected void mouseClicked(int par1, int par2, int par3) throws IOException{
         this.searchField.mouseClicked(par1, par2, par3);
         //Left mouse button
         if(par3 == 0 && this.currentEntrySet.chapter != null){
@@ -212,12 +213,7 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
                 BookletUtils.openIndexEntry(this, null, 1, true);
             }
         }
-        try{
-            super.mouseClicked(par1, par2, par3);
-        }
-        catch(Exception e){
-            ModUtil.LOGGER.error("Something bad happened when trying to click a button in the booklet!", e);
-        }
+        super.mouseClicked(par1, par2, par3);
     }
 
     @Override
@@ -362,7 +358,7 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
 
     @Override
     //For scrolling through pages
-    public void handleMouseInput(){
+    public void handleMouseInput() throws IOException{
         int wheel = Mouse.getEventDWheel();
         if(wheel != 0){
             if(wheel > 0){
@@ -372,12 +368,7 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
                 BookletUtils.handlePreviousPage(this);
             }
         }
-        try{
-            super.handleMouseInput();
-        }
-        catch(Exception e){
-            ModUtil.LOGGER.error("Something bad happened when trying to click a button in the booklet!", e);
-        }
+        super.handleMouseInput();
     }
 
     @Override

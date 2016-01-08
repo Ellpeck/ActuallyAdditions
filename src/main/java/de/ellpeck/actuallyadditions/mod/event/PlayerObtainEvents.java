@@ -20,7 +20,6 @@ import de.ellpeck.actuallyadditions.mod.util.playerdata.PersistentServerData;
 import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -37,8 +36,8 @@ public class PlayerObtainEvents{
         if(ConfigBoolValues.GIVE_BOOKLET_ON_FIRST_CRAFT.isEnabled()){
             if(!event.player.worldObj.isRemote && event.crafting.getItem() != InitItems.itemBooklet){
 
-                String itemName = Item.itemRegistry.getNameForObject(event.crafting.getItem());
-                String blockName = Block.blockRegistry.getNameForObject(Block.getBlockFromItem(event.crafting.getItem()));
+                String itemName = event.crafting.getItem().getRegistryName();
+                String blockName = Block.getBlockFromItem(event.crafting.getItem()).getRegistryName();
 
                 if((itemName != null && itemName.toLowerCase(Locale.ROOT).contains(ModUtil.MOD_ID_LOWER)) || (blockName != null && blockName.toLowerCase(Locale.ROOT).contains(ModUtil.MOD_ID_LOWER))){
                     NBTTagCompound compound = PersistentServerData.getDataFromPlayer(event.player);
@@ -47,7 +46,7 @@ public class PlayerObtainEvents{
                         WorldData.makeDirty();
 
                         EntityItem entityItem = new EntityItem(event.player.worldObj, event.player.posX, event.player.posY, event.player.posZ, new ItemStack(InitItems.itemBooklet));
-                        entityItem.delayBeforeCanPickup = 0;
+                        entityItem.setPickupDelay(0);
                         event.player.worldObj.spawnEntityInWorld(entityItem);
                     }
                 }

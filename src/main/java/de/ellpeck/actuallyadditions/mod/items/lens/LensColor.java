@@ -56,18 +56,18 @@ public class LensColor extends Lens{
     @Override
     public boolean invoke(Position hitBlock, IAtomicReconstructor tile){
         if(hitBlock != null){
-            if(Util.arrayContains(CONVERTABLE_BLOCKS, hitBlock.getBlock(tile.getWorld())) >= 0 && tile.getEnergy() >= ENERGY_USE){
-                int meta = hitBlock.getMetadata(tile.getWorld());
+            if(Util.arrayContains(CONVERTABLE_BLOCKS, hitBlock.getBlock(tile.getWorldObject())) >= 0 && tile.getEnergy() >= ENERGY_USE){
+                int meta = hitBlock.getMetadata(tile.getWorldObject());
                 if(meta >= 15){
-                    hitBlock.setMetadata(tile.getWorld(), 0, 2);
+                    hitBlock.setMetadata(tile.getWorldObject(), 0, 2);
                 }
                 else{
-                    hitBlock.setMetadata(tile.getWorld(), meta+1, 2);
+                    hitBlock.setMetadata(tile.getWorldObject(), meta+1, 2);
                 }
                 tile.extractEnergy(ENERGY_USE);
             }
 
-            ArrayList<EntityItem> items = (ArrayList<EntityItem>)tile.getWorld().getEntitiesWithinAABB(EntityItem.class, AxisAlignedBB.getBoundingBox(hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), hitBlock.getX()+1, hitBlock.getY()+1, hitBlock.getZ()+1));
+            ArrayList<EntityItem> items = (ArrayList<EntityItem>)tile.getWorldObject().getEntitiesWithinAABB(EntityItem.class, AxisAlignedBB.fromBounds(hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), hitBlock.getX()+1, hitBlock.getY()+1, hitBlock.getZ()+1));
             for(EntityItem item : items){
                 if(item.getEntityItem() != null && tile.getEnergy() >= ENERGY_USE){
                     if(Util.arrayContains(CONVERTABLE_BLOCKS, item.getEntityItem().getItem()) >= 0 || Util.arrayContains(CONVERTABLE_BLOCKS, Block.getBlockFromItem(item.getEntityItem().getItem())) >= 0){

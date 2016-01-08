@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.event;
 
+import de.ellpeck.actuallyadditions.api.Position;
 import de.ellpeck.actuallyadditions.api.block.IHudDisplay;
 import de.ellpeck.actuallyadditions.api.tile.IEnergyDisplay;
 import de.ellpeck.actuallyadditions.mod.tile.IRedstoneToggle;
@@ -37,7 +38,7 @@ public class HudEvent{
             Profiler profiler = minecraft.mcProfiler;
             EntityPlayer player = minecraft.thePlayer;
             MovingObjectPosition posHit = minecraft.objectMouseOver;
-            FontRenderer font = minecraft.fontRenderer;
+            FontRenderer font = minecraft.fontRendererObj;
             ItemStack stack = player.getCurrentEquippedItem();
 
             profiler.startSection(ModUtil.MOD_ID+"Hud");
@@ -51,8 +52,8 @@ public class HudEvent{
             }
 
             if(posHit != null){
-                Block blockHit = minecraft.theWorld.getBlock(posHit.blockX, posHit.blockY, posHit.blockZ);
-                TileEntity tileHit = minecraft.theWorld.getTileEntity(posHit.blockX, posHit.blockY, posHit.blockZ);
+                Block blockHit = Position.fromBlockPos(posHit.getBlockPos()).getBlock(minecraft.theWorld);
+                TileEntity tileHit = minecraft.theWorld.getTileEntity(posHit.getBlockPos());
 
                 if(blockHit instanceof IHudDisplay){
                     profiler.startSection("BlockHudDisplay");

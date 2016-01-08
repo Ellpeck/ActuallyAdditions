@@ -10,13 +10,13 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
+import de.ellpeck.actuallyadditions.api.Position;
 import de.ellpeck.actuallyadditions.api.block.IHudDisplay;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityMiner;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
-import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -70,18 +70,18 @@ public class BlockMiner extends BlockContainerBase implements IHudDisplay{
     }
 
     @Override
-    public void breakBlock(World world, int x, int y, int z, Block block, int par6){
-        this.dropInventory(world, x, y, z);
-        super.breakBlock(world, x, y, z, block, par6);
+    public void breakBlock(World world, BlockPos pos, IBlockState state){
+        this.dropInventory(world, Position.fromBlockPos(pos));
+        super.breakBlock(world, pos, state);
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public void displayHud(Minecraft minecraft, EntityPlayer player, ItemStack stack, MovingObjectPosition posHit, Profiler profiler, ScaledResolution resolution){
-        TileEntity tile = minecraft.theWorld.getTileEntity(posHit.blockX, posHit.blockY, posHit.blockZ);
+        TileEntity tile = minecraft.theWorld.getTileEntity(posHit.getBlockPos());
         if(tile instanceof TileEntityMiner){
             String info = ((TileEntityMiner)tile).layerAt <= 0 ? "Done Mining!" : "Mining at Y = "+((TileEntityMiner)tile).layerAt+".";
-            minecraft.fontRenderer.drawStringWithShadow(info, resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2-20, StringUtil.DECIMAL_COLOR_WHITE);
+            minecraft.fontRendererObj.drawStringWithShadow(info, resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2-20, StringUtil.DECIMAL_COLOR_WHITE);
         }
     }
 }
