@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.items.base;
 
 import de.ellpeck.actuallyadditions.mod.creative.CreativeTab;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.block.Block;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumRarity;
@@ -40,6 +41,8 @@ public class ItemBucketAA extends ItemBucket{
         else{
             this.setCreativeTab(null);
         }
+
+        Util.ITEMS_AND_BLOCKS.add(this);
     }
 
     protected String getBaseName(){

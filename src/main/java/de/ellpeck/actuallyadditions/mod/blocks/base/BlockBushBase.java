@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.blocks.base;
 
 import de.ellpeck.actuallyadditions.mod.creative.CreativeTab;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockState;
@@ -39,6 +40,8 @@ public class BlockBushBase extends BlockBush{
         else{
             this.setCreativeTab(null);
         }
+
+        Util.ITEMS_AND_BLOCKS.add(this);
     }
 
     protected String getBaseName(){

@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.blocks.base;
 
 import de.ellpeck.actuallyadditions.mod.creative.CreativeTab;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyInteger;
@@ -41,6 +42,8 @@ public class BlockBase extends Block{
         else{
             this.setCreativeTab(null);
         }
+
+        Util.ITEMS_AND_BLOCKS.add(this);
     }
 
     protected String getBaseName(){

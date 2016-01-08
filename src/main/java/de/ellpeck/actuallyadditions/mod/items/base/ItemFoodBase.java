@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.items.base;
 
 import de.ellpeck.actuallyadditions.mod.creative.CreativeTab;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.item.ItemFood;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -36,6 +37,8 @@ public class ItemFoodBase extends ItemFood{
         else{
             this.setCreativeTab(null);
         }
+
+        Util.ITEMS_AND_BLOCKS.add(this);
     }
 
     protected String getBaseName(){

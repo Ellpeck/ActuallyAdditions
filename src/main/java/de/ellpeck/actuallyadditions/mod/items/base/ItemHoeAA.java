@@ -13,6 +13,7 @@ package de.ellpeck.actuallyadditions.mod.items.base;
 import de.ellpeck.actuallyadditions.mod.creative.CreativeTab;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemHoe;
@@ -44,6 +45,8 @@ public class ItemHoeAA extends ItemHoe{
         else{
             this.setCreativeTab(null);
         }
+
+        Util.ITEMS_AND_BLOCKS.add(this);
     }
 
     protected String getBaseName(){

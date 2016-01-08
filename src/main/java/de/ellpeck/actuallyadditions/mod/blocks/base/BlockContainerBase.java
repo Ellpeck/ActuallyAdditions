@@ -59,6 +59,8 @@ public abstract class BlockContainerBase extends BlockContainer{
         else{
             this.setCreativeTab(null);
         }
+
+        Util.ITEMS_AND_BLOCKS.add(this);
     }
 
     protected String getBaseName(){

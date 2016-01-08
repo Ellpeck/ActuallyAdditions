@@ -22,8 +22,14 @@ import de.ellpeck.actuallyadditions.mod.misc.special.SpecialRenderInit;
 import de.ellpeck.actuallyadditions.mod.tile.*;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.Util;
 import de.ellpeck.actuallyadditions.mod.util.playerdata.PersistentClientData;
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.ItemModelMesher;
+import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -31,7 +37,9 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 @SuppressWarnings("unused")
 public class ClientProxy implements IProxy{
@@ -75,6 +83,24 @@ public class ClientProxy implements IProxy{
 
         //TODO Fix villager
         //VillagerRegistry.instance().registerVillagerSkin(ConfigIntValues.JAM_VILLAGER_ID.getValue(), new ResourceLocation(ModUtil.MOD_ID_LOWER, "textures/entity/villager/jamVillager.png"));
+
+        for(Object o : Util.ITEMS_AND_BLOCKS){
+            ItemModelMesher mesher = Minecraft.getMinecraft().getRenderItem().getItemModelMesher();
+            if(o instanceof Item){
+                List<ItemStack> subItems = new ArrayList<ItemStack>();
+                ((Item)o).getSubItems((Item)o, null, subItems);
+                for(ItemStack aStack : subItems){
+                    mesher.register(aStack.getItem(), aStack.getItemDamage(), new ModelResourceLocation(ModUtil.MOD_ID_LOWER+":"+aStack.getItem().getRegistryName(), "inventory"));
+                }
+            }
+            else if(o instanceof Block){
+                List<ItemStack> subItems = new ArrayList<ItemStack>();
+                ((Block)o).getSubBlocks(Item.getItemFromBlock((Block)o), null, subItems);
+                for(ItemStack aStack : subItems){
+                    mesher.register(aStack.getItem(), aStack.getItemDamage(), new ModelResourceLocation(ModUtil.MOD_ID_LOWER+":"+aStack.getItem().getRegistryName(), "inventory"));
+                }
+            }
+        }
     }
 
     @Override

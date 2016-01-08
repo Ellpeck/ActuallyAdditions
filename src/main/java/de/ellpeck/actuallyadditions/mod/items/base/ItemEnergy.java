@@ -13,6 +13,7 @@ package de.ellpeck.actuallyadditions.mod.items.base;
 import cofh.api.energy.ItemEnergyContainer;
 import de.ellpeck.actuallyadditions.mod.creative.CreativeTab;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -47,6 +48,8 @@ public abstract class ItemEnergy extends ItemEnergyContainer{
         else{
             this.setCreativeTab(null);
         }
+
+        Util.ITEMS_AND_BLOCKS.add(this);
     }
 
     protected String getBaseName(){
