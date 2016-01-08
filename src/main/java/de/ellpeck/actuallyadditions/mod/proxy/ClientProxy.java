@@ -85,19 +85,24 @@ public class ClientProxy implements IProxy{
         //VillagerRegistry.instance().registerVillagerSkin(ConfigIntValues.JAM_VILLAGER_ID.getValue(), new ResourceLocation(ModUtil.MOD_ID_LOWER, "textures/entity/villager/jamVillager.png"));
 
         for(Object o : Util.ITEMS_AND_BLOCKS){
-            ItemModelMesher mesher = Minecraft.getMinecraft().getRenderItem().getItemModelMesher();
+
+            ItemStack stack = null;
             if(o instanceof Item){
-                List<ItemStack> subItems = new ArrayList<ItemStack>();
-                ((Item)o).getSubItems((Item)o, null, subItems);
-                for(ItemStack aStack : subItems){
-                    mesher.register(aStack.getItem(), aStack.getItemDamage(), new ModelResourceLocation(ModUtil.MOD_ID_LOWER+":"+aStack.getItem().getRegistryName(), "inventory"));
-                }
+                stack = new ItemStack((Item)o);
             }
             else if(o instanceof Block){
+                stack = new ItemStack((Block)o);
+            }
+
+            if(stack != null){
+                ItemModelMesher mesher = Minecraft.getMinecraft().getRenderItem().getItemModelMesher();
+                String name = stack.getItem().getRegistryName();
+
                 List<ItemStack> subItems = new ArrayList<ItemStack>();
-                ((Block)o).getSubBlocks(Item.getItemFromBlock((Block)o), null, subItems);
+                stack.getItem().getSubItems(stack.getItem(), null, subItems);
+
                 for(ItemStack aStack : subItems){
-                    mesher.register(aStack.getItem(), aStack.getItemDamage(), new ModelResourceLocation(ModUtil.MOD_ID_LOWER+":"+aStack.getItem().getRegistryName(), "inventory"));
+                    mesher.register(aStack.getItem(), aStack.getItemDamage(), new ModelResourceLocation(name, "inventory"));
                 }
             }
         }

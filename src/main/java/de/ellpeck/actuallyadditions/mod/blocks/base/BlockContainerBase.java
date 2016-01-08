@@ -280,4 +280,9 @@ public abstract class BlockContainerBase extends BlockContainer{
     protected PropertyInteger getMetaProperty(){
         return null;
     }
+
+    @Override
+    public int getRenderType(){
+        return 3;
+    }
 }
