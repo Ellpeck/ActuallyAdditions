@@ -206,7 +206,8 @@ public class BookletUtils{
                 currentEntry.chapters.clear();
 
                 for(IBookletChapter chapter : currentEntry.allChapters){
-                    if(chapter.getLocalizedName().toLowerCase(Locale.ROOT).contains(booklet.searchField.getText().toLowerCase(Locale.ROOT))){
+                    String searchFieldText = booklet.searchField.getText().toLowerCase(Locale.ROOT);
+                    if(chapter.getLocalizedName().toLowerCase(Locale.ROOT).contains(searchFieldText) || getChapterStacksContainString(searchFieldText, chapter)){
                         currentEntry.chapters.add(chapter);
                     }
                 }
@@ -216,6 +217,20 @@ public class BookletUtils{
             }
             openIndexEntry(booklet, booklet.currentEntrySet.entry, booklet.currentEntrySet.pageInIndex, false);
         }
+    }
+
+    private static boolean getChapterStacksContainString(String text, IBookletChapter chapter){
+        for(BookletPage page : chapter.getPages()){
+            ItemStack[] pageStacks = page.getItemStacksForPage();
+            if(pageStacks != null){
+                for(ItemStack stack : pageStacks){
+                    if(stack.getDisplayName().toLowerCase(Locale.ROOT).contains(text)){
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     @SuppressWarnings("unchecked")

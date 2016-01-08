@@ -46,7 +46,7 @@ public class WorldUtil{
     public static void breakBlockAtSide(EnumFacing side, World world, BlockPos pos, int offset){
         BlockPos c = getCoordsFromSide(side, pos, offset);
         if(c != null){
-            world.setBlockToAir(pos);
+            world.setBlockToAir(c);
         }
     }
 

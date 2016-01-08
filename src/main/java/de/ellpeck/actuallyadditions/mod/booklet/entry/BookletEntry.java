@@ -13,7 +13,6 @@ package de.ellpeck.actuallyadditions.mod.booklet.entry;
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
-import de.ellpeck.actuallyadditions.mod.booklet.chapter.BookletChapter;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.util.EnumChatFormatting;
@@ -42,10 +41,6 @@ public class BookletEntry implements IBookletEntry{
     @Override
     public List<IBookletChapter> getChapters(){
         return this.chapters;
-    }
-
-    public void addChapter(BookletChapter chapter){
-        this.chapters.add(chapter);
     }
 
     @Override

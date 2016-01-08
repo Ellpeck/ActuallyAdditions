@@ -1,5 +1,5 @@
 {
-  "parent": "actuallyadditions:block/blockColoredLampWhite",
+  "parent": "actuallyadditions:block/blockColoredLampGreenOn",
   "display": {
     "thirdperson": {
       "rotation": [ 10, -45, 170 ],
