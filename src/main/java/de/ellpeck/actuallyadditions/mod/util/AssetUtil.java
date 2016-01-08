@@ -31,15 +31,6 @@ public class AssetUtil{
     public static final ResourceLocation GUI_INVENTORY_LOCATION = getGuiLocation("guiInventory");
     public static final int TESR_RENDER_ID = 2;
 
-    public static int compostRenderId;
-    public static int fishingNetRenderId;
-    public static int furnaceSolarRenderId;
-    public static int coffeeMachineRenderId;
-    public static int phantomBoosterRenderId;
-    public static int smileyCloudRenderId;
-    public static int laserRelayRenderId;
-    public static int bookletStandRenderId;
-
     public static ResourceLocation getGuiLocation(String file){
         return new ResourceLocation(ModUtil.MOD_ID_LOWER, "textures/gui/"+file+".png");
     }

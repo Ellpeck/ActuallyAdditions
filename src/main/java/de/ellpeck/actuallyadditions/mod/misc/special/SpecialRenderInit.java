@@ -62,6 +62,7 @@ public class SpecialRenderInit{
                 //Add a new Special Renderer to the list
                 if(stack != null){
                     specialList.put(key, new RenderSpecial(stack));
+                    System.out.println(stack.toString());
                 }
             }
         }

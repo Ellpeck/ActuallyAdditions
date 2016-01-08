@@ -38,15 +38,13 @@ public class RenderSpecial{
             return;
         }
 
-        boolean isBlock = this.theThingToRender.getItem() instanceof ItemBlock;
-        float size = isBlock ? 0.5F : 0.6F;
-        double offsetUp = isBlock ? 0F : 0.2F;
-
         if(ClientProxy.pumpkinBlurPumpkinBlur){
             this.theThingToRender = new ItemStack(Calendar.getInstance().get(Calendar.DAY_OF_MONTH)%2 == 0 ? Blocks.lit_pumpkin : Blocks.pumpkin);
-            size = 0.5F;
-            offsetUp = 0;
         }
+
+        boolean isBlock = this.theThingToRender.getItem() instanceof ItemBlock;
+        float size = isBlock ? 0.5F : 0.4F;
+        double offsetUp = isBlock ? 0D : 0.1875D;
 
         double bobHeight = 70;
         double theTime = Minecraft.getSystemTime();
@@ -81,8 +79,11 @@ public class RenderSpecial{
                 AssetUtil.renderBlockInWorld(Block.getBlockFromItem(this.theThingToRender.getItem()), this.theThingToRender.getItemDamage());
             }
             else{
-                GlStateManager.translate(-0.5D, 0D, 0D);
+                GlStateManager.pushMatrix();
+                GlStateManager.translate(0D, 0.5D, 0D);
+                GlStateManager.rotate(180F, 1F, 0F, 0F);
                 AssetUtil.renderItemInWorld(this.theThingToRender);
+                GlStateManager.popMatrix();
             }
         }
         GlStateManager.enableLighting();

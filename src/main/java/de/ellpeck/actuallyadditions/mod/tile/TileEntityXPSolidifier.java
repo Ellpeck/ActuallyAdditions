@@ -95,6 +95,7 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
         }
     }
 
+    //TODO Fix XP System to fit points needed in 1.8 (OpenBlocks?)
     /**
      * Gets the Player's XP
      * (Excerpted from OpenBlocks' XP system with permission, thanks guys!)
