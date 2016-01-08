@@ -1,0 +1,20 @@
+{
+  "variants": {
+    "meta=0": { "model": "actuallyadditions:blockColoredLampWhiteOn" },
+    "meta=1": { "model": "actuallyadditions:blockColoredLampOrangeOn" },
+    "meta=2": { "model": "actuallyadditions:blockColoredLampMagentaOn" },
+    "meta=3": { "model": "actuallyadditions:blockColoredLampLightBlueOn" },
+    "meta=4": { "model": "actuallyadditions:blockColoredLampYellowOn" },
+    "meta=5": { "model": "actuallyadditions:blockColoredLampLimeOn" },
+    "meta=6": { "model": "actuallyadditions:blockColoredLampPinkOn" },
+    "meta=7": { "model": "actuallyadditions:blockColoredLampGrayOn" },
+    "meta=8": { "model": "actuallyadditions:blockColoredLampLightGrayOn" },
+    "meta=9": { "model": "actuallyadditions:blockColoredLampCyanOn" },
+    "meta=10": { "model": "actuallyadditions:blockColoredLampPurpleOn" },
+    "meta=11": { "model": "actuallyadditions:blockColoredLampBlueOn" },
+    "meta=12": { "model": "actuallyadditions:blockColoredLampBrownOn" },
+    "meta=13": { "model": "actuallyadditions:blockColoredLampGreenOn" },
+    "meta=14": { "model": "actuallyadditions:blockColoredLampRedOn" },
+    "meta=15": { "model": "actuallyadditions:blockColoredLampBlackOn" }
+  }
+}

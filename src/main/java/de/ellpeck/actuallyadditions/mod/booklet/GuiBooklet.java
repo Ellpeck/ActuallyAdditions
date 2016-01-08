@@ -361,10 +361,10 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
     public void handleMouseInput() throws IOException{
         int wheel = Mouse.getEventDWheel();
         if(wheel != 0){
-            if(wheel > 0){
+            if(wheel < 0){
                 BookletUtils.handleNextPage(this);
             }
-            else if(wheel < 0){
+            else if(wheel > 0){
                 BookletUtils.handlePreviousPage(this);
             }
         }

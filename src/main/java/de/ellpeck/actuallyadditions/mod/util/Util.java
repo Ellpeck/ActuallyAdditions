@@ -24,14 +24,11 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.oredict.OreDictionary;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 @SuppressWarnings("unused")
 public class Util{
-
-    public static final List ITEMS_AND_BLOCKS = new ArrayList();
 
     public static final Random RANDOM = new Random();
     public static final int WILDCARD = OreDictionary.WILDCARD_VALUE;

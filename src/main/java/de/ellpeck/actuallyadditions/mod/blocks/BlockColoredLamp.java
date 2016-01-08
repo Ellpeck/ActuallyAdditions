@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.blocks;
 
 
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockBase;
 import de.ellpeck.actuallyadditions.mod.blocks.base.ItemBlockBase;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheColoredLampColors;
@@ -28,6 +29,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -132,6 +134,18 @@ public class BlockColoredLamp extends BlockBase{
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.RARE;
     }
+
+    @Override
+    protected void registerRendering(){
+        ResourceLocation[] resLocs = new ResourceLocation[allLampTypes.length];
+        for(int i = 0; i < allLampTypes.length; i++){
+            String name = this.getBaseName()+allLampTypes[i].name;
+            resLocs[i] = new ResourceLocation(ModUtil.MOD_ID_LOWER, name);
+            ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), new ResourceLocation(ModUtil.MOD_ID_LOWER, name));
+        }
+        ActuallyAdditions.proxy.addRenderVariant(Item.getItemFromBlock(this), resLocs);
+    }
+
 
     public static class TheItemBlock extends ItemBlockBase{
 

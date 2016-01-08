@@ -22,27 +22,29 @@ import de.ellpeck.actuallyadditions.mod.misc.special.SpecialRenderInit;
 import de.ellpeck.actuallyadditions.mod.tile.*;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
-import de.ellpeck.actuallyadditions.mod.util.Util;
 import de.ellpeck.actuallyadditions.mod.util.playerdata.PersistentClientData;
-import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.ItemModelMesher;
+import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 @SuppressWarnings("unused")
 public class ClientProxy implements IProxy{
+
+    private static Map<ItemStack, ResourceLocation> modelLocationsForRegistering = new HashMap<ItemStack, ResourceLocation>();
+    private static Map<Item, ResourceLocation[]> modelVariantsForRegistering = new HashMap<Item, ResourceLocation[]>();
 
     public static boolean pumpkinBlurPumpkinBlur;
     public static boolean jingleAllTheWay;
@@ -63,6 +65,10 @@ public class ClientProxy implements IProxy{
         }
 
         PersistentClientData.setTheFile(new File(Minecraft.getMinecraft().mcDataDir, ModUtil.MOD_ID+"Data.dat"));
+
+        for(Map.Entry<Item, ResourceLocation[]> entry : modelVariantsForRegistering.entrySet()){
+            ModelBakery.registerItemVariants(entry.getKey(), entry.getValue());
+        }
     }
 
     @Override
@@ -84,27 +90,8 @@ public class ClientProxy implements IProxy{
         //TODO Fix villager
         //VillagerRegistry.instance().registerVillagerSkin(ConfigIntValues.JAM_VILLAGER_ID.getValue(), new ResourceLocation(ModUtil.MOD_ID_LOWER, "textures/entity/villager/jamVillager.png"));
 
-        for(Object o : Util.ITEMS_AND_BLOCKS){
-
-            ItemStack stack = null;
-            if(o instanceof Item){
-                stack = new ItemStack((Item)o);
-            }
-            else if(o instanceof Block){
-                stack = new ItemStack((Block)o);
-            }
-
-            if(stack != null){
-                ItemModelMesher mesher = Minecraft.getMinecraft().getRenderItem().getItemModelMesher();
-                String name = stack.getItem().getRegistryName();
-
-                List<ItemStack> subItems = new ArrayList<ItemStack>();
-                stack.getItem().getSubItems(stack.getItem(), null, subItems);
-
-                for(ItemStack aStack : subItems){
-                    mesher.register(aStack.getItem(), aStack.getItemDamage(), new ModelResourceLocation(name, "inventory"));
-                }
-            }
+        for(Map.Entry<ItemStack, ResourceLocation> entry : modelLocationsForRegistering.entrySet()){
+            Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(entry.getKey().getItem(), entry.getKey().getItemDamage(), new ModelResourceLocation(entry.getValue(), "inventory"));
         }
     }
 
@@ -113,6 +100,16 @@ public class ClientProxy implements IProxy{
         ModUtil.LOGGER.info("PostInitializing ClientProxy...");
 
         SpecialRenderInit.init();
+    }
+
+    @Override
+    public void addRenderRegister(ItemStack stack, ResourceLocation location){
+        modelLocationsForRegistering.put(stack, location);
+    }
+
+    @Override
+    public void addRenderVariant(Item item, ResourceLocation[] location){
+        modelVariantsForRegistering.put(item, location);
     }
 
     private static void registerRenderer(Class<? extends TileEntity> tileClass, RenderTileEntity tileRender, int renderID){

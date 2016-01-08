@@ -11,6 +11,9 @@
 package de.ellpeck.actuallyadditions.mod.proxy;
 
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -31,5 +34,15 @@ public class ServerProxy implements IProxy{
     @Override
     public void postInit(FMLPostInitializationEvent event){
         ModUtil.LOGGER.info("PostInitializing ServerProxy...");
+    }
+
+    @Override
+    public void addRenderRegister(ItemStack stack, ResourceLocation location){
+
+    }
+
+    @Override
+    public void addRenderVariant(Item item, ResourceLocation[] location){
+
     }
 }
