@@ -30,6 +30,7 @@ import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class PageCrafting extends BookletPageAA{
@@ -114,7 +115,7 @@ public class PageCrafting extends BookletPageAA{
             else if(recipe instanceof ShapelessRecipes){
                 ShapelessRecipes shapeless = (ShapelessRecipes)recipe;
                 for(int i = 0; i < shapeless.recipeItems.size(); i++){
-                    stacks[i] = (ItemStack)shapeless.recipeItems.get(i);
+                    stacks[i] = shapeless.recipeItems.get(i);
                 }
             }
             else if(recipe instanceof ShapedOreRecipe){
@@ -124,7 +125,7 @@ public class PageCrafting extends BookletPageAA{
                 for(int i = 0; i < shaped.getInput().length; i++){
                     Object input = shaped.getInput()[i];
                     if(input != null){
-                        stacks[i] = input instanceof ItemStack ? (ItemStack)input : (((ArrayList<ItemStack>)input).isEmpty() ? null : ((ArrayList<ItemStack>)input).get(0));
+                        stacks[i] = input instanceof ItemStack ? (ItemStack)input : (((List<ItemStack>)input).isEmpty() ? null : ((List<ItemStack>)input).get(0));
                     }
                 }
             }
@@ -132,7 +133,7 @@ public class PageCrafting extends BookletPageAA{
                 ShapelessOreRecipe shapeless = (ShapelessOreRecipe)recipe;
                 for(int i = 0; i < shapeless.getInput().size(); i++){
                     Object input = shapeless.getInput().get(i);
-                    stacks[i] = input instanceof ItemStack ? (ItemStack)input : (((ArrayList<ItemStack>)input).isEmpty() ? null : ((ArrayList<ItemStack>)input).get(0));
+                    stacks[i] = input instanceof ItemStack ? (ItemStack)input : (((List<ItemStack>)input).isEmpty() ? null : ((List<ItemStack>)input).get(0));
                 }
             }
 
