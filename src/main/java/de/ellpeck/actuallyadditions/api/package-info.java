@@ -7,7 +7,7 @@
  *
  * © 2016 Ellpeck
  */
-@API(owner = "ActuallyAdditions", apiVersion = "3", provides = "ActuallyAdditionsAPI")
+@API(owner = "ActuallyAdditions", apiVersion = "4", provides = "ActuallyAdditionsAPI")
 package de.ellpeck.actuallyadditions.api;
 
 import net.minecraftforge.fml.common.API;
