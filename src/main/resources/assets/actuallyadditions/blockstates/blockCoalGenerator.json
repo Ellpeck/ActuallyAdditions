@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "meta=0": { "model": "actuallyadditions:blockCoalGenerator" },
+    "meta=1": { "model": "actuallyadditions:blockCoalGenerator" }
+  }
+}

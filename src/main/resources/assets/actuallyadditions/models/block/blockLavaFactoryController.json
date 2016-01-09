@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "particle": "actuallyadditions:blocks/blockLavaFactoryController",
+    "down": "actuallyadditions:blocks/blockLavaFactoryController",
+    "up": "actuallyadditions:blocks/blockLavaFactoryControllerTop",
+    "north": "actuallyadditions:blocks/blockLavaFactoryController",
+    "east": "actuallyadditions:blocks/blockLavaFactoryController",
+    "south": "actuallyadditions:blocks/blockLavaFactoryController",
+    "west": "actuallyadditions:blocks/blockLavaFactoryController"
+  }
+}

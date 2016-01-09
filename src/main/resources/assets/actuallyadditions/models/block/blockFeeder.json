@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "particle": "actuallyadditions:blocks/blockFeeder",
+    "down": "actuallyadditions:blocks/blockFeederTop",
+    "up": "actuallyadditions:blocks/blockFeederTop",
+    "north": "actuallyadditions:blocks/blockFeeder",
+    "east": "actuallyadditions:blocks/blockFeeder",
+    "south": "actuallyadditions:blocks/blockFeeder",
+    "west": "actuallyadditions:blocks/blockFeeder"
+  }
+}

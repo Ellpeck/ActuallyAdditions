@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "particle": "actuallyadditions:blocks/blockLampPowerer",
+    "down": "actuallyadditions:blocks/blockLampPowerer",
+    "up": "actuallyadditions:blocks/blockLampPowerer",
+    "north": "actuallyadditions:blocks/blockLampPowererFront",
+    "east": "actuallyadditions:blocks/blockLampPowerer",
+    "south": "actuallyadditions:blocks/blockLampPowerer",
+    "west": "actuallyadditions:blocks/blockLampPowerer"
+  }
+}

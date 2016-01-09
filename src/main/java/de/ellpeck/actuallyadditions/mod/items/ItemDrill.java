@@ -13,6 +13,7 @@ package de.ellpeck.actuallyadditions.mod.items;
 import cofh.api.energy.IEnergyContainerItem;
 import com.google.common.collect.Multimap;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheColoredLampColors;
 import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemEnergy;
@@ -37,10 +38,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.*;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.fml.relauncher.Side;
@@ -107,6 +105,17 @@ public class ItemDrill extends ItemEnergy{
             }
         }
         return false;
+    }
+
+    @Override
+    protected void registerRendering(){
+        ResourceLocation[] resLocs = new ResourceLocation[16];
+        for(int i = 0; i < 16; i++){
+            String name = this.getBaseName()+TheColoredLampColors.values()[i].name;
+            resLocs[i] = new ResourceLocation(ModUtil.MOD_ID_LOWER, name);
+            ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), new ResourceLocation(ModUtil.MOD_ID_LOWER, name));
+        }
+        ActuallyAdditions.proxy.addRenderVariant(this, resLocs);
     }
 
     /**

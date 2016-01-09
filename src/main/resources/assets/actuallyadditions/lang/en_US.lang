@@ -534,6 +534,7 @@ booklet.actuallyadditions.indexEntry.itemsRF.name=Items that use RF
 
 #Booklet Info
 booklet.actuallyadditions.recipeDisabled=The crafting recipe for this item is disabled in the Config File! If you're on a server, ask the server author to enable it in the config. If you're on a client, press the 'Open Config'-Button on the top right and enable the recipe!
+booklet.actuallyadditions.unavailable=Parts of this feature are currently disabled or incomplete due to the not fully complete 1.8.9 Port. You may experience something that's missing or doesn't fully work. Please use this item with caution!
 booklet.actuallyadditions.clickToSeeRecipe=Click to see more Information
 booklet.actuallyadditions.amountOfWords=%s words in total
 booklet.actuallyadditions.amountOfChars=%s characters in total
