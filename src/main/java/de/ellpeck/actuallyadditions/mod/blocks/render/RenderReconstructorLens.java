@@ -11,20 +11,15 @@
 package de.ellpeck.actuallyadditions.mod.blocks.render;
 
 
-import de.ellpeck.actuallyadditions.api.lens.ILensItem;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityAtomicReconstructor;
-import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import de.ellpeck.actuallyadditions.mod.util.PosUtil;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 
+//TODO Fix Reconstructor Lens rendering
 public class RenderReconstructorLens extends TileEntitySpecialRenderer{
 
     @Override
     public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float par5, int par6){
-        if(!(tile instanceof TileEntityAtomicReconstructor)){
+        /*if(!(tile instanceof TileEntityAtomicReconstructor)){
             return;
         }
         ItemStack stack = ((TileEntityAtomicReconstructor)tile).getStackInSlot(0);
@@ -66,6 +61,6 @@ public class RenderReconstructorLens extends TileEntitySpecialRenderer{
             AssetUtil.renderItemInWorld(stack);
 
             GlStateManager.popMatrix();
-        }
+        }*/
     }
 }

@@ -191,6 +191,9 @@ public class BookletUtils{
                 else if(button instanceof TexturedButton){
                     booklet.drawHoveringText(((TexturedButton)button).textList, mouseX, mouseY);
                 }
+                else if(button instanceof IndexButton){
+                    ((IndexButton)button).drawHover(mouseX, mouseY);
+                }
             }
         }
     }
