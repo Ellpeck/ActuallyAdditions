@@ -42,7 +42,7 @@ public class ServerProxy implements IProxy{
     }
 
     @Override
-    public void addRenderVariant(Item item, ResourceLocation[] location){
+    public void addRenderVariant(Item item, ResourceLocation... location){
 
     }
 }

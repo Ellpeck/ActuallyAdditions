@@ -37,34 +37,28 @@ public class RenderReconstructorLens extends TileEntitySpecialRenderer{
             int meta = PosUtil.getMetadata(tile.getPos(), tile.getWorld());
             if(meta == 0){
                 GlStateManager.translate(0F, -0.5F, 0F);
-                GlStateManager.translate(-0.25F, 0F, -0.25F);
                 GlStateManager.rotate(90F, 1F, 0F, 0F);
             }
             if(meta == 1){
                 GlStateManager.translate(0F, -1.5F-0.5F/16F, 0F);
-                GlStateManager.translate(-0.25F, 0F, -0.25F);
                 GlStateManager.rotate(90F, 1F, 0F, 0F);
             }
             if(meta == 2){
                 GlStateManager.translate(0F, -1F, 0F);
                 GlStateManager.translate(0F, 0F, -0.5F);
-                GlStateManager.translate(-0.25F, -0.25F, 0F);
             }
             if(meta == 3){
                 GlStateManager.translate(0F, -1F, 0F);
                 GlStateManager.translate(0F, 0F, 0.5F+0.5F/16F);
-                GlStateManager.translate(-0.25F, -0.25F, 0F);
             }
             if(meta == 4){
                 GlStateManager.translate(0F, -1F, 0F);
                 GlStateManager.translate(0.5F+0.5F/16F, 0F, 0F);
-                GlStateManager.translate(0F, -0.25F, 0.25F);
                 GlStateManager.rotate(90F, 0F, 1F, 0F);
             }
             if(meta == 5){
                 GlStateManager.translate(0F, -1F, 0F);
                 GlStateManager.translate(-0.5F, 0F, 0F);
-                GlStateManager.translate(0F, -0.25F, 0.25F);
                 GlStateManager.rotate(90F, 0F, 1F, 0F);
             }
 
