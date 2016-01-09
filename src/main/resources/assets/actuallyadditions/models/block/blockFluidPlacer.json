@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "particle": "actuallyadditions:blocks/blockFluidPlacer",
+    "down": "actuallyadditions:blocks/blockFluidPlacerTop",
+    "up": "actuallyadditions:blocks/blockFluidPlacerTop",
+    "north": "actuallyadditions:blocks/blockFluidPlacerFront",
+    "east": "actuallyadditions:blocks/blockFluidPlacer",
+    "south": "actuallyadditions:blocks/blockFluidPlacer",
+    "west": "actuallyadditions:blocks/blockFluidPlacer"
+  }
+}

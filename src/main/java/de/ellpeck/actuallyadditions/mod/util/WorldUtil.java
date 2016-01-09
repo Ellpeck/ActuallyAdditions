@@ -46,7 +46,7 @@ public class WorldUtil{
     public static void breakBlockAtSide(EnumFacing side, World world, BlockPos pos, int offset){
         BlockPos c = getCoordsFromSide(side, pos, offset);
         if(c != null){
-            world.setBlockToAir(pos);
+            world.setBlockToAir(c);
         }
     }
 
@@ -398,7 +398,6 @@ public class WorldUtil{
         }
         else{
             //Check the Server if a Block that changed on the Client really changed, if not, revert the change
-            //TODO Check if this is the right action
             Minecraft.getMinecraft().getNetHandler().addToSendQueue(new C07PacketPlayerDigging(C07PacketPlayerDigging.Action.STOP_DESTROY_BLOCK, pos, Minecraft.getMinecraft().objectMouseOver.sideHit));
         }
         return removed;

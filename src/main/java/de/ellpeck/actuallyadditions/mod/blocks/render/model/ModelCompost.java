@@ -10,17 +10,12 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks.render.model;
 
-import de.ellpeck.actuallyadditions.mod.items.InitItems;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityCompost;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.ModelRenderer;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
+import net.minecraft.client.model.ModelBase;
 
-public class ModelCompost extends ModelBaseAA{
+//TODO Fix compost rendering
+public class ModelCompost extends ModelBase{
 
-    public ModelRenderer floor;
+    /*public ModelRenderer floor;
     public ModelRenderer wallOne;
     public ModelRenderer wallTwo;
     public ModelRenderer wallThree;
@@ -68,11 +63,6 @@ public class ModelCompost extends ModelBaseAA{
     }
 
     @Override
-    public String getName(){
-        return "modelCompost";
-    }
-
-    @Override
     public void renderExtra(float f, TileEntity tile){
         //Hehe
         if("ShadowfactsDev".equals(Minecraft.getMinecraft().thePlayer.getName())){
@@ -95,5 +85,5 @@ public class ModelCompost extends ModelBaseAA{
                 }
             }
         }
-    }
+    }*/
 }

@@ -10,9 +10,11 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockBase;
 import de.ellpeck.actuallyadditions.mod.blocks.base.ItemBlockBase;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheMiscBlocks;
+import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -22,6 +24,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -47,6 +50,17 @@ public class BlockMisc extends BlockBase{
     @Override
     public int damageDropped(IBlockState state){
         return this.getMetaFromState(state);
+    }
+
+    @Override
+    protected void registerRendering(){
+        ResourceLocation[] resLocs = new ResourceLocation[allMiscBlocks.length];
+        for(int i = 0; i < allMiscBlocks.length; i++){
+            String name = this.getBaseName()+allMiscBlocks[i].name;
+            resLocs[i] = new ResourceLocation(ModUtil.MOD_ID_LOWER, name);
+            ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), new ResourceLocation(ModUtil.MOD_ID_LOWER, name));
+        }
+        ActuallyAdditions.proxy.addRenderVariant(Item.getItemFromBlock(this), resLocs);
     }
 
     @SuppressWarnings("all")

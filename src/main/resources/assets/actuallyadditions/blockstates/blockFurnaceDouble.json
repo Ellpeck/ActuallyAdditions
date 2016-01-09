@@ -1,0 +1,12 @@
+{
+  "variants": {
+    "meta=0": { "model": "actuallyadditions:blockFurnaceDouble", "y": 0 },
+    "meta=1": { "model": "actuallyadditions:blockFurnaceDouble", "y": 180 },
+    "meta=2": { "model": "actuallyadditions:blockFurnaceDouble", "y": -90 },
+    "meta=3": { "model": "actuallyadditions:blockFurnaceDouble", "y": 90 },
+    "meta=4": { "model": "actuallyadditions:blockFurnaceDoubleOn", "y": 0 },
+    "meta=5": { "model": "actuallyadditions:blockFurnaceDoubleOn", "y": 180 },
+    "meta=6": { "model": "actuallyadditions:blockFurnaceDoubleOn", "y": -90 },
+    "meta=7": { "model": "actuallyadditions:blockFurnaceDoubleOn", "y": 90 }
+  }
+}

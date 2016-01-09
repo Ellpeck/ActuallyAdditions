@@ -19,14 +19,13 @@ import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.MathHelper;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class BlockCoffeeMachine extends BlockContainerBase{
@@ -88,22 +87,21 @@ public class BlockCoffeeMachine extends BlockContainerBase{
     }
 
     @Override
-    public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase player, ItemStack stack){
-        int rotation = MathHelper.floor_double((double)(player.rotationYaw*4.0F/360.0F)+0.5D) & 3;
+    public void setBlockBoundsBasedOnState(IBlockAccess world, BlockPos pos){
+        int meta = PosUtil.getMetadata(pos, world);
+        float f = 0.0625F;
 
-        if(rotation == 0){
-            PosUtil.setMetadata(pos, world, 0, 2);
+        if(meta == 0){
+            this.setBlockBounds(0F, 0F, 0F, 1F, 1F, 1F-f*3F);
         }
-        if(rotation == 1){
-            PosUtil.setMetadata(pos, world, 3, 2);
+        if(meta == 1){
+            this.setBlockBounds(0F, 0F, 0F, 1F-f*3F, 1F, 1F);
         }
-        if(rotation == 2){
-            PosUtil.setMetadata(pos, world, 1, 2);
+        if(meta == 2){
+            this.setBlockBounds(0F, 0F, f*3F, 1F, 1F, 1F);
         }
-        if(rotation == 3){
-            PosUtil.setMetadata(pos, world, 2, 2);
+        if(meta == 3){
+            this.setBlockBounds(f*3F, 0F, 0F, 1F, 1F, 1F);
         }
-
-        super.onBlockPlacedBy(world, pos, state, player, stack);
     }
 }

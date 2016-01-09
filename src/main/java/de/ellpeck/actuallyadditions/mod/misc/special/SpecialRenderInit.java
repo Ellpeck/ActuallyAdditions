@@ -68,14 +68,13 @@ public class SpecialRenderInit{
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
-    //TODO Fix floating item
     public void onPlayerRender(RenderPlayerEvent.Pre event){
         if(!specialList.isEmpty()){
             for(Map.Entry<String, RenderSpecial> entry : specialList.entrySet()){
                 //Does the player have one of the names from the list?
                 if(StringUtil.equalsToLowerCase(entry.getKey(), event.entityPlayer.getName())){
                     //Render the special Item/Block
-                    entry.getValue().render(event.entityPlayer);
+                    entry.getValue().render(event.entityPlayer, event.partialRenderTick);
                     break;
                 }
             }

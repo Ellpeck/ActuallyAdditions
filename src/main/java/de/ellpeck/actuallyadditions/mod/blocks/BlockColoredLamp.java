@@ -78,21 +78,24 @@ public class BlockColoredLamp extends BlockBase{
             return true;
         }
 
-        //Changing Colors
-        int[] oreIDs = OreDictionary.getOreIDs(player.getCurrentEquippedItem());
-        if(oreIDs.length > 0){
-            for(int oreID : oreIDs){
-                String name = OreDictionary.getOreName(oreID);
-                TheColoredLampColors color = TheColoredLampColors.getColorFromDyeName(name);
-                if(color != null){
-                    if(PosUtil.getMetadata(pos, world) != color.ordinal()){
-                        if(!world.isRemote){
-                            PosUtil.setMetadata(pos, world, color.ordinal(), 2);
-                            if(!player.capabilities.isCreativeMode){
-                                player.inventory.decrStackSize(player.inventory.currentItem, 1);
+        ItemStack stack = player.getCurrentEquippedItem();
+        if(stack != null){
+            //Changing Colors
+            int[] oreIDs = OreDictionary.getOreIDs(stack);
+            if(oreIDs.length > 0){
+                for(int oreID : oreIDs){
+                    String name = OreDictionary.getOreName(oreID);
+                    TheColoredLampColors color = TheColoredLampColors.getColorFromDyeName(name);
+                    if(color != null){
+                        if(PosUtil.getMetadata(pos, world) != color.ordinal()){
+                            if(!world.isRemote){
+                                PosUtil.setMetadata(pos, world, color.ordinal(), 2);
+                                if(!player.capabilities.isCreativeMode){
+                                    player.inventory.decrStackSize(player.inventory.currentItem, 1);
+                                }
                             }
+                            return true;
                         }
-                        return true;
                     }
                 }
             }

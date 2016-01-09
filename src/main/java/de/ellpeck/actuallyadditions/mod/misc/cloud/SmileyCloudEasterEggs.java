@@ -385,7 +385,7 @@ public class SmileyCloudEasterEggs{
         GlStateManager.translate(-0.5F, 0.2F, leftHand ? 0.55F : -0.5F);
         GlStateManager.scale(0.75F, 0.75F, 0.75F);
 
-        AssetUtil.renderItemInWorld(stack, 0);
+        AssetUtil.renderItemInWorld(stack);
 
         GlStateManager.popMatrix();
     }

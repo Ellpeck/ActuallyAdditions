@@ -10,30 +10,17 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks.render;
 
-import de.ellpeck.actuallyadditions.mod.blocks.render.model.ModelBaseAA;
-import de.ellpeck.actuallyadditions.mod.misc.cloud.ISmileyCloudEasterEgg;
-import de.ellpeck.actuallyadditions.mod.misc.cloud.SmileyCloudEasterEggs;
-import de.ellpeck.actuallyadditions.mod.proxy.ClientProxy;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntitySmileyCloud;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
-import de.ellpeck.actuallyadditions.mod.util.PosUtil;
-import de.ellpeck.actuallyadditions.mod.util.StringUtil;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ResourceLocation;
 
-public class RenderSmileyCloud extends RenderTileEntity{
+//TODO Fix Smiley Cloud
+public class RenderSmileyCloud extends TileEntitySpecialRenderer{
 
-    private static final ResourceLocation resLocValentine = new ResourceLocation(ModUtil.MOD_ID_LOWER, "textures/blocks/models/modelPinkFluffyUnicloud.png");
-
-    public RenderSmileyCloud(ModelBaseAA model){
-        super(model);
-    }
+    //private static final ResourceLocation resLocValentine = new ResourceLocation(ModUtil.MOD_ID_LOWER, "textures/blocks/models/modelPinkFluffyUnicloud.png");
 
     @Override
     public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float par5, int partial){
-        if(!(tile instanceof TileEntitySmileyCloud)){
+        /*if(!(tile instanceof TileEntitySmileyCloud)){
             return;
         }
         TileEntitySmileyCloud theCloud = (TileEntitySmileyCloud)tile;
@@ -122,7 +109,7 @@ public class RenderSmileyCloud extends RenderTileEntity{
                     GlStateManager.enableBlend();
                     GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
                     //TODO Fix nameplate with Smiley Cloud
-                    /*Tessellator tessellator = Tessellator.getInstance();
+                    Tessellator tessellator = Tessellator.getInstance();
                     GlStateManager.glDisable(GlStateManager.GL_TEXTURE_2D);
                     tessellator.startDrawingQuads();
                     int i = Minecraft.getMinecraft().fontRendererObj.getStringWidth(theCloud.name)/2;
@@ -132,7 +119,7 @@ public class RenderSmileyCloud extends RenderTileEntity{
                     tessellator.addVertex(i+1, 8.0D, 0.0D);
                     tessellator.addVertex(i+1, -1.0D, 0.0D);
                     tessellator.draw();
-                    GlStateManager.glEnable(GlStateManager.GL_TEXTURE_2D);*/
+                    GlStateManager.glEnable(GlStateManager.GL_TEXTURE_2D);
                     GlStateManager.depthMask(true);
 
                     Minecraft.getMinecraft().fontRendererObj.drawString(theCloud.name, -Minecraft.getMinecraft().fontRendererObj.getStringWidth(theCloud.name)/2, 0, StringUtil.DECIMAL_COLOR_WHITE);
@@ -146,6 +133,7 @@ public class RenderSmileyCloud extends RenderTileEntity{
             }
         }
         GlStateManager.popMatrix();
+        */
     }
 
 }

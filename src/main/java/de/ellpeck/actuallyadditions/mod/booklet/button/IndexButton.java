@@ -12,10 +12,14 @@ package de.ellpeck.actuallyadditions.mod.booklet.button;
 
 import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
 import de.ellpeck.actuallyadditions.mod.booklet.GuiBooklet;
+import de.ellpeck.actuallyadditions.mod.booklet.chapter.BookletChapter;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
+import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.util.EnumChatFormatting;
 
 public class IndexButton extends GuiButton{
 
@@ -54,6 +58,12 @@ public class IndexButton extends GuiButton{
             }
 
             this.gui.getFontRenderer().drawString(this.displayString, this.xPosition+textOffsetX, this.yPosition+(this.height-8)/2, 0);
+        }
+    }
+
+    public void drawHover(int mouseX, int mouseY){
+        if(this.chap instanceof BookletChapter && ((BookletChapter)this.chap).isIncomplete){
+            this.gui.drawHoveringText(this.gui.getFontRenderer().listFormattedStringToWidth(EnumChatFormatting.RED+StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".unavailable"), 250), mouseX, mouseY);
         }
     }
 }
