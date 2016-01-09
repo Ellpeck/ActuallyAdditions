@@ -28,6 +28,7 @@ public class BlockBushBase extends BlockBush{
 
     public BlockBushBase(String name){
         this.name = name;
+        this.setStepSound(soundTypeGrass);
 
         this.register();
     }
