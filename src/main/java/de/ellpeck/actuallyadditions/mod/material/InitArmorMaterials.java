@@ -31,15 +31,15 @@ public class InitArmorMaterials{
         ModUtil.LOGGER.info("Initializing Armor Materials...");
 
         //TODO Fix armor textures
-        armorMaterialEmerald = EnumHelper.addArmorMaterial("armorMaterialEmerald", "TODO", 50, new int[]{5, 9, 8, 5}, 15);
-        armorMaterialObsidian = EnumHelper.addArmorMaterial("armorMaterialObsidian", "TODO", 120, new int[]{3, 4, 3, 1}, 10);
-        armorMaterialQuartz = EnumHelper.addArmorMaterial("armorMaterialQuartz", "TODO", 20, new int[]{3, 6, 5, 3}, 8);
+        armorMaterialEmerald = EnumHelper.addArmorMaterial("armorMaterialEmerald", ModUtil.MOD_ID_LOWER+":armorEmerald", 50, new int[]{5, 9, 8, 5}, 15);
+        armorMaterialObsidian = EnumHelper.addArmorMaterial("armorMaterialObsidian", ModUtil.MOD_ID_LOWER+":armorObsidian", 120, new int[]{3, 4, 3, 1}, 10);
+        armorMaterialQuartz = EnumHelper.addArmorMaterial("armorMaterialQuartz", ModUtil.MOD_ID_LOWER+":armorQuartz", 20, new int[]{3, 6, 5, 3}, 8);
 
-        armorMaterialCrystalRed = EnumHelper.addArmorMaterial("armorMaterialCrystalRed", "TODO", 18, new int[]{3, 7, 6, 3}, 9);
-        armorMaterialCrystalBlue = EnumHelper.addArmorMaterial("armorMaterialCrystalBlue", "TODO", 18, new int[]{3, 7, 6, 3}, 10);
-        armorMaterialCrystalLightBlue = EnumHelper.addArmorMaterial("armorMaterialCrystalLightBlue", "TODO", 35, new int[]{7, 9, 7, 5}, 12);
-        armorMaterialCrystalBlack = EnumHelper.addArmorMaterial("armorMaterialCrystalBlack", "TODO", 12, new int[]{1, 4, 3, 1}, 13);
-        armorMaterialCrystalGreen = EnumHelper.addArmorMaterial("armorMaterialCrystalGreen", "TODO", 60, new int[]{7, 10, 9, 6}, 18);
-        armorMaterialCrystalWhite = EnumHelper.addArmorMaterial("armorMaterialCrystalWhite", "TODO", 18, new int[]{4, 7, 6, 4}, 11);
+        armorMaterialCrystalRed = EnumHelper.addArmorMaterial("armorMaterialCrystalRed", ModUtil.MOD_ID_LOWER+":armorCrystalRed", 18, new int[]{3, 7, 6, 3}, 9);
+        armorMaterialCrystalBlue = EnumHelper.addArmorMaterial("armorMaterialCrystalBlue", ModUtil.MOD_ID_LOWER+":armorCrystalBlue", 18, new int[]{3, 7, 6, 3}, 10);
+        armorMaterialCrystalLightBlue = EnumHelper.addArmorMaterial("armorMaterialCrystalLightBlue", ModUtil.MOD_ID_LOWER+":armorCrystalLightBlue", 35, new int[]{7, 9, 7, 5}, 12);
+        armorMaterialCrystalBlack = EnumHelper.addArmorMaterial("armorMaterialCrystalBlack", ModUtil.MOD_ID_LOWER+":armorCrystalBlack", 12, new int[]{1, 4, 3, 1}, 13);
+        armorMaterialCrystalGreen = EnumHelper.addArmorMaterial("armorMaterialCrystalGreen", ModUtil.MOD_ID_LOWER+":armorCrystalGreen", 60, new int[]{7, 10, 9, 6}, 18);
+        armorMaterialCrystalWhite = EnumHelper.addArmorMaterial("armorMaterialCrystalWhite", ModUtil.MOD_ID_LOWER+":armorCrystalWhite", 18, new int[]{4, 7, 6, 4}, 11);
     }
 }

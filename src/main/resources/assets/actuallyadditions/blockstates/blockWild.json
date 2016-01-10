@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "meta=0": { "model": "actuallyadditions:blockCanolaStage4" },
+    "meta=1": { "model": "actuallyadditions:blockFlaxStage6" },
+    "meta=2": { "model": "actuallyadditions:blockRiceStage6" },
+    "meta=3": { "model": "actuallyadditions:blockCoffeeStage6" }
+  }
+}

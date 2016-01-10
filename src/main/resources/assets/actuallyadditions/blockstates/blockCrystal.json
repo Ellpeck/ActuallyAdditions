@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "meta=0": { "model": "actuallyadditions:blockCrystalRed" },
+    "meta=1": { "model": "actuallyadditions:blockCrystalBlue" },
+    "meta=2": { "model": "actuallyadditions:blockCrystalLightBlue" },
+    "meta=3": { "model": "actuallyadditions:blockCrystalBlack" },
+    "meta=4": { "model": "actuallyadditions:blockCrystalGreen" },
+    "meta=5": { "model": "actuallyadditions:blockCrystalWhite" }
+  }
+}

@@ -70,7 +70,7 @@ public class BlockPlant extends BlockCrops{
     }
 
     public boolean shouldAddCreative(){
-        return true;
+        return false;
     }
 
     public EnumRarity getRarity(ItemStack stack){

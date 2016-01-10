@@ -10,8 +10,10 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemFoodBase;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheJams;
+import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.item.EntityItem;
@@ -21,6 +23,7 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -96,5 +99,12 @@ public class ItemJams extends ItemFoodBase{
     @Override
     public float getSaturationModifier(ItemStack stack){
         return stack.getItemDamage() >= allJams.length ? 0 : allJams[stack.getItemDamage()].saturation;
+    }
+
+    @Override
+    protected void registerRendering(){
+        for(int i = 0; i < allJams.length; i++){
+            ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), new ResourceLocation(ModUtil.MOD_ID_LOWER, this.getBaseName()));
+        }
     }
 }

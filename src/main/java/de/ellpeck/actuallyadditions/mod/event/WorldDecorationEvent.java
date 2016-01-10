@@ -20,7 +20,6 @@ import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockBush;
 import net.minecraft.block.material.Material;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.biome.BiomeGenOcean;
@@ -69,13 +68,13 @@ public class WorldDecorationEvent{
                 if(event.rand.nextInt(50) == 0){
                     BlockPos randomPos = new BlockPos(event.pos.getX()+event.rand.nextInt(16)+8, 0, event.pos.getZ()+event.rand.nextInt(16)+8);
                     randomPos = event.world.getTopSolidOrLiquidBlock(randomPos);
-
                     if(PosUtil.getMaterial(randomPos, event.world) == Material.water){
                         ArrayList<Material> blocksAroundBottom = WorldUtil.getMaterialsAround(event.world, randomPos);
-                        ArrayList<Material> blocksAroundTop = WorldUtil.getMaterialsAround(event.world, PosUtil.offset(randomPos, 0, 1, 0));
+                        BlockPos posToGenAt = PosUtil.offset(randomPos, 0, 1, 0);
+                        ArrayList<Material> blocksAroundTop = WorldUtil.getMaterialsAround(event.world, posToGenAt);
                         if(blocksAroundBottom.contains(Material.grass) || blocksAroundBottom.contains(Material.ground) || blocksAroundBottom.contains(Material.rock) || blocksAroundBottom.contains(Material.sand)){
-                            if(!blocksAroundTop.contains(Material.water) && PosUtil.getMaterial(randomPos, event.world) == Material.air){
-                                PosUtil.setBlock(PosUtil.offset(randomPos, 0, 1, 0), event.world, InitBlocks.blockWildPlant, TheWildPlants.RICE.ordinal(), 2);
+                            if(!blocksAroundTop.contains(Material.water) && PosUtil.getMaterial(posToGenAt, event.world) == Material.air){
+                                PosUtil.setBlock(posToGenAt, event.world, InitBlocks.blockWildPlant, TheWildPlants.RICE.ordinal(), 2);
                             }
                         }
                     }
@@ -91,11 +90,9 @@ public class WorldDecorationEvent{
                     BlockPos randomPos = new BlockPos(event.pos.getX()+event.rand.nextInt(16)+8, 0, event.pos.getZ()+event.rand.nextInt(16)+8);
                     randomPos = event.world.getTopSolidOrLiquidBlock(randomPos);
 
-                    if(PosUtil.getMaterial(randomPos, event.world) == blockBelow){
-                        BlockPos top = PosUtil.offset(randomPos, 0, 1, 0);
-                        PosUtil.setBlock(top, event.world, plant, meta, 2);
-                        if(plant instanceof BlockBush && !((BlockBush)plant).canBlockStay(event.world, top, event.world.getBlockState(top))){
-                            event.world.setBlockToAir(top);
+                    if(PosUtil.getMaterial(PosUtil.offset(randomPos, 0, -1, 0), event.world) == blockBelow){
+                        if(plant.canPlaceBlockAt(event.world, randomPos)){
+                            PosUtil.setBlock(randomPos, event.world, plant, meta, 2);
                         }
                     }
                 }
