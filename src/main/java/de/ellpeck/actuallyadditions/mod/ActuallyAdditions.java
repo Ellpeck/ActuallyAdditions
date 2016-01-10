@@ -133,10 +133,10 @@ public class ActuallyAdditions{
 
     @EventHandler
     public void missingMapping(FMLMissingMappingsEvent event){
-        for(FMLMissingMappingsEvent.MissingMapping mapping : event.get()){
+        for(FMLMissingMappingsEvent.MissingMapping mapping : event.getAll()){
             //Ignore removal of foreign paxels
             if(mapping.name != null && mapping.name.toLowerCase(Locale.ROOT).startsWith(ModUtil.MOD_ID_LOWER+":")){
-                if(mapping.name.contains("paxel") || mapping.name.contains("itemSpecial")){
+                if(mapping.name.contains("paxel") || mapping.name.contains("itemSpecial") || mapping.name.contains("blockBookStand")){
                     mapping.ignore();
                     ModUtil.LOGGER.info("Missing Mapping "+mapping.name+" is getting ignored. This is intentional.");
                 }

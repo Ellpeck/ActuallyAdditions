@@ -108,7 +108,6 @@ public class InitBlocks{
     public static Block blockCrystal;
     public static Block blockAtomicReconstructor;
 
-    public static Block blockBookletStand;
     public static Block blockMiner;
 
     public static Block blockFireworkBox;
@@ -128,7 +127,6 @@ public class InitBlocks{
 
         blockFireworkBox = new BlockFireworkBox("blockFireworkBox");
         blockMiner = new BlockMiner("blockMiner");
-        blockBookletStand = new BlockBookletStand("blockBookStand");
         blockAtomicReconstructor = new BlockAtomicReconstructor("blockAtomicReconstructor");
         blockCrystal = new BlockCrystal("blockCrystal");
         blockBlackLotus = new BlockBlackLotus("blockBlackLotus");

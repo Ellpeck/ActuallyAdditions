@@ -115,7 +115,6 @@ public abstract class BlockContainerBase extends BlockContainer{
             entityItem.motionZ = Util.RANDOM.nextGaussian()*factor;
             world.spawnEntityInWorld(entityItem);
         }
-        tile.setInventorySlotContents(i, null);
     }
 
     @Override

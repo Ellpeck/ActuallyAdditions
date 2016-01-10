@@ -49,7 +49,6 @@ public class CreativeTab extends CreativeTabs{
 
         add(InitItems.itemBooklet);
         add(InitBlocks.blockSmileyCloud);
-        add(InitBlocks.blockBookletStand);
 
         add(InitBlocks.blockFireworkBox);
         add(InitBlocks.blockLaserRelay);

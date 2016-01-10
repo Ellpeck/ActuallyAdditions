@@ -26,7 +26,7 @@ public class BlockFurnaceSolar extends BlockContainerBase{
         this.setHardness(1.5F);
         this.setResistance(10.0F);
         this.setStepSound(soundTypeStone);
-        this.setBlockBounds(0F, 0F, 0F, 1F, 3F/16F, 1F);
+        this.setBlockBounds(0F, 0F, 0F, 1F, 6F/16F, 1F);
     }
 
     @Override

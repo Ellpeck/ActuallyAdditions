@@ -26,7 +26,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
 
-@SideOnly(Side.CLIENT)
 public class AssetUtil{
 
     public static final ResourceLocation GUI_INVENTORY_LOCATION = getGuiLocation("guiInventory");
