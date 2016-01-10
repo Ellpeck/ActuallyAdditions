@@ -20,7 +20,8 @@ public class UpdateChecker{
     public static final String CHANGELOG_LINK = "http://ellpeck.de/actaddchangelog/";
     public static boolean checkFailed;
     public static boolean needsUpdateNotify;
-    public static String updateVersion;
+    public static int updateVersionInt;
+    public static String updateVersionString;
 
     public static void init(){
         if(ConfigBoolValues.DO_UPDATE_CHECK.isEnabled() && !Util.isDevVersion()){
