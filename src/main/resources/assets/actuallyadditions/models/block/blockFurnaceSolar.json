@@ -1,7 +1,8 @@
 {
-    "__createdwith": "opl's Model Creator",
+    "__createdBy": "canitzp",
     "ambientocclusion": false,
     "textures": {
+        "particle": "blocks/iron_block",
         "furnaceSolar": "actuallyadditions:blocks/models/modelFurnaceSolar"
     },
     "elements": [
