@@ -10,11 +10,13 @@
 
 package de.ellpeck.actuallyadditions.mod.update;
 
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 
-import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.Properties;
 
 public class ThreadUpdateChecker extends Thread{
 
@@ -28,14 +30,36 @@ public class ThreadUpdateChecker extends Thread{
     public void run(){
         ModUtil.LOGGER.info("Starting Update Check...");
         try{
-            URL newestURL = new URL("https://raw.githubusercontent.com/Ellpeck/ActuallyAdditions/master/update/updateVersion.txt");
-            BufferedReader newestReader = new BufferedReader(new InputStreamReader(newestURL.openStream()));
-            UpdateChecker.updateVersion = newestReader.readLine();
-            newestReader.close();
+            URL newestURL = new URL("https://raw.githubusercontent.com/Ellpeck/ActuallyAdditions/master/update/updateVersions.properties");
+            Properties updateProperties = new Properties();
+            updateProperties.load(new InputStreamReader(newestURL.openStream()));
 
-            int updateVersion = Integer.parseInt(UpdateChecker.updateVersion.replace("-", "").replace(".", "").replace("r", ""));
-            int clientVersion = Integer.parseInt(ModUtil.VERSION.replace("-", "").replace(".", "").replace("r", ""));
-            if(updateVersion > clientVersion){
+            String currentMcVersion = ModUtil.VERSION.split("-")[0];
+            if(ConfigBoolValues.UPDATE_CHECK_VERSION_SPECIFIC.isEnabled()){
+                String newestVersionProp = updateProperties.getProperty(currentMcVersion);
+
+                UpdateChecker.updateVersionInt = Integer.parseInt(newestVersionProp);
+                UpdateChecker.updateVersionString = currentMcVersion+"-r"+newestVersionProp;
+            }
+            else{
+                int highest = 0;
+                String highestString = "";
+
+                for(String updateMC : updateProperties.stringPropertyNames()){
+                    String updateVersion = updateProperties.getProperty(updateMC);
+                    int update = Integer.parseInt(updateVersion);
+                    if(highest < update){
+                        highest = update;
+                        highestString = updateMC+"-r"+updateVersion;
+                    }
+                }
+
+                UpdateChecker.updateVersionInt = highest;
+                UpdateChecker.updateVersionString = highestString;
+            }
+
+            int clientVersion = Integer.parseInt(ModUtil.VERSION.substring(ModUtil.VERSION.indexOf("r")+1));
+            if(UpdateChecker.updateVersionInt > clientVersion){
                 UpdateChecker.needsUpdateNotify = true;
             }
 
@@ -49,7 +73,7 @@ public class ThreadUpdateChecker extends Thread{
         if(!UpdateChecker.checkFailed){
             if(UpdateChecker.needsUpdateNotify){
                 ModUtil.LOGGER.info("There is an Update for "+ModUtil.NAME+" available!");
-                ModUtil.LOGGER.info("Current Version: "+ModUtil.VERSION+", newest Version: "+UpdateChecker.updateVersion+"!");
+                ModUtil.LOGGER.info("Current Version: "+ModUtil.VERSION+", newest Version: "+UpdateChecker.updateVersionString+"!");
                 ModUtil.LOGGER.info("View the Changelog at "+UpdateChecker.CHANGELOG_LINK);
                 ModUtil.LOGGER.info("Download at "+UpdateChecker.DOWNLOAD_LINK);
             }
