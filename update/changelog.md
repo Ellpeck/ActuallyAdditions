@@ -1,3 +1,14 @@
+# 1.7.10-r21
+* Made looking up the double furnace in the booklet possible
+* The magnet ring now only uses RF when actually sucking up items
+* The growth ring now only uses RF when growing stuff
+* Made the growth ring a little more expensive
+* Balanced the magnet a bit
+* Made the solar panel thing cheaper
+* German translation started (Kristian295)
+* New update checker
+#### This will probably the last 1.7.10 version before I move on to 1.8.9. The port is almost done and will be coming out soon. There will be an update notification that shows the update, but if you only want to be notified for further 1.7.10 patches, change the config option for the update checker to be version-specific.
+
 # 1.7.10-r20
 * Fixed another stupid obfuscation bug. Great. /shrugs
 
