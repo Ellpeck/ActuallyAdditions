@@ -12,7 +12,7 @@ buildscript {
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
 
-version = "1.7.10-r20"
+version = "1.8.9-r21"
 group = "de.ellpeck.actuallyadditions"
 archivesBaseName = "ActuallyAdditions"
 
@@ -21,6 +21,7 @@ minecraft {
     runDir = "idea"
 
     mappings = "stable_20"
+    makeObfSourceJar = false
 
     replaceIn "ModUtil.java"
     replace "@VERSION@", project.version.toString()
@@ -28,20 +29,14 @@ minecraft {
 
 repositories {
     maven {
-        name "Mobius"
-        url "http://mobiusstrip.eu/maven"
-    }
-    maven {
-        name "ChickenBones"
         url "http://chickenbones.net/maven/"
     }
 }
 
 dependencies {
-    //compile "mcp.mobius.waila:Waila:1.5.10_1.7.10"
-    //compile "codechicken:CodeChickenLib:1.7.10-1.1.3.138:dev"
-    //compile "codechicken:CodeChickenCore:1.7.10-1.0.7.46:dev"
-    //compile "codechicken:NotEnoughItems:1.7.10-1.0.5.110:dev"
+    compile "codechicken:CodeChickenLib:1.8-1.1.2.139:dev"
+    compile "codechicken:CodeChickenCore:1.8-1.0.5.36:dev"
+    compile "codechicken:NotEnoughItems:1.8-1.0.5.104:dev"
 }
 
 processResources {
@@ -59,7 +54,6 @@ processResources {
     }
 }
 
-// Why is OpenComputers one of the only mods that has a readable build.gradle? (Thank you Sangar!) :D
 jar {}
 
 task deobfJar(type: Jar) {

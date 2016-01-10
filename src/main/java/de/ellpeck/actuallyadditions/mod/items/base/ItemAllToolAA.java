@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.items.base;
 
-import com.google.common.collect.Sets;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
 import de.ellpeck.actuallyadditions.mod.creative.CreativeTab;
@@ -49,7 +48,7 @@ public class ItemAllToolAA extends ItemTool{
     private String repairOredict;
 
     public ItemAllToolAA(ToolMaterial toolMat, ItemStack repairItem, String unlocalizedName, EnumRarity rarity, int color){
-        super(4.0F, toolMat, Sets.newHashSet());
+        super(4.0F, toolMat, new HashSet<Block>());
 
         this.repairItem = repairItem;
         this.name = unlocalizedName;
