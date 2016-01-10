@@ -2,6 +2,7 @@
     "__createdwith": "opl's Model Creator",
     "ambientocclusion": false,
     "textures": {
+        "particle": "actuallyadditions:blocks/models/modelCoffeeMachine",
         "coffeeMachine": "actuallyadditions:blocks/models/modelCoffeeMachine"
     },
     "elements": [

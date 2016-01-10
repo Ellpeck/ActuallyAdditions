@@ -17,7 +17,7 @@ import net.minecraftforge.fluids.Fluid;
 public class FluidAA extends Fluid{
 
     public FluidAA(String fluidName, String textureName){
-        super(fluidName, new ResourceLocation(ModUtil.MOD_ID_LOWER, "textures/blocks/"+textureName+"Still.png"), new ResourceLocation(ModUtil.MOD_ID_LOWER, "textures/blocks/"+textureName+"Flowing.png"));
+        super(fluidName, new ResourceLocation(ModUtil.MOD_ID_LOWER, "blocks/"+textureName+"Still"), new ResourceLocation(ModUtil.MOD_ID_LOWER, "blocks/"+textureName+"Flowing"));
     }
 
     @Override

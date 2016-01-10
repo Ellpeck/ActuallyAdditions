@@ -48,11 +48,6 @@ public class BlockCompost extends BlockContainerBase implements IHudDisplay{
     }
 
     @Override
-    public int getRenderType(){
-        return AssetUtil.TESR_RENDER_ID;
-    }
-
-    @Override
     public void addCollisionBoxesToList(World world, BlockPos pos, IBlockState state, AxisAlignedBB mask, List list, Entity collidingEntity){
         this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.3125F, 1.0F);
         super.addCollisionBoxesToList(world, pos, state, mask, list, collidingEntity);

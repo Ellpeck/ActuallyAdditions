@@ -10,7 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.util;
 
-import de.ellpeck.actuallyadditions.mod.items.ItemSeed;
+import de.ellpeck.actuallyadditions.mod.items.base.ItemSeed;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

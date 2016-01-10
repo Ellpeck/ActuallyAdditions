@@ -10,13 +10,16 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheDusts;
+import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -57,6 +60,13 @@ public class ItemDust extends ItemBase{
     public void getSubItems(Item item, CreativeTabs tab, List list){
         for(int j = 0; j < allDusts.length; j++){
             list.add(new ItemStack(this, 1, j));
+        }
+    }
+
+    @Override
+    protected void registerRendering(){
+        for(int i = 0; i < allDusts.length; i++){
+            ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), new ResourceLocation(ModUtil.MOD_ID_LOWER, this.getBaseName()));
         }
     }
 }

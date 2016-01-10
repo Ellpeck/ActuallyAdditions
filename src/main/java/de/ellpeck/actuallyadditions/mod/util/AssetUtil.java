@@ -26,10 +26,10 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
 
+@SideOnly(Side.CLIENT)
 public class AssetUtil{
 
     public static final ResourceLocation GUI_INVENTORY_LOCATION = getGuiLocation("guiInventory");
-    public static final int TESR_RENDER_ID = 2;
 
     public static ResourceLocation getGuiLocation(String file){
         return new ResourceLocation(ModUtil.MOD_ID_LOWER, "textures/gui/"+file+".png");

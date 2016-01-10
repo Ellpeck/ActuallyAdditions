@@ -22,8 +22,6 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.BlockPos;
-import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -49,19 +47,6 @@ public class BlockCrystal extends BlockBase{
     @Override
     public int damageDropped(IBlockState state){
         return this.getMetaFromState(state);
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public int getRenderColor(IBlockState state){
-        int meta = this.getMetaFromState(state);
-        return meta >= allCrystals.length ? super.getRenderColor(state) : allCrystals[meta].color;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public int colorMultiplier(IBlockAccess world, BlockPos pos, int renderPass){
-        return this.getRenderColor(world.getBlockState(pos));
     }
 
     @SuppressWarnings("all")

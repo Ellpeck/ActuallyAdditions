@@ -11,7 +11,6 @@
 package de.ellpeck.actuallyadditions.mod.blocks.base;
 
 
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.creative.CreativeTab;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.PosUtil;
@@ -19,7 +18,6 @@ import net.minecraft.block.material.Material;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockPos;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.BlockFluidClassic;
@@ -33,7 +31,7 @@ public class BlockFluidFlowing extends BlockFluidClassic{
     public BlockFluidFlowing(Fluid fluid, Material material, String unlocalizedName){
         super(fluid, material);
         this.name = unlocalizedName;
-        displacements.put(this, false);
+        this.displacements.put(this, false);
 
         this.register();
     }
@@ -47,12 +45,6 @@ public class BlockFluidFlowing extends BlockFluidClassic{
         else{
             this.setCreativeTab(null);
         }
-
-        this.registerRendering();
-    }
-
-    protected void registerRendering(){
-        ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this), new ResourceLocation(ModUtil.MOD_ID_LOWER, this.getBaseName()));
     }
 
     protected String getBaseName(){

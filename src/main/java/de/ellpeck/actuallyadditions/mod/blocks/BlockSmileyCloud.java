@@ -16,7 +16,6 @@ import de.ellpeck.actuallyadditions.mod.achievement.TheAchievements;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntitySmileyCloud;
-import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.block.material.Material;
@@ -51,11 +50,6 @@ public class BlockSmileyCloud extends BlockContainerBase{
     @Override
     protected PropertyInteger getMetaProperty(){
         return META;
-    }
-
-    @Override
-    public int getRenderType(){
-        return AssetUtil.TESR_RENDER_ID;
     }
 
     @Override

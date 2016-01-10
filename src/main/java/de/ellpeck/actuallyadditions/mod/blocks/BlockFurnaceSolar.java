@@ -12,7 +12,6 @@ package de.ellpeck.actuallyadditions.mod.blocks;
 
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityFurnaceSolar;
-import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
@@ -33,11 +32,6 @@ public class BlockFurnaceSolar extends BlockContainerBase{
     @Override
     public TileEntity createNewTileEntity(World world, int par2){
         return new TileEntityFurnaceSolar();
-    }
-
-    @Override
-    public int getRenderType(){
-        return AssetUtil.TESR_RENDER_ID;
     }
 
     @Override

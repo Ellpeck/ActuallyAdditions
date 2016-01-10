@@ -12,7 +12,6 @@ package de.ellpeck.actuallyadditions.mod.blocks;
 
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelay;
-import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyInteger;
@@ -51,11 +50,6 @@ public class BlockLaserRelay extends BlockContainerBase{
     public void addCollisionBoxesToList(World world, BlockPos pos, IBlockState state, AxisAlignedBB axis, List list, Entity entity){
         this.setBlockBoundsBasedOnState(world, pos);
         super.addCollisionBoxesToList(world, pos, state, axis, list, entity);
-    }
-
-    @Override
-    public int getRenderType(){
-        return AssetUtil.TESR_RENDER_ID;
     }
 
     @Override

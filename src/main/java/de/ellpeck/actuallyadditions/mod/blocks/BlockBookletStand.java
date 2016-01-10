@@ -57,11 +57,6 @@ public class BlockBookletStand extends BlockContainerBase implements IHudDisplay
     }
 
     @Override
-    public int getRenderType(){
-        return AssetUtil.TESR_RENDER_ID;
-    }
-
-    @Override
     public boolean isOpaqueCube(){
         return false;
     }

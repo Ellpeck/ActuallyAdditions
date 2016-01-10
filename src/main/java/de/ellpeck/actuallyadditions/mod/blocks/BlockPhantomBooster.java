@@ -12,7 +12,6 @@ package de.ellpeck.actuallyadditions.mod.blocks;
 
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityPhantomBooster;
-import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
@@ -30,11 +29,6 @@ public class BlockPhantomBooster extends BlockContainerBase{
 
         float f = 1F/16F;
         this.setBlockBounds(3*f, 0F, 3*f, 1-3*f, 1F, 1-3*f);
-    }
-
-    @Override
-    public int getRenderType(){
-        return AssetUtil.TESR_RENDER_ID;
     }
 
     @Override

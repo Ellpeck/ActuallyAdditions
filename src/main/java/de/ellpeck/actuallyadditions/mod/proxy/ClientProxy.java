@@ -11,17 +11,22 @@
 package de.ellpeck.actuallyadditions.mod.proxy;
 
 
+import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.event.InitEvents;
 import de.ellpeck.actuallyadditions.mod.misc.special.SpecialRenderInit;
+import de.ellpeck.actuallyadditions.mod.util.FluidStateMapper;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.playerdata.PersistentClientData;
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -60,6 +65,21 @@ public class ClientProxy implements IProxy{
         for(Map.Entry<Item, ResourceLocation[]> entry : modelVariantsForRegistering.entrySet()){
             ModelBakery.registerItemVariants(entry.getKey(), entry.getValue());
         }
+
+        this.registerCustomFluidBlockRenderer(InitBlocks.fluidCanolaOil);
+        this.registerCustomFluidBlockRenderer(InitBlocks.fluidOil);
+    }
+
+    /**
+     * (Excerpted from Tinkers' Construct with permission, thanks guys!)
+     */
+    private void registerCustomFluidBlockRenderer(Fluid fluid){
+        Block block = fluid.getBlock();
+        Item item = Item.getItemFromBlock(block);
+        FluidStateMapper mapper = new FluidStateMapper(fluid);
+        ModelLoader.registerItemVariants(item);
+        ModelLoader.setCustomMeshDefinition(item, mapper);
+        ModelLoader.setCustomStateMapper(block, mapper);
     }
 
     @Override
