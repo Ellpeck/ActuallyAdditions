@@ -49,6 +49,11 @@ public class BlockWildPlant extends BlockBushBase{
     }
 
     @Override
+    public int damageDropped(IBlockState state){
+        return this.getMetaFromState(state);
+    }
+
+    @Override
     protected PropertyInteger getMetaProperty(){
         return META;
     }

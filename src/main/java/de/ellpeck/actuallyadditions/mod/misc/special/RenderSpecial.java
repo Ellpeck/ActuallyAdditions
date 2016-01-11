@@ -76,6 +76,7 @@ public class RenderSpecial{
         GlStateManager.disableLighting();
         if(this.theThingToRender != null){
             if(isBlock){
+                GlStateManager.rotate(180F, 1F, 0F, 0F);
                 AssetUtil.renderBlockInWorld(Block.getBlockFromItem(this.theThingToRender.getItem()), this.theThingToRender.getItemDamage());
             }
             else{
