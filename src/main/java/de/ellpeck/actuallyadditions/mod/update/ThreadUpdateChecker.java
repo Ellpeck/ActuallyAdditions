@@ -59,6 +59,7 @@ public class ThreadUpdateChecker extends Thread{
 
             String clientVersionString = ModUtil.VERSION.substring(ModUtil.VERSION.indexOf("r")+1);
             int clientVersion = Integer.parseInt(clientVersionString.contains("_") ? clientVersionString.substring(0, clientVersionString.indexOf("_")) : clientVersionString);
+
             if(UpdateChecker.updateVersionInt > clientVersion){
                 UpdateChecker.needsUpdateNotify = true;
             }
