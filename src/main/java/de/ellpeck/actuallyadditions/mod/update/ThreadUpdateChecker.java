@@ -12,7 +12,6 @@ package de.ellpeck.actuallyadditions.mod.update;
 
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
-import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 
 import java.io.InputStreamReader;
 import java.net.URL;
@@ -58,7 +57,8 @@ public class ThreadUpdateChecker extends Thread{
                 UpdateChecker.updateVersionString = highestString;
             }
 
-            int clientVersion = Integer.parseInt(ModUtil.VERSION.substring(ModUtil.VERSION.indexOf("r")+1));
+            String clientVersionString = ModUtil.VERSION.substring(ModUtil.VERSION.indexOf("r")+1);
+            int clientVersion = Integer.parseInt(clientVersionString.substring(0, clientVersionString.indexOf("_")));
             if(UpdateChecker.updateVersionInt > clientVersion){
                 UpdateChecker.needsUpdateNotify = true;
             }
