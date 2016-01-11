@@ -1,7 +1,7 @@
 {
   "parent": "builtin/generated",
   "textures": {
-    "layer0": "actuallyadditions:items/itemAxeQuartz"
+    "layer0": "actuallyadditions:items/itemShovelQuartz"
   },
   "display": {
     "thirdperson": {
