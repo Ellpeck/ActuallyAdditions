@@ -1,3 +1,7 @@
+# 1.8.9-r22
+* 1.8.9 PORT!
+#### DON'T EXPECT EVERYTHING TO WORK PERFECTLY. THIS IS A BETA. Also: If you look through the booklet, you will see a hover text on some chapters' buttons saying the item or block doesn't fully work. RESPECT THAT. Thanks.
+
 # 1.7.10-r21
 * Made looking up the double furnace in the booklet possible
 * The magnet ring now only uses RF when actually sucking up items
