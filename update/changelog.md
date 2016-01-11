@@ -1,3 +1,7 @@
+# 1.8.9-r23
+* Fixed a ginormous bug that screwed over crafting
+#### DON'T EXPECT EVERYTHING TO WORK PERFECTLY. Seriously, I break lots of stuff probably.
+
 # 1.8.9-r22
 * 1.8.9 PORT!
 #### DON'T EXPECT EVERYTHING TO WORK PERFECTLY. THIS IS A BETA. Also: If you look through the booklet, you will see a hover text on some chapters' buttons saying the item or block doesn't fully work. RESPECT THAT. Thanks.
