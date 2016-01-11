@@ -33,6 +33,8 @@ public class VanillaPacketSyncer{
     }
 
     public static void sendTileToPlayer(TileEntity tile, EntityPlayerMP player){
-        player.playerNetServerHandler.sendPacket(tile.getDescriptionPacket());
+        if(player.getEntityWorld().getTileEntity(tile.getPos()) == tile){
+            player.playerNetServerHandler.sendPacket(tile.getDescriptionPacket());
+        }
     }
 }
