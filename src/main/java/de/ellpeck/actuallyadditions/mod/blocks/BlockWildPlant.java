@@ -49,11 +49,6 @@ public class BlockWildPlant extends BlockBushBase{
     }
 
     @Override
-    public int damageDropped(IBlockState state){
-        return this.getMetaFromState(state);
-    }
-
-    @Override
     protected PropertyInteger getMetaProperty(){
         return META;
     }
@@ -112,7 +107,7 @@ public class BlockWildPlant extends BlockBushBase{
 
     @Override
     public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune){
-        int metadata = PosUtil.getMetadata(pos, world);
+        int metadata = state.getBlock().getMetaFromState(state);
         return metadata >= allWildPlants.length ? null : allWildPlants[metadata].wildVersionOf.getDrops(world, pos, allWildPlants[metadata].wildVersionOf.getStateFromMeta(7), fortune);
     }
 
