@@ -39,6 +39,8 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
     private boolean activateOnceWithSignal;
     private int oldEnergy;
 
+    public boolean syncSlotsNextTime;
+
     public TileEntityAtomicReconstructor(){
         super(1, "reconstructor");
     }
@@ -109,11 +111,12 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
         super.writeSyncableNBT(compound, sync);
         compound.setInteger("CurrentTime", this.currentTime);
         this.storage.writeToNBT(compound);
-    }
 
-    @Override
-    public boolean shouldSyncSlots(){
-        return true;
+        if(this.syncSlotsNextTime){
+            this.writeSlotsToCompound(compound);
+            compound.setBoolean("ShouldSync", true);
+            this.syncSlotsNextTime = false;
+        }
     }
 
     @Override
@@ -121,16 +124,22 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
         super.readSyncableNBT(compound, sync);
         this.currentTime = compound.getInteger("CurrentTime");
         this.storage.readFromNBT(compound);
+
+        if(compound.getBoolean("ShouldSync")){
+            this.readSlotsFromCompound(compound);
+        }
     }
 
     @Override
     public void setInventorySlotContents(int i, ItemStack stack){
         super.setInventorySlotContents(i, stack);
+        this.syncSlotsNextTime = true;
         this.sendUpdate();
     }
 
     @Override
     public ItemStack decrStackSize(int i, int j){
+        this.syncSlotsNextTime = true;
         this.sendUpdate();
         return super.decrStackSize(i, j);
     }
