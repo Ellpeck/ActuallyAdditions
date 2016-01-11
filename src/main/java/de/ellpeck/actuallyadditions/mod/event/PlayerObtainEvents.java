@@ -24,6 +24,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 
+import java.util.Locale;
+
 public class PlayerObtainEvents{
 
     @SubscribeEvent
@@ -34,7 +36,7 @@ public class PlayerObtainEvents{
             if(!event.player.worldObj.isRemote && event.crafting != null && event.crafting.getItem() != null && event.crafting.getItem() != InitItems.itemBooklet){
 
                 String name = event.crafting.getItem().getRegistryName();
-                if(name != null && name.toLowerCase().contains(ModUtil.MOD_ID_LOWER)){
+                if(name != null && name.toLowerCase(Locale.ROOT).contains(ModUtil.MOD_ID_LOWER)){
                     NBTTagCompound compound = PersistentServerData.getDataFromPlayer(event.player);
                     if(compound != null && !compound.getBoolean("BookGottenAlready")){
                         compound.setBoolean("BookGottenAlready", true);
