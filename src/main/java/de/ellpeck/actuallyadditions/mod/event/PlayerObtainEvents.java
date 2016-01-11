@@ -17,15 +17,12 @@ import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.misc.WorldData;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.playerdata.PersistentServerData;
-import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
-
-import java.util.Locale;
 
 public class PlayerObtainEvents{
 
@@ -34,12 +31,10 @@ public class PlayerObtainEvents{
         checkAchievements(event.crafting, event.player, InitAchievements.Type.CRAFTING);
 
         if(ConfigBoolValues.GIVE_BOOKLET_ON_FIRST_CRAFT.isEnabled()){
-            if(!event.player.worldObj.isRemote && event.crafting.getItem() != InitItems.itemBooklet){
+            if(!event.player.worldObj.isRemote && event.crafting != null && event.crafting.getItem() != null && event.crafting.getItem() != InitItems.itemBooklet){
 
-                String itemName = event.crafting.getItem().getRegistryName();
-                String blockName = Block.getBlockFromItem(event.crafting.getItem()).getRegistryName();
-
-                if((itemName != null && itemName.toLowerCase(Locale.ROOT).contains(ModUtil.MOD_ID_LOWER)) || (blockName != null && blockName.toLowerCase(Locale.ROOT).contains(ModUtil.MOD_ID_LOWER))){
+                String name = event.crafting.getItem().getRegistryName();
+                if(name != null && name.toLowerCase().contains(ModUtil.MOD_ID_LOWER)){
                     NBTTagCompound compound = PersistentServerData.getDataFromPlayer(event.player);
                     if(compound != null && !compound.getBoolean("BookGottenAlready")){
                         compound.setBoolean("BookGottenAlready", true);
