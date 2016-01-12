@@ -476,67 +476,67 @@ info.actuallyadditions.update.buttons=[{"text":"["},{"text":"Klicke hier für de
 info.actuallyadditions.update.buttonOptions=Klick: Changelog, [Umschalt]-Klick: Download! (Im Browser)
 info.actuallyadditions.update.failed=[{"text":"Die Überprüfung nach "},{"text":"Actually Additions","color":"dark_green"},{"text":"-Updates ist fehlgeschlagen! In den Logs findest du weite Informationen!","color":"none"}]
 
-#Achievements
-achievement.actuallyadditions.openBooklet=Screams of Knowledge
-achievement.actuallyadditions.openBooklet.desc=Open an Actually Additions Manual
+#Achievements / Erfolge
+achievement.actuallyadditions.openBooklet=Geschrei des Wissens
+achievement.actuallyadditions.openBooklet.desc=Öffne ein Actually Additions-Handbuch
 
-achievement.actuallyadditions.nameSmileyCloud=Your best friend
-achievement.actuallyadditions.nameSmileyCloud.desc=Name a Smiley Cloud
+achievement.actuallyadditions.nameSmileyCloud=Dein bester Freund
+achievement.actuallyadditions.nameSmileyCloud.desc=Benenne eine Smiley-Wolke
 
-achievement.actuallyadditions.craftPhantomface=Zoom, Zoom, Items!
-achievement.actuallyadditions.craftPhantomface.desc=Craft a Phantomface
+achievement.actuallyadditions.craftPhantomface=Zoom, Zoom, Gegenstände!
+achievement.actuallyadditions.craftPhantomface.desc=Fertige eine Phantomoberfläche an.
 
-achievement.actuallyadditions.openTreasureChest=Underwater Dungeon
-achievement.actuallyadditions.openTreasureChest.desc=Open a Treasure Chest
+achievement.actuallyadditions.openTreasureChest=Verlies unter Wasser
+achievement.actuallyadditions.openTreasureChest.desc=Offne eine Schatzkiste
 
-achievement.actuallyadditions.craftLiquiface=Zoom, Zoom, Fluids!
-achievement.actuallyadditions.craftLiquiface.desc=Craft a Phantom Liquiface
+achievement.actuallyadditions.craftLiquiface=Zoom, Zoom, Flüssigkeiten!
+achievement.actuallyadditions.craftLiquiface.desc=Fertige eine Liqui-Oberfläche an.
 
 achievement.actuallyadditions.craftEnergyface=Zoom, Zoom, RF!
-achievement.actuallyadditions.craftEnergyface.desc=Craft a Phantom Energyface
+achievement.actuallyadditions.craftEnergyface.desc=Fertige eine Phantom-Energie-Oberfläche an.
 
 achievement.actuallyadditions.craftCoalGen=Furnace for cools
-achievement.actuallyadditions.craftCoalGen.desc=Craft a Coal Generator
+achievement.actuallyadditions.craftCoalGen.desc=Fertige einen Kohle-Generator an.
 
-achievement.actuallyadditions.craftLeafGen=Munch, dude!
-achievement.actuallyadditions.craftLeafGen.desc=Craft a Leaf-Eating Generator
+achievement.actuallyadditions.craftLeafGen=Mampf, Alter!
+achievement.actuallyadditions.craftLeafGen.desc=Fertige einen blätterfressenden Generator an.
 
-achievement.actuallyadditions.craftReconstructor=Bzrrrrt something else
-achievement.actuallyadditions.craftReconstructor.desc=Craft an Atomic Reconstructor
+achievement.actuallyadditions.craftReconstructor=Bzrrrr etwas anderes
+achievement.actuallyadditions.craftReconstructor.desc=Fertige einen Atomaren Umwandler an.
 
-achievement.actuallyadditions.craftLaserRelay=Relayed, not delayed
-achievement.actuallyadditions.craftLaserRelay.desc=Craft a Laser Relay
+achievement.actuallyadditions.craftLaserRelay=Weitergeschoben, nicht aufgeschoben!
+achievement.actuallyadditions.craftLaserRelay.desc=Fertige ein Laser-Relais an.
 
-achievement.actuallyadditions.craftCrusher=Doublin' up!
-achievement.actuallyadditions.craftCrusher.desc=Craft a Crusher
+achievement.actuallyadditions.craftCrusher=Verdoppeln!
+achievement.actuallyadditions.craftCrusher.desc=Fertige einen Brecher an.
 
-achievement.actuallyadditions.pickUpCoffee=Makes you addicted
-achievement.actuallyadditions.pickUpCoffee.desc=Harvest some coffee
+achievement.actuallyadditions.pickUpCoffee=Macht dich süchtig
+achievement.actuallyadditions.pickUpCoffee.desc=Ernte etwas Kaffee
 
-achievement.actuallyadditions.craftCoffeeMachine=Addiction in cups
-achievement.actuallyadditions.craftCoffeeMachine.desc=Craft a Coffee Machine
+achievement.actuallyadditions.craftCoffeeMachine=Sucht in Tassen
+achievement.actuallyadditions.craftCoffeeMachine.desc=Fertige eine Kaffeemaschine an.
 
-#Booklet Recipe Names
-booklet.actuallyadditions.shapelessRecipe=Shapeless Recipe
-booklet.actuallyadditions.shapedRecipe=Shaped Recipe
-booklet.actuallyadditions.shapelessOreRecipe=Shapeless OreDictionary Recipe
-booklet.actuallyadditions.shapedOreRecipe=Shaped OreDictionary Recipe
+#Booklet Recipe Names / Rezept-Namen (Büchlein)
+booklet.actuallyadditions.shapelessRecipe=Formloses Rezept
+booklet.actuallyadditions.shapedRecipe=Geformtes Rezept
+booklet.actuallyadditions.shapelessOreRecipe=Formloses OreDictionary-Rezept
+booklet.actuallyadditions.shapedOreRecipe=Geformtes OreDictionary-Rezept
 
-#Booklet Entries
-booklet.actuallyadditions.indexEntry.gettingStarted.name=Getting Started
-booklet.actuallyadditions.indexEntry.misc.name=Miscellaneous
-booklet.actuallyadditions.indexEntry.functionalNoRF.name=Blocks that don't use RF
-booklet.actuallyadditions.indexEntry.allAndSearch.name=All Items and Search
-booklet.actuallyadditions.indexEntry.functionalRF.name=Blocks that use RF
-booklet.actuallyadditions.indexEntry.generatingRF.name=Blocks that generate RF
-booklet.actuallyadditions.indexEntry.itemsNoRF.name=Items that don't use RF
-booklet.actuallyadditions.indexEntry.itemsRF.name=Items that use RF
+#Booklet Entries / Handbuch-Einträge
+booklet.actuallyadditions.indexEntry.gettingStarted.name=Erste Schritte
+booklet.actuallyadditions.indexEntry.misc.name=Verschiedenes
+booklet.actuallyadditions.indexEntry.functionalNoRF.name=Blöcke, die nicht RF benutzen
+booklet.actuallyadditions.indexEntry.allAndSearch.name=Alle Gegenstände und Suche
+booklet.actuallyadditions.indexEntry.functionalRF.name=Blöcke, die RF benutzen
+booklet.actuallyadditions.indexEntry.generatingRF.name=Blöcke, die RF herstellen
+booklet.actuallyadditions.indexEntry.itemsNoRF.name=Gegenstände, die nicht RF benutzen
+booklet.actuallyadditions.indexEntry.itemsRF.name=Gegenstände, die RF benutzen
 
-#Booklet Info
-booklet.actuallyadditions.recipeDisabled=The crafting recipe for this item is disabled in the Config File! If you're on a server, ask the server author to enable it in the config. If you're on a client, press the 'Open Config'-Button on the top right and enable the recipe!
-booklet.actuallyadditions.clickToSeeRecipe=Click to see more Information
-booklet.actuallyadditions.amountOfWords=%s words in total
-booklet.actuallyadditions.amountOfChars=%s characters in total
+#Booklet Info / Handbuch-Informationen
+booklet.actuallyadditions.recipeDisabled=Das Rezept für diesen Gegenstand ist deaktiviert! Wenn du dich auf einem Server befindest, frage den Besitzer, es für dich zu aktivieren. Im Einzelspieler-Modus, kannst du einfach oben rechts auf 'Config öffnen' klicken und das Rezept aktivieren!
+booklet.actuallyadditions.clickToSeeRecipe=Klicke, um weitere Informationen zu erhalten.
+booklet.actuallyadditions.amountOfWords=%s Wörter insgesamt
+booklet.actuallyadditions.amountOfChars=%s Zeichen insgesamt
 
 #Booklet Chapters
 booklet.actuallyadditions.chapter.intro.name=An Introduction to ActAdd
