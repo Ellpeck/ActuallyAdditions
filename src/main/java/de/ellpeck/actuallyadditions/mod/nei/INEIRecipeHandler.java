@@ -8,7 +8,9 @@
  * © 2016 Ellpeck
  */
 
-package de.ellpeck.actuallyadditions.api.booklet;
+package de.ellpeck.actuallyadditions.mod.nei;
+
+import de.ellpeck.actuallyadditions.api.booklet.BookletPage;
 
 /**
  * Make an NEI Recipe Handler implement this to make a button show up on the page
