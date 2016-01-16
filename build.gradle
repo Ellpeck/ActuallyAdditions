@@ -17,11 +17,12 @@ group = "de.ellpeck.actuallyadditions"
 archivesBaseName = "ActuallyAdditions"
 
 minecraft {
-    version = "1.8.9-11.15.0.1684"
+    version = "1.8.9-11.15.0.1697"
     runDir = "idea"
 
     mappings = "stable_20"
     makeObfSourceJar = false
+    useDepAts = true
 
     replaceIn "ModUtil.java"
     replace "@VERSION@", project.version.toString()
@@ -31,12 +32,17 @@ repositories {
     maven {
         url "http://chickenbones.net/maven/"
     }
+    maven {
+        url "http://dvs1.progwml6.com/files/maven"
+    }
 }
 
 dependencies {
     compile "codechicken:CodeChickenLib:1.8-1.1.2.139:dev"
     compile "codechicken:CodeChickenCore:1.8-1.0.5.36:dev"
     compile "codechicken:NotEnoughItems:1.8-1.0.5.104:dev"
+
+    deobfCompile "mezz.jei:jei_1.8.9:2.18.1.88"
 }
 
 processResources {

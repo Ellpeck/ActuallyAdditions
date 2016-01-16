@@ -120,8 +120,13 @@ public class PageCrafting extends BookletPageAA{
             }
             else if(recipe instanceof ShapedOreRecipe){
                 ShapedOreRecipe shaped = (ShapedOreRecipe)recipe;
-                width = ReflectionHelper.getPrivateValue(ShapedOreRecipe.class, shaped, 4);
-                height = ReflectionHelper.getPrivateValue(ShapedOreRecipe.class, shaped, 5);
+                try{
+                    width = ReflectionHelper.getPrivateValue(ShapedOreRecipe.class, shaped, 4);
+                    height = ReflectionHelper.getPrivateValue(ShapedOreRecipe.class, shaped, 5);
+                }
+                catch(Exception e){
+                    ModUtil.LOGGER.error("Something went wrong trying to get the Crafting Recipe in the booklet to display!", e);
+                }
                 for(int i = 0; i < shaped.getInput().length; i++){
                     Object input = shaped.getInput()[i];
                     if(input != null){

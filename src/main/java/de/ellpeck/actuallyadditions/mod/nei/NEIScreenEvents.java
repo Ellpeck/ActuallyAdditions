@@ -33,8 +33,6 @@ public class NEIScreenEvents{
     @SubscribeEvent
     public void onInitGuiForNEI(GuiScreenEvent.InitGuiEvent event){
         if(event.gui instanceof GuiRecipe){
-            GuiRecipe theGui = (GuiRecipe)event.gui;
-
             int xSize = 176;
             int ySize = 166;
             int guiLeft = (event.gui.width-xSize)/2;
@@ -50,8 +48,10 @@ public class NEIScreenEvents{
                     }
                 }
             };
-
             event.buttonList.add(this.neiButton);
+
+            GuiRecipe theGui = (GuiRecipe)event.gui;
+
             IRecipeHandler handler = theGui.getCurrentRecipeHandlers().get(theGui.recipetype);
             this.neiButton.visible = handler instanceof INEIRecipeHandler && ((INEIRecipeHandler)handler).getPageForInfo(theGui.page) != null;
         }

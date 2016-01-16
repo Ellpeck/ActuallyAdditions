@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.booklet;
 
 import de.ellpeck.actuallyadditions.mod.achievement.InitAchievements;
+import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.achievement.GuiAchievements;
 import net.minecraft.stats.StatFileWriter;
@@ -23,7 +24,12 @@ public class GuiAAAchievements extends GuiAchievements{
 
     public GuiAAAchievements(GuiScreen screen, StatFileWriter writer){
         super(screen, writer);
-        ReflectionHelper.setPrivateValue(GuiAchievements.class, this, InitAchievements.pageNumber, 20);
+        try{
+            ReflectionHelper.setPrivateValue(GuiAchievements.class, this, InitAchievements.pageNumber, 20);
+        }
+        catch(Exception e){
+            ModUtil.LOGGER.error("Something went wrong trying to open the Achievements GUI!", e);
+        }
     }
 
     @Override
