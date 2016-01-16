@@ -11,6 +11,10 @@
 package de.ellpeck.actuallyadditions.mod.proxy;
 
 
+import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
+import de.ellpeck.actuallyadditions.api.booklet.BookletPage;
+import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
+import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.event.InitEvents;
@@ -20,6 +24,9 @@ import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.playerdata.PersistentClientData;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.IReloadableResourceManager;
+import net.minecraft.client.resources.IResourceManager;
+import net.minecraft.client.resources.IResourceManagerReloadListener;
 import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.item.Item;
@@ -36,7 +43,6 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
-@SuppressWarnings("unused")
 public class ClientProxy implements IProxy{
 
     private static Map<ItemStack, ResourceLocation> modelLocationsForRegistering = new HashMap<ItemStack, ResourceLocation>();
@@ -45,6 +51,9 @@ public class ClientProxy implements IProxy{
     public static boolean pumpkinBlurPumpkinBlur;
     public static boolean jingleAllTheWay;
     public static boolean bulletForMyValentine;
+
+    public static int bookletWordCount;
+    public static int bookletCharCount;
 
     @Override
     public void preInit(FMLPreInitializationEvent event){
@@ -65,9 +74,18 @@ public class ClientProxy implements IProxy{
         for(Map.Entry<Item, ResourceLocation[]> entry : modelVariantsForRegistering.entrySet()){
             ModelBakery.registerItemVariants(entry.getKey(), entry.getValue());
         }
-
         this.registerCustomFluidBlockRenderer(InitBlocks.fluidCanolaOil);
         this.registerCustomFluidBlockRenderer(InitBlocks.fluidOil);
+
+        IResourceManager manager = Minecraft.getMinecraft().getResourceManager();
+        if(manager instanceof IReloadableResourceManager){
+            ((IReloadableResourceManager)manager).registerReloadListener(new IResourceManagerReloadListener(){
+                @Override
+                public void onResourceManagerReload(IResourceManager resourceManager){
+                    countBookletWords();
+                }
+            });
+        }
     }
 
     /**
@@ -112,6 +130,8 @@ public class ClientProxy implements IProxy{
         ModUtil.LOGGER.info("PostInitializing ClientProxy...");
 
         SpecialRenderInit.init();
+
+        countBookletWords();
     }
 
     @Override
@@ -122,5 +142,25 @@ public class ClientProxy implements IProxy{
     @Override
     public void addRenderVariant(Item item, ResourceLocation... location){
         modelVariantsForRegistering.put(item, location);
+    }
+
+    private static void countBookletWords(){
+        bookletWordCount = 0;
+        bookletCharCount = 0;
+
+        for(IBookletEntry entry : ActuallyAdditionsAPI.bookletEntries){
+            for(IBookletChapter chapter : entry.getChapters()){
+                for(BookletPage page : chapter.getPages()){
+                    if(page.getText() != null){
+                        bookletWordCount += page.getText().split(" ").length;
+                        bookletCharCount += page.getText().length();
+                    }
+                }
+                bookletWordCount += chapter.getLocalizedName().split(" ").length;
+                bookletCharCount += chapter.getLocalizedName().length();
+            }
+            bookletWordCount += entry.getLocalizedName().split(" ").length;
+            bookletCharCount += entry.getLocalizedName().length();
+        }
     }
 }

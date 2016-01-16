@@ -12,8 +12,6 @@ package de.ellpeck.actuallyadditions.mod.booklet;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.booklet.BookletPage;
-import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
-import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheColoredLampColors;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheMiscBlocks;
@@ -40,9 +38,6 @@ import java.util.ArrayList;
 
 public class InitBooklet{
 
-    public static int wordCount;
-    public static int charCount;
-
     public static BookletChapter chapterIntro;
 
     public static void preInit(){
@@ -58,7 +53,6 @@ public class InitBooklet{
     
     public static void postInit(){
         initChapters();
-        countWords();
     }
 
     private static void initChapters(){
@@ -147,22 +141,5 @@ public class InitBooklet{
         new BookletChapter("growthRing", ActuallyAdditionsAPI.entryItemsRF, new ItemStack(InitItems.itemGrowthRing), new PageCrafting(1, ItemCrafting.recipeGrowthRing));
         new BookletChapter("waterRemovalRing", ActuallyAdditionsAPI.entryItemsRF, new ItemStack(InitItems.itemWaterRemovalRing), new PageCrafting(1, ItemCrafting.recipeWaterRing));
         new BookletChapter("batteries", ActuallyAdditionsAPI.entryItemsRF, new ItemStack(InitItems.itemBatteryTriple), new PageTextOnly(1), new PageCrafting(2, ItemCrafting.recipeBattery).setNoText(), new PageCrafting(3, ItemCrafting.recipeBatteryDouble).setNoText(), new PageCrafting(4, ItemCrafting.recipeBatteryTriple).setNoText(), new PageCrafting(5, ItemCrafting.recipeBatteryQuadruple).setNoText(), new PageCrafting(6, ItemCrafting.recipeBatteryQuintuple).setNoText());
-    }
-
-    private static void countWords(){
-        for(IBookletEntry entry : ActuallyAdditionsAPI.bookletEntries){
-            for(IBookletChapter chapter : entry.getChapters()){
-                for(BookletPage page : chapter.getPages()){
-                    if(page.getText() != null){
-                        wordCount += page.getText().split(" ").length;
-                        charCount += page.getText().length();
-                    }
-                }
-                wordCount += chapter.getLocalizedName().split(" ").length;
-                charCount += chapter.getLocalizedName().length();
-            }
-            wordCount += entry.getLocalizedName().split(" ").length;
-            charCount += entry.getLocalizedName().length();
-        }
     }
 }
