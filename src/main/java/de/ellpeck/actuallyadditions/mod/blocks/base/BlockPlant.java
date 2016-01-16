@@ -10,9 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks.base;
 
-import java.util.List;
-import java.util.Random;
-
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.creative.CreativeTab;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
@@ -31,6 +28,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.EnumPlantType;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
+import java.util.List;
+import java.util.Random;
+
 public class BlockPlant extends BlockCrops{
 
     public Item seedItem;
@@ -46,22 +46,28 @@ public class BlockPlant extends BlockCrops{
         this.addDropAmount = addDropAmount;
         this.register();
     }
-    public boolean onBlockActivated(World w, BlockPos p, IBlockState s, EntityPlayer ep, EnumFacing f, float hitX, float hitY, float hitZ){
-    	if(getMetaFromState(s)>=7){
-    		if(w.isRemote)return true;
-    		List<ItemStack> isa = getDrops(w, p, s, 0);
-    		for(ItemStack i:isa){
-    			if(i!=null&&i.getItem()==this.getSeed()){
-    				i.stackSize--;
-    			}
-    			EntityItem ei = new EntityItem(w, p.getX()+.5,p.getY()+.5,p.getZ()+.5,i);
-    			w.spawnEntityInWorld(ei);
-    		}
-    		w.setBlockState(p, getStateFromMeta(0));
-    		return true;
-    	}
-    	return false;
+
+    @Override
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing facing, float hitX, float hitY, float hitZ){
+        if(getMetaFromState(state) >= 7){
+            if(!world.isRemote){
+
+                List<ItemStack> drops = getDrops(world, pos, state, 0);
+                for(ItemStack stack : drops){
+                    if(stack != null && stack.getItem() == this.getSeed()){
+                        stack.stackSize--;
+                    }
+                    EntityItem entity = new EntityItem(world, pos.getX()+.5, pos.getY()+.5, pos.getZ()+.5, stack);
+                    world.spawnEntityInWorld(entity);
+                }
+
+                world.setBlockState(pos, getStateFromMeta(0));
+            }
+            return true;
+        }
+        return false;
     }
+
     private void register(){
         this.setUnlocalizedName(ModUtil.MOD_ID_LOWER+"."+this.getBaseName());
         GameRegistry.registerBlock(this, this.getItemBlock(), this.getBaseName());
@@ -109,6 +115,7 @@ public class BlockPlant extends BlockCrops{
     public Item getCrop(){
         return this.returnItem;
     }
+
     @Override
     public Item getItemDropped(IBlockState state, Random rand, int par3){
         return this.getMetaFromState(state) >= 7 ? this.getCrop() : this.getSeed();
