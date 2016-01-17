@@ -67,10 +67,11 @@ public class PacketUpdateTileEntity implements IMessage{
         public IMessage onMessage(PacketUpdateTileEntity message, MessageContext ctx){
             if(message.pos != null && message.compound != null){
                 World world = Minecraft.getMinecraft().theWorld;
-
-                TileEntity tile = world.getTileEntity(message.pos);
-                if(tile != null && tile instanceof TileEntityBase){
-                    ((TileEntityBase)tile).receiveSyncCompound(message.compound);
+                if(world != null){
+                    TileEntity tile = world.getTileEntity(message.pos);
+                    if(tile != null && tile instanceof TileEntityBase){
+                        ((TileEntityBase)tile).receiveSyncCompound(message.compound);
+                    }
                 }
             }
             return null;
