@@ -20,6 +20,7 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 
@@ -71,15 +72,22 @@ public class LensColor extends Lens{
 
             ArrayList<EntityItem> items = (ArrayList<EntityItem>)tile.getWorldObject().getEntitiesWithinAABB(EntityItem.class, AxisAlignedBB.fromBounds(hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), hitBlock.getX()+1, hitBlock.getY()+1, hitBlock.getZ()+1));
             for(EntityItem item : items){
-                if(item.getEntityItem() != null && tile.getEnergy() >= ENERGY_USE){
+                if(!item.isDead && item.getEntityItem() != null && tile.getEnergy() >= ENERGY_USE){
                     if(Util.arrayContains(CONVERTABLE_BLOCKS, item.getEntityItem().getItem()) >= 0 || Util.arrayContains(CONVERTABLE_BLOCKS, Block.getBlockFromItem(item.getEntityItem().getItem())) >= 0){
-                        int meta = item.getEntityItem().getItemDamage();
+                        ItemStack newStack = item.getEntityItem().copy();
+                        int meta = newStack.getItemDamage();
                         if(meta >= 15){
-                            item.getEntityItem().setItemDamage(0);
+                            newStack.setItemDamage(0);
                         }
                         else{
-                            item.getEntityItem().setItemDamage(meta+1);
+                            newStack.setItemDamage(meta+1);
                         }
+
+                        item.setDead();
+
+                        EntityItem newItem = new EntityItem(tile.getWorldObject(), item.posX, item.posY, item.posZ, newStack);
+                        tile.getWorldObject().spawnEntityInWorld(newItem);
+
                         tile.extractEnergy(ENERGY_USE);
                     }
                 }

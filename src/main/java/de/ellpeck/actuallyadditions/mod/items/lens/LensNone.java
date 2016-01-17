@@ -65,7 +65,7 @@ public class LensNone extends Lens{
             ArrayList<EntityItem> items = (ArrayList<EntityItem>)tile.getWorldObject().getEntitiesWithinAABB(EntityItem.class, AxisAlignedBB.fromBounds(hitBlock.getX()-range, hitBlock.getY()-range, hitBlock.getZ()-range, hitBlock.getX()+range, hitBlock.getY()+range, hitBlock.getZ()+range));
             for(EntityItem item : items){
                 ItemStack stack = item.getEntityItem();
-                if(stack != null){
+                if(!item.isDead && stack != null){
                     List<LensNoneRecipe> recipes = LensNoneRecipeHandler.getRecipesFor(stack);
                     for(LensNoneRecipe recipe : recipes){
                         if(recipe != null && tile.getEnergy() >= recipe.energyUse){
@@ -73,7 +73,11 @@ public class LensNone extends Lens{
                             if(outputs != null && !outputs.isEmpty()){
                                 ItemStack outputCopy = outputs.get(0).copy();
                                 outputCopy.stackSize = stack.stackSize;
-                                item.setEntityItemStack(outputCopy);
+
+                                item.setDead();
+
+                                EntityItem newItem = new EntityItem(tile.getWorldObject(), item.posX, item.posY, item.posZ, outputCopy);
+                                tile.getWorldObject().spawnEntityInWorld(newItem);
 
                                 tile.extractEnergy(recipe.energyUse);
                                 break;
