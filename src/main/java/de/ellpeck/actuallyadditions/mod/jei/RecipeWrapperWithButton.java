@@ -8,7 +8,7 @@
  * © 2016 Ellpeck
  */
 
-package de.ellpeck.actuallyadditions.api.integration;
+package de.ellpeck.actuallyadditions.mod.jei;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.booklet.BookletPage;
@@ -19,10 +19,6 @@ import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.Minecraft;
 
-/**
- * Make a JEI Recipe Wrapper extend this to make a button show up on the page
- * You still need to make it implement IRecipeWrapper!
- */
 public abstract class RecipeWrapperWithButton{
 
     protected TexturedButton theButton;
@@ -40,9 +36,6 @@ public abstract class RecipeWrapperWithButton{
         };
     }
 
-    /**
-     * Handles a click. Return this on IRecipeWrapper's handleClick() method
-     */
     public boolean handleClick(Minecraft mc, int mouseX, int mouseY){
         if(this.theButton.mousePressed(mc, mouseX, mouseY)){
             this.theButton.playPressSound(mc.getSoundHandler());
@@ -59,15 +52,9 @@ public abstract class RecipeWrapperWithButton{
         return false;
     }
 
-    /**
-     * Updates the button's rendering. Call this on IRecipeWrapper's drawInfo() method
-     */
     public void updateButton(Minecraft mc, int mouseX, int mouseY){
         this.theButton.drawButton(mc, mouseX, mouseY);
     }
 
-    /**
-     * The booklet page that will be opened when clicking the button
-     */
     public abstract BookletPage getPage();
 }
