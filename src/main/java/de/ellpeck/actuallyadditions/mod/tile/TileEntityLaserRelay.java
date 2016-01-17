@@ -21,9 +21,6 @@ import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import io.netty.util.internal.ConcurrentSet;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.Packet;
-import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fml.relauncher.Side;
@@ -58,7 +55,7 @@ public class TileEntityLaserRelay extends TileEntityBase implements IEnergyRecei
     }
 
     @Override
-    public Packet getDescriptionPacket(){
+    public NBTTagCompound getSyncCompound(){
         NBTTagCompound compound = new NBTTagCompound();
 
         BlockPos thisPos = this.pos;
@@ -70,18 +67,18 @@ public class TileEntityLaserRelay extends TileEntityBase implements IEnergyRecei
                 list.appendTag(pair.writeToNBT());
             }
             compound.setTag("Connections", list);
-            return new S35PacketUpdateTileEntity(thisPos, 3, compound);
+            return compound;
         }
         return null;
     }
 
     @Override
-    public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt){
+    public void receiveSyncCompound(NBTTagCompound compound){
         BlockPos thisPos = this.pos;
-        if(pkt != null && pkt.getNbtCompound() != null){
+        if(compound != null){
             LaserRelayConnectionHandler.getInstance().removeRelayFromNetwork(thisPos);
 
-            NBTTagList list = pkt.getNbtCompound().getTagList("Connections", 10);
+            NBTTagList list = compound.getTagList("Connections", 10);
             for(int i = 0; i < list.tagCount(); i++){
                 LaserRelayConnectionHandler.ConnectionPair pair = LaserRelayConnectionHandler.ConnectionPair.readFromNBT(list.getCompoundTagAt(i));
                 LaserRelayConnectionHandler.getInstance().addConnection(pair.firstRelay, pair.secondRelay);

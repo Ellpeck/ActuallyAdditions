@@ -11,7 +11,8 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
-import de.ellpeck.actuallyadditions.mod.network.VanillaPacketSyncer;
+import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
+import de.ellpeck.actuallyadditions.mod.network.PacketUpdateTileEntity;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
@@ -22,6 +23,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ITickable;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public abstract class TileEntityBase extends TileEntity implements ITickable{
@@ -90,7 +92,7 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
     }
 
     @Override
-    public void update(){
+    public final void update(){
         this.updateEntity();
     }
 
@@ -99,15 +101,21 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
     }
 
     @Override
-    public Packet getDescriptionPacket(){
-        NBTTagCompound tag = new NBTTagCompound();
-        this.writeSyncableNBT(tag, true);
-        return new S35PacketUpdateTileEntity(this.pos, 3, tag);
+    public final Packet getDescriptionPacket(){
+        NBTTagCompound compound = this.getSyncCompound();
+        if(compound != null){
+            return new S35PacketUpdateTileEntity(this.pos, 3, compound);
+        }
+        else{
+            return null;
+        }
     }
 
     @Override
-    public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt){
-        this.readSyncableNBT(pkt.getNbtCompound(), true);
+    public final void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt){
+        if(pkt != null){
+            this.receiveSyncCompound(pkt.getNbtCompound());
+        }
     }
 
     @Override
@@ -127,12 +135,12 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
         }
     }
 
-    public void setRedstonePowered(boolean powered){
+    public final void setRedstonePowered(boolean powered){
         this.isRedstonePowered = powered;
         this.markDirty();
     }
 
-    protected boolean sendUpdateWithInterval(){
+    protected final boolean sendUpdateWithInterval(){
         if(this.ticksElapsed%ConfigIntValues.TILE_ENTITY_UPDATE_INTERVAL.getValue() == 0){
             this.sendUpdate();
             return true;
@@ -142,7 +150,17 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
         }
     }
 
-    public void sendUpdate(){
-        VanillaPacketSyncer.sendTileToNearbyPlayers(this);
+    public final void sendUpdate(){
+        PacketHandler.theNetwork.sendToAllAround(new PacketUpdateTileEntity(this), new NetworkRegistry.TargetPoint(this.worldObj.provider.getDimensionId(), this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), 64));
+    }
+
+    public NBTTagCompound getSyncCompound(){
+        NBTTagCompound tag = new NBTTagCompound();
+        this.writeSyncableNBT(tag, true);
+        return tag;
+    }
+
+    public void receiveSyncCompound(NBTTagCompound compound){
+        this.readSyncableNBT(compound, true);
     }
 }
