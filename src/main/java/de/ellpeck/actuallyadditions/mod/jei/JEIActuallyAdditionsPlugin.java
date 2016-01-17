@@ -15,6 +15,8 @@ import de.ellpeck.actuallyadditions.mod.jei.booklet.BookletRecipeCategory;
 import de.ellpeck.actuallyadditions.mod.jei.booklet.BookletRecipeHandler;
 import de.ellpeck.actuallyadditions.mod.jei.coffee.CoffeeMachineRecipeCategory;
 import de.ellpeck.actuallyadditions.mod.jei.coffee.CoffeeMachineRecipeHandler;
+import de.ellpeck.actuallyadditions.mod.jei.crusher.CrusherRecipeCategory;
+import de.ellpeck.actuallyadditions.mod.jei.crusher.CrusherRecipeHandler;
 import mezz.jei.api.*;
 
 @JEIPlugin
@@ -36,16 +38,19 @@ public class JEIActuallyAdditionsPlugin implements IModPlugin{
     public void register(IModRegistry registry){
         registry.addRecipeCategories(
                 new BookletRecipeCategory(this.helpers.getGuiHelper()),
-                new CoffeeMachineRecipeCategory(this.helpers.getGuiHelper())
+                new CoffeeMachineRecipeCategory(this.helpers.getGuiHelper()),
+                new CrusherRecipeCategory(this.helpers.getGuiHelper())
         );
 
         registry.addRecipeHandlers(
                 new BookletRecipeHandler(),
-                new CoffeeMachineRecipeHandler()
+                new CoffeeMachineRecipeHandler(),
+                new CrusherRecipeHandler()
         );
 
         registry.addRecipes(ActuallyAdditionsAPI.bookletPagesWithItemStackData);
         registry.addRecipes(ActuallyAdditionsAPI.coffeeMachineIngredients);
+        registry.addRecipes(ActuallyAdditionsAPI.crusherRecipes);
     }
 
     @Override
