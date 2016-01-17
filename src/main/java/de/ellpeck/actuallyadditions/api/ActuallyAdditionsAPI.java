@@ -28,7 +28,7 @@ public class ActuallyAdditionsAPI{
 
     public static final String MOD_ID = "ActuallyAdditions";
     public static final String API_ID = MOD_ID+"API";
-    public static final String API_VERSION = "5";
+    public static final String API_VERSION = "6";
 
     public static List<CrusherRecipe> crusherRecipes = new ArrayList<CrusherRecipe>();
     public static List<BallOfFurReturn> ballOfFurReturnItems = new ArrayList<BallOfFurReturn>();

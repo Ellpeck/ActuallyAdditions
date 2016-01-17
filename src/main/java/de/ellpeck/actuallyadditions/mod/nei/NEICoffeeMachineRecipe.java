@@ -17,6 +17,7 @@ import codechicken.nei.recipe.RecipeInfo;
 import codechicken.nei.recipe.TemplateRecipeHandler;
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.booklet.BookletPage;
+import de.ellpeck.actuallyadditions.api.integration.INEIRecipeHandler;
 import de.ellpeck.actuallyadditions.api.recipe.coffee.CoffeeBrewing;
 import de.ellpeck.actuallyadditions.api.recipe.coffee.CoffeeIngredient;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;

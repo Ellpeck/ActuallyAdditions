@@ -27,7 +27,7 @@ public class BookletRecipeCategory implements IRecipeCategory{
     private IDrawable background;
 
     public BookletRecipeCategory(IGuiHelper helper){
-        this.background = helper.createBlankDrawable(150, 256);
+        this.background = helper.createBlankDrawable(160, 100);
     }
 
     @Nonnull
@@ -63,7 +63,7 @@ public class BookletRecipeCategory implements IRecipeCategory{
         if(recipeWrapper instanceof BookletRecipeWrapper){
             BookletRecipeWrapper wrapper = (BookletRecipeWrapper)recipeWrapper;
 
-            recipeLayout.getItemStacks().init(0, true, 62, 23);
+            recipeLayout.getItemStacks().init(0, true, 62, -3);
             recipeLayout.getItemStacks().set(0, Arrays.asList(wrapper.thePage.getItemStacksForPage()));
         }
     }

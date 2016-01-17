@@ -8,7 +8,7 @@
  * © 2016 Ellpeck
  */
 
-package de.ellpeck.actuallyadditions.mod.nei;
+package de.ellpeck.actuallyadditions.api.integration;
 
 import de.ellpeck.actuallyadditions.api.booklet.BookletPage;
 
