@@ -1,0 +1,12 @@
+{
+  "variants": {
+    "age=0": { "model": "actuallyadditions:blockFlaxStage1" },
+    "age=1": { "model": "actuallyadditions:blockFlaxStage2" },
+    "age=2": { "model": "actuallyadditions:blockFlaxStage2" },
+    "age=3": { "model": "actuallyadditions:blockFlaxStage3" },
+    "age=4": { "model": "actuallyadditions:blockFlaxStage4" },
+    "age=5": { "model": "actuallyadditions:blockFlaxStage4" },
+    "age=6": { "model": "actuallyadditions:blockFlaxStage5" },
+    "age=7": { "model": "actuallyadditions:blockFlaxStage6" }
+  }
+}

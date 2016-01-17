@@ -10,30 +10,38 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockBushBase;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockPlant;
 import de.ellpeck.actuallyadditions.mod.blocks.base.ItemBlockBase;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheWildPlants;
+import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.block.properties.PropertyInteger;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIcon;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class BlockWildPlant extends BlockBushBase{
 
     public static final TheWildPlants[] allWildPlants = TheWildPlants.values();
+    private static final PropertyInteger META = PropertyInteger.create("meta", 0, allWildPlants.length-1);
 
     public BlockWildPlant(String name){
         super(name);
@@ -41,8 +49,14 @@ public class BlockWildPlant extends BlockBushBase{
     }
 
     @Override
-    public boolean canBlockStay(World world, int x, int y, int z){
-        return world.getBlockMetadata(x, y, z) == TheWildPlants.RICE.ordinal() ? world.getBlock(x, y-1, z).getMaterial() == Material.water : world.getBlock(x, y-1, z).canSustainPlant(world, x, y-1, z, ForgeDirection.UP, this);
+    protected PropertyInteger getMetaProperty(){
+        return META;
+    }
+
+    @Override
+    public boolean canBlockStay(World world, BlockPos pos, IBlockState state){
+        BlockPos offset = PosUtil.offset(pos, 0, -1, 0);
+        return PosUtil.getMetadata(pos, world) == TheWildPlants.RICE.ordinal() ? PosUtil.getMaterial(offset, world) == Material.water : PosUtil.getBlock(offset, world).canSustainPlant(world, offset, EnumFacing.UP, this);
     }
 
     @Override
@@ -57,25 +71,19 @@ public class BlockWildPlant extends BlockBushBase{
 
     @Override
     public EnumRarity getRarity(ItemStack stack){
-        return stack.getItemDamage() >= allWildPlants.length ? EnumRarity.common : allWildPlants[stack.getItemDamage()].rarity;
+        return stack.getItemDamage() >= allWildPlants.length ? EnumRarity.COMMON : allWildPlants[stack.getItemDamage()].rarity;
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public IIcon getIcon(int side, int metadata){
-        return metadata >= allWildPlants.length ? null : allWildPlants[metadata].wildVersionOf.getIcon(0, 7);
-    }
-
-    @Override
-    public boolean canSilkHarvest(){
+    public boolean canSilkHarvest(World world, BlockPos pos, IBlockState state, EntityPlayer player){
         return false;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public Item getItem(World world, int x, int y, int z){
-        int meta = world.getBlockMetadata(x, y, z);
-        return meta >= allWildPlants.length ? null : ((BlockPlant)allWildPlants[meta].wildVersionOf).seedItem;
+    public Item getItem(World world, BlockPos pos){
+        int metadata = PosUtil.getMetadata(pos, world);
+        return metadata >= allWildPlants.length ? null : ((BlockPlant)allWildPlants[metadata].wildVersionOf).seedItem;
     }
 
     @SuppressWarnings("all")
@@ -87,14 +95,20 @@ public class BlockWildPlant extends BlockBushBase{
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister iconReg){
-
+    protected void registerRendering(){
+        ResourceLocation[] resLocs = new ResourceLocation[allWildPlants.length];
+        for(int i = 0; i < allWildPlants.length; i++){
+            String name = this.getBaseName()+allWildPlants[i].name;
+            resLocs[i] = new ResourceLocation(ModUtil.MOD_ID_LOWER, name);
+            ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), new ResourceLocation(ModUtil.MOD_ID_LOWER, name));
+        }
+        ActuallyAdditions.proxy.addRenderVariant(Item.getItemFromBlock(this), resLocs);
     }
 
     @Override
-    public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune){
-        return metadata >= allWildPlants.length ? null : allWildPlants[metadata].wildVersionOf.getDrops(world, x, y, z, 7, fortune);
+    public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune){
+        int metadata = state.getBlock().getMetaFromState(state);
+        return metadata >= allWildPlants.length ? null : allWildPlants[metadata].wildVersionOf.getDrops(world, pos, allWildPlants[metadata].wildVersionOf.getStateFromMeta(7), fortune);
     }
 
     public static class TheItemBlock extends ItemBlockBase{
@@ -103,12 +117,6 @@ public class BlockWildPlant extends BlockBushBase{
             super(block);
             this.setHasSubtypes(true);
             this.setMaxDamage(0);
-        }
-
-        @Override
-        @SideOnly(Side.CLIENT)
-        public IIcon getIconFromDamage(int meta){
-            return this.field_150939_a.getIcon(0, meta);
         }
 
         @Override

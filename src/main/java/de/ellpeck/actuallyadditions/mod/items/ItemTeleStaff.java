@@ -10,23 +10,17 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemEnergy;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.IIcon;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
 
 public class ItemTeleStaff extends ItemEnergy{
 
@@ -40,23 +34,20 @@ public class ItemTeleStaff extends ItemEnergy{
             if(this.getWaitTime(stack) <= 0){
                 MovingObjectPosition pos = WorldUtil.getNearestPositionWithAir(world, player, 100);
                 if(pos != null && (pos.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK || player.rotationPitch >= -5)){
-                    int side = pos.sideHit;
+                    int side = pos.sideHit.ordinal();
                     if(side != -1){
-                        ForgeDirection forgeSide = ForgeDirection.getOrientation(side);
-                        if(forgeSide != ForgeDirection.UNKNOWN){
-                            double x = pos.hitVec.xCoord-(side == 4 ? 0.5 : 0)+(side == 5 ? 0.5 : 0);
-                            double y = pos.hitVec.yCoord-(side == 0 ? 2.0 : 0)+(side == 1 ? 0.5 : 0);
-                            double z = pos.hitVec.zCoord-(side == 2 ? 0.5 : 0)+(side == 3 ? 0.5 : 0);
-                            int baseUse = 200;
-                            int use = baseUse+(int)(baseUse*pos.hitVec.distanceTo(Vec3.createVectorHelper(player.posX, player.posY+(player.getEyeHeight()-player.getDefaultEyeHeight()), player.posZ)));
-                            if(this.getEnergyStored(stack) >= use){
-                                ((EntityPlayerMP)player).playerNetServerHandler.setPlayerLocation(x, y, z, player.rotationYaw, player.rotationPitch);
-                                player.mountEntity(null);
-                                world.playSoundAtEntity(player, "mob.endermen.portal", 1.0F, 1.0F);
-                                if(!player.capabilities.isCreativeMode){
-                                    this.extractEnergy(stack, use, false);
-                                    this.setWaitTime(stack, 50);
-                                }
+                        double x = pos.hitVec.xCoord-(side == 4 ? 0.5 : 0)+(side == 5 ? 0.5 : 0);
+                        double y = pos.hitVec.yCoord-(side == 0 ? 2.0 : 0)+(side == 1 ? 0.5 : 0);
+                        double z = pos.hitVec.zCoord-(side == 2 ? 0.5 : 0)+(side == 3 ? 0.5 : 0);
+                        int baseUse = 200;
+                        int use = baseUse+(int)(baseUse*pos.hitVec.distanceTo(new Vec3(player.posX, player.posY+(player.getEyeHeight()-player.getDefaultEyeHeight()), player.posZ)));
+                        if(this.getEnergyStored(stack) >= use){
+                            ((EntityPlayerMP)player).playerNetServerHandler.setPlayerLocation(x, y, z, player.rotationYaw, player.rotationPitch);
+                            player.mountEntity(null);
+                            world.playSoundAtEntity(player, "mob.endermen.portal", 1.0F, 1.0F);
+                            if(!player.capabilities.isCreativeMode){
+                                this.extractEnergy(stack, use, false);
+                                this.setWaitTime(stack, 50);
                             }
                         }
                     }
@@ -77,19 +68,7 @@ public class ItemTeleStaff extends ItemEnergy{
 
     @Override
     public EnumRarity getRarity(ItemStack stack){
-        return EnumRarity.epic;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister iconReg){
-        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName());
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public IIcon getIcon(ItemStack stack, int pass){
-        return this.itemIcon;
+        return EnumRarity.EPIC;
     }
 
     private int getWaitTime(ItemStack stack){

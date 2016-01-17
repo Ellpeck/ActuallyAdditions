@@ -11,16 +11,17 @@
 package de.ellpeck.actuallyadditions.mod.misc;
 
 import cofh.api.energy.IEnergyReceiver;
-import de.ellpeck.actuallyadditions.api.Position;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelay;
+import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import io.netty.util.internal.ConcurrentSet;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
 
 public class LaserRelayConnectionHandler{
 
@@ -61,7 +62,7 @@ public class LaserRelayConnectionHandler{
     /**
      * Gets all Connections for a Relay
      */
-    public ConcurrentSet<ConnectionPair> getConnectionsFor(Position relay){
+    public ConcurrentSet<ConnectionPair> getConnectionsFor(BlockPos relay){
         ConcurrentSet<ConnectionPair> allPairs = new ConcurrentSet<ConnectionPair>();
         for(Network aNetwork : this.networks){
             for(ConnectionPair pair : aNetwork.connections){
@@ -76,7 +77,7 @@ public class LaserRelayConnectionHandler{
     /**
      * Removes a Relay from its Network
      */
-    public void removeRelayFromNetwork(Position relay){
+    public void removeRelayFromNetwork(BlockPos relay){
         Network network = this.getNetworkFor(relay);
         if(network != null){
             //Setup new network (so that splitting a network will cause it to break into two)
@@ -94,7 +95,7 @@ public class LaserRelayConnectionHandler{
     /**
      * Gets a Network for a Relay
      */
-    public Network getNetworkFor(Position relay){
+    public Network getNetworkFor(BlockPos relay){
         for(Network aNetwork : this.networks){
             for(ConnectionPair pair : aNetwork.connections){
                 if(pair.contains(relay)){
@@ -109,9 +110,9 @@ public class LaserRelayConnectionHandler{
      * Adds a new connection between two relays
      * (Puts it into the correct network!)
      */
-    public boolean addConnection(Position firstRelay, Position secondRelay){
-        int distance = (int)firstRelay.toVec().distanceTo(secondRelay.toVec());
-        if(distance > TileEntityLaserRelay.MAX_DISTANCE || firstRelay.isEqual(secondRelay)){
+    public boolean addConnection(BlockPos firstRelay, BlockPos secondRelay){
+        int distance = (int)PosUtil.toVec(firstRelay).distanceTo(PosUtil.toVec(secondRelay));
+        if(distance > TileEntityLaserRelay.MAX_DISTANCE || PosUtil.areSamePos(firstRelay, secondRelay)){
             return false;
         }
 
@@ -161,21 +162,21 @@ public class LaserRelayConnectionHandler{
         //System.out.println("Merged Two Networks!");
     }
 
-    public int transferEnergyToReceiverInNeed(World world, Position energyGottenFrom, Network network, int maxTransfer, boolean simulate){
+    public int transferEnergyToReceiverInNeed(World world, BlockPos energyGottenFrom, Network network, int maxTransfer, boolean simulate){
         int transmitted = 0;
         //Go through all of the connections in the network
         for(ConnectionPair pair : network.connections){
-            Position[] relays = new Position[]{pair.firstRelay, pair.secondRelay};
+            BlockPos[] relays = new BlockPos[]{pair.firstRelay, pair.secondRelay};
             //Go through both relays in the connection
-            for(Position relay : relays){
+            for(BlockPos relay : relays){
                 if(relay != null){
                     //Get every side of the relay
                     for(int i = 0; i <= 5; i++){
-                        ForgeDirection side = ForgeDirection.getOrientation(i);
+                        EnumFacing side = WorldUtil.getDirectionBySidesInOrder(i);
                         //Get the Position at the side
-                        Position pos = WorldUtil.getCoordsFromSide(side, relay.getX(), relay.getY(), relay.getZ(), 0);
-                        if(!pos.isEqual(energyGottenFrom)){
-                            TileEntity tile = pos.getTileEntity(world);
+                        BlockPos pos = WorldUtil.getCoordsFromSide(side, relay, 0);
+                        if(!PosUtil.areSamePos(pos, energyGottenFrom)){
+                            TileEntity tile = world.getTileEntity(pos);
                             if(tile instanceof IEnergyReceiver && !(tile instanceof TileEntityLaserRelay)){
                                 IEnergyReceiver receiver = (IEnergyReceiver)tile;
                                 if(receiver.canConnectEnergy(side.getOpposite())){
@@ -203,30 +204,30 @@ public class LaserRelayConnectionHandler{
 
     public static class ConnectionPair{
 
-        public Position firstRelay;
-        public Position secondRelay;
+        public BlockPos firstRelay;
+        public BlockPos secondRelay;
 
-        public ConnectionPair(Position firstRelay, Position secondRelay){
+        public ConnectionPair(BlockPos firstRelay, BlockPos secondRelay){
             this.firstRelay = firstRelay;
             this.secondRelay = secondRelay;
         }
 
         public static ConnectionPair readFromNBT(NBTTagCompound compound){
             if(compound != null){
-                Position[] pos = new Position[2];
+                BlockPos[] pos = new BlockPos[2];
                 for(int i = 0; i < pos.length; i++){
                     int anX = compound.getInteger("x"+i);
                     int aY = compound.getInteger("y"+i);
                     int aZ = compound.getInteger("z"+i);
-                    pos[i] = new Position(anX, aY, aZ);
+                    pos[i] = new BlockPos(anX, aY, aZ);
                 }
                 return new ConnectionPair(pos[0], pos[1]);
             }
             return null;
         }
 
-        public boolean contains(Position relay){
-            return (this.firstRelay != null && this.firstRelay.isEqual(relay)) || (this.secondRelay != null && this.secondRelay.isEqual(relay));
+        public boolean contains(BlockPos relay){
+            return (this.firstRelay != null && PosUtil.areSamePos(firstRelay, relay)) || (this.secondRelay != null && PosUtil.areSamePos(secondRelay, relay));
         }
 
         @Override
@@ -237,7 +238,7 @@ public class LaserRelayConnectionHandler{
         public NBTTagCompound writeToNBT(){
             NBTTagCompound compound = new NBTTagCompound();
             for(int i = 0; i < 2; i++){
-                Position relay = i == 0 ? this.firstRelay : this.secondRelay;
+                BlockPos relay = i == 0 ? this.firstRelay : this.secondRelay;
                 compound.setInteger("x"+i, relay.getX());
                 compound.setInteger("y"+i, relay.getY());
                 compound.setInteger("z"+i, relay.getZ());

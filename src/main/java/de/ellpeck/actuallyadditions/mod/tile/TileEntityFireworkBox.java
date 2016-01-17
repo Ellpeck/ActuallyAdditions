@@ -12,9 +12,6 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import de.ellpeck.actuallyadditions.api.tile.IEnergyDisplay;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.entity.item.EntityFireworkRocket;
 import net.minecraft.init.Items;
@@ -22,8 +19,10 @@ import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.MathHelper;
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileEntityFireworkBox extends TileEntityBase implements IEnergyReceiver, IRedstoneToggle, IEnergyDisplay, IEnergySaver{
 
@@ -61,9 +60,9 @@ public class TileEntityFireworkBox extends TileEntityBase implements IEnergyRece
             for(int i = 0; i < amount; i++){
                 ItemStack firework = this.makeFirework();
 
-                double x = this.xCoord+MathHelper.getRandomDoubleInRange(Util.RANDOM, 0, range*2)-range;
-                double z = this.zCoord+MathHelper.getRandomDoubleInRange(Util.RANDOM, 0, range*2)-range;
-                EntityFireworkRocket rocket = new EntityFireworkRocket(this.worldObj, x, this.yCoord+0.5, z, firework);
+                double x = this.pos.getX()+MathHelper.getRandomDoubleInRange(Util.RANDOM, 0, range*2)-range;
+                double z = this.pos.getZ()+MathHelper.getRandomDoubleInRange(Util.RANDOM, 0, range*2)-range;
+                EntityFireworkRocket rocket = new EntityFireworkRocket(this.worldObj, x, this.pos.getY()+0.5, z, firework);
                 this.worldObj.spawnEntityInWorld(rocket);
             }
 
@@ -105,7 +104,7 @@ public class TileEntityFireworkBox extends TileEntityBase implements IEnergyRece
 
         int[] colors = new int[MathHelper.getRandomIntegerInRange(Util.RANDOM, 1, 6)];
         for(int i = 0; i < colors.length; i++){
-            colors[i] = ItemDye.field_150922_c[Util.RANDOM.nextInt(ItemDye.field_150922_c.length)];
+            colors[i] = ItemDye.dyeColors[Util.RANDOM.nextInt(ItemDye.dyeColors.length)];
         }
         compound.setIntArray("Colors", colors);
 
@@ -127,22 +126,22 @@ public class TileEntityFireworkBox extends TileEntityBase implements IEnergyRece
     }
 
     @Override
-    public int receiveEnergy(ForgeDirection from, int maxReceive, boolean simulate){
+    public int receiveEnergy(EnumFacing from, int maxReceive, boolean simulate){
         return this.storage.receiveEnergy(maxReceive, simulate);
     }
 
     @Override
-    public int getEnergyStored(ForgeDirection from){
+    public int getEnergyStored(EnumFacing from){
         return this.storage.getEnergyStored();
     }
 
     @Override
-    public int getMaxEnergyStored(ForgeDirection from){
+    public int getMaxEnergyStored(EnumFacing from){
         return this.storage.getMaxEnergyStored();
     }
 
     @Override
-    public boolean canConnectEnergy(ForgeDirection from){
+    public boolean canConnectEnergy(EnumFacing from){
         return true;
     }
 

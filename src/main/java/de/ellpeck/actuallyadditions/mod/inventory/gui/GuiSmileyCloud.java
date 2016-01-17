@@ -10,8 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerSmileyCloud;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
 import de.ellpeck.actuallyadditions.mod.network.gui.PacketGuiString;
@@ -23,11 +21,15 @@ import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Keyboard;
-import org.lwjgl.opengl.GL11;
+
+import java.io.IOException;
 
 @SideOnly(Side.CLIENT)
 public class GuiSmileyCloud extends GuiContainer{
@@ -59,7 +61,7 @@ public class GuiSmileyCloud extends GuiContainer{
     public void initGui(){
         super.initGui();
 
-        this.nameField = new GuiTextField(this.fontRendererObj, guiLeft+5, guiTop+6, 114, 8);
+        this.nameField = new GuiTextField(4000, this.fontRendererObj, guiLeft+5, guiTop+6, 114, 8);
         this.nameField.setMaxStringLength(20);
         this.nameField.setEnableBackgroundDrawing(false);
         this.nameField.setFocused(true);
@@ -80,7 +82,7 @@ public class GuiSmileyCloud extends GuiContainer{
 
     @Override
     public void drawGuiContainerBackgroundLayer(float f, int x, int y){
-        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 
         this.mc.getTextureManager().bindTexture(resLoc);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
@@ -89,13 +91,13 @@ public class GuiSmileyCloud extends GuiContainer{
     }
 
     @Override
-    protected void mouseClicked(int par1, int par2, int par3){
+    protected void mouseClicked(int par1, int par2, int par3) throws IOException{
         this.nameField.mouseClicked(par1, par2, par3);
         super.mouseClicked(par1, par2, par3);
     }
 
     @Override
-    public void keyTyped(char theChar, int key){
+    public void keyTyped(char theChar, int key) throws IOException{
         if(key != 1 && this.nameField.isFocused()){
             if(key == Keyboard.KEY_RETURN || key == Keyboard.KEY_NUMPADENTER){
                 this.setVariable(this.nameField);

@@ -10,7 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks.base;
 
-import cpw.mods.fml.common.registry.GameRegistry;
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.creative.CreativeTab;
 import de.ellpeck.actuallyadditions.mod.tile.*;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
@@ -19,6 +19,9 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.BlockRedstoneTorch;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.PropertyInteger;
+import net.minecraft.block.state.BlockState;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -28,8 +31,12 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -46,7 +53,7 @@ public abstract class BlockContainerBase extends BlockContainer{
     }
 
     private void register(){
-        this.setBlockName(ModUtil.MOD_ID_LOWER+"."+this.getBaseName());
+        this.setUnlocalizedName(ModUtil.MOD_ID_LOWER+"."+this.getBaseName());
         GameRegistry.registerBlock(this, this.getItemBlock(), this.getBaseName());
         if(this.shouldAddCreative()){
             this.setCreativeTab(CreativeTab.instance);
@@ -54,6 +61,12 @@ public abstract class BlockContainerBase extends BlockContainer{
         else{
             this.setCreativeTab(null);
         }
+
+        this.registerRendering();
+    }
+
+    protected void registerRendering(){
+        ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this), new ResourceLocation(ModUtil.MOD_ID_LOWER, this.getBaseName()));
     }
 
     protected String getBaseName(){
@@ -69,30 +82,30 @@ public abstract class BlockContainerBase extends BlockContainer{
     }
 
     public EnumRarity getRarity(ItemStack stack){
-        return EnumRarity.common;
+        return EnumRarity.COMMON;
     }
 
-    public void dropInventory(World world, int x, int y, int z){
+    public void dropInventory(World world, BlockPos position){
         if(!world.isRemote){
-            TileEntity aTile = world.getTileEntity(x, y, z);
+            TileEntity aTile = world.getTileEntity(position);
             if(aTile instanceof TileEntityInventoryBase){
                 TileEntityInventoryBase tile = (TileEntityInventoryBase)aTile;
                 if(tile.getSizeInventory() > 0){
                     for(int i = 0; i < tile.getSizeInventory(); i++){
-                        this.dropSlotFromInventory(i, tile, world, x, y, z);
+                        this.dropSlotFromInventory(i, tile, world, position);
                     }
                 }
             }
         }
     }
 
-    public void dropSlotFromInventory(int i, TileEntityInventoryBase tile, World world, int x, int y, int z){
+    public void dropSlotFromInventory(int i, TileEntityInventoryBase tile, World world, BlockPos pos){
         ItemStack stack = tile.getStackInSlot(i);
         if(stack != null && stack.stackSize > 0){
             float dX = Util.RANDOM.nextFloat()*0.8F+0.1F;
             float dY = Util.RANDOM.nextFloat()*0.8F+0.1F;
             float dZ = Util.RANDOM.nextFloat()*0.8F+0.1F;
-            EntityItem entityItem = new EntityItem(world, x+dX, y+dY, z+dZ, stack.copy());
+            EntityItem entityItem = new EntityItem(world, pos.getX()+dX, pos.getY()+dY, pos.getZ()+dZ, stack.copy());
             if(stack.hasTagCompound()){
                 entityItem.getEntityItem().setTagCompound((NBTTagCompound)stack.getTagCompound().copy());
             }
@@ -102,23 +115,22 @@ public abstract class BlockContainerBase extends BlockContainer{
             entityItem.motionZ = Util.RANDOM.nextGaussian()*factor;
             world.spawnEntityInWorld(entityItem);
         }
-        tile.setInventorySlotContents(i, null);
     }
 
     @Override
-    public void onNeighborBlockChange(World world, int x, int y, int z, Block block){
-        this.updateRedstoneState(world, x, y, z);
+    public void onNeighborBlockChange(World world, BlockPos pos, IBlockState state, Block neighborBlock){
+        this.updateRedstoneState(world, pos);
     }
 
-    public void updateRedstoneState(World world, int x, int y, int z){
+    public void updateRedstoneState(World world, BlockPos pos){
         if(!world.isRemote){
-            TileEntity tile = world.getTileEntity(x, y, z);
+            TileEntity tile = world.getTileEntity(pos);
             if(tile instanceof TileEntityBase){
-                boolean powered = world.isBlockIndirectlyGettingPowered(x, y, z);
+                boolean powered = world.isBlockIndirectlyGettingPowered(pos) > 0;
                 boolean wasPowered = ((TileEntityBase)tile).isRedstonePowered;
                 if(powered && !wasPowered){
                     if(tile instanceof IRedstoneToggle && ((IRedstoneToggle)tile).isPulseMode()){
-                        world.scheduleBlockUpdate(x, y, z, this, this.tickRate(world));
+                        world.scheduleUpdate(pos, this, this.tickRate(world));
                     }
                     ((TileEntityBase)tile).setRedstonePowered(true);
                 }
@@ -130,9 +142,9 @@ public abstract class BlockContainerBase extends BlockContainer{
     }
 
     @Override
-    public void updateTick(World world, int x, int y, int z, Random random){
+    public void updateTick(World world, BlockPos pos, IBlockState state, Random random){
         if(!world.isRemote){
-            TileEntity tile = world.getTileEntity(x, y, z);
+            TileEntity tile = world.getTileEntity(pos);
             if(tile instanceof IRedstoneToggle && ((IRedstoneToggle)tile).isPulseMode()){
                 ((IRedstoneToggle)tile).activateOnPulse();
             }
@@ -140,22 +152,25 @@ public abstract class BlockContainerBase extends BlockContainer{
     }
 
     @Override
-    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack){
+    public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase entity, ItemStack stack){
         if(stack.getTagCompound() != null){
-            TileEntity tile = world.getTileEntity(x, y, z);
+            TileEntity tile = world.getTileEntity(pos);
 
             if(tile instanceof IEnergySaver){
                 ((IEnergySaver)tile).setEnergy(stack.getTagCompound().getInteger("Energy"));
+                stack.getTagCompound().removeTag("Energy");
             }
 
             if(tile instanceof IFluidSaver){
                 int amount = stack.getTagCompound().getInteger("FluidAmount");
+                stack.getTagCompound().removeTag("FluidAmount");
 
                 if(amount > 0){
                     FluidStack[] fluids = new FluidStack[amount];
 
                     for(int i = 0; i < amount; i++){
                         NBTTagCompound compound = stack.getTagCompound().getCompoundTag("Fluid"+i);
+                        stack.getTagCompound().removeTag("Fluid"+i);
                         if(compound != null){
                             fluids[i] = FluidStack.loadFluidStackFromNBT(compound);
                         }
@@ -168,9 +183,9 @@ public abstract class BlockContainerBase extends BlockContainer{
     }
 
     @Override
-    public void onBlockHarvested(World world, int x, int y, int z, int meta, EntityPlayer player){
+    public void onBlockHarvested(World world, BlockPos pos, IBlockState state, EntityPlayer player){
         if(!player.capabilities.isCreativeMode){
-            this.dropBlockAsItem(world, x, y, z, meta, 0);
+            this.dropBlockAsItem(world, pos, state, 0);
         }
     }
 
@@ -180,8 +195,8 @@ public abstract class BlockContainerBase extends BlockContainer{
     }
 
     @Override
-    public int getComparatorInputOverride(World world, int x, int y, int z, int meta){
-        TileEntity tile = world.getTileEntity(x, y, z);
+    public int getComparatorInputOverride(World world, BlockPos pos){
+        TileEntity tile = world.getTileEntity(pos);
         if(tile instanceof IInventory){
             return Container.calcRedstoneFromInventory((IInventory)tile);
         }
@@ -189,12 +204,12 @@ public abstract class BlockContainerBase extends BlockContainer{
     }
 
     @Override
-    public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune){
+    public ArrayList<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune){
         ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
 
-        TileEntity tile = world.getTileEntity(x, y, z);
+        TileEntity tile = world.getTileEntity(pos);
         if(tile != null){
-            ItemStack stack = new ItemStack(this.getItemDropped(metadata, Util.RANDOM, fortune), 1, this.damageDropped(metadata));
+            ItemStack stack = new ItemStack(this.getItemDropped(state, Util.RANDOM, fortune), 1, this.damageDropped(state));
 
             if(tile instanceof IEnergySaver){
                 int energy = ((IEnergySaver)tile).getEnergy();
@@ -232,14 +247,14 @@ public abstract class BlockContainerBase extends BlockContainer{
     }
 
     @Override
-    public void onBlockAdded(World world, int x, int y, int z){
-        this.updateRedstoneState(world, x, y, z);
+    public void onBlockAdded(World world, BlockPos pos, IBlockState state){
+        this.updateRedstoneState(world, pos);
     }
 
-    public boolean tryToggleRedstone(World world, int x, int y, int z, EntityPlayer player){
+    public boolean tryToggleRedstone(World world, BlockPos pos, EntityPlayer player){
         ItemStack stack = player.getCurrentEquippedItem();
         if(stack != null && Block.getBlockFromItem(stack.getItem()) instanceof BlockRedstoneTorch){
-            TileEntity tile = world.getTileEntity(x, y, z);
+            TileEntity tile = world.getTileEntity(pos);
             if(tile instanceof IRedstoneToggle){
                 if(!world.isRemote){
                     ((IRedstoneToggle)tile).toggle(!((IRedstoneToggle)tile).isPulseMode());
@@ -255,4 +270,27 @@ public abstract class BlockContainerBase extends BlockContainer{
         return false;
     }
 
+    @Override
+    protected BlockState createBlockState(){
+        return this.getMetaProperty() == null ? super.createBlockState() : new BlockState(this, this.getMetaProperty());
+    }
+
+    @Override
+    public IBlockState getStateFromMeta(int meta){
+        return this.getMetaProperty() == null ? super.getStateFromMeta(meta) : this.getDefaultState().withProperty(this.getMetaProperty(), meta);
+    }
+
+    @Override
+    public int getMetaFromState(IBlockState state){
+        return this.getMetaProperty() == null ? super.getMetaFromState(state) : state.getValue(this.getMetaProperty());
+    }
+
+    protected PropertyInteger getMetaProperty(){
+        return null;
+    }
+
+    @Override
+    public int getRenderType(){
+        return 3;
+    }
 }

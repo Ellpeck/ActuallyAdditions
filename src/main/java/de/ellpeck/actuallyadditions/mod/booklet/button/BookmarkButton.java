@@ -18,10 +18,9 @@ import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.KeyUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.renderer.OpenGlHelper;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
-import org.lwjgl.opengl.GL11;
 
 import java.util.ArrayList;
 
@@ -57,24 +56,24 @@ public class BookmarkButton extends GuiButton{
     public void drawButton(Minecraft minecraft, int x, int y){
         if(this.visible){
             minecraft.getTextureManager().bindTexture(GuiBooklet.resLoc);
-            GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-            this.field_146123_n = x >= this.xPosition && y >= this.yPosition && x < this.xPosition+this.width && y < this.yPosition+this.height;
-            int k = this.getHoverState(this.field_146123_n);
+            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+            this.hovered = x >= this.xPosition && y >= this.yPosition && x < this.xPosition+this.width && y < this.yPosition+this.height;
+            int k = this.getHoverState(this.hovered);
             if(k == 0){
                 k = 1;
             }
 
-            GL11.glEnable(GL11.GL_BLEND);
-            OpenGlHelper.glBlendFunc(770, 771, 1, 0);
-            GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+            GlStateManager.enableBlend();
+            GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+            GlStateManager.blendFunc(770, 771);
             int renderHeight = 25;
             this.drawTexturedModalRect(this.xPosition, this.yPosition, 146+(this.assignedEntry.entry == null ? 0 : 16), 194-renderHeight+k*renderHeight, this.width, renderHeight);
             this.mouseDragged(minecraft, x, y);
 
             if(this.assignedEntry.entry != null){
-                GL11.glPushMatrix();
+                GlStateManager.pushMatrix();
                 AssetUtil.renderStackToGui(this.assignedEntry.chapter != null && this.assignedEntry.chapter.getDisplayItemStack() != null ? this.assignedEntry.chapter.getDisplayItemStack() : new ItemStack(InitItems.itemBooklet), this.xPosition+2, this.yPosition+1, 0.725F);
-                GL11.glPopMatrix();
+                GlStateManager.popMatrix();
             }
         }
     }

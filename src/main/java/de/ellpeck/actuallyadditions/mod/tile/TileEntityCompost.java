@@ -16,6 +16,7 @@ import de.ellpeck.actuallyadditions.mod.items.ItemMisc;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumFacing;
 
 public class TileEntityCompost extends TileEntityInventoryBase{
 
@@ -79,7 +80,7 @@ public class TileEntityCompost extends TileEntityInventoryBase{
     }
 
     @Override
-    public boolean canInsertItem(int slot, ItemStack stack, int side){
+    public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
         return this.isItemValidForSlot(slot, stack);
     }
 
@@ -89,7 +90,7 @@ public class TileEntityCompost extends TileEntityInventoryBase{
     }
 
     @Override
-    public boolean canExtractItem(int slot, ItemStack stack, int side){
+    public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
         return stack.getItem() instanceof ItemFertilizer;
     }
 }

@@ -12,17 +12,17 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyProvider;
-import cpw.mods.fml.common.network.NetworkRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import de.ellpeck.actuallyadditions.api.Position;
-import de.ellpeck.actuallyadditions.api.tile.IEnergyDisplay;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
 import de.ellpeck.actuallyadditions.mod.network.PacketParticle;
+import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -46,14 +46,15 @@ public class TileEntityLeafGenerator extends TileEntityBase implements IEnergyPr
                     this.nextUseCounter = 0;
 
                     if(ENERGY_PRODUCED <= this.storage.getMaxEnergyStored()-this.storage.getEnergyStored()){
-                        ArrayList<Position> breakPositions = new ArrayList<Position>();
+                        ArrayList<BlockPos> breakPositions = new ArrayList<BlockPos>();
 
                         for(int reachX = -RANGE; reachX < RANGE+1; reachX++){
                             for(int reachZ = -RANGE; reachZ < RANGE+1; reachZ++){
                                 for(int reachY = -RANGE; reachY < RANGE+1; reachY++){
-                                    Block block = this.worldObj.getBlock(this.xCoord+reachX, this.yCoord+reachY, this.zCoord+reachZ);
-                                    if(block != null && block.isLeaves(this.worldObj, this.xCoord+reachX, this.yCoord+reachY, this.zCoord+reachZ)){
-                                        breakPositions.add(new Position(this.xCoord+reachX, this.yCoord+reachY, this.zCoord+reachZ));
+                                    BlockPos pos = PosUtil.offset(this.pos, reachX, reachY, reachZ);
+                                    Block block = PosUtil.getBlock(pos, worldObj);
+                                    if(block != null && block.isLeaves(this.worldObj, pos)){
+                                        breakPositions.add(pos);
                                     }
                                 }
                             }
@@ -61,17 +62,17 @@ public class TileEntityLeafGenerator extends TileEntityBase implements IEnergyPr
 
                         if(!breakPositions.isEmpty()){
                             Collections.shuffle(breakPositions);
-                            Position theCoord = breakPositions.get(0);
+                            BlockPos theCoord = breakPositions.get(0);
 
-                            Block theBlock = this.worldObj.getBlock(theCoord.getX(), theCoord.getY(), theCoord.getZ());
-                            int meta = this.worldObj.getBlockMetadata(theCoord.getX(), theCoord.getY(), theCoord.getZ());
-                            this.worldObj.playAuxSFX(2001, theCoord.getX(), theCoord.getY(), theCoord.getZ(), Block.getIdFromBlock(theBlock)+(meta << 12));
+                            Block theBlock = PosUtil.getBlock(theCoord, worldObj);
+                            int meta = PosUtil.getMetadata(theCoord, worldObj);
+                            this.worldObj.playAuxSFX(2001, theCoord, Block.getIdFromBlock(theBlock)+(meta << 12));
 
-                            this.worldObj.setBlockToAir(theCoord.getX(), theCoord.getY(), theCoord.getZ());
+                            this.worldObj.setBlockToAir(theCoord);
 
                             this.storage.receiveEnergy(ENERGY_PRODUCED, false);
 
-                            PacketHandler.theNetwork.sendToAllAround(new PacketParticle(xCoord, yCoord, zCoord, theCoord.getX(), theCoord.getY(), theCoord.getZ(), new float[]{62F/255F, 163F/255F, 74F/255F}, 5, 1.0F), new NetworkRegistry.TargetPoint(worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 64));
+                            PacketHandler.theNetwork.sendToAllAround(new PacketParticle(this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), theCoord.getX(), theCoord.getY(), theCoord.getZ(), new float[]{62F/255F, 163F/255F, 74F/255F}, 5, 1.0F), new NetworkRegistry.TargetPoint(worldObj.provider.getDimensionId(), this.pos.getX(), this.pos.getY(), this.pos.getZ(), 64));
                         }
                     }
                 }
@@ -80,13 +81,8 @@ public class TileEntityLeafGenerator extends TileEntityBase implements IEnergyPr
                 }
             }
 
-            if(this.getEnergyStored(ForgeDirection.UNKNOWN) > 0){
-                WorldUtil.pushEnergy(worldObj, xCoord, yCoord, zCoord, ForgeDirection.UP, storage);
-                WorldUtil.pushEnergy(worldObj, xCoord, yCoord, zCoord, ForgeDirection.DOWN, storage);
-                WorldUtil.pushEnergy(worldObj, xCoord, yCoord, zCoord, ForgeDirection.NORTH, storage);
-                WorldUtil.pushEnergy(worldObj, xCoord, yCoord, zCoord, ForgeDirection.EAST, storage);
-                WorldUtil.pushEnergy(worldObj, xCoord, yCoord, zCoord, ForgeDirection.SOUTH, storage);
-                WorldUtil.pushEnergy(worldObj, xCoord, yCoord, zCoord, ForgeDirection.WEST, storage);
+            if(this.storage.getEnergyStored() > 0){
+                WorldUtil.pushEnergyToAllSides(worldObj, this.pos, this.storage);
             }
 
             if(this.oldEnergy != this.storage.getEnergyStored() && this.sendUpdateWithInterval()){
@@ -108,22 +104,22 @@ public class TileEntityLeafGenerator extends TileEntityBase implements IEnergyPr
     }
 
     @Override
-    public int extractEnergy(ForgeDirection from, int maxReceive, boolean simulate){
+    public int extractEnergy(EnumFacing from, int maxReceive, boolean simulate){
         return this.storage.extractEnergy(maxReceive, simulate);
     }
 
     @Override
-    public int getEnergyStored(ForgeDirection from){
+    public int getEnergyStored(EnumFacing from){
         return this.storage.getEnergyStored();
     }
 
     @Override
-    public int getMaxEnergyStored(ForgeDirection from){
+    public int getMaxEnergyStored(EnumFacing from){
         return this.storage.getMaxEnergyStored();
     }
 
     @Override
-    public boolean canConnectEnergy(ForgeDirection from){
+    public boolean canConnectEnergy(EnumFacing from){
         return true;
     }
 

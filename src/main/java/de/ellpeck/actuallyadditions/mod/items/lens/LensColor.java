@@ -10,16 +10,19 @@
 
 package de.ellpeck.actuallyadditions.mod.items.lens;
 
-import de.ellpeck.actuallyadditions.api.Position;
+
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
+import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.BlockPos;
 
 import java.util.ArrayList;
 
@@ -54,30 +57,37 @@ public class LensColor extends Lens{
 
     @SuppressWarnings("unchecked")
     @Override
-    public boolean invoke(Position hitBlock, IAtomicReconstructor tile){
+    public boolean invoke(BlockPos hitBlock, IAtomicReconstructor tile){
         if(hitBlock != null){
-            if(Util.arrayContains(CONVERTABLE_BLOCKS, hitBlock.getBlock(tile.getWorld())) >= 0 && tile.getEnergy() >= ENERGY_USE){
-                int meta = hitBlock.getMetadata(tile.getWorld());
+            if(Util.arrayContains(CONVERTABLE_BLOCKS, PosUtil.getBlock(hitBlock, tile.getWorldObject())) >= 0 && tile.getEnergy() >= ENERGY_USE){
+                int meta = PosUtil.getMetadata(hitBlock, tile.getWorldObject());
                 if(meta >= 15){
-                    hitBlock.setMetadata(tile.getWorld(), 0, 2);
+                    PosUtil.setMetadata(hitBlock, tile.getWorldObject(), 0, 2);
                 }
                 else{
-                    hitBlock.setMetadata(tile.getWorld(), meta+1, 2);
+                    PosUtil.setMetadata(hitBlock, tile.getWorldObject(), meta+1, 2);
                 }
                 tile.extractEnergy(ENERGY_USE);
             }
 
-            ArrayList<EntityItem> items = (ArrayList<EntityItem>)tile.getWorld().getEntitiesWithinAABB(EntityItem.class, AxisAlignedBB.getBoundingBox(hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), hitBlock.getX()+1, hitBlock.getY()+1, hitBlock.getZ()+1));
+            ArrayList<EntityItem> items = (ArrayList<EntityItem>)tile.getWorldObject().getEntitiesWithinAABB(EntityItem.class, AxisAlignedBB.fromBounds(hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), hitBlock.getX()+1, hitBlock.getY()+1, hitBlock.getZ()+1));
             for(EntityItem item : items){
-                if(item.getEntityItem() != null && tile.getEnergy() >= ENERGY_USE){
+                if(!item.isDead && item.getEntityItem() != null && tile.getEnergy() >= ENERGY_USE){
                     if(Util.arrayContains(CONVERTABLE_BLOCKS, item.getEntityItem().getItem()) >= 0 || Util.arrayContains(CONVERTABLE_BLOCKS, Block.getBlockFromItem(item.getEntityItem().getItem())) >= 0){
-                        int meta = item.getEntityItem().getItemDamage();
+                        ItemStack newStack = item.getEntityItem().copy();
+                        int meta = newStack.getItemDamage();
                         if(meta >= 15){
-                            item.getEntityItem().setItemDamage(0);
+                            newStack.setItemDamage(0);
                         }
                         else{
-                            item.getEntityItem().setItemDamage(meta+1);
+                            newStack.setItemDamage(meta+1);
                         }
+
+                        item.setDead();
+
+                        EntityItem newItem = new EntityItem(tile.getWorldObject(), item.posX, item.posY, item.posZ, newStack);
+                        tile.getWorldObject().spawnEntityInWorld(newItem);
+
                         tile.extractEnergy(ENERGY_USE);
                     }
                 }

@@ -36,26 +36,26 @@ public class ItemBlockBase extends ItemBlock{
 
     @Override
     public EnumRarity getRarity(ItemStack stack){
-        if(this.field_150939_a instanceof BlockBase){
-            return ((BlockBase)this.field_150939_a).getRarity(stack);
+        if(this.block instanceof BlockBase){
+            return ((BlockBase)this.block).getRarity(stack);
         }
-        else if(this.field_150939_a instanceof BlockContainerBase){
-            return ((BlockContainerBase)this.field_150939_a).getRarity(stack);
+        else if(this.block instanceof BlockContainerBase){
+            return ((BlockContainerBase)this.block).getRarity(stack);
         }
-        else if(this.field_150939_a instanceof BlockFluidFlowing){
-            return ((BlockFluidFlowing)this.field_150939_a).getRarity(stack);
+        else if(this.block instanceof BlockFluidFlowing){
+            return ((BlockFluidFlowing)this.block).getRarity(stack);
         }
-        else if(this.field_150939_a instanceof BlockPlant){
-            return ((BlockPlant)this.field_150939_a).getRarity(stack);
+        else if(this.block instanceof BlockPlant){
+            return ((BlockPlant)this.block).getRarity(stack);
         }
-        else if(this.field_150939_a instanceof BlockStair){
-            return ((BlockStair)this.field_150939_a).getRarity(stack);
+        else if(this.block instanceof BlockStair){
+            return ((BlockStair)this.block).getRarity(stack);
         }
-        else if(this.field_150939_a instanceof BlockWallAA){
-            return ((BlockWallAA)this.field_150939_a).getRarity(stack);
+        else if(this.block instanceof BlockWallAA){
+            return ((BlockWallAA)this.block).getRarity(stack);
         }
-        else if(this.field_150939_a instanceof BlockBushBase){
-            return ((BlockBushBase)this.field_150939_a).getRarity(stack);
+        else if(this.block instanceof BlockBushBase){
+            return ((BlockBushBase)this.block).getRarity(stack);
         }
         else{
             return Util.FALLBACK_RARITY;

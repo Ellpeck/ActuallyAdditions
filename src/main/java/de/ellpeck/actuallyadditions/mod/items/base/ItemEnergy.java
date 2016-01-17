@@ -11,9 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.items.base;
 
 import cofh.api.energy.ItemEnergyContainer;
-import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.creative.CreativeTab;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.creativetab.CreativeTabs;
@@ -21,7 +19,11 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
@@ -47,6 +49,12 @@ public abstract class ItemEnergy extends ItemEnergyContainer{
         else{
             this.setCreativeTab(null);
         }
+
+        this.registerRendering();
+    }
+
+    protected void registerRendering(){
+        ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this), new ResourceLocation(ModUtil.MOD_ID_LOWER, this.getBaseName()));
     }
 
     protected String getBaseName(){
@@ -100,7 +108,7 @@ public abstract class ItemEnergy extends ItemEnergyContainer{
 
     @Override
     @SideOnly(Side.CLIENT)
-    public boolean hasEffect(ItemStack stack, int pass){
+    public boolean hasEffect(ItemStack stack){
         return false;
     }
 

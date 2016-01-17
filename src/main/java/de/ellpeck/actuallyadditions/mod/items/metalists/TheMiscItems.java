@@ -14,25 +14,25 @@ import net.minecraft.item.EnumRarity;
 
 public enum TheMiscItems{
 
-    PAPER_CONE("PaperCone", EnumRarity.common),
-    MASHED_FOOD("MashedFood", EnumRarity.uncommon),
-    KNIFE_BLADE("KnifeBlade", EnumRarity.common),
-    KNIFE_HANDLE("KnifeHandle", EnumRarity.common),
-    DOUGH("Dough", EnumRarity.common),
-    QUARTZ("BlackQuartz", EnumRarity.epic),
-    RING("Ring", EnumRarity.uncommon),
-    COIL("Coil", EnumRarity.common),
-    COIL_ADVANCED("CoilAdvanced", EnumRarity.uncommon),
-    RICE_DOUGH("RiceDough", EnumRarity.uncommon),
-    TINY_COAL("TinyCoal", EnumRarity.common),
-    TINY_CHAR("TinyCharcoal", EnumRarity.common),
-    RICE_SLIME("RiceSlime", EnumRarity.uncommon),
-    CANOLA("Canola", EnumRarity.uncommon),
-    CUP("Cup", EnumRarity.uncommon),
-    BAT_WING("BatWing", EnumRarity.rare),
-    DRILL_CORE("DrillCore", EnumRarity.uncommon),
-    BLACK_DYE("BlackDye", EnumRarity.epic),
-    LENS("Lens", EnumRarity.uncommon);
+    PAPER_CONE("PaperCone", EnumRarity.COMMON),
+    MASHED_FOOD("MashedFood", EnumRarity.UNCOMMON),
+    KNIFE_BLADE("KnifeBlade", EnumRarity.COMMON),
+    KNIFE_HANDLE("KnifeHandle", EnumRarity.COMMON),
+    DOUGH("Dough", EnumRarity.COMMON),
+    QUARTZ("BlackQuartz", EnumRarity.EPIC),
+    RING("Ring", EnumRarity.UNCOMMON),
+    COIL("Coil", EnumRarity.COMMON),
+    COIL_ADVANCED("CoilAdvanced", EnumRarity.UNCOMMON),
+    RICE_DOUGH("RiceDough", EnumRarity.UNCOMMON),
+    TINY_COAL("TinyCoal", EnumRarity.COMMON),
+    TINY_CHAR("TinyCharcoal", EnumRarity.COMMON),
+    RICE_SLIME("RiceSlime", EnumRarity.UNCOMMON),
+    CANOLA("Canola", EnumRarity.UNCOMMON),
+    CUP("Cup", EnumRarity.UNCOMMON),
+    BAT_WING("BatWing", EnumRarity.RARE),
+    DRILL_CORE("DrillCore", EnumRarity.UNCOMMON),
+    BLACK_DYE("BlackDye", EnumRarity.EPIC),
+    LENS("Lens", EnumRarity.UNCOMMON);
 
     public final String name;
     public final EnumRarity rarity;

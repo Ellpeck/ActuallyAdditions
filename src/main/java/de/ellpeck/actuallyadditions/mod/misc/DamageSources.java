@@ -30,8 +30,8 @@ public class DamageSources extends DamageSource{
     }
 
     @Override
-    public IChatComponent func_151519_b(EntityLivingBase entity){
+    public IChatComponent getDeathMessage(EntityLivingBase entity){
         String locTag = "death."+ModUtil.MOD_ID_LOWER+"."+this.damageType+"."+(Util.RANDOM.nextInt(this.messageCount)+1);
-        return new ChatComponentText(StringUtil.localizeFormatted(locTag, entity.getCommandSenderName()));
+        return new ChatComponentText(StringUtil.localizeFormatted(locTag, entity.getName()));
     }
 }

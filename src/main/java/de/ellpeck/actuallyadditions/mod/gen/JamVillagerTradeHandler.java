@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.gen;
 
-import cpw.mods.fml.common.registry.VillagerRegistry;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheJams;
 import net.minecraft.entity.passive.EntityVillager;
@@ -24,7 +23,8 @@ import net.minecraftforge.oredict.OreDictionary;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class JamVillagerTradeHandler implements VillagerRegistry.IVillageTradeHandler{
+//TODO Fix the villager
+public class JamVillagerTradeHandler{
 
     private ArrayList<Trade> trades = new ArrayList<Trade>();
 
@@ -41,7 +41,7 @@ public class JamVillagerTradeHandler implements VillagerRegistry.IVillageTradeHa
     }
 
     public void addWants(String oredictName, int minSize, int maxSize){
-        ArrayList<ItemStack> stacks = (ArrayList<ItemStack>)OreDictionary.getOres(oredictName, false);
+        ArrayList<ItemStack> stacks = (ArrayList<ItemStack>)OreDictionary.getOres(oredictName);
         trades.add(new Trade(stacks, minSize, maxSize));
     }
 
@@ -49,7 +49,8 @@ public class JamVillagerTradeHandler implements VillagerRegistry.IVillageTradeHa
         trades.add(new Trade(stack, minSize, maxSize));
     }
 
-    @Override
+    //TODO Fix the Villager
+    //@Override
     @SuppressWarnings("all")
     public void manipulateTradesForVillager(EntityVillager villager, MerchantRecipeList recipeList, Random rand){
         for(int trade = 0; trade < trades.size(); trade++){

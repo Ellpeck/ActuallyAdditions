@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.util;
 
-import cpw.mods.fml.common.FMLCommonHandler;
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.recipe.CrusherRecipe;
 import de.ellpeck.actuallyadditions.api.recipe.LensNoneRecipe;
@@ -45,7 +44,6 @@ public class Util{
 
     public static void registerEvent(Object o){
         MinecraftForge.EVENT_BUS.register(o);
-        FMLCommonHandler.instance().bus().register(o);
     }
 
     public static boolean isDevVersion(){

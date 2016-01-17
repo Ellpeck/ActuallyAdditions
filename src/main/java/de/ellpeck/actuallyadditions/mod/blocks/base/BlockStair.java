@@ -11,13 +11,15 @@
 package de.ellpeck.actuallyadditions.mod.blocks.base;
 
 
-import cpw.mods.fml.common.registry.GameRegistry;
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.creative.CreativeTab;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockStairs;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockStair extends BlockStairs{
 
@@ -28,7 +30,7 @@ public class BlockStair extends BlockStairs{
     }
 
     public BlockStair(Block block, String name, int meta){
-        super(block, meta);
+        super(block.getStateFromMeta(meta));
         this.name = name;
         this.setLightOpacity(0);
 
@@ -36,7 +38,7 @@ public class BlockStair extends BlockStairs{
     }
 
     private void register(){
-        this.setBlockName(ModUtil.MOD_ID_LOWER+"."+this.getBaseName());
+        this.setUnlocalizedName(ModUtil.MOD_ID_LOWER+"."+this.getBaseName());
         GameRegistry.registerBlock(this, this.getItemBlock(), this.getBaseName());
         if(this.shouldAddCreative()){
             this.setCreativeTab(CreativeTab.instance);
@@ -44,6 +46,12 @@ public class BlockStair extends BlockStairs{
         else{
             this.setCreativeTab(null);
         }
+
+        this.registerRendering();
+    }
+
+    protected void registerRendering(){
+        ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this), new ResourceLocation(ModUtil.MOD_ID_LOWER, this.getBaseName()));
     }
 
     protected String getBaseName(){
@@ -59,6 +67,6 @@ public class BlockStair extends BlockStairs{
     }
 
     public EnumRarity getRarity(ItemStack stack){
-        return EnumRarity.common;
+        return EnumRarity.COMMON;
     }
 }

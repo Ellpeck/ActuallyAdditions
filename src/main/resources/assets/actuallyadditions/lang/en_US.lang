@@ -18,7 +18,6 @@ container.nei.actuallyadditions.treasureChest.info=Items at
 container.nei.actuallyadditions.coffee.name=Coffee Machine
 container.nei.actuallyadditions.coffee.special=Special Feature
 container.nei.actuallyadditions.coffee.maxAmount=Max Amount
-container.nei.actuallyadditions.coffee.shift=[SHIFT]!
 container.nei.actuallyadditions.coffee.extra.milk=+01:00, -1 Level
 container.nei.actuallyadditions.reconstructor.name=Atomic Reconstructor
 
@@ -124,7 +123,6 @@ tile.actuallyadditions.blockCrystalLightBlue.name=Diamatine Crystal Block
 tile.actuallyadditions.blockCrystalGreen.name=Emeradic Crystal Block
 tile.actuallyadditions.blockCrystalBlack.name=Void Crystal Block
 tile.actuallyadditions.blockCrystalWhite.name=Enori Crystal Block
-tile.actuallyadditions.blockBookStand.name=Manual Stand
 tile.actuallyadditions.blockMiner.name=Vertical Digger
 tile.actuallyadditions.blockFireworkBox.name=Firework Box
 tile.actuallyadditions.blockQuartzWall.name=Black Quartz Wall
@@ -534,6 +532,7 @@ booklet.actuallyadditions.indexEntry.itemsRF.name=Items that use RF
 
 #Booklet Info
 booklet.actuallyadditions.recipeDisabled=The crafting recipe for this item is disabled in the Config File! If you're on a server, ask the server author to enable it in the config. If you're on a client, press the 'Open Config'-Button on the top right and enable the recipe!
+booklet.actuallyadditions.unavailable=Parts of this feature are currently disabled or incomplete due to the not fully complete 1.8.9 Port. You may experience something that's missing or doesn't fully work. Please use this item with caution!
 booklet.actuallyadditions.clickToSeeRecipe=Click to see more Information
 booklet.actuallyadditions.amountOfWords=%s words in total
 booklet.actuallyadditions.amountOfChars=%s characters in total
@@ -710,15 +709,12 @@ booklet.actuallyadditions.chapter.crystals.text.1=The <item>Atomic Reconstructor
 booklet.actuallyadditions.chapter.crystals.text.2=There are various <item>Lenses<r> that can be attached to the Reconstructor that don't all follow the default behavior of the Reconstructor and are able to do some neat things. <n>See the <imp>"Reconstructor Lenses & Misc"<r> chapter in the booklet's Miscellaneous section <imp>for more information<r>. <n><n>When right-clicking the Reconstructor with a <item>Redstone Torch<r> in hand, it will change between a mode where it <imp>gets deactivated by Redstone<r> and a mode where it <imp>responds to pulses<r>.
 booklet.actuallyadditions.chapter.crystals.text.3=It should be noted that any recipes listed without information about Lenses <imp>don't use one<r>. <n><i>I thought that was obvious.
 booklet.actuallyadditions.chapter.crystals.text.5=When you have crafted a couple of items, you might want to find a way to <imp>automate this<r>. <n>There is a very simple way to do accomplish this: <n>Place the <item>Atomic Reconstructor<r> down facing into a <item>Precision Dropper<r> (to find it, look it up in the <imp>All Items and Search<r> Entry!). <n>Next, place a <item>Ranged Collector<r> in the area that has the converted items set as a whitelist. <n>Now you can just chuck your raw materials into the Dropper to convert them!
+booklet.actuallyadditions.chapter.crystals.text.6=<n><n><n><i>Molecular Transformilator
 
 booklet.actuallyadditions.chapter.bookTutorial.name=Intro to the Manual
 booklet.actuallyadditions.chapter.bookTutorial.text.1=The <item>Actually Additions Manual<r> is very versatile. Here is a quick overview: <n><imp>Entries & Chapters<r><n>An Entry is a general topic while a Chapter is almost always pointed to a specific item. When closing a chapter, the index opens, when closing that, the front page will. <n><imp>Bookmarks<r><n>Bookmarks, as seen on the bottom of the booklet, store the current page when clicked and can restore said page when clicked again. This can be very useful for easy navigation.
 booklet.actuallyadditions.chapter.bookTutorial.text.2=<imp>The Buttons at the top right<r> lead you to the Achievements or Configuration Screen. When looking at a chapter that is somehow connected to an achievement, a speech bubble that you can hover over to see the Achievement in question will point to the Achievements Button. <n><imp>The Buttons on the top left<r> can be used to be directed to various Webpages that have to do with the mod. <n>When an update is available, a button to download it will also show up on the top left.
 booklet.actuallyadditions.chapter.bookTutorial.text.3=If you, for some reason, want to craft this book again, just take a <item>piece of paper<r> and a <item>canola seed<r> which you can find randomly generated and craft them together!
-
-booklet.actuallyadditions.chapter.bookStand.name=Manual Stand
-booklet.actuallyadditions.chapter.bookStand.text.1=The <item>Manual Stand<r> is a block that is supposed to mainly be used on <imp>Servers<r>. <n>You can, provided you are the person who <imp>placed it down<r>, set a page in the GUI that will <imp>open when someone else accesses it<r> by pressing the "Set Page"-button while being on the desired page. <n>The Manual Stand <imp>does not save<r> pages another player navigated to, meaing re-accessing the Stand will cause it to always <imp>end up on the page speficied<r> by the placer.
-booklet.actuallyadditions.chapter.bookStand.text.2=<n><n><n><i>Stand on it
 
 booklet.actuallyadditions.chapter.reconstructorLenses.name=Reconstructor Lenses & Misc
 booklet.actuallyadditions.chapter.reconstructorLenses.text.1=The <item>Atomic Reconstructor<r>, by default, can only convert some blocks. <n>This can be changed, however, with <item>Lenses<r>. They can be, once crafted, attached to the Reconstructor via <imp>right-clicking<r> the Reconstructor with them in hand. To remove them, right-click it with an empty hand. <n><item>Lenses<r> have lots of different features and uses, as you can see on <imp>the following pages<r>. <n>However, there is also some <imp>other useful recipes<r> to be found there too.

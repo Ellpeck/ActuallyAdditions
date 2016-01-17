@@ -10,13 +10,13 @@
 
 package de.ellpeck.actuallyadditions.mod.network;
 
-import cpw.mods.fml.common.network.NetworkRegistry;
-import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
-import cpw.mods.fml.relauncher.Side;
 import de.ellpeck.actuallyadditions.mod.network.gui.PacketGuiButton;
 import de.ellpeck.actuallyadditions.mod.network.gui.PacketGuiNumber;
 import de.ellpeck.actuallyadditions.mod.network.gui.PacketGuiString;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
+import net.minecraftforge.fml.relauncher.Side;
 
 public class PacketHandler{
 
@@ -29,6 +29,5 @@ public class PacketHandler{
         theNetwork.registerMessage(PacketGuiNumber.Handler.class, PacketGuiNumber.class, 1, Side.SERVER);
         theNetwork.registerMessage(PacketGuiString.Handler.class, PacketGuiString.class, 2, Side.SERVER);
         theNetwork.registerMessage(PacketParticle.Handler.class, PacketParticle.class, 3, Side.CLIENT);
-        theNetwork.registerMessage(PacketBookletStandButton.Handler.class, PacketBookletStandButton.class, 4, Side.SERVER);
     }
 }

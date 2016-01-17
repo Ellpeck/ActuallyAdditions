@@ -60,7 +60,7 @@ public class CrusherRecipe{
             return null;
         }
 
-        List<ItemStack> stacks = OreDictionary.getOres(this.outputOne, false);
+        List<ItemStack> stacks = OreDictionary.getOres(this.outputOne);
         if(stacks != null && !stacks.isEmpty()){
             List<ItemStack> stacksCopy = new ArrayList<ItemStack>();
             for(ItemStack stack : stacks){
@@ -84,7 +84,7 @@ public class CrusherRecipe{
             return null;
         }
 
-        List<ItemStack> stacks = OreDictionary.getOres(this.outputTwo, false);
+        List<ItemStack> stacks = OreDictionary.getOres(this.outputTwo);
         if(stacks != null && !stacks.isEmpty()){
             List<ItemStack> stacksCopy = new ArrayList<ItemStack>();
             for(ItemStack stack : stacks){
@@ -108,7 +108,7 @@ public class CrusherRecipe{
             return null;
         }
 
-        List<ItemStack> stacks = OreDictionary.getOres(this.input, false);
+        List<ItemStack> stacks = OreDictionary.getOres(this.input);
         if(stacks != null && !stacks.isEmpty()){
             List<ItemStack> stacksCopy = new ArrayList<ItemStack>();
             for(ItemStack stack : stacks){

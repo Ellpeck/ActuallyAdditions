@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "particle": "actuallyadditions:blocks/blockCanolaPress",
+    "down": "actuallyadditions:blocks/blockCanolaPressTop",
+    "up": "actuallyadditions:blocks/blockCanolaPressTop",
+    "north": "actuallyadditions:blocks/blockCanolaPress",
+    "east": "actuallyadditions:blocks/blockCanolaPress",
+    "south": "actuallyadditions:blocks/blockCanolaPress",
+    "west": "actuallyadditions:blocks/blockCanolaPress"
+  }
+}

@@ -14,16 +14,16 @@ import net.minecraft.item.EnumRarity;
 
 public enum TheMiscBlocks{
 
-    QUARTZ_PILLAR("BlackQuartzPillar", EnumRarity.rare),
-    QUARTZ_CHISELED("BlackQuartzChiseled", EnumRarity.rare),
-    QUARTZ("BlackQuartz", EnumRarity.rare),
-    ORE_QUARTZ("OreBlackQuartz", EnumRarity.epic),
-    WOOD_CASING("WoodCasing", EnumRarity.common),
-    CHARCOAL_BLOCK("Charcoal", EnumRarity.common),
-    ENDERPEARL_BLOCK("Enderpearl", EnumRarity.rare),
-    LAVA_FACTORY_CASE("LavaFactoryCase", EnumRarity.uncommon),
-    ENDER_CASING("EnderCasing", EnumRarity.epic),
-    IRON_CASING("IronCasing", EnumRarity.rare);
+    QUARTZ_PILLAR("BlackQuartzPillar", EnumRarity.RARE),
+    QUARTZ_CHISELED("BlackQuartzChiseled", EnumRarity.RARE),
+    QUARTZ("BlackQuartz", EnumRarity.RARE),
+    ORE_QUARTZ("OreBlackQuartz", EnumRarity.EPIC),
+    WOOD_CASING("WoodCasing", EnumRarity.COMMON),
+    CHARCOAL_BLOCK("Charcoal", EnumRarity.COMMON),
+    ENDERPEARL_BLOCK("Enderpearl", EnumRarity.RARE),
+    LAVA_FACTORY_CASE("LavaFactoryCase", EnumRarity.UNCOMMON),
+    ENDER_CASING("EnderCasing", EnumRarity.EPIC),
+    IRON_CASING("IronCasing", EnumRarity.RARE);
 
     public final String name;
     public final EnumRarity rarity;

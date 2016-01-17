@@ -16,10 +16,10 @@ import net.minecraft.item.EnumRarity;
 
 public enum TheWildPlants{
 
-    CANOLA("Canola", EnumRarity.rare, InitBlocks.blockCanola),
-    FLAX("Flax", EnumRarity.rare, InitBlocks.blockFlax),
-    RICE("Rice", EnumRarity.rare, InitBlocks.blockRice),
-    COFFEE("Coffee", EnumRarity.rare, InitBlocks.blockCoffee);
+    CANOLA("Canola", EnumRarity.RARE, InitBlocks.blockCanola),
+    FLAX("Flax", EnumRarity.RARE, InitBlocks.blockFlax),
+    RICE("Rice", EnumRarity.RARE, InitBlocks.blockRice),
+    COFFEE("Coffee", EnumRarity.RARE, InitBlocks.blockCoffee);
 
     public final String name;
     public final EnumRarity rarity;

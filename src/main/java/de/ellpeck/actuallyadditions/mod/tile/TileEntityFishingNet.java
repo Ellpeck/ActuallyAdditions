@@ -10,6 +10,8 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+
+import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.material.Material;
@@ -18,8 +20,8 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.FishingHooks;
-import net.minecraftforge.common.util.ForgeDirection;
 
 import java.util.ArrayList;
 
@@ -32,19 +34,19 @@ public class TileEntityFishingNet extends TileEntityBase{
         super.updateEntity();
         if(!worldObj.isRemote){
             if(!this.isRedstonePowered){
-                if(worldObj.getBlock(xCoord, yCoord-1, zCoord).getMaterial() == Material.water){
+                if(PosUtil.getMaterial(PosUtil.offset(this.pos, 0, -1, 0), this.worldObj) == Material.water){
                     if(this.timeUntilNextDrop > 0){
                         this.timeUntilNextDrop--;
                         if(timeUntilNextDrop <= 0){
                             ItemStack fishable = FishingHooks.getRandomFishable(Util.RANDOM, Util.RANDOM.nextFloat());
-                            TileEntity tile = worldObj.getTileEntity(xCoord, yCoord+1, zCoord);
+                            TileEntity tile = worldObj.getTileEntity(PosUtil.offset(pos, 0, 1, 0));
                             if(tile != null && tile instanceof IInventory){
                                 ArrayList<ItemStack> list = new ArrayList<ItemStack>();
                                 list.add(fishable);
-                                WorldUtil.addToInventory((IInventory)tile, list, ForgeDirection.DOWN, true);
+                                WorldUtil.addToInventory((IInventory)tile, list, EnumFacing.DOWN, true, false);
                             }
                             else{
-                                EntityItem item = new EntityItem(worldObj, xCoord+0.5, yCoord+0.5, zCoord+0.5, fishable);
+                                EntityItem item = new EntityItem(worldObj, pos.getX()+0.5, pos.getY()+0.5, pos.getZ()+0.5, fishable);
                                 item.lifespan = 2000;
                                 worldObj.spawnEntityInWorld(item);
                             }

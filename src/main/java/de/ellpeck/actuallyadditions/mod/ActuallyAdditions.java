@@ -10,11 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod;
 
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.EventHandler;
-import cpw.mods.fml.common.Mod.Instance;
-import cpw.mods.fml.common.SidedProxy;
-import cpw.mods.fml.common.event.*;
 import de.ellpeck.actuallyadditions.mod.achievement.InitAchievements;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.booklet.InitBooklet;
@@ -46,6 +41,11 @@ import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.init.Items;
 import net.minecraft.server.MinecraftServer;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.EventHandler;
+import net.minecraftforge.fml.common.Mod.Instance;
+import net.minecraftforge.fml.common.SidedProxy;
+import net.minecraftforge.fml.common.event.*;
 
 import java.util.Locale;
 
@@ -133,10 +133,10 @@ public class ActuallyAdditions{
 
     @EventHandler
     public void missingMapping(FMLMissingMappingsEvent event){
-        for(FMLMissingMappingsEvent.MissingMapping mapping : event.get()){
+        for(FMLMissingMappingsEvent.MissingMapping mapping : event.getAll()){
             //Ignore removal of foreign paxels
             if(mapping.name != null && mapping.name.toLowerCase(Locale.ROOT).startsWith(ModUtil.MOD_ID_LOWER+":")){
-                if(mapping.name.contains("paxel") || mapping.name.contains("itemSpecial")){
+                if(mapping.name.contains("paxel") || mapping.name.contains("itemSpecial") || mapping.name.contains("blockBookStand")){
                     mapping.ignore();
                     ModUtil.LOGGER.info("Missing Mapping "+mapping.name+" is getting ignored. This is intentional.");
                 }

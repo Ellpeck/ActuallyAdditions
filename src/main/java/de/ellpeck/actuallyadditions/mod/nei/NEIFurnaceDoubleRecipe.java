@@ -16,16 +16,15 @@ import codechicken.nei.PositionedStack;
 import codechicken.nei.recipe.RecipeInfo;
 import codechicken.nei.recipe.TemplateRecipeHandler;
 import de.ellpeck.actuallyadditions.api.booklet.BookletPage;
-import de.ellpeck.actuallyadditions.api.booklet.INEIRecipeHandler;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.booklet.BookletUtils;
 import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiFurnaceDouble;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
-import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
 import java.util.Collections;
@@ -55,7 +54,7 @@ public class NEIFurnaceDoubleRecipe extends TemplateRecipeHandler implements INE
     @Override
     public void loadCraftingRecipes(String outputId, Object... results){
         if(outputId.equals(NAME) && getClass() == NEIFurnaceDoubleRecipe.class){
-            Map<ItemStack, ItemStack> recipes = (Map<ItemStack, ItemStack>)FurnaceRecipes.smelting().getSmeltingList();
+            Map<ItemStack, ItemStack> recipes = FurnaceRecipes.instance().getSmeltingList();
             for(Map.Entry<ItemStack, ItemStack> recipe : recipes.entrySet()){
                 arecipes.add(new CachedFurn(recipe.getKey(), recipe.getValue()));
             }
@@ -68,7 +67,7 @@ public class NEIFurnaceDoubleRecipe extends TemplateRecipeHandler implements INE
     @SuppressWarnings("unchecked")
     @Override
     public void loadCraftingRecipes(ItemStack result){
-        Map<ItemStack, ItemStack> recipes = (Map<ItemStack, ItemStack>)FurnaceRecipes.smelting().getSmeltingList();
+        Map<ItemStack, ItemStack> recipes = FurnaceRecipes.instance().getSmeltingList();
         for(Map.Entry<ItemStack, ItemStack> recipe : recipes.entrySet()){
             if(NEIServerUtils.areStacksSameType(recipe.getValue(), result)){
                 arecipes.add(new CachedFurn(recipe.getKey(), recipe.getValue()));
@@ -79,7 +78,7 @@ public class NEIFurnaceDoubleRecipe extends TemplateRecipeHandler implements INE
     @SuppressWarnings("unchecked")
     @Override
     public void loadUsageRecipes(ItemStack ingredient){
-        Map<ItemStack, ItemStack> recipes = (Map<ItemStack, ItemStack>)FurnaceRecipes.smelting().getSmeltingList();
+        Map<ItemStack, ItemStack> recipes = FurnaceRecipes.instance().getSmeltingList();
         for(Map.Entry<ItemStack, ItemStack> recipe : recipes.entrySet()){
             if(NEIServerUtils.areStacksSameTypeCrafting(recipe.getKey(), ingredient)){
                 CachedFurn theRecipe = new CachedFurn(recipe.getKey(), recipe.getValue());
@@ -111,7 +110,7 @@ public class NEIFurnaceDoubleRecipe extends TemplateRecipeHandler implements INE
 
     @Override
     public void drawBackground(int recipeIndex){
-        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         GuiDraw.changeTexture(getGuiTexture());
         GuiDraw.drawTexturedModalRect(46, 20, 46, 20, 84, 70);
     }

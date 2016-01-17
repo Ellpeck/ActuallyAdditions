@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "particle": "actuallyadditions:blocks/blockGiantChest",
+    "down": "actuallyadditions:blocks/blockGiantChestBottom",
+    "up": "actuallyadditions:blocks/blockGiantChestTop",
+    "north": "actuallyadditions:blocks/blockGiantChest",
+    "east": "actuallyadditions:blocks/blockGiantChest",
+    "south": "actuallyadditions:blocks/blockGiantChest",
+    "west": "actuallyadditions:blocks/blockGiantChest"
+  }
+}

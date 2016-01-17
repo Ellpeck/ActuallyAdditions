@@ -10,40 +10,32 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import de.ellpeck.actuallyadditions.api.block.IHudDisplay;
 import de.ellpeck.actuallyadditions.api.tile.IPhantomTile;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
-import de.ellpeck.actuallyadditions.mod.proxy.ClientProxy;
 import de.ellpeck.actuallyadditions.mod.tile.*;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
-import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.profiler.Profiler;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.IIcon;
-import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.*;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockPhantom extends BlockContainerBase implements IHudDisplay{
 
     public Type type;
     public int range;
-
-    @SideOnly(Side.CLIENT)
-    private IIcon iconSeasonal;
 
     public BlockPhantom(Type type, String name){
         super(Material.rock, name);
@@ -62,11 +54,11 @@ public class BlockPhantom extends BlockContainerBase implements IHudDisplay{
     }
 
     @Override
-    public void breakBlock(World world, int x, int y, int z, Block block, int par6){
+    public void breakBlock(World world, BlockPos pos, IBlockState state){
         if(this.type == Type.PLACER || this.type == Type.BREAKER){
-            this.dropInventory(world, x, y, z);
+            this.dropInventory(world, pos);
         }
-        super.breakBlock(world, x, y, z, block, par6);
+        super.breakBlock(world, pos, state);
     }
 
     @Override
@@ -86,61 +78,47 @@ public class BlockPhantom extends BlockContainerBase implements IHudDisplay{
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public IIcon getIcon(int side, int metadata){
-        return (this.type == Type.FACE && ClientProxy.pumpkinBlurPumpkinBlur && side > 1) ? this.iconSeasonal : this.blockIcon;
-    }
-
-    @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int hitSide, float hitX, float hitY, float hitZ){
-        if(this.tryToggleRedstone(world, x, y, z, player)){
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ){
+        if(this.tryToggleRedstone(world, pos, player)){
             return true;
         }
         if(!world.isRemote){
-            TileEntity tile = world.getTileEntity(x, y, z);
+            TileEntity tile = world.getTileEntity(pos);
             if(tile instanceof IPhantomTile && ((IPhantomTile)tile).getGuiID() != -1){
-                player.openGui(ActuallyAdditions.instance, ((IPhantomTile)tile).getGuiID(), world, x, y, z);
+                player.openGui(ActuallyAdditions.instance, ((IPhantomTile)tile).getGuiID(), world, pos.getX(), pos.getY(), pos.getZ());
             }
         }
         return true;
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister iconReg){
-        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName());
-
-        this.iconSeasonal = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":blockPhantomfacePumpkin");
-    }
-
-    @Override
     public EnumRarity getRarity(ItemStack stack){
-        return EnumRarity.epic;
+        return EnumRarity.EPIC;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public void displayHud(Minecraft minecraft, EntityPlayer player, ItemStack stack, MovingObjectPosition posHit, Profiler profiler, ScaledResolution resolution){
-        TileEntity tile = minecraft.theWorld.getTileEntity(posHit.blockX, posHit.blockY, posHit.blockZ);
+        TileEntity tile = minecraft.theWorld.getTileEntity(posHit.getBlockPos());
         if(tile != null){
             if(tile instanceof IPhantomTile){
                 IPhantomTile phantom = (IPhantomTile)tile;
-                minecraft.fontRenderer.drawStringWithShadow(EnumChatFormatting.GOLD+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".blockPhantomRange.desc")+": "+phantom.getRange(), resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2-40, StringUtil.DECIMAL_COLOR_WHITE);
+                minecraft.fontRendererObj.drawStringWithShadow(EnumChatFormatting.GOLD+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".blockPhantomRange.desc")+": "+phantom.getRange(), resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2-40, StringUtil.DECIMAL_COLOR_WHITE);
                 if(phantom.hasBoundPosition()){
-                    int distance = (int)Vec3.createVectorHelper(posHit.blockX, posHit.blockY, posHit.blockZ).distanceTo(Vec3.createVectorHelper(phantom.getBoundPosition().getX(), phantom.getBoundPosition().getY(), phantom.getBoundPosition().getZ()));
-                    Item item = phantom.getBoundPosition().getItemBlock(minecraft.theWorld);
-                    String name = item == null ? "Absolutely Nothing" : item.getItemStackDisplayName(new ItemStack(phantom.getBoundPosition().getBlock(minecraft.theWorld), 1, phantom.getBoundPosition().getMetadata(minecraft.theWorld)));
-                    StringUtil.drawSplitString(minecraft.fontRenderer, StringUtil.localizeFormatted("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.blockInfo.desc", name, phantom.getBoundPosition().getX(), phantom.getBoundPosition().getY(), phantom.getBoundPosition().getZ(), distance), resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2-30, 200, StringUtil.DECIMAL_COLOR_WHITE, true);
+                    int distance = (int)new Vec3(posHit.getBlockPos()).distanceTo(new Vec3(phantom.getBoundPosition()));
+                    Item item = PosUtil.getItemBlock(phantom.getBoundPosition(), minecraft.theWorld);
+                    String name = item == null ? "Absolutely Nothing" : item.getItemStackDisplayName(new ItemStack(PosUtil.getBlock(phantom.getBoundPosition(), minecraft.theWorld), 1, PosUtil.getMetadata(phantom.getBoundPosition(), minecraft.theWorld)));
+                    StringUtil.drawSplitString(minecraft.fontRendererObj, StringUtil.localizeFormatted("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.blockInfo.desc", name, phantom.getBoundPosition().getX(), phantom.getBoundPosition().getY(), phantom.getBoundPosition().getZ(), distance), resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2-30, 200, StringUtil.DECIMAL_COLOR_WHITE, true);
 
                     if(phantom.isBoundThingInRange()){
-                        StringUtil.drawSplitString(minecraft.fontRenderer, EnumChatFormatting.DARK_GREEN+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.connectedRange.desc"), resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2+25, 200, StringUtil.DECIMAL_COLOR_WHITE, true);
+                        StringUtil.drawSplitString(minecraft.fontRendererObj, EnumChatFormatting.DARK_GREEN+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.connectedRange.desc"), resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2+25, 200, StringUtil.DECIMAL_COLOR_WHITE, true);
                     }
                     else{
-                        StringUtil.drawSplitString(minecraft.fontRenderer, EnumChatFormatting.DARK_RED+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.connectedNoRange.desc"), resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2+25, 200, StringUtil.DECIMAL_COLOR_WHITE, true);
+                        StringUtil.drawSplitString(minecraft.fontRendererObj, EnumChatFormatting.DARK_RED+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.connectedNoRange.desc"), resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2+25, 200, StringUtil.DECIMAL_COLOR_WHITE, true);
                     }
                 }
                 else{
-                    minecraft.fontRenderer.drawStringWithShadow(EnumChatFormatting.RED+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.notConnected.desc"), resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2+25, StringUtil.DECIMAL_COLOR_WHITE);
+                    minecraft.fontRendererObj.drawStringWithShadow(EnumChatFormatting.RED+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.notConnected.desc"), resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2+25, StringUtil.DECIMAL_COLOR_WHITE);
                 }
             }
         }

@@ -10,13 +10,11 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemFoodBase;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheJams;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -25,16 +23,16 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.IIcon;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
 public class ItemJams extends ItemFoodBase{
 
     public static final TheJams[] allJams = TheJams.values();
-    @SideOnly(Side.CLIENT)
-    public IIcon overlayIcon;
 
     public ItemJams(String name){
         super(0, 0.0F, false, name);
@@ -61,18 +59,7 @@ public class ItemJams extends ItemFoodBase{
 
     @Override
     public EnumRarity getRarity(ItemStack stack){
-        return stack.getItemDamage() >= allJams.length ? EnumRarity.common : allJams[stack.getItemDamage()].rarity;
-    }
-
-    @Override
-    public boolean requiresMultipleRenderPasses(){
-        return true;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public IIcon getIconFromDamageForRenderPass(int damage, int pass){
-        return pass > 0 ? this.overlayIcon : super.getIconFromDamageForRenderPass(damage, pass);
+        return stack.getItemDamage() >= allJams.length ? EnumRarity.COMMON : allJams[stack.getItemDamage()].rarity;
     }
 
     @SuppressWarnings("all")
@@ -84,15 +71,8 @@ public class ItemJams extends ItemFoodBase{
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister iconReg){
-        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName());
-        this.overlayIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName()+"Overlay");
-    }
-
-    @Override
-    public ItemStack onEaten(ItemStack stack, World world, EntityPlayer player){
-        ItemStack stackToReturn = super.onEaten(stack, world, player);
+    public ItemStack onItemUseFinish(ItemStack stack, World world, EntityPlayer player){
+        ItemStack stackToReturn = super.onItemUseFinish(stack, world, player);
 
         if(!world.isRemote && stack.getItemDamage() < allJams.length){
             PotionEffect firstEffectToGet = new PotionEffect(allJams[stack.getItemDamage()].firstEffectToGet, 200);
@@ -104,7 +84,7 @@ public class ItemJams extends ItemFoodBase{
             ItemStack returnItem = new ItemStack(Items.glass_bottle);
             if(!player.inventory.addItemStackToInventory(returnItem.copy())){
                 EntityItem entityItem = new EntityItem(player.worldObj, player.posX, player.posY, player.posZ, returnItem.copy());
-                entityItem.delayBeforeCanPickup = 0;
+                entityItem.setPickupDelay(0);
                 player.worldObj.spawnEntityInWorld(entityItem);
             }
         }
@@ -112,12 +92,19 @@ public class ItemJams extends ItemFoodBase{
     }
 
     @Override
-    public int func_150905_g(ItemStack stack){
+    public int getHealAmount(ItemStack stack){
         return stack.getItemDamage() >= allJams.length ? 0 : allJams[stack.getItemDamage()].healAmount;
     }
 
     @Override
-    public float func_150906_h(ItemStack stack){
+    public float getSaturationModifier(ItemStack stack){
         return stack.getItemDamage() >= allJams.length ? 0 : allJams[stack.getItemDamage()].saturation;
+    }
+
+    @Override
+    protected void registerRendering(){
+        for(int i = 0; i < allJams.length; i++){
+            ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), new ResourceLocation(ModUtil.MOD_ID_LOWER, this.getBaseName()));
+        }
     }
 }

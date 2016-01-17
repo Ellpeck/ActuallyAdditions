@@ -12,10 +12,8 @@ package de.ellpeck.actuallyadditions.mod.nei;
 
 import codechicken.nei.recipe.GuiRecipe;
 import codechicken.nei.recipe.IRecipeHandler;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.booklet.BookletPage;
-import de.ellpeck.actuallyadditions.api.booklet.INEIRecipeHandler;
 import de.ellpeck.actuallyadditions.mod.booklet.BookletUtils;
 import de.ellpeck.actuallyadditions.mod.booklet.GuiBooklet;
 import de.ellpeck.actuallyadditions.mod.booklet.button.TexturedButton;
@@ -23,6 +21,7 @@ import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.event.GuiScreenEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class NEIScreenEvents{
 
@@ -33,8 +32,6 @@ public class NEIScreenEvents{
     @SubscribeEvent
     public void onInitGuiForNEI(GuiScreenEvent.InitGuiEvent event){
         if(event.gui instanceof GuiRecipe){
-            GuiRecipe theGui = (GuiRecipe)event.gui;
-
             int xSize = 176;
             int ySize = 166;
             int guiLeft = (event.gui.width-xSize)/2;
@@ -44,14 +41,16 @@ public class NEIScreenEvents{
                 @Override
                 public void drawButton(Minecraft minecraft, int x, int y){
                     super.drawButton(minecraft, x, y);
-                    if(this.visible && this.field_146123_n){
+                    if(this.visible && this.hovered){
                         String text = StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".clickToSeeRecipe");
-                        Minecraft.getMinecraft().fontRenderer.drawString(text, this.xPosition-Minecraft.getMinecraft().fontRenderer.getStringWidth(text)-1, this.yPosition+this.height/2-Minecraft.getMinecraft().fontRenderer.FONT_HEIGHT/2, StringUtil.DECIMAL_COLOR_WHITE, true);
+                        Minecraft.getMinecraft().fontRendererObj.drawString(text, this.xPosition-Minecraft.getMinecraft().fontRendererObj.getStringWidth(text)-1, this.yPosition+this.height/2-Minecraft.getMinecraft().fontRendererObj.FONT_HEIGHT/2, StringUtil.DECIMAL_COLOR_WHITE, true);
                     }
                 }
             };
-
             event.buttonList.add(this.neiButton);
+
+            GuiRecipe theGui = (GuiRecipe)event.gui;
+
             IRecipeHandler handler = theGui.getCurrentRecipeHandlers().get(theGui.recipetype);
             this.neiButton.visible = handler instanceof INEIRecipeHandler && ((INEIRecipeHandler)handler).getPageForInfo(theGui.page) != null;
         }

@@ -1,0 +1,12 @@
+{
+  "variants": {
+    "age=0": { "model": "actuallyadditions:blockCoffeeStage1" },
+    "age=1": { "model": "actuallyadditions:blockCoffeeStage2" },
+    "age=2": { "model": "actuallyadditions:blockCoffeeStage2" },
+    "age=3": { "model": "actuallyadditions:blockCoffeeStage3" },
+    "age=4": { "model": "actuallyadditions:blockCoffeeStage4" },
+    "age=5": { "model": "actuallyadditions:blockCoffeeStage4" },
+    "age=6": { "model": "actuallyadditions:blockCoffeeStage5" },
+    "age=7": { "model": "actuallyadditions:blockCoffeeStage6" }
+  }
+}

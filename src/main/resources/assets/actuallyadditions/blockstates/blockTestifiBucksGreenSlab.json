@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "meta=0": { "model": "actuallyadditions:blockTestifiBucksGreenSlabBottom" },
+        "meta=1": { "model": "actuallyadditions:blockTestifiBucksGreenSlabTop" }
+    }
+}

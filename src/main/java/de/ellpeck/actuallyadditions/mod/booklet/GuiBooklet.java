@@ -10,8 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.booklet;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.booklet.BookletPage;
 import de.ellpeck.actuallyadditions.api.internal.EntrySet;
@@ -34,14 +32,17 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
-import org.lwjgl.opengl.GL11;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -90,8 +91,9 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
         this.saveOnClose = saveOnClose;
     }
 
+    @Override
     public void drawHoveringText(List list, int x, int y){
-        super.func_146283_a(list, x, y);
+        super.drawHoveringText(list, x, y);
     }
 
     public FontRenderer getFontRenderer(){
@@ -116,10 +118,10 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
         //So don't fuck with everything unintentionally
         //
         //(This fixes your fuckery)
-        GL11.glScalef(1.0F, 1.0F, 1.0F);
+        GlStateManager.scale(1.0F, 1.0F, 1.0F);
 
         //Draws the Background
-        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(ClientProxy.jingleAllTheWay ? resLocChristmas : (ClientProxy.pumpkinBlurPumpkinBlur ? resLocHalloween : (ClientProxy.bulletForMyValentine ? resLocValentine : resLoc)));
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
 
@@ -181,7 +183,7 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
         else{
             if(AND_HIS_NAME_IS.length > this.hisNameIsAt && AND_HIS_NAME_IS[this.hisNameIsAt] == key){
                 if(this.hisNameIsAt+1 >= AND_HIS_NAME_IS.length){
-                    Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.func_147673_a(new ResourceLocation(ModUtil.MOD_ID_LOWER, "duhDuhDuhDuuuh")));
+                    Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.create(new ResourceLocation(ModUtil.MOD_ID_LOWER, "duhDuhDuhDuuuh")));
                     ModUtil.LOGGER.info("AND HIS NAME IS JOHN CENA DUH DUH DUH DUUUH");
                     this.hisNameIsAt = 0;
                 }
@@ -196,7 +198,7 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
     }
 
     @Override
-    protected void mouseClicked(int par1, int par2, int par3){
+    protected void mouseClicked(int par1, int par2, int par3) throws IOException{
         this.searchField.mouseClicked(par1, par2, par3);
         //Left mouse button
         if(par3 == 0 && this.currentEntrySet.chapter != null){
@@ -283,11 +285,11 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
 
         ArrayList updateHover = new ArrayList();
         if(UpdateChecker.checkFailed){
-            updateHover.add(IChatComponent.Serializer.func_150699_a(StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".update.failed")).getFormattedText());
+            updateHover.add(IChatComponent.Serializer.jsonToComponent(StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".update.failed")).getFormattedText());
         }
         else if(UpdateChecker.needsUpdateNotify){
-            updateHover.add(IChatComponent.Serializer.func_150699_a(StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".update.generic")).getFormattedText());
-            updateHover.add(IChatComponent.Serializer.func_150699_a(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID_LOWER+".update.versionCompare", ModUtil.VERSION, UpdateChecker.updateVersion)).getFormattedText());
+            updateHover.add(IChatComponent.Serializer.jsonToComponent(StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".update.generic")).getFormattedText());
+            updateHover.add(IChatComponent.Serializer.jsonToComponent(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID_LOWER+".update.versionCompare", ModUtil.VERSION, UpdateChecker.updateVersionString)).getFormattedText());
             updateHover.add(StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".update.buttonOptions"));
         }
         this.buttonUpdate = new TexturedButton(4, this.guiLeft-11, this.guiTop-11, 245, 0, 11, 11, updateHover);
@@ -327,7 +329,7 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
             this.buttonList.add(this.bookmarkButtons[i]);
         }
 
-        this.searchField = new GuiTextField(this.fontRendererObj, guiLeft+148, guiTop+162, 66, 10);
+        this.searchField = new GuiTextField(4500, this.fontRendererObj, guiLeft+148, guiTop+162, 66, 10);
         this.searchField.setMaxStringLength(30);
         this.searchField.setEnableBackgroundDrawing(false);
         this.searchField.setCanLoseFocus(false);
@@ -356,13 +358,13 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
 
     @Override
     //For scrolling through pages
-    public void handleMouseInput(){
+    public void handleMouseInput() throws IOException{
         int wheel = Mouse.getEventDWheel();
         if(wheel != 0){
-            if(wheel > 0){
+            if(wheel < 0){
                 BookletUtils.handleNextPage(this);
             }
-            else if(wheel < 0){
+            else if(wheel > 0){
                 BookletUtils.handlePreviousPage(this);
             }
         }
@@ -404,8 +406,8 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
 
     @Override
     public void renderTooltipAndTransferButton(BookletPage from, ItemStack stack, int x, int y, boolean renderTransferButton, boolean mousePressed){
-        boolean flagBefore = this.mc.fontRenderer.getUnicodeFlag();
-        this.mc.fontRenderer.setUnicodeFlag(false);
+        boolean flagBefore = this.mc.fontRendererObj.getUnicodeFlag();
+        this.mc.fontRendererObj.setUnicodeFlag(false);
 
         List list = stack.getTooltip(this.mc.thePlayer, this.mc.gameSettings.advancedItemTooltips);
 
@@ -426,14 +428,14 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
                 if(mousePressed){
                     BookletUtils.openIndexEntry(this, page.getChapter().getEntry(), ActuallyAdditionsAPI.bookletEntries.indexOf(page.getChapter().getEntry())/GuiBooklet.CHAPTER_BUTTONS_AMOUNT+1, true);
                     BookletUtils.openChapter(this, page.getChapter(), page);
-                    Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.func_147674_a(new ResourceLocation("gui.button.press"), 1.0F));
+                    Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.create(new ResourceLocation("gui.button.press"), 1.0F));
                 }
             }
         }
 
         this.drawHoveringText(list, x, y);
 
-        this.mc.fontRenderer.setUnicodeFlag(flagBefore);
+        this.mc.fontRendererObj.setUnicodeFlag(flagBefore);
     }
 
     @Override

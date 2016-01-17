@@ -14,6 +14,7 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.ResourceLocation;
 
 import java.util.List;
 
@@ -21,8 +22,9 @@ import java.util.List;
 public class ItemUtil{
 
     public static Item getItemFromName(String name){
-        if(Item.itemRegistry.containsKey(name)){
-            return (Item)Item.itemRegistry.getObject(name);
+        ResourceLocation resLoc = new ResourceLocation(name);
+        if(Item.itemRegistry.containsKey(resLoc)){
+            return Item.itemRegistry.getObject(resLoc);
         }
         return null;
     }

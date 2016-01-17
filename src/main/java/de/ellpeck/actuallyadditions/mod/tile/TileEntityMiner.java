@@ -12,22 +12,23 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
-import cpw.mods.fml.common.network.NetworkRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import de.ellpeck.actuallyadditions.api.tile.IEnergyDisplay;
 import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
 import de.ellpeck.actuallyadditions.mod.network.PacketParticle;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
+import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fluids.IFluidBlock;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
@@ -51,13 +52,13 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyR
         super.updateEntity();
         if(!this.worldObj.isRemote){
             if(this.layerAt == -1){
-                this.layerAt = this.yCoord-1;
+                this.layerAt = this.getPos().getY()-1;
             }
 
             if(!this.isRedstonePowered && this.ticksElapsed%5 == 0){
 
                 if(this.layerAt > 0){
-                    if(this.mine(TileEntityPhantomface.upgradeRange(DEFAULT_RANGE, worldObj, xCoord, yCoord, zCoord))){
+                    if(this.mine(TileEntityPhantomface.upgradeRange(DEFAULT_RANGE, worldObj, this.pos))){
                         this.layerAt--;
                     }
                 }
@@ -75,26 +76,24 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyR
             for(int aZ = -range; aZ <= range; aZ++){
                 int actualUse = ENERGY_USE_PER_BLOCK*(this.onlyMineOres ? 3 : 1);
                 if(this.storage.getEnergyStored() >= actualUse){
-                    int x = this.xCoord+anX;
-                    int z = this.zCoord+aZ;
-                    int y = this.layerAt;
+                    BlockPos pos = new BlockPos(this.pos.getX()+anX, this.layerAt, this.pos.getZ()+aZ);
 
-                    Block block = this.worldObj.getBlock(x, y, z);
-                    int meta = this.worldObj.getBlockMetadata(x, y, z);
-                    if(block != null && !block.isAir(this.worldObj, x, y, z)){
-                        if(block.getHarvestLevel(meta) <= 3F && block.getBlockHardness(this.worldObj, x, y, z) >= 0F && !(block instanceof BlockLiquid) && !(block instanceof IFluidBlock) && this.isMinable(block, meta)){
+                    Block block = PosUtil.getBlock(pos, worldObj);
+                    int meta = PosUtil.getMetadata(pos, worldObj);
+                    if(block != null && !block.isAir(this.worldObj, pos)){
+                        if(block.getHarvestLevel(worldObj.getBlockState(pos)) <= 3F && block.getBlockHardness(this.worldObj, pos) >= 0F && !(block instanceof BlockLiquid) && !(block instanceof IFluidBlock) && this.isMinable(block, meta)){
                             ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-                            drops.addAll(block.getDrops(worldObj, x, y, z, meta, 0));
+                            drops.addAll(block.getDrops(worldObj, pos, worldObj.getBlockState(pos), 0));
 
-                            if(WorldUtil.addToInventory(this, drops, ForgeDirection.UNKNOWN, false)){
-                                worldObj.playAuxSFX(2001, x, y, z, Block.getIdFromBlock(block)+(meta << 12));
-                                worldObj.setBlockToAir(x, y, z);
+                            if(WorldUtil.addToInventory(this, drops, false, true)){
+                                worldObj.playAuxSFX(2001, pos, Block.getIdFromBlock(block)+(meta << 12));
+                                worldObj.setBlockToAir(pos);
 
-                                WorldUtil.addToInventory(this, drops, ForgeDirection.UNKNOWN, true);
+                                WorldUtil.addToInventory(this, drops, true, true);
                                 this.markDirty();
 
                                 this.storage.extractEnergy(actualUse, false);
-                                this.shootParticles(x, y, z);
+                                this.shootParticles(pos.getX(), pos.getY(), pos.getZ());
                             }
                             return false;
                         }
@@ -122,7 +121,7 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyR
                     }
                 }
 
-                String reg = Block.blockRegistry.getNameForObject(block);
+                String reg = block.getRegistryName();
                 if(reg != null && !reg.isEmpty()){
                     for(String string : ConfigValues.minerExtraWhitelist){
                         if(reg.equals(string)){
@@ -136,7 +135,7 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyR
     }
 
     private boolean isBlacklisted(Block block){
-        String reg = Block.blockRegistry.getNameForObject(block);
+        String reg = block.getRegistryName();
         if(reg != null && !reg.isEmpty()){
             for(String string : ConfigValues.minerBlacklist){
                 if(reg.equals(string)){
@@ -148,7 +147,7 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyR
     }
 
     private void shootParticles(int endX, int endY, int endZ){
-        PacketHandler.theNetwork.sendToAllAround(new PacketParticle(xCoord, yCoord, zCoord, endX, endY, endZ, new float[]{62F/255F, 163F/255F, 74F/255F}, 5, 1.0F), new NetworkRegistry.TargetPoint(worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 96));
+        PacketHandler.theNetwork.sendToAllAround(new PacketParticle(this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), endX, endY, endZ, new float[]{62F/255F, 163F/255F, 74F/255F}, 5, 1.0F), new NetworkRegistry.TargetPoint(worldObj.provider.getDimensionId(), this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), 96));
     }
 
     @Override
@@ -168,32 +167,32 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyR
     }
 
     @Override
-    public int receiveEnergy(ForgeDirection from, int maxReceive, boolean simulate){
+    public int receiveEnergy(EnumFacing from, int maxReceive, boolean simulate){
         return this.storage.receiveEnergy(maxReceive, simulate);
     }
 
     @Override
-    public int getEnergyStored(ForgeDirection from){
+    public int getEnergyStored(EnumFacing from){
         return this.storage.getEnergyStored();
     }
 
     @Override
-    public int getMaxEnergyStored(ForgeDirection from){
+    public int getMaxEnergyStored(EnumFacing from){
         return this.storage.getMaxEnergyStored();
     }
 
     @Override
-    public boolean canConnectEnergy(ForgeDirection from){
+    public boolean canConnectEnergy(EnumFacing from){
         return true;
     }
 
     @Override
-    public boolean canInsertItem(int slot, ItemStack stack, int side){
+    public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
         return this.isItemValidForSlot(slot, stack);
     }
 
     @Override
-    public boolean canExtractItem(int slot, ItemStack stack, int side){
+    public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
         return true;
     }
 

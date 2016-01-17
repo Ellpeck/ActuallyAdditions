@@ -26,6 +26,10 @@ import java.util.List;
 
 public class ActuallyAdditionsAPI{
 
+    public static final String MOD_ID = "ActuallyAdditions";
+    public static final String API_ID = MOD_ID+"API";
+    public static final String API_VERSION = "7";
+
     public static List<CrusherRecipe> crusherRecipes = new ArrayList<CrusherRecipe>();
     public static List<BallOfFurReturn> ballOfFurReturnItems = new ArrayList<BallOfFurReturn>();
     public static List<TreasureChestLoot> treasureChestLoot = new ArrayList<TreasureChestLoot>();
@@ -69,7 +73,7 @@ public class ActuallyAdditionsAPI{
      * @param outputTwoChance The chance of the second output (0 won't occur at all, 100 will all the time)
      */
     public static void addCrusherRecipe(String input, String outputOne, int outputOneAmount, String outputTwo, int outputTwoAmount, int outputTwoChance){
-        if(!OreDictionary.getOres(input, false).isEmpty() && !OreDictionary.getOres(outputOne, false).isEmpty() && (outputTwo == null || outputTwo.isEmpty() || !OreDictionary.getOres(outputTwo, false).isEmpty())){
+        if(!OreDictionary.getOres(input).isEmpty() && !OreDictionary.getOres(outputOne).isEmpty() && (outputTwo == null || outputTwo.isEmpty() || !OreDictionary.getOres(outputTwo).isEmpty())){
             crusherRecipes.add(new CrusherRecipe(input, outputOne, outputOneAmount, outputTwo, outputTwoAmount, outputTwoChance));
         }
     }
@@ -107,7 +111,7 @@ public class ActuallyAdditionsAPI{
      * @param outputOneAmount The amount of the first output
      */
     public static void addCrusherRecipe(ItemStack input, String outputOne, int outputOneAmount){
-        if(!OreDictionary.getOres(outputOne, false).isEmpty()){
+        if(!OreDictionary.getOres(outputOne).isEmpty()){
             crusherRecipes.add(new CrusherRecipe(input, outputOne, outputOneAmount));
         }
     }

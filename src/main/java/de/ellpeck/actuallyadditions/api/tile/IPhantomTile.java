@@ -10,7 +10,7 @@
 
 package de.ellpeck.actuallyadditions.api.tile;
 
-import de.ellpeck.actuallyadditions.api.Position;
+import net.minecraft.util.BlockPos;
 
 /**
  * Extending this will cause a TileEntity to be able to be connected via a Phantom Connector
@@ -30,12 +30,12 @@ public interface IPhantomTile{
     /**
      * @return The position this tile is bound to
      */
-    Position getBoundPosition();
+    BlockPos getBoundPosition();
 
     /**
      * Sets the bound position
      */
-    void setBoundPosition(Position pos);
+    void setBoundPosition(BlockPos pos);
 
     /**
      * @return The ID of the GUI it opens, -1 if none

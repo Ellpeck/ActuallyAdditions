@@ -10,36 +10,28 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIcon;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
 public class ItemMisc extends ItemBase{
 
     public static final TheMiscItems[] allMiscItems = TheMiscItems.values();
-    @SideOnly(Side.CLIENT)
-    public IIcon[] textures;
 
     public ItemMisc(String name){
         super(name);
         this.setHasSubtypes(true);
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public IIcon getIconFromDamage(int par1){
-        return par1 >= textures.length ? null : textures[par1];
     }
 
     @Override
@@ -54,7 +46,7 @@ public class ItemMisc extends ItemBase{
 
     @Override
     public EnumRarity getRarity(ItemStack stack){
-        return stack.getItemDamage() >= allMiscItems.length ? EnumRarity.common : allMiscItems[stack.getItemDamage()].rarity;
+        return stack.getItemDamage() >= allMiscItems.length ? EnumRarity.COMMON : allMiscItems[stack.getItemDamage()].rarity;
     }
 
     @SuppressWarnings("all")
@@ -66,11 +58,13 @@ public class ItemMisc extends ItemBase{
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister iconReg){
-        this.textures = new IIcon[allMiscItems.length];
-        for(int i = 0; i < textures.length; i++){
-            textures[i] = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName()+allMiscItems[i].name);
+    protected void registerRendering(){
+        ResourceLocation[] resLocs = new ResourceLocation[allMiscItems.length];
+        for(int i = 0; i < allMiscItems.length; i++){
+            String name = this.getBaseName()+allMiscItems[i].name;
+            resLocs[i] = new ResourceLocation(ModUtil.MOD_ID_LOWER, name);
+            ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), new ResourceLocation(ModUtil.MOD_ID_LOWER, name));
         }
+        ActuallyAdditions.proxy.addRenderVariant(this, resLocs);
     }
 }

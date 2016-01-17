@@ -19,6 +19,7 @@ import de.ellpeck.actuallyadditions.mod.booklet.button.BookmarkButton;
 import de.ellpeck.actuallyadditions.mod.booklet.button.IndexButton;
 import de.ellpeck.actuallyadditions.mod.booklet.button.TexturedButton;
 import de.ellpeck.actuallyadditions.mod.booklet.entry.BookletEntryAllSearch;
+import de.ellpeck.actuallyadditions.mod.proxy.ClientProxy;
 import de.ellpeck.actuallyadditions.mod.util.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
@@ -81,7 +82,7 @@ public class BookletUtils{
             booklet.getFontRenderer().drawString(strg, booklet.guiLeft+booklet.xSize/2-booklet.getFontRenderer().getStringWidth(strg)/2-3, booklet.guiTop+12+booklet.getFontRenderer().FONT_HEIGHT, 0);
 
             String version;
-            String playerName = Minecraft.getMinecraft().thePlayer.getCommandSenderName();
+            String playerName = Minecraft.getMinecraft().thePlayer.getName();
             if(playerName.equals("dqmhose")){
                 version = "Pants Edition";
             }
@@ -169,10 +170,10 @@ public class BookletUtils{
         }
         //Renders the amount of words and chars the book has
         else{
-            String wordCountString = StringUtil.localizeFormatted("booklet."+ModUtil.MOD_ID_LOWER+".amountOfWords", InitBooklet.wordCount);
+            String wordCountString = StringUtil.localizeFormatted("booklet."+ModUtil.MOD_ID_LOWER+".amountOfWords", ClientProxy.bookletWordCount);
             booklet.getFontRenderer().drawString(EnumChatFormatting.ITALIC+wordCountString, booklet.guiLeft+booklet.xSize-booklet.getFontRenderer().getStringWidth(wordCountString)-15, booklet.guiTop+booklet.ySize-18-booklet.getFontRenderer().FONT_HEIGHT, 0);
 
-            String charCountString = StringUtil.localizeFormatted("booklet."+ModUtil.MOD_ID_LOWER+".amountOfChars", InitBooklet.charCount);
+            String charCountString = StringUtil.localizeFormatted("booklet."+ModUtil.MOD_ID_LOWER+".amountOfChars", ClientProxy.bookletCharCount);
             booklet.getFontRenderer().drawString(EnumChatFormatting.ITALIC+charCountString, booklet.guiLeft+booklet.xSize-booklet.getFontRenderer().getStringWidth(charCountString)-15, booklet.guiTop+booklet.ySize-18, 0);
         }
     }
@@ -184,12 +185,15 @@ public class BookletUtils{
     public static void doHoverTexts(GuiBooklet booklet, int mouseX, int mouseY){
         //Update all of the buttons' hovering texts
         for(Object button : booklet.getButtonList()){
-            if(button instanceof GuiButton && ((GuiButton)button).visible && ((GuiButton)button).func_146115_a()){
+            if(button instanceof GuiButton && ((GuiButton)button).visible && ((GuiButton)button).isMouseOver()){
                 if(button instanceof BookmarkButton){
                     ((BookmarkButton)button).drawHover(mouseX, mouseY);
                 }
                 else if(button instanceof TexturedButton){
                     booklet.drawHoveringText(((TexturedButton)button).textList, mouseX, mouseY);
+                }
+                else if(button instanceof IndexButton){
+                    ((IndexButton)button).drawHover(mouseX, mouseY);
                 }
             }
         }
@@ -206,7 +210,8 @@ public class BookletUtils{
                 currentEntry.chapters.clear();
 
                 for(IBookletChapter chapter : currentEntry.allChapters){
-                    if(chapter.getLocalizedName().toLowerCase(Locale.ROOT).contains(booklet.searchField.getText().toLowerCase(Locale.ROOT))){
+                    String searchFieldText = booklet.searchField.getText().toLowerCase(Locale.ROOT);
+                    if(chapter.getLocalizedName().toLowerCase(Locale.ROOT).contains(searchFieldText) || getChapterStacksContainString(searchFieldText, chapter)){
                         currentEntry.chapters.add(chapter);
                     }
                 }
@@ -216,6 +221,20 @@ public class BookletUtils{
             }
             openIndexEntry(booklet, booklet.currentEntrySet.entry, booklet.currentEntrySet.pageInIndex, false);
         }
+    }
+
+    private static boolean getChapterStacksContainString(String text, IBookletChapter chapter){
+        for(BookletPage page : chapter.getPages()){
+            ItemStack[] pageStacks = page.getItemStacksForPage();
+            if(pageStacks != null){
+                for(ItemStack stack : pageStacks){
+                    if(stack.getDisplayName().toLowerCase(Locale.ROOT).contains(text)){
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     @SuppressWarnings("unchecked")

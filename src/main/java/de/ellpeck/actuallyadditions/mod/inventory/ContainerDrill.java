@@ -21,6 +21,7 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.IChatComponent;
 
 @InventoryContainer
 public class ContainerDrill extends Container{
@@ -72,7 +73,7 @@ public class ContainerDrill extends Container{
         final int hotbarStart = inventoryEnd+1;
         final int hotbarEnd = hotbarStart+8;
 
-        Slot theSlot = (Slot)this.inventorySlots.get(slot);
+        Slot theSlot = this.inventorySlots.get(slot);
 
         if(theSlot != null && theSlot.getHasStack()){
             ItemStack newStack = theSlot.getStack();
@@ -149,13 +150,18 @@ public class ContainerDrill extends Container{
         public ItemStack[] slots = new ItemStack[SLOT_AMOUNT];
 
         @Override
-        public String getInventoryName(){
+        public String getName(){
             return "drill";
         }
 
         @Override
-        public boolean hasCustomInventoryName(){
+        public boolean hasCustomName(){
             return false;
+        }
+
+        @Override
+        public IChatComponent getDisplayName(){
+            return null;
         }
 
         @Override
@@ -169,18 +175,28 @@ public class ContainerDrill extends Container{
         }
 
         @Override
-        public void openInventory(){
-
-        }
-
-        @Override
-        public void closeInventory(){
-
-        }
-
-        @Override
         public boolean isItemValidForSlot(int slot, ItemStack stack){
             return true;
+        }
+
+        @Override
+        public int getField(int id){
+            return 0;
+        }
+
+        @Override
+        public void setField(int id, int value){
+
+        }
+
+        @Override
+        public int getFieldCount(){
+            return 0;
+        }
+
+        @Override
+        public void clear(){
+            this.slots = new ItemStack[this.slots.length];
         }
 
         @Override
@@ -189,8 +205,13 @@ public class ContainerDrill extends Container{
         }
 
         @Override
-        public ItemStack getStackInSlotOnClosing(int i){
-            return getStackInSlot(i);
+        public void openInventory(EntityPlayer player){
+
+        }
+
+        @Override
+        public void closeInventory(EntityPlayer player){
+
         }
 
         @Override
@@ -232,6 +253,13 @@ public class ContainerDrill extends Container{
                 }
             }
             return null;
+        }
+
+        @Override
+        public ItemStack removeStackFromSlot(int index){
+            ItemStack stack = this.slots[index];
+            this.slots[index] = null;
+            return stack;
         }
     }
 }

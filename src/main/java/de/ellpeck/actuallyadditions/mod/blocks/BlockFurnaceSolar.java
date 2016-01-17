@@ -10,18 +10,12 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityFurnaceSolar;
-import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
 public class BlockFurnaceSolar extends BlockContainerBase{
@@ -32,7 +26,7 @@ public class BlockFurnaceSolar extends BlockContainerBase{
         this.setHardness(1.5F);
         this.setResistance(10.0F);
         this.setStepSound(soundTypeStone);
-        this.setBlockBounds(0F, 0F, 0F, 1F, 3F/16F, 1F);
+        this.setBlockBounds(0F, 0F, 0F, 1F, 6F/16F, 1F);
     }
 
     @Override
@@ -41,34 +35,12 @@ public class BlockFurnaceSolar extends BlockContainerBase{
     }
 
     @Override
-    public boolean renderAsNormalBlock(){
-        return false;
-    }
-
-    @Override
-    public int getRenderType(){
-        return AssetUtil.furnaceSolarRenderId;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public IIcon getIcon(int side, int metadata){
-        return this.blockIcon;
-    }
-
-    @Override
     public boolean isOpaqueCube(){
         return false;
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister iconReg){
-        this.blockIcon = Blocks.daylight_detector.getIcon(0, 0);
-    }
-
-    @Override
     public EnumRarity getRarity(ItemStack stack){
-        return EnumRarity.uncommon;
+        return EnumRarity.UNCOMMON;
     }
 }

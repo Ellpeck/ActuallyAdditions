@@ -10,39 +10,33 @@
 
 package de.ellpeck.actuallyadditions.mod.items.base;
 
-import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.creative.CreativeTab;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
-import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.entity.Entity;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIcon;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemArmorAA extends ItemArmor{
 
     private ItemStack repairItem;
     private String name;
-    private String[] textures;
     private EnumRarity rarity;
 
     public ItemArmorAA(String name, ArmorMaterial material, int type, ItemStack repairItem, String textureBase, EnumRarity rarity){
         super(material, 0, type);
         this.repairItem = repairItem;
         this.name = name;
-        String texture = ModUtil.MOD_ID_LOWER+":textures/armor/"+textureBase;
-        textures = new String[]{texture+"1.png", texture+"2.png"};
         this.rarity = rarity;
 
         this.register();
     }
 
     public ItemArmorAA(String name, ArmorMaterial material, int type, ItemStack repairItem, String textureBase){
-        this(name, material, type, repairItem, textureBase, EnumRarity.rare);
+        this(name, material, type, repairItem, textureBase, EnumRarity.RARE);
     }
 
     private void register(){
@@ -54,6 +48,12 @@ public class ItemArmorAA extends ItemArmor{
         else{
             this.setCreativeTab(null);
         }
+
+        this.registerRendering();
+    }
+
+    protected void registerRendering(){
+        ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this), new ResourceLocation(ModUtil.MOD_ID_LOWER, this.getBaseName()));
     }
 
     protected String getBaseName(){
@@ -70,24 +70,7 @@ public class ItemArmorAA extends ItemArmor{
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public IIcon getIcon(ItemStack stack, int pass){
-        return this.itemIcon;
-    }
-
-    @Override
-    public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type){
-        return this.textures[slot == 2 ? 1 : 0];
-    }
-
-    @Override
     public boolean getIsRepairable(ItemStack itemToRepair, ItemStack stack){
         return ItemUtil.areItemsEqual(this.repairItem, stack, false);
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister iconReg){
-        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName());
     }
 }

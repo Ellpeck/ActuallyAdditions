@@ -10,19 +10,21 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import cpw.mods.fml.common.registry.GameRegistry;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.network.VanillaPacketSyncer;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
-import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.ITickable;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public abstract class TileEntityBase extends TileEntity{
+public abstract class TileEntityBase extends TileEntity implements ITickable{
 
     protected int ticksElapsed;
     public boolean isRedstonePowered;
@@ -69,7 +71,6 @@ public abstract class TileEntityBase extends TileEntity{
         GameRegistry.registerTileEntity(TileEntityRangedCollector.class, ModUtil.MOD_ID_LOWER+":tileEntityRangedCollector");
         GameRegistry.registerTileEntity(TileEntityLaserRelay.class, ModUtil.MOD_ID_LOWER+":tileEntityLaserRelay");
         GameRegistry.registerTileEntity(TileEntityAtomicReconstructor.class, ModUtil.MOD_ID_LOWER+":tileEntityAtomicReconstructor");
-        GameRegistry.registerTileEntity(TileEntityBookletStand.class, ModUtil.MOD_ID_LOWER+":tileEntityBookletStand");
         GameRegistry.registerTileEntity(TileEntityMiner.class, ModUtil.MOD_ID_LOWER+":tileEntityMiner");
         GameRegistry.registerTileEntity(TileEntityFireworkBox.class, ModUtil.MOD_ID_LOWER+":tileEntityFireworkBox");
     }
@@ -89,6 +90,10 @@ public abstract class TileEntityBase extends TileEntity{
     }
 
     @Override
+    public void update(){
+        this.updateEntity();
+    }
+
     public void updateEntity(){
         this.ticksElapsed++;
     }
@@ -97,17 +102,17 @@ public abstract class TileEntityBase extends TileEntity{
     public Packet getDescriptionPacket(){
         NBTTagCompound tag = new NBTTagCompound();
         this.writeSyncableNBT(tag, true);
-        return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord, 3, tag);
+        return new S35PacketUpdateTileEntity(this.pos, 3, tag);
     }
 
     @Override
     public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt){
-        this.readSyncableNBT(pkt.func_148857_g(), true);
+        this.readSyncableNBT(pkt.getNbtCompound(), true);
     }
 
     @Override
-    public boolean shouldRefresh(Block oldBlock, Block newBlock, int oldMeta, int newMeta, World world, int x, int y, int z){
-        return !(oldBlock.isAssociatedBlock(newBlock));
+    public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newState){
+        return !(oldState.getBlock().isAssociatedBlock(newState.getBlock()));
     }
 
     public void writeSyncableNBT(NBTTagCompound compound, boolean isForSync){

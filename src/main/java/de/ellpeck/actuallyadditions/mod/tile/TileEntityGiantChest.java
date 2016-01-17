@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
 
 public class TileEntityGiantChest extends TileEntityInventoryBase{
 
@@ -20,12 +21,7 @@ public class TileEntityGiantChest extends TileEntityInventoryBase{
     }
 
     @Override
-    public boolean canUpdate(){
-        return false;
-    }
-
-    @Override
-    public boolean canInsertItem(int slot, ItemStack stack, int side){
+    public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
         return this.isItemValidForSlot(slot, stack);
     }
 
@@ -35,7 +31,7 @@ public class TileEntityGiantChest extends TileEntityInventoryBase{
     }
 
     @Override
-    public boolean canExtractItem(int slot, ItemStack stack, int side){
+    public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
         return true;
     }
 }

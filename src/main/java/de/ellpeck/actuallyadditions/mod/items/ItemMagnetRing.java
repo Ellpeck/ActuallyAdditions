@@ -10,18 +10,13 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemEnergy;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.IIcon;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
@@ -40,13 +35,13 @@ public class ItemMagnetRing extends ItemEnergy{
         if(!entity.isSneaking()){
             //Get all the Items in the area
             int range = 5;
-            ArrayList<EntityItem> items = (ArrayList<EntityItem>)world.getEntitiesWithinAABB(EntityItem.class, AxisAlignedBB.getBoundingBox(entity.posX-range, entity.posY-range, entity.posZ-range, entity.posX+range, entity.posY+range, entity.posZ+range));
+            ArrayList<EntityItem> items = (ArrayList<EntityItem>)world.getEntitiesWithinAABB(EntityItem.class, AxisAlignedBB.fromBounds(entity.posX-range, entity.posY-range, entity.posZ-range, entity.posX+range, entity.posY+range, entity.posZ+range));
             if(!items.isEmpty()){
                 for(EntityItem item : items){
                     if(this.getEnergyStored(stack) >= energyUse){
                         //If the Item is near enough to get picked up
                         //(So it doesn't bounce around until it notices itself..)
-                        if(Vec3.createVectorHelper(entity.posX, entity.posY, entity.posZ).distanceTo(Vec3.createVectorHelper(item.posX, item.posY, item.posZ)) <= 1.5){
+                        if(new Vec3(entity.posX, entity.posY, entity.posZ).distanceTo(new Vec3(item.posX, item.posY, item.posZ)) <= 1.5){
                             item.onCollideWithPlayer((EntityPlayer)entity);
                         }
                         else{
@@ -71,18 +66,6 @@ public class ItemMagnetRing extends ItemEnergy{
 
     @Override
     public EnumRarity getRarity(ItemStack stack){
-        return EnumRarity.epic;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister iconReg){
-        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName());
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public IIcon getIcon(ItemStack stack, int pass){
-        return this.itemIcon;
+        return EnumRarity.EPIC;
     }
 }

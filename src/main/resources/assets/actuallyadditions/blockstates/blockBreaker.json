@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "meta=0": { "model": "actuallyadditions:blockBreaker", "x": 90 },
+    "meta=1": { "model": "actuallyadditions:blockBreaker", "x": -90 },
+    "meta=2": { "model": "actuallyadditions:blockBreaker", "y": 0 },
+    "meta=3": { "model": "actuallyadditions:blockBreaker", "y": 180 },
+    "meta=4": { "model": "actuallyadditions:blockBreaker", "y": 270 },
+    "meta=5": { "model": "actuallyadditions:blockBreaker", "y": 90 }
+  }
+}

@@ -11,35 +11,49 @@
 package de.ellpeck.actuallyadditions.mod.proxy;
 
 
-import cpw.mods.fml.client.registry.ClientRegistry;
-import cpw.mods.fml.client.registry.RenderingRegistry;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLPostInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.registry.VillagerRegistry;
-import de.ellpeck.actuallyadditions.mod.blocks.render.*;
-import de.ellpeck.actuallyadditions.mod.blocks.render.model.*;
+import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
+import de.ellpeck.actuallyadditions.api.booklet.BookletPage;
+import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
+import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
+import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
-import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.event.InitEvents;
 import de.ellpeck.actuallyadditions.mod.misc.special.SpecialRenderInit;
-import de.ellpeck.actuallyadditions.mod.tile.*;
-import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
+import de.ellpeck.actuallyadditions.mod.util.FluidStateMapper;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.playerdata.PersistentClientData;
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
-import net.minecraft.tileentity.TileEntity;
+import net.minecraft.client.resources.IReloadableResourceManager;
+import net.minecraft.client.resources.IResourceManager;
+import net.minecraft.client.resources.IResourceManagerReloadListener;
+import net.minecraft.client.resources.model.ModelBakery;
+import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 import java.io.File;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
-@SuppressWarnings("unused")
 public class ClientProxy implements IProxy{
+
+    private static Map<ItemStack, ResourceLocation> modelLocationsForRegistering = new HashMap<ItemStack, ResourceLocation>();
+    private static Map<Item, ResourceLocation[]> modelVariantsForRegistering = new HashMap<Item, ResourceLocation[]>();
 
     public static boolean pumpkinBlurPumpkinBlur;
     public static boolean jingleAllTheWay;
     public static boolean bulletForMyValentine;
+
+    public static int bookletWordCount;
+    public static int bookletCharCount;
 
     @Override
     public void preInit(FMLPreInitializationEvent event){
@@ -56,6 +70,34 @@ public class ClientProxy implements IProxy{
         }
 
         PersistentClientData.setTheFile(new File(Minecraft.getMinecraft().mcDataDir, ModUtil.MOD_ID+"Data.dat"));
+
+        for(Map.Entry<Item, ResourceLocation[]> entry : modelVariantsForRegistering.entrySet()){
+            ModelBakery.registerItemVariants(entry.getKey(), entry.getValue());
+        }
+        this.registerCustomFluidBlockRenderer(InitBlocks.fluidCanolaOil);
+        this.registerCustomFluidBlockRenderer(InitBlocks.fluidOil);
+
+        IResourceManager manager = Minecraft.getMinecraft().getResourceManager();
+        if(manager instanceof IReloadableResourceManager){
+            ((IReloadableResourceManager)manager).registerReloadListener(new IResourceManagerReloadListener(){
+                @Override
+                public void onResourceManagerReload(IResourceManager resourceManager){
+                    countBookletWords();
+                }
+            });
+        }
+    }
+
+    /**
+     * (Excerpted from Tinkers' Construct with permission, thanks guys!)
+     */
+    private void registerCustomFluidBlockRenderer(Fluid fluid){
+        Block block = fluid.getBlock();
+        Item item = Item.getItemFromBlock(block);
+        FluidStateMapper mapper = new FluidStateMapper(fluid);
+        ModelLoader.registerItemVariants(item);
+        ModelLoader.setCustomMeshDefinition(item, mapper);
+        ModelLoader.setCustomStateMapper(block, mapper);
     }
 
     @Override
@@ -64,26 +106,23 @@ public class ClientProxy implements IProxy{
 
         InitEvents.initClient();
 
-        AssetUtil.compostRenderId = RenderingRegistry.getNextAvailableRenderId();
-        AssetUtil.fishingNetRenderId = RenderingRegistry.getNextAvailableRenderId();
-        AssetUtil.furnaceSolarRenderId = RenderingRegistry.getNextAvailableRenderId();
-        AssetUtil.coffeeMachineRenderId = RenderingRegistry.getNextAvailableRenderId();
-        AssetUtil.phantomBoosterRenderId = RenderingRegistry.getNextAvailableRenderId();
-        AssetUtil.smileyCloudRenderId = RenderingRegistry.getNextAvailableRenderId();
-        AssetUtil.laserRelayRenderId = RenderingRegistry.getNextAvailableRenderId();
-        AssetUtil.bookletStandRenderId = RenderingRegistry.getNextAvailableRenderId();
+        //TODO Fix Tile rendering
+        /*ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCompost.class, new RenderTileEntity(new ModelCompost()));
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFishingNet.class, new RenderTileEntity(new ModelFishingNet()));
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFurnaceSolar.class, new RenderTileEntity(new ModelFurnaceSolar()));
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCoffeeMachine.class, new RenderTileEntity(new ModelCoffeeMachine()));
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPhantomBooster.class, new RenderTileEntity(new ModelPhantomBooster()));
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntitySmileyCloud.class, new RenderSmileyCloud(new ModelSmileyCloud()));
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityLaserRelay.class, new RenderLaserRelay(new ModelLaserRelay()));
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityBookletStand.class, new RenderTileEntity(new ModelBookletStand()));
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAtomicReconstructor.class, new RenderReconstructorLens());*/
 
-        registerRenderer(TileEntityCompost.class, new RenderTileEntity(new ModelCompost()), AssetUtil.compostRenderId);
-        registerRenderer(TileEntityFishingNet.class, new RenderTileEntity(new ModelFishingNet()), AssetUtil.fishingNetRenderId);
-        registerRenderer(TileEntityFurnaceSolar.class, new RenderTileEntity(new ModelFurnaceSolar()), AssetUtil.furnaceSolarRenderId);
-        registerRenderer(TileEntityCoffeeMachine.class, new RenderTileEntity(new ModelCoffeeMachine()), AssetUtil.coffeeMachineRenderId);
-        registerRenderer(TileEntityPhantomBooster.class, new RenderTileEntity(new ModelPhantomBooster()), AssetUtil.phantomBoosterRenderId);
-        registerRenderer(TileEntitySmileyCloud.class, new RenderSmileyCloud(new ModelSmileyCloud()), AssetUtil.smileyCloudRenderId);
-        registerRenderer(TileEntityLaserRelay.class, new RenderLaserRelay(new ModelLaserRelay()), AssetUtil.laserRelayRenderId);
-        registerRenderer(TileEntityBookletStand.class, new RenderTileEntity(new ModelBookletStand()), AssetUtil.bookletStandRenderId);
-        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAtomicReconstructor.class, new RenderReconstructorLens());
+        //TODO Fix villager
+        //VillagerRegistry.instance().registerVillagerSkin(ConfigIntValues.JAM_VILLAGER_ID.getValue(), new ResourceLocation(ModUtil.MOD_ID_LOWER, "textures/entity/villager/jamVillager.png"));
 
-        VillagerRegistry.instance().registerVillagerSkin(ConfigIntValues.JAM_VILLAGER_ID.getValue(), new ResourceLocation(ModUtil.MOD_ID_LOWER, "textures/entity/villager/jamVillager.png"));
+        for(Map.Entry<ItemStack, ResourceLocation> entry : modelLocationsForRegistering.entrySet()){
+            Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(entry.getKey().getItem(), entry.getKey().getItemDamage(), new ModelResourceLocation(entry.getValue(), "inventory"));
+        }
     }
 
     @Override
@@ -91,10 +130,37 @@ public class ClientProxy implements IProxy{
         ModUtil.LOGGER.info("PostInitializing ClientProxy...");
 
         SpecialRenderInit.init();
+
+        countBookletWords();
     }
 
-    private static void registerRenderer(Class<? extends TileEntity> tileClass, RenderTileEntity tileRender, int renderID){
-        ClientRegistry.bindTileEntitySpecialRenderer(tileClass, tileRender);
-        RenderingRegistry.registerBlockHandler(new RenderInventory(tileRender, renderID));
+    @Override
+    public void addRenderRegister(ItemStack stack, ResourceLocation location){
+        modelLocationsForRegistering.put(stack, location);
+    }
+
+    @Override
+    public void addRenderVariant(Item item, ResourceLocation... location){
+        modelVariantsForRegistering.put(item, location);
+    }
+
+    private static void countBookletWords(){
+        bookletWordCount = 0;
+        bookletCharCount = 0;
+
+        for(IBookletEntry entry : ActuallyAdditionsAPI.bookletEntries){
+            for(IBookletChapter chapter : entry.getChapters()){
+                for(BookletPage page : chapter.getPages()){
+                    if(page.getText() != null){
+                        bookletWordCount += page.getText().split(" ").length;
+                        bookletCharCount += page.getText().length();
+                    }
+                }
+                bookletWordCount += chapter.getLocalizedName().split(" ").length;
+                bookletCharCount += chapter.getLocalizedName().length();
+            }
+            bookletWordCount += entry.getLocalizedName().split(" ").length;
+            bookletCharCount += entry.getLocalizedName().length();
+        }
     }
 }

@@ -108,7 +108,6 @@ public class InitBlocks{
     public static Block blockCrystal;
     public static Block blockAtomicReconstructor;
 
-    public static Block blockBookletStand;
     public static Block blockMiner;
 
     public static Block blockFireworkBox;
@@ -128,7 +127,6 @@ public class InitBlocks{
 
         blockFireworkBox = new BlockFireworkBox("blockFireworkBox");
         blockMiner = new BlockMiner("blockMiner");
-        blockBookletStand = new BlockBookletStand("blockBookStand");
         blockAtomicReconstructor = new BlockAtomicReconstructor("blockAtomicReconstructor");
         blockCrystal = new BlockCrystal("blockCrystal");
         blockBlackLotus = new BlockBlackLotus("blockBlackLotus");
@@ -162,13 +160,13 @@ public class InitBlocks{
         blockCoalGenerator = new BlockCoalGenerator("blockCoalGenerator");
         blockOilGenerator = new BlockOilGenerator("blockOilGenerator");
         blockFermentingBarrel = new BlockFermentingBarrel("blockFermentingBarrel");
-        blockRice = new BlockPlant("blockRice", 6, 1, 2);
+        blockRice = new BlockPlant("blockRice", 1, 2);
         CompatUtil.registerMFRPlant(blockRice);
-        blockCanola = new BlockPlant("blockCanola", 4, 5, 5);
+        blockCanola = new BlockPlant("blockCanola", 5, 5);
         CompatUtil.registerMFRPlant(blockCanola);
-        blockFlax = new BlockPlant("blockFlax", 6, 2, 4);
+        blockFlax = new BlockPlant("blockFlax", 2, 4);
         CompatUtil.registerMFRPlant(blockFlax);
-        blockCoffee = new BlockPlant("blockCoffee", 6, 2, 2);
+        blockCoffee = new BlockPlant("blockCoffee", 2, 2);
         CompatUtil.registerMFRPlant(blockCoffee);
         blockCompost = new BlockCompost("blockCompost");
         blockMisc = new BlockMisc("blockMisc");
@@ -209,7 +207,7 @@ public class InitBlocks{
         //Canola Fluid
         String canolaOil = "canolaoil";
         if(!FluidRegistry.isFluidRegistered(canolaOil) || ConfigBoolValues.PREVENT_CANOLA_OVERRIDE.isEnabled()){
-            fluidCanolaOil = new FluidAA(canolaOil).setRarity(EnumRarity.uncommon);
+            fluidCanolaOil = new FluidAA(canolaOil, "blockCanolaOil").setRarity(EnumRarity.UNCOMMON);
             FluidRegistry.registerFluid(fluidCanolaOil);
         }
         else{
@@ -229,7 +227,7 @@ public class InitBlocks{
         //Oil Fluid
         String oil = "oil";
         if(!FluidRegistry.isFluidRegistered(oil) || ConfigBoolValues.PREVENT_OIL_OVERRIDE.isEnabled()){
-            fluidOil = new FluidAA(oil).setRarity(EnumRarity.uncommon);
+            fluidOil = new FluidAA(oil, "blockOil").setRarity(EnumRarity.UNCOMMON);
             FluidRegistry.registerFluid(fluidOil);
         }
         else{

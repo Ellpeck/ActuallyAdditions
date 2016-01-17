@@ -10,22 +10,18 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import de.ellpeck.actuallyadditions.api.Position;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemEnergy;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockGrass;
 import net.minecraft.block.IGrowable;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.IIcon;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
@@ -49,12 +45,12 @@ public class ItemGrowthRing extends ItemEnergy{
 
         int energyUse = 300;
         if(equipped != null && equipped == stack && this.getEnergyStored(stack) >= energyUse){
-            ArrayList<Position> blocks = new ArrayList<Position>();
+            ArrayList<BlockPos> blocks = new ArrayList<BlockPos>();
 
-            if(stack.stackTagCompound == null){
+            if(stack.getTagCompound() == null){
                 stack.setTagCompound(new NBTTagCompound());
             }
-            int waitTime = stack.stackTagCompound.getInteger("WaitTime");
+            int waitTime = stack.getTagCompound().getInteger("WaitTime");
 
             //Adding all possible Blocks
             if(waitTime >= 30){
@@ -65,9 +61,10 @@ public class ItemGrowthRing extends ItemEnergy{
                             int theX = MathHelper.floor_double(player.posX+x);
                             int theY = MathHelper.floor_double(player.posY+y);
                             int theZ = MathHelper.floor_double(player.posZ+z);
-                            Block theBlock = world.getBlock(theX, theY, theZ);
+                            BlockPos posInQuestion = new BlockPos(theX, theY, theZ);
+                            Block theBlock = PosUtil.getBlock(posInQuestion, world);
                             if((theBlock instanceof IGrowable || theBlock instanceof IPlantable) && !(theBlock instanceof BlockGrass)){
-                                blocks.add(new Position(theX, theY, theZ));
+                                blocks.add(posInQuestion);
                             }
                         }
                     }
@@ -77,14 +74,14 @@ public class ItemGrowthRing extends ItemEnergy{
                 if(!blocks.isEmpty()){
                     for(int i = 0; i < 45; i++){
                         if(this.getEnergyStored(stack) >= energyUse){
-                            Position pos = blocks.get(Util.RANDOM.nextInt(blocks.size()));
+                            BlockPos pos = blocks.get(Util.RANDOM.nextInt(blocks.size()));
 
-                            int metaBefore = pos.getMetadata(world);
-                            pos.getBlock(world).updateTick(world, pos.getX(), pos.getY(), pos.getZ(), Util.RANDOM);
+                            int metaBefore = PosUtil.getMetadata(pos, world);
+                            PosUtil.getBlock(pos, world).updateTick(world, pos, world.getBlockState(pos), Util.RANDOM);
 
                             //Show Particles if Metadata changed
-                            if(pos.getMetadata(world) != metaBefore){
-                                world.playAuxSFX(2005, pos.getX(), pos.getY(), pos.getZ(), 0);
+                            if(PosUtil.getMetadata(pos, world) != metaBefore){
+                                world.playAuxSFX(2005, pos, 0);
                             }
 
                             if(!player.capabilities.isCreativeMode){
@@ -97,28 +94,16 @@ public class ItemGrowthRing extends ItemEnergy{
                     }
                 }
 
-                stack.stackTagCompound.setInteger("WaitTime", 0);
+                stack.getTagCompound().setInteger("WaitTime", 0);
             }
             else{
-                stack.stackTagCompound.setInteger("WaitTime", waitTime+1);
+                stack.getTagCompound().setInteger("WaitTime", waitTime+1);
             }
         }
     }
 
     @Override
     public EnumRarity getRarity(ItemStack stack){
-        return EnumRarity.epic;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister iconReg){
-        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName());
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public IIcon getIcon(ItemStack stack, int pass){
-        return this.itemIcon;
+        return EnumRarity.EPIC;
     }
 }

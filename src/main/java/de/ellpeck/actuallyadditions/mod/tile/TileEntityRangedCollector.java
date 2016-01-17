@@ -17,6 +17,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.EnumFacing;
 
 import java.util.ArrayList;
 
@@ -37,7 +38,7 @@ public class TileEntityRangedCollector extends TileEntityInventoryBase implement
         super.updateEntity();
         if(!worldObj.isRemote){
             if(!this.isRedstonePowered){
-                ArrayList<EntityItem> items = (ArrayList<EntityItem>)this.worldObj.getEntitiesWithinAABB(EntityItem.class, AxisAlignedBB.getBoundingBox(this.xCoord-RANGE, this.yCoord-RANGE, this.zCoord-RANGE, this.xCoord+RANGE, this.yCoord+RANGE, this.zCoord+RANGE));
+                ArrayList<EntityItem> items = (ArrayList<EntityItem>)this.worldObj.getEntitiesWithinAABB(EntityItem.class, AxisAlignedBB.fromBounds(this.pos.getX()-RANGE, this.pos.getY()-RANGE, this.pos.getZ()-RANGE, this.pos.getX()+RANGE, this.pos.getY()+RANGE, this.pos.getZ()+RANGE));
                 if(!items.isEmpty()){
                     for(EntityItem item : items){
                         if(!item.isDead && item.getEntityItem() != null){
@@ -45,8 +46,8 @@ public class TileEntityRangedCollector extends TileEntityInventoryBase implement
                             if(this.checkFilter(toAdd)){
                                 ArrayList<ItemStack> checkList = new ArrayList<ItemStack>();
                                 checkList.add(toAdd);
-                                if(WorldUtil.addToInventory(this, 0, WHITELIST_START, checkList, false)){
-                                    WorldUtil.addToInventory(this, 0, WHITELIST_START, checkList, true);
+                                if(WorldUtil.addToInventory(this, 0, WHITELIST_START, checkList, EnumFacing.UP, false, true)){
+                                    WorldUtil.addToInventory(this, 0, WHITELIST_START, checkList, EnumFacing.UP, true, true);
                                     item.setDead();
                                 }
                             }
@@ -85,7 +86,7 @@ public class TileEntityRangedCollector extends TileEntityInventoryBase implement
     }
 
     @Override
-    public boolean canInsertItem(int slot, ItemStack stack, int side){
+    public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
         return this.isItemValidForSlot(slot, stack);
     }
 
@@ -95,7 +96,7 @@ public class TileEntityRangedCollector extends TileEntityInventoryBase implement
     }
 
     @Override
-    public boolean canExtractItem(int slot, ItemStack stack, int side){
+    public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
         return slot < WHITELIST_START;
     }
 
