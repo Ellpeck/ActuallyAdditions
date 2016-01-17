@@ -1,3 +1,16 @@
+# 1.8.9-r24
+* Fixed texture names of quartz tools (ssblur)
+* Added right-click harvest functionality to all crops. (ssblur)
+* Made word count reload when reloading resources
+* Fixed Lenses not syncing correctly on the server when converting items
+* JEI Implementation for booklet, crusher, coffee machine and reconstructor
+* Fixed the drill's 3x3 and 5x5 ming acting weird on servers
+* red mushroom -> nether wart in Reconstructor
+* Custom packet handler for 98.7% less stack traces when joining worlds
+* [API] Removed INEIRecipeHandler
+* [API] Removed IHudDisplay
+* [API] Removed IEnergyDisplay
+
 # 1.8.9-r23
 * Fixed a ginormous bug that screwed over crafting
 #### DON'T EXPECT EVERYTHING TO WORK PERFECTLY. Seriously, I break lots of stuff probably.
