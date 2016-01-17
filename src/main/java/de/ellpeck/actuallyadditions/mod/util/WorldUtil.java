@@ -53,7 +53,7 @@ public class WorldUtil{
     public static BlockPos getCoordsFromSide(EnumFacing side, BlockPos pos, int offset){
         return new BlockPos(pos.getX()+side.getFrontOffsetX()*(offset+1), pos.getY()+side.getFrontOffsetY()*(offset+1), pos.getZ()+side.getFrontOffsetZ()*(offset+1));
     }
-    
+
     public static void pushEnergyToAllSides(World world, BlockPos pos, EnergyStorage storage){
         pushEnergy(world, pos, EnumFacing.UP, storage);
         pushEnergy(world, pos, EnumFacing.DOWN, storage);
@@ -317,20 +317,19 @@ public class WorldUtil{
     }
 
     private static MovingObjectPosition getMovingObjectPosWithReachDistance(World world, EntityPlayer player, double distance, boolean p1, boolean p2, boolean p3){
-        float f = 1.0F;
-        float f1 = player.prevRotationPitch+(player.rotationPitch-player.prevRotationPitch)*f;
-        float f2 = player.prevRotationYaw+(player.rotationYaw-player.prevRotationYaw)*f;
-        double d0 = player.prevPosX+(player.posX-player.prevPosX)*(double)f;
-        double d1 = player.prevPosY+(player.posY-player.prevPosY)*(double)f+(double)(world.isRemote ? player.getEyeHeight()-player.getDefaultEyeHeight() : player.getEyeHeight());
-        double d2 = player.prevPosZ+(player.posZ-player.prevPosZ)*(double)f;
+        float f = player.rotationPitch;
+        float f1 = player.rotationYaw;
+        double d0 = player.posX;
+        double d1 = player.posY+(double)player.getEyeHeight();
+        double d2 = player.posZ;
         Vec3 vec3 = new Vec3(d0, d1, d2);
-        float f3 = MathHelper.cos(-f2*0.017453292F-(float)Math.PI);
-        float f4 = MathHelper.sin(-f2*0.017453292F-(float)Math.PI);
-        float f5 = -MathHelper.cos(-f1*0.017453292F);
-        float f6 = MathHelper.sin(-f1*0.017453292F);
-        float f7 = f4*f5;
-        float f8 = f3*f5;
-        Vec3 vec31 = vec3.addVector((double)f7*distance, (double)f6*distance, (double)f8*distance);
+        float f2 = MathHelper.cos(-f1*0.017453292F-(float)Math.PI);
+        float f3 = MathHelper.sin(-f1*0.017453292F-(float)Math.PI);
+        float f4 = -MathHelper.cos(-f*0.017453292F);
+        float f5 = MathHelper.sin(-f*0.017453292F);
+        float f6 = f3*f4;
+        float f7 = f2*f4;
+        Vec3 vec31 = vec3.addVector((double)f6*distance, (double)f5*distance, (double)f7*distance);
         return world.rayTraceBlocks(vec3, vec31, p1, p2, p3);
     }
 
