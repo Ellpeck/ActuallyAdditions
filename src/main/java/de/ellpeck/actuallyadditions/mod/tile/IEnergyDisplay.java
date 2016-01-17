@@ -8,14 +8,11 @@
  * © 2016 Ellpeck
  */
 
-package de.ellpeck.actuallyadditions.api.tile;
+package de.ellpeck.actuallyadditions.mod.tile;
 
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-/**
- * Extending this will cause a block to show "getEnergy()/maxEnergy() RF" when hovering over it in-world
- */
 public interface IEnergyDisplay{
 
     @SideOnly(Side.CLIENT)

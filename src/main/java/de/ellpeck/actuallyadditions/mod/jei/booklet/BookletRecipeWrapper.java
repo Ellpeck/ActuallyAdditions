@@ -100,4 +100,14 @@ public class BookletRecipeWrapper extends RecipeWrapperWithButton implements IRe
     public BookletPage getPage(){
         return this.thePage;
     }
+
+    @Override
+    public int getButtonX(){
+        return 0;
+    }
+
+    @Override
+    public int getButtonY(){
+        return 84;
+    }
 }

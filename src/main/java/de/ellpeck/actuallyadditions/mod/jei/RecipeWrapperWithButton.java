@@ -24,7 +24,7 @@ public abstract class RecipeWrapperWithButton{
     protected TexturedButton theButton;
 
     public RecipeWrapperWithButton(){
-        this.theButton = new TexturedButton(23782, 0, 84, 146, 154, 20, 20){
+        this.theButton = new TexturedButton(23782, this.getButtonX(), this.getButtonY(), 146, 154, 20, 20){
             @Override
             public void drawButton(Minecraft minecraft, int x, int y){
                 super.drawButton(minecraft, x, y);
@@ -57,4 +57,7 @@ public abstract class RecipeWrapperWithButton{
     }
 
     public abstract BookletPage getPage();
+
+    public abstract int getButtonX();
+    public abstract int getButtonY();
 }

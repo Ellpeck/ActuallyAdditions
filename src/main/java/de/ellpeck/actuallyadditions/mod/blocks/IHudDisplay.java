@@ -8,7 +8,7 @@
  * © 2016 Ellpeck
  */
 
-package de.ellpeck.actuallyadditions.api.block;
+package de.ellpeck.actuallyadditions.mod.blocks;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
@@ -19,9 +19,6 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-/**
- * Extending this will cause displayHud() to be called when hovering over it in-world
- */
 public interface IHudDisplay{
 
     @SideOnly(Side.CLIENT)

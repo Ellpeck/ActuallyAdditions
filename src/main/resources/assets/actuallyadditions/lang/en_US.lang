@@ -18,7 +18,6 @@ container.nei.actuallyadditions.treasureChest.info=Items at
 container.nei.actuallyadditions.coffee.name=Coffee Machine
 container.nei.actuallyadditions.coffee.special=Special Feature
 container.nei.actuallyadditions.coffee.maxAmount=Max Amount
-container.nei.actuallyadditions.coffee.shift=[SHIFT]!
 container.nei.actuallyadditions.coffee.extra.milk=+01:00, -1 Level
 container.nei.actuallyadditions.reconstructor.name=Atomic Reconstructor
 
