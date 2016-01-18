@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.jei;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
+import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.jei.booklet.BookletRecipeCategory;
 import de.ellpeck.actuallyadditions.mod.jei.booklet.BookletRecipeHandler;
 import de.ellpeck.actuallyadditions.mod.jei.coffee.CoffeeMachineRecipeCategory;
@@ -56,6 +57,18 @@ public class JEIActuallyAdditionsPlugin implements IModPlugin{
         registry.addRecipes(ActuallyAdditionsAPI.coffeeMachineIngredients);
         registry.addRecipes(ActuallyAdditionsAPI.crusherRecipes);
         registry.addRecipes(ActuallyAdditionsAPI.reconstructorLensNoneRecipes);
+
+        INbtIgnoreList ignoreList = this.helpers.getNbtIgnoreList();
+        ignoreList.ignoreNbtTagNames(InitItems.itemDrill, "Energy");
+        ignoreList.ignoreNbtTagNames(InitItems.itemTeleStaff, "Energy");
+        ignoreList.ignoreNbtTagNames(InitItems.itemGrowthRing, "Energy");
+        ignoreList.ignoreNbtTagNames(InitItems.itemMagnetRing, "Energy");
+        ignoreList.ignoreNbtTagNames(InitItems.itemWaterRemovalRing, "Energy");
+        ignoreList.ignoreNbtTagNames(InitItems.itemBattery, "Energy");
+        ignoreList.ignoreNbtTagNames(InitItems.itemBatteryDouble, "Energy");
+        ignoreList.ignoreNbtTagNames(InitItems.itemBatteryTriple, "Energy");
+        ignoreList.ignoreNbtTagNames(InitItems.itemBatteryQuadruple, "Energy");
+        ignoreList.ignoreNbtTagNames(InitItems.itemBatteryQuintuple, "Energy");
     }
 
     @Override
