@@ -116,7 +116,6 @@ tile.actuallyadditions.blockMiscIronCasing.name=Iron Casing
 tile.actuallyadditions.blockBlackLotus.name=Black Lotus
 tile.actuallyadditions.blockTestifiBucksWhiteFence.name=Ethetic Quartz Wall
 tile.actuallyadditions.blockTestifiBucksGreenFence.name=Ethetic Green Wall
-tile.actuallyadditions.blockAtomicReconstructor.name=Atomic Reconstructor
 tile.actuallyadditions.blockCrystalRed.name=Restonia Crystal Block
 tile.actuallyadditions.blockCrystalBlue.name=Palis Crystal Block
 tile.actuallyadditions.blockCrystalLightBlue.name=Diamatine Crystal Block
@@ -153,6 +152,37 @@ tile.actuallyadditions.blockInputter.add.12.name=Energetic Solo Dancer
 tile.actuallyadditions.blockInputter.add.13.name=Efficient Sucking Dilettant
 tile.actuallyadditions.blockInputter.add.14.name=Extreme Sand Digger
 tile.actuallyadditions.blockInputter.add.15.name=Ending Serious Daughter
+
+#Reconstructor
+tile.actuallyadditions.blockAtomicReconstructor.name=Atomic Reconstructor
+
+tile.actuallyadditions.blockAtomicReconstructor.info.1.1=Molecular
+tile.actuallyadditions.blockAtomicReconstructor.info.1.2=Material
+tile.actuallyadditions.blockAtomicReconstructor.info.1.3=Quarkal
+tile.actuallyadditions.blockAtomicReconstructor.info.1.4=Atomatic
+tile.actuallyadditions.blockAtomicReconstructor.info.1.5=Tiny Bit
+tile.actuallyadditions.blockAtomicReconstructor.info.1.6=Component
+tile.actuallyadditions.blockAtomicReconstructor.info.1.7=Vittle
+tile.actuallyadditions.blockAtomicReconstructor.info.1.8=Transmaterial
+tile.actuallyadditions.blockAtomicReconstructor.info.1.9=Part
+tile.actuallyadditions.blockAtomicReconstructor.info.1.10=Jimmie
+tile.actuallyadditions.blockAtomicReconstructor.info.1.11=Chit
+tile.actuallyadditions.blockAtomicReconstructor.info.1.12=Cube
+
+tile.actuallyadditions.blockAtomicReconstructor.info.2.1=Recombobulizer
+tile.actuallyadditions.blockAtomicReconstructor.info.2.2=Shiftulator
+tile.actuallyadditions.blockAtomicReconstructor.info.2.3=Recombinator
+tile.actuallyadditions.blockAtomicReconstructor.info.2.4=Modulator
+tile.actuallyadditions.blockAtomicReconstructor.info.2.5=Moleculizer
+tile.actuallyadditions.blockAtomicReconstructor.info.2.6=Modificulator
+tile.actuallyadditions.blockAtomicReconstructor.info.2.7=Changer
+tile.actuallyadditions.blockAtomicReconstructor.info.2.8=Atomizer
+tile.actuallyadditions.blockAtomicReconstructor.info.2.9=Makerator
+tile.actuallyadditions.blockAtomicReconstructor.info.2.10=Swapper
+tile.actuallyadditions.blockAtomicReconstructor.info.2.11=Exchanger
+tile.actuallyadditions.blockAtomicReconstructor.info.2.12=Replacer
+tile.actuallyadditions.blockAtomicReconstructor.info.2.13=Differentiator
+tile.actuallyadditions.blockAtomicReconstructor.info.2.14=Rustler
 
 #Items
 item.actuallyadditions.itemDrill.name=Drill

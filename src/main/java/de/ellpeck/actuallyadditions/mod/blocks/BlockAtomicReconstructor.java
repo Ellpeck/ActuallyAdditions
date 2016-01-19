@@ -12,11 +12,10 @@ package de.ellpeck.actuallyadditions.mod.blocks;
 
 import de.ellpeck.actuallyadditions.api.lens.ILensItem;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
+import de.ellpeck.actuallyadditions.mod.blocks.base.ItemBlockBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityAtomicReconstructor;
-import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
-import de.ellpeck.actuallyadditions.mod.util.PosUtil;
-import de.ellpeck.actuallyadditions.mod.util.StringUtil;
+import de.ellpeck.actuallyadditions.mod.util.*;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockPistonBase;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyInteger;
@@ -37,9 +36,14 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.util.List;
+
 public class BlockAtomicReconstructor extends BlockContainerBase implements IHudDisplay{
 
     private static final PropertyInteger META = PropertyInteger.create("meta", 0, 5);
+
+    public static final int NAME_FLAVOR_AMOUNTS_1 = 12;
+    public static final int NAME_FLAVOR_AMOUNTS_2 = 14;
 
     public BlockAtomicReconstructor(String name){
         super(Material.rock, name);
@@ -127,6 +131,48 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
                 AssetUtil.renderStackToGui(slot, resolution.getScaledWidth()/2+15, resolution.getScaledHeight()/2-29, 1F);
             }
             minecraft.fontRendererObj.drawStringWithShadow(EnumChatFormatting.YELLOW+""+EnumChatFormatting.ITALIC+strg, resolution.getScaledWidth()/2+35, resolution.getScaledHeight()/2-25, StringUtil.DECIMAL_COLOR_WHITE);
+        }
+    }
+
+    @Override
+    protected Class<? extends ItemBlockBase> getItemBlock(){
+        return TheItemBlock.class;
+    }
+
+    public static class TheItemBlock extends ItemBlockBase{
+
+        private long lastSysTime;
+        private int toPick1;
+        private int toPick2;
+
+        public TheItemBlock(Block block){
+            super(block);
+            this.setHasSubtypes(false);
+            this.setMaxDamage(0);
+        }
+
+        @Override
+        public String getUnlocalizedName(ItemStack stack){
+            return this.getUnlocalizedName();
+        }
+
+        @Override
+        public int getMetadata(int damage){
+            return damage;
+        }
+
+        @Override
+        public void addInformation(ItemStack stack, EntityPlayer player, List<String> list, boolean bool){
+            long sysTime = System.currentTimeMillis();
+
+            if(this.lastSysTime+3000 < sysTime){
+                this.lastSysTime = sysTime;
+                this.toPick1 = Util.RANDOM.nextInt(NAME_FLAVOR_AMOUNTS_1)+1;
+                this.toPick2 = Util.RANDOM.nextInt(NAME_FLAVOR_AMOUNTS_2)+1;
+            }
+
+            String base = "tile."+ModUtil.MOD_ID_LOWER+"."+((BlockAtomicReconstructor)this.block).getBaseName()+".info.";
+            list.add(StringUtil.localize(base+"1."+this.toPick1)+" "+StringUtil.localize(base+"2."+this.toPick2));
         }
     }
 }
