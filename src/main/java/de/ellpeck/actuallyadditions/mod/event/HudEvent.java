@@ -10,11 +10,11 @@
 
 package de.ellpeck.actuallyadditions.mod.event;
 
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import de.ellpeck.actuallyadditions.api.block.IHudDisplay;
-import de.ellpeck.actuallyadditions.api.tile.IEnergyDisplay;
+import de.ellpeck.actuallyadditions.mod.blocks.IHudDisplay;
+import de.ellpeck.actuallyadditions.mod.tile.IEnergyDisplay;
 import de.ellpeck.actuallyadditions.mod.tile.IRedstoneToggle;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRedstoneTorch;
@@ -27,6 +27,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class HudEvent{
 
@@ -37,7 +38,7 @@ public class HudEvent{
             Profiler profiler = minecraft.mcProfiler;
             EntityPlayer player = minecraft.thePlayer;
             MovingObjectPosition posHit = minecraft.objectMouseOver;
-            FontRenderer font = minecraft.fontRenderer;
+            FontRenderer font = minecraft.fontRendererObj;
             ItemStack stack = player.getCurrentEquippedItem();
 
             profiler.startSection(ModUtil.MOD_ID+"Hud");
@@ -50,9 +51,9 @@ public class HudEvent{
                 }
             }
 
-            if(posHit != null){
-                Block blockHit = minecraft.theWorld.getBlock(posHit.blockX, posHit.blockY, posHit.blockZ);
-                TileEntity tileHit = minecraft.theWorld.getTileEntity(posHit.blockX, posHit.blockY, posHit.blockZ);
+            if(posHit != null && posHit.getBlockPos() != null){
+                Block blockHit = PosUtil.getBlock(posHit.getBlockPos(), minecraft.theWorld);
+                TileEntity tileHit = minecraft.theWorld.getTileEntity(posHit.getBlockPos());
 
                 if(blockHit instanceof IHudDisplay){
                     profiler.startSection("BlockHudDisplay");

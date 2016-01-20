@@ -10,16 +10,16 @@
 
 package de.ellpeck.actuallyadditions.mod.network;
 
-import cpw.mods.fml.common.network.simpleimpl.IMessage;
-import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
-import cpw.mods.fml.common.network.simpleimpl.MessageContext;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import de.ellpeck.actuallyadditions.mod.misc.EntityColoredParticleFX;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
+import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class PacketParticle implements IMessage{
 
@@ -58,7 +58,7 @@ public class PacketParticle implements IMessage{
             int difX = startX-endX;
             int difY = startY-endY;
             int difZ = startZ-endZ;
-            double distance = Vec3.createVectorHelper(startX, startY, startZ).distanceTo(Vec3.createVectorHelper(endX, endY, endZ));
+            double distance = new Vec3(startX, startY, startZ).distanceTo(new Vec3(endX, endY, endZ));
 
             for(int times = 0; times < particleAmount/2; times++){
                 for(double i = 0; i <= 1; i += 1/(distance*particleAmount)){

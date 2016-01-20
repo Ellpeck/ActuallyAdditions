@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "meta=0": { "model": "actuallyadditions:blockGrinderDouble" },
+    "meta=1": { "model": "actuallyadditions:blockGrinderDoubleOn" }
+  }
+}

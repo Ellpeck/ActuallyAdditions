@@ -12,11 +12,14 @@ package de.ellpeck.actuallyadditions.mod.booklet.button;
 
 import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
 import de.ellpeck.actuallyadditions.mod.booklet.GuiBooklet;
+import de.ellpeck.actuallyadditions.mod.booklet.chapter.BookletChapter;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
+import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.renderer.OpenGlHelper;
-import org.lwjgl.opengl.GL11;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.util.EnumChatFormatting;
 
 public class IndexButton extends GuiButton{
 
@@ -31,30 +34,36 @@ public class IndexButton extends GuiButton{
     @Override
     public void drawButton(Minecraft minecraft, int mouseX, int mouseY){
         if(this.visible){
-            GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-            this.field_146123_n = mouseX >= this.xPosition && mouseY >= this.yPosition && mouseX < this.xPosition+this.width && mouseY < this.yPosition+this.height;
-            GL11.glEnable(GL11.GL_BLEND);
-            OpenGlHelper.glBlendFunc(770, 771, 1, 0);
-            GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+            this.hovered = mouseX >= this.xPosition && mouseY >= this.yPosition && mouseX < this.xPosition+this.width && mouseY < this.yPosition+this.height;
+            GlStateManager.enableBlend();
+            GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+            GlStateManager.blendFunc(770, 771);
             this.mouseDragged(minecraft, mouseX, mouseY);
 
             int textOffsetX = 0;
             if(this.chap != null){
                 if(this.chap.getDisplayItemStack() != null){
-                    GL11.glPushMatrix();
+                    GlStateManager.pushMatrix();
                     AssetUtil.renderStackToGui(this.chap.getDisplayItemStack(), this.xPosition-4, this.yPosition, 0.725F);
-                    GL11.glPopMatrix();
+                    GlStateManager.popMatrix();
                     textOffsetX = 10;
                 }
             }
 
-            if(this.field_146123_n){
-                GL11.glPushMatrix();
-                AssetUtil.drawHorizontalGradientRect(this.xPosition+textOffsetX-1, this.yPosition+this.height-1, this.xPosition+this.gui.getFontRenderer().getStringWidth(this.displayString)+textOffsetX+1, this.yPosition+this.height, 0x80 << 24 | 22271, 22271);
-                GL11.glPopMatrix();
+            if(this.hovered){
+                GlStateManager.pushMatrix();
+                AssetUtil.drawHorizontalGradientRect(this.xPosition+textOffsetX-1, this.yPosition+this.height-1, this.xPosition+this.gui.getFontRenderer().getStringWidth(this.displayString)+textOffsetX+1, this.yPosition+this.height, 0x80 << 24 | 22271, 22271, this.zLevel);
+                GlStateManager.popMatrix();
             }
 
             this.gui.getFontRenderer().drawString(this.displayString, this.xPosition+textOffsetX, this.yPosition+(this.height-8)/2, 0);
+        }
+    }
+
+    public void drawHover(int mouseX, int mouseY){
+        if(this.chap instanceof BookletChapter && ((BookletChapter)this.chap).isIncomplete){
+            this.gui.drawHoveringText(this.gui.getFontRenderer().listFormattedStringToWidth(EnumChatFormatting.RED+StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".unavailable"), 250), mouseX, mouseY);
         }
     }
 }

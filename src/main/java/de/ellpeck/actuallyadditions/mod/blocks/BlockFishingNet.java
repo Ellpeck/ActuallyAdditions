@@ -10,18 +10,12 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityFishingNet;
-import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
 public class BlockFishingNet extends BlockContainerBase{
@@ -41,34 +35,12 @@ public class BlockFishingNet extends BlockContainerBase{
     }
 
     @Override
-    public boolean renderAsNormalBlock(){
-        return false;
-    }
-
-    @Override
-    public int getRenderType(){
-        return AssetUtil.fishingNetRenderId;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public IIcon getIcon(int side, int metadata){
-        return this.blockIcon;
-    }
-
-    @Override
     public boolean isOpaqueCube(){
         return false;
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister iconReg){
-        this.blockIcon = Blocks.planks.getIcon(0, 0);
-    }
-
-    @Override
     public EnumRarity getRarity(ItemStack stack){
-        return EnumRarity.rare;
+        return EnumRarity.RARE;
     }
 }

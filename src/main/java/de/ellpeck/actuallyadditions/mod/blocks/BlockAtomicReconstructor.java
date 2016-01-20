@@ -10,39 +10,40 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import de.ellpeck.actuallyadditions.api.block.IHudDisplay;
 import de.ellpeck.actuallyadditions.api.lens.ILensItem;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
+import de.ellpeck.actuallyadditions.mod.blocks.base.ItemBlockBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityAtomicReconstructor;
-import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
-import de.ellpeck.actuallyadditions.mod.util.StringUtil;
+import de.ellpeck.actuallyadditions.mod.util.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockPistonBase;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.PropertyInteger;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.profiler.Profiler;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.IIcon;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
+import java.util.List;
 
 public class BlockAtomicReconstructor extends BlockContainerBase implements IHudDisplay{
 
-    @SideOnly(Side.CLIENT)
-    private IIcon frontIcon;
-    @SideOnly(Side.CLIENT)
-    private IIcon topIcon;
+    private static final PropertyInteger META = PropertyInteger.create("meta", 0, 5);
+
+    public static final int NAME_FLAVOR_AMOUNTS_1 = 12;
+    public static final int NAME_FLAVOR_AMOUNTS_2 = 14;
 
     public BlockAtomicReconstructor(String name){
         super(Material.rock, name);
@@ -53,41 +54,21 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
     }
 
     @Override
+    protected PropertyInteger getMetaProperty(){
+        return META;
+    }
+
+    @Override
     public EnumRarity getRarity(ItemStack stack){
-        return EnumRarity.epic;
+        return EnumRarity.EPIC;
     }
 
     @Override
-    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack stack){
-        int rotation = BlockPistonBase.determineOrientation(world, x, y, z, player);
-        world.setBlockMetadataWithNotify(x, y, z, rotation, 2);
+    public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase player, ItemStack stack){
+        int rotation = BlockPistonBase.getFacingFromEntity(world, pos, player).ordinal();
+        PosUtil.setMetadata(pos, world, rotation, 2);
 
-        super.onBlockPlacedBy(world, x, y, z, player, stack);
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public IIcon getIcon(IBlockAccess world, int x, int y, int z, int side){
-        int meta = world.getBlockMetadata(x, y, z);
-        if(side != meta && (side == 0 || side == 1)){
-            return this.topIcon;
-        }
-        if(side == meta){
-            return this.frontIcon;
-        }
-        return this.blockIcon;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public IIcon getIcon(int side, int meta){
-        if(side == 0 || side == 1){
-            return this.topIcon;
-        }
-        if(side == 3){
-            return this.frontIcon;
-        }
-        return this.blockIcon;
+        super.onBlockPlacedBy(world, pos, state, player, stack);
     }
 
     @Override
@@ -96,12 +77,12 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
     }
 
     @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9){
-        if(this.tryToggleRedstone(world, x, y, z, player)){
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing par6, float par7, float par8, float par9){
+        if(this.tryToggleRedstone(world, pos, player)){
             return true;
         }
         if(!world.isRemote){
-            TileEntityAtomicReconstructor reconstructor = (TileEntityAtomicReconstructor)world.getTileEntity(x, y, z);
+            TileEntityAtomicReconstructor reconstructor = (TileEntityAtomicReconstructor)world.getTileEntity(pos);
             if(reconstructor != null){
                 ItemStack heldItem = player.getCurrentEquippedItem();
                 if(heldItem != null){
@@ -124,28 +105,20 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister iconReg){
-        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName());
-        this.frontIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName()+"Front");
-        this.topIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName()+"Top");
-    }
-
-    @Override
     public TileEntity createNewTileEntity(World world, int i){
         return new TileEntityAtomicReconstructor();
     }
 
     @Override
-    public void breakBlock(World world, int x, int y, int z, Block block, int par6){
-        this.dropInventory(world, x, y, z);
-        super.breakBlock(world, x, y, z, block, par6);
+    public void breakBlock(World world, BlockPos pos, IBlockState state){
+        this.dropInventory(world, pos);
+        super.breakBlock(world, pos, state);
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public void displayHud(Minecraft minecraft, EntityPlayer player, ItemStack stack, MovingObjectPosition posHit, Profiler profiler, ScaledResolution resolution){
-        TileEntity tile = minecraft.theWorld.getTileEntity(posHit.blockX, posHit.blockY, posHit.blockZ);
+        TileEntity tile = minecraft.theWorld.getTileEntity(posHit.getBlockPos());
         if(tile instanceof TileEntityAtomicReconstructor){
             ItemStack slot = ((TileEntityAtomicReconstructor)tile).getStackInSlot(0);
             String strg;
@@ -157,7 +130,49 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
 
                 AssetUtil.renderStackToGui(slot, resolution.getScaledWidth()/2+15, resolution.getScaledHeight()/2-29, 1F);
             }
-            minecraft.fontRenderer.drawStringWithShadow(EnumChatFormatting.YELLOW+""+EnumChatFormatting.ITALIC+strg, resolution.getScaledWidth()/2+35, resolution.getScaledHeight()/2-25, StringUtil.DECIMAL_COLOR_WHITE);
+            minecraft.fontRendererObj.drawStringWithShadow(EnumChatFormatting.YELLOW+""+EnumChatFormatting.ITALIC+strg, resolution.getScaledWidth()/2+35, resolution.getScaledHeight()/2-25, StringUtil.DECIMAL_COLOR_WHITE);
+        }
+    }
+
+    @Override
+    protected Class<? extends ItemBlockBase> getItemBlock(){
+        return TheItemBlock.class;
+    }
+
+    public static class TheItemBlock extends ItemBlockBase{
+
+        private long lastSysTime;
+        private int toPick1;
+        private int toPick2;
+
+        public TheItemBlock(Block block){
+            super(block);
+            this.setHasSubtypes(false);
+            this.setMaxDamage(0);
+        }
+
+        @Override
+        public String getUnlocalizedName(ItemStack stack){
+            return this.getUnlocalizedName();
+        }
+
+        @Override
+        public int getMetadata(int damage){
+            return damage;
+        }
+
+        @Override
+        public void addInformation(ItemStack stack, EntityPlayer player, List<String> list, boolean bool){
+            long sysTime = System.currentTimeMillis();
+
+            if(this.lastSysTime+3000 < sysTime){
+                this.lastSysTime = sysTime;
+                this.toPick1 = Util.RANDOM.nextInt(NAME_FLAVOR_AMOUNTS_1)+1;
+                this.toPick2 = Util.RANDOM.nextInt(NAME_FLAVOR_AMOUNTS_2)+1;
+            }
+
+            String base = "tile."+ModUtil.MOD_ID_LOWER+"."+((BlockAtomicReconstructor)this.block).getBaseName()+".info.";
+            list.add(StringUtil.localize(base+"1."+this.toPick1)+" "+StringUtil.localize(base+"2."+this.toPick2));
         }
     }
 }

@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.event;
 
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.util.KeyUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
@@ -19,6 +18,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.item.Item;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class TooltipEvent{
@@ -66,7 +66,7 @@ public class TooltipEvent{
                     }
 
                     //Disabling Info
-                    event.toolTip.addAll(Minecraft.getMinecraft().fontRenderer.listFormattedStringToWidth(EnumChatFormatting.ITALIC+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".disablingInfo.desc"), 200));
+                    event.toolTip.addAll(Minecraft.getMinecraft().fontRendererObj.listFormattedStringToWidth(EnumChatFormatting.ITALIC+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".disablingInfo.desc"), 200));
                 }
                 else{
                     if(ConfigBoolValues.CTRL_INFO_FOR_EXTRA_INFO.isEnabled()){

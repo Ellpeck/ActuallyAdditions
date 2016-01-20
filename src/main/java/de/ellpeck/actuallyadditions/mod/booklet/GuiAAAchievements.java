@@ -10,12 +10,12 @@
 
 package de.ellpeck.actuallyadditions.mod.booklet;
 
-import cpw.mods.fml.relauncher.ReflectionHelper;
 import de.ellpeck.actuallyadditions.mod.achievement.InitAchievements;
-import net.minecraft.client.gui.GuiButton;
+import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.achievement.GuiAchievements;
 import net.minecraft.stats.StatFileWriter;
+import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
 /**
  * (Partially excerpted from Botania by Vazkii with permission, thanks!)
@@ -24,12 +24,17 @@ public class GuiAAAchievements extends GuiAchievements{
 
     public GuiAAAchievements(GuiScreen screen, StatFileWriter writer){
         super(screen, writer);
-        ReflectionHelper.setPrivateValue(GuiAchievements.class, this, InitAchievements.pageNumber, 21);
+        try{
+            ReflectionHelper.setPrivateValue(GuiAchievements.class, this, InitAchievements.pageNumber, 20);
+        }
+        catch(Exception e){
+            ModUtil.LOGGER.error("Something went wrong trying to open the Achievements GUI!", e);
+        }
     }
 
     @Override
     public void initGui(){
         super.initGui();
-        ((GuiButton)buttonList.get(1)).displayString = InitAchievements.theAchievementPage.getName();
+        this.buttonList.get(1).displayString = InitAchievements.theAchievementPage.getName();
     }
 }

@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "meta=0": { "model": "actuallyadditions:blockFluidCollector", "x": 90 },
+    "meta=1": { "model": "actuallyadditions:blockFluidCollector", "x": -90 },
+    "meta=2": { "model": "actuallyadditions:blockFluidCollector", "y": 0 },
+    "meta=3": { "model": "actuallyadditions:blockFluidCollector", "y": 180 },
+    "meta=4": { "model": "actuallyadditions:blockFluidCollector", "y": 270 },
+    "meta=5": { "model": "actuallyadditions:blockFluidCollector", "y": 90 }
+  }
+}

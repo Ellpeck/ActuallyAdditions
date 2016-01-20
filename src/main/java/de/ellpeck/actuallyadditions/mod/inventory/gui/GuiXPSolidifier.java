@@ -10,8 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerXPSolidifier;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
 import de.ellpeck.actuallyadditions.mod.network.gui.PacketGuiButton;
@@ -22,10 +20,12 @@ import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import org.lwjgl.opengl.GL11;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class GuiXPSolidifier extends GuiContainer{
@@ -81,12 +81,12 @@ public class GuiXPSolidifier extends GuiContainer{
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y){
-        AssetUtil.displayNameString(this.fontRendererObj, xSize, -10, this.solidifier.getInventoryName());
+        AssetUtil.displayNameString(this.fontRendererObj, xSize, -10, this.solidifier.getName());
     }
 
     @Override
     public void drawGuiContainerBackgroundLayer(float f, int x, int y){
-        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 
         this.mc.getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop+93, 0, 0, 176, 86);

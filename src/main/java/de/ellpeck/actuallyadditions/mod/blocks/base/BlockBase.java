@@ -10,13 +10,18 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks.base;
 
-import cpw.mods.fml.common.registry.GameRegistry;
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.creative.CreativeTab;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.PropertyInteger;
+import net.minecraft.block.state.BlockState;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockBase extends Block{
 
@@ -30,7 +35,7 @@ public class BlockBase extends Block{
     }
 
     private void register(){
-        this.setBlockName(ModUtil.MOD_ID_LOWER+"."+this.getBaseName());
+        this.setUnlocalizedName(ModUtil.MOD_ID_LOWER+"."+this.getBaseName());
         GameRegistry.registerBlock(this, this.getItemBlock(), this.getBaseName());
         if(this.shouldAddCreative()){
             this.setCreativeTab(CreativeTab.instance);
@@ -38,6 +43,12 @@ public class BlockBase extends Block{
         else{
             this.setCreativeTab(null);
         }
+
+        this.registerRendering();
+    }
+
+    protected void registerRendering(){
+        ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this), new ResourceLocation(ModUtil.MOD_ID_LOWER, this.getBaseName()));
     }
 
     protected String getBaseName(){
@@ -53,6 +64,25 @@ public class BlockBase extends Block{
     }
 
     public EnumRarity getRarity(ItemStack stack){
-        return EnumRarity.common;
+        return EnumRarity.COMMON;
+    }
+
+    @Override
+    protected BlockState createBlockState(){
+        return this.getMetaProperty() == null ? super.createBlockState() : new BlockState(this, this.getMetaProperty());
+    }
+
+    @Override
+    public IBlockState getStateFromMeta(int meta){
+        return this.getMetaProperty() == null ? super.getStateFromMeta(meta) : this.getDefaultState().withProperty(this.getMetaProperty(), meta);
+    }
+
+    @Override
+    public int getMetaFromState(IBlockState state){
+        return this.getMetaProperty() == null ? super.getMetaFromState(state) : state.getValue(this.getMetaProperty());
+    }
+
+    protected PropertyInteger getMetaProperty(){
+        return null;
     }
 }

@@ -10,21 +10,19 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityGiantChest;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockChest;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
-import net.minecraft.util.IIcon;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
 public class ItemChestToCrateUpgrade extends ItemBase{
@@ -34,10 +32,11 @@ public class ItemChestToCrateUpgrade extends ItemBase{
     }
 
     @Override
-    public boolean onItemUse(ItemStack heldStack, EntityPlayer player, World world, int x, int y, int z, int par7, float par8, float par9, float par10){
+    public boolean onItemUse(ItemStack heldStack, EntityPlayer player, World world, BlockPos pos, EnumFacing facing, float par8, float par9, float par10){
         if(player.isSneaking()){
-            TileEntity tileHit = world.getTileEntity(x, y, z);
-            if(world.getBlock(x, y, z) instanceof BlockChest && tileHit instanceof TileEntityChest){
+            TileEntity tileHit = world.getTileEntity(pos);
+            Block block = PosUtil.getBlock(pos, world);
+            if(block instanceof BlockChest && tileHit instanceof TileEntityChest){
                 if(!world.isRemote){
                     TileEntityChest chest = (TileEntityChest)tileHit;
 
@@ -52,11 +51,11 @@ public class ItemChestToCrateUpgrade extends ItemBase{
                     }
 
                     //Set New Block
-                    world.playAuxSFX(2001, x, y, z, Block.getIdFromBlock(world.getBlock(x, y, z))+(world.getBlockMetadata(x, y, z) << 12));
-                    world.setBlock(x, y, z, InitBlocks.blockGiantChest, 0, 2);
+                    world.playAuxSFX(2001, pos, Block.getIdFromBlock(block)+(PosUtil.getMetadata(pos, world) << 12));
+                    PosUtil.setBlock(pos, world, InitBlocks.blockGiantChest, 0, 2);
 
                     //Copy Items into new Chest
-                    TileEntity newTileHit = world.getTileEntity(x, y, z);
+                    TileEntity newTileHit = world.getTileEntity(pos);
                     if(newTileHit instanceof TileEntityGiantChest){
                         TileEntityGiantChest newChest = (TileEntityGiantChest)newTileHit;
                         for(int i = 0; i < stacks.length; i++){
@@ -76,24 +75,11 @@ public class ItemChestToCrateUpgrade extends ItemBase{
             }
         }
 
-        return super.onItemUse(heldStack, player, world, x, y, z, par7, par8, par9, par10);
+        return super.onItemUse(heldStack, player, world, pos, facing, par8, par9, par10);
     }
 
     @Override
     public EnumRarity getRarity(ItemStack stack){
-        return EnumRarity.rare;
+        return EnumRarity.RARE;
     }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister iconReg){
-        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName());
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public IIcon getIcon(ItemStack stack, int pass){
-        return this.itemIcon;
-    }
-
 }

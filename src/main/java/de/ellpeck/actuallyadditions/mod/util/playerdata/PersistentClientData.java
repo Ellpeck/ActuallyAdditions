@@ -10,8 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.util.playerdata;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import de.ellpeck.actuallyadditions.api.internal.EntrySet;
 import de.ellpeck.actuallyadditions.mod.booklet.BookletUtils;
 import de.ellpeck.actuallyadditions.mod.booklet.GuiBooklet;
@@ -21,6 +19,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -89,7 +89,7 @@ public class PersistentClientData{
 
     private static String getName(){
         if(Minecraft.getMinecraft().theWorld != null){
-            return Minecraft.getMinecraft().isIntegratedServerRunning() ? Minecraft.getMinecraft().getIntegratedServer().getFolderName() : Minecraft.getMinecraft().func_147104_D().serverIP;
+            return Minecraft.getMinecraft().isIntegratedServerRunning() ? Minecraft.getMinecraft().getIntegratedServer().getFolderName() : Minecraft.getMinecraft().getCurrentServerData().serverIP;
         }
         else{
             return "Invalid";

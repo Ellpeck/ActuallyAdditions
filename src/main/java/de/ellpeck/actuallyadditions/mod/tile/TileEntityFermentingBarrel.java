@@ -10,15 +10,15 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fluids.*;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileEntityFermentingBarrel extends TileEntityInventoryBase implements IFluidHandler, IFluidSaver{
 
@@ -58,12 +58,12 @@ public class TileEntityFermentingBarrel extends TileEntityInventoryBase implemen
             WorldUtil.fillBucket(oilTank, slots, 2, 3);
 
             if(this.oilTank.getFluidAmount() > 0){
-                WorldUtil.pushFluid(worldObj, xCoord, yCoord, zCoord, ForgeDirection.DOWN, this.oilTank);
+                WorldUtil.pushFluid(worldObj, this.pos, EnumFacing.DOWN, this.oilTank);
                 if(!this.isRedstonePowered){
-                    WorldUtil.pushFluid(worldObj, xCoord, yCoord, zCoord, ForgeDirection.NORTH, this.oilTank);
-                    WorldUtil.pushFluid(worldObj, xCoord, yCoord, zCoord, ForgeDirection.EAST, this.oilTank);
-                    WorldUtil.pushFluid(worldObj, xCoord, yCoord, zCoord, ForgeDirection.SOUTH, this.oilTank);
-                    WorldUtil.pushFluid(worldObj, xCoord, yCoord, zCoord, ForgeDirection.WEST, this.oilTank);
+                    WorldUtil.pushFluid(worldObj, this.pos, EnumFacing.NORTH, this.oilTank);
+                    WorldUtil.pushFluid(worldObj, this.pos, EnumFacing.EAST, this.oilTank);
+                    WorldUtil.pushFluid(worldObj, this.pos, EnumFacing.SOUTH, this.oilTank);
+                    WorldUtil.pushFluid(worldObj, this.pos, EnumFacing.WEST, this.oilTank);
                 }
             }
 
@@ -109,7 +109,7 @@ public class TileEntityFermentingBarrel extends TileEntityInventoryBase implemen
     }
 
     @Override
-    public boolean canInsertItem(int slot, ItemStack stack, int side){
+    public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
         return this.isItemValidForSlot(slot, stack);
     }
 
@@ -119,20 +119,20 @@ public class TileEntityFermentingBarrel extends TileEntityInventoryBase implemen
     }
 
     @Override
-    public boolean canExtractItem(int slot, ItemStack stack, int side){
+    public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
         return (slot == 1 && stack.getItem() == Items.bucket) || (slot == 3 && FluidContainerRegistry.containsFluid(stack, new FluidStack(InitBlocks.fluidOil, FluidContainerRegistry.BUCKET_VOLUME)));
     }
 
     @Override
-    public int fill(ForgeDirection from, FluidStack resource, boolean doFill){
-        if(from != ForgeDirection.DOWN && resource.getFluid() == InitBlocks.fluidCanolaOil){
+    public int fill(EnumFacing from, FluidStack resource, boolean doFill){
+        if(from != EnumFacing.DOWN && resource.getFluid() == InitBlocks.fluidCanolaOil){
             return this.canolaTank.fill(resource, doFill);
         }
         return 0;
     }
 
     @Override
-    public FluidStack drain(ForgeDirection from, FluidStack resource, boolean doDrain){
+    public FluidStack drain(EnumFacing from, FluidStack resource, boolean doDrain){
         if(resource.getFluid() == InitBlocks.fluidOil){
             return this.oilTank.drain(resource.amount, doDrain);
         }
@@ -140,22 +140,22 @@ public class TileEntityFermentingBarrel extends TileEntityInventoryBase implemen
     }
 
     @Override
-    public FluidStack drain(ForgeDirection from, int maxDrain, boolean doDrain){
+    public FluidStack drain(EnumFacing from, int maxDrain, boolean doDrain){
         return this.oilTank.drain(maxDrain, doDrain);
     }
 
     @Override
-    public boolean canFill(ForgeDirection from, Fluid fluid){
-        return from != ForgeDirection.DOWN && fluid == InitBlocks.fluidCanolaOil;
+    public boolean canFill(EnumFacing from, Fluid fluid){
+        return from != EnumFacing.DOWN && fluid == InitBlocks.fluidCanolaOil;
     }
 
     @Override
-    public boolean canDrain(ForgeDirection from, Fluid fluid){
-        return from != ForgeDirection.UP && fluid == InitBlocks.fluidOil;
+    public boolean canDrain(EnumFacing from, Fluid fluid){
+        return from != EnumFacing.UP && fluid == InitBlocks.fluidOil;
     }
 
     @Override
-    public FluidTankInfo[] getTankInfo(ForgeDirection from){
+    public FluidTankInfo[] getTankInfo(EnumFacing from){
         return new FluidTankInfo[]{this.canolaTank.getInfo(), this.oilTank.getInfo()};
     }
 

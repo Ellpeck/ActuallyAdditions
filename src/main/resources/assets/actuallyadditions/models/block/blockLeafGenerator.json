@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "particle": "actuallyadditions:blocks/blockLeafGenerator",
+    "down": "actuallyadditions:blocks/blockLeafGeneratorBottom",
+    "up": "actuallyadditions:blocks/blockLeafGeneratorTop",
+    "north": "actuallyadditions:blocks/blockLeafGenerator",
+    "east": "actuallyadditions:blocks/blockLeafGenerator",
+    "south": "actuallyadditions:blocks/blockLeafGenerator",
+    "west": "actuallyadditions:blocks/blockLeafGenerator"
+  }
+}

@@ -10,10 +10,10 @@
 
 package de.ellpeck.actuallyadditions.mod.event;
 
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import de.ellpeck.actuallyadditions.mod.misc.LaserRelayConnectionHandler;
 import de.ellpeck.actuallyadditions.mod.misc.WorldData;
 import net.minecraftforge.event.world.WorldEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class WorldLoadingEvents{
 

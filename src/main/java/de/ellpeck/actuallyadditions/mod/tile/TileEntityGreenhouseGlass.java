@@ -10,12 +10,14 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import de.ellpeck.actuallyadditions.api.Position;
+
+import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockGrass;
 import net.minecraft.block.IGrowable;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.BlockPos;
 import net.minecraftforge.common.IPlantable;
 
 public class TileEntityGreenhouseGlass extends TileEntityBase{
@@ -26,17 +28,17 @@ public class TileEntityGreenhouseGlass extends TileEntityBase{
     public void updateEntity(){
         super.updateEntity();
         if(!worldObj.isRemote){
-            if(worldObj.canBlockSeeTheSky(xCoord, yCoord, zCoord) && worldObj.isDaytime()){
+            if(worldObj.canBlockSeeSky(this.getPos()) && worldObj.isDaytime()){
                 if(this.timeUntilNextFert > 0){
                     this.timeUntilNextFert--;
                     if(timeUntilNextFert <= 0){
-                        Position blockToFert = this.blockToFertilize();
+                        BlockPos blockToFert = this.blockToFertilize();
                         if(blockToFert != null){
-                            int metaBefore = blockToFert.getMetadata(worldObj);
-                            worldObj.getBlock(blockToFert.getX(), blockToFert.getY(), blockToFert.getZ()).updateTick(worldObj, blockToFert.getX(), blockToFert.getY(), blockToFert.getZ(), Util.RANDOM);
+                            int metaBefore = PosUtil.getMetadata(blockToFert, worldObj);
+                            PosUtil.getBlock(blockToFert, worldObj).updateTick(worldObj, blockToFert, worldObj.getBlockState(blockToFert), Util.RANDOM);
 
-                            if(blockToFert.getMetadata(worldObj) != metaBefore){
-                                worldObj.playAuxSFX(2005, blockToFert.getX(), blockToFert.getY(), blockToFert.getZ(), 0);
+                            if(PosUtil.getMetadata(blockToFert, worldObj) != metaBefore){
+                                worldObj.playAuxSFX(2005, blockToFert, 0);
                             }
                         }
                     }
@@ -49,12 +51,13 @@ public class TileEntityGreenhouseGlass extends TileEntityBase{
         }
     }
 
-    public Position blockToFertilize(){
-        for(int i = yCoord-1; i > 0; i--){
-            Block block = worldObj.getBlock(xCoord, i, zCoord);
-            if(block != null && !(worldObj.isAirBlock(xCoord, i, zCoord))){
+    public BlockPos blockToFertilize(){
+        for(int i = -1; i > 0; i--){
+            BlockPos offset = PosUtil.offset(this.pos, 0, i, 0);
+            Block block = PosUtil.getBlock(pos, worldObj);
+            if(block != null && !(worldObj.isAirBlock(offset))){
                 if((block instanceof IGrowable || block instanceof IPlantable) && !(block instanceof BlockGrass)){
-                    return new Position(xCoord, i, zCoord);
+                    return offset;
                 }
                 else{
                     return null;

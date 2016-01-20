@@ -10,14 +10,9 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemEnergy;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIcon;
 
 public class ItemBattery extends ItemEnergy{
 
@@ -28,18 +23,6 @@ public class ItemBattery extends ItemEnergy{
 
     @Override
     public EnumRarity getRarity(ItemStack stack){
-        return EnumRarity.rare;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister iconReg){
-        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName());
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public IIcon getIcon(ItemStack stack, int pass){
-        return this.itemIcon;
+        return EnumRarity.RARE;
     }
 }

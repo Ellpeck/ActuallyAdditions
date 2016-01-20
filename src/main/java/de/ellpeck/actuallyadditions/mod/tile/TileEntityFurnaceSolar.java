@@ -12,37 +12,38 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyProvider;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import de.ellpeck.actuallyadditions.api.tile.IEnergyDisplay;
+import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileEntityFurnaceSolar extends TileEntityBase implements IEnergyProvider, IEnergySaver, IEnergyDisplay{
 
-    public static final int PRODUCE = 10;
+    public static final int PRODUCE = 8;
     public EnergyStorage storage = new EnergyStorage(30000);
     private int oldEnergy;
 
     @Override
-    public int extractEnergy(ForgeDirection from, int maxExtract, boolean simulate){
+    public int extractEnergy(EnumFacing from, int maxExtract, boolean simulate){
         return this.storage.extractEnergy(maxExtract, simulate);
     }
 
     @Override
-    public int getEnergyStored(ForgeDirection from){
+    public int getEnergyStored(EnumFacing from){
         return this.storage.getEnergyStored();
     }
 
     @Override
-    public int getMaxEnergyStored(ForgeDirection from){
+    public int getMaxEnergyStored(EnumFacing from){
         return this.storage.getMaxEnergyStored();
     }
 
     @Override
-    public boolean canConnectEnergy(ForgeDirection from){
-        return from != ForgeDirection.UP;
+    public boolean canConnectEnergy(EnumFacing from){
+        return from != EnumFacing.UP;
     }
 
     @Override
@@ -50,18 +51,14 @@ public class TileEntityFurnaceSolar extends TileEntityBase implements IEnergyPro
         super.updateEntity();
         if(!worldObj.isRemote){
             if(!this.hasBlockAbove() && worldObj.isDaytime()){
-                if(PRODUCE <= this.getMaxEnergyStored(ForgeDirection.UNKNOWN)-this.getEnergyStored(ForgeDirection.UNKNOWN)){
+                if(PRODUCE <= this.storage.getMaxEnergyStored()-this.storage.getEnergyStored()){
                     this.storage.receiveEnergy(PRODUCE, false);
                     this.markDirty();
                 }
             }
 
-            if(this.getEnergyStored(ForgeDirection.UNKNOWN) > 0){
-                WorldUtil.pushEnergy(worldObj, xCoord, yCoord, zCoord, ForgeDirection.DOWN, storage);
-                WorldUtil.pushEnergy(worldObj, xCoord, yCoord, zCoord, ForgeDirection.NORTH, storage);
-                WorldUtil.pushEnergy(worldObj, xCoord, yCoord, zCoord, ForgeDirection.EAST, storage);
-                WorldUtil.pushEnergy(worldObj, xCoord, yCoord, zCoord, ForgeDirection.SOUTH, storage);
-                WorldUtil.pushEnergy(worldObj, xCoord, yCoord, zCoord, ForgeDirection.WEST, storage);
+            if(this.storage.getEnergyStored() > 0){
+                WorldUtil.pushEnergyToAllSides(worldObj, this.pos, this.storage);
             }
 
             if(this.oldEnergy != this.storage.getEnergyStored() && this.sendUpdateWithInterval()){
@@ -83,8 +80,9 @@ public class TileEntityFurnaceSolar extends TileEntityBase implements IEnergyPro
     }
 
     public boolean hasBlockAbove(){
-        for(int y = yCoord+1; y <= worldObj.getHeight(); y++){
-            if(!worldObj.getBlock(xCoord, y, zCoord).isAir(worldObj, xCoord, y, zCoord)){
+        for(int y = 1; y <= worldObj.getHeight(); y++){
+            BlockPos offset = PosUtil.offset(this.pos, 0, y, 0);
+            if(!PosUtil.getBlock(offset, worldObj).isAir(worldObj, offset)){
                 return true;
             }
         }

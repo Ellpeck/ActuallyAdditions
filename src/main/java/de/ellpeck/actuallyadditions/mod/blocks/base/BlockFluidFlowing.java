@@ -10,41 +10,34 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks.base;
 
-import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+
 import de.ellpeck.actuallyadditions.mod.creative.CreativeTab;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIcon;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.BlockFluidClassic;
 import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockFluidFlowing extends BlockFluidClassic{
-
-    @SideOnly(Side.CLIENT)
-    public IIcon stillIcon;
-    @SideOnly(Side.CLIENT)
-    public IIcon flowingIcon;
 
     private String name;
 
     public BlockFluidFlowing(Fluid fluid, Material material, String unlocalizedName){
         super(fluid, material);
         this.name = unlocalizedName;
-        this.setRenderPass(1);
-        displacements.put(this, false);
+        this.displacements.put(this, false);
 
         this.register();
     }
 
     private void register(){
-        this.setBlockName(ModUtil.MOD_ID_LOWER+"."+this.getBaseName());
+        this.setUnlocalizedName(ModUtil.MOD_ID_LOWER+"."+this.getBaseName());
         GameRegistry.registerBlock(this, this.getItemBlock(), this.getBaseName());
         if(this.shouldAddCreative()){
             this.setCreativeTab(CreativeTab.instance);
@@ -67,30 +60,16 @@ public class BlockFluidFlowing extends BlockFluidClassic{
     }
 
     @Override
-    public boolean canDisplace(IBlockAccess world, int x, int y, int z){
-        return !world.getBlock(x, y, z).getMaterial().isLiquid() && super.canDisplace(world, x, y, z);
+    public boolean canDisplace(IBlockAccess world, BlockPos pos){
+        return !PosUtil.getMaterial(pos, world).isLiquid() && super.canDisplace(world, pos);
     }
 
     @Override
-    public boolean displaceIfPossible(World world, int x, int y, int z){
-        return !world.getBlock(x, y, z).getMaterial().isLiquid() && super.displaceIfPossible(world, x, y, z);
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public IIcon getIcon(int side, int meta){
-        return side <= 1 ? this.stillIcon : this.flowingIcon;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister iconReg){
-        this.stillIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName()+"Still");
-        this.flowingIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName()+"Flowing");
-        this.definedFluid.setIcons(this.stillIcon, this.flowingIcon);
+    public boolean displaceIfPossible(World world, BlockPos pos){
+        return !PosUtil.getMaterial(pos, world).isLiquid() && super.displaceIfPossible(world, pos);
     }
 
     public EnumRarity getRarity(ItemStack stack){
-        return EnumRarity.epic;
+        return EnumRarity.EPIC;
     }
 }

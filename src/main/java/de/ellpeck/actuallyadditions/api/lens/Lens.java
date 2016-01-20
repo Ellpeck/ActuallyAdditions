@@ -11,9 +11,9 @@
 package de.ellpeck.actuallyadditions.api.lens;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
-import de.ellpeck.actuallyadditions.api.Position;
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import net.minecraft.item.Item;
+import net.minecraft.util.BlockPos;
 
 /**
  * This is the base class for a Reconstructor Lens Type (NOT THE ITEM!)
@@ -32,7 +32,7 @@ public abstract class Lens{
      * @param tile The tile the lens was invoked from
      * @return If the Reconstructor should stop continuing (return false if you want it to go through blocks)
      */
-    public abstract boolean invoke(Position hitBlock, IAtomicReconstructor tile);
+    public abstract boolean invoke(BlockPos hitBlock, IAtomicReconstructor tile);
 
     /**
      * Returns the color in an array of 3 float values that are r, g, b

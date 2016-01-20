@@ -11,7 +11,6 @@
 package de.ellpeck.actuallyadditions.mod.booklet.entry;
 
 import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
-import de.ellpeck.actuallyadditions.mod.booklet.chapter.BookletChapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +25,7 @@ public class BookletEntryAllSearch extends BookletEntry{
 
     @SuppressWarnings("unchecked")
     @Override
-    public void addChapter(BookletChapter chapter){
+    public void addChapter(IBookletChapter chapter){
         this.allChapters.add(chapter);
         this.chapters = (ArrayList<IBookletChapter>)this.allChapters.clone();
     }
@@ -34,5 +33,6 @@ public class BookletEntryAllSearch extends BookletEntry{
     @Override
     public void setChapters(List<IBookletChapter> chapters){
         this.allChapters = (ArrayList<IBookletChapter>)chapters;
+        this.chapters = (ArrayList<IBookletChapter>)this.allChapters.clone();
     }
 }

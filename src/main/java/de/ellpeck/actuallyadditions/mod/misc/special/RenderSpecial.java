@@ -14,11 +14,13 @@ import de.ellpeck.actuallyadditions.mod.proxy.ClientProxy;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EnumPlayerModelParts;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import org.lwjgl.opengl.GL11;
+import net.minecraft.util.Vec3;
 
 import java.util.Calendar;
 
@@ -31,20 +33,18 @@ public class RenderSpecial{
         this.theThingToRender = stack;
     }
 
-    public void render(EntityPlayer player){
-        if(player.isInvisible() || player.getHideCape()){
+    public void render(EntityPlayer player, float partialTicks){
+        if(player.isInvisible() || !player.isWearing(EnumPlayerModelParts.CAPE)){
             return;
         }
 
-        boolean isBlock = this.theThingToRender.getItem() instanceof ItemBlock;
-        float size = isBlock ? 0.3F : 0.4F;
-        double offsetUp = isBlock ? 0F : 0.2F;
-
         if(ClientProxy.pumpkinBlurPumpkinBlur){
             this.theThingToRender = new ItemStack(Calendar.getInstance().get(Calendar.DAY_OF_MONTH)%2 == 0 ? Blocks.lit_pumpkin : Blocks.pumpkin);
-            size = 0.3F;
-            offsetUp = 0;
         }
+
+        boolean isBlock = this.theThingToRender.getItem() instanceof ItemBlock;
+        float size = isBlock ? 0.5F : 0.4F;
+        double offsetUp = isBlock ? 0D : 0.1875D;
 
         double bobHeight = 70;
         double theTime = Minecraft.getSystemTime();
@@ -54,33 +54,42 @@ public class RenderSpecial{
             this.lastTimeForBobbing = time;
         }
 
-        GL11.glPushMatrix();
-        GL11.glTranslated(0D, -0.775D+offsetUp, 0D);
-        GL11.glRotatef(180F, 1.0F, 0.0F, 1.0F);
-        GL11.glScalef(size, size, size);
+        GlStateManager.pushMatrix();
+
+        Vec3 currentPos = Minecraft.getMinecraft().thePlayer.getPositionEyes(partialTicks);
+        Vec3 playerPos = player.getPositionEyes(partialTicks);
+        GlStateManager.translate(playerPos.xCoord-currentPos.xCoord, playerPos.yCoord-currentPos.yCoord-(player.isSneaking() || Minecraft.getMinecraft().thePlayer.isSneaking() ? 0.125D : 0D), playerPos.zCoord-currentPos.zCoord);
+
+        GlStateManager.translate(0D, 2.535D+offsetUp, 0D);
+        GlStateManager.rotate(180F, 1.0F, 0.0F, 1.0F);
+        GlStateManager.scale(size, size, size);
 
         if(time-(bobHeight/2) >= lastTimeForBobbing){
-            GL11.glTranslated(0, (time-this.lastTimeForBobbing)/100, 0);
+            GlStateManager.translate(0D, (time-this.lastTimeForBobbing)/100D, 0D);
         }
         else{
-            GL11.glTranslated(0, -(time-lastTimeForBobbing)/100+bobHeight/100, 0);
+            GlStateManager.translate(0D, -(time-lastTimeForBobbing)/100D+bobHeight/100D, 0D);
         }
 
-        GL11.glRotated(theTime/20, 0, 1, 0);
+        GlStateManager.rotate((float)(theTime/20), 0, 1, 0);
 
-        GL11.glDisable(GL11.GL_LIGHTING);
+        GlStateManager.disableLighting();
         if(this.theThingToRender != null){
             if(isBlock){
+                GlStateManager.rotate(180F, 1F, 0F, 0F);
                 AssetUtil.renderBlockInWorld(Block.getBlockFromItem(this.theThingToRender.getItem()), this.theThingToRender.getItemDamage());
             }
             else{
-                GL11.glTranslatef(-0.5F, 0F, 0F);
-                AssetUtil.renderItemInWorld(this.theThingToRender, 0);
+                GlStateManager.pushMatrix();
+                GlStateManager.translate(0D, 0.5D, 0D);
+                GlStateManager.rotate(180F, 1F, 0F, 0F);
+                AssetUtil.renderItemInWorld(this.theThingToRender);
+                GlStateManager.popMatrix();
             }
         }
-        GL11.glEnable(GL11.GL_LIGHTING);
+        GlStateManager.enableLighting();
 
-        GL11.glPopMatrix();
+        GlStateManager.popMatrix();
     }
 
 }

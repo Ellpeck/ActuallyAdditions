@@ -10,8 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.recipe;
 
-import cpw.mods.fml.common.IFuelHandler;
-import cpw.mods.fml.common.registry.GameRegistry;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheMiscBlocks;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
@@ -20,6 +18,8 @@ import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.common.IFuelHandler;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.HashMap;

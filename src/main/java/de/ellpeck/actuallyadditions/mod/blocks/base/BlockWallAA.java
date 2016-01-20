@@ -10,25 +10,28 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks.base;
 
-import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import de.ellpeck.actuallyadditions.mod.creative.CreativeTab;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockFenceGate;
 import net.minecraft.block.BlockWall;
+import net.minecraft.block.material.Material;
+import net.minecraft.block.state.BlockState;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.EnumRarity;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIcon;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
-public class BlockWallAA extends BlockWall{
+public class BlockWallAA extends BlockBase{
 
-    private String name;
-    private Block baseBlock;
     private int meta;
 
     public BlockWallAA(String name, Block base){
@@ -36,45 +39,14 @@ public class BlockWallAA extends BlockWall{
     }
 
     public BlockWallAA(String name, Block base, int meta){
-        super(base);
-        this.baseBlock = base;
-        this.name = name;
+        super(base.getMaterial(), name);
         this.meta = meta;
 
-        this.register();
-    }
+        this.setHardness(1.5F);
+        this.setResistance(10F);
+        this.setStepSound(base.stepSound);
 
-    private void register(){
-        this.setBlockName(ModUtil.MOD_ID_LOWER+"."+this.getBaseName());
-        GameRegistry.registerBlock(this, this.getItemBlock(), this.getBaseName());
-        if(this.shouldAddCreative()){
-            this.setCreativeTab(CreativeTab.instance);
-        }
-        else{
-            this.setCreativeTab(null);
-        }
-    }
-
-    protected String getBaseName(){
-        return this.name;
-    }
-
-    protected Class<? extends ItemBlockBase> getItemBlock(){
-        return ItemBlockBase.class;
-    }
-
-    public boolean shouldAddCreative(){
-        return true;
-    }
-
-    public EnumRarity getRarity(ItemStack stack){
-        return EnumRarity.common;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public IIcon getIcon(int side, int meta){
-        return this.baseBlock.getIcon(side, this.meta);
+        this.setDefaultState(this.blockState.getBaseState().withProperty(BlockWall.UP, false).withProperty(BlockWall.NORTH, false).withProperty(BlockWall.EAST, false).withProperty(BlockWall.SOUTH, false).withProperty(BlockWall.WEST, false));
     }
 
     @SuppressWarnings("unchecked")
@@ -85,7 +57,99 @@ public class BlockWallAA extends BlockWall{
     }
 
     @Override
-    public int damageDropped(int meta){
+    public int damageDropped(IBlockState state){
         return meta;
+    }
+
+    @Override
+    public boolean isFullCube(){
+        return false;
+    }
+
+    @Override
+    public boolean isPassable(IBlockAccess worldIn, BlockPos pos){
+        return false;
+    }
+
+    @Override
+    public boolean isOpaqueCube(){
+        return false;
+    }
+
+    @Override
+    public void setBlockBoundsBasedOnState(IBlockAccess worldIn, BlockPos pos){
+        boolean flag = this.canConnectTo(worldIn, pos.north());
+        boolean flag1 = this.canConnectTo(worldIn, pos.south());
+        boolean flag2 = this.canConnectTo(worldIn, pos.west());
+        boolean flag3 = this.canConnectTo(worldIn, pos.east());
+        float f = 0.25F;
+        float f1 = 0.75F;
+        float f2 = 0.25F;
+        float f3 = 0.75F;
+        float f4 = 1.0F;
+
+        if(flag){
+            f2 = 0.0F;
+        }
+        if(flag1){
+            f3 = 1.0F;
+        }
+        if(flag2){
+            f = 0.0F;
+        }
+        if(flag3){
+            f1 = 1.0F;
+        }
+
+        if(flag && flag1 && !flag2 && !flag3){
+            f4 = 0.8125F;
+            f = 0.3125F;
+            f1 = 0.6875F;
+        }
+        else if(!flag && !flag1 && flag2 && flag3){
+            f4 = 0.8125F;
+            f2 = 0.3125F;
+            f3 = 0.6875F;
+        }
+
+        this.setBlockBounds(f, 0.0F, f2, f1, f4, f3);
+    }
+
+    @Override
+    public AxisAlignedBB getCollisionBoundingBox(World worldIn, BlockPos pos, IBlockState state){
+        this.setBlockBoundsBasedOnState(worldIn, pos);
+        this.maxY = 1.5D;
+        return super.getCollisionBoundingBox(worldIn, pos, state);
+    }
+
+    public boolean canConnectTo(IBlockAccess worldIn, BlockPos pos){
+        Block block = worldIn.getBlockState(pos).getBlock();
+        return block != Blocks.barrier && (!(block != this && !(block instanceof BlockFenceGate)) || ((block.getMaterial().isOpaque() && block.isFullCube()) && block.getMaterial() != Material.gourd));
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public boolean shouldSideBeRendered(IBlockAccess worldIn, BlockPos pos, EnumFacing side){
+        return side != EnumFacing.DOWN || super.shouldSideBeRendered(worldIn, pos, side);
+    }
+
+    @Override
+    public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos){
+        return state.withProperty(BlockWall.UP, !worldIn.isAirBlock(pos.up())).withProperty(BlockWall.NORTH, this.canConnectTo(worldIn, pos.north())).withProperty(BlockWall.EAST, this.canConnectTo(worldIn, pos.east())).withProperty(BlockWall.SOUTH, this.canConnectTo(worldIn, pos.south())).withProperty(BlockWall.WEST, this.canConnectTo(worldIn, pos.west()));
+    }
+
+    @Override
+    protected BlockState createBlockState(){
+        return new BlockState(this, BlockWall.UP, BlockWall.NORTH, BlockWall.EAST, BlockWall.WEST, BlockWall.SOUTH);
+    }
+
+    @Override
+    public IBlockState getStateFromMeta(int meta){
+        return this.getDefaultState();
+    }
+
+    @Override
+    public int getMetaFromState(IBlockState state){
+        return 0;
     }
 }

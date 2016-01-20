@@ -10,9 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
-import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.recipe.coffee.CoffeeBrewing;
 import de.ellpeck.actuallyadditions.api.recipe.coffee.CoffeeIngredient;
@@ -21,7 +18,6 @@ import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumAction;
@@ -31,9 +27,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.IIcon;
 import net.minecraft.util.StringUtils;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.Loader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,9 +73,9 @@ public class ItemCoffee extends ItemFoodBase{
     }
 
     @Override
-    public ItemStack onEaten(ItemStack stack, World world, EntityPlayer player){
+    public ItemStack onItemUseFinish(ItemStack stack, World world, EntityPlayer player){
         ItemStack theStack = stack.copy();
-        super.onEaten(stack, world, player);
+        super.onItemUseFinish(stack, world, player);
         applyPotionEffectsFromStack(stack, player);
         theStack.setItemDamage(theStack.getItemDamage()+1);
         if(theStack.getMaxDamage()-theStack.getItemDamage() < 0){
@@ -101,13 +97,7 @@ public class ItemCoffee extends ItemFoodBase{
 
     @Override
     public EnumAction getItemUseAction(ItemStack stack){
-        return EnumAction.drink;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public IIcon getIconFromDamage(int par1){
-        return this.itemIcon;
+        return EnumAction.DRINK;
     }
 
     @Override
@@ -136,13 +126,7 @@ public class ItemCoffee extends ItemFoodBase{
 
     @Override
     public EnumRarity getRarity(ItemStack stack){
-        return EnumRarity.rare;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister iconReg){
-        itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName());
+        return EnumRarity.RARE;
     }
 
     public static class MilkIngredient extends CoffeeIngredient{

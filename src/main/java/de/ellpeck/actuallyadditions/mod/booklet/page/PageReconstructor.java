@@ -10,8 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.booklet.page;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import de.ellpeck.actuallyadditions.api.internal.IBookletGui;
 import de.ellpeck.actuallyadditions.api.recipe.LensNoneRecipe;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
@@ -24,6 +22,8 @@ import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,7 +62,7 @@ public class PageReconstructor extends BookletPageAA{
     public void renderPre(IBookletGui gui, int mouseX, int mouseY, int ticksElapsed, boolean mousePressed){
         if(this.recipes[this.recipePos] != null){
             Minecraft.getMinecraft().getTextureManager().bindTexture(ClientProxy.bulletForMyValentine ? GuiBooklet.resLocValentine : GuiBooklet.resLoc);
-            gui.drawTexturedModalRect(gui.getGuiLeft()+37, gui.getGuiTop()+20, 188, 154, 60, 60);
+            gui.drawRect(gui.getGuiLeft()+37, gui.getGuiTop()+20, 188, 154, 60, 60);
         }
     }
 
@@ -72,16 +72,16 @@ public class PageReconstructor extends BookletPageAA{
     public void render(IBookletGui gui, int mouseX, int mouseY, int ticksElapsed, boolean mousePressed){
         LensNoneRecipe recipe = this.recipes[this.recipePos];
         if(recipe == null){
-            StringUtil.drawSplitString(Minecraft.getMinecraft().fontRenderer, EnumChatFormatting.DARK_RED+StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".recipeDisabled"), gui.getGuiLeft()+14, gui.getGuiTop()+15, 115, 0, false);
+            StringUtil.drawSplitString(Minecraft.getMinecraft().fontRendererObj, EnumChatFormatting.DARK_RED+StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".recipeDisabled"), gui.getGuiLeft()+14, gui.getGuiTop()+15, 115, 0, false);
         }
         else{
             String strg = "Atomic Reconstructor";
-            Minecraft.getMinecraft().fontRenderer.drawString(strg, gui.getGuiLeft()+gui.getXSize()/2-Minecraft.getMinecraft().fontRenderer.getStringWidth(strg)/2, gui.getGuiTop()+10, 0);
+            Minecraft.getMinecraft().fontRendererObj.drawString(strg, gui.getGuiLeft()+gui.getXSize()/2-Minecraft.getMinecraft().fontRendererObj.getStringWidth(strg)/2, gui.getGuiTop()+10, 0);
         }
 
         String text = gui.getCurrentEntrySet().page.getText();
         if(text != null && !text.isEmpty()){
-            StringUtil.drawSplitString(Minecraft.getMinecraft().fontRenderer, text, gui.getGuiLeft()+14, gui.getGuiTop()+100, 115, 0, false);
+            StringUtil.drawSplitString(Minecraft.getMinecraft().fontRendererObj, text, gui.getGuiLeft()+14, gui.getGuiTop()+100, 115, 0, false);
         }
 
         if(recipe != null){

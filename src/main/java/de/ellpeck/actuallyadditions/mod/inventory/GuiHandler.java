@@ -10,16 +10,16 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory;
 
-import cpw.mods.fml.common.network.IGuiHandler;
-import cpw.mods.fml.common.network.NetworkRegistry;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.booklet.GuiBooklet;
-import de.ellpeck.actuallyadditions.mod.booklet.GuiBookletStand;
 import de.ellpeck.actuallyadditions.mod.inventory.gui.*;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.network.IGuiHandler;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
 
 public class GuiHandler implements IGuiHandler{
 
@@ -32,7 +32,7 @@ public class GuiHandler implements IGuiHandler{
     public Object getServerGuiElement(int id, EntityPlayer entityPlayer, World world, int x, int y, int z){
         TileEntityBase tile = null;
         if(GuiTypes.values()[id].checkTileEntity){
-            tile = (TileEntityBase)world.getTileEntity(x, y, z);
+            tile = (TileEntityBase)world.getTileEntity(new BlockPos(x, y, z));
         }
         switch(GuiTypes.values()[id]){
             case FEEDER:
@@ -96,7 +96,7 @@ public class GuiHandler implements IGuiHandler{
     public Object getClientGuiElement(int id, EntityPlayer entityPlayer, World world, int x, int y, int z){
         TileEntityBase tile = null;
         if(GuiTypes.values()[id].checkTileEntity){
-            tile = (TileEntityBase)world.getTileEntity(x, y, z);
+            tile = (TileEntityBase)world.getTileEntity(new BlockPos(x, y, z));
         }
         switch(GuiTypes.values()[id]){
             case FEEDER:
@@ -147,8 +147,6 @@ public class GuiHandler implements IGuiHandler{
                 return new GuiSmileyCloud(tile, x, y, z, world);
             case BOOK:
                 return new GuiBooklet(null, true, true);
-            case BOOK_STAND:
-                return new GuiBookletStand(tile);
             case DIRECTIONAL_BREAKER:
                 return new GuiDirectionalBreaker(entityPlayer.inventory, tile);
             case RANGED_COLLECTOR:
@@ -185,7 +183,6 @@ public class GuiHandler implements IGuiHandler{
         XP_SOLIDIFIER,
         CLOUD,
         BOOK(false),
-        BOOK_STAND,
         DIRECTIONAL_BREAKER,
         RANGED_COLLECTOR,
         MINER;

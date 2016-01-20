@@ -10,8 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerFeeder;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityFeeder;
@@ -19,9 +17,11 @@ import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
-import org.lwjgl.opengl.GL11;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.Arrays;
 
@@ -43,18 +43,18 @@ public class GuiFeeder extends GuiContainer{
         super.drawScreen(x, y, f);
         if(x >= guiLeft+69 && y >= guiTop+30 && x <= guiLeft+69+10 && y <= guiTop+30+10){
             String[] array = new String[]{(this.tileFeeder.currentAnimalAmount+" "+StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.animals")), ((this.tileFeeder.currentAnimalAmount >= 2 && this.tileFeeder.currentAnimalAmount < TileEntityFeeder.THRESHOLD) ? StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.enoughToBreed") : (this.tileFeeder.currentAnimalAmount >= TileEntityFeeder.THRESHOLD ? StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.tooMany") : StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.notEnough")))};
-            this.func_146283_a(Arrays.asList(array), x, y);
+            this.drawHoveringText(Arrays.asList(array), x, y);
         }
     }
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y){
-        AssetUtil.displayNameString(this.fontRendererObj, xSize, -10, this.tileFeeder.getInventoryName());
+        AssetUtil.displayNameString(this.fontRendererObj, xSize, -10, this.tileFeeder.getName());
     }
 
     @Override
     public void drawGuiContainerBackgroundLayer(float f, int x, int y){
-        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop+70, 0, 0, 176, 86);
         this.mc.getTextureManager().bindTexture(resLoc);

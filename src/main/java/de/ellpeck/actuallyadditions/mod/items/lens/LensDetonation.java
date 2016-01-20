@@ -10,18 +10,19 @@
 
 package de.ellpeck.actuallyadditions.mod.items.lens;
 
-import de.ellpeck.actuallyadditions.api.Position;
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
+import de.ellpeck.actuallyadditions.mod.util.PosUtil;
+import net.minecraft.util.BlockPos;
 
 public class LensDetonation extends Lens{
 
     @Override
-    public boolean invoke(Position hitBlock, IAtomicReconstructor tile){
-        if(hitBlock != null && !hitBlock.getBlock(tile.getWorldObj()).isAir(tile.getWorldObj(), hitBlock.getX(), hitBlock.getY(), hitBlock.getZ())){
+    public boolean invoke(BlockPos hitBlock, IAtomicReconstructor tile){
+        if(hitBlock != null && !PosUtil.getBlock(hitBlock, tile.getWorldObject()).isAir(tile.getWorldObject(), hitBlock)){
             int use = 250000;
             if(tile.getEnergy() >= use){
-                tile.getWorldObj().newExplosion(null, hitBlock.getX()+0.5, hitBlock.getY()+0.5, hitBlock.getZ()+0.5, 10F, true, true);
+                tile.getWorldObject().newExplosion(null, hitBlock.getX()+0.5, hitBlock.getY()+0.5, hitBlock.getZ()+0.5, 10F, true, true);
                 tile.extractEnergy(use);
             }
             return true;

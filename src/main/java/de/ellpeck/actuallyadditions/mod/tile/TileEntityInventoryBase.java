@@ -16,6 +16,8 @@ import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.IChatComponent;
 
 public abstract class TileEntityInventoryBase extends TileEntityBase implements ISidedInventory{
 
@@ -29,20 +31,6 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
 
     public void initializeSlots(int itemAmount){
         this.slots = new ItemStack[itemAmount];
-    }
-
-    @Override
-    public int[] getAccessibleSlotsFromSide(int side){
-        if(this.slots.length > 0){
-            int[] theInt = new int[slots.length];
-            for(int i = 0; i < theInt.length; i++){
-                theInt[i] = i;
-            }
-            return theInt;
-        }
-        else{
-            return new int[0];
-        }
     }
 
     @Override
@@ -98,12 +86,42 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
 
     @Override
     public boolean isUseableByPlayer(EntityPlayer player){
-        return player.getDistanceSq(xCoord+0.5D, yCoord+0.5D, zCoord+0.5D) <= 64;
+        return player.getDistanceSq(this.getPos().getX()+0.5D, this.pos.getY()+0.5D, this.pos.getZ()+0.5D) <= 64 && !this.isInvalid() && this.worldObj.getTileEntity(this.pos) == this;
     }
 
     @Override
-    public ItemStack getStackInSlotOnClosing(int i){
-        return getStackInSlot(i);
+    public void openInventory(EntityPlayer player){
+
+    }
+
+    @Override
+    public void closeInventory(EntityPlayer player){
+
+    }
+
+    @Override
+    public boolean isItemValidForSlot(int index, ItemStack stack){
+        return false;
+    }
+
+    @Override
+    public int getField(int id){
+        return 0;
+    }
+
+    @Override
+    public void setField(int id, int value){
+
+    }
+
+    @Override
+    public int getFieldCount(){
+        return 0;
+    }
+
+    @Override
+    public void clear(){
+        this.initializeSlots(this.slots.length);
     }
 
     @Override
@@ -147,26 +165,39 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
         return null;
     }
 
+    @Override
+    public ItemStack removeStackFromSlot(int index){
+        ItemStack stack = this.slots[index];
+        this.slots[index] = null;
+        return stack;
+    }
 
     @Override
-    public String getInventoryName(){
+    public int[] getSlotsForFace(EnumFacing side){
+        if(this.slots.length > 0){
+            int[] theInt = new int[slots.length];
+            for(int i = 0; i < theInt.length; i++){
+                theInt[i] = i;
+            }
+            return theInt;
+        }
+        else{
+            return new int[0];
+        }
+    }
+
+    @Override
+    public String getName(){
         return this.name;
     }
 
     @Override
-    public boolean hasCustomInventoryName(){
+    public boolean hasCustomName(){
         return false;
     }
 
     @Override
-    public void openInventory(){
-
+    public IChatComponent getDisplayName(){
+        return null;
     }
-
-    @Override
-    public void closeInventory(){
-
-    }
-
-
 }

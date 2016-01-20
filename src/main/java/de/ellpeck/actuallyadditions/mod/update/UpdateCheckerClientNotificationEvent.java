@@ -10,13 +10,13 @@
 
 package de.ellpeck.actuallyadditions.mod.update;
 
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.gameevent.TickEvent;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.IChatComponent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 public class UpdateCheckerClientNotificationEvent{
 
@@ -31,13 +31,13 @@ public class UpdateCheckerClientNotificationEvent{
             if(ticksElapsedBeforeInfo >= 800){
                 EntityPlayer player = Minecraft.getMinecraft().thePlayer;
                 if(UpdateChecker.checkFailed){
-                    player.addChatComponentMessage(IChatComponent.Serializer.func_150699_a(StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".update.failed")));
+                    player.addChatComponentMessage(IChatComponent.Serializer.jsonToComponent(StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".update.failed")));
                     notified = true;
                 }
                 else if(UpdateChecker.needsUpdateNotify){
-                    player.addChatComponentMessage(IChatComponent.Serializer.func_150699_a(StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".update.generic")));
-                    player.addChatComponentMessage(IChatComponent.Serializer.func_150699_a(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID_LOWER+".update.versionCompare", ModUtil.VERSION, UpdateChecker.updateVersion)));
-                    player.addChatComponentMessage(IChatComponent.Serializer.func_150699_a(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID_LOWER+".update.buttons", UpdateChecker.CHANGELOG_LINK, UpdateChecker.DOWNLOAD_LINK)));
+                    player.addChatComponentMessage(IChatComponent.Serializer.jsonToComponent(StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".update.generic")));
+                    player.addChatComponentMessage(IChatComponent.Serializer.jsonToComponent(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID_LOWER+".update.versionCompare", ModUtil.VERSION, UpdateChecker.updateVersionString)));
+                    player.addChatComponentMessage(IChatComponent.Serializer.jsonToComponent(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID_LOWER+".update.buttons", UpdateChecker.CHANGELOG_LINK, UpdateChecker.DOWNLOAD_LINK)));
                     notified = true;
                 }
                 ticksElapsedBeforeInfo = 0;

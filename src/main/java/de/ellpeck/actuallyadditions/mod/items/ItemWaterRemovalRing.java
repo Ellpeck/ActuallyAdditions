@@ -10,17 +10,16 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+
 import de.ellpeck.actuallyadditions.mod.items.base.ItemEnergy;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
-import net.minecraft.client.renderer.texture.IIconRegister;
+import de.ellpeck.actuallyadditions.mod.util.PosUtil;
+import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIcon;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
@@ -39,7 +38,7 @@ public class ItemWaterRemovalRing extends ItemEnergy{
         EntityPlayer player = (EntityPlayer)entity;
         ItemStack equipped = player.getCurrentEquippedItem();
 
-        int energyUse = 30;
+        int energyUse = 350;
         if(equipped != null && equipped == stack && this.getEnergyStored(stack) >= energyUse){
 
             //Setting everything to air
@@ -50,22 +49,23 @@ public class ItemWaterRemovalRing extends ItemEnergy{
                         int theX = MathHelper.floor_double(player.posX+x);
                         int theY = MathHelper.floor_double(player.posY+y);
                         int theZ = MathHelper.floor_double(player.posZ+z);
-                        if(this.getEnergyStored(stack) >= energyUse){
-                            //Remove Water
-                            if(world.getBlock(theX, theY, theZ) == Blocks.water || world.getBlock(theX, theY, theZ) == Blocks.flowing_water){
-                                world.setBlockToAir(theX, theY, theZ);
 
-                                if(!player.capabilities.isCreativeMode){
-                                    this.extractEnergy(stack, energyUse, false);
-                                }
+                        //Remove Water
+                        BlockPos pos = new BlockPos(theX, theY, theZ);
+                        Block block = PosUtil.getBlock(pos, world);
+                        if((block == Blocks.water || block == Blocks.flowing_water) && this.getEnergyStored(stack) >= energyUse){
+                            world.setBlockToAir(pos);
+
+                            if(!player.capabilities.isCreativeMode){
+                                this.extractEnergy(stack, energyUse, false);
                             }
-                            //Remove Lava
-                            else if(world.getBlock(theX, theY, theZ) == Blocks.lava || world.getBlock(theX, theY, theZ) == Blocks.flowing_lava){
-                                world.setBlockToAir(theX, theY, theZ);
+                        }
+                        //Remove Lava
+                        else if((block == Blocks.lava || block == Blocks.flowing_lava) && this.getEnergyStored(stack) >= energyUse*2){
+                            world.setBlockToAir(pos);
 
-                                if(!player.capabilities.isCreativeMode){
-                                    this.extractEnergy(stack, energyUse*2, false);
-                                }
+                            if(!player.capabilities.isCreativeMode){
+                                this.extractEnergy(stack, energyUse*2, false);
                             }
                         }
                     }
@@ -76,18 +76,6 @@ public class ItemWaterRemovalRing extends ItemEnergy{
 
     @Override
     public EnumRarity getRarity(ItemStack stack){
-        return EnumRarity.epic;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister iconReg){
-        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName());
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public IIcon getIcon(ItemStack stack, int pass){
-        return this.itemIcon;
+        return EnumRarity.EPIC;
     }
 }

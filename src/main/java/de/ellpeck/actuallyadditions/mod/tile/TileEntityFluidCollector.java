@@ -10,16 +10,18 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import de.ellpeck.actuallyadditions.api.Position;
+
+import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fluids.*;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileEntityFluidCollector extends TileEntityInventoryBase implements IFluidHandler, IFluidSaver, IRedstoneToggle{
 
@@ -54,37 +56,37 @@ public class TileEntityFluidCollector extends TileEntityInventoryBase implements
     }
 
     private void doWork(){
-        ForgeDirection sideToManipulate = ForgeDirection.getOrientation(worldObj.getBlockMetadata(xCoord, yCoord, zCoord));
+        EnumFacing sideToManipulate = WorldUtil.getDirectionByPistonRotation(PosUtil.getMetadata(this.pos, worldObj));
+        BlockPos coordsBlock = WorldUtil.getCoordsFromSide(sideToManipulate, this.pos, 0);
 
-        Position coordsBlock = WorldUtil.getCoordsFromSide(sideToManipulate, xCoord, yCoord, zCoord, 0);
         if(coordsBlock != null){
-            Block blockToBreak = worldObj.getBlock(coordsBlock.getX(), coordsBlock.getY(), coordsBlock.getZ());
-            if(!this.isPlacer && blockToBreak != null && worldObj.getBlockMetadata(coordsBlock.getX(), coordsBlock.getY(), coordsBlock.getZ()) == 0 && FluidContainerRegistry.BUCKET_VOLUME <= this.tank.getCapacity()-this.tank.getFluidAmount()){
+            Block blockToBreak = PosUtil.getBlock(coordsBlock, worldObj);
+            if(!this.isPlacer && blockToBreak != null && PosUtil.getMetadata(coordsBlock, worldObj) == 0 && FluidContainerRegistry.BUCKET_VOLUME <= this.tank.getCapacity()-this.tank.getFluidAmount()){
                 if(blockToBreak instanceof IFluidBlock && ((IFluidBlock)blockToBreak).getFluid() != null){
                     if(this.tank.fill(new FluidStack(((IFluidBlock)blockToBreak).getFluid(), FluidContainerRegistry.BUCKET_VOLUME), false) >= FluidContainerRegistry.BUCKET_VOLUME){
                         this.tank.fill(new FluidStack(((IFluidBlock)blockToBreak).getFluid(), FluidContainerRegistry.BUCKET_VOLUME), true);
-                        WorldUtil.breakBlockAtSide(sideToManipulate, worldObj, xCoord, yCoord, zCoord);
+                        WorldUtil.breakBlockAtSide(sideToManipulate, worldObj, this.pos);
                     }
                 }
                 else if(blockToBreak == Blocks.lava || blockToBreak == Blocks.flowing_lava){
                     if(this.tank.fill(new FluidStack(FluidRegistry.LAVA, FluidContainerRegistry.BUCKET_VOLUME), false) >= FluidContainerRegistry.BUCKET_VOLUME){
                         this.tank.fill(new FluidStack(FluidRegistry.LAVA, FluidContainerRegistry.BUCKET_VOLUME), true);
-                        WorldUtil.breakBlockAtSide(sideToManipulate, worldObj, xCoord, yCoord, zCoord);
+                        WorldUtil.breakBlockAtSide(sideToManipulate, worldObj, this.pos);
                     }
                 }
                 else if(blockToBreak == Blocks.water || blockToBreak == Blocks.flowing_water){
                     if(this.tank.fill(new FluidStack(FluidRegistry.WATER, FluidContainerRegistry.BUCKET_VOLUME), false) >= FluidContainerRegistry.BUCKET_VOLUME){
                         this.tank.fill(new FluidStack(FluidRegistry.WATER, FluidContainerRegistry.BUCKET_VOLUME), true);
-                        WorldUtil.breakBlockAtSide(sideToManipulate, worldObj, xCoord, yCoord, zCoord);
+                        WorldUtil.breakBlockAtSide(sideToManipulate, worldObj, this.pos);
                     }
                 }
             }
-            else if(this.isPlacer && worldObj.getBlock(coordsBlock.getX(), coordsBlock.getY(), coordsBlock.getZ()).isReplaceable(worldObj, coordsBlock.getX(), coordsBlock.getY(), coordsBlock.getZ())){
+            else if(this.isPlacer && PosUtil.getBlock(coordsBlock, worldObj).isReplaceable(worldObj, coordsBlock)){
                 if(this.tank.getFluidAmount() >= FluidContainerRegistry.BUCKET_VOLUME){
                     if(this.tank.getFluid().getFluid().getBlock() != null){
-                        Block block = worldObj.getBlock(xCoord+sideToManipulate.offsetX, yCoord+sideToManipulate.offsetY, zCoord+sideToManipulate.offsetZ);
+                        Block block = PosUtil.getBlock(coordsBlock, worldObj);
                         if(!(block instanceof IFluidBlock) && block != Blocks.lava && block != Blocks.water && block != Blocks.flowing_lava && block != Blocks.flowing_water){
-                            WorldUtil.placeBlockAtSide(sideToManipulate, worldObj, xCoord, yCoord, zCoord, new ItemStack(this.tank.getFluid().getFluid().getBlock()));
+                            WorldUtil.placeBlockAtSide(sideToManipulate, worldObj, this.pos, new ItemStack(this.tank.getFluid().getFluid().getBlock()));
                             this.tank.drain(FluidContainerRegistry.BUCKET_VOLUME, true);
                         }
                     }
@@ -94,7 +96,7 @@ public class TileEntityFluidCollector extends TileEntityInventoryBase implements
     }
 
     @Override
-    public int fill(ForgeDirection from, FluidStack resource, boolean doFill){
+    public int fill(EnumFacing from, FluidStack resource, boolean doFill){
         if(this.isPlacer){
             return this.tank.fill(resource, doFill);
         }
@@ -102,7 +104,7 @@ public class TileEntityFluidCollector extends TileEntityInventoryBase implements
     }
 
     @Override
-    public FluidStack drain(ForgeDirection from, FluidStack resource, boolean doDrain){
+    public FluidStack drain(EnumFacing from, FluidStack resource, boolean doDrain){
         if(!this.isPlacer){
             return this.tank.drain(resource.amount, doDrain);
         }
@@ -110,7 +112,7 @@ public class TileEntityFluidCollector extends TileEntityInventoryBase implements
     }
 
     @Override
-    public FluidStack drain(ForgeDirection from, int maxDrain, boolean doDrain){
+    public FluidStack drain(EnumFacing from, int maxDrain, boolean doDrain){
         if(!this.isPlacer){
             return this.tank.drain(maxDrain, doDrain);
         }
@@ -118,17 +120,17 @@ public class TileEntityFluidCollector extends TileEntityInventoryBase implements
     }
 
     @Override
-    public boolean canFill(ForgeDirection from, Fluid fluid){
+    public boolean canFill(EnumFacing from, Fluid fluid){
         return this.isPlacer;
     }
 
     @Override
-    public boolean canDrain(ForgeDirection from, Fluid fluid){
+    public boolean canDrain(EnumFacing from, Fluid fluid){
         return !this.isPlacer;
     }
 
     @Override
-    public FluidTankInfo[] getTankInfo(ForgeDirection from){
+    public FluidTankInfo[] getTankInfo(EnumFacing from){
         return new FluidTankInfo[]{this.tank.getInfo()};
     }
 
@@ -157,12 +159,12 @@ public class TileEntityFluidCollector extends TileEntityInventoryBase implements
             }
 
             if(!this.isPlacer && this.tank.getFluidAmount() > 0){
-                WorldUtil.pushFluid(worldObj, xCoord, yCoord, zCoord, ForgeDirection.DOWN, this.tank);
+                WorldUtil.pushFluid(worldObj, this.pos, EnumFacing.DOWN, this.tank);
                 if(!this.isRedstonePowered){
-                    WorldUtil.pushFluid(worldObj, xCoord, yCoord, zCoord, ForgeDirection.NORTH, this.tank);
-                    WorldUtil.pushFluid(worldObj, xCoord, yCoord, zCoord, ForgeDirection.EAST, this.tank);
-                    WorldUtil.pushFluid(worldObj, xCoord, yCoord, zCoord, ForgeDirection.SOUTH, this.tank);
-                    WorldUtil.pushFluid(worldObj, xCoord, yCoord, zCoord, ForgeDirection.WEST, this.tank);
+                    WorldUtil.pushFluid(worldObj, this.pos, EnumFacing.NORTH, this.tank);
+                    WorldUtil.pushFluid(worldObj, this.pos, EnumFacing.EAST, this.tank);
+                    WorldUtil.pushFluid(worldObj, this.pos, EnumFacing.SOUTH, this.tank);
+                    WorldUtil.pushFluid(worldObj, this.pos, EnumFacing.WEST, this.tank);
                 }
             }
 
@@ -192,7 +194,7 @@ public class TileEntityFluidCollector extends TileEntityInventoryBase implements
     }
 
     @Override
-    public boolean canInsertItem(int slot, ItemStack stack, int side){
+    public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
         return this.isItemValidForSlot(slot, stack);
     }
 
@@ -210,7 +212,7 @@ public class TileEntityFluidCollector extends TileEntityInventoryBase implements
     }
 
     @Override
-    public boolean canExtractItem(int slot, ItemStack stack, int side){
+    public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
         return slot == 1;
     }
 

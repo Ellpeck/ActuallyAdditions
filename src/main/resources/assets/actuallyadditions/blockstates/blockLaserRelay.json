@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "meta=0": { "model": "actuallyadditions:blockLaserRelay", "x": 180 },
+    "meta=1": { "model": "actuallyadditions:blockLaserRelay"},
+    "meta=2": { "model": "actuallyadditions:blockLaserRelay", "x": 90 },
+    "meta=3": { "model": "actuallyadditions:blockLaserRelay", "x": 270 },
+    "meta=4": { "model": "actuallyadditions:blockLaserRelay", "x": 90, "y": 270 },
+    "meta=5": { "model": "actuallyadditions:blockLaserRelay", "x": 90, "y": 90 }
+  }
+}

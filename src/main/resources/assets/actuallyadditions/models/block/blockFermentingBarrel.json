@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "particle": "actuallyadditions:blocks/blockFermentingBarrel",
+    "down": "actuallyadditions:blocks/blockFermentingBarrelTop",
+    "up": "actuallyadditions:blocks/blockFermentingBarrelTop",
+    "north": "actuallyadditions:blocks/blockFermentingBarrel",
+    "east": "actuallyadditions:blocks/blockFermentingBarrel",
+    "south": "actuallyadditions:blocks/blockFermentingBarrel",
+    "west": "actuallyadditions:blocks/blockFermentingBarrel"
+  }
+}

@@ -10,29 +10,31 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import de.ellpeck.actuallyadditions.api.Position;
 import de.ellpeck.actuallyadditions.api.tile.IPhantomTile;
 import de.ellpeck.actuallyadditions.mod.blocks.BlockPhantom;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.network.PacketParticle;
+import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileEntityPhantomface extends TileEntityInventoryBase implements IPhantomTile{
 
     public static final int RANGE = 16;
     public static final float[] COLORS = new float[]{93F/255F, 43F/255F, 181F/255F};
-    public Position boundPosition;
+    public BlockPos boundPosition;
     public BlockPhantom.Type type;
     public int range;
     private int rangeBefore;
-    private Position boundPosBefore;
+    private BlockPos boundPosBefore;
     private Block boundBlockBefore;
 
     public TileEntityPhantomface(String name){
@@ -43,23 +45,23 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
     public void updateEntity(){
         super.updateEntity();
         if(!worldObj.isRemote){
-            this.range = upgradeRange(RANGE, worldObj, xCoord, yCoord, zCoord);
+            this.range = upgradeRange(RANGE, worldObj, this.getPos());
 
             if(!this.hasBoundPosition()){
                 this.boundPosition = null;
             }
 
-            if(this.boundPosition != this.boundPosBefore || (this.boundPosition != null && this.boundPosition.getBlock(worldObj) != this.boundBlockBefore) || this.rangeBefore != this.range){
+            if(this.boundPosition != this.boundPosBefore || (this.boundPosition != null && PosUtil.getBlock(this.boundPosition, worldObj) != this.boundBlockBefore) || this.rangeBefore != this.range){
                 this.rangeBefore = this.range;
                 this.boundPosBefore = this.boundPosition;
-                this.boundBlockBefore = this.boundPosition == null ? null : this.boundPosition.getBlock(worldObj);
+                this.boundBlockBefore = this.boundPosition == null ? null : PosUtil.getBlock(this.boundPosition, this.worldObj);
 
-                this.getWorldObj().markBlockForUpdate(this.xCoord+1, this.yCoord, this.zCoord);
-                this.getWorldObj().markBlockForUpdate(this.xCoord-1, this.yCoord, this.zCoord);
-                this.getWorldObj().markBlockForUpdate(this.xCoord, this.yCoord+1, this.zCoord);
-                this.getWorldObj().markBlockForUpdate(this.xCoord, this.yCoord-1, this.zCoord);
-                this.getWorldObj().markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord+1);
-                this.getWorldObj().markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord-1);
+                this.worldObj.markBlockForUpdate(PosUtil.offset(this.pos, 1, 0, 0));
+                this.worldObj.markBlockForUpdate(PosUtil.offset(this.pos, -1, 0, 0));
+                this.worldObj.markBlockForUpdate(PosUtil.offset(this.pos, 0, 1, 0));
+                this.worldObj.markBlockForUpdate(PosUtil.offset(this.pos, 0, -1, 0));
+                this.worldObj.markBlockForUpdate(PosUtil.offset(this.pos, 0, 0, 1));
+                this.worldObj.markBlockForUpdate(PosUtil.offset(this.pos, 0, 0, -1));
                 this.sendUpdate();
                 this.markDirty();
             }
@@ -88,18 +90,17 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
         int x = compound.getInteger("XCoordOfTileStored");
         int y = compound.getInteger("YCoordOfTileStored");
         int z = compound.getInteger("ZCoordOfTileStored");
-        int world = compound.getInteger("WorldOfTileStored");
         this.range = compound.getInteger("Range");
         if(!(x == 0 && y == 0 && z == 0)){
-            this.boundPosition = new Position(x, y, z);
+            this.boundPosition = new BlockPos(x, y, z);
             this.markDirty();
         }
     }
 
-    public static int upgradeRange(int defaultRange, World world, int x, int y, int z){
+    public static int upgradeRange(int defaultRange, World world, BlockPos pos){
         int newRange = defaultRange;
         for(int i = 0; i < 3; i++){
-            Block block = world.getBlock(x, y+1+i, z);
+            Block block = PosUtil.getBlock(PosUtil.offset(pos, 0, 1+i, 0), world);
             if(block == InitBlocks.blockPhantomBooster){
                 newRange = newRange*2;
             }
@@ -113,7 +114,7 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
     @Override
     public boolean hasBoundPosition(){
         if(this.boundPosition != null){
-            if(worldObj.getTileEntity(boundPosition.getX(), boundPosition.getY(), boundPosition.getZ()) instanceof IPhantomTile || (this.xCoord == this.boundPosition.getX() && this.yCoord == this.boundPosition.getY() && this.zCoord == this.boundPosition.getZ())){
+            if(worldObj.getTileEntity(boundPosition) instanceof IPhantomTile || (this.getPos().getX() == this.boundPosition.getX() && this.getPos().getY() == this.boundPosition.getY() && this.getPos().getZ() == this.boundPosition.getZ())){
                 this.boundPosition = null;
                 return false;
             }
@@ -133,27 +134,27 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
             double d5 = (double)(Util.RANDOM.nextFloat()*1.0F*(float)j1);
             double d0 = (double)this.boundPosition.getX()+0.5D+0.25D*(double)i1;
             double d3 = (double)(Util.RANDOM.nextFloat()*1.0F*(float)i1);
-            worldObj.spawnParticle("portal", d0, d1, d2, d3, d4, d5);
+            worldObj.spawnParticle(EnumParticleTypes.PORTAL, d0, d1, d2, d3, d4, d5);
         }
 
         if(this.ticksElapsed%80 == 0){
-            PacketParticle.renderParticlesFromAToB(xCoord, yCoord, zCoord, boundPosition.getX(), boundPosition.getY(), boundPosition.getZ(), 2, 0.35F, COLORS, 3);
+            PacketParticle.renderParticlesFromAToB(this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), boundPosition.getX(), boundPosition.getY(), boundPosition.getZ(), 2, 0.35F, COLORS, 3);
         }
     }
 
     @Override
     public boolean isBoundThingInRange(){
-        return this.hasBoundPosition() && this.boundPosition.toVec().distanceTo(Vec3.createVectorHelper(xCoord, yCoord, zCoord)) <= this.range;
+        return this.hasBoundPosition() && PosUtil.toVec(this.boundPosition).distanceTo(PosUtil.toVec(this.getPos())) <= this.range;
     }
 
     @Override
-    public Position getBoundPosition(){
+    public BlockPos getBoundPosition(){
         return this.boundPosition;
     }
 
     @Override
-    public void setBoundPosition(Position pos){
-        this.boundPosition = pos == null ? null : pos.copy();
+    public void setBoundPosition(BlockPos pos){
+        this.boundPosition = pos == null ? null : PosUtil.copyPos(pos);
     }
 
     @Override
@@ -167,12 +168,12 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
     }
 
     @Override
-    public boolean canInsertItem(int slot, ItemStack stack, int side){
+    public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
         return false;
     }
 
     @Override
-    public boolean canExtractItem(int slot, ItemStack stack, int side){
+    public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
         return false;
     }
 

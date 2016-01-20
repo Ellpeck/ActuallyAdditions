@@ -10,8 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.blocks.base.ItemBlockBase;
@@ -23,12 +22,13 @@ import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.IIcon;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
 public class BlockInputter extends BlockContainerBase{
@@ -53,17 +53,11 @@ public class BlockInputter extends BlockContainerBase{
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public IIcon getIcon(int side, int meta){
-        return this.blockIcon;
-    }
-
-    @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9){
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing par6, float par7, float par8, float par9){
         if(!world.isRemote){
-            TileEntityInputter inputter = (TileEntityInputter)world.getTileEntity(x, y, z);
+            TileEntityInputter inputter = (TileEntityInputter)world.getTileEntity(pos);
             if(inputter != null){
-                player.openGui(ActuallyAdditions.instance, this.isAdvanced ? GuiHandler.GuiTypes.INPUTTER_ADVANCED.ordinal() : GuiHandler.GuiTypes.INPUTTER.ordinal(), world, x, y, z);
+                player.openGui(ActuallyAdditions.instance, this.isAdvanced ? GuiHandler.GuiTypes.INPUTTER_ADVANCED.ordinal() : GuiHandler.GuiTypes.INPUTTER.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
             }
             return true;
         }
@@ -71,21 +65,15 @@ public class BlockInputter extends BlockContainerBase{
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister iconReg){
-        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName());
-    }
-
-    @Override
-    public void breakBlock(World world, int x, int y, int z, Block block, int par6){
+    public void breakBlock(World world, BlockPos pos, IBlockState state){
         if(!world.isRemote){
-            TileEntity aTile = world.getTileEntity(x, y, z);
+            TileEntity aTile = world.getTileEntity(pos);
             if(aTile instanceof TileEntityInventoryBase){
                 TileEntityInventoryBase tile = (TileEntityInventoryBase)aTile;
-                this.dropSlotFromInventory(0, tile, world, x, y, z);
+                this.dropSlotFromInventory(0, tile, world, pos);
             }
         }
-        super.breakBlock(world, x, y, z, block, par6);
+        super.breakBlock(world, pos, state);
     }
 
     @Override
@@ -95,7 +83,7 @@ public class BlockInputter extends BlockContainerBase{
 
     @Override
     public EnumRarity getRarity(ItemStack stack){
-        return EnumRarity.epic;
+        return EnumRarity.EPIC;
     }
 
     public static class TheItemBlock extends ItemBlockBase{

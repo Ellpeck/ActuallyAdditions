@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "meta=0": { "model": "actuallyadditions:blockAtomicReconstructor", "x": 90 },
+    "meta=1": { "model": "actuallyadditions:blockAtomicReconstructor", "x": -90 },
+    "meta=2": { "model": "actuallyadditions:blockAtomicReconstructor", "y": 0 },
+    "meta=3": { "model": "actuallyadditions:blockAtomicReconstructor", "y": 180 },
+    "meta=4": { "model": "actuallyadditions:blockAtomicReconstructor", "y": 270 },
+    "meta=5": { "model": "actuallyadditions:blockAtomicReconstructor", "y": 90 }
+  }
+}

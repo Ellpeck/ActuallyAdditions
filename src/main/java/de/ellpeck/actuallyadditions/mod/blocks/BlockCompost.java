@@ -10,9 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import de.ellpeck.actuallyadditions.api.block.IHudDisplay;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.items.ItemFertilizer;
 import de.ellpeck.actuallyadditions.mod.items.ItemMisc;
@@ -20,23 +17,20 @@ import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityCompost;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
-import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.profiler.Profiler;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.IIcon;
-import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.*;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
@@ -53,34 +47,18 @@ public class BlockCompost extends BlockContainerBase implements IHudDisplay{
     }
 
     @Override
-    public boolean renderAsNormalBlock(){
-        return false;
-    }
-
-    @Override
-    public int getRenderType(){
-        return AssetUtil.compostRenderId;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public IIcon getIcon(int side, int metadata){
-        return this.blockIcon;
-    }
-
-    @Override
-    public void addCollisionBoxesToList(World world, int x, int y, int z, AxisAlignedBB mask, List list, Entity collidingEntity){
+    public void addCollisionBoxesToList(World world, BlockPos pos, IBlockState state, AxisAlignedBB mask, List list, Entity collidingEntity){
         this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.3125F, 1.0F);
-        super.addCollisionBoxesToList(world, x, y, z, mask, list, collidingEntity);
+        super.addCollisionBoxesToList(world, pos, state, mask, list, collidingEntity);
         float f = 0.125F;
         this.setBlockBounds(0.0F, 0.0F, 0.0F, f, 1.0F, 1.0F);
-        super.addCollisionBoxesToList(world, x, y, z, mask, list, collidingEntity);
+        super.addCollisionBoxesToList(world, pos, state, mask, list, collidingEntity);
         this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, f);
-        super.addCollisionBoxesToList(world, x, y, z, mask, list, collidingEntity);
+        super.addCollisionBoxesToList(world, pos, state, mask, list, collidingEntity);
         this.setBlockBounds(1.0F-f, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
-        super.addCollisionBoxesToList(world, x, y, z, mask, list, collidingEntity);
+        super.addCollisionBoxesToList(world, pos, state, mask, list, collidingEntity);
         this.setBlockBounds(0.0F, 0.0F, 1.0F-f, 1.0F, 1.0F, 1.0F);
-        super.addCollisionBoxesToList(world, x, y, z, mask, list, collidingEntity);
+        super.addCollisionBoxesToList(world, pos, state, mask, list, collidingEntity);
         this.setBlockBoundsForItemRender();
     }
 
@@ -90,10 +68,10 @@ public class BlockCompost extends BlockContainerBase implements IHudDisplay{
     }
 
     @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int f6, float f7, float f8, float f9){
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing f6, float f7, float f8, float f9){
         if(!world.isRemote){
             ItemStack stackPlayer = player.getCurrentEquippedItem();
-            TileEntityCompost tile = (TileEntityCompost)world.getTileEntity(x, y, z);
+            TileEntityCompost tile = (TileEntityCompost)world.getTileEntity(pos);
             //Add items to be composted
             if(stackPlayer != null && stackPlayer.getItem() instanceof ItemMisc && stackPlayer.getItemDamage() == TheMiscItems.MASHED_FOOD.ordinal() && (tile.slots[0] == null || (!(tile.slots[0].getItem() instanceof ItemFertilizer) && tile.slots[0].stackSize < TileEntityCompost.AMOUNT))){
                 if(tile.slots[0] == null){
@@ -130,31 +108,25 @@ public class BlockCompost extends BlockContainerBase implements IHudDisplay{
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister iconReg){
-        this.blockIcon = Blocks.planks.getIcon(0, 0);
-    }
-
-    @Override
     public TileEntity createNewTileEntity(World world, int meta){
         return new TileEntityCompost();
     }
 
     @Override
-    public void breakBlock(World world, int x, int y, int z, Block block, int par6){
-        this.dropInventory(world, x, y, z);
-        super.breakBlock(world, x, y, z, block, par6);
+    public void breakBlock(World world, BlockPos pos, IBlockState state){
+        this.dropInventory(world, pos);
+        super.breakBlock(world, pos, state);
     }
 
     @Override
     public EnumRarity getRarity(ItemStack stack){
-        return EnumRarity.uncommon;
+        return EnumRarity.UNCOMMON;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public void displayHud(Minecraft minecraft, EntityPlayer player, ItemStack stack, MovingObjectPosition posHit, Profiler profiler, ScaledResolution resolution){
-        TileEntity tile = minecraft.theWorld.getTileEntity(posHit.blockX, posHit.blockY, posHit.blockZ);
+        TileEntity tile = minecraft.theWorld.getTileEntity(posHit.getBlockPos());
         if(tile instanceof TileEntityCompost){
             ItemStack slot = ((TileEntityCompost)tile).getStackInSlot(0);
             String strg;
@@ -166,7 +138,7 @@ public class BlockCompost extends BlockContainerBase implements IHudDisplay{
 
                 AssetUtil.renderStackToGui(slot, resolution.getScaledWidth()/2+15, resolution.getScaledHeight()/2-29, 1F);
             }
-            minecraft.fontRenderer.drawStringWithShadow(EnumChatFormatting.YELLOW+""+EnumChatFormatting.ITALIC+strg, resolution.getScaledWidth()/2+35, resolution.getScaledHeight()/2-25, StringUtil.DECIMAL_COLOR_WHITE);
+            minecraft.fontRendererObj.drawStringWithShadow(EnumChatFormatting.YELLOW+""+EnumChatFormatting.ITALIC+strg, resolution.getScaledWidth()/2+35, resolution.getScaledHeight()/2-25, StringUtil.DECIMAL_COLOR_WHITE);
         }
     }
 }

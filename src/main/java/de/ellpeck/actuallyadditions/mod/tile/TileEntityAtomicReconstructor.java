@@ -12,22 +12,23 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
-import cpw.mods.fml.common.network.NetworkRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import de.ellpeck.actuallyadditions.api.Position;
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.lens.ILensItem;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
-import de.ellpeck.actuallyadditions.api.tile.IEnergyDisplay;
 import de.ellpeck.actuallyadditions.mod.items.lens.Lenses;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
 import de.ellpeck.actuallyadditions.mod.network.PacketParticle;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.world.World;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileEntityAtomicReconstructor extends TileEntityInventoryBase implements IEnergyReceiver, IEnergySaver, IRedstoneToggle, IEnergyDisplay, IAtomicReconstructor{
 
@@ -67,7 +68,7 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
 
     private void doWork(){
         if(this.storage.getEnergyStored() >= ENERGY_USE){
-            ForgeDirection sideToManipulate = ForgeDirection.getOrientation(worldObj.getBlockMetadata(xCoord, yCoord, zCoord));
+            EnumFacing sideToManipulate = WorldUtil.getDirectionByPistonRotation(PosUtil.getMetadata(this.pos, worldObj));
             //Extract energy for shooting the laser itself too!
             this.storage.extractEnergy(ENERGY_USE, false);
 
@@ -75,7 +76,7 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
             Lens currentLens = this.getCurrentLens();
             int distance = currentLens.getDistance();
             for(int i = 0; i < distance; i++){
-                Position hitBlock = WorldUtil.getCoordsFromSide(sideToManipulate, xCoord, yCoord, zCoord, i);
+                BlockPos hitBlock = WorldUtil.getCoordsFromSide(sideToManipulate, this.pos, i);
 
                 if(currentLens.invoke(hitBlock, this)){
                     this.shootLaser(hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), currentLens);
@@ -98,8 +99,8 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
     }
 
     private void shootLaser(int endX, int endY, int endZ, Lens currentLens){
-        this.worldObj.playSoundEffect(xCoord, yCoord, zCoord, ModUtil.MOD_ID_LOWER+":reconstructor", 0.35F, 1.0F);
-        PacketHandler.theNetwork.sendToAllAround(new PacketParticle(xCoord, yCoord, zCoord, endX, endY, endZ, currentLens.getColor(), 8, 2F), new NetworkRegistry.TargetPoint(worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 64));
+        this.worldObj.playSoundEffect(this.getX(), this.getY(), this.getZ(), ModUtil.MOD_ID_LOWER+":reconstructor", 0.35F, 1.0F);
+        PacketHandler.theNetwork.sendToAllAround(new PacketParticle(this.getX(), this.getY(), this.getZ(), endX, endY, endZ, currentLens.getColor(), 8, 2F), new NetworkRegistry.TargetPoint(worldObj.provider.getDimensionId(), this.getX(), this.getY(), this.getZ(), 64));
     }
 
     @Override
@@ -134,27 +135,27 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
     }
 
     @Override
-    public int receiveEnergy(ForgeDirection from, int maxReceive, boolean simulate){
+    public int receiveEnergy(EnumFacing from, int maxReceive, boolean simulate){
         return this.storage.receiveEnergy(maxReceive, simulate);
     }
 
     @Override
-    public int getEnergyStored(ForgeDirection from){
+    public int getEnergyStored(EnumFacing from){
         return this.storage.getEnergyStored();
     }
 
     @Override
-    public int getMaxEnergyStored(ForgeDirection from){
+    public int getMaxEnergyStored(EnumFacing from){
         return this.storage.getMaxEnergyStored();
     }
 
     @Override
-    public boolean canConnectEnergy(ForgeDirection from){
+    public boolean canConnectEnergy(EnumFacing from){
         return true;
     }
 
     @Override
-    public boolean canInsertItem(int slot, ItemStack stack, int side){
+    public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
         return this.isItemValidForSlot(slot, stack);
     }
 
@@ -164,23 +165,28 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
     }
 
     @Override
-    public boolean canExtractItem(int slot, ItemStack stack, int side){
+    public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
         return true;
     }
 
     @Override
     public int getX(){
-        return this.xCoord;
+        return this.getPos().getX();
     }
 
     @Override
     public int getY(){
-        return this.yCoord;
+        return this.getPos().getY();
     }
 
     @Override
     public int getZ(){
-        return this.zCoord;
+        return this.getPos().getZ();
+    }
+
+    @Override
+    public World getWorldObject(){
+        return this.getWorld();
     }
 
     @Override

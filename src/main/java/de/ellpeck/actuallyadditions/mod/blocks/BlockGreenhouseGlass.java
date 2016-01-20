@@ -10,20 +10,21 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityGreenhouseGlass;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Facing;
-import net.minecraft.util.IIcon;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumWorldBlockLayer;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockGreenhouseGlass extends BlockContainerBase{
 
@@ -36,21 +37,14 @@ public class BlockGreenhouseGlass extends BlockContainerBase{
     }
 
     @Override
-    public boolean renderAsNormalBlock(){
+    @SideOnly(Side.CLIENT)
+    public EnumWorldBlockLayer getBlockLayer(){
+        return EnumWorldBlockLayer.CUTOUT;
+    }
+
+    @Override
+    public boolean isFullCube(){
         return false;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public boolean shouldSideBeRendered(IBlockAccess world, int x, int y, int z, int meta){
-        return world.getBlockMetadata(x, y, z) != world.getBlockMetadata(x-Facing.offsetsXForSide[meta], y-Facing.offsetsYForSide[meta], z-Facing.offsetsZForSide[meta]) || (world.getBlock(x, y, z) != this && super.shouldSideBeRendered(world, x, y, z, meta));
-
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public IIcon getIcon(int side, int metadata){
-        return this.blockIcon;
     }
 
     @Override
@@ -59,20 +53,8 @@ public class BlockGreenhouseGlass extends BlockContainerBase{
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public int getRenderBlockPass(){
-        return 0;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister iconReg){
-        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName());
-    }
-
-    @Override
     public EnumRarity getRarity(ItemStack stack){
-        return EnumRarity.epic;
+        return EnumRarity.EPIC;
     }
 
     @Override
@@ -80,4 +62,12 @@ public class BlockGreenhouseGlass extends BlockContainerBase{
         return new TileEntityGreenhouseGlass();
     }
 
+    @Override
+    @SideOnly(Side.CLIENT)
+    public boolean shouldSideBeRendered(IBlockAccess worldIn, BlockPos pos, EnumFacing side){
+        IBlockState state = worldIn.getBlockState(pos);
+        Block block = state.getBlock();
+        return worldIn.getBlockState(pos.offset(side.getOpposite())) != state || block != this && block != this && super.shouldSideBeRendered(worldIn, pos, side);
+
+    }
 }

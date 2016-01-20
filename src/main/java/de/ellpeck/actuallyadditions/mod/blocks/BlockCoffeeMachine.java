@@ -10,27 +10,27 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityCoffeeMachine;
-import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import net.minecraft.block.Block;
+import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.block.properties.PropertyInteger;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.IIcon;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
 public class BlockCoffeeMachine extends BlockContainerBase{
+
+    private static final PropertyInteger META = PropertyInteger.create("meta", 0, 3);
 
     public BlockCoffeeMachine(String name){
         super(Material.rock, name);
@@ -39,24 +39,14 @@ public class BlockCoffeeMachine extends BlockContainerBase{
         this.setResistance(10.0F);
         this.setStepSound(soundTypeStone);
 
-        float f = 1/16F;
-        this.setBlockBounds(f, 0F, f, 1F-f, 1F-2*f, 1F-f);
+        //TODO Fix bounding box
+        //float f = 1/16F;
+        //this.setBlockBounds(f, 0F, f, 1F-f, 1F-2*f, 1F-f);
     }
 
     @Override
-    public boolean renderAsNormalBlock(){
-        return false;
-    }
-
-    @Override
-    public int getRenderType(){
-        return AssetUtil.coffeeMachineRenderId;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public IIcon getIcon(int side, int metadata){
-        return this.blockIcon;
+    protected PropertyInteger getMetaProperty(){
+        return META;
     }
 
     @Override
@@ -65,21 +55,15 @@ public class BlockCoffeeMachine extends BlockContainerBase{
     }
 
     @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int f6, float f7, float f8, float f9){
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing f6, float f7, float f8, float f9){
         if(!world.isRemote){
-            TileEntityCoffeeMachine machine = (TileEntityCoffeeMachine)world.getTileEntity(x, y, z);
+            TileEntityCoffeeMachine machine = (TileEntityCoffeeMachine)world.getTileEntity(pos);
             if(machine != null){
-                player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.COFFEE_MACHINE.ordinal(), world, x, y, z);
+                player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.COFFEE_MACHINE.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
             }
             return true;
         }
         return true;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister iconReg){
-        this.blockIcon = Blocks.coal_block.getIcon(0, 0);
     }
 
     @Override
@@ -88,33 +72,33 @@ public class BlockCoffeeMachine extends BlockContainerBase{
     }
 
     @Override
-    public void breakBlock(World world, int x, int y, int z, Block block, int par6){
-        this.dropInventory(world, x, y, z);
-        super.breakBlock(world, x, y, z, block, par6);
+    public void breakBlock(World world, BlockPos pos, IBlockState state){
+        this.dropInventory(world, pos);
+        super.breakBlock(world, pos, state);
     }
 
     @Override
     public EnumRarity getRarity(ItemStack stack){
-        return EnumRarity.epic;
+        return EnumRarity.EPIC;
     }
 
     @Override
-    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack stack){
+    public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase player, ItemStack stack){
         int rotation = MathHelper.floor_double((double)(player.rotationYaw*4.0F/360.0F)+0.5D) & 3;
 
         if(rotation == 0){
-            world.setBlockMetadataWithNotify(x, y, z, 2, 2);
+            PosUtil.setMetadata(pos, world, 0, 2);
         }
         if(rotation == 1){
-            world.setBlockMetadataWithNotify(x, y, z, 1, 2);
+            PosUtil.setMetadata(pos, world, 3, 2);
         }
         if(rotation == 2){
-            world.setBlockMetadataWithNotify(x, y, z, 0, 2);
+            PosUtil.setMetadata(pos, world, 1, 2);
         }
         if(rotation == 3){
-            world.setBlockMetadataWithNotify(x, y, z, 3, 2);
+            PosUtil.setMetadata(pos, world, 2, 2);
         }
 
-        super.onBlockPlacedBy(world, x, y, z, player, stack);
+        super.onBlockPlacedBy(world, pos, state, player, stack);
     }
 }

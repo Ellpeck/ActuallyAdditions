@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "meta=0": { "model": "actuallyadditions:blockGrinder" },
+    "meta=1": { "model": "actuallyadditions:blockGrinderOn" }
+  }
+}

@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.crafting;
 
-import cpw.mods.fml.common.registry.GameRegistry;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigCrafting;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheFoods;
@@ -20,6 +19,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
@@ -56,7 +56,7 @@ public class FoodCrafting{
         //Bacon
         if(ConfigCrafting.BACON.isEnabled()){
             GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemFoods, 3, TheFoods.BACON.ordinal()),
-                    knifeStack, new ItemStack(Items.cooked_porkchop)));
+                    knifeStack.copy(), new ItemStack(Items.cooked_porkchop)));
             recipeBacon = Util.GetRecipes.lastIRecipe();
         }
 
@@ -73,8 +73,8 @@ public class FoodCrafting{
                     'D', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.DOUGH.ordinal()),
                     'M', new ItemStack(Blocks.brown_mushroom),
                     'C', "cropCarrot",
-                    'F', new ItemStack(Items.cooked_fished, 1, Util.WILDCARD),
-                    'K', knifeStack,
+                    'F', new ItemStack(Items.cooked_fish, 1, Util.WILDCARD),
+                    'K', knifeStack.copy(),
                     'H', new ItemStack(InitItems.itemFoods, 1, TheFoods.CHEESE.ordinal())));
             recipePizza = Util.GetRecipes.lastIRecipe();
         }
@@ -85,7 +85,7 @@ public class FoodCrafting{
                     "KT ", "CB ", " T ",
                     'T', new ItemStack(InitItems.itemFoods, 1, TheFoods.TOAST.ordinal()),
                     'C', new ItemStack(InitItems.itemFoods, 1, TheFoods.CHEESE.ordinal()),
-                    'K', knifeStack,
+                    'K', knifeStack.copy(),
                     'B', new ItemStack(Items.cooked_beef)));
             recipeHamburger = Util.GetRecipes.lastIRecipe();
         }
@@ -105,9 +105,9 @@ public class FoodCrafting{
                     "KCP", "FB ", "PCP",
                     'P', new ItemStack(Items.paper),
                     'C', new ItemStack(InitItems.itemFoods, 1, TheFoods.CHEESE.ordinal()),
-                    'F', new ItemStack(Items.cooked_fished, 1, Util.WILDCARD),
+                    'F', new ItemStack(Items.cooked_fish, 1, Util.WILDCARD),
                     'B', new ItemStack(InitItems.itemFoods, 1, TheFoods.BAGUETTE.ordinal()),
-                    'K', knifeStack));
+                    'K', knifeStack.copy()));
             recipeSubSandwich = Util.GetRecipes.lastIRecipe();
         }
 
@@ -115,7 +115,7 @@ public class FoodCrafting{
         if(ConfigCrafting.FRENCH_FRY.isEnabled()){
             GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemFoods, 2, TheFoods.FRENCH_FRY.ordinal()),
                     new ItemStack(Items.baked_potato),
-                    knifeStack));
+                    knifeStack.copy()));
             recipeFrenchFry = Util.GetRecipes.lastIRecipe();
         }
 
@@ -132,7 +132,7 @@ public class FoodCrafting{
         if(ConfigCrafting.FISH_N_CHIPS.isEnabled()){
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemFoods, 1, TheFoods.FISH_N_CHIPS.ordinal()),
                     "FIF", " P ",
-                    'I', new ItemStack(Items.cooked_fished, 1, Util.WILDCARD),
+                    'I', new ItemStack(Items.cooked_fish, 1, Util.WILDCARD),
                     'P', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.PAPER_CONE.ordinal()),
                     'F', new ItemStack(InitItems.itemFoods, 1, TheFoods.FRENCH_FRY.ordinal())));
             recipeFishNChips = Util.GetRecipes.lastIRecipe();
@@ -157,7 +157,7 @@ public class FoodCrafting{
         //Carrot Juice
         if(ConfigCrafting.CARROT_JUICE.isEnabled()){
             GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemFoods, 1, TheFoods.CARROT_JUICE.ordinal()),
-                    new ItemStack(Items.glass_bottle), "cropCarrot", knifeStack));
+                    new ItemStack(Items.glass_bottle), "cropCarrot", knifeStack.copy()));
             recipeCarrotJuice = Util.GetRecipes.lastIRecipe();
         }
 
@@ -173,7 +173,7 @@ public class FoodCrafting{
         //Noodle
         if(ConfigCrafting.NOODLE.isEnabled()){
             GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemFoods, 1, TheFoods.NOODLE.ordinal()),
-                    "cropWheat", knifeStack));
+                    "cropWheat", knifeStack.copy()));
             recipeNoodle = Util.GetRecipes.lastIRecipe();
         }
 

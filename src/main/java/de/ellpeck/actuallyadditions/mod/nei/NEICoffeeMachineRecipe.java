@@ -17,7 +17,6 @@ import codechicken.nei.recipe.RecipeInfo;
 import codechicken.nei.recipe.TemplateRecipeHandler;
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.booklet.BookletPage;
-import de.ellpeck.actuallyadditions.api.booklet.INEIRecipeHandler;
 import de.ellpeck.actuallyadditions.api.recipe.coffee.CoffeeBrewing;
 import de.ellpeck.actuallyadditions.api.recipe.coffee.CoffeeIngredient;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
@@ -30,8 +29,8 @@ import de.ellpeck.actuallyadditions.mod.tile.TileEntityCoffeeMachine;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.item.ItemStack;
-import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -114,7 +113,6 @@ public class NEICoffeeMachineRecipe extends TemplateRecipeHandler implements INE
             GuiDraw.drawString(StringUtil.localize("container.nei."+ModUtil.MOD_ID_LOWER+".coffee.special")+":", 2, 4, StringUtil.DECIMAL_COLOR_GRAY_TEXT, false);
             GuiDraw.drawString(cache.extraText, 2, 16, StringUtil.DECIMAL_COLOR_GRAY_TEXT, false);
         }
-        GuiDraw.drawString(StringUtil.localize("container.nei."+ModUtil.MOD_ID_LOWER+".coffee.shift"), 1, 75, StringUtil.DECIMAL_COLOR_GRAY_TEXT, false);
 
         if(cache.maxAmp > 0){
             GuiDraw.drawString(StringUtil.localize("container.nei."+ModUtil.MOD_ID_LOWER+".coffee.maxAmount")+": "+cache.maxAmp, 2, 28, StringUtil.DECIMAL_COLOR_GRAY_TEXT, false);
@@ -128,7 +126,7 @@ public class NEICoffeeMachineRecipe extends TemplateRecipeHandler implements INE
 
     @Override
     public void drawBackground(int recipeIndex){
-        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         GuiDraw.changeTexture(getGuiTexture());
         GuiDraw.drawTexturedModalRect(0, 0, 0, 0, 126, 88);
     }

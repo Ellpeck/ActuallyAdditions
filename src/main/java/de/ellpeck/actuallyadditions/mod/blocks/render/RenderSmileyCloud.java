@@ -10,40 +10,25 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks.render;
 
-import de.ellpeck.actuallyadditions.mod.blocks.render.model.ModelBaseAA;
-import de.ellpeck.actuallyadditions.mod.misc.cloud.ISmileyCloudEasterEgg;
-import de.ellpeck.actuallyadditions.mod.misc.cloud.SmileyCloudEasterEggs;
-import de.ellpeck.actuallyadditions.mod.proxy.ClientProxy;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntitySmileyCloud;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
-import de.ellpeck.actuallyadditions.mod.util.StringUtil;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.OpenGlHelper;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ResourceLocation;
-import org.lwjgl.opengl.GL11;
 
-public class RenderSmileyCloud extends RenderTileEntity{
+//TODO Fix Smiley Cloud
+public class RenderSmileyCloud extends TileEntitySpecialRenderer{
 
-    private static final ResourceLocation resLocValentine = new ResourceLocation(ModUtil.MOD_ID_LOWER, "textures/blocks/models/modelPinkFluffyUnicloud.png");
-
-    public RenderSmileyCloud(ModelBaseAA model){
-        super(model);
-    }
+    //private static final ResourceLocation resLocValentine = new ResourceLocation(ModUtil.MOD_ID_LOWER, "textures/blocks/models/modelPinkFluffyUnicloud.png");
 
     @Override
-    public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float par5){
-        if(!(tile instanceof TileEntitySmileyCloud)){
+    public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float par5, int partial){
+        /*if(!(tile instanceof TileEntitySmileyCloud)){
             return;
         }
         TileEntitySmileyCloud theCloud = (TileEntitySmileyCloud)tile;
 
-        GL11.glPushMatrix();
+        GlStateManager.pushMatrix();
         {
             if(theCloud.flyHeight == 0){
-                theCloud.flyHeight = tile.getWorldObj().rand.nextInt(30)+30;
+                theCloud.flyHeight = tile.getWorld().rand.nextInt(30)+30;
             }
             int bobHeight = theCloud.flyHeight;
             double theTime = Minecraft.getSystemTime();
@@ -54,28 +39,28 @@ public class RenderSmileyCloud extends RenderTileEntity{
             }
 
             if(time-(bobHeight/2) >= theCloud.lastFlyHeight){
-                GL11.glTranslated(0, (time-theCloud.lastFlyHeight)/300, 0);
+                GlStateManager.translate(0, (time-theCloud.lastFlyHeight)/300, 0);
             }
             else{
-                GL11.glTranslated(0, -(time-theCloud.lastFlyHeight)/300+(double)bobHeight/300, 0);
+                GlStateManager.translate(0, -(time-theCloud.lastFlyHeight)/300+(double)bobHeight/300, 0);
             }
 
-            GL11.glTranslatef((float)x+0.5F, (float)y-0.5F, (float)z+0.5F);
-            GL11.glRotatef(180F, 0.0F, 0.0F, 1.0F);
-            GL11.glTranslatef(0.0F, -2F, 0.0F);
+            GlStateManager.translate((float)x+0.5F, (float)y-0.5F, (float)z+0.5F);
+            GlStateManager.rotate(180F, 0.0F, 0.0F, 1.0F);
+            GlStateManager.translate(0.0F, -2F, 0.0F);
 
-            GL11.glPushMatrix();
+            GlStateManager.pushMatrix();
             {
                 if(theModel.doesRotate()){
-                    int meta = tile.getWorldObj().getBlockMetadata(tile.xCoord, tile.yCoord, tile.zCoord);
+                    int meta = PosUtil.getMetadata(tile.getPos(), tile.getWorld());
                     if(meta == 0){
-                        GL11.glRotatef(180F, 0F, 1F, 0F);
+                        GlStateManager.rotate(180F, 0F, 1F, 0F);
                     }
                     if(meta == 1){
-                        GL11.glRotatef(90F, 0F, 1F, 0F);
+                        GlStateManager.rotate(90F, 0F, 1F, 0F);
                     }
                     if(meta == 3){
-                        GL11.glRotatef(270F, 0F, 1F, 0F);
+                        GlStateManager.rotate(270F, 0F, 1F, 0F);
                     }
                 }
 
@@ -104,49 +89,51 @@ public class RenderSmileyCloud extends RenderTileEntity{
                     }
                 }
             }
-            GL11.glPopMatrix();
+            GlStateManager.popMatrix();
 
             if(theCloud.name != null && !theCloud.name.isEmpty() && !Minecraft.getMinecraft().gameSettings.hideGUI){
-                GL11.glPushMatrix();
+                GlStateManager.pushMatrix();
                 {
-                    GL11.glTranslatef(0F, 0.1F, 0F);
-                    GL11.glRotatef(180F, 1F, 0F, 0F);
-                    GL11.glRotatef(180F, 0F, 1F, 0F);
+                    GlStateManager.translate(0F, 0.1F, 0F);
+                    GlStateManager.rotate(180F, 1F, 0F, 0F);
+                    GlStateManager.rotate(180F, 0F, 1F, 0F);
 
-                    GL11.glRotatef(-RenderManager.instance.playerViewY, 0.0F, 1.0F, 0.0F);
-                    GL11.glRotatef(RenderManager.instance.playerViewX, 1.0F, 0.0F, 0.0F);
+                    GlStateManager.rotate(-Minecraft.getMinecraft().getRenderManager().playerViewY, 0.0F, 1.0F, 0.0F);
+                    GlStateManager.rotate(Minecraft.getMinecraft().getRenderManager().playerViewX, 1.0F, 0.0F, 0.0F);
                     float f = 1.6F;
                     float f1 = 0.016666668F*f;
-                    GL11.glScalef(-f1, -f1, f1);
-                    GL11.glDisable(GL11.GL_LIGHTING);
-                    GL11.glTranslatef(0.0F, 0F/f1, 0.0F);
-                    GL11.glDepthMask(false);
-                    GL11.glEnable(GL11.GL_BLEND);
-                    OpenGlHelper.glBlendFunc(770, 771, 1, 0);
-                    Tessellator tessellator = Tessellator.instance;
-                    GL11.glDisable(GL11.GL_TEXTURE_2D);
+                    GlStateManager.scale(-f1, -f1, f1);
+                    GlStateManager.disableLighting();
+                    GlStateManager.translate(0.0F, 0F/f1, 0.0F);
+                    GlStateManager.depthMask(false);
+                    GlStateManager.enableBlend();
+                    GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+                    //TODO Fix nameplate with Smiley Cloud
+                    Tessellator tessellator = Tessellator.getInstance();
+                    GlStateManager.glDisable(GlStateManager.GL_TEXTURE_2D);
                     tessellator.startDrawingQuads();
-                    int i = Minecraft.getMinecraft().fontRenderer.getStringWidth(theCloud.name)/2;
+                    int i = Minecraft.getMinecraft().fontRendererObj.getStringWidth(theCloud.name)/2;
                     tessellator.setColorRGBA_F(0.0F, 0.0F, 0.0F, 0.25F);
                     tessellator.addVertex(-i-1, -1.0D, 0.0D);
                     tessellator.addVertex(-i-1, 8.0D, 0.0D);
                     tessellator.addVertex(i+1, 8.0D, 0.0D);
                     tessellator.addVertex(i+1, -1.0D, 0.0D);
                     tessellator.draw();
-                    GL11.glEnable(GL11.GL_TEXTURE_2D);
-                    GL11.glDepthMask(true);
+                    GlStateManager.glEnable(GlStateManager.GL_TEXTURE_2D);
+                    GlStateManager.depthMask(true);
 
-                    Minecraft.getMinecraft().fontRenderer.drawString(theCloud.name, -Minecraft.getMinecraft().fontRenderer.getStringWidth(theCloud.name)/2, 0, StringUtil.DECIMAL_COLOR_WHITE);
+                    Minecraft.getMinecraft().fontRendererObj.drawString(theCloud.name, -Minecraft.getMinecraft().fontRendererObj.getStringWidth(theCloud.name)/2, 0, StringUtil.DECIMAL_COLOR_WHITE);
 
-                    GL11.glEnable(GL11.GL_LIGHTING);
-                    GL11.glDisable(GL11.GL_BLEND);
-                    GL11.glColor4f(1F, 1F, 1F, 1F);
-                    GL11.glScalef(1F/-f1, 1F/-f1, 1F/f1);
+                    GlStateManager.enableLighting();
+                    GlStateManager.disableBlend();
+                    GlStateManager.color(1F, 1F, 1F, 1F);
+                    GlStateManager.scale(1F/-f1, 1F/-f1, 1F/f1);
                 }
-                GL11.glPopMatrix();
+                GlStateManager.popMatrix();
             }
         }
-        GL11.glPopMatrix();
+        GlStateManager.popMatrix();
+        */
     }
 
 }

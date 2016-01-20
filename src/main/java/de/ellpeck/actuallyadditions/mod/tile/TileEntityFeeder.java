@@ -10,13 +10,15 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumParticleTypes;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
@@ -45,7 +47,7 @@ public class TileEntityFeeder extends TileEntityInventoryBase{
         if(!worldObj.isRemote){
             boolean theFlag = this.currentTimer > 0;
             int range = 5;
-            List<EntityAnimal> animals = worldObj.getEntitiesWithinAABB(EntityAnimal.class, AxisAlignedBB.getBoundingBox(this.xCoord-range, this.yCoord-range, this.zCoord-range, this.xCoord+range, this.yCoord+range, this.zCoord+range));
+            List<EntityAnimal> animals = worldObj.getEntitiesWithinAABB(EntityAnimal.class, AxisAlignedBB.fromBounds(this.pos.getX()-range, this.pos.getY()-range, this.pos.getZ()-range, this.pos.getX()+range, this.pos.getY()+range, this.pos.getZ()+range));
             if(animals != null){
                 this.currentAnimalAmount = animals.size();
                 if(this.currentAnimalAmount >= 2){
@@ -108,17 +110,17 @@ public class TileEntityFeeder extends TileEntityInventoryBase{
     }
 
     public void feedAnimal(EntityAnimal animal){
-        animal.func_146082_f(null);
+        animal.setInLove(null);
         for(int i = 0; i < 7; i++){
             double d = Util.RANDOM.nextGaussian()*0.02D;
             double d1 = Util.RANDOM.nextGaussian()*0.02D;
             double d2 = Util.RANDOM.nextGaussian()*0.02D;
-            worldObj.spawnParticle("heart", (animal.posX+(double)(Util.RANDOM.nextFloat()*animal.width*2.0F))-animal.width, animal.posY+0.5D+(double)(Util.RANDOM.nextFloat()*animal.height), (animal.posZ+(double)(Util.RANDOM.nextFloat()*animal.width*2.0F))-animal.width, d, d1, d2);
+            worldObj.spawnParticle(EnumParticleTypes.HEART, (animal.posX+(double)(Util.RANDOM.nextFloat()*animal.width*2.0F))-animal.width, animal.posY+0.5D+(double)(Util.RANDOM.nextFloat()*animal.height), (animal.posZ+(double)(Util.RANDOM.nextFloat()*animal.width*2.0F))-animal.width, d, d1, d2);
         }
     }
 
     @Override
-    public boolean canInsertItem(int slot, ItemStack stack, int side){
+    public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
         return this.isItemValidForSlot(slot, stack);
     }
 
@@ -128,7 +130,7 @@ public class TileEntityFeeder extends TileEntityInventoryBase{
     }
 
     @Override
-    public boolean canExtractItem(int slot, ItemStack stack, int side){
+    public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
         return false;
     }
 }

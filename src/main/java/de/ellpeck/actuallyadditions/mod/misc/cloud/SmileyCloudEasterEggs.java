@@ -16,10 +16,10 @@ import de.ellpeck.actuallyadditions.mod.items.metalists.TheFoods;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import net.minecraft.block.Block;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import org.lwjgl.opengl.GL11;
 
 import java.util.ArrayList;
 
@@ -377,30 +377,30 @@ public class SmileyCloudEasterEggs{
     }
 
     private static void renderHoldingItem(boolean leftHand, ItemStack stack){
-        GL11.glPushMatrix();
+        GlStateManager.pushMatrix();
 
-        GL11.glRotatef(180F, 0F, 0F, 1F);
-        GL11.glRotatef(270F, 0F, 1F, 0F);
-        GL11.glTranslatef(0F, -1.5F, 0F);
-        GL11.glTranslatef(-0.5F, 0.2F, leftHand ? 0.55F : -0.5F);
-        GL11.glScalef(0.75F, 0.75F, 0.75F);
+        GlStateManager.rotate(180F, 0F, 0F, 1F);
+        GlStateManager.rotate(270F, 0F, 1F, 0F);
+        GlStateManager.translate(0F, -1.5F, 0F);
+        GlStateManager.translate(-0.5F, 0.2F, leftHand ? 0.55F : -0.5F);
+        GlStateManager.scale(0.75F, 0.75F, 0.75F);
 
-        AssetUtil.renderItemInWorld(stack, 0);
+        AssetUtil.renderItemInWorld(stack);
 
-        GL11.glPopMatrix();
+        GlStateManager.popMatrix();
     }
 
     private static void renderHeadBlock(Block block, int meta, float rotation){
-        GL11.glPushMatrix();
-        GL11.glDisable(GL11.GL_LIGHTING);
-        GL11.glTranslatef(-0.015F, 0.6F, 0.075F);
-        GL11.glScalef(0.3F, 0.3F, 0.3F);
-        GL11.glRotatef(180F, 1F, 0F, 0F);
-        GL11.glRotatef(rotation, 0F, 1F, 0F);
+        GlStateManager.pushMatrix();
+        GlStateManager.disableLighting();
+        GlStateManager.translate(-0.015F, 0.6F, 0.075F);
+        GlStateManager.scale(0.3F, 0.3F, 0.3F);
+        GlStateManager.rotate(180F, 1F, 0F, 0F);
+        GlStateManager.rotate(rotation, 0F, 1F, 0F);
 
         AssetUtil.renderBlockInWorld(block, meta);
 
-        GL11.glEnable(GL11.GL_LIGHTING);
-        GL11.glPopMatrix();
+        GlStateManager.enableLighting();
+        GlStateManager.popMatrix();
     }
 }

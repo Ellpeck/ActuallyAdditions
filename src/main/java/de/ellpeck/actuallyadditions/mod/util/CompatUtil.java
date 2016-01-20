@@ -10,12 +10,12 @@
 
 package de.ellpeck.actuallyadditions.mod.util;
 
-import cpw.mods.fml.common.event.FMLInterModComms;
-import de.ellpeck.actuallyadditions.mod.items.ItemSeed;
+import de.ellpeck.actuallyadditions.mod.items.base.ItemSeed;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.fml.common.event.FMLInterModComms;
 
 public class CompatUtil{
 
@@ -23,14 +23,14 @@ public class CompatUtil{
         FMLInterModComms.sendMessage("MineFactoryReloaded", "registerHarvestable_Crop", new ItemStack(block, 1, 7));
 
         NBTTagCompound compound = new NBTTagCompound();
-        compound.setString("plant", Block.blockRegistry.getNameForObject(block));
+        compound.setString("plant", block.getRegistryName());
         FMLInterModComms.sendMessage("MineFactoryReloaded", "registerFertilizable_Crop", compound);
     }
 
     public static void registerMFRSeed(Item item){
         NBTTagCompound compound = new NBTTagCompound();
-        compound.setString("seed", Item.itemRegistry.getNameForObject(item));
-        compound.setString("crop", Block.blockRegistry.getNameForObject(((ItemSeed)item).plant));
+        compound.setString("seed", item.getRegistryName());
+        compound.setString("crop", ((ItemSeed)item).plant.getRegistryName());
         FMLInterModComms.sendMessage("MineFactoryReloaded", "registerPlantable_Crop", compound);
     }
 

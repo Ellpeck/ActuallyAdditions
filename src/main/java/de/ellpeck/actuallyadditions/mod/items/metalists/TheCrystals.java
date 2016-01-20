@@ -15,20 +15,18 @@ import net.minecraft.item.EnumRarity;
 
 public enum TheCrystals{
 
-    REDSTONE("Red", Util.CRYSTAL_RED_RARITY, 16318464),
-    LAPIS("Blue", Util.CRYSTAL_BLUE_RARITY, 131437),
-    DIAMOND("LightBlue", Util.CRYSTAL_LIGHT_BLUE_RARITY, 9211636),
-    COAL("Black", Util.CRYSTAL_BLACK_RARITY, 986895),
-    EMERALD("Green", Util.CRYSTAL_GREEN_RARITY, 382466),
-    IRON("White", Util.CRYSTAL_WHITE_RARITY, 11053224);
+    REDSTONE("Red", Util.CRYSTAL_RED_RARITY),
+    LAPIS("Blue", Util.CRYSTAL_BLUE_RARITY),
+    DIAMOND("LightBlue", Util.CRYSTAL_LIGHT_BLUE_RARITY),
+    COAL("Black", Util.CRYSTAL_BLACK_RARITY),
+    EMERALD("Green", Util.CRYSTAL_GREEN_RARITY),
+    IRON("White", Util.CRYSTAL_WHITE_RARITY);
 
     public final String name;
     public final EnumRarity rarity;
-    public final int color;
 
-    TheCrystals(String name, EnumRarity rarity, int color){
+    TheCrystals(String name, EnumRarity rarity){
         this.name = name;
         this.rarity = rarity;
-        this.color = color;
     }
 }

@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.network.gui.INumberReactor;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
@@ -19,6 +20,7 @@ import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 
 public class TileEntityInputter extends TileEntityInventoryBase implements IButtonReactor, INumberReactor{
 
@@ -121,7 +123,7 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
                     if(theSided != null){
                         //Check if Item can be inserted from any Side (Because Sidedness gets ignored!)
                         for(int j = 0; j <= 5; j++){
-                            if(theSided.canExtractItem(i, tempStack, j)){
+                            if(theSided.canExtractItem(i, tempStack, EnumFacing.values()[j])){
                                 theStack = tempStack;
                                 theSlotToPull = i;
                                 can = true;
@@ -208,7 +210,7 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
                     if(theInventory.isItemValidForSlot(i, this.slots[0]) && (tempStack == null || (tempStack.isItemEqual(this.slots[0]) && tempStack.stackSize < maxSize)) && this.checkBothFilters(this.slots[0])){
                         if(theSided != null){
                             for(int j = 0; j <= 5; j++){
-                                if(theSided.canInsertItem(i, this.slots[0], j)){
+                                if(theSided.canInsertItem(i, this.slots[0], EnumFacing.values()[j])){
                                     theStack = tempStack;
                                     theSlotToPut = i;
                                     can = true;
@@ -301,8 +303,8 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
     public void initVars(){
 
         //Gets the Place to put and Pull
-        this.placeToPull = WorldUtil.getTileEntityFromSide(WorldUtil.getDirectionBySidesInOrder(this.sideToPull), this.worldObj, this.xCoord, this.yCoord, this.zCoord);
-        this.placeToPut = WorldUtil.getTileEntityFromSide(WorldUtil.getDirectionBySidesInOrder(this.sideToPut), this.worldObj, this.xCoord, this.yCoord, this.zCoord);
+        this.placeToPull = WorldUtil.getTileEntityFromSide(WorldUtil.getDirectionBySidesInOrder(this.sideToPull), this.worldObj, this.pos);
+        this.placeToPut = WorldUtil.getTileEntityFromSide(WorldUtil.getDirectionBySidesInOrder(this.sideToPut), this.worldObj, this.pos);
 
         //Resets the Variables
         if(this.placeToPull instanceof IInventory){
@@ -427,7 +429,7 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
     }
 
     @Override
-    public boolean canInsertItem(int slot, ItemStack stack, int side){
+    public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
         return this.isItemValidForSlot(slot, stack);
     }
 
@@ -437,7 +439,7 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
     }
 
     @Override
-    public boolean canExtractItem(int slot, ItemStack stack, int side){
+    public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
         return slot == 0;
     }
 

@@ -10,35 +10,35 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.achievement.TheAchievements;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntitySmileyCloud;
-import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
+import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
-import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.block.properties.PropertyInteger;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.IIcon;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.*;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 import java.util.Random;
 
 public class BlockSmileyCloud extends BlockContainerBase{
+
+    private static final PropertyInteger META = PropertyInteger.create("meta", 0, 3);
 
     public BlockSmileyCloud(String name){
         super(Material.cloth, name);
@@ -47,21 +47,9 @@ public class BlockSmileyCloud extends BlockContainerBase{
         this.setStepSound(soundTypeCloth);
         this.setTickRandomly(true);
     }
-
     @Override
-    public boolean renderAsNormalBlock(){
-        return false;
-    }
-
-    @Override
-    public int getRenderType(){
-        return AssetUtil.smileyCloudRenderId;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public IIcon getIcon(int side, int metadata){
-        return this.blockIcon;
+    protected PropertyInteger getMetaProperty(){
+        return META;
     }
 
     @Override
@@ -71,23 +59,23 @@ public class BlockSmileyCloud extends BlockContainerBase{
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void randomDisplayTick(World world, int x, int y, int z, Random rand){
+    public void randomDisplayTick(World world, BlockPos pos, IBlockState state, Random rand){
         if(Util.RANDOM.nextInt(30) == 0){
             for(int i = 0; i < 2; i++){
                 double d = Util.RANDOM.nextGaussian()*0.02D;
                 double d1 = Util.RANDOM.nextGaussian()*0.02D;
                 double d2 = Util.RANDOM.nextGaussian()*0.02D;
-                world.spawnParticle("heart", x+Util.RANDOM.nextFloat(), y+0.65+Util.RANDOM.nextFloat(), z+Util.RANDOM.nextFloat(), d, d1, d2);
+                world.spawnParticle(EnumParticleTypes.HEART, pos.getX()+Util.RANDOM.nextFloat(), pos.getY()+0.65+Util.RANDOM.nextFloat(), pos.getZ()+Util.RANDOM.nextFloat(), d, d1, d2);
             }
         }
     }
 
     @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int f6, float f7, float f8, float f9){
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing f6, float f7, float f8, float f9){
         if(!world.isRemote){
-            TileEntity tile = world.getTileEntity(x, y, z);
+            TileEntity tile = world.getTileEntity(pos);
             if(tile instanceof TileEntitySmileyCloud){
-                player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.CLOUD.ordinal(), world, x, y, z);
+                player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.CLOUD.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
 
                 player.triggerAchievement(TheAchievements.NAME_SMILEY_CLOUD.ach);
             }
@@ -96,14 +84,14 @@ public class BlockSmileyCloud extends BlockContainerBase{
     }
 
     @Override
-    public void addCollisionBoxesToList(World world, int x, int y, int z, AxisAlignedBB axis, List list, Entity entity){
-        this.setBlockBoundsBasedOnState(world, x, y, z);
-        super.addCollisionBoxesToList(world, x, y, z, axis, list, entity);
+    public void addCollisionBoxesToList(World world, BlockPos pos, IBlockState state, AxisAlignedBB axis, List list, Entity entity){
+        this.setBlockBoundsBasedOnState(world, pos);
+        super.addCollisionBoxesToList(world, pos, state, axis, list, entity);
     }
 
     @Override
-    public void setBlockBoundsBasedOnState(IBlockAccess world, int x, int y, int z){
-        int meta = world.getBlockMetadata(x, y, z);
+    public void setBlockBoundsBasedOnState(IBlockAccess world, BlockPos pos){
+        int meta = PosUtil.getMetadata(pos, world);
         float f = 0.0625F;
 
         if(meta == 0){
@@ -121,44 +109,38 @@ public class BlockSmileyCloud extends BlockContainerBase{
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister iconReg){
-        this.blockIcon = Blocks.wool.getIcon(0, 0);
-    }
-
-    @Override
     public TileEntity createNewTileEntity(World world, int meta){
         return new TileEntitySmileyCloud();
     }
 
     @Override
-    public void breakBlock(World world, int x, int y, int z, Block block, int par6){
-        this.dropInventory(world, x, y, z);
-        super.breakBlock(world, x, y, z, block, par6);
+    public void breakBlock(World world, BlockPos pos, IBlockState state){
+        this.dropInventory(world, pos);
+        super.breakBlock(world, pos, state);
     }
 
     @Override
     public EnumRarity getRarity(ItemStack stack){
-        return EnumRarity.rare;
+        return EnumRarity.RARE;
     }
 
     @Override
-    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack stack){
+    public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase player, ItemStack stack){
         int rotation = MathHelper.floor_double((double)(player.rotationYaw*4.0F/360.0F)+0.5D) & 3;
 
         if(rotation == 0){
-            world.setBlockMetadataWithNotify(x, y, z, 2, 2);
+            PosUtil.setMetadata(pos, world, 0, 2);
         }
         if(rotation == 1){
-            world.setBlockMetadataWithNotify(x, y, z, 1, 2);
+            PosUtil.setMetadata(pos, world, 3, 2);
         }
         if(rotation == 2){
-            world.setBlockMetadataWithNotify(x, y, z, 0, 2);
+            PosUtil.setMetadata(pos, world, 1, 2);
         }
         if(rotation == 3){
-            world.setBlockMetadataWithNotify(x, y, z, 3, 2);
+            PosUtil.setMetadata(pos, world, 2, 2);
         }
 
-        super.onBlockPlacedBy(world, x, y, z, player, stack);
+        super.onBlockPlacedBy(world, pos, state, player, stack);
     }
 }

@@ -10,8 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.event;
 
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.gameevent.PlayerEvent;
 import de.ellpeck.actuallyadditions.mod.achievement.InitAchievements;
 import de.ellpeck.actuallyadditions.mod.achievement.TheAchievements;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
@@ -19,12 +17,12 @@ import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.misc.WorldData;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.playerdata.PersistentServerData;
-import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 
 import java.util.Locale;
 
@@ -35,19 +33,17 @@ public class PlayerObtainEvents{
         checkAchievements(event.crafting, event.player, InitAchievements.Type.CRAFTING);
 
         if(ConfigBoolValues.GIVE_BOOKLET_ON_FIRST_CRAFT.isEnabled()){
-            if(!event.player.worldObj.isRemote && event.crafting.getItem() != InitItems.itemBooklet){
+            if(!event.player.worldObj.isRemote && event.crafting != null && event.crafting.getItem() != null && event.crafting.getItem() != InitItems.itemBooklet){
 
-                String itemName = Item.itemRegistry.getNameForObject(event.crafting.getItem());
-                String blockName = Block.blockRegistry.getNameForObject(Block.getBlockFromItem(event.crafting.getItem()));
-
-                if((itemName != null && itemName.toLowerCase(Locale.ROOT).contains(ModUtil.MOD_ID_LOWER)) || (blockName != null && blockName.toLowerCase(Locale.ROOT).contains(ModUtil.MOD_ID_LOWER))){
+                String name = event.crafting.getItem().getRegistryName();
+                if(name != null && name.toLowerCase(Locale.ROOT).contains(ModUtil.MOD_ID_LOWER)){
                     NBTTagCompound compound = PersistentServerData.getDataFromPlayer(event.player);
                     if(compound != null && !compound.getBoolean("BookGottenAlready")){
                         compound.setBoolean("BookGottenAlready", true);
                         WorldData.makeDirty();
 
                         EntityItem entityItem = new EntityItem(event.player.worldObj, event.player.posX, event.player.posY, event.player.posZ, new ItemStack(InitItems.itemBooklet));
-                        entityItem.delayBeforeCanPickup = 0;
+                        entityItem.setPickupDelay(0);
                         event.player.worldObj.spawnEntityInWorld(entityItem);
                     }
                 }

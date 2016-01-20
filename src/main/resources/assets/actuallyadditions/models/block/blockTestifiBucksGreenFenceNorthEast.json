@@ -1,0 +1,6 @@
+{
+    "parent": "block/wall_ne",
+    "textures": {
+        "wall": "actuallyadditions:blocks/blockTestifiBucksGreenWall"
+    }
+}

@@ -10,8 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.creative;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.items.InitForeignPaxels;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
@@ -20,6 +18,8 @@ import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
@@ -49,7 +49,6 @@ public class CreativeTab extends CreativeTabs{
 
         add(InitItems.itemBooklet);
         add(InitBlocks.blockSmileyCloud);
-        add(InitBlocks.blockBookletStand);
 
         add(InitBlocks.blockFireworkBox);
         add(InitBlocks.blockLaserRelay);
@@ -118,6 +117,7 @@ public class CreativeTab extends CreativeTabs{
         add(InitBlocks.blockPillarQuartzSlab);
 
         add(InitBlocks.blockColoredLamp);
+        add(InitBlocks.blockColoredLampOn);
         add(InitBlocks.blockLampPowerer);
         add(InitBlocks.blockTreasureChest);
 

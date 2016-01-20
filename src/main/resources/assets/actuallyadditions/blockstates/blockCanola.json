@@ -1,0 +1,12 @@
+{
+  "variants": {
+    "age=0": { "model": "actuallyadditions:blockCanolaStage1" },
+    "age=1": { "model": "actuallyadditions:blockCanolaStage1" },
+    "age=2": { "model": "actuallyadditions:blockCanolaStage2" },
+    "age=3": { "model": "actuallyadditions:blockCanolaStage2" },
+    "age=4": { "model": "actuallyadditions:blockCanolaStage2" },
+    "age=5": { "model": "actuallyadditions:blockCanolaStage3" },
+    "age=6": { "model": "actuallyadditions:blockCanolaStage3" },
+    "age=7": { "model": "actuallyadditions:blockCanolaStage4" }
+  }
+}

@@ -10,35 +10,31 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityXPSolidifier;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
-import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.block.properties.PropertyInteger;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.IIcon;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.MathHelper;
-import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class BlockXPSolidifier extends BlockContainerBase{
 
-    @SideOnly(Side.CLIENT)
-    private IIcon topIcon;
-    @SideOnly(Side.CLIENT)
-    private IIcon frontIcon;
+    private static final PropertyInteger META = PropertyInteger.create("meta", 0, 3);
 
     public BlockXPSolidifier(String name){
         super(Material.rock, name);
@@ -49,41 +45,21 @@ public class BlockXPSolidifier extends BlockContainerBase{
     }
 
     @Override
+    protected PropertyInteger getMetaProperty(){
+        return META;
+    }
+
+    @Override
     public TileEntity createNewTileEntity(World world, int par2){
         return new TileEntityXPSolidifier();
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public IIcon getIcon(IBlockAccess world, int x, int y, int z, int side){
-        int meta = world.getBlockMetadata(x, y, z);
-        if(side == 1 || side == 0){
-            return this.topIcon;
-        }
-        if(side == meta+2){
-            return this.frontIcon;
-        }
-        return this.blockIcon;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public IIcon getIcon(int side, int meta){
-        if(side == 1 || side == 0){
-            return this.topIcon;
-        }
-        if(side == 3){
-            return this.frontIcon;
-        }
-        return this.blockIcon;
-    }
-
-    @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9){
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing par6, float par7, float par8, float par9){
         if(!world.isRemote){
-            TileEntityXPSolidifier solidifier = (TileEntityXPSolidifier)world.getTileEntity(x, y, z);
+            TileEntityXPSolidifier solidifier = (TileEntityXPSolidifier)world.getTileEntity(pos);
             if(solidifier != null){
-                player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.XP_SOLIDIFIER.ordinal(), world, x, y, z);
+                player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.XP_SOLIDIFIER.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
             }
             return true;
         }
@@ -91,56 +67,48 @@ public class BlockXPSolidifier extends BlockContainerBase{
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister iconReg){
-        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName());
-        this.topIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName()+"Top");
-        this.frontIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName()+"Front");
-    }
-
-    @Override
     public EnumRarity getRarity(ItemStack stack){
-        return EnumRarity.epic;
+        return EnumRarity.EPIC;
     }
 
     @Override
-    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack stack){
+    public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase player, ItemStack stack){
         int rotation = MathHelper.floor_double((double)(player.rotationYaw*4.0F/360.0F)+0.5D) & 3;
 
         if(rotation == 0){
-            world.setBlockMetadataWithNotify(x, y, z, 0, 2);
+            PosUtil.setMetadata(pos, world, 0, 2);
         }
         if(rotation == 1){
-            world.setBlockMetadataWithNotify(x, y, z, 3, 2);
+            PosUtil.setMetadata(pos, world, 3, 2);
         }
         if(rotation == 2){
-            world.setBlockMetadataWithNotify(x, y, z, 1, 2);
+            PosUtil.setMetadata(pos, world, 1, 2);
         }
         if(rotation == 3){
-            world.setBlockMetadataWithNotify(x, y, z, 2, 2);
+            PosUtil.setMetadata(pos, world, 2, 2);
         }
 
-        super.onBlockPlacedBy(world, x, y, z, player, stack);
+        super.onBlockPlacedBy(world, pos, state, player, stack);
     }
 
     @Override
-    public void breakBlock(World world, int x, int y, int z, Block block, int par6){
-        this.dropInventory(world, x, y, z);
-        TileEntity tile = world.getTileEntity(x, y, z);
+    public void breakBlock(World world, BlockPos pos, IBlockState state){
+        this.dropInventory(world, pos);
+        TileEntity tile = world.getTileEntity(pos);
         if(tile instanceof TileEntityXPSolidifier){
             TileEntityXPSolidifier solidifier = (TileEntityXPSolidifier)tile;
             if(solidifier.amount > 0){
                 int stacks = solidifier.amount/64;
                 int rest = solidifier.amount%64;
                 for(int i = 0; i < stacks; i++){
-                    this.spawnItem(world, x, y, z, new ItemStack(InitItems.itemSolidifiedExperience, 64));
+                    this.spawnItem(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(InitItems.itemSolidifiedExperience, 64));
                 }
-                this.spawnItem(world, x, y, z, new ItemStack(InitItems.itemSolidifiedExperience, rest));
+                this.spawnItem(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(InitItems.itemSolidifiedExperience, rest));
                 solidifier.amount = 0;
             }
         }
 
-        super.breakBlock(world, x, y, z, block, par6);
+        super.breakBlock(world, pos, state);
     }
 
     private void spawnItem(World world, int x, int y, int z, ItemStack stack){

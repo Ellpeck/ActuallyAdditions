@@ -12,12 +12,13 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraft.util.EnumFacing;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements IEnergyReceiver, IEnergySaver{
 
@@ -80,14 +81,14 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
 
             if(flag != (this.firstSmeltTime > 0 || this.secondSmeltTime > 0)){
                 this.markDirty();
-                int meta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
+                int meta = PosUtil.getMetadata(this.pos, worldObj);
                 if(meta > 3){
                     if(!this.canSmeltOn(SLOT_INPUT_1, SLOT_OUTPUT_1) && !this.canSmeltOn(SLOT_INPUT_2, SLOT_OUTPUT_2)){
-                        worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, meta-4, 2);
+                        PosUtil.setMetadata(this.pos, worldObj, meta-4, 2);
                     }
                 }
                 else{
-                    worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, meta+4, 2);
+                    PosUtil.setMetadata(this.pos, worldObj, meta+4, 2);
                 }
             }
 
@@ -117,7 +118,7 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
 
     public boolean canSmeltOn(int theInput, int theOutput){
         if(this.slots[theInput] != null){
-            ItemStack output = FurnaceRecipes.smelting().getSmeltingResult(this.slots[theInput]);
+            ItemStack output = FurnaceRecipes.instance().getSmeltingResult(this.slots[theInput]);
             if(this.slots[theInput] != null){
                 if(output != null){
                     if(this.slots[theOutput] == null || (this.slots[theOutput].isItemEqual(output) && this.slots[theOutput].stackSize <= this.slots[theOutput].getMaxStackSize()-output.stackSize)){
@@ -130,7 +131,7 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
     }
 
     public void finishBurning(int theInput, int theOutput){
-        ItemStack output = FurnaceRecipes.smelting().getSmeltingResult(this.slots[theInput]);
+        ItemStack output = FurnaceRecipes.instance().getSmeltingResult(this.slots[theInput]);
         if(this.slots[theOutput] == null){
             this.slots[theOutput] = output.copy();
         }
@@ -160,37 +161,37 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
     }
 
     @Override
-    public boolean canInsertItem(int slot, ItemStack stack, int side){
+    public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
         return this.isItemValidForSlot(slot, stack);
     }
 
     @Override
     public boolean isItemValidForSlot(int i, ItemStack stack){
-        return (i == SLOT_INPUT_1 || i == SLOT_INPUT_2) && FurnaceRecipes.smelting().getSmeltingResult(stack) != null;
+        return (i == SLOT_INPUT_1 || i == SLOT_INPUT_2) && FurnaceRecipes.instance().getSmeltingResult(stack) != null;
     }
 
     @Override
-    public boolean canExtractItem(int slot, ItemStack stack, int side){
+    public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
         return slot == SLOT_OUTPUT_1 || slot == SLOT_OUTPUT_2;
     }
 
     @Override
-    public int receiveEnergy(ForgeDirection from, int maxReceive, boolean simulate){
+    public int receiveEnergy(EnumFacing from, int maxReceive, boolean simulate){
         return this.storage.receiveEnergy(maxReceive, simulate);
     }
 
     @Override
-    public int getEnergyStored(ForgeDirection from){
+    public int getEnergyStored(EnumFacing from){
         return this.storage.getEnergyStored();
     }
 
     @Override
-    public int getMaxEnergyStored(ForgeDirection from){
+    public int getMaxEnergyStored(EnumFacing from){
         return this.storage.getMaxEnergyStored();
     }
 
     @Override
-    public boolean canConnectEnergy(ForgeDirection from){
+    public boolean canConnectEnergy(EnumFacing from){
         return true;
     }
 

@@ -10,14 +10,16 @@
 
 package de.ellpeck.actuallyadditions.mod.network.gui;
 
-import cpw.mods.fml.common.network.simpleimpl.IMessage;
-import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
-import cpw.mods.fml.common.network.simpleimpl.MessageContext;
+
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
+import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class PacketGuiButton implements IMessage{
 
@@ -37,7 +39,7 @@ public class PacketGuiButton implements IMessage{
         this.tileX = x;
         this.tileY = y;
         this.tileZ = z;
-        this.worldID = world.provider.dimensionId;
+        this.worldID = world.provider.getDimensionId();
         this.buttonID = buttonID;
         this.playerID = player.getEntityId();
     }
@@ -67,7 +69,7 @@ public class PacketGuiButton implements IMessage{
         @Override
         public IMessage onMessage(PacketGuiButton message, MessageContext ctx){
             World world = DimensionManager.getWorld(message.worldID);
-            TileEntity tile = world.getTileEntity(message.tileX, message.tileY, message.tileZ);
+            TileEntity tile = world.getTileEntity(new BlockPos(message.tileX, message.tileY, message.tileZ));
 
             if(tile instanceof IButtonReactor){
                 IButtonReactor reactor = (IButtonReactor)tile;

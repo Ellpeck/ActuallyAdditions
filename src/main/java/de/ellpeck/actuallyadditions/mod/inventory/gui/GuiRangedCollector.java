@@ -10,8 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerRangedCollector;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
 import de.ellpeck.actuallyadditions.mod.network.gui.PacketGuiButton;
@@ -23,10 +21,12 @@ import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import org.lwjgl.opengl.GL11;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.Collections;
 
@@ -72,18 +72,18 @@ public class GuiRangedCollector extends GuiContainer{
 
         String text1 = this.collector.isWhitelist ? StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.whitelist") : StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.blacklist");
         if(x >= guiLeft+3 && y >= guiTop+16 && x <= guiLeft+18 && y <= guiTop+31){
-            this.func_146283_a(Collections.singletonList(text1), x, y);
+            this.drawHoveringText(Collections.singletonList(text1), x, y);
         }
     }
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y){
-        AssetUtil.displayNameString(this.fontRendererObj, xSize, -10, this.collector.getInventoryName());
+        AssetUtil.displayNameString(this.fontRendererObj, xSize, -10, this.collector.getName());
     }
 
     @Override
     public void drawGuiContainerBackgroundLayer(float f, int x, int y){
-        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 
         this.mc.getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop+86, 0, 0, 176, 86);

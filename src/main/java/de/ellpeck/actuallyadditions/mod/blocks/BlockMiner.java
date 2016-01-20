@@ -10,35 +10,29 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import de.ellpeck.actuallyadditions.api.block.IHudDisplay;
+
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityMiner;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
-import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.profiler.Profiler;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.IIcon;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockMiner extends BlockContainerBase implements IHudDisplay{
-
-    @SideOnly(Side.CLIENT)
-    private IIcon frontIcon;
-    @SideOnly(Side.CLIENT)
-    private IIcon topIcon;
 
     public BlockMiner(String name){
         super(Material.rock, name);
@@ -49,38 +43,24 @@ public class BlockMiner extends BlockContainerBase implements IHudDisplay{
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public IIcon getIcon(int side, int meta){
-        return side == 0 ? this.frontIcon : (side == 1 ? this.topIcon : this.blockIcon);
-    }
-
-    @Override
     public boolean isOpaqueCube(){
         return false;
     }
 
     @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9){
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing par6, float par7, float par8, float par9){
         if(!world.isRemote){
-            TileEntity tile = world.getTileEntity(x, y, z);
+            TileEntity tile = world.getTileEntity(pos);
             if(tile instanceof TileEntityMiner){
-                player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.MINER.ordinal(), world, x, y, z);
+                player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.MINER.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
             }
         }
         return true;
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister iconReg){
-        this.blockIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName());
-        this.frontIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName()+"Front");
-        this.topIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName()+"Top");
-    }
-
-    @Override
     public EnumRarity getRarity(ItemStack stack){
-        return EnumRarity.rare;
+        return EnumRarity.RARE;
     }
 
     @Override
@@ -89,18 +69,18 @@ public class BlockMiner extends BlockContainerBase implements IHudDisplay{
     }
 
     @Override
-    public void breakBlock(World world, int x, int y, int z, Block block, int par6){
-        this.dropInventory(world, x, y, z);
-        super.breakBlock(world, x, y, z, block, par6);
+    public void breakBlock(World world, BlockPos pos, IBlockState state){
+        this.dropInventory(world, pos);
+        super.breakBlock(world, pos, state);
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public void displayHud(Minecraft minecraft, EntityPlayer player, ItemStack stack, MovingObjectPosition posHit, Profiler profiler, ScaledResolution resolution){
-        TileEntity tile = minecraft.theWorld.getTileEntity(posHit.blockX, posHit.blockY, posHit.blockZ);
+        TileEntity tile = minecraft.theWorld.getTileEntity(posHit.getBlockPos());
         if(tile instanceof TileEntityMiner){
             String info = ((TileEntityMiner)tile).layerAt <= 0 ? "Done Mining!" : "Mining at Y = "+((TileEntityMiner)tile).layerAt+".";
-            minecraft.fontRenderer.drawStringWithShadow(info, resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2-20, StringUtil.DECIMAL_COLOR_WHITE);
+            minecraft.fontRendererObj.drawStringWithShadow(info, resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2-20, StringUtil.DECIMAL_COLOR_WHITE);
         }
     }
 }

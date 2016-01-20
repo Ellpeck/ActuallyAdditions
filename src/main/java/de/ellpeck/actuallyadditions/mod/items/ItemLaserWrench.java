@@ -10,24 +10,23 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import de.ellpeck.actuallyadditions.api.Position;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.misc.LaserRelayConnectionHandler;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelay;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.IIcon;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
@@ -39,22 +38,21 @@ public class ItemLaserWrench extends ItemBase{
     }
 
     @Override
-    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int par7, float par8, float par9, float par10){
+    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing par7, float par8, float par9, float par10){
         if(!world.isRemote){
-            TileEntity tile = world.getTileEntity(x, y, z);
+            TileEntity tile = world.getTileEntity(pos);
             if(tile instanceof TileEntityLaserRelay){
                 if(ItemPhantomConnector.getStoredPosition(stack) == null){
-                    ItemPhantomConnector.storeConnection(stack, x, y, z, world);
+                    ItemPhantomConnector.storeConnection(stack, pos.getX(), pos.getY(), pos.getZ(), world);
                     player.addChatComponentMessage(new ChatComponentText(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".laser.stored.desc")));
                 }
                 else{
-                    Position savedPos = ItemPhantomConnector.getStoredPosition(stack);
-                    Position otherPos = new Position(x, y, z);
-                    if(ItemPhantomConnector.getStoredWorld(stack) == world && savedPos.getTileEntity(world) instanceof TileEntityLaserRelay && LaserRelayConnectionHandler.getInstance().addConnection(savedPos, otherPos)){
+                    BlockPos savedPos = ItemPhantomConnector.getStoredPosition(stack);
+                    if(ItemPhantomConnector.getStoredWorld(stack) == world && world.getTileEntity(savedPos) instanceof TileEntityLaserRelay && LaserRelayConnectionHandler.getInstance().addConnection(savedPos, pos)){
                         ItemPhantomConnector.clearStorage(stack);
 
-                        ((TileEntityLaserRelay)savedPos.getTileEntity(world)).sendUpdate();
-                        ((TileEntityLaserRelay)otherPos.getTileEntity(world)).sendUpdate();
+                        ((TileEntityLaserRelay)world.getTileEntity(savedPos)).sendUpdate();
+                        ((TileEntityLaserRelay)world.getTileEntity(pos)).sendUpdate();
 
                         player.addChatComponentMessage(new ChatComponentText(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".laser.connected.desc")));
                     }
@@ -84,7 +82,7 @@ public class ItemLaserWrench extends ItemBase{
     @SuppressWarnings("unchecked")
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld){
-        Position coords = ItemPhantomConnector.getStoredPosition(stack);
+        BlockPos coords = ItemPhantomConnector.getStoredPosition(stack);
         if(coords != null){
             list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".boundTo.desc")+":");
             list.add("X: "+coords.getX());
@@ -96,18 +94,6 @@ public class ItemLaserWrench extends ItemBase{
 
     @Override
     public EnumRarity getRarity(ItemStack stack){
-        return EnumRarity.epic;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister iconReg){
-        this.itemIcon = iconReg.registerIcon(ModUtil.MOD_ID_LOWER+":"+this.getBaseName());
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public IIcon getIcon(ItemStack stack, int pass){
-        return this.itemIcon;
+        return EnumRarity.EPIC;
     }
 }

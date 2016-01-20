@@ -10,10 +10,13 @@
 
 package de.ellpeck.actuallyadditions.mod.items.base;
 
-import cpw.mods.fml.common.registry.GameRegistry;
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.creative.CreativeTab;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.item.ItemFood;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 
 public class ItemFoodBase extends ItemFood{
@@ -36,6 +39,12 @@ public class ItemFoodBase extends ItemFood{
         else{
             this.setCreativeTab(null);
         }
+
+        this.registerRendering();
+    }
+
+    protected void registerRendering(){
+        ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this), new ResourceLocation(ModUtil.MOD_ID_LOWER, this.getBaseName()));
     }
 
     protected String getBaseName(){

@@ -1,3 +1,43 @@
+# 1.8.9-r24
+* Fixed texture names of quartz tools (ssblur)
+* Added right-click harvest functionality to all crops. (ssblur)
+* Made word count reload when reloading resources
+* Fixed Lenses not syncing correctly on the server when converting items
+* JEI Implementation for booklet, crusher, coffee machine and reconstructor
+* Fixed the drill's 3x3 and 5x5 ming acting weird on servers
+* red mushroom -> nether wart in Reconstructor
+* Custom packet handler for 98.7% less stack traces when joining worlds
+* [API] Removed INEIRecipeHandler
+* [API] Removed IHudDisplay
+* [API] Removed IEnergyDisplay
+
+# 1.8.9-r23
+* Fixed a ginormous bug that screwed over crafting
+#### DON'T EXPECT EVERYTHING TO WORK PERFECTLY. Seriously, I break lots of stuff probably.
+
+# 1.8.9-r22
+* 1.8.9 PORT!
+#### DON'T EXPECT EVERYTHING TO WORK PERFECTLY. THIS IS A BETA. Also: If you look through the booklet, you will see a hover text on some chapters' buttons saying the item or block doesn't fully work. RESPECT THAT. Thanks.
+
+# 1.7.10-r21
+* Made looking up the double furnace in the booklet possible
+* The magnet ring now only uses RF when actually sucking up items
+* The growth ring now only uses RF when growing stuff
+* Made the growth ring a little more expensive
+* Balanced the magnet a bit
+* Made the solar panel thing cheaper
+* German translation started (Kristian295)
+* New update checker
+#### This will probably the last 1.7.10 version before I move on to 1.8.9. The port is almost done and will be coming out soon. There will be an update notification that shows the update, but if you only want to be notified for further 1.7.10 patches, change the config option for the update checker to be version-specific.
+
+# 1.7.10-r20
+* Fixed another stupid obfuscation bug. Great. /shrugs
+
+# 1.7.10-r19
+* Added API and Dev version as seperate jars
+* Fixed a nasty bug with obfuscation causing some booklet pages to crash the game
+* [API] Increased version to 3
+
 # 1.7.10-r18
 * Added Bacon (Don't name it Ellspeck. Just don't.)
 * Added an API.

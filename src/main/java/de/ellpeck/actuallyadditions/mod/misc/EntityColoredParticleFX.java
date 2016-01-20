@@ -10,10 +10,10 @@
 
 package de.ellpeck.actuallyadditions.mod.misc;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.particle.EntityReddustFX;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class EntityColoredParticleFX extends EntityReddustFX{
