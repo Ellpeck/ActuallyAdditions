@@ -26,7 +26,6 @@ import java.util.Calendar;
 
 public class RenderSpecial{
 
-    private double lastTimeForBobbing;
     private ItemStack theThingToRender;
 
     public RenderSpecial(ItemStack stack){
@@ -46,13 +45,8 @@ public class RenderSpecial{
         float size = isBlock ? 0.5F : 0.4F;
         double offsetUp = isBlock ? 0D : 0.1875D;
 
-        double bobHeight = 70;
-        double theTime = Minecraft.getSystemTime();
-        double time = theTime/50;
-
-        if(time-bobHeight >= lastTimeForBobbing){
-            this.lastTimeForBobbing = time;
-        }
+        double bobHeight = 0.3;
+        double boop = Minecraft.getSystemTime()/1000D;
 
         GlStateManager.pushMatrix();
 
@@ -60,18 +54,13 @@ public class RenderSpecial{
         Vec3 playerPos = player.getPositionEyes(partialTicks);
         GlStateManager.translate(playerPos.xCoord-currentPos.xCoord, playerPos.yCoord-currentPos.yCoord-(player.isSneaking() || Minecraft.getMinecraft().thePlayer.isSneaking() ? 0.125D : 0D), playerPos.zCoord-currentPos.zCoord);
 
-        GlStateManager.translate(0D, 2.535D+offsetUp, 0D);
+        GlStateManager.translate(0D, 2.435D+offsetUp, 0D);
         GlStateManager.rotate(180F, 1.0F, 0.0F, 1.0F);
         GlStateManager.scale(size, size, size);
 
-        if(time-(bobHeight/2) >= lastTimeForBobbing){
-            GlStateManager.translate(0D, (time-this.lastTimeForBobbing)/100D, 0D);
-        }
-        else{
-            GlStateManager.translate(0D, -(time-lastTimeForBobbing)/100D+bobHeight/100D, 0D);
-        }
-
-        GlStateManager.rotate((float)(theTime/20), 0, 1, 0);
+        // Make the floaty stuff look nice using sine waves \o/
+        GlStateManager.translate(0D, Math.sin(boop%(2*Math.PI))*bobHeight, 0D);
+        GlStateManager.rotate((float)(((boop*40D)%360)), 0, 1, 0);
 
         GlStateManager.disableLighting();
         if(this.theThingToRender != null){
