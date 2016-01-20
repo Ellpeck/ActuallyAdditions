@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.jei.coffee;
 
-import com.google.common.collect.ImmutableList;
 import de.ellpeck.actuallyadditions.api.booklet.BookletPage;
 import de.ellpeck.actuallyadditions.api.recipe.coffee.CoffeeBrewing;
 import de.ellpeck.actuallyadditions.api.recipe.coffee.CoffeeIngredient;
@@ -62,12 +61,12 @@ public class CoffeeMachineRecipeWrapper extends RecipeWrapperWithButton implemen
 
     @Override
     public List<FluidStack> getFluidInputs(){
-        return ImmutableList.of();
+        return new ArrayList<FluidStack>();
     }
 
     @Override
     public List<FluidStack> getFluidOutputs(){
-        return ImmutableList.of();
+        return new ArrayList<FluidStack>();
     }
 
     @Override

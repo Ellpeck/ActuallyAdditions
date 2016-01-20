@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.jei.reconstructor;
 
-import com.google.common.collect.ImmutableList;
 import de.ellpeck.actuallyadditions.api.booklet.BookletPage;
 import de.ellpeck.actuallyadditions.api.recipe.LensNoneRecipe;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
@@ -23,6 +22,7 @@ import net.minecraftforge.fluids.FluidStack;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ReconstructorRecipeWrapper extends RecipeWrapperWithButton implements IRecipeWrapper{
@@ -45,12 +45,12 @@ public class ReconstructorRecipeWrapper extends RecipeWrapperWithButton implemen
 
     @Override
     public List<FluidStack> getFluidInputs(){
-        return ImmutableList.of();
+        return new ArrayList<FluidStack>();
     }
 
     @Override
     public List<FluidStack> getFluidOutputs(){
-        return ImmutableList.of();
+        return new ArrayList<FluidStack>();
     }
 
     @Override

@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.jei.crusher;
 
-import com.google.common.collect.ImmutableList;
 import de.ellpeck.actuallyadditions.api.booklet.BookletPage;
 import de.ellpeck.actuallyadditions.api.recipe.CrusherRecipe;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
@@ -55,12 +54,12 @@ public class CrusherRecipeWrapper extends RecipeWrapperWithButton implements IRe
 
     @Override
     public List<FluidStack> getFluidInputs(){
-        return ImmutableList.of();
+        return new ArrayList<FluidStack>();
     }
 
     @Override
     public List<FluidStack> getFluidOutputs(){
-        return ImmutableList.of();
+        return new ArrayList<FluidStack>();
     }
 
     @Override
