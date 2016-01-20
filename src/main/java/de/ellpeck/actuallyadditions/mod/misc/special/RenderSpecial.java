@@ -58,7 +58,8 @@ public class RenderSpecial{
         GlStateManager.rotate(180F, 1.0F, 0.0F, 1.0F);
         GlStateManager.scale(size, size, size);
 
-        // Make the floaty stuff look nice using sine waves \o/
+        //Make the floaty stuff look nice using sine waves \o/ -xdjackiexd
+        //Peck edit: What do you mean by "nice" you jackass? >_>
         GlStateManager.translate(0D, Math.sin(boop%(2*Math.PI))*bobHeight, 0D);
         GlStateManager.rotate((float)(((boop*40D)%360)), 0, 1, 0);
 
