@@ -58,6 +58,11 @@ public class BlockSmileyCloud extends BlockContainerBase{
     }
 
     @Override
+    public boolean isFullCube(){
+        return false;
+    }
+
+    @Override
     @SideOnly(Side.CLIENT)
     public void randomDisplayTick(World world, BlockPos pos, IBlockState state, Random rand){
         if(Util.RANDOM.nextInt(30) == 0){

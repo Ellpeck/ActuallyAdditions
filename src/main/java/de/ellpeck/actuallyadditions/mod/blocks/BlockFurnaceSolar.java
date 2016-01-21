@@ -40,6 +40,11 @@ public class BlockFurnaceSolar extends BlockContainerBase{
     }
 
     @Override
+    public boolean isFullCube(){
+        return false;
+    }
+
+    @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.UNCOMMON;
     }

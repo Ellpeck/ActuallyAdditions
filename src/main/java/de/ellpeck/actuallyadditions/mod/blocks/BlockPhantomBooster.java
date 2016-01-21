@@ -37,6 +37,11 @@ public class BlockPhantomBooster extends BlockContainerBase{
     }
 
     @Override
+    public boolean isFullCube(){
+        return false;
+    }
+
+    @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.EPIC;
     }

@@ -58,6 +58,11 @@ public class BlockLaserRelay extends BlockContainerBase{
     }
 
     @Override
+    public boolean isFullCube(){
+        return false;
+    }
+
+    @Override
     public IBlockState onBlockPlaced(World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, int meta, EntityLivingBase base){
         return this.getStateFromMeta(side.ordinal());
     }
