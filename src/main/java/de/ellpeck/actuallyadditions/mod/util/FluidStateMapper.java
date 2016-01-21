@@ -32,7 +32,6 @@ public class FluidStateMapper extends StateMapperBase implements ItemMeshDefinit
     public FluidStateMapper(Fluid fluid){
         this.fluid = fluid;
 
-        // have each block hold its fluid per nbt? hm
         this.location = new ModelResourceLocation(new ResourceLocation(ModUtil.MOD_ID_LOWER, "fluids"), fluid.getName());
     }
 
