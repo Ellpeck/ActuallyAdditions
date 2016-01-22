@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.jei;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
+import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.jei.booklet.BookletRecipeCategory;
 import de.ellpeck.actuallyadditions.mod.jei.booklet.BookletRecipeHandler;
@@ -20,7 +21,9 @@ import de.ellpeck.actuallyadditions.mod.jei.crusher.CrusherRecipeCategory;
 import de.ellpeck.actuallyadditions.mod.jei.crusher.CrusherRecipeHandler;
 import de.ellpeck.actuallyadditions.mod.jei.reconstructor.ReconstructorRecipeCategory;
 import de.ellpeck.actuallyadditions.mod.jei.reconstructor.ReconstructorRecipeHandler;
+import de.ellpeck.actuallyadditions.mod.util.Util;
 import mezz.jei.api.*;
+import net.minecraft.item.ItemStack;
 
 @JEIPlugin
 public class JEIActuallyAdditionsPlugin implements IModPlugin{
@@ -69,6 +72,14 @@ public class JEIActuallyAdditionsPlugin implements IModPlugin{
         ignoreList.ignoreNbtTagNames(InitItems.itemBatteryTriple, "Energy");
         ignoreList.ignoreNbtTagNames(InitItems.itemBatteryQuadruple, "Energy");
         ignoreList.ignoreNbtTagNames(InitItems.itemBatteryQuintuple, "Energy");
+        
+        IItemBlacklist blacklist = this.helpers.getItemBlacklist();
+        blacklist.addItemToBlacklist(new ItemStack(InitBlocks.blockRice));
+        blacklist.addItemToBlacklist(new ItemStack(InitBlocks.blockCanola));
+        blacklist.addItemToBlacklist(new ItemStack(InitBlocks.blockFlax));
+        blacklist.addItemToBlacklist(new ItemStack(InitBlocks.blockCoffee));
+        blacklist.addItemToBlacklist(new ItemStack(InitBlocks.blockWildPlant, 1, Util.WILDCARD));
+        blacklist.addItemToBlacklist(new ItemStack(InitBlocks.blockColoredLampOn, 1, Util.WILDCARD));
     }
 
     @Override

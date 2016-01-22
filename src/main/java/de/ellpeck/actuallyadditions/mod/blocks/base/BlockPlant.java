@@ -55,12 +55,17 @@ public class BlockPlant extends BlockCrops{
                 List<ItemStack> drops = getDrops(world, pos, state, 0);
                 boolean deductedSeedSize = false;
                 for(ItemStack stack : drops){
-                    if(stack != null && stack.getItem() == this.seedItem && !deductedSeedSize){
-                        stack.stackSize--;
-                        deductedSeedSize = true;
+                    if(stack != null){
+                        if(stack.getItem() == this.seedItem && !deductedSeedSize){
+                            stack.stackSize--;
+                            deductedSeedSize = true;
+                        }
+
+                        if(stack.stackSize > 0){
+                            EntityItem entity = new EntityItem(world, pos.getX()+0.5, pos.getY()+0.5, pos.getZ()+0.5, stack);
+                            world.spawnEntityInWorld(entity);
+                        }
                     }
-                    EntityItem entity = new EntityItem(world, pos.getX()+.5, pos.getY()+.5, pos.getZ()+.5, stack);
-                    world.spawnEntityInWorld(entity);
                 }
 
                 world.setBlockState(pos, getStateFromMeta(0));
