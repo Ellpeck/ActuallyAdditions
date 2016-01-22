@@ -30,7 +30,6 @@ public class InitArmorMaterials{
     public static void init(){
         ModUtil.LOGGER.info("Initializing Armor Materials...");
 
-        //TODO Fix armor textures
         armorMaterialEmerald = EnumHelper.addArmorMaterial("armorMaterialEmerald", ModUtil.MOD_ID_LOWER+":armorEmerald", 50, new int[]{5, 9, 8, 5}, 15);
         armorMaterialObsidian = EnumHelper.addArmorMaterial("armorMaterialObsidian", ModUtil.MOD_ID_LOWER+":armorObsidian", 120, new int[]{3, 4, 3, 1}, 10);
         armorMaterialQuartz = EnumHelper.addArmorMaterial("armorMaterialQuartz", ModUtil.MOD_ID_LOWER+":armorQuartz", 20, new int[]{3, 6, 5, 3}, 8);
