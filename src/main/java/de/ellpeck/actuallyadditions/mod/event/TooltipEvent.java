@@ -16,10 +16,13 @@ import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.Item;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.oredict.OreDictionary;
+
+import java.util.List;
 
 //TODO Add meta & nbt info
 public class TooltipEvent{
@@ -66,8 +69,29 @@ public class TooltipEvent{
                         event.toolTip.add(ADVANCED_INFO_TEXT_PRE+metaName);
                     }
 
+                    //Metadata
+                    int meta = event.itemStack.getItemDamage();
+                    event.toolTip.add(ADVANCED_INFO_HEADER_PRE+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".meta.desc")+":");
+                    event.toolTip.add(ADVANCED_INFO_TEXT_PRE+meta);
+
+                    //NBT
+                    NBTTagCompound compound = event.itemStack.getTagCompound();
+                    if(compound != null && !compound.hasNoTags()){
+                        event.toolTip.add(ADVANCED_INFO_HEADER_PRE+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".nbt.desc")+":");
+                        if(KeyUtil.isShiftPressed()){
+                            List<String> strgList = Minecraft.getMinecraft().fontRendererObj.listFormattedStringToWidth(compound.toString(), 200);
+                            for(String strg : strgList){
+                                event.toolTip.add(ADVANCED_INFO_TEXT_PRE+strg);
+                            }
+                        }
+                        else{
+                            event.toolTip.add(ADVANCED_INFO_TEXT_PRE+EnumChatFormatting.ITALIC+"["+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".pressShift.desc")+"]");
+                        }
+                    }
+
                     //Disabling Info
                     event.toolTip.addAll(Minecraft.getMinecraft().fontRendererObj.listFormattedStringToWidth(EnumChatFormatting.ITALIC+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".disablingInfo.desc"), 200));
+
                 }
                 else{
                     if(ConfigBoolValues.CTRL_INFO_FOR_EXTRA_INFO.isEnabled()){
