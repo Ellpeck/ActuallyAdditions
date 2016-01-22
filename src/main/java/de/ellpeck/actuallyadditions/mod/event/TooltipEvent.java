@@ -24,7 +24,6 @@ import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.List;
 
-//TODO Add meta & nbt info
 public class TooltipEvent{
 
     private static final String ADVANCED_INFO_TEXT_PRE = EnumChatFormatting.DARK_GRAY+"     ";
