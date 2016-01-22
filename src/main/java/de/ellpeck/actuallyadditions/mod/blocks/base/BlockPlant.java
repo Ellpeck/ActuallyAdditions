@@ -53,9 +53,11 @@ public class BlockPlant extends BlockCrops{
             if(!world.isRemote){
 
                 List<ItemStack> drops = getDrops(world, pos, state, 0);
+                boolean deductedSeedSize = false;
                 for(ItemStack stack : drops){
-                    if(stack != null && stack.getItem() == this.getSeed()){
+                    if(stack != null && stack.getItem() == this.seedItem && !deductedSeedSize){
                         stack.stackSize--;
+                        deductedSeedSize = true;
                     }
                     EntityItem entity = new EntityItem(world, pos.getX()+.5, pos.getY()+.5, pos.getZ()+.5, stack);
                     world.spawnEntityInWorld(entity);
