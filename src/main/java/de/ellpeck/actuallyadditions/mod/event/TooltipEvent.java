@@ -61,17 +61,17 @@ public class TooltipEvent{
                         event.toolTip.add(ADVANCED_INFO_TEXT_PRE+baseName);
                     }
 
+                    //Metadata
+                    int meta = event.itemStack.getItemDamage();
+                    event.toolTip.add(ADVANCED_INFO_HEADER_PRE+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".meta.desc")+":");
+                    event.toolTip.add(ADVANCED_INFO_TEXT_PRE+meta);
+
                     //Unlocalized Name
                     String metaName = event.itemStack.getItem().getUnlocalizedName(event.itemStack);
                     if(metaName != null && baseName != null && !metaName.equals(baseName)){
                         event.toolTip.add(ADVANCED_INFO_HEADER_PRE+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".unlocName.desc")+":");
                         event.toolTip.add(ADVANCED_INFO_TEXT_PRE+metaName);
                     }
-
-                    //Metadata
-                    int meta = event.itemStack.getItemDamage();
-                    event.toolTip.add(ADVANCED_INFO_HEADER_PRE+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".meta.desc")+":");
-                    event.toolTip.add(ADVANCED_INFO_TEXT_PRE+meta);
 
                     //NBT
                     NBTTagCompound compound = event.itemStack.getTagCompound();
