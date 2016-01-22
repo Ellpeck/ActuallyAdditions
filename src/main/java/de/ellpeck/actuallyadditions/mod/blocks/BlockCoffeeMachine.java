@@ -39,9 +39,8 @@ public class BlockCoffeeMachine extends BlockContainerBase{
         this.setResistance(10.0F);
         this.setStepSound(soundTypeStone);
 
-        //TODO Fix bounding box
-        //float f = 1/16F;
-        //this.setBlockBounds(f, 0F, f, 1F-f, 1F-2*f, 1F-f);
+        float f = 1/16F;
+        this.setBlockBounds(f, 0F, f, 1F-f, 1F-2*f, 1F-f);
     }
 
     @Override

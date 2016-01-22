@@ -21,19 +21,19 @@ import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.*;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.util.List;
 import java.util.Random;
 
 public class BlockSmileyCloud extends BlockContainerBase{
@@ -88,8 +88,7 @@ public class BlockSmileyCloud extends BlockContainerBase{
         return true;
     }
 
-    //TODO Fix bounding box
-    /*@Override
+    @Override
     public void addCollisionBoxesToList(World world, BlockPos pos, IBlockState state, AxisAlignedBB axis, List list, Entity entity){
         this.setBlockBoundsBasedOnState(world, pos);
         super.addCollisionBoxesToList(world, pos, state, axis, list, entity);
@@ -100,20 +99,19 @@ public class BlockSmileyCloud extends BlockContainerBase{
         int meta = PosUtil.getMetadata(pos, world);
         float f = 0.0625F;
 
-        if(meta == 0){
-            this.setBlockBounds(0F, 0F, 0F, 1F, 1F, 1F-f*3F);
-        }
         if(meta == 1){
-            this.setBlockBounds(0F, 0F, 0F, 1F-f*3F, 1F, 1F);
-        }
-        if(meta == 2){
-            this.setBlockBounds(0F, 0F, f*3F, 1F, 1F, 1F);
+            this.setBlockBounds(0F, 0F, 0F, 1F, 1F-f*3F, 1F-f*2F);
         }
         if(meta == 3){
-            this.setBlockBounds(f*3F, 0F, 0F, 1F, 1F, 1F);
+            this.setBlockBounds(0F, 0F, 0F, 1F-f*2F, 1F-f*3F, 1F);
+        }
+        if(meta == 0){
+            this.setBlockBounds(0F, 0F, f*2F, 1F, 1F-f*3F, 1F);
+        }
+        if(meta == 2){
+            this.setBlockBounds(f*2F, 0F, 0F, 1F, 1F-f*3F, 1F);
         }
     }
-    */
 
     @Override
     public TileEntity createNewTileEntity(World world, int meta){
