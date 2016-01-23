@@ -10,18 +10,9 @@
 
 package de.ellpeck.actuallyadditions.mod.nei;
 
-import codechicken.nei.api.API;
-import codechicken.nei.api.IConfigureNEI;
-import codechicken.nei.recipe.DefaultOverlayHandler;
-import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
-import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiCrafter;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
-import de.ellpeck.actuallyadditions.mod.util.Util;
-import net.minecraft.item.ItemStack;
+public class NEIActuallyAdditionsConfig/* implements IConfigureNEI*/{
 
-public class NEIActuallyAdditionsConfig implements IConfigureNEI{
-
-    @Override
+    /*@Override
     public void loadConfig(){
         ModUtil.LOGGER.info("Initializing Not Enough Items Plugin...");
 
@@ -80,6 +71,5 @@ public class NEIActuallyAdditionsConfig implements IConfigureNEI{
     @Override
     public String getVersion(){
         return ModUtil.VERSION;
-    }
-
+    }*/
 }

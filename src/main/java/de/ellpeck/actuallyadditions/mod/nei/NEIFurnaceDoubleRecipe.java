@@ -10,32 +10,11 @@
 
 package de.ellpeck.actuallyadditions.mod.nei;
 
-import codechicken.lib.gui.GuiDraw;
-import codechicken.nei.NEIServerUtils;
-import codechicken.nei.PositionedStack;
-import codechicken.nei.recipe.RecipeInfo;
-import codechicken.nei.recipe.TemplateRecipeHandler;
-import de.ellpeck.actuallyadditions.api.booklet.BookletPage;
-import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
-import de.ellpeck.actuallyadditions.mod.booklet.BookletUtils;
-import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiFurnaceDouble;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
-import de.ellpeck.actuallyadditions.mod.util.StringUtil;
-import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.FurnaceRecipes;
-
-import java.awt.*;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-
-public class NEIFurnaceDoubleRecipe extends TemplateRecipeHandler implements INEIRecipeHandler{
+public class NEIFurnaceDoubleRecipe /*extends TemplateRecipeHandler implements INEIRecipeHandler*/{
 
     public static final String NAME = "actuallyadditions.furnaceDouble";
 
-    public NEIFurnaceDoubleRecipe(){
+    /*public NEIFurnaceDoubleRecipe(){
         RecipeInfo.setGuiOffset(this.getGuiClass(), 0, 0);
     }
 
@@ -145,5 +124,5 @@ public class NEIFurnaceDoubleRecipe extends TemplateRecipeHandler implements INE
         public List<PositionedStack> getIngredients(){
             return getCycledIngredients(cycleticks/48, Collections.singletonList(ingredient));
         }
-    }
+    }*/
 }

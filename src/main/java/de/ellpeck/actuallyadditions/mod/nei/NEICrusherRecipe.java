@@ -10,31 +10,9 @@
 
 package de.ellpeck.actuallyadditions.mod.nei;
 
-import codechicken.lib.gui.GuiDraw;
-import codechicken.nei.PositionedStack;
-import codechicken.nei.recipe.RecipeInfo;
-import codechicken.nei.recipe.TemplateRecipeHandler;
-import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
-import de.ellpeck.actuallyadditions.api.booklet.BookletPage;
-import de.ellpeck.actuallyadditions.api.recipe.CrusherRecipe;
-import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
-import de.ellpeck.actuallyadditions.mod.booklet.BookletUtils;
-import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiGrinder;
-import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
-import de.ellpeck.actuallyadditions.mod.util.StringUtil;
-import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.item.ItemStack;
+public class NEICrusherRecipe/* extends TemplateRecipeHandler implements INEIRecipeHandler*/{
 
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-public class NEICrusherRecipe extends TemplateRecipeHandler implements INEIRecipeHandler{
-
-    public NEICrusherRecipe(){
+    /*public NEICrusherRecipe(){
         RecipeInfo.setGuiOffset(this.getGuiClass(), 0, 0);
     }
 
@@ -204,5 +182,5 @@ public class NEICrusherRecipe extends TemplateRecipeHandler implements INEIRecip
             }
             return list;
         }
-    }
+    }*/
 }

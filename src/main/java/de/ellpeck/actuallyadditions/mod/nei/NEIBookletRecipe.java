@@ -10,33 +10,11 @@
 
 package de.ellpeck.actuallyadditions.mod.nei;
 
-import codechicken.lib.gui.GuiDraw;
-import codechicken.nei.PositionedStack;
-import codechicken.nei.recipe.RecipeInfo;
-import codechicken.nei.recipe.TemplateRecipeHandler;
-import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
-import de.ellpeck.actuallyadditions.api.booklet.BookletPage;
-import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
-import de.ellpeck.actuallyadditions.mod.booklet.BookletUtils;
-import de.ellpeck.actuallyadditions.mod.booklet.page.PagePicture;
-import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
-import de.ellpeck.actuallyadditions.mod.util.StringUtil;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumChatFormatting;
-
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
-
-public class NEIBookletRecipe extends TemplateRecipeHandler implements INEIRecipeHandler{
+public class NEIBookletRecipe/* extends TemplateRecipeHandler implements INEIRecipeHandler*/{
 
     public static final String NAME = "actuallyadditions.booklet";
 
-    public NEIBookletRecipe(){
+    /*public NEIBookletRecipe(){
         RecipeInfo.setGuiOffset(this.getGuiClass(), 0, 0);
     }
 
@@ -169,5 +147,5 @@ public class NEIBookletRecipe extends TemplateRecipeHandler implements INEIRecip
             }
             return null;
         }
-    }
+    }*/
 }

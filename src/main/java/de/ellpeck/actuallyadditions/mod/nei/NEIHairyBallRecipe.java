@@ -10,31 +10,11 @@
 
 package de.ellpeck.actuallyadditions.mod.nei;
 
-import codechicken.lib.gui.GuiDraw;
-import codechicken.nei.NEIServerUtils;
-import codechicken.nei.PositionedStack;
-import codechicken.nei.recipe.RecipeInfo;
-import codechicken.nei.recipe.TemplateRecipeHandler;
-import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
-import de.ellpeck.actuallyadditions.api.booklet.BookletPage;
-import de.ellpeck.actuallyadditions.api.recipe.BallOfFurReturn;
-import de.ellpeck.actuallyadditions.mod.booklet.BookletUtils;
-import de.ellpeck.actuallyadditions.mod.items.InitItems;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
-import de.ellpeck.actuallyadditions.mod.util.StringUtil;
-import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.item.ItemStack;
-
-import java.awt.*;
-import java.util.Collections;
-import java.util.List;
-
-public class NEIHairyBallRecipe extends TemplateRecipeHandler implements INEIRecipeHandler{
+public class NEIHairyBallRecipe/* extends TemplateRecipeHandler implements INEIRecipeHandler*/{
 
     public static final String NAME = "actuallyadditions.ballOfHair";
 
-    public NEIHairyBallRecipe(){
+    /*public NEIHairyBallRecipe(){
         super();
         RecipeInfo.setGuiOffset(this.getGuiClass(), 0, 0);
     }
@@ -148,5 +128,5 @@ public class NEIHairyBallRecipe extends TemplateRecipeHandler implements INEIRec
         public PositionedStack getIngredient(){
             return input;
         }
-    }
+    }*/
 }

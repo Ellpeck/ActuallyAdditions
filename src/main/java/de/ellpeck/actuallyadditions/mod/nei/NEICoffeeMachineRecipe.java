@@ -10,38 +10,11 @@
 
 package de.ellpeck.actuallyadditions.mod.nei;
 
-import codechicken.lib.gui.GuiDraw;
-import codechicken.nei.NEIServerUtils;
-import codechicken.nei.PositionedStack;
-import codechicken.nei.recipe.RecipeInfo;
-import codechicken.nei.recipe.TemplateRecipeHandler;
-import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
-import de.ellpeck.actuallyadditions.api.booklet.BookletPage;
-import de.ellpeck.actuallyadditions.api.recipe.coffee.CoffeeBrewing;
-import de.ellpeck.actuallyadditions.api.recipe.coffee.CoffeeIngredient;
-import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
-import de.ellpeck.actuallyadditions.mod.booklet.BookletUtils;
-import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiCoffeeMachine;
-import de.ellpeck.actuallyadditions.mod.items.InitItems;
-import de.ellpeck.actuallyadditions.mod.items.ItemCoffee;
-import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityCoffeeMachine;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
-import de.ellpeck.actuallyadditions.mod.util.StringUtil;
-import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.item.ItemStack;
-
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-public class NEICoffeeMachineRecipe extends TemplateRecipeHandler implements INEIRecipeHandler{
+public class NEICoffeeMachineRecipe/* extends TemplateRecipeHandler implements INEIRecipeHandler*/{
 
     public static final String NAME = "actuallyadditions.coffee";
 
-    public NEICoffeeMachineRecipe(){
+    /*public NEICoffeeMachineRecipe(){
         super();
         RecipeInfo.setGuiOffset(this.getGuiClass(), 35, 3);
     }
@@ -178,5 +151,5 @@ public class NEICoffeeMachineRecipe extends TemplateRecipeHandler implements INE
             list.add(this.coffeeBeans);
             return list;
         }
-    }
+    }*/
 }
