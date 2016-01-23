@@ -102,12 +102,11 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
             Block blockToBreak = PosUtil.getBlock(boundPosition, worldObj);
             if(blockToBreak != null && blockToBreak.getBlockHardness(worldObj, boundPosition) > -1.0F){
                 ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-                int meta = PosUtil.getMetadata(boundPosition, worldObj);
                 drops.addAll(blockToBreak.getDrops(worldObj, boundPosition, worldObj.getBlockState(boundPosition), 0));
 
                 if(WorldUtil.addToInventory(this, drops, false, true)){
                     if(!ConfigValues.lessBlockBreakingEffects){
-                        worldObj.playAuxSFX(2001, this.boundPosition, Block.getIdFromBlock(blockToBreak)+(meta << 12));
+                        worldObj.playAuxSFX(2001, this.boundPosition, Block.getStateId(worldObj.getBlockState(this.boundPosition)));
                     }
                     worldObj.setBlockToAir(this.boundPosition);
                     WorldUtil.addToInventory(this, drops, true, true);

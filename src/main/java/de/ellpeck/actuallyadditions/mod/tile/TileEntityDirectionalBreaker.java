@@ -73,12 +73,11 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase implem
                 Block blockToBreak = PosUtil.getBlock(coordsBlock, worldObj);
                 if(blockToBreak != null && !(blockToBreak instanceof BlockAir) && blockToBreak.getBlockHardness(worldObj, pos) > -1.0F){
                     ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-                    int meta = PosUtil.getMetadata(coordsBlock, worldObj);
                     drops.addAll(blockToBreak.getDrops(worldObj, coordsBlock, worldObj.getBlockState(coordsBlock), 0));
 
                     if(WorldUtil.addToInventory(this, drops, false, true)){
                         if(!ConfigValues.lessBlockBreakingEffects){
-                            worldObj.playAuxSFX(2001, coordsBlock, Block.getIdFromBlock(blockToBreak)+(meta << 12));
+                            worldObj.playAuxSFX(2001, coordsBlock, Block.getStateId(worldObj.getBlockState(coordsBlock)));
                         }
                         WorldUtil.breakBlockAtSide(sideToManipulate, worldObj, this.getPos(), i);
                         WorldUtil.addToInventory(this, drops, true, true);

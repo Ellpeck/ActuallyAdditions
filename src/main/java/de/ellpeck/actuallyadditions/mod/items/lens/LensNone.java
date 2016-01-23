@@ -47,7 +47,7 @@ public class LensNone extends Lens{
                                     ItemStack output = outputs.get(0);
                                     if(output.getItem() instanceof ItemBlock){
                                         if(!ConfigValues.lessBlockBreakingEffects){
-                                            tile.getWorldObject().playAuxSFX(2001, pos, Block.getIdFromBlock(PosUtil.getBlock(pos, tile.getWorldObject()))+(PosUtil.getMetadata(pos, tile.getWorldObject()) << 12));
+                                            tile.getWorldObject().playAuxSFX(2001, pos, Block.getStateId(tile.getWorldObject().getBlockState(pos)));
                                         }
                                         PosUtil.setBlock(pos, tile.getWorldObject(), Block.getBlockFromItem(output.getItem()), output.getItemDamage(), 2);
                                     }

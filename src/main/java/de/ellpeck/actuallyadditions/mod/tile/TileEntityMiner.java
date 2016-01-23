@@ -87,7 +87,7 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyR
 
                             if(WorldUtil.addToInventory(this, drops, false, true)){
                                 if(!ConfigValues.lessBlockBreakingEffects){
-                                    worldObj.playAuxSFX(2001, pos, Block.getIdFromBlock(block)+(meta << 12));
+                                    worldObj.playAuxSFX(2001, pos, Block.getStateId(worldObj.getBlockState(pos)));
                                 }
                                 worldObj.setBlockToAir(pos);
 

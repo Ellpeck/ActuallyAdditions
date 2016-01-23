@@ -65,10 +65,8 @@ public class TileEntityLeafGenerator extends TileEntityBase implements IEnergyPr
                             Collections.shuffle(breakPositions);
                             BlockPos theCoord = breakPositions.get(0);
 
-                            Block theBlock = PosUtil.getBlock(theCoord, worldObj);
-                            int meta = PosUtil.getMetadata(theCoord, worldObj);
                             if(!ConfigValues.lessBlockBreakingEffects){
-                                this.worldObj.playAuxSFX(2001, theCoord, Block.getIdFromBlock(theBlock)+(meta << 12));
+                                this.worldObj.playAuxSFX(2001, theCoord, Block.getStateId(worldObj.getBlockState(theCoord)));
                             }
 
                             this.worldObj.setBlockToAir(theCoord);

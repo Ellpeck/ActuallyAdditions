@@ -366,7 +366,7 @@ public class WorldUtil{
         }
         else{
             //Shows the Harvest Particles and plays the Block's Sound
-            world.playAuxSFX(2001, pos, Block.getIdFromBlock(block)+(meta << 12));
+            world.playAuxSFX(2001, pos, Block.getStateId(state));
         }
 
         //If the Block was actually "removed", meaning it will drop an Item

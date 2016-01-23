@@ -82,7 +82,7 @@ public class TileEntityBreaker extends TileEntityInventoryBase implements IRedst
 
                 if(WorldUtil.addToInventory(this, drops, false, true)){
                     if(!ConfigValues.lessBlockBreakingEffects){
-                        worldObj.playAuxSFX(2001, coordsBlock, Block.getIdFromBlock(blockToBreak)+(meta << 12));
+                        worldObj.playAuxSFX(2001, coordsBlock, Block.getStateId(worldObj.getBlockState(coordsBlock)));
                     }
                     WorldUtil.breakBlockAtSide(sideToManipulate, worldObj, this.pos);
                     WorldUtil.addToInventory(this, drops, true, true);

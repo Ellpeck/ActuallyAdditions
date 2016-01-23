@@ -53,7 +53,7 @@ public class ItemChestToCrateUpgrade extends ItemBase{
 
                     //Set New Block
                     if(!ConfigValues.lessBlockBreakingEffects){
-                        world.playAuxSFX(2001, pos, Block.getIdFromBlock(block)+(PosUtil.getMetadata(pos, world) << 12));
+                        world.playAuxSFX(2001, pos, Block.getStateId(world.getBlockState(pos)));
                     }
                     PosUtil.setBlock(pos, world, InitBlocks.blockGiantChest, 0, 2);
 

@@ -106,16 +106,16 @@ public class ItemLeafBlower extends ItemBase{
             Block theBlock = PosUtil.getBlock(theCoord, world);
 
             ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-            int meta = PosUtil.getMetadata(theCoord, world);
             //Gets all of the Drops the Block should have
             drops.addAll(theBlock.getDrops(world, theCoord, world.getBlockState(theCoord), 0));
 
-            //Deletes the Block
-            world.setBlockToAir(theCoord);
             //Plays the Breaking Sound
             if(!ConfigValues.lessBlockBreakingEffects){
-                world.playAuxSFX(2001, theCoord, Block.getIdFromBlock(theBlock)+(meta << 12));
+                world.playAuxSFX(2001, theCoord, Block.getStateId(world.getBlockState(theCoord)));
             }
+
+            //Deletes the Block
+            world.setBlockToAir(theCoord);
 
             for(ItemStack theDrop : drops){
                 //Drops the Items into the World
