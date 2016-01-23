@@ -86,7 +86,9 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyR
                             drops.addAll(block.getDrops(worldObj, pos, worldObj.getBlockState(pos), 0));
 
                             if(WorldUtil.addToInventory(this, drops, false, true)){
-                                worldObj.playAuxSFX(2001, pos, Block.getIdFromBlock(block)+(meta << 12));
+                                if(!ConfigValues.lessBlockBreakingEffects){
+                                    worldObj.playAuxSFX(2001, pos, Block.getIdFromBlock(block)+(meta << 12));
+                                }
                                 worldObj.setBlockToAir(pos);
 
                                 WorldUtil.addToInventory(this, drops, true, true);
@@ -147,7 +149,9 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyR
     }
 
     private void shootParticles(int endX, int endY, int endZ){
-        PacketHandler.theNetwork.sendToAllAround(new PacketParticle(this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), endX, endY, endZ, new float[]{62F/255F, 163F/255F, 74F/255F}, 5, 1.0F), new NetworkRegistry.TargetPoint(worldObj.provider.getDimensionId(), this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), 96));
+        if(!ConfigValues.lessParticles){
+            PacketHandler.theNetwork.sendToAllAround(new PacketParticle(this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), endX, endY, endZ, new float[]{62F/255F, 163F/255F, 74F/255F}, 5, 1.0F), new NetworkRegistry.TargetPoint(worldObj.provider.getDimensionId(), this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), 96));
+        }
     }
 
     @Override

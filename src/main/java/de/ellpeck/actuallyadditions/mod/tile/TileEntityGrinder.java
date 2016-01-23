@@ -13,6 +13,7 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
+import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
 import de.ellpeck.actuallyadditions.mod.recipe.CrusherRecipeRegistry;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.PosUtil;
@@ -142,7 +143,7 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
                 this.lastSecondCrush = this.secondCrushTime;
             }
 
-            if(shouldPlaySound){
+            if(shouldPlaySound && !ConfigValues.lessSound){
                 this.worldObj.playSoundEffect(this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), ModUtil.MOD_ID_LOWER+":crusher", 0.25F, 1.0F);
             }
         }

@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 
+import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
 import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
@@ -80,7 +81,9 @@ public class TileEntityBreaker extends TileEntityInventoryBase implements IRedst
                 drops.addAll(blockToBreak.getDrops(worldObj, coordsBlock, worldObj.getBlockState(coordsBlock), 0));
 
                 if(WorldUtil.addToInventory(this, drops, false, true)){
-                    worldObj.playAuxSFX(2001, coordsBlock, Block.getIdFromBlock(blockToBreak)+(meta << 12));
+                    if(!ConfigValues.lessBlockBreakingEffects){
+                        worldObj.playAuxSFX(2001, coordsBlock, Block.getIdFromBlock(blockToBreak)+(meta << 12));
+                    }
                     WorldUtil.breakBlockAtSide(sideToManipulate, worldObj, this.pos);
                     WorldUtil.addToInventory(this, drops, true, true);
                     this.markDirty();

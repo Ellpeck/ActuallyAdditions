@@ -15,6 +15,7 @@ import cofh.api.energy.IEnergyReceiver;
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.lens.ILensItem;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
+import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
 import de.ellpeck.actuallyadditions.mod.items.lens.Lenses;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
 import de.ellpeck.actuallyadditions.mod.network.PacketParticle;
@@ -99,8 +100,10 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
     }
 
     private void shootLaser(int endX, int endY, int endZ, Lens currentLens){
-        this.worldObj.playSoundEffect(this.getX(), this.getY(), this.getZ(), ModUtil.MOD_ID_LOWER+":reconstructor", 0.35F, 1.0F);
-        PacketHandler.theNetwork.sendToAllAround(new PacketParticle(this.getX(), this.getY(), this.getZ(), endX, endY, endZ, currentLens.getColor(), 8, 2F), new NetworkRegistry.TargetPoint(worldObj.provider.getDimensionId(), this.getX(), this.getY(), this.getZ(), 64));
+        if(!ConfigValues.lessSound){
+            this.worldObj.playSoundEffect(this.getX(), this.getY(), this.getZ(), ModUtil.MOD_ID_LOWER+":reconstructor", 0.35F, 1.0F);
+        }
+        PacketHandler.theNetwork.sendToAllAround(new PacketParticle(this.getX(), this.getY(), this.getZ(), endX, endY, endZ, currentLens.getColor(), ConfigValues.lessParticles ? 2 : 8, 2F), new NetworkRegistry.TargetPoint(worldObj.provider.getDimensionId(), this.getX(), this.getY(), this.getZ(), 64));
     }
 
     @Override

@@ -15,8 +15,6 @@ import de.ellpeck.actuallyadditions.mod.config.ConfigurationHandler;
 
 public enum ConfigBoolValues{
 
-    LEAF_BLOWER_SOUND("Leaf Blower: Sound", ConfigCategories.TOOL_VALUES, true, "If the Leaf Blower makes Sounds"),
-
     JAM_VILLAGER_EXISTS("Jam Villager: Existence", ConfigCategories.WORLD_GEN, true, "If the Jam Villager and his House exist"),
     CROP_FIELD_EXISTS("Crop Field: Existence", ConfigCategories.WORLD_GEN, true, "If the Custom Crop Fields exist"),
 
@@ -53,7 +51,6 @@ public enum ConfigBoolValues{
     GIVE_BOOKLET_ON_FIRST_CRAFT("Give Booklet on First Craft", ConfigCategories.OTHER, true, "If the booklet should be given to the player when he first crafts something from the Mod"),
 
     ENABLE_SEASONAL("Seasonal Mode", ConfigCategories.OTHER, true, "If Seasonal Mode is enabled"),
-    LESS_LASER_RELAY_PARTICLES("Laser Relay: Particles", ConfigCategories.MACHINE_VALUES, false, "If the Laser Relay should have less laser particles to prevent lag"),
 
     DUNGEON_LOOT("Dungeon Loot", ConfigCategories.OTHER, true, "Should Actually Additions Loot spawn in Dungeons");
 
