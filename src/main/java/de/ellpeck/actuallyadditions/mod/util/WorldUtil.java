@@ -243,6 +243,7 @@ public class WorldUtil{
         return blocks;
     }
 
+    //TODO make this work for the stupid new system
     /**
      * Add an ArrayList of ItemStacks to an Array of slots
      *

@@ -82,10 +82,24 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
         this.markDirty();
     }
 
+    private boolean newPull(){
+        //TODO make this work for the stupid new system
+        return false;
+    }
+
+    private boolean newPut(){
+        //TODO make this work for the stupid new system
+        return false;
+    }
+
     /**
      * Pulls Items from the specified Slots on the specified Side
      */
-    public void pull(){
+    private void pull(){
+        if(this.newPull()){
+            return;
+        }
+
         //The Inventory to pull from
         IInventory theInventory = (IInventory)placeToPull;
         //Does the Inventory even have Slots!?
@@ -184,7 +198,11 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
      * Puts Items into the specified Slots at the specified Side
      * (Check pull() for Description, similar to this)
      */
-    public void put(){
+    private void put(){
+        if(this.newPut()){
+            return;
+        }
+
         IInventory theInventory = (IInventory)placeToPut;
         if(theInventory.getSizeInventory() > 0){
             int theSlotToPut = this.slotToPutStart;
@@ -229,6 +247,7 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
                     }
                 }
                 if(can){
+                    System.out.println("Putting old");
                     if(theStack != null){
                         ItemStack copiedStack = theStack.copy();
                         if(copiedStack.isItemEqual(this.slots[0])){
