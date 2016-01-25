@@ -23,6 +23,9 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.CapabilityDispatcher;
+import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -37,8 +40,12 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
     private BlockPos boundPosBefore;
     private Block boundBlockBefore;
 
+    private CapabilityDispatcher capabilities;
+
     public TileEntityPhantomface(String name){
         super(0, name);
+
+        this.capabilities = ForgeEventFactory.gatherCapabilities(this);
     }
 
     @Override
@@ -180,5 +187,10 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
     @Override
     public boolean isItemValidForSlot(int slot, ItemStack stack){
         return false;
+    }
+
+    @Override
+    public <T> T getCapability(Capability<T> capability, EnumFacing facing){
+        return this.capabilities.getCapability(capability, facing);
     }
 }

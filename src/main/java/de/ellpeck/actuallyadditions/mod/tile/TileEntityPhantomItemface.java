@@ -16,6 +16,7 @@ import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraftforge.common.capabilities.Capability;
 
 public class TileEntityPhantomItemface extends TileEntityPhantomface{
 
@@ -121,5 +122,16 @@ public class TileEntityPhantomItemface extends TileEntityPhantomface{
         if(this.isBoundThingInRange()){
             this.getInventory().clear();
         }
+    }
+
+    @Override
+    public <T> T getCapability(Capability<T> capability, EnumFacing facing){
+        if(this.isBoundThingInRange()){
+            TileEntity tile = worldObj.getTileEntity(this.boundPosition);
+            if(tile != null){
+                return tile.getCapability(capability, facing);
+            }
+        }
+        return super.getCapability(capability, facing);
     }
 }
