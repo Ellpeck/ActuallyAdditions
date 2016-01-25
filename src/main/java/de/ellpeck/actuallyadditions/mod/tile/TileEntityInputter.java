@@ -247,7 +247,6 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
                     }
                 }
                 if(can){
-                    System.out.println("Putting old");
                     if(theStack != null){
                         ItemStack copiedStack = theStack.copy();
                         if(copiedStack.isItemEqual(this.slots[0])){
