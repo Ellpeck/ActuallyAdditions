@@ -154,36 +154,36 @@ tile.actuallyadditions.blockInputter.add.13.name=Eingelaugtes Salz-Gebäck
 tile.actuallyadditions.blockInputter.add.14.name=Eierlegendes Schreck-Gebilde
 tile.actuallyadditions.blockInputter.add.15.name=Exzellentes Spaghetti-Gericht
 
-#Reconstructor
- tile.actuallyadditions.blockAtomicReconstructor.name=Atomic Reconstructor
+#Reconstructor / Umwandler
+ tile.actuallyadditions.blockAtomicReconstructor.name=Atomarer Umwandler
  
- tile.actuallyadditions.blockAtomicReconstructor.info.1.1=Molecular
- tile.actuallyadditions.blockAtomicReconstructor.info.1.2=Material
+ tile.actuallyadditions.blockAtomicReconstructor.info.1.1=Molekular
+ tile.actuallyadditions.blockAtomicReconstructor.info.1.2=Materiell
  tile.actuallyadditions.blockAtomicReconstructor.info.1.3=Quarkal
- tile.actuallyadditions.blockAtomicReconstructor.info.1.4=Atomatic
- tile.actuallyadditions.blockAtomicReconstructor.info.1.5=Tiny Bit
- tile.actuallyadditions.blockAtomicReconstructor.info.1.6=Component
- tile.actuallyadditions.blockAtomicReconstructor.info.1.7=Vittle
- tile.actuallyadditions.blockAtomicReconstructor.info.1.8=Transmaterial
- tile.actuallyadditions.blockAtomicReconstructor.info.1.9=Partial
- tile.actuallyadditions.blockAtomicReconstructor.info.1.10=Spatial
- tile.actuallyadditions.blockAtomicReconstructor.info.1.11=Stuffy
+ tile.actuallyadditions.blockAtomicReconstructor.info.1.4=Atomar
+ tile.actuallyadditions.blockAtomicReconstructor.info.1.5=Kleines Bisschen
+ tile.actuallyadditions.blockAtomicReconstructor.info.1.6=Komponente
+ tile.actuallyadditions.blockAtomicReconstructor.info.1.7=Vittell
+ tile.actuallyadditions.blockAtomicReconstructor.info.1.8=Transmateriell
+ tile.actuallyadditions.blockAtomicReconstructor.info.1.9=Partiell
+ tile.actuallyadditions.blockAtomicReconstructor.info.1.10=Räumlich
+ tile.actuallyadditions.blockAtomicReconstructor.info.1.11=Stickig
  tile.actuallyadditions.blockAtomicReconstructor.info.1.12=Interdimensional
  
- tile.actuallyadditions.blockAtomicReconstructor.info.2.1=Recombobulizer
- tile.actuallyadditions.blockAtomicReconstructor.info.2.2=Shiftulator
- tile.actuallyadditions.blockAtomicReconstructor.info.2.3=Recombinator
+ tile.actuallyadditions.blockAtomicReconstructor.info.2.1=Vermischer
+ tile.actuallyadditions.blockAtomicReconstructor.info.2.2=Verschieber
+ tile.actuallyadditions.blockAtomicReconstructor.info.2.3=Rekombinierer
  tile.actuallyadditions.blockAtomicReconstructor.info.2.4=Modulator
- tile.actuallyadditions.blockAtomicReconstructor.info.2.5=Moleculizer
- tile.actuallyadditions.blockAtomicReconstructor.info.2.6=Modificulator
- tile.actuallyadditions.blockAtomicReconstructor.info.2.7=Changer
- tile.actuallyadditions.blockAtomicReconstructor.info.2.8=Atomizer
- tile.actuallyadditions.blockAtomicReconstructor.info.2.9=Makerator
+ tile.actuallyadditions.blockAtomicReconstructor.info.2.5=Molekülisator
+ tile.actuallyadditions.blockAtomicReconstructor.info.2.6=Modifikulisator
+ tile.actuallyadditions.blockAtomicReconstructor.info.2.7=Veränderer
+ tile.actuallyadditions.blockAtomicReconstructor.info.2.8=Atomisierer
+ tile.actuallyadditions.blockAtomicReconstructor.info.2.9=Zerhacker
  tile.actuallyadditions.blockAtomicReconstructor.info.2.10=Swapper
- tile.actuallyadditions.blockAtomicReconstructor.info.2.11=Exchanger
- tile.actuallyadditions.blockAtomicReconstructor.info.2.12=Replacer
- tile.actuallyadditions.blockAtomicReconstructor.info.2.13=Differentiator
- tile.actuallyadditions.blockAtomicReconstructor.info.2.14=Receiver
+ tile.actuallyadditions.blockAtomicReconstructor.info.2.11=Vertauscher
+ tile.actuallyadditions.blockAtomicReconstructor.info.2.12=Austauscher
+ tile.actuallyadditions.blockAtomicReconstructor.info.2.13=Differenzierer
+ tile.actuallyadditions.blockAtomicReconstructor.info.2.14=Empfänger
 
 #Items / Gegenstände
 item.actuallyadditions.itemDrill.name=Bohrer
@@ -426,8 +426,8 @@ tooltip.actuallyadditions.oredictName.desc=OreDictionary-Einträge
 tooltip.actuallyadditions.noOredictNameAvail.desc=Keine
 tooltip.actuallyadditions.codeName.desc=Codename
 tooltip.actuallyadditions.baseUnlocName.desc=Unlokalisierter Name des Gegenstands
-tooltip.actuallyadditions.meta.desc=Metadata
-tooltip.actuallyadditions.nbt.desc=NBT
+tooltip.actuallyadditions.meta.desc=Metadaten
+tooltip.actuallyadditions.nbt.desc=NBT-Daten
 tooltip.actuallyadditions.unlocName.desc=Unlokalisierter Name der Meta
 tooltip.actuallyadditions.disablingInfo.desc=Wenn du diese Informationen nicht sehen möchtest, deaktiviere sie in den Actually Additions-Einstellungen!
 tooltip.actuallyadditions.ctrlForMoreInfo.desc=Drücke STRG für weitere Informationen
