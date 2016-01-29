@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks.base;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -39,11 +40,13 @@ public class BlockPlant extends BlockCrops{
     private String name;
     private int minDropAmount;
     private int addDropAmount;
+    private Random randomAccess;
 
     public BlockPlant(String name, int minDropAmount, int addDropAmount){
         this.name = name;
         this.minDropAmount = minDropAmount;
         this.addDropAmount = addDropAmount;
+        this.randomAccess = new Random();
         this.register();
     }
     public boolean onBlockActivated(World w, BlockPos p, IBlockState s, EntityPlayer ep, EnumFacing f, float hitX, float hitY, float hitZ){
@@ -110,22 +113,18 @@ public class BlockPlant extends BlockCrops{
         return this.returnItem;
     }
     @Override
-    public Item getItemDropped(IBlockState state, Random rand, int par3){
-        return this.getMetaFromState(state) >= 7 ? this.getCrop() : this.getSeed();
+    public List<ItemStack> getDrops(IBlockAccess worldBlockAccess, BlockPos blockPosition, IBlockState blockState, int fortuneLevel){
+		ArrayList droppedItems = new ArrayList<ItemStack>();
+    	if(getMetaFromState(blockState) >= 7){
+			droppedItems.add(new ItemStack(getSeed(),randomAccess.nextBoolean()?2:1));
+			droppedItems.add(new ItemStack(getCrop(),randomAccess.nextInt(addDropAmount)+minDropAmount));
+		} else {
+			droppedItems.add(new ItemStack(getSeed(),1));
+		}
+    	return droppedItems;
     }
-
-    @Override
-    public int damageDropped(IBlockState state){
-        return this.getMetaFromState(state) >= 7 ? this.returnMeta : 0;
-    }
-
     @Override
     public int getDamageValue(World world, BlockPos pos){
         return 0;
-    }
-
-    @Override
-    public int quantityDropped(IBlockState state, int fortune, Random random){
-        return this.getMetaFromState(state) >= 7 ? random.nextInt(addDropAmount)+minDropAmount : super.quantityDropped(state, fortune, random);
     }
 }
