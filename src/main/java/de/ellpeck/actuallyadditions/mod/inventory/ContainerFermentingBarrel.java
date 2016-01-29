@@ -10,7 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory;
 
-import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
+import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotOutput;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityFermentingBarrel;
@@ -62,12 +62,12 @@ public class ContainerFermentingBarrel extends Container{
             //Other Slots in Inventory excluded
             if(slot >= inventoryStart){
                 //Shift from Inventory
-                if(FluidContainerRegistry.containsFluid(newStack, new FluidStack(InitBlocks.fluidCanolaOil, 1))){
+                if(FluidContainerRegistry.containsFluid(newStack, new FluidStack(InitFluids.fluidCanolaOil, 1))){
                     if(!this.mergeItemStack(newStack, 0, 1, false)){
                         return null;
                     }
                 }
-                else if(FluidContainerRegistry.getContainerCapacity(new FluidStack(InitBlocks.fluidOil, 1), newStack) > 0){
+                else if(FluidContainerRegistry.getContainerCapacity(new FluidStack(InitFluids.fluidOil, 1), newStack) > 0){
                     if(!this.mergeItemStack(newStack, 2, 3, false)){
                         return null;
                     }

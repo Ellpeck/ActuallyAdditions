@@ -10,7 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
+import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -45,7 +45,7 @@ public class TileEntityFermentingBarrel extends TileEntityInventoryBase implemen
                 if(this.currentProcessTime >= PROCESS_TIME){
                     this.currentProcessTime = 0;
 
-                    this.oilTank.fill(new FluidStack(InitBlocks.fluidOil, produce), true);
+                    this.oilTank.fill(new FluidStack(InitFluids.fluidOil, produce), true);
                     this.canolaTank.drain(produce, true);
                     this.markDirty();
                 }
@@ -54,7 +54,7 @@ public class TileEntityFermentingBarrel extends TileEntityInventoryBase implemen
                 this.currentProcessTime = 0;
             }
 
-            WorldUtil.emptyBucket(canolaTank, slots, 0, 1, InitBlocks.fluidCanolaOil);
+            WorldUtil.emptyBucket(canolaTank, slots, 0, 1, InitFluids.fluidCanolaOil);
             WorldUtil.fillBucket(oilTank, slots, 2, 3);
 
             if(this.oilTank.getFluidAmount() > 0){
@@ -115,17 +115,17 @@ public class TileEntityFermentingBarrel extends TileEntityInventoryBase implemen
 
     @Override
     public boolean isItemValidForSlot(int i, ItemStack stack){
-        return (i == 0 && FluidContainerRegistry.containsFluid(stack, new FluidStack(InitBlocks.fluidCanolaOil, FluidContainerRegistry.BUCKET_VOLUME))) || (i == 2 && stack.getItem() == Items.bucket);
+        return (i == 0 && FluidContainerRegistry.containsFluid(stack, new FluidStack(InitFluids.fluidCanolaOil, FluidContainerRegistry.BUCKET_VOLUME))) || (i == 2 && stack.getItem() == Items.bucket);
     }
 
     @Override
     public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
-        return (slot == 1 && stack.getItem() == Items.bucket) || (slot == 3 && FluidContainerRegistry.containsFluid(stack, new FluidStack(InitBlocks.fluidOil, FluidContainerRegistry.BUCKET_VOLUME)));
+        return (slot == 1 && stack.getItem() == Items.bucket) || (slot == 3 && FluidContainerRegistry.containsFluid(stack, new FluidStack(InitFluids.fluidOil, FluidContainerRegistry.BUCKET_VOLUME)));
     }
 
     @Override
     public int fill(EnumFacing from, FluidStack resource, boolean doFill){
-        if(from != EnumFacing.DOWN && resource.getFluid() == InitBlocks.fluidCanolaOil){
+        if(from != EnumFacing.DOWN && resource.getFluid() == InitFluids.fluidCanolaOil){
             return this.canolaTank.fill(resource, doFill);
         }
         return 0;
@@ -133,7 +133,7 @@ public class TileEntityFermentingBarrel extends TileEntityInventoryBase implemen
 
     @Override
     public FluidStack drain(EnumFacing from, FluidStack resource, boolean doDrain){
-        if(resource.getFluid() == InitBlocks.fluidOil){
+        if(resource.getFluid() == InitFluids.fluidOil){
             return this.oilTank.drain(resource.amount, doDrain);
         }
         return null;
@@ -146,12 +146,12 @@ public class TileEntityFermentingBarrel extends TileEntityInventoryBase implemen
 
     @Override
     public boolean canFill(EnumFacing from, Fluid fluid){
-        return from != EnumFacing.DOWN && fluid == InitBlocks.fluidCanolaOil;
+        return from != EnumFacing.DOWN && fluid == InitFluids.fluidCanolaOil;
     }
 
     @Override
     public boolean canDrain(EnumFacing from, Fluid fluid){
-        return from != EnumFacing.UP && fluid == InitBlocks.fluidOil;
+        return from != EnumFacing.UP && fluid == InitFluids.fluidOil;
     }
 
     @Override

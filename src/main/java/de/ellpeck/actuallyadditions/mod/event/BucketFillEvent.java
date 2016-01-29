@@ -11,7 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.event;
 
 
-import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
+import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import net.minecraft.block.Block;
@@ -25,8 +25,8 @@ public class BucketFillEvent{
 
     @SubscribeEvent
     public void onBucketFilled(FillBucketEvent event){
-        this.fillBucket(event, InitItems.itemBucketOil, InitBlocks.blockOil);
-        this.fillBucket(event, InitItems.itemBucketCanolaOil, InitBlocks.blockCanolaOil);
+        this.fillBucket(event, InitItems.itemBucketOil, InitFluids.blockOil);
+        this.fillBucket(event, InitItems.itemBucketCanolaOil, InitFluids.blockCanolaOil);
     }
 
     private void fillBucket(FillBucketEvent event, Item item, Block fluid){

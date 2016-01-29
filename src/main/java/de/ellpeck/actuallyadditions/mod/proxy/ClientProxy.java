@@ -15,9 +15,9 @@ import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.booklet.BookletPage;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
-import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.event.InitEvents;
+import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.misc.special.SpecialRenderInit;
 import de.ellpeck.actuallyadditions.mod.util.FluidStateMapper;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
@@ -75,8 +75,8 @@ public class ClientProxy implements IProxy{
         for(Map.Entry<Item, ResourceLocation[]> entry : modelVariantsForRegistering.entrySet()){
             ModelBakery.registerItemVariants(entry.getKey(), entry.getValue());
         }
-        this.registerCustomFluidBlockRenderer(InitBlocks.fluidCanolaOil);
-        this.registerCustomFluidBlockRenderer(InitBlocks.fluidOil);
+        this.registerCustomFluidBlockRenderer(InitFluids.fluidCanolaOil);
+        this.registerCustomFluidBlockRenderer(InitFluids.fluidOil);
 
         IResourceManager manager = Minecraft.getMinecraft().getResourceManager();
         if(manager instanceof IReloadableResourceManager){

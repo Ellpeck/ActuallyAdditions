@@ -12,7 +12,7 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyProvider;
-import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
+import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.item.ItemStack;
@@ -72,7 +72,7 @@ public class TileEntityOilGenerator extends TileEntityInventoryBase implements I
                 }
             }
 
-            WorldUtil.emptyBucket(tank, slots, 0, 1, InitBlocks.fluidOil);
+            WorldUtil.emptyBucket(tank, slots, 0, 1, InitFluids.fluidOil);
 
             if(this.storage.getEnergyStored() > 0){
                 WorldUtil.pushEnergyToAllSides(worldObj, this.pos, this.storage);
@@ -122,7 +122,7 @@ public class TileEntityOilGenerator extends TileEntityInventoryBase implements I
 
     @Override
     public boolean isItemValidForSlot(int i, ItemStack stack){
-        return FluidContainerRegistry.containsFluid(stack, new FluidStack(InitBlocks.fluidOil, FluidContainerRegistry.BUCKET_VOLUME)) && i == 0;
+        return FluidContainerRegistry.containsFluid(stack, new FluidStack(InitFluids.fluidOil, FluidContainerRegistry.BUCKET_VOLUME)) && i == 0;
     }
 
     @Override
@@ -152,7 +152,7 @@ public class TileEntityOilGenerator extends TileEntityInventoryBase implements I
 
     @Override
     public int fill(EnumFacing from, FluidStack resource, boolean doFill){
-        if(resource.getFluid() == InitBlocks.fluidOil){
+        if(resource.getFluid() == InitFluids.fluidOil){
             return this.tank.fill(resource, doFill);
         }
         return 0;
@@ -170,7 +170,7 @@ public class TileEntityOilGenerator extends TileEntityInventoryBase implements I
 
     @Override
     public boolean canFill(EnumFacing from, Fluid fluid){
-        return from != EnumFacing.DOWN && fluid == InitBlocks.fluidOil;
+        return from != EnumFacing.DOWN && fluid == InitFluids.fluidOil;
     }
 
     @Override

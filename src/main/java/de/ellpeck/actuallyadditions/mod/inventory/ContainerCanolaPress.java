@@ -10,7 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory;
 
-import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
+import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotOutput;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
@@ -68,7 +68,7 @@ public class ContainerCanolaPress extends Container{
                         return null;
                     }
                 }
-                else if(FluidContainerRegistry.getContainerCapacity(new FluidStack(InitBlocks.fluidCanolaOil, 1), newStack) > 0){
+                else if(FluidContainerRegistry.getContainerCapacity(new FluidStack(InitFluids.fluidCanolaOil, 1), newStack) > 0){
                     if(!this.mergeItemStack(newStack, 1, 2, false)){
                         return null;
                     }

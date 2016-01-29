@@ -12,7 +12,7 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
-import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
+import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
@@ -72,7 +72,7 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IE
                             this.slots[0] = null;
                         }
 
-                        this.tank.fill(new FluidStack(InitBlocks.fluidCanolaOil, PRODUCE), true);
+                        this.tank.fill(new FluidStack(InitFluids.fluidCanolaOil, PRODUCE), true);
                         this.markDirty();
                     }
                 }
@@ -133,7 +133,7 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IE
 
     @Override
     public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
-        return slot == 2 && FluidContainerRegistry.containsFluid(this.slots[0], new FluidStack(InitBlocks.fluidCanolaOil, FluidContainerRegistry.BUCKET_VOLUME));
+        return slot == 2 && FluidContainerRegistry.containsFluid(this.slots[0], new FluidStack(InitFluids.fluidCanolaOil, FluidContainerRegistry.BUCKET_VOLUME));
     }
 
     @Override
@@ -163,7 +163,7 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IE
 
     @Override
     public FluidStack drain(EnumFacing from, FluidStack resource, boolean doDrain){
-        if(resource.getFluid() == InitBlocks.fluidCanolaOil){
+        if(resource.getFluid() == InitFluids.fluidCanolaOil){
             return this.tank.drain(resource.amount, doDrain);
         }
         return null;
