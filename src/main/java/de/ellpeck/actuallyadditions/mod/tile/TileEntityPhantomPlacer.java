@@ -115,12 +115,10 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
             }
         }
         else{
-            if(PosUtil.getBlock(boundPosition, worldObj).isReplaceable(worldObj, boundPosition)){
-                int theSlot = WorldUtil.findFirstFilledSlot(this.slots);
-                this.setInventorySlotContents(theSlot, WorldUtil.placeBlockAtSide(EnumFacing.UP, worldObj, boundPosition, this.slots[theSlot]));
-                if(this.slots[theSlot] != null && this.slots[theSlot].stackSize <= 0){
-                    this.slots[theSlot] = null;
-                }
+            int theSlot = WorldUtil.findFirstFilledSlot(this.slots);
+            this.setInventorySlotContents(theSlot, WorldUtil.useItemAtSide(EnumFacing.UP, worldObj, boundPosition, this.slots[theSlot]));
+            if(this.slots[theSlot] != null && this.slots[theSlot].stackSize <= 0){
+                this.slots[theSlot] = null;
             }
         }
     }

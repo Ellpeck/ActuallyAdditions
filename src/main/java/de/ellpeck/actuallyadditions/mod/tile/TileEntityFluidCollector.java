@@ -84,11 +84,8 @@ public class TileEntityFluidCollector extends TileEntityInventoryBase implements
             else if(this.isPlacer && PosUtil.getBlock(coordsBlock, worldObj).isReplaceable(worldObj, coordsBlock)){
                 if(this.tank.getFluidAmount() >= FluidContainerRegistry.BUCKET_VOLUME){
                     if(this.tank.getFluid().getFluid().getBlock() != null){
-                        Block block = PosUtil.getBlock(coordsBlock, worldObj);
-                        if(!(block instanceof IFluidBlock) && block != Blocks.lava && block != Blocks.water && block != Blocks.flowing_lava && block != Blocks.flowing_water){
-                            WorldUtil.placeBlockAtSide(sideToManipulate, worldObj, this.pos, new ItemStack(this.tank.getFluid().getFluid().getBlock()));
-                            this.tank.drain(FluidContainerRegistry.BUCKET_VOLUME, true);
-                        }
+                        WorldUtil.useItemAtSide(sideToManipulate, worldObj, this.pos, new ItemStack(this.tank.getFluid().getFluid().getBlock()));
+                        this.tank.drain(FluidContainerRegistry.BUCKET_VOLUME, true);
                     }
                 }
             }

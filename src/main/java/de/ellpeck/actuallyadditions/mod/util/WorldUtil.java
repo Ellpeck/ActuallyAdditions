@@ -13,6 +13,7 @@ package de.ellpeck.actuallyadditions.mod.util;
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -109,43 +110,45 @@ public class WorldUtil{
         }
     }
 
-    public static ItemStack placeBlockAtSide(EnumFacing side, World world, BlockPos pos, ItemStack stack){
+    public static ItemStack useItemAtSide(EnumFacing side, World world, BlockPos pos, ItemStack stack){
         if(world instanceof WorldServer && stack != null && stack.getItem() != null){
             BlockPos offsetPos = pos.offset(side);
+            Block block = PosUtil.getBlock(offsetPos, world);
+            boolean replaceable = block.isReplaceable(world, offsetPos);
 
             //Fluids
-            FluidStack fluid = FluidContainerRegistry.getFluidForFilledItem(stack);
-            if(fluid != null && fluid.getFluid().getBlock() != null && fluid.getFluid().getBlock().canPlaceBlockAt(world, offsetPos)){
-                Block block = PosUtil.getBlock(offsetPos, world);
-                if(!(block instanceof IFluidBlock) && block != Blocks.lava && block != Blocks.water && block != Blocks.flowing_lava && block != Blocks.flowing_water){
-                    if(PosUtil.setBlock(pos, world, fluid.getFluid().getBlock(), 0, 2)){
+            if(replaceable && FluidContainerRegistry.isFilledContainer(stack) && !(block instanceof IFluidBlock) && !(block instanceof BlockLiquid)){
+                FluidStack fluid = FluidContainerRegistry.getFluidForFilledItem(stack);
+                if(fluid != null && fluid.getFluid().getBlock() != null && fluid.getFluid().getBlock().canPlaceBlockAt(world, offsetPos)){
+                    if(PosUtil.setBlock(offsetPos, world, fluid.getFluid().getBlock(), 0, 2)){
                         return stack.getItem().getContainerItem(stack);
                     }
                 }
             }
 
             //Redstone
-            else if(stack.getItem() == Items.redstone){
-                PosUtil.setBlock(pos, world, Blocks.redstone_wire, 0, 2);
+            else if(replaceable && stack.getItem() == Items.redstone){
+                PosUtil.setBlock(offsetPos, world, Blocks.redstone_wire, 0, 2);
                 stack.stackSize--;
             }
 
             //Plants
-            else if(stack.getItem() instanceof IPlantable){
+            else if(replaceable && stack.getItem() instanceof IPlantable){
                 if(((IPlantable)stack.getItem()).getPlant(world, offsetPos).getBlock().canPlaceBlockAt(world, offsetPos)){
                     if(world.setBlockState(offsetPos, ((IPlantable)stack.getItem()).getPlant(world, offsetPos), 2)){
                         stack.stackSize--;
                     }
                 }
             }
+
+            //Everything else
             else{
                 try{
-                    //Blocks
-                    stack.onItemUse(FakePlayerUtil.getFakePlayer(world), world, pos, side, 0, 0, 0);
+                    stack.onItemUse(FakePlayerUtil.getFakePlayer(world), world, offsetPos, side.getOpposite(), 0.5F, 0.5F, 0.5F);
                     return stack;
                 }
                 catch(Exception e){
-                    ModUtil.LOGGER.error("Something that places Blocks at "+offsetPos.getX()+", "+offsetPos.getY()+", "+offsetPos.getZ()+" in World "+world.provider.getDimensionId()+" threw an Exception! Don't let that happen again!");
+                    ModUtil.LOGGER.error("Something that places Blocks at "+offsetPos.getX()+", "+offsetPos.getY()+", "+offsetPos.getZ()+" in World "+world.provider.getDimensionId()+" threw an Exception! Don't let that happen again!", e);
                 }
             }
         }
@@ -244,6 +247,7 @@ public class WorldUtil{
     }
 
     //TODO make this work for the stupid new system
+
     /**
      * Add an ArrayList of ItemStacks to an Array of slots
      *

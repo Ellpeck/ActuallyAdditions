@@ -89,9 +89,9 @@ public class TileEntityBreaker extends TileEntityInventoryBase implements IRedst
                     this.markDirty();
                 }
             }
-            else if(this.isPlacer && PosUtil.getBlock(coordsBlock, worldObj).isReplaceable(worldObj, coordsBlock)){
+            else if(this.isPlacer){
                 int theSlot = WorldUtil.findFirstFilledSlot(this.slots);
-                this.setInventorySlotContents(theSlot, WorldUtil.placeBlockAtSide(sideToManipulate, worldObj, this.pos, this.slots[theSlot]));
+                this.setInventorySlotContents(theSlot, WorldUtil.useItemAtSide(sideToManipulate, worldObj, this.pos, this.slots[theSlot]));
                 if(this.slots[theSlot] != null && this.slots[theSlot].stackSize <= 0){
                     this.slots[theSlot] = null;
                 }
