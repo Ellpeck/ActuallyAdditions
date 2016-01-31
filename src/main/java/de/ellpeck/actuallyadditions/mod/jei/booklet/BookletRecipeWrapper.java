@@ -57,7 +57,7 @@ public class BookletRecipeWrapper extends RecipeWrapperWithButton implements IRe
 
     @Override
     public void drawInfo(@Nonnull Minecraft minecraft, int recipeWidth, int recipeHeight){
-        this.drawInfo(minecraft, recipeWidth, recipeHeight, 0, 0);
+
     }
 
     @Override
