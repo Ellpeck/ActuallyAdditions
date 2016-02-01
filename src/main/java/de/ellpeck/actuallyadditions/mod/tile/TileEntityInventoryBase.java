@@ -209,8 +209,6 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
         return stack;
     }
 
-
-
     @Override
     public String getName(){
         return this.name;
@@ -225,9 +223,5 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
     public IChatComponent getDisplayName(){
         return new ChatComponentText(StringUtil.localize(this.getName()));
     }
-
-
-
-
 
 }
