@@ -32,16 +32,16 @@ public class PageTextOnly extends BookletPageAA{
     }
 
     @Override
-    public ItemStack[] getItemStacksForPage(){
-        return this.stack == null ? new ItemStack[0] : new ItemStack[]{this.stack};
-    }
-
-    @Override
     @SideOnly(Side.CLIENT)
     public void renderPre(IBookletGui gui, int mouseX, int mouseY, int ticksElapsed, boolean mousePressed){
         String text = gui.getCurrentEntrySet().page.getText();
         if(text != null && !text.isEmpty()){
             StringUtil.drawSplitString(Minecraft.getMinecraft().fontRendererObj, text, gui.getGuiLeft()+14, gui.getGuiTop()+9, 115, 0, false);
         }
+    }
+
+    @Override
+    public ItemStack[] getItemStacksForPage(){
+        return this.stack == null ? new ItemStack[0] : new ItemStack[]{this.stack};
     }
 }

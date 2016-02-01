@@ -108,18 +108,11 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
     }
 
     @Override
-    public int getInventoryStackLimit(){
-        return 64;
-    }
-
-    @Override
     public boolean hasCapability(net.minecraftforge.common.capabilities.Capability<?> capability, net.minecraft.util.EnumFacing facing){
         return this.getCapability(capability, facing) != null;
-    }
-
-    @Override
-    public boolean isUseableByPlayer(EntityPlayer player){
-        return player.getDistanceSq(this.getPos().getX()+0.5D, this.pos.getY()+0.5D, this.pos.getZ()+0.5D) <= 64 && !this.isInvalid() && this.worldObj.getTileEntity(this.pos) == this;
+    }    @Override
+    public int getInventoryStackLimit(){
+        return 64;
     }
 
     @Override
@@ -130,7 +123,16 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
         else{
             return super.getCapability(capability, facing);
         }
-    }    @Override
+    }
+
+    @Override
+    public boolean isUseableByPlayer(EntityPlayer player){
+        return player.getDistanceSq(this.getPos().getX()+0.5D, this.pos.getY()+0.5D, this.pos.getZ()+0.5D) <= 64 && !this.isInvalid() && this.worldObj.getTileEntity(this.pos) == this;
+    }
+
+
+
+    @Override
     public void openInventory(EntityPlayer player){
 
     }

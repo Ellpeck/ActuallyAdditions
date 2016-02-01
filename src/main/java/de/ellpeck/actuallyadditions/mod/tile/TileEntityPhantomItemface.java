@@ -105,11 +105,6 @@ public class TileEntityPhantomItemface extends TileEntityPhantomface{
     }
 
     @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
-        return this.isBoundThingInRange() && this.getInventory().isItemValidForSlot(i, stack);
-    }
-
-    @Override
     public <T> T getCapability(Capability<T> capability, EnumFacing facing){
         if(this.isBoundThingInRange()){
             TileEntity tile = worldObj.getTileEntity(this.boundPosition);
@@ -118,6 +113,11 @@ public class TileEntityPhantomItemface extends TileEntityPhantomface{
             }
         }
         return super.getCapability(capability, facing);
+    }
+
+    @Override
+    public boolean isItemValidForSlot(int i, ItemStack stack){
+        return this.isBoundThingInRange() && this.getInventory().isItemValidForSlot(i, stack);
     }
 
     @Override

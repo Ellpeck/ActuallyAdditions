@@ -48,6 +48,22 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyR
     }
 
     @Override
+    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.writeSyncableNBT(compound, sync);
+        this.storage.writeToNBT(compound);
+        compound.setInteger("Layer", this.layerAt);
+        compound.setBoolean("OnlyOres", this.onlyMineOres);
+    }
+
+    @Override
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.readSyncableNBT(compound, sync);
+        this.storage.readFromNBT(compound);
+        this.layerAt = compound.getInteger("Layer");
+        this.onlyMineOres = compound.getBoolean("OnlyOres");
+    }
+
+    @Override
     public void updateEntity(){
         super.updateEntity();
         if(!this.worldObj.isRemote){
@@ -152,22 +168,6 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyR
             }
         }
         return false;
-    }
-
-    @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.writeSyncableNBT(compound, sync);
-        this.storage.writeToNBT(compound);
-        compound.setInteger("Layer", this.layerAt);
-        compound.setBoolean("OnlyOres", this.onlyMineOres);
-    }
-
-    @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.readSyncableNBT(compound, sync);
-        this.storage.readFromNBT(compound);
-        this.layerAt = compound.getInteger("Layer");
-        this.onlyMineOres = compound.getBoolean("OnlyOres");
     }
 
     @Override

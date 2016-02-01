@@ -124,6 +124,11 @@ public class BlockColoredLamp extends BlockBase{
     }
 
     @Override
+    public Class<? extends ItemBlockBase> getItemBlock(){
+        return TheItemBlock.class;
+    }
+
+    @Override
     protected void registerRendering(){
         ResourceLocation[] resLocs = new ResourceLocation[allLampTypes.length];
         for(int i = 0; i < allLampTypes.length; i++){
@@ -132,11 +137,6 @@ public class BlockColoredLamp extends BlockBase{
             ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), new ResourceLocation(ModUtil.MOD_ID_LOWER, name));
         }
         ActuallyAdditions.proxy.addRenderVariant(Item.getItemFromBlock(this), resLocs);
-    }
-
-    @Override
-    public Class<? extends ItemBlockBase> getItemBlock(){
-        return TheItemBlock.class;
     }
 
     @Override

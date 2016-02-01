@@ -49,27 +49,12 @@ public class PageCrafting extends BookletPageAA{
     }
 
     @Override
-    public ItemStack[] getItemStacksForPage(){
-        if(this.recipes != null){
-            ItemStack[] stacks = new ItemStack[this.recipes.length];
-            for(int i = 0; i < this.recipes.length; i++){
-                if(this.recipes[i] != null){
-                    ItemStack output = this.recipes[i].getRecipeOutput();
-                    if(output != null){
-                        if(!this.arePageStacksWildcard){
-                            stacks[i] = output;
-                        }
-                        else{
-                            ItemStack wildcardOutput = output.copy();
-                            wildcardOutput.setItemDamage(Util.WILDCARD);
-                            stacks[i] = wildcardOutput;
-                        }
-                    }
-                }
-            }
-            return stacks;
+    @SideOnly(Side.CLIENT)
+    public void renderPre(IBookletGui gui, int mouseX, int mouseY, int ticksElapsed, boolean mousePressed){
+        if(this.recipes[this.recipePos] != null){
+            Minecraft.getMinecraft().getTextureManager().bindTexture(ClientProxy.bulletForMyValentine ? GuiBooklet.resLocValentine : GuiBooklet.resLoc);
+            gui.drawRect(gui.getGuiLeft()+27, gui.getGuiTop()+20, 146, 20, 99, 60);
         }
-        return null;
     }
 
     @SuppressWarnings("unchecked")
@@ -168,15 +153,6 @@ public class PageCrafting extends BookletPageAA{
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void renderPre(IBookletGui gui, int mouseX, int mouseY, int ticksElapsed, boolean mousePressed){
-        if(this.recipes[this.recipePos] != null){
-            Minecraft.getMinecraft().getTextureManager().bindTexture(ClientProxy.bulletForMyValentine ? GuiBooklet.resLocValentine : GuiBooklet.resLoc);
-            gui.drawRect(gui.getGuiLeft()+27, gui.getGuiTop()+20, 146, 20, 99, 60);
-        }
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
     public void updateScreen(int ticksElapsed){
         if(ticksElapsed%15 == 0){
             if(this.recipePos+1 >= this.recipes.length){
@@ -186,5 +162,29 @@ public class PageCrafting extends BookletPageAA{
                 this.recipePos++;
             }
         }
+    }
+
+    @Override
+    public ItemStack[] getItemStacksForPage(){
+        if(this.recipes != null){
+            ItemStack[] stacks = new ItemStack[this.recipes.length];
+            for(int i = 0; i < this.recipes.length; i++){
+                if(this.recipes[i] != null){
+                    ItemStack output = this.recipes[i].getRecipeOutput();
+                    if(output != null){
+                        if(!this.arePageStacksWildcard){
+                            stacks[i] = output;
+                        }
+                        else{
+                            ItemStack wildcardOutput = output.copy();
+                            wildcardOutput.setItemDamage(Util.WILDCARD);
+                            stacks[i] = wildcardOutput;
+                        }
+                    }
+                }
+            }
+            return stacks;
+        }
+        return null;
     }
 }

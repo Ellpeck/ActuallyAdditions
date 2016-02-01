@@ -81,6 +81,16 @@ public class BlockWildPlant extends BlockBushBase{
     }
 
     @Override
+    public Class<? extends ItemBlockBase> getItemBlock(){
+        return TheItemBlock.class;
+    }
+
+    @Override
+    public boolean shouldAddCreative(){
+        return false;
+    }
+
+    @Override
     protected void registerRendering(){
         ResourceLocation[] resLocs = new ResourceLocation[allWildPlants.length];
         for(int i = 0; i < allWildPlants.length; i++){
@@ -89,16 +99,6 @@ public class BlockWildPlant extends BlockBushBase{
             ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), new ResourceLocation(ModUtil.MOD_ID_LOWER, name));
         }
         ActuallyAdditions.proxy.addRenderVariant(Item.getItemFromBlock(this), resLocs);
-    }
-
-    @Override
-    public Class<? extends ItemBlockBase> getItemBlock(){
-        return TheItemBlock.class;
-    }
-
-    @Override
-    public boolean shouldAddCreative(){
-        return false;
     }
 
     @Override

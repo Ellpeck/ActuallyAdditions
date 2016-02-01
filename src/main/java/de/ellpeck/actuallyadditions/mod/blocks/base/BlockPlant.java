@@ -116,30 +116,32 @@ public class BlockPlant extends BlockCrops{
             return true;
         }
         return false;
-    }    @Override
-    public Item getSeed(){
-        return this.seedItem;
     }
 
     @Override
     public int getDamageValue(World world, BlockPos pos){
         return 0;
     }    @Override
-    public Item getCrop(){
-        return this.returnItem;
+    public Item getSeed(){
+        return this.seedItem;
     }
 
     @Override
     public int quantityDropped(IBlockState state, int fortune, Random random){
         return this.getMetaFromState(state) >= 7 ? random.nextInt(addDropAmount)+minDropAmount : super.quantityDropped(state, fortune, random);
-    }    @Override
-    public Item getItemDropped(IBlockState state, Random rand, int par3){
-        return this.getMetaFromState(state) >= 7 ? this.getCrop() : this.getSeed();
+    }
+
+    @Override
+    public Item getCrop(){
+        return this.returnItem;
     }
 
 
 
-
+    @Override
+    public Item getItemDropped(IBlockState state, Random rand, int par3){
+        return this.getMetaFromState(state) >= 7 ? this.getCrop() : this.getSeed();
+    }
 
 
 }

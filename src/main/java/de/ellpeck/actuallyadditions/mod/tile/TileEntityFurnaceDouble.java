@@ -40,6 +40,22 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
     }
 
     @Override
+    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.writeSyncableNBT(compound, sync);
+        compound.setInteger("FirstSmeltTime", this.firstSmeltTime);
+        compound.setInteger("SecondSmeltTime", this.secondSmeltTime);
+        this.storage.writeToNBT(compound);
+    }
+
+    @Override
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.readSyncableNBT(compound, sync);
+        this.firstSmeltTime = compound.getInteger("FirstSmeltTime");
+        this.secondSmeltTime = compound.getInteger("SecondSmeltTime");
+        this.storage.readFromNBT(compound);
+    }
+
+    @Override
     @SuppressWarnings("unchecked")
     public void updateEntity(){
         super.updateEntity();
@@ -98,22 +114,6 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
                 this.lastSecondSmelt = this.secondSmeltTime;
             }
         }
-    }
-
-    @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.writeSyncableNBT(compound, sync);
-        compound.setInteger("FirstSmeltTime", this.firstSmeltTime);
-        compound.setInteger("SecondSmeltTime", this.secondSmeltTime);
-        this.storage.writeToNBT(compound);
-    }
-
-    @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.readSyncableNBT(compound, sync);
-        this.firstSmeltTime = compound.getInteger("FirstSmeltTime");
-        this.secondSmeltTime = compound.getInteger("SecondSmeltTime");
-        this.storage.readFromNBT(compound);
     }
 
     @Override

@@ -72,6 +72,22 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
     }
 
     @Override
+    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
+        compound.setInteger("FirstCrushTime", this.firstCrushTime);
+        compound.setInteger("SecondCrushTime", this.secondCrushTime);
+        this.storage.writeToNBT(compound);
+        super.writeSyncableNBT(compound, sync);
+    }
+
+    @Override
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
+        this.firstCrushTime = compound.getInteger("FirstCrushTime");
+        this.secondCrushTime = compound.getInteger("SecondCrushTime");
+        this.storage.readFromNBT(compound);
+        super.readSyncableNBT(compound, sync);
+    }
+
+    @Override
     @SuppressWarnings("unchecked")
     public void updateEntity(){
         super.updateEntity();
@@ -147,22 +163,6 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
                 this.worldObj.playSoundEffect(this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), ModUtil.MOD_ID_LOWER+":crusher", 0.25F, 1.0F);
             }
         }
-    }
-
-    @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        compound.setInteger("FirstCrushTime", this.firstCrushTime);
-        compound.setInteger("SecondCrushTime", this.secondCrushTime);
-        this.storage.writeToNBT(compound);
-        super.writeSyncableNBT(compound, sync);
-    }
-
-    @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        this.firstCrushTime = compound.getInteger("FirstCrushTime");
-        this.secondCrushTime = compound.getInteger("SecondCrushTime");
-        this.storage.readFromNBT(compound);
-        super.readSyncableNBT(compound, sync);
     }
 
     @Override

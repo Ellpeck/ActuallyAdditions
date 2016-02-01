@@ -53,6 +53,22 @@ public class TileEntityOilGenerator extends TileEntityInventoryBase implements I
     }
 
     @Override
+    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
+        compound.setInteger("BurnTime", this.currentBurnTime);
+        this.storage.writeToNBT(compound);
+        this.tank.writeToNBT(compound);
+        super.writeSyncableNBT(compound, sync);
+    }
+
+    @Override
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
+        this.currentBurnTime = compound.getInteger("BurnTime");
+        this.storage.readFromNBT(compound);
+        this.tank.readFromNBT(compound);
+        super.readSyncableNBT(compound, sync);
+    }
+
+    @Override
     @SuppressWarnings("unchecked")
     public void updateEntity(){
         super.updateEntity();
@@ -97,22 +113,6 @@ public class TileEntityOilGenerator extends TileEntityInventoryBase implements I
                 this.lastBurnTime = this.currentBurnTime;
             }
         }
-    }
-
-    @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        compound.setInteger("BurnTime", this.currentBurnTime);
-        this.storage.writeToNBT(compound);
-        this.tank.writeToNBT(compound);
-        super.writeSyncableNBT(compound, sync);
-    }
-
-    @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        this.currentBurnTime = compound.getInteger("BurnTime");
-        this.storage.readFromNBT(compound);
-        this.tank.readFromNBT(compound);
-        super.readSyncableNBT(compound, sync);
     }
 
     @Override
