@@ -13,6 +13,7 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.network.gui.INumberReactor;
+import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -21,6 +22,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 
 public class TileEntityInputter extends TileEntityInventoryBase implements IButtonReactor, INumberReactor{
 
@@ -61,34 +64,74 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
     @Override
     public void onNumberReceived(int text, int textID, EntityPlayer player){
         if(text != -1){
-            if(this.placeToPut instanceof IInventory){
-                if(textID == 0){
-                    this.slotToPutStart = Math.max(Math.min(text, ((IInventory)this.placeToPut).getSizeInventory()-1), 0);
-                }
-                if(textID == 1){
-                    this.slotToPutEnd = Math.max(Math.min(text, ((IInventory)this.placeToPut).getSizeInventory()), 0);
-                }
+            //TODO Find a better solution for the Math.max and Math.min stuff here (also below in initVars()!)
+            if(textID == 0){
+                this.slotToPutStart = this.placeToPut instanceof IInventory ? Math.max(Math.min(text, ((IInventory)this.placeToPut).getSizeInventory()-1), 0) : text;
+            }
+            if(textID == 1){
+                this.slotToPutEnd = this.placeToPut instanceof IInventory ? Math.max(Math.min(text, ((IInventory)this.placeToPut).getSizeInventory()), 0) : text;
             }
 
-            if(this.placeToPull instanceof IInventory){
-                if(textID == 2){
-                    this.slotToPullStart = Math.max(Math.min(text, ((IInventory)this.placeToPull).getSizeInventory()-1), 0);
-                }
-                if(textID == 3){
-                    this.slotToPullEnd = Math.max(Math.min(text, ((IInventory)this.placeToPull).getSizeInventory()), 0);
-                }
+            if(textID == 2){
+                this.slotToPullStart = this.placeToPull instanceof IInventory ? Math.max(Math.min(text, ((IInventory)this.placeToPull).getSizeInventory()-1), 0) : text;
+            }
+            if(textID == 3){
+                this.slotToPullEnd = this.placeToPull instanceof IInventory ? Math.max(Math.min(text, ((IInventory)this.placeToPull).getSizeInventory()), 0) : text;
             }
         }
         this.markDirty();
     }
 
     private boolean newPull(){
-        //TODO make this work for the stupid new system
+        for(EnumFacing facing : EnumFacing.values()){
+            IItemHandler handler = this.placeToPull.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing);
+            if(handler != null){
+                for(int i = Math.max(this.lastPullStart, 0); i < Math.min(this.slotToPullEnd, handler.getSlots()); i++){
+                    ItemStack stackInOtherInv = handler.getStackInSlot(i);
+                    if(stackInOtherInv != null){
+                        if(this.slots[0] == null || ItemUtil.areItemsEqual(stackInOtherInv, this.slots[0], false)){
+
+                            ItemStack pulled = handler.extractItem(i, this.slots[0] == null ? stackInOtherInv.stackSize : Math.min(stackInOtherInv.stackSize, this.slots[0].getMaxStackSize()-this.slots[0].stackSize), false);
+                            if(pulled != null){
+                                ItemStack slotCopy = this.slots[0] == null ? null : this.slots[0].copy();
+
+                                if(this.slots[0] == null){
+                                    this.slots[0] = pulled.copy();
+                                }
+                                else{
+                                    this.slots[0].stackSize+=pulled.stackSize;
+                                }
+
+                                if(!ItemUtil.areStacksEqualAndSameSize(slotCopy, this.slots[0], false)){
+                                    return true;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
         return false;
     }
 
     private boolean newPut(){
-        //TODO make this work for the stupid new system
+        if(this.slots[0] != null){
+            for(EnumFacing facing : EnumFacing.values()){
+                IItemHandler handler = this.placeToPut.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing);
+                if(handler != null){
+                    for(int i = Math.max(this.slotToPutStart, 0); i < Math.min(this.slotToPutEnd, handler.getSlots()); i++){
+                        ItemStack slotCopy = this.slots[0].copy();
+
+                        ItemStack remaining = handler.insertItem(i, slotCopy, false);
+                        this.slots[0] = remaining == null ? null : remaining.copy();
+
+                        if(!ItemUtil.areStacksEqualAndSameSize(slotCopy, this.slots[0], false)){
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
         return false;
     }
 
