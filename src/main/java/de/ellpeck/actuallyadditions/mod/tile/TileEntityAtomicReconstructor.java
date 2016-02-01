@@ -114,6 +114,12 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
     }
 
     @Override
+    public void markDirty(){
+        super.markDirty();
+        this.sendUpdate();
+    }
+
+    @Override
     public boolean shouldSyncSlots(){
         return true;
     }
@@ -123,18 +129,6 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
         super.readSyncableNBT(compound, sync);
         this.currentTime = compound.getInteger("CurrentTime");
         this.storage.readFromNBT(compound);
-    }
-
-    @Override
-    public void setInventorySlotContents(int i, ItemStack stack){
-        super.setInventorySlotContents(i, stack);
-        this.sendUpdate();
-    }
-
-    @Override
-    public ItemStack decrStackSize(int i, int j){
-        this.sendUpdate();
-        return super.decrStackSize(i, j);
     }
 
     @Override

@@ -63,18 +63,6 @@ public class TileEntityCompost extends TileEntityInventoryBase{
     }
 
     @Override
-    public void setInventorySlotContents(int i, ItemStack stack){
-        super.setInventorySlotContents(i, stack);
-        this.sendUpdate();
-    }
-
-    @Override
-    public ItemStack decrStackSize(int i, int j){
-        this.sendUpdate();
-        return super.decrStackSize(i, j);
-    }
-
-    @Override
     public int getInventoryStackLimit(){
         return AMOUNT;
     }
@@ -92,5 +80,11 @@ public class TileEntityCompost extends TileEntityInventoryBase{
     @Override
     public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
         return stack.getItem() instanceof ItemFertilizer;
+    }
+
+    @Override
+    public void markDirty(){
+        super.markDirty();
+        this.sendUpdate();
     }
 }

@@ -83,7 +83,7 @@ public class BlockCompost extends BlockContainerBase implements IHudDisplay{
                 if(!player.capabilities.isCreativeMode){
                     player.inventory.getCurrentItem().stackSize--;
                 }
-                tile.sendUpdate();
+                tile.markDirty();
             }
 
             //Add Fertilizer to player's inventory
@@ -95,7 +95,7 @@ public class BlockCompost extends BlockContainerBase implements IHudDisplay{
                     player.getCurrentEquippedItem().stackSize += tile.slots[0].stackSize;
                 }
                 tile.slots[0] = null;
-                tile.sendUpdate();
+                tile.markDirty();
             }
         }
         return true;
