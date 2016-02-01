@@ -64,10 +64,6 @@ public class InitOreDict{
         addOre(InitItems.itemCrystal, TheCrystals.REDSTONE.ordinal(), "actAddCrystalRed");
     }
 
-    private static void addOre(ItemStack stack, String name){
-        OreDictionary.registerOre(name, stack);
-    }
-
     private static void addOre(Item item, int meta, String name){
         addOre(new ItemStack(item, 1, meta), name);
     }
@@ -76,11 +72,15 @@ public class InitOreDict{
         addOre(item, 0, name);
     }
 
+    private static void addOre(Block block, String name){
+        addOre(block, 0, name);
+    }
+
     private static void addOre(Block block, int meta, String name){
         addOre(new ItemStack(block, 1, meta), name);
     }
 
-    private static void addOre(Block block, String name){
-        addOre(block, 0, name);
+    private static void addOre(ItemStack stack, String name){
+        OreDictionary.registerOre(name, stack);
     }
 }

@@ -79,6 +79,14 @@ public class ItemPhantomConnector extends ItemBase{
         }
     }
 
+    public static World getStoredWorld(ItemStack stack){
+        NBTTagCompound tag = stack.getTagCompound();
+        if(tag != null){
+            return DimensionManager.getWorld(tag.getInteger("WorldOfTileStored"));
+        }
+        return null;
+    }
+
     public static BlockPos getStoredPosition(ItemStack stack){
         NBTTagCompound tag = stack.getTagCompound();
         if(tag != null){
@@ -88,14 +96,6 @@ public class ItemPhantomConnector extends ItemBase{
             if(!(x == 0 && y == 0 && z == 0)){
                 return new BlockPos(x, y, z);
             }
-        }
-        return null;
-    }
-
-    public static World getStoredWorld(ItemStack stack){
-        NBTTagCompound tag = stack.getTagCompound();
-        if(tag != null){
-            return DimensionManager.getWorld(tag.getInteger("WorldOfTileStored"));
         }
         return null;
     }

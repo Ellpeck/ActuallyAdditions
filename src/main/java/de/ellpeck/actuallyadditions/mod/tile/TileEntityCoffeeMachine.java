@@ -110,6 +110,11 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
         this.brewTime = compound.getInteger("Time");
     }
 
+    @Override
+    public boolean isItemValidForSlot(int i, ItemStack stack){
+        return (i >= 3 && ItemCoffee.getIngredientFromStack(stack) != null) || (i == SLOT_COFFEE_BEANS && stack.getItem() == InitItems.itemCoffeeBean) || (i == SLOT_INPUT && stack.getItem() == InitItems.itemMisc && stack.getItemDamage() == TheMiscItems.CUP.ordinal()) || (i == SLOT_WATER_INPUT && FluidContainerRegistry.containsFluid(stack, new FluidStack(FluidRegistry.WATER, 1)));
+    }
+
     public void storeCoffee(){
         if(this.slots[SLOT_COFFEE_BEANS] != null && this.slots[SLOT_COFFEE_BEANS].getItem() == InitItems.itemCoffeeBean){
             int toAdd = 2;
@@ -170,11 +175,6 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
     @Override
     public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
         return this.isItemValidForSlot(slot, stack);
-    }
-
-    @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
-        return (i >= 3 && ItemCoffee.getIngredientFromStack(stack) != null) || (i == SLOT_COFFEE_BEANS && stack.getItem() == InitItems.itemCoffeeBean) || (i == SLOT_INPUT && stack.getItem() == InitItems.itemMisc && stack.getItemDamage() == TheMiscItems.CUP.ordinal()) || (i == SLOT_WATER_INPUT && FluidContainerRegistry.containsFluid(stack, new FluidStack(FluidRegistry.WATER, 1)));
     }
 
     @Override

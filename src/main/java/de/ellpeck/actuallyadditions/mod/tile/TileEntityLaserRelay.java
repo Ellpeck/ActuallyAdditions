@@ -32,25 +32,19 @@ public class TileEntityLaserRelay extends TileEntityBase implements IEnergyRecei
     private static final float[] COLOR = new float[]{1F, 0F, 0F};
 
     @Override
-    public void updateEntity(){
-        super.updateEntity();
-        if(this.worldObj.isRemote){
-            this.renderParticles();
-        }
-    }
+    public void receiveSyncCompound(NBTTagCompound compound){
+        BlockPos thisPos = this.pos;
+        if(compound != null){
+            LaserRelayConnectionHandler.getInstance().removeRelayFromNetwork(thisPos);
 
-    @SideOnly(Side.CLIENT)
-    public void renderParticles(){
-        if(Util.RANDOM.nextInt(ConfigValues.lessParticles ? 15 : 8) == 0){
-            BlockPos thisPos = this.pos;
-            LaserRelayConnectionHandler.Network network = LaserRelayConnectionHandler.getInstance().getNetworkFor(thisPos);
-            if(network != null){
-                for(LaserRelayConnectionHandler.ConnectionPair aPair : network.connections){
-                    if(aPair.contains(thisPos) && PosUtil.areSamePos(thisPos, aPair.firstRelay)){
-                        PacketParticle.renderParticlesFromAToB(aPair.firstRelay.getX(), aPair.firstRelay.getY(), aPair.firstRelay.getZ(), aPair.secondRelay.getX(), aPair.secondRelay.getY(), aPair.secondRelay.getZ(), ConfigValues.lessParticles ? 1 : Util.RANDOM.nextInt(3)+1, 0.8F, COLOR, 1F);
-                    }
-                }
+            NBTTagList list = compound.getTagList("Connections", 10);
+            for(int i = 0; i < list.tagCount(); i++){
+                LaserRelayConnectionHandler.ConnectionPair pair = LaserRelayConnectionHandler.ConnectionPair.readFromNBT(list.getCompoundTagAt(i));
+                LaserRelayConnectionHandler.getInstance().addConnection(pair.firstRelay, pair.secondRelay);
             }
+        }
+        else{
+            LaserRelayConnectionHandler.getInstance().removeRelayFromNetwork(thisPos);
         }
     }
 
@@ -73,19 +67,25 @@ public class TileEntityLaserRelay extends TileEntityBase implements IEnergyRecei
     }
 
     @Override
-    public void receiveSyncCompound(NBTTagCompound compound){
-        BlockPos thisPos = this.pos;
-        if(compound != null){
-            LaserRelayConnectionHandler.getInstance().removeRelayFromNetwork(thisPos);
-
-            NBTTagList list = compound.getTagList("Connections", 10);
-            for(int i = 0; i < list.tagCount(); i++){
-                LaserRelayConnectionHandler.ConnectionPair pair = LaserRelayConnectionHandler.ConnectionPair.readFromNBT(list.getCompoundTagAt(i));
-                LaserRelayConnectionHandler.getInstance().addConnection(pair.firstRelay, pair.secondRelay);
-            }
+    public void updateEntity(){
+        super.updateEntity();
+        if(this.worldObj.isRemote){
+            this.renderParticles();
         }
-        else{
-            LaserRelayConnectionHandler.getInstance().removeRelayFromNetwork(thisPos);
+    }
+
+    @SideOnly(Side.CLIENT)
+    public void renderParticles(){
+        if(Util.RANDOM.nextInt(ConfigValues.lessParticles ? 15 : 8) == 0){
+            BlockPos thisPos = this.pos;
+            LaserRelayConnectionHandler.Network network = LaserRelayConnectionHandler.getInstance().getNetworkFor(thisPos);
+            if(network != null){
+                for(LaserRelayConnectionHandler.ConnectionPair aPair : network.connections){
+                    if(aPair.contains(thisPos) && PosUtil.areSamePos(thisPos, aPair.firstRelay)){
+                        PacketParticle.renderParticlesFromAToB(aPair.firstRelay.getX(), aPair.firstRelay.getY(), aPair.firstRelay.getZ(), aPair.secondRelay.getX(), aPair.secondRelay.getY(), aPair.secondRelay.getZ(), ConfigValues.lessParticles ? 1 : Util.RANDOM.nextInt(3)+1, 0.8F, COLOR, 1F);
+                    }
+                }
+            }
         }
     }
 

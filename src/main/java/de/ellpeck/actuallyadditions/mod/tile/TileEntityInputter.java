@@ -447,13 +447,13 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
     }
 
     @Override
-    public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
-        return this.isItemValidForSlot(slot, stack);
+    public boolean isItemValidForSlot(int i, ItemStack stack){
+        return i == 0;
     }
 
     @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
-        return i == 0;
+    public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
+        return this.isItemValidForSlot(slot, stack);
     }
 
     @Override

@@ -33,6 +33,18 @@ public class TileEntityRangedCollector extends TileEntityInventoryBase implement
     }
 
     @Override
+    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.writeSyncableNBT(compound, sync);
+        compound.setBoolean("Whitelist", this.isWhitelist);
+    }
+
+    @Override
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.readSyncableNBT(compound, sync);
+        this.isWhitelist = compound.getBoolean("Whitelist");
+    }
+
+    @Override
     @SuppressWarnings("unchecked")
     public void updateEntity(){
         super.updateEntity();
@@ -74,25 +86,13 @@ public class TileEntityRangedCollector extends TileEntityInventoryBase implement
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.writeSyncableNBT(compound, sync);
-        compound.setBoolean("Whitelist", this.isWhitelist);
-    }
-
-    @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.readSyncableNBT(compound, sync);
-        this.isWhitelist = compound.getBoolean("Whitelist");
+    public boolean isItemValidForSlot(int i, ItemStack stack){
+        return false;
     }
 
     @Override
     public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
         return this.isItemValidForSlot(slot, stack);
-    }
-
-    @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
-        return false;
     }
 
     @Override

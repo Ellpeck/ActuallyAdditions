@@ -116,6 +116,11 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
         this.storage.readFromNBT(compound);
     }
 
+    @Override
+    public boolean isItemValidForSlot(int i, ItemStack stack){
+        return (i == SLOT_INPUT_1 || i == SLOT_INPUT_2) && FurnaceRecipes.instance().getSmeltingResult(stack) != null;
+    }
+
     public boolean canSmeltOn(int theInput, int theOutput){
         if(this.slots[theInput] != null){
             ItemStack output = FurnaceRecipes.instance().getSmeltingResult(this.slots[theInput]);
@@ -163,11 +168,6 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
     @Override
     public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
         return this.isItemValidForSlot(slot, stack);
-    }
-
-    @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
-        return (i == SLOT_INPUT_1 || i == SLOT_INPUT_2) && FurnaceRecipes.instance().getSmeltingResult(stack) != null;
     }
 
     @Override

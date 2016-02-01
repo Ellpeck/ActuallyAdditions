@@ -97,11 +97,6 @@ public class BookletRecipeWrapper extends RecipeWrapperWithButton implements IRe
     }
 
     @Override
-    public BookletPage getPage(){
-        return this.thePage;
-    }
-
-    @Override
     public int getButtonX(){
         return 0;
     }
@@ -109,5 +104,10 @@ public class BookletRecipeWrapper extends RecipeWrapperWithButton implements IRe
     @Override
     public int getButtonY(){
         return 84;
+    }
+
+    @Override
+    public BookletPage getPage(){
+        return this.thePage;
     }
 }

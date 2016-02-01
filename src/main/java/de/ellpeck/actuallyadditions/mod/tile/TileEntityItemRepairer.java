@@ -77,6 +77,11 @@ public class TileEntityItemRepairer extends TileEntityInventoryBase implements I
         this.storage.readFromNBT(compound);
     }
 
+    @Override
+    public boolean isItemValidForSlot(int i, ItemStack stack){
+        return i == SLOT_INPUT;
+    }
+
     public static boolean canBeRepaired(ItemStack stack){
         return stack != null && stack.getItem().isRepairable();
     }
@@ -97,11 +102,6 @@ public class TileEntityItemRepairer extends TileEntityInventoryBase implements I
     @Override
     public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
         return this.isItemValidForSlot(slot, stack);
-    }
-
-    @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
-        return i == SLOT_INPUT;
     }
 
     @Override

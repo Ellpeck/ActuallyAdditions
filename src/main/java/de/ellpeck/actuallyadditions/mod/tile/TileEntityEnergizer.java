@@ -66,13 +66,13 @@ public class TileEntityEnergizer extends TileEntityInventoryBase implements IEne
     }
 
     @Override
-    public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
-        return this.isItemValidForSlot(slot, stack);
+    public boolean isItemValidForSlot(int i, ItemStack stack){
+        return i == 0 && stack.getItem() instanceof IEnergyContainerItem;
     }
 
     @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
-        return i == 0 && stack.getItem() instanceof IEnergyContainerItem;
+    public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
+        return this.isItemValidForSlot(slot, stack);
     }
 
     @Override

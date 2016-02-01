@@ -66,13 +66,13 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
     }
 
     @Override
-    public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
-        return this.isItemValidForSlot(slot, stack);
+    public boolean isItemValidForSlot(int i, ItemStack stack){
+        return false;
     }
 
     @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
-        return false;
+    public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
+        return this.isItemValidForSlot(slot, stack);
     }
 
     @Override
@@ -96,6 +96,7 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
     }
 
     //TODO Fix XP System to fit points needed in 1.8 (OpenBlocks?)
+
     /**
      * Gets the Player's XP
      * (Excerpted from OpenBlocks' XP system with permission, thanks guys!)

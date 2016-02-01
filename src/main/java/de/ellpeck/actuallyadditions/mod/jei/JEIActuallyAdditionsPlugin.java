@@ -72,7 +72,7 @@ public class JEIActuallyAdditionsPlugin implements IModPlugin{
         ignoreList.ignoreNbtTagNames(InitItems.itemBatteryTriple, "Energy");
         ignoreList.ignoreNbtTagNames(InitItems.itemBatteryQuadruple, "Energy");
         ignoreList.ignoreNbtTagNames(InitItems.itemBatteryQuintuple, "Energy");
-        
+
         IItemBlacklist blacklist = this.helpers.getItemBlacklist();
         blacklist.addItemToBlacklist(new ItemStack(InitBlocks.blockRice));
         blacklist.addItemToBlacklist(new ItemStack(InitBlocks.blockCanola));

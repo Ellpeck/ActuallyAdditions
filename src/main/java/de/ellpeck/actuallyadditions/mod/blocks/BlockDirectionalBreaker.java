@@ -42,11 +42,6 @@ public class BlockDirectionalBreaker extends BlockContainerBase{
     }
 
     @Override
-    protected PropertyInteger getMetaProperty(){
-        return META;
-    }
-
-    @Override
     public TileEntity createNewTileEntity(World world, int par2){
         return new TileEntityDirectionalBreaker();
     }
@@ -77,6 +72,11 @@ public class BlockDirectionalBreaker extends BlockContainerBase{
         PosUtil.setMetadata(pos, world, rotation, 2);
 
         super.onBlockPlacedBy(world, pos, state, player, stack);
+    }
+
+    @Override
+    protected PropertyInteger getMetaProperty(){
+        return META;
     }
 
     @Override

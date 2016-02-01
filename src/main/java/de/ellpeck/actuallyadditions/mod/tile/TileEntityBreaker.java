@@ -69,6 +69,11 @@ public class TileEntityBreaker extends TileEntityInventoryBase implements IRedst
         this.currentTime = compound.getInteger("CurrentTime");
     }
 
+    @Override
+    public boolean isItemValidForSlot(int i, ItemStack stack){
+        return this.isPlacer;
+    }
+
     private void doWork(){
         EnumFacing sideToManipulate = WorldUtil.getDirectionByPistonRotation(PosUtil.getMetadata(this.pos, worldObj));
 
@@ -102,11 +107,6 @@ public class TileEntityBreaker extends TileEntityInventoryBase implements IRedst
     @Override
     public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
         return this.isItemValidForSlot(slot, stack);
-    }
-
-    @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
-        return this.isPlacer;
     }
 
     @Override

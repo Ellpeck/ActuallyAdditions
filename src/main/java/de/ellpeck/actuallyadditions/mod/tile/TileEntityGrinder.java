@@ -165,6 +165,11 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
         super.readSyncableNBT(compound, sync);
     }
 
+    @Override
+    public boolean isItemValidForSlot(int i, ItemStack stack){
+        return (i == SLOT_INPUT_1 || i == SLOT_INPUT_2) && CrusherRecipeRegistry.getRecipeFromInput(stack) != null;
+    }
+
     public boolean canCrushOn(int theInput, int theFirstOutput, int theSecondOutput){
         if(this.slots[theInput] != null){
             List<ItemStack> outputOnes = CrusherRecipeRegistry.getOutputOnes(this.slots[theInput]);
@@ -256,11 +261,6 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
     @Override
     public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
         return this.isItemValidForSlot(slot, stack);
-    }
-
-    @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
-        return (i == SLOT_INPUT_1 || i == SLOT_INPUT_2) && CrusherRecipeRegistry.getRecipeFromInput(stack) != null;
     }
 
     @Override

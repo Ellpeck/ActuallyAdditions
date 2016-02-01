@@ -171,7 +171,7 @@ public class InitItems{
     public static Item itemPantsCrystalLightBlue;
     public static Item itemBootsCrystalLightBlue;
     public static Item itemPaxelCrystalLightBlue;
-    
+
     public static Item itemPickaxeCrystalBlack;
     public static Item itemAxeCrystalBlack;
     public static Item itemShovelCrystalBlack;
@@ -204,7 +204,7 @@ public class InitItems{
     public static Item itemPantsCrystalWhite;
     public static Item itemBootsCrystalWhite;
     public static Item itemPaxelCrystalWhite;
-    
+
     public static void init(){
         ModUtil.LOGGER.info("Initializing Items...");
 

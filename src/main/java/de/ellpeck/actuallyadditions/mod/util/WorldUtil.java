@@ -248,6 +248,14 @@ public class WorldUtil{
 
     //TODO make this work for the stupid new system
 
+    public static boolean addToInventory(IInventory inventory, ArrayList<ItemStack> stacks, boolean actuallyDo, boolean shouldAlwaysWork){
+        return addToInventory(inventory, stacks, EnumFacing.UP, actuallyDo, shouldAlwaysWork);
+    }
+
+    public static boolean addToInventory(IInventory inventory, ArrayList<ItemStack> stacks, EnumFacing side, boolean actuallyDo, boolean shouldAlwaysWork){
+        return addToInventory(inventory, 0, inventory.getSizeInventory(), stacks, side, actuallyDo, shouldAlwaysWork);
+    }
+
     /**
      * Add an ArrayList of ItemStacks to an Array of slots
      *
@@ -298,14 +306,6 @@ public class WorldUtil{
         }
 
         return working >= stacks.size();
-    }
-
-    public static boolean addToInventory(IInventory inventory, ArrayList<ItemStack> stacks, boolean actuallyDo, boolean shouldAlwaysWork){
-        return addToInventory(inventory, stacks, EnumFacing.UP, actuallyDo, shouldAlwaysWork);
-    }
-
-    public static boolean addToInventory(IInventory inventory, ArrayList<ItemStack> stacks, EnumFacing side, boolean actuallyDo, boolean shouldAlwaysWork){
-        return addToInventory(inventory, 0, inventory.getSizeInventory(), stacks, side, actuallyDo, shouldAlwaysWork);
     }
 
     public static int findFirstFilledSlot(ItemStack[] slots){

@@ -72,15 +72,6 @@ public class PageCrafting extends BookletPageAA{
         return null;
     }
 
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void renderPre(IBookletGui gui, int mouseX, int mouseY, int ticksElapsed, boolean mousePressed){
-        if(this.recipes[this.recipePos] != null){
-            Minecraft.getMinecraft().getTextureManager().bindTexture(ClientProxy.bulletForMyValentine ? GuiBooklet.resLocValentine : GuiBooklet.resLoc);
-            gui.drawRect(gui.getGuiLeft()+27, gui.getGuiTop()+20, 146, 20, 99, 60);
-        }
-    }
-
     @SuppressWarnings("unchecked")
     @Override
     @SideOnly(Side.CLIENT)
@@ -172,6 +163,15 @@ public class PageCrafting extends BookletPageAA{
             if(mouseX >= xShowOutput && mouseX <= xShowOutput+16 && mouseY >= yShowOutput && mouseY <= yShowOutput+16){
                 gui.renderTooltipAndTransferButton(this, recipe.getRecipeOutput(), mouseX, mouseY, false, mousePressed);
             }
+        }
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void renderPre(IBookletGui gui, int mouseX, int mouseY, int ticksElapsed, boolean mousePressed){
+        if(this.recipes[this.recipePos] != null){
+            Minecraft.getMinecraft().getTextureManager().bindTexture(ClientProxy.bulletForMyValentine ? GuiBooklet.resLocValentine : GuiBooklet.resLoc);
+            gui.drawRect(gui.getGuiLeft()+27, gui.getGuiTop()+20, 146, 20, 99, 60);
         }
     }
 

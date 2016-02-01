@@ -31,6 +31,7 @@ import java.util.List;
 
 public class BlockSlabs extends BlockBase{
 
+    private static final PropertyInteger META = PropertyInteger.create("meta", 0, 1);
     private Block fullBlock;
     private int meta;
 
@@ -38,19 +39,12 @@ public class BlockSlabs extends BlockBase{
         this(name, fullBlock, 0);
     }
 
-    private static final PropertyInteger META = PropertyInteger.create("meta", 0, 1);
-
     public BlockSlabs(String name, Block fullBlock, int meta){
         super(fullBlock.getMaterial(), name);
         this.setHardness(1.5F);
         this.setResistance(10.0F);
         this.fullBlock = fullBlock;
         this.meta = meta;
-    }
-
-    @Override
-    protected PropertyInteger getMetaProperty(){
-        return META;
     }
 
     @Override
@@ -96,6 +90,11 @@ public class BlockSlabs extends BlockBase{
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.COMMON;
+    }
+
+    @Override
+    protected PropertyInteger getMetaProperty(){
+        return META;
     }
 
     public static class TheItemBlock extends ItemBlockBase{

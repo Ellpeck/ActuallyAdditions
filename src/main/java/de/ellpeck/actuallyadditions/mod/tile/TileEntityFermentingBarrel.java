@@ -35,6 +35,24 @@ public class TileEntityFermentingBarrel extends TileEntityInventoryBase implemen
     }
 
     @Override
+    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
+        compound.setInteger("ProcessTime", this.currentProcessTime);
+        this.canolaTank.writeToNBT(compound);
+        NBTTagCompound tag = new NBTTagCompound();
+        this.oilTank.writeToNBT(tag);
+        compound.setTag("OilTank", tag);
+        super.writeSyncableNBT(compound, sync);
+    }
+
+    @Override
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
+        this.currentProcessTime = compound.getInteger("ProcessTime");
+        this.canolaTank.readFromNBT(compound);
+        this.oilTank.readFromNBT((NBTTagCompound)compound.getTag("OilTank"));
+        super.readSyncableNBT(compound, sync);
+    }
+
+    @Override
     @SuppressWarnings("unchecked")
     public void updateEntity(){
         super.updateEntity();
@@ -76,21 +94,8 @@ public class TileEntityFermentingBarrel extends TileEntityInventoryBase implemen
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        compound.setInteger("ProcessTime", this.currentProcessTime);
-        this.canolaTank.writeToNBT(compound);
-        NBTTagCompound tag = new NBTTagCompound();
-        this.oilTank.writeToNBT(tag);
-        compound.setTag("OilTank", tag);
-        super.writeSyncableNBT(compound, sync);
-    }
-
-    @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        this.currentProcessTime = compound.getInteger("ProcessTime");
-        this.canolaTank.readFromNBT(compound);
-        this.oilTank.readFromNBT((NBTTagCompound)compound.getTag("OilTank"));
-        super.readSyncableNBT(compound, sync);
+    public boolean isItemValidForSlot(int i, ItemStack stack){
+        return (i == 0 && FluidContainerRegistry.containsFluid(stack, new FluidStack(InitFluids.fluidCanolaOil, FluidContainerRegistry.BUCKET_VOLUME))) || (i == 2 && stack.getItem() == Items.bucket);
     }
 
     @SideOnly(Side.CLIENT)
@@ -111,11 +116,6 @@ public class TileEntityFermentingBarrel extends TileEntityInventoryBase implemen
     @Override
     public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
         return this.isItemValidForSlot(slot, stack);
-    }
-
-    @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
-        return (i == 0 && FluidContainerRegistry.containsFluid(stack, new FluidStack(InitFluids.fluidCanolaOil, FluidContainerRegistry.BUCKET_VOLUME))) || (i == 2 && stack.getItem() == Items.bucket);
     }
 
     @Override

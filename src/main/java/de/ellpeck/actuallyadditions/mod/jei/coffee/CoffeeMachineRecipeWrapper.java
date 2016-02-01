@@ -105,11 +105,6 @@ public class CoffeeMachineRecipeWrapper extends RecipeWrapperWithButton implemen
     }
 
     @Override
-    public BookletPage getPage(){
-        return BookletUtils.getFirstPageForStack(new ItemStack(InitBlocks.blockCoffeeMachine));
-    }
-
-    @Override
     public int getButtonX(){
         return 0;
     }
@@ -117,5 +112,10 @@ public class CoffeeMachineRecipeWrapper extends RecipeWrapperWithButton implemen
     @Override
     public int getButtonY(){
         return 70;
+    }
+
+    @Override
+    public BookletPage getPage(){
+        return BookletUtils.getFirstPageForStack(new ItemStack(InitBlocks.blockCoffeeMachine));
     }
 }

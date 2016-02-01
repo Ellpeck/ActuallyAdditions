@@ -48,6 +48,13 @@ public class TileEntityPhantomItemface extends TileEntityPhantomface{
     }
 
     @Override
+    public void clear(){
+        if(this.isBoundThingInRange()){
+            this.getInventory().clear();
+        }
+    }
+
+    @Override
     public void setInventorySlotContents(int i, ItemStack stack){
         if(this.isBoundThingInRange()){
             this.getInventory().setInventorySlotContents(i, stack);
@@ -71,13 +78,16 @@ public class TileEntityPhantomItemface extends TileEntityPhantomface{
     }
 
     @Override
-    public String getName(){
-        return this.name;
+    public ItemStack removeStackFromSlot(int index){
+        if(this.isBoundThingInRange()){
+            return this.getInventory().removeStackFromSlot(index);
+        }
+        return null;
     }
 
     @Override
-    public boolean isBoundThingInRange(){
-        return super.isBoundThingInRange() && worldObj.getTileEntity(boundPosition) instanceof IInventory;
+    public String getName(){
+        return this.name;
     }
 
     public ISidedInventory getSided(){
@@ -95,33 +105,8 @@ public class TileEntityPhantomItemface extends TileEntityPhantomface{
     }
 
     @Override
-    public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
-        return this.isBoundThingInRange() && (this.getSided() == null || this.getSided().canInsertItem(slot, stack, side));
-    }
-
-    @Override
-    public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
-        return this.isBoundThingInRange() && (this.getSided() == null || this.getSided().canExtractItem(slot, stack, side));
-    }
-
-    @Override
     public boolean isItemValidForSlot(int i, ItemStack stack){
         return this.isBoundThingInRange() && this.getInventory().isItemValidForSlot(i, stack);
-    }
-
-    @Override
-    public ItemStack removeStackFromSlot(int index){
-        if(this.isBoundThingInRange()){
-            return this.getInventory().removeStackFromSlot(index);
-        }
-        return null;
-    }
-
-    @Override
-    public void clear(){
-        if(this.isBoundThingInRange()){
-            this.getInventory().clear();
-        }
     }
 
     @Override
@@ -133,5 +118,20 @@ public class TileEntityPhantomItemface extends TileEntityPhantomface{
             }
         }
         return super.getCapability(capability, facing);
+    }
+
+    @Override
+    public boolean isBoundThingInRange(){
+        return super.isBoundThingInRange() && worldObj.getTileEntity(boundPosition) instanceof IInventory;
+    }
+
+    @Override
+    public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
+        return this.isBoundThingInRange() && (this.getSided() == null || this.getSided().canInsertItem(slot, stack, side));
+    }
+
+    @Override
+    public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
+        return this.isBoundThingInRange() && (this.getSided() == null || this.getSided().canExtractItem(slot, stack, side));
     }
 }

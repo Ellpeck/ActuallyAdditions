@@ -80,11 +80,6 @@ public class ReconstructorRecipeWrapper extends RecipeWrapperWithButton implemen
     }
 
     @Override
-    public BookletPage getPage(){
-        return BookletUtils.getFirstPageForStack(new ItemStack(InitBlocks.blockAtomicReconstructor));
-    }
-
-    @Override
     public int getButtonX(){
         return 3;
     }
@@ -92,5 +87,10 @@ public class ReconstructorRecipeWrapper extends RecipeWrapperWithButton implemen
     @Override
     public int getButtonY(){
         return 40;
+    }
+
+    @Override
+    public BookletPage getPage(){
+        return BookletUtils.getFirstPageForStack(new ItemStack(InitBlocks.blockAtomicReconstructor));
     }
 }

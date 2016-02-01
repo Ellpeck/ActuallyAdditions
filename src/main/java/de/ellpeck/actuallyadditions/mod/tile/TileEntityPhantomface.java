@@ -104,6 +104,16 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
         }
     }
 
+    @Override
+    public boolean isItemValidForSlot(int slot, ItemStack stack){
+        return false;
+    }
+
+    @Override
+    public <T> T getCapability(Capability<T> capability, EnumFacing facing){
+        return this.capabilities.getCapability(capability, facing);
+    }
+
     public static int upgradeRange(int defaultRange, World world, BlockPos pos){
         int newRange = defaultRange;
         for(int i = 0; i < 3; i++){
@@ -182,15 +192,5 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
     @Override
     public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
         return false;
-    }
-
-    @Override
-    public boolean isItemValidForSlot(int slot, ItemStack stack){
-        return false;
-    }
-
-    @Override
-    public <T> T getCapability(Capability<T> capability, EnumFacing facing){
-        return this.capabilities.getCapability(capability, facing);
     }
 }

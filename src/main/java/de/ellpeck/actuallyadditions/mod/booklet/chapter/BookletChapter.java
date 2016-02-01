@@ -50,11 +50,6 @@ public class BookletChapter implements IBookletChapter{
         return this.pages;
     }
 
-    public BookletChapter setIncomplete(){
-        this.isIncomplete = true;
-        return this;
-    }
-
     @Override
     public String getUnlocalizedName(){
         return this.unlocalizedName;
@@ -78,6 +73,11 @@ public class BookletChapter implements IBookletChapter{
     @Override
     public ItemStack getDisplayItemStack(){
         return this.displayStack;
+    }
+
+    public BookletChapter setIncomplete(){
+        this.isIncomplete = true;
+        return this;
     }
 
     public BookletChapter setImportant(){

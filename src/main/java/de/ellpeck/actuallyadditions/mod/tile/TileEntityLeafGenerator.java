@@ -37,6 +37,18 @@ public class TileEntityLeafGenerator extends TileEntityBase implements IEnergyPr
     private int oldEnergy;
 
     @Override
+    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.writeSyncableNBT(compound, sync);
+        this.storage.writeToNBT(compound);
+    }
+
+    @Override
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.readSyncableNBT(compound, sync);
+        this.storage.readFromNBT(compound);
+    }
+
+    @Override
     @SuppressWarnings("unchecked")
     public void updateEntity(){
         super.updateEntity();
@@ -92,18 +104,6 @@ public class TileEntityLeafGenerator extends TileEntityBase implements IEnergyPr
                 this.oldEnergy = this.storage.getEnergyStored();
             }
         }
-    }
-
-    @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.writeSyncableNBT(compound, sync);
-        this.storage.writeToNBT(compound);
-    }
-
-    @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.readSyncableNBT(compound, sync);
-        this.storage.readFromNBT(compound);
     }
 
     @Override

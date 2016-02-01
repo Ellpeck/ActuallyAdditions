@@ -56,6 +56,11 @@ public class TileEntityDropper extends TileEntityInventoryBase implements IRedst
         this.currentTime = compound.getInteger("CurrentTime");
     }
 
+    @Override
+    public boolean isItemValidForSlot(int i, ItemStack stack){
+        return true;
+    }
+
     private void doWork(){
         if(this.removeFromInventory(false) != null){
             ItemStack stack = this.removeFromInventory(true);
@@ -83,11 +88,6 @@ public class TileEntityDropper extends TileEntityInventoryBase implements IRedst
     @Override
     public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
         return this.isItemValidForSlot(slot, stack);
-    }
-
-    @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
-        return true;
     }
 
     @Override

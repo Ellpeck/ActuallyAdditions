@@ -71,6 +71,11 @@ public class TileEntityEnervator extends TileEntityInventoryBase implements IEne
     }
 
     @Override
+    public boolean isItemValidForSlot(int i, ItemStack stack){
+        return i == 0 && stack.getItem() instanceof IEnergyContainerItem;
+    }
+
+    @Override
     public int extractEnergy(EnumFacing from, int maxExtract, boolean simulate){
         return this.storage.extractEnergy(maxExtract, simulate);
     }
@@ -98,11 +103,6 @@ public class TileEntityEnervator extends TileEntityInventoryBase implements IEne
     @Override
     public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
         return this.isItemValidForSlot(slot, stack);
-    }
-
-    @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
-        return i == 0 && stack.getItem() instanceof IEnergyContainerItem;
     }
 
     @Override

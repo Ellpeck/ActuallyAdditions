@@ -132,6 +132,20 @@ public class TileEntityFluidCollector extends TileEntityInventoryBase implements
     }
 
     @Override
+    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.writeSyncableNBT(compound, sync);
+        compound.setInteger("CurrentTime", this.currentTime);
+        this.tank.writeToNBT(compound);
+    }
+
+    @Override
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.readSyncableNBT(compound, sync);
+        this.currentTime = compound.getInteger("CurrentTime");
+        this.tank.readFromNBT(compound);
+    }
+
+    @Override
     @SuppressWarnings("unchecked")
     public void updateEntity(){
         super.updateEntity();
@@ -172,30 +186,6 @@ public class TileEntityFluidCollector extends TileEntityInventoryBase implements
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.writeSyncableNBT(compound, sync);
-        compound.setInteger("CurrentTime", this.currentTime);
-        this.tank.writeToNBT(compound);
-    }
-
-    @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.readSyncableNBT(compound, sync);
-        this.currentTime = compound.getInteger("CurrentTime");
-        this.tank.readFromNBT(compound);
-    }
-
-    @SideOnly(Side.CLIENT)
-    public int getTankScaled(int i){
-        return this.tank.getFluidAmount()*i/this.tank.getCapacity();
-    }
-
-    @Override
-    public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
-        return this.isItemValidForSlot(slot, stack);
-    }
-
-    @Override
     public boolean isItemValidForSlot(int i, ItemStack stack){
         if(i == 0){
             if(this.isPlacer){
@@ -206,6 +196,16 @@ public class TileEntityFluidCollector extends TileEntityInventoryBase implements
             }
         }
         return false;
+    }
+
+    @SideOnly(Side.CLIENT)
+    public int getTankScaled(int i){
+        return this.tank.getFluidAmount()*i/this.tank.getCapacity();
+    }
+
+    @Override
+    public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
+        return this.isItemValidForSlot(slot, stack);
     }
 
     @Override

@@ -47,18 +47,20 @@ public class BlockSmileyCloud extends BlockContainerBase{
         this.setStepSound(soundTypeCloth);
         this.setTickRandomly(true);
     }
-    @Override
-    protected PropertyInteger getMetaProperty(){
-        return META;
-    }
 
     @Override
-    public boolean isOpaqueCube(){
+    public boolean isFullCube(){
         return false;
     }
 
     @Override
-    public boolean isFullCube(){
+    public void addCollisionBoxesToList(World world, BlockPos pos, IBlockState state, AxisAlignedBB axis, List list, Entity entity){
+        this.setBlockBoundsBasedOnState(world, pos);
+        super.addCollisionBoxesToList(world, pos, state, axis, list, entity);
+    }
+
+    @Override
+    public boolean isOpaqueCube(){
         return false;
     }
 
@@ -86,12 +88,6 @@ public class BlockSmileyCloud extends BlockContainerBase{
             }
         }
         return true;
-    }
-
-    @Override
-    public void addCollisionBoxesToList(World world, BlockPos pos, IBlockState state, AxisAlignedBB axis, List list, Entity entity){
-        this.setBlockBoundsBasedOnState(world, pos);
-        super.addCollisionBoxesToList(world, pos, state, axis, list, entity);
     }
 
     @Override
@@ -147,5 +143,10 @@ public class BlockSmileyCloud extends BlockContainerBase{
         }
 
         super.onBlockPlacedBy(world, pos, state, player, stack);
+    }
+
+    @Override
+    protected PropertyInteger getMetaProperty(){
+        return META;
     }
 }

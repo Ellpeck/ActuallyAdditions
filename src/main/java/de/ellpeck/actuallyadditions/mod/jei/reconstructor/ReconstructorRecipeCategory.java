@@ -26,8 +26,8 @@ import javax.annotation.Nonnull;
 
 public class ReconstructorRecipeCategory implements IRecipeCategory{
 
-    private IDrawable background;
     private static final ItemStack RECONSTRUCTOR = new ItemStack(InitBlocks.blockAtomicReconstructor);
+    private IDrawable background;
 
     public ReconstructorRecipeCategory(IGuiHelper helper){
         this.background = helper.createDrawable(AssetUtil.getGuiLocation("guiNEIAtomicReconstructor"), 0, 0, 96, 60);

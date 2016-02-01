@@ -28,8 +28,8 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public abstract class TileEntityBase extends TileEntity implements ITickable{
 
-    protected int ticksElapsed;
     public boolean isRedstonePowered;
+    protected int ticksElapsed;
 
     public static void init(){
         ModUtil.LOGGER.info("Registering TileEntities...");
@@ -92,15 +92,6 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
     }
 
     @Override
-    public final void update(){
-        this.updateEntity();
-    }
-
-    public void updateEntity(){
-        this.ticksElapsed++;
-    }
-
-    @Override
     public final Packet getDescriptionPacket(){
         NBTTagCompound compound = this.getSyncCompound();
         if(compound != null){
@@ -123,6 +114,16 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
         return !(oldState.getBlock().isAssociatedBlock(newState.getBlock()));
     }
 
+    public void receiveSyncCompound(NBTTagCompound compound){
+        this.readSyncableNBT(compound, true);
+    }
+
+    public NBTTagCompound getSyncCompound(){
+        NBTTagCompound tag = new NBTTagCompound();
+        this.writeSyncableNBT(tag, true);
+        return tag;
+    }
+
     public void writeSyncableNBT(NBTTagCompound compound, boolean isForSync){
         if(this instanceof IRedstoneToggle){
             compound.setBoolean("IsPulseMode", ((IRedstoneToggle)this).isPulseMode());
@@ -133,6 +134,15 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
         if(this instanceof IRedstoneToggle){
             ((IRedstoneToggle)this).toggle(compound.getBoolean("IsPulseMode"));
         }
+    }
+
+    @Override
+    public final void update(){
+        this.updateEntity();
+    }
+
+    public void updateEntity(){
+        this.ticksElapsed++;
     }
 
     public final void setRedstonePowered(boolean powered){
@@ -152,15 +162,5 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
 
     public final void sendUpdate(){
         PacketHandler.theNetwork.sendToAllAround(new PacketUpdateTileEntity(this), new NetworkRegistry.TargetPoint(this.worldObj.provider.getDimensionId(), this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), 64));
-    }
-
-    public NBTTagCompound getSyncCompound(){
-        NBTTagCompound tag = new NBTTagCompound();
-        this.writeSyncableNBT(tag, true);
-        return tag;
-    }
-
-    public void receiveSyncCompound(NBTTagCompound compound){
-        this.readSyncableNBT(compound, true);
     }
 }

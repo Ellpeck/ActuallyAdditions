@@ -46,15 +46,13 @@ import java.util.Map;
 
 public class ClientProxy implements IProxy{
 
-    private static Map<ItemStack, ResourceLocation> modelLocationsForRegistering = new HashMap<ItemStack, ResourceLocation>();
-    private static Map<Item, ResourceLocation[]> modelVariantsForRegistering = new HashMap<Item, ResourceLocation[]>();
-
     public static boolean pumpkinBlurPumpkinBlur;
     public static boolean jingleAllTheWay;
     public static boolean bulletForMyValentine;
-
     public static int bookletWordCount;
     public static int bookletCharCount;
+    private static Map<ItemStack, ResourceLocation> modelLocationsForRegistering = new HashMap<ItemStack, ResourceLocation>();
+    private static Map<Item, ResourceLocation[]> modelVariantsForRegistering = new HashMap<Item, ResourceLocation[]>();
 
     @Override
     public void preInit(FMLPreInitializationEvent event){
@@ -101,6 +99,26 @@ public class ClientProxy implements IProxy{
         ModelLoader.setCustomStateMapper(block, mapper);
     }
 
+    private static void countBookletWords(){
+        bookletWordCount = 0;
+        bookletCharCount = 0;
+
+        for(IBookletEntry entry : ActuallyAdditionsAPI.bookletEntries){
+            for(IBookletChapter chapter : entry.getChapters()){
+                for(BookletPage page : chapter.getPages()){
+                    if(page.getText() != null){
+                        bookletWordCount += page.getText().split(" ").length;
+                        bookletCharCount += page.getText().length();
+                    }
+                }
+                bookletWordCount += chapter.getLocalizedName().split(" ").length;
+                bookletCharCount += chapter.getLocalizedName().length();
+            }
+            bookletWordCount += entry.getLocalizedName().split(" ").length;
+            bookletCharCount += entry.getLocalizedName().length();
+        }
+    }
+
     @Override
     public void init(FMLInitializationEvent event){
         ModUtil.LOGGER.info("Initializing ClientProxy...");
@@ -143,25 +161,5 @@ public class ClientProxy implements IProxy{
     @Override
     public void addRenderVariant(Item item, ResourceLocation... location){
         modelVariantsForRegistering.put(item, location);
-    }
-
-    private static void countBookletWords(){
-        bookletWordCount = 0;
-        bookletCharCount = 0;
-
-        for(IBookletEntry entry : ActuallyAdditionsAPI.bookletEntries){
-            for(IBookletChapter chapter : entry.getChapters()){
-                for(BookletPage page : chapter.getPages()){
-                    if(page.getText() != null){
-                        bookletWordCount += page.getText().split(" ").length;
-                        bookletCharCount += page.getText().length();
-                    }
-                }
-                bookletWordCount += chapter.getLocalizedName().split(" ").length;
-                bookletCharCount += chapter.getLocalizedName().length();
-            }
-            bookletWordCount += entry.getLocalizedName().split(" ").length;
-            bookletCharCount += entry.getLocalizedName().length();
-        }
     }
 }

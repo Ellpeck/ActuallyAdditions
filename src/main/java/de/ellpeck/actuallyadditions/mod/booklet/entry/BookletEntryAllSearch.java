@@ -23,16 +23,16 @@ public class BookletEntryAllSearch extends BookletEntry{
         super(unlocalizedName);
     }
 
+    @Override
+    public void setChapters(List<IBookletChapter> chapters){
+        this.allChapters = (ArrayList<IBookletChapter>)chapters;
+        this.chapters = (ArrayList<IBookletChapter>)this.allChapters.clone();
+    }
+
     @SuppressWarnings("unchecked")
     @Override
     public void addChapter(IBookletChapter chapter){
         this.allChapters.add(chapter);
-        this.chapters = (ArrayList<IBookletChapter>)this.allChapters.clone();
-    }
-
-    @Override
-    public void setChapters(List<IBookletChapter> chapters){
-        this.allChapters = (ArrayList<IBookletChapter>)chapters;
         this.chapters = (ArrayList<IBookletChapter>)this.allChapters.clone();
     }
 }

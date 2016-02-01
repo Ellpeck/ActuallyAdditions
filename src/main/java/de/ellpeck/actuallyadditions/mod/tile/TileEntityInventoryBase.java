@@ -49,11 +49,6 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
     }
 
     @Override
-    public void updateEntity(){
-        super.updateEntity();
-    }
-
-    @Override
     public void writeSyncableNBT(NBTTagCompound compound, boolean isForSync){
         super.writeSyncableNBT(compound, isForSync);
         if(!isForSync || this.shouldSyncSlots()){
@@ -94,17 +89,44 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
     }
 
     @Override
+    public void updateEntity(){
+        super.updateEntity();
+    }
+
+    @Override
+    public int[] getSlotsForFace(EnumFacing side){
+        if(this.slots.length > 0){
+            int[] theInt = new int[slots.length];
+            for(int i = 0; i < theInt.length; i++){
+                theInt[i] = i;
+            }
+            return theInt;
+        }
+        else{
+            return new int[0];
+        }
+    }    @Override
     public int getInventoryStackLimit(){
         return 64;
     }
 
-
     @Override
+    public boolean hasCapability(net.minecraftforge.common.capabilities.Capability<?> capability, net.minecraft.util.EnumFacing facing){
+        return this.getCapability(capability, facing) != null;
+    }    @Override
     public boolean isUseableByPlayer(EntityPlayer player){
         return player.getDistanceSq(this.getPos().getX()+0.5D, this.pos.getY()+0.5D, this.pos.getZ()+0.5D) <= 64 && !this.isInvalid() && this.worldObj.getTileEntity(this.pos) == this;
     }
 
     @Override
+    public <T> T getCapability(Capability<T> capability, EnumFacing facing){
+        if(facing != null && capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY){
+            return (T)this.itemHandlers.get(facing);
+        }
+        else{
+            return super.getCapability(capability, facing);
+        }
+    }    @Override
     public void openInventory(EntityPlayer player){
 
     }
@@ -187,19 +209,7 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
         return stack;
     }
 
-    @Override
-    public int[] getSlotsForFace(EnumFacing side){
-        if(this.slots.length > 0){
-            int[] theInt = new int[slots.length];
-            for(int i = 0; i < theInt.length; i++){
-                theInt[i] = i;
-            }
-            return theInt;
-        }
-        else{
-            return new int[0];
-        }
-    }
+
 
     @Override
     public String getName(){
@@ -216,19 +226,8 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
         return new ChatComponentText(StringUtil.localize(this.getName()));
     }
 
-    @Override
-    public boolean hasCapability(net.minecraftforge.common.capabilities.Capability<?> capability, net.minecraft.util.EnumFacing facing){
-        return this.getCapability(capability, facing) != null;
-    }
 
-    @Override
-    public <T> T getCapability(Capability<T> capability, EnumFacing facing){
-        if(facing != null && capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY){
-            return (T)this.itemHandlers.get(facing);
-        }
-        else{
-            return super.getCapability(capability, facing);
-        }
-    }
+
+
 
 }

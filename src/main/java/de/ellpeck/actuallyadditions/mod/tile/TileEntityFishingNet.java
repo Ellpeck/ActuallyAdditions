@@ -30,6 +30,18 @@ public class TileEntityFishingNet extends TileEntityBase{
     public int timeUntilNextDrop;
 
     @Override
+    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.writeSyncableNBT(compound, sync);
+        compound.setInteger("TimeUntilNextDrop", this.timeUntilNextDrop);
+    }
+
+    @Override
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.readSyncableNBT(compound, sync);
+        this.timeUntilNextDrop = compound.getInteger("TimeUntilNextDrop");
+    }
+
+    @Override
     public void updateEntity(){
         super.updateEntity();
         if(!worldObj.isRemote){
@@ -59,17 +71,5 @@ public class TileEntityFishingNet extends TileEntityBase{
                 }
             }
         }
-    }
-
-    @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.writeSyncableNBT(compound, sync);
-        compound.setInteger("TimeUntilNextDrop", this.timeUntilNextDrop);
-    }
-
-    @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.readSyncableNBT(compound, sync);
-        this.timeUntilNextDrop = compound.getInteger("TimeUntilNextDrop");
     }
 }

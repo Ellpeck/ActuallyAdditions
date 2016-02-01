@@ -40,10 +40,9 @@ import java.util.List;
 
 public class BlockAtomicReconstructor extends BlockContainerBase implements IHudDisplay{
 
-    private static final PropertyInteger META = PropertyInteger.create("meta", 0, 5);
-
     public static final int NAME_FLAVOR_AMOUNTS_1 = 12;
     public static final int NAME_FLAVOR_AMOUNTS_2 = 14;
+    private static final PropertyInteger META = PropertyInteger.create("meta", 0, 5);
 
     public BlockAtomicReconstructor(String name){
         super(Material.rock, name);
@@ -51,24 +50,6 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
         this.setHardness(10F);
         this.setResistance(80F);
         this.setStepSound(soundTypeStone);
-    }
-
-    @Override
-    protected PropertyInteger getMetaProperty(){
-        return META;
-    }
-
-    @Override
-    public EnumRarity getRarity(ItemStack stack){
-        return EnumRarity.EPIC;
-    }
-
-    @Override
-    public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase player, ItemStack stack){
-        int rotation = BlockPistonBase.getFacingFromEntity(world, pos, player).ordinal();
-        PosUtil.setMetadata(pos, world, rotation, 2);
-
-        super.onBlockPlacedBy(world, pos, state, player, stack);
     }
 
     @Override
@@ -137,6 +118,24 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
     @Override
     protected Class<? extends ItemBlockBase> getItemBlock(){
         return TheItemBlock.class;
+    }
+
+    @Override
+    public EnumRarity getRarity(ItemStack stack){
+        return EnumRarity.EPIC;
+    }
+
+    @Override
+    public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase player, ItemStack stack){
+        int rotation = BlockPistonBase.getFacingFromEntity(world, pos, player).ordinal();
+        PosUtil.setMetadata(pos, world, rotation, 2);
+
+        super.onBlockPlacedBy(world, pos, state, player, stack);
+    }
+
+    @Override
+    protected PropertyInteger getMetaProperty(){
+        return META;
     }
 
     public static class TheItemBlock extends ItemBlockBase{

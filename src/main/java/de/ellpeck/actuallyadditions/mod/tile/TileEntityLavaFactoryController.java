@@ -34,6 +34,20 @@ public class TileEntityLavaFactoryController extends TileEntityBase implements I
     private int oldEnergy;
 
     @Override
+    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.writeSyncableNBT(compound, sync);
+        this.storage.writeToNBT(compound);
+        compound.setInteger("WorkTime", this.currentWorkTime);
+    }
+
+    @Override
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.readSyncableNBT(compound, sync);
+        this.storage.readFromNBT(compound);
+        this.currentWorkTime = compound.getInteger("WorkTime");
+    }
+
+    @Override
     @SuppressWarnings("unchecked")
     public void updateEntity(){
         super.updateEntity();
@@ -54,20 +68,6 @@ public class TileEntityLavaFactoryController extends TileEntityBase implements I
                 this.oldEnergy = this.storage.getEnergyStored();
             }
         }
-    }
-
-    @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.writeSyncableNBT(compound, sync);
-        this.storage.writeToNBT(compound);
-        compound.setInteger("WorkTime", this.currentWorkTime);
-    }
-
-    @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.readSyncableNBT(compound, sync);
-        this.storage.readFromNBT(compound);
-        this.currentWorkTime = compound.getInteger("WorkTime");
     }
 
     public int isMultiblock(){

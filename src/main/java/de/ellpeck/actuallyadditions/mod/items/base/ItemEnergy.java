@@ -53,16 +53,16 @@ public abstract class ItemEnergy extends ItemEnergyContainer{
         this.registerRendering();
     }
 
-    protected void registerRendering(){
-        ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this), new ResourceLocation(ModUtil.MOD_ID_LOWER, this.getBaseName()));
-    }
-
     protected String getBaseName(){
         return this.name;
     }
 
     public boolean shouldAddCreative(){
         return true;
+    }
+
+    protected void registerRendering(){
+        ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this), new ResourceLocation(ModUtil.MOD_ID_LOWER, this.getBaseName()));
     }
 
     @Override
@@ -79,6 +79,12 @@ public abstract class ItemEnergy extends ItemEnergyContainer{
     @Override
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean bool){
         list.add(this.getEnergyStored(stack)+"/"+this.getMaxEnergyStored(stack)+" RF");
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public boolean hasEffect(ItemStack stack){
+        return false;
     }
 
     @Override
@@ -104,12 +110,6 @@ public abstract class ItemEnergy extends ItemEnergyContainer{
         double energyDif = getMaxEnergyStored(stack)-getEnergyStored(stack);
         double maxAmount = getMaxEnergyStored(stack);
         return energyDif/maxAmount;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public boolean hasEffect(ItemStack stack){
-        return false;
     }
 
     public void setEnergy(ItemStack stack, int energy){

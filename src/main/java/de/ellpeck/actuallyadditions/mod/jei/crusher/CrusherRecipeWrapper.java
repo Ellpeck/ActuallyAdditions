@@ -94,11 +94,6 @@ public class CrusherRecipeWrapper extends RecipeWrapperWithButton implements IRe
     }
 
     @Override
-    public BookletPage getPage(){
-        return BookletUtils.getFirstPageForStack(new ItemStack(InitBlocks.blockGrinder));
-    }
-
-    @Override
     public int getButtonX(){
         return -5;
     }
@@ -106,5 +101,10 @@ public class CrusherRecipeWrapper extends RecipeWrapperWithButton implements IRe
     @Override
     public int getButtonY(){
         return 26;
+    }
+
+    @Override
+    public BookletPage getPage(){
+        return BookletUtils.getFirstPageForStack(new ItemStack(InitBlocks.blockGrinder));
     }
 }

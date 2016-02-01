@@ -45,11 +45,6 @@ public class BlockXPSolidifier extends BlockContainerBase{
     }
 
     @Override
-    protected PropertyInteger getMetaProperty(){
-        return META;
-    }
-
-    @Override
     public TileEntity createNewTileEntity(World world, int par2){
         return new TileEntityXPSolidifier();
     }
@@ -89,6 +84,11 @@ public class BlockXPSolidifier extends BlockContainerBase{
         }
 
         super.onBlockPlacedBy(world, pos, state, player, stack);
+    }
+
+    @Override
+    protected PropertyInteger getMetaProperty(){
+        return META;
     }
 
     @Override

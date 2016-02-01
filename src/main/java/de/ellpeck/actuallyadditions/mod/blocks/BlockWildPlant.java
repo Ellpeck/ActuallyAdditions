@@ -49,34 +49,9 @@ public class BlockWildPlant extends BlockBushBase{
     }
 
     @Override
-    protected PropertyInteger getMetaProperty(){
-        return META;
-    }
-
-    @Override
     public boolean canBlockStay(World world, BlockPos pos, IBlockState state){
         BlockPos offset = PosUtil.offset(pos, 0, -1, 0);
         return PosUtil.getMetadata(pos, world) == TheWildPlants.RICE.ordinal() ? PosUtil.getMaterial(offset, world) == Material.water : PosUtil.getBlock(offset, world).canSustainPlant(world, offset, EnumFacing.UP, this);
-    }
-
-    @Override
-    public Class<? extends ItemBlockBase> getItemBlock(){
-        return TheItemBlock.class;
-    }
-
-    @Override
-    public boolean shouldAddCreative(){
-        return false;
-    }
-
-    @Override
-    public EnumRarity getRarity(ItemStack stack){
-        return stack.getItemDamage() >= allWildPlants.length ? EnumRarity.COMMON : allWildPlants[stack.getItemDamage()].rarity;
-    }
-
-    @Override
-    public boolean canSilkHarvest(World world, BlockPos pos, IBlockState state, EntityPlayer player){
-        return false;
     }
 
     @Override
@@ -95,6 +70,17 @@ public class BlockWildPlant extends BlockBushBase{
     }
 
     @Override
+    public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune){
+        int metadata = state.getBlock().getMetaFromState(state);
+        return metadata >= allWildPlants.length ? null : allWildPlants[metadata].wildVersionOf.getDrops(world, pos, allWildPlants[metadata].wildVersionOf.getStateFromMeta(7), fortune);
+    }
+
+    @Override
+    public boolean canSilkHarvest(World world, BlockPos pos, IBlockState state, EntityPlayer player){
+        return false;
+    }
+
+    @Override
     protected void registerRendering(){
         ResourceLocation[] resLocs = new ResourceLocation[allWildPlants.length];
         for(int i = 0; i < allWildPlants.length; i++){
@@ -106,9 +92,23 @@ public class BlockWildPlant extends BlockBushBase{
     }
 
     @Override
-    public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune){
-        int metadata = state.getBlock().getMetaFromState(state);
-        return metadata >= allWildPlants.length ? null : allWildPlants[metadata].wildVersionOf.getDrops(world, pos, allWildPlants[metadata].wildVersionOf.getStateFromMeta(7), fortune);
+    public Class<? extends ItemBlockBase> getItemBlock(){
+        return TheItemBlock.class;
+    }
+
+    @Override
+    public boolean shouldAddCreative(){
+        return false;
+    }
+
+    @Override
+    public EnumRarity getRarity(ItemStack stack){
+        return stack.getItemDamage() >= allWildPlants.length ? EnumRarity.COMMON : allWildPlants[stack.getItemDamage()].rarity;
+    }
+
+    @Override
+    protected PropertyInteger getMetaProperty(){
+        return META;
     }
 
     public static class TheItemBlock extends ItemBlockBase{

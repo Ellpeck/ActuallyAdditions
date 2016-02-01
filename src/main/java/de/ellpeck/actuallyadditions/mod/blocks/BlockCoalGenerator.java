@@ -47,11 +47,6 @@ public class BlockCoalGenerator extends BlockContainerBase{
     }
 
     @Override
-    protected PropertyInteger getMetaProperty(){
-        return META;
-    }
-
-    @Override
     public TileEntity createNewTileEntity(World world, int par2){
         return new TileEntityCoalGenerator();
     }
@@ -83,6 +78,11 @@ public class BlockCoalGenerator extends BlockContainerBase{
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.RARE;
+    }
+
+    @Override
+    protected PropertyInteger getMetaProperty(){
+        return META;
     }
 
     @Override

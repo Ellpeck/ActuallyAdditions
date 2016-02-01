@@ -25,6 +25,18 @@ public class TileEntityGreenhouseGlass extends TileEntityBase{
     private int timeUntilNextFert;
 
     @Override
+    public void writeSyncableNBT(NBTTagCompound compound, boolean isForSync){
+        super.writeSyncableNBT(compound, isForSync);
+        this.timeUntilNextFert = compound.getInteger("Time");
+    }
+
+    @Override
+    public void readSyncableNBT(NBTTagCompound compound, boolean isForSync){
+        super.readSyncableNBT(compound, isForSync);
+        compound.setInteger("Time", this.timeUntilNextFert);
+    }
+
+    @Override
     public void updateEntity(){
         super.updateEntity();
         if(!worldObj.isRemote){
@@ -65,17 +77,5 @@ public class TileEntityGreenhouseGlass extends TileEntityBase{
             }
         }
         return null;
-    }
-
-    @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean isForSync){
-        super.writeSyncableNBT(compound, isForSync);
-        this.timeUntilNextFert = compound.getInteger("Time");
-    }
-
-    @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean isForSync){
-        super.readSyncableNBT(compound, isForSync);
-        compound.setInteger("Time", this.timeUntilNextFert);
     }
 }

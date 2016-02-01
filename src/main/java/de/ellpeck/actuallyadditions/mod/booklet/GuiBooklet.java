@@ -91,11 +91,6 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
         this.saveOnClose = saveOnClose;
     }
 
-    @Override
-    public void drawHoveringText(List list, int x, int y){
-        super.drawHoveringText(list, x, y);
-    }
-
     public FontRenderer getFontRenderer(){
         return this.fontRendererObj;
     }
@@ -195,6 +190,11 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
                 this.hisNameIsAt = 0;
             }
         }
+    }
+
+    @Override
+    public void drawHoveringText(List list, int x, int y){
+        super.drawHoveringText(list, x, y);
     }
 
     @Override

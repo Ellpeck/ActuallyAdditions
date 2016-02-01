@@ -109,6 +109,11 @@ public class TileEntityFeeder extends TileEntityInventoryBase{
         }
     }
 
+    @Override
+    public boolean isItemValidForSlot(int i, ItemStack stack){
+        return true;
+    }
+
     public void feedAnimal(EntityAnimal animal){
         animal.setInLove(null);
         for(int i = 0; i < 7; i++){
@@ -122,11 +127,6 @@ public class TileEntityFeeder extends TileEntityInventoryBase{
     @Override
     public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
         return this.isItemValidForSlot(slot, stack);
-    }
-
-    @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
-        return true;
     }
 
     @Override

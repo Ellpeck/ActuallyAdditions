@@ -46,16 +46,16 @@ public class ItemBucketAA extends ItemBucket{
         this.registerRendering();
     }
 
-    protected void registerRendering(){
-        ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this), new ResourceLocation(ModUtil.MOD_ID_LOWER, this.getBaseName()));
-    }
-
     protected String getBaseName(){
         return this.name;
     }
 
     public boolean shouldAddCreative(){
         return true;
+    }
+
+    protected void registerRendering(){
+        ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this), new ResourceLocation(ModUtil.MOD_ID_LOWER, this.getBaseName()));
     }
 
     @Override

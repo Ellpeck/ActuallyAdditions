@@ -44,17 +44,12 @@ public class BlockCoffeeMachine extends BlockContainerBase{
     }
 
     @Override
-    protected PropertyInteger getMetaProperty(){
-        return META;
-    }
-
-    @Override
-    public boolean isOpaqueCube(){
+    public boolean isFullCube(){
         return false;
     }
 
     @Override
-    public boolean isFullCube(){
+    public boolean isOpaqueCube(){
         return false;
     }
 
@@ -104,5 +99,10 @@ public class BlockCoffeeMachine extends BlockContainerBase{
         }
 
         super.onBlockPlacedBy(world, pos, state, player, stack);
+    }
+
+    @Override
+    protected PropertyInteger getMetaProperty(){
+        return META;
     }
 }

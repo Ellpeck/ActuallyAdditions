@@ -116,13 +116,13 @@ public class TileEntityOilGenerator extends TileEntityInventoryBase implements I
     }
 
     @Override
-    public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
-        return this.isItemValidForSlot(slot, stack);
+    public boolean isItemValidForSlot(int i, ItemStack stack){
+        return FluidContainerRegistry.containsFluid(stack, new FluidStack(InitFluids.fluidOil, FluidContainerRegistry.BUCKET_VOLUME)) && i == 0;
     }
 
     @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
-        return FluidContainerRegistry.containsFluid(stack, new FluidStack(InitFluids.fluidOil, FluidContainerRegistry.BUCKET_VOLUME)) && i == 0;
+    public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
+        return this.isItemValidForSlot(slot, stack);
     }
 
     @Override

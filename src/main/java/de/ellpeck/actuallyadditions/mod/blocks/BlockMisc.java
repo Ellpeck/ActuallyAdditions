@@ -43,13 +43,16 @@ public class BlockMisc extends BlockBase{
     }
 
     @Override
-    protected PropertyInteger getMetaProperty(){
-        return META;
-    }
-
-    @Override
     public int damageDropped(IBlockState state){
         return this.getMetaFromState(state);
+    }
+
+    @SuppressWarnings("all")
+    @SideOnly(Side.CLIENT)
+    public void getSubBlocks(Item item, CreativeTabs tab, List list){
+        for(int j = 0; j < allMiscBlocks.length; j++){
+            list.add(new ItemStack(item, 1, j));
+        }
     }
 
     @Override
@@ -63,14 +66,6 @@ public class BlockMisc extends BlockBase{
         ActuallyAdditions.proxy.addRenderVariant(Item.getItemFromBlock(this), resLocs);
     }
 
-    @SuppressWarnings("all")
-    @SideOnly(Side.CLIENT)
-    public void getSubBlocks(Item item, CreativeTabs tab, List list){
-        for(int j = 0; j < allMiscBlocks.length; j++){
-            list.add(new ItemStack(item, 1, j));
-        }
-    }
-
     @Override
     public Class<? extends ItemBlockBase> getItemBlock(){
         return TheItemBlock.class;
@@ -79,6 +74,11 @@ public class BlockMisc extends BlockBase{
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return stack.getItemDamage() >= allMiscBlocks.length ? EnumRarity.COMMON : allMiscBlocks[stack.getItemDamage()].rarity;
+    }
+
+    @Override
+    protected PropertyInteger getMetaProperty(){
+        return META;
     }
 
     public static class TheItemBlock extends ItemBlockBase{

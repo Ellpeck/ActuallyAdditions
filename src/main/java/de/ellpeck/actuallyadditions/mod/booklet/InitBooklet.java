@@ -50,7 +50,7 @@ public class InitBooklet{
         ActuallyAdditionsAPI.entryMisc = new BookletEntry("misc");
         ActuallyAdditionsAPI.allAndSearch = new BookletEntryAllSearch("allAndSearch").setSpecial();
     }
-    
+
     public static void postInit(){
         initChapters();
     }

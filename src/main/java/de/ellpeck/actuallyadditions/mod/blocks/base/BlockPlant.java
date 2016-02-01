@@ -47,6 +47,49 @@ public class BlockPlant extends BlockCrops{
         this.register();
     }
 
+    private void register(){
+        this.setUnlocalizedName(ModUtil.MOD_ID_LOWER+"."+this.getBaseName());
+        GameRegistry.registerBlock(this, this.getItemBlock(), this.getBaseName());
+        if(this.shouldAddCreative()){
+            this.setCreativeTab(CreativeTab.instance);
+        }
+        else{
+            this.setCreativeTab(null);
+        }
+
+        this.registerRendering();
+    }
+
+    protected String getBaseName(){
+        return this.name;
+    }
+
+    protected Class<? extends ItemBlockBase> getItemBlock(){
+        return ItemBlockBase.class;
+    }
+
+    public boolean shouldAddCreative(){
+        return false;
+    }
+
+    protected void registerRendering(){
+        ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this), new ResourceLocation(ModUtil.MOD_ID_LOWER, this.getBaseName()));
+    }
+
+    public EnumRarity getRarity(ItemStack stack){
+        return EnumRarity.RARE;
+    }
+
+    @Override
+    public EnumPlantType getPlantType(IBlockAccess world, BlockPos pos){
+        return EnumPlantType.Crop;
+    }
+
+    @Override
+    public int damageDropped(IBlockState state){
+        return this.getMetaFromState(state) >= 7 ? this.returnMeta : 0;
+    }
+
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing facing, float hitX, float hitY, float hitZ){
         if(getMetaFromState(state) >= 7){
@@ -73,73 +116,30 @@ public class BlockPlant extends BlockCrops{
             return true;
         }
         return false;
-    }
-
-    private void register(){
-        this.setUnlocalizedName(ModUtil.MOD_ID_LOWER+"."+this.getBaseName());
-        GameRegistry.registerBlock(this, this.getItemBlock(), this.getBaseName());
-        if(this.shouldAddCreative()){
-            this.setCreativeTab(CreativeTab.instance);
-        }
-        else{
-            this.setCreativeTab(null);
-        }
-
-        this.registerRendering();
-    }
-
-    protected void registerRendering(){
-        ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this), new ResourceLocation(ModUtil.MOD_ID_LOWER, this.getBaseName()));
-    }
-
-    protected String getBaseName(){
-        return this.name;
-    }
-
-    protected Class<? extends ItemBlockBase> getItemBlock(){
-        return ItemBlockBase.class;
-    }
-
-    public boolean shouldAddCreative(){
-        return false;
-    }
-
-    public EnumRarity getRarity(ItemStack stack){
-        return EnumRarity.RARE;
-    }
-
-    @Override
-    public EnumPlantType getPlantType(IBlockAccess world, BlockPos pos){
-        return EnumPlantType.Crop;
-    }
-
-    @Override
+    }    @Override
     public Item getSeed(){
         return this.seedItem;
     }
 
     @Override
+    public int getDamageValue(World world, BlockPos pos){
+        return 0;
+    }    @Override
     public Item getCrop(){
         return this.returnItem;
     }
 
     @Override
+    public int quantityDropped(IBlockState state, int fortune, Random random){
+        return this.getMetaFromState(state) >= 7 ? random.nextInt(addDropAmount)+minDropAmount : super.quantityDropped(state, fortune, random);
+    }    @Override
     public Item getItemDropped(IBlockState state, Random rand, int par3){
         return this.getMetaFromState(state) >= 7 ? this.getCrop() : this.getSeed();
     }
 
-    @Override
-    public int damageDropped(IBlockState state){
-        return this.getMetaFromState(state) >= 7 ? this.returnMeta : 0;
-    }
 
-    @Override
-    public int getDamageValue(World world, BlockPos pos){
-        return 0;
-    }
 
-    @Override
-    public int quantityDropped(IBlockState state, int fortune, Random random){
-        return this.getMetaFromState(state) >= 7 ? random.nextInt(addDropAmount)+minDropAmount : super.quantityDropped(state, fortune, random);
-    }
+
+
+
 }

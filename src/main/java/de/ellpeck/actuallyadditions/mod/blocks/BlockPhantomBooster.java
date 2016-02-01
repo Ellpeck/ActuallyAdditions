@@ -32,12 +32,12 @@ public class BlockPhantomBooster extends BlockContainerBase{
     }
 
     @Override
-    public boolean isOpaqueCube(){
+    public boolean isFullCube(){
         return false;
     }
 
     @Override
-    public boolean isFullCube(){
+    public boolean isOpaqueCube(){
         return false;
     }
 

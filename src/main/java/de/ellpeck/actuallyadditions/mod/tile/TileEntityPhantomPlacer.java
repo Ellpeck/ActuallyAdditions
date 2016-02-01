@@ -49,6 +49,30 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
     }
 
     @Override
+    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.writeSyncableNBT(compound, sync);
+        compound.setInteger("Range", this.range);
+        if(this.boundPosition != null){
+            compound.setInteger("XCoordOfTileStored", boundPosition.getX());
+            compound.setInteger("YCoordOfTileStored", boundPosition.getY());
+            compound.setInteger("ZCoordOfTileStored", boundPosition.getZ());
+        }
+    }
+
+    @Override
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.readSyncableNBT(compound, sync);
+        int x = compound.getInteger("XCoordOfTileStored");
+        int y = compound.getInteger("YCoordOfTileStored");
+        int z = compound.getInteger("ZCoordOfTileStored");
+        this.range = compound.getInteger("Range");
+        if(!(x == 0 && y == 0 && z == 0)){
+            this.boundPosition = new BlockPos(x, y, z);
+            this.markDirty();
+        }
+    }
+
+    @Override
     public void updateEntity(){
         super.updateEntity();
         if(!worldObj.isRemote){
@@ -168,37 +192,13 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.writeSyncableNBT(compound, sync);
-        compound.setInteger("Range", this.range);
-        if(this.boundPosition != null){
-            compound.setInteger("XCoordOfTileStored", boundPosition.getX());
-            compound.setInteger("YCoordOfTileStored", boundPosition.getY());
-            compound.setInteger("ZCoordOfTileStored", boundPosition.getZ());
-        }
-    }
-
-    @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.readSyncableNBT(compound, sync);
-        int x = compound.getInteger("XCoordOfTileStored");
-        int y = compound.getInteger("YCoordOfTileStored");
-        int z = compound.getInteger("ZCoordOfTileStored");
-        this.range = compound.getInteger("Range");
-        if(!(x == 0 && y == 0 && z == 0)){
-            this.boundPosition = new BlockPos(x, y, z);
-            this.markDirty();
-        }
+    public boolean isItemValidForSlot(int i, ItemStack stack){
+        return !this.isBreaker;
     }
 
     @Override
     public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
         return this.isItemValidForSlot(slot, stack);
-    }
-
-    @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
-        return !this.isBreaker;
     }
 
     @Override

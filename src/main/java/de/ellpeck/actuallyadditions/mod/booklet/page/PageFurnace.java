@@ -47,15 +47,6 @@ public class PageFurnace extends BookletPageAA{
         return this.result == null ? new ItemStack[0] : new ItemStack[]{this.result};
     }
 
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void renderPre(IBookletGui gui, int mouseX, int mouseY, int ticksElapsed, boolean mousePressed){
-        if(this.input != null || this.getInputForOutput(this.result) != null){
-            Minecraft.getMinecraft().getTextureManager().bindTexture(ClientProxy.bulletForMyValentine ? GuiBooklet.resLocValentine : GuiBooklet.resLoc);
-            gui.drawRect(gui.getGuiLeft()+37, gui.getGuiTop()+20, 0, 180, 60, 60);
-        }
-    }
-
     @SuppressWarnings("unchecked")
     @Override
     @SideOnly(Side.CLIENT)
@@ -95,6 +86,15 @@ public class PageFurnace extends BookletPageAA{
                     }
                 }
             }
+        }
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void renderPre(IBookletGui gui, int mouseX, int mouseY, int ticksElapsed, boolean mousePressed){
+        if(this.input != null || this.getInputForOutput(this.result) != null){
+            Minecraft.getMinecraft().getTextureManager().bindTexture(ClientProxy.bulletForMyValentine ? GuiBooklet.resLocValentine : GuiBooklet.resLoc);
+            gui.drawRect(gui.getGuiLeft()+37, gui.getGuiTop()+20, 0, 180, 60, 60);
         }
     }
 

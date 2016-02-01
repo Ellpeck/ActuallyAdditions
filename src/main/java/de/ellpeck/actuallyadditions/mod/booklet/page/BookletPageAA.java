@@ -33,23 +33,8 @@ public class BookletPageAA extends BookletPage{
     }
 
     @Override
-    public ItemStack[] getItemStacksForPage(){
-        return null;
-    }
-
-    @Override
-    public String getClickToSeeRecipeString(){
-        return EnumChatFormatting.GOLD+StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".clickToSeeRecipe");
-    }
-
-    @Override
     public int getID(){
         return Util.arrayContains(this.chapter.getPages(), this)+1;
-    }
-
-    public BookletPage setNoText(){
-        this.hasNoText = true;
-        return this;
     }
 
     @Override
@@ -74,18 +59,33 @@ public class BookletPageAA extends BookletPage{
     }
 
     @Override
-    public void render(IBookletGui gui, int mouseX, int mouseY, int ticksElapsed, boolean mousePressed){
+    public void renderPre(IBookletGui gui, int mouseX, int mouseY, int ticksElapsed, boolean mousePressed){
 
     }
 
     @Override
-    public void renderPre(IBookletGui gui, int mouseX, int mouseY, int ticksElapsed, boolean mousePressed){
+    public void render(IBookletGui gui, int mouseX, int mouseY, int ticksElapsed, boolean mousePressed){
 
     }
 
     @Override
     public void updateScreen(int ticksElapsed){
 
+    }
+
+    @Override
+    public ItemStack[] getItemStacksForPage(){
+        return null;
+    }
+
+    @Override
+    public String getClickToSeeRecipeString(){
+        return EnumChatFormatting.GOLD+StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".clickToSeeRecipe");
+    }
+
+    public BookletPage setNoText(){
+        this.hasNoText = true;
+        return this;
     }
 
     public BookletPageAA addTextReplacement(String text, int replacement){

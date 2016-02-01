@@ -46,14 +46,14 @@ public class TileEntityCompost extends TileEntityInventoryBase{
     }
 
     @Override
-    public boolean shouldSyncSlots(){
-        return true;
-    }
-
-    @Override
     public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
         super.writeSyncableNBT(compound, sync);
         compound.setInteger("ConversionTime", this.conversionTime);
+    }
+
+    @Override
+    public boolean shouldSyncSlots(){
+        return true;
     }
 
     @Override
@@ -68,23 +68,23 @@ public class TileEntityCompost extends TileEntityInventoryBase{
     }
 
     @Override
-    public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
-        return this.isItemValidForSlot(slot, stack);
-    }
-
-    @Override
     public boolean isItemValidForSlot(int i, ItemStack stack){
         return stack.getItem() instanceof ItemMisc && stack.getItemDamage() == TheMiscItems.MASHED_FOOD.ordinal();
-    }
-
-    @Override
-    public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
-        return stack.getItem() instanceof ItemFertilizer;
     }
 
     @Override
     public void markDirty(){
         super.markDirty();
         this.sendUpdate();
+    }
+
+    @Override
+    public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
+        return this.isItemValidForSlot(slot, stack);
+    }
+
+    @Override
+    public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
+        return stack.getItem() instanceof ItemFertilizer;
     }
 }

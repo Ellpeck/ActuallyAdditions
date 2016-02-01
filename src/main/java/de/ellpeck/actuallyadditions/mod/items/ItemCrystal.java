@@ -48,6 +48,14 @@ public class ItemCrystal extends ItemBase{
         return stack.getItemDamage() >= BlockCrystal.allCrystals.length ? EnumRarity.COMMON : BlockCrystal.allCrystals[stack.getItemDamage()].rarity;
     }
 
+    @SuppressWarnings("all")
+    @SideOnly(Side.CLIENT)
+    public void getSubItems(Item item, CreativeTabs tab, List list){
+        for(int j = 0; j < BlockCrystal.allCrystals.length; j++){
+            list.add(new ItemStack(this, 1, j));
+        }
+    }
+
     @Override
     protected void registerRendering(){
         ResourceLocation[] resLocs = new ResourceLocation[BlockCrystal.allCrystals.length];
@@ -57,13 +65,5 @@ public class ItemCrystal extends ItemBase{
             ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), new ResourceLocation(ModUtil.MOD_ID_LOWER, name));
         }
         ActuallyAdditions.proxy.addRenderVariant(this, resLocs);
-    }
-
-    @SuppressWarnings("all")
-    @SideOnly(Side.CLIENT)
-    public void getSubItems(Item item, CreativeTabs tab, List list){
-        for(int j = 0; j < BlockCrystal.allCrystals.length; j++){
-            list.add(new ItemStack(this, 1, j));
-        }
     }
 }

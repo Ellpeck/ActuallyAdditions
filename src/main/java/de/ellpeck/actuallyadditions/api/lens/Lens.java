@@ -28,8 +28,9 @@ public abstract class Lens{
 
     /**
      * Invokes the lens type's behavior on a block
+     *
      * @param hitBlock The block that was hit
-     * @param tile The tile the lens was invoked from
+     * @param tile     The tile the lens was invoked from
      * @return If the Reconstructor should stop continuing (return false if you want it to go through blocks)
      */
     public abstract boolean invoke(BlockPos hitBlock, IAtomicReconstructor tile);

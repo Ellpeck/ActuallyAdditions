@@ -44,6 +44,25 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
     }
 
     @Override
+    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.writeSyncableNBT(compound, sync);
+        compound.setInteger("CurrentTime", this.currentTime);
+        this.storage.writeToNBT(compound);
+    }
+
+    @Override
+    public boolean shouldSyncSlots(){
+        return true;
+    }
+
+    @Override
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.readSyncableNBT(compound, sync);
+        this.currentTime = compound.getInteger("CurrentTime");
+        this.storage.readFromNBT(compound);
+    }
+
+    @Override
     @SuppressWarnings("unchecked")
     public void updateEntity(){
         super.updateEntity();
@@ -107,28 +126,39 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.writeSyncableNBT(compound, sync);
-        compound.setInteger("CurrentTime", this.currentTime);
-        this.storage.writeToNBT(compound);
+    public int getX(){
+        return this.getPos().getX();
+    }
+
+    @Override
+    public int getY(){
+        return this.getPos().getY();
+    }
+
+    @Override
+    public int getZ(){
+        return this.getPos().getZ();
+    }
+
+    @Override
+    public World getWorldObject(){
+        return this.getWorld();
+    }
+
+    @Override
+    public void extractEnergy(int amount){
+        this.storage.extractEnergy(amount, false);
+    }
+
+    @Override
+    public boolean isItemValidForSlot(int i, ItemStack stack){
+        return stack != null && stack.getItem() instanceof ILensItem;
     }
 
     @Override
     public void markDirty(){
         super.markDirty();
         this.sendUpdate();
-    }
-
-    @Override
-    public boolean shouldSyncSlots(){
-        return true;
-    }
-
-    @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.readSyncableNBT(compound, sync);
-        this.currentTime = compound.getInteger("CurrentTime");
-        this.storage.readFromNBT(compound);
     }
 
     @Override
@@ -157,38 +187,8 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
     }
 
     @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
-        return stack != null && stack.getItem() instanceof ILensItem;
-    }
-
-    @Override
     public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
         return true;
-    }
-
-    @Override
-    public int getX(){
-        return this.getPos().getX();
-    }
-
-    @Override
-    public int getY(){
-        return this.getPos().getY();
-    }
-
-    @Override
-    public int getZ(){
-        return this.getPos().getZ();
-    }
-
-    @Override
-    public World getWorldObject(){
-        return this.getWorld();
-    }
-
-    @Override
-    public void extractEnergy(int amount){
-        this.storage.extractEnergy(amount, false);
     }
 
     @Override
