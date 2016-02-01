@@ -217,6 +217,11 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
     }
 
     @Override
+    public boolean hasCapability(net.minecraftforge.common.capabilities.Capability<?> capability, net.minecraft.util.EnumFacing facing){
+        return this.getCapability(capability, facing) != null;
+    }
+
+    @Override
     public <T> T getCapability(Capability<T> capability, EnumFacing facing){
         if(facing != null && capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY){
             return (T)this.itemHandlers.get(facing);
