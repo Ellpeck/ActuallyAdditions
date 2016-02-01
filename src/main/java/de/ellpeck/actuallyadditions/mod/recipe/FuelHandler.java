@@ -50,11 +50,6 @@ public class FuelHandler implements IFuelHandler{
         addFuel(Item.getItemFromBlock(block), metadata, value);
     }
 
-    @Override
-    public int getBurnTime(ItemStack fuel){
-        return getFuelValue(fuel);
-    }
-
     private static int getFuelValue(ItemStack stack){
         if(stack != null && stack.getItem() != null){
             Pair<Item, Integer> pair = Pair.of(stack.getItem(), stack.getItemDamage());
@@ -70,5 +65,10 @@ public class FuelHandler implements IFuelHandler{
             }
         }
         return 0;
+    }
+
+    @Override
+    public int getBurnTime(ItemStack fuel){
+        return getFuelValue(fuel);
     }
 }

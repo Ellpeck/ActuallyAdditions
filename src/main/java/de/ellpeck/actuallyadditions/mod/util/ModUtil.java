@@ -17,6 +17,7 @@ import org.apache.logging.log4j.Logger;
 import java.util.Locale;
 
 public class ModUtil{
+
     public static final String VERSION = "@VERSION@"; //build.gradle
 
     public static final String MOD_ID = ActuallyAdditionsAPI.MOD_ID;

@@ -31,13 +31,6 @@ public class EntrySet{
         this.setEntry(page, chapter, entry, pageInIndex);
     }
 
-    public void setEntry(BookletPage page, IBookletChapter chapter, IBookletEntry entry, int pageInIndex){
-        this.page = page;
-        this.chapter = chapter;
-        this.entry = entry;
-        this.pageInIndex = pageInIndex;
-    }
-
     public static EntrySet readFromNBT(NBTTagCompound compound){
         if(compound != null){
             if(compound.hasKey("Entry")){
@@ -54,6 +47,13 @@ public class EntrySet{
             }
         }
         return new EntrySet(null);
+    }
+
+    public void setEntry(BookletPage page, IBookletChapter chapter, IBookletEntry entry, int pageInIndex){
+        this.page = page;
+        this.chapter = chapter;
+        this.entry = entry;
+        this.pageInIndex = pageInIndex;
     }
 
     public void removeEntry(){

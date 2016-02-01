@@ -31,6 +31,10 @@ public class TileEntityItemRepairer extends TileEntityInventoryBase implements I
         super(2, "repairer");
     }
 
+    public static boolean canBeRepaired(ItemStack stack){
+        return stack != null && stack.getItem().isRepairable();
+    }
+
     @Override
     public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
         compound.setInteger("NextRepairTick", this.nextRepairTick);
@@ -80,10 +84,6 @@ public class TileEntityItemRepairer extends TileEntityInventoryBase implements I
     @Override
     public boolean isItemValidForSlot(int i, ItemStack stack){
         return i == SLOT_INPUT;
-    }
-
-    public static boolean canBeRepaired(ItemStack stack){
-        return stack != null && stack.getItem().isRepairable();
     }
 
     @SideOnly(Side.CLIENT)

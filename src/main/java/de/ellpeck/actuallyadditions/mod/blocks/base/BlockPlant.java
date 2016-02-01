@@ -121,7 +121,9 @@ public class BlockPlant extends BlockCrops{
     @Override
     public int getDamageValue(World world, BlockPos pos){
         return 0;
-    }    @Override
+    }
+
+    @Override
     public Item getSeed(){
         return this.seedItem;
     }
@@ -135,7 +137,6 @@ public class BlockPlant extends BlockCrops{
     public Item getCrop(){
         return this.returnItem;
     }
-
 
 
     @Override

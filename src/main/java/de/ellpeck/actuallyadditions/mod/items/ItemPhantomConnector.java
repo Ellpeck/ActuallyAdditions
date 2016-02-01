@@ -39,6 +39,45 @@ public class ItemPhantomConnector extends ItemBase{
         this.setMaxStackSize(1);
     }
 
+    public static World getStoredWorld(ItemStack stack){
+        NBTTagCompound tag = stack.getTagCompound();
+        if(tag != null){
+            return DimensionManager.getWorld(tag.getInteger("WorldOfTileStored"));
+        }
+        return null;
+    }
+
+    public static BlockPos getStoredPosition(ItemStack stack){
+        NBTTagCompound tag = stack.getTagCompound();
+        if(tag != null){
+            int x = tag.getInteger("XCoordOfTileStored");
+            int y = tag.getInteger("YCoordOfTileStored");
+            int z = tag.getInteger("ZCoordOfTileStored");
+            if(!(x == 0 && y == 0 && z == 0)){
+                return new BlockPos(x, y, z);
+            }
+        }
+        return null;
+    }
+
+    public static void clearStorage(ItemStack stack){
+        stack.setTagCompound(new NBTTagCompound());
+    }
+
+    public static void storeConnection(ItemStack stack, int x, int y, int z, World world){
+        NBTTagCompound tag = stack.getTagCompound();
+        if(tag == null){
+            tag = new NBTTagCompound();
+        }
+
+        tag.setInteger("XCoordOfTileStored", x);
+        tag.setInteger("YCoordOfTileStored", y);
+        tag.setInteger("ZCoordOfTileStored", z);
+        tag.setInteger("WorldOfTileStored", world.provider.getDimensionId());
+
+        stack.setTagCompound(tag);
+    }
+
     @Override
     public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing par7, float par8, float par9, float par10){
         if(!world.isRemote){
@@ -77,45 +116,6 @@ public class ItemPhantomConnector extends ItemBase{
             player.addChatComponentMessage(new ChatComponentText(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.unbound.desc")));
             return false;
         }
-    }
-
-    public static World getStoredWorld(ItemStack stack){
-        NBTTagCompound tag = stack.getTagCompound();
-        if(tag != null){
-            return DimensionManager.getWorld(tag.getInteger("WorldOfTileStored"));
-        }
-        return null;
-    }
-
-    public static BlockPos getStoredPosition(ItemStack stack){
-        NBTTagCompound tag = stack.getTagCompound();
-        if(tag != null){
-            int x = tag.getInteger("XCoordOfTileStored");
-            int y = tag.getInteger("YCoordOfTileStored");
-            int z = tag.getInteger("ZCoordOfTileStored");
-            if(!(x == 0 && y == 0 && z == 0)){
-                return new BlockPos(x, y, z);
-            }
-        }
-        return null;
-    }
-
-    public static void clearStorage(ItemStack stack){
-        stack.setTagCompound(new NBTTagCompound());
-    }
-
-    public static void storeConnection(ItemStack stack, int x, int y, int z, World world){
-        NBTTagCompound tag = stack.getTagCompound();
-        if(tag == null){
-            tag = new NBTTagCompound();
-        }
-
-        tag.setInteger("XCoordOfTileStored", x);
-        tag.setInteger("YCoordOfTileStored", y);
-        tag.setInteger("ZCoordOfTileStored", z);
-        tag.setInteger("WorldOfTileStored", world.provider.getDimensionId());
-
-        stack.setTagCompound(tag);
     }
 
     @Override

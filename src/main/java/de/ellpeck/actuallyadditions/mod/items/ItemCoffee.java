@@ -72,6 +72,15 @@ public class ItemCoffee extends ItemFoodBase{
         return null;
     }
 
+    public static void applyPotionEffectsFromStack(ItemStack stack, EntityPlayer player){
+        PotionEffect[] effects = CoffeeBrewing.getEffectsFromStack(stack);
+        if(effects != null && effects.length > 0){
+            for(PotionEffect effect : effects){
+                player.addPotionEffect(new PotionEffect(effect.getPotionID(), effect.getDuration()*20, effect.getAmplifier()));
+            }
+        }
+    }
+
     @Override
     public ItemStack onItemUseFinish(ItemStack stack, World world, EntityPlayer player){
         ItemStack theStack = stack.copy();
@@ -83,15 +92,6 @@ public class ItemCoffee extends ItemFoodBase{
         }
         else{
             return theStack;
-        }
-    }
-
-    public static void applyPotionEffectsFromStack(ItemStack stack, EntityPlayer player){
-        PotionEffect[] effects = CoffeeBrewing.getEffectsFromStack(stack);
-        if(effects != null && effects.length > 0){
-            for(PotionEffect effect : effects){
-                player.addPotionEffect(new PotionEffect(effect.getPotionID(), effect.getDuration()*20, effect.getAmplifier()));
-            }
         }
     }
 

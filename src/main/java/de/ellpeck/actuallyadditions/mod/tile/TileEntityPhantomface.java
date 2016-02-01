@@ -48,6 +48,20 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
         this.capabilities = ForgeEventFactory.gatherCapabilities(this);
     }
 
+    public static int upgradeRange(int defaultRange, World world, BlockPos pos){
+        int newRange = defaultRange;
+        for(int i = 0; i < 3; i++){
+            Block block = PosUtil.getBlock(PosUtil.offset(pos, 0, 1+i, 0), world);
+            if(block == InitBlocks.blockPhantomBooster){
+                newRange = newRange*2;
+            }
+            else{
+                break;
+            }
+        }
+        return newRange;
+    }
+
     @Override
     public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
         super.writeSyncableNBT(compound, sync);
@@ -112,20 +126,6 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
     @Override
     public boolean isItemValidForSlot(int slot, ItemStack stack){
         return false;
-    }
-
-    public static int upgradeRange(int defaultRange, World world, BlockPos pos){
-        int newRange = defaultRange;
-        for(int i = 0; i < 3; i++){
-            Block block = PosUtil.getBlock(PosUtil.offset(pos, 0, 1+i, 0), world);
-            if(block == InitBlocks.blockPhantomBooster){
-                newRange = newRange*2;
-            }
-            else{
-                break;
-            }
-        }
-        return newRange;
     }
 
     @Override

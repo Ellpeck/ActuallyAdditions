@@ -51,6 +51,10 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
         this.isDouble = false;
     }
 
+    public static int getEnergyUse(boolean isDouble){
+        return isDouble ? 60 : 40;
+    }
+
     @Override
     public int receiveEnergy(EnumFacing from, int maxReceive, boolean simulate){
         return this.storage.receiveEnergy(maxReceive, simulate);
@@ -191,10 +195,6 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
             }
         }
         return false;
-    }
-
-    public static int getEnergyUse(boolean isDouble){
-        return isDouble ? 60 : 40;
     }
 
     private int getMaxCrushTime(){
