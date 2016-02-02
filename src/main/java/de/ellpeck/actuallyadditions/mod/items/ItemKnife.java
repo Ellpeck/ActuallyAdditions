@@ -24,6 +24,7 @@ public class ItemKnife extends ItemBase{
         this.setMaxDamage(100);
         this.setMaxStackSize(1);
         this.setContainerItem(this);
+        this.setNoRepair();
     }
 
     @Override
