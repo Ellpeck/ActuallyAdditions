@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.api.lens;
 
-import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import net.minecraft.item.Item;
 import net.minecraft.util.BlockPos;
@@ -44,14 +43,6 @@ public abstract class Lens{
      * Gets the maximum distance the beam goes with this lense
      */
     public abstract int getDistance();
-
-    /**
-     * Registers the lense type
-     */
-    public Lens register(){
-        ActuallyAdditionsAPI.reconstructorLenses.add(this);
-        return this;
-    }
 
     /**
      * Sets the item corresponding to the lense
