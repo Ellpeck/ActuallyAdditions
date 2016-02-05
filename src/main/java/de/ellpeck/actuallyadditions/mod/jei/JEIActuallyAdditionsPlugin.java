@@ -12,6 +12,9 @@ package de.ellpeck.actuallyadditions.mod.jei;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
+import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiCoffeeMachine;
+import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiFurnaceDouble;
+import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiGrinder;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.jei.booklet.BookletRecipeCategory;
 import de.ellpeck.actuallyadditions.mod.jei.booklet.BookletRecipeHandler;
@@ -21,8 +24,10 @@ import de.ellpeck.actuallyadditions.mod.jei.crusher.CrusherRecipeCategory;
 import de.ellpeck.actuallyadditions.mod.jei.crusher.CrusherRecipeHandler;
 import de.ellpeck.actuallyadditions.mod.jei.reconstructor.ReconstructorRecipeCategory;
 import de.ellpeck.actuallyadditions.mod.jei.reconstructor.ReconstructorRecipeHandler;
+import de.ellpeck.actuallyadditions.mod.nei.NEICoffeeMachineRecipe;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import mezz.jei.api.*;
+import mezz.jei.api.recipe.VanillaRecipeCategoryUid;
 import net.minecraft.item.ItemStack;
 
 @JEIPlugin
@@ -60,6 +65,11 @@ public class JEIActuallyAdditionsPlugin implements IModPlugin{
         registry.addRecipes(ActuallyAdditionsAPI.coffeeMachineIngredients);
         registry.addRecipes(ActuallyAdditionsAPI.crusherRecipes);
         registry.addRecipes(ActuallyAdditionsAPI.reconstructorLensNoneRecipes);
+
+        registry.addRecipeClickArea(GuiCoffeeMachine.class, 53, 42, 22, 16, NEICoffeeMachineRecipe.NAME);
+        registry.addRecipeClickArea(GuiGrinder.class, 80, 40, 24, 22, CrusherRecipeCategory.NAME);
+        registry.addRecipeClickArea(GuiGrinder.GuiGrinderDouble.class, 51, 40, 74, 22, CrusherRecipeCategory.NAME);
+        registry.addRecipeClickArea(GuiFurnaceDouble.class, 51, 40, 74, 22, VanillaRecipeCategoryUid.SMELTING);
 
         INbtIgnoreList ignoreList = this.helpers.getNbtIgnoreList();
         ignoreList.ignoreNbtTagNames(InitItems.itemDrill, "Energy");
