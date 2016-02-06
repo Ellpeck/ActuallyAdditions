@@ -18,6 +18,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 
+//TODO completely adapt to new item system?
 public class TileEntityPhantomItemface extends TileEntityPhantomface{
 
     public TileEntityPhantomItemface(){

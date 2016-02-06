@@ -246,7 +246,7 @@ public class WorldUtil{
         return blocks;
     }
 
-    //TODO make this work for the stupid new system
+    //TODO make this work for the stupid new item system
 
     public static boolean addToInventory(IInventory inventory, ArrayList<ItemStack> stacks, boolean actuallyDo, boolean shouldAlwaysWork){
         return addToInventory(inventory, stacks, EnumFacing.UP, actuallyDo, shouldAlwaysWork);

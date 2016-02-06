@@ -13,7 +13,6 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.network.gui.INumberReactor;
-import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -22,8 +21,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
-import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
 
 public class TileEntityInputter extends TileEntityInventoryBase implements IButtonReactor, INumberReactor{
 
@@ -82,8 +79,9 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
         this.markDirty();
     }
 
+    //TODO Fix for new item system
     private boolean newPull(){
-        for(EnumFacing facing : EnumFacing.values()){
+        /*for(EnumFacing facing : EnumFacing.values()){
             IItemHandler handler = this.placeToPull.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing);
             if(handler != null){
                 for(int i = Math.max(this.lastPullStart, 0); i < Math.min(this.slotToPullEnd, handler.getSlots()); i++){
@@ -110,12 +108,12 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
                     }
                 }
             }
-        }
+        }*/
         return false;
     }
 
     private boolean newPut(){
-        if(this.slots[0] != null){
+        /*if(this.slots[0] != null){
             for(EnumFacing facing : EnumFacing.values()){
                 IItemHandler handler = this.placeToPut.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing);
                 if(handler != null){
@@ -131,7 +129,7 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
                     }
                 }
             }
-        }
+        }*/
         return false;
     }
 
