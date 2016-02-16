@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import cofh.api.energy.IEnergyHandler;
 import cofh.api.energy.IEnergyProvider;
 import cofh.api.energy.IEnergyReceiver;
 import de.ellpeck.actuallyadditions.mod.blocks.BlockPhantom;
@@ -18,7 +17,7 @@ import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 
-public class TileEntityPhantomEnergyface extends TileEntityPhantomface implements IEnergyHandler{
+public class TileEntityPhantomEnergyface extends TileEntityPhantomface implements IEnergyReceiver, IEnergyProvider{
 
     public TileEntityPhantomEnergyface(){
         super("energyface");
