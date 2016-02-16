@@ -13,6 +13,7 @@ package de.ellpeck.actuallyadditions.mod.util;
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -53,7 +54,7 @@ public class WorldUtil{
     public static BlockPos getCoordsFromSide(EnumFacing side, BlockPos pos, int offset){
         return new BlockPos(pos.getX()+side.getFrontOffsetX()*(offset+1), pos.getY()+side.getFrontOffsetY()*(offset+1), pos.getZ()+side.getFrontOffsetZ()*(offset+1));
     }
-    
+
     public static void pushEnergyToAllSides(World world, BlockPos pos, EnergyStorage storage){
         pushEnergy(world, pos, EnumFacing.UP, storage);
         pushEnergy(world, pos, EnumFacing.DOWN, storage);
@@ -109,43 +110,45 @@ public class WorldUtil{
         }
     }
 
-    public static ItemStack placeBlockAtSide(EnumFacing side, World world, BlockPos pos, ItemStack stack){
+    public static ItemStack useItemAtSide(EnumFacing side, World world, BlockPos pos, ItemStack stack){
         if(world instanceof WorldServer && stack != null && stack.getItem() != null){
             BlockPos offsetPos = pos.offset(side);
+            Block block = PosUtil.getBlock(offsetPos, world);
+            boolean replaceable = block.isReplaceable(world, offsetPos);
 
             //Fluids
-            FluidStack fluid = FluidContainerRegistry.getFluidForFilledItem(stack);
-            if(fluid != null && fluid.getFluid().getBlock() != null && fluid.getFluid().getBlock().canPlaceBlockAt(world, offsetPos)){
-                Block block = PosUtil.getBlock(offsetPos, world);
-                if(!(block instanceof IFluidBlock) && block != Blocks.lava && block != Blocks.water && block != Blocks.flowing_lava && block != Blocks.flowing_water){
-                    if(PosUtil.setBlock(pos, world, fluid.getFluid().getBlock(), 0, 2)){
+            if(replaceable && FluidContainerRegistry.isFilledContainer(stack) && !(block instanceof IFluidBlock) && !(block instanceof BlockLiquid)){
+                FluidStack fluid = FluidContainerRegistry.getFluidForFilledItem(stack);
+                if(fluid != null && fluid.getFluid().getBlock() != null && fluid.getFluid().getBlock().canPlaceBlockAt(world, offsetPos)){
+                    if(PosUtil.setBlock(offsetPos, world, fluid.getFluid().getBlock(), 0, 2)){
                         return stack.getItem().getContainerItem(stack);
                     }
                 }
             }
 
             //Redstone
-            else if(stack.getItem() == Items.redstone){
-                PosUtil.setBlock(pos, world, Blocks.redstone_wire, 0, 2);
+            else if(replaceable && stack.getItem() == Items.redstone){
+                PosUtil.setBlock(offsetPos, world, Blocks.redstone_wire, 0, 2);
                 stack.stackSize--;
             }
 
             //Plants
-            else if(stack.getItem() instanceof IPlantable){
+            else if(replaceable && stack.getItem() instanceof IPlantable){
                 if(((IPlantable)stack.getItem()).getPlant(world, offsetPos).getBlock().canPlaceBlockAt(world, offsetPos)){
                     if(world.setBlockState(offsetPos, ((IPlantable)stack.getItem()).getPlant(world, offsetPos), 2)){
                         stack.stackSize--;
                     }
                 }
             }
+
+            //Everything else
             else{
                 try{
-                    //Blocks
-                    stack.onItemUse(FakePlayerUtil.getFakePlayer(world), world, pos, side, 0, 0, 0);
+                    stack.onItemUse(FakePlayerUtil.getFakePlayer(world), world, offsetPos, side.getOpposite(), 0.5F, 0.5F, 0.5F);
                     return stack;
                 }
                 catch(Exception e){
-                    ModUtil.LOGGER.error("Something that places Blocks at "+offsetPos.getX()+", "+offsetPos.getY()+", "+offsetPos.getZ()+" in World "+world.provider.getDimensionId()+" threw an Exception! Don't let that happen again!");
+                    ModUtil.LOGGER.error("Something that places Blocks at "+offsetPos.getX()+", "+offsetPos.getY()+", "+offsetPos.getZ()+" in World "+world.provider.getDimensionId()+" threw an Exception! Don't let that happen again!", e);
                 }
             }
         }
@@ -243,6 +246,16 @@ public class WorldUtil{
         return blocks;
     }
 
+    //TODO make this work for the stupid new item system
+
+    public static boolean addToInventory(IInventory inventory, ArrayList<ItemStack> stacks, boolean actuallyDo, boolean shouldAlwaysWork){
+        return addToInventory(inventory, stacks, EnumFacing.UP, actuallyDo, shouldAlwaysWork);
+    }
+
+    public static boolean addToInventory(IInventory inventory, ArrayList<ItemStack> stacks, EnumFacing side, boolean actuallyDo, boolean shouldAlwaysWork){
+        return addToInventory(inventory, 0, inventory.getSizeInventory(), stacks, side, actuallyDo, shouldAlwaysWork);
+    }
+
     /**
      * Add an ArrayList of ItemStacks to an Array of slots
      *
@@ -295,14 +308,6 @@ public class WorldUtil{
         return working >= stacks.size();
     }
 
-    public static boolean addToInventory(IInventory inventory, ArrayList<ItemStack> stacks, boolean actuallyDo, boolean shouldAlwaysWork){
-        return addToInventory(inventory, stacks, EnumFacing.UP, actuallyDo, shouldAlwaysWork);
-    }
-
-    public static boolean addToInventory(IInventory inventory, ArrayList<ItemStack> stacks, EnumFacing side, boolean actuallyDo, boolean shouldAlwaysWork){
-        return addToInventory(inventory, 0, inventory.getSizeInventory(), stacks, side, actuallyDo, shouldAlwaysWork);
-    }
-
     public static int findFirstFilledSlot(ItemStack[] slots){
         for(int i = 0; i < slots.length; i++){
             if(slots[i] != null){
@@ -317,20 +322,19 @@ public class WorldUtil{
     }
 
     private static MovingObjectPosition getMovingObjectPosWithReachDistance(World world, EntityPlayer player, double distance, boolean p1, boolean p2, boolean p3){
-        float f = 1.0F;
-        float f1 = player.prevRotationPitch+(player.rotationPitch-player.prevRotationPitch)*f;
-        float f2 = player.prevRotationYaw+(player.rotationYaw-player.prevRotationYaw)*f;
-        double d0 = player.prevPosX+(player.posX-player.prevPosX)*(double)f;
-        double d1 = player.prevPosY+(player.posY-player.prevPosY)*(double)f+(double)(world.isRemote ? player.getEyeHeight()-player.getDefaultEyeHeight() : player.getEyeHeight());
-        double d2 = player.prevPosZ+(player.posZ-player.prevPosZ)*(double)f;
+        float f = player.rotationPitch;
+        float f1 = player.rotationYaw;
+        double d0 = player.posX;
+        double d1 = player.posY+(double)player.getEyeHeight();
+        double d2 = player.posZ;
         Vec3 vec3 = new Vec3(d0, d1, d2);
-        float f3 = MathHelper.cos(-f2*0.017453292F-(float)Math.PI);
-        float f4 = MathHelper.sin(-f2*0.017453292F-(float)Math.PI);
-        float f5 = -MathHelper.cos(-f1*0.017453292F);
-        float f6 = MathHelper.sin(-f1*0.017453292F);
-        float f7 = f4*f5;
-        float f8 = f3*f5;
-        Vec3 vec31 = vec3.addVector((double)f7*distance, (double)f6*distance, (double)f8*distance);
+        float f2 = MathHelper.cos(-f1*0.017453292F-(float)Math.PI);
+        float f3 = MathHelper.sin(-f1*0.017453292F-(float)Math.PI);
+        float f4 = -MathHelper.cos(-f*0.017453292F);
+        float f5 = MathHelper.sin(-f*0.017453292F);
+        float f6 = f3*f4;
+        float f7 = f2*f4;
+        Vec3 vec31 = vec3.addVector((double)f6*distance, (double)f5*distance, (double)f7*distance);
         return world.rayTraceBlocks(vec3, vec31, p1, p2, p3);
     }
 
@@ -367,7 +371,7 @@ public class WorldUtil{
         }
         else{
             //Shows the Harvest Particles and plays the Block's Sound
-            world.playAuxSFX(2001, pos, Block.getIdFromBlock(block)+(meta << 12));
+            world.playAuxSFX(2001, pos, Block.getStateId(state));
         }
 
         //If the Block was actually "removed", meaning it will drop an Item

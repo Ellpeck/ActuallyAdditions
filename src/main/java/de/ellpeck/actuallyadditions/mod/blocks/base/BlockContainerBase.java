@@ -65,10 +65,6 @@ public abstract class BlockContainerBase extends BlockContainer{
         this.registerRendering();
     }
 
-    protected void registerRendering(){
-        ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this), new ResourceLocation(ModUtil.MOD_ID_LOWER, this.getBaseName()));
-    }
-
     protected String getBaseName(){
         return this.name;
     }
@@ -79,6 +75,10 @@ public abstract class BlockContainerBase extends BlockContainer{
 
     public boolean shouldAddCreative(){
         return true;
+    }
+
+    protected void registerRendering(){
+        ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this), new ResourceLocation(ModUtil.MOD_ID_LOWER, this.getBaseName()));
     }
 
     public EnumRarity getRarity(ItemStack stack){
@@ -117,6 +117,45 @@ public abstract class BlockContainerBase extends BlockContainer{
         }
     }
 
+    public boolean tryToggleRedstone(World world, BlockPos pos, EntityPlayer player){
+        ItemStack stack = player.getCurrentEquippedItem();
+        if(stack != null && Block.getBlockFromItem(stack.getItem()) instanceof BlockRedstoneTorch){
+            TileEntity tile = world.getTileEntity(pos);
+            if(tile instanceof IRedstoneToggle){
+                if(!world.isRemote){
+                    ((IRedstoneToggle)tile).toggle(!((IRedstoneToggle)tile).isPulseMode());
+                    tile.markDirty();
+
+                    if(tile instanceof TileEntityBase){
+                        ((TileEntityBase)tile).sendUpdate();
+                    }
+                }
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public IBlockState getStateFromMeta(int meta){
+        return this.getMetaProperty() == null ? super.getStateFromMeta(meta) : this.getDefaultState().withProperty(this.getMetaProperty(), meta);
+    }
+
+    @Override
+    public int getMetaFromState(IBlockState state){
+        return this.getMetaProperty() == null ? super.getMetaFromState(state) : state.getValue(this.getMetaProperty());
+    }
+
+    @Override
+    public void updateTick(World world, BlockPos pos, IBlockState state, Random random){
+        if(!world.isRemote){
+            TileEntity tile = world.getTileEntity(pos);
+            if(tile instanceof IRedstoneToggle && ((IRedstoneToggle)tile).isPulseMode()){
+                ((IRedstoneToggle)tile).activateOnPulse();
+            }
+        }
+    }
+
     @Override
     public void onNeighborBlockChange(World world, BlockPos pos, IBlockState state, Block neighborBlock){
         this.updateRedstoneState(world, pos);
@@ -142,13 +181,8 @@ public abstract class BlockContainerBase extends BlockContainer{
     }
 
     @Override
-    public void updateTick(World world, BlockPos pos, IBlockState state, Random random){
-        if(!world.isRemote){
-            TileEntity tile = world.getTileEntity(pos);
-            if(tile instanceof IRedstoneToggle && ((IRedstoneToggle)tile).isPulseMode()){
-                ((IRedstoneToggle)tile).activateOnPulse();
-            }
-        }
+    public void onBlockAdded(World world, BlockPos pos, IBlockState state){
+        this.updateRedstoneState(world, pos);
     }
 
     @Override
@@ -204,6 +238,11 @@ public abstract class BlockContainerBase extends BlockContainer{
     }
 
     @Override
+    protected BlockState createBlockState(){
+        return this.getMetaProperty() == null ? super.createBlockState() : new BlockState(this, this.getMetaProperty());
+    }
+
+    @Override
     public ArrayList<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune){
         ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
 
@@ -244,45 +283,6 @@ public abstract class BlockContainerBase extends BlockContainer{
         }
 
         return drops;
-    }
-
-    @Override
-    public void onBlockAdded(World world, BlockPos pos, IBlockState state){
-        this.updateRedstoneState(world, pos);
-    }
-
-    public boolean tryToggleRedstone(World world, BlockPos pos, EntityPlayer player){
-        ItemStack stack = player.getCurrentEquippedItem();
-        if(stack != null && Block.getBlockFromItem(stack.getItem()) instanceof BlockRedstoneTorch){
-            TileEntity tile = world.getTileEntity(pos);
-            if(tile instanceof IRedstoneToggle){
-                if(!world.isRemote){
-                    ((IRedstoneToggle)tile).toggle(!((IRedstoneToggle)tile).isPulseMode());
-                    tile.markDirty();
-
-                    if(tile instanceof TileEntityBase){
-                        ((TileEntityBase)tile).sendUpdate();
-                    }
-                }
-                return true;
-            }
-        }
-        return false;
-    }
-
-    @Override
-    protected BlockState createBlockState(){
-        return this.getMetaProperty() == null ? super.createBlockState() : new BlockState(this, this.getMetaProperty());
-    }
-
-    @Override
-    public IBlockState getStateFromMeta(int meta){
-        return this.getMetaProperty() == null ? super.getStateFromMeta(meta) : this.getDefaultState().withProperty(this.getMetaProperty(), meta);
-    }
-
-    @Override
-    public int getMetaFromState(IBlockState state){
-        return this.getMetaProperty() == null ? super.getMetaFromState(state) : state.getValue(this.getMetaProperty());
     }
 
     protected PropertyInteger getMetaProperty(){

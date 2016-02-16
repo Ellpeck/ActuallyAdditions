@@ -15,12 +15,13 @@ import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.booklet.BookletPage;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
-import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.event.InitEvents;
+import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.misc.special.SpecialRenderInit;
 import de.ellpeck.actuallyadditions.mod.util.FluidStateMapper;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import de.ellpeck.actuallyadditions.mod.util.playerdata.PersistentClientData;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -45,15 +46,33 @@ import java.util.Map;
 
 public class ClientProxy implements IProxy{
 
-    private static Map<ItemStack, ResourceLocation> modelLocationsForRegistering = new HashMap<ItemStack, ResourceLocation>();
-    private static Map<Item, ResourceLocation[]> modelVariantsForRegistering = new HashMap<Item, ResourceLocation[]>();
-
     public static boolean pumpkinBlurPumpkinBlur;
     public static boolean jingleAllTheWay;
     public static boolean bulletForMyValentine;
-
     public static int bookletWordCount;
     public static int bookletCharCount;
+    private static Map<ItemStack, ResourceLocation> modelLocationsForRegistering = new HashMap<ItemStack, ResourceLocation>();
+    private static Map<Item, ResourceLocation[]> modelVariantsForRegistering = new HashMap<Item, ResourceLocation[]>();
+
+    private static void countBookletWords(){
+        bookletWordCount = 0;
+        bookletCharCount = 0;
+
+        for(IBookletEntry entry : ActuallyAdditionsAPI.bookletEntries){
+            for(IBookletChapter chapter : entry.getChapters()){
+                for(BookletPage page : chapter.getPages()){
+                    if(page.getText() != null){
+                        bookletWordCount += page.getText().split(" ").length;
+                        bookletCharCount += page.getText().length();
+                    }
+                }
+                bookletWordCount += chapter.getLocalizedName().split(" ").length;
+                bookletCharCount += chapter.getLocalizedName().length();
+            }
+            bookletWordCount += entry.getLocalizedName().split(" ").length;
+            bookletCharCount += entry.getLocalizedName().length();
+        }
+    }
 
     @Override
     public void preInit(FMLPreInitializationEvent event){
@@ -63,7 +82,7 @@ public class ClientProxy implements IProxy{
             Calendar c = Calendar.getInstance();
             pumpkinBlurPumpkinBlur = c.get(Calendar.MONTH) == Calendar.OCTOBER;
             jingleAllTheWay = c.get(Calendar.MONTH) == Calendar.DECEMBER && c.get(Calendar.DAY_OF_MONTH) >= 6 && c.get(Calendar.DAY_OF_MONTH) <= 26;
-            bulletForMyValentine = c.get(Calendar.MONTH) == Calendar.FEBRUARY && c.get(Calendar.DAY_OF_MONTH) >= 12 && c.get(Calendar.DAY_OF_MONTH) <= 16;
+            bulletForMyValentine = (c.get(Calendar.MONTH) == Calendar.FEBRUARY && c.get(Calendar.DAY_OF_MONTH) >= 12 && c.get(Calendar.DAY_OF_MONTH) <= 16) || StringUtil.equalsToLowerCase(Minecraft.getMinecraft().getSession().getUsername(), "pinkhrya");
         }
         else{
             ModUtil.LOGGER.warn("You have turned Seasonal Mode off. Therefore, you are evil.");
@@ -74,8 +93,8 @@ public class ClientProxy implements IProxy{
         for(Map.Entry<Item, ResourceLocation[]> entry : modelVariantsForRegistering.entrySet()){
             ModelBakery.registerItemVariants(entry.getKey(), entry.getValue());
         }
-        this.registerCustomFluidBlockRenderer(InitBlocks.fluidCanolaOil);
-        this.registerCustomFluidBlockRenderer(InitBlocks.fluidOil);
+        this.registerCustomFluidBlockRenderer(InitFluids.fluidCanolaOil);
+        this.registerCustomFluidBlockRenderer(InitFluids.fluidOil);
 
         IResourceManager manager = Minecraft.getMinecraft().getResourceManager();
         if(manager instanceof IReloadableResourceManager){
@@ -142,25 +161,5 @@ public class ClientProxy implements IProxy{
     @Override
     public void addRenderVariant(Item item, ResourceLocation... location){
         modelVariantsForRegistering.put(item, location);
-    }
-
-    private static void countBookletWords(){
-        bookletWordCount = 0;
-        bookletCharCount = 0;
-
-        for(IBookletEntry entry : ActuallyAdditionsAPI.bookletEntries){
-            for(IBookletChapter chapter : entry.getChapters()){
-                for(BookletPage page : chapter.getPages()){
-                    if(page.getText() != null){
-                        bookletWordCount += page.getText().split(" ").length;
-                        bookletCharCount += page.getText().length();
-                    }
-                }
-                bookletWordCount += chapter.getLocalizedName().split(" ").length;
-                bookletCharCount += chapter.getLocalizedName().length();
-            }
-            bookletWordCount += entry.getLocalizedName().split(" ").length;
-            bookletCharCount += entry.getLocalizedName().length();
-        }
     }
 }

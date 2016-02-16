@@ -42,8 +42,8 @@ public class BlockLaserRelay extends BlockContainerBase{
     }
 
     @Override
-    protected PropertyInteger getMetaProperty(){
-        return META;
+    public boolean isFullCube(){
+        return false;
     }
 
     @Override
@@ -90,6 +90,11 @@ public class BlockLaserRelay extends BlockContainerBase{
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.EPIC;
+    }
+
+    @Override
+    protected PropertyInteger getMetaProperty(){
+        return META;
     }
 
     @Override

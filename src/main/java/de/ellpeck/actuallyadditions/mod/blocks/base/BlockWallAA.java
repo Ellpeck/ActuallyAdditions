@@ -49,16 +49,9 @@ public class BlockWallAA extends BlockBase{
         this.setDefaultState(this.blockState.getBaseState().withProperty(BlockWall.UP, false).withProperty(BlockWall.NORTH, false).withProperty(BlockWall.EAST, false).withProperty(BlockWall.SOUTH, false).withProperty(BlockWall.WEST, false));
     }
 
-    @SuppressWarnings("unchecked")
     @Override
-    @SideOnly(Side.CLIENT)
-    public void getSubBlocks(Item item, CreativeTabs tab, List list){
-        list.add(new ItemStack(item, 1, 0));
-    }
-
-    @Override
-    public int damageDropped(IBlockState state){
-        return meta;
+    public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos){
+        return state.withProperty(BlockWall.UP, !worldIn.isAirBlock(pos.up())).withProperty(BlockWall.NORTH, this.canConnectTo(worldIn, pos.north())).withProperty(BlockWall.EAST, this.canConnectTo(worldIn, pos.east())).withProperty(BlockWall.SOUTH, this.canConnectTo(worldIn, pos.south())).withProperty(BlockWall.WEST, this.canConnectTo(worldIn, pos.west()));
     }
 
     @Override
@@ -72,8 +65,26 @@ public class BlockWallAA extends BlockBase{
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
+    public boolean shouldSideBeRendered(IBlockAccess worldIn, BlockPos pos, EnumFacing side){
+        return side != EnumFacing.DOWN || super.shouldSideBeRendered(worldIn, pos, side);
+    }
+
+    @Override
+    public AxisAlignedBB getCollisionBoundingBox(World worldIn, BlockPos pos, IBlockState state){
+        this.setBlockBoundsBasedOnState(worldIn, pos);
+        this.maxY = 1.5D;
+        return super.getCollisionBoundingBox(worldIn, pos, state);
+    }
+
+    @Override
     public boolean isOpaqueCube(){
         return false;
+    }
+
+    @Override
+    public int damageDropped(IBlockState state){
+        return meta;
     }
 
     @Override
@@ -115,32 +126,16 @@ public class BlockWallAA extends BlockBase{
         this.setBlockBounds(f, 0.0F, f2, f1, f4, f3);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public AxisAlignedBB getCollisionBoundingBox(World worldIn, BlockPos pos, IBlockState state){
-        this.setBlockBoundsBasedOnState(worldIn, pos);
-        this.maxY = 1.5D;
-        return super.getCollisionBoundingBox(worldIn, pos, state);
+    @SideOnly(Side.CLIENT)
+    public void getSubBlocks(Item item, CreativeTabs tab, List list){
+        list.add(new ItemStack(item, 1, 0));
     }
 
     public boolean canConnectTo(IBlockAccess worldIn, BlockPos pos){
         Block block = worldIn.getBlockState(pos).getBlock();
         return block != Blocks.barrier && (!(block != this && !(block instanceof BlockFenceGate)) || ((block.getMaterial().isOpaque() && block.isFullCube()) && block.getMaterial() != Material.gourd));
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public boolean shouldSideBeRendered(IBlockAccess worldIn, BlockPos pos, EnumFacing side){
-        return side != EnumFacing.DOWN || super.shouldSideBeRendered(worldIn, pos, side);
-    }
-
-    @Override
-    public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos){
-        return state.withProperty(BlockWall.UP, !worldIn.isAirBlock(pos.up())).withProperty(BlockWall.NORTH, this.canConnectTo(worldIn, pos.north())).withProperty(BlockWall.EAST, this.canConnectTo(worldIn, pos.east())).withProperty(BlockWall.SOUTH, this.canConnectTo(worldIn, pos.south())).withProperty(BlockWall.WEST, this.canConnectTo(worldIn, pos.west()));
-    }
-
-    @Override
-    protected BlockState createBlockState(){
-        return new BlockState(this, BlockWall.UP, BlockWall.NORTH, BlockWall.EAST, BlockWall.WEST, BlockWall.SOUTH);
     }
 
     @Override
@@ -151,5 +146,10 @@ public class BlockWallAA extends BlockBase{
     @Override
     public int getMetaFromState(IBlockState state){
         return 0;
+    }
+
+    @Override
+    protected BlockState createBlockState(){
+        return new BlockState(this, BlockWall.UP, BlockWall.NORTH, BlockWall.EAST, BlockWall.WEST, BlockWall.SOUTH);
     }
 }

@@ -43,11 +43,6 @@ public class PageFurnace extends BookletPageAA{
     }
 
     @Override
-    public ItemStack[] getItemStacksForPage(){
-        return this.result == null ? new ItemStack[0] : new ItemStack[]{this.result};
-    }
-
-    @Override
     @SideOnly(Side.CLIENT)
     public void renderPre(IBookletGui gui, int mouseX, int mouseY, int ticksElapsed, boolean mousePressed){
         if(this.input != null || this.getInputForOutput(this.result) != null){
@@ -96,6 +91,11 @@ public class PageFurnace extends BookletPageAA{
                 }
             }
         }
+    }
+
+    @Override
+    public ItemStack[] getItemStacksForPage(){
+        return this.result == null ? new ItemStack[0] : new ItemStack[]{this.result};
     }
 
     private ItemStack getInputForOutput(ItemStack output){

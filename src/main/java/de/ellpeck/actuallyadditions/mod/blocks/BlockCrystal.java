@@ -43,11 +43,6 @@ public class BlockCrystal extends BlockBase{
     }
 
     @Override
-    protected PropertyInteger getMetaProperty(){
-        return META;
-    }
-
-    @Override
     public int damageDropped(IBlockState state){
         return this.getMetaFromState(state);
     }
@@ -66,11 +61,6 @@ public class BlockCrystal extends BlockBase{
     }
 
     @Override
-    public EnumRarity getRarity(ItemStack stack){
-        return stack.getItemDamage() >= allCrystals.length ? EnumRarity.COMMON : allCrystals[stack.getItemDamage()].rarity;
-    }
-
-    @Override
     protected void registerRendering(){
         ResourceLocation[] resLocs = new ResourceLocation[allCrystals.length];
         for(int i = 0; i < allCrystals.length; i++){
@@ -79,6 +69,16 @@ public class BlockCrystal extends BlockBase{
             ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), new ResourceLocation(ModUtil.MOD_ID_LOWER, name));
         }
         ActuallyAdditions.proxy.addRenderVariant(Item.getItemFromBlock(this), resLocs);
+    }
+
+    @Override
+    public EnumRarity getRarity(ItemStack stack){
+        return stack.getItemDamage() >= allCrystals.length ? EnumRarity.COMMON : allCrystals[stack.getItemDamage()].rarity;
+    }
+
+    @Override
+    protected PropertyInteger getMetaProperty(){
+        return META;
     }
 
     public static class TheItemBlock extends ItemBlockBase{

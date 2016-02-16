@@ -47,6 +47,18 @@ public class TileEntityFurnaceSolar extends TileEntityBase implements IEnergyPro
     }
 
     @Override
+    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.writeSyncableNBT(compound, sync);
+        this.storage.writeToNBT(compound);
+    }
+
+    @Override
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.readSyncableNBT(compound, sync);
+        this.storage.readFromNBT(compound);
+    }
+
+    @Override
     public void updateEntity(){
         super.updateEntity();
         if(!worldObj.isRemote){
@@ -65,18 +77,6 @@ public class TileEntityFurnaceSolar extends TileEntityBase implements IEnergyPro
                 this.oldEnergy = this.storage.getEnergyStored();
             }
         }
-    }
-
-    @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.writeSyncableNBT(compound, sync);
-        this.storage.writeToNBT(compound);
-    }
-
-    @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.readSyncableNBT(compound, sync);
-        this.storage.readFromNBT(compound);
     }
 
     public boolean hasBlockAbove(){

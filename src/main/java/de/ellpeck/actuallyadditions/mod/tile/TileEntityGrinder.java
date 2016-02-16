@@ -13,6 +13,7 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
+import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
 import de.ellpeck.actuallyadditions.mod.recipe.CrusherRecipeRegistry;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.PosUtil;
@@ -50,6 +51,10 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
         this.isDouble = false;
     }
 
+    public static int getEnergyUse(boolean isDouble){
+        return isDouble ? 60 : 40;
+    }
+
     @Override
     public int receiveEnergy(EnumFacing from, int maxReceive, boolean simulate){
         return this.storage.receiveEnergy(maxReceive, simulate);
@@ -68,6 +73,22 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
     @Override
     public boolean canConnectEnergy(EnumFacing from){
         return true;
+    }
+
+    @Override
+    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
+        compound.setInteger("FirstCrushTime", this.firstCrushTime);
+        compound.setInteger("SecondCrushTime", this.secondCrushTime);
+        this.storage.writeToNBT(compound);
+        super.writeSyncableNBT(compound, sync);
+    }
+
+    @Override
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
+        this.firstCrushTime = compound.getInteger("FirstCrushTime");
+        this.secondCrushTime = compound.getInteger("SecondCrushTime");
+        this.storage.readFromNBT(compound);
+        super.readSyncableNBT(compound, sync);
     }
 
     @Override
@@ -142,26 +163,15 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
                 this.lastSecondCrush = this.secondCrushTime;
             }
 
-            if(shouldPlaySound){
+            if(shouldPlaySound && !ConfigValues.lessSound){
                 this.worldObj.playSoundEffect(this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), ModUtil.MOD_ID_LOWER+":crusher", 0.25F, 1.0F);
             }
         }
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        compound.setInteger("FirstCrushTime", this.firstCrushTime);
-        compound.setInteger("SecondCrushTime", this.secondCrushTime);
-        this.storage.writeToNBT(compound);
-        super.writeSyncableNBT(compound, sync);
-    }
-
-    @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        this.firstCrushTime = compound.getInteger("FirstCrushTime");
-        this.secondCrushTime = compound.getInteger("SecondCrushTime");
-        this.storage.readFromNBT(compound);
-        super.readSyncableNBT(compound, sync);
+    public boolean isItemValidForSlot(int i, ItemStack stack){
+        return (i == SLOT_INPUT_1 || i == SLOT_INPUT_2) && CrusherRecipeRegistry.getRecipeFromInput(stack) != null;
     }
 
     public boolean canCrushOn(int theInput, int theFirstOutput, int theSecondOutput){
@@ -185,10 +195,6 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
             }
         }
         return false;
-    }
-
-    public static int getEnergyUse(boolean isDouble){
-        return isDouble ? 60 : 40;
     }
 
     private int getMaxCrushTime(){
@@ -255,11 +261,6 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
     @Override
     public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
         return this.isItemValidForSlot(slot, stack);
-    }
-
-    @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
-        return (i == SLOT_INPUT_1 || i == SLOT_INPUT_2) && CrusherRecipeRegistry.getRecipeFromInput(stack) != null;
     }
 
     @Override

@@ -14,6 +14,7 @@ package de.ellpeck.actuallyadditions.mod.items.lens;
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
 import de.ellpeck.actuallyadditions.api.recipe.LensNoneRecipe;
+import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
 import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
@@ -45,7 +46,9 @@ public class LensNone extends Lens{
                                 if(outputs != null && !outputs.isEmpty()){
                                     ItemStack output = outputs.get(0);
                                     if(output.getItem() instanceof ItemBlock){
-                                        tile.getWorldObject().playAuxSFX(2001, pos, Block.getIdFromBlock(PosUtil.getBlock(pos, tile.getWorldObject()))+(PosUtil.getMetadata(pos, tile.getWorldObject()) << 12));
+                                        if(!ConfigValues.lessBlockBreakingEffects){
+                                            tile.getWorldObject().playAuxSFX(2001, pos, Block.getStateId(tile.getWorldObject().getBlockState(pos)));
+                                        }
                                         PosUtil.setBlock(pos, tile.getWorldObject(), Block.getBlockFromItem(output.getItem()), output.getItemDamage(), 2);
                                     }
                                     else{

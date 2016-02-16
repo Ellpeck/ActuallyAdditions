@@ -39,10 +39,6 @@ public class BlockDropper extends BlockContainerBase{
         this.setResistance(10.0F);
         this.setStepSound(soundTypeStone);
     }
-    @Override
-    protected PropertyInteger getMetaProperty(){
-        return META;
-    }
 
     @Override
     public TileEntity createNewTileEntity(World world, int par2){
@@ -75,6 +71,11 @@ public class BlockDropper extends BlockContainerBase{
         PosUtil.setMetadata(pos, world, rotation, 2);
 
         super.onBlockPlacedBy(world, pos, state, player, stack);
+    }
+
+    @Override
+    protected PropertyInteger getMetaProperty(){
+        return META;
     }
 
     @Override

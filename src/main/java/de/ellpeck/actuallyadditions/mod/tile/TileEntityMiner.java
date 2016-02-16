@@ -48,6 +48,22 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyR
     }
 
     @Override
+    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.writeSyncableNBT(compound, sync);
+        this.storage.writeToNBT(compound);
+        compound.setInteger("Layer", this.layerAt);
+        compound.setBoolean("OnlyOres", this.onlyMineOres);
+    }
+
+    @Override
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.readSyncableNBT(compound, sync);
+        this.storage.readFromNBT(compound);
+        this.layerAt = compound.getInteger("Layer");
+        this.onlyMineOres = compound.getBoolean("OnlyOres");
+    }
+
+    @Override
     public void updateEntity(){
         super.updateEntity();
         if(!this.worldObj.isRemote){
@@ -86,7 +102,9 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyR
                             drops.addAll(block.getDrops(worldObj, pos, worldObj.getBlockState(pos), 0));
 
                             if(WorldUtil.addToInventory(this, drops, false, true)){
-                                worldObj.playAuxSFX(2001, pos, Block.getIdFromBlock(block)+(meta << 12));
+                                if(!ConfigValues.lessBlockBreakingEffects){
+                                    worldObj.playAuxSFX(2001, pos, Block.getStateId(worldObj.getBlockState(pos)));
+                                }
                                 worldObj.setBlockToAir(pos);
 
                                 WorldUtil.addToInventory(this, drops, true, true);
@@ -134,6 +152,12 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyR
         return false;
     }
 
+    private void shootParticles(int endX, int endY, int endZ){
+        if(!ConfigValues.lessParticles){
+            PacketHandler.theNetwork.sendToAllAround(new PacketParticle(this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), endX, endY, endZ, new float[]{62F/255F, 163F/255F, 74F/255F}, 5, 1.0F), new NetworkRegistry.TargetPoint(worldObj.provider.getDimensionId(), this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), 96));
+        }
+    }
+
     private boolean isBlacklisted(Block block){
         String reg = block.getRegistryName();
         if(reg != null && !reg.isEmpty()){
@@ -146,24 +170,9 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyR
         return false;
     }
 
-    private void shootParticles(int endX, int endY, int endZ){
-        PacketHandler.theNetwork.sendToAllAround(new PacketParticle(this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), endX, endY, endZ, new float[]{62F/255F, 163F/255F, 74F/255F}, 5, 1.0F), new NetworkRegistry.TargetPoint(worldObj.provider.getDimensionId(), this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), 96));
-    }
-
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.writeSyncableNBT(compound, sync);
-        this.storage.writeToNBT(compound);
-        compound.setInteger("Layer", this.layerAt);
-        compound.setBoolean("OnlyOres", this.onlyMineOres);
-    }
-
-    @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.readSyncableNBT(compound, sync);
-        this.storage.readFromNBT(compound);
-        this.layerAt = compound.getInteger("Layer");
-        this.onlyMineOres = compound.getBoolean("OnlyOres");
+    public boolean isItemValidForSlot(int slot, ItemStack stack){
+        return false;
     }
 
     @Override
@@ -194,11 +203,6 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyR
     @Override
     public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
         return true;
-    }
-
-    @Override
-    public boolean isItemValidForSlot(int slot, ItemStack stack){
-        return false;
     }
 
     @Override

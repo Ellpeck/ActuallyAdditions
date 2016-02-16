@@ -23,6 +23,9 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.CapabilityDispatcher;
+import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -37,8 +40,50 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
     private BlockPos boundPosBefore;
     private Block boundBlockBefore;
 
+    private CapabilityDispatcher capabilities;
+
     public TileEntityPhantomface(String name){
         super(0, name);
+
+        this.capabilities = ForgeEventFactory.gatherCapabilities(this);
+    }
+
+    public static int upgradeRange(int defaultRange, World world, BlockPos pos){
+        int newRange = defaultRange;
+        for(int i = 0; i < 3; i++){
+            Block block = PosUtil.getBlock(PosUtil.offset(pos, 0, 1+i, 0), world);
+            if(block == InitBlocks.blockPhantomBooster){
+                newRange = newRange*2;
+            }
+            else{
+                break;
+            }
+        }
+        return newRange;
+    }
+
+    @Override
+    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.writeSyncableNBT(compound, sync);
+        compound.setInteger("Range", this.range);
+        if(this.boundPosition != null){
+            compound.setInteger("XCoordOfTileStored", boundPosition.getX());
+            compound.setInteger("YCoordOfTileStored", boundPosition.getY());
+            compound.setInteger("ZCoordOfTileStored", boundPosition.getZ());
+        }
+    }
+
+    @Override
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.readSyncableNBT(compound, sync);
+        int x = compound.getInteger("XCoordOfTileStored");
+        int y = compound.getInteger("YCoordOfTileStored");
+        int z = compound.getInteger("ZCoordOfTileStored");
+        this.range = compound.getInteger("Range");
+        if(!(x == 0 && y == 0 && z == 0)){
+            this.boundPosition = new BlockPos(x, y, z);
+            this.markDirty();
+        }
     }
 
     @Override
@@ -74,41 +119,13 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.writeSyncableNBT(compound, sync);
-        compound.setInteger("Range", this.range);
-        if(this.boundPosition != null){
-            compound.setInteger("XCoordOfTileStored", boundPosition.getX());
-            compound.setInteger("YCoordOfTileStored", boundPosition.getY());
-            compound.setInteger("ZCoordOfTileStored", boundPosition.getZ());
-        }
+    public <T> T getCapability(Capability<T> capability, EnumFacing facing){
+        return this.capabilities.getCapability(capability, facing);
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.readSyncableNBT(compound, sync);
-        int x = compound.getInteger("XCoordOfTileStored");
-        int y = compound.getInteger("YCoordOfTileStored");
-        int z = compound.getInteger("ZCoordOfTileStored");
-        this.range = compound.getInteger("Range");
-        if(!(x == 0 && y == 0 && z == 0)){
-            this.boundPosition = new BlockPos(x, y, z);
-            this.markDirty();
-        }
-    }
-
-    public static int upgradeRange(int defaultRange, World world, BlockPos pos){
-        int newRange = defaultRange;
-        for(int i = 0; i < 3; i++){
-            Block block = PosUtil.getBlock(PosUtil.offset(pos, 0, 1+i, 0), world);
-            if(block == InitBlocks.blockPhantomBooster){
-                newRange = newRange*2;
-            }
-            else{
-                break;
-            }
-        }
-        return newRange;
+    public boolean isItemValidForSlot(int slot, ItemStack stack){
+        return false;
     }
 
     @Override
@@ -174,11 +191,6 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
 
     @Override
     public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
-        return false;
-    }
-
-    @Override
-    public boolean isItemValidForSlot(int slot, ItemStack stack){
         return false;
     }
 }

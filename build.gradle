@@ -12,12 +12,12 @@ buildscript {
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
 
-version = "1.8.9-r23"
+version = "1.8.9-r25"
 group = "de.ellpeck.actuallyadditions"
 archivesBaseName = "ActuallyAdditions"
 
 minecraft {
-    version = "1.8.9-11.15.0.1697"
+    version = "1.8.9-11.15.1.1732"
     runDir = "idea"
 
     mappings = "stable_20"
@@ -38,11 +38,11 @@ repositories {
 }
 
 dependencies {
-    compile "codechicken:CodeChickenLib:1.8-1.1.2.139:dev"
-    compile "codechicken:CodeChickenCore:1.8-1.0.5.36:dev"
-    compile "codechicken:NotEnoughItems:1.8-1.0.5.104:dev"
+    //compile "codechicken:CodeChickenLib:1.8-1.1.2.139:dev"
+    //compile "codechicken:CodeChickenCore:1.8-1.0.5.36:dev"
+    //compile "codechicken:NotEnoughItems:1.8-1.0.5.104:dev"
 
-    deobfCompile "mezz.jei:jei_1.8.9:2.18.1.88"
+    deobfCompile "mezz.jei:jei_1.8.9:2.25.6.140"
 }
 
 processResources {

@@ -31,8 +31,8 @@ import net.minecraft.world.World;
 
 public class BlockBreaker extends BlockContainerBase{
 
-    private boolean isPlacer;
     private static final PropertyInteger META = PropertyInteger.create("meta", 0, 5);
+    private boolean isPlacer;
 
     public BlockBreaker(boolean isPlacer, String name){
         super(Material.rock, name);
@@ -41,11 +41,6 @@ public class BlockBreaker extends BlockContainerBase{
         this.setHardness(1.5F);
         this.setResistance(10.0F);
         this.setStepSound(soundTypeStone);
-    }
-
-    @Override
-    protected PropertyInteger getMetaProperty(){
-        return META;
     }
 
     @Override
@@ -79,6 +74,11 @@ public class BlockBreaker extends BlockContainerBase{
         PosUtil.setMetadata(pos, world, rotation, 2);
 
         super.onBlockPlacedBy(world, pos, state, player, stack);
+    }
+
+    @Override
+    protected PropertyInteger getMetaProperty(){
+        return META;
     }
 
     @Override

@@ -12,7 +12,7 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
-import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
+import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
@@ -26,7 +26,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileEntityCanolaPress extends TileEntityInventoryBase implements IEnergyReceiver, IFluidHandler, IEnergySaver, IFluidSaver{
 
-    public static final int PRODUCE = 120;
+    public static final int PRODUCE = 80;
     public static final int ENERGY_USE = 35;
     private static final int TIME = 30;
     public EnergyStorage storage = new EnergyStorage(40000);
@@ -56,6 +56,22 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IE
     }
 
     @Override
+    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
+        compound.setInteger("ProcessTime", this.currentProcessTime);
+        this.storage.writeToNBT(compound);
+        this.tank.writeToNBT(compound);
+        super.writeSyncableNBT(compound, sync);
+    }
+
+    @Override
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
+        this.currentProcessTime = compound.getInteger("ProcessTime");
+        this.storage.readFromNBT(compound);
+        this.tank.readFromNBT(compound);
+        super.readSyncableNBT(compound, sync);
+    }
+
+    @Override
     @SuppressWarnings("unchecked")
     public void updateEntity(){
         super.updateEntity();
@@ -72,7 +88,7 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IE
                             this.slots[0] = null;
                         }
 
-                        this.tank.fill(new FluidStack(InitBlocks.fluidCanolaOil, PRODUCE), true);
+                        this.tank.fill(new FluidStack(InitFluids.fluidCanolaOil, PRODUCE), true);
                         this.markDirty();
                     }
                 }
@@ -102,19 +118,8 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IE
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        compound.setInteger("ProcessTime", this.currentProcessTime);
-        this.storage.writeToNBT(compound);
-        this.tank.writeToNBT(compound);
-        super.writeSyncableNBT(compound, sync);
-    }
-
-    @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        this.currentProcessTime = compound.getInteger("ProcessTime");
-        this.storage.readFromNBT(compound);
-        this.tank.readFromNBT(compound);
-        super.readSyncableNBT(compound, sync);
+    public boolean isItemValidForSlot(int i, ItemStack stack){
+        return (i == 0 && stack.getItem() == InitItems.itemMisc && stack.getItemDamage() == TheMiscItems.CANOLA.ordinal()) || (i == 1 && stack.getItem() == Items.bucket);
     }
 
     public boolean isCanola(int slot){
@@ -127,13 +132,8 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IE
     }
 
     @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
-        return (i == 0 && stack.getItem() == InitItems.itemMisc && stack.getItemDamage() == TheMiscItems.CANOLA.ordinal()) || (i == 1 && stack.getItem() == Items.bucket);
-    }
-
-    @Override
     public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
-        return slot == 2 && FluidContainerRegistry.containsFluid(this.slots[0], new FluidStack(InitBlocks.fluidCanolaOil, FluidContainerRegistry.BUCKET_VOLUME));
+        return slot == 2 && FluidContainerRegistry.containsFluid(this.slots[0], new FluidStack(InitFluids.fluidCanolaOil, FluidContainerRegistry.BUCKET_VOLUME));
     }
 
     @Override
@@ -163,7 +163,7 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IE
 
     @Override
     public FluidStack drain(EnumFacing from, FluidStack resource, boolean doDrain){
-        if(resource.getFluid() == InitBlocks.fluidCanolaOil){
+        if(resource.getFluid() == InitFluids.fluidCanolaOil){
             return this.tank.drain(resource.amount, doDrain);
         }
         return null;

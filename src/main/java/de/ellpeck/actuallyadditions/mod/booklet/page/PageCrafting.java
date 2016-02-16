@@ -49,30 +49,6 @@ public class PageCrafting extends BookletPageAA{
     }
 
     @Override
-    public ItemStack[] getItemStacksForPage(){
-        if(this.recipes != null){
-            ItemStack[] stacks = new ItemStack[this.recipes.length];
-            for(int i = 0; i < this.recipes.length; i++){
-                if(this.recipes[i] != null){
-                    ItemStack output = this.recipes[i].getRecipeOutput();
-                    if(output != null){
-                        if(!this.arePageStacksWildcard){
-                            stacks[i] = output;
-                        }
-                        else{
-                            ItemStack wildcardOutput = output.copy();
-                            wildcardOutput.setItemDamage(Util.WILDCARD);
-                            stacks[i] = wildcardOutput;
-                        }
-                    }
-                }
-            }
-            return stacks;
-        }
-        return null;
-    }
-
-    @Override
     @SideOnly(Side.CLIENT)
     public void renderPre(IBookletGui gui, int mouseX, int mouseY, int ticksElapsed, boolean mousePressed){
         if(this.recipes[this.recipePos] != null){
@@ -186,5 +162,29 @@ public class PageCrafting extends BookletPageAA{
                 this.recipePos++;
             }
         }
+    }
+
+    @Override
+    public ItemStack[] getItemStacksForPage(){
+        if(this.recipes != null){
+            ItemStack[] stacks = new ItemStack[this.recipes.length];
+            for(int i = 0; i < this.recipes.length; i++){
+                if(this.recipes[i] != null){
+                    ItemStack output = this.recipes[i].getRecipeOutput();
+                    if(output != null){
+                        if(!this.arePageStacksWildcard){
+                            stacks[i] = output;
+                        }
+                        else{
+                            ItemStack wildcardOutput = output.copy();
+                            wildcardOutput.setItemDamage(Util.WILDCARD);
+                            stacks[i] = wildcardOutput;
+                        }
+                    }
+                }
+            }
+            return stacks;
+        }
+        return null;
     }
 }

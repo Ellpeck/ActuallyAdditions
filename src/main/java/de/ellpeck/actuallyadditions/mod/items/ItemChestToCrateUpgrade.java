@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.items;
 
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
+import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityGiantChest;
 import de.ellpeck.actuallyadditions.mod.util.PosUtil;
@@ -51,7 +52,9 @@ public class ItemChestToCrateUpgrade extends ItemBase{
                     }
 
                     //Set New Block
-                    world.playAuxSFX(2001, pos, Block.getIdFromBlock(block)+(PosUtil.getMetadata(pos, world) << 12));
+                    if(!ConfigValues.lessBlockBreakingEffects){
+                        world.playAuxSFX(2001, pos, Block.getStateId(world.getBlockState(pos)));
+                    }
                     PosUtil.setBlock(pos, world, InitBlocks.blockGiantChest, 0, 2);
 
                     //Copy Items into new Chest

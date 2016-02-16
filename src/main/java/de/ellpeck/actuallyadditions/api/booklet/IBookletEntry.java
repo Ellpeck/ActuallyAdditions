@@ -16,13 +16,13 @@ public interface IBookletEntry{
 
     List<IBookletChapter> getChapters();
 
+    void setChapters(List<IBookletChapter> chapters);
+
     String getUnlocalizedName();
 
     String getLocalizedName();
 
     String getLocalizedNameWithFormatting();
-
-    void setChapters(List<IBookletChapter> chapters);
 
     void addChapter(IBookletChapter chapter);
 

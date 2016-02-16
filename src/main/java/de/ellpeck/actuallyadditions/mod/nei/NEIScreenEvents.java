@@ -10,25 +10,14 @@
 
 package de.ellpeck.actuallyadditions.mod.nei;
 
-import codechicken.nei.recipe.GuiRecipe;
-import codechicken.nei.recipe.IRecipeHandler;
-import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
-import de.ellpeck.actuallyadditions.api.booklet.BookletPage;
-import de.ellpeck.actuallyadditions.mod.booklet.BookletUtils;
-import de.ellpeck.actuallyadditions.mod.booklet.GuiBooklet;
 import de.ellpeck.actuallyadditions.mod.booklet.button.TexturedButton;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
-import de.ellpeck.actuallyadditions.mod.util.StringUtil;
-import net.minecraft.client.Minecraft;
-import net.minecraftforge.client.event.GuiScreenEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class NEIScreenEvents{
 
     private static final int NEI_BUTTON_ID = 123782;
     private TexturedButton neiButton;
 
-    @SuppressWarnings("unchecked")
+    /*@SuppressWarnings("unchecked")
     @SubscribeEvent
     public void onInitGuiForNEI(GuiScreenEvent.InitGuiEvent event){
         if(event.gui instanceof GuiRecipe){
@@ -75,5 +64,5 @@ public class NEIScreenEvents{
                 }
             }
         }
-    }
+    }*/
 }

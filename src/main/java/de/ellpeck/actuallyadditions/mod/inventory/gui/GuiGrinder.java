@@ -84,6 +84,7 @@ public class GuiGrinder extends GuiContainer{
     }
 
     public static class GuiGrinderDouble extends GuiGrinder{
+
         public GuiGrinderDouble(InventoryPlayer inventory, TileEntityBase tile){
             super(inventory, tile, true);
         }

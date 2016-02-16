@@ -54,11 +54,6 @@ public class BlockColoredLamp extends BlockBase{
     }
 
     @Override
-    protected PropertyInteger getMetaProperty(){
-        return META;
-    }
-
-    @Override
     public Item getItemDropped(IBlockState state, Random rand, int par3){
         return Item.getItemFromBlock(InitBlocks.blockColoredLamp);
     }
@@ -134,11 +129,6 @@ public class BlockColoredLamp extends BlockBase{
     }
 
     @Override
-    public EnumRarity getRarity(ItemStack stack){
-        return EnumRarity.RARE;
-    }
-
-    @Override
     protected void registerRendering(){
         ResourceLocation[] resLocs = new ResourceLocation[allLampTypes.length];
         for(int i = 0; i < allLampTypes.length; i++){
@@ -149,6 +139,15 @@ public class BlockColoredLamp extends BlockBase{
         ActuallyAdditions.proxy.addRenderVariant(Item.getItemFromBlock(this), resLocs);
     }
 
+    @Override
+    public EnumRarity getRarity(ItemStack stack){
+        return EnumRarity.RARE;
+    }
+
+    @Override
+    protected PropertyInteger getMetaProperty(){
+        return META;
+    }
 
     public static class TheItemBlock extends ItemBlockBase{
 

@@ -38,11 +38,6 @@ public class BlockLampPowerer extends BlockBase{
     }
 
     @Override
-    protected PropertyInteger getMetaProperty(){
-        return META;
-    }
-
-    @Override
     public void onNeighborBlockChange(World world, BlockPos pos, IBlockState state, Block neighborBlock){
         this.updateLamp(world, pos);
     }
@@ -81,5 +76,10 @@ public class BlockLampPowerer extends BlockBase{
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.RARE;
+    }
+
+    @Override
+    protected PropertyInteger getMetaProperty(){
+        return META;
     }
 }

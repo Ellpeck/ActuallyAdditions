@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.items;
 
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
+import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.items.base.*;
 import de.ellpeck.actuallyadditions.mod.items.lens.ItemLens;
 import de.ellpeck.actuallyadditions.mod.items.lens.Lenses;
@@ -170,7 +171,7 @@ public class InitItems{
     public static Item itemPantsCrystalLightBlue;
     public static Item itemBootsCrystalLightBlue;
     public static Item itemPaxelCrystalLightBlue;
-    
+
     public static Item itemPickaxeCrystalBlack;
     public static Item itemAxeCrystalBlack;
     public static Item itemShovelCrystalBlack;
@@ -203,7 +204,7 @@ public class InitItems{
     public static Item itemPantsCrystalWhite;
     public static Item itemBootsCrystalWhite;
     public static Item itemPaxelCrystalWhite;
-    
+
     public static void init(){
         ModUtil.LOGGER.info("Initializing Items...");
 
@@ -248,10 +249,10 @@ public class InitItems{
         itemDrillUpgradeThreeByThree = new ItemDrillUpgrade(ItemDrillUpgrade.UpgradeType.THREE_BY_THREE, "itemDrillUpgradeThreeByThree");
         itemDrillUpgradeFiveByFive = new ItemDrillUpgrade(ItemDrillUpgrade.UpgradeType.FIVE_BY_FIVE, "itemDrillUpgradeFiveByFive");
         itemDrillUpgradeBlockPlacing = new ItemDrillUpgrade(ItemDrillUpgrade.UpgradeType.PLACER, "itemDrillUpgradeBlockPlacing");
-        itemBucketOil = new ItemBucketAA(InitBlocks.blockOil, "itemBucketOil");
-        FluidContainerRegistry.registerFluidContainer(InitBlocks.fluidOil, new ItemStack(itemBucketOil), FluidContainerRegistry.EMPTY_BUCKET);
-        itemBucketCanolaOil = new ItemBucketAA(InitBlocks.blockCanolaOil, "itemBucketCanolaOil");
-        FluidContainerRegistry.registerFluidContainer(InitBlocks.fluidCanolaOil, new ItemStack(itemBucketCanolaOil), FluidContainerRegistry.EMPTY_BUCKET);
+        itemBucketOil = new ItemBucketAA(InitFluids.blockOil, "itemBucketOil");
+        FluidContainerRegistry.registerFluidContainer(InitFluids.fluidOil, new ItemStack(itemBucketOil), FluidContainerRegistry.EMPTY_BUCKET);
+        itemBucketCanolaOil = new ItemBucketAA(InitFluids.blockCanolaOil, "itemBucketCanolaOil");
+        FluidContainerRegistry.registerFluidContainer(InitFluids.fluidCanolaOil, new ItemStack(itemBucketCanolaOil), FluidContainerRegistry.EMPTY_BUCKET);
         itemFertilizer = new ItemFertilizer("itemFertilizer");
         itemCoffee = new ItemCoffee("itemCoffee");
         itemPhantomConnector = new ItemPhantomConnector("itemPhantomConnector");

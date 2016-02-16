@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.config;
 
 public enum ConfigCategories{
 
+    PERFORMANCE("PERFORMANCE", "Performance Settings"),
     FOOD_CRAFTING("Food Crafting", "Crafting Recipes for Food Items"),
     BLOCKS_CRAFTING("Block Crafting", "Crafting Recipes for Blocks"),
     ITEMS_CRAFTING("Item Crafting", "Crafting Recipes for Items"),

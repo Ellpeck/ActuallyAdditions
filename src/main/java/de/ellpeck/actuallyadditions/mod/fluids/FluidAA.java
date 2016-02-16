@@ -8,7 +8,7 @@
  * © 2016 Ellpeck
  */
 
-package de.ellpeck.actuallyadditions.mod.blocks;
+package de.ellpeck.actuallyadditions.mod.fluids;
 
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.util.ResourceLocation;

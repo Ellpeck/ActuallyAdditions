@@ -16,7 +16,7 @@ import de.ellpeck.actuallyadditions.mod.util.Util;
 
 public class UpdateChecker{
 
-    public static final String DOWNLOAD_LINK = "http://minecraft.curseforge.com/mc-mods/228404-actually-additions/files";
+    public static final String DOWNLOAD_LINK = "http://ellpeck.de/actadddownload";
     public static final String CHANGELOG_LINK = "http://ellpeck.de/actaddchangelog/";
     public static boolean checkFailed;
     public static boolean needsUpdateNotify;

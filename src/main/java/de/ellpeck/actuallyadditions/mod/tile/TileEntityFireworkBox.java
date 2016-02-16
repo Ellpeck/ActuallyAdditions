@@ -33,6 +33,18 @@ public class TileEntityFireworkBox extends TileEntityBase implements IEnergyRece
     private int oldEnergy;
 
     @Override
+    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.writeSyncableNBT(compound, sync);
+        this.storage.writeToNBT(compound);
+    }
+
+    @Override
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.readSyncableNBT(compound, sync);
+        this.storage.readFromNBT(compound);
+    }
+
+    @Override
     public void updateEntity(){
         if(!this.worldObj.isRemote){
             if(!this.isRedstonePowered && !this.activateOnceWithSignal){
@@ -111,18 +123,6 @@ public class TileEntityFireworkBox extends TileEntityBase implements IEnergyRece
         compound.setByte("Type", (byte)Util.RANDOM.nextInt(5));
 
         return compound;
-    }
-
-    @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.writeSyncableNBT(compound, sync);
-        this.storage.writeToNBT(compound);
-    }
-
-    @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.readSyncableNBT(compound, sync);
-        this.storage.readFromNBT(compound);
     }
 
     @Override

@@ -47,9 +47,16 @@ public class BlockSmileyCloud extends BlockContainerBase{
         this.setStepSound(soundTypeCloth);
         this.setTickRandomly(true);
     }
+
     @Override
-    protected PropertyInteger getMetaProperty(){
-        return META;
+    public boolean isFullCube(){
+        return false;
+    }
+
+    @Override
+    public void addCollisionBoxesToList(World world, BlockPos pos, IBlockState state, AxisAlignedBB axis, List list, Entity entity){
+        this.setBlockBoundsBasedOnState(world, pos);
+        super.addCollisionBoxesToList(world, pos, state, axis, list, entity);
     }
 
     @Override
@@ -84,27 +91,21 @@ public class BlockSmileyCloud extends BlockContainerBase{
     }
 
     @Override
-    public void addCollisionBoxesToList(World world, BlockPos pos, IBlockState state, AxisAlignedBB axis, List list, Entity entity){
-        this.setBlockBoundsBasedOnState(world, pos);
-        super.addCollisionBoxesToList(world, pos, state, axis, list, entity);
-    }
-
-    @Override
     public void setBlockBoundsBasedOnState(IBlockAccess world, BlockPos pos){
         int meta = PosUtil.getMetadata(pos, world);
         float f = 0.0625F;
 
-        if(meta == 0){
-            this.setBlockBounds(0F, 0F, 0F, 1F, 1F, 1F-f*3F);
-        }
         if(meta == 1){
-            this.setBlockBounds(0F, 0F, 0F, 1F-f*3F, 1F, 1F);
-        }
-        if(meta == 2){
-            this.setBlockBounds(0F, 0F, f*3F, 1F, 1F, 1F);
+            this.setBlockBounds(0F, 0F, 0F, 1F, 1F-f*3F, 1F-f*2F);
         }
         if(meta == 3){
-            this.setBlockBounds(f*3F, 0F, 0F, 1F, 1F, 1F);
+            this.setBlockBounds(0F, 0F, 0F, 1F-f*2F, 1F-f*3F, 1F);
+        }
+        if(meta == 0){
+            this.setBlockBounds(0F, 0F, f*2F, 1F, 1F-f*3F, 1F);
+        }
+        if(meta == 2){
+            this.setBlockBounds(f*2F, 0F, 0F, 1F, 1F-f*3F, 1F);
         }
     }
 
@@ -142,5 +143,10 @@ public class BlockSmileyCloud extends BlockContainerBase{
         }
 
         super.onBlockPlacedBy(world, pos, state, player, stack);
+    }
+
+    @Override
+    protected PropertyInteger getMetaProperty(){
+        return META;
     }
 }

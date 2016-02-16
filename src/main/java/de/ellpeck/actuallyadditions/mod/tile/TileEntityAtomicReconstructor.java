@@ -15,6 +15,7 @@ import cofh.api.energy.IEnergyReceiver;
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.lens.ILensItem;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
+import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
 import de.ellpeck.actuallyadditions.mod.items.lens.Lenses;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
 import de.ellpeck.actuallyadditions.mod.network.PacketParticle;
@@ -40,6 +41,25 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
 
     public TileEntityAtomicReconstructor(){
         super(1, "reconstructor");
+    }
+
+    @Override
+    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.writeSyncableNBT(compound, sync);
+        compound.setInteger("CurrentTime", this.currentTime);
+        this.storage.writeToNBT(compound);
+    }
+
+    @Override
+    public boolean shouldSyncSlots(){
+        return true;
+    }
+
+    @Override
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.readSyncableNBT(compound, sync);
+        this.currentTime = compound.getInteger("CurrentTime");
+        this.storage.readFromNBT(compound);
     }
 
     @Override
@@ -99,39 +119,46 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
     }
 
     private void shootLaser(int endX, int endY, int endZ, Lens currentLens){
-        this.worldObj.playSoundEffect(this.getX(), this.getY(), this.getZ(), ModUtil.MOD_ID_LOWER+":reconstructor", 0.35F, 1.0F);
-        PacketHandler.theNetwork.sendToAllAround(new PacketParticle(this.getX(), this.getY(), this.getZ(), endX, endY, endZ, currentLens.getColor(), 8, 2F), new NetworkRegistry.TargetPoint(worldObj.provider.getDimensionId(), this.getX(), this.getY(), this.getZ(), 64));
+        if(!ConfigValues.lessSound){
+            this.worldObj.playSoundEffect(this.getX(), this.getY(), this.getZ(), ModUtil.MOD_ID_LOWER+":reconstructor", 0.35F, 1.0F);
+        }
+        PacketHandler.theNetwork.sendToAllAround(new PacketParticle(this.getX(), this.getY(), this.getZ(), endX, endY, endZ, currentLens.getColor(), ConfigValues.lessParticles ? 2 : 8, 2F), new NetworkRegistry.TargetPoint(worldObj.provider.getDimensionId(), this.getX(), this.getY(), this.getZ(), 64));
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.writeSyncableNBT(compound, sync);
-        compound.setInteger("CurrentTime", this.currentTime);
-        this.storage.writeToNBT(compound);
+    public int getX(){
+        return this.getPos().getX();
     }
 
     @Override
-    public boolean shouldSyncSlots(){
-        return true;
+    public int getY(){
+        return this.getPos().getY();
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.readSyncableNBT(compound, sync);
-        this.currentTime = compound.getInteger("CurrentTime");
-        this.storage.readFromNBT(compound);
+    public int getZ(){
+        return this.getPos().getZ();
     }
 
     @Override
-    public void setInventorySlotContents(int i, ItemStack stack){
-        super.setInventorySlotContents(i, stack);
+    public World getWorldObject(){
+        return this.getWorld();
+    }
+
+    @Override
+    public void extractEnergy(int amount){
+        this.storage.extractEnergy(amount, false);
+    }
+
+    @Override
+    public boolean isItemValidForSlot(int i, ItemStack stack){
+        return stack != null && stack.getItem() instanceof ILensItem;
+    }
+
+    @Override
+    public void markDirty(){
+        super.markDirty();
         this.sendUpdate();
-    }
-
-    @Override
-    public ItemStack decrStackSize(int i, int j){
-        this.sendUpdate();
-        return super.decrStackSize(i, j);
     }
 
     @Override
@@ -160,38 +187,8 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
     }
 
     @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
-        return stack != null && stack.getItem() instanceof ILensItem;
-    }
-
-    @Override
     public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
         return true;
-    }
-
-    @Override
-    public int getX(){
-        return this.getPos().getX();
-    }
-
-    @Override
-    public int getY(){
-        return this.getPos().getY();
-    }
-
-    @Override
-    public int getZ(){
-        return this.getPos().getZ();
-    }
-
-    @Override
-    public World getWorldObject(){
-        return this.getWorld();
-    }
-
-    @Override
-    public void extractEnergy(int amount){
-        this.storage.extractEnergy(amount, false);
     }
 
     @Override

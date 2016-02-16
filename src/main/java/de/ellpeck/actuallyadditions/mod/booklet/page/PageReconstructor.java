@@ -44,20 +44,6 @@ public class PageReconstructor extends BookletPageAA{
     }
 
     @Override
-    public ItemStack[] getItemStacksForPage(){
-        if(this.recipes != null){
-            ArrayList<ItemStack> stacks = new ArrayList<ItemStack>();
-            for(LensNoneRecipe recipe : this.recipes){
-                if(recipe != null){
-                    stacks.addAll(recipe.getOutputs());
-                }
-            }
-            return stacks.toArray(new ItemStack[stacks.size()]);
-        }
-        return null;
-    }
-
-    @Override
     @SideOnly(Side.CLIENT)
     public void renderPre(IBookletGui gui, int mouseX, int mouseY, int ticksElapsed, boolean mousePressed){
         if(this.recipes[this.recipePos] != null){
@@ -124,5 +110,19 @@ public class PageReconstructor extends BookletPageAA{
                 this.recipePos++;
             }
         }
+    }
+
+    @Override
+    public ItemStack[] getItemStacksForPage(){
+        if(this.recipes != null){
+            ArrayList<ItemStack> stacks = new ArrayList<ItemStack>();
+            for(LensNoneRecipe recipe : this.recipes){
+                if(recipe != null){
+                    stacks.addAll(recipe.getOutputs());
+                }
+            }
+            return stacks.toArray(new ItemStack[stacks.size()]);
+        }
+        return null;
     }
 }

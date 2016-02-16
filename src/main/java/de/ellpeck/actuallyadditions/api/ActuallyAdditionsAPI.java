@@ -12,7 +12,6 @@ package de.ellpeck.actuallyadditions.api;
 
 import de.ellpeck.actuallyadditions.api.booklet.BookletPage;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
-import de.ellpeck.actuallyadditions.api.lens.Lens;
 import de.ellpeck.actuallyadditions.api.recipe.BallOfFurReturn;
 import de.ellpeck.actuallyadditions.api.recipe.CrusherRecipe;
 import de.ellpeck.actuallyadditions.api.recipe.LensNoneRecipe;
@@ -28,12 +27,11 @@ public class ActuallyAdditionsAPI{
 
     public static final String MOD_ID = "ActuallyAdditions";
     public static final String API_ID = MOD_ID+"API";
-    public static final String API_VERSION = "7";
+    public static final String API_VERSION = "8";
 
     public static List<CrusherRecipe> crusherRecipes = new ArrayList<CrusherRecipe>();
     public static List<BallOfFurReturn> ballOfFurReturnItems = new ArrayList<BallOfFurReturn>();
     public static List<TreasureChestLoot> treasureChestLoot = new ArrayList<TreasureChestLoot>();
-    public static List<Lens> reconstructorLenses = new ArrayList<Lens>();
     public static List<LensNoneRecipe> reconstructorLensNoneRecipes = new ArrayList<LensNoneRecipe>();
     public static List<CoffeeIngredient> coffeeMachineIngredients = new ArrayList<CoffeeIngredient>();
 

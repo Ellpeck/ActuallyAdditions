@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.api.lens;
 
-import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import net.minecraft.item.Item;
 import net.minecraft.util.BlockPos;
@@ -28,8 +27,9 @@ public abstract class Lens{
 
     /**
      * Invokes the lens type's behavior on a block
+     *
      * @param hitBlock The block that was hit
-     * @param tile The tile the lens was invoked from
+     * @param tile     The tile the lens was invoked from
      * @return If the Reconstructor should stop continuing (return false if you want it to go through blocks)
      */
     public abstract boolean invoke(BlockPos hitBlock, IAtomicReconstructor tile);
@@ -43,14 +43,6 @@ public abstract class Lens{
      * Gets the maximum distance the beam goes with this lense
      */
     public abstract int getDistance();
-
-    /**
-     * Registers the lense type
-     */
-    public Lens register(){
-        ActuallyAdditionsAPI.reconstructorLenses.add(this);
-        return this;
-    }
 
     /**
      * Sets the item corresponding to the lense

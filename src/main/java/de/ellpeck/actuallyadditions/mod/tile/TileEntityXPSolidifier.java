@@ -30,6 +30,18 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
     }
 
     @Override
+    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.writeSyncableNBT(compound, sync);
+        compound.setShort("Amount", this.amount);
+    }
+
+    @Override
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.readSyncableNBT(compound, sync);
+        this.amount = compound.getShort("Amount");
+    }
+
+    @Override
     public void updateEntity(){
         super.updateEntity();
         if(!worldObj.isRemote){
@@ -54,25 +66,13 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.writeSyncableNBT(compound, sync);
-        compound.setShort("Amount", this.amount);
-    }
-
-    @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.readSyncableNBT(compound, sync);
-        this.amount = compound.getShort("Amount");
+    public boolean isItemValidForSlot(int i, ItemStack stack){
+        return false;
     }
 
     @Override
     public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
         return this.isItemValidForSlot(slot, stack);
-    }
-
-    @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
-        return false;
     }
 
     @Override
@@ -96,6 +96,7 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
     }
 
     //TODO Fix XP System to fit points needed in 1.8 (OpenBlocks?)
+
     /**
      * Gets the Player's XP
      * (Excerpted from OpenBlocks' XP system with permission, thanks guys!)

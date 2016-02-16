@@ -35,6 +35,7 @@ public class LensNoneRecipeHandler{
     public static LensNoneRecipe recipeExplosionLens;
     public static LensNoneRecipe recipeDamageLens;
     public static LensNoneRecipe recipeLeather;
+    public static LensNoneRecipe recipeNetherWart;
 
     public static void init(){
         //Crystal Blocks
@@ -86,6 +87,9 @@ public class LensNoneRecipeHandler{
             recipeSoulSand = Util.GetRecipes.lastReconstructorRecipe();
             ActuallyAdditionsAPI.addReconstructorLensNoneRecipe(new ItemStack(Items.rotten_flesh), new ItemStack(Items.leather), 8000);
             recipeLeather = Util.GetRecipes.lastReconstructorRecipe();
+
+            ActuallyAdditionsAPI.addReconstructorLensNoneRecipe(new ItemStack(Blocks.red_mushroom), new ItemStack(Items.nether_wart), 150000);
+            recipeNetherWart = Util.GetRecipes.lastReconstructorRecipe();
         }
 
         ActuallyAdditionsAPI.addReconstructorLensNoneRecipe(new ItemStack(Blocks.quartz_block), new ItemStack(InitBlocks.blockTestifiBucksWhiteWall), 10);

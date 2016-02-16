@@ -1,3 +1,34 @@
+# 1.8.9-r25
+* Fixed assets derping because of wrong capitalization
+* Ignore NBT Tags of Energy items in JEI
+* Added some fun naming stuff to the Reconstructor that makes it have fun stuffz
+* Make the floaty special thingie move more awesome! (xdjackiexd)
+* Cheap workaround for glitching into some blocks with a smaller hitbox causing graphical glitches and damanging the player
+* Fix Smiley Cloud bounding box
+* Fix right-clicking never returned any seeds from plants
+* Ignore some Items in JEI
+* Fix Coffee Machine bounding box
+* Added metadata and NBT to the Control Info for ItemStacks
+* Added performance settings for bad PCs
+* Remove NEI Recipe Handlers until it gets properly updated
+* Rebalanced canola oil
+* Made a placer be able to apply bonemeal and do other awesome stuff
+* Fixed compost and reconstructor syncing with hoppers going wrong
+* Updated stuff for the new item system [This is not important for you if you don't make mods!]
+
+# 1.8.9-r24
+* Fixed texture names of quartz tools (ssblur)
+* Added right-click harvest functionality to all crops. (ssblur)
+* Made word count reload when reloading resources
+* Fixed Lenses not syncing correctly on the server when converting items
+* JEI Implementation for booklet, crusher, coffee machine and reconstructor
+* Fixed the drill's 3x3 and 5x5 ming acting weird on servers
+* red mushroom -> nether wart in Reconstructor
+* Custom packet handler for 98.7% less stack traces when joining worlds
+* [API] Removed INEIRecipeHandler
+* [API] Removed IHudDisplay
+* [API] Removed IEnergyDisplay
+
 # 1.8.9-r23
 * Fixed a ginormous bug that screwed over crafting
 #### DON'T EXPECT EVERYTHING TO WORK PERFECTLY. Seriously, I break lots of stuff probably.

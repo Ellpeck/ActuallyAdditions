@@ -35,8 +35,8 @@ import java.util.Random;
 
 public class BlockGrinder extends BlockContainerBase{
 
-    private final boolean isDouble;
     private static final PropertyInteger META = PropertyInteger.create("meta", 0, 1);
+    private final boolean isDouble;
 
     public BlockGrinder(boolean isDouble, String name){
         super(Material.rock, name);
@@ -46,11 +46,6 @@ public class BlockGrinder extends BlockContainerBase{
         this.setResistance(10.0F);
         this.setStepSound(soundTypeStone);
         this.setTickRandomly(true);
-    }
-
-    @Override
-    protected PropertyInteger getMetaProperty(){
-        return META;
     }
 
     @Override
@@ -93,6 +88,11 @@ public class BlockGrinder extends BlockContainerBase{
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.EPIC;
+    }
+
+    @Override
+    protected PropertyInteger getMetaProperty(){
+        return META;
     }
 
     @Override

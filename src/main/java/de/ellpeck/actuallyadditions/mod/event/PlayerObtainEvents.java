@@ -28,6 +28,19 @@ import java.util.Locale;
 
 public class PlayerObtainEvents{
 
+    public static void checkAchievements(ItemStack gotten, EntityPlayer player, InitAchievements.Type type){
+        for(int i = 0; i < TheAchievements.values().length; i++){
+            TheAchievements ach = TheAchievements.values()[i];
+            if(ach.type == type){
+                if(gotten != null && ach.ach.theItemStack != null && gotten.getItem() == ach.ach.theItemStack.getItem()){
+                    if(gotten.getItemDamage() == ach.ach.theItemStack.getItemDamage()){
+                        player.addStat(ach.ach, 1);
+                    }
+                }
+            }
+        }
+    }
+
     @SubscribeEvent
     public void onCraftedEvent(PlayerEvent.ItemCraftedEvent event){
         checkAchievements(event.crafting, event.player, InitAchievements.Type.CRAFTING);
@@ -45,19 +58,6 @@ public class PlayerObtainEvents{
                         EntityItem entityItem = new EntityItem(event.player.worldObj, event.player.posX, event.player.posY, event.player.posZ, new ItemStack(InitItems.itemBooklet));
                         entityItem.setPickupDelay(0);
                         event.player.worldObj.spawnEntityInWorld(entityItem);
-                    }
-                }
-            }
-        }
-    }
-
-    public static void checkAchievements(ItemStack gotten, EntityPlayer player, InitAchievements.Type type){
-        for(int i = 0; i < TheAchievements.values().length; i++){
-            TheAchievements ach = TheAchievements.values()[i];
-            if(ach.type == type){
-                if(gotten != null && ach.ach.theItemStack != null && gotten.getItem() == ach.ach.theItemStack.getItem()){
-                    if(gotten.getItemDamage() == ach.ach.theItemStack.getItemDamage()){
-                        player.addStat(ach.ach, 1);
                     }
                 }
             }

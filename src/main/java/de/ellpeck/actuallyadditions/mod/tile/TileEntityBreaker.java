@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 
+import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
 import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
@@ -38,6 +39,18 @@ public class TileEntityBreaker extends TileEntityInventoryBase implements IRedst
     }
 
     @Override
+    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.writeSyncableNBT(compound, sync);
+        compound.setInteger("CurrentTime", this.currentTime);
+    }
+
+    @Override
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.readSyncableNBT(compound, sync);
+        this.currentTime = compound.getInteger("CurrentTime");
+    }
+
+    @Override
     @SuppressWarnings("unchecked")
     public void updateEntity(){
         super.updateEntity();
@@ -57,15 +70,8 @@ public class TileEntityBreaker extends TileEntityInventoryBase implements IRedst
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.writeSyncableNBT(compound, sync);
-        compound.setInteger("CurrentTime", this.currentTime);
-    }
-
-    @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.readSyncableNBT(compound, sync);
-        this.currentTime = compound.getInteger("CurrentTime");
+    public boolean isItemValidForSlot(int i, ItemStack stack){
+        return this.isPlacer;
     }
 
     private void doWork(){
@@ -80,15 +86,17 @@ public class TileEntityBreaker extends TileEntityInventoryBase implements IRedst
                 drops.addAll(blockToBreak.getDrops(worldObj, coordsBlock, worldObj.getBlockState(coordsBlock), 0));
 
                 if(WorldUtil.addToInventory(this, drops, false, true)){
-                    worldObj.playAuxSFX(2001, coordsBlock, Block.getIdFromBlock(blockToBreak)+(meta << 12));
+                    if(!ConfigValues.lessBlockBreakingEffects){
+                        worldObj.playAuxSFX(2001, coordsBlock, Block.getStateId(worldObj.getBlockState(coordsBlock)));
+                    }
                     WorldUtil.breakBlockAtSide(sideToManipulate, worldObj, this.pos);
                     WorldUtil.addToInventory(this, drops, true, true);
                     this.markDirty();
                 }
             }
-            else if(this.isPlacer && PosUtil.getBlock(coordsBlock, worldObj).isReplaceable(worldObj, coordsBlock)){
+            else if(this.isPlacer){
                 int theSlot = WorldUtil.findFirstFilledSlot(this.slots);
-                this.setInventorySlotContents(theSlot, WorldUtil.placeBlockAtSide(sideToManipulate, worldObj, this.pos, this.slots[theSlot]));
+                this.setInventorySlotContents(theSlot, WorldUtil.useItemAtSide(sideToManipulate, worldObj, this.pos, this.slots[theSlot]));
                 if(this.slots[theSlot] != null && this.slots[theSlot].stackSize <= 0){
                     this.slots[theSlot] = null;
                 }
@@ -99,11 +107,6 @@ public class TileEntityBreaker extends TileEntityInventoryBase implements IRedst
     @Override
     public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
         return this.isItemValidForSlot(slot, stack);
-    }
-
-    @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
-        return this.isPlacer;
     }
 
     @Override

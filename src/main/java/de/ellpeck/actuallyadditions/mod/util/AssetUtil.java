@@ -44,6 +44,11 @@ public class AssetUtil{
     }
 
     @SideOnly(Side.CLIENT)
+    public static void renderBlockInWorld(Block block, int meta){
+        renderItemInWorld(new ItemStack(block, 1, meta));
+    }
+
+    @SideOnly(Side.CLIENT)
     public static void renderItemInWorld(ItemStack stack){
         GlStateManager.pushMatrix();
         GlStateManager.disableLighting();
@@ -54,11 +59,6 @@ public class AssetUtil{
         GlStateManager.popAttrib();
         GlStateManager.enableLighting();
         GlStateManager.popMatrix();
-    }
-
-    @SideOnly(Side.CLIENT)
-    public static void renderBlockInWorld(Block block, int meta){
-        renderItemInWorld(new ItemStack(block, 1, meta));
     }
 
     @SideOnly(Side.CLIENT)

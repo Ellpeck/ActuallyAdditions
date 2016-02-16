@@ -10,7 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
-import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
+import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import net.minecraft.block.Block;
@@ -66,7 +66,7 @@ public class ItemLeafBlower extends ItemBase{
                 //Breaks the Blocks
                 this.breakStuff(player.worldObj, MathHelper.floor_double(player.posX), MathHelper.floor_double(player.posY), MathHelper.floor_double(player.posZ));
                 //Plays a Minecart sounds (It really sounds like a Leaf Blower!)
-                if(ConfigBoolValues.LEAF_BLOWER_SOUND.isEnabled()){
+                if(!ConfigValues.lessSound){
                     player.worldObj.playSoundAtEntity(player, "minecart.base", 0.3F, 0.001F);
                 }
             }
@@ -106,14 +106,16 @@ public class ItemLeafBlower extends ItemBase{
             Block theBlock = PosUtil.getBlock(theCoord, world);
 
             ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-            int meta = PosUtil.getMetadata(theCoord, world);
             //Gets all of the Drops the Block should have
             drops.addAll(theBlock.getDrops(world, theCoord, world.getBlockState(theCoord), 0));
 
+            //Plays the Breaking Sound
+            if(!ConfigValues.lessBlockBreakingEffects){
+                world.playAuxSFX(2001, theCoord, Block.getStateId(world.getBlockState(theCoord)));
+            }
+
             //Deletes the Block
             world.setBlockToAir(theCoord);
-            //Plays the Breaking Sound
-            world.playAuxSFX(2001, theCoord, Block.getIdFromBlock(theBlock)+(meta << 12));
 
             for(ItemStack theDrop : drops){
                 //Drops the Items into the World

@@ -30,6 +30,18 @@ public class TileEntityEnervator extends TileEntityInventoryBase implements IEne
     }
 
     @Override
+    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
+        this.storage.writeToNBT(compound);
+        super.writeSyncableNBT(compound, sync);
+    }
+
+    @Override
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
+        this.storage.readFromNBT(compound);
+        super.readSyncableNBT(compound, sync);
+    }
+
+    @Override
     public void updateEntity(){
         super.updateEntity();
         if(!worldObj.isRemote){
@@ -59,15 +71,8 @@ public class TileEntityEnervator extends TileEntityInventoryBase implements IEne
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        this.storage.writeToNBT(compound);
-        super.writeSyncableNBT(compound, sync);
-    }
-
-    @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        this.storage.readFromNBT(compound);
-        super.readSyncableNBT(compound, sync);
+    public boolean isItemValidForSlot(int i, ItemStack stack){
+        return i == 0 && stack.getItem() instanceof IEnergyContainerItem;
     }
 
     @Override
@@ -98,11 +103,6 @@ public class TileEntityEnervator extends TileEntityInventoryBase implements IEne
     @Override
     public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
         return this.isItemValidForSlot(slot, stack);
-    }
-
-    @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
-        return i == 0 && stack.getItem() instanceof IEnergyContainerItem;
     }
 
     @Override

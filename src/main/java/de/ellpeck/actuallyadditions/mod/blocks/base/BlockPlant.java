@@ -47,27 +47,6 @@ public class BlockPlant extends BlockCrops{
         this.register();
     }
 
-    @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing facing, float hitX, float hitY, float hitZ){
-        if(getMetaFromState(state) >= 7){
-            if(!world.isRemote){
-
-                List<ItemStack> drops = getDrops(world, pos, state, 0);
-                for(ItemStack stack : drops){
-                    if(stack != null && stack.getItem() == this.getSeed()){
-                        stack.stackSize--;
-                    }
-                    EntityItem entity = new EntityItem(world, pos.getX()+.5, pos.getY()+.5, pos.getZ()+.5, stack);
-                    world.spawnEntityInWorld(entity);
-                }
-
-                world.setBlockState(pos, getStateFromMeta(0));
-            }
-            return true;
-        }
-        return false;
-    }
-
     private void register(){
         this.setUnlocalizedName(ModUtil.MOD_ID_LOWER+"."+this.getBaseName());
         GameRegistry.registerBlock(this, this.getItemBlock(), this.getBaseName());
@@ -79,10 +58,6 @@ public class BlockPlant extends BlockCrops{
         }
 
         this.registerRendering();
-    }
-
-    protected void registerRendering(){
-        ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this), new ResourceLocation(ModUtil.MOD_ID_LOWER, this.getBaseName()));
     }
 
     protected String getBaseName(){
@@ -97,6 +72,10 @@ public class BlockPlant extends BlockCrops{
         return false;
     }
 
+    protected void registerRendering(){
+        ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this), new ResourceLocation(ModUtil.MOD_ID_LOWER, this.getBaseName()));
+    }
+
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.RARE;
     }
@@ -107,23 +86,36 @@ public class BlockPlant extends BlockCrops{
     }
 
     @Override
-    public Item getSeed(){
-        return this.seedItem;
-    }
-
-    @Override
-    public Item getCrop(){
-        return this.returnItem;
-    }
-
-    @Override
-    public Item getItemDropped(IBlockState state, Random rand, int par3){
-        return this.getMetaFromState(state) >= 7 ? this.getCrop() : this.getSeed();
-    }
-
-    @Override
     public int damageDropped(IBlockState state){
         return this.getMetaFromState(state) >= 7 ? this.returnMeta : 0;
+    }
+
+    @Override
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing facing, float hitX, float hitY, float hitZ){
+        if(getMetaFromState(state) >= 7){
+            if(!world.isRemote){
+
+                List<ItemStack> drops = getDrops(world, pos, state, 0);
+                boolean deductedSeedSize = false;
+                for(ItemStack stack : drops){
+                    if(stack != null){
+                        if(stack.getItem() == this.seedItem && !deductedSeedSize){
+                            stack.stackSize--;
+                            deductedSeedSize = true;
+                        }
+
+                        if(stack.stackSize > 0){
+                            EntityItem entity = new EntityItem(world, pos.getX()+0.5, pos.getY()+0.5, pos.getZ()+0.5, stack);
+                            world.spawnEntityInWorld(entity);
+                        }
+                    }
+                }
+
+                world.setBlockState(pos, getStateFromMeta(0));
+            }
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -132,7 +124,25 @@ public class BlockPlant extends BlockCrops{
     }
 
     @Override
+    public Item getSeed(){
+        return this.seedItem;
+    }
+
+    @Override
     public int quantityDropped(IBlockState state, int fortune, Random random){
         return this.getMetaFromState(state) >= 7 ? random.nextInt(addDropAmount)+minDropAmount : super.quantityDropped(state, fortune, random);
     }
+
+    @Override
+    public Item getCrop(){
+        return this.returnItem;
+    }
+
+
+    @Override
+    public Item getItemDropped(IBlockState state, Random rand, int par3){
+        return this.getMetaFromState(state) >= 7 ? this.getCrop() : this.getSeed();
+    }
+
+
 }

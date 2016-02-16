@@ -61,31 +61,86 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
     @Override
     public void onNumberReceived(int text, int textID, EntityPlayer player){
         if(text != -1){
-            if(this.placeToPut instanceof IInventory){
-                if(textID == 0){
-                    this.slotToPutStart = Math.max(Math.min(text, ((IInventory)this.placeToPut).getSizeInventory()-1), 0);
-                }
-                if(textID == 1){
-                    this.slotToPutEnd = Math.max(Math.min(text, ((IInventory)this.placeToPut).getSizeInventory()), 0);
-                }
+            //TODO Find a better solution for the Math.max and Math.min stuff here (also below in initVars()!)
+            if(textID == 0){
+                this.slotToPutStart = this.placeToPut instanceof IInventory ? Math.max(Math.min(text, ((IInventory)this.placeToPut).getSizeInventory()-1), 0) : text;
+            }
+            if(textID == 1){
+                this.slotToPutEnd = this.placeToPut instanceof IInventory ? Math.max(Math.min(text, ((IInventory)this.placeToPut).getSizeInventory()), 0) : text;
             }
 
-            if(this.placeToPull instanceof IInventory){
-                if(textID == 2){
-                    this.slotToPullStart = Math.max(Math.min(text, ((IInventory)this.placeToPull).getSizeInventory()-1), 0);
-                }
-                if(textID == 3){
-                    this.slotToPullEnd = Math.max(Math.min(text, ((IInventory)this.placeToPull).getSizeInventory()), 0);
-                }
+            if(textID == 2){
+                this.slotToPullStart = this.placeToPull instanceof IInventory ? Math.max(Math.min(text, ((IInventory)this.placeToPull).getSizeInventory()-1), 0) : text;
+            }
+            if(textID == 3){
+                this.slotToPullEnd = this.placeToPull instanceof IInventory ? Math.max(Math.min(text, ((IInventory)this.placeToPull).getSizeInventory()), 0) : text;
             }
         }
         this.markDirty();
     }
 
+    //TODO Fix for new item system
+    private boolean newPull(){
+        /*for(EnumFacing facing : EnumFacing.values()){
+            IItemHandler handler = this.placeToPull.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing);
+            if(handler != null){
+                for(int i = Math.max(this.lastPullStart, 0); i < Math.min(this.slotToPullEnd, handler.getSlots()); i++){
+                    ItemStack stackInOtherInv = handler.getStackInSlot(i);
+                    if(stackInOtherInv != null){
+                        if(this.slots[0] == null || ItemUtil.areItemsEqual(stackInOtherInv, this.slots[0], false)){
+
+                            ItemStack pulled = handler.extractItem(i, this.slots[0] == null ? stackInOtherInv.stackSize : Math.min(stackInOtherInv.stackSize, this.slots[0].getMaxStackSize()-this.slots[0].stackSize), false);
+                            if(pulled != null){
+                                ItemStack slotCopy = this.slots[0] == null ? null : this.slots[0].copy();
+
+                                if(this.slots[0] == null){
+                                    this.slots[0] = pulled.copy();
+                                }
+                                else{
+                                    this.slots[0].stackSize+=pulled.stackSize;
+                                }
+
+                                if(!ItemUtil.areStacksEqualAndSameSize(slotCopy, this.slots[0], false)){
+                                    return true;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }*/
+        return false;
+    }
+
+    private boolean newPut(){
+        /*if(this.slots[0] != null){
+            for(EnumFacing facing : EnumFacing.values()){
+                IItemHandler handler = this.placeToPut.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing);
+                if(handler != null){
+                    for(int i = Math.max(this.slotToPutStart, 0); i < Math.min(this.slotToPutEnd, handler.getSlots()); i++){
+                        ItemStack slotCopy = this.slots[0].copy();
+
+                        ItemStack remaining = handler.insertItem(i, slotCopy, false);
+                        this.slots[0] = remaining == null ? null : remaining.copy();
+
+                        if(!ItemUtil.areStacksEqualAndSameSize(slotCopy, this.slots[0], false)){
+                            return true;
+                        }
+                    }
+                }
+            }
+        }*/
+        return false;
+    }
+
     /**
      * Pulls Items from the specified Slots on the specified Side
      */
-    public void pull(){
+    private void pull(){
+        if(this.newPull()){
+            return;
+        }
+
         //The Inventory to pull from
         IInventory theInventory = (IInventory)placeToPull;
         //Does the Inventory even have Slots!?
@@ -184,7 +239,11 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
      * Puts Items into the specified Slots at the specified Side
      * (Check pull() for Description, similar to this)
      */
-    public void put(){
+    private void put(){
+        if(this.newPut()){
+            return;
+        }
+
         IInventory theInventory = (IInventory)placeToPut;
         if(theInventory.getSizeInventory() > 0){
             int theSlotToPut = this.slotToPutStart;
@@ -371,6 +430,32 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
     }
 
     @Override
+    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.writeSyncableNBT(compound, sync);
+        compound.setInteger("SideToPut", this.sideToPut);
+        compound.setInteger("SlotToPut", this.slotToPutStart);
+        compound.setInteger("SlotToPutEnd", this.slotToPutEnd);
+        compound.setInteger("SideToPull", this.sideToPull);
+        compound.setInteger("SlotToPull", this.slotToPullStart);
+        compound.setInteger("SlotToPullEnd", this.slotToPullEnd);
+        compound.setBoolean("PullWhitelist", this.isPullWhitelist);
+        compound.setBoolean("PutWhitelist", this.isPutWhitelist);
+    }
+
+    @Override
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
+        this.sideToPut = compound.getInteger("SideToPut");
+        this.slotToPutStart = compound.getInteger("SlotToPut");
+        this.slotToPutEnd = compound.getInteger("SlotToPutEnd");
+        this.sideToPull = compound.getInteger("SideToPull");
+        this.slotToPullStart = compound.getInteger("SlotToPull");
+        this.slotToPullEnd = compound.getInteger("SlotToPullEnd");
+        this.isPullWhitelist = compound.getBoolean("PullWhitelist");
+        this.isPutWhitelist = compound.getBoolean("PutWhitelist");
+        super.readSyncableNBT(compound, sync);
+    }
+
+    @Override
     public void updateEntity(){
         super.updateEntity();
         if(!worldObj.isRemote){
@@ -403,39 +488,13 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.writeSyncableNBT(compound, sync);
-        compound.setInteger("SideToPut", this.sideToPut);
-        compound.setInteger("SlotToPut", this.slotToPutStart);
-        compound.setInteger("SlotToPutEnd", this.slotToPutEnd);
-        compound.setInteger("SideToPull", this.sideToPull);
-        compound.setInteger("SlotToPull", this.slotToPullStart);
-        compound.setInteger("SlotToPullEnd", this.slotToPullEnd);
-        compound.setBoolean("PullWhitelist", this.isPullWhitelist);
-        compound.setBoolean("PutWhitelist", this.isPutWhitelist);
-    }
-
-    @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        this.sideToPut = compound.getInteger("SideToPut");
-        this.slotToPutStart = compound.getInteger("SlotToPut");
-        this.slotToPutEnd = compound.getInteger("SlotToPutEnd");
-        this.sideToPull = compound.getInteger("SideToPull");
-        this.slotToPullStart = compound.getInteger("SlotToPull");
-        this.slotToPullEnd = compound.getInteger("SlotToPullEnd");
-        this.isPullWhitelist = compound.getBoolean("PullWhitelist");
-        this.isPutWhitelist = compound.getBoolean("PutWhitelist");
-        super.readSyncableNBT(compound, sync);
+    public boolean isItemValidForSlot(int i, ItemStack stack){
+        return i == 0;
     }
 
     @Override
     public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
         return this.isItemValidForSlot(slot, stack);
-    }
-
-    @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
-        return i == 0;
     }
 
     @Override

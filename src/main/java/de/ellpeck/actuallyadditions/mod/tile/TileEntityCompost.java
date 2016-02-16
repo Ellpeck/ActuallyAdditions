@@ -28,6 +28,23 @@ public class TileEntityCompost extends TileEntityInventoryBase{
     }
 
     @Override
+    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.writeSyncableNBT(compound, sync);
+        compound.setInteger("ConversionTime", this.conversionTime);
+    }
+
+    @Override
+    public boolean shouldSyncSlots(){
+        return true;
+    }
+
+    @Override
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.readSyncableNBT(compound, sync);
+        this.conversionTime = compound.getInteger("ConversionTime");
+    }
+
+    @Override
     public void updateEntity(){
         super.updateEntity();
         if(!worldObj.isRemote){
@@ -46,47 +63,24 @@ public class TileEntityCompost extends TileEntityInventoryBase{
     }
 
     @Override
-    public boolean shouldSyncSlots(){
-        return true;
-    }
-
-    @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.writeSyncableNBT(compound, sync);
-        compound.setInteger("ConversionTime", this.conversionTime);
-    }
-
-    @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.readSyncableNBT(compound, sync);
-        this.conversionTime = compound.getInteger("ConversionTime");
-    }
-
-    @Override
-    public void setInventorySlotContents(int i, ItemStack stack){
-        super.setInventorySlotContents(i, stack);
-        this.sendUpdate();
-    }
-
-    @Override
-    public ItemStack decrStackSize(int i, int j){
-        this.sendUpdate();
-        return super.decrStackSize(i, j);
-    }
-
-    @Override
     public int getInventoryStackLimit(){
         return AMOUNT;
     }
 
     @Override
-    public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
-        return this.isItemValidForSlot(slot, stack);
+    public boolean isItemValidForSlot(int i, ItemStack stack){
+        return stack.getItem() instanceof ItemMisc && stack.getItemDamage() == TheMiscItems.MASHED_FOOD.ordinal();
     }
 
     @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
-        return stack.getItem() instanceof ItemMisc && stack.getItemDamage() == TheMiscItems.MASHED_FOOD.ordinal();
+    public void markDirty(){
+        super.markDirty();
+        this.sendUpdate();
+    }
+
+    @Override
+    public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
+        return this.isItemValidForSlot(slot, stack);
     }
 
     @Override

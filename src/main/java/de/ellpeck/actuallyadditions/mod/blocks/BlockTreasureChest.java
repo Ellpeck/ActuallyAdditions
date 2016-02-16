@@ -47,11 +47,6 @@ public class BlockTreasureChest extends BlockBase{
     }
 
     @Override
-    protected PropertyInteger getMetaProperty(){
-        return META;
-    }
-
-    @Override
     @SideOnly(Side.CLIENT)
     public void randomDisplayTick(World world, BlockPos pos, IBlockState state, Random rand){
         for(int i = 0; i < 2; i++){
@@ -81,11 +76,6 @@ public class BlockTreasureChest extends BlockBase{
     }
 
     @Override
-    public boolean canSilkHarvest(World world, BlockPos pos, IBlockState state, EntityPlayer player){
-        return false;
-    }
-
-    @Override
     public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase player, ItemStack stack){
         int rotation = MathHelper.floor_double((double)(player.rotationYaw*4.0F/360.0F)+0.5D) & 3;
 
@@ -101,6 +91,11 @@ public class BlockTreasureChest extends BlockBase{
         if(rotation == 3){
             PosUtil.setMetadata(pos, world, 2, 2);
         }
+    }
+
+    @Override
+    public boolean canSilkHarvest(World world, BlockPos pos, IBlockState state, EntityPlayer player){
+        return false;
     }
 
     private void dropItems(World world, BlockPos pos){
@@ -128,5 +123,10 @@ public class BlockTreasureChest extends BlockBase{
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.EPIC;
+    }
+
+    @Override
+    protected PropertyInteger getMetaProperty(){
+        return META;
     }
 }

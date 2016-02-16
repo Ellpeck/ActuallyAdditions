@@ -33,6 +33,10 @@ public class ConfigValues{
     public static String[] minerExtraWhitelist;
     public static String[] minerBlacklist;
 
+    public static boolean lessSound;
+    public static boolean lessParticles;
+    public static boolean lessBlockBreakingEffects;
+
     public static void defineConfigValues(Configuration config){
 
         for(ConfigCrafting currConf : craftingConfig){
@@ -53,5 +57,9 @@ public class ConfigValues{
         plantDimensionBlacklist = config.get(ConfigCategories.WORLD_GEN.name, "Plant Blacklist", new int[0], "The IDs of the dimensions that Actually Additions Plants (Rice for example) are banned in").getIntList();
         minerExtraWhitelist = config.get(ConfigCategories.MACHINE_VALUES.name, "Vertical Digger Extra Whitelist", new String[0], "By default, the Vertical Digger mines everything that starts with 'ore' in the OreDictionary. If there is one that it can't mine, but should be able to, put its REGISTRY NAME here. These are the actual registered Item Names, the ones you use, for example, when using the /give Command. This Config Option only applies if the miner is in Ores Only Mode.").getStringList();
         minerBlacklist = config.get(ConfigCategories.MACHINE_VALUES.name, "Vertical Digger Blacklist", new String[0], "By default, the Vertical Digger mines everything that starts with 'ore' in the OreDictionary. If there is one that it can mine, but shouldn't be able to, put its REGISTRY NAME here. These are the actual registered Item Names, the ones you use, for example, when using the /give Command. This Config Option will apply in both modes.").getStringList();
+
+        lessSound = config.get(ConfigCategories.PERFORMANCE.name, "Less Sound", false, "If blocks in Actually Additions should have less sounds").getBoolean();
+        lessParticles = config.get(ConfigCategories.PERFORMANCE.name, "Less Particles", false, "If blocks in Actually Additions should have less particles").getBoolean();
+        lessBlockBreakingEffects = config.get(ConfigCategories.PERFORMANCE.name, "Less Block Breaking Effects", false, "If there should not be a sound effect and particles when a block is being destroyed by a breaker or similar").getBoolean();
     }
 }

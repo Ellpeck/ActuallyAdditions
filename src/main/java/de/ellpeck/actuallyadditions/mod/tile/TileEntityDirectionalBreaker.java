@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
+import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
 import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
@@ -36,6 +37,20 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase implem
 
     public TileEntityDirectionalBreaker(){
         super(9, "directionalBreaker");
+    }
+
+    @Override
+    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.writeSyncableNBT(compound, sync);
+        this.storage.writeToNBT(compound);
+        compound.setInteger("CurrentTime", this.currentTime);
+    }
+
+    @Override
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.readSyncableNBT(compound, sync);
+        this.storage.readFromNBT(compound);
+        this.currentTime = compound.getInteger("CurrentTime");
     }
 
     @Override
@@ -72,11 +87,12 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase implem
                 Block blockToBreak = PosUtil.getBlock(coordsBlock, worldObj);
                 if(blockToBreak != null && !(blockToBreak instanceof BlockAir) && blockToBreak.getBlockHardness(worldObj, pos) > -1.0F){
                     ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-                    int meta = PosUtil.getMetadata(coordsBlock, worldObj);
                     drops.addAll(blockToBreak.getDrops(worldObj, coordsBlock, worldObj.getBlockState(coordsBlock), 0));
 
                     if(WorldUtil.addToInventory(this, drops, false, true)){
-                        worldObj.playAuxSFX(2001, coordsBlock, Block.getIdFromBlock(blockToBreak)+(meta << 12));
+                        if(!ConfigValues.lessBlockBreakingEffects){
+                            worldObj.playAuxSFX(2001, coordsBlock, Block.getStateId(worldObj.getBlockState(coordsBlock)));
+                        }
                         WorldUtil.breakBlockAtSide(sideToManipulate, worldObj, this.getPos(), i);
                         WorldUtil.addToInventory(this, drops, true, true);
                         this.storage.extractEnergy(ENERGY_USE, false);
@@ -88,17 +104,8 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase implem
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.writeSyncableNBT(compound, sync);
-        this.storage.writeToNBT(compound);
-        compound.setInteger("CurrentTime", this.currentTime);
-    }
-
-    @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.readSyncableNBT(compound, sync);
-        this.storage.readFromNBT(compound);
-        this.currentTime = compound.getInteger("CurrentTime");
+    public boolean isItemValidForSlot(int i, ItemStack stack){
+        return false;
     }
 
     @SideOnly(Side.CLIENT)
@@ -109,11 +116,6 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase implem
     @Override
     public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
         return this.isItemValidForSlot(slot, stack);
-    }
-
-    @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
-        return false;
     }
 
     @Override

@@ -47,6 +47,11 @@ public class ItemAllToolAA extends ItemTool{
     private ItemStack repairItem;
     private String repairOredict;
 
+    public ItemAllToolAA(ToolMaterial toolMat, String repairItem, String unlocalizedName, EnumRarity rarity, int color){
+        this(toolMat, (ItemStack)null, unlocalizedName, rarity, color);
+        this.repairOredict = repairItem;
+    }
+
     public ItemAllToolAA(ToolMaterial toolMat, ItemStack repairItem, String unlocalizedName, EnumRarity rarity, int color){
         super(4.0F, toolMat, new HashSet<Block>());
 
@@ -58,11 +63,6 @@ public class ItemAllToolAA extends ItemTool{
         this.setMaxDamage(this.getMaxDamage()*4);
 
         this.register();
-    }
-
-    public ItemAllToolAA(ToolMaterial toolMat, String repairItem, String unlocalizedName, EnumRarity rarity, int color){
-        this(toolMat, (ItemStack)null, unlocalizedName, rarity, color);
-        this.repairOredict = repairItem;
     }
 
     private void register(){
@@ -79,17 +79,17 @@ public class ItemAllToolAA extends ItemTool{
         this.registerRendering();
     }
 
-    protected void registerRendering(){
-        ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this), new ResourceLocation(ModUtil.MOD_ID_LOWER, "itemPaxel"));
-        ActuallyAdditions.proxy.addRenderVariant(this, new ResourceLocation(ModUtil.MOD_ID_LOWER, "itemPaxel"));
-    }
-
     protected String getBaseName(){
         return this.name;
     }
 
     public boolean shouldAddCreative(){
         return true;
+    }
+
+    protected void registerRendering(){
+        ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this), new ResourceLocation(ModUtil.MOD_ID_LOWER, "itemPaxel"));
+        ActuallyAdditions.proxy.addRenderVariant(this, new ResourceLocation(ModUtil.MOD_ID_LOWER, "itemPaxel"));
     }
 
     @Override

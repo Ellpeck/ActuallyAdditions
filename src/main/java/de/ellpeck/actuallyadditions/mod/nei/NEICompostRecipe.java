@@ -10,31 +10,11 @@
 
 package de.ellpeck.actuallyadditions.mod.nei;
 
-import codechicken.lib.gui.GuiDraw;
-import codechicken.nei.NEIServerUtils;
-import codechicken.nei.PositionedStack;
-import codechicken.nei.recipe.RecipeInfo;
-import codechicken.nei.recipe.TemplateRecipeHandler;
-import de.ellpeck.actuallyadditions.api.booklet.BookletPage;
-import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
-import de.ellpeck.actuallyadditions.mod.booklet.BookletUtils;
-import de.ellpeck.actuallyadditions.mod.items.InitItems;
-import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityCompost;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
-import de.ellpeck.actuallyadditions.mod.util.StringUtil;
-import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.item.ItemStack;
-
-import java.awt.*;
-import java.util.Collections;
-
-public class NEICompostRecipe extends TemplateRecipeHandler implements INEIRecipeHandler{
+public class NEICompostRecipe/* extends TemplateRecipeHandler implements INEIRecipeHandler*/{
 
     public static final String NAME = "actuallyadditions.compost";
 
-    public NEICompostRecipe(){
+    /*public NEICompostRecipe(){
         super();
         RecipeInfo.setGuiOffset(this.getGuiClass(), 0, 0);
     }
@@ -127,5 +107,5 @@ public class NEICompostRecipe extends TemplateRecipeHandler implements INEIRecip
         public PositionedStack getIngredient(){
             return input;
         }
-    }
+    }*/
 }

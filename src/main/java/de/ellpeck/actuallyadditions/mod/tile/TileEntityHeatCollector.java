@@ -33,6 +33,18 @@ public class TileEntityHeatCollector extends TileEntityBase implements IEnergyPr
     private int oldEnergy;
 
     @Override
+    public void writeSyncableNBT(NBTTagCompound compound, boolean isForSync){
+        super.writeSyncableNBT(compound, isForSync);
+        this.storage.writeToNBT(compound);
+    }
+
+    @Override
+    public void readSyncableNBT(NBTTagCompound compound, boolean isForSync){
+        super.readSyncableNBT(compound, isForSync);
+        this.storage.readFromNBT(compound);
+    }
+
+    @Override
     public void updateEntity(){
         super.updateEntity();
         if(!worldObj.isRemote){
@@ -67,18 +79,6 @@ public class TileEntityHeatCollector extends TileEntityBase implements IEnergyPr
                 this.oldEnergy = this.storage.getEnergyStored();
             }
         }
-    }
-
-    @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean isForSync){
-        super.writeSyncableNBT(compound, isForSync);
-        this.storage.writeToNBT(compound);
-    }
-
-    @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean isForSync){
-        super.readSyncableNBT(compound, isForSync);
-        this.storage.readFromNBT(compound);
     }
 
     @Override

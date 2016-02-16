@@ -22,6 +22,10 @@ import net.minecraft.world.World;
 
 public class PosUtil{
 
+    public static Material getMaterial(BlockPos pos, IBlockAccess world){
+        return getBlock(pos, world).getMaterial();
+    }
+
     public static Block getBlock(BlockPos pos, IBlockAccess world){
         if(pos != null){
             IBlockState state = world.getBlockState(pos);
@@ -30,10 +34,6 @@ public class PosUtil{
             }
         }
         return null;
-    }
-
-    public static Material getMaterial(BlockPos pos, IBlockAccess world){
-        return getBlock(pos, world).getMaterial();
     }
 
     public static int getMetadata(BlockPos pos, IBlockAccess world){

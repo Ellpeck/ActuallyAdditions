@@ -41,6 +41,24 @@ public class TileEntityFeeder extends TileEntityInventoryBase{
     }
 
     @Override
+    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.writeSyncableNBT(compound, sync);
+        compound.setInteger("Timer", this.currentTimer);
+        if(sync){
+            compound.setInteger("Animals", this.currentAnimalAmount);
+        }
+    }
+
+    @Override
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.readSyncableNBT(compound, sync);
+        this.currentTimer = compound.getInteger("Timer");
+        if(sync){
+            this.currentAnimalAmount = compound.getInteger("Animals");
+        }
+    }
+
+    @Override
     @SuppressWarnings("unchecked")
     public void updateEntity(){
         super.updateEntity();
@@ -92,21 +110,8 @@ public class TileEntityFeeder extends TileEntityInventoryBase{
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.writeSyncableNBT(compound, sync);
-        compound.setInteger("Timer", this.currentTimer);
-        if(sync){
-            compound.setInteger("Animals", this.currentAnimalAmount);
-        }
-    }
-
-    @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.readSyncableNBT(compound, sync);
-        this.currentTimer = compound.getInteger("Timer");
-        if(sync){
-            this.currentAnimalAmount = compound.getInteger("Animals");
-        }
+    public boolean isItemValidForSlot(int i, ItemStack stack){
+        return true;
     }
 
     public void feedAnimal(EntityAnimal animal){
@@ -122,11 +127,6 @@ public class TileEntityFeeder extends TileEntityInventoryBase{
     @Override
     public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
         return this.isItemValidForSlot(slot, stack);
-    }
-
-    @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
-        return true;
     }
 
     @Override

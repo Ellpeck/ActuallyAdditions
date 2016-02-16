@@ -35,6 +35,11 @@ public class BlockFurnaceSolar extends BlockContainerBase{
     }
 
     @Override
+    public boolean isFullCube(){
+        return false;
+    }
+
+    @Override
     public boolean isOpaqueCube(){
         return false;
     }

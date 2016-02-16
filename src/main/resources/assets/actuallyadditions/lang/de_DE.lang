@@ -18,7 +18,6 @@ container.nei.actuallyadditions.treasureChest.info=Gegenstände zu
 container.nei.actuallyadditions.coffee.name=Kaffeemaschine
 container.nei.actuallyadditions.coffee.special=Spezialfunktion
 container.nei.actuallyadditions.coffee.maxAmount=Maximale Menge
-container.nei.actuallyadditions.coffee.shift=[UMSCHALT]!
 container.nei.actuallyadditions.coffee.extra.milk=+01:00, -1 Level
 container.nei.actuallyadditions.reconstructor.name=Atomarer Umwandler
 
@@ -117,7 +116,6 @@ tile.actuallyadditions.blockMiscIronCasing.name=Eisengehäuse
 tile.actuallyadditions.blockBlackLotus.name=Schwarze Lotos
 tile.actuallyadditions.blockTestifiBucksWhiteFence.name=Ethetische Quarz Wand
 tile.actuallyadditions.blockTestifiBucksGreenFence.name=Ethetische Grüne Wand
-tile.actuallyadditions.blockAtomicReconstructor.name=Atomarer Umwandler
 tile.actuallyadditions.blockCrystalRed.name=Restonia Kristallblock
 tile.actuallyadditions.blockCrystalBlue.name=Palis Kristallblock
 tile.actuallyadditions.blockCrystalLightBlue.name=Diamatin Kristallblock
@@ -155,6 +153,37 @@ tile.actuallyadditions.blockInputter.add.12.name=Einfältig Spielender Gaukler
 tile.actuallyadditions.blockInputter.add.13.name=Eingelaugtes Salz-Gebäck
 tile.actuallyadditions.blockInputter.add.14.name=Eierlegendes Schreck-Gebilde
 tile.actuallyadditions.blockInputter.add.15.name=Exzellentes Spaghetti-Gericht
+
+#Reconstructor / Umwandler
+ tile.actuallyadditions.blockAtomicReconstructor.name=Atomarer Umwandler
+ 
+ tile.actuallyadditions.blockAtomicReconstructor.info.1.1=Molekular
+ tile.actuallyadditions.blockAtomicReconstructor.info.1.2=Materiell
+ tile.actuallyadditions.blockAtomicReconstructor.info.1.3=Quarkal
+ tile.actuallyadditions.blockAtomicReconstructor.info.1.4=Atomar
+ tile.actuallyadditions.blockAtomicReconstructor.info.1.5=Kleines Bisschen
+ tile.actuallyadditions.blockAtomicReconstructor.info.1.6=Komponente
+ tile.actuallyadditions.blockAtomicReconstructor.info.1.7=Vittell
+ tile.actuallyadditions.blockAtomicReconstructor.info.1.8=Transmateriell
+ tile.actuallyadditions.blockAtomicReconstructor.info.1.9=Partiell
+ tile.actuallyadditions.blockAtomicReconstructor.info.1.10=Räumlich
+ tile.actuallyadditions.blockAtomicReconstructor.info.1.11=Stickig
+ tile.actuallyadditions.blockAtomicReconstructor.info.1.12=Interdimensional
+ 
+ tile.actuallyadditions.blockAtomicReconstructor.info.2.1=Vermischer
+ tile.actuallyadditions.blockAtomicReconstructor.info.2.2=Verschieber
+ tile.actuallyadditions.blockAtomicReconstructor.info.2.3=Rekombinierer
+ tile.actuallyadditions.blockAtomicReconstructor.info.2.4=Modulator
+ tile.actuallyadditions.blockAtomicReconstructor.info.2.5=Molekülisator
+ tile.actuallyadditions.blockAtomicReconstructor.info.2.6=Modifikulisator
+ tile.actuallyadditions.blockAtomicReconstructor.info.2.7=Veränderer
+ tile.actuallyadditions.blockAtomicReconstructor.info.2.8=Atomisierer
+ tile.actuallyadditions.blockAtomicReconstructor.info.2.9=Zerhacker
+ tile.actuallyadditions.blockAtomicReconstructor.info.2.10=Swapper
+ tile.actuallyadditions.blockAtomicReconstructor.info.2.11=Vertauscher
+ tile.actuallyadditions.blockAtomicReconstructor.info.2.12=Austauscher
+ tile.actuallyadditions.blockAtomicReconstructor.info.2.13=Differenzierer
+ tile.actuallyadditions.blockAtomicReconstructor.info.2.14=Empfänger
 
 #Items / Gegenstände
 item.actuallyadditions.itemDrill.name=Bohrer
@@ -397,6 +426,8 @@ tooltip.actuallyadditions.oredictName.desc=OreDictionary-Einträge
 tooltip.actuallyadditions.noOredictNameAvail.desc=Keine
 tooltip.actuallyadditions.codeName.desc=Codename
 tooltip.actuallyadditions.baseUnlocName.desc=Unlokalisierter Name des Gegenstands
+tooltip.actuallyadditions.meta.desc=Metadaten
+tooltip.actuallyadditions.nbt.desc=NBT-Daten
 tooltip.actuallyadditions.unlocName.desc=Unlokalisierter Name der Meta
 tooltip.actuallyadditions.disablingInfo.desc=Wenn du diese Informationen nicht sehen möchtest, deaktiviere sie in den Actually Additions-Einstellungen!
 tooltip.actuallyadditions.ctrlForMoreInfo.desc=Drücke STRG für weitere Informationen

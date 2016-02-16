@@ -54,6 +54,10 @@ public class ItemUtil{
         return stack1 != null && stack2 != null && (stack1.isItemEqual(stack2) || (checkWildcard && stack1.getItem() == stack2.getItem() && (stack1.getItemDamage() == Util.WILDCARD || stack2.getItemDamage() == Util.WILDCARD)));
     }
 
+    public static boolean areStacksEqualAndSameSize(ItemStack stack1, ItemStack stack2, boolean checkWildcard){
+        return areItemsEqual(stack1, stack2, checkWildcard) && stack1.stackSize == stack2.stackSize;
+    }
+
     /**
      * Returns true if list contains stack or if both contain null
      */

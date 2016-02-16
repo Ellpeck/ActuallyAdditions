@@ -34,18 +34,8 @@ public class BookletEntry implements IBookletEntry{
     }
 
     @Override
-    public String getUnlocalizedName(){
-        return this.unlocalizedName;
-    }
-
-    @Override
     public List<IBookletChapter> getChapters(){
         return this.chapters;
-    }
-
-    @Override
-    public String getLocalizedNameWithFormatting(){
-        return this.color+this.getLocalizedName();
     }
 
     @Override
@@ -54,13 +44,23 @@ public class BookletEntry implements IBookletEntry{
     }
 
     @Override
-    public void addChapter(IBookletChapter chapter){
-        this.chapters.add(chapter);
+    public String getUnlocalizedName(){
+        return this.unlocalizedName;
     }
 
     @Override
     public String getLocalizedName(){
         return StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".indexEntry."+this.unlocalizedName+".name");
+    }
+
+    @Override
+    public String getLocalizedNameWithFormatting(){
+        return this.color+this.getLocalizedName();
+    }
+
+    @Override
+    public void addChapter(IBookletChapter chapter){
+        this.chapters.add(chapter);
     }
 
     public BookletEntry setImportant(){

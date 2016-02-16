@@ -50,10 +50,6 @@ public class BlockStair extends BlockStairs{
         this.registerRendering();
     }
 
-    protected void registerRendering(){
-        ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this), new ResourceLocation(ModUtil.MOD_ID_LOWER, this.getBaseName()));
-    }
-
     protected String getBaseName(){
         return this.name;
     }
@@ -64,6 +60,10 @@ public class BlockStair extends BlockStairs{
 
     public boolean shouldAddCreative(){
         return true;
+    }
+
+    protected void registerRendering(){
+        ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this), new ResourceLocation(ModUtil.MOD_ID_LOWER, this.getBaseName()));
     }
 
     public EnumRarity getRarity(ItemStack stack){

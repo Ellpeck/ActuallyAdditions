@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.api.tile.IPhantomTile;
+import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.network.PacketParticle;
 import de.ellpeck.actuallyadditions.mod.util.PosUtil;
@@ -45,6 +46,30 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
     public TileEntityPhantomPlacer(){
         super(9, "phantomPlacer");
         this.isBreaker = false;
+    }
+
+    @Override
+    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.writeSyncableNBT(compound, sync);
+        compound.setInteger("Range", this.range);
+        if(this.boundPosition != null){
+            compound.setInteger("XCoordOfTileStored", boundPosition.getX());
+            compound.setInteger("YCoordOfTileStored", boundPosition.getY());
+            compound.setInteger("ZCoordOfTileStored", boundPosition.getZ());
+        }
+    }
+
+    @Override
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.readSyncableNBT(compound, sync);
+        int x = compound.getInteger("XCoordOfTileStored");
+        int y = compound.getInteger("YCoordOfTileStored");
+        int z = compound.getInteger("ZCoordOfTileStored");
+        this.range = compound.getInteger("Range");
+        if(!(x == 0 && y == 0 && z == 0)){
+            this.boundPosition = new BlockPos(x, y, z);
+            this.markDirty();
+        }
     }
 
     @Override
@@ -101,11 +126,12 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
             Block blockToBreak = PosUtil.getBlock(boundPosition, worldObj);
             if(blockToBreak != null && blockToBreak.getBlockHardness(worldObj, boundPosition) > -1.0F){
                 ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-                int meta = PosUtil.getMetadata(boundPosition, worldObj);
                 drops.addAll(blockToBreak.getDrops(worldObj, boundPosition, worldObj.getBlockState(boundPosition), 0));
 
                 if(WorldUtil.addToInventory(this, drops, false, true)){
-                    worldObj.playAuxSFX(2001, this.boundPosition, Block.getIdFromBlock(blockToBreak)+(meta << 12));
+                    if(!ConfigValues.lessBlockBreakingEffects){
+                        worldObj.playAuxSFX(2001, this.boundPosition, Block.getStateId(worldObj.getBlockState(this.boundPosition)));
+                    }
                     worldObj.setBlockToAir(this.boundPosition);
                     WorldUtil.addToInventory(this, drops, true, true);
                     this.markDirty();
@@ -113,12 +139,10 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
             }
         }
         else{
-            if(PosUtil.getBlock(boundPosition, worldObj).isReplaceable(worldObj, boundPosition)){
-                int theSlot = WorldUtil.findFirstFilledSlot(this.slots);
-                this.setInventorySlotContents(theSlot, WorldUtil.placeBlockAtSide(EnumFacing.UP, worldObj, boundPosition, this.slots[theSlot]));
-                if(this.slots[theSlot] != null && this.slots[theSlot].stackSize <= 0){
-                    this.slots[theSlot] = null;
-                }
+            int theSlot = WorldUtil.findFirstFilledSlot(this.slots);
+            this.setInventorySlotContents(theSlot, WorldUtil.useItemAtSide(EnumFacing.UP, worldObj, boundPosition, this.slots[theSlot]));
+            if(this.slots[theSlot] != null && this.slots[theSlot].stackSize <= 0){
+                this.slots[theSlot] = null;
             }
         }
     }
@@ -168,37 +192,13 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.writeSyncableNBT(compound, sync);
-        compound.setInteger("Range", this.range);
-        if(this.boundPosition != null){
-            compound.setInteger("XCoordOfTileStored", boundPosition.getX());
-            compound.setInteger("YCoordOfTileStored", boundPosition.getY());
-            compound.setInteger("ZCoordOfTileStored", boundPosition.getZ());
-        }
-    }
-
-    @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.readSyncableNBT(compound, sync);
-        int x = compound.getInteger("XCoordOfTileStored");
-        int y = compound.getInteger("YCoordOfTileStored");
-        int z = compound.getInteger("ZCoordOfTileStored");
-        this.range = compound.getInteger("Range");
-        if(!(x == 0 && y == 0 && z == 0)){
-            this.boundPosition = new BlockPos(x, y, z);
-            this.markDirty();
-        }
+    public boolean isItemValidForSlot(int i, ItemStack stack){
+        return !this.isBreaker;
     }
 
     @Override
     public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
         return this.isItemValidForSlot(slot, stack);
-    }
-
-    @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
-        return !this.isBreaker;
     }
 
     @Override

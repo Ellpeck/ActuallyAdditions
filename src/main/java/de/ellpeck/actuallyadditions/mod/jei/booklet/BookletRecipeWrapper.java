@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.jei.booklet;
 
-import com.google.common.collect.ImmutableList;
 import de.ellpeck.actuallyadditions.api.booklet.BookletPage;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
 import de.ellpeck.actuallyadditions.mod.booklet.page.PagePicture;
@@ -24,6 +23,7 @@ import net.minecraftforge.fluids.FluidStack;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -47,12 +47,12 @@ public class BookletRecipeWrapper extends RecipeWrapperWithButton implements IRe
 
     @Override
     public List<FluidStack> getFluidInputs(){
-        return ImmutableList.of();
+        return new ArrayList<FluidStack>();
     }
 
     @Override
     public List<FluidStack> getFluidOutputs(){
-        return ImmutableList.of();
+        return new ArrayList<FluidStack>();
     }
 
     @Override
@@ -97,11 +97,6 @@ public class BookletRecipeWrapper extends RecipeWrapperWithButton implements IRe
     }
 
     @Override
-    public BookletPage getPage(){
-        return this.thePage;
-    }
-
-    @Override
     public int getButtonX(){
         return 0;
     }
@@ -109,5 +104,10 @@ public class BookletRecipeWrapper extends RecipeWrapperWithButton implements IRe
     @Override
     public int getButtonY(){
         return 84;
+    }
+
+    @Override
+    public BookletPage getPage(){
+        return this.thePage;
     }
 }

@@ -53,16 +53,6 @@ public class ItemBooklet extends ItemBase implements IHudDisplay{
     }
 
     @Override
-    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player){
-        player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.BOOK.ordinal(), world, (int)player.posX, (int)player.posY, (int)player.posZ);
-
-        if(!world.isRemote){
-            player.triggerAchievement(TheAchievements.OPEN_BOOKLET.ach);
-        }
-        return stack;
-    }
-
-    @Override
     public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing face, float hitX, float hitY, float hitZ){
         if(player.isSneaking()){
             Block block = PosUtil.getBlock(pos, world);
@@ -79,6 +69,16 @@ public class ItemBooklet extends ItemBase implements IHudDisplay{
             }
         }
         return false;
+    }
+
+    @Override
+    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player){
+        player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.BOOK.ordinal(), world, (int)player.posX, (int)player.posY, (int)player.posZ);
+
+        if(!world.isRemote){
+            player.triggerAchievement(TheAchievements.OPEN_BOOKLET.ach);
+        }
+        return stack;
     }
 
     @SuppressWarnings("unchecked")

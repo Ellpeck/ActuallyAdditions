@@ -37,19 +37,28 @@ public class BlockGreenhouseGlass extends BlockContainerBase{
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public EnumWorldBlockLayer getBlockLayer(){
-        return EnumWorldBlockLayer.CUTOUT;
-    }
-
-    @Override
     public boolean isFullCube(){
         return false;
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
+    public boolean shouldSideBeRendered(IBlockAccess worldIn, BlockPos pos, EnumFacing side){
+        IBlockState state = worldIn.getBlockState(pos);
+        Block block = state.getBlock();
+        return worldIn.getBlockState(pos.offset(side.getOpposite())) != state || block != this && block != this && super.shouldSideBeRendered(worldIn, pos, side);
+
+    }
+
+    @Override
     public boolean isOpaqueCube(){
         return false;
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public EnumWorldBlockLayer getBlockLayer(){
+        return EnumWorldBlockLayer.CUTOUT;
     }
 
     @Override
@@ -60,14 +69,5 @@ public class BlockGreenhouseGlass extends BlockContainerBase{
     @Override
     public TileEntity createNewTileEntity(World world, int par2){
         return new TileEntityGreenhouseGlass();
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public boolean shouldSideBeRendered(IBlockAccess worldIn, BlockPos pos, EnumFacing side){
-        IBlockState state = worldIn.getBlockState(pos);
-        Block block = state.getBlock();
-        return worldIn.getBlockState(pos.offset(side.getOpposite())) != state || block != this && block != this && super.shouldSideBeRendered(worldIn, pos, side);
-
     }
 }

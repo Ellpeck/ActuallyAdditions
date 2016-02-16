@@ -43,24 +43,8 @@ public class BlockMisc extends BlockBase{
     }
 
     @Override
-    protected PropertyInteger getMetaProperty(){
-        return META;
-    }
-
-    @Override
     public int damageDropped(IBlockState state){
         return this.getMetaFromState(state);
-    }
-
-    @Override
-    protected void registerRendering(){
-        ResourceLocation[] resLocs = new ResourceLocation[allMiscBlocks.length];
-        for(int i = 0; i < allMiscBlocks.length; i++){
-            String name = this.getBaseName()+allMiscBlocks[i].name;
-            resLocs[i] = new ResourceLocation(ModUtil.MOD_ID_LOWER, name);
-            ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), new ResourceLocation(ModUtil.MOD_ID_LOWER, name));
-        }
-        ActuallyAdditions.proxy.addRenderVariant(Item.getItemFromBlock(this), resLocs);
     }
 
     @SuppressWarnings("all")
@@ -77,8 +61,24 @@ public class BlockMisc extends BlockBase{
     }
 
     @Override
+    protected void registerRendering(){
+        ResourceLocation[] resLocs = new ResourceLocation[allMiscBlocks.length];
+        for(int i = 0; i < allMiscBlocks.length; i++){
+            String name = this.getBaseName()+allMiscBlocks[i].name;
+            resLocs[i] = new ResourceLocation(ModUtil.MOD_ID_LOWER, name);
+            ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), new ResourceLocation(ModUtil.MOD_ID_LOWER, name));
+        }
+        ActuallyAdditions.proxy.addRenderVariant(Item.getItemFromBlock(this), resLocs);
+    }
+
+    @Override
     public EnumRarity getRarity(ItemStack stack){
         return stack.getItemDamage() >= allMiscBlocks.length ? EnumRarity.COMMON : allMiscBlocks[stack.getItemDamage()].rarity;
+    }
+
+    @Override
+    protected PropertyInteger getMetaProperty(){
+        return META;
     }
 
     public static class TheItemBlock extends ItemBlockBase{

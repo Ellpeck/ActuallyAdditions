@@ -36,6 +36,10 @@ public abstract class RecipeWrapperWithButton{
         };
     }
 
+    public abstract int getButtonX();
+
+    public abstract int getButtonY();
+
     public boolean handleClick(Minecraft mc, int mouseX, int mouseY){
         if(this.theButton.mousePressed(mc, mouseX, mouseY)){
             this.theButton.playPressSound(mc.getSoundHandler());
@@ -52,12 +56,9 @@ public abstract class RecipeWrapperWithButton{
         return false;
     }
 
+    public abstract BookletPage getPage();
+
     public void updateButton(Minecraft mc, int mouseX, int mouseY){
         this.theButton.drawButton(mc, mouseX, mouseY);
     }
-
-    public abstract BookletPage getPage();
-
-    public abstract int getButtonX();
-    public abstract int getButtonY();
 }

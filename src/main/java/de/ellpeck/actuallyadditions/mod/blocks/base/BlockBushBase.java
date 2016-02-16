@@ -46,10 +46,6 @@ public class BlockBushBase extends BlockBush{
         this.registerRendering();
     }
 
-    protected void registerRendering(){
-        ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this), new ResourceLocation(ModUtil.MOD_ID_LOWER, this.getBaseName()));
-    }
-
     protected String getBaseName(){
         return this.name;
     }
@@ -62,13 +58,12 @@ public class BlockBushBase extends BlockBush{
         return true;
     }
 
-    public EnumRarity getRarity(ItemStack stack){
-        return EnumRarity.COMMON;
+    protected void registerRendering(){
+        ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this), new ResourceLocation(ModUtil.MOD_ID_LOWER, this.getBaseName()));
     }
 
-    @Override
-    protected BlockState createBlockState(){
-        return this.getMetaProperty() == null ? super.createBlockState() : new BlockState(this, this.getMetaProperty());
+    public EnumRarity getRarity(ItemStack stack){
+        return EnumRarity.COMMON;
     }
 
     @Override
@@ -79,6 +74,11 @@ public class BlockBushBase extends BlockBush{
     @Override
     public int getMetaFromState(IBlockState state){
         return this.getMetaProperty() == null ? super.getMetaFromState(state) : state.getValue(this.getMetaProperty());
+    }
+
+    @Override
+    protected BlockState createBlockState(){
+        return this.getMetaProperty() == null ? super.createBlockState() : new BlockState(this, this.getMetaProperty());
     }
 
     protected PropertyInteger getMetaProperty(){

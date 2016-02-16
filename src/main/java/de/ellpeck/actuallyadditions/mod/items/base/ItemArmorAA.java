@@ -26,6 +26,10 @@ public class ItemArmorAA extends ItemArmor{
     private String name;
     private EnumRarity rarity;
 
+    public ItemArmorAA(String name, ArmorMaterial material, int type, ItemStack repairItem, String textureBase){
+        this(name, material, type, repairItem, textureBase, EnumRarity.RARE);
+    }
+
     public ItemArmorAA(String name, ArmorMaterial material, int type, ItemStack repairItem, String textureBase, EnumRarity rarity){
         super(material, 0, type);
         this.repairItem = repairItem;
@@ -33,10 +37,6 @@ public class ItemArmorAA extends ItemArmor{
         this.rarity = rarity;
 
         this.register();
-    }
-
-    public ItemArmorAA(String name, ArmorMaterial material, int type, ItemStack repairItem, String textureBase){
-        this(name, material, type, repairItem, textureBase, EnumRarity.RARE);
     }
 
     private void register(){
@@ -52,16 +52,16 @@ public class ItemArmorAA extends ItemArmor{
         this.registerRendering();
     }
 
-    protected void registerRendering(){
-        ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this), new ResourceLocation(ModUtil.MOD_ID_LOWER, this.getBaseName()));
-    }
-
     protected String getBaseName(){
         return this.name;
     }
 
     public boolean shouldAddCreative(){
         return true;
+    }
+
+    protected void registerRendering(){
+        ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this), new ResourceLocation(ModUtil.MOD_ID_LOWER, this.getBaseName()));
     }
 
     @Override
