@@ -38,7 +38,7 @@ import java.util.Random;
 
 public class BlockSmileyCloud extends BlockContainerBase{
 
-    private static final PropertyInteger META = PropertyInteger.create("meta", 0, 3);
+    private static final PropertyInteger META = PropertyInteger.create("meta", 0, 7);
 
     public BlockSmileyCloud(String name){
         super(Material.cloth, name);

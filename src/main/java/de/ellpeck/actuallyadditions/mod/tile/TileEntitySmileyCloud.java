@@ -10,7 +10,9 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import de.ellpeck.actuallyadditions.mod.blocks.BlockSmileyCloud;
 import de.ellpeck.actuallyadditions.mod.network.gui.IStringReactor;
+import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.relauncher.Side;
@@ -56,4 +58,15 @@ public class TileEntitySmileyCloud extends TileEntityBase implements IStringReac
     public void onTextReceived(String text, int textID, EntityPlayer player){
         this.name = text;
     }
+
+    public void setPinkAndFluffy(){
+        if(PosUtil.getMetadata(this.pos, this.worldObj) <= 3)
+            PosUtil.setMetadata(this.pos, this.worldObj, PosUtil.getMetadata(this.pos, this.worldObj) + 4, 2);
+    }
+
+    public void setNormalCloud(){
+        if(PosUtil.getMetadata(this.pos, this.worldObj) >= 4)
+            PosUtil.setMetadata(this.pos, this.worldObj, PosUtil.getMetadata(this.pos, this.worldObj) - 4, 2);
+    }
+
 }
