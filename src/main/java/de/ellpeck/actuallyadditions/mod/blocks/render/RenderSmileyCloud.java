@@ -10,17 +10,22 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks.render;
 
+import de.ellpeck.actuallyadditions.mod.tile.TileEntitySmileyCloud;
+import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
 
 //TODO Fix Smiley Cloud
 public class RenderSmileyCloud extends TileEntitySpecialRenderer{
 
-    //private static final ResourceLocation resLocValentine = new ResourceLocation(ModUtil.MOD_ID_LOWER, "textures/blocks/models/modelPinkFluffyUnicloud.png");
+    private static final ResourceLocation resLocValentine = new ResourceLocation(ModUtil.MOD_ID_LOWER, "textures/blocks/models/modelPinkFluffyUnicloud.png");
 
     @Override
     public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float par5, int partial){
-        /*if(!(tile instanceof TileEntitySmileyCloud)){
+        if(!(tile instanceof TileEntitySmileyCloud)){
             return;
         }
         TileEntitySmileyCloud theCloud = (TileEntitySmileyCloud)tile;
@@ -49,6 +54,7 @@ public class RenderSmileyCloud extends TileEntitySpecialRenderer{
             GlStateManager.rotate(180F, 0.0F, 0.0F, 1.0F);
             GlStateManager.translate(0.0F, -2F, 0.0F);
 
+            /*
             GlStateManager.pushMatrix();
             {
                 if(theModel.doesRotate()){
@@ -90,6 +96,7 @@ public class RenderSmileyCloud extends TileEntitySpecialRenderer{
                 }
             }
             GlStateManager.popMatrix();
+            */
 
             if(theCloud.name != null && !theCloud.name.isEmpty() && !Minecraft.getMinecraft().gameSettings.hideGUI){
                 GlStateManager.pushMatrix();
@@ -108,10 +115,11 @@ public class RenderSmileyCloud extends TileEntitySpecialRenderer{
                     GlStateManager.depthMask(false);
                     GlStateManager.enableBlend();
                     GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+                    /*
                     //TODO Fix nameplate with Smiley Cloud
-                    Tessellator tessellator = Tessellator.getInstance();
-                    GlStateManager.glDisable(GlStateManager.GL_TEXTURE_2D);
-                    tessellator.startDrawingQuads();
+                    WorldRenderer tessy = Tessellator.getInstance().getWorldRenderer();
+                    //GlStateManager.disable(GlStateManager.GL_TEXTURE_2D);
+                    tessy.st
                     int i = Minecraft.getMinecraft().fontRendererObj.getStringWidth(theCloud.name)/2;
                     tessellator.setColorRGBA_F(0.0F, 0.0F, 0.0F, 0.25F);
                     tessellator.addVertex(-i-1, -1.0D, 0.0D);
@@ -128,12 +136,12 @@ public class RenderSmileyCloud extends TileEntitySpecialRenderer{
                     GlStateManager.disableBlend();
                     GlStateManager.color(1F, 1F, 1F, 1F);
                     GlStateManager.scale(1F/-f1, 1F/-f1, 1F/f1);
+                    */
                 }
                 GlStateManager.popMatrix();
             }
         }
         GlStateManager.popMatrix();
-        */
     }
 
 }
