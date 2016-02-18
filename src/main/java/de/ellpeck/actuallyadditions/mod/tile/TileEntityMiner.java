@@ -126,29 +126,32 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyR
     }
 
     private boolean isMinable(Block block, int meta){
-        if(!this.isBlacklisted(block)){
-            if(!this.onlyMineOres){
-                return true;
-            }
-            else{
-                int[] ids = OreDictionary.getOreIDs(new ItemStack(block, 1, meta));
-                for(int id : ids){
-                    String name = OreDictionary.getOreName(id);
-                    if(name.startsWith("ore") || name.startsWith("denseore")){
-                        return true;
-                    }
+        if(block != null){
+            if(!this.isBlacklisted(block)){
+                if(!this.onlyMineOres){
+                    return true;
                 }
-
-                String reg = block.getRegistryName();
-                if(reg != null && !reg.isEmpty()){
-                    for(String string : ConfigValues.minerExtraWhitelist){
-                        if(reg.equals(string)){
+                else{
+                    int[] ids = OreDictionary.getOreIDs(new ItemStack(block, 1, meta));
+                    for(int id : ids){
+                        String name = OreDictionary.getOreName(id);
+                        if(name.startsWith("ore") || name.startsWith("denseore")){
                             return true;
+                        }
+                    }
+
+                    String reg = block.getRegistryName();
+                    if(reg != null && !reg.isEmpty()){
+                        for(String string : ConfigValues.minerExtraWhitelist){
+                            if(reg.equals(string)){
+                                return true;
+                            }
                         }
                     }
                 }
             }
         }
+
         return false;
     }
 
