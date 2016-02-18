@@ -62,8 +62,8 @@ public class BookletRecipeCategory implements IRecipeCategory{
     public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull IRecipeWrapper recipeWrapper){
         if(recipeWrapper instanceof BookletRecipeWrapper){
             BookletRecipeWrapper wrapper = (BookletRecipeWrapper)recipeWrapper;
-
-            recipeLayout.getItemStacks().init(0, true, 62, -3);
+            boolean isBigScreen = Minecraft.getMinecraft().displayHeight >= 600;
+            recipeLayout.getItemStacks().init(0, true, 70, isBigScreen ? -3 : -7);
             recipeLayout.getItemStacks().set(0, Arrays.asList(wrapper.thePage.getItemStacksForPage()));
         }
     }
