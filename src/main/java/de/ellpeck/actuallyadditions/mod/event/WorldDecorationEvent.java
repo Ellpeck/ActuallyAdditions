@@ -20,6 +20,7 @@ import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.material.Material;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.biome.BiomeGenOcean;
@@ -91,7 +92,7 @@ public class WorldDecorationEvent{
                     randomPos = event.world.getTopSolidOrLiquidBlock(randomPos);
 
                     if(PosUtil.getMaterial(PosUtil.offset(randomPos, 0, -1, 0), event.world) == blockBelow){
-                        if(plant.canPlaceBlockAt(event.world, randomPos)){
+                        if(plant.canPlaceBlockAt(event.world, randomPos) && WorldUtil.isBlockAir(event.world, randomPos.add(0, 1, 0))){
                             PosUtil.setBlock(randomPos, event.world, plant, meta, 2);
                         }
                     }
