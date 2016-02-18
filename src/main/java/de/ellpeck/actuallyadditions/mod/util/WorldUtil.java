@@ -51,10 +51,6 @@ public class WorldUtil{
         }
     }
 
-    public static boolean isBlockAir(World world, BlockPos pos){
-        return world.isAirBlock(pos);
-    }
-
     public static BlockPos getCoordsFromSide(EnumFacing side, BlockPos pos, int offset){
         return new BlockPos(pos.getX()+side.getFrontOffsetX()*(offset+1), pos.getY()+side.getFrontOffsetY()*(offset+1), pos.getZ()+side.getFrontOffsetZ()*(offset+1));
     }

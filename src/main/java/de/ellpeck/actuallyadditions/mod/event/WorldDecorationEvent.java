@@ -92,7 +92,7 @@ public class WorldDecorationEvent{
                     randomPos = event.world.getTopSolidOrLiquidBlock(randomPos);
 
                     if(PosUtil.getMaterial(PosUtil.offset(randomPos, 0, -1, 0), event.world) == blockBelow){
-                        if(plant.canPlaceBlockAt(event.world, randomPos) && WorldUtil.isBlockAir(event.world, randomPos.add(0, 1, 0))){
+                        if(plant.canPlaceBlockAt(event.world, randomPos) && event.world.isAirBlock(randomPos)){
                             PosUtil.setBlock(randomPos, event.world, plant, meta, 2);
                         }
                     }
