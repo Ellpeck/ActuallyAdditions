@@ -68,7 +68,7 @@ public class BlockColoredLamp extends BlockBase{
         //Turning On
         if(player.isSneaking()){
             if(!world.isRemote){
-                PosUtil.setBlock(pos, world, this.isOn ? InitBlocks.blockColoredLamp : InitBlocks.blockColoredLampOn, PosUtil.getMetadata(pos, world), 2);
+                PosUtil.setBlock(pos, world, this.isOn ? InitBlocks.blockColoredLamp : InitBlocks.blockColoredLampOn, state.getBlock().getMetaFromState(state), 2);
             }
             return true;
         }
@@ -82,7 +82,7 @@ public class BlockColoredLamp extends BlockBase{
                     String name = OreDictionary.getOreName(oreID);
                     TheColoredLampColors color = TheColoredLampColors.getColorFromDyeName(name);
                     if(color != null){
-                        if(PosUtil.getMetadata(pos, world) != color.ordinal()){
+                        if(state.getBlock().getMetaFromState(state) != color.ordinal()){
                             if(!world.isRemote){
                                 PosUtil.setMetadata(pos, world, color.ordinal(), 2);
                                 if(!player.capabilities.isCreativeMode){

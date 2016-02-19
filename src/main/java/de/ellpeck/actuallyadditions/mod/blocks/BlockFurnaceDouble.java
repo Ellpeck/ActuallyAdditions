@@ -56,7 +56,7 @@ public class BlockFurnaceDouble extends BlockContainerBase{
     @Override
     @SideOnly(Side.CLIENT)
     public void randomDisplayTick(World world, BlockPos pos, IBlockState state, Random rand){
-        int meta = PosUtil.getMetadata(pos, world);
+        int meta = state.getBlock().getMetaFromState(state);
 
         if(meta > 3){
             float f = (float)pos.getX()+0.5F;

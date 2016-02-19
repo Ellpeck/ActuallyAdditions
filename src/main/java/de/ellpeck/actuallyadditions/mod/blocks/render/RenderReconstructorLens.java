@@ -20,7 +20,6 @@ import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 
-//TODO Fix Reconstructor Lens rendering
 public class RenderReconstructorLens extends TileEntitySpecialRenderer{
 
     @Override

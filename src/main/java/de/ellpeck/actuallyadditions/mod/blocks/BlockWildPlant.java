@@ -51,7 +51,7 @@ public class BlockWildPlant extends BlockBushBase{
     @Override
     public boolean canBlockStay(World world, BlockPos pos, IBlockState state){
         BlockPos offset = PosUtil.offset(pos, 0, -1, 0);
-        return PosUtil.getMetadata(pos, world) == TheWildPlants.RICE.ordinal() ? PosUtil.getMaterial(offset, world) == Material.water : PosUtil.getBlock(offset, world).canSustainPlant(world, offset, EnumFacing.UP, this);
+        return state.getBlock().getMetaFromState(state) == TheWildPlants.RICE.ordinal() ? PosUtil.getMaterial(offset, world) == Material.water : PosUtil.getBlock(offset, world).canSustainPlant(world, offset, EnumFacing.UP, this);
     }
 
     @Override

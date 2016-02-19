@@ -54,7 +54,7 @@ public class BlockCoalGenerator extends BlockContainerBase{
     @Override
     @SideOnly(Side.CLIENT)
     public void randomDisplayTick(World world, BlockPos pos, IBlockState state, Random rand){
-        int meta = PosUtil.getMetadata(pos, world);
+        int meta = state.getBlock().getMetaFromState(state);
 
         if(meta == 1){
             for(int i = 0; i < 5; i++){
