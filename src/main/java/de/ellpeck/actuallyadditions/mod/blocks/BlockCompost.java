@@ -50,20 +50,26 @@ public class BlockCompost extends BlockContainerBase implements IHudDisplay{
     public void addCollisionBoxesToList(World world, BlockPos pos, IBlockState state, AxisAlignedBB mask, List list, Entity collidingEntity){
         this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.3125F, 1.0F);
         super.addCollisionBoxesToList(world, pos, state, mask, list, collidingEntity);
-        float f = 0.125F;
-        this.setBlockBounds(0.0F, 0.0F, 0.0F, f, 1.0F, 1.0F);
+        float f = 0.125F, y = 0.7F;
+        this.setBlockBounds(0.0F, 0.0F, 0.0F, f, y, 1.0F);
         super.addCollisionBoxesToList(world, pos, state, mask, list, collidingEntity);
-        this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, f);
+        this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, y, f);
         super.addCollisionBoxesToList(world, pos, state, mask, list, collidingEntity);
-        this.setBlockBounds(1.0F-f, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
+        this.setBlockBounds(1.0F-f, 0.0F, 0.0F, 1.0F, y, 1.0F);
         super.addCollisionBoxesToList(world, pos, state, mask, list, collidingEntity);
-        this.setBlockBounds(0.0F, 0.0F, 1.0F-f, 1.0F, 1.0F, 1.0F);
+        this.setBlockBounds(0.0F, 0.0F, 1.0F-f, 1.0F, y, 1.0F);
         super.addCollisionBoxesToList(world, pos, state, mask, list, collidingEntity);
         this.setBlockBoundsForItemRender();
     }
 
     @Override
     public boolean isOpaqueCube(){
+        return false;
+    }
+
+    @Override
+    public boolean isFullCube()
+    {
         return false;
     }
 
@@ -104,7 +110,7 @@ public class BlockCompost extends BlockContainerBase implements IHudDisplay{
     @Override
     public void setBlockBoundsForItemRender(){
         float f = 1.0F/16.0F;
-        this.setBlockBounds(f, 0.0F, f, 1.0F-f, 1.0F, 1.0F-f);
+        this.setBlockBounds(f, 0.0F, f, 1.0F-f, 11 * f, 1.0F-f);
     }
 
     @Override

@@ -33,6 +33,10 @@ public class TileEntityCompost extends TileEntityInventoryBase{
         compound.setInteger("ConversionTime", this.conversionTime);
     }
 
+    public float getAmount(){
+        return this.getStackInSlot(0) != null ? this.getStackInSlot(0).stackSize : 0F;
+    }
+
     @Override
     public boolean shouldSyncSlots(){
         return true;
