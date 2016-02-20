@@ -1,3 +1,20 @@
+# 1.8.9-r26
+### This update was done by canitzp. As I started to work on another mod and I'm not really interested in Actually Additions anymore, this will now be a common feature. If something breaks with an update, call him. Not me. Thanks.
+* Made the knife not repairable
+* Changed download link for updates to redirect to the proper page
+* added click area to JEI for easy recipe access
+* Set ESD incomplete. Because it's incomplete.
+* Haphazardly revert implementation of new item system for ESD as it was completely broken
+* Updated to official RF API.
+* Fixed tool JSONs
+* Reactivated Atomic Reconstructor Lens Renderer
+* Rewrote Smiley Cloud renderer
+* Hopefully fixed a minor miner bug (ha ha ha)
+* Fixed Double Plant crash
+* Fixed JEI booklet page rendering
+* New compost rendering
+* [API] Removed lens registry
+
 # 1.8.9-r25
 * Fixed assets derping because of wrong capitalization
 * Ignore NBT Tags of Energy items in JEI
