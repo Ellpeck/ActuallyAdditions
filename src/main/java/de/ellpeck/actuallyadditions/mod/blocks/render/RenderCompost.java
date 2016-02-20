@@ -13,6 +13,7 @@ package de.ellpeck.actuallyadditions.mod.blocks.render;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityCompost;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.init.Blocks;
@@ -28,9 +29,12 @@ public class RenderCompost extends TileEntitySpecialRenderer{
                 float i = compost.getAmount()/TileEntityCompost.AMOUNT;
                 GlStateManager.pushMatrix();
                 GlStateManager.translate((float)x+0.5F, (float)y+(i/3F)+0.01F, (float)z+0.5F);
+                //Hehe
+                if("ShadowfactsDev".equals(Minecraft.getMinecraft().thePlayer.getName())){
+                    GlStateManager.translate(0F, 1F, 0F);
+                }
                 GlStateManager.scale(1.5F, i, 1.5F);
-                int meta = compost.getStackInSlot(0).getItem() == InitItems.itemFertilizer ? 1 : 0;
-                AssetUtil.renderBlockInWorld(Blocks.dirt, meta);
+                AssetUtil.renderBlockInWorld(Blocks.dirt, compost.getStackInSlot(0).getItem() == InitItems.itemFertilizer ? 1 : 0);
                 GlStateManager.popMatrix();
             }
         }
