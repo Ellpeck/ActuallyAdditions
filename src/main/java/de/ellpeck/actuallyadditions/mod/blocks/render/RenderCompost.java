@@ -21,13 +21,13 @@ import net.minecraft.tileentity.TileEntity;
 public class RenderCompost extends TileEntitySpecialRenderer{
 
     @Override
-    public void renderTileEntityAt(TileEntity te, double x, double y, double z, float partialTicks, int destroyStage) {
+    public void renderTileEntityAt(TileEntity te, double x, double y, double z, float partialTicks, int destroyStage){
         if(te instanceof TileEntityCompost){
-            TileEntityCompost compost = (TileEntityCompost) te;
+            TileEntityCompost compost = (TileEntityCompost)te;
             if(compost.getStackInSlot(0) != null){
-                float i = compost.getAmount() / TileEntityCompost.AMOUNT;
+                float i = compost.getAmount()/TileEntityCompost.AMOUNT;
                 GlStateManager.pushMatrix();
-                GlStateManager.translate((float) x + 0.5F, (float) y + (i / 3F) + 0.01F, (float) z + 0.5F);
+                GlStateManager.translate((float)x+0.5F, (float)y+(i/3F)+0.01F, (float)z+0.5F);
                 GlStateManager.scale(1.5F, i, 1.5F);
                 int meta = compost.getStackInSlot(0).getItem() == InitItems.itemFertilizer ? 1 : 0;
                 AssetUtil.renderBlockInWorld(Blocks.dirt, meta);

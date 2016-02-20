@@ -54,7 +54,8 @@ public class RenderSmileyCloud extends TileEntitySpecialRenderer{
 
             if(ClientProxy.bulletForMyValentine || (theCloud.name != null && !theCloud.name.isEmpty() && theCloud.name.equals("Pink Fluffy Unicloud"))){
                 theCloud.setPinkAndFluffy();
-            } else {
+            }
+            else{
                 theCloud.setNormalCloud();
             }
 
@@ -64,16 +65,16 @@ public class RenderSmileyCloud extends TileEntitySpecialRenderer{
                     for(String triggerName : cloud.getTriggerNames()){
                         if(StringUtil.equalsToLowerCase(triggerName, theCloud.name)){
                             GlStateManager.pushMatrix();
-                            switch (PosUtil.getMetadata(theCloud.getPos(), theCloud.getWorld())){
-                                case 1: {
+                            switch(PosUtil.getMetadata(theCloud.getPos(), theCloud.getWorld())){
+                                case 1:{
                                     GlStateManager.rotate(180, 0, 1, 0);
                                     break;
                                 }
-                                case 2: {
+                                case 2:{
                                     GlStateManager.rotate(270, 0, 1, 0);
                                     break;
                                 }
-                                case 3: {
+                                case 3:{
                                     GlStateManager.rotate(90, 0, 1, 0);
                                     break;
                                 }
@@ -91,8 +92,8 @@ public class RenderSmileyCloud extends TileEntitySpecialRenderer{
             }
             GlStateManager.popMatrix();
 
-            if(theCloud.name != null && !theCloud.name.isEmpty() && !Minecraft.getMinecraft().gameSettings.hideGUI) {
-                AssetUtil.renderNameTag(theCloud.name, x + 0.5F, y + 1.3F, z + 0.66);
+            if(theCloud.name != null && !theCloud.name.isEmpty() && !Minecraft.getMinecraft().gameSettings.hideGUI){
+                AssetUtil.renderNameTag(theCloud.name, x+0.5F, y+1.3F, z+0.66);
             }
 
         }

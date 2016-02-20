@@ -68,8 +68,7 @@ public class BlockCompost extends BlockContainerBase implements IHudDisplay{
     }
 
     @Override
-    public boolean isFullCube()
-    {
+    public boolean isFullCube(){
         return false;
     }
 
@@ -110,7 +109,7 @@ public class BlockCompost extends BlockContainerBase implements IHudDisplay{
     @Override
     public void setBlockBoundsForItemRender(){
         float f = 1.0F/16.0F;
-        this.setBlockBounds(f, 0.0F, f, 1.0F-f, 11 * f, 1.0F-f);
+        this.setBlockBounds(f, 0.0F, f, 1.0F-f, 11*f, 1.0F-f);
     }
 
     @Override

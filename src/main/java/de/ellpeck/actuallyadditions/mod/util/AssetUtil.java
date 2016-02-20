@@ -118,7 +118,7 @@ public class AssetUtil{
     public static void renderNameTag(String tag, float x, float y, float z){
         FontRenderer fontrenderer = Minecraft.getMinecraft().fontRendererObj;
         float f = 1.6F;
-        float f1 = 0.016666668F * f;
+        float f1 = 0.016666668F*f;
         GlStateManager.pushMatrix();
         GlStateManager.translate(x, y, z);
         GL11.glNormal3f(0.0F, 1.0F, 0.0F);
@@ -133,19 +133,19 @@ public class AssetUtil{
         Tessellator tessellator = Tessellator.getInstance();
         WorldRenderer worldrenderer = tessellator.getWorldRenderer();
         int i = 0;
-        int j = fontrenderer.getStringWidth(tag) / 2;
+        int j = fontrenderer.getStringWidth(tag)/2;
         GlStateManager.disableTexture2D();
         worldrenderer.begin(7, DefaultVertexFormats.POSITION_COLOR);
-        worldrenderer.pos((double) (-j - 1), (double) (-1 + i), 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
-        worldrenderer.pos((double) (-j - 1), (double) (8 + i), 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
-        worldrenderer.pos((double) (j + 1), (double) (8 + i), 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
-        worldrenderer.pos((double) (j + 1), (double) (-1 + i), 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
+        worldrenderer.pos((double)(-j-1), (double)(-1+i), 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
+        worldrenderer.pos((double)(-j-1), (double)(8+i), 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
+        worldrenderer.pos((double)(j+1), (double)(8+i), 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
+        worldrenderer.pos((double)(j+1), (double)(-1+i), 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
         tessellator.draw();
         GlStateManager.enableTexture2D();
-        fontrenderer.drawString(tag, -fontrenderer.getStringWidth(tag) / 2, i, 553648127);
+        fontrenderer.drawString(tag, -fontrenderer.getStringWidth(tag)/2, i, 553648127);
         GlStateManager.enableDepth();
         GlStateManager.depthMask(true);
-        fontrenderer.drawString(tag, -fontrenderer.getStringWidth(tag) / 2, i, -1);
+        fontrenderer.drawString(tag, -fontrenderer.getStringWidth(tag)/2, i, -1);
         GlStateManager.enableLighting();
         GlStateManager.disableBlend();
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
@@ -153,6 +153,6 @@ public class AssetUtil{
     }
 
     public static void renderNameTag(String tag, double x, double y, double z){
-        renderNameTag(tag, (float) x,  (float) y,  (float) z);
+        renderNameTag(tag, (float)x, (float)y, (float)z);
     }
 }

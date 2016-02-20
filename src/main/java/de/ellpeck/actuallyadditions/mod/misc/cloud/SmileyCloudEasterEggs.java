@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.misc.cloud;
 
-import de.ellpeck.actuallyadditions.mod.blocks.BlockSmileyCloud;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheFoods;
