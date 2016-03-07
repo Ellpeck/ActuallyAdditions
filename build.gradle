@@ -17,10 +17,10 @@ group = "de.ellpeck.actuallyadditions"
 archivesBaseName = "ActuallyAdditions"
 
 minecraft {
-    version = "1.8.9-11.15.1.1747"
+    version = "1.8.9-11.15.1.1764"
     runDir = "idea"
 
-    mappings = "stable_20"
+    mappings = "stable_22"
     makeObfSourceJar = false
     useDepAts = true
 
@@ -42,7 +42,7 @@ dependencies {
     //compile "codechicken:CodeChickenCore:1.8-1.0.5.36:dev"
     //compile "codechicken:NotEnoughItems:1.8-1.0.5.104:dev"
 
-    deobfCompile "mezz.jei:jei_1.8.9:2.26.0.154"
+    deobfCompile "mezz.jei:jei_1.8.9:2.28.6.173"
 }
 
 processResources {
