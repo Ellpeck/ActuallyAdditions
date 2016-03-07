@@ -92,6 +92,9 @@ public class BookletUtils{
             else if(playerName.equals("KittyVanCat")){
                 version = "Cat's Edition";
             }
+            else if(playerName.equals("canitzp")){
+                version = "P's Edition";
+            }
             else if(playerName.equals("Ellpeck") || Util.isDevVersion()){
                 version = "Dev's Edition";
             }
