@@ -120,7 +120,7 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
 
     @Override
     public <T> T getCapability(Capability<T> capability, EnumFacing facing){
-        return this.capabilities.getCapability(capability, facing);
+        return this.capabilities != null ? this.capabilities.getCapability(capability, facing) : super.getCapability(capability, facing);
     }
 
     @Override
