@@ -15,8 +15,10 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class ItemFertilizer extends ItemBase{
@@ -26,14 +28,14 @@ public class ItemFertilizer extends ItemBase{
     }
 
     @Override
-    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float par8, float par9, float par10){
+    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float par8, float par9, float par10){
         if(ItemDye.applyBonemeal(stack, world, pos, player)){
             if(!world.isRemote){
                 world.playAuxSFX(2005, pos, 0);
             }
-            return true;
+            return EnumActionResult.SUCCESS;
         }
-        return super.onItemUse(stack, player, world, pos, side, par8, par9, par10);
+        return super.onItemUse(stack, player, world, pos, hand, side, par8, par9, par10);
     }
 
     @Override

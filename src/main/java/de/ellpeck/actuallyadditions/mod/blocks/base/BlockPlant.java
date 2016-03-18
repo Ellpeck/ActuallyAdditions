@@ -20,9 +20,10 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.EnumPlantType;
@@ -83,21 +84,21 @@ public class BlockPlant extends BlockCrops{
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing facing, float hitX, float hitY, float hitZ){
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack stack, EnumFacing facing, float hitX, float hitY, float hitZ){
         if(getMetaFromState(state) >= 7){
             if(!world.isRemote){
 
                 List<ItemStack> drops = getDrops(world, pos, state, 0);
                 boolean deductedSeedSize = false;
-                for(ItemStack stack : drops){
-                    if(stack != null){
-                        if(stack.getItem() == this.seedItem && !deductedSeedSize){
-                            stack.stackSize--;
+                for(ItemStack drop : drops){
+                    if(drop != null){
+                        if(drop.getItem() == this.seedItem && !deductedSeedSize){
+                            drop.stackSize--;
                             deductedSeedSize = true;
                         }
 
-                        if(stack.stackSize > 0){
-                            EntityItem entity = new EntityItem(world, pos.getX()+0.5, pos.getY()+0.5, pos.getZ()+0.5, stack);
+                        if(drop.stackSize > 0){
+                            EntityItem entity = new EntityItem(world, pos.getX()+0.5, pos.getY()+0.5, pos.getZ()+0.5, drop);
                             world.spawnEntityInWorld(entity);
                         }
                     }
@@ -108,11 +109,6 @@ public class BlockPlant extends BlockCrops{
             return true;
         }
         return false;
-    }
-
-    @Override
-    public int getDamageValue(World world, BlockPos pos){
-        return 0;
     }
 
     @Override

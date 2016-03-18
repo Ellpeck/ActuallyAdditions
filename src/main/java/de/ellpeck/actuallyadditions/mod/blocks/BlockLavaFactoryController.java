@@ -14,6 +14,7 @@ import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityLavaFactoryController;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
@@ -22,7 +23,7 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.profiler.Profiler;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -34,7 +35,7 @@ public class BlockLavaFactoryController extends BlockContainerBase implements IH
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(4.5F);
         this.setResistance(20.0F);
-        this.setStepSound(soundTypeStone);
+        this.setStepSound(SoundType.STONE);
     }
 
     @Override
@@ -49,7 +50,7 @@ public class BlockLavaFactoryController extends BlockContainerBase implements IH
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void displayHud(Minecraft minecraft, EntityPlayer player, ItemStack stack, MovingObjectPosition posHit, Profiler profiler, ScaledResolution resolution){
+    public void displayHud(Minecraft minecraft, EntityPlayer player, ItemStack stack, RayTraceResult posHit, Profiler profiler, ScaledResolution resolution){
         TileEntityLavaFactoryController factory = (TileEntityLavaFactoryController)minecraft.theWorld.getTileEntity(posHit.getBlockPos());
         if(factory != null){
             int state = factory.isMultiblock();

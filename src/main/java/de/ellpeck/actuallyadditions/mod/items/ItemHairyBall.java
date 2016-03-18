@@ -18,6 +18,9 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.WeightedRandom;
 import net.minecraft.world.World;
 
@@ -28,7 +31,7 @@ public class ItemHairyBall extends ItemBase{
     }
 
     @Override
-    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player){
+    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand){
         if(!world.isRemote){
             ItemStack returnItem = this.getRandomReturnItem();
             if(!player.inventory.addItemStackToInventory(returnItem)){
@@ -37,13 +40,15 @@ public class ItemHairyBall extends ItemBase{
                 player.worldObj.spawnEntityInWorld(entityItem);
             }
             stack.stackSize--;
-            world.playSoundAtEntity(player, "random.pop", 0.2F, Util.RANDOM.nextFloat()*0.1F+0.9F);
+
+            //TODO Sound
+            //world.playSoundAtEntity(player, "random.pop", 0.2F, Util.RANDOM.nextFloat()*0.1F+0.9F);
         }
-        return stack;
+        return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
     }
 
     public ItemStack getRandomReturnItem(){
-        return ((BallOfFurReturn)WeightedRandom.getRandomItem(Util.RANDOM, ActuallyAdditionsAPI.ballOfFurReturnItems)).returnItem.copy();
+        return WeightedRandom.getRandomItem(Util.RANDOM, ActuallyAdditionsAPI.ballOfFurReturnItems).returnItem.copy();
     }
 
     @Override

@@ -21,12 +21,13 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ItemGrowthRing extends ItemEnergy{
 
@@ -41,11 +42,11 @@ public class ItemGrowthRing extends ItemEnergy{
         }
 
         EntityPlayer player = (EntityPlayer)entity;
-        ItemStack equipped = player.getCurrentEquippedItem();
+        ItemStack equipped = player.getActiveItemStack();
 
         int energyUse = 300;
         if(equipped != null && equipped == stack && this.getEnergyStored(stack) >= energyUse){
-            ArrayList<BlockPos> blocks = new ArrayList<BlockPos>();
+            List<BlockPos> blocks = new ArrayList<BlockPos>();
 
             if(stack.getTagCompound() == null){
                 stack.setTagCompound(new NBTTagCompound());

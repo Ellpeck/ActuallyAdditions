@@ -94,7 +94,7 @@ public class ItemUtil{
         if(ench != null){
             for(int i = 0; i < ench.tagCount(); i++){
                 short id = ench.getCompoundTagAt(i).getShort("id");
-                if(id == e.effectId){
+                if(id == Enchantment.getEnchantmentID(e)){
                     return true;
                 }
             }
@@ -107,7 +107,7 @@ public class ItemUtil{
         if(ench != null){
             for(int i = 0; i < ench.tagCount(); i++){
                 short id = ench.getCompoundTagAt(i).getShort("id");
-                if(id == e.effectId){
+                if(id == Enchantment.getEnchantmentID(e)){
                     ench.removeTag(i);
                 }
             }

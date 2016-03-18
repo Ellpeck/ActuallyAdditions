@@ -18,6 +18,7 @@ import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntitySmileyCloud;
 import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.IBlockState;
@@ -28,6 +29,9 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -44,53 +48,17 @@ public class BlockSmileyCloud extends BlockContainerBase{
         super(Material.cloth, name);
         this.setHardness(0.5F);
         this.setResistance(5.0F);
-        this.setStepSound(soundTypeCloth);
+        this.setStepSound(SoundType.CLOTH);
         this.setTickRandomly(true);
     }
 
     @Override
-    public boolean isFullCube(){
+    public boolean isFullCube(IBlockState state){
         return false;
     }
 
-    @Override
-    public void addCollisionBoxesToList(World world, BlockPos pos, IBlockState state, AxisAlignedBB axis, List list, Entity entity){
-        this.setBlockBoundsBasedOnState(world, pos);
-        super.addCollisionBoxesToList(world, pos, state, axis, list, entity);
-    }
-
-    @Override
-    public boolean isOpaqueCube(){
-        return false;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void randomDisplayTick(World world, BlockPos pos, IBlockState state, Random rand){
-        if(Util.RANDOM.nextInt(30) == 0){
-            for(int i = 0; i < 2; i++){
-                double d = Util.RANDOM.nextGaussian()*0.02D;
-                double d1 = Util.RANDOM.nextGaussian()*0.02D;
-                double d2 = Util.RANDOM.nextGaussian()*0.02D;
-                world.spawnParticle(EnumParticleTypes.HEART, pos.getX()+Util.RANDOM.nextFloat(), pos.getY()+0.65+Util.RANDOM.nextFloat(), pos.getZ()+Util.RANDOM.nextFloat(), d, d1, d2);
-            }
-        }
-    }
-
-    @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing f6, float f7, float f8, float f9){
-        if(!world.isRemote){
-            TileEntity tile = world.getTileEntity(pos);
-            if(tile instanceof TileEntitySmileyCloud){
-                player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.CLOUD.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
-
-                player.triggerAchievement(TheAchievements.NAME_SMILEY_CLOUD.ach);
-            }
-        }
-        return true;
-    }
-
-    @Override
+    //TODO Fix bounding box
+    /*@Override
     public void setBlockBoundsBasedOnState(IBlockAccess world, BlockPos pos){
         int meta = PosUtil.getMetadata(pos, world);
         float f = 0.0625F;
@@ -107,6 +75,43 @@ public class BlockSmileyCloud extends BlockContainerBase{
         if(meta == 2){
             this.setBlockBounds(f*2F, 0F, 0F, 1F, 1F-f*3F, 1F);
         }
+    }
+
+    @Override
+    public void addCollisionBoxesToList(World world, BlockPos pos, IBlockState state, AxisAlignedBB axis, List list, Entity entity){
+        this.setBlockBoundsBasedOnState(world, pos);
+        super.addCollisionBoxesToList(world, pos, state, axis, list, entity);
+    }*/
+
+    @Override
+    public boolean isOpaqueCube(IBlockState state){
+        return false;
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random rand){
+        if(Util.RANDOM.nextInt(30) == 0){
+            for(int i = 0; i < 2; i++){
+                double d = Util.RANDOM.nextGaussian()*0.02D;
+                double d1 = Util.RANDOM.nextGaussian()*0.02D;
+                double d2 = Util.RANDOM.nextGaussian()*0.02D;
+                world.spawnParticle(EnumParticleTypes.HEART, pos.getX()+Util.RANDOM.nextFloat(), pos.getY()+0.65+Util.RANDOM.nextFloat(), pos.getZ()+Util.RANDOM.nextFloat(), d, d1, d2);
+            }
+        }
+    }
+
+    @Override
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack stack, EnumFacing f6, float f7, float f8, float f9){
+        if(!world.isRemote){
+            TileEntity tile = world.getTileEntity(pos);
+            if(tile instanceof TileEntitySmileyCloud){
+                player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.CLOUD.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
+
+                player.addStat(TheAchievements.NAME_SMILEY_CLOUD.ach);
+            }
+        }
+        return true;
     }
 
     @Override

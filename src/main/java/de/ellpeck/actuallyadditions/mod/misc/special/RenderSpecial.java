@@ -20,7 +20,7 @@ import net.minecraft.entity.player.EnumPlayerModelParts;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.math.Vec3d;
 
 import java.util.Calendar;
 
@@ -50,8 +50,8 @@ public class RenderSpecial{
 
         GlStateManager.pushMatrix();
 
-        Vec3 currentPos = Minecraft.getMinecraft().thePlayer.getPositionEyes(partialTicks);
-        Vec3 playerPos = player.getPositionEyes(partialTicks);
+        Vec3d currentPos = Minecraft.getMinecraft().thePlayer.getPositionEyes(partialTicks);
+        Vec3d playerPos = player.getPositionEyes(partialTicks);
         GlStateManager.translate(playerPos.xCoord-currentPos.xCoord, playerPos.yCoord-currentPos.yCoord-(player.isSneaking() || Minecraft.getMinecraft().thePlayer.isSneaking() ? 0.125D : 0D), playerPos.zCoord-currentPos.zCoord);
 
         GlStateManager.translate(0D, 2.435D+offsetUp, 0D);

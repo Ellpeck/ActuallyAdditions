@@ -20,7 +20,8 @@ import net.minecraft.block.BlockContainer;
 import net.minecraft.block.BlockRedstoneTorch;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyInteger;
-import net.minecraft.block.state.BlockState;
+import net.minecraft.block.state.BlockStateBase;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
@@ -31,8 +32,9 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
@@ -118,7 +120,7 @@ public abstract class BlockContainerBase extends BlockContainer{
     }
 
     public boolean tryToggleRedstone(World world, BlockPos pos, EntityPlayer player){
-        ItemStack stack = player.getCurrentEquippedItem();
+        ItemStack stack = player.getActiveItemStack();
         if(stack != null && Block.getBlockFromItem(stack.getItem()) instanceof BlockRedstoneTorch){
             TileEntity tile = world.getTileEntity(pos);
             if(tile instanceof IRedstoneToggle){
@@ -224,12 +226,12 @@ public abstract class BlockContainerBase extends BlockContainer{
     }
 
     @Override
-    public boolean hasComparatorInputOverride(){
+    public boolean hasComparatorInputOverride(IBlockState state){
         return true;
     }
 
     @Override
-    public int getComparatorInputOverride(World world, BlockPos pos){
+    public int getComparatorInputOverride(IBlockState state, World world, BlockPos pos){
         TileEntity tile = world.getTileEntity(pos);
         if(tile instanceof IInventory){
             return Container.calcRedstoneFromInventory((IInventory)tile);
@@ -238,8 +240,8 @@ public abstract class BlockContainerBase extends BlockContainer{
     }
 
     @Override
-    protected BlockState createBlockState(){
-        return this.getMetaProperty() == null ? super.createBlockState() : new BlockState(this, this.getMetaProperty());
+    protected BlockStateContainer createBlockState(){
+        return this.getMetaProperty() == null ? super.createBlockState() : new BlockStateContainer(this, this.getMetaProperty());
     }
 
     @Override
@@ -290,7 +292,7 @@ public abstract class BlockContainerBase extends BlockContainer{
     }
 
     @Override
-    public int getRenderType(){
-        return 3;
+    public EnumBlockRenderType getRenderType(IBlockState state){
+        return EnumBlockRenderType.MODEL;
     }
 }

@@ -121,11 +121,8 @@ public class ActuallyAdditions{
         Util.registerDispenserHandler(InitItems.itemBucketCanolaOil, new DispenserHandlerEmptyBucket());
         Util.registerDispenserHandler(Items.bucket, new DispenserHandlerFillBucket());
         Util.registerDispenserHandler(InitItems.itemFertilizer, new DispenserHandlerFertilize());
-    }
 
-    @EventHandler
-    public void serverStarted(FMLServerStartedEvent event){
-        WorldData.init();
+        WorldData.init(event.getServer());
     }
 
     @EventHandler

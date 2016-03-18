@@ -22,8 +22,10 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class ItemChestToCrateUpgrade extends ItemBase{
@@ -33,7 +35,7 @@ public class ItemChestToCrateUpgrade extends ItemBase{
     }
 
     @Override
-    public boolean onItemUse(ItemStack heldStack, EntityPlayer player, World world, BlockPos pos, EnumFacing facing, float par8, float par9, float par10){
+    public EnumActionResult onItemUse(ItemStack heldStack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float par8, float par9, float par10){
         if(player.isSneaking()){
             TileEntity tileHit = world.getTileEntity(pos);
             Block block = PosUtil.getBlock(pos, world);
@@ -74,11 +76,11 @@ public class ItemChestToCrateUpgrade extends ItemBase{
                         heldStack.stackSize--;
                     }
                 }
-                return true;
+                return EnumActionResult.SUCCESS;
             }
         }
 
-        return super.onItemUse(heldStack, player, world, pos, facing, par8, par9, par10);
+        return super.onItemUse(heldStack, player, world, pos, hand, facing, par8, par9, par10);
     }
 
     @Override

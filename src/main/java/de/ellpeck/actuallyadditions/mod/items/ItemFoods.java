@@ -16,12 +16,14 @@ import de.ellpeck.actuallyadditions.mod.items.metalists.TheFoods;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -41,11 +43,11 @@ public class ItemFoods extends ItemFoodBase{
     }
 
     @Override
-    public ItemStack onItemUseFinish(ItemStack stack, World world, EntityPlayer player){
+    public ItemStack onItemUseFinish(ItemStack stack, World world, EntityLivingBase player){
         ItemStack stackToReturn = super.onItemUseFinish(stack, world, player);
         ItemStack returnItem = stack.getItemDamage() >= allFoods.length ? null : allFoods[stack.getItemDamage()].returnItem;
-        if(returnItem != null){
-            if(!player.inventory.addItemStackToInventory(returnItem.copy())){
+        if(returnItem != null && player instanceof EntityPlayer){
+            if(!((EntityPlayer)player).inventory.addItemStackToInventory(returnItem.copy())){
                 if(!world.isRemote){
                     EntityItem entityItem = new EntityItem(player.worldObj, player.posX, player.posY, player.posZ, returnItem.copy());
                     entityItem.setPickupDelay(0);

@@ -33,8 +33,7 @@ public class WorldData extends WorldSavedData{
         }
     }
 
-    public static void init(){
-        MinecraftServer server = MinecraftServer.getServer();
+    public static void init(MinecraftServer server){
         if(server != null){
             World world = server.getEntityWorld();
             if(!world.isRemote){

@@ -17,6 +17,7 @@ import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBreaker;
 import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import net.minecraft.block.BlockPistonBase;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.IBlockState;
@@ -25,8 +26,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class BlockBreaker extends BlockContainerBase{
@@ -40,7 +42,7 @@ public class BlockBreaker extends BlockContainerBase{
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(1.5F);
         this.setResistance(10.0F);
-        this.setStepSound(soundTypeStone);
+        this.setStepSound(SoundType.STONE);
     }
 
     @Override
@@ -49,7 +51,7 @@ public class BlockBreaker extends BlockContainerBase{
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing par6, float par7, float par8, float par9){
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack stack, EnumFacing par6, float par7, float par8, float par9){
         if(this.tryToggleRedstone(world, pos, player)){
             return true;
         }
@@ -70,7 +72,7 @@ public class BlockBreaker extends BlockContainerBase{
 
     @Override
     public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase player, ItemStack stack){
-        int rotation = BlockPistonBase.getFacingFromEntity(world, pos, player).ordinal();
+        int rotation = BlockPistonBase.getFacingFromEntity(pos, player).ordinal();
         PosUtil.setMetadata(pos, world, rotation, 2);
 
         super.onBlockPlacedBy(world, pos, state, player, stack);

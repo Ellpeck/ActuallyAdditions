@@ -44,11 +44,12 @@ public class ItemDust extends ItemBase{
         return stack.getItemDamage() >= allDusts.length ? StringUtil.BUGGED_ITEM_NAME : this.getUnlocalizedName()+allDusts[stack.getItemDamage()].name;
     }
 
-    @Override
+    //TODO Figure out item colors
+    /*@Override
     @SideOnly(Side.CLIENT)
     public int getColorFromItemStack(ItemStack stack, int pass){
         return stack.getItemDamage() >= allDusts.length ? 0 : allDusts[stack.getItemDamage()].color;
-    }
+    }*/
 
     @Override
     public EnumRarity getRarity(ItemStack stack){

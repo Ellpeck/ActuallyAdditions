@@ -14,8 +14,9 @@ import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.block.BlockBush;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.properties.PropertyInteger;
-import net.minecraft.block.state.BlockState;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
@@ -27,7 +28,7 @@ public class BlockBushBase extends BlockBush{
 
     public BlockBushBase(String name){
         this.name = name;
-        this.setStepSound(soundTypeGrass);
+        this.setStepSound(SoundType.PLANT);
 
         this.register();
     }
@@ -69,8 +70,8 @@ public class BlockBushBase extends BlockBush{
     }
 
     @Override
-    protected BlockState createBlockState(){
-        return this.getMetaProperty() == null ? super.createBlockState() : new BlockState(this, this.getMetaProperty());
+    protected BlockStateContainer createBlockState(){
+        return this.getMetaProperty() == null ? super.createBlockState() : new BlockStateContainer(this, this.getMetaProperty());
     }
 
     protected PropertyInteger getMetaProperty(){

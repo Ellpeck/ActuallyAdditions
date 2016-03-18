@@ -17,7 +17,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.oredict.OreDictionary;
@@ -26,8 +26,8 @@ import java.util.List;
 
 public class TooltipEvent{
 
-    private static final String ADVANCED_INFO_TEXT_PRE = EnumChatFormatting.DARK_GRAY+"     ";
-    private static final String ADVANCED_INFO_HEADER_PRE = EnumChatFormatting.GRAY+"  -";
+    private static final String ADVANCED_INFO_TEXT_PRE = TextFormatting.DARK_GRAY+"     ";
+    private static final String ADVANCED_INFO_HEADER_PRE = TextFormatting.GRAY+"  -";
 
     @SuppressWarnings("unchecked")
     @SubscribeEvent
@@ -36,7 +36,7 @@ public class TooltipEvent{
         if(event.itemStack.getItem() != null){
             if(ConfigBoolValues.CTRL_EXTRA_INFO.isEnabled()){
                 if(GuiScreen.isCtrlKeyDown()){
-                    event.toolTip.add(EnumChatFormatting.DARK_GRAY+""+EnumChatFormatting.ITALIC+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".extraInfo.desc")+":");
+                    event.toolTip.add(TextFormatting.DARK_GRAY+""+TextFormatting.ITALIC+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".extraInfo.desc")+":");
 
                     //OreDict Names
                     int[] oreIDs = OreDictionary.getOreIDs(event.itemStack);
@@ -84,17 +84,17 @@ public class TooltipEvent{
                             }
                         }
                         else{
-                            event.toolTip.add(ADVANCED_INFO_TEXT_PRE+EnumChatFormatting.ITALIC+"["+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".pressShift.desc")+"]");
+                            event.toolTip.add(ADVANCED_INFO_TEXT_PRE+TextFormatting.ITALIC+"["+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".pressShift.desc")+"]");
                         }
                     }
 
                     //Disabling Info
-                    event.toolTip.addAll(Minecraft.getMinecraft().fontRendererObj.listFormattedStringToWidth(EnumChatFormatting.ITALIC+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".disablingInfo.desc"), 200));
+                    event.toolTip.addAll(Minecraft.getMinecraft().fontRendererObj.listFormattedStringToWidth(TextFormatting.ITALIC+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".disablingInfo.desc"), 200));
 
                 }
                 else{
                     if(ConfigBoolValues.CTRL_INFO_FOR_EXTRA_INFO.isEnabled()){
-                        event.toolTip.add(EnumChatFormatting.DARK_GRAY+""+EnumChatFormatting.ITALIC+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".ctrlForMoreInfo.desc"));
+                        event.toolTip.add(TextFormatting.DARK_GRAY+""+TextFormatting .ITALIC+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".ctrlForMoreInfo.desc"));
                     }
                 }
             }

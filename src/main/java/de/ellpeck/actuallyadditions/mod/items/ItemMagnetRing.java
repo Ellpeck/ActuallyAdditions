@@ -16,8 +16,8 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
@@ -35,13 +35,13 @@ public class ItemMagnetRing extends ItemEnergy{
         if(!entity.isSneaking()){
             //Get all the Items in the area
             int range = 5;
-            ArrayList<EntityItem> items = (ArrayList<EntityItem>)world.getEntitiesWithinAABB(EntityItem.class, AxisAlignedBB.fromBounds(entity.posX-range, entity.posY-range, entity.posZ-range, entity.posX+range, entity.posY+range, entity.posZ+range));
+            ArrayList<EntityItem> items = (ArrayList<EntityItem>)world.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(entity.posX-range, entity.posY-range, entity.posZ-range, entity.posX+range, entity.posY+range, entity.posZ+range));
             if(!items.isEmpty()){
                 for(EntityItem item : items){
                     if(this.getEnergyStored(stack) >= energyUse){
                         //If the Item is near enough to get picked up
                         //(So it doesn't bounce around until it notices itself..)
-                        if(new Vec3(entity.posX, entity.posY, entity.posZ).distanceTo(new Vec3(item.posX, item.posY, item.posZ)) <= 1.5){
+                        if(new Vec3d(entity.posX, entity.posY, entity.posZ).distanceTo(new Vec3d(item.posX, item.posY, item.posZ)) <= 1.5){
                             item.onCollideWithPlayer((EntityPlayer)entity);
                         }
                         else{

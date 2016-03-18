@@ -12,7 +12,9 @@ package de.ellpeck.actuallyadditions.mod.blocks;
 
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityFishingNet;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -25,8 +27,9 @@ public class BlockFishingNet extends BlockContainerBase{
         this.setHarvestLevel("axe", 0);
         this.setHardness(0.5F);
         this.setResistance(3.0F);
-        this.setStepSound(soundTypeWood);
-        this.setBlockBounds(0F, 0F, 0F, 1F, 1F/16F, 1F);
+        this.setStepSound(SoundType.WOOD);
+        //TODO Fix block bounds
+        //this.setBlockBounds(0F, 0F, 0F, 1F, 1F/16F, 1F);
     }
 
     @Override
@@ -35,12 +38,12 @@ public class BlockFishingNet extends BlockContainerBase{
     }
 
     @Override
-    public boolean isFullCube(){
+    public boolean isFullCube(IBlockState state){
         return false;
     }
 
     @Override
-    public boolean isOpaqueCube(){
+    public boolean isOpaqueCube(IBlockState state){
         return false;
     }
 

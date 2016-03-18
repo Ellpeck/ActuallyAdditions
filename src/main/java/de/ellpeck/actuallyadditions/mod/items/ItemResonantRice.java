@@ -11,9 +11,13 @@
 package de.ellpeck.actuallyadditions.mod.items;
 
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 
 public class ItemResonantRice extends ItemBase{
@@ -23,12 +27,12 @@ public class ItemResonantRice extends ItemBase{
     }
 
     @Override
-    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player){
+    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand){
         if(!world.isRemote){
             stack.stackSize--;
             world.createExplosion(null, player.posX, player.posY, player.posZ, 0.5F, true);
         }
-        return stack;
+        return new ActionResult<>(EnumActionResult.SUCCESS, stack);
     }
 
     @Override

@@ -15,6 +15,9 @@ import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 
 public class ItemSolidifiedExperience extends ItemBase{
@@ -26,7 +29,7 @@ public class ItemSolidifiedExperience extends ItemBase{
     }
 
     @Override
-    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player){
+    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand){
         if(!world.isRemote){
             if(!player.isSneaking()){
                 world.spawnEntityInWorld(new EntityXPOrb(world, player.posX+0.5, player.posY+0.5, player.posZ+0.5, SOLID_XP_AMOUNT));
@@ -41,7 +44,7 @@ public class ItemSolidifiedExperience extends ItemBase{
                 }
             }
         }
-        return stack;
+        return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
     }
 
     @Override

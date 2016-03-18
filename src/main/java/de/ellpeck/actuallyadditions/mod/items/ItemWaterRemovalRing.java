@@ -19,8 +19,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 public class ItemWaterRemovalRing extends ItemEnergy{
@@ -36,7 +36,7 @@ public class ItemWaterRemovalRing extends ItemEnergy{
         }
 
         EntityPlayer player = (EntityPlayer)entity;
-        ItemStack equipped = player.getCurrentEquippedItem();
+        ItemStack equipped = player.getActiveItemStack();
 
         int energyUse = 350;
         if(equipped != null && equipped == stack && this.getEnergyStored(stack) >= energyUse){

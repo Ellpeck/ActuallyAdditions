@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.blocks;
 
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockBase;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
@@ -22,7 +23,7 @@ public class BlockGeneric extends BlockBase{
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(1.5F);
         this.setResistance(10.0F);
-        this.setStepSound(soundTypeStone);
+        this.setStepSound(SoundType.STONE);
     }
 
     @Override

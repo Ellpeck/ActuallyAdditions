@@ -16,13 +16,14 @@ import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockPistonBase;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class BlockLampPowerer extends BlockBase{
@@ -34,7 +35,7 @@ public class BlockLampPowerer extends BlockBase{
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(1.5F);
         this.setResistance(10.0F);
-        this.setStepSound(soundTypeStone);
+        this.setStepSound(SoundType.STONE);
     }
 
     @Override
@@ -49,7 +50,7 @@ public class BlockLampPowerer extends BlockBase{
 
     @Override
     public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase player, ItemStack stack){
-        int rotation = BlockPistonBase.getFacingFromEntity(world, pos, player).ordinal();
+        int rotation = BlockPistonBase.getFacingFromEntity(pos, player).ordinal();
         PosUtil.setMetadata(pos, world, rotation, 2);
 
         super.onBlockPlacedBy(world, pos, state, player, stack);

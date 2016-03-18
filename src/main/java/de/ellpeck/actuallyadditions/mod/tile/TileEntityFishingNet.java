@@ -17,13 +17,17 @@ import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.item.ItemFishingRod;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
-import net.minecraftforge.common.FishingHooks;
+import net.minecraft.world.WorldServer;
+import net.minecraft.world.storage.loot.LootContext;
+import net.minecraft.world.storage.loot.LootTableList;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class TileEntityFishingNet extends TileEntityBase{
 
@@ -50,17 +54,20 @@ public class TileEntityFishingNet extends TileEntityBase{
                     if(this.timeUntilNextDrop > 0){
                         this.timeUntilNextDrop--;
                         if(timeUntilNextDrop <= 0){
-                            ItemStack fishable = FishingHooks.getRandomFishable(Util.RANDOM, Util.RANDOM.nextFloat());
-                            TileEntity tile = worldObj.getTileEntity(PosUtil.offset(pos, 0, 1, 0));
-                            if(tile != null && tile instanceof IInventory){
-                                ArrayList<ItemStack> list = new ArrayList<ItemStack>();
-                                list.add(fishable);
-                                WorldUtil.addToInventory((IInventory)tile, list, EnumFacing.DOWN, true, false);
-                            }
-                            else{
-                                EntityItem item = new EntityItem(worldObj, pos.getX()+0.5, pos.getY()+0.5, pos.getZ()+0.5, fishable);
-                                item.lifespan = 2000;
-                                worldObj.spawnEntityInWorld(item);
+                            LootContext.Builder builder = new LootContext.Builder((WorldServer)this.worldObj);
+                            List<ItemStack> fishables = this.worldObj.getLootTableManager().getLootTableFromLocation(LootTableList.GAMEPLAY_FISHING).generateLootForPools(Util.RANDOM, builder.build());
+                            for(ItemStack fishable : fishables){
+                                TileEntity tile = worldObj.getTileEntity(PosUtil.offset(pos, 0, 1, 0));
+                                if(tile != null && tile instanceof IInventory){
+                                    ArrayList<ItemStack> list = new ArrayList<ItemStack>();
+                                    list.add(fishable);
+                                    WorldUtil.addToInventory((IInventory)tile, list, EnumFacing.DOWN, true, false);
+                                }
+                                else{
+                                    EntityItem item = new EntityItem(worldObj, pos.getX()+0.5, pos.getY()+0.5, pos.getZ()+0.5, fishable);
+                                    item.lifespan = 2000;
+                                    worldObj.spawnEntityInWorld(item);
+                                }
                             }
                         }
                     }

@@ -16,15 +16,16 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockFenceGate;
 import net.minecraft.block.BlockWall;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.BlockState;
+import net.minecraft.block.state.BlockStateBase;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -40,13 +41,17 @@ public class BlockWallAA extends BlockBase{
         this(name, base, 0);
     }
 
+    protected static final AxisAlignedBB[] field_185751_g = new AxisAlignedBB[]{new AxisAlignedBB(0.25D, 0.0D, 0.25D, 0.75D, 1.0D, 0.75D), new AxisAlignedBB(0.25D, 0.0D, 0.25D, 0.75D, 1.0D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.25D, 0.75D, 1.0D, 0.75D), new AxisAlignedBB(0.0D, 0.0D, 0.25D, 0.75D, 1.0D, 1.0D), new AxisAlignedBB(0.25D, 0.0D, 0.0D, 0.75D, 1.0D, 0.75D), new AxisAlignedBB(0.3125D, 0.0D, 0.0D, 0.6875D, 0.875D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 0.75D, 1.0D, 0.75D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 0.75D, 1.0D, 1.0D), new AxisAlignedBB(0.25D, 0.0D, 0.25D, 1.0D, 1.0D, 0.75D), new AxisAlignedBB(0.25D, 0.0D, 0.25D, 1.0D, 1.0D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.3125D, 1.0D, 0.875D, 0.6875D), new AxisAlignedBB(0.0D, 0.0D, 0.25D, 1.0D, 1.0D, 1.0D), new AxisAlignedBB(0.25D, 0.0D, 0.0D, 1.0D, 1.0D, 0.75D), new AxisAlignedBB(0.25D, 0.0D, 0.0D, 1.0D, 1.0D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 1.0D, 0.75D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 1.0D, 1.0D)};
+    protected static final AxisAlignedBB[] field_185750_B = new AxisAlignedBB[]{field_185751_g[0].setMaxY(1.5D), field_185751_g[1].setMaxY(1.5D), field_185751_g[2].setMaxY(1.5D), field_185751_g[3].setMaxY(1.5D), field_185751_g[4].setMaxY(1.5D), field_185751_g[5].setMaxY(1.5D), field_185751_g[6].setMaxY(1.5D), field_185751_g[7].setMaxY(1.5D), field_185751_g[8].setMaxY(1.5D), field_185751_g[9].setMaxY(1.5D), field_185751_g[10].setMaxY(1.5D), field_185751_g[11].setMaxY(1.5D), field_185751_g[12].setMaxY(1.5D), field_185751_g[13].setMaxY(1.5D), field_185751_g[14].setMaxY(1.5D), field_185751_g[15].setMaxY(1.5D)};
+
+
     public BlockWallAA(String name, Block base, int meta){
-        super(base.getMaterial(), name);
+        super(base.getMaterial(base.getDefaultState()), name);
         this.meta = meta;
 
         this.setHardness(1.5F);
         this.setResistance(10F);
-        this.setStepSound(base.stepSound);
+        this.setStepSound(base.getStepSound());
 
         this.setDefaultState(this.blockState.getBaseState().withProperty(BlockWall.UP, false).withProperty(BlockWall.NORTH, false).withProperty(BlockWall.EAST, false).withProperty(BlockWall.SOUTH, false).withProperty(BlockWall.WEST, false));
     }
@@ -57,7 +62,7 @@ public class BlockWallAA extends BlockBase{
     }
 
     @Override
-    public boolean isFullCube(){
+    public boolean isFullCube(IBlockState state){
         return false;
     }
 
@@ -68,64 +73,50 @@ public class BlockWallAA extends BlockBase{
 
     @Override
     @SideOnly(Side.CLIENT)
-    public boolean shouldSideBeRendered(IBlockAccess worldIn, BlockPos pos, EnumFacing side){
-        return side != EnumFacing.DOWN || super.shouldSideBeRendered(worldIn, pos, side);
+    public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side){
+        return side != EnumFacing.DOWN || super.shouldSideBeRendered(blockState, blockAccess, pos, side);
+    }
+
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos){
+        state = this.getActualState(state, source, pos);
+        return field_185751_g[figureOutSomeWallStuff(state)];
+    }
+
+    public AxisAlignedBB getSelectedBoundingBox(IBlockState blockState, World worldIn, BlockPos pos){
+        blockState = this.getActualState(blockState, worldIn, pos);
+        return field_185750_B[figureOutSomeWallStuff(blockState)];
+    }
+
+    private static int figureOutSomeWallStuff(IBlockState state){
+        int i = 0;
+
+        if(state.getValue(BlockWall.NORTH)){
+            i |= 1 << EnumFacing.NORTH.getHorizontalIndex();
+        }
+
+        if(state.getValue(BlockWall.EAST)){
+            i |= 1 << EnumFacing.EAST.getHorizontalIndex();
+        }
+
+        if(state.getValue(BlockWall.SOUTH)){
+            i |= 1 << EnumFacing.SOUTH.getHorizontalIndex();
+        }
+
+        if(state.getValue(BlockWall.WEST)){
+            i |= 1 << EnumFacing.WEST.getHorizontalIndex();
+        }
+
+        return i;
     }
 
     @Override
-    public AxisAlignedBB getCollisionBoundingBox(World worldIn, BlockPos pos, IBlockState state){
-        this.setBlockBoundsBasedOnState(worldIn, pos);
-        this.maxY = 1.5D;
-        return super.getCollisionBoundingBox(worldIn, pos, state);
-    }
-
-    @Override
-    public boolean isOpaqueCube(){
+    public boolean isOpaqueCube(IBlockState state){
         return false;
     }
 
     @Override
     public int damageDropped(IBlockState state){
         return meta;
-    }
-
-    @Override
-    public void setBlockBoundsBasedOnState(IBlockAccess worldIn, BlockPos pos){
-        boolean flag = this.canConnectTo(worldIn, pos.north());
-        boolean flag1 = this.canConnectTo(worldIn, pos.south());
-        boolean flag2 = this.canConnectTo(worldIn, pos.west());
-        boolean flag3 = this.canConnectTo(worldIn, pos.east());
-        float f = 0.25F;
-        float f1 = 0.75F;
-        float f2 = 0.25F;
-        float f3 = 0.75F;
-        float f4 = 1.0F;
-
-        if(flag){
-            f2 = 0.0F;
-        }
-        if(flag1){
-            f3 = 1.0F;
-        }
-        if(flag2){
-            f = 0.0F;
-        }
-        if(flag3){
-            f1 = 1.0F;
-        }
-
-        if(flag && flag1 && !flag2 && !flag3){
-            f4 = 0.8125F;
-            f = 0.3125F;
-            f1 = 0.6875F;
-        }
-        else if(!flag && !flag1 && flag2 && flag3){
-            f4 = 0.8125F;
-            f2 = 0.3125F;
-            f3 = 0.6875F;
-        }
-
-        this.setBlockBounds(f, 0.0F, f2, f1, f4, f3);
     }
 
     @SuppressWarnings("unchecked")
@@ -137,7 +128,8 @@ public class BlockWallAA extends BlockBase{
 
     public boolean canConnectTo(IBlockAccess worldIn, BlockPos pos){
         Block block = PosUtil.getBlock(pos, worldIn);
-        return block != Blocks.barrier && (!(block != this && !(block instanceof BlockFenceGate)) || ((block.getMaterial().isOpaque() && block.isFullCube()) && block.getMaterial() != Material.gourd));
+        IBlockState state = worldIn.getBlockState(pos);
+        return block != Blocks.barrier && (!(block != this && !(block instanceof BlockFenceGate)) || ((block.getMaterial(state).isOpaque() && block.isFullCube(state)) && block.getMaterial(state) != Material.gourd));
     }
 
     @Override
@@ -151,7 +143,7 @@ public class BlockWallAA extends BlockBase{
     }
 
     @Override
-    protected BlockState createBlockState(){
-        return new BlockState(this, BlockWall.UP, BlockWall.NORTH, BlockWall.EAST, BlockWall.WEST, BlockWall.SOUTH);
+    protected BlockStateContainer createBlockState(){
+        return new BlockStateContainer(this, BlockWall.UP, BlockWall.NORTH, BlockWall.EAST, BlockWall.WEST, BlockWall.SOUTH);
     }
 }

@@ -18,10 +18,10 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
-import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -95,7 +95,7 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
     public final Packet getDescriptionPacket(){
         NBTTagCompound compound = this.getSyncCompound();
         if(compound != null){
-            return new S35PacketUpdateTileEntity(this.pos, 3, compound);
+            return new SPacketUpdateTileEntity(this.pos, 3, compound);
         }
         else{
             return null;
@@ -103,7 +103,7 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
     }
 
     @Override
-    public final void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt){
+    public final void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt){
         if(pkt != null){
             this.receiveSyncCompound(pkt.getNbtCompound());
         }
@@ -161,6 +161,6 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
     }
 
     public final void sendUpdate(){
-        PacketHandler.theNetwork.sendToAllAround(new PacketUpdateTileEntity(this), new NetworkRegistry.TargetPoint(this.worldObj.provider.getDimensionId(), this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), 64));
+        PacketHandler.theNetwork.sendToAllAround(new PacketUpdateTileEntity(this), new NetworkRegistry.TargetPoint(this.worldObj.provider.getDimension(), this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), 64));
     }
 }

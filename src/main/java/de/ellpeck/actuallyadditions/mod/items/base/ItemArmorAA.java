@@ -11,8 +11,10 @@
 package de.ellpeck.actuallyadditions.mod.items.base;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.mod.inventory.ContainerEnervator;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
@@ -24,12 +26,12 @@ public class ItemArmorAA extends ItemArmor{
     private String name;
     private EnumRarity rarity;
 
-    public ItemArmorAA(String name, ArmorMaterial material, int type, ItemStack repairItem, String textureBase){
-        this(name, material, type, repairItem, textureBase, EnumRarity.RARE);
+    public ItemArmorAA(String name, ArmorMaterial material, int type, ItemStack repairItem){
+        this(name, material, type, repairItem, EnumRarity.RARE);
     }
 
-    public ItemArmorAA(String name, ArmorMaterial material, int type, ItemStack repairItem, String textureBase, EnumRarity rarity){
-        super(material, 0, type);
+    public ItemArmorAA(String name, ArmorMaterial material, int type, ItemStack repairItem, EnumRarity rarity){
+        super(material, 0, ContainerEnervator.ARMOR_SLOTS[type]);
         this.repairItem = repairItem;
         this.name = name;
         this.rarity = rarity;

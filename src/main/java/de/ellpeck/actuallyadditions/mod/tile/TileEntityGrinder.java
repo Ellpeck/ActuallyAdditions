@@ -164,7 +164,8 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
             }
 
             if(shouldPlaySound && !ConfigValues.lessSound){
-                this.worldObj.playSoundEffect(this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), ModUtil.MOD_ID_LOWER+":crusher", 0.25F, 1.0F);
+                //TODO Fix sound
+                //this.worldObj.playSoundEffect(this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), ModUtil.MOD_ID_LOWER+":crusher", 0.25F, 1.0F);
             }
         }
     }

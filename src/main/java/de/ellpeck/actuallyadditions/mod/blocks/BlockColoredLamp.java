@@ -27,9 +27,10 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -64,7 +65,7 @@ public class BlockColoredLamp extends BlockBase{
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ){
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack stack, EnumFacing side, float hitX, float hitY, float hitZ){
         //Turning On
         if(player.isSneaking()){
             if(!world.isRemote){
@@ -73,7 +74,6 @@ public class BlockColoredLamp extends BlockBase{
             return true;
         }
 
-        ItemStack stack = player.getCurrentEquippedItem();
         if(stack != null){
             //Changing Colors
             int[] oreIDs = OreDictionary.getOreIDs(stack);
@@ -104,12 +104,6 @@ public class BlockColoredLamp extends BlockBase{
         return new ItemStack(InitBlocks.blockColoredLamp, 1, this.getMetaFromState(state));
     }
 
-    @Override
-    @SideOnly(Side.CLIENT)
-    public Item getItem(World world, BlockPos pos){
-        return Item.getItemFromBlock(InitBlocks.blockColoredLamp);
-    }
-
     @SuppressWarnings("all")
     @SideOnly(Side.CLIENT)
     public void getSubBlocks(Item item, CreativeTabs tab, List list){
@@ -119,7 +113,7 @@ public class BlockColoredLamp extends BlockBase{
     }
 
     @Override
-    public int getLightValue(IBlockAccess world, BlockPos pos){
+    public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos){
         return this.isOn ? 15 : 0;
     }
 

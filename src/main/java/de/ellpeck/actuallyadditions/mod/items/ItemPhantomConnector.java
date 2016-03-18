@@ -21,10 +21,12 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.relauncher.Side;
@@ -73,13 +75,13 @@ public class ItemPhantomConnector extends ItemBase{
         tag.setInteger("XCoordOfTileStored", x);
         tag.setInteger("YCoordOfTileStored", y);
         tag.setInteger("ZCoordOfTileStored", z);
-        tag.setInteger("WorldOfTileStored", world.provider.getDimensionId());
+        tag.setInteger("WorldOfTileStored", world.provider.getDimension());
 
         stack.setTagCompound(tag);
     }
 
     @Override
-    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing par7, float par8, float par9, float par10){
+    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing par7, float par8, float par9, float par10){
         if(!world.isRemote){
             //Passing Data to Phantoms
             TileEntity tile = world.getTileEntity(pos);
@@ -92,17 +94,17 @@ public class ItemPhantomConnector extends ItemBase{
                             ((TileEntityBase)tile).sendUpdate();
                         }
                         clearStorage(stack);
-                        player.addChatComponentMessage(new ChatComponentText(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.connected.desc")));
-                        return true;
+                        player.addChatComponentMessage(new TextComponentString(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.connected.desc")));
+                        return EnumActionResult.SUCCESS;
                     }
-                    return false;
+                    return EnumActionResult.FAIL;
                 }
             }
             //Storing Connections
             storeConnection(stack, pos.getX(), pos.getY(), pos.getZ(), world);
-            player.addChatComponentMessage(new ChatComponentText(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.stored.desc")));
+            player.addChatComponentMessage(new TextComponentString(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.stored.desc")));
         }
-        return true;
+        return EnumActionResult.SUCCESS;
     }
 
     public boolean checkHasConnection(ItemStack stack, EntityPlayer player, TileEntity tile){
@@ -113,7 +115,7 @@ public class ItemPhantomConnector extends ItemBase{
             if(tile instanceof IPhantomTile){
                 ((IPhantomTile)tile).setBoundPosition(null);
             }
-            player.addChatComponentMessage(new ChatComponentText(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.unbound.desc")));
+            player.addChatComponentMessage(new TextComponentString(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.unbound.desc")));
             return false;
         }
     }
@@ -140,7 +142,7 @@ public class ItemPhantomConnector extends ItemBase{
             list.add("X: "+coords.getX());
             list.add("Y: "+coords.getY());
             list.add("Z: "+coords.getZ());
-            list.add(EnumChatFormatting.ITALIC+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".clearStorage.desc"));
+            list.add(TextFormatting.ITALIC+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".clearStorage.desc"));
         }
     }
 

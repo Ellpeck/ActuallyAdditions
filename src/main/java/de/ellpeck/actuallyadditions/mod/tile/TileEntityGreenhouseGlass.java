@@ -17,7 +17,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockGrass;
 import net.minecraft.block.IGrowable;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.IPlantable;
 
 public class TileEntityGreenhouseGlass extends TileEntityBase{

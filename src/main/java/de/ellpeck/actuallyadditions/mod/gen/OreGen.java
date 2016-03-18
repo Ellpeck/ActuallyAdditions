@@ -17,12 +17,13 @@ import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.pattern.BlockHelper;
+import net.minecraft.block.state.pattern.BlockMatcher;
 import net.minecraft.init.Blocks;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldType;
+import net.minecraft.world.chunk.IChunkGenerator;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.feature.WorldGenMinable;
 import net.minecraftforge.fml.common.IWorldGenerator;
@@ -41,9 +42,9 @@ public class OreGen implements IWorldGenerator{
     }
 
     @Override
-    public void generate(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider){
-        if(world.getWorldType() != WorldType.FLAT && Util.arrayContains(ConfigValues.oreGenDimensionBlacklist, world.provider.getDimensionId()) < 0){
-            switch(world.provider.getDimensionId()){
+    public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider){
+        if(world.getWorldType() != WorldType.FLAT && Util.arrayContains(ConfigValues.oreGenDimensionBlacklist, world.provider.getDimension()) < 0){
+            switch(world.provider.getDimension()){
                 case -1:
                     generateNether(world, random, chunkX*16, chunkZ*16);
                     //case 0:
@@ -79,7 +80,7 @@ public class OreGen implements IWorldGenerator{
                 int posX = blockXPos+random.nextInt(16);
                 int posY = minY+random.nextInt(yDiff);
                 int posZ = blockZPos+random.nextInt(16);
-                new WorldGenMinable(block.getStateFromMeta(meta), maxVeinSize, BlockHelper.forBlock(blockIn)).generate(world, random, new BlockPos(posX, posY, posZ));
+                new WorldGenMinable(block.getStateFromMeta(meta), maxVeinSize, BlockMatcher.forBlock(blockIn)).generate(world, random, new BlockPos(posX, posY, posZ));
             }
         }
         else{

@@ -17,7 +17,7 @@ import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.text.TextFormatting;
 
 public class BookletChapter implements IBookletChapter{
 
@@ -25,7 +25,7 @@ public class BookletChapter implements IBookletChapter{
     public final IBookletEntry entry;
     public final ItemStack displayStack;
     private final String unlocalizedName;
-    public EnumChatFormatting color;
+    public TextFormatting color;
 
     public boolean isIncomplete;
 
@@ -42,7 +42,7 @@ public class BookletChapter implements IBookletChapter{
             page.setChapter(this);
         }
 
-        this.color = EnumChatFormatting.RESET;
+        this.color = TextFormatting.RESET;
     }
 
     @Override
@@ -81,12 +81,12 @@ public class BookletChapter implements IBookletChapter{
     }
 
     public BookletChapter setImportant(){
-        this.color = EnumChatFormatting.DARK_GREEN;
+        this.color = TextFormatting.DARK_GREEN;
         return this;
     }
 
     public BookletChapter setSpecial(){
-        this.color = EnumChatFormatting.DARK_PURPLE;
+        this.color = TextFormatting.DARK_PURPLE;
         return this;
     }
 }

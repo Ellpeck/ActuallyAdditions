@@ -16,10 +16,11 @@ import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockAir;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
 
 import java.util.ArrayList;
 
@@ -80,14 +81,14 @@ public class TileEntityBreaker extends TileEntityInventoryBase implements IRedst
         BlockPos coordsBlock = WorldUtil.getCoordsFromSide(sideToManipulate, this.pos, 0);
         if(coordsBlock != null){
             Block blockToBreak = PosUtil.getBlock(coordsBlock, worldObj);
-            if(!this.isPlacer && blockToBreak != null && !(blockToBreak instanceof BlockAir) && blockToBreak.getBlockHardness(worldObj, coordsBlock) > -1.0F){
+            IBlockState stateToBreak = worldObj.getBlockState(coordsBlock);
+            if(!this.isPlacer && blockToBreak != null && !(blockToBreak instanceof BlockAir) && blockToBreak.getBlockHardness(stateToBreak, worldObj, coordsBlock) > -1.0F){
                 ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-                int meta = PosUtil.getMetadata(coordsBlock, worldObj);
-                drops.addAll(blockToBreak.getDrops(worldObj, coordsBlock, worldObj.getBlockState(coordsBlock), 0));
+                drops.addAll(blockToBreak.getDrops(worldObj, coordsBlock, stateToBreak, 0));
 
                 if(WorldUtil.addToInventory(this, drops, false, true)){
                     if(!ConfigValues.lessBlockBreakingEffects){
-                        worldObj.playAuxSFX(2001, coordsBlock, Block.getStateId(worldObj.getBlockState(coordsBlock)));
+                        worldObj.playAuxSFX(2001, coordsBlock, Block.getStateId(stateToBreak));
                     }
                     WorldUtil.breakBlockAtSide(sideToManipulate, worldObj, this.pos);
                     WorldUtil.addToInventory(this, drops, true, true);

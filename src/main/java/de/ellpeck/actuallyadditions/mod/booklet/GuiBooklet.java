@@ -34,9 +34,9 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.IChatComponent;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Keyboard;
@@ -164,7 +164,8 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
     public void keyTyped(char theChar, int key){
         if(AND_HIS_NAME_IS.length > this.hisNameIsAt && AND_HIS_NAME_IS[this.hisNameIsAt] == key){
             if(this.hisNameIsAt+1 >= AND_HIS_NAME_IS.length){
-                Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.create(new ResourceLocation(ModUtil.MOD_ID_LOWER, "duhDuhDuhDuuuh")));
+                //TODO Fix sound
+                //Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.create(new ResourceLocation(ModUtil.MOD_ID_LOWER, "duhDuhDuhDuuuh")));
                 ModUtil.LOGGER.info("AND HIS NAME IS JOHN CENA DUH DUH DUH DUUUH");
                 this.hisNameIsAt = 0;
             }
@@ -274,46 +275,46 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
         this.guiLeft = (this.width-this.xSize)/2;
         this.guiTop = (this.height-this.ySize)/2;
 
-        this.buttonForward = new TexturedButton(0, this.guiLeft+this.xSize-26, this.guiTop+this.ySize+1, 164, 0, 18, 10, Collections.singletonList(EnumChatFormatting.GOLD+"Next Page"));
+        this.buttonForward = new TexturedButton(0, this.guiLeft+this.xSize-26, this.guiTop+this.ySize+1, 164, 0, 18, 10, Collections.singletonList(TextFormatting.GOLD+"Next Page"));
         this.buttonList.add(this.buttonForward);
 
-        this.buttonBackward = new TexturedButton(1, this.guiLeft+8, this.guiTop+this.ySize+1, 146, 0, 18, 10, Collections.singletonList(EnumChatFormatting.GOLD+"Previous Page"));
+        this.buttonBackward = new TexturedButton(1, this.guiLeft+8, this.guiTop+this.ySize+1, 146, 0, 18, 10, Collections.singletonList(TextFormatting.GOLD+"Previous Page"));
         this.buttonList.add(this.buttonBackward);
 
-        this.buttonPreviousScreen = new TexturedButton(2, this.guiLeft+this.xSize/2-7, this.guiTop+this.ySize+1, 182, 0, 15, 10, Collections.singletonList(EnumChatFormatting.GOLD+"Back"));
+        this.buttonPreviousScreen = new TexturedButton(2, this.guiLeft+this.xSize/2-7, this.guiTop+this.ySize+1, 182, 0, 15, 10, Collections.singletonList(TextFormatting.GOLD+"Back"));
         this.buttonList.add(this.buttonPreviousScreen);
 
         ArrayList updateHover = new ArrayList();
         if(UpdateChecker.checkFailed){
-            updateHover.add(IChatComponent.Serializer.jsonToComponent(StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".update.failed")).getFormattedText());
+            updateHover.add(ITextComponent.Serializer.jsonToComponent(StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".update.failed")).getFormattedText());
         }
         else if(UpdateChecker.needsUpdateNotify){
-            updateHover.add(IChatComponent.Serializer.jsonToComponent(StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".update.generic")).getFormattedText());
-            updateHover.add(IChatComponent.Serializer.jsonToComponent(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID_LOWER+".update.versionCompare", ModUtil.VERSION, UpdateChecker.updateVersionString)).getFormattedText());
+            updateHover.add(ITextComponent.Serializer.jsonToComponent(StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".update.generic")).getFormattedText());
+            updateHover.add(ITextComponent.Serializer.jsonToComponent(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID_LOWER+".update.versionCompare", ModUtil.VERSION, UpdateChecker.updateVersionString)).getFormattedText());
             updateHover.add(StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".update.buttonOptions"));
         }
         this.buttonUpdate = new TexturedButton(4, this.guiLeft-11, this.guiTop-11, 245, 0, 11, 11, updateHover);
         this.buttonUpdate.visible = UpdateChecker.needsUpdateNotify;
         this.buttonList.add(this.buttonUpdate);
 
-        this.buttonTwitter = new TexturedButton(5, this.guiLeft, this.guiTop, 213, 0, 8, 8, Collections.singletonList(EnumChatFormatting.GOLD+"Open @ActAddMod on Twitter in Browser"));
+        this.buttonTwitter = new TexturedButton(5, this.guiLeft, this.guiTop, 213, 0, 8, 8, Collections.singletonList(TextFormatting.GOLD+"Open @ActAddMod on Twitter in Browser"));
         this.buttonList.add(this.buttonTwitter);
 
-        this.buttonForum = new TexturedButton(6, this.guiLeft, this.guiTop+10, 221, 0, 8, 8, Collections.singletonList(EnumChatFormatting.GOLD+"Open Minecraft Forum Post in Browser"));
+        this.buttonForum = new TexturedButton(6, this.guiLeft, this.guiTop+10, 221, 0, 8, 8, Collections.singletonList(TextFormatting.GOLD+"Open Minecraft Forum Post in Browser"));
         this.buttonList.add(this.buttonForum);
 
-        this.buttonAchievements = new TexturedButton(7, this.guiLeft+138, this.guiTop, 205, 0, 8, 8, Collections.singletonList(EnumChatFormatting.GOLD+"Show Achievements"));
+        this.buttonAchievements = new TexturedButton(7, this.guiLeft+138, this.guiTop, 205, 0, 8, 8, Collections.singletonList(TextFormatting.GOLD+"Show Achievements"));
         this.buttonList.add(this.buttonAchievements);
 
         ArrayList websiteHover = new ArrayList();
-        websiteHover.add(EnumChatFormatting.GOLD+"Open Author's Website");
+        websiteHover.add(TextFormatting.GOLD+"Open Author's Website");
         websiteHover.add("(There's some cool stuff there!)");
-        websiteHover.add(EnumChatFormatting.GRAY+""+EnumChatFormatting.ITALIC+"Would you call this Product Placement?");
+        websiteHover.add(TextFormatting.GRAY+""+TextFormatting.ITALIC+"Would you call this Product Placement?");
         this.buttonWebsite = new TexturedButton(-99, this.guiLeft, this.guiTop+20, 228, 0, 8, 8, websiteHover);
         this.buttonList.add(this.buttonWebsite);
 
         ArrayList configHover = new ArrayList();
-        configHover.add(EnumChatFormatting.GOLD+"Show Configuration GUI");
+        configHover.add(TextFormatting.GOLD+"Show Configuration GUI");
         configHover.addAll(this.fontRendererObj.listFormattedStringToWidth("It is highly recommended that you restart your game after changing anything as that prevents possible bugs occuring!", 200));
         this.buttonConfig = new TexturedButton(8, this.guiLeft+138, this.guiTop+10, 197, 0, 8, 8, configHover);
         this.buttonList.add(this.buttonConfig);
@@ -416,7 +417,7 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
                 list.set(k, stack.getRarity().rarityColor+(String)list.get(k));
             }
             else{
-                list.set(k, EnumChatFormatting.GRAY+(String)list.get(k));
+                list.set(k, TextFormatting.GRAY+(String)list.get(k));
             }
         }
 
@@ -428,7 +429,8 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
                 if(mousePressed){
                     BookletUtils.openIndexEntry(this, page.getChapter().getEntry(), ActuallyAdditionsAPI.bookletEntries.indexOf(page.getChapter().getEntry())/GuiBooklet.CHAPTER_BUTTONS_AMOUNT+1, true);
                     BookletUtils.openChapter(this, page.getChapter(), page);
-                    Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.create(new ResourceLocation("gui.button.press"), 1.0F));
+                    //TODO Fix sound
+                    //Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.create(new ResourceLocation("gui.button.press"), 1.0F));
                 }
             }
         }

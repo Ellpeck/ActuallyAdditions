@@ -19,14 +19,15 @@ import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class TileEntityLeafGenerator extends TileEntityBase implements IEnergyProvider, IEnergySaver, IEnergyDisplay{
 
@@ -59,14 +60,14 @@ public class TileEntityLeafGenerator extends TileEntityBase implements IEnergyPr
                     this.nextUseCounter = 0;
 
                     if(ENERGY_PRODUCED <= this.storage.getMaxEnergyStored()-this.storage.getEnergyStored()){
-                        ArrayList<BlockPos> breakPositions = new ArrayList<BlockPos>();
+                        List<BlockPos> breakPositions = new ArrayList<BlockPos>();
 
                         for(int reachX = -RANGE; reachX < RANGE+1; reachX++){
                             for(int reachZ = -RANGE; reachZ < RANGE+1; reachZ++){
                                 for(int reachY = -RANGE; reachY < RANGE+1; reachY++){
                                     BlockPos pos = PosUtil.offset(this.pos, reachX, reachY, reachZ);
                                     Block block = PosUtil.getBlock(pos, worldObj);
-                                    if(block != null && block.isLeaves(this.worldObj, pos)){
+                                    if(block != null && block.isLeaves(this.worldObj.getBlockState(pos), this.worldObj, pos)){
                                         breakPositions.add(pos);
                                     }
                                 }
@@ -86,7 +87,7 @@ public class TileEntityLeafGenerator extends TileEntityBase implements IEnergyPr
                             this.storage.receiveEnergy(ENERGY_PRODUCED, false);
 
                             if(!ConfigValues.lessParticles){
-                                PacketHandler.theNetwork.sendToAllAround(new PacketParticle(this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), theCoord.getX(), theCoord.getY(), theCoord.getZ(), new float[]{62F/255F, 163F/255F, 74F/255F}, 5, 1.0F), new NetworkRegistry.TargetPoint(worldObj.provider.getDimensionId(), this.pos.getX(), this.pos.getY(), this.pos.getZ(), 64));
+                                PacketHandler.theNetwork.sendToAllAround(new PacketParticle(this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), theCoord.getX(), theCoord.getY(), theCoord.getZ(), new float[]{62F/255F, 163F/255F, 74F/255F}, 5, 1.0F), new NetworkRegistry.TargetPoint(worldObj.provider.getDimension(), this.pos.getX(), this.pos.getY(), this.pos.getZ(), 64));
                             }
                         }
                     }

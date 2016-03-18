@@ -23,9 +23,11 @@ import net.minecraft.init.Items;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -50,7 +52,7 @@ public class ItemAllToolAA extends ItemTool{
     }
 
     public ItemAllToolAA(ToolMaterial toolMat, ItemStack repairItem, String unlocalizedName, EnumRarity rarity, int color){
-        super(4.0F, toolMat, new HashSet<Block>());
+        super(4.0F, -2F, toolMat, new HashSet<Block>());
 
         this.repairItem = repairItem;
         this.name = unlocalizedName;
@@ -82,15 +84,16 @@ public class ItemAllToolAA extends ItemTool{
     }
 
     @Override
-    public boolean onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ){
-        return Items.iron_hoe.onItemUse(stack, playerIn, worldIn, pos, side, hitX, hitY, hitZ);
+    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ){
+        return Items.iron_hoe.onItemUse(stack, playerIn, worldIn, pos, hand, side, hitX, hitY, hitZ);
     }
 
-    @Override
+    //TODO Fix ItemStack color
+    /*@Override
     @SideOnly(Side.CLIENT)
     public int getColorFromItemStack(ItemStack stack, int pass){
-        return pass > 0 ? this.color : super.getColorFromItemStack(stack, pass);
-    }
+        return pass > 0 ? this.color : super.(stack, pass);
+    }*/
 
     @Override
     public EnumRarity getRarity(ItemStack stack){
@@ -98,8 +101,9 @@ public class ItemAllToolAA extends ItemTool{
     }
 
     @Override
-    public boolean canHarvestBlock(Block block, ItemStack stack){
-        return this.hasExtraWhitelist(block) || block.getMaterial().isToolNotRequired() || (block == Blocks.snow_layer || block == Blocks.snow || (block == Blocks.obsidian ? this.toolMaterial.getHarvestLevel() >= 3 : (block != Blocks.diamond_block && block != Blocks.diamond_ore ? (block != Blocks.emerald_ore && block != Blocks.emerald_block ? (block != Blocks.gold_block && block != Blocks.gold_ore ? (block != Blocks.iron_block && block != Blocks.iron_ore ? (block != Blocks.lapis_block && block != Blocks.lapis_ore ? (block != Blocks.redstone_ore && block != Blocks.lit_redstone_ore ? (block.getMaterial() == Material.rock || (block.getMaterial() == Material.iron || block.getMaterial() == Material.anvil)) : this.toolMaterial.getHarvestLevel() >= 2) : this.toolMaterial.getHarvestLevel() >= 1) : this.toolMaterial.getHarvestLevel() >= 1) : this.toolMaterial.getHarvestLevel() >= 2) : this.toolMaterial.getHarvestLevel() >= 2) : this.toolMaterial.getHarvestLevel() >= 2)));
+    public boolean canHarvestBlock(IBlockState state, ItemStack stack){
+
+        return this.hasExtraWhitelist(state.getBlock()) || state.getBlock().getMaterial(state).isToolNotRequired() || (state.getBlock() == Blocks.snow_layer || state.getBlock()== Blocks.snow || (state.getBlock()== Blocks.obsidian ? this.toolMaterial.getHarvestLevel() >= 3 : (state.getBlock()!= Blocks.diamond_block && state.getBlock()!= Blocks.diamond_ore ? (state.getBlock()!= Blocks.emerald_ore && state.getBlock()!= Blocks.emerald_block? (state.getBlock()!= Blocks.gold_block&& state.getBlock()!= Blocks.gold_ore ? (state.getBlock()!= Blocks.iron_block&& state.getBlock()!= Blocks.iron_ore ? (state.getBlock()!= Blocks.lapis_block&& state.getBlock()!= Blocks.lapis_ore ? (state.getBlock()!= Blocks.redstone_ore && state.getBlock()!= Blocks.lit_redstone_ore ? (state.getBlock().getMaterial(state) == Material.rock || (state.getBlock().getMaterial(state) == Material.iron || state.getBlock().getMaterial(state) == Material.anvil)) : this.toolMaterial.getHarvestLevel() >= 2) : this.toolMaterial.getHarvestLevel() >= 1) : this.toolMaterial.getHarvestLevel() >= 1) : this.toolMaterial.getHarvestLevel() >= 2) : this.toolMaterial.getHarvestLevel() >= 2) : this.toolMaterial.getHarvestLevel() >= 2)));
     }
 
     private boolean hasExtraWhitelist(Block block){
@@ -140,7 +144,7 @@ public class ItemAllToolAA extends ItemTool{
     }
 
     @Override
-    public float getDigSpeed(ItemStack stack, IBlockState state){
+    public float getStrVsBlock(ItemStack stack, IBlockState state){
         return this.hasExtraWhitelist(state.getBlock()) || state.getBlock().getHarvestTool(state) == null || state.getBlock().getHarvestTool(state).isEmpty() || this.getToolClasses(stack).contains(state.getBlock().getHarvestTool(state)) ? this.efficiencyOnProperMaterial : 1.0F;
     }
 }

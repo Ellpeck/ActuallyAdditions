@@ -103,7 +103,8 @@ public class ContainerInputter extends Container{
         return null;
     }
 
-    @Override
+    //TODO slotClick()
+    /*@Override
     public ItemStack slotClick(int par1, int par2, int par3, EntityPlayer player){
         if(par1 >= 0 && par1 < this.inventorySlots.size() && this.getSlot(par1) instanceof SlotFilter){
             //Calls the Filter's SlotClick function
@@ -112,7 +113,7 @@ public class ContainerInputter extends Container{
         else{
             return super.slotClick(par1, par2, par3, player);
         }
-    }
+    }*/
 
     @Override
     public boolean canInteractWith(EntityPlayer player){

@@ -14,9 +14,9 @@ import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -65,7 +65,7 @@ public class TileEntityFeeder extends TileEntityInventoryBase{
         if(!worldObj.isRemote){
             boolean theFlag = this.currentTimer > 0;
             int range = 5;
-            List<EntityAnimal> animals = worldObj.getEntitiesWithinAABB(EntityAnimal.class, AxisAlignedBB.fromBounds(this.pos.getX()-range, this.pos.getY()-range, this.pos.getZ()-range, this.pos.getX()+range, this.pos.getY()+range, this.pos.getZ()+range));
+            List<EntityAnimal> animals = worldObj.getEntitiesWithinAABB(EntityAnimal.class, new AxisAlignedBB(this.pos.getX()-range, this.pos.getY()-range, this.pos.getZ()-range, this.pos.getX()+range, this.pos.getY()+range, this.pos.getZ()+range));
             if(animals != null){
                 this.currentAnimalAmount = animals.size();
                 if(this.currentAnimalAmount >= 2){

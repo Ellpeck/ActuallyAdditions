@@ -16,7 +16,7 @@ import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyInteger;
-import net.minecraft.block.state.BlockState;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
@@ -70,8 +70,8 @@ public class BlockBase extends Block{
     }
 
     @Override
-    protected BlockState createBlockState(){
-        return this.getMetaProperty() == null ? super.createBlockState() : new BlockState(this, this.getMetaProperty());
+    protected BlockStateContainer createBlockState(){
+        return this.getMetaProperty() == null ? super.createBlockState() : new BlockStateContainer(this, this.getMetaProperty());
     }
 
     protected PropertyInteger getMetaProperty(){

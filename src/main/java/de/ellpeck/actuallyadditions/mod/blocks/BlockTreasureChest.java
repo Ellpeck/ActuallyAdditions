@@ -16,6 +16,7 @@ import de.ellpeck.actuallyadditions.mod.achievement.TheAchievements;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockBase;
 import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.IBlockState;
@@ -27,6 +28,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.*;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -42,13 +45,13 @@ public class BlockTreasureChest extends BlockBase{
         this.setHarvestLevel("axe", 0);
         this.setHardness(300.0F);
         this.setResistance(50.0F);
-        this.setStepSound(soundTypeWood);
+        this.setStepSound(SoundType.WOOD);
         this.setTickRandomly(true);
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void randomDisplayTick(World world, BlockPos pos, IBlockState state, Random rand){
+    public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random rand){
         for(int i = 0; i < 2; i++){
             for(float f = 0; f <= 3; f += 0.5){
                 float particleX = rand.nextFloat();
@@ -64,13 +67,14 @@ public class BlockTreasureChest extends BlockBase{
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing par6, float par7, float par8, float par9){
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack stack, EnumFacing par6, float par7, float par8, float par9){
         if(!world.isRemote){
-            world.playSoundAtEntity(player, "random.chestopen", 0.2F, Util.RANDOM.nextFloat()*0.1F+0.9F);
+            //TODO Fix sounds
+            //world.playSoundAtEntity(player, "random.chestopen", 0.2F, Util.RANDOM.nextFloat()*0.1F+0.9F);
             this.dropItems(world, pos);
             world.setBlockToAir(pos);
 
-            player.triggerAchievement(TheAchievements.OPEN_TREASURE_CHEST.ach);
+            //player.triggerAchievement(TheAchievements.OPEN_TREASURE_CHEST.ach);
         }
         return true;
     }

@@ -11,7 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.util;
 
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.fluids.FluidTank;
 
 import java.util.List;
@@ -29,14 +29,14 @@ public class StringUtil{
      * Localizes a given String via StatCollector
      */
     public static String localize(String text){
-        return StatCollector.translateToLocal(text);
+        return I18n.translateToLocal(text);
     }
 
     /**
      * Localizes a given formatted String with the given Replacements
      */
     public static String localizeFormatted(String text, Object... replace){
-        return StatCollector.translateToLocalFormatted(text, replace);
+        return I18n.translateToLocalFormatted(text, replace);
     }
 
     public static boolean equalsToLowerCase(String one, String two){

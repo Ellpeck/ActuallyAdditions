@@ -18,8 +18,10 @@ import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
+import net.minecraft.init.MobEffects;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
@@ -54,13 +56,13 @@ public class ItemCoffee extends ItemFoodBase{
             }
         }
 
-        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(new ItemStack(Items.sugar), new PotionEffect[]{new PotionEffect(Potion.moveSpeed.getId(), 30, 0)}, 4));
-        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(new ItemStack(Items.magma_cream), new PotionEffect[]{new PotionEffect(Potion.fireResistance.getId(), 20, 0)}, 2));
-        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(new ItemStack(Items.fish, 1, 3), new PotionEffect[]{new PotionEffect(Potion.waterBreathing.getId(), 10, 0)}, 2));
-        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(new ItemStack(Items.golden_carrot), new PotionEffect[]{new PotionEffect(Potion.nightVision.getId(), 30, 0)}, 2));
-        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(new ItemStack(Items.ghast_tear), new PotionEffect[]{new PotionEffect(Potion.regeneration.getId(), 5, 0)}, 3));
-        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(new ItemStack(Items.blaze_powder), new PotionEffect[]{new PotionEffect(Potion.damageBoost.getId(), 15, 0)}, 4));
-        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(new ItemStack(Items.fermented_spider_eye), new PotionEffect[]{new PotionEffect(Potion.invisibility.getId(), 25, 0)}, 2));
+        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(new ItemStack(Items.sugar), new PotionEffect[]{new PotionEffect(MobEffects.moveSpeed, 30, 0)}, 4));
+        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(new ItemStack(Items.magma_cream), new PotionEffect[]{new PotionEffect(MobEffects.fireResistance, 20, 0)}, 2));
+        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(new ItemStack(Items.fish, 1, 3), new PotionEffect[]{new PotionEffect(MobEffects.waterBreathing, 10, 0)}, 2));
+        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(new ItemStack(Items.golden_carrot), new PotionEffect[]{new PotionEffect(MobEffects.nightVision, 30, 0)}, 2));
+        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(new ItemStack(Items.ghast_tear), new PotionEffect[]{new PotionEffect(MobEffects.regeneration, 5, 0)}, 3));
+        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(new ItemStack(Items.blaze_powder), new PotionEffect[]{new PotionEffect(MobEffects.damageBoost, 15, 0)}, 4));
+        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(new ItemStack(Items.fermented_spider_eye), new PotionEffect[]{new PotionEffect(MobEffects.invisibility, 25, 0)}, 2));
     }
 
     public static CoffeeIngredient getIngredientFromStack(ItemStack stack){
@@ -72,17 +74,17 @@ public class ItemCoffee extends ItemFoodBase{
         return null;
     }
 
-    public static void applyPotionEffectsFromStack(ItemStack stack, EntityPlayer player){
+    public static void applyPotionEffectsFromStack(ItemStack stack, EntityLivingBase player){
         PotionEffect[] effects = CoffeeBrewing.getEffectsFromStack(stack);
         if(effects != null && effects.length > 0){
             for(PotionEffect effect : effects){
-                player.addPotionEffect(new PotionEffect(effect.getPotionID(), effect.getDuration()*20, effect.getAmplifier()));
+                player.addPotionEffect(new PotionEffect(effect.getPotion(), effect.getDuration()*20, effect.getAmplifier()));
             }
         }
     }
 
     @Override
-    public ItemStack onItemUseFinish(ItemStack stack, World world, EntityPlayer player){
+    public ItemStack onItemUseFinish(ItemStack stack, World world, EntityLivingBase player){
         ItemStack theStack = stack.copy();
         super.onItemUseFinish(stack, world, player);
         applyPotionEffectsFromStack(stack, player);
@@ -142,7 +144,7 @@ public class ItemCoffee extends ItemFoodBase{
             if(effects != null && effects.length > 0){
                 for(PotionEffect effect : effects){
                     if(effect.getAmplifier() > 0){
-                        effectsNew.add(new PotionEffect(effect.getPotionID(), effect.getDuration()+120, effect.getAmplifier()-1));
+                        effectsNew.add(new PotionEffect(effect.getPotion(), effect.getDuration()+120, effect.getAmplifier()-1));
                     }
                 }
                 stack.setTagCompound(new NBTTagCompound());

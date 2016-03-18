@@ -21,6 +21,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -52,11 +53,12 @@ public class ItemPotionRing extends ItemBase{
         return stack.getItemDamage() >= allRings.length ? StringUtil.BUGGED_ITEM_NAME : this.getUnlocalizedName()+allRings[stack.getItemDamage()].name;
     }
 
-    @Override
+    //TODO Color
+    /*@Override
     @SideOnly(Side.CLIENT)
     public int getColorFromItemStack(ItemStack stack, int pass){
         return stack.getItemDamage() >= allRings.length ? 0 : allRings[stack.getItemDamage()].color;
-    }
+    }*/
 
     @Override
     @SuppressWarnings("unchecked")
@@ -66,17 +68,18 @@ public class ItemPotionRing extends ItemBase{
         if(!world.isRemote && stack.getItemDamage() < allRings.length){
             if(player instanceof EntityPlayer){
                 EntityPlayer thePlayer = (EntityPlayer)player;
-                ItemStack equippedStack = ((EntityPlayer)player).getCurrentEquippedItem();
+                ItemStack equippedStack = ((EntityPlayer)player).getActiveItemStack();
 
                 ThePotionRings effect = ThePotionRings.values()[stack.getItemDamage()];
-                if(!effect.needsWaitBeforeActivating || !thePlayer.isPotionActive(effect.effectID)){
+                Potion potion = Potion.getPotionById(effect.effectID);
+                if(!effect.needsWaitBeforeActivating || !thePlayer.isPotionActive(potion)){
                     if(!((ItemPotionRing)stack.getItem()).isAdvanced){
                         if(equippedStack != null && stack == equippedStack){
-                            thePlayer.addPotionEffect(new PotionEffect(effect.effectID, effect.activeTime, effect.normalAmplifier, true, false));
+                            thePlayer.addPotionEffect(new PotionEffect(potion, effect.activeTime, effect.normalAmplifier, true, false));
                         }
                     }
                     else{
-                        thePlayer.addPotionEffect(new PotionEffect(effect.effectID, effect.activeTime, effect.advancedAmplifier, true, false));
+                        thePlayer.addPotionEffect(new PotionEffect(potion, effect.activeTime, effect.advancedAmplifier, true, false));
                     }
                 }
             }

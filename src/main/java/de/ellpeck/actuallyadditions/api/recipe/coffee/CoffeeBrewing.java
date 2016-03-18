@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.api.recipe.coffee;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 
 import java.util.ArrayList;
@@ -49,7 +50,7 @@ public class CoffeeBrewing{
         PotionEffect[] effectsStack = getEffectsFromStack(stack);
         if(effectsStack != null && effectsStack.length > 0){
             for(PotionEffect effectStack : effectsStack){
-                if(effect.getPotionID() == effectStack.getPotionID()){
+                if(effect.getPotion() == effectStack.getPotion()){
                     return effectStack;
                 }
             }
@@ -61,8 +62,8 @@ public class CoffeeBrewing{
         PotionEffect[] effects = getEffectsFromStack(stack);
         stack.setTagCompound(new NBTTagCompound());
         for(int i = 0; i < effects.length; i++){
-            if(effects[i].getPotionID() == effect.getPotionID()){
-                effects[i] = new PotionEffect(effects[i].getPotionID(), effects[i].getDuration()+(addDur ? effect.getDuration() : 0), effects[i].getAmplifier()+(addAmp ? (effect.getAmplifier() > 0 ? effect.getAmplifier() : 1) : 0));
+            if(effects[i].getPotion() == effect.getPotion()){
+                effects[i] = new PotionEffect(effects[i].getPotion(), effects[i].getDuration()+(addDur ? effect.getDuration() : 0), effects[i].getAmplifier()+(addAmp ? (effect.getAmplifier() > 0 ? effect.getAmplifier() : 1) : 0));
             }
             addEffectToStack(stack, effects[i]);
         }
@@ -76,7 +77,7 @@ public class CoffeeBrewing{
 
         int prevCounter = tag.getInteger("Counter");
         NBTTagCompound compound = new NBTTagCompound();
-        compound.setInteger("ID", effect.getPotionID());
+        compound.setInteger("ID", Potion.getIdFromPotion(effect.getPotion()));
         compound.setInteger("Duration", effect.getDuration());
         compound.setInteger("Amplifier", effect.getAmplifier());
 
@@ -94,10 +95,8 @@ public class CoffeeBrewing{
             int counter = tag.getInteger("Counter");
             while(counter > 0){
                 NBTTagCompound compound = (NBTTagCompound)tag.getTag(counter+"");
-                PotionEffect effect = new PotionEffect(compound.getInteger("ID"), compound.getInteger("Duration"), compound.getByte("Amplifier"));
-                if(effect.getPotionID() > 0){
-                    effects.add(effect);
-                }
+                PotionEffect effect = new PotionEffect(Potion.getPotionById(compound.getInteger("ID")), compound.getInteger("Duration"), compound.getByte("Amplifier"));
+                effects.add(effect);
                 counter--;
             }
         }

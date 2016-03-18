@@ -12,28 +12,29 @@ package de.ellpeck.actuallyadditions.mod.items.metalists;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.init.MobEffects;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 
 public enum ThePotionRings{
 
-    SPEED(Potion.moveSpeed.getName(), 8171462, Potion.moveSpeed.getId(), 0, 1, 10, false, EnumRarity.UNCOMMON, new ItemStack(Items.sugar)),
+    SPEED(MobEffects.moveSpeed.getName(), 8171462, MobEffects.moveSpeed, 0, 1, 10, false, EnumRarity.UNCOMMON, new ItemStack(Items.sugar)),
     //Slowness
-    HASTE(Potion.digSpeed.getName(), 14270531, Potion.digSpeed.getId(), 0, 1, 10, false, EnumRarity.EPIC, new ItemStack(Items.repeater)),
+    HASTE(MobEffects.digSpeed.getName(), 14270531, MobEffects.digSpeed, 0, 1, 10, false, EnumRarity.EPIC, new ItemStack(Items.repeater)),
     //Mining Fatigue
-    STRENGTH(Potion.damageBoost.getName(), 9643043, Potion.damageBoost.getId(), 0, 1, 10, false, EnumRarity.RARE, new ItemStack(Items.blaze_powder)),
+    STRENGTH(MobEffects.damageBoost.getName(), 9643043, MobEffects.damageBoost, 0, 1, 10, false, EnumRarity.RARE, new ItemStack(Items.blaze_powder)),
     //Health (Not Happening)
     //Damage
-    JUMP_BOOST(Potion.jump.getName(), 7889559, Potion.jump.getId(), 0, 1, 10, false, EnumRarity.RARE, new ItemStack(Blocks.piston)),
+    JUMP_BOOST(MobEffects.jump.getName(), 7889559, MobEffects.jump, 0, 1, 10, false, EnumRarity.RARE, new ItemStack(Blocks.piston)),
     //Nausea
-    REGEN(Potion.regeneration.getName(), 13458603, Potion.regeneration.getId(), 0, 1, 50, true, EnumRarity.RARE, new ItemStack(Items.ghast_tear)),
-    RESISTANCE(Potion.resistance.getName(), 10044730, Potion.resistance.getId(), 0, 1, 10, false, EnumRarity.EPIC, new ItemStack(Items.slime_ball)),
-    FIRE_RESISTANCE(Potion.fireResistance.getName(), 14981690, Potion.fireResistance.getId(), 0, 0, 10, false, EnumRarity.UNCOMMON, new ItemStack(Items.magma_cream)),
-    WATER_BREATHING(Potion.waterBreathing.getName(), 3035801, Potion.waterBreathing.getId(), 0, 0, 10, false, EnumRarity.RARE, new ItemStack(Items.fish, 1, 3)),
-    INVISIBILITY(Potion.invisibility.getName(), 8356754, Potion.invisibility.getId(), 0, 0, 10, false, EnumRarity.EPIC, new ItemStack(Items.fermented_spider_eye)),
+    REGEN(MobEffects.regeneration.getName(), 13458603, MobEffects.regeneration, 0, 1, 50, true, EnumRarity.RARE, new ItemStack(Items.ghast_tear)),
+    RESISTANCE(MobEffects.resistance.getName(), 10044730, MobEffects.resistance, 0, 1, 10, false, EnumRarity.EPIC, new ItemStack(Items.slime_ball)),
+    FIRE_RESISTANCE(MobEffects.fireResistance.getName(), 14981690, MobEffects.fireResistance, 0, 0, 10, false, EnumRarity.UNCOMMON, new ItemStack(Items.magma_cream)),
+    WATER_BREATHING(MobEffects.waterBreathing.getName(), 3035801, MobEffects.waterBreathing, 0, 0, 10, false, EnumRarity.RARE, new ItemStack(Items.fish, 1, 3)),
+    INVISIBILITY(MobEffects.invisibility.getName(), 8356754, MobEffects.invisibility, 0, 0, 10, false, EnumRarity.EPIC, new ItemStack(Items.fermented_spider_eye)),
     //Blindness
-    NIGHT_VISION(Potion.nightVision.getName(), 2039713, Potion.nightVision.getId(), 0, 0, 300, false, EnumRarity.RARE, new ItemStack(Items.golden_carrot));
+    NIGHT_VISION(MobEffects.nightVision.getName(), 2039713, MobEffects.nightVision, 0, 0, 300, false, EnumRarity.RARE, new ItemStack(Items.golden_carrot));
     //Hunger
     //Weakness
     //Poison
@@ -51,11 +52,11 @@ public enum ThePotionRings{
     public final boolean needsWaitBeforeActivating;
     public final ItemStack craftingItem;
 
-    ThePotionRings(String name, int color, int effectID, int normalAmplifier, int advancedAmplifier, int activeTime, boolean needsWaitBeforeActivating, EnumRarity rarity, ItemStack craftingItem){
+    ThePotionRings(String name, int color, Potion effect, int normalAmplifier, int advancedAmplifier, int activeTime, boolean needsWaitBeforeActivating, EnumRarity rarity, ItemStack craftingItem){
         this.name = name;
         this.color = color;
         this.rarity = rarity;
-        this.effectID = effectID;
+        this.effectID = Potion.getIdFromPotion(effect);
         this.normalAmplifier = normalAmplifier;
         this.advancedAmplifier = advancedAmplifier;
         this.activeTime = activeTime;

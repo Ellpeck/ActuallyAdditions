@@ -17,6 +17,7 @@ import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityCompost;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -28,11 +29,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.profiler.Profiler;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.List;
 
 public class BlockCompost extends BlockContainerBase implements IHudDisplay{
 
@@ -41,11 +43,17 @@ public class BlockCompost extends BlockContainerBase implements IHudDisplay{
         this.setHarvestLevel("axe", 0);
         this.setHardness(0.5F);
         this.setResistance(5.0F);
-        this.setStepSound(soundTypeWood);
+        this.setStepSound(SoundType.WOOD);
 
-        this.setBlockBoundsForItemRender();
+        //this.setBlockBoundsForItemRender();
     }
 
+    //TODO Fix bounding box
+    /*@Override
+    public void setBlockBoundsForItemRender(){
+        float f = 1.0F/16.0F;
+        this.setBlockBounds(f, 0.0F, f, 1.0F-f, 11*f, 1.0F-f);
+    }
     @Override
     public void addCollisionBoxesToList(World world, BlockPos pos, IBlockState state, AxisAlignedBB mask, List list, Entity collidingEntity){
         this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.3125F, 1.0F);
@@ -60,22 +68,21 @@ public class BlockCompost extends BlockContainerBase implements IHudDisplay{
         this.setBlockBounds(0.0F, 0.0F, 1.0F-f, 1.0F, y, 1.0F);
         super.addCollisionBoxesToList(world, pos, state, mask, list, collidingEntity);
         this.setBlockBoundsForItemRender();
-    }
+    }*/
 
     @Override
-    public boolean isOpaqueCube(){
+    public boolean isOpaqueCube(IBlockState state){
         return false;
     }
 
     @Override
-    public boolean isFullCube(){
+    public boolean isFullCube(IBlockState state){
         return false;
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing f6, float f7, float f8, float f9){
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack stackPlayer, EnumFacing f6, float f7, float f8, float f9){
         if(!world.isRemote){
-            ItemStack stackPlayer = player.getCurrentEquippedItem();
             TileEntityCompost tile = (TileEntityCompost)world.getTileEntity(pos);
             //Add items to be composted
             if(stackPlayer != null && stackPlayer.getItem() instanceof ItemMisc && stackPlayer.getItemDamage() == TheMiscItems.MASHED_FOOD.ordinal() && (tile.slots[0] == null || (!(tile.slots[0].getItem() instanceof ItemFertilizer) && tile.slots[0].stackSize < TileEntityCompost.AMOUNT))){
@@ -97,19 +104,13 @@ public class BlockCompost extends BlockContainerBase implements IHudDisplay{
                     player.inventory.setInventorySlotContents(player.inventory.currentItem, tile.slots[0].copy());
                 }
                 else{
-                    player.getCurrentEquippedItem().stackSize += tile.slots[0].stackSize;
+                    player.getActiveItemStack().stackSize += tile.slots[0].stackSize;
                 }
                 tile.slots[0] = null;
                 tile.markDirty();
             }
         }
         return true;
-    }
-
-    @Override
-    public void setBlockBoundsForItemRender(){
-        float f = 1.0F/16.0F;
-        this.setBlockBounds(f, 0.0F, f, 1.0F-f, 11*f, 1.0F-f);
     }
 
     @Override
@@ -130,7 +131,7 @@ public class BlockCompost extends BlockContainerBase implements IHudDisplay{
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void displayHud(Minecraft minecraft, EntityPlayer player, ItemStack stack, MovingObjectPosition posHit, Profiler profiler, ScaledResolution resolution){
+    public void displayHud(Minecraft minecraft, EntityPlayer player, ItemStack stack, RayTraceResult posHit, Profiler profiler, ScaledResolution resolution){
         TileEntity tile = minecraft.theWorld.getTileEntity(posHit.getBlockPos());
         if(tile instanceof TileEntityCompost){
             ItemStack slot = ((TileEntityCompost)tile).getStackInSlot(0);
@@ -143,7 +144,7 @@ public class BlockCompost extends BlockContainerBase implements IHudDisplay{
 
                 AssetUtil.renderStackToGui(slot, resolution.getScaledWidth()/2+15, resolution.getScaledHeight()/2-29, 1F);
             }
-            minecraft.fontRendererObj.drawStringWithShadow(EnumChatFormatting.YELLOW+""+EnumChatFormatting.ITALIC+strg, resolution.getScaledWidth()/2+35, resolution.getScaledHeight()/2-25, StringUtil.DECIMAL_COLOR_WHITE);
+            minecraft.fontRendererObj.drawStringWithShadow(TextFormatting.YELLOW+""+TextFormatting.ITALIC+strg, resolution.getScaledWidth()/2+35, resolution.getScaledHeight()/2-25, StringUtil.DECIMAL_COLOR_WHITE);
         }
     }
 }

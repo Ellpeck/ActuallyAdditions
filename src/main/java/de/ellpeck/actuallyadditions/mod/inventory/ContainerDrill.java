@@ -21,7 +21,7 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.IChatComponent;
+import net.minecraft.util.text.ITextComponent;
 
 @InventoryContainer
 public class ContainerDrill extends Container{
@@ -119,7 +119,8 @@ public class ContainerDrill extends Container{
         return null;
     }
 
-    @Override
+    //TODO Fix slotClick()
+    /*@Override
     public ItemStack slotClick(int par1, int par2, int par3, EntityPlayer player){
         //par3 appears to be the type of clicking
         //par3 == 2 appears to be one of the number keys being hit
@@ -129,7 +130,7 @@ public class ContainerDrill extends Container{
         else{
             return super.slotClick(par1, par2, par3, player);
         }
-    }
+    }*/
 
     @Override
     public void onContainerClosed(EntityPlayer player){
@@ -160,7 +161,7 @@ public class ContainerDrill extends Container{
         }
 
         @Override
-        public IChatComponent getDisplayName(){
+        public ITextComponent getDisplayName(){
             return null;
         }
 

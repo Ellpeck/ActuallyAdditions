@@ -17,12 +17,13 @@ import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 
 import java.util.ArrayList;
 
@@ -57,7 +58,7 @@ public class LensColor extends Lens{
 
     @SuppressWarnings("unchecked")
     @Override
-    public boolean invoke(BlockPos hitBlock, IAtomicReconstructor tile){
+    public boolean invoke(IBlockState hitState, BlockPos hitBlock, IAtomicReconstructor tile){
         if(hitBlock != null){
             if(Util.arrayContains(CONVERTABLE_BLOCKS, PosUtil.getBlock(hitBlock, tile.getWorldObject())) >= 0 && tile.getEnergy() >= ENERGY_USE){
                 int meta = PosUtil.getMetadata(hitBlock, tile.getWorldObject());
@@ -70,7 +71,7 @@ public class LensColor extends Lens{
                 tile.extractEnergy(ENERGY_USE);
             }
 
-            ArrayList<EntityItem> items = (ArrayList<EntityItem>)tile.getWorldObject().getEntitiesWithinAABB(EntityItem.class, AxisAlignedBB.fromBounds(hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), hitBlock.getX()+1, hitBlock.getY()+1, hitBlock.getZ()+1));
+            ArrayList<EntityItem> items = (ArrayList<EntityItem>)tile.getWorldObject().getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), hitBlock.getX()+1, hitBlock.getY()+1, hitBlock.getZ()+1));
             for(EntityItem item : items){
                 if(!item.isDead && item.getEntityItem() != null && tile.getEnergy() >= ENERGY_USE){
                     if(Util.arrayContains(CONVERTABLE_BLOCKS, item.getEntityItem().getItem()) >= 0 || Util.arrayContains(CONVERTABLE_BLOCKS, Block.getBlockFromItem(item.getEntityItem().getItem())) >= 0){

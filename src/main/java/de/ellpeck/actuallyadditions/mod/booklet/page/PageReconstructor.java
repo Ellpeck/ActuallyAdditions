@@ -21,7 +21,7 @@ import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -58,7 +58,7 @@ public class PageReconstructor extends BookletPageAA{
     public void render(IBookletGui gui, int mouseX, int mouseY, int ticksElapsed, boolean mousePressed){
         LensNoneRecipe recipe = this.recipes[this.recipePos];
         if(recipe == null){
-            StringUtil.drawSplitString(Minecraft.getMinecraft().fontRendererObj, EnumChatFormatting.DARK_RED+StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".recipeDisabled"), gui.getGuiLeft()+14, gui.getGuiTop()+15, 115, 0, false);
+            StringUtil.drawSplitString(Minecraft.getMinecraft().fontRendererObj, TextFormatting.DARK_RED+StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".recipeDisabled"), gui.getGuiLeft()+14, gui.getGuiTop()+15, 115, 0, false);
         }
         else{
             String strg = "Atomic Reconstructor";
