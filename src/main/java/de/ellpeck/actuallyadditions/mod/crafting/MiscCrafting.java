@@ -16,7 +16,7 @@ import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheCrystals;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheFoods;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
-import de.ellpeck.actuallyadditions.mod.util.Util;
+import de.ellpeck.actuallyadditions.mod.util.RecipeUtil;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -36,23 +36,23 @@ public class MiscCrafting{
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockCrystal, 1, i),
                     "XXX", "XXX", "XXX",
                     'X', new ItemStack(InitItems.itemCrystal, 1, i)));
-            recipesCrystalBlocks[i] = Util.GetRecipes.lastIRecipe();
+            recipesCrystalBlocks[i] = RecipeUtil.lastIRecipe();
             GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemCrystal, 9, i), new ItemStack(InitBlocks.blockCrystal, 1, i)));
-            recipesCrystals[i] = Util.GetRecipes.lastIRecipe();
+            recipesCrystals[i] = RecipeUtil.lastIRecipe();
         }
 
         //Dough
         if(ConfigCrafting.DOUGH.isEnabled()){
             GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemMisc, 2, TheMiscItems.DOUGH.ordinal()),
                     "cropWheat", "cropWheat"));
-            ItemCrafting.recipeDough = Util.GetRecipes.lastIRecipe();
+            ItemCrafting.recipeDough = RecipeUtil.lastIRecipe();
         }
 
         //Rice Dough
         if(ConfigCrafting.RICE_DOUGH.isEnabled()){
             GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemMisc, 2, TheMiscItems.RICE_DOUGH.ordinal()),
                     new ItemStack(InitItems.itemFoods, 1, TheFoods.RICE.ordinal()), new ItemStack(InitItems.itemFoods, 1, TheFoods.RICE.ordinal()), new ItemStack(InitItems.itemFoods, 1, TheFoods.RICE.ordinal())));
-            ItemCrafting.recipeRiceDough = Util.GetRecipes.lastIRecipe();
+            ItemCrafting.recipeRiceDough = RecipeUtil.lastIRecipe();
         }
 
         //Paper Cone
@@ -67,7 +67,7 @@ public class MiscCrafting{
             GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.KNIFE_HANDLE.ordinal()),
                     "stickWood",
                     new ItemStack(Items.leather)));
-            ItemCrafting.recipeKnifeHandle = Util.GetRecipes.lastIRecipe();
+            ItemCrafting.recipeKnifeHandle = RecipeUtil.lastIRecipe();
         }
 
         //Knife Blade
@@ -76,7 +76,7 @@ public class MiscCrafting{
                     "K", "K", "F",
                     'K', "ingotIron",
                     'F', new ItemStack(Items.flint)));
-            ItemCrafting.recipeKnifeBlade = Util.GetRecipes.lastIRecipe();
+            ItemCrafting.recipeKnifeBlade = RecipeUtil.lastIRecipe();
         }
     }
 

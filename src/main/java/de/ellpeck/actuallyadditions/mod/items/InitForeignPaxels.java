@@ -17,7 +17,7 @@ import de.ellpeck.actuallyadditions.mod.creative.CreativeTab;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemAllToolAA;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
-import de.ellpeck.actuallyadditions.mod.util.Util;
+import de.ellpeck.actuallyadditions.mod.util.RecipeUtil;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemTool;
@@ -64,7 +64,7 @@ public class InitForeignPaxels{
 
                         if(ConfigCrafting.PAXELS.isEnabled()){
                             GameRegistry.addRecipe(new ShapelessOreRecipe(soPaxels[i], axe, pickaxe, hoe, sword, shovel));
-                            ToolCrafting.recipesPaxels.add(Util.GetRecipes.lastIRecipe());
+                            ToolCrafting.recipesPaxels.add(RecipeUtil.lastIRecipe());
                         }
                     }
                 }
@@ -92,7 +92,7 @@ public class InitForeignPaxels{
 
                         if(ConfigCrafting.PAXELS.isEnabled()){
                             GameRegistry.addRecipe(new ShapelessOreRecipe(mtPaxels[i], axe, pickaxe, hoe, sword, shovel));
-                            ToolCrafting.recipesPaxels.add(Util.GetRecipes.lastIRecipe());
+                            ToolCrafting.recipesPaxels.add(RecipeUtil.lastIRecipe());
                         }
                     }
                 }
@@ -120,7 +120,7 @@ public class InitForeignPaxels{
 
                         if(ConfigCrafting.PAXELS.isEnabled()){
                             GameRegistry.addRecipe(new ShapelessOreRecipe(tfPaxels[i], axe, pickaxe, hoe, sword, shovel));
-                            ToolCrafting.recipesPaxels.add(Util.GetRecipes.lastIRecipe());
+                            ToolCrafting.recipesPaxels.add(RecipeUtil.lastIRecipe());
                         }
                     }
                 }

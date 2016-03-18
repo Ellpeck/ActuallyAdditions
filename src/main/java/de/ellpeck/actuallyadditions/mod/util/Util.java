@@ -10,21 +10,15 @@
 
 package de.ellpeck.actuallyadditions.mod.util;
 
-import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
-import de.ellpeck.actuallyadditions.api.recipe.CrusherRecipe;
-import de.ellpeck.actuallyadditions.api.recipe.LensNoneRecipe;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.dispenser.BehaviorDefaultDispenseItem;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
-import net.minecraft.item.crafting.CraftingManager;
-import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.oredict.OreDictionary;
 
-import java.util.List;
 import java.util.Random;
 
 @SuppressWarnings("unused")
@@ -74,22 +68,4 @@ public class Util{
         return -1;
     }
 
-    public static class GetRecipes{
-
-        public static LensNoneRecipe lastReconstructorRecipe(){
-            List<LensNoneRecipe> list = ActuallyAdditionsAPI.reconstructorLensNoneRecipes;
-            return list.get(list.size()-1);
-        }
-
-        public static CrusherRecipe lastCrusherRecipe(){
-            List<CrusherRecipe> list = ActuallyAdditionsAPI.crusherRecipes;
-            return list.get(list.size()-1);
-        }
-
-        public static IRecipe lastIRecipe(){
-            List list = CraftingManager.getInstance().getRecipeList();
-            Object recipe = list.get(list.size()-1);
-            return recipe instanceof IRecipe ? (IRecipe)recipe : null;
-        }
-    }
 }
