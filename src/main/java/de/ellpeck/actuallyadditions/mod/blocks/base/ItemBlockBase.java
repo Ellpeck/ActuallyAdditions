@@ -51,9 +51,6 @@ public class ItemBlockBase extends ItemBlock{
         else if(this.block instanceof BlockStair){
             return ((BlockStair)this.block).getRarity(stack);
         }
-        else if(this.block instanceof BlockWallAA){
-            return ((BlockWallAA)this.block).getRarity(stack);
-        }
         else if(this.block instanceof BlockBushBase){
             return ((BlockBushBase)this.block).getRarity(stack);
         }

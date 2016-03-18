@@ -12,15 +12,14 @@ package de.ellpeck.actuallyadditions.mod.items.base;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
-import de.ellpeck.actuallyadditions.mod.creative.CreativeTab;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockDirt;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
@@ -28,8 +27,6 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import net.minecraftforge.event.ForgeEventFactory;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
@@ -66,15 +63,7 @@ public class ItemAllToolAA extends ItemTool{
     }
 
     private void register(){
-        this.setUnlocalizedName(ModUtil.MOD_ID_LOWER+"."+this.getBaseName());
-        GameRegistry.registerItem(this, this.getBaseName());
-
-        if(this.shouldAddCreative()){
-            this.setCreativeTab(CreativeTab.instance);
-        }
-        else{
-            this.setCreativeTab(null);
-        }
+        ItemUtil.registerItem(this, this.getBaseName(), this.shouldAddCreative());
 
         this.registerRendering();
     }
@@ -94,48 +83,7 @@ public class ItemAllToolAA extends ItemTool{
 
     @Override
     public boolean onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ){
-        if(!playerIn.canPlayerEdit(pos.offset(side), side, stack)){
-            return false;
-        }
-        else{
-            int hook = ForgeEventFactory.onHoeUse(stack, playerIn, worldIn, pos);
-            if(hook != 0){
-                return hook > 0;
-            }
-
-            IBlockState state = worldIn.getBlockState(pos);
-            Block block = state.getBlock();
-
-            if(side != EnumFacing.DOWN && worldIn.isAirBlock(pos.up())){
-                if(block == Blocks.grass){
-                    return this.useHoe(stack, playerIn, worldIn, pos, Blocks.farmland.getDefaultState());
-                }
-
-                if(block == Blocks.dirt){
-                    switch(state.getValue(BlockDirt.VARIANT)){
-                        case DIRT:
-                            return this.useHoe(stack, playerIn, worldIn, pos, Blocks.farmland.getDefaultState());
-                        case COARSE_DIRT:
-                            return this.useHoe(stack, playerIn, worldIn, pos, Blocks.dirt.getDefaultState().withProperty(BlockDirt.VARIANT, BlockDirt.DirtType.DIRT));
-                    }
-                }
-            }
-
-            return false;
-        }
-    }
-
-    private boolean useHoe(ItemStack stack, EntityPlayer player, World worldIn, BlockPos target, IBlockState newState){
-        worldIn.playSoundEffect((double)((float)target.getX()+0.5F), (double)((float)target.getY()+0.5F), (double)((float)target.getZ()+0.5F), newState.getBlock().stepSound.getStepSound(), (newState.getBlock().stepSound.getVolume()+1.0F)/2.0F, newState.getBlock().stepSound.getFrequency()*0.8F);
-
-        if(worldIn.isRemote){
-            return true;
-        }
-        else{
-            worldIn.setBlockState(target, newState);
-            stack.damageItem(1, player);
-            return true;
-        }
+        return Items.iron_hoe.onItemUse(stack, playerIn, worldIn, pos, side, hitX, hitY, hitZ);
     }
 
     @Override

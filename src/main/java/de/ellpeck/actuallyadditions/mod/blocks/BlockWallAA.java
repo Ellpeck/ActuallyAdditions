@@ -8,8 +8,9 @@
  * © 2016 Ellpeck
  */
 
-package de.ellpeck.actuallyadditions.mod.blocks.base;
+package de.ellpeck.actuallyadditions.mod.blocks;
 
+import de.ellpeck.actuallyadditions.mod.blocks.base.BlockBase;
 import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFenceGate;
