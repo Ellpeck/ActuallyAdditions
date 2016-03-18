@@ -14,18 +14,12 @@ import de.ellpeck.actuallyadditions.mod.network.gui.IStringReactor;
 import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.Objects;
 
 public class TileEntitySmileyCloud extends TileEntityBase implements IStringReactor{
 
     public String name;
-    @SideOnly(Side.CLIENT)
-    public double lastFlyHeight;
-    @SideOnly(Side.CLIENT)
-    public int flyHeight;
     private String nameBefore;
 
     @Override
@@ -58,16 +52,17 @@ public class TileEntitySmileyCloud extends TileEntityBase implements IStringReac
         this.name = text;
     }
 
-    public void setPinkAndFluffy(){
-        if(PosUtil.getMetadata(this.pos, this.worldObj) <= 3){
-            PosUtil.setMetadata(this.pos, this.worldObj, PosUtil.getMetadata(this.pos, this.worldObj)+4, 2);
+    public void setStatus(boolean pinkAndFluffy){
+        int meta = PosUtil.getMetadata(this.pos, this.worldObj);
+        if(pinkAndFluffy){
+            if(meta <= 3){
+                PosUtil.setMetadata(this.pos, this.worldObj, meta+4, 2);
+            }
+        }
+        else{
+            if(meta >= 4){
+                PosUtil.setMetadata(this.pos, this.worldObj, meta-4, 2);
+            }
         }
     }
-
-    public void setNormalCloud(){
-        if(PosUtil.getMetadata(this.pos, this.worldObj) >= 4){
-            PosUtil.setMetadata(this.pos, this.worldObj, PosUtil.getMetadata(this.pos, this.worldObj)-4, 2);
-        }
-    }
-
 }

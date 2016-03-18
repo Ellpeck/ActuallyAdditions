@@ -16,7 +16,6 @@ import de.ellpeck.actuallyadditions.mod.items.metalists.TheFoods;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -381,8 +380,7 @@ public class SmileyCloudEasterEggs{
         GlStateManager.pushMatrix();
         GlStateManager.rotate(180F, 0F, 0F, 1F);
         GlStateManager.rotate(90, 0, 1, 0);
-        GlStateManager.translate(0F, -1.5F, 0F);
-        GlStateManager.translate(0, 0.2F, leftHand ? -0.5F : 0.55F);
+        GlStateManager.translate(0.2, -1F, leftHand ? -0.525F : 0.525F);
         GlStateManager.scale(0.75F, 0.75F, 0.75F);
 
         AssetUtil.renderItemInWorld(stack);
@@ -393,13 +391,10 @@ public class SmileyCloudEasterEggs{
     private static void renderHeadBlock(Block block, int meta, float rotation){
         GlStateManager.pushMatrix();
         GlStateManager.disableLighting();
-        GlStateManager.translate(-0.015F, 0.6F, 0.075F);
-        GlStateManager.scale(0.3F, 0.3F, 0.3F);
+        GlStateManager.translate(-0.015F, 0.625F, 0.04F);
+        GlStateManager.scale(0.5F, 0.5F, 0.5F);
         GlStateManager.rotate(180F, 1F, 0F, 0F);
         GlStateManager.rotate(rotation, 0F, 1F, 0F);
-
-        double boop = Minecraft.getSystemTime()/1000D;
-        GlStateManager.rotate((float)(((boop*40D)%360)), 0, 1, 0);
 
         AssetUtil.renderBlockInWorld(block, meta);
 
