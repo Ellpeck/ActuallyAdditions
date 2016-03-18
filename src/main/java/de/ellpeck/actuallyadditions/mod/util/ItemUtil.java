@@ -36,7 +36,7 @@ public class ItemUtil{
     public static void registerBlock(Block block, Class<? extends ItemBlockBase> itemBlock, String name, boolean addTab){
         block.setUnlocalizedName(ModUtil.MOD_ID_LOWER+"."+name);
 
-        block.setRegistryName(ModUtil.MOD_ID_LOWER, name);
+        block.setRegistryName(ModUtil.MOD_ID, name);
         GameRegistry.registerBlock(block, itemBlock);
 
         block.setCreativeTab(addTab ? CreativeTab.instance : null);
@@ -45,7 +45,7 @@ public class ItemUtil{
     public static void registerItem(Item item, String name, boolean addTab){
         item.setUnlocalizedName(ModUtil.MOD_ID_LOWER+"."+name);
 
-        item.setRegistryName(ModUtil.MOD_ID_LOWER, name);
+        item.setRegistryName(ModUtil.MOD_ID, name);
         GameRegistry.registerItem(item);
 
         item.setCreativeTab(addTab ? CreativeTab.instance : null);
