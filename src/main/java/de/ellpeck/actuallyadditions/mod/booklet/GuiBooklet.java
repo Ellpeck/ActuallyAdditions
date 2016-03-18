@@ -162,7 +162,7 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
 
     @Override
     public void keyTyped(char theChar, int key){
-        if(key == Keyboard.KEY_ESCAPE){
+        if(key == Keyboard.KEY_ESCAPE || (key == this.mc.gameSettings.keyBindInventory.getKeyCode() && this.hisNameIsAt <= 0 && !this.searchField.isFocused())){
             if(this.parentScreen != null){
                 this.mc.displayGuiScreen(this.parentScreen);
             }
@@ -238,11 +238,11 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
         }
         //Handles config
         else if(button == this.buttonConfig){
-            mc.displayGuiScreen(new GuiConfiguration(this));
+            this.mc.displayGuiScreen(new GuiConfiguration(this));
         }
         //Handles achievements
         else if(button == this.buttonAchievements){
-            mc.displayGuiScreen(new GuiAAAchievements(this, mc.thePlayer.getStatFileWriter()));
+            this.mc.displayGuiScreen(new GuiAAAchievements(this, this.mc.thePlayer.getStatFileWriter()));
         }
         else if(button == this.buttonForward){
             BookletUtils.handleNextPage(this);
