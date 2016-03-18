@@ -162,34 +162,34 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
 
     @Override
     public void keyTyped(char theChar, int key){
-        if(key == Keyboard.KEY_ESCAPE || (key == this.mc.gameSettings.keyBindInventory.getKeyCode() && this.hisNameIsAt <= 0 && !this.searchField.isFocused())){
-            if(this.parentScreen != null){
-                this.mc.displayGuiScreen(this.parentScreen);
-            }
-            else{
-                this.mc.displayGuiScreen(null);
-                this.mc.setIngameFocus();
-            }
-        }
-        else if(this.searchField.isFocused()){
-            this.searchField.textboxKeyTyped(theChar, key);
-            BookletUtils.updateSearchBar(this);
-        }
-        else{
-            if(AND_HIS_NAME_IS.length > this.hisNameIsAt && AND_HIS_NAME_IS[this.hisNameIsAt] == key){
-                if(this.hisNameIsAt+1 >= AND_HIS_NAME_IS.length){
-                    Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.create(new ResourceLocation(ModUtil.MOD_ID_LOWER, "duhDuhDuhDuuuh")));
-                    ModUtil.LOGGER.info("AND HIS NAME IS JOHN CENA DUH DUH DUH DUUUH");
-                    this.hisNameIsAt = 0;
-                }
-                else{
-                    this.hisNameIsAt++;
-                }
-            }
-            else{
+        if(AND_HIS_NAME_IS.length > this.hisNameIsAt && AND_HIS_NAME_IS[this.hisNameIsAt] == key){
+            if(this.hisNameIsAt+1 >= AND_HIS_NAME_IS.length){
+                Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.create(new ResourceLocation(ModUtil.MOD_ID_LOWER, "duhDuhDuhDuuuh")));
+                ModUtil.LOGGER.info("AND HIS NAME IS JOHN CENA DUH DUH DUH DUUUH");
                 this.hisNameIsAt = 0;
             }
+            else{
+                this.hisNameIsAt++;
+            }
         }
+        else{
+            this.hisNameIsAt = 0;
+
+            if(key == Keyboard.KEY_ESCAPE || (key == this.mc.gameSettings.keyBindInventory.getKeyCode() && !this.searchField.isFocused())){
+                if(this.parentScreen != null){
+                    this.mc.displayGuiScreen(this.parentScreen);
+                }
+                else{
+                    this.mc.displayGuiScreen(null);
+                    this.mc.setIngameFocus();
+                }
+            }
+            else if(this.searchField.isFocused()){
+                this.searchField.textboxKeyTyped(theChar, key);
+                BookletUtils.updateSearchBar(this);
+            }
+        }
+
     }
 
     @Override
