@@ -33,11 +33,10 @@ public class LaserRelayConnectionHandler{
     public ConcurrentSet<Network> networks = new ConcurrentSet<Network>();
 
     public static LaserRelayConnectionHandler getInstance(){
+        if(instance == null){
+            instance = new LaserRelayConnectionHandler();
+        }
         return instance;
-    }
-
-    public static void setInstance(LaserRelayConnectionHandler handler){
-        instance = handler;
     }
 
     public NBTTagCompound writeNetworkToNBT(Network network){

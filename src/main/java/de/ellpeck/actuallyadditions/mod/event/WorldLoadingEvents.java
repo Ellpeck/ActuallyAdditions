@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.event;
 
-import de.ellpeck.actuallyadditions.mod.misc.LaserRelayConnectionHandler;
 import de.ellpeck.actuallyadditions.mod.misc.WorldData;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -19,9 +18,7 @@ public class WorldLoadingEvents{
 
     @SubscribeEvent
     public void onLoad(WorldEvent.Load event){
-        if(LaserRelayConnectionHandler.getInstance() == null){
-            LaserRelayConnectionHandler.setInstance(new LaserRelayConnectionHandler());
-        }
+        WorldData.makeDirty();
     }
 
     @SubscribeEvent

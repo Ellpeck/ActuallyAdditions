@@ -41,7 +41,6 @@ import de.ellpeck.actuallyadditions.mod.util.FakePlayerUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.init.Items;
-import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -126,11 +125,7 @@ public class ActuallyAdditions{
 
     @EventHandler
     public void serverStarted(FMLServerStartedEvent event){
-        if(LaserRelayConnectionHandler.getInstance() == null){
-            LaserRelayConnectionHandler.setInstance(new LaserRelayConnectionHandler());
-        }
-
-        WorldData.init(MinecraftServer.getServer());
+        WorldData.init();
     }
 
     @EventHandler
