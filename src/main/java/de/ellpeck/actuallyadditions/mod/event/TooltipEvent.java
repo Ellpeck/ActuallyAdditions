@@ -11,10 +11,10 @@
 package de.ellpeck.actuallyadditions.mod.event;
 
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
-import de.ellpeck.actuallyadditions.mod.util.KeyUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumChatFormatting;
@@ -35,7 +35,7 @@ public class TooltipEvent{
         //Advanced Item Info
         if(event.itemStack.getItem() != null){
             if(ConfigBoolValues.CTRL_EXTRA_INFO.isEnabled()){
-                if(KeyUtil.isControlPressed()){
+                if(GuiScreen.isCtrlKeyDown()){
                     event.toolTip.add(EnumChatFormatting.DARK_GRAY+""+EnumChatFormatting.ITALIC+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".extraInfo.desc")+":");
 
                     //OreDict Names
@@ -77,7 +77,7 @@ public class TooltipEvent{
                     NBTTagCompound compound = event.itemStack.getTagCompound();
                     if(compound != null && !compound.hasNoTags()){
                         event.toolTip.add(ADVANCED_INFO_HEADER_PRE+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".nbt.desc")+":");
-                        if(KeyUtil.isShiftPressed()){
+                        if(GuiScreen.isShiftKeyDown()){
                             List<String> strgList = Minecraft.getMinecraft().fontRendererObj.listFormattedStringToWidth(compound.toString(), 200);
                             for(String strg : strgList){
                                 event.toolTip.add(ADVANCED_INFO_TEXT_PRE+strg);

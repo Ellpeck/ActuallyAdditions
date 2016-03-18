@@ -56,7 +56,7 @@ public class BlockGrinder extends BlockContainerBase{
     @Override
     @SideOnly(Side.CLIENT)
     public void randomDisplayTick(World world, BlockPos pos, IBlockState state, Random rand){
-        int meta = state.getBlock().getMetaFromState(state);
+        int meta = PosUtil.getMetadata(state);
 
         if(meta == 1){
             for(int i = 0; i < 5; i++){

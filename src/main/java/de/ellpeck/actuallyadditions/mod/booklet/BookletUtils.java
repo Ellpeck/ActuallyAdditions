@@ -20,9 +20,13 @@ import de.ellpeck.actuallyadditions.mod.booklet.button.IndexButton;
 import de.ellpeck.actuallyadditions.mod.booklet.button.TexturedButton;
 import de.ellpeck.actuallyadditions.mod.booklet.entry.BookletEntryAllSearch;
 import de.ellpeck.actuallyadditions.mod.proxy.ClientProxy;
-import de.ellpeck.actuallyadditions.mod.util.*;
+import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
+import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.StringUtil;
+import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.Achievement;
 import net.minecraft.util.EnumChatFormatting;
@@ -51,7 +55,7 @@ public class BookletUtils{
     public static void openBrowser(String url, String shiftUrl){
         try{
             if(Desktop.isDesktopSupported()){
-                if(shiftUrl.equals(url) || KeyUtil.isShiftPressed()){
+                if(shiftUrl.equals(url) || GuiScreen.isShiftKeyDown()){
                     Desktop.getDesktop().browse(new URI(shiftUrl));
                 }
                 else{

@@ -38,7 +38,12 @@ public class PosUtil{
 
     public static int getMetadata(BlockPos pos, IBlockAccess world){
         Block block = getBlock(pos, world);
-        return block != null ? getBlock(pos, world).getMetaFromState(world.getBlockState(pos)) : 0;
+        return block != null ? block.getMetaFromState(world.getBlockState(pos)) : 0;
+    }
+
+    public static int getMetadata(IBlockState state){
+        Block block = state.getBlock();
+        return block != null ? block.getMetaFromState(state) : 0;
     }
 
     public static BlockPos offset(BlockPos pos, int x, int y, int z){

@@ -79,6 +79,7 @@ public class AssetUtil{
         Minecraft.getMinecraft().getRenderItem().renderItemOverlayIntoGUI(mc.fontRendererObj, stack, 0, 0, null);
         mc.fontRendererObj.setUnicodeFlag(flagBefore);
 
+        //TODO I don't think this is needed anymore, but I need to check that
         //GL+MC+NEI suck
         if(mc.currentScreen instanceof GuiBooklet || mc.currentScreen == null){
             RenderHelper.disableStandardItemLighting();
@@ -115,7 +116,7 @@ public class AssetUtil{
         GlStateManager.enableTexture2D();
     }
 
-    public static void renderNameTag(String tag, float x, float y, float z){
+    public static void renderNameTag(String tag, double x, double y, double z){
         FontRenderer fontrenderer = Minecraft.getMinecraft().fontRendererObj;
         float f = 1.6F;
         float f1 = 0.016666668F*f;
@@ -150,9 +151,5 @@ public class AssetUtil{
         GlStateManager.disableBlend();
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         GlStateManager.popMatrix();
-    }
-
-    public static void renderNameTag(String tag, double x, double y, double z){
-        renderNameTag(tag, (float)x, (float)y, (float)z);
     }
 }

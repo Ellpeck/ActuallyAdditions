@@ -16,6 +16,7 @@ import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.proxy.ClientProxy;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityCoalGenerator;
+import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.IBlockState;
@@ -53,7 +54,7 @@ public class BlockCoalGenerator extends BlockContainerBase{
     @Override
     @SideOnly(Side.CLIENT)
     public void randomDisplayTick(World world, BlockPos pos, IBlockState state, Random rand){
-        int meta = state.getBlock().getMetaFromState(state);
+        int meta = PosUtil.getMetadata(state);
 
         if(meta == 1){
             for(int i = 0; i < 5; i++){

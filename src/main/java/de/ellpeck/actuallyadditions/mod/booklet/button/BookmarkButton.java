@@ -15,9 +15,9 @@ import de.ellpeck.actuallyadditions.mod.booklet.BookletUtils;
 import de.ellpeck.actuallyadditions.mod.booklet.GuiBooklet;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import de.ellpeck.actuallyadditions.mod.util.KeyUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
@@ -37,7 +37,7 @@ public class BookmarkButton extends GuiButton{
 
     public void onPressed(){
         if(this.assignedEntry.entry != null){
-            if(KeyUtil.isShiftPressed()){
+            if(GuiScreen.isShiftKeyDown()){
                 this.assignedEntry.removeEntry();
             }
             else{

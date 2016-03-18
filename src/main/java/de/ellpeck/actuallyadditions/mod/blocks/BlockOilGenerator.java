@@ -16,6 +16,7 @@ import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.proxy.ClientProxy;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityOilGenerator;
+import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.IBlockState;
@@ -53,7 +54,7 @@ public class BlockOilGenerator extends BlockContainerBase{
     @Override
     @SideOnly(Side.CLIENT)
     public void randomDisplayTick(World world, BlockPos pos, IBlockState state, Random rand){
-        if(state.getBlock().getMetaFromState(state) == 1){
+        if(PosUtil.getMetadata(state) == 1){
             for(int i = 0; i < 5; i++){
                 world.spawnParticle(ClientProxy.bulletForMyValentine ? EnumParticleTypes.HEART : EnumParticleTypes.SMOKE_NORMAL, (double)pos.getX()+0.5F, (double)pos.getY()+1.0F, (double)pos.getZ()+0.5F, 0.0D, 0.0D, 0.0D);
             }
