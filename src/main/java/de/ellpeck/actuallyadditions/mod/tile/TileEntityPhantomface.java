@@ -23,9 +23,6 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.CapabilityDispatcher;
-import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -40,12 +37,8 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
     private BlockPos boundPosBefore;
     private Block boundBlockBefore;
 
-    private CapabilityDispatcher capabilities;
-
     public TileEntityPhantomface(String name){
         super(0, name);
-
-        this.capabilities = ForgeEventFactory.gatherCapabilities(this);
     }
 
     public static int upgradeRange(int defaultRange, World world, BlockPos pos){
@@ -116,11 +109,6 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
                 this.renderParticles();
             }
         }
-    }
-
-    @Override
-    public <T> T getCapability(Capability<T> capability, EnumFacing facing){
-        return this.capabilities != null ? this.capabilities.getCapability(capability, facing) : super.getCapability(capability, facing);
     }
 
     @Override

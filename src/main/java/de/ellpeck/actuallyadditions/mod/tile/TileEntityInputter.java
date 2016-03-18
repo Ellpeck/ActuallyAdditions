@@ -61,7 +61,6 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
     @Override
     public void onNumberReceived(int text, int textID, EntityPlayer player){
         if(text != -1){
-            //TODO Find a better solution for the Math.max and Math.min stuff here (also below in initVars()!)
             if(textID == 0){
                 this.slotToPutStart = this.placeToPut instanceof IInventory ? Math.max(Math.min(text, ((IInventory)this.placeToPut).getSizeInventory()-1), 0) : text;
             }
@@ -79,68 +78,10 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
         this.markDirty();
     }
 
-    //TODO Fix for new item system
-    private boolean newPull(){
-        /*for(EnumFacing facing : EnumFacing.values()){
-            IItemHandler handler = this.placeToPull.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing);
-            if(handler != null){
-                for(int i = Math.max(this.lastPullStart, 0); i < Math.min(this.slotToPullEnd, handler.getSlots()); i++){
-                    ItemStack stackInOtherInv = handler.getStackInSlot(i);
-                    if(stackInOtherInv != null){
-                        if(this.slots[0] == null || ItemUtil.areItemsEqual(stackInOtherInv, this.slots[0], false)){
-
-                            ItemStack pulled = handler.extractItem(i, this.slots[0] == null ? stackInOtherInv.stackSize : Math.min(stackInOtherInv.stackSize, this.slots[0].getMaxStackSize()-this.slots[0].stackSize), false);
-                            if(pulled != null){
-                                ItemStack slotCopy = this.slots[0] == null ? null : this.slots[0].copy();
-
-                                if(this.slots[0] == null){
-                                    this.slots[0] = pulled.copy();
-                                }
-                                else{
-                                    this.slots[0].stackSize+=pulled.stackSize;
-                                }
-
-                                if(!ItemUtil.areStacksEqualAndSameSize(slotCopy, this.slots[0], false)){
-                                    return true;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }*/
-        return false;
-    }
-
-    private boolean newPut(){
-        /*if(this.slots[0] != null){
-            for(EnumFacing facing : EnumFacing.values()){
-                IItemHandler handler = this.placeToPut.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing);
-                if(handler != null){
-                    for(int i = Math.max(this.slotToPutStart, 0); i < Math.min(this.slotToPutEnd, handler.getSlots()); i++){
-                        ItemStack slotCopy = this.slots[0].copy();
-
-                        ItemStack remaining = handler.insertItem(i, slotCopy, false);
-                        this.slots[0] = remaining == null ? null : remaining.copy();
-
-                        if(!ItemUtil.areStacksEqualAndSameSize(slotCopy, this.slots[0], false)){
-                            return true;
-                        }
-                    }
-                }
-            }
-        }*/
-        return false;
-    }
-
     /**
      * Pulls Items from the specified Slots on the specified Side
      */
     private void pull(){
-        if(this.newPull()){
-            return;
-        }
-
         //The Inventory to pull from
         IInventory theInventory = (IInventory)placeToPull;
         //Does the Inventory even have Slots!?
@@ -240,10 +181,6 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
      * (Check pull() for Description, similar to this)
      */
     private void put(){
-        if(this.newPut()){
-            return;
-        }
-
         IInventory theInventory = (IInventory)placeToPut;
         if(theInventory.getSizeInventory() > 0){
             int theSlotToPut = this.slotToPutStart;

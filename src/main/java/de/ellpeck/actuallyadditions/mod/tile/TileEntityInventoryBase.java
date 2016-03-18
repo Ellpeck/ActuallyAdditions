@@ -20,28 +20,15 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IChatComponent;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.wrapper.SidedInvWrapper;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public abstract class TileEntityInventoryBase extends TileEntityBase implements ISidedInventory{
 
     public ItemStack slots[];
     public String name;
 
-    private Map<EnumFacing, IItemHandler> itemHandlers = new HashMap<EnumFacing, IItemHandler>();
-
     public TileEntityInventoryBase(int slots, String name){
         this.initializeSlots(slots);
         this.name = "container."+ModUtil.MOD_ID_LOWER+"."+name;
-
-        for(EnumFacing facing : EnumFacing.values()){
-            this.itemHandlers.put(facing, new SidedInvWrapper(this, facing));
-        }
     }
 
     public void initializeSlots(int itemAmount){
@@ -108,23 +95,8 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
     }
 
     @Override
-    public boolean hasCapability(net.minecraftforge.common.capabilities.Capability<?> capability, net.minecraft.util.EnumFacing facing){
-        return this.getCapability(capability, facing) != null;
-    }
-
-    @Override
     public int getInventoryStackLimit(){
         return 64;
-    }
-
-    @Override
-    public <T> T getCapability(Capability<T> capability, EnumFacing facing){
-        if(facing != null && capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY){
-            return (T)this.itemHandlers.get(facing);
-        }
-        else{
-            return super.getCapability(capability, facing);
-        }
     }
 
     @Override

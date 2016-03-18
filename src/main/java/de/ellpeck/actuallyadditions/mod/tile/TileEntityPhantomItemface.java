@@ -16,9 +16,7 @@ import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
-import net.minecraftforge.common.capabilities.Capability;
 
-//TODO completely adapt to new item system?
 public class TileEntityPhantomItemface extends TileEntityPhantomface{
 
     public TileEntityPhantomItemface(){
@@ -103,17 +101,6 @@ public class TileEntityPhantomItemface extends TileEntityPhantomface{
             }
         }
         return null;
-    }
-
-    @Override
-    public <T> T getCapability(Capability<T> capability, EnumFacing facing){
-        if(this.isBoundThingInRange()){
-            TileEntity tile = worldObj.getTileEntity(this.boundPosition);
-            if(tile != null){
-                return tile.getCapability(capability, facing);
-            }
-        }
-        return super.getCapability(capability, facing);
     }
 
     @Override
