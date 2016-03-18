@@ -20,7 +20,7 @@ import java.util.UUID;
 
 public class FakePlayerUtil{
 
-    private static final String FAKE_NAME = "EllpecksActuallyAdditionsFakePlayer";
+    private static final String FAKE_NAME = ModUtil.MOD_ID+"FakePlayer";
     private static final GameProfile FAKE_PROFILE = new GameProfile(UUID.nameUUIDFromBytes(FAKE_NAME.getBytes()), FAKE_NAME);
     private static FakePlayer theFakePlayer;
 
