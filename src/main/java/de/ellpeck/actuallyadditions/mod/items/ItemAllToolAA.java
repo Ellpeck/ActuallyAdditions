@@ -13,6 +13,7 @@ package de.ellpeck.actuallyadditions.mod.items;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemToolAA;
+import de.ellpeck.actuallyadditions.mod.util.IColorProvidingItem;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -29,14 +30,16 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @SuppressWarnings("unchecked")
-public class ItemAllToolAA extends ItemToolAA implements IItemColor{
+public class ItemAllToolAA extends ItemToolAA implements IColorProvidingItem{
 
-    private int color;
+    public final int color;
 
     public ItemAllToolAA(ToolMaterial toolMat, String repairItem, String unlocalizedName, EnumRarity rarity, int color){
         super(4.0F, -2F, toolMat, repairItem, unlocalizedName, rarity, new HashSet<Block>());
@@ -51,6 +54,8 @@ public class ItemAllToolAA extends ItemToolAA implements IItemColor{
     protected void registerRendering(){
         ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this), new ResourceLocation(ModUtil.MOD_ID_LOWER, "itemPaxel"));
         ActuallyAdditions.proxy.addRenderVariant(this, new ResourceLocation(ModUtil.MOD_ID_LOWER, "itemPaxel"));
+
+
     }
 
     @Override
@@ -90,8 +95,14 @@ public class ItemAllToolAA extends ItemToolAA implements IItemColor{
         return this.hasExtraWhitelist(state.getBlock()) || state.getBlock().getHarvestTool(state) == null || state.getBlock().getHarvestTool(state).isEmpty() || this.getToolClasses(stack).contains(state.getBlock().getHarvestTool(state)) ? this.efficiencyOnProperMaterial : 1.0F;
     }
 
+    @SideOnly(Side.CLIENT)
     @Override
-    public int getColorFromItemstack(ItemStack stack, int tintIndex){
-        return tintIndex > 0 ? this.color : 0xFFFFFF;
+    public IItemColor getColor(){
+        return new IItemColor(){
+            @Override
+            public int getColorFromItemstack(ItemStack stack, int pass){
+                return pass > 0 ? color : 0xFFFFFF;
+            }
+        };
     }
 }

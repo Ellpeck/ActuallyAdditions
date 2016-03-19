@@ -45,4 +45,9 @@ public class ServerProxy implements IProxy{
     public void addRenderVariant(Item item, ResourceLocation... location){
 
     }
+
+    @Override
+    public void addColoredItem(Item item){
+
+    }
 }

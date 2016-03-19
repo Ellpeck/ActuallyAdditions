@@ -81,7 +81,7 @@ public class ItemBooklet extends ItemBase implements IHudDisplay{
         if(!world.isRemote){
             player.addStat(TheAchievements.OPEN_BOOKLET.ach);
         }
-        return new ActionResult<>(EnumActionResult.SUCCESS, stack);
+        return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
     }
 
     @SuppressWarnings("unchecked")

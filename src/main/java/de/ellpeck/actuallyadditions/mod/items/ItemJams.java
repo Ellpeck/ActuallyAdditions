@@ -13,8 +13,10 @@ package de.ellpeck.actuallyadditions.mod.items;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemFoodBase;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheJams;
+import de.ellpeck.actuallyadditions.mod.util.IColorProvidingItem;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
+import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
@@ -32,7 +34,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
-public class ItemJams extends ItemFoodBase{
+public class ItemJams extends ItemFoodBase implements IColorProvidingItem{
 
     public static final TheJams[] allJams = TheJams.values();
 
@@ -52,13 +54,6 @@ public class ItemJams extends ItemFoodBase{
     public String getUnlocalizedName(ItemStack stack){
         return stack.getItemDamage() >= allJams.length ? StringUtil.BUGGED_ITEM_NAME : this.getUnlocalizedName()+allJams[stack.getItemDamage()].name;
     }
-
-    //TODO Color
-    /*@Override
-    @SideOnly(Side.CLIENT)
-    public int getColorFromItemStack(ItemStack stack, int pass){
-        return pass > 0 ? (stack.getItemDamage() >= allJams.length ? 0 : allJams[stack.getItemDamage()].color) : super.getColorFromItemStack(stack, pass);
-    }*/
 
     @Override
     public EnumRarity getRarity(ItemStack stack){
@@ -109,5 +104,16 @@ public class ItemJams extends ItemFoodBase{
         for(int i = 0; i < allJams.length; i++){
             ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), new ResourceLocation(ModUtil.MOD_ID_LOWER, this.getBaseName()));
         }
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public IItemColor getColor(){
+        return new IItemColor(){
+            @Override
+            public int getColorFromItemstack(ItemStack stack, int pass){
+                return pass > 0 ? (stack.getItemDamage() >= allJams.length ? 0xFFFFFF : allJams[stack.getItemDamage()].color) : 0xFFFFFF;
+            }
+        };
     }
 }

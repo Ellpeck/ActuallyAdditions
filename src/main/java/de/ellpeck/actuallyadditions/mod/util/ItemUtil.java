@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.util;
 
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.ItemBlockBase;
 import de.ellpeck.actuallyadditions.mod.creative.CreativeTab;
 import net.minecraft.block.Block;
@@ -49,6 +50,10 @@ public class ItemUtil{
         GameRegistry.registerItem(item);
 
         item.setCreativeTab(addTab ? CreativeTab.instance : null);
+
+        if(item instanceof IColorProvidingItem){
+            ActuallyAdditions.proxy.addColoredItem(item);
+        }
     }
 
     /**
