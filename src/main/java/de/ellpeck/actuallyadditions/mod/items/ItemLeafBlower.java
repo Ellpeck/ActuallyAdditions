@@ -15,13 +15,17 @@ import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
@@ -38,9 +42,9 @@ public class ItemLeafBlower extends ItemBase{
     }
 
     @Override
-    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player){
-        player.setItemInUse(stack, this.getMaxItemUseDuration(stack));
-        return stack;
+    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand){
+        player.setActiveHand(hand);
+        return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
     }
 
     @Override
@@ -60,14 +64,15 @@ public class ItemLeafBlower extends ItemBase{
     }
 
     @Override
-    public void onUsingTick(ItemStack stack, EntityPlayer player, int time){
+    public void onUsingTick(ItemStack stack, EntityLivingBase player, int time){
         if(!player.worldObj.isRemote){
             if(time <= getMaxItemUseDuration(stack) && (this.isAdvanced || time%3 == 0)){
                 //Breaks the Blocks
                 this.breakStuff(player.worldObj, MathHelper.floor_double(player.posX), MathHelper.floor_double(player.posY), MathHelper.floor_double(player.posZ));
                 //Plays a Minecart sounds (It really sounds like a Leaf Blower!)
                 if(!ConfigValues.lessSound){
-                    player.worldObj.playSoundAtEntity(player, "minecart.base", 0.3F, 0.001F);
+                    //TODO Fix sound
+                    //player.worldObj.playSoundAtEntity(player, "minecart.base", 0.3F, 0.001F);
                 }
             }
         }
@@ -92,7 +97,7 @@ public class ItemLeafBlower extends ItemBase{
                     //The current Block to break
                     BlockPos pos = new BlockPos(x+reachX, y+reachY, z+reachZ);
                     Block block = PosUtil.getBlock(pos, world);
-                    if(block != null && (block instanceof BlockBush || (this.isAdvanced && block.isLeaves(world, pos)))){
+                    if(block != null && (block instanceof BlockBush || (this.isAdvanced && block.isLeaves(world.getBlockState(pos), world, pos)))){
                         breakPositions.add(pos);
                     }
                 }

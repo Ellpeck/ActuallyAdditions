@@ -17,11 +17,12 @@ import de.ellpeck.actuallyadditions.mod.network.PacketParticle;
 import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -94,12 +95,9 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
                 this.boundPosBefore = this.boundPosition;
                 this.boundBlockBefore = this.boundPosition == null ? null : PosUtil.getBlock(this.boundPosition, this.worldObj);
 
-                this.worldObj.markBlockForUpdate(PosUtil.offset(this.pos, 1, 0, 0));
-                this.worldObj.markBlockForUpdate(PosUtil.offset(this.pos, -1, 0, 0));
-                this.worldObj.markBlockForUpdate(PosUtil.offset(this.pos, 0, 1, 0));
-                this.worldObj.markBlockForUpdate(PosUtil.offset(this.pos, 0, -1, 0));
-                this.worldObj.markBlockForUpdate(PosUtil.offset(this.pos, 0, 0, 1));
-                this.worldObj.markBlockForUpdate(PosUtil.offset(this.pos, 0, 0, -1));
+                IBlockState myState = this.worldObj.getBlockState(this.pos);
+                this.worldObj.notifyBlockUpdate(this.pos, myState, myState, 3);
+
                 this.sendUpdate();
                 this.markDirty();
             }

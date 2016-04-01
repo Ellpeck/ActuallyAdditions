@@ -13,8 +13,10 @@ package de.ellpeck.actuallyadditions.mod.items;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheDusts;
+import de.ellpeck.actuallyadditions.mod.util.IColorProvidingItem;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
+import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
@@ -25,7 +27,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
-public class ItemDust extends ItemBase{
+public class ItemDust extends ItemBase implements IColorProvidingItem{
 
     public static final TheDusts[] allDusts = TheDusts.values();
 
@@ -42,12 +44,6 @@ public class ItemDust extends ItemBase{
     @Override
     public String getUnlocalizedName(ItemStack stack){
         return stack.getItemDamage() >= allDusts.length ? StringUtil.BUGGED_ITEM_NAME : this.getUnlocalizedName()+allDusts[stack.getItemDamage()].name;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public int getColorFromItemStack(ItemStack stack, int pass){
-        return stack.getItemDamage() >= allDusts.length ? 0 : allDusts[stack.getItemDamage()].color;
     }
 
     @Override
@@ -68,5 +64,16 @@ public class ItemDust extends ItemBase{
         for(int i = 0; i < allDusts.length; i++){
             ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), new ResourceLocation(ModUtil.MOD_ID_LOWER, this.getBaseName()));
         }
+    }
+
+    @SideOnly(Side.CLIENT)
+    @Override
+    public IItemColor getColor(){
+        return new IItemColor(){
+            @Override
+            public int getColorFromItemstack(ItemStack stack, int pass){
+                return stack.getItemDamage() >= allDusts.length ? 0xFFFFFF : allDusts[stack.getItemDamage()].color;
+            }
+        };
     }
 }

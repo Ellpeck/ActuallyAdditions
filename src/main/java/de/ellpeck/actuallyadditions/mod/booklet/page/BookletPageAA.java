@@ -17,7 +17,7 @@ import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.text.TextFormatting;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -44,12 +44,12 @@ public class BookletPageAA extends BookletPage{
         }
 
         String base = StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".chapter."+this.chapter.getUnlocalizedName()+".text."+this.localizationKey);
-        base = base.replaceAll("<imp>", EnumChatFormatting.DARK_GREEN+"");
-        base = base.replaceAll("<item>", EnumChatFormatting.BLUE+"");
-        base = base.replaceAll("<r>", EnumChatFormatting.BLACK+"");
+        base = base.replaceAll("<imp>", TextFormatting.DARK_GREEN+"");
+        base = base.replaceAll("<item>", TextFormatting.BLUE+"");
+        base = base.replaceAll("<r>", TextFormatting.BLACK+"");
         base = base.replaceAll("<n>", "\n");
-        base = base.replaceAll("<i>", EnumChatFormatting.ITALIC+"");
-        base = base.replaceAll("<tifisgrin>", EnumChatFormatting.DARK_RED+""+EnumChatFormatting.UNDERLINE); //This is fucking important so go read it now
+        base = base.replaceAll("<i>", TextFormatting.ITALIC+"");
+        base = base.replaceAll("<tifisgrin>", TextFormatting.DARK_RED+""+TextFormatting.UNDERLINE); //This is fucking important so go read it now
 
         for(Object o : this.textReplacements.entrySet()){
             Map.Entry e = (Map.Entry)o;
@@ -80,7 +80,7 @@ public class BookletPageAA extends BookletPage{
 
     @Override
     public String getClickToSeeRecipeString(){
-        return EnumChatFormatting.GOLD+StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".clickToSeeRecipe");
+        return TextFormatting.GOLD+StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".clickToSeeRecipe");
     }
 
     public BookletPage setNoText(){

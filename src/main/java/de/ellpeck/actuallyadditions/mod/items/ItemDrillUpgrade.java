@@ -14,6 +14,9 @@ import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 
 public class ItemDrillUpgrade extends ItemBase{
@@ -35,11 +38,12 @@ public class ItemDrillUpgrade extends ItemBase{
     }
 
     @Override
-    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player){
+    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand){
         if(!world.isRemote && this.type == UpgradeType.PLACER){
             this.setSlotToPlaceFrom(stack, player.inventory.currentItem);
+            return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
         }
-        return stack;
+        return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
     }
 
     public void setSlotToPlaceFrom(ItemStack stack, int slot){

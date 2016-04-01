@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.misc;
 
 
+import de.ellpeck.actuallyadditions.mod.util.FakePlayerUtil;
 import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.dispenser.BehaviorDefaultDispenseItem;
@@ -18,8 +19,8 @@ import net.minecraft.dispenser.IBlockSource;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemBucket;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
 
 public class DispenserHandlerEmptyBucket extends BehaviorDefaultDispenseItem{
 
@@ -31,7 +32,7 @@ public class DispenserHandlerEmptyBucket extends BehaviorDefaultDispenseItem{
         int z = source.getBlockTileEntity().getPos().getZ()+facing.getFrontOffsetZ();
         BlockPos pos = new BlockPos(x, y, z);
 
-        if(source.getWorld().isAirBlock(pos) && !PosUtil.getMaterial(pos, source.getWorld()).isSolid() && ((ItemBucket)bucket.getItem()).tryPlaceContainedLiquid(source.getWorld(), pos)){
+        if(source.getWorld().isAirBlock(pos) && !PosUtil.getMaterial(pos, source.getWorld()).isSolid() && ((ItemBucket)bucket.getItem()).tryPlaceContainedLiquid(FakePlayerUtil.getFakePlayer(source.getWorld()), source.getWorld(), pos)){
             return new ItemStack(Items.bucket);
         }
 

@@ -24,8 +24,8 @@ import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.relauncher.Side;
@@ -98,7 +98,7 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
             for(int i = 0; i < distance; i++){
                 BlockPos hitBlock = WorldUtil.getCoordsFromSide(sideToManipulate, this.pos, i);
 
-                if(currentLens.invoke(hitBlock, this)){
+                if(currentLens.invoke(this.worldObj.getBlockState(hitBlock), hitBlock, this)){
                     this.shootLaser(hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), currentLens);
                     break;
                 }
@@ -120,9 +120,10 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
 
     private void shootLaser(int endX, int endY, int endZ, Lens currentLens){
         if(!ConfigValues.lessSound){
-            this.worldObj.playSoundEffect(this.getX(), this.getY(), this.getZ(), ModUtil.MOD_ID_LOWER+":reconstructor", 0.35F, 1.0F);
+            //TODO Fix sound
+            //this.worldObj.playSoundEffect(this.getX(), this.getY(), this.getZ(), ModUtil.MOD_ID_LOWER+":reconstructor", 0.35F, 1.0F);
         }
-        PacketHandler.theNetwork.sendToAllAround(new PacketParticle(this.getX(), this.getY(), this.getZ(), endX, endY, endZ, currentLens.getColor(), ConfigValues.lessParticles ? 2 : 8, 2F), new NetworkRegistry.TargetPoint(worldObj.provider.getDimensionId(), this.getX(), this.getY(), this.getZ(), 64));
+        PacketHandler.theNetwork.sendToAllAround(new PacketParticle(this.getX(), this.getY(), this.getZ(), endX, endY, endZ, currentLens.getColor(), ConfigValues.lessParticles ? 2 : 8, 2F), new NetworkRegistry.TargetPoint(worldObj.provider.getDimension(), this.getX(), this.getY(), this.getZ(), 64));
     }
 
     @Override

@@ -21,7 +21,7 @@ import de.ellpeck.actuallyadditions.mod.util.Util;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.biome.BiomeGenOcean;
 import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
@@ -34,7 +34,7 @@ public class WorldDecorationEvent{
     @SubscribeEvent
     public void onWorldDecoration(DecorateBiomeEvent.Decorate event){
         if((event.getResult() == Event.Result.ALLOW || event.getResult() == Event.Result.DEFAULT)){
-            if(Util.arrayContains(ConfigValues.plantDimensionBlacklist, event.world.provider.getDimensionId()) < 0){
+            if(Util.arrayContains(ConfigValues.plantDimensionBlacklist, event.world.provider.getDimension()) < 0){
                 this.generateRice(event);
                 this.genPlantNormally(InitBlocks.blockWildPlant, TheWildPlants.CANOLA.ordinal(), ConfigIntValues.CANOLA_AMOUNT.getValue(), ConfigBoolValues.DO_CANOLA_GEN.isEnabled(), Material.grass, event);
                 this.genPlantNormally(InitBlocks.blockWildPlant, TheWildPlants.FLAX.ordinal(), ConfigIntValues.FLAX_AMOUNT.getValue(), ConfigBoolValues.DO_FLAX_GEN.isEnabled(), Material.grass, event);
@@ -50,7 +50,7 @@ public class WorldDecorationEvent{
 
                     if(event.world.getBiomeGenForCoords(randomPos) instanceof BiomeGenOcean){
                         if(randomPos.getY() >= 25 && randomPos.getY() <= 45){
-                            if(PosUtil.getBlock(randomPos, event.world).getMaterial() == Material.water){
+                            if(PosUtil.getBlock(randomPos, event.world).getMaterial(event.world.getBlockState(randomPos)) == Material.water){
                                 if(PosUtil.getMaterial(PosUtil.offset(randomPos, 0, -1, 0), event.world).isSolid()){
                                     PosUtil.setBlock(randomPos, event.world, InitBlocks.blockTreasureChest, event.rand.nextInt(4), 2);
                                 }

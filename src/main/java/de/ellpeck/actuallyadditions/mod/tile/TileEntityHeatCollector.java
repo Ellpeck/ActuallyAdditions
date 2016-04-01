@@ -18,8 +18,8 @@ import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -54,7 +54,7 @@ public class TileEntityHeatCollector extends TileEntityBase implements IEnergyPr
                     BlockPos coords = WorldUtil.getCoordsFromSide(WorldUtil.getDirectionBySidesInOrder(i), this.pos, 0);
                     if(coords != null){
                         Block block = PosUtil.getBlock(coords, worldObj);
-                        if(block != null && block.getMaterial() == Material.lava && PosUtil.getMetadata(coords, worldObj) == 0){
+                        if(block != null && block.getMaterial(worldObj.getBlockState(coords)) == Material.lava && PosUtil.getMetadata(coords, worldObj) == 0){
                             blocksAround.add(i);
                         }
                     }

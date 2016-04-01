@@ -20,7 +20,7 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.text.TextFormatting;
 
 import java.util.ArrayList;
 
@@ -83,16 +83,16 @@ public class BookmarkButton extends GuiButton{
         ArrayList list = new ArrayList();
         if(this.assignedEntry.entry != null){
             if(this.assignedEntry.chapter != null){
-                list.add(EnumChatFormatting.GOLD+this.assignedEntry.chapter.getLocalizedName()+", Page "+this.assignedEntry.page.getID());
+                list.add(TextFormatting.GOLD+this.assignedEntry.chapter.getLocalizedName()+", Page "+this.assignedEntry.page.getID());
             }
             else{
-                list.add(EnumChatFormatting.GOLD+this.assignedEntry.entry.getLocalizedName()+", Page "+this.assignedEntry.pageInIndex);
+                list.add(TextFormatting.GOLD+this.assignedEntry.entry.getLocalizedName()+", Page "+this.assignedEntry.pageInIndex);
             }
             list.add("Click to open");
-            list.add(EnumChatFormatting.ITALIC+"Shift-Click to remove");
+            list.add(TextFormatting.ITALIC+"Shift-Click to remove");
         }
         else{
-            list.add(EnumChatFormatting.GOLD+"None");
+            list.add(TextFormatting.GOLD+"None");
             list.add("Click to save current page");
         }
         this.booklet.drawHoveringText(list, mouseX, mouseY);

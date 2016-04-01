@@ -50,7 +50,7 @@ public class ContainerEnergizer extends Container{
             this.addSlotToContainer(new Slot(inventory, inventory.getSizeInventory()-1-i, 102, 19+i*18){
                 @Override
                 public boolean isItemValid(ItemStack stack){
-                    return stack != null && stack.getItem().isValidArmor(stack, finalI, finalPlayer);
+                    return stack != null && stack.getItem().isValidArmor(stack, ContainerEnervator.ARMOR_SLOTS[finalI], finalPlayer);
                 }
 
                 @Override

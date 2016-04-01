@@ -13,15 +13,19 @@ package de.ellpeck.actuallyadditions.mod.items;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemFoodBase;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheJams;
+import de.ellpeck.actuallyadditions.mod.util.IColorProvidingItem;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
+import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -30,7 +34,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
-public class ItemJams extends ItemFoodBase{
+public class ItemJams extends ItemFoodBase implements IColorProvidingItem{
 
     public static final TheJams[] allJams = TheJams.values();
 
@@ -52,12 +56,6 @@ public class ItemJams extends ItemFoodBase{
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public int getColorFromItemStack(ItemStack stack, int pass){
-        return pass > 0 ? (stack.getItemDamage() >= allJams.length ? 0 : allJams[stack.getItemDamage()].color) : super.getColorFromItemStack(stack, pass);
-    }
-
-    @Override
     public EnumRarity getRarity(ItemStack stack){
         return stack.getItemDamage() >= allJams.length ? EnumRarity.COMMON : allJams[stack.getItemDamage()].rarity;
     }
@@ -71,18 +69,18 @@ public class ItemJams extends ItemFoodBase{
     }
 
     @Override
-    public ItemStack onItemUseFinish(ItemStack stack, World world, EntityPlayer player){
+    public ItemStack onItemUseFinish(ItemStack stack, World world, EntityLivingBase player){
         ItemStack stackToReturn = super.onItemUseFinish(stack, world, player);
 
-        if(!world.isRemote && stack.getItemDamage() < allJams.length){
-            PotionEffect firstEffectToGet = new PotionEffect(allJams[stack.getItemDamage()].firstEffectToGet, 200);
+        if(player instanceof EntityPlayer && !world.isRemote && stack.getItemDamage() < allJams.length){
+            PotionEffect firstEffectToGet = new PotionEffect(Potion.getPotionById(allJams[stack.getItemDamage()].firstEffectToGet), 200);
             player.addPotionEffect(firstEffectToGet);
 
-            PotionEffect secondEffectToGet = new PotionEffect(allJams[stack.getItemDamage()].secondEffectToGet, 600);
+            PotionEffect secondEffectToGet = new PotionEffect(Potion.getPotionById(allJams[stack.getItemDamage()].secondEffectToGet), 600);
             player.addPotionEffect(secondEffectToGet);
 
             ItemStack returnItem = new ItemStack(Items.glass_bottle);
-            if(!player.inventory.addItemStackToInventory(returnItem.copy())){
+            if(!((EntityPlayer)player).inventory.addItemStackToInventory(returnItem.copy())){
                 EntityItem entityItem = new EntityItem(player.worldObj, player.posX, player.posY, player.posZ, returnItem.copy());
                 entityItem.setPickupDelay(0);
                 player.worldObj.spawnEntityInWorld(entityItem);
@@ -106,5 +104,16 @@ public class ItemJams extends ItemFoodBase{
         for(int i = 0; i < allJams.length; i++){
             ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), new ResourceLocation(ModUtil.MOD_ID_LOWER, this.getBaseName()));
         }
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public IItemColor getColor(){
+        return new IItemColor(){
+            @Override
+            public int getColorFromItemstack(ItemStack stack, int pass){
+                return pass > 0 ? (stack.getItemDamage() >= allJams.length ? 0xFFFFFF : allJams[stack.getItemDamage()].color) : 0xFFFFFF;
+            }
+        };
     }
 }

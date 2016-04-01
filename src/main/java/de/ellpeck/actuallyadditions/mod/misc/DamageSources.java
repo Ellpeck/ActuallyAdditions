@@ -14,9 +14,9 @@ import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.IChatComponent;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentString;
 
 public class DamageSources extends DamageSource{
 
@@ -30,8 +30,8 @@ public class DamageSources extends DamageSource{
     }
 
     @Override
-    public IChatComponent getDeathMessage(EntityLivingBase entity){
+    public ITextComponent getDeathMessage(EntityLivingBase entity){
         String locTag = "death."+ModUtil.MOD_ID_LOWER+"."+this.damageType+"."+(Util.RANDOM.nextInt(this.messageCount)+1);
-        return new ChatComponentText(StringUtil.localizeFormatted(locTag, entity.getName()));
+        return new TextComponentString(StringUtil.localizeFormatted(locTag, entity.getName()));
     }
 }

@@ -17,11 +17,12 @@ import de.ellpeck.actuallyadditions.api.recipe.LensNoneRecipe;
 import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
 import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,8 +31,8 @@ public class LensNone extends Lens{
 
     @SuppressWarnings("unchecked")
     @Override
-    public boolean invoke(BlockPos hitBlock, IAtomicReconstructor tile){
-        if(hitBlock != null && !PosUtil.getBlock(hitBlock, tile.getWorldObject()).isAir(tile.getWorldObject(), hitBlock)){
+    public boolean invoke(IBlockState hitState, BlockPos hitBlock, IAtomicReconstructor tile){
+        if(hitBlock != null && !PosUtil.getBlock(hitBlock, tile.getWorldObject()).isAir(hitState, tile.getWorldObject(), hitBlock)){
             int range = 2;
 
             //Converting the Blocks
@@ -65,7 +66,7 @@ public class LensNone extends Lens{
             }
 
             //Converting the Items
-            ArrayList<EntityItem> items = (ArrayList<EntityItem>)tile.getWorldObject().getEntitiesWithinAABB(EntityItem.class, AxisAlignedBB.fromBounds(hitBlock.getX()-range, hitBlock.getY()-range, hitBlock.getZ()-range, hitBlock.getX()+range, hitBlock.getY()+range, hitBlock.getZ()+range));
+            ArrayList<EntityItem> items = (ArrayList<EntityItem>)tile.getWorldObject().getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(hitBlock.getX()-range, hitBlock.getY()-range, hitBlock.getZ()-range, hitBlock.getX()+range, hitBlock.getY()+range, hitBlock.getZ()+range));
             for(EntityItem item : items){
                 ItemStack stack = item.getEntityItem();
                 if(!item.isDead && stack != null){

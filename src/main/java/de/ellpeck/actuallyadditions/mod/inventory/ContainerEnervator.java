@@ -18,6 +18,7 @@ import invtweaks.api.container.InventoryContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
@@ -28,6 +29,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ContainerEnervator extends Container{
 
     private TileEntityEnervator enervator;
+
+    public static final EntityEquipmentSlot[] ARMOR_SLOTS = new EntityEquipmentSlot[] {EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET};
 
     public ContainerEnervator(EntityPlayer player, TileEntityBase tile){
         this.enervator = (TileEntityEnervator)tile;
@@ -50,7 +53,7 @@ public class ContainerEnervator extends Container{
             this.addSlotToContainer(new Slot(inventory, inventory.getSizeInventory()-1-i, 102, 19+i*18){
                 @Override
                 public boolean isItemValid(ItemStack stack){
-                    return stack != null && stack.getItem().isValidArmor(stack, finalI, finalPlayer);
+                    return stack != null && stack.getItem().isValidArmor(stack, ARMOR_SLOTS[finalI], finalPlayer);
                 }
 
                 @Override

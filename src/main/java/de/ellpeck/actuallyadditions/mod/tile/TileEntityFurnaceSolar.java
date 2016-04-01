@@ -15,8 +15,8 @@ import cofh.api.energy.IEnergyProvider;
 import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -82,7 +82,7 @@ public class TileEntityFurnaceSolar extends TileEntityBase implements IEnergyPro
     public boolean hasBlockAbove(){
         for(int y = 1; y <= worldObj.getHeight(); y++){
             BlockPos offset = PosUtil.offset(this.pos, 0, y, 0);
-            if(!PosUtil.getBlock(offset, worldObj).isAir(worldObj, offset)){
+            if(!PosUtil.getBlock(offset, worldObj).isAir(worldObj.getBlockState(offset), worldObj, offset)){
                 return true;
             }
         }

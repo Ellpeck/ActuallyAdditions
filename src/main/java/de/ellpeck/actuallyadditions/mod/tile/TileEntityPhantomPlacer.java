@@ -20,10 +20,10 @@ import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -112,11 +112,11 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
     @Override
     public boolean hasBoundPosition(){
         if(this.boundPosition != null){
-            if(this.worldObj.getTileEntity(boundPosition) instanceof IPhantomTile || (this.getPos().getX() == this.boundPosition.getX() && this.getPos().getY() == this.boundPosition.getY() && this.getPos().getZ() == this.boundPosition.getZ() && this.worldObj.provider.getDimensionId() == this.worldObj.provider.getDimensionId())){
+            if(this.worldObj.getTileEntity(boundPosition) instanceof IPhantomTile || (this.getPos().getX() == this.boundPosition.getX() && this.getPos().getY() == this.boundPosition.getY() && this.getPos().getZ() == this.boundPosition.getZ() && this.worldObj.provider.getDimension() == this.worldObj.provider.getDimension())){
                 this.boundPosition = null;
                 return false;
             }
-            return this.worldObj.provider.getDimensionId() == this.worldObj.provider.getDimensionId();
+            return this.worldObj.provider.getDimension() == this.worldObj.provider.getDimension();
         }
         return false;
     }
@@ -124,7 +124,7 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
     private void doWork(){
         if(this.isBreaker){
             Block blockToBreak = PosUtil.getBlock(boundPosition, worldObj);
-            if(blockToBreak != null && blockToBreak.getBlockHardness(worldObj, boundPosition) > -1.0F){
+            if(blockToBreak != null && blockToBreak.getBlockHardness(worldObj.getBlockState(boundPosition), worldObj, boundPosition) > -1.0F){
                 ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
                 drops.addAll(blockToBreak.getDrops(worldObj, boundPosition, worldObj.getBlockState(boundPosition), 0));
 
@@ -168,7 +168,7 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
 
     @Override
     public boolean isBoundThingInRange(){
-        return this.hasBoundPosition() && PosUtil.toVec(this.boundPosition).distanceTo(new Vec3(this.getPos().getX(), this.getPos().getY(), this.getPos().getZ())) <= this.range;
+        return this.hasBoundPosition() && PosUtil.toVec(this.boundPosition).distanceTo(new Vec3d(this.getPos().getX(), this.getPos().getY(), this.getPos().getZ())) <= this.range;
     }
 
     @Override

@@ -19,8 +19,8 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockAir;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -85,8 +85,8 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase implem
             BlockPos coordsBlock = WorldUtil.getCoordsFromSide(sideToManipulate, pos, i);
             if(coordsBlock != null){
                 Block blockToBreak = PosUtil.getBlock(coordsBlock, worldObj);
-                if(blockToBreak != null && !(blockToBreak instanceof BlockAir) && blockToBreak.getBlockHardness(worldObj, pos) > -1.0F){
-                    ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
+                if(blockToBreak != null && !(blockToBreak instanceof BlockAir) && blockToBreak.getBlockHardness(worldObj.getBlockState(coordsBlock), worldObj, pos) > -1.0F){
+                    ArrayList<ItemStack> drops = new ArrayList();
                     drops.addAll(blockToBreak.getDrops(worldObj, coordsBlock, worldObj.getBlockState(coordsBlock), 0));
 
                     if(WorldUtil.addToInventory(this, drops, false, true)){

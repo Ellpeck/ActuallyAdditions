@@ -13,14 +13,17 @@ package de.ellpeck.actuallyadditions.mod.items;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.items.metalists.ThePotionRings;
+import de.ellpeck.actuallyadditions.mod.util.IColorProvidingItem;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
+import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -29,7 +32,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
-public class ItemPotionRing extends ItemBase{
+public class ItemPotionRing extends ItemBase implements IColorProvidingItem{
 
     public static final ThePotionRings[] allRings = ThePotionRings.values();
 
@@ -53,12 +56,6 @@ public class ItemPotionRing extends ItemBase{
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public int getColorFromItemStack(ItemStack stack, int pass){
-        return stack.getItemDamage() >= allRings.length ? 0 : allRings[stack.getItemDamage()].color;
-    }
-
-    @Override
     @SuppressWarnings("unchecked")
     public void onUpdate(ItemStack stack, World world, Entity player, int par4, boolean par5){
         super.onUpdate(stack, world, player, par4, par5);
@@ -66,17 +63,18 @@ public class ItemPotionRing extends ItemBase{
         if(!world.isRemote && stack.getItemDamage() < allRings.length){
             if(player instanceof EntityPlayer){
                 EntityPlayer thePlayer = (EntityPlayer)player;
-                ItemStack equippedStack = ((EntityPlayer)player).getCurrentEquippedItem();
+                ItemStack equippedStack = ((EntityPlayer)player).getActiveItemStack();
 
                 ThePotionRings effect = ThePotionRings.values()[stack.getItemDamage()];
-                if(!effect.needsWaitBeforeActivating || !thePlayer.isPotionActive(effect.effectID)){
+                Potion potion = Potion.getPotionById(effect.effectID);
+                if(!effect.needsWaitBeforeActivating || !thePlayer.isPotionActive(potion)){
                     if(!((ItemPotionRing)stack.getItem()).isAdvanced){
                         if(equippedStack != null && stack == equippedStack){
-                            thePlayer.addPotionEffect(new PotionEffect(effect.effectID, effect.activeTime, effect.normalAmplifier, true, false));
+                            thePlayer.addPotionEffect(new PotionEffect(potion, effect.activeTime, effect.normalAmplifier, true, false));
                         }
                     }
                     else{
-                        thePlayer.addPotionEffect(new PotionEffect(effect.effectID, effect.activeTime, effect.advancedAmplifier, true, false));
+                        thePlayer.addPotionEffect(new PotionEffect(potion, effect.activeTime, effect.advancedAmplifier, true, false));
                     }
                 }
             }
@@ -111,5 +109,16 @@ public class ItemPotionRing extends ItemBase{
         for(int i = 0; i < allRings.length; i++){
             ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), new ResourceLocation(ModUtil.MOD_ID_LOWER, this.getBaseName()));
         }
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public IItemColor getColor(){
+        return new IItemColor(){
+            @Override
+            public int getColorFromItemstack(ItemStack stack, int tintIndex){
+                return stack.getItemDamage() >= allRings.length ? 0xFFFFFF : allRings[stack.getItemDamage()].color;
+            }
+        };
     }
 }

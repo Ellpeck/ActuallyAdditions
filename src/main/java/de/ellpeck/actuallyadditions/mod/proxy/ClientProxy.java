@@ -26,16 +26,17 @@ import de.ellpeck.actuallyadditions.mod.tile.TileEntityAtomicReconstructor;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityCompost;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntitySmileyCloud;
 import de.ellpeck.actuallyadditions.mod.util.FluidStateMapper;
+import de.ellpeck.actuallyadditions.mod.util.IColorProvidingItem;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import de.ellpeck.actuallyadditions.mod.util.playerdata.PersistentClientData;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.block.model.ModelBakery;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.resources.IReloadableResourceManager;
 import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.client.resources.IResourceManagerReloadListener;
-import net.minecraft.client.resources.model.ModelBakery;
-import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -47,9 +48,7 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 import java.io.File;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class ClientProxy implements IProxy{
 
@@ -58,6 +57,8 @@ public class ClientProxy implements IProxy{
     public static boolean bulletForMyValentine;
     public static int bookletWordCount;
     public static int bookletCharCount;
+
+    private static List<Item> colorProdividingItemsForRegistering = new ArrayList<Item>();
     private static Map<ItemStack, ResourceLocation> modelLocationsForRegistering = new HashMap<ItemStack, ResourceLocation>();
     private static Map<Item, ResourceLocation[]> modelVariantsForRegistering = new HashMap<Item, ResourceLocation[]>();
 
@@ -97,9 +98,13 @@ public class ClientProxy implements IProxy{
 
         PersistentClientData.setTheFile(new File(Minecraft.getMinecraft().mcDataDir, ModUtil.MOD_ID+"Data.dat"));
 
+        for(Map.Entry<ItemStack, ResourceLocation> entry : modelLocationsForRegistering.entrySet()){
+            ModelLoader.setCustomModelResourceLocation(entry.getKey().getItem(), entry.getKey().getItemDamage(), new ModelResourceLocation(entry.getValue(), "inventory"));
+        }
         for(Map.Entry<Item, ResourceLocation[]> entry : modelVariantsForRegistering.entrySet()){
             ModelBakery.registerItemVariants(entry.getKey(), entry.getValue());
         }
+
         this.registerCustomFluidBlockRenderer(InitFluids.fluidCanolaOil);
         this.registerCustomFluidBlockRenderer(InitFluids.fluidOil);
 
@@ -140,8 +145,10 @@ public class ClientProxy implements IProxy{
         //TODO Fix villager, doesn't work in this Version of Forge
         //VillagerRegistry.instance().registerVillagerSkin(ConfigIntValues.JAM_VILLAGER_ID.getValue(), new ResourceLocation(ModUtil.MOD_ID_LOWER, "textures/entity/villager/jamVillager.png"));
 
-        for(Map.Entry<ItemStack, ResourceLocation> entry : modelLocationsForRegistering.entrySet()){
-            Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(entry.getKey().getItem(), entry.getKey().getItemDamage(), new ModelResourceLocation(entry.getValue(), "inventory"));
+        for(Item item : colorProdividingItemsForRegistering){
+            if(item instanceof IColorProvidingItem){
+                Minecraft.getMinecraft().getItemColors().registerItemColorHandler(((IColorProvidingItem)item).getColor(), item);
+            }
         }
     }
 
@@ -162,5 +169,10 @@ public class ClientProxy implements IProxy{
     @Override
     public void addRenderVariant(Item item, ResourceLocation... location){
         modelVariantsForRegistering.put(item, location);
+    }
+
+    @Override
+    public void addColoredItem(Item item){
+        colorProdividingItemsForRegistering.add(item);
     }
 }

@@ -14,7 +14,7 @@ package de.ellpeck.actuallyadditions.mod.network.gui;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -39,7 +39,7 @@ public class PacketGuiButton implements IMessage{
         this.tileX = x;
         this.tileY = y;
         this.tileZ = z;
-        this.worldID = world.provider.getDimensionId();
+        this.worldID = world.provider.getDimension();
         this.buttonID = buttonID;
         this.playerID = player.getEntityId();
     }

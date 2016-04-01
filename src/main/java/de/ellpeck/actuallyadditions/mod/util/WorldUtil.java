@@ -22,14 +22,19 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.play.client.C07PacketPlayerDigging;
-import net.minecraft.network.play.server.S23PacketBlockChange;
+import net.minecraft.network.play.client.CPacketPlayerDigging;
+import net.minecraft.network.play.server.SPacketBlockChange;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.ForgeHooks;
@@ -144,11 +149,12 @@ public class WorldUtil{
             //Everything else
             else{
                 try{
-                    stack.onItemUse(FakePlayerUtil.getFakePlayer(world), world, offsetPos, side.getOpposite(), 0.5F, 0.5F, 0.5F);
+                    EntityPlayer fake = FakePlayerUtil.getFakePlayer(world);
+                    stack.onItemUse(fake, world, offsetPos, fake.getActiveHand(), side.getOpposite(), 0.5F, 0.5F, 0.5F);
                     return stack;
                 }
                 catch(Exception e){
-                    ModUtil.LOGGER.error("Something that places Blocks at "+offsetPos.getX()+", "+offsetPos.getY()+", "+offsetPos.getZ()+" in World "+world.provider.getDimensionId()+" threw an Exception! Don't let that happen again!", e);
+                    ModUtil.LOGGER.error("Something that places Blocks at "+offsetPos.getX()+", "+offsetPos.getY()+", "+offsetPos.getZ()+" in World "+world.provider.getDimension()+" threw an Exception! Don't let that happen again!", e);
                 }
             }
         }
@@ -315,29 +321,29 @@ public class WorldUtil{
         return 0;
     }
 
-    public static MovingObjectPosition getNearestPositionWithAir(World world, EntityPlayer player, int reach){
+    public static RayTraceResult getNearestPositionWithAir(World world, EntityPlayer player, int reach){
         return getMovingObjectPosWithReachDistance(world, player, reach, false, false, true);
     }
 
-    private static MovingObjectPosition getMovingObjectPosWithReachDistance(World world, EntityPlayer player, double distance, boolean p1, boolean p2, boolean p3){
+    private static RayTraceResult getMovingObjectPosWithReachDistance(World world, EntityPlayer player, double distance, boolean p1, boolean p2, boolean p3){
         float f = player.rotationPitch;
         float f1 = player.rotationYaw;
         double d0 = player.posX;
         double d1 = player.posY+(double)player.getEyeHeight();
         double d2 = player.posZ;
-        Vec3 vec3 = new Vec3(d0, d1, d2);
+        Vec3d vec3 = new Vec3d(d0, d1, d2);
         float f2 = MathHelper.cos(-f1*0.017453292F-(float)Math.PI);
         float f3 = MathHelper.sin(-f1*0.017453292F-(float)Math.PI);
         float f4 = -MathHelper.cos(-f*0.017453292F);
         float f5 = MathHelper.sin(-f*0.017453292F);
         float f6 = f3*f4;
         float f7 = f2*f4;
-        Vec3 vec31 = vec3.addVector((double)f6*distance, (double)f5*distance, (double)f7*distance);
+        Vec3d vec31 = vec3.addVector((double)f6*distance, (double)f5*distance, (double)f7*distance);
         return world.rayTraceBlocks(vec3, vec31, p1, p2, p3);
     }
 
-    public static MovingObjectPosition getNearestBlockWithDefaultReachDistance(World world, EntityPlayer player){
-        return getMovingObjectPosWithReachDistance(world, player, player instanceof EntityPlayerMP ? ((EntityPlayerMP)player).theItemInWorldManager.getBlockReachDistance() : 5.0D, false, true, false);
+    public static RayTraceResult getNearestBlockWithDefaultReachDistance(World world, EntityPlayer player){
+        return getMovingObjectPosWithReachDistance(world, player, player instanceof EntityPlayerMP ? ((EntityPlayerMP)player).interactionManager.getBlockReachDistance() : 5.0D, false, true, false);
     }
 
     /**
@@ -350,15 +356,15 @@ public class WorldUtil{
     public static boolean playerHarvestBlock(World world, BlockPos pos, EntityPlayer player){
         Block block = PosUtil.getBlock(pos, world);
         IBlockState state = world.getBlockState(pos);
-        int meta = PosUtil.getMetadata(pos, world);
         TileEntity tile = world.getTileEntity(pos);
+        ItemStack stack = player.getActiveItemStack();
+
         //If the Block can be harvested or not
         boolean canHarvest = block.canHarvestBlock(world, pos, player);
 
         //Send Block Breaking Event
         if(player instanceof EntityPlayerMP){
-            int event = ForgeHooks.onBlockBreakEvent(world, ((EntityPlayerMP)player).theItemInWorldManager.getGameType(), (EntityPlayerMP)player, pos);
-            if(event == -1){
+            if(ForgeHooks.onBlockBreakEvent(world, ((EntityPlayerMP)player).interactionManager.getGameType(), (EntityPlayerMP)player, pos) == -1){
                 return false;
             }
         }
@@ -373,7 +379,7 @@ public class WorldUtil{
         }
 
         //If the Block was actually "removed", meaning it will drop an Item
-        boolean removed = block.removedByPlayer(world, pos, player, canHarvest);
+        boolean removed = block.removedByPlayer(state, world, pos, player, canHarvest);
         //Actually removes the Block from the World
         if(removed){
             //Before the Block is destroyed, special cases
@@ -382,12 +388,12 @@ public class WorldUtil{
             if(!world.isRemote && !player.capabilities.isCreativeMode){
                 //Actually drops the Block's Items etc.
                 if(canHarvest){
-                    block.harvestBlock(world, player, pos, state, tile);
+                    block.harvestBlock(world, player, pos, state, tile, stack);
                 }
                 //Only drop XP when no Silk Touch is applied
-                if(!EnchantmentHelper.getSilkTouchModifier(player)){
+                if(EnchantmentHelper.getEnchantmentLevel(Enchantments.silkTouch, stack) <= 0){
                     //Drop XP depending on Fortune Level
-                    block.dropXpOnBlockBreak(world, pos, block.getExpDrop(world, pos, EnchantmentHelper.getFortuneModifier(player)));
+                    block.dropXpOnBlockBreak(world, pos, block.getExpDrop(state, world, pos, EnchantmentHelper.getEnchantmentLevel(Enchantments.fortune, stack)));
                 }
             }
         }
@@ -395,12 +401,12 @@ public class WorldUtil{
         if(!world.isRemote){
             //Update the Client of a Block Change
             if(player instanceof EntityPlayerMP){
-                ((EntityPlayerMP)player).playerNetServerHandler.sendPacket(new S23PacketBlockChange(world, pos));
+                ((EntityPlayerMP)player).playerNetServerHandler.sendPacket(new SPacketBlockChange(world, pos));
             }
         }
         else{
             //Check the Server if a Block that changed on the Client really changed, if not, revert the change
-            Minecraft.getMinecraft().getNetHandler().addToSendQueue(new C07PacketPlayerDigging(C07PacketPlayerDigging.Action.STOP_DESTROY_BLOCK, pos, Minecraft.getMinecraft().objectMouseOver.sideHit));
+            Minecraft.getMinecraft().getNetHandler().addToSendQueue(new CPacketPlayerDigging(CPacketPlayerDigging.Action.STOP_DESTROY_BLOCK, pos, Minecraft.getMinecraft().objectMouseOver.sideHit));
         }
         return removed;
     }

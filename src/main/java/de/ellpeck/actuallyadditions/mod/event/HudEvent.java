@@ -24,8 +24,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.profiler.Profiler;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -37,9 +37,9 @@ public class HudEvent{
             Minecraft minecraft = Minecraft.getMinecraft();
             Profiler profiler = minecraft.mcProfiler;
             EntityPlayer player = minecraft.thePlayer;
-            MovingObjectPosition posHit = minecraft.objectMouseOver;
+            RayTraceResult posHit = minecraft.objectMouseOver;
             FontRenderer font = minecraft.fontRendererObj;
-            ItemStack stack = player.getCurrentEquippedItem();
+            ItemStack stack = player.getActiveItemStack();
 
             profiler.startSection(ModUtil.MOD_ID+"Hud");
 
@@ -64,11 +64,11 @@ public class HudEvent{
                 if(tileHit instanceof IRedstoneToggle){
                     profiler.startSection("RedstoneToggleHudDisplay");
 
-                    String strg = "Redstone Mode: "+EnumChatFormatting.DARK_RED+(((IRedstoneToggle)tileHit).isPulseMode() ? "Pulse" : "Deactivation")+EnumChatFormatting.RESET;
+                    String strg = "Redstone Mode: "+TextFormatting.DARK_RED+(((IRedstoneToggle)tileHit).isPulseMode() ? "Pulse" : "Deactivation")+TextFormatting.RESET;
                     font.drawStringWithShadow(strg, event.resolution.getScaledWidth()/2+5, event.resolution.getScaledHeight()/2+5, StringUtil.DECIMAL_COLOR_WHITE);
 
                     if(stack != null && Block.getBlockFromItem(stack.getItem()) instanceof BlockRedstoneTorch){
-                        String expl = EnumChatFormatting.GREEN+"Right-Click to toggle!";
+                        String expl = TextFormatting.GREEN+"Right-Click to toggle!";
                         font.drawStringWithShadow(expl, event.resolution.getScaledWidth()/2+5, event.resolution.getScaledHeight()/2+15, StringUtil.DECIMAL_COLOR_WHITE);
                     }
 
@@ -78,7 +78,7 @@ public class HudEvent{
                 if(tileHit instanceof IEnergyDisplay){
                     profiler.startSection("EnergyDisplay");
                     String strg = ((IEnergyDisplay)tileHit).getEnergy()+"/"+((IEnergyDisplay)tileHit).getMaxEnergy()+" RF";
-                    font.drawStringWithShadow(EnumChatFormatting.GOLD+strg, event.resolution.getScaledWidth()/2+5, event.resolution.getScaledHeight()/2-10, StringUtil.DECIMAL_COLOR_WHITE);
+                    font.drawStringWithShadow(TextFormatting.GOLD+strg, event.resolution.getScaledWidth()/2+5, event.resolution.getScaledHeight()/2-10, StringUtil.DECIMAL_COLOR_WHITE);
                     profiler.endSection();
                 }
             }

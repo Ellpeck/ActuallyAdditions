@@ -15,7 +15,7 @@ import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.text.TextFormatting;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,13 +24,13 @@ public class BookletEntry implements IBookletEntry{
 
     private final String unlocalizedName;
     public List<IBookletChapter> chapters = new ArrayList<IBookletChapter>();
-    private EnumChatFormatting color;
+    private TextFormatting color;
 
     public BookletEntry(String unlocalizedName){
         this.unlocalizedName = unlocalizedName;
         ActuallyAdditionsAPI.addBookletEntry(this);
 
-        this.color = EnumChatFormatting.RESET;
+        this.color = TextFormatting.RESET;
     }
 
     @Override
@@ -64,12 +64,12 @@ public class BookletEntry implements IBookletEntry{
     }
 
     public BookletEntry setImportant(){
-        this.color = EnumChatFormatting.DARK_GREEN;
+        this.color = TextFormatting.DARK_GREEN;
         return this;
     }
 
     public BookletEntry setSpecial(){
-        this.color = EnumChatFormatting.DARK_PURPLE;
+        this.color = TextFormatting.DARK_PURPLE;
         return this;
     }
 

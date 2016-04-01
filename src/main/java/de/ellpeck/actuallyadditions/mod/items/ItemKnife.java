@@ -14,6 +14,7 @@ import com.google.common.collect.Multimap;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 
@@ -39,9 +40,9 @@ public class ItemKnife extends ItemBase{
 
     @SuppressWarnings("unchecked")
     @Override
-    public Multimap getAttributeModifiers(ItemStack stack){
-        Multimap map = super.getAttributeModifiers(stack);
-        map.put(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(), new AttributeModifier(itemModifierUUID, "Knife Modifier", 3, 0));
+    public Multimap getAttributeModifiers(EntityEquipmentSlot slot, ItemStack stack){
+        Multimap map = super.getAttributeModifiers(slot, stack);
+        map.put(SharedMonsterAttributes.ATTACK_DAMAGE.getAttributeUnlocalizedName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Knife Modifier", 3, 0));
         return map;
     }
 

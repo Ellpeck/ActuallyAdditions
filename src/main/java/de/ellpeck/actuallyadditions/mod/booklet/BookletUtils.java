@@ -29,7 +29,7 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.Achievement;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.text.TextFormatting;
 
 import java.awt.*;
 import java.net.URI;
@@ -80,9 +80,9 @@ public class BookletUtils{
 
         //Draw No Entry title
         if(booklet.currentEntrySet.entry == null){
-            String strg = EnumChatFormatting.DARK_GREEN+StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".booklet.manualName.1");
+            String strg = TextFormatting.DARK_GREEN+StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".booklet.manualName.1");
             booklet.getFontRenderer().drawString(strg, booklet.guiLeft+booklet.xSize/2-booklet.getFontRenderer().getStringWidth(strg)/2-3, booklet.guiTop+12, 0);
-            strg = EnumChatFormatting.DARK_GREEN+StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".booklet.manualName.2");
+            strg = TextFormatting.DARK_GREEN+StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".booklet.manualName.2");
             booklet.getFontRenderer().drawString(strg, booklet.guiLeft+booklet.xSize/2-booklet.getFontRenderer().getStringWidth(strg)/2-3, booklet.guiTop+12+booklet.getFontRenderer().FONT_HEIGHT, 0);
 
             String version;
@@ -105,7 +105,7 @@ public class BookletUtils{
             else{
                 version = StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".booklet.edition")+" "+ModUtil.VERSION.substring(ModUtil.VERSION.indexOf("r")+1);
             }
-            strg = EnumChatFormatting.GOLD+EnumChatFormatting.ITALIC.toString()+"-"+version+"-";
+            strg = TextFormatting.GOLD+TextFormatting.ITALIC.toString()+"-"+version+"-";
             booklet.getFontRenderer().drawString(strg, booklet.guiLeft+booklet.xSize/2-booklet.getFontRenderer().getStringWidth(strg)/2-3, booklet.guiTop+33, 0);
         }
 
@@ -139,10 +139,10 @@ public class BookletUtils{
                                     if(mouseX >= booklet.guiLeft+booklet.xSize+1 && mouseX < booklet.guiLeft+booklet.xSize+1+22 && mouseY >= booklet.guiTop-18 && mouseY < booklet.guiTop-18+21){
                                         if(infoList == null){
                                             infoList = new ArrayList<String>();
-                                            infoList.add(EnumChatFormatting.GOLD+"Achievements related to this chapter:");
+                                            infoList.add(TextFormatting.GOLD+"Achievements related to this chapter:");
                                         }
                                         infoList.add("-"+StringUtil.localize(achievement.statId));
-                                        infoList.add(EnumChatFormatting.GRAY+"("+achievement.getDescription()+")");
+                                        infoList.add(TextFormatting.GRAY+"("+achievement.getDescription()+")");
                                     }
                                 }
                             }
@@ -178,10 +178,10 @@ public class BookletUtils{
         //Renders the amount of words and chars the book has
         else{
             String wordCountString = StringUtil.localizeFormatted("booklet."+ModUtil.MOD_ID_LOWER+".amountOfWords", ClientProxy.bookletWordCount);
-            booklet.getFontRenderer().drawString(EnumChatFormatting.ITALIC+wordCountString, booklet.guiLeft+booklet.xSize-booklet.getFontRenderer().getStringWidth(wordCountString)-15, booklet.guiTop+booklet.ySize-18-booklet.getFontRenderer().FONT_HEIGHT, 0);
+            booklet.getFontRenderer().drawString(TextFormatting.ITALIC+wordCountString, booklet.guiLeft+booklet.xSize-booklet.getFontRenderer().getStringWidth(wordCountString)-15, booklet.guiTop+booklet.ySize-18-booklet.getFontRenderer().FONT_HEIGHT, 0);
 
             String charCountString = StringUtil.localizeFormatted("booklet."+ModUtil.MOD_ID_LOWER+".amountOfChars", ClientProxy.bookletCharCount);
-            booklet.getFontRenderer().drawString(EnumChatFormatting.ITALIC+charCountString, booklet.guiLeft+booklet.xSize-booklet.getFontRenderer().getStringWidth(charCountString)-15, booklet.guiTop+booklet.ySize-18, 0);
+            booklet.getFontRenderer().drawString(TextFormatting.ITALIC+charCountString, booklet.guiLeft+booklet.xSize-booklet.getFontRenderer().getStringWidth(charCountString)-15, booklet.guiTop+booklet.ySize-18, 0);
         }
     }
 
