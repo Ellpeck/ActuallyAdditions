@@ -12,7 +12,7 @@ buildscript {
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
 
-version = "1.8.9-r26"
+version = "1.9-r27"
 group = "de.ellpeck.actuallyadditions"
 archivesBaseName = "ActuallyAdditions"
 
@@ -42,7 +42,7 @@ dependencies {
     //compile "codechicken:CodeChickenCore:1.8-1.0.5.36:dev"
     //compile "codechicken:NotEnoughItems:1.8-1.0.5.104:dev"
 
-    //deobfCompile "mezz.jei:jei_1.8.9:2.28.6.173"
+    deobfCompile "mezz.jei:jei_1.9:3.2.11.186"
 }
 
 processResources {

@@ -1,3 +1,10 @@
+# 1.9-r27
+### Yes, really. This update pushes the mod's version to 1.9, however it probably is very unstable. There is a few notable bugs and things missing, but I wanted to push this version because a lot of people wanted it.
+## If you encounter any bugs, please post them on the Issue Tracker here: https://github.com/Ellpeck/ActuallyAdditions/issues
+* Updated the Mod to 1.9
+* Did some other stuff
+* All of the items, when holding them in your hands, also look like shields right now. I couldn't be bothered to change the JSONs yet, so you'll have to live with it.
+
 # 1.8.9-r26
 ### This update was done by canitzp. As I started to work on another mod and I'm not really interested in Actually Additions anymore, this will now be a common feature. If something breaks with an update, call him. Not me. Thanks.
 * Made the knife not repairable

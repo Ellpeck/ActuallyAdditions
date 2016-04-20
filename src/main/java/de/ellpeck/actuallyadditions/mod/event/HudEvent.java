@@ -43,6 +43,7 @@ public class HudEvent{
 
             profiler.startSection(ModUtil.MOD_ID+"Hud");
 
+            //TODO Fix this not working because stack is always null for some reason
             if(stack != null){
                 if(stack.getItem() instanceof IHudDisplay){
                     profiler.startSection("ItemHudDisplay");
