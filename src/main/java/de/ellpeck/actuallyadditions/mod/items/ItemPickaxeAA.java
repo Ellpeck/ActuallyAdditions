@@ -24,7 +24,7 @@ import java.util.Set;
 
 public class ItemPickaxeAA extends ItemToolAA{
 
-    private static final Set<Block> EFFECTIVE_ON = Sets.newHashSet(Blocks.activator_rail, Blocks.coal_ore, Blocks.cobblestone, Blocks.detector_rail, Blocks.diamond_block, Blocks.diamond_ore, Blocks.double_stone_slab, Blocks.golden_rail, Blocks.gold_block, Blocks.gold_ore, Blocks.ice, Blocks.iron_block, Blocks.iron_ore, Blocks.lapis_block, Blocks.lapis_ore, Blocks.lit_redstone_ore, Blocks.mossy_cobblestone, Blocks.netherrack, Blocks.packed_ice, Blocks.rail, Blocks.redstone_ore, Blocks.sandstone, Blocks.red_sandstone, Blocks.stone, Blocks.stone_slab, Blocks.stone_button, Blocks.stone_pressure_plate);
+    private static final Set<Block> EFFECTIVE_ON = Sets.newHashSet(Blocks.ACTIVATOR_RAIL, Blocks.COAL_ORE, Blocks.COBBLESTONE, Blocks.DETECTOR_RAIL, Blocks.DIAMOND_BLOCK, Blocks.DIAMOND_ORE, Blocks.DOUBLE_STONE_SLAB, Blocks.GOLDEN_RAIL, Blocks.GOLD_BLOCK, Blocks.GOLD_ORE, Blocks.ICE, Blocks.IRON_BLOCK, Blocks.IRON_ORE, Blocks.LAPIS_BLOCK, Blocks.LAPIS_ORE, Blocks.LIT_REDSTONE_ORE, Blocks.MOSSY_COBBLESTONE, Blocks.NETHERRACK, Blocks.PACKED_ICE, Blocks.RAIL, Blocks.REDSTONE_ORE, Blocks.SANDSTONE, Blocks.RED_SANDSTONE, Blocks.STONE, Blocks.STONE_SLAB, Blocks.STONE_BUTTON, Blocks.STONE_PRESSURE_PLATE);
 
     public ItemPickaxeAA(Item.ToolMaterial material, String repairItem, String unlocalizedName, EnumRarity rarity){
         super(1.0F, -2.8F, material, repairItem, unlocalizedName, rarity, EFFECTIVE_ON);
@@ -34,14 +34,48 @@ public class ItemPickaxeAA extends ItemToolAA{
         super(1.0F, -2.8F, material, repairItem, unlocalizedName, rarity, EFFECTIVE_ON);
     }
 
-    @Override
-    public boolean canHarvestBlock(IBlockState state) {
-        Block blockIn = state.getBlock();
-        return blockIn == Blocks.obsidian ? toolMaterial.getHarvestLevel() == 3 : blockIn != Blocks.diamond_block && blockIn != Blocks.diamond_ore ? blockIn != Blocks.emerald_ore && blockIn != Blocks.emerald_block ? blockIn != Blocks.gold_block && blockIn != Blocks.gold_ore ? blockIn != Blocks.iron_block && blockIn != Blocks.iron_ore ? blockIn != Blocks.lapis_block && blockIn != Blocks.lapis_ore ? blockIn != Blocks.redstone_ore && blockIn != Blocks.lit_redstone_ore ? state.getMaterial() == Material.rock || (state.getMaterial() == Material.iron || state.getMaterial() == Material.anvil) : toolMaterial.getHarvestLevel() >= 2 : toolMaterial.getHarvestLevel() >= 1 : toolMaterial.getHarvestLevel() >= 1 : toolMaterial.getHarvestLevel() >= 2 : toolMaterial.getHarvestLevel() >= 2 : toolMaterial.getHarvestLevel() >= 2;
+    public boolean canHarvestBlock(IBlockState blockIn){
+        Block block = blockIn.getBlock();
+
+        if(block == Blocks.OBSIDIAN){
+            return this.toolMaterial.getHarvestLevel() == 3;
+        }
+        else if(block != Blocks.DIAMOND_BLOCK && block != Blocks.DIAMOND_ORE){
+            if(block != Blocks.EMERALD_ORE && block != Blocks.EMERALD_BLOCK){
+                if(block != Blocks.GOLD_BLOCK && block != Blocks.GOLD_ORE){
+                    if(block != Blocks.IRON_BLOCK && block != Blocks.IRON_ORE){
+                        if(block != Blocks.LAPIS_BLOCK && block != Blocks.LAPIS_ORE){
+                            if(block != Blocks.REDSTONE_ORE && block != Blocks.LIT_REDSTONE_ORE){
+                                Material material = blockIn.getMaterial();
+                                return material == Material.ROCK || (material == Material.IRON || material == Material.ANVIL);
+                            }
+                            else{
+                                return this.toolMaterial.getHarvestLevel() >= 2;
+                            }
+                        }
+                        else{
+                            return this.toolMaterial.getHarvestLevel() >= 1;
+                        }
+                    }
+                    else{
+                        return this.toolMaterial.getHarvestLevel() >= 1;
+                    }
+                }
+                else{
+                    return this.toolMaterial.getHarvestLevel() >= 2;
+                }
+            }
+            else{
+                return this.toolMaterial.getHarvestLevel() >= 2;
+            }
+        }
+        else{
+            return this.toolMaterial.getHarvestLevel() >= 2;
+        }
     }
 
     public float getStrVsBlock(ItemStack stack, IBlockState state){
         Material material = state.getMaterial();
-        return material != Material.iron && material != Material.anvil && material != Material.rock ? super.getStrVsBlock(stack, state) : this.efficiencyOnProperMaterial;
+        return material != Material.IRON && material != Material.ANVIL && material != Material.ROCK ? super.getStrVsBlock(stack, state) : this.efficiencyOnProperMaterial;
     }
 }

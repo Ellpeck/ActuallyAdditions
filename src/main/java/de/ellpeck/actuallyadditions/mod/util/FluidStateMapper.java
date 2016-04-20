@@ -32,7 +32,7 @@ public class FluidStateMapper extends StateMapperBase implements ItemMeshDefinit
     public FluidStateMapper(Fluid fluid){
         this.fluid = fluid;
 
-        this.location = new ModelResourceLocation(new ResourceLocation(ModUtil.MOD_ID_LOWER, "fluids"), fluid.getName());
+        this.location = new ModelResourceLocation(new ResourceLocation(ModUtil.MOD_ID, "fluids"), fluid.getName());
     }
 
     @Override

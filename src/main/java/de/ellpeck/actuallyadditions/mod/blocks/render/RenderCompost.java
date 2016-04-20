@@ -34,7 +34,7 @@ public class RenderCompost extends TileEntitySpecialRenderer{
                     GlStateManager.translate(0F, 1F, 0F);
                 }
                 GlStateManager.scale(1.5F, i, 1.5F);
-                AssetUtil.renderBlockInWorld(Blocks.dirt, compost.getStackInSlot(0).getItem() == InitItems.itemFertilizer ? 1 : 0);
+                AssetUtil.renderBlockInWorld(Blocks.DIRT, compost.getStackInSlot(0).getItem() == InitItems.itemFertilizer ? 1 : 0);
                 GlStateManager.popMatrix();
             }
         }

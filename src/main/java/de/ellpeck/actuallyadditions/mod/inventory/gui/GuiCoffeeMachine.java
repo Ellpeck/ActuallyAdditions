@@ -56,7 +56,7 @@ public class GuiCoffeeMachine extends GuiContainer{
     public void initGui(){
         super.initGui();
 
-        GuiButton buttonOkay = new GuiButton(0, guiLeft+60, guiTop+11, 58, 20, StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.ok"));
+        GuiButton buttonOkay = new GuiButton(0, guiLeft+60, guiTop+11, 58, 20, StringUtil.localize("info."+ModUtil.MOD_ID+".gui.ok"));
         this.buttonList.add(buttonOkay);
     }
 
@@ -73,7 +73,7 @@ public class GuiCoffeeMachine extends GuiContainer{
             this.drawHoveringText(Collections.singletonList(text3), x, y);
         }
 
-        String text2 = this.machine.coffeeCacheAmount+"/"+TileEntityCoffeeMachine.COFFEE_CACHE_MAX_AMOUNT+" "+StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.coffee");
+        String text2 = this.machine.coffeeCacheAmount+"/"+TileEntityCoffeeMachine.COFFEE_CACHE_MAX_AMOUNT+" "+StringUtil.localize("info."+ModUtil.MOD_ID+".gui.coffee");
         if(x >= guiLeft+40 && y >= guiTop+25 && x <= guiLeft+49 && y <= guiTop+56){
             this.drawHoveringText(Collections.singletonList(text2), x, y);
         }

@@ -31,12 +31,12 @@ public class LensColor extends Lens{
 
     public static final int ENERGY_USE = 200;
     public static final Object[] CONVERTABLE_BLOCKS = new Object[]{
-            Items.dye,
-            Blocks.wool,
-            Blocks.stained_glass,
-            Blocks.stained_glass_pane,
-            Blocks.stained_hardened_clay,
-            Blocks.carpet,
+            Items.DYE,
+            Blocks.WOOL,
+            Blocks.STAINED_GLASS,
+            Blocks.STAINED_GLASS_PANE,
+            Blocks.STAINED_HARDENED_CLAY,
+            Blocks.CARPET,
             InitBlocks.blockColoredLamp,
             InitBlocks.blockColoredLampOn
     };

@@ -69,7 +69,7 @@ public class NEIFurnaceDoubleRecipe /*extends TemplateRecipeHandler implements I
 
     @Override
     public String getGuiTexture(){
-        return ModUtil.MOD_ID_LOWER+":textures/gui/guiFurnaceDouble.png";
+        return ModUtil.MOD_ID+":textures/gui/guiFurnaceDouble.png";
     }
 
     @Override

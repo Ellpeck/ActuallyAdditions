@@ -57,9 +57,9 @@ public enum TheFoods{
     }
 
     public static void setReturnItems(){
-        SPAGHETTI.returnItem = new ItemStack(Items.bowl);
-        PUMPKIN_STEW.returnItem = new ItemStack(Items.bowl);
-        CARROT_JUICE.returnItem = new ItemStack(Items.glass_bottle);
+        SPAGHETTI.returnItem = new ItemStack(Items.BOWL);
+        PUMPKIN_STEW.returnItem = new ItemStack(Items.BOWL);
+        CARROT_JUICE.returnItem = new ItemStack(Items.GLASS_BOTTLE);
         FRENCH_FRIES.returnItem = new ItemStack(InitItems.itemMisc, 1, TheMiscItems.PAPER_CONE.ordinal());
         FISH_N_CHIPS.returnItem = new ItemStack(InitItems.itemMisc, 1, TheMiscItems.PAPER_CONE.ordinal());
     }

@@ -50,7 +50,7 @@ public class TileEntityFishingNet extends TileEntityBase{
         super.updateEntity();
         if(!worldObj.isRemote){
             if(!this.isRedstonePowered){
-                if(PosUtil.getMaterial(PosUtil.offset(this.pos, 0, -1, 0), this.worldObj) == Material.water){
+                if(PosUtil.getMaterial(PosUtil.offset(this.pos, 0, -1, 0), this.worldObj) == Material.WATER){
                     if(this.timeUntilNextDrop > 0){
                         this.timeUntilNextDrop--;
                         if(timeUntilNextDrop <= 0){

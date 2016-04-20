@@ -31,13 +31,13 @@ public class UpdateCheckerClientNotificationEvent{
             if(ticksElapsedBeforeInfo >= 800){
                 EntityPlayer player = Minecraft.getMinecraft().thePlayer;
                 if(UpdateChecker.checkFailed){
-                    player.addChatComponentMessage(ITextComponent.Serializer.jsonToComponent(StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".update.failed")));
+                    player.addChatComponentMessage(ITextComponent.Serializer.jsonToComponent(StringUtil.localize("info."+ModUtil.MOD_ID+".update.failed")));
                     notified = true;
                 }
                 else if(UpdateChecker.needsUpdateNotify){
-                    player.addChatComponentMessage(ITextComponent.Serializer.jsonToComponent(StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".update.generic")));
-                    player.addChatComponentMessage(ITextComponent.Serializer.jsonToComponent(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID_LOWER+".update.versionCompare", ModUtil.VERSION, UpdateChecker.updateVersionString)));
-                    player.addChatComponentMessage(ITextComponent.Serializer.jsonToComponent(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID_LOWER+".update.buttons", UpdateChecker.CHANGELOG_LINK, UpdateChecker.DOWNLOAD_LINK)));
+                    player.addChatComponentMessage(ITextComponent.Serializer.jsonToComponent(StringUtil.localize("info."+ModUtil.MOD_ID+".update.generic")));
+                    player.addChatComponentMessage(ITextComponent.Serializer.jsonToComponent(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID+".update.versionCompare", ModUtil.VERSION, UpdateChecker.updateVersionString)));
+                    player.addChatComponentMessage(ITextComponent.Serializer.jsonToComponent(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID+".update.buttons", UpdateChecker.CHANGELOG_LINK, UpdateChecker.DOWNLOAD_LINK)));
                     notified = true;
                 }
                 ticksElapsedBeforeInfo = 0;

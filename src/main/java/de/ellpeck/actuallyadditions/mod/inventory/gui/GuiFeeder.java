@@ -42,7 +42,7 @@ public class GuiFeeder extends GuiContainer{
     public void drawScreen(int x, int y, float f){
         super.drawScreen(x, y, f);
         if(x >= guiLeft+69 && y >= guiTop+30 && x <= guiLeft+69+10 && y <= guiTop+30+10){
-            String[] array = new String[]{(this.tileFeeder.currentAnimalAmount+" "+StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.animals")), ((this.tileFeeder.currentAnimalAmount >= 2 && this.tileFeeder.currentAnimalAmount < TileEntityFeeder.THRESHOLD) ? StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.enoughToBreed") : (this.tileFeeder.currentAnimalAmount >= TileEntityFeeder.THRESHOLD ? StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.tooMany") : StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.notEnough")))};
+            String[] array = new String[]{(this.tileFeeder.currentAnimalAmount+" "+StringUtil.localize("info."+ModUtil.MOD_ID+".gui.animals")), ((this.tileFeeder.currentAnimalAmount >= 2 && this.tileFeeder.currentAnimalAmount < TileEntityFeeder.THRESHOLD) ? StringUtil.localize("info."+ModUtil.MOD_ID+".gui.enoughToBreed") : (this.tileFeeder.currentAnimalAmount >= TileEntityFeeder.THRESHOLD ? StringUtil.localize("info."+ModUtil.MOD_ID+".gui.tooMany") : StringUtil.localize("info."+ModUtil.MOD_ID+".gui.notEnough")))};
             this.drawHoveringText(Arrays.asList(array), x, y);
         }
     }

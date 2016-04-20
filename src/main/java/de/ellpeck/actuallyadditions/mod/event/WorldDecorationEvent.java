@@ -34,25 +34,25 @@ public class WorldDecorationEvent{
     @SubscribeEvent
     public void onWorldDecoration(DecorateBiomeEvent.Decorate event){
         if((event.getResult() == Event.Result.ALLOW || event.getResult() == Event.Result.DEFAULT)){
-            if(Util.arrayContains(ConfigValues.plantDimensionBlacklist, event.world.provider.getDimension()) < 0){
+            if(Util.arrayContains(ConfigValues.plantDimensionBlacklist, event.getWorld().provider.getDimension()) < 0){
                 this.generateRice(event);
-                this.genPlantNormally(InitBlocks.blockWildPlant, TheWildPlants.CANOLA.ordinal(), ConfigIntValues.CANOLA_AMOUNT.getValue(), ConfigBoolValues.DO_CANOLA_GEN.isEnabled(), Material.grass, event);
-                this.genPlantNormally(InitBlocks.blockWildPlant, TheWildPlants.FLAX.ordinal(), ConfigIntValues.FLAX_AMOUNT.getValue(), ConfigBoolValues.DO_FLAX_GEN.isEnabled(), Material.grass, event);
-                this.genPlantNormally(InitBlocks.blockWildPlant, TheWildPlants.COFFEE.ordinal(), ConfigIntValues.COFFEE_AMOUNT.getValue(), ConfigBoolValues.DO_COFFEE_GEN.isEnabled(), Material.grass, event);
-                this.genPlantNormally(InitBlocks.blockBlackLotus, 0, ConfigIntValues.BLACK_LOTUS_AMOUNT.getValue(), ConfigBoolValues.DO_LOTUS_GEN.isEnabled(), Material.grass, event);
+                this.genPlantNormally(InitBlocks.blockWildPlant, TheWildPlants.CANOLA.ordinal(), ConfigIntValues.CANOLA_AMOUNT.getValue(), ConfigBoolValues.DO_CANOLA_GEN.isEnabled(), Material.GRASS, event);
+                this.genPlantNormally(InitBlocks.blockWildPlant, TheWildPlants.FLAX.ordinal(), ConfigIntValues.FLAX_AMOUNT.getValue(), ConfigBoolValues.DO_FLAX_GEN.isEnabled(), Material.GRASS, event);
+                this.genPlantNormally(InitBlocks.blockWildPlant, TheWildPlants.COFFEE.ordinal(), ConfigIntValues.COFFEE_AMOUNT.getValue(), ConfigBoolValues.DO_COFFEE_GEN.isEnabled(), Material.GRASS, event);
+                this.genPlantNormally(InitBlocks.blockBlackLotus, 0, ConfigIntValues.BLACK_LOTUS_AMOUNT.getValue(), ConfigBoolValues.DO_LOTUS_GEN.isEnabled(), Material.GRASS, event);
             }
 
             //Generate Treasure Chests
             if(ConfigBoolValues.DO_TREASURE_CHEST_GEN.isEnabled()){
-                if(event.rand.nextInt(300) == 0){
-                    BlockPos randomPos = new BlockPos(event.pos.getX()+event.rand.nextInt(16)+8, 0, event.pos.getZ()+event.rand.nextInt(16)+8);
-                    randomPos = event.world.getTopSolidOrLiquidBlock(randomPos);
+                if(event.getRand().nextInt(300) == 0){
+                    BlockPos randomPos = new BlockPos(event.getPos().getX()+event.getRand().nextInt(16)+8, 0, event.getPos().getZ()+event.getRand().nextInt(16)+8);
+                    randomPos = event.getWorld().getTopSolidOrLiquidBlock(randomPos);
 
-                    if(event.world.getBiomeGenForCoords(randomPos) instanceof BiomeGenOcean){
+                    if(event.getWorld().getBiomeGenForCoords(randomPos) instanceof BiomeGenOcean){
                         if(randomPos.getY() >= 25 && randomPos.getY() <= 45){
-                            if(PosUtil.getBlock(randomPos, event.world).getMaterial(event.world.getBlockState(randomPos)) == Material.water){
-                                if(PosUtil.getMaterial(PosUtil.offset(randomPos, 0, -1, 0), event.world).isSolid()){
-                                    PosUtil.setBlock(randomPos, event.world, InitBlocks.blockTreasureChest, event.rand.nextInt(4), 2);
+                            if(PosUtil.getBlock(randomPos, event.getWorld()).getMaterial(event.getWorld().getBlockState(randomPos)) == Material.WATER){
+                                if(PosUtil.getMaterial(PosUtil.offset(randomPos, 0, -1, 0), event.getWorld()).isSolid()){
+                                    PosUtil.setBlock(randomPos, event.getWorld(), InitBlocks.blockTreasureChest, event.getRand().nextInt(4), 2);
                                 }
                             }
                         }
@@ -65,16 +65,16 @@ public class WorldDecorationEvent{
     private void generateRice(DecorateBiomeEvent event){
         if(ConfigBoolValues.DO_RICE_GEN.isEnabled()){
             for(int i = 0; i < ConfigIntValues.RICE_AMOUNT.getValue(); i++){
-                if(event.rand.nextInt(50) == 0){
-                    BlockPos randomPos = new BlockPos(event.pos.getX()+event.rand.nextInt(16)+8, 0, event.pos.getZ()+event.rand.nextInt(16)+8);
-                    randomPos = event.world.getTopSolidOrLiquidBlock(randomPos);
-                    if(PosUtil.getMaterial(randomPos, event.world) == Material.water){
-                        ArrayList<Material> blocksAroundBottom = WorldUtil.getMaterialsAround(event.world, randomPos);
+                if(event.getRand().nextInt(50) == 0){
+                    BlockPos randomPos = new BlockPos(event.getPos().getX()+event.getRand().nextInt(16)+8, 0, event.getPos().getZ()+event.getRand().nextInt(16)+8);
+                    randomPos = event.getWorld().getTopSolidOrLiquidBlock(randomPos);
+                    if(PosUtil.getMaterial(randomPos, event.getWorld()) == Material.WATER){
+                        ArrayList<Material> blocksAroundBottom = WorldUtil.getMaterialsAround(event.getWorld(), randomPos);
                         BlockPos posToGenAt = PosUtil.offset(randomPos, 0, 1, 0);
-                        ArrayList<Material> blocksAroundTop = WorldUtil.getMaterialsAround(event.world, posToGenAt);
-                        if(blocksAroundBottom.contains(Material.grass) || blocksAroundBottom.contains(Material.ground) || blocksAroundBottom.contains(Material.rock) || blocksAroundBottom.contains(Material.sand)){
-                            if(!blocksAroundTop.contains(Material.water) && PosUtil.getMaterial(posToGenAt, event.world) == Material.air){
-                                PosUtil.setBlock(posToGenAt, event.world, InitBlocks.blockWildPlant, TheWildPlants.RICE.ordinal(), 2);
+                        ArrayList<Material> blocksAroundTop = WorldUtil.getMaterialsAround(event.getWorld(), posToGenAt);
+                        if(blocksAroundBottom.contains(Material.GRASS) || blocksAroundBottom.contains(Material.GROUND) || blocksAroundBottom.contains(Material.ROCK) || blocksAroundBottom.contains(Material.SAND)){
+                            if(!blocksAroundTop.contains(Material.WATER) && PosUtil.getMaterial(posToGenAt, event.getWorld()) == Material.AIR){
+                                PosUtil.setBlock(posToGenAt, event.getWorld(), InitBlocks.blockWildPlant, TheWildPlants.RICE.ordinal(), 2);
                             }
                         }
                     }
@@ -86,13 +86,13 @@ public class WorldDecorationEvent{
     private void genPlantNormally(Block plant, int meta, int amount, boolean doIt, Material blockBelow, DecorateBiomeEvent event){
         if(doIt){
             for(int i = 0; i < amount; i++){
-                if(event.rand.nextInt(400) == 0){
-                    BlockPos randomPos = new BlockPos(event.pos.getX()+event.rand.nextInt(16)+8, 0, event.pos.getZ()+event.rand.nextInt(16)+8);
-                    randomPos = event.world.getTopSolidOrLiquidBlock(randomPos);
+                if(event.getRand().nextInt(400) == 0){
+                    BlockPos randomPos = new BlockPos(event.getPos().getX()+event.getRand().nextInt(16)+8, 0, event.getPos().getZ()+event.getRand().nextInt(16)+8);
+                    randomPos = event.getWorld().getTopSolidOrLiquidBlock(randomPos);
 
-                    if(PosUtil.getMaterial(PosUtil.offset(randomPos, 0, -1, 0), event.world) == blockBelow){
-                        if(plant.canPlaceBlockAt(event.world, randomPos) && event.world.isAirBlock(randomPos)){
-                            PosUtil.setBlock(randomPos, event.world, plant, meta, 2);
+                    if(PosUtil.getMaterial(PosUtil.offset(randomPos, 0, -1, 0), event.getWorld()) == blockBelow){
+                        if(plant.canPlaceBlockAt(event.getWorld(), randomPos) && event.getWorld().isAirBlock(randomPos)){
+                            PosUtil.setBlock(randomPos, event.getWorld(), plant, meta, 2);
                         }
                     }
                 }

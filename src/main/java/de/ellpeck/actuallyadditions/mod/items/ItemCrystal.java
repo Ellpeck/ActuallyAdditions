@@ -61,8 +61,8 @@ public class ItemCrystal extends ItemBase{
         ResourceLocation[] resLocs = new ResourceLocation[BlockCrystal.allCrystals.length];
         for(int i = 0; i < BlockCrystal.allCrystals.length; i++){
             String name = this.getBaseName()+BlockCrystal.allCrystals[i].name;
-            resLocs[i] = new ResourceLocation(ModUtil.MOD_ID_LOWER, name);
-            ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), new ResourceLocation(ModUtil.MOD_ID_LOWER, name));
+            resLocs[i] = new ResourceLocation(ModUtil.MOD_ID, name);
+            ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), new ResourceLocation(ModUtil.MOD_ID, name));
         }
         ActuallyAdditions.proxy.addRenderVariant(this, resLocs);
     }

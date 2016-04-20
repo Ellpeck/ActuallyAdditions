@@ -41,11 +41,11 @@ public class BlockTreasureChest extends BlockBase{
     private static final PropertyInteger META = PropertyInteger.create("meta", 0, 3);
 
     public BlockTreasureChest(String name){
-        super(Material.wood, name);
+        super(Material.WOOD, name);
         this.setHarvestLevel("axe", 0);
         this.setHardness(300.0F);
         this.setResistance(50.0F);
-        this.setStepSound(SoundType.WOOD);
+        this.setSoundType(SoundType.WOOD);
         this.setTickRandomly(true);
     }
 

@@ -31,7 +31,7 @@ public class NEIScreenEvents{
                 public void drawButton(Minecraft minecraft, int x, int y){
                     super.drawButton(minecraft, x, y);
                     if(this.visible && this.hovered){
-                        String text = StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".clickToSeeRecipe");
+                        String text = StringUtil.localize("booklet."+ModUtil.MOD_ID+".clickToSeeRecipe");
                         Minecraft.getMinecraft().fontRendererObj.drawString(text, this.xPosition-Minecraft.getMinecraft().fontRendererObj.getStringWidth(text)-1, this.yPosition+this.height/2-Minecraft.getMinecraft().fontRendererObj.FONT_HEIGHT/2, StringUtil.DECIMAL_COLOR_WHITE, true);
                     }
                 }

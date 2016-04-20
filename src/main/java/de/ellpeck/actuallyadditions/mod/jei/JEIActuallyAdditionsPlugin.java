@@ -33,25 +33,13 @@ import net.minecraft.item.ItemStack;
 @JEIPlugin
 public class JEIActuallyAdditionsPlugin implements IModPlugin{
 
-    private IJeiHelpers helpers;
-
-    @Override
-    public void onJeiHelpersAvailable(IJeiHelpers jeiHelpers){
-        this.helpers = jeiHelpers;
-    }
-
-    @Override
-    public void onItemRegistryAvailable(IItemRegistry itemRegistry){
-
-    }
-
     @Override
     public void register(IModRegistry registry){
         registry.addRecipeCategories(
-                new BookletRecipeCategory(this.helpers.getGuiHelper()),
-                new CoffeeMachineRecipeCategory(this.helpers.getGuiHelper()),
-                new CrusherRecipeCategory(this.helpers.getGuiHelper()),
-                new ReconstructorRecipeCategory(this.helpers.getGuiHelper())
+                new BookletRecipeCategory(registry.getJeiHelpers().getGuiHelper()),
+                new CoffeeMachineRecipeCategory(registry.getJeiHelpers().getGuiHelper()),
+                new CrusherRecipeCategory(registry.getJeiHelpers().getGuiHelper()),
+                new ReconstructorRecipeCategory(registry.getJeiHelpers().getGuiHelper())
         );
 
         registry.addRecipeHandlers(
@@ -71,7 +59,7 @@ public class JEIActuallyAdditionsPlugin implements IModPlugin{
         registry.addRecipeClickArea(GuiGrinder.GuiGrinderDouble.class, 51, 40, 74, 22, CrusherRecipeCategory.NAME);
         registry.addRecipeClickArea(GuiFurnaceDouble.class, 51, 40, 74, 22, VanillaRecipeCategoryUid.SMELTING);
 
-        INbtIgnoreList ignoreList = this.helpers.getNbtIgnoreList();
+        INbtIgnoreList ignoreList = registry.getJeiHelpers().getNbtIgnoreList();
         ignoreList.ignoreNbtTagNames(InitItems.itemDrill, "Energy");
         ignoreList.ignoreNbtTagNames(InitItems.itemTeleStaff, "Energy");
         ignoreList.ignoreNbtTagNames(InitItems.itemGrowthRing, "Energy");
@@ -83,18 +71,13 @@ public class JEIActuallyAdditionsPlugin implements IModPlugin{
         ignoreList.ignoreNbtTagNames(InitItems.itemBatteryQuadruple, "Energy");
         ignoreList.ignoreNbtTagNames(InitItems.itemBatteryQuintuple, "Energy");
 
-        IItemBlacklist blacklist = this.helpers.getItemBlacklist();
+        IItemBlacklist blacklist = registry.getJeiHelpers().getItemBlacklist();
         blacklist.addItemToBlacklist(new ItemStack(InitBlocks.blockRice));
         blacklist.addItemToBlacklist(new ItemStack(InitBlocks.blockCanola));
         blacklist.addItemToBlacklist(new ItemStack(InitBlocks.blockFlax));
         blacklist.addItemToBlacklist(new ItemStack(InitBlocks.blockCoffee));
         blacklist.addItemToBlacklist(new ItemStack(InitBlocks.blockWildPlant, 1, Util.WILDCARD));
         blacklist.addItemToBlacklist(new ItemStack(InitBlocks.blockColoredLampOn, 1, Util.WILDCARD));
-    }
-
-    @Override
-    public void onRecipeRegistryAvailable(IRecipeRegistry recipeRegistry){
-
     }
 
     @Override

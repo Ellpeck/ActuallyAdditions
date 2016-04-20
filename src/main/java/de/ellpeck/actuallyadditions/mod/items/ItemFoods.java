@@ -23,7 +23,6 @@ import net.minecraft.item.EnumAction;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -106,8 +105,8 @@ public class ItemFoods extends ItemFoodBase{
         ResourceLocation[] resLocs = new ResourceLocation[allFoods.length];
         for(int i = 0; i < allFoods.length; i++){
             String name = this.getBaseName()+allFoods[i].name;
-            resLocs[i] = new ResourceLocation(ModUtil.MOD_ID_LOWER, name);
-            ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), new ResourceLocation(ModUtil.MOD_ID_LOWER, name));
+            resLocs[i] = new ResourceLocation(ModUtil.MOD_ID, name);
+            ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), new ResourceLocation(ModUtil.MOD_ID, name));
         }
         ActuallyAdditions.proxy.addRenderVariant(this, resLocs);
     }

@@ -45,10 +45,10 @@ public class BlockSmileyCloud extends BlockContainerBase{
     private static final PropertyInteger META = PropertyInteger.create("meta", 0, 7);
 
     public BlockSmileyCloud(String name){
-        super(Material.cloth, name);
+        super(Material.CLOTH, name);
         this.setHardness(0.5F);
         this.setResistance(5.0F);
-        this.setStepSound(SoundType.CLOTH);
+        this.setSoundType(SoundType.CLOTH);
         this.setTickRandomly(true);
     }
 

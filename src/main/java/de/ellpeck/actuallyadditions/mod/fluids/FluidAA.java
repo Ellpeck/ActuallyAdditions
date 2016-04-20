@@ -17,11 +17,11 @@ import net.minecraftforge.fluids.Fluid;
 public class FluidAA extends Fluid{
 
     public FluidAA(String fluidName, String textureName){
-        super(fluidName, new ResourceLocation(ModUtil.MOD_ID_LOWER, "blocks/"+textureName+"Still"), new ResourceLocation(ModUtil.MOD_ID_LOWER, "blocks/"+textureName+"Flowing"));
+        super(fluidName, new ResourceLocation(ModUtil.MOD_ID, "blocks/"+textureName+"Still"), new ResourceLocation(ModUtil.MOD_ID, "blocks/"+textureName+"Flowing"));
     }
 
     @Override
     public String getUnlocalizedName(){
-        return "fluid."+ModUtil.MOD_ID_LOWER+"."+this.unlocalizedName;
+        return "fluid."+ModUtil.MOD_ID+"."+this.unlocalizedName;
     }
 }

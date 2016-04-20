@@ -68,13 +68,13 @@ public class TileEntityFluidCollector extends TileEntityInventoryBase implements
                         WorldUtil.breakBlockAtSide(sideToManipulate, worldObj, this.pos);
                     }
                 }
-                else if(blockToBreak == Blocks.lava || blockToBreak == Blocks.flowing_lava){
+                else if(blockToBreak == Blocks.LAVA || blockToBreak == Blocks.FLOWING_LAVA){
                     if(this.tank.fill(new FluidStack(FluidRegistry.LAVA, FluidContainerRegistry.BUCKET_VOLUME), false) >= FluidContainerRegistry.BUCKET_VOLUME){
                         this.tank.fill(new FluidStack(FluidRegistry.LAVA, FluidContainerRegistry.BUCKET_VOLUME), true);
                         WorldUtil.breakBlockAtSide(sideToManipulate, worldObj, this.pos);
                     }
                 }
-                else if(blockToBreak == Blocks.water || blockToBreak == Blocks.flowing_water){
+                else if(blockToBreak == Blocks.WATER || blockToBreak == Blocks.FLOWING_WATER){
                     if(this.tank.fill(new FluidStack(FluidRegistry.WATER, FluidContainerRegistry.BUCKET_VOLUME), false) >= FluidContainerRegistry.BUCKET_VOLUME){
                         this.tank.fill(new FluidStack(FluidRegistry.WATER, FluidContainerRegistry.BUCKET_VOLUME), true);
                         WorldUtil.breakBlockAtSide(sideToManipulate, worldObj, this.pos);

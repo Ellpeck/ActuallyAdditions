@@ -52,11 +52,9 @@ public class TileEntityHeatCollector extends TileEntityBase implements IEnergyPr
             if(ENERGY_PRODUCE <= this.storage.getMaxEnergyStored()-this.storage.getEnergyStored()){
                 for(int i = 1; i <= 5; i++){
                     BlockPos coords = WorldUtil.getCoordsFromSide(WorldUtil.getDirectionBySidesInOrder(i), this.pos, 0);
-                    if(coords != null){
-                        Block block = PosUtil.getBlock(coords, worldObj);
-                        if(block != null && block.getMaterial(worldObj.getBlockState(coords)) == Material.lava && PosUtil.getMetadata(coords, worldObj) == 0){
-                            blocksAround.add(i);
-                        }
+                    Block block = PosUtil.getBlock(coords, worldObj);
+                    if(block != null && block.getMaterial(worldObj.getBlockState(coords)) == Material.LAVA && PosUtil.getMetadata(coords, worldObj) == 0){
+                        blocksAround.add(i);
                     }
                 }
 

@@ -11,8 +11,8 @@
 package de.ellpeck.actuallyadditions.mod.blocks.base;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.mod.creative.CreativeTab;
 import de.ellpeck.actuallyadditions.mod.tile.*;
+import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.block.Block;
@@ -20,7 +20,6 @@ import net.minecraft.block.BlockContainer;
 import net.minecraft.block.BlockRedstoneTorch;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyInteger;
-import net.minecraft.block.state.BlockStateBase;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
@@ -38,7 +37,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -55,14 +53,7 @@ public abstract class BlockContainerBase extends BlockContainer{
     }
 
     private void register(){
-        this.setUnlocalizedName(ModUtil.MOD_ID_LOWER+"."+this.getBaseName());
-        GameRegistry.registerBlock(this, this.getItemBlock(), this.getBaseName());
-        if(this.shouldAddCreative()){
-            this.setCreativeTab(CreativeTab.instance);
-        }
-        else{
-            this.setCreativeTab(null);
-        }
+        ItemUtil.registerBlock(this, this.getItemBlock(), this.getBaseName(), this.shouldAddCreative());
 
         this.registerRendering();
     }
@@ -71,8 +62,8 @@ public abstract class BlockContainerBase extends BlockContainer{
         return this.name;
     }
 
-    protected Class<? extends ItemBlockBase> getItemBlock(){
-        return ItemBlockBase.class;
+    protected ItemBlockBase getItemBlock(){
+        return new ItemBlockBase(this);
     }
 
     public boolean shouldAddCreative(){
@@ -80,7 +71,7 @@ public abstract class BlockContainerBase extends BlockContainer{
     }
 
     protected void registerRendering(){
-        ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this), new ResourceLocation(ModUtil.MOD_ID_LOWER, this.getBaseName()));
+        ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this), new ResourceLocation(ModUtil.MOD_ID, this.getBaseName()));
     }
 
     public EnumRarity getRarity(ItemStack stack){

@@ -48,8 +48,8 @@ public class PlayerObtainEvents{
         if(ConfigBoolValues.GIVE_BOOKLET_ON_FIRST_CRAFT.isEnabled()){
             if(!event.player.worldObj.isRemote && event.crafting != null && event.crafting.getItem() != null && event.crafting.getItem() != InitItems.itemBooklet){
 
-                String name = event.crafting.getItem().getRegistryName();
-                if(name != null && name.toLowerCase(Locale.ROOT).contains(ModUtil.MOD_ID_LOWER)){
+                String name = event.crafting.getItem().getRegistryName().toString();
+                if(name != null && name.toLowerCase(Locale.ROOT).contains(ModUtil.MOD_ID)){
                     NBTTagCompound compound = PersistentServerData.getDataFromPlayer(event.player);
                     if(compound != null && !compound.getBoolean("BookGottenAlready")){
                         compound.setBoolean("BookGottenAlready", true);

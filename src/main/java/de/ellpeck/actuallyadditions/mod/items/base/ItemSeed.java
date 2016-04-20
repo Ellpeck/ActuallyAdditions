@@ -32,7 +32,7 @@ public class ItemSeed extends ItemSeeds{
     public String oredictName;
 
     public ItemSeed(String name, String oredictName, Block plant, Item returnItem, int returnMeta){
-        super(plant, Blocks.farmland);
+        super(plant, Blocks.FARMLAND);
         this.name = name;
         this.oredictName = oredictName;
         this.plant = plant;
@@ -61,7 +61,7 @@ public class ItemSeed extends ItemSeeds{
     }
 
     protected void registerRendering(){
-        ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this), new ResourceLocation(ModUtil.MOD_ID_LOWER, this.getBaseName()));
+        ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this), new ResourceLocation(ModUtil.MOD_ID, this.getBaseName()));
     }
 
     @Override

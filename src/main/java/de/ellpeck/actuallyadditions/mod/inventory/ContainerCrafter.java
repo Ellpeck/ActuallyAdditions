@@ -104,7 +104,7 @@ public class ContainerCrafter extends Container{
             for(int i = 0; i < 9; ++i){
                 ItemStack stack = this.craftMatrix.removeStackFromSlot(i);
                 if(stack != null){
-                    player.dropPlayerItemWithRandomChoice(stack, false);
+                    player.dropItem(stack, false);
                 }
             }
         }

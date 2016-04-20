@@ -75,8 +75,8 @@ public class GuiSmileyCloud extends GuiContainer{
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y){
-        String name = cloud.name == null || cloud.name.isEmpty() ? "" : TextFormatting.GOLD+cloud.name+TextFormatting.RESET+" "+StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.the")+" ";
-        String localizedName = name+StringUtil.localize("container."+ModUtil.MOD_ID_LOWER+".cloud.name");
+        String name = cloud.name == null || cloud.name.isEmpty() ? "" : TextFormatting.GOLD+cloud.name+TextFormatting.RESET+" "+StringUtil.localize("info."+ModUtil.MOD_ID+".gui.the")+" ";
+        String localizedName = name+StringUtil.localize("container."+ModUtil.MOD_ID+".cloud.name");
         this.fontRendererObj.drawString(localizedName, xSize/2-this.fontRendererObj.getStringWidth(localizedName)/2, -10, StringUtil.DECIMAL_COLOR_WHITE);
     }
 

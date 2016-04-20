@@ -46,7 +46,7 @@ public class ItemLaserWrench extends ItemBase{
             if(tile instanceof TileEntityLaserRelay){
                 if(ItemPhantomConnector.getStoredPosition(stack) == null){
                     ItemPhantomConnector.storeConnection(stack, pos.getX(), pos.getY(), pos.getZ(), world);
-                    player.addChatComponentMessage(new TextComponentString(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".laser.stored.desc")));
+                    player.addChatComponentMessage(new TextComponentString(StringUtil.localize("tooltip."+ModUtil.MOD_ID+".laser.stored.desc")));
                 }
                 else{
                     BlockPos savedPos = ItemPhantomConnector.getStoredPosition(stack);
@@ -56,10 +56,10 @@ public class ItemLaserWrench extends ItemBase{
                         ((TileEntityLaserRelay)world.getTileEntity(savedPos)).sendUpdate();
                         ((TileEntityLaserRelay)world.getTileEntity(pos)).sendUpdate();
 
-                        player.addChatComponentMessage(new TextComponentString(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".laser.connected.desc")));
+                        player.addChatComponentMessage(new TextComponentString(StringUtil.localize("tooltip."+ModUtil.MOD_ID+".laser.connected.desc")));
                     }
                     else{
-                        player.addChatComponentMessage(new TextComponentString(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".laser.cantConnect.desc")));
+                        player.addChatComponentMessage(new TextComponentString(StringUtil.localize("tooltip."+ModUtil.MOD_ID+".laser.cantConnect.desc")));
                         ItemPhantomConnector.clearStorage(stack);
                     }
                 }
@@ -87,11 +87,11 @@ public class ItemLaserWrench extends ItemBase{
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld){
         BlockPos coords = ItemPhantomConnector.getStoredPosition(stack);
         if(coords != null){
-            list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".boundTo.desc")+":");
+            list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID+".boundTo.desc")+":");
             list.add("X: "+coords.getX());
             list.add("Y: "+coords.getY());
             list.add("Z: "+coords.getZ());
-            list.add(TextFormatting.ITALIC+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".clearStorage.desc"));
+            list.add(TextFormatting.ITALIC+StringUtil.localize("tooltip."+ModUtil.MOD_ID+".clearStorage.desc"));
         }
     }
 

@@ -27,7 +27,7 @@ public class ItemBucketAA extends ItemBucket{
     public ItemBucketAA(Block block, String unlocName){
         super(block);
         this.name = unlocName;
-        this.setContainerItem(Items.bucket);
+        this.setContainerItem(Items.BUCKET);
 
         this.register();
     }
@@ -47,7 +47,7 @@ public class ItemBucketAA extends ItemBucket{
     }
 
     protected void registerRendering(){
-        ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this), new ResourceLocation(ModUtil.MOD_ID_LOWER, this.getBaseName()));
+        ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this), new ResourceLocation(ModUtil.MOD_ID, this.getBaseName()));
     }
 
     @Override

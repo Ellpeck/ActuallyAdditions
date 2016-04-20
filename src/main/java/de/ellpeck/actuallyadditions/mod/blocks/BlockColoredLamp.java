@@ -47,7 +47,7 @@ public class BlockColoredLamp extends BlockBase{
     public boolean isOn;
 
     public BlockColoredLamp(boolean isOn, String name){
-        super(Material.redstoneLight, name);
+        super(Material.REDSTONE_LIGHT, name);
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(0.5F);
         this.setResistance(3.0F);
@@ -118,8 +118,8 @@ public class BlockColoredLamp extends BlockBase{
     }
 
     @Override
-    public Class<? extends ItemBlockBase> getItemBlock(){
-        return TheItemBlock.class;
+    protected ItemBlockBase getItemBlock(){
+        return new TheItemBlock(this);
     }
 
     @Override
@@ -127,8 +127,8 @@ public class BlockColoredLamp extends BlockBase{
         ResourceLocation[] resLocs = new ResourceLocation[allLampTypes.length];
         for(int i = 0; i < allLampTypes.length; i++){
             String name = this.getBaseName()+allLampTypes[i].name;
-            resLocs[i] = new ResourceLocation(ModUtil.MOD_ID_LOWER, name);
-            ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), new ResourceLocation(ModUtil.MOD_ID_LOWER, name));
+            resLocs[i] = new ResourceLocation(ModUtil.MOD_ID, name);
+            ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), new ResourceLocation(ModUtil.MOD_ID, name));
         }
         ActuallyAdditions.proxy.addRenderVariant(Item.getItemFromBlock(this), resLocs);
     }
@@ -156,7 +156,7 @@ public class BlockColoredLamp extends BlockBase{
             if(stack.getItemDamage() >= allLampTypes.length){
                 return null;
             }
-            return StringUtil.localize(this.getUnlocalizedName(stack)+".name")+(((BlockColoredLamp)this.block).isOn ? " ("+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".onSuffix.desc")+")" : "");
+            return StringUtil.localize(this.getUnlocalizedName(stack)+".name")+(((BlockColoredLamp)this.block).isOn ? " ("+StringUtil.localize("tooltip."+ModUtil.MOD_ID+".onSuffix.desc")+")" : "");
         }
 
         @Override

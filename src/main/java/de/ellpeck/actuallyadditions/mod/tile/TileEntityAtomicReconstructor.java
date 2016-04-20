@@ -121,7 +121,7 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
     private void shootLaser(int endX, int endY, int endZ, Lens currentLens){
         if(!ConfigValues.lessSound){
             //TODO Fix sound
-            //this.worldObj.playSoundEffect(this.getX(), this.getY(), this.getZ(), ModUtil.MOD_ID_LOWER+":reconstructor", 0.35F, 1.0F);
+            //this.worldObj.playSoundEffect(this.getX(), this.getY(), this.getZ(), ModUtil.MOD_ID+":reconstructor", 0.35F, 1.0F);
         }
         PacketHandler.theNetwork.sendToAllAround(new PacketParticle(this.getX(), this.getY(), this.getZ(), endX, endY, endZ, currentLens.getColor(), ConfigValues.lessParticles ? 2 : 8, 2F), new NetworkRegistry.TargetPoint(worldObj.provider.getDimension(), this.getX(), this.getY(), this.getZ(), 64));
     }

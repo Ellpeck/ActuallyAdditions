@@ -37,11 +37,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class BlockMiner extends BlockContainerBase implements IHudDisplay{
 
     public BlockMiner(String name){
-        super(Material.rock, name);
+        super(Material.ROCK, name);
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(8F);
         this.setResistance(30F);
-        this.setStepSound(SoundType.STONE);
+        this.setSoundType(SoundType.STONE);
     }
 
     @Override

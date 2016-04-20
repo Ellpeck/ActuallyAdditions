@@ -23,11 +23,11 @@ import net.minecraft.world.World;
 public class BlockFishingNet extends BlockContainerBase{
 
     public BlockFishingNet(String name){
-        super(Material.wood, name);
+        super(Material.WOOD, name);
         this.setHarvestLevel("axe", 0);
         this.setHardness(0.5F);
         this.setResistance(3.0F);
-        this.setStepSound(SoundType.WOOD);
+        this.setSoundType(SoundType.WOOD);
         //TODO Fix block bounds
         //this.setBlockBounds(0F, 0F, 0F, 1F, 1F/16F, 1F);
     }

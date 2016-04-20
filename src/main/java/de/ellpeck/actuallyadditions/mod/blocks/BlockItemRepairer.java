@@ -32,11 +32,11 @@ import net.minecraft.world.World;
 public class BlockItemRepairer extends BlockContainerBase{
 
     public BlockItemRepairer(String name){
-        super(Material.rock, name);
+        super(Material.ROCK, name);
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(20.0F);
         this.setResistance(15.0F);
-        this.setStepSound(SoundType.STONE);
+        this.setSoundType(SoundType.STONE);
         this.setTickRandomly(true);
     }
 

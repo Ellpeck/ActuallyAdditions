@@ -23,11 +23,11 @@ import net.minecraft.world.World;
 public class BlockPhantomBooster extends BlockContainerBase{
 
     public BlockPhantomBooster(String name){
-        super(Material.rock, name);
+        super(Material.ROCK, name);
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(1.5F);
         this.setResistance(10.0F);
-        this.setStepSound(SoundType.STONE);
+        this.setSoundType(SoundType.STONE);
 
         //TODO Fix block bounds
         //float f = 1F/16F;

@@ -43,7 +43,7 @@ public class BookletPageAA extends BookletPage{
             return null;
         }
 
-        String base = StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".chapter."+this.chapter.getUnlocalizedName()+".text."+this.localizationKey);
+        String base = StringUtil.localize("booklet."+ModUtil.MOD_ID+".chapter."+this.chapter.getUnlocalizedName()+".text."+this.localizationKey);
         base = base.replaceAll("<imp>", TextFormatting.DARK_GREEN+"");
         base = base.replaceAll("<item>", TextFormatting.BLUE+"");
         base = base.replaceAll("<r>", TextFormatting.BLACK+"");
@@ -80,7 +80,7 @@ public class BookletPageAA extends BookletPage{
 
     @Override
     public String getClickToSeeRecipeString(){
-        return TextFormatting.GOLD+StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".clickToSeeRecipe");
+        return TextFormatting.GOLD+StringUtil.localize("booklet."+ModUtil.MOD_ID+".clickToSeeRecipe");
     }
 
     public BookletPage setNoText(){

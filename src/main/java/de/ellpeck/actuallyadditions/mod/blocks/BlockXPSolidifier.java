@@ -39,11 +39,11 @@ public class BlockXPSolidifier extends BlockContainerBase{
     private static final PropertyInteger META = PropertyInteger.create("meta", 0, 3);
 
     public BlockXPSolidifier(String name){
-        super(Material.rock, name);
+        super(Material.ROCK, name);
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(2.5F);
         this.setResistance(10.0F);
-        this.setStepSound(SoundType.STONE);
+        this.setSoundType(SoundType.STONE);
     }
 
     @Override

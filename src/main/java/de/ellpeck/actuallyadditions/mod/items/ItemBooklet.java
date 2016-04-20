@@ -87,7 +87,7 @@ public class ItemBooklet extends ItemBase implements IHudDisplay{
     @SuppressWarnings("unchecked")
     @Override
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean bool){
-        list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+"."+this.getBaseName()+".desc"));
+        list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID+"."+this.getBaseName()+".desc"));
     }
 
     @Override

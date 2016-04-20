@@ -119,7 +119,7 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IE
 
     @Override
     public boolean isItemValidForSlot(int i, ItemStack stack){
-        return (i == 0 && stack.getItem() == InitItems.itemMisc && stack.getItemDamage() == TheMiscItems.CANOLA.ordinal()) || (i == 1 && stack.getItem() == Items.bucket);
+        return (i == 0 && stack.getItem() == InitItems.itemMisc && stack.getItemDamage() == TheMiscItems.CANOLA.ordinal()) || (i == 1 && stack.getItem() == Items.BUCKET);
     }
 
     public boolean isCanola(int slot){

@@ -52,25 +52,25 @@ public class ItemAllToolAA extends ItemToolAA implements IColorProvidingItem{
     }
 
     protected void registerRendering(){
-        ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this), new ResourceLocation(ModUtil.MOD_ID_LOWER, "itemPaxel"));
-        ActuallyAdditions.proxy.addRenderVariant(this, new ResourceLocation(ModUtil.MOD_ID_LOWER, "itemPaxel"));
+        ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this), new ResourceLocation(ModUtil.MOD_ID, "itemPaxel"));
+        ActuallyAdditions.proxy.addRenderVariant(this, new ResourceLocation(ModUtil.MOD_ID, "itemPaxel"));
 
 
     }
 
     @Override
     public EnumActionResult onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ){
-        return Items.iron_hoe.onItemUse(stack, playerIn, worldIn, pos, hand, side, hitX, hitY, hitZ);
+        return Items.IRON_HOE.onItemUse(stack, playerIn, worldIn, pos, hand, side, hitX, hitY, hitZ);
     }
 
     @Override
     public boolean canHarvestBlock(IBlockState state, ItemStack stack){
 
-        return this.hasExtraWhitelist(state.getBlock()) || state.getBlock().getMaterial(state).isToolNotRequired() || (state.getBlock() == Blocks.snow_layer || state.getBlock()== Blocks.snow || (state.getBlock()== Blocks.obsidian ? this.toolMaterial.getHarvestLevel() >= 3 : (state.getBlock()!= Blocks.diamond_block && state.getBlock()!= Blocks.diamond_ore ? (state.getBlock()!= Blocks.emerald_ore && state.getBlock()!= Blocks.emerald_block? (state.getBlock()!= Blocks.gold_block&& state.getBlock()!= Blocks.gold_ore ? (state.getBlock()!= Blocks.iron_block&& state.getBlock()!= Blocks.iron_ore ? (state.getBlock()!= Blocks.lapis_block&& state.getBlock()!= Blocks.lapis_ore ? (state.getBlock()!= Blocks.redstone_ore && state.getBlock()!= Blocks.lit_redstone_ore ? (state.getBlock().getMaterial(state) == Material.rock || (state.getBlock().getMaterial(state) == Material.iron || state.getBlock().getMaterial(state) == Material.anvil)) : this.toolMaterial.getHarvestLevel() >= 2) : this.toolMaterial.getHarvestLevel() >= 1) : this.toolMaterial.getHarvestLevel() >= 1) : this.toolMaterial.getHarvestLevel() >= 2) : this.toolMaterial.getHarvestLevel() >= 2) : this.toolMaterial.getHarvestLevel() >= 2)));
+        return this.hasExtraWhitelist(state.getBlock()) || state.getBlock().getMaterial(state).isToolNotRequired() || (state.getBlock() == Blocks.SNOW_LAYER || state.getBlock()== Blocks.SNOW || (state.getBlock()== Blocks.OBSIDIAN ? this.toolMaterial.getHarvestLevel() >= 3 : (state.getBlock()!= Blocks.DIAMOND_BLOCK && state.getBlock()!= Blocks.DIAMOND_ORE ? (state.getBlock()!= Blocks.EMERALD_ORE && state.getBlock()!= Blocks.EMERALD_BLOCK? (state.getBlock()!= Blocks.GOLD_BLOCK&& state.getBlock()!= Blocks.GOLD_ORE ? (state.getBlock()!= Blocks.IRON_BLOCK&& state.getBlock()!= Blocks.IRON_ORE ? (state.getBlock()!= Blocks.LAPIS_BLOCK&& state.getBlock()!= Blocks.LAPIS_ORE ? (state.getBlock()!= Blocks.REDSTONE_ORE && state.getBlock()!= Blocks.LIT_REDSTONE_ORE ? (state.getBlock().getMaterial(state) == Material.ROCK || (state.getBlock().getMaterial(state) == Material.IRON || state.getBlock().getMaterial(state) == Material.ANVIL)) : this.toolMaterial.getHarvestLevel() >= 2) : this.toolMaterial.getHarvestLevel() >= 1) : this.toolMaterial.getHarvestLevel() >= 1) : this.toolMaterial.getHarvestLevel() >= 2) : this.toolMaterial.getHarvestLevel() >= 2) : this.toolMaterial.getHarvestLevel() >= 2)));
     }
 
     private boolean hasExtraWhitelist(Block block){
-        String name = block.getRegistryName();
+        String name = block.getRegistryName().toString();
         if(name != null){
             for(String list : ConfigValues.paxelExtraMiningWhitelist){
                 if(list.equals(name)){

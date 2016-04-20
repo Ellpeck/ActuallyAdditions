@@ -95,7 +95,7 @@ public class ItemCrafting{
         recipeBlackDye = RecipeUtil.lastIRecipe();
 
         //Booklet
-        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemBooklet), new ItemStack(InitItems.itemCanolaSeed), new ItemStack(Items.paper)));
+        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemBooklet), new ItemStack(InitItems.itemCanolaSeed), new ItemStack(Items.PAPER)));
         recipeBook = RecipeUtil.lastIRecipe();
 
         //Clearing NBT Storage
@@ -106,7 +106,7 @@ public class ItemCrafting{
         if(ConfigCrafting.CHEST_TO_CRATE_UPGRADE.isEnabled()){
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemChestToCrateUpgrade),
                     "CWC", "WWW", "CWC",
-                    'C', new ItemStack(Blocks.chest),
+                    'C', new ItemStack(Blocks.CHEST),
                     'W', "plankWood"));
             recipeChestToCrateUpgrade = RecipeUtil.lastIRecipe();
         }
@@ -132,26 +132,26 @@ public class ItemCrafting{
 
         //Rice Stuff
         if(ConfigCrafting.RICE_GADGETS.isEnabled()){
-            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.paper, 3),
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.PAPER, 3),
                     "R  ", " R ", "  R",
                     'R', new ItemStack(InitItems.itemFoods, 1, TheFoods.RICE.ordinal())));
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemMisc, 4, TheMiscItems.RICE_SLIME.ordinal()),
                     " R ", "RBR", " R ",
                     'R', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.RICE_DOUGH.ordinal()),
-                    'B', Items.water_bucket));
+                    'B', Items.WATER_BUCKET));
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemMisc, 4, TheMiscItems.RICE_SLIME.ordinal()),
                     " R ", "RBR", " R ",
                     'R', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.RICE_DOUGH.ordinal()),
-                    'B', new ItemStack(Items.potionitem)));
+                    'B', new ItemStack(Items.POTIONITEM)));
         }
 
         //Leaf Blower
         if(ConfigCrafting.LEAF_BLOWER.isEnabled()){
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemLeafBlower),
                     " F", "IP", "IC",
-                    'F', new ItemStack(Items.flint),
+                    'F', new ItemStack(Items.FLINT),
                     'I', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.IRON.ordinal()),
-                    'P', new ItemStack(Blocks.piston),
+                    'P', new ItemStack(Blocks.PISTON),
                     'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal())));
             recipeLeafBlower = RecipeUtil.lastIRecipe();
         }
@@ -201,21 +201,21 @@ public class ItemCrafting{
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemDrillUpgradeSpeed),
                     "ISI", "SRS", "ISI",
                     'I', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.IRON.ordinal()),
-                    'S', Items.sugar,
+                    'S', Items.SUGAR,
                     'R', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.REDSTONE.ordinal())));
             recipeDrillSpeedI = RecipeUtil.lastIRecipe();
 
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemDrillUpgradeSpeedII),
                     "ISI", "SCS", "ISI",
                     'I', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.IRON.ordinal()),
-                    'S', Items.sugar,
-                    'C', Items.cake));
+                    'S', Items.SUGAR,
+                    'C', Items.CAKE));
             recipeDrillSpeedII = RecipeUtil.lastIRecipe();
 
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemDrillUpgradeSpeedIII),
                     "ISI", "SFS", "ISI",
                     'I', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.IRON.ordinal()),
-                    'S', Items.sugar,
+                    'S', Items.SUGAR,
                     'F', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.DIAMOND.ordinal())));
             recipeDrillSpeedIII = RecipeUtil.lastIRecipe();
         }
@@ -224,14 +224,14 @@ public class ItemCrafting{
         if(ConfigCrafting.DRILL_FORTUNE.isEnabled()){
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemDrillUpgradeFortune),
                     "ISI", "SRS", "ISI",
-                    'I', Blocks.glowstone,
-                    'S', Items.redstone,
+                    'I', Blocks.GLOWSTONE,
+                    'S', Items.REDSTONE,
                     'R', new ItemStack(InitBlocks.blockCrystal, 1, TheCrystals.DIAMOND.ordinal())));
             recipeDrillFortuneI = RecipeUtil.lastIRecipe();
 
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemDrillUpgradeFortuneII),
                     "ISI", "SRS", "ISI",
-                    'I', Blocks.glowstone,
+                    'I', Blocks.GLOWSTONE,
                     'S', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.REDSTONE.ordinal()),
                     'R', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.ENDER_CASING.ordinal())));
             recipeDrillFortuneII = RecipeUtil.lastIRecipe();
@@ -269,7 +269,7 @@ public class ItemCrafting{
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemDrillUpgradeBlockPlacing),
                     "CEC", "RAR", "CEC",
                     'C', "cobblestone",
-                    'E', Items.paper,
+                    'E', Items.PAPER,
                     'A', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL.ordinal()),
                     'R', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.IRON.ordinal())));
             recipeDrillPlacing = RecipeUtil.lastIRecipe();
@@ -301,7 +301,7 @@ public class ItemCrafting{
                     "RIB", "IOI", "BIR",
                     'R', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.REDSTONE.ordinal()),
                     'I', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.IRON.ordinal()),
-                    'B', new ItemStack(Items.dye, 1, 4),
+                    'B', new ItemStack(Items.DYE, 1, 4),
                     'O', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.RING.ordinal())));
             recipeMagnetRing = RecipeUtil.lastIRecipe();
         }
@@ -310,7 +310,7 @@ public class ItemCrafting{
         if(ConfigCrafting.GROWTH_RING.isEnabled()){
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemGrowthRing),
                     "SIS", "IOI", "SIS",
-                    'S', new ItemStack(Items.wheat_seeds),
+                    'S', new ItemStack(Items.WHEAT_SEEDS),
                     'I', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.IRON.ordinal()),
                     'O', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.RING.ordinal())));
             recipeGrowthRing = RecipeUtil.lastIRecipe();
@@ -320,7 +320,7 @@ public class ItemCrafting{
         if(ConfigCrafting.WATER_RING.isEnabled()){
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemWaterRemovalRing),
                     "BIB", "IOI", "BIB",
-                    'B', new ItemStack(Items.water_bucket),
+                    'B', new ItemStack(Items.WATER_BUCKET),
                     'I', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.DIAMOND.ordinal()),
                     'O', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.RING.ordinal())));
             recipeWaterRing = RecipeUtil.lastIRecipe();
@@ -362,15 +362,15 @@ public class ItemCrafting{
                     "WNW", "WDW", "WNW",
                     'W', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.BAT_WING.ordinal()),
                     'N', new ItemStack(InitBlocks.blockCrystal, 1, TheCrystals.DIAMOND.ordinal()),
-                    'D', new ItemStack(Items.nether_star)));
+                    'D', new ItemStack(Items.NETHER_STAR)));
             recipeWings = RecipeUtil.lastIRecipe();
         }
 
         //Quartz
         if(ConfigCrafting.QUARTZ.isEnabled()){
             GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal()),
-                    new ItemStack(Items.coal),
-                    new ItemStack(Items.quartz)));
+                    new ItemStack(Items.COAL),
+                    new ItemStack(Items.QUARTZ)));
         }
 
         //Coil
@@ -394,7 +394,7 @@ public class ItemCrafting{
         //Resonant Rice
         if(ConfigCrafting.RESONANT_RICE.isEnabled() && !OreDictionary.getOres("nuggetEnderium").isEmpty()){
             GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemResonantRice),
-                    new ItemStack(InitItems.itemFoods, 1, TheFoods.RICE.ordinal()), "nuggetEnderium", Items.gunpowder));
+                    new ItemStack(InitItems.itemFoods, 1, TheFoods.RICE.ordinal()), "nuggetEnderium", Items.GUNPOWDER));
         }
 
         //Advanced Coil
@@ -410,9 +410,9 @@ public class ItemCrafting{
         if(ConfigCrafting.LEAF_BLOWER_ADVANCED.isEnabled()){
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemLeafBlowerAdvanced),
                     " F", "DP", "DC",
-                    'F', new ItemStack(Items.flint),
+                    'F', new ItemStack(Items.FLINT),
                     'D', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.DIAMOND.ordinal()),
-                    'P', new ItemStack(Blocks.piston),
+                    'P', new ItemStack(Blocks.PISTON),
                     'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal())));
             recipeLeafBlowerAdvanced = RecipeUtil.lastIRecipe();
         }
@@ -421,8 +421,8 @@ public class ItemCrafting{
         if(ConfigCrafting.PHANTOM_CONNECTOR.isEnabled()){
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemPhantomConnector),
                     "YE", "EY", "S ",
-                    'Y', Items.ender_eye,
-                    'E', Items.ender_pearl,
+                    'Y', Items.ENDER_EYE,
+                    'E', Items.ENDER_PEARL,
                     'S', "stickWood"));
             recipePhantomConnector = RecipeUtil.lastIRecipe();
         }
@@ -442,16 +442,16 @@ public class ItemCrafting{
         //Crafter on a Stick
         if(ConfigCrafting.STICK_CRAFTER.isEnabled()){
             GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemCrafterOnAStick),
-                    new ItemStack(Blocks.crafting_table),
-                    new ItemStack(Items.sign)));
+                    new ItemStack(Blocks.CRAFTING_TABLE),
+                    new ItemStack(Items.SIGN)));
         }
 
         //Tiny Coal
         GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemMisc, 8, TheMiscItems.TINY_COAL.ordinal()),
-                new ItemStack(Items.coal));
+                new ItemStack(Items.COAL));
         recipeTinyCoal = RecipeUtil.lastIRecipe();
         GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemMisc, 8, TheMiscItems.TINY_CHAR.ordinal()),
-                new ItemStack(Items.coal, 1, 1));
+                new ItemStack(Items.COAL, 1, 1));
         recipeTinyChar = RecipeUtil.lastIRecipe();
 
         //Rice Seeds
@@ -467,21 +467,21 @@ public class ItemCrafting{
 
         //Ingots from Dusts
         GameRegistry.addSmelting(new ItemStack(InitItems.itemDust, 1, TheDusts.IRON.ordinal()),
-                new ItemStack(Items.iron_ingot), 1F);
+                new ItemStack(Items.IRON_INGOT), 1F);
         GameRegistry.addSmelting(new ItemStack(InitItems.itemDust, 1, TheDusts.GOLD.ordinal()),
-                new ItemStack(Items.gold_ingot), 1F);
+                new ItemStack(Items.GOLD_INGOT), 1F);
         GameRegistry.addSmelting(new ItemStack(InitItems.itemDust, 1, TheDusts.DIAMOND.ordinal()),
-                new ItemStack(Items.diamond), 1F);
+                new ItemStack(Items.DIAMOND), 1F);
         GameRegistry.addSmelting(new ItemStack(InitItems.itemDust, 1, TheDusts.EMERALD.ordinal()),
-                new ItemStack(Items.emerald), 1F);
+                new ItemStack(Items.EMERALD), 1F);
         GameRegistry.addSmelting(new ItemStack(InitItems.itemDust, 1, TheDusts.LAPIS.ordinal()),
-                new ItemStack(Items.dye, 1, 4), 1F);
+                new ItemStack(Items.DYE, 1, 4), 1F);
         GameRegistry.addSmelting(new ItemStack(InitItems.itemDust, 1, TheDusts.QUARTZ_BLACK.ordinal()),
                 new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal()), 1F);
         GameRegistry.addSmelting(new ItemStack(InitItems.itemDust, 1, TheDusts.QUARTZ.ordinal()),
-                new ItemStack(Items.quartz), 1F);
+                new ItemStack(Items.QUARTZ), 1F);
         GameRegistry.addSmelting(new ItemStack(InitItems.itemDust, 1, TheDusts.COAL.ordinal()),
-                new ItemStack(Items.coal), 1F);
+                new ItemStack(Items.COAL), 1F);
 
     }
 
@@ -526,15 +526,15 @@ public class ItemCrafting{
     }
 
     public static void addRingRecipeWithStack(ItemStack mainStack, int meta){
-        GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemPotionRing, 1, meta), mainStack, mainStack, mainStack, mainStack, new ItemStack(InitBlocks.blockCrystal, 1, TheCrystals.DIAMOND.ordinal()), new ItemStack(Items.nether_wart), new ItemStack(Items.potionitem), new ItemStack(InitItems.itemMisc, 1, TheMiscItems.RING.ordinal()));
+        GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemPotionRing, 1, meta), mainStack, mainStack, mainStack, mainStack, new ItemStack(InitBlocks.blockCrystal, 1, TheCrystals.DIAMOND.ordinal()), new ItemStack(Items.NETHER_WART), new ItemStack(Items.POTIONITEM), new ItemStack(InitItems.itemMisc, 1, TheMiscItems.RING.ordinal()));
         recipesPotionRings.add(RecipeUtil.lastIRecipe());
-        GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemPotionRingAdvanced, 1, meta), new ItemStack(InitItems.itemPotionRing, 1, meta), new ItemStack(Items.nether_star), new ItemStack(Items.nether_star));
+        GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemPotionRingAdvanced, 1, meta), new ItemStack(InitItems.itemPotionRing, 1, meta), new ItemStack(Items.NETHER_STAR), new ItemStack(Items.NETHER_STAR));
         recipesPotionRings.add(RecipeUtil.lastIRecipe());
     }
 
     public static void initMashedFoodRecipes(){
         if(ConfigCrafting.MASHED_FOOD.isEnabled()){
-            for(Item item : Item.itemRegistry){
+            for(Item item : Item.REGISTRY){
                 if(item instanceof ItemFood || item instanceof IPlantable || item instanceof IGrowable){
                     if(!isBlacklisted(item)){
                         ItemStack ingredient = new ItemStack(item, 1, Util.WILDCARD);
@@ -548,7 +548,7 @@ public class ItemCrafting{
 
     private static boolean isBlacklisted(Item item){
         for(String except : ConfigValues.mashedFoodCraftingExceptions){
-            if(item.getRegistryName().equals(except)){
+            if(item.getRegistryName().toString().equals(except)){
                 return true;
             }
         }

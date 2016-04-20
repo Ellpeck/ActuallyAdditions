@@ -40,7 +40,7 @@ public enum TheAchievements{
     }
 
     TheAchievements(String name, int x, int y, ItemStack displayStack, TheAchievements hasToHaveBefore, InitAchievements.Type type, boolean special){
-        this.ach = new Achievement("achievement."+ModUtil.MOD_ID_LOWER+"."+name, ModUtil.MOD_ID_LOWER+"."+name, x, y, displayStack, hasToHaveBefore == null ? null : hasToHaveBefore.ach);
+        this.ach = new Achievement("achievement."+ModUtil.MOD_ID+"."+name, ModUtil.MOD_ID+"."+name, x, y, displayStack, hasToHaveBefore == null ? null : hasToHaveBefore.ach);
         if(hasToHaveBefore == null){
             this.ach.initIndependentStat();
         }

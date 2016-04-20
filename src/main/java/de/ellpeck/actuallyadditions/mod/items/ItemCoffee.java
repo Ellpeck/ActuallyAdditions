@@ -27,7 +27,6 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.StringUtils;
 import net.minecraft.world.World;
@@ -47,7 +46,7 @@ public class ItemCoffee extends ItemFoodBase{
     }
 
     public static void initIngredients(){
-        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new MilkIngredient(new ItemStack(Items.milk_bucket)));
+        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new MilkIngredient(new ItemStack(Items.MILK_BUCKET)));
         //Pam's Soy Milk (For Jemx because he's lactose intolerant. YER HAPPY NAO!?)
         if(Loader.isModLoaded("harvestcraft")){
             Item item = ItemUtil.getItemFromName("harvestcraft:soymilkItem");
@@ -56,13 +55,13 @@ public class ItemCoffee extends ItemFoodBase{
             }
         }
 
-        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(new ItemStack(Items.sugar), new PotionEffect[]{new PotionEffect(MobEffects.moveSpeed, 30, 0)}, 4));
-        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(new ItemStack(Items.magma_cream), new PotionEffect[]{new PotionEffect(MobEffects.fireResistance, 20, 0)}, 2));
-        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(new ItemStack(Items.fish, 1, 3), new PotionEffect[]{new PotionEffect(MobEffects.waterBreathing, 10, 0)}, 2));
-        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(new ItemStack(Items.golden_carrot), new PotionEffect[]{new PotionEffect(MobEffects.nightVision, 30, 0)}, 2));
-        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(new ItemStack(Items.ghast_tear), new PotionEffect[]{new PotionEffect(MobEffects.regeneration, 5, 0)}, 3));
-        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(new ItemStack(Items.blaze_powder), new PotionEffect[]{new PotionEffect(MobEffects.damageBoost, 15, 0)}, 4));
-        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(new ItemStack(Items.fermented_spider_eye), new PotionEffect[]{new PotionEffect(MobEffects.invisibility, 25, 0)}, 2));
+        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(new ItemStack(Items.SUGAR), new PotionEffect[]{new PotionEffect(MobEffects.SPEED, 30, 0)}, 4));
+        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(new ItemStack(Items.MAGMA_CREAM), new PotionEffect[]{new PotionEffect(MobEffects.FIRE_RESISTANCE, 20, 0)}, 2));
+        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(new ItemStack(Items.FISH, 1, 3), new PotionEffect[]{new PotionEffect(MobEffects.WATER_BREATHING, 10, 0)}, 2));
+        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(new ItemStack(Items.GOLDEN_CARROT), new PotionEffect[]{new PotionEffect(MobEffects.NIGHT_VISION, 30, 0)}, 2));
+        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(new ItemStack(Items.GHAST_TEAR), new PotionEffect[]{new PotionEffect(MobEffects.REGENERATION, 5, 0)}, 3));
+        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(new ItemStack(Items.BLAZE_POWDER), new PotionEffect[]{new PotionEffect(MobEffects.STRENGTH, 15, 0)}, 4));
+        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(new ItemStack(Items.FERMENTED_SPIDER_EYE), new PotionEffect[]{new PotionEffect(MobEffects.INVISIBILITY, 25, 0)}, 2));
     }
 
     public static CoffeeIngredient getIngredientFromStack(ItemStack stack){
@@ -159,7 +158,7 @@ public class ItemCoffee extends ItemFoodBase{
 
         @Override
         public String getExtraText(){
-            return StringUtil.localize("container.nei."+ModUtil.MOD_ID_LOWER+".coffee.extra.milk");
+            return StringUtil.localize("container.nei."+ModUtil.MOD_ID+".coffee.extra.milk");
         }
     }
 }

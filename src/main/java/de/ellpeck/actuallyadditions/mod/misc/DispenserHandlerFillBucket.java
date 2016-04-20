@@ -58,16 +58,16 @@ public class DispenserHandlerFillBucket extends BehaviorDefaultDispenseItem{
         BlockPos pos = new BlockPos(x, y, z);
         Block block = PosUtil.getBlock(pos, source.getWorld());
 
-        if(block == Blocks.water || block == Blocks.flowing_water){
+        if(block == Blocks.WATER || block == Blocks.FLOWING_WATER){
             if(PosUtil.getMetadata(pos, source.getWorld()) == 0){
                 source.getWorld().setBlockToAir(pos);
-                return new ItemStack(Items.water_bucket);
+                return new ItemStack(Items.WATER_BUCKET);
             }
         }
-        else if(block == Blocks.lava || block == Blocks.flowing_lava){
+        else if(block == Blocks.LAVA || block == Blocks.FLOWING_LAVA){
             if(PosUtil.getMetadata(pos, source.getWorld()) == 0){
                 source.getWorld().setBlockToAir(pos);
-                return new ItemStack(Items.lava_bucket);
+                return new ItemStack(Items.LAVA_BUCKET);
             }
         }
         else if(block instanceof IFluidBlock && ((IFluidBlock)block).canDrain(source.getWorld(), pos)){

@@ -104,7 +104,7 @@ public class NEIReconstructorRecipe/* extends TemplateRecipeHandler implements I
 
     @Override
     public String getGuiTexture(){
-        return ModUtil.MOD_ID_LOWER+":textures/gui/guiNEIAtomicReconstructor.png";
+        return ModUtil.MOD_ID+":textures/gui/guiNEIAtomicReconstructor.png";
     }
 
     @Override

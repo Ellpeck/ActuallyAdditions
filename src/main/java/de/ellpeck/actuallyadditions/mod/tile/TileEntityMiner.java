@@ -140,7 +140,7 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyR
                         }
                     }
 
-                    String reg = block.getRegistryName();
+                    String reg = block.getRegistryName().toString();
                     if(reg != null && !reg.isEmpty()){
                         for(String string : ConfigValues.minerExtraWhitelist){
                             if(reg.equals(string)){
@@ -162,7 +162,7 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyR
     }
 
     private boolean isBlacklisted(Block block){
-        String reg = block.getRegistryName();
+        String reg = block.getRegistryName().toString();
         if(reg != null && !reg.isEmpty()){
             for(String string : ConfigValues.minerBlacklist){
                 if(reg.equals(string)){

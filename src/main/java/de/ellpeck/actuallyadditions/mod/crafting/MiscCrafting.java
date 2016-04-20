@@ -59,14 +59,14 @@ public class MiscCrafting{
         if(ConfigCrafting.PAPER_CONE.isEnabled()){
             GameRegistry.addRecipe(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.PAPER_CONE.ordinal()),
                     "P P", " P ",
-                    'P', new ItemStack(Items.paper));
+                    'P', new ItemStack(Items.PAPER));
         }
 
         //Knife Handle
         if(ConfigCrafting.KNIFE_HANDLE.isEnabled()){
             GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.KNIFE_HANDLE.ordinal()),
                     "stickWood",
-                    new ItemStack(Items.leather)));
+                    new ItemStack(Items.LEATHER)));
             ItemCrafting.recipeKnifeHandle = RecipeUtil.lastIRecipe();
         }
 
@@ -75,7 +75,7 @@ public class MiscCrafting{
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.KNIFE_BLADE.ordinal()),
                     "K", "K", "F",
                     'K', "ingotIron",
-                    'F', new ItemStack(Items.flint)));
+                    'F', new ItemStack(Items.FLINT)));
             ItemCrafting.recipeKnifeBlade = RecipeUtil.lastIRecipe();
         }
     }

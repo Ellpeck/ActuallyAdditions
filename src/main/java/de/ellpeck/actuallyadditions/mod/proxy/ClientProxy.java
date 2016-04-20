@@ -143,7 +143,7 @@ public class ClientProxy implements IProxy{
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntitySmileyCloud.class, new RenderSmileyCloud());
 
         //TODO Fix villager, doesn't work in this Version of Forge
-        //VillagerRegistry.instance().registerVillagerSkin(ConfigIntValues.JAM_VILLAGER_ID.getValue(), new ResourceLocation(ModUtil.MOD_ID_LOWER, "textures/entity/villager/jamVillager.png"));
+        //VillagerRegistry.instance().registerVillagerSkin(ConfigIntValues.JAM_VILLAGER_ID.getValue(), new ResourceLocation(ModUtil.MOD_ID, "textures/entity/villager/jamVillager.png"));
 
         for(Item item : colorProdividingItemsForRegistering){
             if(item instanceof IColorProvidingItem){

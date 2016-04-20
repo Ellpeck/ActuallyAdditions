@@ -33,7 +33,7 @@ public class ToolCrafting{
     public static void init(){
 
         if(ConfigCrafting.TOOL_EMERALD.isEnabled()){
-            addToolAndArmorRecipes(new ItemStack(Items.emerald), InitItems.itemPickaxeEmerald, InitItems.itemSwordEmerald, InitItems.itemAxeEmerald, InitItems.itemShovelEmerald, InitItems.itemHoeEmerald, InitItems.itemHelmEmerald, InitItems.itemChestEmerald, InitItems.itemPantsEmerald, InitItems.itemBootsEmerald);
+            addToolAndArmorRecipes(new ItemStack(Items.EMERALD), InitItems.itemPickaxeEmerald, InitItems.itemSwordEmerald, InitItems.itemAxeEmerald, InitItems.itemShovelEmerald, InitItems.itemHoeEmerald, InitItems.itemHelmEmerald, InitItems.itemChestEmerald, InitItems.itemPantsEmerald, InitItems.itemBootsEmerald);
         }
 
         if(ConfigCrafting.TOOL_QUARTZ.isEnabled()){
@@ -41,7 +41,7 @@ public class ToolCrafting{
         }
 
         if(ConfigCrafting.TOOL_OBSIDIAN.isEnabled()){
-            addToolAndArmorRecipes(new ItemStack(Blocks.obsidian), InitItems.itemPickaxeObsidian, InitItems.itemSwordObsidian, InitItems.itemAxeObsidian, InitItems.itemShovelObsidian, InitItems.itemHoeObsidian, InitItems.itemHelmObsidian, InitItems.itemChestObsidian, InitItems.itemPantsObsidian, InitItems.itemBootsObsidian);
+            addToolAndArmorRecipes(new ItemStack(Blocks.OBSIDIAN), InitItems.itemPickaxeObsidian, InitItems.itemSwordObsidian, InitItems.itemAxeObsidian, InitItems.itemShovelObsidian, InitItems.itemHoeObsidian, InitItems.itemHelmObsidian, InitItems.itemChestObsidian, InitItems.itemPantsObsidian, InitItems.itemBootsObsidian);
         }
 
         if(ConfigCrafting.TOOL_CRYSTALS.isEnabled()){
@@ -56,39 +56,39 @@ public class ToolCrafting{
         //Paxels
         if(ConfigCrafting.PAXELS.isEnabled()){
             GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.woodenPaxel),
-                    new ItemStack(Items.wooden_axe),
-                    new ItemStack(Items.wooden_pickaxe),
-                    new ItemStack(Items.wooden_shovel),
-                    new ItemStack(Items.wooden_sword),
-                    new ItemStack(Items.wooden_hoe)));
+                    new ItemStack(Items.WOODEN_AXE),
+                    new ItemStack(Items.WOODEN_PICKAXE),
+                    new ItemStack(Items.WOODEN_SHOVEL),
+                    new ItemStack(Items.WOODEN_SWORD),
+                    new ItemStack(Items.WOODEN_HOE)));
             recipesPaxels.add(RecipeUtil.lastIRecipe());
             GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.stonePaxel),
-                    new ItemStack(Items.stone_axe),
-                    new ItemStack(Items.stone_pickaxe),
-                    new ItemStack(Items.stone_shovel),
-                    new ItemStack(Items.stone_sword),
-                    new ItemStack(Items.stone_hoe)));
+                    new ItemStack(Items.STONE_AXE),
+                    new ItemStack(Items.STONE_PICKAXE),
+                    new ItemStack(Items.STONE_SHOVEL),
+                    new ItemStack(Items.STONE_SWORD),
+                    new ItemStack(Items.STONE_HOE)));
             recipesPaxels.add(RecipeUtil.lastIRecipe());
             GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.ironPaxel),
-                    new ItemStack(Items.iron_axe),
-                    new ItemStack(Items.iron_pickaxe),
-                    new ItemStack(Items.iron_shovel),
-                    new ItemStack(Items.iron_sword),
-                    new ItemStack(Items.iron_hoe)));
+                    new ItemStack(Items.IRON_AXE),
+                    new ItemStack(Items.IRON_PICKAXE),
+                    new ItemStack(Items.IRON_SHOVEL),
+                    new ItemStack(Items.IRON_SWORD),
+                    new ItemStack(Items.IRON_HOE)));
             recipesPaxels.add(RecipeUtil.lastIRecipe());
             GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.goldPaxel),
-                    new ItemStack(Items.golden_axe),
-                    new ItemStack(Items.golden_pickaxe),
-                    new ItemStack(Items.golden_shovel),
-                    new ItemStack(Items.golden_sword),
-                    new ItemStack(Items.golden_hoe)));
+                    new ItemStack(Items.GOLDEN_AXE),
+                    new ItemStack(Items.GOLDEN_PICKAXE),
+                    new ItemStack(Items.GOLDEN_SHOVEL),
+                    new ItemStack(Items.GOLDEN_SWORD),
+                    new ItemStack(Items.GOLDEN_HOE)));
             recipesPaxels.add(RecipeUtil.lastIRecipe());
             GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.diamondPaxel),
-                    new ItemStack(Items.diamond_axe),
-                    new ItemStack(Items.diamond_pickaxe),
-                    new ItemStack(Items.diamond_shovel),
-                    new ItemStack(Items.diamond_sword),
-                    new ItemStack(Items.diamond_hoe)));
+                    new ItemStack(Items.DIAMOND_AXE),
+                    new ItemStack(Items.DIAMOND_PICKAXE),
+                    new ItemStack(Items.DIAMOND_SHOVEL),
+                    new ItemStack(Items.DIAMOND_SWORD),
+                    new ItemStack(Items.DIAMOND_HOE)));
             recipesPaxels.add(RecipeUtil.lastIRecipe());
             GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.emeraldPaxel),
                     new ItemStack(InitItems.itemAxeEmerald),
@@ -162,31 +162,31 @@ public class ToolCrafting{
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(pickaxe),
                 "EEE", " S ", " S ",
                 'E', base,
-                'S', new ItemStack(Items.stick)));
+                'S', new ItemStack(Items.STICK)));
 
         //Sword
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(sword),
                 "E", "E", "S",
                 'E', base,
-                'S', new ItemStack(Items.stick)));
+                'S', new ItemStack(Items.STICK)));
 
         //Axe
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(axe),
                 "EE", "ES", " S",
                 'E', base,
-                'S', new ItemStack(Items.stick)));
+                'S', new ItemStack(Items.STICK)));
 
         //Shovel
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(shovel),
                 "E", "S", "S",
                 'E', base,
-                'S', new ItemStack(Items.stick)));
+                'S', new ItemStack(Items.STICK)));
 
         //Hoe
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(hoe),
                 "EE", " S", " S",
                 'E', base,
-                'S', new ItemStack(Items.stick)));
+                'S', new ItemStack(Items.STICK)));
 
         //Helm
         GameRegistry.addRecipe(new ItemStack(helm),

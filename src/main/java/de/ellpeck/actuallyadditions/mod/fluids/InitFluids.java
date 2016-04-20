@@ -41,7 +41,7 @@ public class InitFluids{
 
         //Canola Block
         if(fluidCanolaOil.getBlock() == null || ConfigBoolValues.PREVENT_CANOLA_BLOCK_OVERRIDE.isEnabled()){
-            blockCanolaOil = new BlockFluidFlowing(fluidCanolaOil, Material.water, "blockCanolaOil");
+            blockCanolaOil = new BlockFluidFlowing(fluidCanolaOil, Material.WATER, "blockCanolaOil");
         }
         else{
             errorAlreadyRegistered("Canola Oil Block");
@@ -61,7 +61,7 @@ public class InitFluids{
 
         //Oil Block
         if(fluidOil.getBlock() == null || ConfigBoolValues.PREVENT_OIL_BLOCK_OVERRIDE.isEnabled()){
-            blockOil = new BlockFluidFlowing(fluidOil, Material.water, "blockOil");
+            blockOil = new BlockFluidFlowing(fluidOil, Material.WATER, "blockOil");
         }
         else{
             errorAlreadyRegistered("Oil Block");

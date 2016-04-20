@@ -33,7 +33,7 @@ public class GuiDrill extends GuiContainer{
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y){
-        AssetUtil.displayNameString(this.fontRendererObj, xSize, -10, "container."+ModUtil.MOD_ID_LOWER+".drill");
+        AssetUtil.displayNameString(this.fontRendererObj, xSize, -10, "container."+ModUtil.MOD_ID+".drill");
     }
 
     @Override

@@ -32,12 +32,12 @@ public class BlockEnergizer extends BlockContainerBase{
     private boolean isEnergizer;
 
     public BlockEnergizer(boolean isEnergizer, String name){
-        super(Material.rock, name);
+        super(Material.ROCK, name);
         this.isEnergizer = isEnergizer;
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(2.0F);
         this.setResistance(10.0F);
-        this.setStepSound(SoundType.STONE);
+        this.setSoundType(SoundType.STONE);
     }
 
     @Override

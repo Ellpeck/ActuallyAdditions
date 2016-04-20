@@ -54,11 +54,6 @@ public class ReconstructorRecipeWrapper extends RecipeWrapperWithButton implemen
     }
 
     @Override
-    public void drawInfo(@Nonnull Minecraft minecraft, int recipeWidth, int recipeHeight){
-
-    }
-
-    @Override
     public void drawInfo(@Nonnull Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY){
         this.updateButton(minecraft, mouseX, mouseY);
     }

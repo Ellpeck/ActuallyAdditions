@@ -62,7 +62,7 @@ public class NEICompostRecipe/* extends TemplateRecipeHandler implements INEIRec
 
     @Override
     public String getGuiTexture(){
-        return ModUtil.MOD_ID_LOWER+":textures/gui/guiNEISimple.png";
+        return ModUtil.MOD_ID+":textures/gui/guiNEISimple.png";
     }
 
     @Override

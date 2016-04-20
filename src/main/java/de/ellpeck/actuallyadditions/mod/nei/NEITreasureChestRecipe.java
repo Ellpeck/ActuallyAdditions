@@ -72,7 +72,7 @@ public class NEITreasureChestRecipe/* extends TemplateRecipeHandler implements I
 
     @Override
     public String getGuiTexture(){
-        return ModUtil.MOD_ID_LOWER+":textures/gui/guiNEISimple.png";
+        return ModUtil.MOD_ID+":textures/gui/guiNEISimple.png";
     }
 
     @Override
@@ -84,7 +84,7 @@ public class NEITreasureChestRecipe/* extends TemplateRecipeHandler implements I
     public void drawExtras(int rec){
         CachedTreasure recipe = (CachedTreasure)this.arecipes.get(rec);
         if(recipe.result != null){
-            GuiDraw.drawString(recipe.minAmount+"-"+recipe.maxAmount+" "+StringUtil.localize("container.nei."+ModUtil.MOD_ID_LOWER+".treasureChest.info")+" "+recipe.chance+"%", 55, 45, StringUtil.DECIMAL_COLOR_GRAY_TEXT, false);
+            GuiDraw.drawString(recipe.minAmount+"-"+recipe.maxAmount+" "+StringUtil.localize("container.nei."+ModUtil.MOD_ID+".treasureChest.info")+" "+recipe.chance+"%", 55, 45, StringUtil.DECIMAL_COLOR_GRAY_TEXT, false);
         }
     }
 

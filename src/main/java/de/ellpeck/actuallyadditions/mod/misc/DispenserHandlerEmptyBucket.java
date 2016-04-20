@@ -33,7 +33,7 @@ public class DispenserHandlerEmptyBucket extends BehaviorDefaultDispenseItem{
         BlockPos pos = new BlockPos(x, y, z);
 
         if(source.getWorld().isAirBlock(pos) && !PosUtil.getMaterial(pos, source.getWorld()).isSolid() && ((ItemBucket)bucket.getItem()).tryPlaceContainedLiquid(FakePlayerUtil.getFakePlayer(source.getWorld()), source.getWorld(), pos)){
-            return new ItemStack(Items.bucket);
+            return new ItemStack(Items.BUCKET);
         }
 
         return new BehaviorDefaultDispenseItem().dispense(source, bucket);

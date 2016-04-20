@@ -31,11 +31,11 @@ public class AssetUtil{
     public static final ResourceLocation GUI_INVENTORY_LOCATION = getGuiLocation("guiInventory");
 
     public static ResourceLocation getGuiLocation(String file){
-        return new ResourceLocation(ModUtil.MOD_ID_LOWER, "textures/gui/"+file+".png");
+        return new ResourceLocation(ModUtil.MOD_ID, "textures/gui/"+file+".png");
     }
 
     public static ResourceLocation getBookletGuiLocation(String file){
-        return new ResourceLocation(ModUtil.MOD_ID_LOWER, "textures/gui/booklet/"+file+".png");
+        return new ResourceLocation(ModUtil.MOD_ID, "textures/gui/booklet/"+file+".png");
     }
 
     public static void displayNameString(FontRenderer font, int xSize, int yPositionOfMachineText, String machineName){

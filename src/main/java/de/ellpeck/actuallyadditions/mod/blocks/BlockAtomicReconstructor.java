@@ -47,11 +47,11 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
     private static final PropertyInteger META = PropertyInteger.create("meta", 0, 5);
 
     public BlockAtomicReconstructor(String name){
-        super(Material.rock, name);
+        super(Material.ROCK, name);
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(10F);
         this.setResistance(80F);
-        this.setStepSound(SoundType.STONE);
+        this.setSoundType(SoundType.STONE);
     }
 
     @Override
@@ -105,7 +105,7 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
             ItemStack slot = ((TileEntityAtomicReconstructor)tile).getStackInSlot(0);
             String strg;
             if(slot == null){
-                strg = StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".noLens");
+                strg = StringUtil.localize("info."+ModUtil.MOD_ID+".noLens");
             }
             else{
                 strg = slot.getItem().getItemStackDisplayName(slot);
@@ -117,8 +117,8 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
     }
 
     @Override
-    protected Class<? extends ItemBlockBase> getItemBlock(){
-        return TheItemBlock.class;
+    protected ItemBlockBase getItemBlock(){
+        return new TheItemBlock(this);
     }
 
     @Override
@@ -171,7 +171,7 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
                 this.toPick2 = Util.RANDOM.nextInt(NAME_FLAVOR_AMOUNTS_2)+1;
             }
 
-            String base = "tile."+ModUtil.MOD_ID_LOWER+"."+((BlockAtomicReconstructor)this.block).getBaseName()+".info.";
+            String base = "tile."+ModUtil.MOD_ID+"."+((BlockAtomicReconstructor)this.block).getBaseName()+".info.";
             list.add(StringUtil.localize(base+"1."+this.toPick1)+" "+StringUtil.localize(base+"2."+this.toPick2));
         }
     }

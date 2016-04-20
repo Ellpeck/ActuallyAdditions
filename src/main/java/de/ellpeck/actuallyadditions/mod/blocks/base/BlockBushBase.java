@@ -28,7 +28,7 @@ public class BlockBushBase extends BlockBush{
 
     public BlockBushBase(String name){
         this.name = name;
-        this.setStepSound(SoundType.PLANT);
+        this.setSoundType(SoundType.PLANT);
 
         this.register();
     }
@@ -43,8 +43,8 @@ public class BlockBushBase extends BlockBush{
         return this.name;
     }
 
-    protected Class<? extends ItemBlockBase> getItemBlock(){
-        return ItemBlockBase.class;
+    protected ItemBlockBase getItemBlock(){
+        return new ItemBlockBase(this);
     }
 
     public boolean shouldAddCreative(){
@@ -52,7 +52,7 @@ public class BlockBushBase extends BlockBush{
     }
 
     protected void registerRendering(){
-        ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this), new ResourceLocation(ModUtil.MOD_ID_LOWER, this.getBaseName()));
+        ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this), new ResourceLocation(ModUtil.MOD_ID, this.getBaseName()));
     }
 
     public EnumRarity getRarity(ItemStack stack){

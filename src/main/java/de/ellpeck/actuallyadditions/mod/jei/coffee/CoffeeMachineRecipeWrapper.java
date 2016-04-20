@@ -70,21 +70,16 @@ public class CoffeeMachineRecipeWrapper extends RecipeWrapperWithButton implemen
     }
 
     @Override
-    public void drawInfo(@Nonnull Minecraft minecraft, int recipeWidth, int recipeHeight){
-
-    }
-
-    @Override
     public void drawInfo(@Nonnull Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY){
         this.updateButton(minecraft, mouseX, mouseY);
 
         if(this.theIngredient.getExtraText() != null){
-            minecraft.fontRendererObj.drawString(StringUtil.localize("container.nei."+ModUtil.MOD_ID_LOWER+".coffee.special")+":", 2, 4, StringUtil.DECIMAL_COLOR_GRAY_TEXT, false);
+            minecraft.fontRendererObj.drawString(StringUtil.localize("container.nei."+ModUtil.MOD_ID+".coffee.special")+":", 2, 4, StringUtil.DECIMAL_COLOR_GRAY_TEXT, false);
             minecraft.fontRendererObj.drawString(this.theIngredient.getExtraText(), 2, 16, StringUtil.DECIMAL_COLOR_GRAY_TEXT, false);
         }
 
         if(this.theIngredient.maxAmplifier > 0){
-            minecraft.fontRendererObj.drawString(StringUtil.localize("container.nei."+ModUtil.MOD_ID_LOWER+".coffee.maxAmount")+": "+this.theIngredient.maxAmplifier, 2, 28, StringUtil.DECIMAL_COLOR_GRAY_TEXT, false);
+            minecraft.fontRendererObj.drawString(StringUtil.localize("container.nei."+ModUtil.MOD_ID+".coffee.maxAmount")+": "+this.theIngredient.maxAmplifier, 2, 28, StringUtil.DECIMAL_COLOR_GRAY_TEXT, false);
         }
     }
 

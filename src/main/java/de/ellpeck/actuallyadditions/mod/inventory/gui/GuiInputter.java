@@ -41,13 +41,13 @@ public class GuiInputter extends GuiContainer{
 
     public static final int OFFSET_ADVANCED = 12+36;
     public static final String[] sideString = new String[]{
-            StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.disabled"),
-            StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.up"),
-            StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.down"),
-            StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.north"),
-            StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.east"),
-            StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.south"),
-            StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.west")};
+            StringUtil.localize("info."+ModUtil.MOD_ID+".gui.disabled"),
+            StringUtil.localize("info."+ModUtil.MOD_ID+".gui.up"),
+            StringUtil.localize("info."+ModUtil.MOD_ID+".gui.down"),
+            StringUtil.localize("info."+ModUtil.MOD_ID+".gui.north"),
+            StringUtil.localize("info."+ModUtil.MOD_ID+".gui.east"),
+            StringUtil.localize("info."+ModUtil.MOD_ID+".gui.south"),
+            StringUtil.localize("info."+ModUtil.MOD_ID+".gui.west")};
     private static final ResourceLocation resLoc = AssetUtil.getGuiLocation("guiInputter");
     private static final ResourceLocation resLocAdvanced = AssetUtil.getGuiLocation("guiInputterAdvanced");
     public TileEntityInputter tileInputter;
@@ -124,15 +124,15 @@ public class GuiInputter extends GuiContainer{
         this.whitelistPut.displayString = this.tileInputter.isPutWhitelist ? "O" : "X";
 
         if(this.isAdvanced){
-            List infoList = this.fontRendererObj.listFormattedStringToWidth(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID_LOWER+".inputter.whitelistInfo"), 200);
-            String text1 = this.tileInputter.isPullWhitelist ? StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.whitelist") : StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.blacklist");
+            List infoList = this.fontRendererObj.listFormattedStringToWidth(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID+".inputter.whitelistInfo"), 200);
+            String text1 = this.tileInputter.isPullWhitelist ? StringUtil.localize("info."+ModUtil.MOD_ID+".gui.whitelist") : StringUtil.localize("info."+ModUtil.MOD_ID+".gui.blacklist");
             if(x >= guiLeft+3 && y >= guiTop+16 && x <= guiLeft+18 && y <= guiTop+31){
                 ArrayList list = new ArrayList();
                 list.add(TextFormatting.BOLD+text1);
                 list.addAll(infoList);
                 this.drawHoveringText(list, x, y);
             }
-            String text2 = this.tileInputter.isPutWhitelist ? StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.whitelist") : StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.blacklist");
+            String text2 = this.tileInputter.isPutWhitelist ? StringUtil.localize("info."+ModUtil.MOD_ID+".gui.whitelist") : StringUtil.localize("info."+ModUtil.MOD_ID+".gui.blacklist");
             if(x >= guiLeft+157 && y >= guiTop+16 && x <= guiLeft+172 && y <= guiTop+31){
                 ArrayList list = new ArrayList();
                 list.add(TextFormatting.BOLD+text2);
@@ -144,16 +144,16 @@ public class GuiInputter extends GuiContainer{
         int newTopOffset = this.guiTop+(this.isAdvanced ? OFFSET_ADVANCED : 0);
         //Info Mode on!
         if(x >= guiLeft+11 && y >= newTopOffset+65 && x <= guiLeft+11+31 && y <= newTopOffset+65+12){
-            this.drawHoveringText(this.fontRendererObj.listFormattedStringToWidth(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID_LOWER+".inputter.info.1").replace("<p>", StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.pull")), 200), x, y);
+            this.drawHoveringText(this.fontRendererObj.listFormattedStringToWidth(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID+".inputter.info.1").replace("<p>", StringUtil.localize("info."+ModUtil.MOD_ID+".gui.pull")), 200), x, y);
         }
         if(x >= guiLeft+96 && y >= newTopOffset+65 && x <= guiLeft+96+31 && y <= newTopOffset+65+12){
-            this.drawHoveringText(this.fontRendererObj.listFormattedStringToWidth(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID_LOWER+".inputter.info.1").replace("<p>", StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.put")), 200), x, y);
+            this.drawHoveringText(this.fontRendererObj.listFormattedStringToWidth(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID+".inputter.info.1").replace("<p>", StringUtil.localize("info."+ModUtil.MOD_ID+".gui.put")), 200), x, y);
         }
         if(x >= guiLeft+48 && y >= newTopOffset+65 && x <= guiLeft+48+31 && y <= newTopOffset+65+12){
-            this.drawHoveringText(this.fontRendererObj.listFormattedStringToWidth(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID_LOWER+".inputter.info.2").replace("<p>", StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.pull")), 200), x, y);
+            this.drawHoveringText(this.fontRendererObj.listFormattedStringToWidth(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID+".inputter.info.2").replace("<p>", StringUtil.localize("info."+ModUtil.MOD_ID+".gui.pull")), 200), x, y);
         }
         if(x >= guiLeft+133 && y >= newTopOffset+65 && x <= guiLeft+133+31 && y <= newTopOffset+65+12){
-            this.drawHoveringText(this.fontRendererObj.listFormattedStringToWidth(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID_LOWER+".inputter.info.2").replace("<p>", StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.put")), 200), x, y);
+            this.drawHoveringText(this.fontRendererObj.listFormattedStringToWidth(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID+".inputter.info.2").replace("<p>", StringUtil.localize("info."+ModUtil.MOD_ID+".gui.put")), 200), x, y);
         }
     }
 
@@ -172,8 +172,8 @@ public class GuiInputter extends GuiContainer{
         this.mc.getTextureManager().bindTexture(this.isAdvanced ? resLocAdvanced : resLoc);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 93+(isAdvanced ? OFFSET_ADVANCED : 0));
 
-        this.fontRendererObj.drawString(StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.pull"), guiLeft+22+3, guiTop+32+(isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_GRAY_TEXT);
-        this.fontRendererObj.drawString(StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.put"), guiLeft+107+3, guiTop+32+(isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_GRAY_TEXT);
+        this.fontRendererObj.drawString(StringUtil.localize("info."+ModUtil.MOD_ID+".gui.pull"), guiLeft+22+3, guiTop+32+(isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_GRAY_TEXT);
+        this.fontRendererObj.drawString(StringUtil.localize("info."+ModUtil.MOD_ID+".gui.put"), guiLeft+107+3, guiTop+32+(isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_GRAY_TEXT);
 
         this.fontRendererObj.drawString(sideString[tileInputter.sideToPull+1], guiLeft+24+1, guiTop+45+3+(isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_GRAY_TEXT);
         this.fontRendererObj.drawString(sideString[tileInputter.sideToPut+1], guiLeft+109+1, guiTop+45+3+(isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_GRAY_TEXT);

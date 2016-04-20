@@ -51,7 +51,7 @@ public class BlockWallAA extends BlockBase{
 
         this.setHardness(1.5F);
         this.setResistance(10F);
-        this.setStepSound(base.getStepSound());
+        this.setSoundType(base.getSoundType());
 
         this.setDefaultState(this.blockState.getBaseState().withProperty(BlockWall.UP, false).withProperty(BlockWall.NORTH, false).withProperty(BlockWall.EAST, false).withProperty(BlockWall.SOUTH, false).withProperty(BlockWall.WEST, false));
     }
@@ -129,7 +129,7 @@ public class BlockWallAA extends BlockBase{
     public boolean canConnectTo(IBlockAccess worldIn, BlockPos pos){
         Block block = PosUtil.getBlock(pos, worldIn);
         IBlockState state = worldIn.getBlockState(pos);
-        return block != Blocks.barrier && (!(block != this && !(block instanceof BlockFenceGate)) || ((block.getMaterial(state).isOpaque() && block.isFullCube(state)) && block.getMaterial(state) != Material.gourd));
+        return block != Blocks.BARRIER && (!(block != this && !(block instanceof BlockFenceGate)) || ((block.getMaterial(state).isOpaque() && block.isFullCube(state)) && block.getMaterial(state) != Material.GOURD));
     }
 
     @Override

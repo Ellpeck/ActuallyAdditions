@@ -47,13 +47,13 @@ public class BlockWildPlant extends BlockBushBase{
 
     public BlockWildPlant(String name){
         super(name);
-        this.setStepSound(SoundType.PLANT);
+        this.setSoundType(SoundType.PLANT);
     }
 
     @Override
     public boolean canBlockStay(World world, BlockPos pos, IBlockState state){
         BlockPos offset = PosUtil.offset(pos, 0, -1, 0);
-        return PosUtil.getMetadata(state) == TheWildPlants.RICE.ordinal() ? PosUtil.getMaterial(offset, world) == Material.water : PosUtil.getBlock(offset, world).canSustainPlant(world.getBlockState(offset), world, offset, EnumFacing.UP, this);
+        return PosUtil.getMetadata(state) == TheWildPlants.RICE.ordinal() ? PosUtil.getMaterial(offset, world) == Material.WATER : PosUtil.getBlock(offset, world).canSustainPlant(world.getBlockState(offset), world, offset, EnumFacing.UP, this);
     }
 
     @Override
@@ -83,8 +83,8 @@ public class BlockWildPlant extends BlockBushBase{
     }
 
     @Override
-    public Class<? extends ItemBlockBase> getItemBlock(){
-        return TheItemBlock.class;
+    protected ItemBlockBase getItemBlock(){
+        return new TheItemBlock(this);
     }
 
     @Override
@@ -97,8 +97,8 @@ public class BlockWildPlant extends BlockBushBase{
         ResourceLocation[] resLocs = new ResourceLocation[allWildPlants.length];
         for(int i = 0; i < allWildPlants.length; i++){
             String name = this.getBaseName()+allWildPlants[i].name;
-            resLocs[i] = new ResourceLocation(ModUtil.MOD_ID_LOWER, name);
-            ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), new ResourceLocation(ModUtil.MOD_ID_LOWER, name));
+            resLocs[i] = new ResourceLocation(ModUtil.MOD_ID, name);
+            ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), new ResourceLocation(ModUtil.MOD_ID, name));
         }
         ActuallyAdditions.proxy.addRenderVariant(Item.getItemFromBlock(this), resLocs);
     }

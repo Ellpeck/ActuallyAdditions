@@ -31,11 +31,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class BlockLavaFactoryController extends BlockContainerBase implements IHudDisplay{
 
     public BlockLavaFactoryController(String name){
-        super(Material.rock, name);
+        super(Material.ROCK, name);
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(4.5F);
         this.setResistance(20.0F);
-        this.setStepSound(SoundType.STONE);
+        this.setSoundType(SoundType.STONE);
     }
 
     @Override
@@ -55,10 +55,10 @@ public class BlockLavaFactoryController extends BlockContainerBase implements IH
         if(factory != null){
             int state = factory.isMultiblock();
             if(state == TileEntityLavaFactoryController.NOT_MULTI){
-                StringUtil.drawSplitString(minecraft.fontRendererObj, StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".factory.notPart.desc"), resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2+5, 200, StringUtil.DECIMAL_COLOR_WHITE, true);
+                StringUtil.drawSplitString(minecraft.fontRendererObj, StringUtil.localize("tooltip."+ModUtil.MOD_ID+".factory.notPart.desc"), resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2+5, 200, StringUtil.DECIMAL_COLOR_WHITE, true);
             }
             else if(state == TileEntityLavaFactoryController.HAS_AIR || state == TileEntityLavaFactoryController.HAS_LAVA){
-                StringUtil.drawSplitString(minecraft.fontRendererObj, StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".factory.works.desc"), resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2+5, 200, StringUtil.DECIMAL_COLOR_WHITE, true);
+                StringUtil.drawSplitString(minecraft.fontRendererObj, StringUtil.localize("tooltip."+ModUtil.MOD_ID+".factory.works.desc"), resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2+5, 200, StringUtil.DECIMAL_COLOR_WHITE, true);
             }
         }
     }

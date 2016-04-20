@@ -56,7 +56,7 @@ public class TileEntityLavaFactoryController extends TileEntityBase implements I
                 this.currentWorkTime++;
                 if(this.currentWorkTime >= 200){
                     this.currentWorkTime = 0;
-                    PosUtil.setBlock(PosUtil.offset(this.pos, 0, 1, 0), worldObj, Blocks.lava, 0, 2);
+                    PosUtil.setBlock(PosUtil.offset(this.pos, 0, 1, 0), worldObj, Blocks.LAVA, 0, 2);
                     this.storage.extractEnergy(ENERGY_USE, false);
                 }
             }
@@ -81,7 +81,7 @@ public class TileEntityLavaFactoryController extends TileEntityBase implements I
 
         if(WorldUtil.hasBlocksInPlacesGiven(positions, InitBlocks.blockMisc, TheMiscBlocks.LAVA_FACTORY_CASE.ordinal(), worldObj)){
             BlockPos pos = PosUtil.offset(thisPos, 0, 1, 0);
-            if(PosUtil.getBlock(pos, worldObj) == Blocks.lava || PosUtil.getBlock(pos, worldObj) == Blocks.flowing_lava){
+            if(PosUtil.getBlock(pos, worldObj) == Blocks.LAVA || PosUtil.getBlock(pos, worldObj) == Blocks.FLOWING_LAVA){
                 return HAS_LAVA;
             }
             if(PosUtil.getBlock(pos, worldObj) == null || worldObj.isAirBlock(pos)){

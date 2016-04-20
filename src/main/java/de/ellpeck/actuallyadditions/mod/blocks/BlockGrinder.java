@@ -41,12 +41,12 @@ public class BlockGrinder extends BlockContainerBase{
     private final boolean isDouble;
 
     public BlockGrinder(boolean isDouble, String name){
-        super(Material.rock, name);
+        super(Material.ROCK, name);
         this.isDouble = isDouble;
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(1.5F);
         this.setResistance(10.0F);
-        this.setStepSound(SoundType.STONE);
+        this.setSoundType(SoundType.STONE);
         this.setTickRandomly(true);
     }
 

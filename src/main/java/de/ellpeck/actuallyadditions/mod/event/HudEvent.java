@@ -33,7 +33,7 @@ public class HudEvent{
 
     @SubscribeEvent
     public void onGameOverlay(RenderGameOverlayEvent.Post event){
-        if(event.type == RenderGameOverlayEvent.ElementType.ALL && Minecraft.getMinecraft().currentScreen == null){
+        if(event.getType() == RenderGameOverlayEvent.ElementType.ALL && Minecraft.getMinecraft().currentScreen == null){
             Minecraft minecraft = Minecraft.getMinecraft();
             Profiler profiler = minecraft.mcProfiler;
             EntityPlayer player = minecraft.thePlayer;
@@ -46,7 +46,7 @@ public class HudEvent{
             if(stack != null){
                 if(stack.getItem() instanceof IHudDisplay){
                     profiler.startSection("ItemHudDisplay");
-                    ((IHudDisplay)stack.getItem()).displayHud(minecraft, player, stack, posHit, profiler, event.resolution);
+                    ((IHudDisplay)stack.getItem()).displayHud(minecraft, player, stack, posHit, profiler, event.getResolution());
                     profiler.endSection();
                 }
             }
@@ -57,7 +57,7 @@ public class HudEvent{
 
                 if(blockHit instanceof IHudDisplay){
                     profiler.startSection("BlockHudDisplay");
-                    ((IHudDisplay)blockHit).displayHud(minecraft, player, stack, posHit, profiler, event.resolution);
+                    ((IHudDisplay)blockHit).displayHud(minecraft, player, stack, posHit, profiler, event.getResolution());
                     profiler.endSection();
                 }
 
@@ -65,11 +65,11 @@ public class HudEvent{
                     profiler.startSection("RedstoneToggleHudDisplay");
 
                     String strg = "Redstone Mode: "+TextFormatting.DARK_RED+(((IRedstoneToggle)tileHit).isPulseMode() ? "Pulse" : "Deactivation")+TextFormatting.RESET;
-                    font.drawStringWithShadow(strg, event.resolution.getScaledWidth()/2+5, event.resolution.getScaledHeight()/2+5, StringUtil.DECIMAL_COLOR_WHITE);
+                    font.drawStringWithShadow(strg, event.getResolution().getScaledWidth()/2+5, event.getResolution().getScaledHeight()/2+5, StringUtil.DECIMAL_COLOR_WHITE);
 
                     if(stack != null && Block.getBlockFromItem(stack.getItem()) instanceof BlockRedstoneTorch){
                         String expl = TextFormatting.GREEN+"Right-Click to toggle!";
-                        font.drawStringWithShadow(expl, event.resolution.getScaledWidth()/2+5, event.resolution.getScaledHeight()/2+15, StringUtil.DECIMAL_COLOR_WHITE);
+                        font.drawStringWithShadow(expl, event.getResolution().getScaledWidth()/2+5, event.getResolution().getScaledHeight()/2+15, StringUtil.DECIMAL_COLOR_WHITE);
                     }
 
                     profiler.endSection();
@@ -78,7 +78,7 @@ public class HudEvent{
                 if(tileHit instanceof IEnergyDisplay){
                     profiler.startSection("EnergyDisplay");
                     String strg = ((IEnergyDisplay)tileHit).getEnergy()+"/"+((IEnergyDisplay)tileHit).getMaxEnergy()+" RF";
-                    font.drawStringWithShadow(TextFormatting.GOLD+strg, event.resolution.getScaledWidth()/2+5, event.resolution.getScaledHeight()/2-10, StringUtil.DECIMAL_COLOR_WHITE);
+                    font.drawStringWithShadow(TextFormatting.GOLD+strg, event.getResolution().getScaledWidth()/2+5, event.getResolution().getScaledHeight()/2-10, StringUtil.DECIMAL_COLOR_WHITE);
                     profiler.endSection();
                 }
             }

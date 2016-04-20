@@ -26,8 +26,6 @@ import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import de.ellpeck.actuallyadditions.mod.util.playerdata.PersistentClientData;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -165,7 +163,7 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
         if(AND_HIS_NAME_IS.length > this.hisNameIsAt && AND_HIS_NAME_IS[this.hisNameIsAt] == key){
             if(this.hisNameIsAt+1 >= AND_HIS_NAME_IS.length){
                 //TODO Fix sound
-                //Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.create(new ResourceLocation(ModUtil.MOD_ID_LOWER, "duhDuhDuhDuuuh")));
+                //Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.create(new ResourceLocation(ModUtil.MOD_ID, "duhDuhDuhDuuuh")));
                 ModUtil.LOGGER.info("AND HIS NAME IS JOHN CENA DUH DUH DUH DUUUH");
                 this.hisNameIsAt = 0;
             }
@@ -286,12 +284,12 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
 
         ArrayList updateHover = new ArrayList();
         if(UpdateChecker.checkFailed){
-            updateHover.add(ITextComponent.Serializer.jsonToComponent(StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".update.failed")).getFormattedText());
+            updateHover.add(ITextComponent.Serializer.jsonToComponent(StringUtil.localize("info."+ModUtil.MOD_ID+".update.failed")).getFormattedText());
         }
         else if(UpdateChecker.needsUpdateNotify){
-            updateHover.add(ITextComponent.Serializer.jsonToComponent(StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".update.generic")).getFormattedText());
-            updateHover.add(ITextComponent.Serializer.jsonToComponent(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID_LOWER+".update.versionCompare", ModUtil.VERSION, UpdateChecker.updateVersionString)).getFormattedText());
-            updateHover.add(StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".update.buttonOptions"));
+            updateHover.add(ITextComponent.Serializer.jsonToComponent(StringUtil.localize("info."+ModUtil.MOD_ID+".update.generic")).getFormattedText());
+            updateHover.add(ITextComponent.Serializer.jsonToComponent(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID+".update.versionCompare", ModUtil.VERSION, UpdateChecker.updateVersionString)).getFormattedText());
+            updateHover.add(StringUtil.localize("info."+ModUtil.MOD_ID+".update.buttonOptions"));
         }
         this.buttonUpdate = new TexturedButton(4, this.guiLeft-11, this.guiTop-11, 245, 0, 11, 11, updateHover);
         this.buttonUpdate.visible = UpdateChecker.needsUpdateNotify;

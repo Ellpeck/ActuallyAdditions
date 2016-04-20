@@ -50,10 +50,7 @@ public class WorldUtil{
     }
 
     public static void breakBlockAtSide(EnumFacing side, World world, BlockPos pos, int offset){
-        BlockPos c = getCoordsFromSide(side, pos, offset);
-        if(c != null){
-            world.setBlockToAir(c);
-        }
+        world.setBlockToAir(getCoordsFromSide(side, pos, offset));
     }
 
     public static BlockPos getCoordsFromSide(EnumFacing side, BlockPos pos, int offset){
@@ -132,8 +129,8 @@ public class WorldUtil{
             }
 
             //Redstone
-            else if(replaceable && stack.getItem() == Items.redstone){
-                PosUtil.setBlock(offsetPos, world, Blocks.redstone_wire, 0, 2);
+            else if(replaceable && stack.getItem() == Items.REDSTONE){
+                PosUtil.setBlock(offsetPos, world, Blocks.REDSTONE_WIRE, 0, 2);
                 stack.stackSize--;
             }
 
@@ -391,9 +388,9 @@ public class WorldUtil{
                     block.harvestBlock(world, player, pos, state, tile, stack);
                 }
                 //Only drop XP when no Silk Touch is applied
-                if(EnchantmentHelper.getEnchantmentLevel(Enchantments.silkTouch, stack) <= 0){
+                if(EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, stack) <= 0){
                     //Drop XP depending on Fortune Level
-                    block.dropXpOnBlockBreak(world, pos, block.getExpDrop(state, world, pos, EnchantmentHelper.getEnchantmentLevel(Enchantments.fortune, stack)));
+                    block.dropXpOnBlockBreak(world, pos, block.getExpDrop(state, world, pos, EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, stack)));
                 }
             }
         }

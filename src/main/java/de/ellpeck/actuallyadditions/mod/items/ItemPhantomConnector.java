@@ -94,7 +94,7 @@ public class ItemPhantomConnector extends ItemBase{
                             ((TileEntityBase)tile).sendUpdate();
                         }
                         clearStorage(stack);
-                        player.addChatComponentMessage(new TextComponentString(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.connected.desc")));
+                        player.addChatComponentMessage(new TextComponentString(StringUtil.localize("tooltip."+ModUtil.MOD_ID+".phantom.connected.desc")));
                         return EnumActionResult.SUCCESS;
                     }
                     return EnumActionResult.FAIL;
@@ -102,7 +102,7 @@ public class ItemPhantomConnector extends ItemBase{
             }
             //Storing Connections
             storeConnection(stack, pos.getX(), pos.getY(), pos.getZ(), world);
-            player.addChatComponentMessage(new TextComponentString(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.stored.desc")));
+            player.addChatComponentMessage(new TextComponentString(StringUtil.localize("tooltip."+ModUtil.MOD_ID+".phantom.stored.desc")));
         }
         return EnumActionResult.SUCCESS;
     }
@@ -115,7 +115,7 @@ public class ItemPhantomConnector extends ItemBase{
             if(tile instanceof IPhantomTile){
                 ((IPhantomTile)tile).setBoundPosition(null);
             }
-            player.addChatComponentMessage(new TextComponentString(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".phantom.unbound.desc")));
+            player.addChatComponentMessage(new TextComponentString(StringUtil.localize("tooltip."+ModUtil.MOD_ID+".phantom.unbound.desc")));
             return false;
         }
     }
@@ -138,11 +138,11 @@ public class ItemPhantomConnector extends ItemBase{
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld){
         BlockPos coords = getStoredPosition(stack);
         if(coords != null){
-            list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".boundTo.desc")+":");
+            list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID+".boundTo.desc")+":");
             list.add("X: "+coords.getX());
             list.add("Y: "+coords.getY());
             list.add("Z: "+coords.getZ());
-            list.add(TextFormatting.ITALIC+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".clearStorage.desc"));
+            list.add(TextFormatting.ITALIC+StringUtil.localize("tooltip."+ModUtil.MOD_ID+".clearStorage.desc"));
         }
     }
 

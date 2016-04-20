@@ -33,68 +33,68 @@ public class TooltipEvent{
     @SubscribeEvent
     public void onTooltipEvent(ItemTooltipEvent event){
         //Advanced Item Info
-        if(event.itemStack.getItem() != null){
+        if(event.getItemStack().getItem() != null){
             if(ConfigBoolValues.CTRL_EXTRA_INFO.isEnabled()){
                 if(GuiScreen.isCtrlKeyDown()){
-                    event.toolTip.add(TextFormatting.DARK_GRAY+""+TextFormatting.ITALIC+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".extraInfo.desc")+":");
+                    event.getToolTip().add(TextFormatting.DARK_GRAY+""+TextFormatting.ITALIC+StringUtil.localize("tooltip."+ModUtil.MOD_ID+".extraInfo.desc")+":");
 
                     //OreDict Names
-                    int[] oreIDs = OreDictionary.getOreIDs(event.itemStack);
-                    event.toolTip.add(ADVANCED_INFO_HEADER_PRE+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".oredictName.desc")+":");
+                    int[] oreIDs = OreDictionary.getOreIDs(event.getItemStack());
+                    event.getToolTip().add(ADVANCED_INFO_HEADER_PRE+StringUtil.localize("tooltip."+ModUtil.MOD_ID+".oredictName.desc")+":");
                     if(oreIDs.length > 0){
                         for(int oreID : oreIDs){
-                            event.toolTip.add(ADVANCED_INFO_TEXT_PRE+OreDictionary.getOreName(oreID));
+                            event.getToolTip().add(ADVANCED_INFO_TEXT_PRE+OreDictionary.getOreName(oreID));
                         }
                     }
                     else{
-                        event.toolTip.add(ADVANCED_INFO_TEXT_PRE+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".noOredictNameAvail.desc"));
+                        event.getToolTip().add(ADVANCED_INFO_TEXT_PRE+StringUtil.localize("tooltip."+ModUtil.MOD_ID+".noOredictNameAvail.desc"));
                     }
 
                     //Code Name
-                    event.toolTip.add(ADVANCED_INFO_HEADER_PRE+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".codeName.desc")+":");
-                    event.toolTip.add(ADVANCED_INFO_TEXT_PRE+Item.itemRegistry.getNameForObject(event.itemStack.getItem()));
+                    event.getToolTip().add(ADVANCED_INFO_HEADER_PRE+StringUtil.localize("tooltip."+ModUtil.MOD_ID+".codeName.desc")+":");
+                    event.getToolTip().add(ADVANCED_INFO_TEXT_PRE+Item.REGISTRY.getNameForObject(event.getItemStack().getItem()));
 
                     //Base Item's Unlocalized Name
-                    String baseName = event.itemStack.getItem().getUnlocalizedName();
+                    String baseName = event.getItemStack().getItem().getUnlocalizedName();
                     if(baseName != null){
-                        event.toolTip.add(ADVANCED_INFO_HEADER_PRE+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".baseUnlocName.desc")+":");
-                        event.toolTip.add(ADVANCED_INFO_TEXT_PRE+baseName);
+                        event.getToolTip().add(ADVANCED_INFO_HEADER_PRE+StringUtil.localize("tooltip."+ModUtil.MOD_ID+".baseUnlocName.desc")+":");
+                        event.getToolTip().add(ADVANCED_INFO_TEXT_PRE+baseName);
                     }
 
                     //Metadata
-                    int meta = event.itemStack.getItemDamage();
-                    event.toolTip.add(ADVANCED_INFO_HEADER_PRE+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".meta.desc")+":");
-                    event.toolTip.add(ADVANCED_INFO_TEXT_PRE+meta);
+                    int meta = event.getItemStack().getItemDamage();
+                    event.getToolTip().add(ADVANCED_INFO_HEADER_PRE+StringUtil.localize("tooltip."+ModUtil.MOD_ID+".meta.desc")+":");
+                    event.getToolTip().add(ADVANCED_INFO_TEXT_PRE+meta);
 
                     //Unlocalized Name
-                    String metaName = event.itemStack.getItem().getUnlocalizedName(event.itemStack);
+                    String metaName = event.getItemStack().getItem().getUnlocalizedName(event.getItemStack());
                     if(metaName != null && baseName != null && !metaName.equals(baseName)){
-                        event.toolTip.add(ADVANCED_INFO_HEADER_PRE+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".unlocName.desc")+":");
-                        event.toolTip.add(ADVANCED_INFO_TEXT_PRE+metaName);
+                        event.getToolTip().add(ADVANCED_INFO_HEADER_PRE+StringUtil.localize("tooltip."+ModUtil.MOD_ID+".unlocName.desc")+":");
+                        event.getToolTip().add(ADVANCED_INFO_TEXT_PRE+metaName);
                     }
 
                     //NBT
-                    NBTTagCompound compound = event.itemStack.getTagCompound();
+                    NBTTagCompound compound = event.getItemStack().getTagCompound();
                     if(compound != null && !compound.hasNoTags()){
-                        event.toolTip.add(ADVANCED_INFO_HEADER_PRE+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".nbt.desc")+":");
+                        event.getToolTip().add(ADVANCED_INFO_HEADER_PRE+StringUtil.localize("tooltip."+ModUtil.MOD_ID+".nbt.desc")+":");
                         if(GuiScreen.isShiftKeyDown()){
                             List<String> strgList = Minecraft.getMinecraft().fontRendererObj.listFormattedStringToWidth(compound.toString(), 200);
                             for(String strg : strgList){
-                                event.toolTip.add(ADVANCED_INFO_TEXT_PRE+strg);
+                                event.getToolTip().add(ADVANCED_INFO_TEXT_PRE+strg);
                             }
                         }
                         else{
-                            event.toolTip.add(ADVANCED_INFO_TEXT_PRE+TextFormatting.ITALIC+"["+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".pressShift.desc")+"]");
+                            event.getToolTip().add(ADVANCED_INFO_TEXT_PRE+TextFormatting.ITALIC+"["+StringUtil.localize("tooltip."+ModUtil.MOD_ID+".pressShift.desc")+"]");
                         }
                     }
 
                     //Disabling Info
-                    event.toolTip.addAll(Minecraft.getMinecraft().fontRendererObj.listFormattedStringToWidth(TextFormatting.ITALIC+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".disablingInfo.desc"), 200));
+                    event.getToolTip().addAll(Minecraft.getMinecraft().fontRendererObj.listFormattedStringToWidth(TextFormatting.ITALIC+StringUtil.localize("tooltip."+ModUtil.MOD_ID+".disablingInfo.desc"), 200));
 
                 }
                 else{
                     if(ConfigBoolValues.CTRL_INFO_FOR_EXTRA_INFO.isEnabled()){
-                        event.toolTip.add(TextFormatting.DARK_GRAY+""+TextFormatting .ITALIC+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".ctrlForMoreInfo.desc"));
+                        event.getToolTip().add(TextFormatting.DARK_GRAY+""+TextFormatting .ITALIC+StringUtil.localize("tooltip."+ModUtil.MOD_ID+".ctrlForMoreInfo.desc"));
                     }
                 }
             }

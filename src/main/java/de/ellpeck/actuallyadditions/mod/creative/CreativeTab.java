@@ -29,7 +29,7 @@ public class CreativeTab extends CreativeTabs{
     private List list;
 
     public CreativeTab(){
-        super(ModUtil.MOD_ID_LOWER);
+        super(ModUtil.MOD_ID);
     }
 
     @Override

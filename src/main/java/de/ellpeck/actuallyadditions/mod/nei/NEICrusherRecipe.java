@@ -60,7 +60,7 @@ public class NEICrusherRecipe/* extends TemplateRecipeHandler implements INEIRec
 
     @Override
     public String getGuiTexture(){
-        return ModUtil.MOD_ID_LOWER+":textures/gui/guiGrinder.png";
+        return ModUtil.MOD_ID+":textures/gui/guiGrinder.png";
     }
 
     @Override
@@ -124,7 +124,7 @@ public class NEICrusherRecipe/* extends TemplateRecipeHandler implements INEIRec
 
         @Override
         public String getGuiTexture(){
-            return ModUtil.MOD_ID_LOWER+":textures/gui/guiGrinderDouble.png";
+            return ModUtil.MOD_ID+":textures/gui/guiGrinderDouble.png";
         }
 
         @Override

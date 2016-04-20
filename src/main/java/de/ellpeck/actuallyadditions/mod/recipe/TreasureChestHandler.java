@@ -19,38 +19,38 @@ import net.minecraft.item.ItemStack;
 public class TreasureChestHandler{
 
     public static void init(){
-        ActuallyAdditionsAPI.addTreasureChestLoot(new ItemStack(Items.diamond), 5, 1, 2);
-        ActuallyAdditionsAPI.addTreasureChestLoot(new ItemStack(Items.iron_ingot), 30, 1, 5);
-        ActuallyAdditionsAPI.addTreasureChestLoot(new ItemStack(Items.gold_nugget), 60, 1, 8);
-        ActuallyAdditionsAPI.addTreasureChestLoot(new ItemStack(Items.gold_ingot), 35, 1, 3);
-        ActuallyAdditionsAPI.addTreasureChestLoot(new ItemStack(Items.ender_pearl), 10, 1, 2);
-        ActuallyAdditionsAPI.addTreasureChestLoot(new ItemStack(Items.emerald), 3, 1, 1);
-        ActuallyAdditionsAPI.addTreasureChestLoot(new ItemStack(Items.experience_bottle), 5, 3, 6);
+        ActuallyAdditionsAPI.addTreasureChestLoot(new ItemStack(Items.DIAMOND), 5, 1, 2);
+        ActuallyAdditionsAPI.addTreasureChestLoot(new ItemStack(Items.IRON_INGOT), 30, 1, 5);
+        ActuallyAdditionsAPI.addTreasureChestLoot(new ItemStack(Items.GOLD_NUGGET), 60, 1, 8);
+        ActuallyAdditionsAPI.addTreasureChestLoot(new ItemStack(Items.GOLD_INGOT), 35, 1, 3);
+        ActuallyAdditionsAPI.addTreasureChestLoot(new ItemStack(Items.ENDER_PEARL), 10, 1, 2);
+        ActuallyAdditionsAPI.addTreasureChestLoot(new ItemStack(Items.EMERALD), 3, 1, 1);
+        ActuallyAdditionsAPI.addTreasureChestLoot(new ItemStack(Items.EXPERIENCE_BOTTLE), 5, 3, 6);
         ActuallyAdditionsAPI.addTreasureChestLoot(new ItemStack(InitItems.itemSolidifiedExperience), 15, 3, 6);
-        ActuallyAdditionsAPI.addTreasureChestLoot(new ItemStack(Items.record_11), 1, 1, 1);
-        ActuallyAdditionsAPI.addTreasureChestLoot(new ItemStack(Items.record_13), 1, 1, 1);
-        ActuallyAdditionsAPI.addTreasureChestLoot(new ItemStack(Items.record_blocks), 1, 1, 1);
-        ActuallyAdditionsAPI.addTreasureChestLoot(new ItemStack(Items.record_cat), 1, 1, 1);
-        ActuallyAdditionsAPI.addTreasureChestLoot(new ItemStack(Items.record_chirp), 1, 1, 1);
-        ActuallyAdditionsAPI.addTreasureChestLoot(new ItemStack(Items.record_far), 1, 1, 1);
-        ActuallyAdditionsAPI.addTreasureChestLoot(new ItemStack(Items.record_mall), 1, 1, 1);
-        ActuallyAdditionsAPI.addTreasureChestLoot(new ItemStack(Items.record_mellohi), 1, 1, 1);
-        ActuallyAdditionsAPI.addTreasureChestLoot(new ItemStack(Items.record_stal), 1, 1, 1);
-        ActuallyAdditionsAPI.addTreasureChestLoot(new ItemStack(Items.record_strad), 1, 1, 1);
-        ActuallyAdditionsAPI.addTreasureChestLoot(new ItemStack(Items.record_ward), 1, 1, 1);
-        ActuallyAdditionsAPI.addTreasureChestLoot(new ItemStack(Items.record_wait), 1, 1, 1);
-        ActuallyAdditionsAPI.addTreasureChestLoot(new ItemStack(Items.saddle), 5, 1, 1);
-        ActuallyAdditionsAPI.addTreasureChestLoot(new ItemStack(Items.name_tag), 20, 1, 2);
+        ActuallyAdditionsAPI.addTreasureChestLoot(new ItemStack(Items.RECORD_11), 1, 1, 1);
+        ActuallyAdditionsAPI.addTreasureChestLoot(new ItemStack(Items.RECORD_13), 1, 1, 1);
+        ActuallyAdditionsAPI.addTreasureChestLoot(new ItemStack(Items.RECORD_BLOCKS), 1, 1, 1);
+        ActuallyAdditionsAPI.addTreasureChestLoot(new ItemStack(Items.RECORD_CAT), 1, 1, 1);
+        ActuallyAdditionsAPI.addTreasureChestLoot(new ItemStack(Items.RECORD_CHIRP), 1, 1, 1);
+        ActuallyAdditionsAPI.addTreasureChestLoot(new ItemStack(Items.RECORD_FAR), 1, 1, 1);
+        ActuallyAdditionsAPI.addTreasureChestLoot(new ItemStack(Items.RECORD_MALL), 1, 1, 1);
+        ActuallyAdditionsAPI.addTreasureChestLoot(new ItemStack(Items.RECORD_MELLOHI), 1, 1, 1);
+        ActuallyAdditionsAPI.addTreasureChestLoot(new ItemStack(Items.RECORD_STAL), 1, 1, 1);
+        ActuallyAdditionsAPI.addTreasureChestLoot(new ItemStack(Items.RECORD_STRAD), 1, 1, 1);
+        ActuallyAdditionsAPI.addTreasureChestLoot(new ItemStack(Items.RECORD_WARD), 1, 1, 1);
+        ActuallyAdditionsAPI.addTreasureChestLoot(new ItemStack(Items.RECORD_WAIT), 1, 1, 1);
+        ActuallyAdditionsAPI.addTreasureChestLoot(new ItemStack(Items.SADDLE), 5, 1, 1);
+        ActuallyAdditionsAPI.addTreasureChestLoot(new ItemStack(Items.NAME_TAG), 20, 1, 2);
         ActuallyAdditionsAPI.addTreasureChestLoot(new ItemStack(InitItems.itemJams, 1, TheJams.CU_BA_RA.ordinal()), 10, 1, 2);
         ActuallyAdditionsAPI.addTreasureChestLoot(new ItemStack(InitItems.itemJams, 1, TheJams.GRA_KI_BA.ordinal()), 10, 1, 2);
         ActuallyAdditionsAPI.addTreasureChestLoot(new ItemStack(InitItems.itemJams, 1, TheJams.PL_AP_LE.ordinal()), 10, 1, 2);
         ActuallyAdditionsAPI.addTreasureChestLoot(new ItemStack(InitItems.itemJams, 1, TheJams.CH_AP_CI.ordinal()), 10, 1, 2);
         ActuallyAdditionsAPI.addTreasureChestLoot(new ItemStack(InitItems.itemJams, 1, TheJams.HO_ME_KI.ordinal()), 10, 1, 2);
         ActuallyAdditionsAPI.addTreasureChestLoot(new ItemStack(InitItems.itemJams, 1, TheJams.PI_CO.ordinal()), 10, 1, 2);
-        ActuallyAdditionsAPI.addTreasureChestLoot(new ItemStack(Items.fish), 80, 1, 3);
-        ActuallyAdditionsAPI.addTreasureChestLoot(new ItemStack(Items.fish, 1, 1), 60, 1, 3);
-        ActuallyAdditionsAPI.addTreasureChestLoot(new ItemStack(Items.fish, 1, 2), 10, 1, 1);
-        ActuallyAdditionsAPI.addTreasureChestLoot(new ItemStack(Items.fish, 1, 3), 40, 1, 2);
+        ActuallyAdditionsAPI.addTreasureChestLoot(new ItemStack(Items.FISH), 80, 1, 3);
+        ActuallyAdditionsAPI.addTreasureChestLoot(new ItemStack(Items.FISH, 1, 1), 60, 1, 3);
+        ActuallyAdditionsAPI.addTreasureChestLoot(new ItemStack(Items.FISH, 1, 2), 10, 1, 1);
+        ActuallyAdditionsAPI.addTreasureChestLoot(new ItemStack(Items.FISH, 1, 3), 40, 1, 2);
     }
 
 }

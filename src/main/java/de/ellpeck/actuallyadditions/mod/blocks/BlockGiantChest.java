@@ -37,11 +37,11 @@ import java.util.ArrayList;
 public class BlockGiantChest extends BlockContainerBase{
 
     public BlockGiantChest(String name){
-        super(Material.wood, name);
+        super(Material.WOOD, name);
         this.setHarvestLevel("axe", 0);
         this.setHardness(0.5F);
         this.setResistance(15.0F);
-        this.setStepSound(SoundType.WOOD);
+        this.setSoundType(SoundType.WOOD);
     }
 
     @Override

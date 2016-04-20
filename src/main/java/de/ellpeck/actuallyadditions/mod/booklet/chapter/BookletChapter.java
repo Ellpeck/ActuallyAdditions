@@ -57,7 +57,7 @@ public class BookletChapter implements IBookletChapter{
 
     @Override
     public String getLocalizedName(){
-        return StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".chapter."+this.unlocalizedName+".name");
+        return StringUtil.localize("booklet."+ModUtil.MOD_ID+".chapter."+this.unlocalizedName+".name");
     }
 
     @Override

@@ -30,11 +30,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class BlockGreenhouseGlass extends BlockContainerBase{
 
     public BlockGreenhouseGlass(String name){
-        super(Material.rock, name);
+        super(Material.ROCK, name);
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(0.5F);
         this.setResistance(10.0F);
-        this.setStepSound(SoundType.STONE);
+        this.setSoundType(SoundType.STONE);
     }
 
     @Override

@@ -17,6 +17,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
@@ -32,7 +33,7 @@ import java.util.Set;
 
 public class ItemShovelAA extends ItemToolAA{
 
-    private static final Set<Block> EFFECTIVE_ON = Sets.newHashSet(Blocks.clay, Blocks.dirt, Blocks.farmland, Blocks.grass, Blocks.gravel, Blocks.mycelium, Blocks.sand, Blocks.snow, Blocks.snow_layer, Blocks.soul_sand, Blocks.grass_path);
+    private static final Set<Block> EFFECTIVE_ON = Sets.newHashSet(Blocks.CLAY, Blocks.DIRT, Blocks.FARMLAND, Blocks.GRASS, Blocks.GRAVEL, Blocks.MYCELIUM, Blocks.SAND, Blocks.SNOW, Blocks.SNOW_LAYER, Blocks.SOUL_SAND, Blocks.GRASS_PATH);
 
     public ItemShovelAA(Item.ToolMaterial material, String repairItem, String unlocalizedName, EnumRarity rarity){
         super(1.5F, -3.0F, material, repairItem, unlocalizedName, rarity, EFFECTIVE_ON);
@@ -42,38 +43,12 @@ public class ItemShovelAA extends ItemToolAA{
         super(1.5F, -3.0F, material, repairItem, unlocalizedName, rarity, EFFECTIVE_ON);
     }
 
-    public float getStrVsBlock(ItemStack stack, IBlockState state){
-        Material material = state.getMaterial();
-        return material != Material.wood && material != Material.plants && material != Material.vine ? super.getStrVsBlock(stack, state) : this.efficiencyOnProperMaterial;
-    }
-
     public boolean canHarvestBlock(IBlockState blockIn){
         Block block = blockIn.getBlock();
-        return block == Blocks.snow_layer || block == Blocks.snow;
+        return block == Blocks.SNOW_LAYER || block == Blocks.SNOW;
     }
 
     public EnumActionResult onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ){
-        if(!playerIn.canPlayerEdit(pos.offset(facing), facing, stack)){
-            return EnumActionResult.FAIL;
-        }
-        else{
-            IBlockState iblockstate = worldIn.getBlockState(pos);
-            Block block = iblockstate.getBlock();
-
-            if(facing != EnumFacing.DOWN && worldIn.getBlockState(pos.up()).getMaterial() == Material.air && block == Blocks.grass){
-                IBlockState iblockstate1 = Blocks.grass_path.getDefaultState();
-                worldIn.playSound(playerIn, pos, SoundEvents.item_shovel_flatten, SoundCategory.BLOCKS, 1.0F, 1.0F);
-
-                if(!worldIn.isRemote){
-                    worldIn.setBlockState(pos, iblockstate1, 11);
-                    stack.damageItem(1, playerIn);
-                }
-
-                return EnumActionResult.SUCCESS;
-            }
-            else{
-                return EnumActionResult.PASS;
-            }
-        }
+        return Items.IRON_HOE.onItemUse(stack, playerIn, worldIn, pos, hand, facing, hitX, hitY, hitZ);
     }
 }

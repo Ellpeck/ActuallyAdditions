@@ -27,14 +27,14 @@ public class Util{
     public static final Random RANDOM = new Random();
     public static final int WILDCARD = OreDictionary.WILDCARD_VALUE;
 
-    public static final EnumRarity CRYSTAL_RED_RARITY = EnumHelper.addRarity(ModUtil.MOD_ID_LOWER+"crystalRed", TextFormatting.DARK_RED, ModUtil.NAME+" Red Crystal");
-    public static final EnumRarity CRYSTAL_BLUE_RARITY = EnumHelper.addRarity(ModUtil.MOD_ID_LOWER+"crystalBlue", TextFormatting.DARK_BLUE, ModUtil.NAME+" Blue Crystal");
-    public static final EnumRarity CRYSTAL_LIGHT_BLUE_RARITY = EnumHelper.addRarity(ModUtil.MOD_ID_LOWER+"crystalLightBlue", TextFormatting.BLUE, ModUtil.NAME+" Light Blue Crystal");
-    public static final EnumRarity CRYSTAL_BLACK_RARITY = EnumHelper.addRarity(ModUtil.MOD_ID_LOWER+"crystalBlack", TextFormatting.DARK_GRAY, ModUtil.NAME+" Black Crystal");
-    public static final EnumRarity CRYSTAL_GREEN_RARITY = EnumHelper.addRarity(ModUtil.MOD_ID_LOWER+"crystalGreen", TextFormatting.DARK_GREEN, ModUtil.NAME+" Green Crystal");
-    public static final EnumRarity CRYSTAL_WHITE_RARITY = EnumHelper.addRarity(ModUtil.MOD_ID_LOWER+"crystalWhite", TextFormatting.GRAY, ModUtil.NAME+" White Crystal");
+    public static final EnumRarity CRYSTAL_RED_RARITY = EnumHelper.addRarity(ModUtil.MOD_ID+"crystalRed", TextFormatting.DARK_RED, ModUtil.NAME+" Red Crystal");
+    public static final EnumRarity CRYSTAL_BLUE_RARITY = EnumHelper.addRarity(ModUtil.MOD_ID+"crystalBlue", TextFormatting.DARK_BLUE, ModUtil.NAME+" Blue Crystal");
+    public static final EnumRarity CRYSTAL_LIGHT_BLUE_RARITY = EnumHelper.addRarity(ModUtil.MOD_ID+"crystalLightBlue", TextFormatting.BLUE, ModUtil.NAME+" Light Blue Crystal");
+    public static final EnumRarity CRYSTAL_BLACK_RARITY = EnumHelper.addRarity(ModUtil.MOD_ID+"crystalBlack", TextFormatting.DARK_GRAY, ModUtil.NAME+" Black Crystal");
+    public static final EnumRarity CRYSTAL_GREEN_RARITY = EnumHelper.addRarity(ModUtil.MOD_ID+"crystalGreen", TextFormatting.DARK_GREEN, ModUtil.NAME+" Green Crystal");
+    public static final EnumRarity CRYSTAL_WHITE_RARITY = EnumHelper.addRarity(ModUtil.MOD_ID+"crystalWhite", TextFormatting.GRAY, ModUtil.NAME+" White Crystal");
 
-    public static final EnumRarity FALLBACK_RARITY = EnumHelper.addRarity(ModUtil.MOD_ID_LOWER+".fallback", TextFormatting.STRIKETHROUGH, ModUtil.NAME+" Fallback");
+    public static final EnumRarity FALLBACK_RARITY = EnumHelper.addRarity(ModUtil.MOD_ID+".fallback", TextFormatting.STRIKETHROUGH, ModUtil.NAME+" Fallback");
 
     public static void registerEvent(Object o){
         MinecraftForge.EVENT_BUS.register(o);
@@ -45,7 +45,7 @@ public class Util{
     }
 
     public static void registerDispenserHandler(Item item, BehaviorDefaultDispenseItem handler){
-        BlockDispenser.dispenseBehaviorRegistry.putObject(item, handler);
+        BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(item, handler);
     }
 
     public static int arrayContains(Object[] array, Object obj){

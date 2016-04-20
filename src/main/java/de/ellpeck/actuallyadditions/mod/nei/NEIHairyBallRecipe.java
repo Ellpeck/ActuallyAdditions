@@ -72,7 +72,7 @@ public class NEIHairyBallRecipe/* extends TemplateRecipeHandler implements INEIR
 
     @Override
     public String getGuiTexture(){
-        return ModUtil.MOD_ID_LOWER+":textures/gui/guiNEISimple.png";
+        return ModUtil.MOD_ID+":textures/gui/guiNEISimple.png";
     }
 
     @Override

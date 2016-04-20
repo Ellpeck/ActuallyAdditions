@@ -79,7 +79,7 @@ public class ItemJams extends ItemFoodBase implements IColorProvidingItem{
             PotionEffect secondEffectToGet = new PotionEffect(Potion.getPotionById(allJams[stack.getItemDamage()].secondEffectToGet), 600);
             player.addPotionEffect(secondEffectToGet);
 
-            ItemStack returnItem = new ItemStack(Items.glass_bottle);
+            ItemStack returnItem = new ItemStack(Items.GLASS_BOTTLE);
             if(!((EntityPlayer)player).inventory.addItemStackToInventory(returnItem.copy())){
                 EntityItem entityItem = new EntityItem(player.worldObj, player.posX, player.posY, player.posZ, returnItem.copy());
                 entityItem.setPickupDelay(0);
@@ -102,7 +102,7 @@ public class ItemJams extends ItemFoodBase implements IColorProvidingItem{
     @Override
     protected void registerRendering(){
         for(int i = 0; i < allJams.length; i++){
-            ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), new ResourceLocation(ModUtil.MOD_ID_LOWER, this.getBaseName()));
+            ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), new ResourceLocation(ModUtil.MOD_ID, this.getBaseName()));
         }
     }
 

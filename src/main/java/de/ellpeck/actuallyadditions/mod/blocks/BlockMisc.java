@@ -36,7 +36,7 @@ public class BlockMisc extends BlockBase{
     private static final PropertyInteger META = PropertyInteger.create("meta", 0, allMiscBlocks.length-1);
 
     public BlockMisc(String name){
-        super(Material.rock, name);
+        super(Material.ROCK, name);
         this.setHardness(1.5F);
         this.setResistance(10.0F);
         this.setHarvestLevel("pickaxe", 1);
@@ -56,8 +56,8 @@ public class BlockMisc extends BlockBase{
     }
 
     @Override
-    public Class<? extends ItemBlockBase> getItemBlock(){
-        return TheItemBlock.class;
+    protected ItemBlockBase getItemBlock(){
+        return new TheItemBlock(this);
     }
 
     @Override
@@ -65,8 +65,8 @@ public class BlockMisc extends BlockBase{
         ResourceLocation[] resLocs = new ResourceLocation[allMiscBlocks.length];
         for(int i = 0; i < allMiscBlocks.length; i++){
             String name = this.getBaseName()+allMiscBlocks[i].name;
-            resLocs[i] = new ResourceLocation(ModUtil.MOD_ID_LOWER, name);
-            ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), new ResourceLocation(ModUtil.MOD_ID_LOWER, name));
+            resLocs[i] = new ResourceLocation(ModUtil.MOD_ID, name);
+            ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), new ResourceLocation(ModUtil.MOD_ID, name));
         }
         ActuallyAdditions.proxy.addRenderVariant(Item.getItemFromBlock(this), resLocs);
     }

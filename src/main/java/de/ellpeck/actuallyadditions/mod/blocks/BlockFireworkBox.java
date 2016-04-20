@@ -28,11 +28,11 @@ import net.minecraft.world.World;
 public class BlockFireworkBox extends BlockContainerBase{
 
     public BlockFireworkBox(String name){
-        super(Material.rock, name);
+        super(Material.ROCK, name);
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(1.5F);
         this.setResistance(10.0F);
-        this.setStepSound(SoundType.STONE);
+        this.setSoundType(SoundType.STONE);
     }
 
     @Override

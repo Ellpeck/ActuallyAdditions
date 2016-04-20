@@ -28,26 +28,29 @@ public class ItemUtil{
 
     public static Item getItemFromName(String name){
         ResourceLocation resLoc = new ResourceLocation(name);
-        if(Item.itemRegistry.containsKey(resLoc)){
-            return Item.itemRegistry.getObject(resLoc);
+        if(Item.REGISTRY.containsKey(resLoc)){
+            return Item.REGISTRY.getObject(resLoc);
         }
         return null;
     }
 
-    public static void registerBlock(Block block, Class<? extends ItemBlockBase> itemBlock, String name, boolean addTab){
-        block.setUnlocalizedName(ModUtil.MOD_ID_LOWER+"."+name);
+    public static void registerBlock(Block block, ItemBlockBase itemBlock, String name, boolean addTab){
+        block.setUnlocalizedName(ModUtil.MOD_ID+"."+name);
 
         block.setRegistryName(ModUtil.MOD_ID, name);
-        GameRegistry.registerBlock(block, itemBlock);
+        GameRegistry.register(block);
+
+        itemBlock.setRegistryName(block.getRegistryName());
+        GameRegistry.register(itemBlock);
 
         block.setCreativeTab(addTab ? CreativeTab.instance : null);
     }
 
     public static void registerItem(Item item, String name, boolean addTab){
-        item.setUnlocalizedName(ModUtil.MOD_ID_LOWER+"."+name);
+        item.setUnlocalizedName(ModUtil.MOD_ID+"."+name);
 
         item.setRegistryName(ModUtil.MOD_ID, name);
-        GameRegistry.registerItem(item);
+        GameRegistry.register(item);
 
         item.setCreativeTab(addTab ? CreativeTab.instance : null);
 

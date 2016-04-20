@@ -69,7 +69,7 @@ public class OreGen implements IWorldGenerator{
 
     private void generateSurface(World world, Random random, int x, int z){
         if(ConfigBoolValues.GENERATE_QUARTZ.isEnabled()){
-            this.addOreSpawn(InitBlocks.blockMisc, TheMiscBlocks.ORE_QUARTZ.ordinal(), Blocks.stone, world, random, x, z, MathHelper.getRandomIntegerInRange(random, 5, 8), 10, QUARTZ_MIN, QUARTZ_MAX);
+            this.addOreSpawn(InitBlocks.blockMisc, TheMiscBlocks.ORE_QUARTZ.ordinal(), Blocks.STONE, world, random, x, z, MathHelper.getRandomIntegerInRange(random, 5, 8), 10, QUARTZ_MIN, QUARTZ_MAX);
         }
     }
 

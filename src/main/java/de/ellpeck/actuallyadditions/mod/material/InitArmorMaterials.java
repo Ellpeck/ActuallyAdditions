@@ -13,7 +13,6 @@ package de.ellpeck.actuallyadditions.mod.material;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
-import net.minecraft.util.SoundEvent;
 import net.minecraftforge.common.util.EnumHelper;
 
 public class InitArmorMaterials{
@@ -32,15 +31,15 @@ public class InitArmorMaterials{
     public static void init(){
         ModUtil.LOGGER.info("Initializing Armor Materials...");
 
-        armorMaterialEmerald = EnumHelper.addArmorMaterial("armorMaterialEmerald", ModUtil.MOD_ID_LOWER+":armorEmerald", 50, new int[]{5, 9, 8, 5}, 15, SoundEvents.item_armor_equip_generic);
-        armorMaterialObsidian = EnumHelper.addArmorMaterial("armorMaterialObsidian", ModUtil.MOD_ID_LOWER+":armorObsidian", 120, new int[]{3, 4, 3, 1}, 10, SoundEvents.item_armor_equip_generic);
-        armorMaterialQuartz = EnumHelper.addArmorMaterial("armorMaterialQuartz", ModUtil.MOD_ID_LOWER+":armorQuartz", 20, new int[]{3, 6, 5, 3}, 8, SoundEvents.item_armor_equip_generic);
+        armorMaterialEmerald = EnumHelper.addArmorMaterial("armorMaterialEmerald", ModUtil.MOD_ID+":armorEmerald", 50, new int[]{5, 9, 8, 5}, 15, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC);
+        armorMaterialObsidian = EnumHelper.addArmorMaterial("armorMaterialObsidian", ModUtil.MOD_ID+":armorObsidian", 120, new int[]{3, 4, 3, 1}, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC);
+        armorMaterialQuartz = EnumHelper.addArmorMaterial("armorMaterialQuartz", ModUtil.MOD_ID+":armorQuartz", 20, new int[]{3, 6, 5, 3}, 8, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC);
 
-        armorMaterialCrystalRed = EnumHelper.addArmorMaterial("armorMaterialCrystalRed", ModUtil.MOD_ID_LOWER+":armorCrystalRed", 18, new int[]{3, 7, 6, 3}, 9, SoundEvents.item_armor_equip_generic);
-        armorMaterialCrystalBlue = EnumHelper.addArmorMaterial("armorMaterialCrystalBlue", ModUtil.MOD_ID_LOWER+":armorCrystalBlue", 18, new int[]{3, 7, 6, 3}, 10, SoundEvents.item_armor_equip_generic);
-        armorMaterialCrystalLightBlue = EnumHelper.addArmorMaterial("armorMaterialCrystalLightBlue", ModUtil.MOD_ID_LOWER+":armorCrystalLightBlue", 35, new int[]{7, 9, 7, 5}, 12, SoundEvents.item_armor_equip_generic);
-        armorMaterialCrystalBlack = EnumHelper.addArmorMaterial("armorMaterialCrystalBlack", ModUtil.MOD_ID_LOWER+":armorCrystalBlack", 12, new int[]{1, 4, 3, 1}, 13, SoundEvents.item_armor_equip_generic);
-        armorMaterialCrystalGreen = EnumHelper.addArmorMaterial("armorMaterialCrystalGreen", ModUtil.MOD_ID_LOWER+":armorCrystalGreen", 60, new int[]{7, 10, 9, 6}, 18, SoundEvents.item_armor_equip_generic);
-        armorMaterialCrystalWhite = EnumHelper.addArmorMaterial("armorMaterialCrystalWhite", ModUtil.MOD_ID_LOWER+":armorCrystalWhite", 18, new int[]{4, 7, 6, 4}, 11, SoundEvents.item_armor_equip_generic);
+        armorMaterialCrystalRed = EnumHelper.addArmorMaterial("armorMaterialCrystalRed", ModUtil.MOD_ID+":armorCrystalRed", 18, new int[]{3, 7, 6, 3}, 9, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC);
+        armorMaterialCrystalBlue = EnumHelper.addArmorMaterial("armorMaterialCrystalBlue", ModUtil.MOD_ID+":armorCrystalBlue", 18, new int[]{3, 7, 6, 3}, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC);
+        armorMaterialCrystalLightBlue = EnumHelper.addArmorMaterial("armorMaterialCrystalLightBlue", ModUtil.MOD_ID+":armorCrystalLightBlue", 35, new int[]{7, 9, 7, 5}, 12, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC);
+        armorMaterialCrystalBlack = EnumHelper.addArmorMaterial("armorMaterialCrystalBlack", ModUtil.MOD_ID+":armorCrystalBlack", 12, new int[]{1, 4, 3, 1}, 13, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC);
+        armorMaterialCrystalGreen = EnumHelper.addArmorMaterial("armorMaterialCrystalGreen", ModUtil.MOD_ID+":armorCrystalGreen", 60, new int[]{7, 10, 9, 6}, 18, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC);
+        armorMaterialCrystalWhite = EnumHelper.addArmorMaterial("armorMaterialCrystalWhite", ModUtil.MOD_ID+":armorCrystalWhite", 18, new int[]{4, 7, 6, 4}, 11, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC);
     }
 }

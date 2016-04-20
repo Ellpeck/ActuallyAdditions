@@ -40,11 +40,11 @@ public class BlockInputter extends BlockContainerBase{
     public boolean isAdvanced;
 
     public BlockInputter(boolean isAdvanced, String name){
-        super(Material.rock, name);
+        super(Material.ROCK, name);
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(1.5F);
         this.setResistance(10.0F);
-        this.setStepSound(SoundType.STONE);
+        this.setSoundType(SoundType.STONE);
         this.setTickRandomly(true);
         this.isAdvanced = isAdvanced;
     }
@@ -79,8 +79,8 @@ public class BlockInputter extends BlockContainerBase{
     }
 
     @Override
-    public Class<? extends ItemBlockBase> getItemBlock(){
-        return TheItemBlock.class;
+    protected ItemBlockBase getItemBlock(){
+        return new TheItemBlock(this);
     }
 
     @Override
@@ -118,7 +118,7 @@ public class BlockInputter extends BlockContainerBase{
                 this.toPick = Util.RANDOM.nextInt(NAME_FLAVOR_AMOUNTS)+1;
             }
 
-            return StringUtil.localize(this.getUnlocalizedName()+".name")+" ("+StringUtil.localize("tile."+ModUtil.MOD_ID_LOWER+".blockInputter.add."+this.toPick+".name")+")";
+            return StringUtil.localize(this.getUnlocalizedName()+".name")+" ("+StringUtil.localize("tile."+ModUtil.MOD_ID+".blockInputter.add."+this.toPick+".name")+")";
         }
     }
 }

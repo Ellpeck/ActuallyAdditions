@@ -95,7 +95,7 @@ public class TileEntityFermentingBarrel extends TileEntityInventoryBase implemen
 
     @Override
     public boolean isItemValidForSlot(int i, ItemStack stack){
-        return (i == 0 && FluidContainerRegistry.containsFluid(stack, new FluidStack(InitFluids.fluidCanolaOil, FluidContainerRegistry.BUCKET_VOLUME))) || (i == 2 && stack.getItem() == Items.bucket);
+        return (i == 0 && FluidContainerRegistry.containsFluid(stack, new FluidStack(InitFluids.fluidCanolaOil, FluidContainerRegistry.BUCKET_VOLUME))) || (i == 2 && stack.getItem() == Items.BUCKET);
     }
 
     @SideOnly(Side.CLIENT)
@@ -120,7 +120,7 @@ public class TileEntityFermentingBarrel extends TileEntityInventoryBase implemen
 
     @Override
     public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
-        return (slot == 1 && stack.getItem() == Items.bucket) || (slot == 3 && FluidContainerRegistry.containsFluid(stack, new FluidStack(InitFluids.fluidOil, FluidContainerRegistry.BUCKET_VOLUME)));
+        return (slot == 1 && stack.getItem() == Items.BUCKET) || (slot == 3 && FluidContainerRegistry.containsFluid(stack, new FluidStack(InitFluids.fluidOil, FluidContainerRegistry.BUCKET_VOLUME)));
     }
 
     @Override

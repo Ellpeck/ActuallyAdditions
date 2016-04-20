@@ -28,12 +28,12 @@ public class EntityLivingEvent{
     @SubscribeEvent
     public void livingUpdateEvent(LivingUpdateEvent event){
         //Ocelots dropping Hair Balls
-        if(event.entityLiving != null && event.entityLiving.worldObj != null && !event.entityLiving.worldObj.isRemote){
-            if((event.entityLiving instanceof EntityOcelot && ((EntityOcelot)event.entityLiving).isTamed()) || (event.entityLiving instanceof EntityPlayer && event.entityLiving.getUniqueID().equals(/*KittyVanCat*/ UUID.fromString("681d4e20-10ef-40c9-a0a5-ba2f1995ef44")))){
+        if(event.getEntityLiving() != null && event.getEntityLiving().worldObj != null && !event.getEntityLiving().worldObj.isRemote){
+            if((event.getEntityLiving() instanceof EntityOcelot && ((EntityOcelot)event.getEntityLiving()).isTamed()) || (event.getEntityLiving() instanceof EntityPlayer && event.getEntityLiving().getUniqueID().equals(/*KittyVanCat*/ UUID.fromString("681d4e20-10ef-40c9-a0a5-ba2f1995ef44")))){
                 if(ConfigBoolValues.DO_CAT_DROPS.isEnabled()){
                     if(Util.RANDOM.nextInt(5000)+1 == 1){
-                        EntityItem item = new EntityItem(event.entityLiving.worldObj, event.entityLiving.posX+0.5, event.entityLiving.posY+0.5, event.entityLiving.posZ+0.5, new ItemStack(InitItems.itemHairyBall));
-                        event.entityLiving.worldObj.spawnEntityInWorld(item);
+                        EntityItem item = new EntityItem(event.getEntityLiving().worldObj, event.getEntityLiving().posX+0.5, event.getEntityLiving().posY+0.5, event.getEntityLiving().posZ+0.5, new ItemStack(InitItems.itemHairyBall));
+                        event.getEntityLiving().worldObj.spawnEntityInWorld(item);
                     }
                 }
             }
@@ -48,8 +48,8 @@ public class EntityLivingEvent{
      * (Partially excerpted from Botania's Wing System by Vazkii (as I had fiddled around with the system and couldn't make it work) with permission, thanks!)
      */
     private void doWingStuff(LivingUpdateEvent event){
-        if(event.entityLiving instanceof EntityPlayer){
-            EntityPlayer player = (EntityPlayer)event.entityLiving;
+        if(event.getEntityLiving() instanceof EntityPlayer){
+            EntityPlayer player = (EntityPlayer)event.getEntityLiving();
             boolean wingsEquipped = ItemWingsOfTheBats.getWingItem(player) != null;
 
             //If Player isn't (really) winged

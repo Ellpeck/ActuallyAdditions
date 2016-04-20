@@ -63,7 +63,7 @@ public class IndexButton extends GuiButton{
 
     public void drawHover(int mouseX, int mouseY){
         if(this.chap instanceof BookletChapter && ((BookletChapter)this.chap).isIncomplete){
-            this.gui.drawHoveringText(this.gui.getFontRenderer().listFormattedStringToWidth(TextFormatting.RED+StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".unavailable"), 250), mouseX, mouseY);
+            this.gui.drawHoveringText(this.gui.getFontRenderer().listFormattedStringToWidth(TextFormatting.RED+StringUtil.localize("booklet."+ModUtil.MOD_ID+".unavailable"), 250), mouseX, mouseY);
         }
     }
 }

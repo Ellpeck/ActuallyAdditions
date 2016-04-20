@@ -16,7 +16,7 @@ import net.minecraft.world.gen.structure.MapGenStructureIO;
 
 public class InitVillager{
 
-    public static final String JAM_HOUSE_CHEST_NAME = ModUtil.MOD_ID_LOWER+".jamHouseChest";
+    public static final String JAM_HOUSE_CHEST_NAME = ModUtil.MOD_ID+".jamHouseChest";
 
     public static void init(){
         ModUtil.LOGGER.info("Initializing Village Addons...");
@@ -45,13 +45,13 @@ public class InitVillager{
         ChestGenHooks.addItem(JAM_HOUSE_CHEST_NAME, new WeightedRandomChestContent(new ItemStack(Items.potionitem), 1, 1, 20));
 
         VillagerRegistry.instance().registerVillageCreationHandler(new VillageJamHouseHandler());
-        MapGenStructureIO.func_143031_a(VillageComponentJamHouse.class, ModUtil.MOD_ID_LOWER+":jamHouseStructure");*/
+        MapGenStructureIO.func_143031_a(VillageComponentJamHouse.class, ModUtil.MOD_ID+":jamHouseStructure");*/
     }
 
     private static void initCustomCropFieldPart(){
         //TODO Fix village
         //VillagerRegistry.instance().registerVillageCreationHandler(new VillageCustomCropFieldHandler());
-        MapGenStructureIO.registerStructureComponent(VillageComponentCustomCropField.class, ModUtil.MOD_ID_LOWER+":customCropFieldStructure");
+        MapGenStructureIO.registerStructureComponent(VillageComponentCustomCropField.class, ModUtil.MOD_ID+":customCropFieldStructure");
     }
 
 }

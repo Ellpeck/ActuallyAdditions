@@ -27,25 +27,25 @@ public class LivingDropEvent{
 
     @SubscribeEvent
     public void onEntityDropEvent(LivingDropsEvent event){
-        if(event.source.getEntity() instanceof EntityPlayer){
+        if(event.getSource().getEntity() instanceof EntityPlayer){
             //Drop Solidified XP
-            if(event.entityLiving instanceof EntityCreature){
+            if(event.getEntityLiving() instanceof EntityCreature){
                 if(Util.RANDOM.nextInt(15) <= 0){
-                    event.entityLiving.entityDropItem(new ItemStack(InitItems.itemSolidifiedExperience, Util.RANDOM.nextInt(2)+1), 0);
+                    event.getEntityLiving().entityDropItem(new ItemStack(InitItems.itemSolidifiedExperience, Util.RANDOM.nextInt(2)+1), 0);
                 }
             }
 
             //Drop Cobwebs from Spiders
-            if(ConfigBoolValues.DO_SPIDER_DROPS.isEnabled() && event.entityLiving instanceof EntitySpider){
+            if(ConfigBoolValues.DO_SPIDER_DROPS.isEnabled() && event.getEntityLiving() instanceof EntitySpider){
                 if(Util.RANDOM.nextInt(80) <= 0){
-                    event.entityLiving.entityDropItem(new ItemStack(Blocks.web, Util.RANDOM.nextInt(2)+1), 0);
+                    event.getEntityLiving().entityDropItem(new ItemStack(Blocks.WEB, Util.RANDOM.nextInt(2)+1), 0);
                 }
             }
 
             //Drop Wings from Bats
-            if(ConfigBoolValues.DO_BAT_DROPS.isEnabled() && event.entityLiving instanceof EntityBat){
+            if(ConfigBoolValues.DO_BAT_DROPS.isEnabled() && event.getEntityLiving() instanceof EntityBat){
                 if(Util.RANDOM.nextInt(30) <= 0){
-                    event.entityLiving.entityDropItem(new ItemStack(InitItems.itemMisc, Util.RANDOM.nextInt(2)+1, TheMiscItems.BAT_WING.ordinal()), 0);
+                    event.getEntityLiving().entityDropItem(new ItemStack(InitItems.itemMisc, Util.RANDOM.nextInt(2)+1, TheMiscItems.BAT_WING.ordinal()), 0);
                 }
             }
         }

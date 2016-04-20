@@ -50,12 +50,12 @@ public class SpecialRenderInit{
                 ItemStack stack = null;
                 //Get the Item from the String
                 ResourceLocation resLoc = new ResourceLocation(itemName);
-                if(Item.itemRegistry.containsKey(resLoc)){
-                    stack = new ItemStack(Item.itemRegistry.getObject(resLoc), 1, meta);
+                if(Item.REGISTRY.containsKey(resLoc)){
+                    stack = new ItemStack(Item.REGISTRY.getObject(resLoc), 1, meta);
                 }
                 else{
-                    if(Block.blockRegistry.containsKey(resLoc)){
-                        stack = new ItemStack(Block.blockRegistry.getObject(resLoc), 1, meta);
+                    if(Block.REGISTRY.containsKey(resLoc)){
+                        stack = new ItemStack(Block.REGISTRY.getObject(resLoc), 1, meta);
                     }
                 }
 
@@ -72,9 +72,9 @@ public class SpecialRenderInit{
         if(!specialList.isEmpty()){
             for(Map.Entry<String, RenderSpecial> entry : specialList.entrySet()){
                 //Does the player have one of the names from the list?
-                if(StringUtil.equalsToLowerCase(entry.getKey(), event.entityPlayer.getName())){
+                if(StringUtil.equalsToLowerCase(entry.getKey(), event.getEntityPlayer().getName())){
                     //Render the special Item/Block
-                    entry.getValue().render(event.entityPlayer, event.partialRenderTick);
+                    entry.getValue().render(event.getEntityPlayer(), event.getPartialRenderTick());
                     break;
                 }
             }

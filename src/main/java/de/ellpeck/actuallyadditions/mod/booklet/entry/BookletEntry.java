@@ -50,7 +50,7 @@ public class BookletEntry implements IBookletEntry{
 
     @Override
     public String getLocalizedName(){
-        return StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".indexEntry."+this.unlocalizedName+".name");
+        return StringUtil.localize("booklet."+ModUtil.MOD_ID+".indexEntry."+this.unlocalizedName+".name");
     }
 
     @Override

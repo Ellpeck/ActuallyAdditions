@@ -23,11 +23,11 @@ import net.minecraft.world.World;
 public class BlockFurnaceSolar extends BlockContainerBase{
 
     public BlockFurnaceSolar(String name){
-        super(Material.rock, name);
+        super(Material.ROCK, name);
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(1.5F);
         this.setResistance(10.0F);
-        this.setStepSound(SoundType.STONE);
+        this.setSoundType(SoundType.STONE);
 
         //TODO Block bounds
         //this.setBlockBounds(0F, 0F, 0F, 1F, 6F/16F, 1F);

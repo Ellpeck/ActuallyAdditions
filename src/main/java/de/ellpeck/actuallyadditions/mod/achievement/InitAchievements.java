@@ -30,7 +30,7 @@ public class InitAchievements{
             achievementList.add(TheAchievements.values()[i].ach);
         }
 
-        theAchievementPage = new AchievementPage(StringUtil.localize("achievement.page."+ModUtil.MOD_ID_LOWER), achievementList.toArray(new Achievement[achievementList.size()]));
+        theAchievementPage = new AchievementPage(StringUtil.localize("achievement.page."+ModUtil.MOD_ID), achievementList.toArray(new Achievement[achievementList.size()]));
         pageNumber = AchievementPage.getAchievementPages().size();
         AchievementPage.registerAchievementPage(theAchievementPage);
     }

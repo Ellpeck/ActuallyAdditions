@@ -39,11 +39,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class BlockCompost extends BlockContainerBase implements IHudDisplay{
 
     public BlockCompost(String name){
-        super(Material.wood, name);
+        super(Material.WOOD, name);
         this.setHarvestLevel("axe", 0);
         this.setHardness(0.5F);
         this.setResistance(5.0F);
-        this.setStepSound(SoundType.WOOD);
+        this.setSoundType(SoundType.WOOD);
 
         //this.setBlockBoundsForItemRender();
     }

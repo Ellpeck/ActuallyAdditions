@@ -29,11 +29,11 @@ import net.minecraft.world.World;
 public class BlockFermentingBarrel extends BlockContainerBase{
 
     public BlockFermentingBarrel(String name){
-        super(Material.wood, name);
+        super(Material.WOOD, name);
         this.setHarvestLevel("axe", 0);
         this.setHardness(0.5F);
         this.setResistance(5.0F);
-        this.setStepSound(SoundType.WOOD);
+        this.setSoundType(SoundType.WOOD);
     }
 
     @Override

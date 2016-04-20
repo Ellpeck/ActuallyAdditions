@@ -96,7 +96,7 @@ public class TileEntityFireworkBox extends TileEntityBase implements IEnergyRece
         NBTTagCompound compound = new NBTTagCompound();
         compound.setTag("Fireworks", compound1);
 
-        ItemStack firework = new ItemStack(Items.fireworks);
+        ItemStack firework = new ItemStack(Items.FIREWORKS);
         firework.setTagCompound(compound);
 
         return firework;
@@ -116,7 +116,7 @@ public class TileEntityFireworkBox extends TileEntityBase implements IEnergyRece
 
         int[] colors = new int[MathHelper.getRandomIntegerInRange(Util.RANDOM, 1, 6)];
         for(int i = 0; i < colors.length; i++){
-            colors[i] = ItemDye.dyeColors[Util.RANDOM.nextInt(ItemDye.dyeColors.length)];
+            colors[i] = ItemDye.DYE_COLORS[Util.RANDOM.nextInt(ItemDye.DYE_COLORS.length)];
         }
         compound.setIntArray("Colors", colors);
 

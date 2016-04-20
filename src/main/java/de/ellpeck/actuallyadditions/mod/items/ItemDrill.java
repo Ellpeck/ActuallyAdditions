@@ -237,11 +237,11 @@ public class ItemDrill extends ItemEnergy{
         if(this.getEnergyStored(stack) >= use){
             //Enchants the Drill depending on the Upgrades it has
             if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SILK_TOUCH)){
-                ItemUtil.addEnchantment(stack, Enchantments.silkTouch, 1);
+                ItemUtil.addEnchantment(stack, Enchantments.SILK_TOUCH, 1);
             }
             else{
                 if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FORTUNE)){
-                    ItemUtil.addEnchantment(stack, Enchantments.fortune, this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FORTUNE_II) ? 3 : 1);
+                    ItemUtil.addEnchantment(stack, Enchantments.FORTUNE, this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FORTUNE_II) ? 3 : 1);
                 }
             }
 
@@ -259,8 +259,8 @@ public class ItemDrill extends ItemEnergy{
             }
 
             //Removes Enchantments added above
-            ItemUtil.removeEnchantment(stack, Enchantments.silkTouch);
-            ItemUtil.removeEnchantment(stack, Enchantments.fortune);
+            ItemUtil.removeEnchantment(stack, Enchantments.SILK_TOUCH);
+            ItemUtil.removeEnchantment(stack, Enchantments.FORTUNE);
         }
         return toReturn;
     }
@@ -269,7 +269,7 @@ public class ItemDrill extends ItemEnergy{
     public boolean canHarvestBlock(IBlockState state, ItemStack stack){
         int harvestLevel = this.getHarvestLevel(stack, "");
         Block block = state.getBlock();
-        return this.getEnergyStored(stack) >= this.getEnergyUsePerBlock(stack) && (this.hasExtraWhitelist(block) || block.getMaterial(state).isToolNotRequired() || (block == Blocks.snow_layer || block == Blocks.snow || (block == Blocks.obsidian ? harvestLevel >= 3 : (block != Blocks.diamond_block && block != Blocks.diamond_ore ? (block != Blocks.emerald_ore && block != Blocks.emerald_block ? (block != Blocks.gold_block && block != Blocks.gold_ore ? (block != Blocks.iron_block && block != Blocks.iron_ore ? (block != Blocks.lapis_block && block != Blocks.lapis_ore ? (block != Blocks.redstone_ore && block != Blocks.lit_redstone_ore ? (block.getMaterial(state) == Material.rock || (block.getMaterial(state) == Material.iron || block.getMaterial(state) == Material.anvil)) : harvestLevel >= 2) : harvestLevel >= 1) : harvestLevel >= 1) : harvestLevel >= 2) : harvestLevel >= 2) : harvestLevel >= 2))));
+        return this.getEnergyStored(stack) >= this.getEnergyUsePerBlock(stack) && (this.hasExtraWhitelist(block) || block.getMaterial(state).isToolNotRequired() || (block == Blocks.SNOW_LAYER || block == Blocks.SNOW || (block == Blocks.OBSIDIAN ? harvestLevel >= 3 : (block != Blocks.DIAMOND_BLOCK && block != Blocks.DIAMOND_ORE ? (block != Blocks.EMERALD_ORE && block != Blocks.EMERALD_BLOCK ? (block != Blocks.GOLD_BLOCK && block != Blocks.GOLD_ORE ? (block != Blocks.IRON_BLOCK && block != Blocks.IRON_ORE ? (block != Blocks.LAPIS_BLOCK && block != Blocks.LAPIS_ORE ? (block != Blocks.REDSTONE_ORE && block != Blocks.LIT_REDSTONE_ORE ? (block.getMaterial(state) == Material.ROCK || (block.getMaterial(state) == Material.IRON || block.getMaterial(state) == Material.ANVIL)) : harvestLevel >= 2) : harvestLevel >= 1) : harvestLevel >= 1) : harvestLevel >= 2) : harvestLevel >= 2) : harvestLevel >= 2))));
     }
 
     @Override
@@ -345,8 +345,8 @@ public class ItemDrill extends ItemEnergy{
         ResourceLocation[] resLocs = new ResourceLocation[16];
         for(int i = 0; i < 16; i++){
             String name = this.getBaseName()+TheColoredLampColors.values()[i].name;
-            resLocs[i] = new ResourceLocation(ModUtil.MOD_ID_LOWER, name);
-            ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), new ResourceLocation(ModUtil.MOD_ID_LOWER, name));
+            resLocs[i] = new ResourceLocation(ModUtil.MOD_ID, name);
+            ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), new ResourceLocation(ModUtil.MOD_ID, name));
         }
         ActuallyAdditions.proxy.addRenderVariant(this, resLocs);
     }
@@ -516,7 +516,7 @@ public class ItemDrill extends ItemEnergy{
     }
 
     private boolean hasExtraWhitelist(Block block){
-        String name = block.getRegistryName();
+        String name = block.getRegistryName().toString();
         if(name != null){
             for(String list : ConfigValues.drillExtraminingWhitelist){
                 if(list.equals(name)){

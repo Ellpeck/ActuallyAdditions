@@ -17,10 +17,10 @@ group = "de.ellpeck.actuallyadditions"
 archivesBaseName = "ActuallyAdditions"
 
 minecraft {
-    version = "1.9-12.16.0.1767-1.9"
+    version = "1.9-12.16.0.1865-1.9"
     runDir = "idea"
 
-    mappings = "snapshot_20160312"
+    mappings = "snapshot_20160420"
     makeObfSourceJar = false
     //useDepAts = true
 

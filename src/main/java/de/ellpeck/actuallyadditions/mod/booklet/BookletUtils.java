@@ -80,9 +80,9 @@ public class BookletUtils{
 
         //Draw No Entry title
         if(booklet.currentEntrySet.entry == null){
-            String strg = TextFormatting.DARK_GREEN+StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".booklet.manualName.1");
+            String strg = TextFormatting.DARK_GREEN+StringUtil.localize("info."+ModUtil.MOD_ID+".booklet.manualName.1");
             booklet.getFontRenderer().drawString(strg, booklet.guiLeft+booklet.xSize/2-booklet.getFontRenderer().getStringWidth(strg)/2-3, booklet.guiTop+12, 0);
-            strg = TextFormatting.DARK_GREEN+StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".booklet.manualName.2");
+            strg = TextFormatting.DARK_GREEN+StringUtil.localize("info."+ModUtil.MOD_ID+".booklet.manualName.2");
             booklet.getFontRenderer().drawString(strg, booklet.guiLeft+booklet.xSize/2-booklet.getFontRenderer().getStringWidth(strg)/2-3, booklet.guiTop+12+booklet.getFontRenderer().FONT_HEIGHT, 0);
 
             String version;
@@ -103,13 +103,13 @@ public class BookletUtils{
                 version = "Dev's Edition";
             }
             else{
-                version = StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".booklet.edition")+" "+ModUtil.VERSION.substring(ModUtil.VERSION.indexOf("r")+1);
+                version = StringUtil.localize("info."+ModUtil.MOD_ID+".booklet.edition")+" "+ModUtil.VERSION.substring(ModUtil.VERSION.indexOf("r")+1);
             }
             strg = TextFormatting.GOLD+TextFormatting.ITALIC.toString()+"-"+version+"-";
             booklet.getFontRenderer().drawString(strg, booklet.guiLeft+booklet.xSize/2-booklet.getFontRenderer().getStringWidth(strg)/2-3, booklet.guiTop+33, 0);
         }
 
-        String strg = booklet.currentEntrySet.chapter == null ? (booklet.currentEntrySet.entry == null ? StringUtil.localize("itemGroup."+ModUtil.MOD_ID_LOWER) : booklet.currentEntrySet.entry.getLocalizedName()) : booklet.currentEntrySet.chapter.getLocalizedName();
+        String strg = booklet.currentEntrySet.chapter == null ? (booklet.currentEntrySet.entry == null ? StringUtil.localize("itemGroup."+ModUtil.MOD_ID) : booklet.currentEntrySet.entry.getLocalizedName()) : booklet.currentEntrySet.chapter.getLocalizedName();
         booklet.drawCenteredString(booklet.getFontRenderer(), strg, booklet.guiLeft+booklet.xSize/2, booklet.guiTop-9, StringUtil.DECIMAL_COLOR_WHITE);
     }
 
@@ -177,10 +177,10 @@ public class BookletUtils{
         }
         //Renders the amount of words and chars the book has
         else{
-            String wordCountString = StringUtil.localizeFormatted("booklet."+ModUtil.MOD_ID_LOWER+".amountOfWords", ClientProxy.bookletWordCount);
+            String wordCountString = StringUtil.localizeFormatted("booklet."+ModUtil.MOD_ID+".amountOfWords", ClientProxy.bookletWordCount);
             booklet.getFontRenderer().drawString(TextFormatting.ITALIC+wordCountString, booklet.guiLeft+booklet.xSize-booklet.getFontRenderer().getStringWidth(wordCountString)-15, booklet.guiTop+booklet.ySize-18-booklet.getFontRenderer().FONT_HEIGHT, 0);
 
-            String charCountString = StringUtil.localizeFormatted("booklet."+ModUtil.MOD_ID_LOWER+".amountOfChars", ClientProxy.bookletCharCount);
+            String charCountString = StringUtil.localizeFormatted("booklet."+ModUtil.MOD_ID+".amountOfChars", ClientProxy.bookletCharCount);
             booklet.getFontRenderer().drawString(TextFormatting.ITALIC+charCountString, booklet.guiLeft+booklet.xSize-booklet.getFontRenderer().getStringWidth(charCountString)-15, booklet.guiTop+booklet.ySize-18, 0);
         }
     }

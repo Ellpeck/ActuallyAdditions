@@ -23,7 +23,7 @@ public class PacketHandler{
     public static SimpleNetworkWrapper theNetwork;
 
     public static void init(){
-        theNetwork = NetworkRegistry.INSTANCE.newSimpleChannel(ModUtil.MOD_ID_LOWER);
+        theNetwork = NetworkRegistry.INSTANCE.newSimpleChannel(ModUtil.MOD_ID);
 
         theNetwork.registerMessage(PacketGuiButton.Handler.class, PacketGuiButton.class, 0, Side.SERVER);
         theNetwork.registerMessage(PacketGuiNumber.Handler.class, PacketGuiNumber.class, 1, Side.SERVER);

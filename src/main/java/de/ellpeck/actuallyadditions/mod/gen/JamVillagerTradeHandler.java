@@ -32,9 +32,9 @@ public class JamVillagerTradeHandler{
         this.addWants("ingotGold", 5, 7);
         this.addWants("cropWheat", 15, 25);
         this.addWants("dustRedstone", 25, 40);
-        this.addWants(new ItemStack(Items.bucket), 5, 9);
-        this.addWants(new ItemStack(Items.glass_bottle), 12, 17);
-        this.addWants(new ItemStack(Items.potionitem), 1, 1);
+        this.addWants(new ItemStack(Items.BUCKET), 5, 9);
+        this.addWants(new ItemStack(Items.GLASS_BOTTLE), 12, 17);
+        this.addWants(new ItemStack(Items.POTIONITEM), 1, 1);
         this.addWants("ingotIron", 10, 15);
         this.addWants("gemDiamond", 1, 2);
         this.addWants("dustGlowstone", 12, 22);

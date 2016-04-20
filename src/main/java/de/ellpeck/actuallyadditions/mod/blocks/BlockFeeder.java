@@ -29,11 +29,11 @@ import net.minecraft.world.World;
 public class BlockFeeder extends BlockContainerBase{
 
     public BlockFeeder(String name){
-        super(Material.rock, name);
+        super(Material.ROCK, name);
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(0.5F);
         this.setResistance(6.0F);
-        this.setStepSound(SoundType.STONE);
+        this.setSoundType(SoundType.STONE);
     }
 
     @Override

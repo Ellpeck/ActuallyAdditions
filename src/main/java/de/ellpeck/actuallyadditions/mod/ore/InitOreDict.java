@@ -30,7 +30,7 @@ public class InitOreDict{
         ModUtil.LOGGER.info("Initializing OreDictionary Entries...");
 
         //Vanilla Ores
-        addOre(Items.coal, "coal");
+        addOre(Items.COAL, "coal");
 
         //Ores for Pulverizers etc.
         addOre(InitItems.itemDust, TheDusts.IRON.ordinal(), "dustIron");
@@ -50,7 +50,7 @@ public class InitOreDict{
         addOre(InitItems.itemRiceSeed, "seedRice");
         addOre(InitItems.itemFoods, TheFoods.RICE.ordinal(), "cropRice");
         addOre(InitItems.itemFlaxSeed, "seedFlax");
-        addOre(Items.string, "cropFlax");
+        addOre(Items.STRING, "cropFlax");
         addOre(InitItems.itemCoffeeSeed, "seedCoffee");
         addOre(InitItems.itemCoffeeBean, "cropCoffee");
 

@@ -28,7 +28,7 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
 
     public TileEntityInventoryBase(int slots, String name){
         this.initializeSlots(slots);
-        this.name = "container."+ModUtil.MOD_ID_LOWER+"."+name;
+        this.name = "container."+ModUtil.MOD_ID+"."+name;
     }
 
     public void initializeSlots(int itemAmount){

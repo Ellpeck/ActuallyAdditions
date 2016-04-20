@@ -70,7 +70,7 @@ public class GuiRangedCollector extends GuiContainer{
 
         this.whitelistButton.displayString = this.collector.isWhitelist ? "O" : "X";
 
-        String text1 = this.collector.isWhitelist ? StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.whitelist") : StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.blacklist");
+        String text1 = this.collector.isWhitelist ? StringUtil.localize("info."+ModUtil.MOD_ID+".gui.whitelist") : StringUtil.localize("info."+ModUtil.MOD_ID+".gui.blacklist");
         if(x >= guiLeft+3 && y >= guiTop+16 && x <= guiLeft+18 && y <= guiTop+31){
             this.drawHoveringText(Collections.singletonList(text1), x, y);
         }

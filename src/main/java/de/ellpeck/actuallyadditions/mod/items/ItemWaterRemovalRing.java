@@ -53,7 +53,7 @@ public class ItemWaterRemovalRing extends ItemEnergy{
                         //Remove Water
                         BlockPos pos = new BlockPos(theX, theY, theZ);
                         Block block = PosUtil.getBlock(pos, world);
-                        if((block == Blocks.water || block == Blocks.flowing_water) && this.getEnergyStored(stack) >= energyUse){
+                        if((block == Blocks.WATER || block == Blocks.FLOWING_WATER) && this.getEnergyStored(stack) >= energyUse){
                             world.setBlockToAir(pos);
 
                             if(!player.capabilities.isCreativeMode){
@@ -61,7 +61,7 @@ public class ItemWaterRemovalRing extends ItemEnergy{
                             }
                         }
                         //Remove Lava
-                        else if((block == Blocks.lava || block == Blocks.flowing_lava) && this.getEnergyStored(stack) >= energyUse*2){
+                        else if((block == Blocks.LAVA || block == Blocks.FLOWING_LAVA) && this.getEnergyStored(stack) >= energyUse*2){
                             world.setBlockToAir(pos);
 
                             if(!player.capabilities.isCreativeMode){

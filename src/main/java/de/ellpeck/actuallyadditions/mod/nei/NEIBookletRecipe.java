@@ -72,7 +72,7 @@ public class NEIBookletRecipe/* extends TemplateRecipeHandler implements INEIRec
 
     @Override
     public String getGuiTexture(){
-        return ModUtil.MOD_ID_LOWER+":textures/gui/guiFurnaceDouble.png";
+        return ModUtil.MOD_ID+":textures/gui/guiFurnaceDouble.png";
     }
 
     @Override
@@ -84,7 +84,7 @@ public class NEIBookletRecipe/* extends TemplateRecipeHandler implements INEIRec
     public void drawExtras(int recipe){
         CachedInfoStack stack = (CachedInfoStack)this.arecipes.get(recipe);
         if(stack.theStack != null){
-            List header = Minecraft.getMinecraft().fontRendererObj.listFormattedStringToWidth(StringUtil.localize("container.nei."+ModUtil.MOD_ID_LOWER+".booklet.header").replaceAll("<item>", EnumChatFormatting.BLUE+"").replaceAll("<r>", EnumChatFormatting.BLACK+""), 165);
+            List header = Minecraft.getMinecraft().fontRendererObj.listFormattedStringToWidth(StringUtil.localize("container.nei."+ModUtil.MOD_ID+".booklet.header").replaceAll("<item>", EnumChatFormatting.BLUE+"").replaceAll("<r>", EnumChatFormatting.BLACK+""), 165);
             for(int i = 0; i < header.size(); i++){
                 GuiDraw.drawString((String)header.get(i), 0, 18+i*(Minecraft.getMinecraft().fontRendererObj.FONT_HEIGHT+1), 0, false);
             }
@@ -92,7 +92,7 @@ public class NEIBookletRecipe/* extends TemplateRecipeHandler implements INEIRec
             int maxLines = 5;
             IBookletChapter chapter = stack.thePage.getChapter();
             String aText = (chapter.getPages()[0] instanceof PagePicture && chapter.getPages().length > 1 ? chapter.getPages()[1] : chapter.getPages()[0]).getText();
-            List text = Minecraft.getMinecraft().fontRendererObj.listFormattedStringToWidth(aText != null ? aText : EnumChatFormatting.DARK_RED+StringUtil.localize("container.nei."+ModUtil.MOD_ID_LOWER+".booklet.noText"), 165);
+            List text = Minecraft.getMinecraft().fontRendererObj.listFormattedStringToWidth(aText != null ? aText : EnumChatFormatting.DARK_RED+StringUtil.localize("container.nei."+ModUtil.MOD_ID+".booklet.noText"), 165);
             for(int i = 0; i < Math.min(maxLines, text.size()); i++){
                 GuiDraw.drawString(text.get(i)+(i == maxLines-1 && text.size() > maxLines ? EnumChatFormatting.RESET+""+EnumChatFormatting.BLACK+"..." : ""), 0, 18+25+i*(Minecraft.getMinecraft().fontRendererObj.FONT_HEIGHT+1), 0, false);
             }
