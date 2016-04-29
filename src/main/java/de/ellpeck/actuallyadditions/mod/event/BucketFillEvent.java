@@ -30,11 +30,13 @@ public class BucketFillEvent{
     }
 
     private void fillBucket(FillBucketEvent event, Item item, Block fluid){
-        Block block = PosUtil.getBlock(event.getTarget().getBlockPos(), event.getWorld());
-        if(block == fluid){
-            event.getWorld().setBlockToAir(event.getTarget().getBlockPos());
-            event.setFilledBucket(new ItemStack(item));
-            event.setResult(Event.Result.ALLOW);
+        if(event.getTarget() != null && event.getTarget().getBlockPos() != null){
+            Block block = PosUtil.getBlock(event.getTarget().getBlockPos(), event.getWorld());
+            if(block == fluid){
+                event.getWorld().setBlockToAir(event.getTarget().getBlockPos());
+                event.setFilledBucket(new ItemStack(item));
+                event.setResult(Event.Result.ALLOW);
+            }
         }
     }
 }
