@@ -1,3 +1,7 @@
+# 1.9-r28
+* Fixed a crash when trying to fill a bucket
+##### Because it was pretty much gamebreaking.
+
 # 1.9-r27
 ### Yes, really. This update pushes the mod's version to 1.9, however it probably is very unstable. There is a few notable bugs and things missing, but I wanted to push this version because a lot of people wanted it.
 ## If you encounter any bugs, please post them on the Issue Tracker here: https://github.com/Ellpeck/ActuallyAdditions/issues
