@@ -213,6 +213,8 @@ public abstract class BlockContainerBase extends BlockContainer{
     public void onBlockHarvested(World world, BlockPos pos, IBlockState state, EntityPlayer player){
         if(!player.capabilities.isCreativeMode){
             this.dropBlockAsItem(world, pos, state, 0);
+            //dirty workaround because of Forge calling Item.onBlockStartBreak() twice
+            world.setBlockToAir(pos);
         }
     }
 
