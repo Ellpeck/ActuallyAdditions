@@ -23,6 +23,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -69,12 +70,11 @@ public class BlockTreasureChest extends BlockBase{
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack stack, EnumFacing par6, float par7, float par8, float par9){
         if(!world.isRemote){
-            //TODO Fix sounds
-            //world.playSoundAtEntity(player, "random.chestopen", 0.2F, Util.RANDOM.nextFloat()*0.1F+0.9F);
+            world.playSound(player, pos, SoundEvents.BLOCK_CHEST_OPEN, SoundCategory.BLOCKS, 0.2F, Util.RANDOM.nextFloat()*0.1F+0.9F);
             this.dropItems(world, pos);
             world.setBlockToAir(pos);
 
-            //player.triggerAchievement(TheAchievements.OPEN_TREASURE_CHEST.ach);
+            player.addStat(TheAchievements.OPEN_TREASURE_CHEST.ach);
         }
         return true;
     }

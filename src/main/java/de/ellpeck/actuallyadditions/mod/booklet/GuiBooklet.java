@@ -20,17 +20,21 @@ import de.ellpeck.actuallyadditions.mod.booklet.button.TexturedButton;
 import de.ellpeck.actuallyadditions.mod.booklet.entry.BookletEntryAllSearch;
 import de.ellpeck.actuallyadditions.mod.config.GuiConfiguration;
 import de.ellpeck.actuallyadditions.mod.items.ItemBooklet;
+import de.ellpeck.actuallyadditions.mod.misc.SoundHandler;
 import de.ellpeck.actuallyadditions.mod.proxy.ClientProxy;
 import de.ellpeck.actuallyadditions.mod.update.UpdateChecker;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import de.ellpeck.actuallyadditions.mod.util.playerdata.PersistentClientData;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
@@ -162,8 +166,7 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
     public void keyTyped(char theChar, int key){
         if(AND_HIS_NAME_IS.length > this.hisNameIsAt && AND_HIS_NAME_IS[this.hisNameIsAt] == key){
             if(this.hisNameIsAt+1 >= AND_HIS_NAME_IS.length){
-                //TODO Fix sound
-                //Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.create(new ResourceLocation(ModUtil.MOD_ID, "duhDuhDuhDuuuh")));
+                Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundHandler.duhDuhDuhDuuuh, 0.5F));
                 ModUtil.LOGGER.info("AND HIS NAME IS JOHN CENA DUH DUH DUH DUUUH");
                 this.hisNameIsAt = 0;
             }
@@ -427,8 +430,7 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
                 if(mousePressed){
                     BookletUtils.openIndexEntry(this, page.getChapter().getEntry(), ActuallyAdditionsAPI.bookletEntries.indexOf(page.getChapter().getEntry())/GuiBooklet.CHAPTER_BUTTONS_AMOUNT+1, true);
                     BookletUtils.openChapter(this, page.getChapter(), page);
-                    //TODO Fix sound
-                    //Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.create(new ResourceLocation("gui.button.press"), 1.0F));
+                    Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0F));
                 }
             }
         }

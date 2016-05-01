@@ -18,12 +18,14 @@ import net.minecraft.block.BlockBush;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
@@ -71,8 +73,7 @@ public class ItemLeafBlower extends ItemBase{
                 this.breakStuff(player.worldObj, MathHelper.floor_double(player.posX), MathHelper.floor_double(player.posY), MathHelper.floor_double(player.posZ));
                 //Plays a Minecart sounds (It really sounds like a Leaf Blower!)
                 if(!ConfigValues.lessSound){
-                    //TODO Fix sound
-                    //player.worldObj.playSoundAtEntity(player, "minecart.base", 0.3F, 0.001F);
+                    player.worldObj.playSound(null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_MINECART_RIDING, SoundCategory.PLAYERS, 0.3F, 0.001F);
                 }
             }
         }

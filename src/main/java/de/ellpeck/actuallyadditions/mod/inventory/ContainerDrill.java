@@ -17,6 +17,7 @@ import de.ellpeck.actuallyadditions.mod.items.ItemDrillUpgrade;
 import invtweaks.api.container.InventoryContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
@@ -119,18 +120,15 @@ public class ContainerDrill extends Container{
         return null;
     }
 
-    //TODO Fix slotClick()
-    /*@Override
-    public ItemStack slotClick(int par1, int par2, int par3, EntityPlayer player){
-        //par3 appears to be the type of clicking
-        //par3 == 2 appears to be one of the number keys being hit
-        if(par3 == 2 && par2 == inventory.currentItem){
+    @Override
+    public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, EntityPlayer player){
+        if(clickTypeIn == ClickType.SWAP && dragType == inventory.currentItem){
             return null;
         }
         else{
-            return super.slotClick(par1, par2, par3, player);
+            return super.slotClick(slotId, dragType, clickTypeIn, player);
         }
-    }*/
+    }
 
     @Override
     public void onContainerClosed(EntityPlayer player){

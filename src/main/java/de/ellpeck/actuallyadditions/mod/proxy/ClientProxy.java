@@ -21,6 +21,7 @@ import de.ellpeck.actuallyadditions.mod.blocks.render.RenderSmileyCloud;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.event.InitEvents;
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
+import de.ellpeck.actuallyadditions.mod.misc.SoundHandler;
 import de.ellpeck.actuallyadditions.mod.misc.special.SpecialRenderInit;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityAtomicReconstructor;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityCompost;
@@ -107,6 +108,8 @@ public class ClientProxy implements IProxy{
 
         this.registerCustomFluidBlockRenderer(InitFluids.fluidCanolaOil);
         this.registerCustomFluidBlockRenderer(InitFluids.fluidOil);
+
+        SoundHandler.init();
 
         IResourceManager manager = Minecraft.getMinecraft().getResourceManager();
         if(manager instanceof IReloadableResourceManager){

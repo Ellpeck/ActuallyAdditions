@@ -39,11 +39,10 @@ public class HudEvent{
             EntityPlayer player = minecraft.thePlayer;
             RayTraceResult posHit = minecraft.objectMouseOver;
             FontRenderer font = minecraft.fontRendererObj;
-            ItemStack stack = player.getActiveItemStack();
+            ItemStack stack = player.getHeldItemMainhand();
 
             profiler.startSection(ModUtil.MOD_ID+"Hud");
 
-            //TODO Fix this not working because stack is always null for some reason
             if(stack != null){
                 if(stack.getItem() instanceof IHudDisplay){
                     profiler.startSection("ItemHudDisplay");

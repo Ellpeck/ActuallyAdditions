@@ -17,6 +17,7 @@ import de.ellpeck.actuallyadditions.api.lens.ILensItem;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
 import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
 import de.ellpeck.actuallyadditions.mod.items.lens.Lenses;
+import de.ellpeck.actuallyadditions.mod.misc.SoundHandler;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
 import de.ellpeck.actuallyadditions.mod.network.PacketParticle;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
@@ -25,6 +26,7 @@ import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
@@ -120,8 +122,8 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
 
     private void shootLaser(int endX, int endY, int endZ, Lens currentLens){
         if(!ConfigValues.lessSound){
-            //TODO Fix sound
-            //this.worldObj.playSoundEffect(this.getX(), this.getY(), this.getZ(), ModUtil.MOD_ID+":reconstructor", 0.35F, 1.0F);
+            System.out.println("SOUND!");
+            this.worldObj.playSound(null, this.getX(), this.getY(), this.getZ(), SoundHandler.reconstructor, SoundCategory.BLOCKS, 0.35F, 1.0F);
         }
         PacketHandler.theNetwork.sendToAllAround(new PacketParticle(this.getX(), this.getY(), this.getZ(), endX, endY, endZ, currentLens.getColor(), ConfigValues.lessParticles ? 2 : 8, 2F), new NetworkRegistry.TargetPoint(worldObj.provider.getDimension(), this.getX(), this.getY(), this.getZ(), 64));
     }

@@ -16,6 +16,7 @@ import de.ellpeck.actuallyadditions.mod.tile.TileEntityRangedCollector;
 import invtweaks.api.container.InventoryContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
@@ -56,7 +57,7 @@ public class ContainerRangedCollector extends Container{
         final int hotbarStart = inventoryEnd+1;
         final int hotbarEnd = hotbarStart+8;
 
-        Slot theSlot = (Slot)this.inventorySlots.get(slot);
+        Slot theSlot = this.inventorySlots.get(slot);
 
         if(theSlot != null && theSlot.getHasStack()){
             ItemStack newStack = theSlot.getStack();
@@ -98,17 +99,16 @@ public class ContainerRangedCollector extends Container{
         return null;
     }
 
-    //TODO Find a replacement for slotClick()
-    /*@Override
-    public ItemStack slotClick(int par1, int par2, int par3, EntityPlayer player){
-        if(par1 >= 0 && par1 < this.inventorySlots.size() && this.getSlot(par1) instanceof SlotFilter){
+    @Override
+    public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, EntityPlayer player){
+        if(slotId >= 0 && slotId < this.inventorySlots.size() && this.getSlot(slotId) instanceof SlotFilter){
             //Calls the Filter's SlotClick function
-            return ((SlotFilter)getSlot(par1)).slotClick(player);
+            return ((SlotFilter)getSlot(slotId)).slotClick(player);
         }
         else{
-            return super.slotClick(par1, par2, par3, player);
+            return super.slotClick(slotId, dragType, clickTypeIn, player);
         }
-    }*/
+    }
 
     @Override
     public boolean canInteractWith(EntityPlayer player){
