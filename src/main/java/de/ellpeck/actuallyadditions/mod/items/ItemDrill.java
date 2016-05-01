@@ -167,7 +167,7 @@ public class ItemDrill extends ItemEnergy{
 
     @Override
     public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand){
-        if(!world.isRemote && player.isSneaking() && stack == player.getActiveItemStack()){
+        if(!world.isRemote && player.isSneaking()){
             player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.DRILL.ordinal(), world, (int)player.posX, (int)player.posY, (int)player.posZ);
         }
         return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
