@@ -30,7 +30,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.client.CPacketPlayerDigging;
 import net.minecraft.network.play.server.SPacketBlockChange;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.*;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
@@ -360,8 +360,10 @@ public class WorldUtil{
         boolean canHarvest = block.canHarvestBlock(world, pos, player);
 
         //Send Block Breaking Event
+        int xp = -1;
         if(player instanceof EntityPlayerMP){
-            if(ForgeHooks.onBlockBreakEvent(world, ((EntityPlayerMP)player).interactionManager.getGameType(), (EntityPlayerMP)player, pos) == -1){
+            xp = ForgeHooks.onBlockBreakEvent(world, ((EntityPlayerMP)player).interactionManager.getGameType(), (EntityPlayerMP)player, pos);
+            if(xp == -1){
                 return false;
             }
         }
@@ -389,8 +391,9 @@ public class WorldUtil{
                 }
                 //Only drop XP when no Silk Touch is applied
                 if(EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, stack) <= 0){
-                    //Drop XP depending on Fortune Level
-                    block.dropXpOnBlockBreak(world, pos, block.getExpDrop(state, world, pos, EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, stack)));
+                    if(xp >= 0){
+                        block.dropXpOnBlockBreak(world, pos, xp);
+                    }
                 }
             }
         }
