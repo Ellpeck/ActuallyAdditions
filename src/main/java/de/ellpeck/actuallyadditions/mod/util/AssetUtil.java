@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.util;
 
-import de.ellpeck.actuallyadditions.mod.booklet.GuiBooklet;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -79,11 +78,7 @@ public class AssetUtil{
         Minecraft.getMinecraft().getRenderItem().renderItemOverlayIntoGUI(mc.fontRendererObj, stack, 0, 0, null);
         mc.fontRendererObj.setUnicodeFlag(flagBefore);
 
-        //TODO I don't think this is needed anymore, but I need to check that
-        //GL+MC+NEI suck
-        if(mc.currentScreen instanceof GuiBooklet || mc.currentScreen == null){
-            RenderHelper.disableStandardItemLighting();
-        }
+        RenderHelper.disableStandardItemLighting();
         GlStateManager.popMatrix();
     }
 
