@@ -109,7 +109,7 @@ public class BlockSlabs extends BlockBase{
             if(PosUtil.getBlock(pos, world) == this.block && ((side.ordinal() == 1 && PosUtil.getMetadata(pos, world) == 0) || (side.ordinal() == 0 && PosUtil.getMetadata(pos, world) == 1))){
                 if(PosUtil.setBlock(pos, world, ((BlockSlabs)this.block).fullBlock, ((BlockSlabs)this.block).meta, 3)){
                     SoundType type = this.block.getSoundType();
-                    world.playSound(player, pos, type.getPlaceSound(), SoundCategory.BLOCKS, (type.getVolume()+1.0F)/2.0F, type.getPitch()*0.8F);
+                    world.playSound(null, pos, type.getPlaceSound(), SoundCategory.BLOCKS, (type.getVolume()+1.0F)/2.0F, type.getPitch()*0.8F);
                     stack.stackSize--;
                     return EnumActionResult.SUCCESS;
                 }
