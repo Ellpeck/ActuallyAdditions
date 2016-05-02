@@ -85,10 +85,10 @@ public class BlockPlant extends BlockCrops{
 
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack stack, EnumFacing facing, float hitX, float hitY, float hitZ){
-        if(getMetaFromState(state) >= 7){
+        if(this.getMetaFromState(state) >= 7){
             if(!world.isRemote){
 
-                List<ItemStack> drops = getDrops(world, pos, state, 0);
+                List<ItemStack> drops = this.getDrops(world, pos, state, 0);
                 boolean deductedSeedSize = false;
                 for(ItemStack drop : drops){
                     if(drop != null){
@@ -104,7 +104,7 @@ public class BlockPlant extends BlockCrops{
                     }
                 }
 
-                world.setBlockState(pos, getStateFromMeta(0));
+                world.setBlockState(pos, this.getStateFromMeta(0));
             }
             return true;
         }
@@ -118,7 +118,7 @@ public class BlockPlant extends BlockCrops{
 
     @Override
     public int quantityDropped(IBlockState state, int fortune, Random random){
-        return this.getMetaFromState(state) >= 7 ? random.nextInt(addDropAmount)+minDropAmount : super.quantityDropped(state, fortune, random);
+        return this.getMetaFromState(state) >= 7 ? random.nextInt(this.addDropAmount)+this.minDropAmount : super.quantityDropped(state, fortune, random);
     }
 
     @Override

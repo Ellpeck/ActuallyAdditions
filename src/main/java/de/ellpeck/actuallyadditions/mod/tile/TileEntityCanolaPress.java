@@ -75,7 +75,7 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IE
     @SuppressWarnings("unchecked")
     public void updateEntity(){
         super.updateEntity();
-        if(!worldObj.isRemote){
+        if(!this.worldObj.isRemote){
             if(this.isCanola(0) && PRODUCE <= this.tank.getCapacity()-this.tank.getFluidAmount()){
                 if(this.storage.getEnergyStored() >= ENERGY_USE){
                     this.currentProcessTime++;
@@ -97,15 +97,15 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IE
                 this.currentProcessTime = 0;
             }
 
-            WorldUtil.fillBucket(tank, slots, 1, 2);
+            WorldUtil.fillBucket(this.tank, this.slots, 1, 2);
 
             if(this.tank.getFluidAmount() > 0){
-                WorldUtil.pushFluid(worldObj, this.pos, EnumFacing.DOWN, this.tank);
+                WorldUtil.pushFluid(this.worldObj, this.pos, EnumFacing.DOWN, this.tank);
                 if(!this.isRedstonePowered){
-                    WorldUtil.pushFluid(worldObj, this.pos, EnumFacing.NORTH, this.tank);
-                    WorldUtil.pushFluid(worldObj, this.pos, EnumFacing.EAST, this.tank);
-                    WorldUtil.pushFluid(worldObj, this.pos, EnumFacing.SOUTH, this.tank);
-                    WorldUtil.pushFluid(worldObj, this.pos, EnumFacing.WEST, this.tank);
+                    WorldUtil.pushFluid(this.worldObj, this.pos, EnumFacing.NORTH, this.tank);
+                    WorldUtil.pushFluid(this.worldObj, this.pos, EnumFacing.EAST, this.tank);
+                    WorldUtil.pushFluid(this.worldObj, this.pos, EnumFacing.SOUTH, this.tank);
+                    WorldUtil.pushFluid(this.worldObj, this.pos, EnumFacing.WEST, this.tank);
                 }
             }
 

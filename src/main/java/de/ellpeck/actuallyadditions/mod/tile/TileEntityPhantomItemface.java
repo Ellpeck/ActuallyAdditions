@@ -95,7 +95,7 @@ public class TileEntityPhantomItemface extends TileEntityPhantomface{
 
     public IInventory getInventory(){
         if(this.boundPosition != null){
-            TileEntity tile = worldObj.getTileEntity(boundPosition);
+            TileEntity tile = this.worldObj.getTileEntity(this.boundPosition);
             if(tile instanceof IInventory){
                 return (IInventory)tile;
             }
@@ -110,7 +110,7 @@ public class TileEntityPhantomItemface extends TileEntityPhantomface{
 
     @Override
     public boolean isBoundThingInRange(){
-        return super.isBoundThingInRange() && worldObj.getTileEntity(boundPosition) instanceof IInventory;
+        return super.isBoundThingInRange() && this.worldObj.getTileEntity(this.boundPosition) instanceof IInventory;
     }
 
     @Override

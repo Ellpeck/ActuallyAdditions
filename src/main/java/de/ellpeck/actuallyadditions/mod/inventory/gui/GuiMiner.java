@@ -44,10 +44,10 @@ public class GuiMiner extends GuiContainer{
     public void initGui(){
         super.initGui();
 
-        GuiButton buttonMode = new GuiButton(0, guiLeft+xSize/2-51, guiTop+75, 50, 20, "Mode");
+        GuiButton buttonMode = new GuiButton(0, this.guiLeft+this.xSize/2-51, this.guiTop+75, 50, 20, "Mode");
         this.buttonList.add(buttonMode);
 
-        GuiButton buttonReset = new GuiButton(1, guiLeft+xSize/2+1, guiTop+75, 50, 20, "Reset");
+        GuiButton buttonReset = new GuiButton(1, this.guiLeft+this.xSize/2+1, this.guiTop+75, 50, 20, "Reset");
         this.buttonList.add(buttonReset);
     }
 
@@ -58,7 +58,7 @@ public class GuiMiner extends GuiContainer{
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y){
-        AssetUtil.displayNameString(this.fontRendererObj, xSize, -10, this.miner.getName());
+        AssetUtil.displayNameString(this.fontRendererObj, this.xSize, -10, this.miner.getName());
     }
 
     @Override
@@ -72,11 +72,11 @@ public class GuiMiner extends GuiContainer{
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 93);
 
         String mining = this.miner.onlyMineOres ? "Only Mining Ores" : "Mining Everything";
-        this.fontRendererObj.drawString(mining, this.guiLeft+this.xSize/2-fontRendererObj.getStringWidth(mining)/2, guiTop+8, StringUtil.DECIMAL_COLOR_GRAY_TEXT);
+        this.fontRendererObj.drawString(mining, this.guiLeft+this.xSize/2-this.fontRendererObj.getStringWidth(mining)/2, this.guiTop+8, StringUtil.DECIMAL_COLOR_GRAY_TEXT);
     }
 
     @Override
     public void actionPerformed(GuiButton button){
-        PacketHandler.theNetwork.sendToServer(new PacketGuiButton(miner.getPos().getX(), miner.getPos().getY(), miner.getPos().getZ(), miner.getWorld(), button.id, Minecraft.getMinecraft().thePlayer));
+        PacketHandler.theNetwork.sendToServer(new PacketGuiButton(this.miner.getPos().getX(), this.miner.getPos().getY(), this.miner.getPos().getZ(), this.miner.getWorld(), button.id, Minecraft.getMinecraft().thePlayer));
     }
 }

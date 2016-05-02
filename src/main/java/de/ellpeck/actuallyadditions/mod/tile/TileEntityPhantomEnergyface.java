@@ -62,7 +62,7 @@ public class TileEntityPhantomEnergyface extends TileEntityPhantomface implement
 
     public IEnergyProvider getProvider(){
         if(this.boundPosition != null){
-            TileEntity tile = worldObj.getTileEntity(boundPosition);
+            TileEntity tile = this.worldObj.getTileEntity(this.boundPosition);
             if(tile instanceof IEnergyProvider){
                 return (IEnergyProvider)tile;
             }
@@ -72,7 +72,7 @@ public class TileEntityPhantomEnergyface extends TileEntityPhantomface implement
 
     public IEnergyReceiver getReceiver(){
         if(this.boundPosition != null){
-            TileEntity tile = worldObj.getTileEntity(boundPosition);
+            TileEntity tile = this.worldObj.getTileEntity(this.boundPosition);
             if(tile instanceof IEnergyReceiver){
                 return (IEnergyReceiver)tile;
             }
@@ -84,7 +84,7 @@ public class TileEntityPhantomEnergyface extends TileEntityPhantomface implement
     public void updateEntity(){
         super.updateEntity();
 
-        if(!worldObj.isRemote){
+        if(!this.worldObj.isRemote){
             if(this.isBoundThingInRange() && this.getProvider() != null){
                 this.pushEnergy(EnumFacing.UP);
                 this.pushEnergy(EnumFacing.DOWN);
@@ -98,11 +98,11 @@ public class TileEntityPhantomEnergyface extends TileEntityPhantomface implement
 
     @Override
     public boolean isBoundThingInRange(){
-        return super.isBoundThingInRange() && (worldObj.getTileEntity(boundPosition) instanceof IEnergyReceiver || worldObj.getTileEntity(boundPosition) instanceof IEnergyProvider);
+        return super.isBoundThingInRange() && (this.worldObj.getTileEntity(this.boundPosition) instanceof IEnergyReceiver || this.worldObj.getTileEntity(this.boundPosition) instanceof IEnergyProvider);
     }
 
     private void pushEnergy(EnumFacing side){
-        TileEntity tile = WorldUtil.getTileEntityFromSide(side, worldObj, this.getPos());
+        TileEntity tile = WorldUtil.getTileEntityFromSide(side, this.worldObj, this.getPos());
         if(tile != null && tile instanceof IEnergyReceiver && this.getProvider().getEnergyStored(side.getOpposite()) > 0){
             if(((IEnergyReceiver)tile).canConnectEnergy(side.getOpposite()) && this.canConnectEnergy(side)){
                 int receive = this.extractEnergy(side, Math.min(((IEnergyReceiver)tile).getMaxEnergyStored(side.getOpposite())-((IEnergyReceiver)tile).getEnergyStored(side.getOpposite()), this.getEnergyStored(side)), true);

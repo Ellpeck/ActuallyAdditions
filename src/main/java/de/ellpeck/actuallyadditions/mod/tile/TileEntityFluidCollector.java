@@ -56,35 +56,35 @@ public class TileEntityFluidCollector extends TileEntityInventoryBase implements
     }
 
     private void doWork(){
-        EnumFacing sideToManipulate = WorldUtil.getDirectionByPistonRotation(PosUtil.getMetadata(this.pos, worldObj));
+        EnumFacing sideToManipulate = WorldUtil.getDirectionByPistonRotation(PosUtil.getMetadata(this.pos, this.worldObj));
         BlockPos coordsBlock = WorldUtil.getCoordsFromSide(sideToManipulate, this.pos, 0);
 
         if(coordsBlock != null){
-            Block blockToBreak = PosUtil.getBlock(coordsBlock, worldObj);
-            if(!this.isPlacer && blockToBreak != null && PosUtil.getMetadata(coordsBlock, worldObj) == 0 && FluidContainerRegistry.BUCKET_VOLUME <= this.tank.getCapacity()-this.tank.getFluidAmount()){
+            Block blockToBreak = PosUtil.getBlock(coordsBlock, this.worldObj);
+            if(!this.isPlacer && blockToBreak != null && PosUtil.getMetadata(coordsBlock, this.worldObj) == 0 && FluidContainerRegistry.BUCKET_VOLUME <= this.tank.getCapacity()-this.tank.getFluidAmount()){
                 if(blockToBreak instanceof IFluidBlock && ((IFluidBlock)blockToBreak).getFluid() != null){
                     if(this.tank.fill(new FluidStack(((IFluidBlock)blockToBreak).getFluid(), FluidContainerRegistry.BUCKET_VOLUME), false) >= FluidContainerRegistry.BUCKET_VOLUME){
                         this.tank.fill(new FluidStack(((IFluidBlock)blockToBreak).getFluid(), FluidContainerRegistry.BUCKET_VOLUME), true);
-                        WorldUtil.breakBlockAtSide(sideToManipulate, worldObj, this.pos);
+                        WorldUtil.breakBlockAtSide(sideToManipulate, this.worldObj, this.pos);
                     }
                 }
                 else if(blockToBreak == Blocks.LAVA || blockToBreak == Blocks.FLOWING_LAVA){
                     if(this.tank.fill(new FluidStack(FluidRegistry.LAVA, FluidContainerRegistry.BUCKET_VOLUME), false) >= FluidContainerRegistry.BUCKET_VOLUME){
                         this.tank.fill(new FluidStack(FluidRegistry.LAVA, FluidContainerRegistry.BUCKET_VOLUME), true);
-                        WorldUtil.breakBlockAtSide(sideToManipulate, worldObj, this.pos);
+                        WorldUtil.breakBlockAtSide(sideToManipulate, this.worldObj, this.pos);
                     }
                 }
                 else if(blockToBreak == Blocks.WATER || blockToBreak == Blocks.FLOWING_WATER){
                     if(this.tank.fill(new FluidStack(FluidRegistry.WATER, FluidContainerRegistry.BUCKET_VOLUME), false) >= FluidContainerRegistry.BUCKET_VOLUME){
                         this.tank.fill(new FluidStack(FluidRegistry.WATER, FluidContainerRegistry.BUCKET_VOLUME), true);
-                        WorldUtil.breakBlockAtSide(sideToManipulate, worldObj, this.pos);
+                        WorldUtil.breakBlockAtSide(sideToManipulate, this.worldObj, this.pos);
                     }
                 }
             }
-            else if(this.isPlacer && PosUtil.getBlock(coordsBlock, worldObj).isReplaceable(worldObj, coordsBlock)){
+            else if(this.isPlacer && PosUtil.getBlock(coordsBlock, this.worldObj).isReplaceable(this.worldObj, coordsBlock)){
                 if(this.tank.getFluidAmount() >= FluidContainerRegistry.BUCKET_VOLUME){
                     if(this.tank.getFluid().getFluid().getBlock() != null){
-                        WorldUtil.useItemAtSide(sideToManipulate, worldObj, this.pos, new ItemStack(this.tank.getFluid().getFluid().getBlock()));
+                        WorldUtil.useItemAtSide(sideToManipulate, this.worldObj, this.pos, new ItemStack(this.tank.getFluid().getFluid().getBlock()));
                         this.tank.drain(FluidContainerRegistry.BUCKET_VOLUME, true);
                     }
                 }
@@ -149,7 +149,7 @@ public class TileEntityFluidCollector extends TileEntityInventoryBase implements
     @SuppressWarnings("unchecked")
     public void updateEntity(){
         super.updateEntity();
-        if(!worldObj.isRemote){
+        if(!this.worldObj.isRemote){
             if(!this.isRedstonePowered && !this.activateOnceWithSignal){
                 if(this.currentTime > 0){
                     this.currentTime--;
@@ -163,24 +163,24 @@ public class TileEntityFluidCollector extends TileEntityInventoryBase implements
             }
 
             if(!this.isPlacer){
-                WorldUtil.fillBucket(tank, slots, 0, 1);
+                WorldUtil.fillBucket(this.tank, this.slots, 0, 1);
             }
             else{
-                WorldUtil.emptyBucket(tank, slots, 0, 1);
+                WorldUtil.emptyBucket(this.tank, this.slots, 0, 1);
             }
 
             if(!this.isPlacer && this.tank.getFluidAmount() > 0){
-                WorldUtil.pushFluid(worldObj, this.pos, EnumFacing.DOWN, this.tank);
+                WorldUtil.pushFluid(this.worldObj, this.pos, EnumFacing.DOWN, this.tank);
                 if(!this.isRedstonePowered){
-                    WorldUtil.pushFluid(worldObj, this.pos, EnumFacing.NORTH, this.tank);
-                    WorldUtil.pushFluid(worldObj, this.pos, EnumFacing.EAST, this.tank);
-                    WorldUtil.pushFluid(worldObj, this.pos, EnumFacing.SOUTH, this.tank);
-                    WorldUtil.pushFluid(worldObj, this.pos, EnumFacing.WEST, this.tank);
+                    WorldUtil.pushFluid(this.worldObj, this.pos, EnumFacing.NORTH, this.tank);
+                    WorldUtil.pushFluid(this.worldObj, this.pos, EnumFacing.EAST, this.tank);
+                    WorldUtil.pushFluid(this.worldObj, this.pos, EnumFacing.SOUTH, this.tank);
+                    WorldUtil.pushFluid(this.worldObj, this.pos, EnumFacing.WEST, this.tank);
                 }
             }
 
-            if(lastTankAmount != this.tank.getFluidAmount() && this.sendUpdateWithInterval()){
-                lastTankAmount = this.tank.getFluidAmount();
+            if(this.lastTankAmount != this.tank.getFluidAmount() && this.sendUpdateWithInterval()){
+                this.lastTankAmount = this.tank.getFluidAmount();
             }
         }
     }

@@ -115,7 +115,7 @@ public class BlockWallAA extends BlockBase{
 
     @Override
     public int damageDropped(IBlockState state){
-        return meta;
+        return this.meta;
     }
 
     @SuppressWarnings("unchecked")

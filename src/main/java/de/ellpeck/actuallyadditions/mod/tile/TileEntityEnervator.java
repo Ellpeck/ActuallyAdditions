@@ -44,7 +44,7 @@ public class TileEntityEnervator extends TileEntityInventoryBase implements IEne
     @Override
     public void updateEntity(){
         super.updateEntity();
-        if(!worldObj.isRemote){
+        if(!this.worldObj.isRemote){
             if(this.slots[0] != null && this.slots[0].getItem() instanceof IEnergyContainerItem && this.slots[1] == null){
                 if(((IEnergyContainerItem)this.slots[0].getItem()).getEnergyStored(this.slots[0]) > 0){
                     int toReceive = ((IEnergyContainerItem)this.slots[0].getItem()).extractEnergy(this.slots[0], this.storage.getMaxEnergyStored()-this.storage.getEnergyStored(), false);
@@ -61,10 +61,10 @@ public class TileEntityEnervator extends TileEntityInventoryBase implements IEne
             }
 
             if(this.storage.getEnergyStored() > 0){
-                WorldUtil.pushEnergyToAllSides(worldObj, this.pos, this.storage);
+                WorldUtil.pushEnergyToAllSides(this.worldObj, this.pos, this.storage);
             }
 
-            if(lastEnergy != this.storage.getEnergyStored() && this.sendUpdateWithInterval()){
+            if(this.lastEnergy != this.storage.getEnergyStored() && this.sendUpdateWithInterval()){
                 this.lastEnergy = this.storage.getEnergyStored();
             }
         }

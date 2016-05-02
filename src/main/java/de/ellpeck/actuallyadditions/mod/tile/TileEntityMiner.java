@@ -74,7 +74,7 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyR
             if(!this.isRedstonePowered && this.ticksElapsed%5 == 0){
 
                 if(this.layerAt > 0){
-                    if(this.mine(TileEntityPhantomface.upgradeRange(DEFAULT_RANGE, worldObj, this.pos))){
+                    if(this.mine(TileEntityPhantomface.upgradeRange(DEFAULT_RANGE, this.worldObj, this.pos))){
                         this.layerAt--;
                     }
                 }
@@ -94,18 +94,18 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyR
                 if(this.storage.getEnergyStored() >= actualUse){
                     BlockPos pos = new BlockPos(this.pos.getX()+anX, this.layerAt, this.pos.getZ()+aZ);
 
-                    Block block = PosUtil.getBlock(pos, worldObj);
-                    int meta = PosUtil.getMetadata(pos, worldObj);
+                    Block block = PosUtil.getBlock(pos, this.worldObj);
+                    int meta = PosUtil.getMetadata(pos, this.worldObj);
                     if(block != null && !block.isAir(this.worldObj.getBlockState(pos), this.worldObj, pos)){
-                        if(block.getHarvestLevel(worldObj.getBlockState(pos)) <= 3F && block.getBlockHardness(this.worldObj.getBlockState(pos), this.worldObj, pos) >= 0F && !(block instanceof BlockLiquid) && !(block instanceof IFluidBlock) && this.isMinable(block, meta)){
+                        if(block.getHarvestLevel(this.worldObj.getBlockState(pos)) <= 3F && block.getBlockHardness(this.worldObj.getBlockState(pos), this.worldObj, pos) >= 0F && !(block instanceof BlockLiquid) && !(block instanceof IFluidBlock) && this.isMinable(block, meta)){
                             ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-                            drops.addAll(block.getDrops(worldObj, pos, worldObj.getBlockState(pos), 0));
+                            drops.addAll(block.getDrops(this.worldObj, pos, this.worldObj.getBlockState(pos), 0));
 
                             if(WorldUtil.addToInventory(this, drops, false, true)){
                                 if(!ConfigValues.lessBlockBreakingEffects){
-                                    worldObj.playAuxSFX(2001, pos, Block.getStateId(worldObj.getBlockState(pos)));
+                                    this.worldObj.playAuxSFX(2001, pos, Block.getStateId(this.worldObj.getBlockState(pos)));
                                 }
-                                worldObj.setBlockToAir(pos);
+                                this.worldObj.setBlockToAir(pos);
 
                                 WorldUtil.addToInventory(this, drops, true, true);
                                 this.markDirty();
@@ -157,7 +157,7 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyR
 
     private void shootParticles(int endX, int endY, int endZ){
         if(!ConfigValues.lessParticles){
-            PacketHandler.theNetwork.sendToAllAround(new PacketParticle(this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), endX, endY, endZ, new float[]{62F/255F, 163F/255F, 74F/255F}, 5, 1.0F), new NetworkRegistry.TargetPoint(worldObj.provider.getDimension(), this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), 96));
+            PacketHandler.theNetwork.sendToAllAround(new PacketParticle(this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), endX, endY, endZ, new float[]{62F/255F, 163F/255F, 74F/255F}, 5, 1.0F), new NetworkRegistry.TargetPoint(this.worldObj.provider.getDimension(), this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), 96));
         }
     }
 

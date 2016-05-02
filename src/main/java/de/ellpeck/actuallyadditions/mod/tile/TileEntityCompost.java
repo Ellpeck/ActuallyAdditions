@@ -51,7 +51,7 @@ public class TileEntityCompost extends TileEntityInventoryBase{
     @Override
     public void updateEntity(){
         super.updateEntity();
-        if(!worldObj.isRemote){
+        if(!this.worldObj.isRemote){
             boolean theFlag = this.conversionTime > 0;
             if(this.slots[0] != null && !(this.slots[0].getItem() instanceof ItemFertilizer) && this.slots[0].stackSize >= AMOUNT){
                 this.conversionTime++;

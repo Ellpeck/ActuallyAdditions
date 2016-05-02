@@ -68,7 +68,7 @@ public class ItemLeafBlower extends ItemBase{
     @Override
     public void onUsingTick(ItemStack stack, EntityLivingBase player, int time){
         if(!player.worldObj.isRemote){
-            if(time <= getMaxItemUseDuration(stack) && (this.isAdvanced || time%3 == 0)){
+            if(time <= this.getMaxItemUseDuration(stack) && (this.isAdvanced || time%3 == 0)){
                 //Breaks the Blocks
                 this.breakStuff(player.worldObj, MathHelper.floor_double(player.posX), MathHelper.floor_double(player.posY), MathHelper.floor_double(player.posZ));
                 //Plays a Minecart sounds (It really sounds like a Leaf Blower!)

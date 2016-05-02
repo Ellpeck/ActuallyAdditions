@@ -41,7 +41,7 @@ public class GuiPhantomPlacer extends GuiContainer{
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y){
-        AssetUtil.displayNameString(this.fontRendererObj, xSize, -10, this.placer.getName());
+        AssetUtil.displayNameString(this.fontRendererObj, this.xSize, -10, this.placer.getName());
     }
 
     @Override

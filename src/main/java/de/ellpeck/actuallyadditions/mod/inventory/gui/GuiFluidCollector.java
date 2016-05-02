@@ -42,14 +42,14 @@ public class GuiFluidCollector extends GuiContainer{
         super.drawScreen(x, y, f);
 
         String text2 = StringUtil.getFluidInfo(this.collector.tank);
-        if(x >= guiLeft+68 && y >= guiTop+6 && x <= guiLeft+83 && y <= guiTop+88){
+        if(x >= this.guiLeft+68 && y >= this.guiTop+6 && x <= this.guiLeft+83 && y <= this.guiTop+88){
             this.drawHoveringText(Collections.singletonList(text2), x, y);
         }
     }
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y){
-        AssetUtil.displayNameString(this.fontRendererObj, xSize, -10, this.collector.getName());
+        AssetUtil.displayNameString(this.fontRendererObj, this.xSize, -10, this.collector.getName());
     }
 
     @Override
@@ -64,7 +64,7 @@ public class GuiFluidCollector extends GuiContainer{
 
         if(this.collector.tank.getFluidAmount() > 0){
             int i = this.collector.getTankScaled(83);
-            drawTexturedModalRect(this.guiLeft+68, this.guiTop+89-i, 176, 0, 16, i);
+            this.drawTexturedModalRect(this.guiLeft+68, this.guiTop+89-i, 176, 0, 16, i);
         }
     }
 }

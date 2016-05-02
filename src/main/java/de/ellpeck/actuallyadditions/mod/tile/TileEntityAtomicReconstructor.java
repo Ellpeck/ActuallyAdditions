@@ -89,7 +89,7 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
 
     private void doWork(){
         if(this.storage.getEnergyStored() >= ENERGY_USE){
-            EnumFacing sideToManipulate = WorldUtil.getDirectionByPistonRotation(PosUtil.getMetadata(this.pos, worldObj));
+            EnumFacing sideToManipulate = WorldUtil.getDirectionByPistonRotation(PosUtil.getMetadata(this.pos, this.worldObj));
             //Extract energy for shooting the laser itself too!
             this.storage.extractEnergy(ENERGY_USE, false);
 
@@ -124,7 +124,7 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
             System.out.println("SOUND!");
             this.worldObj.playSound(null, this.getX(), this.getY(), this.getZ(), SoundHandler.reconstructor, SoundCategory.BLOCKS, 0.35F, 1.0F);
         }
-        PacketHandler.theNetwork.sendToAllAround(new PacketParticle(this.getX(), this.getY(), this.getZ(), endX, endY, endZ, currentLens.getColor(), ConfigValues.lessParticles ? 2 : 8, 2F), new NetworkRegistry.TargetPoint(worldObj.provider.getDimension(), this.getX(), this.getY(), this.getZ(), 64));
+        PacketHandler.theNetwork.sendToAllAround(new PacketParticle(this.getX(), this.getY(), this.getZ(), endX, endY, endZ, currentLens.getColor(), ConfigValues.lessParticles ? 2 : 8, 2F), new NetworkRegistry.TargetPoint(this.worldObj.provider.getDimension(), this.getX(), this.getY(), this.getZ(), 64));
     }
 
     @Override

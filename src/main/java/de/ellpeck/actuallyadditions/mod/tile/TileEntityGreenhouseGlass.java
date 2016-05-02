@@ -39,18 +39,18 @@ public class TileEntityGreenhouseGlass extends TileEntityBase{
     @Override
     public void updateEntity(){
         super.updateEntity();
-        if(!worldObj.isRemote){
-            if(worldObj.canBlockSeeSky(this.getPos()) && worldObj.isDaytime()){
+        if(!this.worldObj.isRemote){
+            if(this.worldObj.canBlockSeeSky(this.getPos()) && this.worldObj.isDaytime()){
                 if(this.timeUntilNextFert > 0){
                     this.timeUntilNextFert--;
-                    if(timeUntilNextFert <= 0){
+                    if(this.timeUntilNextFert <= 0){
                         BlockPos blockToFert = this.blockToFertilize();
                         if(blockToFert != null){
-                            int metaBefore = PosUtil.getMetadata(blockToFert, worldObj);
-                            PosUtil.getBlock(blockToFert, worldObj).updateTick(worldObj, blockToFert, worldObj.getBlockState(blockToFert), Util.RANDOM);
+                            int metaBefore = PosUtil.getMetadata(blockToFert, this.worldObj);
+                            PosUtil.getBlock(blockToFert, this.worldObj).updateTick(this.worldObj, blockToFert, this.worldObj.getBlockState(blockToFert), Util.RANDOM);
 
-                            if(PosUtil.getMetadata(blockToFert, worldObj) != metaBefore){
-                                worldObj.playAuxSFX(2005, blockToFert, 0);
+                            if(PosUtil.getMetadata(blockToFert, this.worldObj) != metaBefore){
+                                this.worldObj.playAuxSFX(2005, blockToFert, 0);
                             }
                         }
                     }
@@ -66,8 +66,8 @@ public class TileEntityGreenhouseGlass extends TileEntityBase{
     public BlockPos blockToFertilize(){
         for(int i = -1; i > 0; i--){
             BlockPos offset = PosUtil.offset(this.pos, 0, i, 0);
-            Block block = PosUtil.getBlock(pos, worldObj);
-            if(block != null && !(worldObj.isAirBlock(offset))){
+            Block block = PosUtil.getBlock(this.pos, this.worldObj);
+            if(block != null && !(this.worldObj.isAirBlock(offset))){
                 if((block instanceof IGrowable || block instanceof IPlantable) && !(block instanceof BlockGrass)){
                     return offset;
                 }

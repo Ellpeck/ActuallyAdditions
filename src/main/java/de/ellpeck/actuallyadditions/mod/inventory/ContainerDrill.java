@@ -36,7 +36,7 @@ public class ContainerDrill extends Container{
         this.inventory = inventory;
 
         for(int i = 0; i < SLOT_AMOUNT; i++){
-            this.addSlotToContainer(new Slot(drillInventory, i, 44+i*18, 19){
+            this.addSlotToContainer(new Slot(ContainerDrill.this.drillInventory, i, 44+i*18, 19){
                 @Override
                 public boolean isItemValid(ItemStack stack){
                     return stack.getItem() instanceof ItemDrillUpgrade || stack.getItem() instanceof IEnergyContainerItem;
@@ -122,7 +122,7 @@ public class ContainerDrill extends Container{
 
     @Override
     public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, EntityPlayer player){
-        if(clickTypeIn == ClickType.SWAP && dragType == inventory.currentItem){
+        if(clickTypeIn == ClickType.SWAP && dragType == this.inventory.currentItem){
             return null;
         }
         else{
@@ -132,9 +132,9 @@ public class ContainerDrill extends Container{
 
     @Override
     public void onContainerClosed(EntityPlayer player){
-        ItemStack stack = inventory.getCurrentItem();
+        ItemStack stack = this.inventory.getCurrentItem();
         if(stack != null && stack.getItem() instanceof ItemDrill){
-            ((ItemDrill)stack.getItem()).writeSlotsToNBT(this.drillInventory.slots, inventory.getCurrentItem());
+            ((ItemDrill)stack.getItem()).writeSlotsToNBT(this.drillInventory.slots, this.inventory.getCurrentItem());
         }
         super.onContainerClosed(player);
     }
@@ -221,31 +221,31 @@ public class ContainerDrill extends Container{
 
         @Override
         public int getSizeInventory(){
-            return slots.length;
+            return this.slots.length;
         }
 
         @Override
         public ItemStack getStackInSlot(int i){
             if(i < this.getSizeInventory()){
-                return slots[i];
+                return this.slots[i];
             }
             return null;
         }
 
         @Override
         public ItemStack decrStackSize(int i, int j){
-            if(slots[i] != null){
+            if(this.slots[i] != null){
                 ItemStack stackAt;
-                if(slots[i].stackSize <= j){
-                    stackAt = slots[i];
-                    slots[i] = null;
+                if(this.slots[i].stackSize <= j){
+                    stackAt = this.slots[i];
+                    this.slots[i] = null;
                     this.markDirty();
                     return stackAt;
                 }
                 else{
-                    stackAt = slots[i].splitStack(j);
-                    if(slots[i].stackSize == 0){
-                        slots[i] = null;
+                    stackAt = this.slots[i].splitStack(j);
+                    if(this.slots[i].stackSize == 0){
+                        this.slots[i] = null;
                     }
                     this.markDirty();
                     return stackAt;

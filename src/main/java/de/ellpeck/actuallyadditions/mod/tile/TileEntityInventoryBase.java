@@ -41,11 +41,11 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
         if(!isForSync || this.shouldSyncSlots()){
             if(this.slots.length > 0){
                 NBTTagList tagList = new NBTTagList();
-                for(int currentIndex = 0; currentIndex < slots.length; currentIndex++){
+                for(int currentIndex = 0; currentIndex < this.slots.length; currentIndex++){
                     NBTTagCompound tagCompound = new NBTTagCompound();
                     tagCompound.setByte("Slot", (byte)currentIndex);
-                    if(slots[currentIndex] != null){
-                        slots[currentIndex].writeToNBT(tagCompound);
+                    if(this.slots[currentIndex] != null){
+                        this.slots[currentIndex].writeToNBT(tagCompound);
                     }
                     tagList.appendTag(tagCompound);
                 }
@@ -67,8 +67,8 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
                 for(int i = 0; i < tagList.tagCount(); i++){
                     NBTTagCompound tagCompound = tagList.getCompoundTagAt(i);
                     byte slotIndex = tagCompound.getByte("Slot");
-                    if(slotIndex >= 0 && slotIndex < slots.length){
-                        slots[slotIndex] = ItemStack.loadItemStackFromNBT(tagCompound);
+                    if(slotIndex >= 0 && slotIndex < this.slots.length){
+                        this.slots[slotIndex] = ItemStack.loadItemStackFromNBT(tagCompound);
                     }
                 }
             }
@@ -83,7 +83,7 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
     @Override
     public int[] getSlotsForFace(EnumFacing side){
         if(this.slots.length > 0){
-            int[] theInt = new int[slots.length];
+            int[] theInt = new int[this.slots.length];
             for(int i = 0; i < theInt.length; i++){
                 theInt[i] = i;
             }
@@ -148,31 +148,31 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
 
     @Override
     public int getSizeInventory(){
-        return slots.length;
+        return this.slots.length;
     }
 
     @Override
     public ItemStack getStackInSlot(int i){
         if(i < this.getSizeInventory()){
-            return slots[i];
+            return this.slots[i];
         }
         return null;
     }
 
     @Override
     public ItemStack decrStackSize(int i, int j){
-        if(slots[i] != null){
+        if(this.slots[i] != null){
             ItemStack stackAt;
-            if(slots[i].stackSize <= j){
-                stackAt = slots[i];
-                slots[i] = null;
+            if(this.slots[i].stackSize <= j){
+                stackAt = this.slots[i];
+                this.slots[i] = null;
                 this.markDirty();
                 return stackAt;
             }
             else{
-                stackAt = slots[i].splitStack(j);
-                if(slots[i].stackSize == 0){
-                    slots[i] = null;
+                stackAt = this.slots[i].splitStack(j);
+                if(this.slots[i].stackSize == 0){
+                    this.slots[i] = null;
                 }
                 this.markDirty();
                 return stackAt;

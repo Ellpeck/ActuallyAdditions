@@ -47,25 +47,25 @@ public class TileEntityFishingNet extends TileEntityBase{
     @Override
     public void updateEntity(){
         super.updateEntity();
-        if(!worldObj.isRemote){
+        if(!this.worldObj.isRemote){
             if(!this.isRedstonePowered){
                 if(PosUtil.getMaterial(PosUtil.offset(this.pos, 0, -1, 0), this.worldObj) == Material.WATER){
                     if(this.timeUntilNextDrop > 0){
                         this.timeUntilNextDrop--;
-                        if(timeUntilNextDrop <= 0){
+                        if(this.timeUntilNextDrop <= 0){
                             LootContext.Builder builder = new LootContext.Builder((WorldServer)this.worldObj);
                             List<ItemStack> fishables = this.worldObj.getLootTableManager().getLootTableFromLocation(LootTableList.GAMEPLAY_FISHING).generateLootForPools(Util.RANDOM, builder.build());
                             for(ItemStack fishable : fishables){
-                                TileEntity tile = worldObj.getTileEntity(PosUtil.offset(pos, 0, 1, 0));
+                                TileEntity tile = this.worldObj.getTileEntity(PosUtil.offset(this.pos, 0, 1, 0));
                                 if(tile != null && tile instanceof IInventory){
                                     ArrayList<ItemStack> list = new ArrayList<ItemStack>();
                                     list.add(fishable);
                                     WorldUtil.addToInventory((IInventory)tile, list, EnumFacing.DOWN, true, false);
                                 }
                                 else{
-                                    EntityItem item = new EntityItem(worldObj, pos.getX()+0.5, pos.getY()+0.5, pos.getZ()+0.5, fishable);
+                                    EntityItem item = new EntityItem(this.worldObj, this.pos.getX()+0.5, this.pos.getY()+0.5, this.pos.getZ()+0.5, fishable);
                                     item.lifespan = 2000;
-                                    worldObj.spawnEntityInWorld(item);
+                                    this.worldObj.spawnEntityInWorld(item);
                                 }
                             }
                         }

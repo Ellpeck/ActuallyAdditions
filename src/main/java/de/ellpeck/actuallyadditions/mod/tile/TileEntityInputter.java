@@ -83,7 +83,7 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
      */
     private void pull(){
         //The Inventory to pull from
-        IInventory theInventory = (IInventory)placeToPull;
+        IInventory theInventory = (IInventory)this.placeToPull;
         //Does the Inventory even have Slots!?
         if(theInventory.getSizeInventory() > 0){
             //The slot currently pulling from (for later)
@@ -181,7 +181,7 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
      * (Check pull() for Description, similar to this)
      */
     private void put(){
-        IInventory theInventory = (IInventory)placeToPut;
+        IInventory theInventory = (IInventory)this.placeToPut;
         if(theInventory.getSizeInventory() > 0){
             int theSlotToPut = this.slotToPutStart;
             int maxSize = theInventory.getInventoryStackLimit();
@@ -266,7 +266,7 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
      * @return If the Item is filtered correctly
      */
     private boolean checkBothFilters(ItemStack stack){
-        return this.checkFilter(stack, true, isPullWhitelist) || this.checkFilter(stack, false, isPutWhitelist);
+        return this.checkFilter(stack, true, this.isPullWhitelist) || this.checkFilter(stack, false, this.isPutWhitelist);
     }
 
     /**
@@ -395,23 +395,23 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
     @Override
     public void updateEntity(){
         super.updateEntity();
-        if(!worldObj.isRemote){
+        if(!this.worldObj.isRemote){
             this.initVars();
 
             //Is Block not powered by Redstone?
             if(!this.isRedstonePowered){
                 if(!(this.sideToPull == this.sideToPut && this.slotToPullStart == this.slotToPutStart && this.slotToPullEnd == this.slotToPutEnd)){
-                    if(sideToPull != -1 && this.placeToPull instanceof IInventory){
+                    if(this.sideToPull != -1 && this.placeToPull instanceof IInventory){
                         this.pull();
                     }
-                    if(sideToPut != -1 && this.placeToPut instanceof IInventory){
+                    if(this.sideToPut != -1 && this.placeToPut instanceof IInventory){
                         this.put();
                     }
                 }
             }
 
             //Update the Client
-            if((this.sideToPut != this.lastPutSide || this.sideToPull != this.lastPullSide || this.slotToPullStart != this.lastPullStart || this.slotToPullEnd != this.lastPullEnd || this.slotToPutStart != this.lastPutStart || this.slotToPutEnd != this.lastPutEnd || this.isPullWhitelist != lastPullWhite || this.isPutWhitelist != this.lastPutWhite) && this.sendUpdateWithInterval()){
+            if((this.sideToPut != this.lastPutSide || this.sideToPull != this.lastPullSide || this.slotToPullStart != this.lastPullStart || this.slotToPullEnd != this.lastPullEnd || this.slotToPutStart != this.lastPutStart || this.slotToPutEnd != this.lastPutEnd || this.isPullWhitelist != this.lastPullWhite || this.isPutWhitelist != this.lastPutWhite) && this.sendUpdateWithInterval()){
                 this.lastPutSide = this.sideToPut;
                 this.lastPullSide = this.sideToPull;
                 this.lastPullStart = this.slotToPullStart;

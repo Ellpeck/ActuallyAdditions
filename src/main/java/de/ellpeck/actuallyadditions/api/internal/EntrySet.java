@@ -62,10 +62,10 @@ public class EntrySet{
 
     public NBTTagCompound writeToNBT(){
         NBTTagCompound compound = new NBTTagCompound();
-        compound.setInteger("Entry", entry == null ? -1 : ActuallyAdditionsAPI.bookletEntries.indexOf(entry));
-        compound.setInteger("Chapter", entry == null || chapter == null ? -1 : entry.getChapters().indexOf(chapter));
-        compound.setInteger("Page", page == null ? -1 : page.getID());
-        compound.setInteger("PageInIndex", pageInIndex);
+        compound.setInteger("Entry", this.entry == null ? -1 : ActuallyAdditionsAPI.bookletEntries.indexOf(this.entry));
+        compound.setInteger("Chapter", this.entry == null || this.chapter == null ? -1 : this.entry.getChapters().indexOf(this.chapter));
+        compound.setInteger("Page", this.page == null ? -1 : this.page.getID());
+        compound.setInteger("PageInIndex", this.pageInIndex);
         return compound;
     }
 }

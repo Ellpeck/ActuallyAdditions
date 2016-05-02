@@ -46,13 +46,13 @@ public class OreGen implements IWorldGenerator{
         if(world.getWorldType() != WorldType.FLAT && Util.arrayContains(ConfigValues.oreGenDimensionBlacklist, world.provider.getDimension()) < 0){
             switch(world.provider.getDimension()){
                 case -1:
-                    generateNether(world, random, chunkX*16, chunkZ*16);
+                    this.generateNether(world, random, chunkX*16, chunkZ*16);
                     //case 0:
                     //   generateSurface(world, random, chunkX*16, chunkZ*16);
                 case 1:
-                    generateEnd(world, random, chunkX*16, chunkZ*16);
+                    this.generateEnd(world, random, chunkX*16, chunkZ*16);
                 default:
-                    generateSurface(world, random, chunkX*16, chunkZ*16);
+                    this.generateSurface(world, random, chunkX*16, chunkZ*16);
             }
         }
     }

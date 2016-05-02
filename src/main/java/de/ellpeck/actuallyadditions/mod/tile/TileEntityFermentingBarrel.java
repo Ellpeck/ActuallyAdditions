@@ -56,7 +56,7 @@ public class TileEntityFermentingBarrel extends TileEntityInventoryBase implemen
     @SuppressWarnings("unchecked")
     public void updateEntity(){
         super.updateEntity();
-        if(!worldObj.isRemote){
+        if(!this.worldObj.isRemote){
             int produce = 80;
             if(this.canolaTank.getFluidAmount() >= produce && produce <= this.oilTank.getCapacity()-this.oilTank.getFluidAmount()){
                 this.currentProcessTime++;
@@ -72,16 +72,16 @@ public class TileEntityFermentingBarrel extends TileEntityInventoryBase implemen
                 this.currentProcessTime = 0;
             }
 
-            WorldUtil.emptyBucket(canolaTank, slots, 0, 1, InitFluids.fluidCanolaOil);
-            WorldUtil.fillBucket(oilTank, slots, 2, 3);
+            WorldUtil.emptyBucket(this.canolaTank, this.slots, 0, 1, InitFluids.fluidCanolaOil);
+            WorldUtil.fillBucket(this.oilTank, this.slots, 2, 3);
 
             if(this.oilTank.getFluidAmount() > 0){
-                WorldUtil.pushFluid(worldObj, this.pos, EnumFacing.DOWN, this.oilTank);
+                WorldUtil.pushFluid(this.worldObj, this.pos, EnumFacing.DOWN, this.oilTank);
                 if(!this.isRedstonePowered){
-                    WorldUtil.pushFluid(worldObj, this.pos, EnumFacing.NORTH, this.oilTank);
-                    WorldUtil.pushFluid(worldObj, this.pos, EnumFacing.EAST, this.oilTank);
-                    WorldUtil.pushFluid(worldObj, this.pos, EnumFacing.SOUTH, this.oilTank);
-                    WorldUtil.pushFluid(worldObj, this.pos, EnumFacing.WEST, this.oilTank);
+                    WorldUtil.pushFluid(this.worldObj, this.pos, EnumFacing.NORTH, this.oilTank);
+                    WorldUtil.pushFluid(this.worldObj, this.pos, EnumFacing.EAST, this.oilTank);
+                    WorldUtil.pushFluid(this.worldObj, this.pos, EnumFacing.SOUTH, this.oilTank);
+                    WorldUtil.pushFluid(this.worldObj, this.pos, EnumFacing.WEST, this.oilTank);
                 }
             }
 

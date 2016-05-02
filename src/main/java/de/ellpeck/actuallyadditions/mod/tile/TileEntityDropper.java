@@ -41,7 +41,7 @@ public class TileEntityDropper extends TileEntityInventoryBase implements IRedst
     @SuppressWarnings("unchecked")
     public void updateEntity(){
         super.updateEntity();
-        if(!worldObj.isRemote){
+        if(!this.worldObj.isRemote){
             if(!this.isRedstonePowered && !this.activateOnceWithSignal){
                 if(this.currentTime > 0){
                     this.currentTime--;
@@ -65,7 +65,7 @@ public class TileEntityDropper extends TileEntityInventoryBase implements IRedst
         if(this.removeFromInventory(false) != null){
             ItemStack stack = this.removeFromInventory(true);
             stack.stackSize = 1;
-            WorldUtil.dropItemAtSide(WorldUtil.getDirectionByPistonRotation(PosUtil.getMetadata(this.pos, worldObj)), worldObj, this.pos, stack);
+            WorldUtil.dropItemAtSide(WorldUtil.getDirectionByPistonRotation(PosUtil.getMetadata(this.pos, this.worldObj)), this.worldObj, this.pos, stack);
         }
     }
 

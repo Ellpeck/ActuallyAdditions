@@ -30,7 +30,7 @@ public class TileEntityPhantomLiquiface extends TileEntityPhantomface implements
     public void updateEntity(){
         super.updateEntity();
 
-        if(!worldObj.isRemote){
+        if(!this.worldObj.isRemote){
             if(this.isRedstonePowered && this.isBoundThingInRange() && this.getHandler() != null){
                 this.pushFluid(EnumFacing.UP);
                 this.pushFluid(EnumFacing.DOWN);
@@ -44,7 +44,7 @@ public class TileEntityPhantomLiquiface extends TileEntityPhantomface implements
 
     public IFluidHandler getHandler(){
         if(this.boundPosition != null){
-            TileEntity tile = worldObj.getTileEntity(boundPosition);
+            TileEntity tile = this.worldObj.getTileEntity(this.boundPosition);
             if(tile instanceof IFluidHandler){
                 return (IFluidHandler)tile;
             }
@@ -53,7 +53,7 @@ public class TileEntityPhantomLiquiface extends TileEntityPhantomface implements
     }
 
     private void pushFluid(EnumFacing side){
-        TileEntity tile = WorldUtil.getTileEntityFromSide(side, worldObj, this.pos);
+        TileEntity tile = WorldUtil.getTileEntityFromSide(side, this.worldObj, this.pos);
         if(tile != null && tile instanceof IFluidHandler && this.getTankInfo(side) != null && this.getTankInfo(side).length > 0 && ((IFluidHandler)tile).getTankInfo(side.getOpposite()) != null && ((IFluidHandler)tile).getTankInfo(side.getOpposite()).length > 0){
             for(FluidTankInfo myInfo : this.getTankInfo(side)){
                 for(FluidTankInfo hisInfo : ((IFluidHandler)tile).getTankInfo(side.getOpposite())){
@@ -73,7 +73,7 @@ public class TileEntityPhantomLiquiface extends TileEntityPhantomface implements
 
     @Override
     public boolean isBoundThingInRange(){
-        return super.isBoundThingInRange() && worldObj.getTileEntity(boundPosition) instanceof IFluidHandler;
+        return super.isBoundThingInRange() && this.worldObj.getTileEntity(this.boundPosition) instanceof IFluidHandler;
     }
 
     @Override

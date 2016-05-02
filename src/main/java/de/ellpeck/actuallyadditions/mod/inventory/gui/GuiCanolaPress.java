@@ -41,19 +41,19 @@ public class GuiCanolaPress extends GuiContainer{
     public void drawScreen(int x, int y, float f){
         super.drawScreen(x, y, f);
         String text1 = this.press.storage.getEnergyStored()+"/"+this.press.storage.getMaxEnergyStored()+" RF";
-        if(x >= guiLeft+43 && y >= guiTop+6 && x <= guiLeft+58 && y <= guiTop+88){
+        if(x >= this.guiLeft+43 && y >= this.guiTop+6 && x <= this.guiLeft+58 && y <= this.guiTop+88){
             this.drawHoveringText(Collections.singletonList(text1), x, y);
         }
 
         String text2 = StringUtil.getFluidInfo(this.press.tank);
-        if(x >= guiLeft+117 && y >= guiTop+6 && x <= guiLeft+132 && y <= guiTop+88){
+        if(x >= this.guiLeft+117 && y >= this.guiTop+6 && x <= this.guiLeft+132 && y <= this.guiTop+88){
             this.drawHoveringText(Collections.singletonList(text2), x, y);
         }
     }
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y){
-        AssetUtil.displayNameString(this.fontRendererObj, xSize, -10, this.press.getName());
+        AssetUtil.displayNameString(this.fontRendererObj, this.xSize, -10, this.press.getName());
     }
 
     @Override
@@ -68,17 +68,17 @@ public class GuiCanolaPress extends GuiContainer{
 
         if(this.press.storage.getEnergyStored() > 0){
             int i = this.press.getEnergyScaled(83);
-            drawTexturedModalRect(this.guiLeft+43, this.guiTop+89-i, 176, 29, 16, i);
+            this.drawTexturedModalRect(this.guiLeft+43, this.guiTop+89-i, 176, 29, 16, i);
         }
 
         if(this.press.tank.getFluidAmount() > 0){
             int i = this.press.getTankScaled(83);
-            drawTexturedModalRect(this.guiLeft+117, this.guiTop+89-i, 192, 29, 16, i);
+            this.drawTexturedModalRect(this.guiLeft+117, this.guiTop+89-i, 192, 29, 16, i);
         }
 
         if(this.press.currentProcessTime > 0){
             int i = this.press.getProcessScaled(29);
-            drawTexturedModalRect(this.guiLeft+83, this.guiTop+32, 176, 0, 12, i);
+            this.drawTexturedModalRect(this.guiLeft+83, this.guiTop+32, 176, 0, 12, i);
         }
     }
 }

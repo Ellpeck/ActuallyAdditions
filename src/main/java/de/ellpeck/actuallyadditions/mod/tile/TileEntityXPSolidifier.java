@@ -44,7 +44,7 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
     @Override
     public void updateEntity(){
         super.updateEntity();
-        if(!worldObj.isRemote){
+        if(!this.worldObj.isRemote){
             if(this.amount > 0){
                 if(this.slots[0] == null){
                     int toSet = this.amount > 64 ? 64 : this.amount;
@@ -87,7 +87,7 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
                 int xp = this.buttonAmounts[buttonID] == -999 ? this.getPlayerXP(player)/ItemSolidifiedExperience.SOLID_XP_AMOUNT : this.buttonAmounts[buttonID];
                 if(this.amount < Short.MAX_VALUE-xp && this.getPlayerXP(player) >= ItemSolidifiedExperience.SOLID_XP_AMOUNT*xp){
                     this.addPlayerXP(player, -(ItemSolidifiedExperience.SOLID_XP_AMOUNT*xp));
-                    if(!worldObj.isRemote){
+                    if(!this.worldObj.isRemote){
                         this.amount += xp;
                     }
                 }
@@ -116,11 +116,11 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
      * @param amount The Amount
      */
     private void addPlayerXP(EntityPlayer player, int amount){
-        int experience = getPlayerXP(player)+amount;
+        int experience = this.getPlayerXP(player)+amount;
         player.experienceTotal = experience;
 
         int level = 0;
-        while(getExperienceForLevel(level) <= experience){
+        while(this.getExperienceForLevel(level) <= experience){
             level++;
         }
         player.experienceLevel = level-1;

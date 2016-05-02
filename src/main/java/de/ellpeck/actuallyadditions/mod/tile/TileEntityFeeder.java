@@ -62,10 +62,10 @@ public class TileEntityFeeder extends TileEntityInventoryBase{
     @SuppressWarnings("unchecked")
     public void updateEntity(){
         super.updateEntity();
-        if(!worldObj.isRemote){
+        if(!this.worldObj.isRemote){
             boolean theFlag = this.currentTimer > 0;
             int range = 5;
-            List<EntityAnimal> animals = worldObj.getEntitiesWithinAABB(EntityAnimal.class, new AxisAlignedBB(this.pos.getX()-range, this.pos.getY()-range, this.pos.getZ()-range, this.pos.getX()+range, this.pos.getY()+range, this.pos.getZ()+range));
+            List<EntityAnimal> animals = this.worldObj.getEntitiesWithinAABB(EntityAnimal.class, new AxisAlignedBB(this.pos.getX()-range, this.pos.getY()-range, this.pos.getZ()-range, this.pos.getX()+range, this.pos.getY()+range, this.pos.getZ()+range));
             if(animals != null){
                 this.currentAnimalAmount = animals.size();
                 if(this.currentAnimalAmount >= 2){
@@ -120,7 +120,7 @@ public class TileEntityFeeder extends TileEntityInventoryBase{
             double d = Util.RANDOM.nextGaussian()*0.02D;
             double d1 = Util.RANDOM.nextGaussian()*0.02D;
             double d2 = Util.RANDOM.nextGaussian()*0.02D;
-            worldObj.spawnParticle(EnumParticleTypes.HEART, (animal.posX+(double)(Util.RANDOM.nextFloat()*animal.width*2.0F))-animal.width, animal.posY+0.5D+(double)(Util.RANDOM.nextFloat()*animal.height), (animal.posZ+(double)(Util.RANDOM.nextFloat()*animal.width*2.0F))-animal.width, d, d1, d2);
+            this.worldObj.spawnParticle(EnumParticleTypes.HEART, (animal.posX+(double)(Util.RANDOM.nextFloat()*animal.width*2.0F))-animal.width, animal.posY+0.5D+(double)(Util.RANDOM.nextFloat()*animal.height), (animal.posZ+(double)(Util.RANDOM.nextFloat()*animal.width*2.0F))-animal.width, d, d1, d2);
         }
     }
 

@@ -56,7 +56,7 @@ public class GuiCoffeeMachine extends GuiContainer{
     public void initGui(){
         super.initGui();
 
-        GuiButton buttonOkay = new GuiButton(0, guiLeft+60, guiTop+11, 58, 20, StringUtil.localize("info."+ModUtil.MOD_ID+".gui.ok"));
+        GuiButton buttonOkay = new GuiButton(0, this.guiLeft+60, this.guiTop+11, 58, 20, StringUtil.localize("info."+ModUtil.MOD_ID+".gui.ok"));
         this.buttonList.add(buttonOkay);
     }
 
@@ -65,23 +65,23 @@ public class GuiCoffeeMachine extends GuiContainer{
         super.drawScreen(x, y, f);
 
         String text1 = this.machine.storage.getEnergyStored()+"/"+this.machine.storage.getMaxEnergyStored()+" RF";
-        if(x >= guiLeft+16 && y >= guiTop+5 && x <= guiLeft+23 && y <= guiTop+89){
+        if(x >= this.guiLeft+16 && y >= this.guiTop+5 && x <= this.guiLeft+23 && y <= this.guiTop+89){
             this.drawHoveringText(Collections.singletonList(text1), x, y);
         }
         String text3 = StringUtil.getFluidInfo(this.machine.tank);
-        if(x >= guiLeft+27 && y >= guiTop+5 && x <= guiLeft+33 && y <= guiTop+70){
+        if(x >= this.guiLeft+27 && y >= this.guiTop+5 && x <= this.guiLeft+33 && y <= this.guiTop+70){
             this.drawHoveringText(Collections.singletonList(text3), x, y);
         }
 
         String text2 = this.machine.coffeeCacheAmount+"/"+TileEntityCoffeeMachine.COFFEE_CACHE_MAX_AMOUNT+" "+StringUtil.localize("info."+ModUtil.MOD_ID+".gui.coffee");
-        if(x >= guiLeft+40 && y >= guiTop+25 && x <= guiLeft+49 && y <= guiTop+56){
+        if(x >= this.guiLeft+40 && y >= this.guiTop+25 && x <= this.guiLeft+49 && y <= this.guiTop+56){
             this.drawHoveringText(Collections.singletonList(text2), x, y);
         }
     }
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y){
-        AssetUtil.displayNameString(this.fontRendererObj, xSize, -10, this.machine.getName());
+        AssetUtil.displayNameString(this.fontRendererObj, this.xSize, -10, this.machine.getName());
     }
 
     @Override
@@ -96,29 +96,29 @@ public class GuiCoffeeMachine extends GuiContainer{
 
         if(this.machine.storage.getEnergyStored() > 0){
             int i = this.machine.getEnergyScaled(83);
-            drawTexturedModalRect(this.guiLeft+17, this.guiTop+89-i, 176, 0, 6, i);
+            this.drawTexturedModalRect(this.guiLeft+17, this.guiTop+89-i, 176, 0, 6, i);
         }
         if(this.machine.tank.getFluidAmount() > 0){
             int i = this.machine.getWaterScaled(64);
-            drawTexturedModalRect(this.guiLeft+27, this.guiTop+70-i, 182, 0, 6, i);
+            this.drawTexturedModalRect(this.guiLeft+27, this.guiTop+70-i, 182, 0, 6, i);
         }
 
         if(this.machine.coffeeCacheAmount > 0){
             int i = this.machine.getCoffeeScaled(30);
-            drawTexturedModalRect(this.guiLeft+41, this.guiTop+56-i, 192, 0, 8, i);
+            this.drawTexturedModalRect(this.guiLeft+41, this.guiTop+56-i, 192, 0, 8, i);
         }
 
         if(this.machine.brewTime > 0){
             int i = this.machine.getBrewScaled(23);
-            drawTexturedModalRect(this.guiLeft+53, this.guiTop+42, 192, 30, i, 16);
+            this.drawTexturedModalRect(this.guiLeft+53, this.guiTop+42, 192, 30, i, 16);
 
             int j = this.machine.getBrewScaled(26);
-            drawTexturedModalRect(this.guiLeft+99+25-j, this.guiTop+44, 192+25-j, 46, j, 12);
+            this.drawTexturedModalRect(this.guiLeft+99+25-j, this.guiTop+44, 192+25-j, 46, j, 12);
         }
     }
 
     @Override
     public void actionPerformed(GuiButton button){
-        PacketHandler.theNetwork.sendToServer(new PacketGuiButton(x, y, z, world, button.id, Minecraft.getMinecraft().thePlayer));
+        PacketHandler.theNetwork.sendToServer(new PacketGuiButton(this.x, this.y, this.z, this.world, button.id, Minecraft.getMinecraft().thePlayer));
     }
 }

@@ -95,7 +95,7 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
     @Override
     public void updateEntity(){
         super.updateEntity();
-        if(!worldObj.isRemote){
+        if(!this.worldObj.isRemote){
             this.storeCoffee();
 
             if(this.brewTime > 0 || this.isRedstonePowered){
@@ -103,7 +103,7 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
             }
 
             if((this.coffeeCacheAmount != this.lastCoffeeAmount || this.storage.getEnergyStored() != this.lastEnergy || this.tank.getFluidAmount() != this.lastTank || this.brewTime != this.lastBrewTime) && this.sendUpdateWithInterval()){
-                this.lastCoffeeAmount = coffeeCacheAmount;
+                this.lastCoffeeAmount = this.coffeeCacheAmount;
                 this.lastEnergy = this.storage.getEnergyStored();
                 this.lastTank = this.tank.getFluidAmount();
                 this.lastBrewTime = this.brewTime;
@@ -128,11 +128,11 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
             }
         }
 
-        WorldUtil.emptyBucket(tank, slots, SLOT_WATER_INPUT, SLOT_WATER_OUTPUT, FluidRegistry.WATER);
+        WorldUtil.emptyBucket(this.tank, this.slots, SLOT_WATER_INPUT, SLOT_WATER_OUTPUT, FluidRegistry.WATER);
     }
 
     public void brew(){
-        if(!worldObj.isRemote){
+        if(!this.worldObj.isRemote){
             if(this.slots[SLOT_INPUT] != null && this.slots[SLOT_INPUT].getItem() == InitItems.itemMisc && this.slots[SLOT_INPUT].getItemDamage() == TheMiscItems.CUP.ordinal() && this.slots[SLOT_OUTPUT] == null && this.coffeeCacheAmount >= CACHE_USE && this.tank.getFluid() != null && this.tank.getFluid().getFluid() == FluidRegistry.WATER && this.tank.getFluidAmount() >= WATER_USE){
                 if(this.storage.getEnergyStored() >= ENERGY_USED){
                     if(this.brewTime%30 == 0 && !ConfigValues.lessSound){

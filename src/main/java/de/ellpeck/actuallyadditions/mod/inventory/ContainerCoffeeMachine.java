@@ -34,18 +34,18 @@ public class ContainerCoffeeMachine extends Container{
     public ContainerCoffeeMachine(InventoryPlayer inventory, TileEntityBase tile){
         this.machine = (TileEntityCoffeeMachine)tile;
 
-        this.addSlotToContainer(new Slot(machine, TileEntityCoffeeMachine.SLOT_COFFEE_BEANS, 37, 6));
-        this.addSlotToContainer(new Slot(machine, TileEntityCoffeeMachine.SLOT_INPUT, 80, 42));
-        this.addSlotToContainer(new SlotOutput(machine, TileEntityCoffeeMachine.SLOT_OUTPUT, 80, 73));
+        this.addSlotToContainer(new Slot(this.machine, TileEntityCoffeeMachine.SLOT_COFFEE_BEANS, 37, 6));
+        this.addSlotToContainer(new Slot(this.machine, TileEntityCoffeeMachine.SLOT_INPUT, 80, 42));
+        this.addSlotToContainer(new SlotOutput(this.machine, TileEntityCoffeeMachine.SLOT_OUTPUT, 80, 73));
 
         for(int i = 0; i < 4; i++){
             for(int j = 0; j < 2; j++){
-                this.addSlotToContainer(new Slot(machine, j+i*2+3, 125+j*18, 6+i*18));
+                this.addSlotToContainer(new Slot(this.machine, j+i*2+3, 125+j*18, 6+i*18));
             }
         }
 
-        this.addSlotToContainer(new Slot(machine, TileEntityCoffeeMachine.SLOT_WATER_INPUT, 26, 73));
-        this.addSlotToContainer(new SlotOutput(machine, TileEntityCoffeeMachine.SLOT_WATER_OUTPUT, 45, 73));
+        this.addSlotToContainer(new Slot(this.machine, TileEntityCoffeeMachine.SLOT_WATER_INPUT, 26, 73));
+        this.addSlotToContainer(new SlotOutput(this.machine, TileEntityCoffeeMachine.SLOT_WATER_OUTPUT, 45, 73));
 
         for(int i = 0; i < 3; i++){
             for(int j = 0; j < 9; j++){
@@ -64,7 +64,7 @@ public class ContainerCoffeeMachine extends Container{
         final int hotbarStart = inventoryEnd+1;
         final int hotbarEnd = hotbarStart+8;
 
-        Slot theSlot = (Slot)this.inventorySlots.get(slot);
+        Slot theSlot = this.inventorySlots.get(slot);
 
         if(theSlot != null && theSlot.getHasStack()){
             ItemStack newStack = theSlot.getStack();

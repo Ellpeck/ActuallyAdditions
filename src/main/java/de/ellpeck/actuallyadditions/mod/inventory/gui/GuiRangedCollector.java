@@ -59,7 +59,7 @@ public class GuiRangedCollector extends GuiContainer{
     public void initGui(){
         super.initGui();
 
-        this.whitelistButton = new GuiInputter.SmallerButton(0, guiLeft+3, guiTop+16, "");
+        this.whitelistButton = new GuiInputter.SmallerButton(0, this.guiLeft+3, this.guiTop+16, "");
         this.buttonList.add(this.whitelistButton);
     }
 
@@ -71,14 +71,14 @@ public class GuiRangedCollector extends GuiContainer{
         this.whitelistButton.displayString = this.collector.isWhitelist ? "O" : "X";
 
         String text1 = this.collector.isWhitelist ? StringUtil.localize("info."+ModUtil.MOD_ID+".gui.whitelist") : StringUtil.localize("info."+ModUtil.MOD_ID+".gui.blacklist");
-        if(x >= guiLeft+3 && y >= guiTop+16 && x <= guiLeft+18 && y <= guiTop+31){
+        if(x >= this.guiLeft+3 && y >= this.guiTop+16 && x <= this.guiLeft+18 && y <= this.guiTop+31){
             this.drawHoveringText(Collections.singletonList(text1), x, y);
         }
     }
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y){
-        AssetUtil.displayNameString(this.fontRendererObj, xSize, -10, this.collector.getName());
+        AssetUtil.displayNameString(this.fontRendererObj, this.xSize, -10, this.collector.getName());
     }
 
     @Override
@@ -94,6 +94,6 @@ public class GuiRangedCollector extends GuiContainer{
 
     @Override
     public void actionPerformed(GuiButton button){
-        PacketHandler.theNetwork.sendToServer(new PacketGuiButton(x, y, z, world, button.id, Minecraft.getMinecraft().thePlayer));
+        PacketHandler.theNetwork.sendToServer(new PacketGuiButton(this.x, this.y, this.z, this.world, button.id, Minecraft.getMinecraft().thePlayer));
     }
 }

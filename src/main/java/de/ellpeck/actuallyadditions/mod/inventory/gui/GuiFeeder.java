@@ -41,7 +41,7 @@ public class GuiFeeder extends GuiContainer{
     @Override
     public void drawScreen(int x, int y, float f){
         super.drawScreen(x, y, f);
-        if(x >= guiLeft+69 && y >= guiTop+30 && x <= guiLeft+69+10 && y <= guiTop+30+10){
+        if(x >= this.guiLeft+69 && y >= this.guiTop+30 && x <= this.guiLeft+69+10 && y <= this.guiTop+30+10){
             String[] array = new String[]{(this.tileFeeder.currentAnimalAmount+" "+StringUtil.localize("info."+ModUtil.MOD_ID+".gui.animals")), ((this.tileFeeder.currentAnimalAmount >= 2 && this.tileFeeder.currentAnimalAmount < TileEntityFeeder.THRESHOLD) ? StringUtil.localize("info."+ModUtil.MOD_ID+".gui.enoughToBreed") : (this.tileFeeder.currentAnimalAmount >= TileEntityFeeder.THRESHOLD ? StringUtil.localize("info."+ModUtil.MOD_ID+".gui.tooMany") : StringUtil.localize("info."+ModUtil.MOD_ID+".gui.notEnough")))};
             this.drawHoveringText(Arrays.asList(array), x, y);
         }
@@ -49,7 +49,7 @@ public class GuiFeeder extends GuiContainer{
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y){
-        AssetUtil.displayNameString(this.fontRendererObj, xSize, -10, this.tileFeeder.getName());
+        AssetUtil.displayNameString(this.fontRendererObj, this.xSize, -10, this.tileFeeder.getName());
     }
 
     @Override
@@ -62,15 +62,15 @@ public class GuiFeeder extends GuiContainer{
 
         if(this.tileFeeder.currentTimer > 0){
             int i = this.tileFeeder.getCurrentTimerToScale(20);
-            this.drawTexturedModalRect(guiLeft+85, guiTop+42-i, 181, 19+19-i, 6, 20);
+            this.drawTexturedModalRect(this.guiLeft+85, this.guiTop+42-i, 181, 19+19-i, 6, 20);
         }
 
         if(this.tileFeeder.currentAnimalAmount >= 2 && this.tileFeeder.currentAnimalAmount < TileEntityFeeder.THRESHOLD){
-            this.drawTexturedModalRect(guiLeft+70, guiTop+31, 192, 16, 8, 8);
+            this.drawTexturedModalRect(this.guiLeft+70, this.guiTop+31, 192, 16, 8, 8);
         }
 
         if(this.tileFeeder.currentAnimalAmount >= TileEntityFeeder.THRESHOLD){
-            this.drawTexturedModalRect(guiLeft+70, guiTop+31, 192, 24, 8, 8);
+            this.drawTexturedModalRect(this.guiLeft+70, this.guiTop+31, 192, 24, 8, 8);
         }
     }
 }

@@ -47,14 +47,14 @@ public class GuiGrinder extends GuiContainer{
     public void drawScreen(int x, int y, float f){
         super.drawScreen(x, y, f);
         String text = this.tileGrinder.storage.getEnergyStored()+"/"+this.tileGrinder.storage.getMaxEnergyStored()+" RF";
-        if((this.isDouble && x >= guiLeft+14 && y >= guiTop+6 && x <= guiLeft+29 && y <= guiTop+88) || (!this.isDouble && x >= guiLeft+43 && y >= guiTop+6 && x <= guiLeft+58 && y <= guiTop+88)){
+        if((this.isDouble && x >= this.guiLeft+14 && y >= this.guiTop+6 && x <= this.guiLeft+29 && y <= this.guiTop+88) || (!this.isDouble && x >= this.guiLeft+43 && y >= this.guiTop+6 && x <= this.guiLeft+58 && y <= this.guiTop+88)){
             this.drawHoveringText(Collections.singletonList(text), x, y);
         }
     }
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y){
-        AssetUtil.displayNameString(this.fontRendererObj, xSize, -10, this.tileGrinder.getName());
+        AssetUtil.displayNameString(this.fontRendererObj, this.xSize, -10, this.tileGrinder.getName());
     }
 
     @Override
@@ -69,11 +69,11 @@ public class GuiGrinder extends GuiContainer{
 
         if(this.tileGrinder.storage.getEnergyStored() > 0){
             int i = this.tileGrinder.getEnergyScaled(83);
-            drawTexturedModalRect(this.guiLeft+(isDouble ? 14 : 43), this.guiTop+89-i, 176, (isDouble ? 44 : 23), 16, i);
+            this.drawTexturedModalRect(this.guiLeft+(this.isDouble ? 14 : 43), this.guiTop+89-i, 176, (this.isDouble ? 44 : 23), 16, i);
         }
         if(this.tileGrinder.firstCrushTime > 0){
             int i = this.tileGrinder.getFirstTimeToScale(23);
-            this.drawTexturedModalRect(this.guiLeft+(isDouble ? 51 : 80), this.guiTop+40, 176, 0, 24, i);
+            this.drawTexturedModalRect(this.guiLeft+(this.isDouble ? 51 : 80), this.guiTop+40, 176, 0, 24, i);
         }
         if(this.isDouble){
             if(this.tileGrinder.secondCrushTime > 0){

@@ -42,7 +42,7 @@ public class PageCrusherRecipe extends BookletPageAA{
     @Override
     @SideOnly(Side.CLIENT)
     public void renderPre(IBookletGui gui, int mouseX, int mouseY, int ticksElapsed, boolean mousePressed){
-        if(recipe != null){
+        if(this.recipe != null){
             Minecraft.getMinecraft().getTextureManager().bindTexture(ClientProxy.bulletForMyValentine ? GuiBooklet.resLocValentine : GuiBooklet.resLoc);
             gui.drawRect(gui.getGuiLeft()+37, gui.getGuiTop()+20, 60, 180, 60, 60);
         }
@@ -52,7 +52,7 @@ public class PageCrusherRecipe extends BookletPageAA{
     @Override
     @SideOnly(Side.CLIENT)
     public void render(IBookletGui gui, int mouseX, int mouseY, int ticksElapsed, boolean mousePressed){
-        if(recipe == null){
+        if(this.recipe == null){
             StringUtil.drawSplitString(Minecraft.getMinecraft().fontRendererObj, TextFormatting.DARK_RED+StringUtil.localize("booklet."+ModUtil.MOD_ID+".recipeDisabled"), gui.getGuiLeft()+14, gui.getGuiTop()+15, 115, 0, false);
         }
         else{
@@ -65,12 +65,12 @@ public class PageCrusherRecipe extends BookletPageAA{
             StringUtil.drawSplitString(Minecraft.getMinecraft().fontRendererObj, text, gui.getGuiLeft()+14, gui.getGuiTop()+100, 115, 0, false);
         }
 
-        if(recipe != null){
-            if(recipe.outputTwoChance > 0){
-                Minecraft.getMinecraft().fontRendererObj.drawString(recipe.outputTwoChance+"%", gui.getGuiLeft()+37+62, gui.getGuiTop()+20+33, 0);
+        if(this.recipe != null){
+            if(this.recipe.outputTwoChance > 0){
+                Minecraft.getMinecraft().fontRendererObj.drawString(this.recipe.outputTwoChance+"%", gui.getGuiLeft()+37+62, gui.getGuiTop()+20+33, 0);
             }
 
-            if(recipe.getRecipeOutputOnes() != null){
+            if(this.recipe.getRecipeOutputOnes() != null){
                 for(int i = 0; i < 2; i++){
                     for(int j = 0; j < 3; j++){
                         ItemStack stack;

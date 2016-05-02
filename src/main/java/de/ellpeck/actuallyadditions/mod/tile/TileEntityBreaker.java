@@ -55,7 +55,7 @@ public class TileEntityBreaker extends TileEntityInventoryBase implements IRedst
     @SuppressWarnings("unchecked")
     public void updateEntity(){
         super.updateEntity();
-        if(!worldObj.isRemote){
+        if(!this.worldObj.isRemote){
             if(!this.isRedstonePowered && !this.activateOnceWithSignal){
                 if(this.currentTime > 0){
                     this.currentTime--;
@@ -76,28 +76,28 @@ public class TileEntityBreaker extends TileEntityInventoryBase implements IRedst
     }
 
     private void doWork(){
-        EnumFacing sideToManipulate = WorldUtil.getDirectionByPistonRotation(PosUtil.getMetadata(this.pos, worldObj));
+        EnumFacing sideToManipulate = WorldUtil.getDirectionByPistonRotation(PosUtil.getMetadata(this.pos, this.worldObj));
 
         BlockPos coordsBlock = WorldUtil.getCoordsFromSide(sideToManipulate, this.pos, 0);
         if(coordsBlock != null){
-            Block blockToBreak = PosUtil.getBlock(coordsBlock, worldObj);
-            IBlockState stateToBreak = worldObj.getBlockState(coordsBlock);
-            if(!this.isPlacer && blockToBreak != null && !(blockToBreak instanceof BlockAir) && blockToBreak.getBlockHardness(stateToBreak, worldObj, coordsBlock) > -1.0F){
+            Block blockToBreak = PosUtil.getBlock(coordsBlock, this.worldObj);
+            IBlockState stateToBreak = this.worldObj.getBlockState(coordsBlock);
+            if(!this.isPlacer && blockToBreak != null && !(blockToBreak instanceof BlockAir) && blockToBreak.getBlockHardness(stateToBreak, this.worldObj, coordsBlock) > -1.0F){
                 ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-                drops.addAll(blockToBreak.getDrops(worldObj, coordsBlock, stateToBreak, 0));
+                drops.addAll(blockToBreak.getDrops(this.worldObj, coordsBlock, stateToBreak, 0));
 
                 if(WorldUtil.addToInventory(this, drops, false, true)){
                     if(!ConfigValues.lessBlockBreakingEffects){
-                        worldObj.playAuxSFX(2001, coordsBlock, Block.getStateId(stateToBreak));
+                        this.worldObj.playAuxSFX(2001, coordsBlock, Block.getStateId(stateToBreak));
                     }
-                    WorldUtil.breakBlockAtSide(sideToManipulate, worldObj, this.pos);
+                    WorldUtil.breakBlockAtSide(sideToManipulate, this.worldObj, this.pos);
                     WorldUtil.addToInventory(this, drops, true, true);
                     this.markDirty();
                 }
             }
             else if(this.isPlacer){
                 int theSlot = WorldUtil.findFirstFilledSlot(this.slots);
-                this.setInventorySlotContents(theSlot, WorldUtil.useItemAtSide(sideToManipulate, worldObj, this.pos, this.slots[theSlot]));
+                this.setInventorySlotContents(theSlot, WorldUtil.useItemAtSide(sideToManipulate, this.worldObj, this.pos, this.slots[theSlot]));
                 if(this.slots[theSlot] != null && this.slots[theSlot].stackSize <= 0){
                     this.slots[theSlot] = null;
                 }

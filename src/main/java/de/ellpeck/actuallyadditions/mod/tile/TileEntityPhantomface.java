@@ -61,9 +61,9 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
         super.writeSyncableNBT(compound, sync);
         compound.setInteger("Range", this.range);
         if(this.boundPosition != null){
-            compound.setInteger("XCoordOfTileStored", boundPosition.getX());
-            compound.setInteger("YCoordOfTileStored", boundPosition.getY());
-            compound.setInteger("ZCoordOfTileStored", boundPosition.getZ());
+            compound.setInteger("XCoordOfTileStored", this.boundPosition.getX());
+            compound.setInteger("YCoordOfTileStored", this.boundPosition.getY());
+            compound.setInteger("ZCoordOfTileStored", this.boundPosition.getZ());
         }
     }
 
@@ -83,14 +83,14 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
     @Override
     public void updateEntity(){
         super.updateEntity();
-        if(!worldObj.isRemote){
-            this.range = upgradeRange(RANGE, worldObj, this.getPos());
+        if(!this.worldObj.isRemote){
+            this.range = upgradeRange(RANGE, this.worldObj, this.getPos());
 
             if(!this.hasBoundPosition()){
                 this.boundPosition = null;
             }
 
-            if(this.boundPosition != this.boundPosBefore || (this.boundPosition != null && PosUtil.getBlock(this.boundPosition, worldObj) != this.boundBlockBefore) || this.rangeBefore != this.range){
+            if(this.boundPosition != this.boundPosBefore || (this.boundPosition != null && PosUtil.getBlock(this.boundPosition, this.worldObj) != this.boundBlockBefore) || this.rangeBefore != this.range){
                 this.rangeBefore = this.range;
                 this.boundPosBefore = this.boundPosition;
                 this.boundBlockBefore = this.boundPosition == null ? null : PosUtil.getBlock(this.boundPosition, this.worldObj);
@@ -117,7 +117,7 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
     @Override
     public boolean hasBoundPosition(){
         if(this.boundPosition != null){
-            if(worldObj.getTileEntity(boundPosition) instanceof IPhantomTile || (this.getPos().getX() == this.boundPosition.getX() && this.getPos().getY() == this.boundPosition.getY() && this.getPos().getZ() == this.boundPosition.getZ())){
+            if(this.worldObj.getTileEntity(this.boundPosition) instanceof IPhantomTile || (this.getPos().getX() == this.boundPosition.getX() && this.getPos().getY() == this.boundPosition.getY() && this.getPos().getZ() == this.boundPosition.getZ())){
                 this.boundPosition = null;
                 return false;
             }
@@ -137,11 +137,11 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
             double d5 = (double)(Util.RANDOM.nextFloat()*1.0F*(float)j1);
             double d0 = (double)this.boundPosition.getX()+0.5D+0.25D*(double)i1;
             double d3 = (double)(Util.RANDOM.nextFloat()*1.0F*(float)i1);
-            worldObj.spawnParticle(EnumParticleTypes.PORTAL, d0, d1, d2, d3, d4, d5);
+            this.worldObj.spawnParticle(EnumParticleTypes.PORTAL, d0, d1, d2, d3, d4, d5);
         }
 
         if(this.ticksElapsed%80 == 0){
-            PacketParticle.renderParticlesFromAToB(this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), boundPosition.getX(), boundPosition.getY(), boundPosition.getZ(), 2, 0.35F, COLORS, 3);
+            PacketParticle.renderParticlesFromAToB(this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), this.boundPosition.getX(), this.boundPosition.getY(), this.boundPosition.getZ(), 2, 0.35F, COLORS, 3);
         }
     }
 

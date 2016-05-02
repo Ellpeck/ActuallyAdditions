@@ -321,17 +321,17 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
         this.buttonList.add(this.buttonConfig);
 
         for(int i = 0; i < this.chapterButtons.length; i++){
-            this.chapterButtons[i] = new IndexButton(9+i, guiLeft+15, guiTop+10+(i*12), 115, 10, "", this);
+            this.chapterButtons[i] = new IndexButton(9+i, this.guiLeft+15, this.guiTop+10+(i*12), 115, 10, "", this);
             this.buttonList.add(this.chapterButtons[i]);
         }
 
         for(int i = 0; i < this.bookmarkButtons.length; i++){
-            int x = this.guiLeft+xSize/2-(this.bookmarkButtons.length/2*16)+(i*16);
+            int x = this.guiLeft+this.xSize/2-(this.bookmarkButtons.length/2*16)+(i*16);
             this.bookmarkButtons[i] = new BookmarkButton(this.chapterButtons[this.chapterButtons.length-1].id+1+i, x, this.guiTop+this.ySize+13, this);
             this.buttonList.add(this.bookmarkButtons[i]);
         }
 
-        this.searchField = new GuiTextField(4500, this.fontRendererObj, guiLeft+148, guiTop+162, 66, 10);
+        this.searchField = new GuiTextField(4500, this.fontRendererObj, this.guiLeft+148, this.guiTop+162, 66, 10);
         this.searchField.setMaxStringLength(30);
         this.searchField.setEnableBackgroundDrawing(false);
         this.searchField.setCanLoseFocus(false);

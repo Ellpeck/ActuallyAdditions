@@ -96,7 +96,7 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
     @SuppressWarnings("unchecked")
     public void updateEntity(){
         super.updateEntity();
-        if(!worldObj.isRemote){
+        if(!this.worldObj.isRemote){
             boolean flag = this.firstCrushTime > 0 || this.secondCrushTime > 0;
 
             boolean canCrushOnFirst = this.canCrushOn(SLOT_INPUT_1, SLOT_OUTPUT_1_1, SLOT_OUTPUT_1_2);
@@ -113,7 +113,7 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
                         shouldPlaySound = true;
                     }
                     this.firstCrushTime++;
-                    if(this.firstCrushTime >= getMaxCrushTime()){
+                    if(this.firstCrushTime >= this.getMaxCrushTime()){
                         this.finishCrushing(SLOT_INPUT_1, SLOT_OUTPUT_1_1, SLOT_OUTPUT_1_2);
                         this.firstCrushTime = 0;
                     }
@@ -130,7 +130,7 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
                             shouldPlaySound = true;
                         }
                         this.secondCrushTime++;
-                        if(this.secondCrushTime >= getMaxCrushTime()){
+                        if(this.secondCrushTime >= this.getMaxCrushTime()){
                             this.finishCrushing(SLOT_INPUT_2, SLOT_OUTPUT_2_1, SLOT_OUTPUT_2_2);
                             this.secondCrushTime = 0;
                         }
@@ -147,18 +147,18 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
 
             if(flag != (this.firstCrushTime > 0 || this.secondCrushTime > 0)){
                 this.markDirty();
-                int meta = PosUtil.getMetadata(this.pos, worldObj);
+                int meta = PosUtil.getMetadata(this.pos, this.worldObj);
                 if(meta == 1){
                     if(!this.canCrushOn(SLOT_INPUT_1, SLOT_OUTPUT_1_1, SLOT_OUTPUT_1_2) && (!this.isDouble || !this.canCrushOn(SLOT_INPUT_2, SLOT_OUTPUT_2_1, SLOT_OUTPUT_2_2))){
-                        PosUtil.setMetadata(this.pos, worldObj, 0, 2);
+                        PosUtil.setMetadata(this.pos, this.worldObj, 0, 2);
                     }
                 }
                 else{
-                    PosUtil.setMetadata(this.pos, worldObj, 1, 2);
+                    PosUtil.setMetadata(this.pos, this.worldObj, 1, 2);
                 }
             }
 
-            if((lastEnergy != this.storage.getEnergyStored() || this.lastFirstCrush != this.firstCrushTime || this.lastSecondCrush != this.secondCrushTime) && this.sendUpdateWithInterval()){
+            if((this.lastEnergy != this.storage.getEnergyStored() || this.lastFirstCrush != this.firstCrushTime || this.lastSecondCrush != this.secondCrushTime) && this.sendUpdateWithInterval()){
                 this.lastEnergy = this.storage.getEnergyStored();
                 this.lastFirstCrush = this.firstCrushTime;
                 this.lastSecondCrush = this.secondCrushTime;

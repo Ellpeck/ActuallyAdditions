@@ -42,11 +42,11 @@ public class JamVillagerTradeHandler{
 
     public void addWants(String oredictName, int minSize, int maxSize){
         ArrayList<ItemStack> stacks = (ArrayList<ItemStack>)OreDictionary.getOres(oredictName);
-        trades.add(new Trade(stacks, minSize, maxSize));
+        this.trades.add(new Trade(stacks, minSize, maxSize));
     }
 
     public void addWants(ItemStack stack, int minSize, int maxSize){
-        trades.add(new Trade(stack, minSize, maxSize));
+        this.trades.add(new Trade(stack, minSize, maxSize));
     }
 
     //TODO Fix the Villager

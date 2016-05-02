@@ -53,9 +53,9 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
         super.writeSyncableNBT(compound, sync);
         compound.setInteger("Range", this.range);
         if(this.boundPosition != null){
-            compound.setInteger("XCoordOfTileStored", boundPosition.getX());
-            compound.setInteger("YCoordOfTileStored", boundPosition.getY());
-            compound.setInteger("ZCoordOfTileStored", boundPosition.getZ());
+            compound.setInteger("XCoordOfTileStored", this.boundPosition.getX());
+            compound.setInteger("YCoordOfTileStored", this.boundPosition.getY());
+            compound.setInteger("ZCoordOfTileStored", this.boundPosition.getZ());
         }
     }
 
@@ -75,8 +75,8 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
     @Override
     public void updateEntity(){
         super.updateEntity();
-        if(!worldObj.isRemote){
-            this.range = TileEntityPhantomface.upgradeRange(RANGE, worldObj, this.pos);
+        if(!this.worldObj.isRemote){
+            this.range = TileEntityPhantomface.upgradeRange(RANGE, this.worldObj, this.pos);
 
             if(!this.hasBoundPosition()){
                 this.boundPosition = null;
@@ -112,7 +112,7 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
     @Override
     public boolean hasBoundPosition(){
         if(this.boundPosition != null){
-            if(this.worldObj.getTileEntity(boundPosition) instanceof IPhantomTile || (this.getPos().getX() == this.boundPosition.getX() && this.getPos().getY() == this.boundPosition.getY() && this.getPos().getZ() == this.boundPosition.getZ() && this.worldObj.provider.getDimension() == this.worldObj.provider.getDimension())){
+            if(this.worldObj.getTileEntity(this.boundPosition) instanceof IPhantomTile || (this.getPos().getX() == this.boundPosition.getX() && this.getPos().getY() == this.boundPosition.getY() && this.getPos().getZ() == this.boundPosition.getZ() && this.worldObj.provider.getDimension() == this.worldObj.provider.getDimension())){
                 this.boundPosition = null;
                 return false;
             }
@@ -123,16 +123,16 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
 
     private void doWork(){
         if(this.isBreaker){
-            Block blockToBreak = PosUtil.getBlock(boundPosition, worldObj);
-            if(blockToBreak != null && blockToBreak.getBlockHardness(worldObj.getBlockState(boundPosition), worldObj, boundPosition) > -1.0F){
+            Block blockToBreak = PosUtil.getBlock(this.boundPosition, this.worldObj);
+            if(blockToBreak != null && blockToBreak.getBlockHardness(this.worldObj.getBlockState(this.boundPosition), this.worldObj, this.boundPosition) > -1.0F){
                 ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-                drops.addAll(blockToBreak.getDrops(worldObj, boundPosition, worldObj.getBlockState(boundPosition), 0));
+                drops.addAll(blockToBreak.getDrops(this.worldObj, this.boundPosition, this.worldObj.getBlockState(this.boundPosition), 0));
 
                 if(WorldUtil.addToInventory(this, drops, false, true)){
                     if(!ConfigValues.lessBlockBreakingEffects){
-                        worldObj.playAuxSFX(2001, this.boundPosition, Block.getStateId(worldObj.getBlockState(this.boundPosition)));
+                        this.worldObj.playAuxSFX(2001, this.boundPosition, Block.getStateId(this.worldObj.getBlockState(this.boundPosition)));
                     }
-                    worldObj.setBlockToAir(this.boundPosition);
+                    this.worldObj.setBlockToAir(this.boundPosition);
                     WorldUtil.addToInventory(this, drops, true, true);
                     this.markDirty();
                 }
@@ -140,7 +140,7 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
         }
         else{
             int theSlot = WorldUtil.findFirstFilledSlot(this.slots);
-            this.setInventorySlotContents(theSlot, WorldUtil.useItemAtSide(EnumFacing.UP, worldObj, boundPosition, this.slots[theSlot]));
+            this.setInventorySlotContents(theSlot, WorldUtil.useItemAtSide(EnumFacing.UP, this.worldObj, this.boundPosition, this.slots[theSlot]));
             if(this.slots[theSlot] != null && this.slots[theSlot].stackSize <= 0){
                 this.slots[theSlot] = null;
             }
@@ -158,11 +158,11 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
             double d5 = (double)(Util.RANDOM.nextFloat()*1.0F*(float)j1);
             double d0 = (double)this.boundPosition.getX()+0.5D+0.25D*(double)i1;
             double d3 = (double)(Util.RANDOM.nextFloat()*1.0F*(float)i1);
-            worldObj.spawnParticle(EnumParticleTypes.PORTAL, d0, d1, d2, d3, d4, d5);
+            this.worldObj.spawnParticle(EnumParticleTypes.PORTAL, d0, d1, d2, d3, d4, d5);
         }
 
         if(this.ticksElapsed%80 == 0){
-            PacketParticle.renderParticlesFromAToB(this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), boundPosition.getX(), boundPosition.getY(), boundPosition.getZ(), 2, 0.35F, TileEntityPhantomface.COLORS, 3);
+            PacketParticle.renderParticlesFromAToB(this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), this.boundPosition.getX(), this.boundPosition.getY(), this.boundPosition.getZ(), 2, 0.35F, TileEntityPhantomface.COLORS, 3);
         }
     }
 

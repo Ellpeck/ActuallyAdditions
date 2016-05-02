@@ -40,14 +40,14 @@ public class GuiRepairer extends GuiContainer{
     public void drawScreen(int x, int y, float f){
         super.drawScreen(x, y, f);
         String text = this.tileRepairer.storage.getEnergyStored()+"/"+this.tileRepairer.storage.getMaxEnergyStored()+" RF";
-        if(x >= guiLeft+28 && y >= guiTop+6 && x <= guiLeft+43 && y <= guiTop+88){
+        if(x >= this.guiLeft+28 && y >= this.guiTop+6 && x <= this.guiLeft+43 && y <= this.guiTop+88){
             this.drawHoveringText(Collections.singletonList(text), x, y);
         }
     }
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y){
-        AssetUtil.displayNameString(this.fontRendererObj, xSize, -10, this.tileRepairer.getName());
+        AssetUtil.displayNameString(this.fontRendererObj, this.xSize, -10, this.tileRepairer.getName());
     }
 
     @Override
@@ -62,7 +62,7 @@ public class GuiRepairer extends GuiContainer{
 
         if(this.tileRepairer.storage.getEnergyStored() > 0){
             int i = this.tileRepairer.getEnergyScaled(83);
-            drawTexturedModalRect(this.guiLeft+28, this.guiTop+89-i, 176, 44, 16, i);
+            this.drawTexturedModalRect(this.guiLeft+28, this.guiTop+89-i, 176, 44, 16, i);
         }
         if(TileEntityItemRepairer.canBeRepaired(this.tileRepairer.slots[TileEntityItemRepairer.SLOT_INPUT])){
             int i = this.tileRepairer.getItemDamageToScale(22);

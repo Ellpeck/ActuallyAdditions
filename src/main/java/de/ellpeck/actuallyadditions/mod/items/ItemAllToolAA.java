@@ -102,7 +102,7 @@ public class ItemAllToolAA extends ItemToolAA implements IColorProvidingItem{
         return new IItemColor(){
             @Override
             public int getColorFromItemstack(ItemStack stack, int pass){
-                return pass > 0 ? color : 0xFFFFFF;
+                return pass > 0 ? ItemAllToolAA.this.color : 0xFFFFFF;
             }
         };
     }

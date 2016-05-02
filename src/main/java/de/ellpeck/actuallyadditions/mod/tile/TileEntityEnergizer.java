@@ -43,7 +43,7 @@ public class TileEntityEnergizer extends TileEntityInventoryBase implements IEne
     @Override
     public void updateEntity(){
         super.updateEntity();
-        if(!worldObj.isRemote){
+        if(!this.worldObj.isRemote){
             if(this.slots[0] != null && this.slots[0].getItem() instanceof IEnergyContainerItem && this.slots[1] == null){
                 if(this.storage.getEnergyStored() > 0){
                     int received = ((IEnergyContainerItem)this.slots[0].getItem()).receiveEnergy(this.slots[0], this.storage.getEnergyStored(), false);
@@ -59,7 +59,7 @@ public class TileEntityEnergizer extends TileEntityInventoryBase implements IEne
                 }
             }
 
-            if(lastEnergy != this.storage.getEnergyStored() && this.sendUpdateWithInterval()){
+            if(this.lastEnergy != this.storage.getEnergyStored() && this.sendUpdateWithInterval()){
                 this.lastEnergy = this.storage.getEnergyStored();
             }
         }

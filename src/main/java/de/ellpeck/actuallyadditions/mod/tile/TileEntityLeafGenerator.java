@@ -53,7 +53,7 @@ public class TileEntityLeafGenerator extends TileEntityBase implements IEnergyPr
     @SuppressWarnings("unchecked")
     public void updateEntity(){
         super.updateEntity();
-        if(!worldObj.isRemote){
+        if(!this.worldObj.isRemote){
             if(!this.isRedstonePowered){
 
                 if(this.nextUseCounter >= 5){
@@ -66,7 +66,7 @@ public class TileEntityLeafGenerator extends TileEntityBase implements IEnergyPr
                             for(int reachZ = -RANGE; reachZ < RANGE+1; reachZ++){
                                 for(int reachY = -RANGE; reachY < RANGE+1; reachY++){
                                     BlockPos pos = PosUtil.offset(this.pos, reachX, reachY, reachZ);
-                                    Block block = PosUtil.getBlock(pos, worldObj);
+                                    Block block = PosUtil.getBlock(pos, this.worldObj);
                                     if(block != null && block.isLeaves(this.worldObj.getBlockState(pos), this.worldObj, pos)){
                                         breakPositions.add(pos);
                                     }
@@ -79,7 +79,7 @@ public class TileEntityLeafGenerator extends TileEntityBase implements IEnergyPr
                             BlockPos theCoord = breakPositions.get(0);
 
                             if(!ConfigValues.lessBlockBreakingEffects){
-                                this.worldObj.playAuxSFX(2001, theCoord, Block.getStateId(worldObj.getBlockState(theCoord)));
+                                this.worldObj.playAuxSFX(2001, theCoord, Block.getStateId(this.worldObj.getBlockState(theCoord)));
                             }
 
                             this.worldObj.setBlockToAir(theCoord);
@@ -87,7 +87,7 @@ public class TileEntityLeafGenerator extends TileEntityBase implements IEnergyPr
                             this.storage.receiveEnergy(ENERGY_PRODUCED, false);
 
                             if(!ConfigValues.lessParticles){
-                                PacketHandler.theNetwork.sendToAllAround(new PacketParticle(this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), theCoord.getX(), theCoord.getY(), theCoord.getZ(), new float[]{62F/255F, 163F/255F, 74F/255F}, 5, 1.0F), new NetworkRegistry.TargetPoint(worldObj.provider.getDimension(), this.pos.getX(), this.pos.getY(), this.pos.getZ(), 64));
+                                PacketHandler.theNetwork.sendToAllAround(new PacketParticle(this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), theCoord.getX(), theCoord.getY(), theCoord.getZ(), new float[]{62F/255F, 163F/255F, 74F/255F}, 5, 1.0F), new NetworkRegistry.TargetPoint(this.worldObj.provider.getDimension(), this.pos.getX(), this.pos.getY(), this.pos.getZ(), 64));
                             }
                         }
                     }
@@ -98,7 +98,7 @@ public class TileEntityLeafGenerator extends TileEntityBase implements IEnergyPr
             }
 
             if(this.storage.getEnergyStored() > 0){
-                WorldUtil.pushEnergyToAllSides(worldObj, this.pos, this.storage);
+                WorldUtil.pushEnergyToAllSides(this.worldObj, this.pos, this.storage);
             }
 
             if(this.oldEnergy != this.storage.getEnergyStored() && this.sendUpdateWithInterval()){

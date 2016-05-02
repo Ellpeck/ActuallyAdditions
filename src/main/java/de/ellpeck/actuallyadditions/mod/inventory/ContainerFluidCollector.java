@@ -29,8 +29,8 @@ public class ContainerFluidCollector extends Container{
     public ContainerFluidCollector(InventoryPlayer inventory, TileEntityBase tile){
         this.collector = (TileEntityFluidCollector)tile;
 
-        this.addSlotToContainer(new Slot(collector, 0, 90, 73));
-        this.addSlotToContainer(new SlotOutput(collector, 1, 90, 42));
+        this.addSlotToContainer(new Slot(this.collector, 0, 90, 73));
+        this.addSlotToContainer(new SlotOutput(this.collector, 1, 90, 42));
 
         for(int i = 0; i < 3; i++){
             for(int j = 0; j < 9; j++){
@@ -49,7 +49,7 @@ public class ContainerFluidCollector extends Container{
         final int hotbarStart = inventoryEnd+1;
         final int hotbarEnd = hotbarStart+8;
 
-        Slot theSlot = (Slot)this.inventorySlots.get(slot);
+        Slot theSlot = this.inventorySlots.get(slot);
 
         if(theSlot != null && theSlot.getHasStack()){
             ItemStack newStack = theSlot.getStack();

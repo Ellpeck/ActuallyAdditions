@@ -40,14 +40,14 @@ public class GuiFurnaceDouble extends GuiContainer{
     public void drawScreen(int x, int y, float f){
         super.drawScreen(x, y, f);
         String text = this.tileFurnace.storage.getEnergyStored()+"/"+this.tileFurnace.storage.getMaxEnergyStored()+" RF";
-        if(x >= guiLeft+28 && y >= guiTop+6 && x <= guiLeft+43 && y <= guiTop+88){
+        if(x >= this.guiLeft+28 && y >= this.guiTop+6 && x <= this.guiLeft+43 && y <= this.guiTop+88){
             this.drawHoveringText(Collections.singletonList(text), x, y);
         }
     }
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y){
-        AssetUtil.displayNameString(this.fontRendererObj, xSize, -10, this.tileFurnace.getName());
+        AssetUtil.displayNameString(this.fontRendererObj, this.xSize, -10, this.tileFurnace.getName());
     }
 
     @Override
@@ -62,7 +62,7 @@ public class GuiFurnaceDouble extends GuiContainer{
 
         if(this.tileFurnace.storage.getEnergyStored() > 0){
             int i = this.tileFurnace.getEnergyScaled(83);
-            drawTexturedModalRect(this.guiLeft+28, this.guiTop+89-i, 176, 44, 16, i);
+            this.drawTexturedModalRect(this.guiLeft+28, this.guiTop+89-i, 176, 44, 16, i);
         }
         if(this.tileFurnace.firstSmeltTime > 0){
             int i = this.tileFurnace.getFirstTimeToScale(23);

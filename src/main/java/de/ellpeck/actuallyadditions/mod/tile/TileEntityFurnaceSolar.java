@@ -61,8 +61,8 @@ public class TileEntityFurnaceSolar extends TileEntityBase implements IEnergyPro
     @Override
     public void updateEntity(){
         super.updateEntity();
-        if(!worldObj.isRemote){
-            if(!this.hasBlockAbove() && worldObj.isDaytime()){
+        if(!this.worldObj.isRemote){
+            if(!this.hasBlockAbove() && this.worldObj.isDaytime()){
                 if(PRODUCE <= this.storage.getMaxEnergyStored()-this.storage.getEnergyStored()){
                     this.storage.receiveEnergy(PRODUCE, false);
                     this.markDirty();
@@ -70,7 +70,7 @@ public class TileEntityFurnaceSolar extends TileEntityBase implements IEnergyPro
             }
 
             if(this.storage.getEnergyStored() > 0){
-                WorldUtil.pushEnergyToAllSides(worldObj, this.pos, this.storage);
+                WorldUtil.pushEnergyToAllSides(this.worldObj, this.pos, this.storage);
             }
 
             if(this.oldEnergy != this.storage.getEnergyStored() && this.sendUpdateWithInterval()){
@@ -80,9 +80,9 @@ public class TileEntityFurnaceSolar extends TileEntityBase implements IEnergyPro
     }
 
     public boolean hasBlockAbove(){
-        for(int y = 1; y <= worldObj.getHeight(); y++){
+        for(int y = 1; y <= this.worldObj.getHeight(); y++){
             BlockPos offset = PosUtil.offset(this.pos, 0, y, 0);
-            if(!PosUtil.getBlock(offset, worldObj).isAir(worldObj.getBlockState(offset), worldObj, offset)){
+            if(!PosUtil.getBlock(offset, this.worldObj).isAir(this.worldObj.getBlockState(offset), this.worldObj, offset)){
                 return true;
             }
         }

@@ -59,7 +59,7 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
     @SuppressWarnings("unchecked")
     public void updateEntity(){
         super.updateEntity();
-        if(!worldObj.isRemote){
+        if(!this.worldObj.isRemote){
             boolean flag = this.firstSmeltTime > 0 || this.secondSmeltTime > 0;
 
             boolean canSmeltOnFirst = this.canSmeltOn(SLOT_INPUT_1, SLOT_OUTPUT_1);
@@ -97,18 +97,18 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
 
             if(flag != (this.firstSmeltTime > 0 || this.secondSmeltTime > 0)){
                 this.markDirty();
-                int meta = PosUtil.getMetadata(this.pos, worldObj);
+                int meta = PosUtil.getMetadata(this.pos, this.worldObj);
                 if(meta > 3){
                     if(!this.canSmeltOn(SLOT_INPUT_1, SLOT_OUTPUT_1) && !this.canSmeltOn(SLOT_INPUT_2, SLOT_OUTPUT_2)){
-                        PosUtil.setMetadata(this.pos, worldObj, meta-4, 2);
+                        PosUtil.setMetadata(this.pos, this.worldObj, meta-4, 2);
                     }
                 }
                 else{
-                    PosUtil.setMetadata(this.pos, worldObj, meta+4, 2);
+                    PosUtil.setMetadata(this.pos, this.worldObj, meta+4, 2);
                 }
             }
 
-            if((lastEnergy != this.storage.getEnergyStored() || this.lastFirstSmelt != this.firstSmeltTime || this.lastSecondSmelt != this.secondSmeltTime) && this.sendUpdateWithInterval()){
+            if((this.lastEnergy != this.storage.getEnergyStored() || this.lastFirstSmelt != this.firstSmeltTime || this.lastSecondSmelt != this.secondSmeltTime) && this.sendUpdateWithInterval()){
                 this.lastEnergy = this.storage.getEnergyStored();
                 this.lastFirstSmelt = this.firstSmeltTime;
                 this.lastSecondSmelt = this.secondSmeltTime;

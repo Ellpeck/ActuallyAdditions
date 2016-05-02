@@ -51,12 +51,12 @@ public class TileEntityLavaFactoryController extends TileEntityBase implements I
     @SuppressWarnings("unchecked")
     public void updateEntity(){
         super.updateEntity();
-        if(!worldObj.isRemote){
+        if(!this.worldObj.isRemote){
             if(this.storage.getEnergyStored() >= ENERGY_USE && this.isMultiblock() == HAS_AIR){
                 this.currentWorkTime++;
                 if(this.currentWorkTime >= 200){
                     this.currentWorkTime = 0;
-                    PosUtil.setBlock(PosUtil.offset(this.pos, 0, 1, 0), worldObj, Blocks.LAVA, 0, 2);
+                    PosUtil.setBlock(PosUtil.offset(this.pos, 0, 1, 0), this.worldObj, Blocks.LAVA, 0, 2);
                     this.storage.extractEnergy(ENERGY_USE, false);
                 }
             }
@@ -79,12 +79,12 @@ public class TileEntityLavaFactoryController extends TileEntityBase implements I
                 PosUtil.offset(thisPos, 0, 1, -1)
         };
 
-        if(WorldUtil.hasBlocksInPlacesGiven(positions, InitBlocks.blockMisc, TheMiscBlocks.LAVA_FACTORY_CASE.ordinal(), worldObj)){
+        if(WorldUtil.hasBlocksInPlacesGiven(positions, InitBlocks.blockMisc, TheMiscBlocks.LAVA_FACTORY_CASE.ordinal(), this.worldObj)){
             BlockPos pos = PosUtil.offset(thisPos, 0, 1, 0);
-            if(PosUtil.getBlock(pos, worldObj) == Blocks.LAVA || PosUtil.getBlock(pos, worldObj) == Blocks.FLOWING_LAVA){
+            if(PosUtil.getBlock(pos, this.worldObj) == Blocks.LAVA || PosUtil.getBlock(pos, this.worldObj) == Blocks.FLOWING_LAVA){
                 return HAS_LAVA;
             }
-            if(PosUtil.getBlock(pos, worldObj) == null || worldObj.isAirBlock(pos)){
+            if(PosUtil.getBlock(pos, this.worldObj) == null || this.worldObj.isAirBlock(pos)){
                 return HAS_AIR;
             }
         }

@@ -72,7 +72,7 @@ public class TileEntityOilGenerator extends TileEntityInventoryBase implements I
     @SuppressWarnings("unchecked")
     public void updateEntity(){
         super.updateEntity();
-        if(!worldObj.isRemote){
+        if(!this.worldObj.isRemote){
             boolean flag = this.currentBurnTime > 0;
 
             if(this.currentBurnTime > 0){
@@ -88,22 +88,22 @@ public class TileEntityOilGenerator extends TileEntityInventoryBase implements I
                 }
             }
 
-            WorldUtil.emptyBucket(tank, slots, 0, 1, InitFluids.fluidOil);
+            WorldUtil.emptyBucket(this.tank, this.slots, 0, 1, InitFluids.fluidOil);
 
             if(this.storage.getEnergyStored() > 0){
-                WorldUtil.pushEnergyToAllSides(worldObj, this.pos, this.storage);
+                WorldUtil.pushEnergyToAllSides(this.worldObj, this.pos, this.storage);
             }
 
             if(flag != this.currentBurnTime > 0){
                 this.markDirty();
-                int meta = PosUtil.getMetadata(pos, worldObj);
+                int meta = PosUtil.getMetadata(this.pos, this.worldObj);
                 if(meta == 1){
                     if(!(ENERGY_PRODUCED*BURN_TIME <= this.storage.getMaxEnergyStored()-this.storage.getEnergyStored() && this.currentBurnTime <= 0 && this.tank.getFluidAmount() >= fuelUsed)){
-                        PosUtil.setMetadata(this.pos, worldObj, 0, 2);
+                        PosUtil.setMetadata(this.pos, this.worldObj, 0, 2);
                     }
                 }
                 else{
-                    PosUtil.setMetadata(this.pos, worldObj, 1, 2);
+                    PosUtil.setMetadata(this.pos, this.worldObj, 1, 2);
                 }
             }
 

@@ -226,7 +226,7 @@ public class LaserRelayConnectionHandler{
         }
 
         public boolean contains(BlockPos relay){
-            return (this.firstRelay != null && PosUtil.areSamePos(firstRelay, relay)) || (this.secondRelay != null && PosUtil.areSamePos(secondRelay, relay));
+            return (this.firstRelay != null && PosUtil.areSamePos(this.firstRelay, relay)) || (this.secondRelay != null && PosUtil.areSamePos(this.secondRelay, relay));
         }
 
         @Override

@@ -42,19 +42,19 @@ public class GuiFermentingBarrel extends GuiContainer{
         super.drawScreen(x, y, f);
 
         String text1 = StringUtil.getFluidInfo(this.press.canolaTank);
-        if(x >= guiLeft+61 && y >= guiTop+6 && x <= guiLeft+76 && y <= guiTop+88){
+        if(x >= this.guiLeft+61 && y >= this.guiTop+6 && x <= this.guiLeft+76 && y <= this.guiTop+88){
             this.drawHoveringText(Collections.singletonList(text1), x, y);
         }
 
         String text2 = StringUtil.getFluidInfo(this.press.oilTank);
-        if(x >= guiLeft+99 && y >= guiTop+6 && x <= guiLeft+114 && y <= guiTop+88){
+        if(x >= this.guiLeft+99 && y >= this.guiTop+6 && x <= this.guiLeft+114 && y <= this.guiTop+88){
             this.drawHoveringText(Collections.singletonList(text2), x, y);
         }
     }
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y){
-        AssetUtil.displayNameString(this.fontRendererObj, xSize, -10, this.press.getName());
+        AssetUtil.displayNameString(this.fontRendererObj, this.xSize, -10, this.press.getName());
     }
 
     @Override
@@ -69,17 +69,17 @@ public class GuiFermentingBarrel extends GuiContainer{
 
         if(this.press.canolaTank.getFluidAmount() > 0){
             int i = this.press.getCanolaTankScaled(83);
-            drawTexturedModalRect(this.guiLeft+61, this.guiTop+89-i, 192, 29, 16, i);
+            this.drawTexturedModalRect(this.guiLeft+61, this.guiTop+89-i, 192, 29, 16, i);
         }
 
         if(this.press.oilTank.getFluidAmount() > 0){
             int i = this.press.getOilTankScaled(83);
-            drawTexturedModalRect(this.guiLeft+99, this.guiTop+89-i, 176, 29, 16, i);
+            this.drawTexturedModalRect(this.guiLeft+99, this.guiTop+89-i, 176, 29, 16, i);
         }
 
         if(this.press.currentProcessTime > 0){
             int i = this.press.getProcessScaled(29);
-            drawTexturedModalRect(this.guiLeft+82, this.guiTop+34, 176, 0, 12, i);
+            this.drawTexturedModalRect(this.guiLeft+82, this.guiTop+34, 176, 0, 12, i);
         }
     }
 }

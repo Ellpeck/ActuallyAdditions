@@ -53,15 +53,15 @@ public class GuiXPSolidifier extends GuiContainer{
     public void initGui(){
         super.initGui();
 
-        GuiButton buttonOne = new GuiInputter.SmallerButton(0, guiLeft+62, guiTop+44, "1");
-        GuiButton buttonFive = new GuiInputter.SmallerButton(1, guiLeft+80, guiTop+44, "5");
-        GuiButton buttonTen = new GuiInputter.SmallerButton(2, guiLeft+99, guiTop+44, "10");
-        GuiButton buttonTwenty = new GuiInputter.SmallerButton(3, guiLeft+62, guiTop+61, "20");
-        GuiButton buttonThirty = new GuiInputter.SmallerButton(4, guiLeft+80, guiTop+61, "30");
-        GuiButton buttonForty = new GuiInputter.SmallerButton(5, guiLeft+99, guiTop+61, "40");
-        GuiButton buttonFifty = new GuiInputter.SmallerButton(6, guiLeft+62, guiTop+78, "50");
-        GuiButton buttonSixtyFour = new GuiInputter.SmallerButton(7, guiLeft+80, guiTop+78, "64");
-        GuiButton buttonAll = new GuiInputter.SmallerButton(8, guiLeft+99, guiTop+78, "All");
+        GuiButton buttonOne = new GuiInputter.SmallerButton(0, this.guiLeft+62, this.guiTop+44, "1");
+        GuiButton buttonFive = new GuiInputter.SmallerButton(1, this.guiLeft+80, this.guiTop+44, "5");
+        GuiButton buttonTen = new GuiInputter.SmallerButton(2, this.guiLeft+99, this.guiTop+44, "10");
+        GuiButton buttonTwenty = new GuiInputter.SmallerButton(3, this.guiLeft+62, this.guiTop+61, "20");
+        GuiButton buttonThirty = new GuiInputter.SmallerButton(4, this.guiLeft+80, this.guiTop+61, "30");
+        GuiButton buttonForty = new GuiInputter.SmallerButton(5, this.guiLeft+99, this.guiTop+61, "40");
+        GuiButton buttonFifty = new GuiInputter.SmallerButton(6, this.guiLeft+62, this.guiTop+78, "50");
+        GuiButton buttonSixtyFour = new GuiInputter.SmallerButton(7, this.guiLeft+80, this.guiTop+78, "64");
+        GuiButton buttonAll = new GuiInputter.SmallerButton(8, this.guiLeft+99, this.guiTop+78, "All");
 
         this.buttonList.add(buttonOne);
         this.buttonList.add(buttonFive);
@@ -81,7 +81,7 @@ public class GuiXPSolidifier extends GuiContainer{
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y){
-        AssetUtil.displayNameString(this.fontRendererObj, xSize, -10, this.solidifier.getName());
+        AssetUtil.displayNameString(this.fontRendererObj, this.xSize, -10, this.solidifier.getName());
     }
 
     @Override
@@ -94,12 +94,12 @@ public class GuiXPSolidifier extends GuiContainer{
         this.mc.getTextureManager().bindTexture(resLoc);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 93);
 
-        this.drawCenteredString(this.fontRendererObj, Integer.toString(this.solidifier.amount), guiLeft+88, guiTop+30, StringUtil.DECIMAL_COLOR_WHITE);
+        this.drawCenteredString(this.fontRendererObj, Integer.toString(this.solidifier.amount), this.guiLeft+88, this.guiTop+30, StringUtil.DECIMAL_COLOR_WHITE);
     }
 
     @Override
     public void actionPerformed(GuiButton button){
-        PacketHandler.theNetwork.sendToServer(new PacketGuiButton(x, y, z, world, button.id, Minecraft.getMinecraft().thePlayer));
+        PacketHandler.theNetwork.sendToServer(new PacketGuiButton(this.x, this.y, this.z, this.world, button.id, Minecraft.getMinecraft().thePlayer));
         this.solidifier.onButtonPressed(button.id, Minecraft.getMinecraft().thePlayer);
     }
 }

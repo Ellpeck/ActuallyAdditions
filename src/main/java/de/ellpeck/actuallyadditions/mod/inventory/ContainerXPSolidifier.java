@@ -28,7 +28,7 @@ public class ContainerXPSolidifier extends Container{
     public ContainerXPSolidifier(InventoryPlayer inventory, TileEntityBase tile){
         this.solidifier = (TileEntityXPSolidifier)tile;
 
-        this.addSlotToContainer(new SlotOutput(solidifier, 0, 80, 8));
+        this.addSlotToContainer(new SlotOutput(this.solidifier, 0, 80, 8));
 
         for(int i = 0; i < 3; i++){
             for(int j = 0; j < 9; j++){
@@ -47,7 +47,7 @@ public class ContainerXPSolidifier extends Container{
         final int hotbarStart = inventoryEnd+1;
         final int hotbarEnd = hotbarStart+8;
 
-        Slot theSlot = (Slot)this.inventorySlots.get(slot);
+        Slot theSlot = this.inventorySlots.get(slot);
 
         if(theSlot != null && theSlot.getHasStack()){
             ItemStack newStack = theSlot.getStack();

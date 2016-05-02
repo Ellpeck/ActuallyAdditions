@@ -115,7 +115,7 @@ public class TileEntityLaserRelay extends TileEntityBase implements IEnergyRecei
         if(maxTransmit > 0){
             LaserRelayConnectionHandler.Network network = LaserRelayConnectionHandler.getInstance().getNetworkFor(this.pos);
             if(network != null){
-                transmitted = LaserRelayConnectionHandler.getInstance().transferEnergyToReceiverInNeed(worldObj, blockFrom, network, Math.min(ConfigIntValues.LASER_RELAY_MAX_TRANSFER.getValue(), maxTransmit), simulate);
+                transmitted = LaserRelayConnectionHandler.getInstance().transferEnergyToReceiverInNeed(this.worldObj, blockFrom, network, Math.min(ConfigIntValues.LASER_RELAY_MAX_TRANSFER.getValue(), maxTransmit), simulate);
             }
         }
         return transmitted;
