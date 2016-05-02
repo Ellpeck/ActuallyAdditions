@@ -1,8 +1,0 @@
-{
-    "parent": "block/stairs",
-    "textures": {
-        "bottom": "actuallyadditions:blocks/blockMiscBlackQuartz",
-        "top": "actuallyadditions:blocks/blockMiscBlackQuartz",
-        "side": "actuallyadditions:blocks/blockMiscBlackQuartz"
-    }
-}

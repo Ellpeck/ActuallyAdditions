@@ -1,12 +1,30 @@
 {
+  "forge_marker": 1,
+  "defaults": {
+    "model": "minecraft:cube",
+    "textures": {
+      "particle": "actuallyadditions:blocks/blockFurnaceDouble",
+      "down": "#particle",
+      "up": "actuallyadditions:blocks/blockFurnaceDoubleTop",
+      "south": "#particle",
+      "north": "actuallyadditions:blocks/blockFurnaceDoubleFront",
+      "east": "#particle",
+      "west": "#particle"
+    },
+    "transform": "forge:default-block"
+  },
   "variants": {
-    "meta=0": { "model": "actuallyadditions:blockFurnaceDouble", "y": 0 },
-    "meta=1": { "model": "actuallyadditions:blockFurnaceDouble", "y": 180 },
-    "meta=2": { "model": "actuallyadditions:blockFurnaceDouble", "y": -90 },
-    "meta=3": { "model": "actuallyadditions:blockFurnaceDouble", "y": 90 },
-    "meta=4": { "model": "actuallyadditions:blockFurnaceDoubleOn", "y": 0 },
-    "meta=5": { "model": "actuallyadditions:blockFurnaceDoubleOn", "y": 180 },
-    "meta=6": { "model": "actuallyadditions:blockFurnaceDoubleOn", "y": -90 },
-    "meta=7": { "model": "actuallyadditions:blockFurnaceDoubleOn", "y": 90 }
+    "normal": [{}],
+    "inventory": [{}],
+    "meta": {
+      "0": { "y" : 0 },
+      "1": { "y" : 180 },
+      "2": { "y" : 270 },
+      "3": { "y" : 90 },
+      "4": { "y" : 0, "textures": { "north": "actuallyadditions:blocks/blockFurnaceDoubleOn" } },
+      "5": { "y" : 180, "textures": { "north": "actuallyadditions:blocks/blockFurnaceDoubleOn" } },
+      "6": { "y" : 270, "textures": { "north": "actuallyadditions:blocks/blockFurnaceDoubleOn" } },
+      "7": { "y" : 90, "textures": { "north": "actuallyadditions:blocks/blockFurnaceDoubleOn" } }
+    }
   }
 }

@@ -1,8 +1,0 @@
-{
-    "parent": "block/upper_slab",
-    "textures": {
-        "bottom": "actuallyadditions:blocks/blockTestifiBucksWhiteWall",
-        "top": "actuallyadditions:blocks/blockTestifiBucksWhiteWall",
-        "side": "actuallyadditions:blocks/blockTestifiBucksWhiteWall"
-    }
-}

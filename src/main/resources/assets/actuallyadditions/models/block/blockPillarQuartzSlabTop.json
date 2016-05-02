@@ -1,8 +1,0 @@
-{
-    "parent": "block/upper_slab",
-    "textures": {
-        "bottom": "actuallyadditions:blocks/blockMiscBlackQuartzPillar",
-        "top": "actuallyadditions:blocks/blockMiscBlackQuartzPillar",
-        "side": "actuallyadditions:blocks/blockMiscBlackQuartzPillar"
-    }
-}

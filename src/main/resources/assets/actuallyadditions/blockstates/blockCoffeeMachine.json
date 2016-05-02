@@ -1,8 +1,0 @@
-{
-  "variants": {
-    "meta=1": { "model": "actuallyadditions:blockCoffeeMachine", "y": 0 },
-    "meta=0": { "model": "actuallyadditions:blockCoffeeMachine", "y": 180 },
-    "meta=3": { "model": "actuallyadditions:blockCoffeeMachine", "y": 270 },
-    "meta=2": { "model": "actuallyadditions:blockCoffeeMachine", "y": 90 }
-  }
-}

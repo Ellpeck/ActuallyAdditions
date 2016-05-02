@@ -1,8 +1,0 @@
-{
-  "variants": {
-    "meta=0": { "model": "actuallyadditions:blockTreasureChest", "y": 0 },
-    "meta=1": { "model": "actuallyadditions:blockTreasureChest", "y": 180 },
-    "meta=2": { "model": "actuallyadditions:blockTreasureChest", "y": -90 },
-    "meta=3": { "model": "actuallyadditions:blockTreasureChest", "y": 90 }
-  }
-}

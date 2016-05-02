@@ -1,6 +1,20 @@
 {
+  "forge_marker": 1,
+  "defaults": {
+    "model": "minecraft:cube_bottom_top",
+    "textures": {
+      "side": "actuallyadditions:blocks/blockCoalGenerator",
+      "bottom": "actuallyadditions:blocks/blockCoalGeneratorBottom",
+      "top": "actuallyadditions:blocks/blockCoalGeneratorTop"
+    },
+    "transform": "forge:default-block"
+  },
   "variants": {
-    "meta=0": { "model": "actuallyadditions:blockCoalGenerator" },
-    "meta=1": { "model": "actuallyadditions:blockCoalGenerator" }
+    "normal": [{}],
+    "inventory": [{}],
+    "meta": {
+      "0": {},
+      "1": {}
+    }
   }
 }

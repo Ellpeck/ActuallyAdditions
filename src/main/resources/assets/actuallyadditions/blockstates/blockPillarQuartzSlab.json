@@ -1,6 +1,0 @@
-{
-    "variants": {
-        "meta=0": { "model": "actuallyadditions:blockPillarQuartzSlabBottom" },
-        "meta=1": { "model": "actuallyadditions:blockPillarQuartzSlabTop" }
-    }
-}

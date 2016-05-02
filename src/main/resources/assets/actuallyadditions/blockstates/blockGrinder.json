@@ -1,6 +1,20 @@
 {
+  "forge_marker": 1,
+  "defaults": {
+    "model": "minecraft:cube_bottom_top",
+    "textures": {
+      "side": "actuallyadditions:blocks/blockGrinder",
+      "bottom": "actuallyadditions:blocks/blockGrinderBottom",
+      "top": "actuallyadditions:blocks/blockGrinderTop"
+    },
+    "transform": "forge:default-block"
+  },
   "variants": {
-    "meta=0": { "model": "actuallyadditions:blockGrinder" },
-    "meta=1": { "model": "actuallyadditions:blockGrinderOn" }
+    "normal": [{}],
+    "inventory": [{}],
+    "meta": {
+      "0": {},
+      "1": { "textures": { "top": "actuallyadditions:blocks/blockGrinderOn" } }
+    }
   }
 }
