@@ -87,6 +87,7 @@ public class BlockSlabs extends BlockBase{
         return this.getStateFromMeta(meta);
     }
 
+    @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos){
         return state.getValue(META) == 1 ? AABB_TOP_HALF : AABB_BOTTOM_HALF;
     }
@@ -114,6 +115,7 @@ public class BlockSlabs extends BlockBase{
             this.setMaxDamage(0);
         }
 
+        @Override
         public EnumActionResult onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ){
             if(stack.stackSize != 0 && playerIn.canPlayerEdit(pos.offset(facing), facing, stack)){
                 IBlockState state = worldIn.getBlockState(pos);
@@ -141,6 +143,7 @@ public class BlockSlabs extends BlockBase{
             }
         }
 
+        @Override
         @SideOnly(Side.CLIENT)
         public boolean canPlaceBlockOnSide(World worldIn, BlockPos pos, EnumFacing side, EntityPlayer player, ItemStack stack){
             IBlockState state = worldIn.getBlockState(pos);

@@ -214,6 +214,7 @@ public class ItemDrill extends ItemEnergy{
         return EnumRarity.EPIC;
     }
 
+    @Override
     public Multimap<String, AttributeModifier> getAttributeModifiers(EntityEquipmentSlot slot, ItemStack stack){
         Multimap<String, AttributeModifier> map = super.getAttributeModifiers(slot, stack);
 

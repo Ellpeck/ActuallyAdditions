@@ -57,32 +57,6 @@ public class BlockSmileyCloud extends BlockContainerBase{
         return false;
     }
 
-    //TODO Fix bounding box
-    /*@Override
-    public void setBlockBoundsBasedOnState(IBlockAccess world, BlockPos pos){
-        int meta = PosUtil.getMetadata(pos, world);
-        float f = 0.0625F;
-
-        if(meta == 1){
-            this.setBlockBounds(0F, 0F, 0F, 1F, 1F-f*3F, 1F-f*2F);
-        }
-        if(meta == 3){
-            this.setBlockBounds(0F, 0F, 0F, 1F-f*2F, 1F-f*3F, 1F);
-        }
-        if(meta == 0){
-            this.setBlockBounds(0F, 0F, f*2F, 1F, 1F-f*3F, 1F);
-        }
-        if(meta == 2){
-            this.setBlockBounds(f*2F, 0F, 0F, 1F, 1F-f*3F, 1F);
-        }
-    }
-
-    @Override
-    public void addCollisionBoxesToList(World world, BlockPos pos, IBlockState state, AxisAlignedBB axis, List list, Entity entity){
-        this.setBlockBoundsBasedOnState(world, pos);
-        super.addCollisionBoxesToList(world, pos, state, axis, list, entity);
-    }*/
-
     @Override
     public boolean isOpaqueCube(IBlockState state){
         return false;

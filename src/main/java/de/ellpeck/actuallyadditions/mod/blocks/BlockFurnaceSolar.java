@@ -18,9 +18,15 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class BlockFurnaceSolar extends BlockContainerBase{
+
+    private static final AxisAlignedBB AABB = new AxisAlignedBB(0, 0, 0, 1, 6*0.0625, 1);
 
     public BlockFurnaceSolar(String name){
         super(Material.ROCK, name);
@@ -28,9 +34,11 @@ public class BlockFurnaceSolar extends BlockContainerBase{
         this.setHardness(1.5F);
         this.setResistance(10.0F);
         this.setSoundType(SoundType.STONE);
+    }
 
-        //TODO Block bounds
-        //this.setBlockBounds(0F, 0F, 0F, 1F, 6F/16F, 1F);
+    @Override
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos){
+        return AABB;
     }
 
     @Override

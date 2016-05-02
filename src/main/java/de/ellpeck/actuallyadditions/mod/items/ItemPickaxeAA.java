@@ -34,6 +34,7 @@ public class ItemPickaxeAA extends ItemToolAA{
         super(1.0F, -2.8F, material, repairItem, unlocalizedName, rarity, EFFECTIVE_ON);
     }
 
+    @Override
     public boolean canHarvestBlock(IBlockState blockIn){
         Block block = blockIn.getBlock();
 
@@ -74,6 +75,7 @@ public class ItemPickaxeAA extends ItemToolAA{
         }
     }
 
+    @Override
     public float getStrVsBlock(ItemStack stack, IBlockState state){
         Material material = state.getMaterial();
         return material != Material.IRON && material != Material.ANVIL && material != Material.ROCK ? super.getStrVsBlock(stack, state) : this.efficiencyOnProperMaterial;

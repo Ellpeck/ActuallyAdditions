@@ -77,11 +77,13 @@ public class BlockWallAA extends BlockBase{
         return side != EnumFacing.DOWN || super.shouldSideBeRendered(blockState, blockAccess, pos, side);
     }
 
+    @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos){
         state = this.getActualState(state, source, pos);
         return field_185751_g[figureOutSomeWallStuff(state)];
     }
 
+    @Override
     public AxisAlignedBB getSelectedBoundingBox(IBlockState blockState, World worldIn, BlockPos pos){
         blockState = this.getActualState(blockState, worldIn, pos);
         return field_185750_B[figureOutSomeWallStuff(blockState)];

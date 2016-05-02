@@ -26,12 +26,15 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-//TODO Fix bounding box
 public class BlockCoffeeMachine extends BlockContainerBase{
+
+    private static final AxisAlignedBB AABB = new AxisAlignedBB(0.0625, 0, 0.0625, 1-0.0625*2, 1-0.0625, 1-0.0625);
 
     private static final PropertyInteger META = PropertyInteger.create("meta", 0, 3);
 
@@ -41,6 +44,11 @@ public class BlockCoffeeMachine extends BlockContainerBase{
         this.setHardness(1.5F);
         this.setResistance(10.0F);
         this.setSoundType(SoundType.STONE);
+    }
+
+    @Override
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos){
+        return AABB;
     }
 
     @Override

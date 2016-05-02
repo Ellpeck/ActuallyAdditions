@@ -28,15 +28,27 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.profiler.Profiler;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.*;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.util.List;
+
 public class BlockCompost extends BlockContainerBase implements IHudDisplay{
+
+    private static final AxisAlignedBB AABB = new AxisAlignedBB(0.0625, 0, 0.0625, 1-0.0625, 11*0.0625, 1-0.0625);
+    protected static final AxisAlignedBB AABB_LEGS = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.3125D, 1.0D);
+    protected static final AxisAlignedBB AABB_WALL_NORTH = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 1.0D, 0.125D);
+    protected static final AxisAlignedBB AABB_WALL_SOUTH = new AxisAlignedBB(0.0D, 0.0D, 0.875D, 1.0D, 1.0D, 1.0D);
+    protected static final AxisAlignedBB AABB_WALL_EAST = new AxisAlignedBB(0.875D, 0.0D, 0.0D, 1.0D, 1.0D, 1.0D);
+    protected static final AxisAlignedBB AABB_WALL_WEST = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 0.125D, 1.0D, 1.0D);
 
     public BlockCompost(String name){
         super(Material.WOOD, name);
@@ -48,27 +60,19 @@ public class BlockCompost extends BlockContainerBase implements IHudDisplay{
         //this.setBlockBoundsForItemRender();
     }
 
-    //TODO Fix bounding box
-    /*@Override
-    public void setBlockBoundsForItemRender(){
-        float f = 1.0F/16.0F;
-        this.setBlockBounds(f, 0.0F, f, 1.0F-f, 11*f, 1.0F-f);
-    }
     @Override
-    public void addCollisionBoxesToList(World world, BlockPos pos, IBlockState state, AxisAlignedBB mask, List list, Entity collidingEntity){
-        this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.3125F, 1.0F);
-        super.addCollisionBoxesToList(world, pos, state, mask, list, collidingEntity);
-        float f = 0.125F, y = 0.7F;
-        this.setBlockBounds(0.0F, 0.0F, 0.0F, f, y, 1.0F);
-        super.addCollisionBoxesToList(world, pos, state, mask, list, collidingEntity);
-        this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, y, f);
-        super.addCollisionBoxesToList(world, pos, state, mask, list, collidingEntity);
-        this.setBlockBounds(1.0F-f, 0.0F, 0.0F, 1.0F, y, 1.0F);
-        super.addCollisionBoxesToList(world, pos, state, mask, list, collidingEntity);
-        this.setBlockBounds(0.0F, 0.0F, 1.0F-f, 1.0F, y, 1.0F);
-        super.addCollisionBoxesToList(world, pos, state, mask, list, collidingEntity);
-        this.setBlockBoundsForItemRender();
-    }*/
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos){
+        return AABB;
+    }
+
+    @Override
+    public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, Entity entityIn){
+        addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_LEGS);
+        addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_WALL_WEST);
+        addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_WALL_NORTH);
+        addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_WALL_EAST);
+        addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_WALL_SOUTH);
+    }
 
     @Override
     public boolean isOpaqueCube(IBlockState state){

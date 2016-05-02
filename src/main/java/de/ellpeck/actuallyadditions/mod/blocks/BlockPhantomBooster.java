@@ -18,9 +18,14 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class BlockPhantomBooster extends BlockContainerBase{
+
+    private static final AxisAlignedBB AABB = new AxisAlignedBB(2*0.0625, 0, 2*0.0625, 1-2*0.0625, 1, 1-2*0.0625);
 
     public BlockPhantomBooster(String name){
         super(Material.ROCK, name);
@@ -28,10 +33,11 @@ public class BlockPhantomBooster extends BlockContainerBase{
         this.setHardness(1.5F);
         this.setResistance(10.0F);
         this.setSoundType(SoundType.STONE);
+    }
 
-        //TODO Fix block bounds
-        //float f = 1F/16F;
-        //this.setBlockBounds(2*f, 0F, 2*f, 1-2*f, 1F, 1-2*f);
+    @Override
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos){
+        return AABB;
     }
 
     @Override

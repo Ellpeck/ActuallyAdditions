@@ -22,10 +22,11 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-//TODO Fix bounding box
 public class BlockLaserRelay extends BlockContainerBase{
 
     private static final PropertyInteger META = PropertyInteger.create("meta", 0, 5);
