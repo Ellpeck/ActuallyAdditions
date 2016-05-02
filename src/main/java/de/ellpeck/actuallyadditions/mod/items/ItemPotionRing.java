@@ -63,7 +63,7 @@ public class ItemPotionRing extends ItemBase implements IColorProvidingItem{
         if(!world.isRemote && stack.getItemDamage() < allRings.length){
             if(player instanceof EntityPlayer){
                 EntityPlayer thePlayer = (EntityPlayer)player;
-                ItemStack equippedStack = ((EntityPlayer)player).getActiveItemStack();
+                ItemStack equippedStack = ((EntityPlayer)player).getHeldItemMainhand();
 
                 ThePotionRings effect = ThePotionRings.values()[stack.getItemDamage()];
                 Potion potion = Potion.getPotionById(effect.effectID);

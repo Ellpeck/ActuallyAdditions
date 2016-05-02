@@ -354,7 +354,7 @@ public class WorldUtil{
         Block block = PosUtil.getBlock(pos, world);
         IBlockState state = world.getBlockState(pos);
         TileEntity tile = world.getTileEntity(pos);
-        ItemStack stack = player.getActiveItemStack();
+        ItemStack stack = player.getHeldItemMainhand();
 
         //If the Block can be harvested or not
         boolean canHarvest = block.canHarvestBlock(world, pos, player);

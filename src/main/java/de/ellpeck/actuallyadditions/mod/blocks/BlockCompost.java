@@ -104,7 +104,7 @@ public class BlockCompost extends BlockContainerBase implements IHudDisplay{
                     player.inventory.setInventorySlotContents(player.inventory.currentItem, tile.slots[0].copy());
                 }
                 else{
-                    player.getActiveItemStack().stackSize += tile.slots[0].stackSize;
+                    stackPlayer.stackSize += tile.slots[0].stackSize;
                 }
                 tile.slots[0] = null;
                 tile.markDirty();

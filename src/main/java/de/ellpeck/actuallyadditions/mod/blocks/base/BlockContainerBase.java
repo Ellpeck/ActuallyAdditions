@@ -111,7 +111,7 @@ public abstract class BlockContainerBase extends BlockContainer{
     }
 
     public boolean tryToggleRedstone(World world, BlockPos pos, EntityPlayer player){
-        ItemStack stack = player.getActiveItemStack();
+        ItemStack stack = player.getHeldItemMainhand();
         if(stack != null && Block.getBlockFromItem(stack.getItem()) instanceof BlockRedstoneTorch){
             TileEntity tile = world.getTileEntity(pos);
             if(tile instanceof IRedstoneToggle){
