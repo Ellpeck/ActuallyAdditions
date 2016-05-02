@@ -328,7 +328,7 @@ public class InitItems{
         itemShovelCrystalLightBlue = new ItemShovelAA(InitToolMaterials.toolMaterialCrystalLightBlue, new ItemStack(InitItems.itemCrystal, 1, TheCrystals.DIAMOND.ordinal()), "itemShovelCrystalLightBlue", Util.CRYSTAL_LIGHT_BLUE_RARITY);
         itemSwordCrystalLightBlue = new ItemSwordAA(InitToolMaterials.toolMaterialCrystalLightBlue, new ItemStack(InitItems.itemCrystal, 1, TheCrystals.DIAMOND.ordinal()), "itemSwordCrystalLightBlue", Util.CRYSTAL_LIGHT_BLUE_RARITY);
         itemHoeCrystalLightBlue = new ItemHoeAA(InitToolMaterials.toolMaterialCrystalLightBlue, new ItemStack(InitItems.itemCrystal, 1, TheCrystals.DIAMOND.ordinal()), "itemHoeCrystalLightBlue", Util.CRYSTAL_LIGHT_BLUE_RARITY);
-        itemHelmCrystalLightBlue = new ItemArmorAA("itemHelmCrystalLightBlue", InitArmorMaterials.armorMaterialCrystalLightBlue, 0, new ItemStack(InitItems.itemCrystal, 1, TheCrystals.DIAMOND.ordinal()),  Util.CRYSTAL_LIGHT_BLUE_RARITY);
+        itemHelmCrystalLightBlue = new ItemArmorAA("itemHelmCrystalLightBlue", InitArmorMaterials.armorMaterialCrystalLightBlue, 0, new ItemStack(InitItems.itemCrystal, 1, TheCrystals.DIAMOND.ordinal()), Util.CRYSTAL_LIGHT_BLUE_RARITY);
         itemChestCrystalLightBlue = new ItemArmorAA("itemChestCrystalLightBlue", InitArmorMaterials.armorMaterialCrystalLightBlue, 1, new ItemStack(InitItems.itemCrystal, 1, TheCrystals.DIAMOND.ordinal()), Util.CRYSTAL_LIGHT_BLUE_RARITY);
         itemPantsCrystalLightBlue = new ItemArmorAA("itemPantsCrystalLightBlue", InitArmorMaterials.armorMaterialCrystalLightBlue, 2, new ItemStack(InitItems.itemCrystal, 1, TheCrystals.DIAMOND.ordinal()), Util.CRYSTAL_LIGHT_BLUE_RARITY);
         itemBootsCrystalLightBlue = new ItemArmorAA("itemBootsCrystalLightBlue", InitArmorMaterials.armorMaterialCrystalLightBlue, 3, new ItemStack(InitItems.itemCrystal, 1, TheCrystals.DIAMOND.ordinal()), Util.CRYSTAL_LIGHT_BLUE_RARITY);
@@ -342,7 +342,7 @@ public class InitItems{
         itemHelmCrystalBlack = new ItemArmorAA("itemHelmCrystalBlack", InitArmorMaterials.armorMaterialCrystalBlack, 0, new ItemStack(InitItems.itemCrystal, 1, TheCrystals.COAL.ordinal()), Util.CRYSTAL_BLACK_RARITY);
         itemChestCrystalBlack = new ItemArmorAA("itemChestCrystalBlack", InitArmorMaterials.armorMaterialCrystalBlack, 1, new ItemStack(InitItems.itemCrystal, 1, TheCrystals.COAL.ordinal()), Util.CRYSTAL_BLACK_RARITY);
         itemPantsCrystalBlack = new ItemArmorAA("itemPantsCrystalBlack", InitArmorMaterials.armorMaterialCrystalBlack, 2, new ItemStack(InitItems.itemCrystal, 1, TheCrystals.COAL.ordinal()), Util.CRYSTAL_BLACK_RARITY);
-        itemBootsCrystalBlack = new ItemArmorAA("itemBootsCrystalBlack", InitArmorMaterials.armorMaterialCrystalBlack, 3, new ItemStack(InitItems.itemCrystal, 1, TheCrystals.COAL.ordinal()),  Util.CRYSTAL_BLACK_RARITY);
+        itemBootsCrystalBlack = new ItemArmorAA("itemBootsCrystalBlack", InitArmorMaterials.armorMaterialCrystalBlack, 3, new ItemStack(InitItems.itemCrystal, 1, TheCrystals.COAL.ordinal()), Util.CRYSTAL_BLACK_RARITY);
         itemPaxelCrystalBlack = new ItemAllToolAA(InitToolMaterials.toolMaterialCrystalBlack, new ItemStack(InitItems.itemCrystal, 1, TheCrystals.COAL.ordinal()), "itemPaxelCrystalBlack", Util.CRYSTAL_BLACK_RARITY, 2631982);
 
         itemPickaxeCrystalGreen = new ItemPickaxeAA(InitToolMaterials.toolMaterialCrystalGreen, new ItemStack(InitItems.itemCrystal, 1, TheCrystals.EMERALD.ordinal()), "itemPickaxeCrystalGreen", Util.CRYSTAL_GREEN_RARITY);
@@ -352,8 +352,8 @@ public class InitItems{
         itemHoeCrystalGreen = new ItemHoeAA(InitToolMaterials.toolMaterialCrystalGreen, new ItemStack(InitItems.itemCrystal, 1, TheCrystals.EMERALD.ordinal()), "itemHoeCrystalGreen", Util.CRYSTAL_GREEN_RARITY);
         itemHelmCrystalGreen = new ItemArmorAA("itemHelmCrystalGreen", InitArmorMaterials.armorMaterialCrystalGreen, 0, new ItemStack(InitItems.itemCrystal, 1, TheCrystals.EMERALD.ordinal()), Util.CRYSTAL_GREEN_RARITY);
         itemChestCrystalGreen = new ItemArmorAA("itemChestCrystalGreen", InitArmorMaterials.armorMaterialCrystalGreen, 1, new ItemStack(InitItems.itemCrystal, 1, TheCrystals.EMERALD.ordinal()), Util.CRYSTAL_GREEN_RARITY);
-        itemPantsCrystalGreen = new ItemArmorAA("itemPantsCrystalGreen", InitArmorMaterials.armorMaterialCrystalGreen, 2, new ItemStack(InitItems.itemCrystal, 1, TheCrystals.EMERALD.ordinal()),  Util.CRYSTAL_GREEN_RARITY);
-        itemBootsCrystalGreen = new ItemArmorAA("itemBootsCrystalGreen", InitArmorMaterials.armorMaterialCrystalGreen, 3, new ItemStack(InitItems.itemCrystal, 1, TheCrystals.EMERALD.ordinal()),  Util.CRYSTAL_GREEN_RARITY);
+        itemPantsCrystalGreen = new ItemArmorAA("itemPantsCrystalGreen", InitArmorMaterials.armorMaterialCrystalGreen, 2, new ItemStack(InitItems.itemCrystal, 1, TheCrystals.EMERALD.ordinal()), Util.CRYSTAL_GREEN_RARITY);
+        itemBootsCrystalGreen = new ItemArmorAA("itemBootsCrystalGreen", InitArmorMaterials.armorMaterialCrystalGreen, 3, new ItemStack(InitItems.itemCrystal, 1, TheCrystals.EMERALD.ordinal()), Util.CRYSTAL_GREEN_RARITY);
         itemPaxelCrystalGreen = new ItemAllToolAA(InitToolMaterials.toolMaterialCrystalGreen, new ItemStack(InitItems.itemCrystal, 1, TheCrystals.EMERALD.ordinal()), "itemPaxelCrystalGreen", Util.CRYSTAL_GREEN_RARITY, 46848);
 
         itemPickaxeCrystalWhite = new ItemPickaxeAA(InitToolMaterials.toolMaterialCrystalWhite, new ItemStack(InitItems.itemCrystal, 1, TheCrystals.IRON.ordinal()), "itemPickaxeCrystalWhite", Util.CRYSTAL_WHITE_RARITY);
@@ -361,7 +361,7 @@ public class InitItems{
         itemShovelCrystalWhite = new ItemShovelAA(InitToolMaterials.toolMaterialCrystalWhite, new ItemStack(InitItems.itemCrystal, 1, TheCrystals.IRON.ordinal()), "itemShovelCrystalWhite", Util.CRYSTAL_WHITE_RARITY);
         itemSwordCrystalWhite = new ItemSwordAA(InitToolMaterials.toolMaterialCrystalWhite, new ItemStack(InitItems.itemCrystal, 1, TheCrystals.IRON.ordinal()), "itemSwordCrystalWhite", Util.CRYSTAL_WHITE_RARITY);
         itemHoeCrystalWhite = new ItemHoeAA(InitToolMaterials.toolMaterialCrystalWhite, new ItemStack(InitItems.itemCrystal, 1, TheCrystals.IRON.ordinal()), "itemHoeCrystalWhite", Util.CRYSTAL_WHITE_RARITY);
-        itemHelmCrystalWhite = new ItemArmorAA("itemHelmCrystalWhite", InitArmorMaterials.armorMaterialCrystalWhite, 0, new ItemStack(InitItems.itemCrystal, 1, TheCrystals.IRON.ordinal()),Util.CRYSTAL_WHITE_RARITY);
+        itemHelmCrystalWhite = new ItemArmorAA("itemHelmCrystalWhite", InitArmorMaterials.armorMaterialCrystalWhite, 0, new ItemStack(InitItems.itemCrystal, 1, TheCrystals.IRON.ordinal()), Util.CRYSTAL_WHITE_RARITY);
         itemChestCrystalWhite = new ItemArmorAA("itemChestCrystalWhite", InitArmorMaterials.armorMaterialCrystalWhite, 1, new ItemStack(InitItems.itemCrystal, 1, TheCrystals.IRON.ordinal()), Util.CRYSTAL_WHITE_RARITY);
         itemPantsCrystalWhite = new ItemArmorAA("itemPantsCrystalWhite", InitArmorMaterials.armorMaterialCrystalWhite, 2, new ItemStack(InitItems.itemCrystal, 1, TheCrystals.IRON.ordinal()), Util.CRYSTAL_WHITE_RARITY);
         itemBootsCrystalWhite = new ItemArmorAA("itemBootsCrystalWhite", InitArmorMaterials.armorMaterialCrystalWhite, 3, new ItemStack(InitItems.itemCrystal, 1, TheCrystals.IRON.ordinal()), Util.CRYSTAL_WHITE_RARITY);

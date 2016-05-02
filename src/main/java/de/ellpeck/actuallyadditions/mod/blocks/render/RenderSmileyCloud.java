@@ -37,7 +37,8 @@ public class RenderSmileyCloud extends TileEntitySpecialRenderer{
             theCloud.setStatus(ClientProxy.bulletForMyValentine || (theCloud.name != null && !theCloud.name.isEmpty() && theCloud.name.equals("Pink Fluffy Unicloud")));
 
             if(theCloud.name != null && !theCloud.name.isEmpty()){
-                easterEggs : for(ISmileyCloudEasterEgg cloud : SmileyCloudEasterEggs.cloudStuff){
+                easterEggs:
+                for(ISmileyCloudEasterEgg cloud : SmileyCloudEasterEggs.cloudStuff){
                     for(String triggerName : cloud.getTriggerNames()){
                         if(StringUtil.equalsToLowerCase(triggerName, theCloud.name)){
                             GlStateManager.pushMatrix();

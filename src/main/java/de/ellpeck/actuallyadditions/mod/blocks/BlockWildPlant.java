@@ -59,7 +59,7 @@ public class BlockWildPlant extends BlockBushBase{
     @Override
     @SideOnly(Side.CLIENT)
     public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player){
-    int metadata = PosUtil.getMetadata(pos, world);
+        int metadata = PosUtil.getMetadata(pos, world);
         return metadata >= allWildPlants.length ? null : new ItemStack(((BlockPlant)allWildPlants[metadata].wildVersionOf).seedItem);
     }
 

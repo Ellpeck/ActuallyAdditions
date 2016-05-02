@@ -28,9 +28,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @InventoryContainer
 public class ContainerEnervator extends Container{
 
+    public static final EntityEquipmentSlot[] ARMOR_SLOTS = new EntityEquipmentSlot[]{EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET};
     private TileEntityEnervator enervator;
-
-    public static final EntityEquipmentSlot[] ARMOR_SLOTS = new EntityEquipmentSlot[] {EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET};
 
     public ContainerEnervator(EntityPlayer player, TileEntityBase tile){
         this.enervator = (TileEntityEnervator)tile;
@@ -77,7 +76,7 @@ public class ContainerEnervator extends Container{
         final int hotbarStart = inventoryEnd+1;
         final int hotbarEnd = hotbarStart+8;
 
-        Slot theSlot = (Slot)this.inventorySlots.get(slot);
+        Slot theSlot = this.inventorySlots.get(slot);
 
         if(theSlot != null && theSlot.getHasStack()){
             ItemStack newStack = theSlot.getStack();
