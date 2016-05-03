@@ -106,7 +106,7 @@ public class ItemFoods extends ItemFoodBase{
         ResourceLocation[] resLocs = new ResourceLocation[allFoods.length];
         for(int i = 0; i < allFoods.length; i++){
             String name = this.getRegistryName()+allFoods[i].name;
-            resLocs[i] = new ResourceLocation(ModUtil.MOD_ID, name);
+            resLocs[i] = new ResourceLocation(name);
             ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), new ModelResourceLocation(name, "inventory"));
         }
         ActuallyAdditions.proxy.addRenderVariant(this, resLocs);

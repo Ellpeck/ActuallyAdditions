@@ -34,7 +34,7 @@ import net.minecraft.world.World;
 
 public class BlockCoffeeMachine extends BlockContainerBase{
 
-    private static final AxisAlignedBB AABB = new AxisAlignedBB(0.0625, 0, 0.0625, 1-0.0625*2, 1-0.0625, 1-0.0625);
+    private static final AxisAlignedBB AABB = new AxisAlignedBB(0.0625, 0, 0.0625, 1-0.0625, 1-0.0625*2, 1-0.0625);
 
     private static final PropertyInteger META = PropertyInteger.create("meta", 0, 3);
 
