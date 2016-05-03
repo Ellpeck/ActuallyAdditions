@@ -15,6 +15,7 @@ import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -83,11 +84,15 @@ public class TileEntityFluidCollector extends TileEntityInventoryBase implements
             }
             else if(this.isPlacer && PosUtil.getBlock(coordsBlock, this.worldObj).isReplaceable(this.worldObj, coordsBlock)){
                 if(this.tank.getFluidAmount() >= FluidContainerRegistry.BUCKET_VOLUME){
-                    //TODO Fix this because apparently getting the item of the water block (for the ItemStack) returns null
                     Block block = this.tank.getFluid().getFluid().getBlock();
                     if(block != null){
-                        WorldUtil.useItemAtSide(sideToManipulate, this.worldObj, this.pos, new ItemStack(block));
-                        this.tank.drain(FluidContainerRegistry.BUCKET_VOLUME, true);
+                        BlockPos offsetPos = this.pos.offset(sideToManipulate);
+                        Block blockPresent = PosUtil.getBlock(offsetPos, this.worldObj);
+                        boolean replaceable = blockPresent.isReplaceable(this.worldObj, offsetPos);
+                        if(replaceable){
+                            PosUtil.setBlock(offsetPos, this.worldObj, block, 0, 3);
+                            this.tank.drain(FluidContainerRegistry.BUCKET_VOLUME, true);
+                        }
                     }
                 }
             }
