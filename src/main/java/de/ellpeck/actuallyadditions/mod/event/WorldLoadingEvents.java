@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.event;
 
 import de.ellpeck.actuallyadditions.mod.misc.WorldData;
+import de.ellpeck.actuallyadditions.mod.util.FakePlayerUtil;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -24,6 +25,7 @@ public class WorldLoadingEvents{
     @SubscribeEvent
     public void onUnload(WorldEvent.Unload event){
         WorldData.makeDirty();
+        FakePlayerUtil.unloadFakePlayer();
     }
 
     @SubscribeEvent

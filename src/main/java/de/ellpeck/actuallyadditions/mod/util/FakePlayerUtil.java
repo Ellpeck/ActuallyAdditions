@@ -39,4 +39,8 @@ public class FakePlayerUtil{
             return null;
         }
     }
+
+    public static void unloadFakePlayer(){
+        theFakePlayer = null;
+    }
 }
