@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.items.base;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.mod.inventory.ContainerEnergizer;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerEnervator;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
@@ -30,7 +31,7 @@ public class ItemArmorAA extends ItemArmor{
     }
 
     public ItemArmorAA(String name, ArmorMaterial material, int type, ItemStack repairItem, EnumRarity rarity){
-        super(material, 0, ContainerEnervator.ARMOR_SLOTS[type]);
+        super(material, 0, ContainerEnergizer.VALID_EQUIPMENT_SLOTS[type]);
         this.repairItem = repairItem;
         this.name = name;
         this.rarity = rarity;

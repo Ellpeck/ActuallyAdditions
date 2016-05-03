@@ -20,7 +20,7 @@ import java.util.Properties;
 public class ThreadUpdateChecker extends Thread{
 
     public ThreadUpdateChecker(){
-        this.setName(ModUtil.MOD_ID+" Update Checker");
+        this.setName(ModUtil.NAME+" Update Checker");
         this.setDaemon(true);
         this.start();
     }

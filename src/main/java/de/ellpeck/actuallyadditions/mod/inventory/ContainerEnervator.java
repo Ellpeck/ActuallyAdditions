@@ -28,10 +28,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @InventoryContainer
 public class ContainerEnervator extends Container{
 
-    public static final EntityEquipmentSlot[] ARMOR_SLOTS = new EntityEquipmentSlot[]{EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET};
     private TileEntityEnervator enervator;
 
-    public ContainerEnervator(EntityPlayer player, TileEntityBase tile){
+    public ContainerEnervator(final EntityPlayer player, TileEntityBase tile){
         this.enervator = (TileEntityEnervator)tile;
         InventoryPlayer inventory = player.inventory;
 
@@ -46,24 +45,24 @@ public class ContainerEnervator extends Container{
         for(int i = 0; i < 9; i++){
             this.addSlotToContainer(new Slot(inventory, i, 8+i*18, 155));
         }
-        final EntityPlayer finalPlayer = player;
-        for(int i = 0; i < 4; ++i){
-            final int finalI = i;
-            this.addSlotToContainer(new Slot(inventory, inventory.getSizeInventory()-1-i, 102, 19+i*18){
-                @Override
-                public boolean isItemValid(ItemStack stack){
-                    return stack != null && stack.getItem().isValidArmor(stack, ARMOR_SLOTS[finalI], finalPlayer);
-                }
 
+        for(int k = 0; k < 4; ++k){
+            final EntityEquipmentSlot slot = ContainerEnergizer.VALID_EQUIPMENT_SLOTS[k];
+            this.addSlotToContainer(new Slot(player.inventory, 36+(3-k), 102, 19+k*18){
                 @Override
                 public int getSlotStackLimit(){
                     return 1;
                 }
 
                 @Override
+                public boolean isItemValid(ItemStack stack){
+                    return stack != null && stack.getItem().isValidArmor(stack, slot, player);
+                }
+
+                @Override
                 @SideOnly(Side.CLIENT)
                 public String getSlotTexture(){
-                    return ItemArmor.EMPTY_SLOT_NAMES[finalI];
+                    return ItemArmor.EMPTY_SLOT_NAMES[slot.getIndex()];
                 }
             });
         }

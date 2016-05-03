@@ -18,6 +18,7 @@ import invtweaks.api.container.InventoryContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
@@ -27,9 +28,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @InventoryContainer
 public class ContainerEnergizer extends Container{
 
+    public static final EntityEquipmentSlot[] VALID_EQUIPMENT_SLOTS = new EntityEquipmentSlot[] {EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET};
     private TileEntityEnergizer energizer;
 
-    public ContainerEnergizer(EntityPlayer player, TileEntityBase tile){
+    public ContainerEnergizer(final EntityPlayer player, TileEntityBase tile){
         this.energizer = (TileEntityEnergizer)tile;
         InventoryPlayer inventory = player.inventory;
 
@@ -44,24 +46,24 @@ public class ContainerEnergizer extends Container{
         for(int i = 0; i < 9; i++){
             this.addSlotToContainer(new Slot(inventory, i, 8+i*18, 155));
         }
-        final EntityPlayer finalPlayer = player;
-        for(int i = 0; i < 4; ++i){
-            final int finalI = i;
-            this.addSlotToContainer(new Slot(inventory, inventory.getSizeInventory()-1-i, 102, 19+i*18){
-                @Override
-                public boolean isItemValid(ItemStack stack){
-                    return stack != null && stack.getItem().isValidArmor(stack, ContainerEnervator.ARMOR_SLOTS[finalI], finalPlayer);
-                }
 
+        for(int k = 0; k < 4; ++k){
+            final EntityEquipmentSlot slot = VALID_EQUIPMENT_SLOTS[k];
+            this.addSlotToContainer(new Slot(player.inventory, 36+(3-k), 102, 19+k*18){
                 @Override
                 public int getSlotStackLimit(){
                     return 1;
                 }
 
                 @Override
+                public boolean isItemValid(ItemStack stack){
+                    return stack != null && stack.getItem().isValidArmor(stack, slot, player);
+                }
+
+                @Override
                 @SideOnly(Side.CLIENT)
                 public String getSlotTexture(){
-                    return ItemArmor.EMPTY_SLOT_NAMES[finalI];
+                    return ItemArmor.EMPTY_SLOT_NAMES[slot.getIndex()];
                 }
             });
         }
@@ -74,7 +76,7 @@ public class ContainerEnergizer extends Container{
         final int hotbarStart = inventoryEnd+1;
         final int hotbarEnd = hotbarStart+8;
 
-        Slot theSlot = (Slot)this.inventorySlots.get(slot);
+        Slot theSlot = this.inventorySlots.get(slot);
 
         if(theSlot != null && theSlot.getHasStack()){
             ItemStack newStack = theSlot.getStack();

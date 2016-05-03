@@ -19,7 +19,7 @@ import java.util.Properties;
 public class ThreadSpecialFetcher extends Thread{
 
     public ThreadSpecialFetcher(){
-        this.setName(ModUtil.MOD_ID+" Special Fetcher");
+        this.setName(ModUtil.NAME+" Special Fetcher");
         this.setDaemon(true);
         this.start();
     }
