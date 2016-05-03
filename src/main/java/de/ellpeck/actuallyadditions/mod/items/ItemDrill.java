@@ -24,6 +24,7 @@ import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -345,9 +346,9 @@ public class ItemDrill extends ItemEnergy{
     protected void registerRendering(){
         ResourceLocation[] resLocs = new ResourceLocation[16];
         for(int i = 0; i < 16; i++){
-            String name = this.getBaseName()+TheColoredLampColors.values()[i].name;
+            String name = this.getRegistryName()+TheColoredLampColors.values()[i].name;
             resLocs[i] = new ResourceLocation(ModUtil.MOD_ID, name);
-            ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), new ResourceLocation(ModUtil.MOD_ID, name));
+            ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), new ModelResourceLocation(name, "inventory"));
         }
         ActuallyAdditions.proxy.addRenderVariant(this, resLocs);
     }

@@ -15,6 +15,7 @@ import de.ellpeck.actuallyadditions.mod.items.base.ItemFoodBase;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheFoods;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
@@ -104,9 +105,9 @@ public class ItemFoods extends ItemFoodBase{
     protected void registerRendering(){
         ResourceLocation[] resLocs = new ResourceLocation[allFoods.length];
         for(int i = 0; i < allFoods.length; i++){
-            String name = this.getBaseName()+allFoods[i].name;
+            String name = this.getRegistryName()+allFoods[i].name;
             resLocs[i] = new ResourceLocation(ModUtil.MOD_ID, name);
-            ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), new ResourceLocation(ModUtil.MOD_ID, name));
+            ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), new ModelResourceLocation(name, "inventory"));
         }
         ActuallyAdditions.proxy.addRenderVariant(this, resLocs);
     }

@@ -60,7 +60,7 @@ public class ClientProxy implements IProxy{
     public static int bookletCharCount;
 
     private static List<Item> colorProdividingItemsForRegistering = new ArrayList<Item>();
-    private static Map<ItemStack, ResourceLocation> modelLocationsForRegistering = new HashMap<ItemStack, ResourceLocation>();
+    private static Map<ItemStack, ModelResourceLocation> modelLocationsForRegistering = new HashMap<ItemStack, ModelResourceLocation>();
     private static Map<Item, ResourceLocation[]> modelVariantsForRegistering = new HashMap<Item, ResourceLocation[]>();
 
     private static void countBookletWords(){
@@ -99,8 +99,8 @@ public class ClientProxy implements IProxy{
 
         PersistentClientData.setTheFile(new File(Minecraft.getMinecraft().mcDataDir, ModUtil.MOD_ID+"Data.dat"));
 
-        for(Map.Entry<ItemStack, ResourceLocation> entry : modelLocationsForRegistering.entrySet()){
-            ModelLoader.setCustomModelResourceLocation(entry.getKey().getItem(), entry.getKey().getItemDamage(), new ModelResourceLocation(entry.getValue(), "inventory"));
+        for(Map.Entry<ItemStack, ModelResourceLocation> entry : modelLocationsForRegistering.entrySet()){
+            ModelLoader.setCustomModelResourceLocation(entry.getKey().getItem(), entry.getKey().getItemDamage(), entry.getValue());
         }
         for(Map.Entry<Item, ResourceLocation[]> entry : modelVariantsForRegistering.entrySet()){
             ModelBakery.registerItemVariants(entry.getKey(), entry.getValue());
@@ -165,7 +165,7 @@ public class ClientProxy implements IProxy{
     }
 
     @Override
-    public void addRenderRegister(ItemStack stack, ResourceLocation location){
+    public void addRenderRegister(ItemStack stack, ModelResourceLocation location){
         modelLocationsForRegistering.put(stack, location);
     }
 

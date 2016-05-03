@@ -83,8 +83,10 @@ public class TileEntityFluidCollector extends TileEntityInventoryBase implements
             }
             else if(this.isPlacer && PosUtil.getBlock(coordsBlock, this.worldObj).isReplaceable(this.worldObj, coordsBlock)){
                 if(this.tank.getFluidAmount() >= FluidContainerRegistry.BUCKET_VOLUME){
-                    if(this.tank.getFluid().getFluid().getBlock() != null){
-                        WorldUtil.useItemAtSide(sideToManipulate, this.worldObj, this.pos, new ItemStack(this.tank.getFluid().getFluid().getBlock()));
+                    //TODO Fix this because apparently getting the item of the water block (for the ItemStack) returns null
+                    Block block = this.tank.getFluid().getFluid().getBlock();
+                    if(block != null){
+                        WorldUtil.useItemAtSide(sideToManipulate, this.worldObj, this.pos, new ItemStack(block));
                         this.tank.drain(FluidContainerRegistry.BUCKET_VOLUME, true);
                     }
                 }

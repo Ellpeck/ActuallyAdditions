@@ -20,6 +20,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
@@ -64,9 +65,9 @@ public class BlockCrystal extends BlockBase{
     protected void registerRendering(){
         ResourceLocation[] resLocs = new ResourceLocation[allCrystals.length];
         for(int i = 0; i < allCrystals.length; i++){
-            String name = this.getBaseName()+allCrystals[i].name;
+            String name = this.getRegistryName()+allCrystals[i].name;
             resLocs[i] = new ResourceLocation(ModUtil.MOD_ID, name);
-            ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), new ResourceLocation(ModUtil.MOD_ID, name));
+            ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), new ModelResourceLocation(name, "inventory"));
         }
         ActuallyAdditions.proxy.addRenderVariant(Item.getItemFromBlock(this), resLocs);
     }

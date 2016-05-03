@@ -18,6 +18,7 @@ import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -53,10 +54,9 @@ public class ItemAllToolAA extends ItemToolAA implements IColorProvidingItem{
 
     @Override
     protected void registerRendering(){
-        ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this), new ResourceLocation(ModUtil.MOD_ID, "itemPaxel"));
-        ActuallyAdditions.proxy.addRenderVariant(this, new ResourceLocation(ModUtil.MOD_ID, "itemPaxel"));
-
-
+        ResourceLocation resLoc = new ResourceLocation(ModUtil.MOD_ID, "itemPaxel");
+        ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this), new ModelResourceLocation(resLoc, "inventory"));
+        ActuallyAdditions.proxy.addRenderVariant(this, resLoc);
     }
 
     @Override

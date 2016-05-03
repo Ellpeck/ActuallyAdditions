@@ -15,6 +15,7 @@ import de.ellpeck.actuallyadditions.mod.blocks.BlockCrystal;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
@@ -60,9 +61,9 @@ public class ItemCrystal extends ItemBase{
     protected void registerRendering(){
         ResourceLocation[] resLocs = new ResourceLocation[BlockCrystal.allCrystals.length];
         for(int i = 0; i < BlockCrystal.allCrystals.length; i++){
-            String name = this.getBaseName()+BlockCrystal.allCrystals[i].name;
+            String name = this.getRegistryName()+BlockCrystal.allCrystals[i].name;
             resLocs[i] = new ResourceLocation(ModUtil.MOD_ID, name);
-            ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), new ResourceLocation(ModUtil.MOD_ID, name));
+            ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), new ModelResourceLocation(name, "inventory"));
         }
         ActuallyAdditions.proxy.addRenderVariant(this, resLocs);
     }

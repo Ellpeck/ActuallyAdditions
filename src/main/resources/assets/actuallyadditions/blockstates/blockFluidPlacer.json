@@ -1,0 +1,28 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "minecraft:cube",
+    "textures": {
+      "particle": "actuallyadditions:blocks/blockFluidPlacer",
+      "down": "#particle",
+      "up": "actuallyadditions:blocks/blockFluidPlacerTop",
+      "south": "#particle",
+      "north": "actuallyadditions:blocks/blockFluidPlacerFront",
+      "east": "#particle",
+      "west": "#particle"
+    },
+    "transform": "forge:default-block"
+  },
+  "variants": {
+    "normal": [{}],
+    "inventory": [{}],
+    "meta": {
+      "0": { "x" : 90 },
+      "1": { "x" : 270 },
+      "2": { "y" : 0 },
+      "3": { "y" : 180 },
+      "4": { "y" : 270 },
+      "5": { "y" : 90 }
+    }
+  }
+}

@@ -16,6 +16,7 @@ import de.ellpeck.actuallyadditions.mod.items.metalists.ThePotionRings;
 import de.ellpeck.actuallyadditions.mod.util.IColorProvidingItem;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
@@ -107,7 +108,7 @@ public class ItemPotionRing extends ItemBase implements IColorProvidingItem{
     @Override
     protected void registerRendering(){
         for(int i = 0; i < allRings.length; i++){
-            ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), new ResourceLocation(ModUtil.MOD_ID, this.getBaseName()));
+            ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), new ModelResourceLocation(this.getRegistryName(), "inventory"));
         }
     }
 
