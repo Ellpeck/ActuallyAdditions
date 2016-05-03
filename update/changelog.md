@@ -1,3 +1,19 @@
+# 1.9-r29
+* Fixed blocks dropping twice when broken with the drill
+* Made drill GUI be openable again (how did I even miss this?)
+* Made XP drops from drill dependent on the forge event
+* Fixed and re-implemented sounds
+* Raised the amount of particles from the laser relay
+* Made the knife not give extra attack damage in armor slots
+* Fixed a couple of bugs with items that need to be held in hand not working
+* Fixed all item models so that they're not held like shields
+* Made slab placing a bit more proper
+* Fixed most bounding boxes
+* Fixed equipment slots in energizer and enervator being off
+* Fixed fluid placer not being able to place
+* Made fake player not persist into different worlds causing coordinate issues
+* Fixed all block models of custom rendered stuff
+
 # 1.9-r28
 * Fixed a crash when trying to fill a bucket
 ##### Because it was pretty much gamebreaking.
