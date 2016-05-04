@@ -41,7 +41,7 @@ public class JamVillagerTradeHandler{
     }
 
     public void addWants(String oredictName, int minSize, int maxSize){
-        ArrayList<ItemStack> stacks = (ArrayList<ItemStack>)OreDictionary.getOres(oredictName);
+        ArrayList<ItemStack> stacks = (ArrayList<ItemStack>)OreDictionary.getOres(oredictName, false);
         this.trades.add(new Trade(stacks, minSize, maxSize));
     }
 

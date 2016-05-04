@@ -38,7 +38,7 @@ public class CrusherRecipeRegistry{
                             String output = theCase.resultPreString+ore.substring(theCase.theCase.length());
 
                             if(!hasOreRecipe(ore)){
-                                if(!OreDictionary.getOres(output).isEmpty() && !OreDictionary.getOres(ore).isEmpty()){
+                                if(!OreDictionary.getOres(output, false).isEmpty() && !OreDictionary.getOres(ore, false).isEmpty()){
                                     ActuallyAdditionsAPI.addCrusherRecipe(ore, output, theCase.resultAmount);
                                 }
                                 else{
