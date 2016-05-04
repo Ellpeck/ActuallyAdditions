@@ -647,7 +647,7 @@ booklet.actuallyadditions.chapter.coffeeMachine.text.6=<item>Milk<r> is an impor
 booklet.actuallyadditions.chapter.coffeeMachine.text.7=<i>The fact that you're reading this means that you either have <imp>HarvestCraft<r><i> installed, or that you're looking at the lang file. <r><n>This does the same thing as <item>Milk<r>, but for veggie guys.
 
 booklet.actuallyadditions.chapter.crusher.name=Crusher and Double Crusher
-booklet.actuallyadditions.chapter.crusher.text.1=The <item>Crusher<r> turns every ore, ingot and gem into its corresponding <imp>dust<r> using <rf1> RF/t. <n>When you put in <imp>Ores<r> however, they will yield <imp>2 pieces of dust<r>. <n>The <item>Double Crusher<r> basically does the same, however it can crush two ores at a time and uses <rf2> RF/t. <n>On the following pages, you can see some additional useful recipes for inside the crusher. <n><n><i>He's my crush
+booklet.actuallyadditions.chapter.crusher.text.1=The <item>Crusher<r> turns every ore, ingot and gem into its corresponding <imp>dust<r> using <rf> RF/t. <n>When you put in <imp>Ores<r> however, they will yield <imp>2 pieces of dust<r>. <n>The <item>Double Crusher<r> basically does the same, however it can crush two ores at a time. <n>On the following pages, you can see some additional useful recipes for inside the crusher. <n><n><i>He's my crush
 
 booklet.actuallyadditions.chapter.furnaceDouble.name=Double Furnace
 booklet.actuallyadditions.chapter.furnaceDouble.text.1=The <item>Double Furnace<r> works like a furnace, however, it uses <rf> RF/t and can smelt <imp>two items at a time<r>.

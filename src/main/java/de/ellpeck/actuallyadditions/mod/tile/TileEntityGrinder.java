@@ -35,6 +35,7 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
     public static final int SLOT_INPUT_2 = 3;
     public static final int SLOT_OUTPUT_2_1 = 4;
     public static final int SLOT_OUTPUT_2_2 = 5;
+    public static final int ENERGY_USE = 40;
     public EnergyStorage storage = new EnergyStorage(60000);
     public int firstCrushTime;
     public int secondCrushTime;
@@ -50,10 +51,6 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
     public TileEntityGrinder(){
         super(3, "grinder");
         this.isDouble = false;
-    }
-
-    public static int getEnergyUse(boolean isDouble){
-        return isDouble ? 60 : 40;
     }
 
     @Override
@@ -108,7 +105,7 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
             boolean shouldPlaySound = false;
 
             if(canCrushOnFirst){
-                if(this.storage.getEnergyStored() >= getEnergyUse(this.isDouble)){
+                if(this.storage.getEnergyStored() >= ENERGY_USE){
                     if(this.firstCrushTime%30 == 0){
                         shouldPlaySound = true;
                     }
@@ -117,6 +114,7 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
                         this.finishCrushing(SLOT_INPUT_1, SLOT_OUTPUT_1_1, SLOT_OUTPUT_1_2);
                         this.firstCrushTime = 0;
                     }
+                    this.storage.extractEnergy(ENERGY_USE, false);
                 }
             }
             else{
@@ -125,7 +123,7 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
 
             if(this.isDouble){
                 if(canCrushOnSecond){
-                    if(this.storage.getEnergyStored() >= getEnergyUse(this.isDouble)){
+                    if(this.storage.getEnergyStored() >= ENERGY_USE){
                         if(this.secondCrushTime%30 == 0){
                             shouldPlaySound = true;
                         }
@@ -134,15 +132,12 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
                             this.finishCrushing(SLOT_INPUT_2, SLOT_OUTPUT_2_1, SLOT_OUTPUT_2_2);
                             this.secondCrushTime = 0;
                         }
+                        this.storage.extractEnergy(ENERGY_USE, false);
                     }
                 }
                 else{
                     this.secondCrushTime = 0;
                 }
-            }
-
-            if(this.storage.getEnergyStored() >= getEnergyUse(this.isDouble) && (this.firstCrushTime > 0 || this.secondCrushTime > 0)){
-                this.storage.extractEnergy(getEnergyUse(this.isDouble), false);
             }
 
             if(flag != (this.firstCrushTime > 0 || this.secondCrushTime > 0)){

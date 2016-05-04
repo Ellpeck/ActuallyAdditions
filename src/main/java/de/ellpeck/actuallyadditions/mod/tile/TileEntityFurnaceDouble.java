@@ -72,6 +72,7 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
                         this.finishBurning(SLOT_INPUT_1, SLOT_OUTPUT_1);
                         this.firstSmeltTime = 0;
                     }
+                    this.storage.extractEnergy(ENERGY_USE, false);
                 }
             }
             else{
@@ -85,14 +86,11 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
                         this.finishBurning(SLOT_INPUT_2, SLOT_OUTPUT_2);
                         this.secondSmeltTime = 0;
                     }
+                    this.storage.extractEnergy(ENERGY_USE, false);
                 }
             }
             else{
                 this.secondSmeltTime = 0;
-            }
-
-            if(this.storage.getEnergyStored() >= ENERGY_USE && (this.firstSmeltTime > 0 || this.secondSmeltTime > 0)){
-                this.storage.extractEnergy(ENERGY_USE, false);
             }
 
             if(flag != (this.firstSmeltTime > 0 || this.secondSmeltTime > 0)){
