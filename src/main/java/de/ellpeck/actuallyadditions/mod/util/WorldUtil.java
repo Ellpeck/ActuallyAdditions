@@ -42,6 +42,7 @@ import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.fluids.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class WorldUtil{
 
@@ -249,11 +250,11 @@ public class WorldUtil{
         return blocks;
     }
 
-    public static boolean addToInventory(IInventory inventory, ArrayList<ItemStack> stacks, boolean actuallyDo, boolean shouldAlwaysWork){
+    public static boolean addToInventory(IInventory inventory, List<ItemStack> stacks, boolean actuallyDo, boolean shouldAlwaysWork){
         return addToInventory(inventory, stacks, EnumFacing.UP, actuallyDo, shouldAlwaysWork);
     }
 
-    public static boolean addToInventory(IInventory inventory, ArrayList<ItemStack> stacks, EnumFacing side, boolean actuallyDo, boolean shouldAlwaysWork){
+    public static boolean addToInventory(IInventory inventory, List<ItemStack> stacks, EnumFacing side, boolean actuallyDo, boolean shouldAlwaysWork){
         return addToInventory(inventory, 0, inventory.getSizeInventory(), stacks, side, actuallyDo, shouldAlwaysWork);
     }
 
@@ -266,7 +267,7 @@ public class WorldUtil{
      * @param actuallyDo Do it or just test if it works?
      * @return Does it work?
      */
-    public static boolean addToInventory(IInventory inventory, int start, int end, ArrayList<ItemStack> stacks, EnumFacing side, boolean actuallyDo, boolean shouldAlwaysWork){
+    public static boolean addToInventory(IInventory inventory, int start, int end, List<ItemStack> stacks, EnumFacing side, boolean actuallyDo, boolean shouldAlwaysWork){
         //Copy the slots if just testing to later load them again
         ItemStack[] backupSlots = null;
         if(!actuallyDo){

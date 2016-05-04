@@ -17,6 +17,7 @@ import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
 import de.ellpeck.actuallyadditions.mod.network.PacketParticle;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.util.PosUtil;
+import de.ellpeck.actuallyadditions.mod.util.Util;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
@@ -25,6 +26,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.event.ForgeEventFactory;
+import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.relauncher.Side;
@@ -32,6 +36,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyReceiver, IButtonReactor, IEnergySaver, IEnergyDisplay{
 
@@ -98,20 +103,22 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyR
                     int meta = PosUtil.getMetadata(pos, this.worldObj);
                     if(block != null && !block.isAir(this.worldObj.getBlockState(pos), this.worldObj, pos)){
                         if(block.getHarvestLevel(this.worldObj.getBlockState(pos)) <= 3F && block.getBlockHardness(this.worldObj.getBlockState(pos), this.worldObj, pos) >= 0F && !(block instanceof BlockLiquid) && !(block instanceof IFluidBlock) && this.isMinable(block, meta)){
-                            ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-                            drops.addAll(block.getDrops(this.worldObj, pos, this.worldObj.getBlockState(pos), 0));
+                            List<ItemStack> drops = block.getDrops(this.worldObj, pos, this.worldObj.getBlockState(pos), 0);
+                            float chance = ForgeEventFactory.fireBlockHarvesting(drops, this.worldObj, pos, this.worldObj.getBlockState(pos), 0, 1, false, null);
 
-                            if(WorldUtil.addToInventory(this, drops, false, true)){
-                                if(!ConfigValues.lessBlockBreakingEffects){
-                                    this.worldObj.playAuxSFX(2001, pos, Block.getStateId(this.worldObj.getBlockState(pos)));
+                            if(Util.RANDOM.nextFloat() <= chance){
+                                if(WorldUtil.addToInventory(this, drops, false, true)){
+                                    if(!ConfigValues.lessBlockBreakingEffects){
+                                        this.worldObj.playAuxSFX(2001, pos, Block.getStateId(this.worldObj.getBlockState(pos)));
+                                    }
+                                    this.worldObj.setBlockToAir(pos);
+
+                                    WorldUtil.addToInventory(this, drops, true, true);
+                                    this.markDirty();
+
+                                    this.storage.extractEnergy(actualUse, false);
+                                    this.shootParticles(pos.getX(), pos.getY(), pos.getZ());
                                 }
-                                this.worldObj.setBlockToAir(pos);
-
-                                WorldUtil.addToInventory(this, drops, true, true);
-                                this.markDirty();
-
-                                this.storage.extractEnergy(actualUse, false);
-                                this.shootParticles(pos.getX(), pos.getY(), pos.getZ());
                             }
                             return false;
                         }

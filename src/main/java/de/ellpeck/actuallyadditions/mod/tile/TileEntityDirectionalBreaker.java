@@ -14,6 +14,7 @@ import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
 import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
 import de.ellpeck.actuallyadditions.mod.util.PosUtil;
+import de.ellpeck.actuallyadditions.mod.util.Util;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockAir;
@@ -21,10 +22,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class TileEntityDirectionalBreaker extends TileEntityInventoryBase implements IEnergyReceiver, IEnergySaver, IRedstoneToggle{
 
@@ -86,17 +89,19 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase implem
             if(coordsBlock != null){
                 Block blockToBreak = PosUtil.getBlock(coordsBlock, this.worldObj);
                 if(blockToBreak != null && !(blockToBreak instanceof BlockAir) && blockToBreak.getBlockHardness(this.worldObj.getBlockState(coordsBlock), this.worldObj, this.pos) > -1.0F){
-                    ArrayList<ItemStack> drops = new ArrayList();
-                    drops.addAll(blockToBreak.getDrops(this.worldObj, coordsBlock, this.worldObj.getBlockState(coordsBlock), 0));
+                    List<ItemStack> drops = blockToBreak.getDrops(this.worldObj, coordsBlock, this.worldObj.getBlockState(coordsBlock), 0);
+                    float chance = ForgeEventFactory.fireBlockHarvesting(drops, this.worldObj, coordsBlock, this.worldObj.getBlockState(coordsBlock), 0, 1, false, null);
 
-                    if(WorldUtil.addToInventory(this, drops, false, true)){
-                        if(!ConfigValues.lessBlockBreakingEffects){
-                            this.worldObj.playAuxSFX(2001, coordsBlock, Block.getStateId(this.worldObj.getBlockState(coordsBlock)));
+                    if(Util.RANDOM.nextFloat() <= chance){
+                        if(WorldUtil.addToInventory(this, drops, false, true)){
+                            if(!ConfigValues.lessBlockBreakingEffects){
+                                this.worldObj.playAuxSFX(2001, coordsBlock, Block.getStateId(this.worldObj.getBlockState(coordsBlock)));
+                            }
+                            WorldUtil.breakBlockAtSide(sideToManipulate, this.worldObj, this.getPos(), i);
+                            WorldUtil.addToInventory(this, drops, true, true);
+                            this.storage.extractEnergy(ENERGY_USE, false);
+                            this.markDirty();
                         }
-                        WorldUtil.breakBlockAtSide(sideToManipulate, this.worldObj, this.getPos(), i);
-                        WorldUtil.addToInventory(this, drops, true, true);
-                        this.storage.extractEnergy(ENERGY_USE, false);
-                        this.markDirty();
                     }
                 }
             }
