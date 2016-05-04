@@ -41,7 +41,7 @@ public class LensColor extends Lens{
             InitBlocks.blockColoredLampOn
     };
     //Thanks to xdjackiexd for this, as I couldn't be bothered
-    private static final float[][] possibleColorLensColors = {
+    private static final float[][] POSSIBLE_COLORS = {
             {158F, 43F, 39F}, //Red
             {234F, 126F, 53F}, //Orange
             {194F, 181F, 28F}, //Yellow
@@ -99,7 +99,7 @@ public class LensColor extends Lens{
 
     @Override
     public float[] getColor(){
-        float[] colors = possibleColorLensColors[Util.RANDOM.nextInt(possibleColorLensColors.length)];
+        float[] colors = POSSIBLE_COLORS[Util.RANDOM.nextInt(POSSIBLE_COLORS.length)];
         return new float[]{colors[0]/255F, colors[1]/255F, colors[2]/255F};
     }
 

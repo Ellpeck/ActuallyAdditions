@@ -25,7 +25,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.EnumRarity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.profiler.Profiler;
 import net.minecraft.tileentity.TileEntity;
@@ -68,11 +70,17 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
             TileEntityAtomicReconstructor reconstructor = (TileEntityAtomicReconstructor)world.getTileEntity(pos);
             if(reconstructor != null){
                 if(heldItem != null){
-                    if(heldItem.getItem() instanceof ILensItem && reconstructor.getStackInSlot(0) == null){
+                    Item item = heldItem.getItem();
+                    if(item instanceof ILensItem && reconstructor.getStackInSlot(0) == null){
                         ItemStack toPut = heldItem.copy();
                         toPut.stackSize = 1;
                         reconstructor.setInventorySlotContents(0, toPut);
                         player.inventory.decrStackSize(player.inventory.currentItem, 1);
+                    }
+                    //Shush, don't tell anyone!
+                    else if(item == Items.RECORD_11){
+                        reconstructor.counter++;
+                        reconstructor.markDirty();
                     }
                 }
                 else{

@@ -39,6 +39,7 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
     private int currentTime;
     private boolean activateOnceWithSignal;
     private int oldEnergy;
+    public int counter;
 
     public TileEntityAtomicReconstructor(){
         super(1, "reconstructor");
@@ -48,6 +49,7 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
     public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
         super.writeSyncableNBT(compound, sync);
         compound.setInteger("CurrentTime", this.currentTime);
+        compound.setInteger("Counter", this.counter);
         this.storage.writeToNBT(compound);
     }
 
@@ -60,6 +62,7 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
     public void readSyncableNBT(NBTTagCompound compound, boolean sync){
         super.readSyncableNBT(compound, sync);
         this.currentTime = compound.getInteger("CurrentTime");
+        this.counter = compound.getInteger("Counter");
         this.storage.readFromNBT(compound);
     }
 
@@ -116,7 +119,7 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
                 return ((ILensItem)this.slots[0].getItem()).getLens();
             }
         }
-        return Lenses.LENS_NONE;
+        return this.counter >= 500 ? Lenses.LENS_DISRUPTION : Lenses.LENS_NONE;
     }
 
     private void shootLaser(int endX, int endY, int endZ, Lens currentLens){

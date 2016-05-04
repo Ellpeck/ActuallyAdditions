@@ -18,4 +18,5 @@ public class Lenses{
     public static final Lens LENS_DETONATION = new LensDetonation();
     public static final Lens LENS_DEATH = new LensDeath();
     public static final Lens LENS_COLOR = new LensColor();
+    public static final Lens LENS_DISRUPTION = new LensDisruption();
 }
