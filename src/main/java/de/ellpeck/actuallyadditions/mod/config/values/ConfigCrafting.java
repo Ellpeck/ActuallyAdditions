@@ -153,7 +153,8 @@ public enum ConfigCrafting{
     DRILL_CORE("Drill Core", ConfigCategories.ITEMS_CRAFTING),
     ATOMIC_RECONSTRUCTOR("Atomic Reconstructor", ConfigCategories.BLOCKS_CRAFTING),
     MINER("Miner", ConfigCategories.BLOCKS_CRAFTING),
-    FIREWORK_BOX("Firework Box", ConfigCategories.BLOCKS_CRAFTING);
+    FIREWORK_BOX("Firework Box", ConfigCategories.BLOCKS_CRAFTING),
+    ENDER_STAR("Ender Star", ConfigCategories.ITEMS_CRAFTING);
 
     public final String name;
     public final String category;

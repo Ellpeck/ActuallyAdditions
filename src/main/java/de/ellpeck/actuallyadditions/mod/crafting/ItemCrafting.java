@@ -80,6 +80,7 @@ public class ItemCrafting{
     public static IRecipe recipeBlackDye;
     public static IRecipe recipeLens;
     public static IRecipe recipeCrateKeeper;
+    public static IRecipe recipeEnderStar;
 
     public static void init(){
 
@@ -362,7 +363,7 @@ public class ItemCrafting{
                     "WNW", "WDW", "WNW",
                     'W', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.BAT_WING.ordinal()),
                     'N', new ItemStack(InitBlocks.blockCrystal, 1, TheCrystals.DIAMOND.ordinal()),
-                    'D', new ItemStack(Items.NETHER_STAR)));
+                    'D', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.ENDER_STAR.ordinal())));
             recipeWings = RecipeUtil.lastIRecipe();
         }
 
@@ -528,7 +529,7 @@ public class ItemCrafting{
     public static void addRingRecipeWithStack(ItemStack mainStack, int meta){
         GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemPotionRing, 1, meta), mainStack, mainStack, mainStack, mainStack, new ItemStack(InitBlocks.blockCrystal, 1, TheCrystals.DIAMOND.ordinal()), new ItemStack(Items.NETHER_WART), new ItemStack(Items.POTIONITEM), new ItemStack(InitItems.itemMisc, 1, TheMiscItems.RING.ordinal()));
         recipesPotionRings.add(RecipeUtil.lastIRecipe());
-        GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemPotionRingAdvanced, 1, meta), new ItemStack(InitItems.itemPotionRing, 1, meta), new ItemStack(Items.NETHER_STAR), new ItemStack(Items.NETHER_STAR));
+        GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemPotionRingAdvanced, 1, meta), new ItemStack(InitItems.itemPotionRing, 1, meta), new ItemStack(InitItems.itemMisc, 1, TheMiscItems.ENDER_STAR.ordinal()));
         recipesPotionRings.add(RecipeUtil.lastIRecipe());
     }
 

@@ -78,6 +78,15 @@ public class MiscCrafting{
                     'F', new ItemStack(Items.FLINT)));
             ItemCrafting.recipeKnifeBlade = RecipeUtil.lastIRecipe();
         }
+
+        //Ender Star
+        if(ConfigCrafting.ENDER_STAR.isEnabled()){
+            GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.ENDER_STAR.ordinal()),
+                    new ItemStack(Items.NETHER_STAR),
+                    new ItemStack(Items.DRAGON_BREATH),
+                    new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal())));
+            ItemCrafting.recipeEnderStar = RecipeUtil.lastIRecipe();
+        }
     }
 
 }
