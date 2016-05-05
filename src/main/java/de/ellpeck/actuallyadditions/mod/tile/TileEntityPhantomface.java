@@ -92,7 +92,6 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
 
             if(this.doesNeedUpdateSend()){
                 this.onUpdateSent();
-                System.out.println("UPDAT!");
             }
         }
         else{
