@@ -41,7 +41,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class BlockPhantom extends BlockContainerBase implements IHudDisplay{
 
     public Type type;
-    public int range;
 
     public BlockPhantom(Type type, String name){
         super(Material.ROCK, name);
@@ -50,13 +49,6 @@ public class BlockPhantom extends BlockContainerBase implements IHudDisplay{
         this.setHardness(4.5F);
         this.setResistance(10.0F);
         this.setSoundType(SoundType.STONE);
-
-        if(type == Type.FACE || type == Type.LIQUIFACE || type == Type.ENERGYFACE){
-            this.range = TileEntityPhantomface.RANGE;
-        }
-        else if(type == Type.BREAKER || type == Type.PLACER){
-            this.range = TileEntityPhantomPlacer.RANGE;
-        }
     }
 
     @Override
