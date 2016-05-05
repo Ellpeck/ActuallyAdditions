@@ -73,6 +73,7 @@ tile.actuallyadditions.blockColoredLampCyan.name=Cyan Lamp
 tile.actuallyadditions.blockColoredLampPurple.name=Purple Lamp
 tile.actuallyadditions.blockPhantomface.name=Phantomface
 tile.actuallyadditions.blockPhantomEnergyface.name=Phantom Energyface
+tile.actuallyadditions.blockPhantomRedstoneface.name=Phantom Redstoneface
 tile.actuallyadditions.blockPhantomLiquiface.name=Phantom Liquiface
 tile.actuallyadditions.blockPhantomPlacer.name=Phantom Placer
 tile.actuallyadditions.blockPhantomBreaker.name=Phantom Breaker

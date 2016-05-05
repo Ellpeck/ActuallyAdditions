@@ -56,6 +56,7 @@ public class InitBlocks{
     public static Block blockPhantomBreaker;
     public static Block blockPhantomLiquiface;
     public static Block blockPhantomEnergyface;
+    public static Block blockPhantomRedstoneface;
 
     public static Block blockFluidPlacer;
     public static Block blockFluidCollector;
@@ -144,6 +145,7 @@ public class InitBlocks{
         blockPhantomPlacer = new BlockPhantom(BlockPhantom.Type.PLACER, "blockPhantomPlacer");
         blockPhantomLiquiface = new BlockPhantom(BlockPhantom.Type.LIQUIFACE, "blockPhantomLiquiface");
         blockPhantomEnergyface = new BlockPhantom(BlockPhantom.Type.ENERGYFACE, "blockPhantomEnergyface");
+        blockPhantomRedstoneface = new BlockPhantom(BlockPhantom.Type.REDSTONEFACE, "blockPhantomRedstoneface");
         blockPhantomBreaker = new BlockPhantom(BlockPhantom.Type.BREAKER, "blockPhantomBreaker");
         blockCoalGenerator = new BlockCoalGenerator("blockCoalGenerator");
         blockOilGenerator = new BlockOilGenerator("blockOilGenerator");

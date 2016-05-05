@@ -17,6 +17,8 @@ import de.ellpeck.actuallyadditions.mod.tile.*;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
+import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
+import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -34,6 +36,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -49,6 +52,33 @@ public class BlockPhantom extends BlockContainerBase implements IHudDisplay{
         this.setHardness(4.5F);
         this.setResistance(10.0F);
         this.setSoundType(SoundType.STONE);
+    }
+
+    @Override
+    public boolean canProvidePower(IBlockState state){
+        return this.type == Type.REDSTONEFACE;
+    }
+
+    @Override
+    public int getWeakPower(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing side){
+        if(this.type == Type.REDSTONEFACE){
+            TileEntity tile = world.getTileEntity(pos);
+            if(tile instanceof TileEntityPhantomRedstoneface){
+                return ((TileEntityPhantomRedstoneface)tile).providesWeak[side.ordinal()];
+            }
+        }
+        return super.getWeakPower(state, world, pos, side);
+    }
+
+    @Override
+    public int getStrongPower(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing side){
+        if(this.type == Type.REDSTONEFACE){
+            TileEntity tile = world.getTileEntity(pos);
+            if(tile instanceof TileEntityPhantomRedstoneface){
+                return ((TileEntityPhantomRedstoneface)tile).providesStrong[side.ordinal()];
+            }
+        }
+        return super.getStrongPower(state, world, pos, side);
     }
 
     @Override
@@ -70,6 +100,8 @@ public class BlockPhantom extends BlockContainerBase implements IHudDisplay{
                 return new TileEntityPhantomLiquiface();
             case ENERGYFACE:
                 return new TileEntityPhantomEnergyface();
+            case REDSTONEFACE:
+                return new TileEntityPhantomRedstoneface();
             default:
                 return new TileEntityPhantomItemface();
         }
@@ -127,6 +159,7 @@ public class BlockPhantom extends BlockContainerBase implements IHudDisplay{
         PLACER,
         BREAKER,
         LIQUIFACE,
-        ENERGYFACE
+        ENERGYFACE,
+        REDSTONEFACE
     }
 }
