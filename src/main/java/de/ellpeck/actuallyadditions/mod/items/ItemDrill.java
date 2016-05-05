@@ -520,7 +520,7 @@ public class ItemDrill extends ItemEnergy{
     private boolean hasExtraWhitelist(Block block){
         String name = block.getRegistryName().toString();
         if(name != null){
-            for(String list : ConfigValues.drillExtraminingWhitelist){
+            for(String list : ConfigValues.drillExtraMiningWhitelist){
                 if(list.equals(name)){
                     return true;
                 }

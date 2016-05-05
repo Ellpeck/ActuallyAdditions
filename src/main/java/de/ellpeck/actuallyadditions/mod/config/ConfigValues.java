@@ -25,13 +25,15 @@ public class ConfigValues{
     public static String[] mashedFoodCraftingExceptions;
 
     public static String[] paxelExtraMiningWhitelist;
-    public static String[] drillExtraminingWhitelist;
+    public static String[] drillExtraMiningWhitelist;
 
     public static int[] oreGenDimensionBlacklist;
     public static int[] plantDimensionBlacklist;
 
     public static String[] minerExtraWhitelist;
     public static String[] minerBlacklist;
+
+    public static String[] repairerExtraWhitelist;
 
     public static boolean lessSound;
     public static boolean lessParticles;
@@ -52,11 +54,12 @@ public class ConfigValues{
         crusherRecipeExceptions = config.get(ConfigCategories.OTHER.name, "Crusher Recipe Exceptions", new String[]{"ingotBrick", "ingotBrickNether"}, "The Ingots, Dusts and Ores blacklisted from being auto-registered to be crushed by the Crusher. This list uses OreDictionary Names of the Inputs only.").getStringList();
         mashedFoodCraftingExceptions = config.get(ConfigCategories.ITEMS_CRAFTING.name, "Mashed Food Crafting Exceptions", new String[]{"ActuallyAdditions:itemCoffee"}, "The ItemFood, IGrowable and IPlantable Items that can not be used to craft Mashed Food. These are the actual registered Item Names, the ones you use, for example, when using the /give Command.").getStringList();
         paxelExtraMiningWhitelist = config.get(ConfigCategories.TOOL_VALUES.name, "AIOT Extra Whitelist", new String[]{"TConstruct:GravelOre"}, "By default, the AIOT can mine certain blocks. If there is one that it can't mine, but should be able to, put its REGISTRY NAME here. These are the actual registered Item Names, the ones you use, for example, when using the /give Command.").getStringList();
-        drillExtraminingWhitelist = config.get(ConfigCategories.TOOL_VALUES.name, "Drill Extra Whitelist", new String[]{"TConstruct:GravelOre"}, "By default, the Drill can mine certain blocks. If there is one that it can't mine, but should be able to, put its REGISTRY NAME here. These are the actual registered Item Names, the ones you use, for example, when using the /give Command.").getStringList();
+        drillExtraMiningWhitelist = config.get(ConfigCategories.TOOL_VALUES.name, "Drill Extra Whitelist", new String[]{"TConstruct:GravelOre"}, "By default, the Drill can mine certain blocks. If there is one that it can't mine, but should be able to, put its REGISTRY NAME here. These are the actual registered Item Names, the ones you use, for example, when using the /give Command.").getStringList();
         oreGenDimensionBlacklist = config.get(ConfigCategories.WORLD_GEN.name, "OreGen Dimension Blacklist", new int[0], "The IDs of the dimensions that Actually Additions OreGen (Black Quartz for example) is banned in").getIntList();
         plantDimensionBlacklist = config.get(ConfigCategories.WORLD_GEN.name, "Plant Blacklist", new int[0], "The IDs of the dimensions that Actually Additions Plants (Rice for example) are banned in").getIntList();
         minerExtraWhitelist = config.get(ConfigCategories.MACHINE_VALUES.name, "Vertical Digger Extra Whitelist", new String[0], "By default, the Vertical Digger mines everything that starts with 'ore' in the OreDictionary. If there is one that it can't mine, but should be able to, put its REGISTRY NAME here. These are the actual registered Item Names, the ones you use, for example, when using the /give Command. This Config Option only applies if the miner is in Ores Only Mode.").getStringList();
         minerBlacklist = config.get(ConfigCategories.MACHINE_VALUES.name, "Vertical Digger Blacklist", new String[0], "By default, the Vertical Digger mines everything that starts with 'ore' in the OreDictionary. If there is one that it can mine, but shouldn't be able to, put its REGISTRY NAME here. These are the actual registered Item Names, the ones you use, for example, when using the /give Command. This Config Option will apply in both modes.").getStringList();
+        repairerExtraWhitelist = config.get(ConfigCategories.MACHINE_VALUES.name, "Item Repairer Extra Whitelist", new String[]{"tconstruct:pickaxe", "tconstruct:shovel", "tconstruct:hatchet", "tconstruct:mattock", "tconstruct:broadsword", "tconstruct:longsword", "tconstruct:frypan", "tconstruct:battlesign", "tconstruct:hammer", "tconstruct:excavator", "tconstruct:lumberaxe", "tconstruct:cleaver"}, "By default, the Item Repairer only repairs items which are repairable in an anvil. Add an item's REGISTRY NAME here if you want it to be repairable.").getStringList();
 
         lessSound = config.get(ConfigCategories.PERFORMANCE.name, "Less Sound", false, "If blocks in Actually Additions should have less sounds").getBoolean();
         lessParticles = config.get(ConfigCategories.PERFORMANCE.name, "Less Particles", false, "If blocks in Actually Additions should have less particles").getBoolean();
