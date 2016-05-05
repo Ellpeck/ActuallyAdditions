@@ -179,4 +179,9 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
     public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
         return false;
     }
+
+    @Override
+    public boolean hasInvWrapperCapabilities(){
+        return false;
+    }
 }

@@ -20,15 +20,23 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.wrapper.SidedInvWrapper;
 
 public abstract class TileEntityInventoryBase extends TileEntityBase implements ISidedInventory{
 
     public ItemStack slots[];
     public String name;
+    private SidedInvWrapper[] invWrappers = new SidedInvWrapper[6];
 
     public TileEntityInventoryBase(int slots, String name){
         this.initializeSlots(slots);
         this.name = "container."+ModUtil.MOD_ID+"."+name;
+
+        for(int i = 0; i < this.invWrappers.length; i++){
+            this.invWrappers[i] = new SidedInvWrapper(this, EnumFacing.values()[i]);
+        }
     }
 
     public void initializeSlots(int itemAmount){
@@ -203,4 +211,22 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
         return new TextComponentString(StringUtil.localize(this.getName()));
     }
 
+    @Override
+    public boolean hasCapability(Capability<?> capability, EnumFacing facing){
+        return this.getCapability(capability, facing) != null;
+    }
+
+    @Override
+    public <T> T getCapability(Capability<T> capability, EnumFacing facing){
+        if(this.hasInvWrapperCapabilities() && capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY){
+            return (T)this.invWrappers[facing.ordinal()];
+        }
+        else{
+            return super.getCapability(capability, facing);
+        }
+    }
+
+    public boolean hasInvWrapperCapabilities(){
+        return true;
+    }
 }
