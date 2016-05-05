@@ -106,8 +106,8 @@ public class ItemCrafting{
         //Chest To Crate Upgrade
         if(ConfigCrafting.CHEST_TO_CRATE_UPGRADE.isEnabled()){
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemChestToCrateUpgrade),
-                    "CWC", "WWW", "CWC",
-                    'C', new ItemStack(Blocks.CHEST),
+                    " W ", "WCW", " W ",
+                    'C', new ItemStack(InitBlocks.blockGiantChest),
                     'W', "plankWood"));
             recipeChestToCrateUpgrade = RecipeUtil.lastIRecipe();
         }
