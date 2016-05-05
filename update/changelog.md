@@ -1,3 +1,16 @@
+# 1.9-r30
+* Fixed mcmod.info being broken
+* Fixed OreDictionary creating empty entries when searching for names
+* Fixed laser relays making no particles when the less particle setting is on
+* Made HarvestDropsEvents be posted when mining blocks automatically
+* Rename itemPotionRIng to itemPotionRing so that it has a proper model and texture
+* Rename itemCrystalLightBLue to itemCrystalLightBlue so that it has a proper model and texture
+* Added the ender start which is a new crafting ingredient
+* Made double furnace and double crusher use the double amount of energy when smelting/crushing two items at once
+* Added a default extra whitelist config option for the Item Repairer
+* Made directional breaker need energy in pulse mode. Duh.
+* Added InvWrapper Capabilities so that inventories work with pipes from mods like NeoTech
+
 # 1.9-r29
 * Fixed blocks dropping twice when broken with the drill
 * Made drill GUI be openable again (how did I even miss this?)
