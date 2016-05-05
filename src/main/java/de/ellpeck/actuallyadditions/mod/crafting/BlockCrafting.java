@@ -81,6 +81,7 @@ public class BlockCrafting{
     public static IRecipe recipeAtomicReconstructor;
     public static IRecipe recipeMiner;
     public static IRecipe recipeFireworkBox;
+    public static IRecipe recipePhantomRedstoneface;
 
     public static void init(){
 
@@ -384,6 +385,16 @@ public class BlockCrafting{
                     'R', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.REDSTONE.ordinal()),
                     'F', InitBlocks.blockPhantomface));
             recipeEnergyface = RecipeUtil.lastIRecipe();
+        }
+
+        //Phantom Redstoneface
+        if(ConfigCrafting.PHANTOM_REDSTONEFACE.isEnabled()){
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockPhantomRedstoneface),
+                    "SRS", "RFR", "SRS",
+                    'R', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.REDSTONE.ordinal()),
+                    'S', new ItemStack(Items.REDSTONE),
+                    'F', InitBlocks.blockPhantomface));
+            recipePhantomRedstoneface = RecipeUtil.lastIRecipe();
         }
 
         //Phantom Liquiface

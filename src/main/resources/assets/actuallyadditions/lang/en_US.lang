@@ -773,3 +773,6 @@ booklet.actuallyadditions.chapter.rf.text.1=For anyone who hasn't used much of a
 
 booklet.actuallyadditions.chapter.enderStar.name=Ender Star
 booklet.actuallyadditions.chapter.enderStar.text.1=The <item>Ender Star<r> can be obtained by both killing a wither and going to the end to collect Dragon's Breath. The latter is obtained by using a bottle on the purple particles that the dragon spits out. <n>The <item>Ender Star<r> is used for <imp>multiple crafting recipes<r>.
+
+booklet.actuallyadditions.chapter.phantomRedstoneface.name=Phantom Redstoneface
+booklet.actuallyadditions.chapter.phantomRedstoneface.text.1=<imp>If you don't know what Phantomfaces are, check the Phantomfaces Entry first.<r> <n><n>The <item>Phantom Redstoneface<r> can be used to transmit redstone signals. This one, however, <imp>works differently<r> to the other Phantomfaces as it <imp>only works in one direction<r>. What this means is that the <imp>connected block has to provide redstone power<r> for redstone next to the Redstoneface to become powered. It does <imp>not work<r> the <imp>other way<r> around.

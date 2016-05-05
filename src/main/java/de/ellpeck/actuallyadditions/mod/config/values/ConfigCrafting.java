@@ -98,6 +98,7 @@ public enum ConfigCrafting{
     PHANTOM_CONNECTOR("Phantom Connector", ConfigCategories.ITEMS_CRAFTING),
 
     PHANTOM_ENERGYFACE("Phantom Energyface", ConfigCategories.BLOCKS_CRAFTING),
+    PHANTOM_REDSTONEFACE("Phantom Redstoneface", ConfigCategories.BLOCKS_CRAFTING),
     PHANTOM_LIQUIFACE("Phantom Liquiface", ConfigCategories.BLOCKS_CRAFTING),
     PHANTOM_PLACER("Phantom Placer", ConfigCategories.BLOCKS_CRAFTING),
     PHANTOM_BREAKER("Phantom Breaker", ConfigCategories.BLOCKS_CRAFTING),
