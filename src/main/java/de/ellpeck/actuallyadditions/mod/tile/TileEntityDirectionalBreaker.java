@@ -26,7 +26,6 @@ import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class TileEntityDirectionalBreaker extends TileEntityInventoryBase implements IEnergyReceiver, IEnergySaver, IRedstoneToggle{
@@ -62,16 +61,14 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase implem
         super.updateEntity();
         if(!this.worldObj.isRemote){
             if(!this.isRedstonePowered && !this.activateOnceWithSignal){
-                if(this.storage.getEnergyStored() >= ENERGY_USE*RANGE){
-                    if(this.currentTime > 0){
-                        this.currentTime--;
-                        if(this.currentTime <= 0){
-                            this.doWork();
-                        }
+                if(this.currentTime > 0){
+                    this.currentTime--;
+                    if(this.currentTime <= 0){
+                        this.doWork();
                     }
-                    else{
-                        this.currentTime = 15;
-                    }
+                }
+                else{
+                    this.currentTime = 15;
                 }
             }
 
@@ -82,25 +79,27 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase implem
     }
 
     private void doWork(){
-        EnumFacing sideToManipulate = WorldUtil.getDirectionByPistonRotation(PosUtil.getMetadata(this.pos, this.worldObj));
+        if(this.storage.getEnergyStored() >= ENERGY_USE*RANGE){
+            EnumFacing sideToManipulate = WorldUtil.getDirectionByPistonRotation(PosUtil.getMetadata(this.pos, this.worldObj));
 
-        for(int i = 0; i < RANGE; i++){
-            BlockPos coordsBlock = WorldUtil.getCoordsFromSide(sideToManipulate, this.pos, i);
-            if(coordsBlock != null){
-                Block blockToBreak = PosUtil.getBlock(coordsBlock, this.worldObj);
-                if(blockToBreak != null && !(blockToBreak instanceof BlockAir) && blockToBreak.getBlockHardness(this.worldObj.getBlockState(coordsBlock), this.worldObj, this.pos) > -1.0F){
-                    List<ItemStack> drops = blockToBreak.getDrops(this.worldObj, coordsBlock, this.worldObj.getBlockState(coordsBlock), 0);
-                    float chance = ForgeEventFactory.fireBlockHarvesting(drops, this.worldObj, coordsBlock, this.worldObj.getBlockState(coordsBlock), 0, 1, false, null);
+            for(int i = 0; i < RANGE; i++){
+                BlockPos coordsBlock = WorldUtil.getCoordsFromSide(sideToManipulate, this.pos, i);
+                if(coordsBlock != null){
+                    Block blockToBreak = PosUtil.getBlock(coordsBlock, this.worldObj);
+                    if(blockToBreak != null && !(blockToBreak instanceof BlockAir) && blockToBreak.getBlockHardness(this.worldObj.getBlockState(coordsBlock), this.worldObj, this.pos) > -1.0F){
+                        List<ItemStack> drops = blockToBreak.getDrops(this.worldObj, coordsBlock, this.worldObj.getBlockState(coordsBlock), 0);
+                        float chance = ForgeEventFactory.fireBlockHarvesting(drops, this.worldObj, coordsBlock, this.worldObj.getBlockState(coordsBlock), 0, 1, false, null);
 
-                    if(Util.RANDOM.nextFloat() <= chance){
-                        if(WorldUtil.addToInventory(this, drops, false, true)){
-                            if(!ConfigValues.lessBlockBreakingEffects){
-                                this.worldObj.playAuxSFX(2001, coordsBlock, Block.getStateId(this.worldObj.getBlockState(coordsBlock)));
+                        if(Util.RANDOM.nextFloat() <= chance){
+                            if(WorldUtil.addToInventory(this, drops, false, true)){
+                                if(!ConfigValues.lessBlockBreakingEffects){
+                                    this.worldObj.playAuxSFX(2001, coordsBlock, Block.getStateId(this.worldObj.getBlockState(coordsBlock)));
+                                }
+                                WorldUtil.breakBlockAtSide(sideToManipulate, this.worldObj, this.getPos(), i);
+                                WorldUtil.addToInventory(this, drops, true, true);
+                                this.storage.extractEnergy(ENERGY_USE, false);
+                                this.markDirty();
                             }
-                            WorldUtil.breakBlockAtSide(sideToManipulate, this.worldObj, this.getPos(), i);
-                            WorldUtil.addToInventory(this, drops, true, true);
-                            this.storage.extractEnergy(ENERGY_USE, false);
-                            this.markDirty();
                         }
                     }
                 }
