@@ -11,8 +11,10 @@
 package de.ellpeck.actuallyadditions.mod.items.lens;
 
 
+import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
+import de.ellpeck.actuallyadditions.api.recipe.IColorLensChanger;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
@@ -21,25 +23,19 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class LensColor extends Lens{
 
     public static final int ENERGY_USE = 200;
-    public static final Object[] CONVERTABLE_BLOCKS = new Object[]{
-            Items.DYE,
-            Blocks.WOOL,
-            Blocks.STAINED_GLASS,
-            Blocks.STAINED_GLASS_PANE,
-            Blocks.STAINED_HARDENED_CLAY,
-            Blocks.CARPET,
-            InitBlocks.blockColoredLamp,
-            InitBlocks.blockColoredLampOn
-    };
+
     //Thanks to xdjackiexd for this, as I couldn't be bothered
     private static final float[][] POSSIBLE_COLORS = {
             {158F, 43F, 39F}, //Red
@@ -60,30 +56,21 @@ public class LensColor extends Lens{
     @Override
     public boolean invoke(IBlockState hitState, BlockPos hitBlock, IAtomicReconstructor tile){
         if(hitBlock != null){
-            if(Util.arrayContains(CONVERTABLE_BLOCKS, PosUtil.getBlock(hitBlock, tile.getWorldObject())) >= 0 && tile.getEnergy() >= ENERGY_USE){
+            if(tile.getEnergy() >= ENERGY_USE){
                 int meta = PosUtil.getMetadata(hitBlock, tile.getWorldObject());
-                if(meta >= 15){
-                    PosUtil.setMetadata(hitBlock, tile.getWorldObject(), 0, 2);
+                ItemStack returnStack = this.tryConvert(new ItemStack(PosUtil.getBlock(hitBlock, tile.getWorldObject()), 1, meta));
+                if(returnStack != null && returnStack.getItem() instanceof ItemBlock){
+                    PosUtil.setBlock(hitBlock, tile.getWorldObject(), Block.getBlockFromItem(returnStack.getItem()), returnStack.getItemDamage(), 2);
+
+                    tile.extractEnergy(ENERGY_USE);
                 }
-                else{
-                    PosUtil.setMetadata(hitBlock, tile.getWorldObject(), meta+1, 2);
-                }
-                tile.extractEnergy(ENERGY_USE);
             }
 
             ArrayList<EntityItem> items = (ArrayList<EntityItem>)tile.getWorldObject().getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), hitBlock.getX()+1, hitBlock.getY()+1, hitBlock.getZ()+1));
             for(EntityItem item : items){
                 if(!item.isDead && item.getEntityItem() != null && tile.getEnergy() >= ENERGY_USE){
-                    if(Util.arrayContains(CONVERTABLE_BLOCKS, item.getEntityItem().getItem()) >= 0 || Util.arrayContains(CONVERTABLE_BLOCKS, Block.getBlockFromItem(item.getEntityItem().getItem())) >= 0){
-                        ItemStack newStack = item.getEntityItem().copy();
-                        int meta = newStack.getItemDamage();
-                        if(meta >= 15){
-                            newStack.setItemDamage(0);
-                        }
-                        else{
-                            newStack.setItemDamage(meta+1);
-                        }
-
+                    ItemStack newStack = this.tryConvert(item.getEntityItem());
+                    if(newStack != null){
                         item.setDead();
 
                         EntityItem newItem = new EntityItem(tile.getWorldObject(), item.posX, item.posY, item.posZ, newStack);
@@ -95,6 +82,21 @@ public class LensColor extends Lens{
             }
         }
         return false;
+    }
+
+    private ItemStack tryConvert(ItemStack stack){
+        if(stack != null){
+            Item item = stack.getItem();
+            if(item != null){
+                for(Map.Entry<Item, IColorLensChanger> changer : ActuallyAdditionsAPI.reconstructorLensColorChangers.entrySet()){
+                    if(item == changer.getKey()){
+                        return changer.getValue().modifyItem(stack);
+                    }
+                }
+            }
+        }
+
+        return null;
     }
 
     @Override

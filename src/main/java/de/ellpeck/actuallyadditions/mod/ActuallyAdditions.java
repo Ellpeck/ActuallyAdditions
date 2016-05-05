@@ -25,7 +25,7 @@ import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.items.InitForeignPaxels;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.ItemCoffee;
-import de.ellpeck.actuallyadditions.mod.items.lens.LensNoneRecipeHandler;
+import de.ellpeck.actuallyadditions.mod.items.lens.LensRecipeHandler;
 import de.ellpeck.actuallyadditions.mod.material.InitArmorMaterials;
 import de.ellpeck.actuallyadditions.mod.material.InitToolMaterials;
 import de.ellpeck.actuallyadditions.mod.misc.*;
@@ -105,7 +105,7 @@ public class ActuallyAdditions{
         ItemCrafting.initMashedFoodRecipes();
         HairyBallHandler.init();
         TreasureChestHandler.init();
-        LensNoneRecipeHandler.init();
+        LensRecipeHandler.init();
         InitForeignPaxels.init();
 
         InitBooklet.postInit();

@@ -40,7 +40,7 @@ public class LensNone extends Lens{
                 for(int reachZ = -range; reachZ < range+1; reachZ++){
                     for(int reachY = -range; reachY < range+1; reachY++){
                         BlockPos pos = new BlockPos(hitBlock.getX()+reachX, hitBlock.getY()+reachY, hitBlock.getZ()+reachZ);
-                        List<LensNoneRecipe> recipes = LensNoneRecipeHandler.getRecipesFor(new ItemStack(PosUtil.getBlock(pos, tile.getWorldObject()), 1, PosUtil.getMetadata(pos, tile.getWorldObject())));
+                        List<LensNoneRecipe> recipes = LensRecipeHandler.getRecipesFor(new ItemStack(PosUtil.getBlock(pos, tile.getWorldObject()), 1, PosUtil.getMetadata(pos, tile.getWorldObject())));
                         for(LensNoneRecipe recipe : recipes){
                             if(recipe != null && tile.getEnergy() >= recipe.energyUse){
                                 List<ItemStack> outputs = recipe.getOutputs();
@@ -70,7 +70,7 @@ public class LensNone extends Lens{
             for(EntityItem item : items){
                 ItemStack stack = item.getEntityItem();
                 if(!item.isDead && stack != null){
-                    List<LensNoneRecipe> recipes = LensNoneRecipeHandler.getRecipesFor(stack);
+                    List<LensNoneRecipe> recipes = LensRecipeHandler.getRecipesFor(stack);
                     for(LensNoneRecipe recipe : recipes){
                         if(recipe != null && tile.getEnergy() >= recipe.energyUse){
                             List<ItemStack> outputs = recipe.getOutputs();

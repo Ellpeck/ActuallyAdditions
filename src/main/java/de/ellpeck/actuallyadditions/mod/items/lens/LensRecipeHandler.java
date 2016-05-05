@@ -11,6 +11,8 @@
 package de.ellpeck.actuallyadditions.mod.items.lens;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
+import de.ellpeck.actuallyadditions.api.recipe.ColorLensChangerByDyeMeta;
+import de.ellpeck.actuallyadditions.api.recipe.IColorLensChanger;
 import de.ellpeck.actuallyadditions.api.recipe.LensNoneRecipe;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigCrafting;
@@ -21,11 +23,12 @@ import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.RecipeUtil;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 import java.util.ArrayList;
 
-public class LensNoneRecipeHandler{
+public class LensRecipeHandler{
 
     public static ArrayList<LensNoneRecipe> mainPageRecipes = new ArrayList<LensNoneRecipe>();
     public static LensNoneRecipe recipeColorLens;
@@ -96,6 +99,17 @@ public class LensNoneRecipeHandler{
         recipeWhiteWall = RecipeUtil.lastReconstructorRecipe();
         ActuallyAdditionsAPI.addReconstructorLensNoneRecipe(new ItemStack(Blocks.QUARTZ_BLOCK, 1, 1), new ItemStack(InitBlocks.blockTestifiBucksGreenWall), 10);
         recipeGreenWall = RecipeUtil.lastReconstructorRecipe();
+
+        IColorLensChanger changer = new ColorLensChangerByDyeMeta();
+        ActuallyAdditionsAPI.addReconstructorLensColorChangeItem(Items.DYE, changer);
+        ActuallyAdditionsAPI.addReconstructorLensColorChangeItem(Item.getItemFromBlock(Blocks.WOOL), changer);
+        ActuallyAdditionsAPI.addReconstructorLensColorChangeItem(Item.getItemFromBlock(Blocks.STAINED_GLASS), changer);
+        ActuallyAdditionsAPI.addReconstructorLensColorChangeItem(Item.getItemFromBlock(Blocks.STAINED_GLASS_PANE), changer);
+        ActuallyAdditionsAPI.addReconstructorLensColorChangeItem(Item.getItemFromBlock(Blocks.STAINED_HARDENED_CLAY), changer);
+        ActuallyAdditionsAPI.addReconstructorLensColorChangeItem(Item.getItemFromBlock(Blocks.CARPET), changer);
+        ActuallyAdditionsAPI.addReconstructorLensColorChangeItem(Item.getItemFromBlock(InitBlocks.blockColoredLamp), changer);
+        ActuallyAdditionsAPI.addReconstructorLensColorChangeItem(Item.getItemFromBlock(InitBlocks.blockColoredLampOn), changer);
+
     }
 
     public static ArrayList<LensNoneRecipe> getRecipesFor(ItemStack input){

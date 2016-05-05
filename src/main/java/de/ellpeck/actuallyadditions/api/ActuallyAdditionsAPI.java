@@ -12,27 +12,28 @@ package de.ellpeck.actuallyadditions.api;
 
 import de.ellpeck.actuallyadditions.api.booklet.BookletPage;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
-import de.ellpeck.actuallyadditions.api.recipe.BallOfFurReturn;
-import de.ellpeck.actuallyadditions.api.recipe.CrusherRecipe;
-import de.ellpeck.actuallyadditions.api.recipe.LensNoneRecipe;
-import de.ellpeck.actuallyadditions.api.recipe.TreasureChestLoot;
+import de.ellpeck.actuallyadditions.api.recipe.*;
 import de.ellpeck.actuallyadditions.api.recipe.coffee.CoffeeIngredient;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ActuallyAdditionsAPI{
 
     public static final String MOD_ID = "actuallyadditions";
     public static final String API_ID = MOD_ID+"api";
-    public static final String API_VERSION = "8";
+    public static final String API_VERSION = "9";
 
     public static List<CrusherRecipe> crusherRecipes = new ArrayList<CrusherRecipe>();
     public static List<BallOfFurReturn> ballOfFurReturnItems = new ArrayList<BallOfFurReturn>();
     public static List<TreasureChestLoot> treasureChestLoot = new ArrayList<TreasureChestLoot>();
     public static List<LensNoneRecipe> reconstructorLensNoneRecipes = new ArrayList<LensNoneRecipe>();
+    public static Map<Item, IColorLensChanger> reconstructorLensColorChangers = new HashMap<Item, IColorLensChanger>();
     public static List<CoffeeIngredient> coffeeMachineIngredients = new ArrayList<CoffeeIngredient>();
 
     public static List<IBookletEntry> bookletEntries = new ArrayList<IBookletEntry>();
@@ -157,6 +158,19 @@ public class ActuallyAdditionsAPI{
      */
     public static void addReconstructorLensNoneRecipe(String input, String output, int energyUse){
         reconstructorLensNoneRecipes.add(new LensNoneRecipe(input, output, energyUse));
+    }
+
+    /**
+     * Adds an item and the way it is modified to the Atomic Reconstructor's color lens.
+     * This also works for blocks, but they have to be in their item form.
+     * The way it is modified is an instance of IColorLensChanger. When modifying the item,
+     * its modifyItem() method will be called with a stack containing the item.
+     *
+     * @param item The item (or block's item) to add
+     * @param changer The change mechanism
+     */
+    public static void addReconstructorLensColorChangeItem(Item item, IColorLensChanger changer){
+        reconstructorLensColorChangers.put(item, changer);
     }
 
     /**
