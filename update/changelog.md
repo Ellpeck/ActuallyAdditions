@@ -39,7 +39,7 @@
 * All of the items, when holding them in your hands, also look like shields right now. I couldn't be bothered to change the JSONs yet, so you'll have to live with it.
 
 # 1.8.9-r26
-### This update was done by canitzp. As I started to work on another mod and I'm not really interested in Actually Additions anymore, this will now be a common feature. If something breaks with an update, call him. Not me. Thanks.
+### This update was done by canitzp. Thanks for helping me out <3
 * Made the knife not repairable
 * Changed download link for updates to redirect to the proper page
 * added click area to JEI for easy recipe access
