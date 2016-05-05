@@ -21,8 +21,6 @@ public class TileEntityPhantomRedstoneface extends TileEntityPhantomface{
 
     @Override
     public void updateEntity(){
-        super.updateEntity();
-
         if(!this.worldObj.isRemote){
             if(this.isBoundThingInRange()){
                 IBlockState boundState = this.worldObj.getBlockState(this.boundPosition);
@@ -37,13 +35,21 @@ public class TileEntityPhantomRedstoneface extends TileEntityPhantomface{
                     }
                 }
             }
-
-            if(!Arrays.equals(this.providesStrong, this.lastProvidesStrong) || !Arrays.equals(this.providesWeak, this.lastProvidesWeak)){
-                System.arraycopy(this.providesWeak, 0, this.lastProvidesWeak, 0, this.providesWeak.length);
-                System.arraycopy(this.providesStrong, 0, this.lastProvidesStrong, 0, this.providesStrong.length);
-
-                this.worldObj.notifyNeighborsOfStateChange(this.pos, PosUtil.getBlock(this.pos, this.worldObj));
-            }
         }
+
+        super.updateEntity();
+    }
+
+    @Override
+    protected boolean doesNeedUpdateSend(){
+        return super.doesNeedUpdateSend() || !Arrays.equals(this.providesStrong, this.lastProvidesStrong) || !Arrays.equals(this.providesWeak, this.lastProvidesWeak);
+    }
+
+    @Override
+    protected void onUpdateSent(){
+        System.arraycopy(this.providesWeak, 0, this.lastProvidesWeak, 0, this.providesWeak.length);
+        System.arraycopy(this.providesStrong, 0, this.lastProvidesStrong, 0, this.providesStrong.length);
+
+        super.onUpdateSent();
     }
 }

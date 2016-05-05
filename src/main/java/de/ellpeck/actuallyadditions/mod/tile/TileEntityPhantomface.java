@@ -90,15 +90,9 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
                 this.boundPosition = null;
             }
 
-            if(this.boundPosition != this.boundPosBefore || (this.boundPosition != null && PosUtil.getBlock(this.boundPosition, this.worldObj) != this.boundBlockBefore) || this.rangeBefore != this.range){
-                this.rangeBefore = this.range;
-                this.boundPosBefore = this.boundPosition;
-                this.boundBlockBefore = this.boundPosition == null ? null : PosUtil.getBlock(this.boundPosition, this.worldObj);
-
-                this.worldObj.notifyNeighborsOfStateChange(this.pos, PosUtil.getBlock(this.pos, this.worldObj));
-
-                this.sendUpdate();
-                this.markDirty();
+            if(this.doesNeedUpdateSend()){
+                this.onUpdateSent();
+                System.out.println("UPDAT!");
             }
         }
         else{
@@ -106,6 +100,21 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
                 this.renderParticles();
             }
         }
+    }
+
+    protected boolean doesNeedUpdateSend(){
+        return this.boundPosition != this.boundPosBefore || (this.boundPosition != null && PosUtil.getBlock(this.boundPosition, this.worldObj) != this.boundBlockBefore) || this.rangeBefore != this.range;
+    }
+
+    protected void onUpdateSent(){
+        this.rangeBefore = this.range;
+        this.boundPosBefore = this.boundPosition;
+        this.boundBlockBefore = this.boundPosition == null ? null : PosUtil.getBlock(this.boundPosition, this.worldObj);
+
+        this.worldObj.notifyNeighborsOfStateChange(this.pos, PosUtil.getBlock(this.pos, this.worldObj));
+
+        this.sendUpdate();
+        this.markDirty();
     }
 
     @Override
