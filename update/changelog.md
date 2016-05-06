@@ -1,3 +1,9 @@
+# 1.9-r31
+* Added Phantom Redstoneface
+* Changed storage crate upgrade recipe because it was clashing with Storage Drawers
+* Added Reconstruction Module as Rarmor integration. Install Canitzp's Rarmor to find out what it is and does.
+* Added Patreon button to the booklet because I wantz all teh moneyz
+
 # 1.9-r30
 * Fixed mcmod.info being broken
 * Fixed OreDictionary creating empty entries when searching for names
