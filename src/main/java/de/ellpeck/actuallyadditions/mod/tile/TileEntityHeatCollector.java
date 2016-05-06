@@ -32,6 +32,10 @@ public class TileEntityHeatCollector extends TileEntityBase implements IEnergyPr
     public EnergyStorage storage = new EnergyStorage(30000);
     private int oldEnergy;
 
+    public TileEntityHeatCollector(){
+        super("heatCollector");
+    }
+
     @Override
     public void writeSyncableNBT(NBTTagCompound compound, boolean isForSync){
         super.writeSyncableNBT(compound, isForSync);

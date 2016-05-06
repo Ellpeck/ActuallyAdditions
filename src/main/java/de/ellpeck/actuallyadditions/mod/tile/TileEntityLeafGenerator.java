@@ -37,6 +37,10 @@ public class TileEntityLeafGenerator extends TileEntityBase implements IEnergyPr
     private int nextUseCounter;
     private int oldEnergy;
 
+    public TileEntityLeafGenerator(){
+        super("leafGenerator");
+    }
+
     @Override
     public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
         super.writeSyncableNBT(compound, sync);

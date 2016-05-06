@@ -34,8 +34,6 @@ public class ContainerCanolaPress extends Container{
         this.press = (TileEntityCanolaPress)tile;
 
         this.addSlotToContainer(new Slot(this.press, 0, 81, 10));
-        this.addSlotToContainer(new Slot(this.press, 1, 136, 73));
-        this.addSlotToContainer(new SlotOutput(this.press, 2, 136, 42));
 
         for(int i = 0; i < 3; i++){
             for(int j = 0; j < 9; j++){
@@ -49,7 +47,7 @@ public class ContainerCanolaPress extends Container{
 
     @Override
     public ItemStack transferStackInSlot(EntityPlayer player, int slot){
-        final int inventoryStart = 3;
+        final int inventoryStart = 1;
         final int inventoryEnd = inventoryStart+26;
         final int hotbarStart = inventoryEnd+1;
         final int hotbarEnd = hotbarStart+8;
@@ -65,11 +63,6 @@ public class ContainerCanolaPress extends Container{
                 //Shift from Inventory
                 if(newStack.getItem() == InitItems.itemMisc && newStack.getItemDamage() == TheMiscItems.CANOLA.ordinal()){
                     if(!this.mergeItemStack(newStack, 0, 1, false)){
-                        return null;
-                    }
-                }
-                else if(FluidContainerRegistry.getContainerCapacity(new FluidStack(InitFluids.fluidCanolaOil, 1), newStack) > 0){
-                    if(!this.mergeItemStack(newStack, 1, 2, false)){
                         return null;
                     }
                 }

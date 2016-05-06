@@ -31,6 +31,10 @@ public class TileEntityLaserRelay extends TileEntityBase implements IEnergyRecei
     public static final int MAX_DISTANCE = 15;
     private static final float[] COLOR = new float[]{1F, 0F, 0F};
 
+    public TileEntityLaserRelay(){
+        super("laserRelay");
+    }
+
     @Override
     public void receiveSyncCompound(NBTTagCompound compound){
         BlockPos thisPos = this.pos;

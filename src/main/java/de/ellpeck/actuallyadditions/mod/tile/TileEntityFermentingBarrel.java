@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
+import de.ellpeck.actuallyadditions.mod.util.Util;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -20,18 +21,18 @@ import net.minecraftforge.fluids.*;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityFermentingBarrel extends TileEntityInventoryBase implements IFluidHandler, IFluidSaver{
+public class TileEntityFermentingBarrel extends TileEntityBase implements IFluidHandler, IFluidSaver{
 
     private static final int PROCESS_TIME = 100;
-    public FluidTank canolaTank = new FluidTank(2*FluidContainerRegistry.BUCKET_VOLUME);
-    public FluidTank oilTank = new FluidTank(2*FluidContainerRegistry.BUCKET_VOLUME);
+    public FluidTank canolaTank = new FluidTank(2*Util.BUCKET);
+    public FluidTank oilTank = new FluidTank(2*Util.BUCKET);
     public int currentProcessTime;
     private int lastCanola;
     private int lastOil;
     private int lastProcessTime;
 
     public TileEntityFermentingBarrel(){
-        super(4, "fermentingBarrel");
+        super("fermentingBarrel");
     }
 
     @Override
@@ -72,9 +73,6 @@ public class TileEntityFermentingBarrel extends TileEntityInventoryBase implemen
                 this.currentProcessTime = 0;
             }
 
-            WorldUtil.emptyBucket(this.canolaTank, this.slots, 0, 1, InitFluids.fluidCanolaOil);
-            WorldUtil.fillBucket(this.oilTank, this.slots, 2, 3);
-
             if(this.oilTank.getFluidAmount() > 0){
                 WorldUtil.pushFluid(this.worldObj, this.pos, EnumFacing.DOWN, this.oilTank);
                 if(!this.isRedstonePowered){
@@ -93,11 +91,6 @@ public class TileEntityFermentingBarrel extends TileEntityInventoryBase implemen
         }
     }
 
-    @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
-        return (i == 0 && FluidContainerRegistry.containsFluid(stack, new FluidStack(InitFluids.fluidCanolaOil, FluidContainerRegistry.BUCKET_VOLUME))) || (i == 2 && stack.getItem() == Items.BUCKET);
-    }
-
     @SideOnly(Side.CLIENT)
     public int getProcessScaled(int i){
         return this.currentProcessTime*i/PROCESS_TIME;
@@ -111,16 +104,6 @@ public class TileEntityFermentingBarrel extends TileEntityInventoryBase implemen
     @SideOnly(Side.CLIENT)
     public int getCanolaTankScaled(int i){
         return this.canolaTank.getFluidAmount()*i/this.canolaTank.getCapacity();
-    }
-
-    @Override
-    public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
-        return this.isItemValidForSlot(slot, stack);
-    }
-
-    @Override
-    public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
-        return (slot == 1 && stack.getItem() == Items.BUCKET) || (slot == 3 && FluidContainerRegistry.containsFluid(stack, new FluidStack(InitFluids.fluidOil, FluidContainerRegistry.BUCKET_VOLUME)));
     }
 
     @Override

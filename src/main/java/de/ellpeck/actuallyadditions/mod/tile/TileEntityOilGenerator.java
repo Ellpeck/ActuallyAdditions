@@ -14,6 +14,7 @@ import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyProvider;
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.util.PosUtil;
+import de.ellpeck.actuallyadditions.mod.util.Util;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -22,19 +23,19 @@ import net.minecraftforge.fluids.*;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityOilGenerator extends TileEntityInventoryBase implements IEnergyProvider, IFluidHandler, IEnergySaver, IFluidSaver{
+public class TileEntityOilGenerator extends TileEntityBase implements IEnergyProvider, IFluidHandler, IEnergySaver, IFluidSaver{
 
     public static final int ENERGY_PRODUCED = 76;
     private static final int BURN_TIME = 100;
     public EnergyStorage storage = new EnergyStorage(50000);
-    public FluidTank tank = new FluidTank(2*FluidContainerRegistry.BUCKET_VOLUME);
+    public FluidTank tank = new FluidTank(2*Util.BUCKET);
     public int currentBurnTime;
     private int lastEnergy;
     private int lastTank;
     private int lastBurnTime;
 
     public TileEntityOilGenerator(){
-        super(2, "oilGenerator");
+        super("oilGenerator");
     }
 
     @SideOnly(Side.CLIENT)
@@ -88,8 +89,6 @@ public class TileEntityOilGenerator extends TileEntityInventoryBase implements I
                 }
             }
 
-            WorldUtil.emptyBucket(this.tank, this.slots, 0, 1, InitFluids.fluidOil);
-
             if(this.storage.getEnergyStored() > 0){
                 WorldUtil.pushEnergyToAllSides(this.worldObj, this.pos, this.storage);
             }
@@ -113,21 +112,6 @@ public class TileEntityOilGenerator extends TileEntityInventoryBase implements I
                 this.lastBurnTime = this.currentBurnTime;
             }
         }
-    }
-
-    @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
-        return FluidContainerRegistry.containsFluid(stack, new FluidStack(InitFluids.fluidOil, FluidContainerRegistry.BUCKET_VOLUME)) && i == 0;
-    }
-
-    @Override
-    public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
-        return this.isItemValidForSlot(slot, stack);
-    }
-
-    @Override
-    public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
-        return slot == 1;
     }
 
     @Override

@@ -24,6 +24,10 @@ public class TileEntityGreenhouseGlass extends TileEntityBase{
 
     private int timeUntilNextFert;
 
+    public TileEntityGreenhouseGlass(){
+        super("greenhouseGlass");
+    }
+
     @Override
     public void writeSyncableNBT(NBTTagCompound compound, boolean isForSync){
         super.writeSyncableNBT(compound, isForSync);

@@ -120,9 +120,17 @@ public class WorldUtil{
             boolean replaceable = block.isReplaceable(world, offsetPos);
 
             //Fluids
-            if(replaceable && FluidContainerRegistry.isFilledContainer(stack) && !(block instanceof IFluidBlock) && !(block instanceof BlockLiquid)){
-                FluidStack fluid = FluidContainerRegistry.getFluidForFilledItem(stack);
-                if(fluid != null && fluid.getFluid().getBlock() != null && fluid.getFluid().getBlock().canPlaceBlockAt(world, offsetPos)){
+            if(replaceable && !(block instanceof IFluidBlock) && !(block instanceof BlockLiquid)){
+                FluidStack fluid = null;
+                //TODO Remove when FluidContainerRegistry is gone
+                if(FluidContainerRegistry.isFilledContainer(stack)){
+                   fluid = FluidContainerRegistry.getFluidForFilledItem(stack);
+                }
+                else if(stack.getItem() instanceof IFluidContainerItem){
+                    fluid = ((IFluidContainerItem)stack.getItem()).getFluid(stack);
+                }
+
+                if(fluid != null && fluid.amount >= Util.BUCKET && fluid.getFluid().getBlock() != null && fluid.getFluid().getBlock().canPlaceBlockAt(world, offsetPos)){
                     if(PosUtil.setBlock(offsetPos, world, fluid.getFluid().getBlock(), 0, 2)){
                         return stack.getItem().getContainerItem(stack);
                     }
@@ -167,56 +175,6 @@ public class WorldUtil{
             item.motionY = 0;
             item.motionZ = 0;
             world.spawnEntityInWorld(item);
-        }
-    }
-
-    public static void fillBucket(FluidTank tank, ItemStack[] slots, int inputSlot, int outputSlot){
-        if(slots[inputSlot] != null && tank.getFluid() != null){
-            ItemStack filled = FluidContainerRegistry.fillFluidContainer(tank.getFluid(), slots[inputSlot].copy());
-            if(filled != null && FluidContainerRegistry.isEmptyContainer(slots[inputSlot]) && (slots[outputSlot] == null || (slots[outputSlot].isItemEqual(filled) && slots[outputSlot].stackSize < slots[outputSlot].getMaxStackSize()))){
-                int cap = FluidContainerRegistry.getContainerCapacity(tank.getFluid(), slots[inputSlot]);
-                if(cap > 0 && cap <= tank.getFluidAmount()){
-                    if(slots[outputSlot] == null){
-                        slots[outputSlot] = FluidContainerRegistry.fillFluidContainer(tank.getFluid(), slots[inputSlot].copy());
-                    }
-                    else{
-                        slots[outputSlot].stackSize++;
-                    }
-
-                    if(slots[outputSlot] != null){
-                        tank.drain(cap, true);
-                        slots[inputSlot].stackSize--;
-                        if(slots[inputSlot].stackSize <= 0){
-                            slots[inputSlot] = null;
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    public static void emptyBucket(FluidTank tank, ItemStack[] slots, int inputSlot, int outputSlot){
-        emptyBucket(tank, slots, inputSlot, outputSlot, null);
-    }
-
-    public static void emptyBucket(FluidTank tank, ItemStack[] slots, int inputSlot, int outputSlot, Fluid containedFluid){
-        if(slots[inputSlot] != null && FluidContainerRegistry.isFilledContainer(slots[inputSlot]) && (slots[outputSlot] == null || (slots[outputSlot].isItemEqual(FluidContainerRegistry.drainFluidContainer(slots[inputSlot].copy())) && slots[outputSlot].stackSize < slots[outputSlot].getMaxStackSize()))){
-            if(containedFluid == null || FluidContainerRegistry.containsFluid(slots[inputSlot], new FluidStack(containedFluid, 0))){
-                if((tank.getFluid() == null || FluidContainerRegistry.getFluidForFilledItem(slots[inputSlot]).isFluidEqual(tank.getFluid())) && tank.getCapacity()-tank.getFluidAmount() >= FluidContainerRegistry.getContainerCapacity(slots[inputSlot])){
-                    if(slots[outputSlot] == null){
-                        slots[outputSlot] = FluidContainerRegistry.drainFluidContainer(slots[inputSlot].copy());
-                    }
-                    else{
-                        slots[outputSlot].stackSize++;
-                    }
-
-                    tank.fill(FluidContainerRegistry.getFluidForFilledItem(slots[inputSlot]), true);
-                    slots[inputSlot].stackSize--;
-                    if(slots[inputSlot].stackSize <= 0){
-                        slots[inputSlot] = null;
-                    }
-                }
-            }
         }
     }
 

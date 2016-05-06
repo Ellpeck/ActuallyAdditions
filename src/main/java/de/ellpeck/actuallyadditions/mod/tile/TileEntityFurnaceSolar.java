@@ -26,6 +26,10 @@ public class TileEntityFurnaceSolar extends TileEntityBase implements IEnergyPro
     public EnergyStorage storage = new EnergyStorage(30000);
     private int oldEnergy;
 
+    public TileEntityFurnaceSolar(){
+        super("solarPanel");
+    }
+
     @Override
     public int extractEnergy(EnumFacing from, int maxExtract, boolean simulate){
         return this.storage.extractEnergy(maxExtract, simulate);

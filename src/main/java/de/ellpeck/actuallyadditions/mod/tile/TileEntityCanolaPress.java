@@ -15,6 +15,7 @@ import cofh.api.energy.IEnergyReceiver;
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
+import de.ellpeck.actuallyadditions.mod.util.Util;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -30,14 +31,14 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IE
     public static final int ENERGY_USE = 35;
     private static final int TIME = 30;
     public EnergyStorage storage = new EnergyStorage(40000);
-    public FluidTank tank = new FluidTank(2*FluidContainerRegistry.BUCKET_VOLUME);
+    public FluidTank tank = new FluidTank(2*Util.BUCKET);
     public int currentProcessTime;
     private int lastEnergyStored;
     private int lastTankAmount;
     private int lastProcessTime;
 
     public TileEntityCanolaPress(){
-        super(3, "canolaPress");
+        super(1, "canolaPress");
     }
 
     @SideOnly(Side.CLIENT)
@@ -97,8 +98,6 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IE
                 this.currentProcessTime = 0;
             }
 
-            WorldUtil.fillBucket(this.tank, this.slots, 1, 2);
-
             if(this.tank.getFluidAmount() > 0){
                 WorldUtil.pushFluid(this.worldObj, this.pos, EnumFacing.DOWN, this.tank);
                 if(!this.isRedstonePowered){
@@ -119,7 +118,7 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IE
 
     @Override
     public boolean isItemValidForSlot(int i, ItemStack stack){
-        return (i == 0 && stack.getItem() == InitItems.itemMisc && stack.getItemDamage() == TheMiscItems.CANOLA.ordinal()) || (i == 1 && stack.getItem() == Items.BUCKET);
+        return (i == 0 && stack.getItem() == InitItems.itemMisc && stack.getItemDamage() == TheMiscItems.CANOLA.ordinal());
     }
 
     public boolean isCanola(int slot){
@@ -133,7 +132,7 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IE
 
     @Override
     public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
-        return slot == 2 && FluidContainerRegistry.containsFluid(this.slots[0], new FluidStack(InitFluids.fluidCanolaOil, FluidContainerRegistry.BUCKET_VOLUME));
+        return false;
     }
 
     @Override

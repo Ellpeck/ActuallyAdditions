@@ -66,7 +66,9 @@ public class BlockCoffeeMachine extends BlockContainerBase{
         if(!world.isRemote){
             TileEntityCoffeeMachine machine = (TileEntityCoffeeMachine)world.getTileEntity(pos);
             if(machine != null){
-                player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.COFFEE_MACHINE.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
+                if(!this.tryUseItemOnTank(player, stack, f6, machine)){
+                    player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.COFFEE_MACHINE.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
+                }
             }
             return true;
         }

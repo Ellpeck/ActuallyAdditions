@@ -17,6 +17,7 @@ import net.minecraft.item.Item;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.EnumHelper;
+import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.Random;
@@ -26,6 +27,7 @@ public class Util{
 
     public static final Random RANDOM = new Random();
     public static final int WILDCARD = OreDictionary.WILDCARD_VALUE;
+    public static final int BUCKET = FluidContainerRegistry.BUCKET_VOLUME;
 
     public static final EnumRarity CRYSTAL_RED_RARITY = EnumHelper.addRarity(ModUtil.MOD_ID+"crystalRed", TextFormatting.DARK_RED, ModUtil.NAME+" Red Crystal");
     public static final EnumRarity CRYSTAL_BLUE_RARITY = EnumHelper.addRarity(ModUtil.MOD_ID+"crystalBlue", TextFormatting.DARK_BLUE, ModUtil.NAME+" Blue Crystal");

@@ -19,6 +19,7 @@ import de.ellpeck.actuallyadditions.mod.items.ItemCoffee;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
 import de.ellpeck.actuallyadditions.mod.misc.SoundHandler;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
+import de.ellpeck.actuallyadditions.mod.util.Util;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -34,15 +35,13 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
     public static final int SLOT_COFFEE_BEANS = 0;
     public static final int SLOT_INPUT = 1;
     public static final int SLOT_OUTPUT = 2;
-    public static final int SLOT_WATER_INPUT = 11;
-    public static final int SLOT_WATER_OUTPUT = 12;
     public static final int CACHE_USE = 15;
     public static final int ENERGY_USED = 150;
     public static final int WATER_USE = 500;
     public static final int COFFEE_CACHE_MAX_AMOUNT = 300;
     private static final int TIME_USED = 500;
     public EnergyStorage storage = new EnergyStorage(300000);
-    public FluidTank tank = new FluidTank(4*FluidContainerRegistry.BUCKET_VOLUME);
+    public FluidTank tank = new FluidTank(4*Util.BUCKET);
     public int coffeeCacheAmount;
     public int brewTime;
     private int lastEnergy;
@@ -51,7 +50,7 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
     private int lastBrewTime;
 
     public TileEntityCoffeeMachine(){
-        super(13, "coffeeMachine");
+        super(11, "coffeeMachine");
     }
 
     @SideOnly(Side.CLIENT)
@@ -113,7 +112,7 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
 
     @Override
     public boolean isItemValidForSlot(int i, ItemStack stack){
-        return (i >= 3 && ItemCoffee.getIngredientFromStack(stack) != null) || (i == SLOT_COFFEE_BEANS && stack.getItem() == InitItems.itemCoffeeBean) || (i == SLOT_INPUT && stack.getItem() == InitItems.itemMisc && stack.getItemDamage() == TheMiscItems.CUP.ordinal()) || (i == SLOT_WATER_INPUT && FluidContainerRegistry.containsFluid(stack, new FluidStack(FluidRegistry.WATER, 1)));
+        return (i >= 3 && ItemCoffee.getIngredientFromStack(stack) != null) || (i == SLOT_COFFEE_BEANS && stack.getItem() == InitItems.itemCoffeeBean) || (i == SLOT_INPUT && stack.getItem() == InitItems.itemMisc && stack.getItemDamage() == TheMiscItems.CUP.ordinal());
     }
 
     public void storeCoffee(){
@@ -127,8 +126,6 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
                 this.coffeeCacheAmount += toAdd;
             }
         }
-
-        WorldUtil.emptyBucket(this.tank, this.slots, SLOT_WATER_INPUT, SLOT_WATER_OUTPUT, FluidRegistry.WATER);
     }
 
     public void brew(){
@@ -180,7 +177,7 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
 
     @Override
     public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
-        return slot == SLOT_OUTPUT || (slot >= 3 && slot < this.slots.length-2 && ItemCoffee.getIngredientFromStack(stack) == null) || slot == SLOT_WATER_OUTPUT;
+        return slot == SLOT_OUTPUT || (slot >= 3 && slot < this.slots.length-2 && ItemCoffee.getIngredientFromStack(stack) == null);
     }
 
     @Override

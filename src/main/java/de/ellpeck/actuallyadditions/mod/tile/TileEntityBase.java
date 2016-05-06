@@ -15,6 +15,7 @@ import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
 import de.ellpeck.actuallyadditions.mod.network.PacketUpdateTileEntity;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
@@ -30,7 +31,13 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
 
     public boolean isRedstonePowered;
     protected int ticksElapsed;
+    public String name;
 
+    public TileEntityBase(String name){
+        this.name = "container."+ModUtil.MOD_ID+"."+name;
+    }
+
+    //TODO Change for next major update to use the name variable automatically
     public static void init(){
         ModUtil.LOGGER.info("Registering TileEntities...");
 
@@ -149,6 +156,10 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
     public final void setRedstonePowered(boolean powered){
         this.isRedstonePowered = powered;
         this.markDirty();
+    }
+
+    public boolean canPlayerUse(EntityPlayer player){
+        return player.getDistanceSq(this.getPos().getX()+0.5D, this.pos.getY()+0.5D, this.pos.getZ()+0.5D) <= 64 && !this.isInvalid() && this.worldObj.getTileEntity(this.pos) == this;
     }
 
     protected final boolean sendUpdateWithInterval(){

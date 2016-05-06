@@ -32,6 +32,10 @@ public class TileEntityFireworkBox extends TileEntityBase implements IEnergyRece
     private boolean activateOnceWithSignal;
     private int oldEnergy;
 
+    public TileEntityFireworkBox(){
+        super("fireworkBox");
+    }
+
     @Override
     public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
         super.writeSyncableNBT(compound, sync);

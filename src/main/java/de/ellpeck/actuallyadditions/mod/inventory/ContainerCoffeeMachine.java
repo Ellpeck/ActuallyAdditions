@@ -44,9 +44,6 @@ public class ContainerCoffeeMachine extends Container{
             }
         }
 
-        this.addSlotToContainer(new Slot(this.machine, TileEntityCoffeeMachine.SLOT_WATER_INPUT, 26, 73));
-        this.addSlotToContainer(new SlotOutput(this.machine, TileEntityCoffeeMachine.SLOT_WATER_OUTPUT, 45, 73));
-
         for(int i = 0; i < 3; i++){
             for(int j = 0; j < 9; j++){
                 this.addSlotToContainer(new Slot(inventory, j+i*9+9, 8+j*18, 97+i*18));
@@ -59,7 +56,7 @@ public class ContainerCoffeeMachine extends Container{
 
     @Override
     public ItemStack transferStackInSlot(EntityPlayer player, int slot){
-        final int inventoryStart = 13;
+        final int inventoryStart = 11;
         final int inventoryEnd = inventoryStart+26;
         final int hotbarStart = inventoryEnd+1;
         final int hotbarEnd = hotbarStart+8;
@@ -82,11 +79,6 @@ public class ContainerCoffeeMachine extends Container{
                 //Shift from Inventory
                 if(newStack.getItem() == InitItems.itemMisc && newStack.getItemDamage() == TheMiscItems.CUP.ordinal()){
                     if(!this.mergeItemStack(newStack, TileEntityCoffeeMachine.SLOT_INPUT, TileEntityCoffeeMachine.SLOT_INPUT+1, false)){
-                        return null;
-                    }
-                }
-                else if(FluidContainerRegistry.containsFluid(newStack, new FluidStack(FluidRegistry.WATER, 1))){
-                    if(!this.mergeItemStack(newStack, TileEntityCoffeeMachine.SLOT_WATER_INPUT, TileEntityCoffeeMachine.SLOT_WATER_INPUT+1, false)){
                         return null;
                     }
                 }

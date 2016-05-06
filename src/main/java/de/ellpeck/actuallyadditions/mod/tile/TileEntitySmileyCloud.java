@@ -22,6 +22,10 @@ public class TileEntitySmileyCloud extends TileEntityBase implements IStringReac
     public String name;
     private String nameBefore;
 
+    public TileEntitySmileyCloud(){
+        super("smileyCloud");
+    }
+
     @Override
     public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
         super.writeSyncableNBT(compound, sync);

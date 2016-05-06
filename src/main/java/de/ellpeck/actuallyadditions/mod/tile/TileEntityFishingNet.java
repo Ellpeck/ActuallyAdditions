@@ -32,6 +32,10 @@ public class TileEntityFishingNet extends TileEntityBase{
 
     public int timeUntilNextDrop;
 
+    public TileEntityFishingNet(){
+        super("fishingNet");
+    }
+
     @Override
     public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
         super.writeSyncableNBT(compound, sync);

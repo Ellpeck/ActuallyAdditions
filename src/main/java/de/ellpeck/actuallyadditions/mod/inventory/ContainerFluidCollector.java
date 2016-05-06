@@ -29,9 +29,6 @@ public class ContainerFluidCollector extends Container{
     public ContainerFluidCollector(InventoryPlayer inventory, TileEntityBase tile){
         this.collector = (TileEntityFluidCollector)tile;
 
-        this.addSlotToContainer(new Slot(this.collector, 0, 90, 73));
-        this.addSlotToContainer(new SlotOutput(this.collector, 1, 90, 42));
-
         for(int i = 0; i < 3; i++){
             for(int j = 0; j < 9; j++){
                 this.addSlotToContainer(new Slot(inventory, j+i*9+9, 8+j*18, 97+i*18));
@@ -44,7 +41,7 @@ public class ContainerFluidCollector extends Container{
 
     @Override
     public ItemStack transferStackInSlot(EntityPlayer player, int slot){
-        final int inventoryStart = 2;
+        final int inventoryStart = 0;
         final int inventoryEnd = inventoryStart+26;
         final int hotbarStart = inventoryEnd+1;
         final int hotbarEnd = hotbarStart+8;
@@ -64,15 +61,7 @@ public class ContainerFluidCollector extends Container{
             }
             //Other Slots in Inventory excluded
             else if(slot >= inventoryStart){
-                //Shift from Inventory
-                if(FluidContainerRegistry.isEmptyContainer(newStack)){
-                    if(!this.mergeItemStack(newStack, 0, 1, false)){
-                        return null;
-                    }
-                }
-                //
-
-                else if(slot >= inventoryStart && slot <= inventoryEnd){
+                if(slot >= inventoryStart && slot <= inventoryEnd){
                     if(!this.mergeItemStack(newStack, hotbarStart, hotbarEnd+1, false)){
                         return null;
                     }
@@ -104,6 +93,6 @@ public class ContainerFluidCollector extends Container{
 
     @Override
     public boolean canInteractWith(EntityPlayer player){
-        return this.collector.isUseableByPlayer(player);
+        return this.collector.canPlayerUse(player);
     }
 }

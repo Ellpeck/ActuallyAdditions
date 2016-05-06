@@ -27,12 +27,12 @@ import net.minecraftforge.items.wrapper.SidedInvWrapper;
 public abstract class TileEntityInventoryBase extends TileEntityBase implements ISidedInventory{
 
     public ItemStack slots[];
-    public String name;
     private SidedInvWrapper[] invWrappers = new SidedInvWrapper[6];
 
     public TileEntityInventoryBase(int slots, String name){
+        super(name);
+
         this.initializeSlots(slots);
-        this.name = "container."+ModUtil.MOD_ID+"."+name;
 
         for(int i = 0; i < this.invWrappers.length; i++){
             this.invWrappers[i] = new SidedInvWrapper(this, EnumFacing.values()[i]);
@@ -109,9 +109,8 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
 
     @Override
     public boolean isUseableByPlayer(EntityPlayer player){
-        return player.getDistanceSq(this.getPos().getX()+0.5D, this.pos.getY()+0.5D, this.pos.getZ()+0.5D) <= 64 && !this.isInvalid() && this.worldObj.getTileEntity(this.pos) == this;
+        return this.canPlayerUse(player);
     }
-
 
     @Override
     public void openInventory(EntityPlayer player){

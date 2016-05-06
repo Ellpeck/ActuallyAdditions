@@ -13,7 +13,6 @@ package de.ellpeck.actuallyadditions.mod.blocks.base;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.tile.*;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
@@ -33,11 +32,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidUtil;
+import net.minecraftforge.fluids.IFluidHandler;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -172,6 +173,10 @@ public abstract class BlockContainerBase extends BlockContainer{
                 }
             }
         }
+    }
+
+    protected boolean tryUseItemOnTank(EntityPlayer player, ItemStack heldItem, EnumFacing sideHit, IFluidHandler tank){
+        return heldItem != null && FluidUtil.interactWithTank(heldItem, player, tank, sideHit);
     }
 
     @Override

@@ -33,6 +33,10 @@ public class TileEntityLavaFactoryController extends TileEntityBase implements I
     private int currentWorkTime;
     private int oldEnergy;
 
+    public TileEntityLavaFactoryController(){
+        super("lavaFactory");
+    }
+
     @Override
     public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
         super.writeSyncableNBT(compound, sync);
