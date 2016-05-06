@@ -103,11 +103,11 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
                 BlockPos hitBlock = WorldUtil.getCoordsFromSide(sideToManipulate, this.pos, i);
 
                 if(currentLens.invoke(this.worldObj.getBlockState(hitBlock), hitBlock, this)){
-                    this.shootLaser(hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), currentLens);
+                    shootLaser(this.worldObj, this.getX(), this.getY(), this.getZ(), hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), currentLens);
                     break;
                 }
                 else if(i >= distance-1){
-                    this.shootLaser(hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), currentLens);
+                    shootLaser(this.worldObj, this.getX(), this.getY(), this.getZ(), hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), currentLens);
                 }
             }
         }
@@ -122,11 +122,11 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
         return this.counter >= 500 ? Lenses.LENS_DISRUPTION : Lenses.LENS_NONE;
     }
 
-    private void shootLaser(int endX, int endY, int endZ, Lens currentLens){
+    public static void shootLaser(World world, double startX, double startY, double startZ, double endX, double endY, double endZ, Lens currentLens){
         if(!ConfigValues.lessSound){
-            this.worldObj.playSound(null, this.getX(), this.getY(), this.getZ(), SoundHandler.reconstructor, SoundCategory.BLOCKS, 0.35F, 1.0F);
+            world.playSound(null, startX, startY, startZ, SoundHandler.reconstructor, SoundCategory.BLOCKS, 0.35F, 1.0F);
         }
-        PacketHandler.theNetwork.sendToAllAround(new PacketParticle(this.getX(), this.getY(), this.getZ(), endX, endY, endZ, currentLens.getColor(), ConfigValues.lessParticles ? 2 : 8, 2F), new NetworkRegistry.TargetPoint(this.worldObj.provider.getDimension(), this.getX(), this.getY(), this.getZ(), 64));
+        PacketHandler.theNetwork.sendToAllAround(new PacketParticle(startX, startY, startZ, endX, endY, endZ, currentLens.getColor(), ConfigValues.lessParticles ? 2 : 8, 2F), new NetworkRegistry.TargetPoint(world.provider.getDimension(), startX, startY, startZ, 64));
     }
 
     @Override

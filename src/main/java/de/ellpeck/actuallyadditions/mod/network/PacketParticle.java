@@ -23,12 +23,12 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class PacketParticle implements IMessage{
 
-    private int startX;
-    private int startY;
-    private int startZ;
-    private int endX;
-    private int endY;
-    private int endZ;
+    private double startX;
+    private double startY;
+    private double startZ;
+    private double endX;
+    private double endY;
+    private double endZ;
     private float[] color;
     private int particleAmount;
     private float particleSize;
@@ -38,7 +38,7 @@ public class PacketParticle implements IMessage{
 
     }
 
-    public PacketParticle(int startX, int startY, int startZ, int endX, int endY, int endZ, float[] color, int particleAmount, float particleSize){
+    public PacketParticle(double startX, double startY, double startZ, double endX, double endY, double endZ, float[] color, int particleAmount, float particleSize){
         this.startX = startX;
         this.startY = startY;
         this.startZ = startZ;
@@ -51,13 +51,13 @@ public class PacketParticle implements IMessage{
     }
 
     @SideOnly(Side.CLIENT)
-    public static void renderParticlesFromAToB(int startX, int startY, int startZ, int endX, int endY, int endZ, int particleAmount, float particleSize, float[] color, float ageMultiplier){
+    public static void renderParticlesFromAToB(double startX, double startY, double startZ, double endX, double endY, double endZ, int particleAmount, float particleSize, float[] color, float ageMultiplier){
         World world = Minecraft.getMinecraft().theWorld;
 
         if(Minecraft.getMinecraft().thePlayer.getDistance(startX, startY, startZ) <= 64 || Minecraft.getMinecraft().thePlayer.getDistance(endX, endY, endZ) <= 64){
-            int difX = startX-endX;
-            int difY = startY-endY;
-            int difZ = startZ-endZ;
+            double difX = startX-endX;
+            double difY = startY-endY;
+            double difZ = startZ-endZ;
             double distance = new Vec3d(startX, startY, startZ).distanceTo(new Vec3d(endX, endY, endZ));
 
             for(int times = 0; times < particleAmount/2; times++){
@@ -71,12 +71,12 @@ public class PacketParticle implements IMessage{
 
     @Override
     public void fromBytes(ByteBuf buf){
-        this.startX = buf.readInt();
-        this.startY = buf.readInt();
-        this.startZ = buf.readInt();
-        this.endX = buf.readInt();
-        this.endY = buf.readInt();
-        this.endZ = buf.readInt();
+        this.startX = buf.readDouble();
+        this.startY = buf.readDouble();
+        this.startZ = buf.readDouble();
+        this.endX = buf.readDouble();
+        this.endY = buf.readDouble();
+        this.endZ = buf.readDouble();
         this.particleAmount = buf.readInt();
         this.particleSize = buf.readFloat();
 
@@ -88,12 +88,12 @@ public class PacketParticle implements IMessage{
 
     @Override
     public void toBytes(ByteBuf buf){
-        buf.writeInt(this.startX);
-        buf.writeInt(this.startY);
-        buf.writeInt(this.startZ);
-        buf.writeInt(this.endX);
-        buf.writeInt(this.endY);
-        buf.writeInt(this.endZ);
+        buf.writeDouble(this.startX);
+        buf.writeDouble(this.startY);
+        buf.writeDouble(this.startZ);
+        buf.writeDouble(this.endX);
+        buf.writeDouble(this.endY);
+        buf.writeDouble(this.endZ);
         buf.writeInt(this.particleAmount);
         buf.writeFloat(this.particleSize);
 

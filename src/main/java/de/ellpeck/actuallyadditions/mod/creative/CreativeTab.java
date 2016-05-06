@@ -191,6 +191,7 @@ public class CreativeTab extends CreativeTabs{
         this.add(InitItems.itemPaxelCrystalBlack);
         this.add(InitItems.itemPaxelCrystalGreen);
         this.add(InitItems.itemPaxelCrystalWhite);
+        this.add(InitItems.itemRarmorModuleReconstructor);
         InitForeignPaxels.addToCreativeTab();
 
         this.add(InitBlocks.blockCrystal);
@@ -296,10 +297,14 @@ public class CreativeTab extends CreativeTabs{
     }
 
     public void add(Item item){
-        item.getSubItems(item, instance, this.list);
+        if(item != null){
+            item.getSubItems(item, instance, this.list);
+        }
     }
 
     public void add(Block block){
-        block.getSubBlocks(new ItemStack(block).getItem(), instance, this.list);
+        if(block != null){
+            block.getSubBlocks(new ItemStack(block).getItem(), instance, this.list);
+        }
     }
 }
