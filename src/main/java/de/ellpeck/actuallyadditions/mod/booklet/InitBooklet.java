@@ -33,6 +33,7 @@ import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraftforge.fml.common.Loader;
 
 import java.util.ArrayList;
 
@@ -48,6 +49,7 @@ public class InitBooklet{
         ActuallyAdditionsAPI.entryItemsNonRF = new BookletEntry("itemsNoRF");
         ActuallyAdditionsAPI.entryItemsRF = new BookletEntry("itemsRF").setSpecial();
         ActuallyAdditionsAPI.entryMisc = new BookletEntry("misc");
+        ActuallyAdditionsAPI.entryCrossover = new BookletEntry("crossover");
         ActuallyAdditionsAPI.allAndSearch = new BookletEntryAllSearch("allAndSearch").setSpecial();
     }
 
@@ -143,5 +145,10 @@ public class InitBooklet{
         new BookletChapter("growthRing", ActuallyAdditionsAPI.entryItemsRF, new ItemStack(InitItems.itemGrowthRing), new PageCrafting(1, ItemCrafting.recipeGrowthRing));
         new BookletChapter("waterRemovalRing", ActuallyAdditionsAPI.entryItemsRF, new ItemStack(InitItems.itemWaterRemovalRing), new PageCrafting(1, ItemCrafting.recipeWaterRing));
         new BookletChapter("batteries", ActuallyAdditionsAPI.entryItemsRF, new ItemStack(InitItems.itemBatteryTriple), new PageTextOnly(1), new PageCrafting(2, ItemCrafting.recipeBattery).setNoText(), new PageCrafting(3, ItemCrafting.recipeBatteryDouble).setNoText(), new PageCrafting(4, ItemCrafting.recipeBatteryTriple).setNoText(), new PageCrafting(5, ItemCrafting.recipeBatteryQuadruple).setNoText(), new PageCrafting(6, ItemCrafting.recipeBatteryQuintuple).setNoText());
+
+        //Crossover
+        if(Loader.isModLoaded("rarmor")){
+            new BookletChapter("rarmorModuleReconstructor", ActuallyAdditionsAPI.entryCrossover, new ItemStack(InitItems.itemRarmorModuleReconstructor), new PageTextOnly(1), new PageCrafting(2, ItemCrafting.recipeRarmorModuleReconstructor).setNoText());
+        }
     }
 }

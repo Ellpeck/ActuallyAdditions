@@ -61,6 +61,7 @@ public enum ConfigCrafting{
     KNIFE("Knife", ConfigCategories.ITEMS_CRAFTING),
     STICK_CRAFTER("Crafting Table On A Stick", ConfigCategories.ITEMS_CRAFTING),
     MASHED_FOOD("Mashed Food", ConfigCategories.ITEMS_CRAFTING),
+    RARMOR_RECONSTRUCTOR_MODULE("Rarmor Reconstructor Module", ConfigCategories.ITEMS_CRAFTING),
 
     RING_SPEED("Speed Ring", ConfigCategories.POTION_RING_CRAFTING),
     RING_HASTE("Haste Ring", ConfigCategories.POTION_RING_CRAFTING),

@@ -27,7 +27,7 @@ public class ActuallyAdditionsAPI{
 
     public static final String MOD_ID = "actuallyadditions";
     public static final String API_ID = MOD_ID+"api";
-    public static final String API_VERSION = "10";
+    public static final String API_VERSION = "11";
 
     public static List<CrusherRecipe> crusherRecipes = new ArrayList<CrusherRecipe>();
     public static List<BallOfFurReturn> ballOfFurReturnItems = new ArrayList<BallOfFurReturn>();
@@ -47,6 +47,7 @@ public class ActuallyAdditionsAPI{
     public static IBookletEntry entryItemsNonRF;
     public static IBookletEntry entryItemsRF;
     public static IBookletEntry entryMisc;
+    public static IBookletEntry entryCrossover;
     public static IBookletEntry allAndSearch;
 
     /**

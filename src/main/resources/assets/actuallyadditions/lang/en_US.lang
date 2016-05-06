@@ -559,6 +559,7 @@ booklet.actuallyadditions.shapedOreRecipe=Shaped OreDictionary Recipe
 #Booklet Entries
 booklet.actuallyadditions.indexEntry.gettingStarted.name=Getting Started
 booklet.actuallyadditions.indexEntry.misc.name=Miscellaneous
+booklet.actuallyadditions.indexEntry.crossover.name=Mod Crossover
 booklet.actuallyadditions.indexEntry.functionalNoRF.name=Blocks that don't use RF
 booklet.actuallyadditions.indexEntry.allAndSearch.name=All Items and Search
 booklet.actuallyadditions.indexEntry.functionalRF.name=Blocks that use RF
@@ -777,3 +778,6 @@ booklet.actuallyadditions.chapter.enderStar.text.1=The <item>Ender Star<r> can b
 
 booklet.actuallyadditions.chapter.phantomRedstoneface.name=Phantom Redstoneface
 booklet.actuallyadditions.chapter.phantomRedstoneface.text.1=<imp>If you don't know what Phantomfaces are, check the Phantomfaces Entry first.<r> <n><n>The <item>Phantom Redstoneface<r> can be used to transmit redstone signals. This one, however, <imp>works differently<r> to the other Phantomfaces as it <imp>only works in one direction<r>. What this means is that the <imp>connected block has to provide redstone power<r> for redstone next to the Redstoneface to become powered. It does <imp>not work<r> the <imp>other way<r> around.
+
+booklet.actuallyadditions.chapter.rarmorModuleReconstructor.name=Reconstruction Module
+booklet.actuallyadditions.chapter.rarmorModuleReconstructor.text.1=The <item>Reconstruction Module<r> can be used in the <item>Rarmor<r>. The Rarmor is a type of configurable armor that is added by the <imp>Rarmor Mod<r>. <n>If you want to use this module, place it inside the Rarmor GUI that is accessed by <imp>wearing the armor<r> and <imp>opening your inventory<r>. <n><n>The module, when the player is <imp>sneaking<r>, will shoot out a <imp>reconstruction beam<r> that would be created by the Atomic Reconstructor <imp>without a lens<r>. This will cause blocks that are hit to be reconstructed.

@@ -176,6 +176,7 @@ public class CreativeTab extends CreativeTabs{
         this.add(InitItems.itemSolidifiedExperience);
         this.add(InitItems.itemLeafBlower);
         this.add(InitItems.itemLeafBlowerAdvanced);
+        this.add(InitItems.itemRarmorModuleReconstructor);
 
         this.add(InitItems.woodenPaxel);
         this.add(InitItems.stonePaxel);
@@ -191,7 +192,6 @@ public class CreativeTab extends CreativeTabs{
         this.add(InitItems.itemPaxelCrystalBlack);
         this.add(InitItems.itemPaxelCrystalGreen);
         this.add(InitItems.itemPaxelCrystalWhite);
-        this.add(InitItems.itemRarmorModuleReconstructor);
         InitForeignPaxels.addToCreativeTab();
 
         this.add(InitBlocks.blockCrystal);
