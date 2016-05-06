@@ -28,7 +28,6 @@ import net.minecraft.init.Items;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fml.common.Loader;
 
 public class InitItems{
@@ -90,8 +89,6 @@ public class InitItems{
     public static Item itemCoffeeSeed;
 
     public static Item itemResonantRice;
-    public static Item itemBucketOil;
-    public static Item itemBucketCanolaOil;
 
     public static Item itemPhantomConnector;
 
@@ -252,10 +249,6 @@ public class InitItems{
         itemDrillUpgradeThreeByThree = new ItemDrillUpgrade(ItemDrillUpgrade.UpgradeType.THREE_BY_THREE, "itemDrillUpgradeThreeByThree");
         itemDrillUpgradeFiveByFive = new ItemDrillUpgrade(ItemDrillUpgrade.UpgradeType.FIVE_BY_FIVE, "itemDrillUpgradeFiveByFive");
         itemDrillUpgradeBlockPlacing = new ItemDrillUpgrade(ItemDrillUpgrade.UpgradeType.PLACER, "itemDrillUpgradeBlockPlacing");
-        itemBucketOil = new ItemBucketAA(InitFluids.blockOil, "itemBucketOil");
-        FluidContainerRegistry.registerFluidContainer(InitFluids.fluidOil, new ItemStack(itemBucketOil), FluidContainerRegistry.EMPTY_BUCKET);
-        itemBucketCanolaOil = new ItemBucketAA(InitFluids.blockCanolaOil, "itemBucketCanolaOil");
-        FluidContainerRegistry.registerFluidContainer(InitFluids.fluidCanolaOil, new ItemStack(itemBucketCanolaOil), FluidContainerRegistry.EMPTY_BUCKET);
         itemFertilizer = new ItemFertilizer("itemFertilizer");
         itemCoffee = new ItemCoffee("itemCoffee");
         itemPhantomConnector = new ItemPhantomConnector("itemPhantomConnector");

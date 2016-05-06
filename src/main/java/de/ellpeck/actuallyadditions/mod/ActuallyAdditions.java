@@ -41,6 +41,7 @@ import de.ellpeck.actuallyadditions.mod.util.FakePlayerUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.init.Items;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -58,6 +59,11 @@ public class ActuallyAdditions{
 
     @SidedProxy(clientSide = "de.ellpeck.actuallyadditions.mod.proxy.ClientProxy", serverSide = "de.ellpeck.actuallyadditions.mod.proxy.ServerProxy")
     public static IProxy proxy;
+
+    static{
+        //For some reason, this has to be done here
+        FluidRegistry.enableUniversalBucket();
+    }
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event){
@@ -117,9 +123,6 @@ public class ActuallyAdditions{
 
     @EventHandler
     public void serverStarting(FMLServerStartingEvent event){
-        Util.registerDispenserHandler(InitItems.itemBucketOil, new DispenserHandlerEmptyBucket());
-        Util.registerDispenserHandler(InitItems.itemBucketCanolaOil, new DispenserHandlerEmptyBucket());
-        Util.registerDispenserHandler(Items.BUCKET, new DispenserHandlerFillBucket());
         Util.registerDispenserHandler(InitItems.itemFertilizer, new DispenserHandlerFertilize());
 
         WorldData.init(event.getServer());
@@ -128,10 +131,13 @@ public class ActuallyAdditions{
     @EventHandler
     public void missingMapping(FMLMissingMappingsEvent event){
         for(FMLMissingMappingsEvent.MissingMapping mapping : event.getAll()){
-            if(mapping.name != null && mapping.name.toLowerCase(Locale.ROOT).startsWith(ModUtil.MOD_ID+":")){
-                if(mapping.name.contains("paxel") || mapping.name.contains("itemSpecial") || mapping.name.contains("blockBookStand") || mapping.name.contains("Rarmor")){
-                    mapping.ignore();
-                    ModUtil.LOGGER.info("Missing Mapping "+mapping.name+" is getting ignored. This is intentional.");
+            if(mapping.name != null){
+                String name = mapping.name.toLowerCase(Locale.ROOT);
+                if(name.startsWith(ModUtil.MOD_ID+":")){
+                    if(name.contains("paxel") || name.contains("itemspecial") || name.contains("blockbookstand") || name.contains("rarmor") || name.contains("bucket")){
+                        mapping.ignore();
+                        ModUtil.LOGGER.info("Missing Mapping "+mapping.name+" is getting ignored. This is intentional.");
+                    }
                 }
             }
         }
