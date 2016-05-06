@@ -511,7 +511,7 @@ info.actuallyadditions.update.buttonOptions=Click: Changelog, Shift-Click: Downl
 info.actuallyadditions.update.failed=[{"text":"The Update Check for "},{"text":"Actually Additions ","color":"dark_green"},{"text":"failed! Check Logs for more Info!","color":"none"}]
 
 #Achievements
-achievement.actuallyadditions.openBooklet=Screams of Knowledge
+achievement.actuallyadditions.openBooklet=Knowledge Bringer!
 achievement.actuallyadditions.openBooklet.desc=Open an Actually Additions Manual
 
 achievement.actuallyadditions.nameSmileyCloud=Your best friend
