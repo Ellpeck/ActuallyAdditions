@@ -75,6 +75,7 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
     public GuiButton buttonAchievements;
     public GuiButton buttonConfig;
     public GuiButton buttonWebsite;
+    public GuiButton buttonPatreon;
     public GuiButton[] chapterButtons = new GuiButton[CHAPTER_BUTTONS_AMOUNT];
     public GuiButton[] bookmarkButtons = new GuiButton[8];
     public GuiTextField searchField;
@@ -230,6 +231,10 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
         else if(button == this.buttonWebsite){
             BookletUtils.openBrowser("http://ellpeck.de");
         }
+        //Handles Patreon
+        else if(button == this.buttonPatreon){
+            BookletUtils.openBrowser("http://www.patreon.com/Ellpeck");
+        }
         //Handles Twitter
         else if(button == this.buttonTwitter){
             BookletUtils.openBrowser("http://twitter.com/ActAddMod");
@@ -298,10 +303,10 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
         this.buttonUpdate.visible = UpdateChecker.needsUpdateNotify;
         this.buttonList.add(this.buttonUpdate);
 
-        this.buttonTwitter = new TexturedButton(5, this.guiLeft, this.guiTop, 213, 0, 8, 8, Collections.singletonList(TextFormatting.GOLD+"Open @ActAddMod on Twitter in Browser"));
+        this.buttonTwitter = new TexturedButton(5, this.guiLeft, this.guiTop+10, 213, 0, 8, 8, Collections.singletonList(TextFormatting.GOLD+"Open @ActAddMod on Twitter in Browser"));
         this.buttonList.add(this.buttonTwitter);
 
-        this.buttonForum = new TexturedButton(6, this.guiLeft, this.guiTop+10, 221, 0, 8, 8, Collections.singletonList(TextFormatting.GOLD+"Open Minecraft Forum Post in Browser"));
+        this.buttonForum = new TexturedButton(6, this.guiLeft, this.guiTop+20, 221, 0, 8, 8, Collections.singletonList(TextFormatting.GOLD+"Open Minecraft Forum Post in Browser"));
         this.buttonList.add(this.buttonForum);
 
         this.buttonAchievements = new TexturedButton(7, this.guiLeft+138, this.guiTop, 205, 0, 8, 8, Collections.singletonList(TextFormatting.GOLD+"Show Achievements"));
@@ -311,8 +316,14 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
         websiteHover.add(TextFormatting.GOLD+"Open Author's Website");
         websiteHover.add("(There's some cool stuff there!)");
         websiteHover.add(TextFormatting.GRAY+""+TextFormatting.ITALIC+"Would you call this Product Placement?");
-        this.buttonWebsite = new TexturedButton(-99, this.guiLeft, this.guiTop+20, 228, 0, 8, 8, websiteHover);
+        this.buttonWebsite = new TexturedButton(-99, this.guiLeft, this.guiTop+30, 229, 0, 8, 8, websiteHover);
         this.buttonList.add(this.buttonWebsite);
+
+        List<String> patreonHover = new ArrayList<String>();
+        patreonHover.add("Like the mod?");
+        patreonHover.add("Why don't support me on "+TextFormatting.GOLD+"Patreon"+TextFormatting.RESET+"?");
+        this.buttonPatreon = new TexturedButton(-100, this.guiLeft, this.guiTop, 237, 0, 8, 8, patreonHover);
+        this.buttonList.add(this.buttonPatreon);
 
         ArrayList configHover = new ArrayList();
         configHover.add(TextFormatting.GOLD+"Show Configuration GUI");
