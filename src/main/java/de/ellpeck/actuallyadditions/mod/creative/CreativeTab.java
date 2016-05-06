@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.creative;
 
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
+import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.items.InitForeignPaxels;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
@@ -29,7 +30,7 @@ import java.util.List;
 public class CreativeTab extends CreativeTabs{
 
     public static CreativeTab instance = new CreativeTab();
-    private List list;
+    private List<ItemStack> list;
 
     public CreativeTab(){
         super(ModUtil.MOD_ID);
@@ -154,6 +155,9 @@ public class CreativeTab extends CreativeTabs{
         this.add(InitItems.itemGrowthRing);
         this.add(InitItems.itemMagnetRing);
         this.add(InitItems.itemWaterRemovalRing);
+
+        this.list.add(UniversalBucket.getFilledBucket(ForgeModContainer.getInstance().universalBucket, InitFluids.fluidCanolaOil));
+        this.list.add(UniversalBucket.getFilledBucket(ForgeModContainer.getInstance().universalBucket, InitFluids.fluidOil));
 
         this.add(InitItems.itemPhantomConnector);
 
