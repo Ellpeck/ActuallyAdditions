@@ -1,6 +1,9 @@
 package de.ellpeck.actuallyadditions.api.recipe;
 
+import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.BlockPos;
 
 /**
  * Changes an item's color by changing its metadata.
@@ -9,7 +12,7 @@ import net.minecraft.item.ItemStack;
 public class ColorLensChangerByDyeMeta implements IColorLensChanger{
 
     @Override
-    public ItemStack modifyItem(ItemStack stack){
+    public ItemStack modifyItem(ItemStack stack, IBlockState hitBlockState, BlockPos hitBlock, IAtomicReconstructor tile){
         ItemStack newStack = stack.copy();
         int meta = newStack.getItemDamage();
         if(meta >= 15){

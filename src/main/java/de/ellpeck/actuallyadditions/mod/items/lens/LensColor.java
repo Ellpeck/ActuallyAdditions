@@ -58,7 +58,7 @@ public class LensColor extends Lens{
         if(hitBlock != null){
             if(tile.getEnergy() >= ENERGY_USE){
                 int meta = PosUtil.getMetadata(hitBlock, tile.getWorldObject());
-                ItemStack returnStack = this.tryConvert(new ItemStack(PosUtil.getBlock(hitBlock, tile.getWorldObject()), 1, meta));
+                ItemStack returnStack = this.tryConvert(new ItemStack(PosUtil.getBlock(hitBlock, tile.getWorldObject()), 1, meta), hitState, hitBlock, tile);
                 if(returnStack != null && returnStack.getItem() instanceof ItemBlock){
                     PosUtil.setBlock(hitBlock, tile.getWorldObject(), Block.getBlockFromItem(returnStack.getItem()), returnStack.getItemDamage(), 2);
 
@@ -69,7 +69,7 @@ public class LensColor extends Lens{
             ArrayList<EntityItem> items = (ArrayList<EntityItem>)tile.getWorldObject().getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), hitBlock.getX()+1, hitBlock.getY()+1, hitBlock.getZ()+1));
             for(EntityItem item : items){
                 if(!item.isDead && item.getEntityItem() != null && tile.getEnergy() >= ENERGY_USE){
-                    ItemStack newStack = this.tryConvert(item.getEntityItem());
+                    ItemStack newStack = this.tryConvert(item.getEntityItem(), hitState, hitBlock, tile);
                     if(newStack != null){
                         item.setDead();
 
@@ -84,13 +84,13 @@ public class LensColor extends Lens{
         return false;
     }
 
-    private ItemStack tryConvert(ItemStack stack){
+    private ItemStack tryConvert(ItemStack stack, IBlockState hitState, BlockPos hitBlock, IAtomicReconstructor tile){
         if(stack != null){
             Item item = stack.getItem();
             if(item != null){
                 for(Map.Entry<Item, IColorLensChanger> changer : ActuallyAdditionsAPI.reconstructorLensColorChangers.entrySet()){
                     if(item == changer.getKey()){
-                        return changer.getValue().modifyItem(stack);
+                        return changer.getValue().modifyItem(stack, hitState, hitBlock, tile);
                     }
                 }
             }
