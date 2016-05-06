@@ -43,7 +43,7 @@ dependencies {
     //compile "codechicken:NotEnoughItems:1.8-1.0.5.104:dev"
 
     deobfCompile "mezz.jei:jei_1.9:3.3.3.197"
-    compile file "lib/Rarmor.jar"
+    compile files("lib/Rarmor.jar")
 }
 
 processResources {
