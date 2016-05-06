@@ -122,7 +122,7 @@ public class ActuallyAdditionsAPI{
      * @param chance The chance (this is from WeightedRandom.Item)
      */
     public static void addBallOfFurReturnItem(ItemStack stack, int chance){
-        ActuallyAdditionsAPI.ballOfFurReturnItems.add(new BallOfFurReturn(stack, chance));
+        ballOfFurReturnItems.add(new BallOfFurReturn(stack, chance));
     }
 
     /**
@@ -134,7 +134,7 @@ public class ActuallyAdditionsAPI{
      * @param maxAmount The maximum stacksize of the returned stack
      */
     public static void addTreasureChestLoot(ItemStack stack, int chance, int minAmount, int maxAmount){
-        ActuallyAdditionsAPI.treasureChestLoot.add(new TreasureChestLoot(stack, chance, minAmount, maxAmount));
+        treasureChestLoot.add(new TreasureChestLoot(stack, chance, minAmount, maxAmount));
     }
 
     /**
@@ -166,7 +166,7 @@ public class ActuallyAdditionsAPI{
      * The way it is modified is an instance of IColorLensChanger. When modifying the item,
      * its modifyItem() method will be called with a stack containing the item.
      *
-     * @param item The item (or block's item) to add
+     * @param item    The item (or block's item) to add
      * @param changer The change mechanism
      */
     public static void addReconstructorLensColorChangeItem(Item item, IColorLensChanger changer){
@@ -199,5 +199,16 @@ public class ActuallyAdditionsAPI{
      */
     public static void addPageWithItemStackData(BookletPage page){
         bookletPagesWithItemStackData.add(page);
+    }
+
+    /**
+     * This can be used for checking if the API is a certain version for
+     * compatibility's sake.
+     * Will always return an integer equivalent to the text in API_VERSION
+     *
+     * @return The API's version as an integer
+     */
+    public static int getAPIVersionInt(){
+        return Integer.parseInt(API_VERSION);
     }
 }
