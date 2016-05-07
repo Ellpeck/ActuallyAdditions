@@ -63,8 +63,9 @@ public class TooltipEvent{
 
                     //Metadata
                     int meta = event.getItemStack().getItemDamage();
+                    int max = event.getItemStack().getMaxDamage();
                     event.getToolTip().add(ADVANCED_INFO_HEADER_PRE+StringUtil.localize("tooltip."+ModUtil.MOD_ID+".meta.desc")+":");
-                    event.getToolTip().add(ADVANCED_INFO_TEXT_PRE+meta);
+                    event.getToolTip().add(ADVANCED_INFO_TEXT_PRE+meta+(max > 0 ? "/"+max : ""));
 
                     //Unlocalized Name
                     String metaName = event.getItemStack().getItem().getUnlocalizedName(event.getItemStack());
