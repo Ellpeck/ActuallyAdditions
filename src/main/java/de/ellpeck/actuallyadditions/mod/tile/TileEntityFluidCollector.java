@@ -15,6 +15,7 @@ import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockLiquid;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -87,7 +88,7 @@ public class TileEntityFluidCollector extends TileEntityBase implements IFluidHa
                     if(block != null){
                         BlockPos offsetPos = this.pos.offset(sideToManipulate);
                         Block blockPresent = PosUtil.getBlock(offsetPos, this.worldObj);
-                        boolean replaceable = blockPresent.isReplaceable(this.worldObj, offsetPos);
+                        boolean replaceable = !(blockPresent instanceof BlockLiquid) && !(blockPresent instanceof IFluidBlock) && !blockPresent.isReplaceable(this.worldObj, offsetPos);
                         if(replaceable){
                             PosUtil.setBlock(offsetPos, this.worldObj, block, 0, 3);
                             this.tank.drain(Util.BUCKET, true);
