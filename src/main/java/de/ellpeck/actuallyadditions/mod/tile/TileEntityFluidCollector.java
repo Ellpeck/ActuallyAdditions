@@ -88,8 +88,8 @@ public class TileEntityFluidCollector extends TileEntityBase implements IFluidHa
                     if(block != null){
                         BlockPos offsetPos = this.pos.offset(sideToManipulate);
                         Block blockPresent = PosUtil.getBlock(offsetPos, this.worldObj);
-                        boolean replaceable = !(blockPresent instanceof BlockLiquid) && !(blockPresent instanceof IFluidBlock) && !blockPresent.isReplaceable(this.worldObj, offsetPos);
-                        if(replaceable){
+                        boolean placeable = !(blockPresent instanceof BlockLiquid) && !(blockPresent instanceof IFluidBlock) && blockPresent.isReplaceable(this.worldObj, offsetPos);
+                        if(placeable){
                             PosUtil.setBlock(offsetPos, this.worldObj, block, 0, 3);
                             this.tank.drain(Util.BUCKET, true);
                         }
