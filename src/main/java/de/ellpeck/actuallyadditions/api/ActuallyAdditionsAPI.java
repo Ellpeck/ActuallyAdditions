@@ -201,15 +201,4 @@ public class ActuallyAdditionsAPI{
     public static void addPageWithItemStackData(BookletPage page){
         bookletPagesWithItemStackData.add(page);
     }
-
-    /**
-     * This can be used for checking if the API is a certain version for
-     * compatibility's sake.
-     * Will always return an integer equivalent to the text in API_VERSION
-     *
-     * @return The API's version as an integer
-     */
-    public static int getAPIVersionInt(){
-        return Integer.parseInt(API_VERSION);
-    }
 }
