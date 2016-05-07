@@ -13,6 +13,7 @@ package de.ellpeck.actuallyadditions.mod.gen;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.world.gen.structure.MapGenStructureIO;
+import net.minecraftforge.fml.common.registry.VillagerRegistry;
 
 public class InitVillager{
 
@@ -42,15 +43,14 @@ public class InitVillager{
             ChestGenHooks.addItem(JAM_HOUSE_CHEST_NAME, new WeightedRandomChestContent(new ItemStack(InitItems.itemJams, 1, i), 1, 1, 10));
         }
         ChestGenHooks.addItem(JAM_HOUSE_CHEST_NAME, new WeightedRandomChestContent(new ItemStack(Items.glass_bottle), 1, 2, 30));
-        ChestGenHooks.addItem(JAM_HOUSE_CHEST_NAME, new WeightedRandomChestContent(new ItemStack(Items.potionitem), 1, 1, 20));
+        ChestGenHooks.addItem(JAM_HOUSE_CHEST_NAME, new WeightedRandomChestContent(new ItemStack(Items.potionitem), 1, 1, 20));*/
 
         VillagerRegistry.instance().registerVillageCreationHandler(new VillageJamHouseHandler());
-        MapGenStructureIO.func_143031_a(VillageComponentJamHouse.class, ModUtil.MOD_ID+":jamHouseStructure");*/
+        MapGenStructureIO.registerStructureComponent(VillageComponentJamHouse.class, ModUtil.MOD_ID+":jamHouseStructure");
     }
 
     private static void initCustomCropFieldPart(){
-        //TODO Fix village
-        //VillagerRegistry.instance().registerVillageCreationHandler(new VillageCustomCropFieldHandler());
+        VillagerRegistry.instance().registerVillageCreationHandler(new VillageCustomCropFieldHandler());
         MapGenStructureIO.registerStructureComponent(VillageComponentCustomCropField.class, ModUtil.MOD_ID+":customCropFieldStructure");
     }
 

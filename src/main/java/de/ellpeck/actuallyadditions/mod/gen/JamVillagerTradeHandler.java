@@ -23,7 +23,6 @@ import net.minecraftforge.oredict.OreDictionary;
 import java.util.ArrayList;
 import java.util.Random;
 
-//TODO Fix the villager
 public class JamVillagerTradeHandler{
 
     private ArrayList<Trade> trades = new ArrayList<Trade>();
@@ -49,7 +48,6 @@ public class JamVillagerTradeHandler{
         this.trades.add(new Trade(stack, minSize, maxSize));
     }
 
-    //TODO Fix the Villager
     //@Override
     @SuppressWarnings("all")
     public void manipulateTradesForVillager(EntityVillager villager, MerchantRecipeList recipeList, Random rand){
