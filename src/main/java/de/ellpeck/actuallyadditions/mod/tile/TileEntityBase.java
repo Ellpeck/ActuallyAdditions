@@ -30,8 +30,8 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public abstract class TileEntityBase extends TileEntity implements ITickable{
 
     public boolean isRedstonePowered;
-    protected int ticksElapsed;
     public String name;
+    protected int ticksElapsed;
 
     public TileEntityBase(String name){
         this.name = "container."+ModUtil.MOD_ID+"."+name;

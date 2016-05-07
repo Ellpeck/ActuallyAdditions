@@ -11,8 +11,10 @@
 package de.ellpeck.actuallyadditions.mod.items;
 
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
-import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
-import de.ellpeck.actuallyadditions.mod.items.base.*;
+import de.ellpeck.actuallyadditions.mod.items.base.ItemArmorAA;
+import de.ellpeck.actuallyadditions.mod.items.base.ItemHoeAA;
+import de.ellpeck.actuallyadditions.mod.items.base.ItemSeed;
+import de.ellpeck.actuallyadditions.mod.items.base.ItemSwordAA;
 import de.ellpeck.actuallyadditions.mod.items.lens.ItemLens;
 import de.ellpeck.actuallyadditions.mod.items.lens.Lenses;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheCrystals;

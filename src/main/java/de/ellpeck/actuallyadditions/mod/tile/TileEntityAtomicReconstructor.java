@@ -36,13 +36,20 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
 
     public static final int ENERGY_USE = 1000;
     public EnergyStorage storage = new EnergyStorage(300000);
+    public int counter;
     private int currentTime;
     private boolean activateOnceWithSignal;
     private int oldEnergy;
-    public int counter;
 
     public TileEntityAtomicReconstructor(){
         super(1, "reconstructor");
+    }
+
+    public static void shootLaser(World world, double startX, double startY, double startZ, double endX, double endY, double endZ, Lens currentLens){
+        if(!ConfigValues.lessSound){
+            world.playSound(null, startX, startY, startZ, SoundHandler.reconstructor, SoundCategory.BLOCKS, 0.35F, 1.0F);
+        }
+        PacketHandler.theNetwork.sendToAllAround(new PacketParticle(startX, startY, startZ, endX, endY, endZ, currentLens.getColor(), ConfigValues.lessParticles ? 2 : 8, 2F), new NetworkRegistry.TargetPoint(world.provider.getDimension(), startX, startY, startZ, 64));
     }
 
     @Override
@@ -120,13 +127,6 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
             }
         }
         return this.counter >= 500 ? Lenses.LENS_DISRUPTION : Lenses.LENS_NONE;
-    }
-
-    public static void shootLaser(World world, double startX, double startY, double startZ, double endX, double endY, double endZ, Lens currentLens){
-        if(!ConfigValues.lessSound){
-            world.playSound(null, startX, startY, startZ, SoundHandler.reconstructor, SoundCategory.BLOCKS, 0.35F, 1.0F);
-        }
-        PacketHandler.theNetwork.sendToAllAround(new PacketParticle(startX, startY, startZ, endX, endY, endZ, currentLens.getColor(), ConfigValues.lessParticles ? 2 : 8, 2F), new NetworkRegistry.TargetPoint(world.provider.getDimension(), startX, startY, startZ, 64));
     }
 
     @Override

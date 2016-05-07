@@ -11,7 +11,6 @@
 package de.ellpeck.actuallyadditions.mod.config.values;
 
 import de.ellpeck.actuallyadditions.mod.config.ConfigCategories;
-import de.ellpeck.actuallyadditions.mod.config.ConfigurationHandler;
 
 public enum ConfigBoolValues{
 

@@ -28,7 +28,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @InventoryContainer
 public class ContainerEnergizer extends Container{
 
-    public static final EntityEquipmentSlot[] VALID_EQUIPMENT_SLOTS = new EntityEquipmentSlot[] {EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET};
+    public static final EntityEquipmentSlot[] VALID_EQUIPMENT_SLOTS = new EntityEquipmentSlot[]{EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET};
     private TileEntityEnergizer energizer;
 
     public ContainerEnergizer(final EntityPlayer player, TileEntityBase tile){

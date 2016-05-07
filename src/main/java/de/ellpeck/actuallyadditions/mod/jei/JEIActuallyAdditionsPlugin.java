@@ -32,7 +32,6 @@ import de.ellpeck.actuallyadditions.mod.util.Util;
 import mezz.jei.api.*;
 import mezz.jei.api.recipe.VanillaRecipeCategoryUid;
 import mezz.jei.api.recipe.transfer.IRecipeTransferRegistry;
-import net.minecraft.inventory.ContainerWorkbench;
 import net.minecraft.item.ItemStack;
 
 @JEIPlugin
@@ -41,7 +40,7 @@ public class JEIActuallyAdditionsPlugin implements IModPlugin{
     @Override
     public void register(IModRegistry registry){
         IJeiHelpers helpers = registry.getJeiHelpers();
-        
+
         registry.addRecipeCategories(
                 new BookletRecipeCategory(helpers.getGuiHelper()),
                 new CoffeeMachineRecipeCategory(helpers.getGuiHelper()),

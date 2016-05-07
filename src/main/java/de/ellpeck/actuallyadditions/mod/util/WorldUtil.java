@@ -124,7 +124,7 @@ public class WorldUtil{
                 FluidStack fluid = null;
                 //TODO Remove when FluidContainerRegistry is gone
                 if(FluidContainerRegistry.isFilledContainer(stack)){
-                   fluid = FluidContainerRegistry.getFluidForFilledItem(stack);
+                    fluid = FluidContainerRegistry.getFluidForFilledItem(stack);
                 }
                 else if(stack.getItem() instanceof IFluidContainerItem){
                     fluid = ((IFluidContainerItem)stack.getItem()).getFluid(stack);
