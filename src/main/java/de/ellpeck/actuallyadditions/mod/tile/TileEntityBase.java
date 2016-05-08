@@ -78,11 +78,13 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
         GameRegistry.registerTileEntity(TileEntityLeafGenerator.class, ModUtil.MOD_ID+":tileEntityLeafGenerator");
         GameRegistry.registerTileEntity(TileEntityDirectionalBreaker.class, ModUtil.MOD_ID+":tileEntityDirectionalBreaker");
         GameRegistry.registerTileEntity(TileEntityRangedCollector.class, ModUtil.MOD_ID+":tileEntityRangedCollector");
-        GameRegistry.registerTileEntity(TileEntityLaserRelay.class, ModUtil.MOD_ID+":tileEntityLaserRelay");
         GameRegistry.registerTileEntity(TileEntityAtomicReconstructor.class, ModUtil.MOD_ID+":tileEntityAtomicReconstructor");
         GameRegistry.registerTileEntity(TileEntityMiner.class, ModUtil.MOD_ID+":tileEntityMiner");
         GameRegistry.registerTileEntity(TileEntityFireworkBox.class, ModUtil.MOD_ID+":tileEntityFireworkBox");
         GameRegistry.registerTileEntity(TileEntityPhantomRedstoneface.class, ModUtil.MOD_ID+":tileEntityPhantomRedstoneface");
+        GameRegistry.registerTileEntity(TileEntityLaserRelay.TileEntityLaserRelayItem.class, ModUtil.MOD_ID+":tileEntityLaserRelayItem");
+        GameRegistry.registerTileEntity(TileEntityLaserRelay.TileEntityLaserRelayEnergy.class, ModUtil.MOD_ID+":tileEntityLaserRelay");
+        GameRegistry.registerTileEntity(TileEntityItemViewer.class, ModUtil.MOD_ID+":tileItemViewer");
     }
 
     @Override

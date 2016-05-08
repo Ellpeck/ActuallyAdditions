@@ -244,7 +244,7 @@ public class ContainerDrill extends Container{
                 }
                 else{
                     stackAt = this.slots[i].splitStack(j);
-                    if(this.slots[i].stackSize == 0){
+                    if(this.slots[i].stackSize <= 0){
                         this.slots[i] = null;
                     }
                     this.markDirty();

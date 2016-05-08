@@ -161,46 +161,6 @@ public class LaserRelayConnectionHandler{
         //System.out.println("Merged Two Networks!");
     }
 
-    public int transferEnergyToReceiverInNeed(World world, BlockPos energyGottenFrom, Network network, int maxTransfer, boolean simulate){
-        int transmitted = 0;
-        //Go through all of the connections in the network
-        for(ConnectionPair pair : network.connections){
-            BlockPos[] relays = new BlockPos[]{pair.firstRelay, pair.secondRelay};
-            //Go through both relays in the connection
-            for(BlockPos relay : relays){
-                if(relay != null){
-                    //Get every side of the relay
-                    for(int i = 0; i <= 5; i++){
-                        EnumFacing side = WorldUtil.getDirectionBySidesInOrder(i);
-                        //Get the Position at the side
-                        BlockPos pos = WorldUtil.getCoordsFromSide(side, relay, 0);
-                        if(!PosUtil.areSamePos(pos, energyGottenFrom)){
-                            TileEntity tile = world.getTileEntity(pos);
-                            if(tile instanceof IEnergyReceiver && !(tile instanceof TileEntityLaserRelay)){
-                                IEnergyReceiver receiver = (IEnergyReceiver)tile;
-                                if(receiver.canConnectEnergy(side.getOpposite())){
-                                    //Transfer the energy (with the energy loss!)
-                                    int theoreticalReceived = ((IEnergyReceiver)tile).receiveEnergy(side.getOpposite(), maxTransfer-transmitted, true);
-                                    //The amount of energy lost during a transfer
-                                    int deduct = (int)(theoreticalReceived*((double)ConfigIntValues.LASER_RELAY_LOSS.getValue()/100));
-
-                                    transmitted += ((IEnergyReceiver)tile).receiveEnergy(side.getOpposite(), theoreticalReceived-deduct, simulate);
-                                    transmitted += deduct;
-
-                                    //If everything that could be transmitted was transmitted
-                                    if(transmitted >= maxTransfer){
-                                        return transmitted;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        return transmitted;
-    }
-
     public static class ConnectionPair{
 
         public BlockPos firstRelay;

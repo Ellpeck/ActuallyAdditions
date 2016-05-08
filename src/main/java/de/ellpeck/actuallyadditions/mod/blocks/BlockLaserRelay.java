@@ -27,13 +27,16 @@ import net.minecraft.world.World;
 public class BlockLaserRelay extends BlockContainerBase{
 
     private static final PropertyInteger META = PropertyInteger.create("meta", 0, 5);
+    private boolean isItem;
 
-    public BlockLaserRelay(String name){
+    public BlockLaserRelay(String name, boolean isItem){
         super(Material.ROCK, name);
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(1.5F);
         this.setResistance(10.0F);
         this.setSoundType(SoundType.STONE);
+
+        this.isItem = isItem;
     }
 
     @Override
@@ -63,6 +66,6 @@ public class BlockLaserRelay extends BlockContainerBase{
 
     @Override
     public TileEntity createNewTileEntity(World world, int i){
-        return new TileEntityLaserRelay();
+        return this.isItem ? new TileEntityLaserRelay.TileEntityLaserRelayItem() : new TileEntityLaserRelay.TileEntityLaserRelayEnergy();
     }
 }

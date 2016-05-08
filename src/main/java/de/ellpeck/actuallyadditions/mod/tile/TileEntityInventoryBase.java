@@ -33,8 +33,10 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
 
         this.initializeSlots(slots);
 
-        for(int i = 0; i < this.invWrappers.length; i++){
-            this.invWrappers[i] = new SidedInvWrapper(this, EnumFacing.values()[i]);
+        if(this.hasInvWrapperCapabilities()){
+            for(int i = 0; i < this.invWrappers.length; i++){
+                this.invWrappers[i] = new SidedInvWrapper(this, EnumFacing.values()[i]);
+            }
         }
     }
 
@@ -83,14 +85,10 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
     }
 
     @Override
-    public void updateEntity(){
-        super.updateEntity();
-    }
-
-    @Override
     public int[] getSlotsForFace(EnumFacing side){
-        if(this.slots.length > 0){
-            int[] theInt = new int[this.slots.length];
+        int invSize = this.getSizeInventory();
+        if(invSize > 0){
+            int[] theInt = new int[invSize];
             for(int i = 0; i < theInt.length; i++){
                 theInt[i] = i;
             }
@@ -177,7 +175,7 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
             }
             else{
                 stackAt = this.slots[i].splitStack(j);
-                if(this.slots[i].stackSize == 0){
+                if(this.slots[i].stackSize <= 0){
                     this.slots[i] = null;
                 }
                 this.markDirty();

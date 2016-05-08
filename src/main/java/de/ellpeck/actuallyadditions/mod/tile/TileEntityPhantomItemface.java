@@ -85,11 +85,6 @@ public class TileEntityPhantomItemface extends TileEntityPhantomface{
         return null;
     }
 
-    @Override
-    public String getName(){
-        return this.name;
-    }
-
     public ISidedInventory getSided(){
         return this.getInventory() instanceof ISidedInventory ? (ISidedInventory)this.getInventory() : null;
     }

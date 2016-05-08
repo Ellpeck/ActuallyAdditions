@@ -92,6 +92,8 @@ public class InitBlocks{
     public static Block blockRangedCollector;
 
     public static Block blockLaserRelay;
+    public static Block blockLaserRelayItem;
+    public static Block blockItemViewer;
 
     public static Block blockBlackLotus;
     public static Block blockCrystal;
@@ -114,12 +116,14 @@ public class InitBlocks{
     public static void init(){
         ModUtil.LOGGER.info("Initializing Blocks...");
 
+        blockItemViewer = new BlockItemViewer("blockItemViewer");
         blockFireworkBox = new BlockFireworkBox("blockFireworkBox");
         blockMiner = new BlockMiner("blockMiner");
         blockAtomicReconstructor = new BlockAtomicReconstructor("blockAtomicReconstructor");
         blockCrystal = new BlockCrystal("blockCrystal");
         blockBlackLotus = new BlockBlackLotus("blockBlackLotus");
-        blockLaserRelay = new BlockLaserRelay("blockLaserRelay");
+        blockLaserRelay = new BlockLaserRelay("blockLaserRelay", false);
+        blockLaserRelayItem = new BlockLaserRelay("blockLaserRelayItem", true);
         blockRangedCollector = new BlockRangedCollector("blockRangedCollector");
         blockDirectionalBreaker = new BlockDirectionalBreaker("blockDirectionalBreaker");
         blockLeafGenerator = new BlockLeafGenerator("blockLeafGenerator");

@@ -50,7 +50,8 @@ public class ItemLaserWrench extends ItemBase{
                 }
                 else{
                     BlockPos savedPos = ItemPhantomConnector.getStoredPosition(stack);
-                    if(ItemPhantomConnector.getStoredWorld(stack) == world && world.getTileEntity(savedPos) instanceof TileEntityLaserRelay && LaserRelayConnectionHandler.getInstance().addConnection(savedPos, pos)){
+                    TileEntity savedTile = world.getTileEntity(savedPos);
+                    if(ItemPhantomConnector.getStoredWorld(stack) == world && savedTile instanceof TileEntityLaserRelay && ((TileEntityLaserRelay)savedTile).isItem == ((TileEntityLaserRelay)tile).isItem && LaserRelayConnectionHandler.getInstance().addConnection(savedPos, pos)){
                         ItemPhantomConnector.clearStorage(stack);
 
                         ((TileEntityLaserRelay)world.getTileEntity(savedPos)).sendUpdate();
