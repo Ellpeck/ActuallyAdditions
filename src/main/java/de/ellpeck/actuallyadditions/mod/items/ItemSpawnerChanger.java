@@ -5,7 +5,6 @@ import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -77,12 +76,12 @@ public class ItemSpawnerChanger extends ItemBase{
         return false;
     }
 
-    private boolean storeClickedEntity(ItemStack stack, Entity entity){
-        if(!entity.worldObj.isRemote){
-            if(!stack.hasTagCompound()){
-                stack.setTagCompound(new NBTTagCompound());
-            }
+    private boolean storeClickedEntity(ItemStack stack, EntityLivingBase entity){
+        if(!stack.hasTagCompound()){
+            stack.setTagCompound(new NBTTagCompound());
+        }
 
+        if(!(entity instanceof EntityPlayer)){
             String entityName = EntityList.getEntityString(entity);
             if(entityName != null && !entityName.isEmpty()){
                 for(String name : ConfigValues.spawnerChangerBlacklist){
