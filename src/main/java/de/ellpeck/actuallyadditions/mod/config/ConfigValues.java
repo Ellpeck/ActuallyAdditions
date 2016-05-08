@@ -35,6 +35,8 @@ public class ConfigValues{
 
     public static String[] repairerExtraWhitelist;
 
+    public static String[] spawnerChangerBlacklist;
+
     public static boolean lessSound;
     public static boolean lessParticles;
     public static boolean lessBlockBreakingEffects;
@@ -60,6 +62,7 @@ public class ConfigValues{
         minerExtraWhitelist = config.get(ConfigCategories.MACHINE_VALUES.name, "Vertical Digger Extra Whitelist", new String[0], "By default, the Vertical Digger mines everything that starts with 'ore' in the OreDictionary. If there is one that it can't mine, but should be able to, put its REGISTRY NAME here. These are the actual registered Item Names, the ones you use, for example, when using the /give Command. This Config Option only applies if the miner is in Ores Only Mode.").getStringList();
         minerBlacklist = config.get(ConfigCategories.MACHINE_VALUES.name, "Vertical Digger Blacklist", new String[0], "By default, the Vertical Digger mines everything that starts with 'ore' in the OreDictionary. If there is one that it can mine, but shouldn't be able to, put its REGISTRY NAME here. These are the actual registered Item Names, the ones you use, for example, when using the /give Command. This Config Option will apply in both modes.").getStringList();
         repairerExtraWhitelist = config.get(ConfigCategories.MACHINE_VALUES.name, "Item Repairer Extra Whitelist", new String[]{"tconstruct:pickaxe", "tconstruct:shovel", "tconstruct:hatchet", "tconstruct:mattock", "tconstruct:broadsword", "tconstruct:longsword", "tconstruct:frypan", "tconstruct:battlesign", "tconstruct:hammer", "tconstruct:excavator", "tconstruct:lumberaxe", "tconstruct:cleaver"}, "By default, the Item Repairer only repairs items which are repairable in an anvil. Add an item's REGISTRY NAME here if you want it to be repairable.").getStringList();
+        spawnerChangerBlacklist = config.get(ConfigCategories.OTHER.name, "Spawner Changer Blacklist", new String[]{"VillagerGolem"}, "By default, the Spawner Changer allows every living entity to be put into a spawner. If there is one that shouldn't be able to, put its MAPPING NAME here.").getStringList();
 
         lessSound = config.get(ConfigCategories.PERFORMANCE.name, "Less Sound", false, "If blocks in Actually Additions should have less sounds").getBoolean();
         lessParticles = config.get(ConfigCategories.PERFORMANCE.name, "Less Particles", false, "If blocks in Actually Additions should have less particles").getBoolean();

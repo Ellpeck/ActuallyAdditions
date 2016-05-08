@@ -410,6 +410,7 @@ item.actuallyadditions.itemPaxelCrystalWhite.name=Enori Crystal AIOT
 item.actuallyadditions.itemPaxelCrystalGreen.name=Emeradic Crystal AIOT
 item.actuallyadditions.itemFoodBacon.name=Bacon
 item.actuallyadditions.itemMiscEnderStar.name=Ender Star
+item.actuallyadditions.itemSpawnerChanger.name=Spawner Changer
 
 #Tooltips
 tooltip.actuallyadditions.onSuffix.desc=On

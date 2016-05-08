@@ -105,6 +105,7 @@ public class ItemCrafting{
         //Clearing NBT Storage
         GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemLaserWrench), new ItemStack(InitItems.itemLaserWrench));
         GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemPhantomConnector), new ItemStack(InitItems.itemPhantomConnector));
+        GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemSpawnerChanger), new ItemStack(InitItems.itemSpawnerChanger));
 
         //Chest To Crate Upgrade
         if(ConfigCrafting.CHEST_TO_CRATE_UPGRADE.isEnabled()){

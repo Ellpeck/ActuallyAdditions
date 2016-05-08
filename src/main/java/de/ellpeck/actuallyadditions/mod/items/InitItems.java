@@ -133,6 +133,8 @@ public class InitItems{
     public static Item itemChestToCrateUpgrade;
     public static Item itemCrateKeeper;
 
+    public static Item itemSpawnerChanger;
+
     public static Item itemLaserWrench;
     public static Item itemCrystal;
     public static Item itemColorLens;
@@ -210,6 +212,7 @@ public class InitItems{
     public static void init(){
         ModUtil.LOGGER.info("Initializing Items...");
 
+        itemSpawnerChanger = new ItemSpawnerChanger("itemSpawnerChanger");
         itemMisc = new ItemMisc("itemMisc");
         itemCrateKeeper = new ItemGeneric("itemCrateKeeper");
         itemColorLens = new ItemLens("itemColorLens", Lenses.LENS_COLOR);
