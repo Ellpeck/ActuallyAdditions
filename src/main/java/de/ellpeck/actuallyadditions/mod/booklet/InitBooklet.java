@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.booklet;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.booklet.BookletPage;
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheColoredLampColors;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheMiscBlocks;
@@ -80,6 +81,7 @@ public class InitBooklet{
         }
         new BookletChapter("lamps", ActuallyAdditionsAPI.entryMisc, new ItemStack(InitBlocks.blockColoredLampOn, 1, TheColoredLampColors.GREEN.ordinal()), lampPages.toArray(new BookletPage[lampPages.size()]));
         new BookletChapter("enderStar", ActuallyAdditionsAPI.entryMisc, new ItemStack(InitItems.itemMisc, 1, TheMiscItems.ENDER_STAR.ordinal()), new PageCrafting(1, ItemCrafting.recipeEnderStar));
+        new BookletChapter("spawnerShard", ActuallyAdditionsAPI.entryMisc, new ItemStack(InitItems.itemMisc, 1, TheMiscItems.SPAWNER_SHARD.ordinal()), new PageTextOnly(1).setStack(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.SPAWNER_SHARD.ordinal())));
 
         new BookletChapter("treasureChest", ActuallyAdditionsAPI.entryMisc, new ItemStack(InitBlocks.blockTreasureChest), new PagePicture(1, "pageTreasureChest", 150).setStack(new ItemStack(InitBlocks.blockTreasureChest)), new PageTextOnly(2)).setSpecial();
         new BookletChapter("hairBalls", ActuallyAdditionsAPI.entryMisc, new ItemStack(InitItems.itemHairyBall), new PagePicture(1, "pageFurBalls", 110).setStack(new ItemStack(InitItems.itemHairyBall)), new PageTextOnly(2)).setSpecial();
@@ -137,6 +139,7 @@ public class InitBooklet{
             potionRingPages.add(new PageCrafting(potionRingPages.size()+1, recipe).setNoText());
         }
         new BookletChapter("potionRings", ActuallyAdditionsAPI.entryItemsNonRF, new ItemStack(InitItems.itemPotionRing), potionRingPages.toArray(new BookletPage[potionRingPages.size()]));
+        new BookletChapter("spawnerChanger", ActuallyAdditionsAPI.entryItemsNonRF, new ItemStack(InitItems.itemSpawnerChanger), new PageTextOnly(1), new PageCrafting(2, ItemCrafting.recipeSpawnerChanger).setNoText());
 
         //RF Using Items
         new BookletChapter("drill", ActuallyAdditionsAPI.entryItemsRF, new ItemStack(InitItems.itemDrill, 1, TheColoredLampColors.LIGHT_BLUE.ordinal()), new PageTextOnly(1), new PageCrafting(2, ItemCrafting.recipeDrill).setNoText(), new PageCrafting(3, ItemCrafting.recipesDrillColoring), new PageCrafting(4, ItemCrafting.recipeDrillCore).setNoText(), new PageCrafting(5, ItemCrafting.recipeDrillSpeedI).setNoText(), new PageCrafting(6, ItemCrafting.recipeDrillSpeedII).setNoText(), new PageCrafting(7, ItemCrafting.recipeDrillSpeedIII).setNoText(), new PageCrafting(8, ItemCrafting.recipeDrillFortuneI).setNoText(), new PageCrafting(9, ItemCrafting.recipeDrillFortuneII).setNoText(), new PageCrafting(10, ItemCrafting.recipeDrillSilk).setNoText(), new PageCrafting(11, ItemCrafting.recipeDrillThree).setNoText(), new PageCrafting(12, ItemCrafting.recipeDrillFive).setNoText(), new PageCrafting(13, ItemCrafting.recipeDrillPlacing).setNoText()).setSpecial();

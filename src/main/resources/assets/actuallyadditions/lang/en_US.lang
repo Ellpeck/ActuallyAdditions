@@ -411,6 +411,7 @@ item.actuallyadditions.itemPaxelCrystalGreen.name=Emeradic Crystal AIOT
 item.actuallyadditions.itemFoodBacon.name=Bacon
 item.actuallyadditions.itemMiscEnderStar.name=Ender Star
 item.actuallyadditions.itemSpawnerChanger.name=Spawner Changer
+item.actuallyadditions.itemMiscSpawnerShard.name=Spawner Shards
 
 #Tooltips
 tooltip.actuallyadditions.onSuffix.desc=On
@@ -782,3 +783,9 @@ booklet.actuallyadditions.chapter.phantomRedstoneface.text.1=<imp>If you don't k
 
 booklet.actuallyadditions.chapter.rarmorModuleReconstructor.name=Reconstruction Module
 booklet.actuallyadditions.chapter.rarmorModuleReconstructor.text.1=The <item>Reconstruction Module<r> can be used in the <item>Rarmor<r>. The Rarmor is a type of configurable armor that is added by the <imp>Rarmor Mod<r>. <n>If you want to use this module, place it inside the Rarmor GUI that is accessed by <imp>wearing the armor<r> and <imp>opening your inventory<r>. <n><n>The module, when the player is <imp>sneaking<r>, will shoot out a <imp>reconstruction beam<r> that would be created by the Atomic Reconstructor <imp>without a lens<r>. This will cause blocks that are hit to be reconstructed.
+
+booklet.actuallyadditions.chapter.spawnerShard.name=Spawner Shards
+booklet.actuallyadditions.chapter.spawnerShard.text.1=The <item>Spawner Shards<r> are a crafting ingredient found by <imp>breaking spawners<r>. Once a spawner in the world is broken, it will always drop <imp>one<r> Shard.
+
+booklet.actuallyadditions.chapter.spawnerChanger.name=Spawner Changer
+booklet.actuallyadditions.chapter.spawnerChanger.text.1=The <item>Spawner Changer<r> is an item that can be used to <imp>manipulate the mobs<r> that <imp>spawners spawn<r>. <n>This can be accomplished by first of all <imp>picking up<r> the desired mob to spawn with the Changer, killing it in the process. Next, the Changer can be <imp>right-clicked on the spawner<r>, causing the spawner to be changed. <n><n>This process probably won't work with every type of mob though.

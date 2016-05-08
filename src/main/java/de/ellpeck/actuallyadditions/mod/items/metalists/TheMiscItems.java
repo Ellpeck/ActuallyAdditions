@@ -33,7 +33,8 @@ public enum TheMiscItems{
     DRILL_CORE("DrillCore", EnumRarity.UNCOMMON),
     BLACK_DYE("BlackDye", EnumRarity.EPIC),
     LENS("Lens", EnumRarity.UNCOMMON),
-    ENDER_STAR("EnderStar", EnumRarity.EPIC);
+    ENDER_STAR("EnderStar", EnumRarity.EPIC),
+    SPAWNER_SHARD("SpawnerShard", EnumRarity.EPIC);
 
     public final String name;
     public final EnumRarity rarity;

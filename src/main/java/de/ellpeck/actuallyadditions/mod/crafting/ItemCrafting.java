@@ -84,6 +84,7 @@ public class ItemCrafting{
     public static IRecipe recipeCrateKeeper;
     public static IRecipe recipeEnderStar;
     public static IRecipe recipeRarmorModuleReconstructor;
+    public static IRecipe recipeSpawnerChanger;
 
     public static void init(){
 
@@ -124,6 +125,16 @@ public class ItemCrafting{
                     'W', "plankWood",
                     'Q', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal())));
             recipeCrateKeeper = RecipeUtil.lastIRecipe();
+        }
+
+        //Spawner Changer
+        if(ConfigCrafting.SPAWNER_CHANGER.isEnabled()){
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemSpawnerChanger),
+                    "MSM", "SDS", "MSM",
+                    'M', new ItemStack(Items.MAGMA_CREAM),
+                    'S', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.SPAWNER_SHARD.ordinal()),
+                    'D', new ItemStack(InitBlocks.blockCrystal, 1, TheCrystals.DIAMOND.ordinal())));
+            recipeSpawnerChanger = RecipeUtil.lastIRecipe();
         }
 
         //Laser Wrench
