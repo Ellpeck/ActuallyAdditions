@@ -15,6 +15,7 @@ import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.misc.LaserRelayConnectionHandler;
 import de.ellpeck.actuallyadditions.mod.network.PacketParticle;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityItemViewer.GenericItemHandlerInfo;
 import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
@@ -28,6 +29,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
+import sun.net.www.content.text.Generic;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -115,21 +117,29 @@ public abstract class TileEntityLaserRelay extends TileEntityBase{
             super("laserRelayItem", true);
         }
 
-        public List<IItemHandler> getItemHandlersInNetwork(LaserRelayConnectionHandler.Network network){
-            List<IItemHandler> handlers = new ArrayList<IItemHandler>();
+        public List<GenericItemHandlerInfo> getItemHandlersInNetwork(LaserRelayConnectionHandler.Network network){
+            List<GenericItemHandlerInfo> handlers = new ArrayList<GenericItemHandlerInfo>();
             for(LaserRelayConnectionHandler.ConnectionPair pair : network.connections){
                 BlockPos[] relays = new BlockPos[]{pair.firstRelay, pair.secondRelay};
                 for(BlockPos relay : relays){
                     if(relay != null){
-                        for(int i = 0; i <= 5; i++){
-                            EnumFacing side = WorldUtil.getDirectionBySidesInOrder(i);
-                            BlockPos pos = WorldUtil.getCoordsFromSide(side, relay, 0);
-                            TileEntity tile = this.worldObj.getTileEntity(pos);
-                            if(tile != null && !(tile instanceof TileEntityItemViewer)){
-                                IItemHandler handler = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side.getOpposite());
-                                if(handler != null && !handlers.contains(handler)){
-                                    handlers.add(handler);
+                        TileEntity aRelayTile = this.worldObj.getTileEntity(relay);
+                        if(aRelayTile instanceof TileEntityLaserRelayItem){
+                            TileEntityLaserRelayItem relayTile = (TileEntityLaserRelayItem)aRelayTile;
+                            if(!GenericItemHandlerInfo.containsTile(handlers, relayTile)){
+                                GenericItemHandlerInfo info = new GenericItemHandlerInfo(relayTile);
+                                for(int i = 0; i <= 5; i++){
+                                    EnumFacing side = WorldUtil.getDirectionBySidesInOrder(i);
+                                    BlockPos pos = WorldUtil.getCoordsFromSide(side, relay, 0);
+                                    TileEntity tile = this.worldObj.getTileEntity(pos);
+                                    if(tile != null && !(tile instanceof TileEntityItemViewer)){
+                                        IItemHandler handler = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side.getOpposite());
+                                        if(handler != null && !GenericItemHandlerInfo.containsHandler(handlers, handler)){
+                                            info.handlers.add(handler);
+                                        }
+                                    }
                                 }
+                                handlers.add(info);
                             }
                         }
                     }

@@ -1,14 +1,15 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.misc.LaserRelayConnectionHandler;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelay.TileEntityLaserRelayItem;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.items.IItemHandler;
-import org.apache.commons.lang3.tuple.Pair;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TileEntityItemViewer extends TileEntityInventoryBase{
@@ -17,8 +18,8 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
         super(0, "itemViewer");
     }
 
-    private List<IItemHandler> getItemHandlers(){
-        TileEntityLaserRelay.TileEntityLaserRelayItem relay = this.getConnectedRelay();
+    private List<GenericItemHandlerInfo> getItemHandlerInfos(){
+        TileEntityLaserRelayItem relay = this.getConnectedRelay();
         if(relay != null){
             LaserRelayConnectionHandler.Network network = LaserRelayConnectionHandler.getInstance().getNetworkFor(relay.getPos());
             if(network != null){
@@ -28,37 +29,39 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
         return null;
     }
 
-    private Pair<IItemHandler, Integer> getSwitchedIndexHandler(int i){
-        List<IItemHandler> handlers = this.getItemHandlers();
+    private SpecificItemHandlerInfo getSwitchedIndexHandler(int i){
+        List<GenericItemHandlerInfo> infos = this.getItemHandlerInfos();
         int currentI = 0;
-        if(handlers != null && !handlers.isEmpty()){
-            for(IItemHandler handler : handlers){
-                int slotAmount = handler.getSlots();
-                if(currentI+slotAmount > i){
-                    return Pair.of(handler, i-currentI);
-                }
-                else{
-                    currentI += slotAmount;
+        if(infos != null && !infos.isEmpty()){
+            for(GenericItemHandlerInfo info : infos){
+                for(IItemHandler handler : info.handlers){
+                    int slotAmount = handler.getSlots();
+                    if(currentI+slotAmount > i){
+                        return new SpecificItemHandlerInfo(handler, i-currentI, info.relayInQuestion);
+                    }
+                    else{
+                        currentI += slotAmount;
+                    }
                 }
             }
         }
         return null;
     }
 
-    private TileEntityLaserRelay.TileEntityLaserRelayItem getConnectedRelay(){
-        TileEntityLaserRelay.TileEntityLaserRelayItem tileFound = null;
+    private TileEntityLaserRelayItem getConnectedRelay(){
+        TileEntityLaserRelayItem tileFound = null;
         if(this.worldObj != null){ //Why is that even possible..?
             for(int i = 0; i <= 5; i++){
                 EnumFacing side = WorldUtil.getDirectionBySidesInOrder(i);
                 BlockPos pos = WorldUtil.getCoordsFromSide(side, this.getPos(), 0);
                 TileEntity tile = this.worldObj.getTileEntity(pos);
 
-                if(tile instanceof TileEntityLaserRelay.TileEntityLaserRelayItem){
+                if(tile instanceof TileEntityLaserRelayItem){
                     if(tileFound != null){
                         return null;
                     }
                     else{
-                        tileFound = (TileEntityLaserRelay.TileEntityLaserRelayItem)tile;
+                        tileFound = (TileEntityLaserRelayItem)tile;
                     }
                 }
             }
@@ -73,10 +76,10 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
 
     @Override
     public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction){
-        Pair<IItemHandler, Integer> handler = this.getSwitchedIndexHandler(index);
+        SpecificItemHandlerInfo handler = this.getSwitchedIndexHandler(index);
         if(handler != null){
-            if(ItemStack.areItemsEqual(handler.getKey().getStackInSlot(handler.getValue()), stack)){
-                ItemStack gaveBack = handler.getKey().extractItem(handler.getValue(), stack.stackSize, true);
+            if(ItemStack.areItemsEqual(handler.handler.getStackInSlot(handler.switchedIndex), stack)){
+                ItemStack gaveBack = handler.handler.extractItem(handler.switchedIndex, stack.stackSize, true);
                 return gaveBack != null;
             }
         }
@@ -85,9 +88,9 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
 
     @Override
     public boolean isItemValidForSlot(int index, ItemStack stack){
-        Pair<IItemHandler, Integer> handler = this.getSwitchedIndexHandler(index);
+        SpecificItemHandlerInfo handler = this.getSwitchedIndexHandler(index);
         if(handler != null){
-            ItemStack gaveBack = handler.getKey().insertItem(handler.getValue(), stack, true);
+            ItemStack gaveBack = handler.handler.insertItem(handler.switchedIndex, stack, true);
             return !ItemStack.areItemStacksEqual(gaveBack, stack);
         }
         return false;
@@ -103,14 +106,14 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
     @Override
     public void setInventorySlotContents(int i, ItemStack stack){
         if(stack != null){
-            Pair<IItemHandler, Integer> handler = this.getSwitchedIndexHandler(i);
+            SpecificItemHandlerInfo handler = this.getSwitchedIndexHandler(i);
             if(handler != null){
                 ItemStack toInsert = stack.copy();
-                ItemStack inSlot = handler.getKey().getStackInSlot(handler.getValue());
+                ItemStack inSlot = handler.handler.getStackInSlot(handler.switchedIndex);
                 if(inSlot != null){
                     toInsert.stackSize -= inSlot.stackSize;
                 }
-                handler.getKey().insertItem(handler.getValue(), toInsert, false);
+                handler.handler.insertItem(handler.switchedIndex, toInsert, false);
             }
         }
         else{
@@ -121,10 +124,12 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
     @Override
     public int getSizeInventory(){
         int size = 0;
-        List<IItemHandler> handlers = this.getItemHandlers();
-        if(handlers != null){
-            for(IItemHandler handler : handlers){
-                size += handler.getSlots();
+        List<GenericItemHandlerInfo> infos = this.getItemHandlerInfos();
+        if(infos != null){
+            for(GenericItemHandlerInfo info : infos){
+                for(IItemHandler handler : info.handlers){
+                    size += handler.getSlots();
+                }
             }
         }
         return size;
@@ -132,32 +137,73 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
 
     @Override
     public ItemStack getStackInSlot(int i){
-        Pair<IItemHandler, Integer> handler = this.getSwitchedIndexHandler(i);
+        SpecificItemHandlerInfo handler = this.getSwitchedIndexHandler(i);
         if(handler != null){
-            return handler.getKey().getStackInSlot(handler.getValue());
+            return handler.handler.getStackInSlot(handler.switchedIndex);
         }
         return null;
     }
 
     @Override
     public ItemStack decrStackSize(int i, int j){
-        Pair<IItemHandler, Integer> handler = this.getSwitchedIndexHandler(i);
+        SpecificItemHandlerInfo handler = this.getSwitchedIndexHandler(i);
         if(handler != null){
-            return handler.getKey().extractItem(handler.getValue(), j, false);
+            return handler.handler.extractItem(handler.switchedIndex, j, false);
         }
         return null;
     }
 
     @Override
     public ItemStack removeStackFromSlot(int index){
-        Pair<IItemHandler, Integer> handler = this.getSwitchedIndexHandler(index);
+        SpecificItemHandlerInfo handler = this.getSwitchedIndexHandler(index);
         if(handler != null){
-            ItemStack stackInSlot = handler.getKey().getStackInSlot(handler.getValue());
+            ItemStack stackInSlot = handler.handler.getStackInSlot(handler.switchedIndex);
             if(stackInSlot != null){
-                handler.getKey().extractItem(handler.getValue(), stackInSlot.stackSize, false);
+                handler.handler.extractItem(handler.switchedIndex, stackInSlot.stackSize, false);
             }
             return stackInSlot;
         }
         return null;
+    }
+
+    private static class SpecificItemHandlerInfo{
+
+        public IItemHandler handler;
+        public int switchedIndex;
+        public TileEntityLaserRelayItem relayInQuestion;
+
+        public SpecificItemHandlerInfo(IItemHandler handler, int switchedIndex, TileEntityLaserRelayItem relayInQuestion){
+            this.handler = handler;
+            this.switchedIndex = switchedIndex;
+            this.relayInQuestion = relayInQuestion;
+        }
+    }
+
+    public static class GenericItemHandlerInfo{
+
+        public List<IItemHandler> handlers = new ArrayList<IItemHandler>();
+        public TileEntityLaserRelayItem relayInQuestion;
+
+        public GenericItemHandlerInfo(TileEntityLaserRelayItem relayInQuestion){
+            this.relayInQuestion = relayInQuestion;
+        }
+
+        public static boolean containsHandler(List<GenericItemHandlerInfo> infos, IItemHandler handler){
+            for(GenericItemHandlerInfo info : infos){
+                if(info.handlers.contains(handler)){
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public static boolean containsTile(List<GenericItemHandlerInfo> infos, TileEntityLaserRelayItem tile){
+            for(GenericItemHandlerInfo info : infos){
+                if(info.relayInQuestion == tile){
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }
