@@ -22,6 +22,8 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 
+import java.util.Locale;
+
 public class RenderSmileyCloud extends TileEntitySpecialRenderer{
 
     @Override
@@ -40,22 +42,24 @@ public class RenderSmileyCloud extends TileEntitySpecialRenderer{
                 easterEggs:
                 for(ISmileyCloudEasterEgg cloud : SmileyCloudEasterEggs.cloudStuff){
                     for(String triggerName : cloud.getTriggerNames()){
-                        if(StringUtil.equalsToLowerCase(triggerName, theCloud.name)){
-                            GlStateManager.pushMatrix();
-                            switch(PosUtil.getMetadata(theCloud.getPos(), theCloud.getWorld())){
-                                case 1:
-                                    GlStateManager.rotate(180, 0, 1, 0);
-                                    break;
-                                case 2:
-                                    GlStateManager.rotate(270, 0, 1, 0);
-                                    break;
-                                case 3:
-                                    GlStateManager.rotate(90, 0, 1, 0);
-                                    break;
+                        if(triggerName != null && theCloud.name != null){
+                            if(triggerName.toLowerCase(Locale.ROOT).equals(theCloud.name.toLowerCase(Locale.ROOT))){
+                                GlStateManager.pushMatrix();
+                                switch(PosUtil.getMetadata(theCloud.getPos(), theCloud.getWorld())){
+                                    case 1:
+                                        GlStateManager.rotate(180, 0, 1, 0);
+                                        break;
+                                    case 2:
+                                        GlStateManager.rotate(270, 0, 1, 0);
+                                        break;
+                                    case 3:
+                                        GlStateManager.rotate(90, 0, 1, 0);
+                                        break;
+                                }
+                                cloud.renderExtra(0.0625F);
+                                GlStateManager.popMatrix();
+                                break easterEggs;
                             }
-                            cloud.renderExtra(0.0625F);
-                            GlStateManager.popMatrix();
-                            break easterEggs;
                         }
                     }
                 }

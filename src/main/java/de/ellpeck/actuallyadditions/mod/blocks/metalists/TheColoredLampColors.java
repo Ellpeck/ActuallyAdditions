@@ -12,6 +12,8 @@ package de.ellpeck.actuallyadditions.mod.blocks.metalists;
 
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 
+import java.util.Locale;
+
 public enum TheColoredLampColors{
 
     WHITE("White"),
@@ -40,9 +42,14 @@ public enum TheColoredLampColors{
     public static TheColoredLampColors getColorFromDyeName(String color){
         if(color.substring(0, 3).equals("dye")){
             String actualName = color.substring(3);
-            for(int i = 0; i < values().length; i++){
-                if(StringUtil.equalsToLowerCase(values()[i].name, actualName)){
-                    return values()[i];
+            if(actualName != null){
+                for(int i = 0; i < values().length; i++){
+                    String aName = values()[i].name;
+                    if(aName != null){
+                        if(aName.toLowerCase(Locale.ROOT).equals(actualName.toLowerCase(Locale.ROOT))){
+                            return values()[i];
+                        }
+                    }
                 }
             }
         }

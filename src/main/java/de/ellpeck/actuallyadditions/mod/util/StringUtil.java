@@ -16,7 +16,6 @@ import net.minecraftforge.fluids.FluidTank;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 
 public class StringUtil{
 
@@ -37,19 +36,6 @@ public class StringUtil{
      */
     public static String localizeFormatted(String text, Object... replace){
         return I18n.translateToLocalFormatted(text, replace);
-    }
-
-    public static boolean equalsToLowerCase(String one, String two){
-        return Objects.equals(toLowerCase(one), toLowerCase(two));
-    }
-
-    public static String toLowerCase(String string){
-        if(string == null){
-            return null;
-        }
-        else{
-            return string.toLowerCase(Locale.ROOT);
-        }
     }
 
     public static void drawSplitString(FontRenderer renderer, String strg, int x, int y, int width, int color, boolean shadow){

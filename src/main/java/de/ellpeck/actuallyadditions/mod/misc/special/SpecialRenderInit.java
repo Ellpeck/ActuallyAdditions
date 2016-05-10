@@ -21,6 +21,7 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 
@@ -72,10 +73,13 @@ public class SpecialRenderInit{
         if(!specialList.isEmpty()){
             for(Map.Entry<String, RenderSpecial> entry : specialList.entrySet()){
                 //Does the player have one of the names from the list?
-                if(StringUtil.equalsToLowerCase(entry.getKey(), event.getEntityPlayer().getName())){
-                    //Render the special Item/Block
-                    entry.getValue().render(event.getEntityPlayer(), event.getPartialRenderTick());
-                    break;
+                String playerName = event.getEntityPlayer().getName();
+                if(entry.getKey() != null && playerName != null){
+                    if(entry.getKey().toLowerCase(Locale.ROOT).equals(playerName.toLowerCase(Locale.ROOT))){
+                        //Render the special Item/Block
+                        entry.getValue().render(event.getEntityPlayer(), event.getPartialRenderTick());
+                        break;
+                    }
                 }
             }
         }

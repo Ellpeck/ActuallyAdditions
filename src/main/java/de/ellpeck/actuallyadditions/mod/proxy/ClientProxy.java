@@ -91,7 +91,7 @@ public class ClientProxy implements IProxy{
             Calendar c = Calendar.getInstance();
             pumpkinBlurPumpkinBlur = c.get(Calendar.MONTH) == Calendar.OCTOBER;
             jingleAllTheWay = c.get(Calendar.MONTH) == Calendar.DECEMBER && c.get(Calendar.DAY_OF_MONTH) >= 6 && c.get(Calendar.DAY_OF_MONTH) <= 26;
-            bulletForMyValentine = (c.get(Calendar.MONTH) == Calendar.FEBRUARY && c.get(Calendar.DAY_OF_MONTH) >= 12 && c.get(Calendar.DAY_OF_MONTH) <= 16) || StringUtil.equalsToLowerCase(Minecraft.getMinecraft().getSession().getUsername(), "pinkhrya");
+            bulletForMyValentine = c.get(Calendar.MONTH) == Calendar.FEBRUARY && c.get(Calendar.DAY_OF_MONTH) >= 12 && c.get(Calendar.DAY_OF_MONTH) <= 16;
         }
         else{
             ModUtil.LOGGER.warn("You have turned Seasonal Mode off. Therefore, you are evil.");

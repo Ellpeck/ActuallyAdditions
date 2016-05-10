@@ -15,8 +15,6 @@ import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 
-import java.util.Objects;
-
 public class TileEntitySmileyCloud extends TileEntityBase implements IStringReactor{
 
     public String name;
@@ -44,7 +42,7 @@ public class TileEntitySmileyCloud extends TileEntityBase implements IStringReac
     public void updateEntity(){
         super.updateEntity();
         if(!this.worldObj.isRemote){
-            if(!Objects.equals(this.name, this.nameBefore) && this.sendUpdateWithInterval()){
+            if((this.nameBefore == null || !this.nameBefore.equals(this.name)) && this.sendUpdateWithInterval()){
                 this.nameBefore = this.name;
                 this.markDirty();
             }
