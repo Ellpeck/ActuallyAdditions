@@ -14,6 +14,7 @@ import cofh.api.energy.IEnergyContainerItem;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotImmovable;
 import de.ellpeck.actuallyadditions.mod.items.ItemDrill;
 import de.ellpeck.actuallyadditions.mod.items.ItemDrillUpgrade;
+import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import invtweaks.api.container.InventoryContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -23,6 +24,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentString;
 
 @InventoryContainer
 public class ContainerDrill extends Container{
@@ -154,16 +156,6 @@ public class ContainerDrill extends Container{
         }
 
         @Override
-        public boolean hasCustomName(){
-            return false;
-        }
-
-        @Override
-        public ITextComponent getDisplayName(){
-            return null;
-        }
-
-        @Override
         public int getInventoryStackLimit(){
             return 64;
         }
@@ -174,7 +166,22 @@ public class ContainerDrill extends Container{
         }
 
         @Override
-        public boolean isItemValidForSlot(int slot, ItemStack stack){
+        public boolean isUseableByPlayer(EntityPlayer player){
+            return true;
+        }
+
+        @Override
+        public void openInventory(EntityPlayer player){
+
+        }
+
+        @Override
+        public void closeInventory(EntityPlayer player){
+
+        }
+
+        @Override
+        public boolean isItemValidForSlot(int index, ItemStack stack){
             return true;
         }
 
@@ -195,22 +202,8 @@ public class ContainerDrill extends Container{
 
         @Override
         public void clear(){
-            this.slots = new ItemStack[this.slots.length];
-        }
-
-        @Override
-        public boolean isUseableByPlayer(EntityPlayer player){
-            return true;
-        }
-
-        @Override
-        public void openInventory(EntityPlayer player){
-
-        }
-
-        @Override
-        public void closeInventory(EntityPlayer player){
-
+            int length = this.slots.length;
+            this.slots = new ItemStack[length];
         }
 
         @Override
@@ -259,6 +252,16 @@ public class ContainerDrill extends Container{
             ItemStack stack = this.slots[index];
             this.slots[index] = null;
             return stack;
+        }
+
+        @Override
+        public boolean hasCustomName(){
+            return false;
+        }
+
+        @Override
+        public ITextComponent getDisplayName(){
+            return new TextComponentString(StringUtil.localize(this.getName()));
         }
     }
 }
