@@ -165,7 +165,7 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
 
     @Override
     public void keyTyped(char theChar, int key){
-        if(AND_HIS_NAME_IS.length > this.hisNameIsAt && AND_HIS_NAME_IS[this.hisNameIsAt] == key){
+        if(!this.searchField.isFocused() && AND_HIS_NAME_IS.length > this.hisNameIsAt && AND_HIS_NAME_IS[this.hisNameIsAt] == key){
             if(this.hisNameIsAt+1 >= AND_HIS_NAME_IS.length){
                 Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundHandler.duhDuhDuhDuuuh, 0.5F));
                 ModUtil.LOGGER.info("AND HIS NAME IS JOHN CENA DUH DUH DUH DUUUH");
