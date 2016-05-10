@@ -93,6 +93,7 @@ public class InitBlocks{
 
     public static Block blockLaserRelay;
     public static Block blockLaserRelayItem;
+    public static Block blockLaserRelayItemWhitelist;
     public static Block blockItemViewer;
 
     public static Block blockBlackLotus;
@@ -122,8 +123,9 @@ public class InitBlocks{
         blockAtomicReconstructor = new BlockAtomicReconstructor("blockAtomicReconstructor");
         blockCrystal = new BlockCrystal("blockCrystal");
         blockBlackLotus = new BlockBlackLotus("blockBlackLotus");
-        blockLaserRelay = new BlockLaserRelay("blockLaserRelay", false);
-        blockLaserRelayItem = new BlockLaserRelay("blockLaserRelayItem", true);
+        blockLaserRelay = new BlockLaserRelay("blockLaserRelay", BlockLaserRelay.Type.ENERGY);
+        blockLaserRelayItem = new BlockLaserRelay("blockLaserRelayItem", BlockLaserRelay.Type.ITEM);
+        blockLaserRelayItemWhitelist = new BlockLaserRelay("blockLaserRelayItemWhitelist", BlockLaserRelay.Type.ITEM_WHITELIST);
         blockRangedCollector = new BlockRangedCollector("blockRangedCollector");
         blockDirectionalBreaker = new BlockDirectionalBreaker("blockDirectionalBreaker");
         blockLeafGenerator = new BlockLeafGenerator("blockLeafGenerator");

@@ -87,6 +87,8 @@ public class GuiHandler implements IGuiHandler{
                 return new ContainerRangedCollector(entityPlayer.inventory, tile);
             case MINER:
                 return new ContainerMiner(entityPlayer.inventory, tile);
+            case LASER_RELAY_ITEM_WHITELIST:
+                return new ContainerLaserRelayItemWhitelist(entityPlayer.inventory, tile);
             default:
                 return null;
         }
@@ -153,6 +155,8 @@ public class GuiHandler implements IGuiHandler{
                 return new GuiRangedCollector(entityPlayer.inventory, tile, x, y, z, world);
             case MINER:
                 return new GuiMiner(entityPlayer.inventory, tile);
+            case LASER_RELAY_ITEM_WHITELIST:
+                return new GuiLaserRelayItemWhitelist(entityPlayer.inventory, tile);
             default:
                 return null;
         }
@@ -185,7 +189,8 @@ public class GuiHandler implements IGuiHandler{
         BOOK(false),
         DIRECTIONAL_BREAKER,
         RANGED_COLLECTOR,
-        MINER;
+        MINER,
+        LASER_RELAY_ITEM_WHITELIST;
 
         public boolean checkTileEntity;
 

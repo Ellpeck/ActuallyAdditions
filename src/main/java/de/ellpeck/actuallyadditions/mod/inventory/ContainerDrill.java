@@ -29,7 +29,7 @@ import net.minecraft.util.text.TextComponentString;
 @InventoryContainer
 public class ContainerDrill extends Container{
 
-    private static final int SLOT_AMOUNT = 5;
+    public static final int SLOT_AMOUNT = 5;
 
     private InventoryDrill drillInventory = new InventoryDrill();
     private InventoryPlayer inventory;

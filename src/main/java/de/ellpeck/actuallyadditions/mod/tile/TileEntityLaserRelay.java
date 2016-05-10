@@ -15,16 +15,24 @@ import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.misc.LaserRelayConnectionHandler;
 import de.ellpeck.actuallyadditions.mod.network.PacketParticle;
+import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityItemViewer.GenericItemHandlerInfo;
 import de.ellpeck.actuallyadditions.mod.util.PosUtil;
+import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import io.netty.util.internal.ConcurrentSet;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.ISidedInventory;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -61,11 +69,13 @@ public abstract class TileEntityLaserRelay extends TileEntityBase{
         else{
             LaserRelayConnectionHandler.getInstance().removeRelayFromNetwork(thisPos);
         }
+
+        super.receiveSyncCompound(compound);
     }
 
     @Override
     public NBTTagCompound getSyncCompound(){
-        NBTTagCompound compound = new NBTTagCompound();
+        NBTTagCompound compound = super.getSyncCompound();
 
         BlockPos thisPos = this.pos;
         ConcurrentSet<LaserRelayConnectionHandler.ConnectionPair> connections = LaserRelayConnectionHandler.getInstance().getConnectionsFor(thisPos);
@@ -76,9 +86,8 @@ public abstract class TileEntityLaserRelay extends TileEntityBase{
                 list.appendTag(pair.writeToNBT());
             }
             compound.setTag("Connections", list);
-            return compound;
         }
-        return null;
+        return compound;
     }
 
     @Override
@@ -112,8 +121,16 @@ public abstract class TileEntityLaserRelay extends TileEntityBase{
 
     public static class TileEntityLaserRelayItem extends TileEntityLaserRelay{
 
+        public TileEntityLaserRelayItem(String name){
+            super(name, true);
+        }
+
         public TileEntityLaserRelayItem(){
-            super("laserRelayItem", true);
+            this("laserRelayItem");
+        }
+
+        public boolean isWhitelisted(ItemStack stack){
+            return true;
         }
 
         public List<GenericItemHandlerInfo> getItemHandlersInNetwork(LaserRelayConnectionHandler.Network network){
@@ -145,6 +162,204 @@ public abstract class TileEntityLaserRelay extends TileEntityBase{
                 }
             }
             return handlers;
+        }
+    }
+
+    public static class TileEntityLaserRelayItemWhitelist extends TileEntityLaserRelayItem implements IButtonReactor{
+
+        private ItemStack[] slots = new ItemStack[24];
+        
+        public IInventory filterInventory;
+
+        public boolean isLeftWhitelist;
+        public boolean isRightWhitelist;
+
+        private boolean lastLeftWhitelist;
+        private boolean lastRightWhitelist;
+
+        public TileEntityLaserRelayItemWhitelist(){
+            super("laserRelayItemWhitelist");
+
+            this.filterInventory = new IInventory(){
+
+                private TileEntityLaserRelayItemWhitelist tile;
+
+                private IInventory setTile(TileEntityLaserRelayItemWhitelist tile){
+                    this.tile = tile;
+                    return this;
+                }
+
+                @Override
+                public String getName(){
+                    return this.tile.name;
+                }
+
+                @Override
+                public int getInventoryStackLimit(){
+                    return 64;
+                }
+
+                @Override
+                public void markDirty(){
+
+                }
+
+                @Override
+                public boolean isUseableByPlayer(EntityPlayer player){
+                    return this.tile.canPlayerUse(player);
+                }
+
+                @Override
+                public void openInventory(EntityPlayer player){
+
+                }
+
+                @Override
+                public void closeInventory(EntityPlayer player){
+
+                }
+
+                @Override
+                public int getField(int id){
+                    return 0;
+                }
+
+                @Override
+                public void setField(int id, int value){
+
+                }
+
+                @Override
+                public int getFieldCount(){
+                    return 0;
+                }
+
+                @Override
+                public void clear(){
+                    int length = this.tile.slots.length;
+                    this.tile.slots = new ItemStack[length];
+                }
+
+                @Override
+                public void setInventorySlotContents(int i, ItemStack stack){
+                    this.tile.slots[i] = stack;
+                    this.markDirty();
+                }
+
+                @Override
+                public int getSizeInventory(){
+                    return this.tile.slots.length;
+                }
+
+                @Override
+                public ItemStack getStackInSlot(int i){
+                    if(i < this.getSizeInventory()){
+                        return this.tile.slots[i];
+                    }
+                    return null;
+                }
+
+                @Override
+                public ItemStack decrStackSize(int i, int j){
+                    if(this.tile.slots[i] != null){
+                        ItemStack stackAt;
+                        if(this.tile.slots[i].stackSize <= j){
+                            stackAt = this.tile.slots[i];
+                            this.tile.slots[i] = null;
+                            this.markDirty();
+                            return stackAt;
+                        }
+                        else{
+                            stackAt = this.tile.slots[i].splitStack(j);
+                            if(this.tile.slots[i].stackSize <= 0){
+                                this.tile.slots[i] = null;
+                            }
+                            this.markDirty();
+                            return stackAt;
+                        }
+                    }
+                    return null;
+                }
+
+                @Override
+                public ItemStack removeStackFromSlot(int index){
+                    ItemStack stack = this.tile.slots[index];
+                    this.tile.slots[index] = null;
+                    return stack;
+                }
+
+                @Override
+                public boolean hasCustomName(){
+                    return false;
+                }
+
+                @Override
+                public ITextComponent getDisplayName(){
+                    return new TextComponentString(StringUtil.localize(this.getName()));
+                }
+
+                @Override
+                public boolean isItemValidForSlot(int index, ItemStack stack){
+                    return false;
+                }
+            }.setTile(this);
+        }
+
+        @Override
+        public boolean isWhitelisted(ItemStack stack){
+            return this.checkFilter(stack, true, this.isLeftWhitelist) || this.checkFilter(stack, false, this.isRightWhitelist);
+        }
+
+        private boolean checkFilter(ItemStack stack, boolean left, boolean isWhitelist){
+            int slotStart = left ? 0 : 12;
+            int slotStop = slotStart+12;
+
+            for(int i = slotStart; i < slotStop; i++){
+                if(this.slots[i] != null && this.slots[i].isItemEqual(stack)){
+                    return isWhitelist;
+                }
+            }
+            return !isWhitelist;
+        }
+
+        @Override
+        public void writeSyncableNBT(NBTTagCompound compound, boolean isForSync){
+            super.writeSyncableNBT(compound, isForSync);
+            if(!isForSync){
+                TileEntityInventoryBase.saveSlots(this.slots, compound);
+            }
+            compound.setBoolean("LeftWhitelist", this.isLeftWhitelist);
+            compound.setBoolean("RightWhitelist", this.isRightWhitelist);
+        }
+
+        @Override
+        public void readSyncableNBT(NBTTagCompound compound, boolean isForSync){
+            super.readSyncableNBT(compound, isForSync);
+            if(!isForSync){
+                TileEntityInventoryBase.loadSlots(this.slots, compound);
+            }
+            this.isLeftWhitelist = compound.getBoolean("LeftWhitelist");
+            this.isRightWhitelist = compound.getBoolean("RightWhitelist");
+        }
+
+        @Override
+        public void onButtonPressed(int buttonID, EntityPlayer player){
+            if(buttonID == 0){
+                this.isLeftWhitelist = !this.isLeftWhitelist;
+            }
+            else if(buttonID == 1){
+                this.isRightWhitelist = !this.isRightWhitelist;
+            }
+        }
+
+        @Override
+        public void updateEntity(){
+            super.updateEntity();
+
+            if((this.isLeftWhitelist != this.lastLeftWhitelist || this.isRightWhitelist != this.lastRightWhitelist) && this.sendUpdateWithInterval()){
+                this.lastLeftWhitelist = this.isLeftWhitelist;
+                this.lastRightWhitelist = this.isRightWhitelist;
+            }
         }
     }
 

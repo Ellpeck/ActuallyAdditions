@@ -84,6 +84,7 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
         GameRegistry.registerTileEntity(TileEntityPhantomRedstoneface.class, ModUtil.MOD_ID+":tileEntityPhantomRedstoneface");
         GameRegistry.registerTileEntity(TileEntityLaserRelay.TileEntityLaserRelayItem.class, ModUtil.MOD_ID+":tileEntityLaserRelayItem");
         GameRegistry.registerTileEntity(TileEntityLaserRelay.TileEntityLaserRelayEnergy.class, ModUtil.MOD_ID+":tileEntityLaserRelay");
+        GameRegistry.registerTileEntity(TileEntityLaserRelay.TileEntityLaserRelayItemWhitelist.class, ModUtil.MOD_ID+":tileEntityLaserRelayItemWhitelist");
         GameRegistry.registerTileEntity(TileEntityItemViewer.class, ModUtil.MOD_ID+":tileItemViewer");
     }
 

@@ -15,8 +15,10 @@ import com.google.common.collect.Multimap;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheColoredLampColors;
 import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
+import de.ellpeck.actuallyadditions.mod.inventory.ContainerDrill;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemEnergy;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityInventoryBase;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.PosUtil;
@@ -150,19 +152,9 @@ public class ItemDrill extends ItemEnergy{
             return null;
         }
 
-        int slotAmount = compound.getInteger("SlotAmount");
-        ItemStack[] slots = new ItemStack[slotAmount];
+        ItemStack[] slots = new ItemStack[ContainerDrill.SLOT_AMOUNT];
+        TileEntityInventoryBase.loadSlots(slots, compound);
 
-        if(slots.length > 0){
-            NBTTagList tagList = compound.getTagList("Items", 10);
-            for(int i = 0; i < tagList.tagCount(); i++){
-                NBTTagCompound tagCompound = tagList.getCompoundTagAt(i);
-                byte slotIndex = tagCompound.getByte("Slot");
-                if(slotIndex >= 0 && slotIndex < slots.length){
-                    slots[slotIndex] = ItemStack.loadItemStackFromNBT(tagCompound);
-                }
-            }
-        }
         return slots;
     }
 
@@ -407,20 +399,7 @@ public class ItemDrill extends ItemEnergy{
         if(compound == null){
             compound = new NBTTagCompound();
         }
-
-        if(slots != null && slots.length > 0){
-            compound.setInteger("SlotAmount", slots.length);
-            NBTTagList tagList = new NBTTagList();
-            for(int currentIndex = 0; currentIndex < slots.length; currentIndex++){
-                if(slots[currentIndex] != null){
-                    NBTTagCompound tagCompound = new NBTTagCompound();
-                    tagCompound.setByte("Slot", (byte)currentIndex);
-                    slots[currentIndex].writeToNBT(tagCompound);
-                    tagList.appendTag(tagCompound);
-                }
-            }
-            compound.setTag("Items", tagList);
-        }
+        TileEntityInventoryBase.saveSlots(slots, compound);
         stack.setTagCompound(compound);
     }
 

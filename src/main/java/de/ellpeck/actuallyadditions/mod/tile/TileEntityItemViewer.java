@@ -78,9 +78,11 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
     public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction){
         SpecificItemHandlerInfo handler = this.getSwitchedIndexHandler(index);
         if(handler != null){
-            if(ItemStack.areItemsEqual(handler.handler.getStackInSlot(handler.switchedIndex), stack)){
-                ItemStack gaveBack = handler.handler.extractItem(handler.switchedIndex, stack.stackSize, true);
-                return gaveBack != null;
+            if(handler.relayInQuestion.isWhitelisted(stack)){
+                if(ItemStack.areItemsEqual(handler.handler.getStackInSlot(handler.switchedIndex), stack)){
+                    ItemStack gaveBack = handler.handler.extractItem(handler.switchedIndex, stack.stackSize, true);
+                    return gaveBack != null;
+                }
             }
         }
         return false;
@@ -90,8 +92,10 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
     public boolean isItemValidForSlot(int index, ItemStack stack){
         SpecificItemHandlerInfo handler = this.getSwitchedIndexHandler(index);
         if(handler != null){
-            ItemStack gaveBack = handler.handler.insertItem(handler.switchedIndex, stack, true);
-            return !ItemStack.areItemStacksEqual(gaveBack, stack);
+            if(handler.relayInQuestion.isWhitelisted(stack)){
+                ItemStack gaveBack = handler.handler.insertItem(handler.switchedIndex, stack, true);
+                return !ItemStack.areItemStacksEqual(gaveBack, stack);
+            }
         }
         return false;
     }
