@@ -58,7 +58,7 @@ public class ContainerCrafter extends Container{
     @Override
     public ItemStack transferStackInSlot(EntityPlayer player, int slot){
         ItemStack stack = null;
-        Slot theSlot = (Slot)this.inventorySlots.get(slot);
+        Slot theSlot = this.inventorySlots.get(slot);
 
         if(theSlot != null && theSlot.getHasStack()){
             ItemStack savedStack = theSlot.getStack();

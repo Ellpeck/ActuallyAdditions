@@ -10,18 +10,12 @@
 
 package de.ellpeck.actuallyadditions.mod.misc;
 
-import cofh.api.energy.IEnergyReceiver;
-import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelay;
 import de.ellpeck.actuallyadditions.mod.util.PosUtil;
-import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import io.netty.util.internal.ConcurrentSet;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 
 public class LaserRelayConnectionHandler{
 
