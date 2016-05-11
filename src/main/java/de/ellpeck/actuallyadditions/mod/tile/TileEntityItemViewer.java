@@ -78,7 +78,7 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
     public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction){
         SpecificItemHandlerInfo handler = this.getSwitchedIndexHandler(index);
         if(handler != null){
-            if(handler.relayInQuestion.isWhitelisted(stack)){
+            if(this.isWhitelisted(handler, stack)){
                 if(ItemStack.areItemsEqual(handler.handler.getStackInSlot(handler.switchedIndex), stack)){
                     ItemStack gaveBack = handler.handler.extractItem(handler.switchedIndex, stack.stackSize, true);
                     return gaveBack != null;
@@ -88,11 +88,15 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
         return false;
     }
 
+    private boolean isWhitelisted(SpecificItemHandlerInfo handler, ItemStack stack){
+     return handler.relayInQuestion.isWhitelisted(stack) && this.getConnectedRelay().isWhitelisted(stack);
+    }
+
     @Override
     public boolean isItemValidForSlot(int index, ItemStack stack){
         SpecificItemHandlerInfo handler = this.getSwitchedIndexHandler(index);
         if(handler != null){
-            if(handler.relayInQuestion.isWhitelisted(stack)){
+            if(this.isWhitelisted(handler, stack)){
                 ItemStack gaveBack = handler.handler.insertItem(handler.switchedIndex, stack, true);
                 return !ItemStack.areItemStacksEqual(gaveBack, stack);
             }
