@@ -82,6 +82,9 @@ public class BlockCrafting{
     public static IRecipe recipeMiner;
     public static IRecipe recipeFireworkBox;
     public static IRecipe recipePhantomRedstoneface;
+    public static IRecipe recipeLaserRelayItem;
+    public static IRecipe recipeLaserRelayItemWhitelist;
+    public static IRecipe recipeItemInterface;
 
     public static void init(){
 
@@ -180,6 +183,35 @@ public class BlockCrafting{
                     'R', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.REDSTONE.ordinal()),
                     'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal())));
             recipeLaserRelay = RecipeUtil.lastIRecipe();
+        }
+
+        //Item Laser Relay
+        if(ConfigCrafting.LASER_RELAY_ITEM.isEnabled()){
+            GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitBlocks.blockLaserRelayItem),
+                    new ItemStack(InitBlocks.blockLaserRelay),
+                    new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal())));
+            recipeLaserRelayItem = RecipeUtil.lastIRecipe();
+        }
+
+        //Whitelist Item Laser Relay
+        if(ConfigCrafting.LASER_RELAY_ITEM_WHITELIST.isEnabled()){
+            GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitBlocks.blockLaserRelayItemWhitelist),
+                    new ItemStack(InitBlocks.blockLaserRelayItem),
+                    new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal()),
+                    new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal()),
+                    new ItemStack(InitItems.itemCrystal, 1, TheCrystals.REDSTONE.ordinal())));
+            recipeLaserRelayItemWhitelist = RecipeUtil.lastIRecipe();
+        }
+
+        //Item Interface
+        if(ConfigCrafting.ITEM_INTERFACE.isEnabled()){
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockItemViewer),
+                    "OBO", "RCR", "OBO",
+                    'B', new ItemStack(Items.REDSTONE),
+                    'O', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL.ordinal()),
+                    'R', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.REDSTONE.ordinal()),
+                    'C', new ItemStack(Blocks.CHEST)));
+            recipeItemInterface = RecipeUtil.lastIRecipe();
         }
 
         //Ranged Collector

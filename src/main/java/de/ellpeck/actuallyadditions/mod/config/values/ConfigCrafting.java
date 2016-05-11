@@ -148,6 +148,8 @@ public enum ConfigCrafting{
     DIRECTIONAL_BREAKER("Long-Range Breaker", ConfigCategories.BLOCKS_CRAFTING),
     RANGED_COLLECTOR("Ranged Collector", ConfigCategories.BLOCKS_CRAFTING),
     LASER_RELAY("Laser Relay", ConfigCategories.BLOCKS_CRAFTING),
+    LASER_RELAY_ITEM("Item Laser Relay", ConfigCategories.BLOCKS_CRAFTING),
+    LASER_RELAY_ITEM_WHITELIST("Advanced Item Laser Relay", ConfigCategories.BLOCKS_CRAFTING),
     LASER_WRENCH("Laser Wrench", ConfigCategories.ITEMS_CRAFTING),
 
     CHEST_TO_CRATE_UPGRADE("Chest To Crate Upgrade", ConfigCategories.ITEMS_CRAFTING),
@@ -157,7 +159,8 @@ public enum ConfigCrafting{
     MINER("Miner", ConfigCategories.BLOCKS_CRAFTING),
     FIREWORK_BOX("Firework Box", ConfigCategories.BLOCKS_CRAFTING),
     ENDER_STAR("Ender Star", ConfigCategories.ITEMS_CRAFTING),
-    SPAWNER_CHANGER("Spawner Changer", ConfigCategories.ITEMS_CRAFTING);
+    SPAWNER_CHANGER("Spawner Changer", ConfigCategories.ITEMS_CRAFTING),
+    ITEM_INTERFACE("Item Interface", ConfigCategories.BLOCKS_CRAFTING);
 
     public final String name;
     public final String category;
