@@ -92,7 +92,7 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
     private boolean isWhitelisted(SpecificItemHandlerInfo handler, ItemStack stack){
         boolean whitelisted = handler.relayInQuestion.isWhitelisted(stack);
         TileEntityLaserRelayItem connected = this.getConnectedRelay();
-        if(!PosUtil.areSamePos(handler.relayInQuestion.getPos(), connected.getPos())){
+        if(connected != handler.relayInQuestion){
             return whitelisted && connected.isWhitelisted(stack);
         }
         else{
