@@ -2,6 +2,7 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.misc.LaserRelayConnectionHandler;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelay.TileEntityLaserRelayItem;
+import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -89,7 +90,14 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
     }
 
     private boolean isWhitelisted(SpecificItemHandlerInfo handler, ItemStack stack){
-     return handler.relayInQuestion.isWhitelisted(stack) && this.getConnectedRelay().isWhitelisted(stack);
+        boolean whitelisted = handler.relayInQuestion.isWhitelisted(stack);
+        TileEntityLaserRelayItem connected = this.getConnectedRelay();
+        if(!PosUtil.areSamePos(handler.relayInQuestion.getPos(), connected.getPos())){
+            return whitelisted && connected.isWhitelisted(stack);
+        }
+        else{
+            return whitelisted;
+        }
     }
 
     @Override
