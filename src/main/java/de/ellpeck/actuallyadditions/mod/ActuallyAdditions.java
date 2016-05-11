@@ -30,6 +30,7 @@ import de.ellpeck.actuallyadditions.mod.material.InitArmorMaterials;
 import de.ellpeck.actuallyadditions.mod.material.InitToolMaterials;
 import de.ellpeck.actuallyadditions.mod.misc.DispenserHandlerFertilize;
 import de.ellpeck.actuallyadditions.mod.misc.DungeonLoot;
+import de.ellpeck.actuallyadditions.mod.misc.SoundHandler;
 import de.ellpeck.actuallyadditions.mod.misc.WorldData;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
 import de.ellpeck.actuallyadditions.mod.ore.InitOreDict;
@@ -78,6 +79,7 @@ public class ActuallyAdditions{
         InitFluids.init();
         InitItems.init();
         FuelHandler.init();
+        SoundHandler.init();
         UpdateChecker.init();
         InitBooklet.preInit();
         proxy.preInit(event);

@@ -109,8 +109,6 @@ public class ClientProxy implements IProxy{
         this.registerCustomFluidBlockRenderer(InitFluids.fluidCanolaOil);
         this.registerCustomFluidBlockRenderer(InitFluids.fluidOil);
 
-        SoundHandler.init();
-
         IResourceManager manager = Minecraft.getMinecraft().getResourceManager();
         if(manager instanceof IReloadableResourceManager){
             ((IReloadableResourceManager)manager).registerReloadListener(new IResourceManagerReloadListener(){
