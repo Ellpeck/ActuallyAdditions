@@ -1,3 +1,15 @@
+# 1.9-r32
+* Added Spawner Changer
+* Added Spawner Shards
+* Added Item Laser Relay Networks with Item Laser Relays, Advanced Item Laser Relays and Item Interfaces
+* Fixed booklet sometimes not typing a letter into the search box
+* Fixed sounds not working on servers
+* Use universal buckets instead of custom ones
+* Replaced bucket slots in GUIs with right click functionality
+* Re-implemented village structures. No Villagers though.
+* Fixed a bug with fluid placers replacing fluids in front of them
+* Added max damage display to the advanced tooltip
+
 # 1.9-r31
 * Added Phantom Redstoneface
 * Changed storage crate upgrade recipe because it was clashing with Storage Drawers
