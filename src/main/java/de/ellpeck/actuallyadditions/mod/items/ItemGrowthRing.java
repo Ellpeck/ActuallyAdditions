@@ -48,9 +48,6 @@ public class ItemGrowthRing extends ItemEnergy{
         if(equipped != null && equipped == stack && this.getEnergyStored(stack) >= energyUse){
             List<BlockPos> blocks = new ArrayList<BlockPos>();
 
-            if(stack.getTagCompound() == null){
-                stack.setTagCompound(new NBTTagCompound());
-            }
             //Adding all possible Blocks
             if(player.worldObj.getTotalWorldTime()%30 == 0){
                 int range = 3;
