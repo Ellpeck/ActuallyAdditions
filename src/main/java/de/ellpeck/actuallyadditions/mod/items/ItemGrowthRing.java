@@ -51,10 +51,8 @@ public class ItemGrowthRing extends ItemEnergy{
             if(stack.getTagCompound() == null){
                 stack.setTagCompound(new NBTTagCompound());
             }
-            int waitTime = stack.getTagCompound().getInteger("WaitTime");
-
             //Adding all possible Blocks
-            if(waitTime >= 30){
+            if(player.worldObj.getTotalWorldTime()%30 == 0){
                 int range = 3;
                 for(int x = -range; x < range+1; x++){
                     for(int z = -range; z < range+1; z++){
@@ -94,11 +92,6 @@ public class ItemGrowthRing extends ItemEnergy{
                         }
                     }
                 }
-
-                stack.getTagCompound().setInteger("WaitTime", 0);
-            }
-            else{
-                stack.getTagCompound().setInteger("WaitTime", waitTime+1);
             }
         }
     }
