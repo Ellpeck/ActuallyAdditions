@@ -2,6 +2,7 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.misc.LaserRelayConnectionHandler;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelay.TileEntityLaserRelayItem;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelay.TileEntityLaserRelayItemWhitelist;
 import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.item.ItemStack;
@@ -11,6 +12,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.items.IItemHandler;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class TileEntityItemViewer extends TileEntityInventoryBase{
@@ -32,6 +34,7 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
 
     private SpecificItemHandlerInfo getSwitchedIndexHandler(int i){
         List<GenericItemHandlerInfo> infos = this.getItemHandlerInfos();
+        Collections.sort(infos);
         int currentI = 0;
         if(infos != null && !infos.isEmpty()){
             for(GenericItemHandlerInfo info : infos){
@@ -195,7 +198,7 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
         }
     }
 
-    public static class GenericItemHandlerInfo{
+    public static class GenericItemHandlerInfo implements Comparable<GenericItemHandlerInfo>{
 
         public List<IItemHandler> handlers = new ArrayList<IItemHandler>();
         public TileEntityLaserRelayItem relayInQuestion;
@@ -220,6 +223,22 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
                 }
             }
             return false;
+        }
+
+        @Override
+        public int compareTo(GenericItemHandlerInfo other){
+            if(other != null){
+                boolean thisWhitelist = this.relayInQuestion instanceof TileEntityLaserRelayItemWhitelist;
+                boolean otherWhitelist = other.relayInQuestion instanceof TileEntityLaserRelayItemWhitelist;
+
+                if(!thisWhitelist && otherWhitelist){
+                    return 1;
+                }
+                else if(thisWhitelist && !otherWhitelist){
+                    return -1;
+                }
+            }
+            return 0;
         }
     }
 }
