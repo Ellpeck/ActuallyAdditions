@@ -167,12 +167,12 @@ public class BookletUtils{
         if(booklet.currentEntrySet.entry != null){
             //Renders Booklet Page Number and Content
             if(booklet.currentEntrySet.chapter != null && booklet.currentEntrySet.page != null){
-                booklet.drawCenteredString(booklet.getFontRenderer(), booklet.currentEntrySet.page.getID()+"/"+booklet.currentEntrySet.chapter.getPages().length, booklet.guiLeft+booklet.xSize/2, booklet.guiTop+172, StringUtil.DECIMAL_COLOR_WHITE);
+                booklet.drawCenteredString(booklet.getFontRenderer(), booklet.currentEntrySet.page.getID()+"/"+booklet.currentEntrySet.chapter.getPages().length, booklet.guiLeft+booklet.xSize/2, booklet.guiTop+171, StringUtil.DECIMAL_COLOR_WHITE);
                 booklet.currentEntrySet.page.renderPre(booklet, mouseX, mouseY, ticksElapsed, mousePressed);
             }
             //Renders Chapter Page Number
             else{
-                booklet.drawCenteredString(booklet.getFontRenderer(), booklet.currentEntrySet.pageInIndex+"/"+booklet.indexPageAmount, booklet.guiLeft+booklet.xSize/2, booklet.guiTop+172, StringUtil.DECIMAL_COLOR_WHITE);
+                booklet.drawCenteredString(booklet.getFontRenderer(), booklet.currentEntrySet.pageInIndex+"/"+booklet.indexPageAmount, booklet.guiLeft+booklet.xSize/2, booklet.guiTop+171, StringUtil.DECIMAL_COLOR_WHITE);
             }
         }
         //Renders the amount of words and chars the book has
