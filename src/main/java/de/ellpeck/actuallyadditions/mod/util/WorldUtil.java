@@ -138,30 +138,30 @@ public class WorldUtil{
             }
 
             //Redstone
-            else if(replaceable && stack.getItem() == Items.REDSTONE){
+            if(replaceable && stack.getItem() == Items.REDSTONE){
                 PosUtil.setBlock(offsetPos, world, Blocks.REDSTONE_WIRE, 0, 2);
                 stack.stackSize--;
+                return stack;
             }
 
             //Plants
-            else if(replaceable && stack.getItem() instanceof IPlantable){
+            if(replaceable && stack.getItem() instanceof IPlantable){
                 if(((IPlantable)stack.getItem()).getPlant(world, offsetPos).getBlock().canPlaceBlockAt(world, offsetPos)){
                     if(world.setBlockState(offsetPos, ((IPlantable)stack.getItem()).getPlant(world, offsetPos), 2)){
                         stack.stackSize--;
+                        return stack;
                     }
                 }
             }
 
             //Everything else
-            else{
-                try{
-                    EntityPlayer fake = FakePlayerUtil.getFakePlayer(world);
-                    stack.onItemUse(fake, world, offsetPos, fake.getActiveHand(), side.getOpposite(), 0.5F, 0.5F, 0.5F);
-                    return stack;
-                }
-                catch(Exception e){
-                    ModUtil.LOGGER.error("Something that places Blocks at "+offsetPos.getX()+", "+offsetPos.getY()+", "+offsetPos.getZ()+" in World "+world.provider.getDimension()+" threw an Exception! Don't let that happen again!", e);
-                }
+            try{
+                EntityPlayer fake = FakePlayerUtil.getFakePlayer(world);
+                stack.onItemUse(fake, world, offsetPos, fake.getActiveHand(), side.getOpposite(), 0.5F, 0.5F, 0.5F);
+                return stack;
+            }
+            catch(Exception e){
+                ModUtil.LOGGER.error("Something that places Blocks at "+offsetPos.getX()+", "+offsetPos.getY()+", "+offsetPos.getZ()+" in World "+world.provider.getDimension()+" threw an Exception! Don't let that happen again!", e);
             }
         }
         return stack;
