@@ -35,9 +35,9 @@ public class PacketUpdateTileEntity implements IMessage{
 
     }
 
-    public PacketUpdateTileEntity(TileEntityBase tile){
-        this.compound = tile.getSyncCompound();
-        this.pos = tile.getPos();
+    public PacketUpdateTileEntity(NBTTagCompound compound, BlockPos pos){
+        this.compound = compound;
+        this.pos = pos;
     }
 
     @Override

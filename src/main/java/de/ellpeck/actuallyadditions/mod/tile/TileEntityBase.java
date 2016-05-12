@@ -176,6 +176,9 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
     }
 
     public final void sendUpdate(){
-        PacketHandler.theNetwork.sendToAllAround(new PacketUpdateTileEntity(this), new NetworkRegistry.TargetPoint(this.worldObj.provider.getDimension(), this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), 64));
+        NBTTagCompound compound = this.getSyncCompound();
+        if(compound != null){
+            PacketHandler.theNetwork.sendToAllAround(new PacketUpdateTileEntity(compound, this.getPos()), new NetworkRegistry.TargetPoint(this.worldObj.provider.getDimension(), this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), 64));
+        }
     }
 }
