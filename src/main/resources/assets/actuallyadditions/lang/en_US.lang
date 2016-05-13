@@ -7,6 +7,75 @@ actuallyadditions.lolWutHowUDoDis.name=This is bugged. Throw it away. Please.
 fluid.actuallyadditions.oil=Oil
 fluid.actuallyadditions.canolaoil=Canola Oil
 
+#Banners
+item.banner.actuallyadditionsBook.black=Black Actually Additions Manual Pattern
+item.banner.actuallyadditionsBook.red=Red Actually Additions Manual Pattern
+item.banner.actuallyadditionsBook.green=Green Actually Additions Manual Pattern
+item.banner.actuallyadditionsBook.brown=Brown Actually Additions Manual Pattern
+item.banner.actuallyadditionsBook.blue=Blue Actually Additions Manual Pattern
+item.banner.actuallyadditionsBook.purple=Purple Actually Additions Manual Pattern
+item.banner.actuallyadditionsBook.cyan=Cyan Actually Additions Manual Pattern
+item.banner.actuallyadditionsBook.silver=Silver Actually Additions Manual Pattern
+item.banner.actuallyadditionsBook.gray=Gray Actually Additions Manual Pattern
+item.banner.actuallyadditionsBook.pink=Pink Actually Additions Manual Pattern
+item.banner.actuallyadditionsBook.lime=Lime Actually Additions Manual Pattern
+item.banner.actuallyadditionsBook.yellow=Yellow Actually Additions Manual Pattern
+item.banner.actuallyadditionsBook.lightBlue=LightBlue Actually Additions Manual Pattern
+item.banner.actuallyadditionsBook.magenta=Magenta Actually Additions Manual Pattern
+item.banner.actuallyadditionsBook.orange=Orange Actually Additions Manual Pattern
+item.banner.actuallyadditionsBook.white=White Actually Additions Manual Pattern
+
+item.banner.actuallyadditionsPhanCon.black=Black Phantom Connector Pattern
+item.banner.actuallyadditionsPhanCon.red=Red Phantom Connector Pattern
+item.banner.actuallyadditionsPhanCon.green=Green Phantom Connector Pattern
+item.banner.actuallyadditionsPhanCon.brown=Brown Phantom Connector Pattern
+item.banner.actuallyadditionsPhanCon.blue=Blue Phantom Connector Pattern
+item.banner.actuallyadditionsPhanCon.purple=Purple Phantom Connector Pattern
+item.banner.actuallyadditionsPhanCon.cyan=Cyan Phantom Connector Pattern
+item.banner.actuallyadditionsPhanCon.silver=Silver Phantom Connector Pattern
+item.banner.actuallyadditionsPhanCon.gray=Gray Phantom Connector Pattern
+item.banner.actuallyadditionsPhanCon.pink=Pink Phantom Connector Pattern
+item.banner.actuallyadditionsPhanCon.lime=Lime Phantom Connector Pattern
+item.banner.actuallyadditionsPhanCon.yellow=Yellow Phantom Connector Pattern
+item.banner.actuallyadditionsPhanCon.lightBlue=LightBlue Phantom Connector Pattern
+item.banner.actuallyadditionsPhanCon.magenta=Magenta Phantom Connector Pattern
+item.banner.actuallyadditionsPhanCon.orange=Orange Phantom Connector Pattern
+item.banner.actuallyadditionsPhanCon.white=White Phantom Connector Pattern
+
+item.banner.actuallyadditionsLeafBlo.black=Black Leaf Blower Pattern
+item.banner.actuallyadditionsLeafBlo.red=Red Leaf Blower Pattern
+item.banner.actuallyadditionsLeafBlo.green=Green Leaf Blower Pattern
+item.banner.actuallyadditionsLeafBlo.brown=Brown Leaf Blower Pattern
+item.banner.actuallyadditionsLeafBlo.blue=Blue Leaf Blower Pattern
+item.banner.actuallyadditionsLeafBlo.purple=Purple Leaf Blower Pattern
+item.banner.actuallyadditionsLeafBlo.cyan=Cyan Leaf Blower Pattern
+item.banner.actuallyadditionsLeafBlo.silver=Silver Leaf Blower Pattern
+item.banner.actuallyadditionsLeafBlo.gray=Gray Leaf Blower Pattern
+item.banner.actuallyadditionsLeafBlo.pink=Pink Leaf Blower Pattern
+item.banner.actuallyadditionsLeafBlo.lime=Lime Leaf Blower Pattern
+item.banner.actuallyadditionsLeafBlo.yellow=Yellow Leaf Blower Pattern
+item.banner.actuallyadditionsLeafBlo.lightBlue=LightBlue Leaf Blower Pattern
+item.banner.actuallyadditionsLeafBlo.magenta=Magenta Leaf Blower Pattern
+item.banner.actuallyadditionsLeafBlo.orange=Orange Leaf Blower Pattern
+item.banner.actuallyadditionsLeafBlo.white=White Leaf Blower Pattern
+
+item.banner.actuallyadditionsDrill.black=Black Drill Pattern
+item.banner.actuallyadditionsDrill.red=Red Drill Pattern
+item.banner.actuallyadditionsDrill.green=Green Drill Pattern
+item.banner.actuallyadditionsDrill.brown=Brown Drill Pattern
+item.banner.actuallyadditionsDrill.blue=Blue Drill Pattern
+item.banner.actuallyadditionsDrill.purple=Purple Drill Pattern
+item.banner.actuallyadditionsDrill.cyan=Cyan Drill Pattern
+item.banner.actuallyadditionsDrill.silver=Silver Drill Pattern
+item.banner.actuallyadditionsDrill.gray=Gray Drill Pattern
+item.banner.actuallyadditionsDrill.pink=Pink Drill Pattern
+item.banner.actuallyadditionsDrill.lime=Lime Drill Pattern
+item.banner.actuallyadditionsDrill.yellow=Yellow Drill Pattern
+item.banner.actuallyadditionsDrill.lightBlue=LightBlue Drill Pattern
+item.banner.actuallyadditionsDrill.magenta=Magenta Drill Pattern
+item.banner.actuallyadditionsDrill.orange=Orange Drill Pattern
+item.banner.actuallyadditionsDrill.white=White Drill Pattern
+
 #NEI Integration
 container.nei.actuallyadditions.crushing.name=Crusher
 container.nei.actuallyadditions.crushingDouble.name=Double Crusher
@@ -797,3 +866,6 @@ booklet.actuallyadditions.chapter.spawnerChanger.text.1=The <item>Spawner Change
 booklet.actuallyadditions.chapter.itemStorage.name=Laser Relay Item Storage
 booklet.actuallyadditions.chapter.itemStorage.text.1=Additionally to the <item>Laser Relays<r> that transfer RF, there are also <item>Item Laser Relays<r> that are able to transfer items. This works in a <imp>verry different way<r> though. <n>To connect <item>Item Laser Relays<r> together works the same as connecting normal ones, however, you need an <item>Item Interface<r> to be able to interact with them. <n>You can place <imp>any inventories<r> (such as chests and furnaces) next to the <item>Item Laser Relays<r>, but to be pulled out from or inputted into, there needs to be an <item>Item Interface<r> connected
 booklet.actuallyadditions.chapter.itemStorage.text.2=to one of the <item>Item Laser Relay<r>s. To input or output items in the system, just <imp>pipe them into the interface<r>. <n>If you want a way to make a storage system with this, there are also <item>Advanced Item Laser Relays<r>, in which, by <imp>sneak-right-clicking<r> them, you can specify which items are <imp>allowed and disallowed<r> to enter or exit inventories connected to this particular relay. When placing an advanced relay next to an <item>Item Interface<r>, this effect also applies.
+
+booklet.actuallyadditions.chapter.banners.name=Additional Banners
+booklet.actuallyadditions.chapter.banners.text.1=For <imp>special items<r> in <imp>Actually Additions<r>, there is also some additional <item>Banner<r> patterns you can do. <n>All of these just require the <imp>item next to the banner<r> in the crafting grid with, optionally, a <imp>color<r> as well. <n><n>The items that have a banner pattern are: <n>The <item>Actually Additions Manual<r> <n>The <item>Phantom Connector<r> <n>The <item>Leaf Blower<r> (not the advanced version) <n>The <item>Drill<r> (only the white one works due to the way banners work)

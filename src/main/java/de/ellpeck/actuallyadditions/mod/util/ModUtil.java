@@ -21,5 +21,9 @@ public class ModUtil{
     public static final String MOD_ID = ActuallyAdditionsAPI.MOD_ID;
     public static final String NAME = "Actually Additions";
 
+    private static final String PROXY_BASE = "de.ellpeck.actuallyadditions.mod.proxy.";
+    public static final String PROXY_CLIENT = PROXY_BASE+"ClientProxy";
+    public static final String PROXY_SERVER = PROXY_BASE+"ServerProxy";
+
     public static final Logger LOGGER = LogManager.getLogger(NAME);
 }

@@ -28,10 +28,7 @@ import de.ellpeck.actuallyadditions.mod.items.ItemCoffee;
 import de.ellpeck.actuallyadditions.mod.items.lens.LensRecipeHandler;
 import de.ellpeck.actuallyadditions.mod.material.InitArmorMaterials;
 import de.ellpeck.actuallyadditions.mod.material.InitToolMaterials;
-import de.ellpeck.actuallyadditions.mod.misc.DispenserHandlerFertilize;
-import de.ellpeck.actuallyadditions.mod.misc.DungeonLoot;
-import de.ellpeck.actuallyadditions.mod.misc.SoundHandler;
-import de.ellpeck.actuallyadditions.mod.misc.WorldData;
+import de.ellpeck.actuallyadditions.mod.misc.*;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
 import de.ellpeck.actuallyadditions.mod.ore.InitOreDict;
 import de.ellpeck.actuallyadditions.mod.proxy.IProxy;
@@ -59,7 +56,7 @@ public class ActuallyAdditions{
     @Instance(ModUtil.MOD_ID)
     public static ActuallyAdditions instance;
 
-    @SidedProxy(clientSide = "de.ellpeck.actuallyadditions.mod.proxy.ClientProxy", serverSide = "de.ellpeck.actuallyadditions.mod.proxy.ServerProxy")
+    @SidedProxy(clientSide = ModUtil.PROXY_CLIENT, serverSide = ModUtil.PROXY_SERVER)
     public static IProxy proxy;
 
     static{
@@ -79,6 +76,7 @@ public class ActuallyAdditions{
         InitFluids.init();
         InitItems.init();
         FuelHandler.init();
+        BannerHelper.init();
         SoundHandler.init();
         UpdateChecker.init();
         InitBooklet.preInit();

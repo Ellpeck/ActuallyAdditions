@@ -31,6 +31,7 @@ import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
 import de.ellpeck.actuallyadditions.mod.tile.*;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.init.Items;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.fml.common.Loader;
@@ -68,6 +69,7 @@ public class InitBooklet{
 
         //Miscellaneous
         new BookletChapter("reconstructorLenses", ActuallyAdditionsAPI.entryMisc, new ItemStack(InitItems.itemMisc, 1, TheMiscItems.LENS.ordinal()), new PageTextOnly(1), new PageCrafting(2, ItemCrafting.recipeLens).setNoText(), new PageReconstructor(3, LensRecipeHandler.recipeColorLens), new PageReconstructor(4, LensRecipeHandler.recipeExplosionLens), new PageReconstructor(5, LensRecipeHandler.recipeDamageLens), new PageReconstructor(6, LensRecipeHandler.recipeSoulSand).setNoText(), new PageReconstructor(7, LensRecipeHandler.recipeLeather).setNoText(), new PageReconstructor(8, LensRecipeHandler.recipeNetherWart).setNoText()).setImportant();
+        new BookletChapter("banners", ActuallyAdditionsAPI.entryMisc, new ItemStack(Items.BANNER, 1, 15), new PageTextOnly(1));
         new BookletChapter("miscDecorStuffsAndThings", ActuallyAdditionsAPI.entryMisc, new ItemStack(InitBlocks.blockTestifiBucksGreenWall), new PageTextOnly(1), new PageReconstructor(2, LensRecipeHandler.recipeWhiteWall).setNoText(), new PageReconstructor(3, LensRecipeHandler.recipeGreenWall).setNoText());
         new BookletChapter("quartz", ActuallyAdditionsAPI.entryMisc, new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal()), new PageTextOnly(1).setStack(new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.ORE_QUARTZ.ordinal())).addTextReplacement("<lowest>", OreGen.QUARTZ_MIN).addTextReplacement("<highest>", OreGen.QUARTZ_MAX), new PageTextOnly(2).setStack(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal())), new PageCrafting(3, BlockCrafting.recipeQuartzBlock).setNoText(), new PageCrafting(4, BlockCrafting.recipeQuartzPillar).setNoText(), new PageCrafting(5, BlockCrafting.recipeQuartzChiseled).setNoText());
         new BookletChapter("cloud", ActuallyAdditionsAPI.entryMisc, new ItemStack(InitBlocks.blockSmileyCloud), new PageTextOnly(1), new PageCrafting(2, BlockCrafting.recipeSmileyCloud).setNoText().setPageStacksWildcard()).setSpecial();
