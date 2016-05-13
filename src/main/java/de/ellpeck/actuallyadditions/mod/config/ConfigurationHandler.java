@@ -20,8 +20,6 @@ import java.io.File;
 
 public class ConfigurationHandler{
 
-    public static final String ISSUES_WARNING = " [THIS COULD CAUSE ISSUES, CHANGE AT YOUR OWN RISK!]";
-
     public static Configuration config;
 
     public ConfigurationHandler(File configFile){
