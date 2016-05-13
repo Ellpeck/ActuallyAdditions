@@ -24,7 +24,6 @@ import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import io.netty.util.internal.ConcurrentSet;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -167,13 +166,10 @@ public abstract class TileEntityLaserRelay extends TileEntityBase{
 
     public static class TileEntityLaserRelayItemWhitelist extends TileEntityLaserRelayItem implements IButtonReactor{
 
-        private ItemStack[] slots = new ItemStack[24];
-        
         public IInventory filterInventory;
-
         public boolean isLeftWhitelist;
         public boolean isRightWhitelist;
-
+        private ItemStack[] slots = new ItemStack[24];
         private boolean lastLeftWhitelist;
         private boolean lastRightWhitelist;
 

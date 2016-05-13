@@ -10,8 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks.metalists;
 
-import de.ellpeck.actuallyadditions.mod.util.StringUtil;
-
 import java.util.Locale;
 
 public enum TheColoredLampColors{

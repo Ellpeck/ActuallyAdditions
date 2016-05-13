@@ -12,7 +12,6 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -41,18 +40,6 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
         }
     }
 
-    public void initializeSlots(int itemAmount){
-        this.slots = new ItemStack[itemAmount];
-    }
-
-    @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean isForSync){
-        super.writeSyncableNBT(compound, isForSync);
-        if(!isForSync || this.shouldSyncSlots()){
-            saveSlots(this.slots, compound);
-        }
-    }
-
     public static void saveSlots(ItemStack[] slots, NBTTagCompound compound){
         if(slots != null && slots.length > 0){
             NBTTagList tagList = new NBTTagList();
@@ -78,6 +65,18 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
                     slots[slotIndex] = ItemStack.loadItemStackFromNBT(tagCompound);
                 }
             }
+        }
+    }
+
+    public void initializeSlots(int itemAmount){
+        this.slots = new ItemStack[itemAmount];
+    }
+
+    @Override
+    public void writeSyncableNBT(NBTTagCompound compound, boolean isForSync){
+        super.writeSyncableNBT(compound, isForSync);
+        if(!isForSync || this.shouldSyncSlots()){
+            saveSlots(this.slots, compound);
         }
     }
 

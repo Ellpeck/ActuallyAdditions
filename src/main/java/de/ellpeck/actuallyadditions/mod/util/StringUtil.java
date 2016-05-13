@@ -15,7 +15,6 @@ import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.fluids.FluidTank;
 
 import java.util.List;
-import java.util.Locale;
 
 public class StringUtil{
 
