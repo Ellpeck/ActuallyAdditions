@@ -356,9 +356,11 @@ public abstract class TileEntityLaserRelay extends TileEntityBase{
         public void updateEntity(){
             super.updateEntity();
 
-            if((this.isLeftWhitelist != this.lastLeftWhitelist || this.isRightWhitelist != this.lastRightWhitelist) && this.sendUpdateWithInterval()){
-                this.lastLeftWhitelist = this.isLeftWhitelist;
-                this.lastRightWhitelist = this.isRightWhitelist;
+            if(!this.worldObj.isRemote){
+                if((this.isLeftWhitelist != this.lastLeftWhitelist || this.isRightWhitelist != this.lastRightWhitelist) && this.sendUpdateWithInterval()){
+                    this.lastLeftWhitelist = this.isLeftWhitelist;
+                    this.lastRightWhitelist = this.isRightWhitelist;
+                }
             }
         }
     }
