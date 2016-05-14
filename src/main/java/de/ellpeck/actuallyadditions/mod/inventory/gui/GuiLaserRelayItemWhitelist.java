@@ -31,6 +31,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @SideOnly(Side.CLIENT)
@@ -55,8 +56,11 @@ public class GuiLaserRelayItemWhitelist extends GuiContainer{
 
         this.whitelistLeft = new SmallerButton(0, this.guiLeft+3, this.guiTop+16, "");
         this.whitelistRight = new SmallerButton(1, this.guiLeft+157, this.guiTop+16, "");
+        SmallerButton smartWhitelist = new SmallerButton(2, this.guiLeft+80, this.guiTop+33, "S");
+
         this.buttonList.add(this.whitelistLeft);
         this.buttonList.add(this.whitelistRight);
+        this.buttonList.add(smartWhitelist);
     }
 
     @Override
@@ -85,6 +89,12 @@ public class GuiLaserRelayItemWhitelist extends GuiContainer{
             ArrayList list = new ArrayList();
             list.add(TextFormatting.BOLD+text2);
             list.addAll(infoList);
+            this.drawHoveringText(list, x, y);
+        }
+        if(x >= this.guiLeft+80 && y >= this.guiTop+33 && x <= this.guiLeft+95 && y <= this.guiTop+46){
+            List<String> list = new ArrayList<String>();
+            list.add(TextFormatting.BOLD+StringUtil.localize("info."+ModUtil.MOD_ID+".gui.smart"));
+            list.addAll(this.fontRendererObj.listFormattedStringToWidth(StringUtil.localize("info."+ModUtil.MOD_ID+".gui.smartInfo"), 200));
             this.drawHoveringText(list, x, y);
         }
     }

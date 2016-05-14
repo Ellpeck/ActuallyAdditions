@@ -17,10 +17,7 @@ import de.ellpeck.actuallyadditions.mod.misc.LaserRelayConnectionHandler;
 import de.ellpeck.actuallyadditions.mod.network.PacketParticle;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityItemViewer.GenericItemHandlerInfo;
-import de.ellpeck.actuallyadditions.mod.util.PosUtil;
-import de.ellpeck.actuallyadditions.mod.util.StringUtil;
-import de.ellpeck.actuallyadditions.mod.util.Util;
-import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
+import de.ellpeck.actuallyadditions.mod.util.*;
 import io.netty.util.internal.ConcurrentSet;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -132,6 +129,22 @@ public abstract class TileEntityLaserRelay extends TileEntityBase{
             return true;
         }
 
+        public List<IItemHandler> getAllHandlersAround(){
+            List<IItemHandler> handlers = new ArrayList<IItemHandler>();
+            for(int i = 0; i <= 5; i++){
+                EnumFacing side = WorldUtil.getDirectionBySidesInOrder(i);
+                BlockPos pos = WorldUtil.getCoordsFromSide(side, this.getPos(), 0);
+                TileEntity tile = this.worldObj.getTileEntity(pos);
+                if(tile != null && !(tile instanceof TileEntityItemViewer)){
+                    IItemHandler handler = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side.getOpposite());
+                    if(handler != null){
+                        handlers.add(handler);
+                    }
+                }
+            }
+            return handlers;
+        }
+
         public List<GenericItemHandlerInfo> getItemHandlersInNetwork(LaserRelayConnectionHandler.Network network){
             List<GenericItemHandlerInfo> handlers = new ArrayList<GenericItemHandlerInfo>();
             for(LaserRelayConnectionHandler.ConnectionPair pair : network.connections){
@@ -143,17 +156,14 @@ public abstract class TileEntityLaserRelay extends TileEntityBase{
                             TileEntityLaserRelayItem relayTile = (TileEntityLaserRelayItem)aRelayTile;
                             if(!GenericItemHandlerInfo.containsTile(handlers, relayTile)){
                                 GenericItemHandlerInfo info = new GenericItemHandlerInfo(relayTile);
-                                for(int i = 0; i <= 5; i++){
-                                    EnumFacing side = WorldUtil.getDirectionBySidesInOrder(i);
-                                    BlockPos pos = WorldUtil.getCoordsFromSide(side, relay, 0);
-                                    TileEntity tile = this.worldObj.getTileEntity(pos);
-                                    if(tile != null && !(tile instanceof TileEntityItemViewer)){
-                                        IItemHandler handler = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side.getOpposite());
-                                        if(handler != null && !GenericItemHandlerInfo.containsHandler(handlers, handler)){
-                                            info.handlers.add(handler);
-                                        }
+
+                                List<IItemHandler> handlersAroundTile = relayTile.getAllHandlersAround();
+                                for(IItemHandler handler : handlersAroundTile){
+                                    if(!GenericItemHandlerInfo.containsHandler(handlers, handler)){
+                                        info.handlers.add(handler);
                                     }
                                 }
+
                                 handlers.add(info);
                             }
                         }
@@ -345,6 +355,30 @@ public abstract class TileEntityLaserRelay extends TileEntityBase{
             }
             else if(buttonID == 1){
                 this.isRightWhitelist = !this.isRightWhitelist;
+            }
+            else if(buttonID == 2){
+                this.addWhitelistSmart();
+            }
+        }
+
+        private void addWhitelistSmart(){
+            List<IItemHandler> handlers = this.getAllHandlersAround();
+            for(IItemHandler handler : handlers){
+                for(int i = 0; i < handler.getSlots(); i++){
+                    ItemStack stack = handler.getStackInSlot(i);
+                    if(stack != null){
+                        if(!ItemUtil.contains(this.slots, stack, false)){
+                            for(int j = 0; j < this.slots.length; j++){
+                                if(this.slots[j] == null || this.slots[j].stackSize <= 0){
+                                    ItemStack whitelistStack = stack.copy();
+                                    whitelistStack.stackSize = 1;
+                                    this.slots[j] = whitelistStack;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
 
