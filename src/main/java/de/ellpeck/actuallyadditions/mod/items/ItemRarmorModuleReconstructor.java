@@ -4,6 +4,8 @@ import cofh.api.energy.IEnergyContainerItem;
 import de.canitzp.rarmor.api.InventoryBase;
 import de.canitzp.rarmor.api.modules.IRarmorModule;
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
+import de.ellpeck.actuallyadditions.api.lens.Lens;
+import de.ellpeck.actuallyadditions.api.lens.LensConversion;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.items.lens.Lenses;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityAtomicReconstructor;
@@ -58,7 +60,7 @@ public class ItemRarmorModuleReconstructor extends ItemBase implements IRarmorMo
     public void onModuleTickInArmor(World world, EntityPlayer player, ItemStack armorChestplate, ItemStack module, InventoryBase inventory){
         if(!world.isRemote && player.isSneaking() && player.onGround){
             if(world.getTotalWorldTime()%50 == 0){
-                RayTraceResult result = WorldUtil.getNearestPositionWithAir(world, player, Lenses.LENS_NONE.getDistance());
+                RayTraceResult result = WorldUtil.getNearestPositionWithAir(world, player, Lenses.LENS_CONVERSION.getDistance());
                 if(result != null){
                     BlockPos pos = result.getBlockPos();
                     if(pos != null){
@@ -66,10 +68,10 @@ public class ItemRarmorModuleReconstructor extends ItemBase implements IRarmorMo
 
                         int energyUse = TileEntityAtomicReconstructor.ENERGY_USE*2;
                         if(fake.getEnergy() >= energyUse){
-                            Lenses.LENS_NONE.invoke(world.getBlockState(pos), pos, fake);
+                            Lenses.LENS_CONVERSION.invoke(world.getBlockState(pos), pos, fake);
 
                             EnumFacing hit = result.sideHit;
-                            TileEntityAtomicReconstructor.shootLaser(world, player.posX-player.width/2, player.posY+player.getYOffset()+player.getEyeHeight()/2, player.posZ-player.width/2, pos.getX()+hit.getFrontOffsetX(), pos.getY()+hit.getFrontOffsetY(), pos.getZ()+hit.getFrontOffsetZ(), Lenses.LENS_NONE);
+                            TileEntityAtomicReconstructor.shootLaser(world, player.posX-player.width/2, player.posY+player.getYOffset()+player.getEyeHeight()/2, player.posZ-player.width/2, pos.getX()+hit.getFrontOffsetX(), pos.getY()+hit.getFrontOffsetY(), pos.getZ()+hit.getFrontOffsetZ(), Lenses.LENS_CONVERSION);
 
                             fake.extractEnergy(energyUse);
                         }
@@ -118,6 +120,11 @@ public class ItemRarmorModuleReconstructor extends ItemBase implements IRarmorMo
                 else{
                     return 0;
                 }
+            }
+
+            @Override
+            public Lens getLens(){
+                return Lenses.LENS_CONVERSION;
             }
         };
     }

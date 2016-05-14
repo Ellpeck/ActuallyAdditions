@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.api.internal;
 
+import de.ellpeck.actuallyadditions.api.lens.Lens;
 import net.minecraft.world.World;
 
 /**
@@ -49,4 +50,6 @@ public interface IAtomicReconstructor{
      * Gets the amount of energy the Reconstructor has stored in its RF storage
      */
     int getEnergy();
+
+    Lens getLens();
 }

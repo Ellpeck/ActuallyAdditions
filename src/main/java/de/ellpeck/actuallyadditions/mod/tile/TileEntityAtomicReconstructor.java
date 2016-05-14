@@ -15,6 +15,7 @@ import cofh.api.energy.IEnergyReceiver;
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.lens.ILensItem;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
+import de.ellpeck.actuallyadditions.api.lens.LensConversion;
 import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
 import de.ellpeck.actuallyadditions.mod.items.lens.Lenses;
 import de.ellpeck.actuallyadditions.mod.misc.SoundHandler;
@@ -104,7 +105,7 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
             this.storage.extractEnergy(ENERGY_USE, false);
 
             //The Lens the Reconstructor currently has installed
-            Lens currentLens = this.getCurrentLens();
+            Lens currentLens = this.getLens();
             int distance = currentLens.getDistance();
             for(int i = 0; i < distance; i++){
                 BlockPos hitBlock = WorldUtil.getCoordsFromSide(sideToManipulate, this.pos, i);
@@ -120,13 +121,14 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
         }
     }
 
-    public Lens getCurrentLens(){
+    @Override
+    public Lens getLens(){
         if(this.slots[0] != null){
             if(this.slots[0].getItem() instanceof ILensItem){
                 return ((ILensItem)this.slots[0].getItem()).getLens();
             }
         }
-        return this.counter >= 500 ? Lenses.LENS_DISRUPTION : Lenses.LENS_NONE;
+        return this.counter >= 500 ? Lenses.LENS_DISRUPTION : Lenses.LENS_CONVERSION;
     }
 
     @Override

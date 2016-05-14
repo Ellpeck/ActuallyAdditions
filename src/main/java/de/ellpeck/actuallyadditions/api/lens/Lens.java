@@ -17,7 +17,6 @@ import net.minecraft.util.math.BlockPos;
 
 /**
  * This is the base class for a Reconstructor Lens Type (NOT THE ITEM!)
- * You need to call register() to register the type
  */
 public abstract class Lens{
 

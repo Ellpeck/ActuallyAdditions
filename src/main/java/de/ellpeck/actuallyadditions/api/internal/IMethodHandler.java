@@ -1,9 +1,10 @@
 package de.ellpeck.actuallyadditions.api.internal;
 
 import de.ellpeck.actuallyadditions.api.recipe.CoffeeIngredient;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.math.BlockPos;
 
 /**
  * This is the internal method handler.
@@ -21,4 +22,6 @@ public interface IMethodHandler{
     void addEffectToStack(ItemStack stack, PotionEffect effect);
 
     PotionEffect[] getEffectsFromStack(ItemStack stack);
+
+    boolean invokeConversionLens(IBlockState hitState, BlockPos hitBlock, IAtomicReconstructor tile);
 }

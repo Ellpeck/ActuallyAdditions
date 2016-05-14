@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.api.recipe;
 
+import de.ellpeck.actuallyadditions.api.lens.LensConversion;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -20,21 +21,24 @@ import java.util.List;
 public class LensConversionRecipe{
 
     public int energyUse;
+    public LensConversion type;
     private String input;
     private String output;
     private ItemStack inputStack;
     private ItemStack outputStack;
 
-    public LensConversionRecipe(ItemStack input, ItemStack output, int energyUse){
+    public LensConversionRecipe(ItemStack input, ItemStack output, int energyUse, LensConversion type){
         this.inputStack = input;
         this.outputStack = output;
         this.energyUse = energyUse;
+        this.type = type;
     }
 
-    public LensConversionRecipe(String input, String output, int energyUse){
+    public LensConversionRecipe(String input, String output, int energyUse, LensConversion type){
         this.input = input;
         this.output = output;
         this.energyUse = energyUse;
+        this.type = type;
     }
 
     public List<ItemStack> getOutputs(){

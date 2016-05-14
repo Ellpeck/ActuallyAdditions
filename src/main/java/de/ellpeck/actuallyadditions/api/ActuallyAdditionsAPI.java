@@ -13,8 +13,8 @@ package de.ellpeck.actuallyadditions.api;
 import de.ellpeck.actuallyadditions.api.booklet.BookletPage;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
 import de.ellpeck.actuallyadditions.api.internal.IMethodHandler;
+import de.ellpeck.actuallyadditions.api.lens.LensConversion;
 import de.ellpeck.actuallyadditions.api.recipe.*;
-import de.ellpeck.actuallyadditions.api.recipe.CoffeeIngredient;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
@@ -154,9 +154,15 @@ public class ActuallyAdditionsAPI{
      * @param input     The input as an ItemStack
      * @param output    The output as an ItemStack
      * @param energyUse The amount of RF used per conversion
+     * @param type      The type of lens used for the conversion. To use the default type, use method below.
+     *                  Note how this always has to be the same instance of the lens type that the item also has for it to work!
      */
+    public static void addReconstructorLensConversionRecipe(ItemStack input, ItemStack output, int energyUse, LensConversion type){
+        reconstructorLensConversionRecipes.add(new LensConversionRecipe(input, output, energyUse, type));
+    }
+
     public static void addReconstructorLensConversionRecipe(ItemStack input, ItemStack output, int energyUse){
-        reconstructorLensConversionRecipes.add(new LensConversionRecipe(input, output, energyUse));
+        addReconstructorLensConversionRecipe(input, output, energyUse, LensConversion.DEFAULT_CONVERSION);
     }
 
     /**
@@ -165,9 +171,15 @@ public class ActuallyAdditionsAPI{
      * @param input     The input's OreDictionary name
      * @param output    The output's OreDictionary name
      * @param energyUse The amount of RF used per conversion
+     * @param type      The type of lens used for the conversion. To use the default type, use method below
+     *                  Note how this always has to be the same instance of the lens type that the item also has for it to work!
      */
+    public static void addReconstructorLensConversionRecipe(String input, String output, int energyUse, LensConversion type){
+        reconstructorLensConversionRecipes.add(new LensConversionRecipe(input, output, energyUse, type));
+    }
+
     public static void addReconstructorLensConversionRecipe(String input, String output, int energyUse){
-        reconstructorLensConversionRecipes.add(new LensConversionRecipe(input, output, energyUse));
+        addReconstructorLensConversionRecipe(input, output, energyUse, LensConversion.DEFAULT_CONVERSION);
     }
 
     /**
