@@ -273,7 +273,7 @@ public class BookletUtils{
                     boolean entryExists = ActuallyAdditionsAPI.bookletEntries.size() > i-GuiBooklet.INDEX_BUTTONS_OFFSET;
                     button.visible = entryExists;
                     if(entryExists){
-                        button.displayString = ActuallyAdditionsAPI.bookletEntries.get(i-GuiBooklet.INDEX_BUTTONS_OFFSET).getLocalizedNameWithFormatting();
+                        button.displayString = "◦ "+ActuallyAdditionsAPI.bookletEntries.get(i-GuiBooklet.INDEX_BUTTONS_OFFSET).getLocalizedNameWithFormatting();
                         button.chap = null;
                     }
                 }
