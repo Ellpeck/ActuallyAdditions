@@ -28,7 +28,7 @@ public class ActuallyAdditionsAPI{
 
     public static final String MOD_ID = "actuallyadditions";
     public static final String API_ID = MOD_ID+"api";
-    public static final String API_VERSION = "11";
+    public static final String API_VERSION = "12";
 
     /**
      * Use this to handle things that aren't based in the API itself

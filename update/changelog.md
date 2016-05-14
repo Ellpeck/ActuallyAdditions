@@ -1,3 +1,18 @@
+# 1.9-r33
+* Made Growth Ring performance better
+* Centered page number in booklet
+* Made placers be able to place anything again
+* Made Item Laser Relays that have a whitelist have more priority than those who don't
+* Fixed a massive console spam issue of Whitelisted Item Laser Relays trying to send client update packages FROM the client
+* The laser relay has less particles again now
+* Added custom banner patterns
+* Added custom shield patterns
+* Remove InvTweaks integration
+* Added a smart whitelist button to the whitelisted laser relay that automatically adds items in adjacent inventories to the filter
+* Lots of API restructuring
+* Bump API Version to 12
+* Put circles in front of the booklet entry buttons on the front page because it looks nice
+
 # 1.9-r32
 * Added Spawner Changer
 * Added Spawner Shards
