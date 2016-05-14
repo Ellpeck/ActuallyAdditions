@@ -15,7 +15,7 @@ import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiInputter.SmallerButton;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
 import de.ellpeck.actuallyadditions.mod.network.gui.PacketGuiButton;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelay.TileEntityLaserRelayItemWhitelist;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayItemWhitelist;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
@@ -31,7 +31,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @SideOnly(Side.CLIENT)

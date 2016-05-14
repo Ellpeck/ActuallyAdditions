@@ -54,9 +54,9 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
         GameRegistry.registerTileEntity(TileEntityGreenhouseGlass.class, ModUtil.MOD_ID+":tileEntityGreenhouseGlass");
         GameRegistry.registerTileEntity(TileEntityBreaker.class, ModUtil.MOD_ID+":tileEntityBreaker");
         GameRegistry.registerTileEntity(TileEntityDropper.class, ModUtil.MOD_ID+":tileEntityDropper");
-        GameRegistry.registerTileEntity(TileEntityInputter.TileEntityInputterAdvanced.class, ModUtil.MOD_ID+":tileEntityInputterAdvanced");
-        GameRegistry.registerTileEntity(TileEntityBreaker.TileEntityPlacer.class, ModUtil.MOD_ID+":tileEntityPlacer");
-        GameRegistry.registerTileEntity(TileEntityGrinder.TileEntityGrinderDouble.class, ModUtil.MOD_ID+":tileEntityGrinderDouble");
+        GameRegistry.registerTileEntity(TileEntityInputterAdvanced.class, ModUtil.MOD_ID+":tileEntityInputterAdvanced");
+        GameRegistry.registerTileEntity(TileEntityPlacer.class, ModUtil.MOD_ID+":tileEntityPlacer");
+        GameRegistry.registerTileEntity(TileEntityGrinderDouble.class, ModUtil.MOD_ID+":tileEntityGrinderDouble");
         GameRegistry.registerTileEntity(TileEntityCanolaPress.class, ModUtil.MOD_ID+":tileEntityCanolaPress");
         GameRegistry.registerTileEntity(TileEntityFermentingBarrel.class, ModUtil.MOD_ID+":tileEntityFermentingBarrel");
         GameRegistry.registerTileEntity(TileEntityOilGenerator.class, ModUtil.MOD_ID+":tileEntityOilGenerator");
@@ -65,9 +65,9 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
         GameRegistry.registerTileEntity(TileEntityPhantomLiquiface.class, ModUtil.MOD_ID+":tileEntityPhantomLiquiface");
         GameRegistry.registerTileEntity(TileEntityPhantomEnergyface.class, ModUtil.MOD_ID+":tileEntityPhantomEnergyface");
         GameRegistry.registerTileEntity(TileEntityPhantomPlacer.class, ModUtil.MOD_ID+":tileEntityPhantomPlacer");
-        GameRegistry.registerTileEntity(TileEntityPhantomPlacer.TileEntityPhantomBreaker.class, ModUtil.MOD_ID+":tileEntityPhantomBreaker");
+        GameRegistry.registerTileEntity(TileEntityPhantomBreaker.class, ModUtil.MOD_ID+":tileEntityPhantomBreaker");
         GameRegistry.registerTileEntity(TileEntityFluidCollector.class, ModUtil.MOD_ID+":tileEntityFluidCollector");
-        GameRegistry.registerTileEntity(TileEntityFluidCollector.TileEntityFluidPlacer.class, ModUtil.MOD_ID+":tileEntityFluidPlacer");
+        GameRegistry.registerTileEntity(TileEntityFluidPlacer.class, ModUtil.MOD_ID+":tileEntityFluidPlacer");
         GameRegistry.registerTileEntity(TileEntityLavaFactoryController.class, ModUtil.MOD_ID+":tileEntityLavaFactoryController");
         GameRegistry.registerTileEntity(TileEntityCoffeeMachine.class, ModUtil.MOD_ID+":tileEntityCoffeeMachine");
         GameRegistry.registerTileEntity(TileEntityPhantomBooster.class, ModUtil.MOD_ID+":tileEntityPhantomBooster");
@@ -82,9 +82,9 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
         GameRegistry.registerTileEntity(TileEntityMiner.class, ModUtil.MOD_ID+":tileEntityMiner");
         GameRegistry.registerTileEntity(TileEntityFireworkBox.class, ModUtil.MOD_ID+":tileEntityFireworkBox");
         GameRegistry.registerTileEntity(TileEntityPhantomRedstoneface.class, ModUtil.MOD_ID+":tileEntityPhantomRedstoneface");
-        GameRegistry.registerTileEntity(TileEntityLaserRelay.TileEntityLaserRelayItem.class, ModUtil.MOD_ID+":tileEntityLaserRelayItem");
-        GameRegistry.registerTileEntity(TileEntityLaserRelay.TileEntityLaserRelayEnergy.class, ModUtil.MOD_ID+":tileEntityLaserRelay");
-        GameRegistry.registerTileEntity(TileEntityLaserRelay.TileEntityLaserRelayItemWhitelist.class, ModUtil.MOD_ID+":tileEntityLaserRelayItemWhitelist");
+        GameRegistry.registerTileEntity(TileEntityLaserRelayItem.class, ModUtil.MOD_ID+":tileEntityLaserRelayItem");
+        GameRegistry.registerTileEntity(TileEntityLaserRelayEnergy.class, ModUtil.MOD_ID+":tileEntityLaserRelay");
+        GameRegistry.registerTileEntity(TileEntityLaserRelayItemWhitelist.class, ModUtil.MOD_ID+":tileEntityLaserRelayItemWhitelist");
         GameRegistry.registerTileEntity(TileEntityItemViewer.class, ModUtil.MOD_ID+":tileItemViewer");
     }
 

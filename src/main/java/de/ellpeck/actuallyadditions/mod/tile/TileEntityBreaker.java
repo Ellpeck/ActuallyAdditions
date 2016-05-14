@@ -134,13 +134,4 @@ public class TileEntityBreaker extends TileEntityInventoryBase implements IRedst
         this.doWork();
     }
 
-    public static class TileEntityPlacer extends TileEntityBreaker{
-
-        public TileEntityPlacer(){
-            super(9, "placer");
-            this.isPlacer = true;
-        }
-
-    }
-
 }

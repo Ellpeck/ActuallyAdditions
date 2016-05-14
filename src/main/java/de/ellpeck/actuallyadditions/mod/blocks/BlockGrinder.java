@@ -15,6 +15,7 @@ import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.proxy.ClientProxy;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityGrinder;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityGrinderDouble;
 import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -52,7 +53,7 @@ public class BlockGrinder extends BlockContainerBase{
 
     @Override
     public TileEntity createNewTileEntity(World world, int par2){
-        return this.isDouble ? new TileEntityGrinder.TileEntityGrinderDouble() : new TileEntityGrinder();
+        return this.isDouble ? new TileEntityGrinderDouble() : new TileEntityGrinder();
     }
 
     @Override

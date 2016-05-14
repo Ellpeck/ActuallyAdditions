@@ -274,12 +274,4 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
         this.storage.setEnergyStored(energy);
     }
 
-    public static class TileEntityGrinderDouble extends TileEntityGrinder{
-
-        public TileEntityGrinderDouble(){
-            super(6, "grinderDouble");
-            this.isDouble = true;
-        }
-
-    }
 }

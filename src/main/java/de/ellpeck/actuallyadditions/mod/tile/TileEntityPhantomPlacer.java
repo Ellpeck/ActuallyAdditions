@@ -221,12 +221,4 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
         this.doWork();
     }
 
-    public static class TileEntityPhantomBreaker extends TileEntityPhantomPlacer{
-
-        public TileEntityPhantomBreaker(){
-            super(9, "phantomBreaker");
-            this.isBreaker = true;
-        }
-
-    }
 }

@@ -93,7 +93,7 @@ public class BlockPhantom extends BlockContainerBase implements IHudDisplay{
             case PLACER:
                 return new TileEntityPhantomPlacer();
             case BREAKER:
-                return new TileEntityPhantomPlacer.TileEntityPhantomBreaker();
+                return new TileEntityPhantomBreaker();
             case LIQUIFACE:
                 return new TileEntityPhantomLiquiface();
             case ENERGYFACE:

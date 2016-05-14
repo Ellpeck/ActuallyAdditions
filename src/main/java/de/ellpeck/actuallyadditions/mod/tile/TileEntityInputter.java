@@ -438,13 +438,4 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
     public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
         return slot == 0;
     }
-
-    public static class TileEntityInputterAdvanced extends TileEntityInputter{
-
-        public TileEntityInputterAdvanced(){
-            super(25, "inputterAdvanced");
-            this.isAdvanced = true;
-        }
-
-    }
 }

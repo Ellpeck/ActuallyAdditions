@@ -15,6 +15,7 @@ import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBreaker;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityPlacer;
 import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import net.minecraft.block.BlockPistonBase;
 import net.minecraft.block.SoundType;
@@ -47,7 +48,7 @@ public class BlockBreaker extends BlockContainerBase{
 
     @Override
     public TileEntity createNewTileEntity(World world, int par2){
-        return this.isPlacer ? new TileEntityBreaker.TileEntityPlacer() : new TileEntityBreaker();
+        return this.isPlacer ? new TileEntityPlacer() : new TileEntityBreaker();
     }
 
     @Override

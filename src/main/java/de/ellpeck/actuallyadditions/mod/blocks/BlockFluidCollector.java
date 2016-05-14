@@ -15,6 +15,7 @@ import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityFluidCollector;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityFluidPlacer;
 import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import net.minecraft.block.BlockPistonBase;
 import net.minecraft.block.SoundType;
@@ -48,7 +49,7 @@ public class BlockFluidCollector extends BlockContainerBase{
 
     @Override
     public TileEntity createNewTileEntity(World world, int par2){
-        return this.isPlacer ? new TileEntityFluidCollector.TileEntityFluidPlacer() : new TileEntityFluidCollector();
+        return this.isPlacer ? new TileEntityFluidPlacer() : new TileEntityFluidCollector();
     }
 
     @Override

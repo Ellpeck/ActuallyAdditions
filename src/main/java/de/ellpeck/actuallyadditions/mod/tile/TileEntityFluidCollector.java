@@ -200,13 +200,4 @@ public class TileEntityFluidCollector extends TileEntityBase implements IFluidHa
         this.tank.setFluid(fluids[0]);
     }
 
-    public static class TileEntityFluidPlacer extends TileEntityFluidCollector{
-
-        public TileEntityFluidPlacer(){
-            super("fluidPlacer");
-            this.isPlacer = true;
-        }
-
-    }
-
 }

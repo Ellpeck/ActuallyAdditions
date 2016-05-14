@@ -14,6 +14,9 @@ import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelay;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayEnergy;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayItem;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayItemWhitelist;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyInteger;
@@ -72,7 +75,7 @@ public class BlockLaserRelay extends BlockContainerBase{
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack stack, EnumFacing par6, float par7, float par8, float par9){
         if(player.isSneaking()){
             TileEntityLaserRelay relay = (TileEntityLaserRelay)world.getTileEntity(pos);
-            if(relay instanceof TileEntityLaserRelay.TileEntityLaserRelayItemWhitelist){
+            if(relay instanceof TileEntityLaserRelayItemWhitelist){
                 if(!world.isRemote){
                     player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.LASER_RELAY_ITEM_WHITELIST.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
                 }
@@ -86,11 +89,11 @@ public class BlockLaserRelay extends BlockContainerBase{
     public TileEntity createNewTileEntity(World world, int i){
         switch(this.type){
             case ITEM:
-                return new TileEntityLaserRelay.TileEntityLaserRelayItem();
+                return new TileEntityLaserRelayItem();
             case ITEM_WHITELIST:
-                return new TileEntityLaserRelay.TileEntityLaserRelayItemWhitelist();
+                return new TileEntityLaserRelayItemWhitelist();
             default:
-                return new TileEntityLaserRelay.TileEntityLaserRelayEnergy();
+                return new TileEntityLaserRelayEnergy();
         }
     }
 

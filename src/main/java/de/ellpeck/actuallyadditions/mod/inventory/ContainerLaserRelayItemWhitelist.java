@@ -12,7 +12,7 @@ package de.ellpeck.actuallyadditions.mod.inventory;
 
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotFilter;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelay.TileEntityLaserRelayItemWhitelist;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayItemWhitelist;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;

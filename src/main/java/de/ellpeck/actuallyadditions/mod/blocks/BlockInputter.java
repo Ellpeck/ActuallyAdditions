@@ -16,6 +16,7 @@ import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.blocks.base.ItemBlockBase;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityInputter;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityInputterAdvanced;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityInventoryBase;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
@@ -51,7 +52,7 @@ public class BlockInputter extends BlockContainerBase{
 
     @Override
     public TileEntity createNewTileEntity(World world, int par2){
-        return this.isAdvanced ? new TileEntityInputter.TileEntityInputterAdvanced() : new TileEntityInputter();
+        return this.isAdvanced ? new TileEntityInputterAdvanced() : new TileEntityInputter();
     }
 
     @Override
