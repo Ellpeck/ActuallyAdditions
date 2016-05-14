@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class LensNoneRecipe{
+public class LensConversionRecipe{
 
     public int energyUse;
     private String input;
@@ -25,13 +25,13 @@ public class LensNoneRecipe{
     private ItemStack inputStack;
     private ItemStack outputStack;
 
-    public LensNoneRecipe(ItemStack input, ItemStack output, int energyUse){
+    public LensConversionRecipe(ItemStack input, ItemStack output, int energyUse){
         this.inputStack = input;
         this.outputStack = output;
         this.energyUse = energyUse;
     }
 
-    public LensNoneRecipe(String input, String output, int energyUse){
+    public LensConversionRecipe(String input, String output, int energyUse){
         this.input = input;
         this.output = output;
         this.energyUse = energyUse;

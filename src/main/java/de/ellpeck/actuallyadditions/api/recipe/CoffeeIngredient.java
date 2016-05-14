@@ -8,8 +8,9 @@
  * © 2016 Ellpeck
  */
 
-package de.ellpeck.actuallyadditions.api.recipe.coffee;
+package de.ellpeck.actuallyadditions.api.recipe;
 
+import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 
@@ -30,7 +31,7 @@ public class CoffeeIngredient{
     }
 
     public boolean effect(ItemStack stack){
-        return CoffeeBrewing.addEffectToStack(stack, this);
+        return ActuallyAdditionsAPI.methodHandler.addEffectToStack(stack, this);
     }
 
     public String getExtraText(){

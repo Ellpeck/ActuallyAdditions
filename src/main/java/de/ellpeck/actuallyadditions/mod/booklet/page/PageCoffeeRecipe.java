@@ -10,9 +10,9 @@
 
 package de.ellpeck.actuallyadditions.mod.booklet.page;
 
+import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.internal.IBookletGui;
-import de.ellpeck.actuallyadditions.api.recipe.coffee.CoffeeBrewing;
-import de.ellpeck.actuallyadditions.api.recipe.coffee.CoffeeIngredient;
+import de.ellpeck.actuallyadditions.api.recipe.CoffeeIngredient;
 import de.ellpeck.actuallyadditions.mod.booklet.GuiBooklet;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
@@ -48,7 +48,7 @@ public class PageCoffeeRecipe extends BookletPageAA{
         String strg = "Coffee Machine Recipe";
         Minecraft.getMinecraft().fontRendererObj.drawString(strg, gui.getGuiLeft()+gui.getXSize()/2-Minecraft.getMinecraft().fontRendererObj.getStringWidth(strg)/2, gui.getGuiTop()+10, 0);
 
-        String text = gui.getCurrentEntrySet().page.getText();
+        String text = gui.getCurrentEntrySet().getCurrentPage().getText();
         if(text != null && !text.isEmpty()){
             StringUtil.drawSplitString(Minecraft.getMinecraft().fontRendererObj, text, gui.getGuiLeft()+14, gui.getGuiTop()+100, 115, 0, false);
         }
@@ -76,7 +76,7 @@ public class PageCoffeeRecipe extends BookletPageAA{
                         break;
                     case 2:
                         stack = new ItemStack(InitItems.itemCoffee);
-                        CoffeeBrewing.addEffectToStack(stack, this.ingredient);
+                        ActuallyAdditionsAPI.methodHandler.addEffectToStack(stack, this.ingredient);
                         coordsOffsetX = 39;
                         coordsOffsetY = 39;
                         break;

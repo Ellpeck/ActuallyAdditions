@@ -35,7 +35,7 @@ public class PagePicture extends PageTextOnly{
         Minecraft.getMinecraft().getTextureManager().bindTexture(this.resLoc);
         gui.drawRect(gui.getGuiLeft(), gui.getGuiTop(), 0, 0, gui.getXSize(), gui.getYSize());
 
-        String text = gui.getCurrentEntrySet().page.getText();
+        String text = gui.getCurrentEntrySet().getCurrentPage().getText();
         if(text != null && !text.isEmpty()){
             StringUtil.drawSplitString(Minecraft.getMinecraft().fontRendererObj, text, gui.getGuiLeft()+14, gui.getGuiTop()+this.textStartY, 115, 0, false);
         }

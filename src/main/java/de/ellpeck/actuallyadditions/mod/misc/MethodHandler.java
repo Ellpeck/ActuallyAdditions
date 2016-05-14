@@ -1,15 +1,13 @@
-/*
- * This file ("CoffeeBrewing.java") is part of the Actually Additions Mod for Minecraft.
- * It is created and owned by Ellpeck and distributed
- * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
- * View the source code at https://github.com/Ellpeck/ActuallyAdditions
- *
- * © 2016 Ellpeck
- */
+package de.ellpeck.actuallyadditions.mod.misc;
 
-package de.ellpeck.actuallyadditions.api.recipe.coffee;
-
+import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
+import de.ellpeck.actuallyadditions.api.booklet.BookletPage;
+import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
+import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
+import de.ellpeck.actuallyadditions.api.internal.IEntrySet;
+import de.ellpeck.actuallyadditions.api.internal.IMethodHandler;
+import de.ellpeck.actuallyadditions.api.recipe.CoffeeIngredient;
+import de.ellpeck.actuallyadditions.mod.booklet.entry.EntrySet;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
@@ -17,27 +15,24 @@ import net.minecraft.potion.PotionEffect;
 
 import java.util.ArrayList;
 
-/**
- * This is a util class for adding Ingredients to ItemStacks
- * Use when making a custom Coffee Ingredient
- */
-public class CoffeeBrewing{
+public class MethodHandler implements IMethodHandler{
 
-    public static boolean addEffectToStack(ItemStack stack, CoffeeIngredient ingredient){
+    @Override
+    public boolean addEffectToStack(ItemStack stack, CoffeeIngredient ingredient){
         boolean worked = false;
         if(ingredient != null){
             PotionEffect[] effects = ingredient.getEffects();
             if(effects != null && effects.length > 0){
                 for(PotionEffect effect : effects){
-                    PotionEffect effectHas = getSameEffectFromStack(stack, effect);
+                    PotionEffect effectHas = this.getSameEffectFromStack(stack, effect);
                     if(effectHas != null){
                         if(effectHas.getAmplifier() < ingredient.maxAmplifier-1){
-                            addEffectProperties(stack, effect, false, true);
+                            this.addEffectProperties(stack, effect, false, true);
                             worked = true;
                         }
                     }
                     else{
-                        addEffectToStack(stack, effect);
+                        this.addEffectToStack(stack, effect);
                         worked = true;
                     }
                 }
@@ -46,8 +41,9 @@ public class CoffeeBrewing{
         return worked;
     }
 
-    public static PotionEffect getSameEffectFromStack(ItemStack stack, PotionEffect effect){
-        PotionEffect[] effectsStack = getEffectsFromStack(stack);
+    @Override
+    public PotionEffect getSameEffectFromStack(ItemStack stack, PotionEffect effect){
+        PotionEffect[] effectsStack = this.getEffectsFromStack(stack);
         if(effectsStack != null && effectsStack.length > 0){
             for(PotionEffect effectStack : effectsStack){
                 if(effect.getPotion() == effectStack.getPotion()){
@@ -58,18 +54,20 @@ public class CoffeeBrewing{
         return null;
     }
 
-    public static void addEffectProperties(ItemStack stack, PotionEffect effect, boolean addDur, boolean addAmp){
-        PotionEffect[] effects = getEffectsFromStack(stack);
+    @Override
+    public void addEffectProperties(ItemStack stack, PotionEffect effect, boolean addDur, boolean addAmp){
+        PotionEffect[] effects = this.getEffectsFromStack(stack);
         stack.setTagCompound(new NBTTagCompound());
         for(int i = 0; i < effects.length; i++){
             if(effects[i].getPotion() == effect.getPotion()){
                 effects[i] = new PotionEffect(effects[i].getPotion(), effects[i].getDuration()+(addDur ? effect.getDuration() : 0), effects[i].getAmplifier()+(addAmp ? (effect.getAmplifier() > 0 ? effect.getAmplifier() : 1) : 0));
             }
-            addEffectToStack(stack, effects[i]);
+            this.addEffectToStack(stack, effects[i]);
         }
     }
 
-    public static void addEffectToStack(ItemStack stack, PotionEffect effect){
+    @Override
+    public void addEffectToStack(ItemStack stack, PotionEffect effect){
         NBTTagCompound tag = stack.getTagCompound();
         if(tag == null){
             tag = new NBTTagCompound();
@@ -88,7 +86,8 @@ public class CoffeeBrewing{
         stack.setTagCompound(tag);
     }
 
-    public static PotionEffect[] getEffectsFromStack(ItemStack stack){
+    @Override
+    public PotionEffect[] getEffectsFromStack(ItemStack stack){
         ArrayList<PotionEffect> effects = new ArrayList<PotionEffect>();
         NBTTagCompound tag = stack.getTagCompound();
         if(tag != null){
@@ -102,5 +101,4 @@ public class CoffeeBrewing{
         }
         return effects.size() > 0 ? effects.toArray(new PotionEffect[effects.size()]) : null;
     }
-
 }

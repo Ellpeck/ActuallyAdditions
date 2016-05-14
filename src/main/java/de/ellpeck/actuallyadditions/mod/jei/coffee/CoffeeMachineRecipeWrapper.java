@@ -10,9 +10,9 @@
 
 package de.ellpeck.actuallyadditions.mod.jei.coffee;
 
+import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.booklet.BookletPage;
-import de.ellpeck.actuallyadditions.api.recipe.coffee.CoffeeBrewing;
-import de.ellpeck.actuallyadditions.api.recipe.coffee.CoffeeIngredient;
+import de.ellpeck.actuallyadditions.api.recipe.CoffeeIngredient;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.booklet.BookletUtils;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
@@ -42,7 +42,7 @@ public class CoffeeMachineRecipeWrapper extends RecipeWrapperWithButton implemen
         this.theIngredient = ingredient;
 
         this.theOutput = new ItemStack(InitItems.itemCoffee);
-        CoffeeBrewing.addEffectToStack(this.theOutput, this.theIngredient);
+        ActuallyAdditionsAPI.methodHandler.addEffectToStack(this.theOutput, this.theIngredient);
     }
 
     @Override

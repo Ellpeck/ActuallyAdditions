@@ -11,8 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.items;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
-import de.ellpeck.actuallyadditions.api.recipe.coffee.CoffeeBrewing;
-import de.ellpeck.actuallyadditions.api.recipe.coffee.CoffeeIngredient;
+import de.ellpeck.actuallyadditions.api.recipe.CoffeeIngredient;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemFoodBase;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
@@ -74,7 +73,7 @@ public class ItemCoffee extends ItemFoodBase{
     }
 
     public static void applyPotionEffectsFromStack(ItemStack stack, EntityLivingBase player){
-        PotionEffect[] effects = CoffeeBrewing.getEffectsFromStack(stack);
+        PotionEffect[] effects = ActuallyAdditionsAPI.methodHandler.getEffectsFromStack(stack);
         if(effects != null && effects.length > 0){
             for(PotionEffect effect : effects){
                 player.addPotionEffect(new PotionEffect(effect.getPotion(), effect.getDuration()*20, effect.getAmplifier()));
@@ -114,7 +113,7 @@ public class ItemCoffee extends ItemFoodBase{
     @SuppressWarnings("unchecked")
     @Override
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean bool){
-        PotionEffect[] effects = CoffeeBrewing.getEffectsFromStack(stack);
+        PotionEffect[] effects = ActuallyAdditionsAPI.methodHandler.getEffectsFromStack(stack);
         if(effects != null){
             for(PotionEffect effect : effects){
                 list.add(StringUtil.localize(effect.getEffectName())+" "+(effect.getAmplifier()+1)+", "+StringUtils.ticksToElapsedTime(effect.getDuration()*20));
@@ -138,7 +137,7 @@ public class ItemCoffee extends ItemFoodBase{
 
         @Override
         public boolean effect(ItemStack stack){
-            PotionEffect[] effects = CoffeeBrewing.getEffectsFromStack(stack);
+            PotionEffect[] effects = ActuallyAdditionsAPI.methodHandler.getEffectsFromStack(stack);
             ArrayList<PotionEffect> effectsNew = new ArrayList<PotionEffect>();
             if(effects != null && effects.length > 0){
                 for(PotionEffect effect : effects){
@@ -149,7 +148,7 @@ public class ItemCoffee extends ItemFoodBase{
                 stack.setTagCompound(new NBTTagCompound());
                 if(effectsNew.size() > 0){
                     this.effects = effectsNew.toArray(new PotionEffect[effectsNew.size()]);
-                    CoffeeBrewing.addEffectToStack(stack, this);
+                    ActuallyAdditionsAPI.methodHandler.addEffectToStack(stack, this);
                 }
             }
             this.effects = null;

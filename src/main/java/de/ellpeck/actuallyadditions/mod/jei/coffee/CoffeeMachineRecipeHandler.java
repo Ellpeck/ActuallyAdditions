@@ -10,7 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.jei.coffee;
 
-import de.ellpeck.actuallyadditions.api.recipe.coffee.CoffeeIngredient;
+import de.ellpeck.actuallyadditions.api.recipe.CoffeeIngredient;
 import de.ellpeck.actuallyadditions.mod.nei.NEICoffeeMachineRecipe;
 import mezz.jei.api.recipe.IRecipeHandler;
 import mezz.jei.api.recipe.IRecipeWrapper;

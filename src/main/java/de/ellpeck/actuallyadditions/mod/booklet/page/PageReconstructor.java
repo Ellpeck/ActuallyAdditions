@@ -11,7 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.booklet.page;
 
 import de.ellpeck.actuallyadditions.api.internal.IBookletGui;
-import de.ellpeck.actuallyadditions.api.recipe.LensNoneRecipe;
+import de.ellpeck.actuallyadditions.api.recipe.LensConversionRecipe;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.booklet.GuiBooklet;
 import de.ellpeck.actuallyadditions.mod.proxy.ClientProxy;
@@ -30,14 +30,14 @@ import java.util.List;
 
 public class PageReconstructor extends BookletPageAA{
 
-    private LensNoneRecipe[] recipes;
+    private LensConversionRecipe[] recipes;
     private int recipePos;
 
-    public PageReconstructor(int id, ArrayList<LensNoneRecipe> recipes){
-        this(id, recipes.toArray(new LensNoneRecipe[recipes.size()]));
+    public PageReconstructor(int id, ArrayList<LensConversionRecipe> recipes){
+        this(id, recipes.toArray(new LensConversionRecipe[recipes.size()]));
     }
 
-    public PageReconstructor(int id, LensNoneRecipe... recipes){
+    public PageReconstructor(int id, LensConversionRecipe... recipes){
         super(id);
         this.recipes = recipes;
         this.addToPagesWithItemStackData();
@@ -56,7 +56,7 @@ public class PageReconstructor extends BookletPageAA{
     @Override
     @SideOnly(Side.CLIENT)
     public void render(IBookletGui gui, int mouseX, int mouseY, int ticksElapsed, boolean mousePressed){
-        LensNoneRecipe recipe = this.recipes[this.recipePos];
+        LensConversionRecipe recipe = this.recipes[this.recipePos];
         if(recipe == null){
             StringUtil.drawSplitString(Minecraft.getMinecraft().fontRendererObj, TextFormatting.DARK_RED+StringUtil.localize("booklet."+ModUtil.MOD_ID+".recipeDisabled"), gui.getGuiLeft()+14, gui.getGuiTop()+15, 115, 0, false);
         }
@@ -65,7 +65,7 @@ public class PageReconstructor extends BookletPageAA{
             Minecraft.getMinecraft().fontRendererObj.drawString(strg, gui.getGuiLeft()+gui.getXSize()/2-Minecraft.getMinecraft().fontRendererObj.getStringWidth(strg)/2, gui.getGuiTop()+10, 0);
         }
 
-        String text = gui.getCurrentEntrySet().page.getText();
+        String text = gui.getCurrentEntrySet().getCurrentPage().getText();
         if(text != null && !text.isEmpty()){
             StringUtil.drawSplitString(Minecraft.getMinecraft().fontRendererObj, text, gui.getGuiLeft()+14, gui.getGuiTop()+100, 115, 0, false);
         }
@@ -116,7 +116,7 @@ public class PageReconstructor extends BookletPageAA{
     public ItemStack[] getItemStacksForPage(){
         if(this.recipes != null){
             ArrayList<ItemStack> stacks = new ArrayList<ItemStack>();
-            for(LensNoneRecipe recipe : this.recipes){
+            for(LensConversionRecipe recipe : this.recipes){
                 if(recipe != null){
                     stacks.addAll(recipe.getOutputs());
                 }

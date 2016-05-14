@@ -43,5 +43,5 @@ public interface IBookletGui{
 
     void drawRect(int startX, int startY, int u, int v, int xSize, int ySize);
 
-    EntrySet getCurrentEntrySet();
+    IEntrySet getCurrentEntrySet();
 }

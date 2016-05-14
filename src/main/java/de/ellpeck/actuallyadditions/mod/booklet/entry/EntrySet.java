@@ -8,15 +8,16 @@
  * © 2016 Ellpeck
  */
 
-package de.ellpeck.actuallyadditions.api.internal;
+package de.ellpeck.actuallyadditions.mod.booklet.entry;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.booklet.BookletPage;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
+import de.ellpeck.actuallyadditions.api.internal.IEntrySet;
 import net.minecraft.nbt.NBTTagCompound;
 
-public class EntrySet{
+public class EntrySet implements IEntrySet{
 
     public BookletPage page;
     public IBookletChapter chapter;
@@ -49,6 +50,7 @@ public class EntrySet{
         return new EntrySet(null);
     }
 
+    @Override
     public void setEntry(BookletPage page, IBookletChapter chapter, IBookletEntry entry, int pageInIndex){
         this.page = page;
         this.chapter = chapter;
@@ -56,10 +58,12 @@ public class EntrySet{
         this.pageInIndex = pageInIndex;
     }
 
+    @Override
     public void removeEntry(){
         this.setEntry(null, null, null, 1);
     }
 
+    @Override
     public NBTTagCompound writeToNBT(){
         NBTTagCompound compound = new NBTTagCompound();
         compound.setInteger("Entry", this.entry == null ? -1 : ActuallyAdditionsAPI.bookletEntries.indexOf(this.entry));
@@ -67,5 +71,45 @@ public class EntrySet{
         compound.setInteger("Page", this.page == null ? -1 : this.page.getID());
         compound.setInteger("PageInIndex", this.pageInIndex);
         return compound;
+    }
+
+    @Override
+    public BookletPage getCurrentPage(){
+        return this.page;
+    }
+
+    @Override
+    public IBookletEntry getCurrentEntry(){
+        return this.entry;
+    }
+
+    @Override
+    public IBookletChapter getCurrentChapter(){
+        return this.chapter;
+    }
+
+    @Override
+    public int getPageInIndex(){
+        return this.pageInIndex;
+    }
+
+    @Override
+    public void setPage(BookletPage page){
+        this.page = page;
+    }
+
+    @Override
+    public void setEntry(IBookletEntry entry){
+        this.entry = entry;
+    }
+
+    @Override
+    public void setChapter(IBookletChapter chapter){
+        this.chapter = chapter;
+    }
+
+    @Override
+    public void setPageInIndex(int page){
+        this.pageInIndex = page;
     }
 }

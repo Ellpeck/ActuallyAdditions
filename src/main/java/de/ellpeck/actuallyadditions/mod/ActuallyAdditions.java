@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod;
 
+import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.mod.achievement.InitAchievements;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.booklet.InitBooklet;
@@ -68,6 +69,9 @@ public class ActuallyAdditions{
     public void preInit(FMLPreInitializationEvent event){
         ModUtil.LOGGER.info("Starting PreInitialization Phase...");
 
+        InitBooklet.preInit();
+        ActuallyAdditionsAPI.methodHandler = new MethodHandler();
+
         new ConfigurationHandler(event.getSuggestedConfigurationFile());
         PacketHandler.init();
         InitToolMaterials.init();
@@ -79,7 +83,6 @@ public class ActuallyAdditions{
         BannerHelper.init();
         SoundHandler.init();
         UpdateChecker.init();
-        InitBooklet.preInit();
         proxy.preInit(event);
 
         ModUtil.LOGGER.info("PreInitialization Finished.");

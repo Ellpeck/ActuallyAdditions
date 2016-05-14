@@ -13,7 +13,7 @@ package de.ellpeck.actuallyadditions.mod.items.lens;
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.recipe.ColorLensChangerByDyeMeta;
 import de.ellpeck.actuallyadditions.api.recipe.IColorLensChanger;
-import de.ellpeck.actuallyadditions.api.recipe.LensNoneRecipe;
+import de.ellpeck.actuallyadditions.api.recipe.LensConversionRecipe;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigCrafting;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
@@ -30,74 +30,74 @@ import java.util.ArrayList;
 
 public class LensRecipeHandler{
 
-    public static ArrayList<LensNoneRecipe> mainPageRecipes = new ArrayList<LensNoneRecipe>();
-    public static LensNoneRecipe recipeColorLens;
-    public static LensNoneRecipe recipeSoulSand;
-    public static LensNoneRecipe recipeGreenWall;
-    public static LensNoneRecipe recipeWhiteWall;
-    public static LensNoneRecipe recipeExplosionLens;
-    public static LensNoneRecipe recipeDamageLens;
-    public static LensNoneRecipe recipeLeather;
-    public static LensNoneRecipe recipeNetherWart;
+    public static ArrayList<LensConversionRecipe> mainPageRecipes = new ArrayList<LensConversionRecipe>();
+    public static LensConversionRecipe recipeColorLens;
+    public static LensConversionRecipe recipeSoulSand;
+    public static LensConversionRecipe recipeGreenWall;
+    public static LensConversionRecipe recipeWhiteWall;
+    public static LensConversionRecipe recipeExplosionLens;
+    public static LensConversionRecipe recipeDamageLens;
+    public static LensConversionRecipe recipeLeather;
+    public static LensConversionRecipe recipeNetherWart;
 
     public static void init(){
         //Crystal Blocks
-        ActuallyAdditionsAPI.addReconstructorLensNoneRecipe(new ItemStack(Blocks.REDSTONE_BLOCK), new ItemStack(InitBlocks.blockCrystal, 1, TheCrystals.REDSTONE.ordinal()), 400);
+        ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(new ItemStack(Blocks.REDSTONE_BLOCK), new ItemStack(InitBlocks.blockCrystal, 1, TheCrystals.REDSTONE.ordinal()), 400);
         mainPageRecipes.add(RecipeUtil.lastReconstructorRecipe());
-        ActuallyAdditionsAPI.addReconstructorLensNoneRecipe(new ItemStack(Blocks.LAPIS_BLOCK), new ItemStack(InitBlocks.blockCrystal, 1, TheCrystals.LAPIS.ordinal()), 400);
+        ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(new ItemStack(Blocks.LAPIS_BLOCK), new ItemStack(InitBlocks.blockCrystal, 1, TheCrystals.LAPIS.ordinal()), 400);
         mainPageRecipes.add(RecipeUtil.lastReconstructorRecipe());
-        ActuallyAdditionsAPI.addReconstructorLensNoneRecipe(new ItemStack(Blocks.DIAMOND_BLOCK), new ItemStack(InitBlocks.blockCrystal, 1, TheCrystals.DIAMOND.ordinal()), 600);
+        ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(new ItemStack(Blocks.DIAMOND_BLOCK), new ItemStack(InitBlocks.blockCrystal, 1, TheCrystals.DIAMOND.ordinal()), 600);
         mainPageRecipes.add(RecipeUtil.lastReconstructorRecipe());
-        ActuallyAdditionsAPI.addReconstructorLensNoneRecipe(new ItemStack(Blocks.EMERALD_BLOCK), new ItemStack(InitBlocks.blockCrystal, 1, TheCrystals.EMERALD.ordinal()), 1000);
+        ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(new ItemStack(Blocks.EMERALD_BLOCK), new ItemStack(InitBlocks.blockCrystal, 1, TheCrystals.EMERALD.ordinal()), 1000);
         mainPageRecipes.add(RecipeUtil.lastReconstructorRecipe());
-        ActuallyAdditionsAPI.addReconstructorLensNoneRecipe(new ItemStack(Blocks.COAL_BLOCK), new ItemStack(InitBlocks.blockCrystal, 1, TheCrystals.COAL.ordinal()), 600);
+        ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(new ItemStack(Blocks.COAL_BLOCK), new ItemStack(InitBlocks.blockCrystal, 1, TheCrystals.COAL.ordinal()), 600);
         mainPageRecipes.add(RecipeUtil.lastReconstructorRecipe());
-        ActuallyAdditionsAPI.addReconstructorLensNoneRecipe(new ItemStack(Blocks.IRON_BLOCK), new ItemStack(InitBlocks.blockCrystal, 1, TheCrystals.IRON.ordinal()), 800);
+        ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(new ItemStack(Blocks.IRON_BLOCK), new ItemStack(InitBlocks.blockCrystal, 1, TheCrystals.IRON.ordinal()), 800);
         mainPageRecipes.add(RecipeUtil.lastReconstructorRecipe());
 
         //Crystal Items
-        ActuallyAdditionsAPI.addReconstructorLensNoneRecipe(new ItemStack(Items.REDSTONE), new ItemStack(InitItems.itemCrystal, 1, TheCrystals.REDSTONE.ordinal()), 40);
+        ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(new ItemStack(Items.REDSTONE), new ItemStack(InitItems.itemCrystal, 1, TheCrystals.REDSTONE.ordinal()), 40);
         mainPageRecipes.add(RecipeUtil.lastReconstructorRecipe());
-        ActuallyAdditionsAPI.addReconstructorLensNoneRecipe(new ItemStack(Items.DYE, 1, 4), new ItemStack(InitItems.itemCrystal, 1, TheCrystals.LAPIS.ordinal()), 40);
+        ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(new ItemStack(Items.DYE, 1, 4), new ItemStack(InitItems.itemCrystal, 1, TheCrystals.LAPIS.ordinal()), 40);
         mainPageRecipes.add(RecipeUtil.lastReconstructorRecipe());
-        ActuallyAdditionsAPI.addReconstructorLensNoneRecipe(new ItemStack(Items.DIAMOND), new ItemStack(InitItems.itemCrystal, 1, TheCrystals.DIAMOND.ordinal()), 60);
+        ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(new ItemStack(Items.DIAMOND), new ItemStack(InitItems.itemCrystal, 1, TheCrystals.DIAMOND.ordinal()), 60);
         mainPageRecipes.add(RecipeUtil.lastReconstructorRecipe());
-        ActuallyAdditionsAPI.addReconstructorLensNoneRecipe(new ItemStack(Items.EMERALD), new ItemStack(InitItems.itemCrystal, 1, TheCrystals.EMERALD.ordinal()), 100);
+        ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(new ItemStack(Items.EMERALD), new ItemStack(InitItems.itemCrystal, 1, TheCrystals.EMERALD.ordinal()), 100);
         mainPageRecipes.add(RecipeUtil.lastReconstructorRecipe());
-        ActuallyAdditionsAPI.addReconstructorLensNoneRecipe(new ItemStack(Items.COAL), new ItemStack(InitItems.itemCrystal, 1, TheCrystals.COAL.ordinal()), 60);
+        ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(new ItemStack(Items.COAL), new ItemStack(InitItems.itemCrystal, 1, TheCrystals.COAL.ordinal()), 60);
         mainPageRecipes.add(RecipeUtil.lastReconstructorRecipe());
-        ActuallyAdditionsAPI.addReconstructorLensNoneRecipe(new ItemStack(Items.IRON_INGOT), new ItemStack(InitItems.itemCrystal, 1, TheCrystals.IRON.ordinal()), 80);
+        ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(new ItemStack(Items.IRON_INGOT), new ItemStack(InitItems.itemCrystal, 1, TheCrystals.IRON.ordinal()), 80);
 
         //Lenses
-        ActuallyAdditionsAPI.addReconstructorLensNoneRecipe(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.LENS.ordinal()), new ItemStack(InitItems.itemColorLens), 5000);
+        ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.LENS.ordinal()), new ItemStack(InitItems.itemColorLens), 5000);
         recipeColorLens = RecipeUtil.lastReconstructorRecipe();
 
         if(ConfigCrafting.RECONSTRUCTOR_EXPLOSION_LENS.isEnabled()){
-            ActuallyAdditionsAPI.addReconstructorLensNoneRecipe(new ItemStack(InitItems.itemColorLens), new ItemStack(InitItems.itemExplosionLens), 5000);
+            ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(new ItemStack(InitItems.itemColorLens), new ItemStack(InitItems.itemExplosionLens), 5000);
             recipeExplosionLens = RecipeUtil.lastReconstructorRecipe();
-            ActuallyAdditionsAPI.addReconstructorLensNoneRecipe(new ItemStack(InitItems.itemExplosionLens), new ItemStack(InitItems.itemDamageLens), 5000);
+            ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(new ItemStack(InitItems.itemExplosionLens), new ItemStack(InitItems.itemDamageLens), 5000);
         }
         else{
-            ActuallyAdditionsAPI.addReconstructorLensNoneRecipe(new ItemStack(InitItems.itemColorLens), new ItemStack(InitItems.itemDamageLens), 5000);
+            ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(new ItemStack(InitItems.itemColorLens), new ItemStack(InitItems.itemDamageLens), 5000);
         }
         recipeDamageLens = RecipeUtil.lastReconstructorRecipe();
 
-        ActuallyAdditionsAPI.addReconstructorLensNoneRecipe(new ItemStack(InitItems.itemDamageLens), new ItemStack(InitItems.itemMisc, 1, TheMiscItems.LENS.ordinal()), 5000);
+        ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(new ItemStack(InitItems.itemDamageLens), new ItemStack(InitItems.itemMisc, 1, TheMiscItems.LENS.ordinal()), 5000);
 
         //Misc
         if(ConfigCrafting.RECONSTRUCTOR_MISC.isEnabled()){
-            ActuallyAdditionsAPI.addReconstructorLensNoneRecipe(new ItemStack(Blocks.SAND), new ItemStack(Blocks.SOUL_SAND), 20000);
+            ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(new ItemStack(Blocks.SAND), new ItemStack(Blocks.SOUL_SAND), 20000);
             recipeSoulSand = RecipeUtil.lastReconstructorRecipe();
-            ActuallyAdditionsAPI.addReconstructorLensNoneRecipe(new ItemStack(Items.ROTTEN_FLESH), new ItemStack(Items.LEATHER), 8000);
+            ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(new ItemStack(Items.ROTTEN_FLESH), new ItemStack(Items.LEATHER), 8000);
             recipeLeather = RecipeUtil.lastReconstructorRecipe();
 
-            ActuallyAdditionsAPI.addReconstructorLensNoneRecipe(new ItemStack(Blocks.RED_MUSHROOM), new ItemStack(Items.NETHER_WART), 150000);
+            ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(new ItemStack(Blocks.RED_MUSHROOM), new ItemStack(Items.NETHER_WART), 150000);
             recipeNetherWart = RecipeUtil.lastReconstructorRecipe();
         }
 
-        ActuallyAdditionsAPI.addReconstructorLensNoneRecipe(new ItemStack(Blocks.QUARTZ_BLOCK), new ItemStack(InitBlocks.blockTestifiBucksWhiteWall), 10);
+        ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(new ItemStack(Blocks.QUARTZ_BLOCK), new ItemStack(InitBlocks.blockTestifiBucksWhiteWall), 10);
         recipeWhiteWall = RecipeUtil.lastReconstructorRecipe();
-        ActuallyAdditionsAPI.addReconstructorLensNoneRecipe(new ItemStack(Blocks.QUARTZ_BLOCK, 1, 1), new ItemStack(InitBlocks.blockTestifiBucksGreenWall), 10);
+        ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(new ItemStack(Blocks.QUARTZ_BLOCK, 1, 1), new ItemStack(InitBlocks.blockTestifiBucksGreenWall), 10);
         recipeGreenWall = RecipeUtil.lastReconstructorRecipe();
 
         IColorLensChanger changer = new ColorLensChangerByDyeMeta();
@@ -112,9 +112,9 @@ public class LensRecipeHandler{
 
     }
 
-    public static ArrayList<LensNoneRecipe> getRecipesFor(ItemStack input){
-        ArrayList<LensNoneRecipe> possibleRecipes = new ArrayList<LensNoneRecipe>();
-        for(LensNoneRecipe recipe : ActuallyAdditionsAPI.reconstructorLensNoneRecipes){
+    public static ArrayList<LensConversionRecipe> getRecipesFor(ItemStack input){
+        ArrayList<LensConversionRecipe> possibleRecipes = new ArrayList<LensConversionRecipe>();
+        for(LensConversionRecipe recipe : ActuallyAdditionsAPI.reconstructorLensConversionRecipes){
             if(ItemUtil.contains(recipe.getInputs(), input, true)){
                 possibleRecipes.add(recipe);
             }

@@ -14,7 +14,7 @@ import de.ellpeck.actuallyadditions.api.lens.Lens;
 
 public class Lenses{
 
-    public static final Lens LENS_NONE = new LensNone();
+    public static final Lens LENS_NONE = new LensConversion();
     public static final Lens LENS_DETONATION = new LensDetonation();
     public static final Lens LENS_DEATH = new LensDeath();
     public static final Lens LENS_COLOR = new LensColor();

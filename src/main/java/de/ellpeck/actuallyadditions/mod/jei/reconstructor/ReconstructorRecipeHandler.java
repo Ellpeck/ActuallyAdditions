@@ -10,19 +10,19 @@
 
 package de.ellpeck.actuallyadditions.mod.jei.reconstructor;
 
-import de.ellpeck.actuallyadditions.api.recipe.LensNoneRecipe;
+import de.ellpeck.actuallyadditions.api.recipe.LensConversionRecipe;
 import de.ellpeck.actuallyadditions.mod.nei.NEIReconstructorRecipe;
 import mezz.jei.api.recipe.IRecipeHandler;
 import mezz.jei.api.recipe.IRecipeWrapper;
 
 import javax.annotation.Nonnull;
 
-public class ReconstructorRecipeHandler implements IRecipeHandler<LensNoneRecipe>{
+public class ReconstructorRecipeHandler implements IRecipeHandler<LensConversionRecipe>{
 
     @Nonnull
     @Override
     public Class getRecipeClass(){
-        return LensNoneRecipe.class;
+        return LensConversionRecipe.class;
     }
 
     @Nonnull
@@ -33,12 +33,12 @@ public class ReconstructorRecipeHandler implements IRecipeHandler<LensNoneRecipe
 
     @Nonnull
     @Override
-    public IRecipeWrapper getRecipeWrapper(@Nonnull LensNoneRecipe recipe){
+    public IRecipeWrapper getRecipeWrapper(@Nonnull LensConversionRecipe recipe){
         return new ReconstructorRecipeWrapper(recipe);
     }
 
     @Override
-    public boolean isRecipeValid(@Nonnull LensNoneRecipe recipe){
+    public boolean isRecipeValid(@Nonnull LensConversionRecipe recipe){
         return true;
     }
 }

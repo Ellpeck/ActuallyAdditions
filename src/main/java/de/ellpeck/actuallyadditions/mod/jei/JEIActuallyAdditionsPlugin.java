@@ -58,7 +58,7 @@ public class JEIActuallyAdditionsPlugin implements IModPlugin{
         registry.addRecipes(ActuallyAdditionsAPI.bookletPagesWithItemStackData);
         registry.addRecipes(ActuallyAdditionsAPI.coffeeMachineIngredients);
         registry.addRecipes(ActuallyAdditionsAPI.crusherRecipes);
-        registry.addRecipes(ActuallyAdditionsAPI.reconstructorLensNoneRecipes);
+        registry.addRecipes(ActuallyAdditionsAPI.reconstructorLensConversionRecipes);
 
         registry.addRecipeClickArea(GuiCoffeeMachine.class, 53, 42, 22, 16, NEICoffeeMachineRecipe.NAME);
         registry.addRecipeClickArea(GuiGrinder.class, 80, 40, 24, 22, CrusherRecipeCategory.NAME);

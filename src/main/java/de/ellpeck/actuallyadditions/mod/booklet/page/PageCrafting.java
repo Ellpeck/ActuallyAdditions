@@ -71,7 +71,7 @@ public class PageCrafting extends BookletPageAA{
             Minecraft.getMinecraft().fontRendererObj.drawString(strg, gui.getGuiLeft()+gui.getXSize()/2-Minecraft.getMinecraft().fontRendererObj.getStringWidth(strg)/2, gui.getGuiTop()+10, 0);
         }
 
-        String text = gui.getCurrentEntrySet().page.getText();
+        String text = gui.getCurrentEntrySet().getCurrentPage().getText();
         if(text != null && !text.isEmpty()){
             StringUtil.drawSplitString(Minecraft.getMinecraft().fontRendererObj, text, gui.getGuiLeft()+14, gui.getGuiTop()+90, 115, 0, false);
         }

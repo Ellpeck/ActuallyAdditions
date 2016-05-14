@@ -13,7 +13,7 @@ package de.ellpeck.actuallyadditions.mod.items.lens;
 
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
-import de.ellpeck.actuallyadditions.api.recipe.LensNoneRecipe;
+import de.ellpeck.actuallyadditions.api.recipe.LensConversionRecipe;
 import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
 import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import net.minecraft.block.Block;
@@ -27,7 +27,7 @@ import net.minecraft.util.math.BlockPos;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LensNone extends Lens{
+public class LensConversion extends Lens{
 
     @SuppressWarnings("unchecked")
     @Override
@@ -40,8 +40,8 @@ public class LensNone extends Lens{
                 for(int reachZ = -range; reachZ < range+1; reachZ++){
                     for(int reachY = -range; reachY < range+1; reachY++){
                         BlockPos pos = new BlockPos(hitBlock.getX()+reachX, hitBlock.getY()+reachY, hitBlock.getZ()+reachZ);
-                        List<LensNoneRecipe> recipes = LensRecipeHandler.getRecipesFor(new ItemStack(PosUtil.getBlock(pos, tile.getWorldObject()), 1, PosUtil.getMetadata(pos, tile.getWorldObject())));
-                        for(LensNoneRecipe recipe : recipes){
+                        List<LensConversionRecipe> recipes = LensRecipeHandler.getRecipesFor(new ItemStack(PosUtil.getBlock(pos, tile.getWorldObject()), 1, PosUtil.getMetadata(pos, tile.getWorldObject())));
+                        for(LensConversionRecipe recipe : recipes){
                             if(recipe != null && tile.getEnergy() >= recipe.energyUse){
                                 List<ItemStack> outputs = recipe.getOutputs();
                                 if(outputs != null && !outputs.isEmpty()){
@@ -70,8 +70,8 @@ public class LensNone extends Lens{
             for(EntityItem item : items){
                 ItemStack stack = item.getEntityItem();
                 if(!item.isDead && stack != null){
-                    List<LensNoneRecipe> recipes = LensRecipeHandler.getRecipesFor(stack);
-                    for(LensNoneRecipe recipe : recipes){
+                    List<LensConversionRecipe> recipes = LensRecipeHandler.getRecipesFor(stack);
+                    for(LensConversionRecipe recipe : recipes){
                         if(recipe != null && tile.getEnergy() >= recipe.energyUse){
                             List<ItemStack> outputs = recipe.getOutputs();
                             if(outputs != null && !outputs.isEmpty()){

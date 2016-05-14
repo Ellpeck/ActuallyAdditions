@@ -10,7 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.util.playerdata;
 
-import de.ellpeck.actuallyadditions.api.internal.EntrySet;
+import de.ellpeck.actuallyadditions.mod.booklet.entry.EntrySet;
 import de.ellpeck.actuallyadditions.mod.booklet.BookletUtils;
 import de.ellpeck.actuallyadditions.mod.booklet.GuiBooklet;
 import de.ellpeck.actuallyadditions.mod.booklet.button.BookmarkButton;

@@ -10,7 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.booklet.button;
 
-import de.ellpeck.actuallyadditions.api.internal.EntrySet;
+import de.ellpeck.actuallyadditions.mod.booklet.entry.EntrySet;
 import de.ellpeck.actuallyadditions.mod.booklet.BookletUtils;
 import de.ellpeck.actuallyadditions.mod.booklet.GuiBooklet;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
@@ -46,8 +46,8 @@ public class BookmarkButton extends GuiButton{
             }
         }
         else{
-            if(this.booklet.currentEntrySet.entry != null){
-                this.assignedEntry.setEntry(this.booklet.currentEntrySet.page, this.booklet.currentEntrySet.chapter, this.booklet.currentEntrySet.entry, this.booklet.currentEntrySet.pageInIndex);
+            if(this.booklet.currentEntrySet.getCurrentEntry() != null){
+                this.assignedEntry.setEntry(this.booklet.currentEntrySet.getCurrentPage(), this.booklet.currentEntrySet.getCurrentChapter(), this.booklet.currentEntrySet.getCurrentEntry(), this.booklet.currentEntrySet.getPageInIndex());
             }
         }
     }

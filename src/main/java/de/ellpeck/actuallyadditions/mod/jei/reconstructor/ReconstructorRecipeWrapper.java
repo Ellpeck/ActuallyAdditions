@@ -11,7 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.jei.reconstructor;
 
 import de.ellpeck.actuallyadditions.api.booklet.BookletPage;
-import de.ellpeck.actuallyadditions.api.recipe.LensNoneRecipe;
+import de.ellpeck.actuallyadditions.api.recipe.LensConversionRecipe;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.booklet.BookletUtils;
 import de.ellpeck.actuallyadditions.mod.jei.RecipeWrapperWithButton;
@@ -27,9 +27,9 @@ import java.util.List;
 
 public class ReconstructorRecipeWrapper extends RecipeWrapperWithButton implements IRecipeWrapper{
 
-    public LensNoneRecipe theRecipe;
+    public LensConversionRecipe theRecipe;
 
-    public ReconstructorRecipeWrapper(LensNoneRecipe recipe){
+    public ReconstructorRecipeWrapper(LensConversionRecipe recipe){
         this.theRecipe = recipe;
     }
 

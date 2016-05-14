@@ -79,7 +79,7 @@ public class BookletUtils{
         booklet.drawTexturedModalRect(booklet.guiLeft+booklet.xSize/2-142/2, booklet.guiTop+booklet.ySize, 0, 243, 142, 13);
 
         //Draw No Entry title
-        if(booklet.currentEntrySet.entry == null){
+        if(booklet.currentEntrySet.getCurrentEntry() == null){
             String strg = TextFormatting.DARK_GREEN+StringUtil.localize("info."+ModUtil.MOD_ID+".booklet.manualName.1");
             booklet.getFontRenderer().drawString(strg, booklet.guiLeft+booklet.xSize/2-booklet.getFontRenderer().getStringWidth(strg)/2-3, booklet.guiTop+12, 0);
             strg = TextFormatting.DARK_GREEN+StringUtil.localize("info."+ModUtil.MOD_ID+".booklet.manualName.2");
@@ -109,7 +109,7 @@ public class BookletUtils{
             booklet.getFontRenderer().drawString(strg, booklet.guiLeft+booklet.xSize/2-booklet.getFontRenderer().getStringWidth(strg)/2-3, booklet.guiTop+33, 0);
         }
 
-        String strg = booklet.currentEntrySet.chapter == null ? (booklet.currentEntrySet.entry == null ? StringUtil.localize("itemGroup."+ModUtil.MOD_ID) : booklet.currentEntrySet.entry.getLocalizedName()) : booklet.currentEntrySet.chapter.getLocalizedName();
+        String strg = booklet.currentEntrySet.getCurrentChapter() == null ? (booklet.currentEntrySet.getCurrentEntry() == null ? StringUtil.localize("itemGroup."+ModUtil.MOD_ID) : booklet.currentEntrySet.getCurrentEntry().getLocalizedName()) : booklet.currentEntrySet.getCurrentChapter().getLocalizedName();
         booklet.drawCenteredString(booklet.getFontRenderer(), strg, booklet.guiLeft+booklet.xSize/2, booklet.guiTop-9, StringUtil.DECIMAL_COLOR_WHITE);
     }
 
@@ -119,12 +119,12 @@ public class BookletUtils{
      * @param pre If the hover info texts or the icon should be drawn
      */
     public static void drawAchievementInfo(GuiBooklet booklet, boolean pre, int mouseX, int mouseY){
-        if(booklet.currentEntrySet.chapter == null){
+        if(booklet.currentEntrySet.getCurrentChapter() == null){
             return;
         }
 
         ArrayList<String> infoList = null;
-        for(BookletPage page : booklet.currentEntrySet.chapter.getPages()){
+        for(BookletPage page : booklet.currentEntrySet.getCurrentChapter().getPages()){
             if(page != null && page.getItemStacksForPage() != null){
                 for(ItemStack stack : page.getItemStacksForPage()){
                     if(stack != null){
@@ -164,15 +164,15 @@ public class BookletUtils{
      * -the amount of words and chars in the index (Just for teh lulz)
      */
     public static void renderPre(GuiBooklet booklet, int mouseX, int mouseY, int ticksElapsed, boolean mousePressed){
-        if(booklet.currentEntrySet.entry != null){
+        if(booklet.currentEntrySet.getCurrentEntry() != null){
             //Renders Booklet Page Number and Content
-            if(booklet.currentEntrySet.chapter != null && booklet.currentEntrySet.page != null){
-                booklet.drawCenteredString(booklet.getFontRenderer(), booklet.currentEntrySet.page.getID()+"/"+booklet.currentEntrySet.chapter.getPages().length, booklet.guiLeft+booklet.xSize/2, booklet.guiTop+171, StringUtil.DECIMAL_COLOR_WHITE);
-                booklet.currentEntrySet.page.renderPre(booklet, mouseX, mouseY, ticksElapsed, mousePressed);
+            if(booklet.currentEntrySet.getCurrentChapter() != null && booklet.currentEntrySet.getCurrentPage() != null){
+                booklet.drawCenteredString(booklet.getFontRenderer(), booklet.currentEntrySet.getCurrentPage().getID()+"/"+booklet.currentEntrySet.getCurrentChapter().getPages().length, booklet.guiLeft+booklet.xSize/2, booklet.guiTop+171, StringUtil.DECIMAL_COLOR_WHITE);
+                booklet.currentEntrySet.getCurrentPage().renderPre(booklet, mouseX, mouseY, ticksElapsed, mousePressed);
             }
             //Renders Chapter Page Number
             else{
-                booklet.drawCenteredString(booklet.getFontRenderer(), booklet.currentEntrySet.pageInIndex+"/"+booklet.indexPageAmount, booklet.guiLeft+booklet.xSize/2, booklet.guiTop+171, StringUtil.DECIMAL_COLOR_WHITE);
+                booklet.drawCenteredString(booklet.getFontRenderer(), booklet.currentEntrySet.getPageInIndex()+"/"+booklet.indexPageAmount, booklet.guiLeft+booklet.xSize/2, booklet.guiTop+171, StringUtil.DECIMAL_COLOR_WHITE);
             }
         }
         //Renders the amount of words and chars the book has
@@ -211,8 +211,8 @@ public class BookletUtils{
      */
     @SuppressWarnings("unchecked")
     public static void updateSearchBar(GuiBooklet booklet){
-        if(booklet.currentEntrySet.entry instanceof BookletEntryAllSearch){
-            BookletEntryAllSearch currentEntry = (BookletEntryAllSearch)booklet.currentEntrySet.entry;
+        if(booklet.currentEntrySet.getCurrentEntry() instanceof BookletEntryAllSearch){
+            BookletEntryAllSearch currentEntry = (BookletEntryAllSearch)booklet.currentEntrySet.getCurrentEntry();
             if(booklet.searchField.getText() != null && !booklet.searchField.getText().isEmpty()){
                 currentEntry.chapters.clear();
 
@@ -226,7 +226,7 @@ public class BookletUtils{
             else{
                 currentEntry.setChapters((ArrayList<IBookletChapter>)currentEntry.allChapters.clone());
             }
-            openIndexEntry(booklet, booklet.currentEntrySet.entry, booklet.currentEntrySet.pageInIndex, false);
+            openIndexEntry(booklet, booklet.currentEntrySet.getCurrentEntry(), booklet.currentEntrySet.getPageInIndex(), false);
         }
     }
 
@@ -255,16 +255,16 @@ public class BookletUtils{
             }
         }
 
-        booklet.currentEntrySet.page = null;
-        booklet.currentEntrySet.chapter = null;
+        booklet.currentEntrySet.setPage(null);
+        booklet.currentEntrySet.setChapter(null);
 
-        booklet.currentEntrySet.entry = entry;
+        booklet.currentEntrySet.setEntry(entry);
         booklet.indexPageAmount = entry == null ? 1 : entry.getChapters().size()/booklet.chapterButtons.length+1;
-        booklet.currentEntrySet.pageInIndex = entry == null ? 1 : (booklet.indexPageAmount <= page || page <= 0 ? booklet.indexPageAmount : page);
+        booklet.currentEntrySet.setPageInIndex(entry == null ? 1 : (booklet.indexPageAmount <= page || page <= 0 ? booklet.indexPageAmount : page));
 
         booklet.buttonPreviousScreen.visible = entry != null;
-        booklet.buttonForward.visible = booklet.currentEntrySet.pageInIndex < booklet.indexPageAmount;
-        booklet.buttonBackward.visible = booklet.currentEntrySet.pageInIndex > 1;
+        booklet.buttonForward.visible = booklet.currentEntrySet.getPageInIndex() < booklet.indexPageAmount;
+        booklet.buttonBackward.visible = booklet.currentEntrySet.getPageInIndex() > 1;
 
         for(int i = 0; i < booklet.chapterButtons.length; i++){
             IndexButton button = (IndexButton)booklet.chapterButtons[i];
@@ -282,10 +282,10 @@ public class BookletUtils{
                 }
             }
             else{
-                boolean entryExists = entry.getChapters().size() > i+(booklet.chapterButtons.length*booklet.currentEntrySet.pageInIndex-booklet.chapterButtons.length);
+                boolean entryExists = entry.getChapters().size() > i+(booklet.chapterButtons.length*booklet.currentEntrySet.getPageInIndex()-booklet.chapterButtons.length);
                 button.visible = entryExists;
                 if(entryExists){
-                    IBookletChapter chap = entry.getChapters().get(i+(booklet.chapterButtons.length*booklet.currentEntrySet.pageInIndex-booklet.chapterButtons.length));
+                    IBookletChapter chap = entry.getChapters().get(i+(booklet.chapterButtons.length*booklet.currentEntrySet.getPageInIndex()-booklet.chapterButtons.length));
                     button.displayString = chap.getLocalizedNameWithFormatting();
                     button.chap = chap;
                 }
@@ -299,10 +299,10 @@ public class BookletUtils{
     public static void handleChapterButtonClick(GuiBooklet booklet, GuiButton button){
         int place = Util.arrayContains(booklet.chapterButtons, button);
         if(place >= 0){
-            if(booklet.currentEntrySet.entry != null){
-                if(booklet.currentEntrySet.chapter == null){
-                    if(place < booklet.currentEntrySet.entry.getChapters().size()){
-                        IBookletChapter chap = booklet.currentEntrySet.entry.getChapters().get(place+(booklet.chapterButtons.length*booklet.currentEntrySet.pageInIndex-booklet.chapterButtons.length));
+            if(booklet.currentEntrySet.getCurrentEntry() != null){
+                if(booklet.currentEntrySet.getCurrentChapter() == null){
+                    if(place < booklet.currentEntrySet.getCurrentEntry().getChapters().size()){
+                        IBookletChapter chap = booklet.currentEntrySet.getCurrentEntry().getChapters().get(place+(booklet.chapterButtons.length*booklet.currentEntrySet.getPageInIndex()-booklet.chapterButtons.length));
                         openChapter(booklet, chap, chap.getPages()[0]);
                     }
                 }
@@ -320,7 +320,7 @@ public class BookletUtils{
      * Can only be done when the chapter is not null and an index entry is opened in the booklet
      */
     public static void openChapter(GuiBooklet booklet, IBookletChapter chapter, BookletPage page){
-        if(chapter == null || booklet.currentEntrySet.entry == null){
+        if(chapter == null || booklet.currentEntrySet.getCurrentEntry() == null){
             return;
         }
 
@@ -328,11 +328,11 @@ public class BookletUtils{
         booklet.searchField.setFocused(false);
         booklet.searchField.setText("");
 
-        booklet.currentEntrySet.chapter = chapter;
-        booklet.currentEntrySet.page = page != null && doesChapterHavePage(chapter, page) ? page : chapter.getPages()[0];
+        booklet.currentEntrySet.setChapter(chapter);
+        booklet.currentEntrySet.setPage(page != null && doesChapterHavePage(chapter, page) ? page : chapter.getPages()[0]);
 
-        booklet.buttonForward.visible = getNextPage(chapter, booklet.currentEntrySet.page) != null;
-        booklet.buttonBackward.visible = getPrevPage(chapter, booklet.currentEntrySet.page) != null;
+        booklet.buttonForward.visible = getNextPage(chapter, booklet.currentEntrySet.getCurrentPage()) != null;
+        booklet.buttonBackward.visible = getPrevPage(chapter, booklet.currentEntrySet.getCurrentPage()) != null;
         booklet.buttonPreviousScreen.visible = true;
 
         for(GuiButton chapterButton : booklet.chapterButtons){
@@ -384,19 +384,19 @@ public class BookletUtils{
      * Called when the "next page"-button is pressed
      */
     public static void handleNextPage(GuiBooklet booklet){
-        if(booklet.currentEntrySet.entry != null){
-            if(booklet.currentEntrySet.page != null){
-                BookletPage page = getNextPage(booklet.currentEntrySet.chapter, booklet.currentEntrySet.page);
+        if(booklet.currentEntrySet.getCurrentEntry() != null){
+            if(booklet.currentEntrySet.getCurrentPage() != null){
+                BookletPage page = getNextPage(booklet.currentEntrySet.getCurrentChapter(), booklet.currentEntrySet.getCurrentPage());
                 if(page != null){
-                    booklet.currentEntrySet.page = page;
+                    booklet.currentEntrySet.setPage(page);
                 }
 
-                booklet.buttonForward.visible = getNextPage(booklet.currentEntrySet.chapter, booklet.currentEntrySet.page) != null;
-                booklet.buttonBackward.visible = getPrevPage(booklet.currentEntrySet.chapter, booklet.currentEntrySet.page) != null;
+                booklet.buttonForward.visible = getNextPage(booklet.currentEntrySet.getCurrentChapter(), booklet.currentEntrySet.getCurrentPage()) != null;
+                booklet.buttonBackward.visible = getPrevPage(booklet.currentEntrySet.getCurrentChapter(), booklet.currentEntrySet.getCurrentPage()) != null;
             }
             else{
-                if(booklet.currentEntrySet.pageInIndex+1 <= booklet.indexPageAmount){
-                    openIndexEntry(booklet, booklet.currentEntrySet.entry, booklet.currentEntrySet.pageInIndex+1, !(booklet.currentEntrySet.entry instanceof BookletEntryAllSearch));
+                if(booklet.currentEntrySet.getPageInIndex()+1 <= booklet.indexPageAmount){
+                    openIndexEntry(booklet, booklet.currentEntrySet.getCurrentEntry(), booklet.currentEntrySet.getPageInIndex()+1, !(booklet.currentEntrySet.getCurrentEntry() instanceof BookletEntryAllSearch));
                 }
             }
         }
@@ -406,19 +406,19 @@ public class BookletUtils{
      * Called when the "previous page"-button is pressed
      */
     public static void handlePreviousPage(GuiBooklet booklet){
-        if(booklet.currentEntrySet.entry != null){
-            if(booklet.currentEntrySet.page != null){
-                BookletPage page = getPrevPage(booklet.currentEntrySet.chapter, booklet.currentEntrySet.page);
+        if(booklet.currentEntrySet.getCurrentEntry() != null){
+            if(booklet.currentEntrySet.getCurrentPage() != null){
+                BookletPage page = getPrevPage(booklet.currentEntrySet.getCurrentChapter(), booklet.currentEntrySet.getCurrentPage());
                 if(page != null){
-                    booklet.currentEntrySet.page = page;
+                    booklet.currentEntrySet.setPage(page);
                 }
 
-                booklet.buttonForward.visible = getNextPage(booklet.currentEntrySet.chapter, booklet.currentEntrySet.page) != null;
-                booklet.buttonBackward.visible = getPrevPage(booklet.currentEntrySet.chapter, booklet.currentEntrySet.page) != null;
+                booklet.buttonForward.visible = getNextPage(booklet.currentEntrySet.getCurrentChapter(), booklet.currentEntrySet.getCurrentPage()) != null;
+                booklet.buttonBackward.visible = getPrevPage(booklet.currentEntrySet.getCurrentChapter(), booklet.currentEntrySet.getCurrentPage()) != null;
             }
             else{
-                if(booklet.currentEntrySet.pageInIndex-1 > 0){
-                    openIndexEntry(booklet, booklet.currentEntrySet.entry, booklet.currentEntrySet.pageInIndex-1, !(booklet.currentEntrySet.entry instanceof BookletEntryAllSearch));
+                if(booklet.currentEntrySet.getPageInIndex()-1 > 0){
+                    openIndexEntry(booklet, booklet.currentEntrySet.getCurrentEntry(), booklet.currentEntrySet.getPageInIndex()-1, !(booklet.currentEntrySet.getCurrentEntry() instanceof BookletEntryAllSearch));
                 }
             }
         }

@@ -12,7 +12,7 @@ package de.ellpeck.actuallyadditions.mod.util;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.recipe.CrusherRecipe;
-import de.ellpeck.actuallyadditions.api.recipe.LensNoneRecipe;
+import de.ellpeck.actuallyadditions.api.recipe.LensConversionRecipe;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 
@@ -20,8 +20,8 @@ import java.util.List;
 
 public class RecipeUtil{
 
-    public static LensNoneRecipe lastReconstructorRecipe(){
-        List<LensNoneRecipe> list = ActuallyAdditionsAPI.reconstructorLensNoneRecipes;
+    public static LensConversionRecipe lastReconstructorRecipe(){
+        List<LensConversionRecipe> list = ActuallyAdditionsAPI.reconstructorLensConversionRecipes;
         return list.get(list.size()-1);
     }
 

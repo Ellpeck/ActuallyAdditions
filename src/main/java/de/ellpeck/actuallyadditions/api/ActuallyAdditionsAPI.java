@@ -12,8 +12,9 @@ package de.ellpeck.actuallyadditions.api;
 
 import de.ellpeck.actuallyadditions.api.booklet.BookletPage;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
+import de.ellpeck.actuallyadditions.api.internal.IMethodHandler;
 import de.ellpeck.actuallyadditions.api.recipe.*;
-import de.ellpeck.actuallyadditions.api.recipe.coffee.CoffeeIngredient;
+import de.ellpeck.actuallyadditions.api.recipe.CoffeeIngredient;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
@@ -29,17 +30,25 @@ public class ActuallyAdditionsAPI{
     public static final String API_ID = MOD_ID+"api";
     public static final String API_VERSION = "11";
 
+    /**
+     * Use this to handle things that aren't based in the API itself
+     * DO NOT CHANGE/OVERRIDE THIS!!
+     * This is getting initialized in Actually Additions' PreInit phase
+     */
+    public static IMethodHandler methodHandler;
+
     public static List<CrusherRecipe> crusherRecipes = new ArrayList<CrusherRecipe>();
     public static List<BallOfFurReturn> ballOfFurReturnItems = new ArrayList<BallOfFurReturn>();
     public static List<TreasureChestLoot> treasureChestLoot = new ArrayList<TreasureChestLoot>();
-    public static List<LensNoneRecipe> reconstructorLensNoneRecipes = new ArrayList<LensNoneRecipe>();
+    public static List<LensConversionRecipe> reconstructorLensConversionRecipes = new ArrayList<LensConversionRecipe>();
     public static Map<Item, IColorLensChanger> reconstructorLensColorChangers = new HashMap<Item, IColorLensChanger>();
     public static List<CoffeeIngredient> coffeeMachineIngredients = new ArrayList<CoffeeIngredient>();
 
     public static List<IBookletEntry> bookletEntries = new ArrayList<IBookletEntry>();
     public static List<BookletPage> bookletPagesWithItemStackData = new ArrayList<BookletPage>();
 
-    //These are getting initlized in Actually Additions' PreInit phase
+    //These are getting initialized in Actually Additions' PreInit phase
+    //DO NOT CHANGE/OVERRIDE THESE!!
     public static IBookletEntry entryGettingStarted;
     public static IBookletEntry entryFunctionalNonRF;
     public static IBookletEntry entryFunctionalRF;
@@ -139,26 +148,26 @@ public class ActuallyAdditionsAPI{
     }
 
     /**
-     * Adds a recipe to the Atomic Reconstructor conversion without lens
+     * Adds a recipe to the Atomic Reconstructor conversion lenses
      * StackSizes can only be 1 and greater ones will be ignored
      *
      * @param input     The input as an ItemStack
      * @param output    The output as an ItemStack
      * @param energyUse The amount of RF used per conversion
      */
-    public static void addReconstructorLensNoneRecipe(ItemStack input, ItemStack output, int energyUse){
-        reconstructorLensNoneRecipes.add(new LensNoneRecipe(input, output, energyUse));
+    public static void addReconstructorLensConversionRecipe(ItemStack input, ItemStack output, int energyUse){
+        reconstructorLensConversionRecipes.add(new LensConversionRecipe(input, output, energyUse));
     }
 
     /**
-     * Adds a recipe to the Atomic Reconstructor conversion without lens
+     * Adds a recipe to the Atomic Reconstructor conversion lenses
      *
      * @param input     The input's OreDictionary name
      * @param output    The output's OreDictionary name
      * @param energyUse The amount of RF used per conversion
      */
-    public static void addReconstructorLensNoneRecipe(String input, String output, int energyUse){
-        reconstructorLensNoneRecipes.add(new LensNoneRecipe(input, output, energyUse));
+    public static void addReconstructorLensConversionRecipe(String input, String output, int energyUse){
+        reconstructorLensConversionRecipes.add(new LensConversionRecipe(input, output, energyUse));
     }
 
     /**

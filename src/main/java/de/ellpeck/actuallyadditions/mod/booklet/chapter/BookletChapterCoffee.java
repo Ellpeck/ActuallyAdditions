@@ -13,7 +13,7 @@ package de.ellpeck.actuallyadditions.mod.booklet.chapter;
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.booklet.BookletPage;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
-import de.ellpeck.actuallyadditions.api.recipe.coffee.CoffeeIngredient;
+import de.ellpeck.actuallyadditions.api.recipe.CoffeeIngredient;
 import de.ellpeck.actuallyadditions.mod.booklet.page.BookletPageAA;
 import de.ellpeck.actuallyadditions.mod.booklet.page.PageCoffeeRecipe;
 import de.ellpeck.actuallyadditions.mod.items.ItemCoffee;
