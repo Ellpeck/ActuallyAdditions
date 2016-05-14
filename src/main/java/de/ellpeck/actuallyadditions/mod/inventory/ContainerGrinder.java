@@ -14,7 +14,7 @@ import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotOutput;
 import de.ellpeck.actuallyadditions.mod.recipe.CrusherRecipeRegistry;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityGrinder;
-import invtweaks.api.container.InventoryContainer;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -22,7 +22,7 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
 
-@InventoryContainer
+
 public class ContainerGrinder extends Container{
 
     public TileEntityGrinder tileGrinder;
