@@ -68,7 +68,7 @@ public class ItemRarmorModuleReconstructor extends ItemBase implements IRarmorMo
 
                         int energyUse = TileEntityAtomicReconstructor.ENERGY_USE*2;
                         if(fake.getEnergy() >= energyUse){
-                            Lenses.LENS_CONVERSION.invoke(world.getBlockState(pos), pos, fake);
+                            fake.getLens().invoke(world.getBlockState(pos), pos, fake);
 
                             EnumFacing hit = result.sideHit;
                             TileEntityAtomicReconstructor.shootLaser(world, player.posX-player.width/2, player.posY+player.getYOffset()+player.getEyeHeight()/2, player.posZ-player.width/2, pos.getX()+hit.getFrontOffsetX(), pos.getY()+hit.getFrontOffsetY(), pos.getZ()+hit.getFrontOffsetZ(), Lenses.LENS_CONVERSION);
