@@ -59,12 +59,9 @@ public class ItemMisc extends ItemBase{
 
     @Override
     protected void registerRendering(){
-        ResourceLocation[] resLocs = new ResourceLocation[allMiscItems.length];
         for(int i = 0; i < allMiscItems.length; i++){
             String name = this.getRegistryName()+allMiscItems[i].name;
-            resLocs[i] = new ResourceLocation(name);
             ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), new ModelResourceLocation(name, "inventory"));
         }
-        ActuallyAdditions.proxy.addRenderVariant(this, resLocs);
     }
 }

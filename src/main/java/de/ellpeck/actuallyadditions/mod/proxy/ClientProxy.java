@@ -165,11 +165,6 @@ public class ClientProxy implements IProxy{
     }
 
     @Override
-    public void addRenderVariant(Item item, ResourceLocation... location){
-        modelVariantsForRegistering.put(item, location);
-    }
-
-    @Override
     public void addColoredItem(Item item){
         colorProdividingItemsForRegistering.add(item);
     }

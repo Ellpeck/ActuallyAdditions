@@ -335,13 +335,10 @@ public class ItemDrill extends ItemEnergy{
 
     @Override
     protected void registerRendering(){
-        ResourceLocation[] resLocs = new ResourceLocation[16];
         for(int i = 0; i < 16; i++){
             String name = this.getRegistryName()+TheColoredLampColors.values()[i].name;
-            resLocs[i] = new ResourceLocation(name);
             ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), new ModelResourceLocation(name, "inventory"));
         }
-        ActuallyAdditions.proxy.addRenderVariant(this, resLocs);
     }
 
     @Override

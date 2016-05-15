@@ -28,7 +28,5 @@ public interface IProxy{
 
     void addRenderRegister(ItemStack stack, ModelResourceLocation location);
 
-    void addRenderVariant(Item item, ResourceLocation... location);
-
     void addColoredItem(Item item);
 }
