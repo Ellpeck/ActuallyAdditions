@@ -27,6 +27,7 @@ import de.ellpeck.actuallyadditions.mod.items.InitForeignPaxels;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.ItemCoffee;
 import de.ellpeck.actuallyadditions.mod.items.lens.LensRecipeHandler;
+import de.ellpeck.actuallyadditions.mod.items.lens.Lenses;
 import de.ellpeck.actuallyadditions.mod.material.InitArmorMaterials;
 import de.ellpeck.actuallyadditions.mod.material.InitToolMaterials;
 import de.ellpeck.actuallyadditions.mod.misc.*;
@@ -69,8 +70,9 @@ public class ActuallyAdditions{
     public void preInit(FMLPreInitializationEvent event){
         ModUtil.LOGGER.info("Starting PreInitialization Phase...");
 
-        InitBooklet.preInit();
         ActuallyAdditionsAPI.methodHandler = new MethodHandler();
+        Lenses.init();
+        InitBooklet.preInit();
 
         new ConfigurationHandler(event.getSuggestedConfigurationFile());
         PacketHandler.init();
