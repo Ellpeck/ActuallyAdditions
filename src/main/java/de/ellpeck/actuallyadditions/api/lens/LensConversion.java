@@ -21,11 +21,9 @@ import net.minecraft.util.math.BlockPos;
  * via the ActuallyAdditionsAPI.reconstructorLensConversionRecipes list.
  *
  * If you want to make a new type of conversion, just use your type in the recipe
- * If you want to use the default type of conversion, use DEFAULT_CONVERSION below.
+ * If you want to use the default type of conversion, use ActuallyAdditionsAPI.lensDefaultConversion.
  */
 public class LensConversion extends Lens{
-
-    public static final LensConversion DEFAULT_CONVERSION = new LensConversion();
 
     @SuppressWarnings("unchecked")
     @Override

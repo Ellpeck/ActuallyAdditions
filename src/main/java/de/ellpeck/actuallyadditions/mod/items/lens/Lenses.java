@@ -10,14 +10,16 @@
 
 package de.ellpeck.actuallyadditions.mod.items.lens;
 
-import de.ellpeck.actuallyadditions.api.lens.Lens;
+import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.lens.LensConversion;
 
 public class Lenses{
 
-    public static final LensConversion LENS_CONVERSION = LensConversion.DEFAULT_CONVERSION;
-    public static final Lens LENS_DETONATION = new LensDetonation();
-    public static final Lens LENS_DEATH = new LensDeath();
-    public static final Lens LENS_COLOR = new LensColor();
-    public static final Lens LENS_DISRUPTION = new LensDisruption();
+    public static void init(){
+        ActuallyAdditionsAPI.lensDefaultConversion = new LensConversion();
+        ActuallyAdditionsAPI.lensDetonation = new LensDetonation();
+        ActuallyAdditionsAPI.lensDeath = new LensDeath();
+        ActuallyAdditionsAPI.lensColor = new LensColor();
+        ActuallyAdditionsAPI.lensDisruption = new LensDisruption();
+    }
 }

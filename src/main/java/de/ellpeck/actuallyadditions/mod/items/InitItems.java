@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
+import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemArmorAA;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemHoeAA;
@@ -215,9 +216,9 @@ public class InitItems{
         itemSpawnerChanger = new ItemSpawnerChanger("itemSpawnerChanger");
         itemMisc = new ItemMisc("itemMisc");
         itemCrateKeeper = new ItemGeneric("itemCrateKeeper");
-        itemColorLens = new ItemLens("itemColorLens", Lenses.LENS_COLOR);
-        itemExplosionLens = new ItemLens("itemExplosionLens", Lenses.LENS_DETONATION);
-        itemDamageLens = new ItemLens("itemDamageLens", Lenses.LENS_DEATH);
+        itemColorLens = new ItemLens("itemColorLens", ActuallyAdditionsAPI.lensColor);
+        itemExplosionLens = new ItemLens("itemExplosionLens", ActuallyAdditionsAPI.lensDetonation);
+        itemDamageLens = new ItemLens("itemDamageLens", ActuallyAdditionsAPI.lensDeath);
         itemCrystal = new ItemCrystal("itemCrystal");
         itemLaserWrench = new ItemLaserWrench("itemLaserWrench");
         itemChestToCrateUpgrade = new ItemChestToCrateUpgrade("itemChestToCrateUpgrade");

@@ -13,6 +13,7 @@ package de.ellpeck.actuallyadditions.api;
 import de.ellpeck.actuallyadditions.api.booklet.BookletPage;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
 import de.ellpeck.actuallyadditions.api.internal.IMethodHandler;
+import de.ellpeck.actuallyadditions.api.lens.Lens;
 import de.ellpeck.actuallyadditions.api.lens.LensConversion;
 import de.ellpeck.actuallyadditions.api.recipe.*;
 import net.minecraft.item.Item;
@@ -28,7 +29,7 @@ public class ActuallyAdditionsAPI{
 
     public static final String MOD_ID = "actuallyadditions";
     public static final String API_ID = MOD_ID+"api";
-    public static final String API_VERSION = "12";
+    public static final String API_VERSION = "13";
 
     /**
      * Use this to handle things that aren't based in the API itself
@@ -58,6 +59,14 @@ public class ActuallyAdditionsAPI{
     public static IBookletEntry entryMisc;
     public static IBookletEntry entryCrossover;
     public static IBookletEntry allAndSearch;
+
+    //These are getting initialized in Actually Additions' PreInit phase
+    //DO NOT CHANGE/OVERRIDE THESE!!
+    public static LensConversion lensDefaultConversion;
+    public static Lens lensDetonation;
+    public static Lens lensDeath;
+    public static Lens lensColor;
+    public static Lens lensDisruption;
 
     /**
      * Adds a Recipe to the Crusher Recipe Registry
@@ -162,7 +171,7 @@ public class ActuallyAdditionsAPI{
     }
 
     public static void addReconstructorLensConversionRecipe(ItemStack input, ItemStack output, int energyUse){
-        addReconstructorLensConversionRecipe(input, output, energyUse, LensConversion.DEFAULT_CONVERSION);
+        addReconstructorLensConversionRecipe(input, output, energyUse, lensDefaultConversion);
     }
 
     /**
@@ -179,7 +188,7 @@ public class ActuallyAdditionsAPI{
     }
 
     public static void addReconstructorLensConversionRecipe(String input, String output, int energyUse){
-        addReconstructorLensConversionRecipe(input, output, energyUse, LensConversion.DEFAULT_CONVERSION);
+        addReconstructorLensConversionRecipe(input, output, energyUse, lensDefaultConversion);
     }
 
     /**

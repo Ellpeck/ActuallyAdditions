@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
+import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.lens.ILensItem;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
@@ -128,7 +129,7 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
                 return ((ILensItem)this.slots[0].getItem()).getLens();
             }
         }
-        return this.counter >= 500 ? Lenses.LENS_DISRUPTION : Lenses.LENS_CONVERSION;
+        return this.counter >= 500 ? ActuallyAdditionsAPI.lensDisruption : ActuallyAdditionsAPI.lensDefaultConversion;
     }
 
     @Override
