@@ -4,27 +4,27 @@ The things listed below are special cases and exceptions from the above. They ha
 Everything that is not listed below applies to the above.
 
 ### YOU MAY
-* Fork and modify the Code
-* Submit Pull Requests
-* Copy (SMALL!) Parts of the Code for other Projects
-* Make a Review/Spotlight of the Mod or use it in a Modpack
-* Make Let's Play (and similar) Videos containing the Mod
+* Fork and modify the code.
+* Submit pull requests.
+* Copy (SMALL!) parts of the code for other projects.
+* Make a review/spotlight of the mod or use it in a modpack.
+* Make Let's Play (and similar) videos containing the mod.
 
 ### YOU CAN NOT
-* Copy the entire Code or claim it is yours.
-* Reupload the Code or Mod to another website or claim you made it.
-* Copy entire Classes, Methods or other big Parts of Code.
+* Copy the entire code or claim it is yours.
+* Reupload the code or mod to another website or claim you made it.
+* Copy entire classes, methods or other big parts of code.
 
 ### YOU HAVE TO
 * Always credit me. Don't be a jerk and copy entire portions of the code and claim they're yours.
-* When it comes to the code, always link back to this Repository.
-* When it comes to the Mod, always link back to the the Forum Thread linked above.
+* When it comes to the code, always link back to the official repository.
+* When it comes to the Mod, always link back to the the official Minecraft Forum thread or CurseForge page.
 
 ### NOTES
 * The Actually Additions API can be excerpted for use in other projects, however it should not be modified. It can be redistributed with other mods (if it is getting used), however it should still be visible that it is a part of Actually Additions. Do not remove the copyright header from any of the API's files.
-* The above License only applies for Code I wrote myself, any APIs used (such as the CoFH API) have their own License that is being respected.
-* There are some excerpts from other code used (such as the OpenBlocks XP System). Credit to the creators of these parts is always given and their Permission is granted or their License is respected.
-* Almost all of the Assets used in this Mod are made by Glenthor and are owned by me. You are not allowed to copy them for any other Project.
-* Parts of this License, especially restrictive ones, can be ignored with Personal Permission. Said Permission, however, will only be given to people I know or someone who has a very good reason for needing it. If you don't, don't ask.
+* The above License only applies for code I wrote myself, any APIs used (such as the CoFH API) have their own License that is being respected.
+* There are some excerpts from other code used (such as the OpenBlocks XP system). Credit to the creators of these parts is always given and their permission is granted or their license is respected.
+* Almost all of the assets used in this mod are made by Glenthor and are owned by me. You are not allowed to copy them for any other project.
+* Parts of this license, especially restrictive ones, can be ignored with personal permission. Said permission, however, will only be given to people I know or someone who has a very good reason for needing it. If you don't, don't ask.
 
 © 2015-2016 Ellpeck
