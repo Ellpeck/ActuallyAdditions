@@ -10,6 +10,7 @@ import net.minecraft.dispenser.IBehaviorDispenseItem;
 import net.minecraft.dispenser.IBlockSource;
 import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
@@ -80,6 +81,11 @@ public abstract class ItemMinecartAA extends ItemBase{
         this.maxStackSize = 1;
 
         BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(this, MINECART_DISPENSER_BEHAVIOR);
+    }
+
+    @Override
+    public EnumRarity getRarity(ItemStack stack){
+        return EnumRarity.UNCOMMON;
     }
 
     public abstract EntityMinecart createCart(World world, double x, double y, double z);
