@@ -1,11 +1,11 @@
 /*
- * This file ("JEIActuallyAdditionsPlugin.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("JEIActuallyAdditionsPlugin.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.jei;
@@ -34,11 +34,13 @@ import mezz.jei.api.recipe.VanillaRecipeCategoryUid;
 import mezz.jei.api.recipe.transfer.IRecipeTransferRegistry;
 import net.minecraft.item.ItemStack;
 
+import javax.annotation.Nonnull;
+
 @JEIPlugin
 public class JEIActuallyAdditionsPlugin implements IModPlugin{
 
     @Override
-    public void register(IModRegistry registry){
+    public void register(@Nonnull IModRegistry registry){
         IJeiHelpers helpers = registry.getJeiHelpers();
 
         registry.addRecipeCategories(
@@ -98,7 +100,7 @@ public class JEIActuallyAdditionsPlugin implements IModPlugin{
     }
 
     @Override
-    public void onRuntimeAvailable(IJeiRuntime jeiRuntime){
+    public void onRuntimeAvailable(@Nonnull IJeiRuntime jeiRuntime){
 
     }
 }

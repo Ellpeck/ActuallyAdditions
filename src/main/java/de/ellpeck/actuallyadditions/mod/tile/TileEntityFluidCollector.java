@@ -1,11 +1,11 @@
 /*
- * This file ("TileEntityFluidCollector.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("TileEntityFluidCollector.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.tile;
@@ -60,39 +60,37 @@ public class TileEntityFluidCollector extends TileEntityBase implements IFluidHa
         EnumFacing sideToManipulate = WorldUtil.getDirectionByPistonRotation(PosUtil.getMetadata(this.pos, this.worldObj));
         BlockPos coordsBlock = WorldUtil.getCoordsFromSide(sideToManipulate, this.pos, 0);
 
-        if(coordsBlock != null){
-            Block blockToBreak = PosUtil.getBlock(coordsBlock, this.worldObj);
-            if(!this.isPlacer && blockToBreak != null && PosUtil.getMetadata(coordsBlock, this.worldObj) == 0 && Util.BUCKET <= this.tank.getCapacity()-this.tank.getFluidAmount()){
-                if(blockToBreak instanceof IFluidBlock && ((IFluidBlock)blockToBreak).getFluid() != null){
-                    if(this.tank.fill(new FluidStack(((IFluidBlock)blockToBreak).getFluid(), Util.BUCKET), false) >= Util.BUCKET){
-                        this.tank.fill(new FluidStack(((IFluidBlock)blockToBreak).getFluid(), Util.BUCKET), true);
-                        WorldUtil.breakBlockAtSide(sideToManipulate, this.worldObj, this.pos);
-                    }
-                }
-                else if(blockToBreak == Blocks.LAVA || blockToBreak == Blocks.FLOWING_LAVA){
-                    if(this.tank.fill(new FluidStack(FluidRegistry.LAVA, Util.BUCKET), false) >= Util.BUCKET){
-                        this.tank.fill(new FluidStack(FluidRegistry.LAVA, Util.BUCKET), true);
-                        WorldUtil.breakBlockAtSide(sideToManipulate, this.worldObj, this.pos);
-                    }
-                }
-                else if(blockToBreak == Blocks.WATER || blockToBreak == Blocks.FLOWING_WATER){
-                    if(this.tank.fill(new FluidStack(FluidRegistry.WATER, Util.BUCKET), false) >= Util.BUCKET){
-                        this.tank.fill(new FluidStack(FluidRegistry.WATER, Util.BUCKET), true);
-                        WorldUtil.breakBlockAtSide(sideToManipulate, this.worldObj, this.pos);
-                    }
+        Block blockToBreak = PosUtil.getBlock(coordsBlock, this.worldObj);
+        if(!this.isPlacer && blockToBreak != null && PosUtil.getMetadata(coordsBlock, this.worldObj) == 0 && Util.BUCKET <= this.tank.getCapacity()-this.tank.getFluidAmount()){
+            if(blockToBreak instanceof IFluidBlock && ((IFluidBlock)blockToBreak).getFluid() != null){
+                if(this.tank.fill(new FluidStack(((IFluidBlock)blockToBreak).getFluid(), Util.BUCKET), false) >= Util.BUCKET){
+                    this.tank.fill(new FluidStack(((IFluidBlock)blockToBreak).getFluid(), Util.BUCKET), true);
+                    WorldUtil.breakBlockAtSide(sideToManipulate, this.worldObj, this.pos);
                 }
             }
-            else if(this.isPlacer && PosUtil.getBlock(coordsBlock, this.worldObj).isReplaceable(this.worldObj, coordsBlock)){
-                if(this.tank.getFluidAmount() >= Util.BUCKET){
-                    Block block = this.tank.getFluid().getFluid().getBlock();
-                    if(block != null){
-                        BlockPos offsetPos = this.pos.offset(sideToManipulate);
-                        Block blockPresent = PosUtil.getBlock(offsetPos, this.worldObj);
-                        boolean placeable = !(blockPresent instanceof BlockLiquid) && !(blockPresent instanceof IFluidBlock) && blockPresent.isReplaceable(this.worldObj, offsetPos);
-                        if(placeable){
-                            PosUtil.setBlock(offsetPos, this.worldObj, block, 0, 3);
-                            this.tank.drain(Util.BUCKET, true);
-                        }
+            else if(blockToBreak == Blocks.LAVA || blockToBreak == Blocks.FLOWING_LAVA){
+                if(this.tank.fill(new FluidStack(FluidRegistry.LAVA, Util.BUCKET), false) >= Util.BUCKET){
+                    this.tank.fill(new FluidStack(FluidRegistry.LAVA, Util.BUCKET), true);
+                    WorldUtil.breakBlockAtSide(sideToManipulate, this.worldObj, this.pos);
+                }
+            }
+            else if(blockToBreak == Blocks.WATER || blockToBreak == Blocks.FLOWING_WATER){
+                if(this.tank.fill(new FluidStack(FluidRegistry.WATER, Util.BUCKET), false) >= Util.BUCKET){
+                    this.tank.fill(new FluidStack(FluidRegistry.WATER, Util.BUCKET), true);
+                    WorldUtil.breakBlockAtSide(sideToManipulate, this.worldObj, this.pos);
+                }
+            }
+        }
+        else if(this.isPlacer && PosUtil.getBlock(coordsBlock, this.worldObj).isReplaceable(this.worldObj, coordsBlock)){
+            if(this.tank.getFluidAmount() >= Util.BUCKET){
+                Block block = this.tank.getFluid().getFluid().getBlock();
+                if(block != null){
+                    BlockPos offsetPos = this.pos.offset(sideToManipulate);
+                    Block blockPresent = PosUtil.getBlock(offsetPos, this.worldObj);
+                    boolean placeable = !(blockPresent instanceof BlockLiquid) && !(blockPresent instanceof IFluidBlock) && blockPresent.isReplaceable(this.worldObj, offsetPos);
+                    if(placeable){
+                        PosUtil.setBlock(offsetPos, this.worldObj, block, 0, 3);
+                        this.tank.drain(Util.BUCKET, true);
                     }
                 }
             }

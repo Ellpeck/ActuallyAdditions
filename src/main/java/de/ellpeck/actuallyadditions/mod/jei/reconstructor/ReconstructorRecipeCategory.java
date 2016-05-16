@@ -1,11 +1,11 @@
 /*
- * This file ("ReconstructorRecipeCategory.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("ReconstructorRecipeCategory.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.jei.reconstructor;
@@ -52,12 +52,12 @@ public class ReconstructorRecipeCategory implements IRecipeCategory{
     }
 
     @Override
-    public void drawExtras(Minecraft minecraft){
+    public void drawExtras(@Nonnull Minecraft minecraft){
         AssetUtil.renderStackToGui(RECONSTRUCTOR, 34, 19, 1.0F);
     }
 
     @Override
-    public void drawAnimations(Minecraft minecraft){
+    public void drawAnimations(@Nonnull Minecraft minecraft){
 
     }
 

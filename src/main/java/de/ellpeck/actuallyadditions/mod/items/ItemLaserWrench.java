@@ -1,11 +1,11 @@
 /*
- * This file ("ItemLaserWrench.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("ItemLaserWrench.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.items;
@@ -50,18 +50,20 @@ public class ItemLaserWrench extends ItemBase{
                 }
                 else{
                     BlockPos savedPos = ItemPhantomConnector.getStoredPosition(stack);
-                    TileEntity savedTile = world.getTileEntity(savedPos);
-                    if(ItemPhantomConnector.getStoredWorld(stack) == world && savedTile instanceof TileEntityLaserRelay && ((TileEntityLaserRelay)savedTile).isItem == ((TileEntityLaserRelay)tile).isItem && LaserRelayConnectionHandler.getInstance().addConnection(savedPos, pos)){
-                        ItemPhantomConnector.clearStorage(stack);
+                    if(savedPos != null){
+                        TileEntity savedTile = world.getTileEntity(savedPos);
+                        if(ItemPhantomConnector.getStoredWorld(stack) == world && savedTile instanceof TileEntityLaserRelay && ((TileEntityLaserRelay)savedTile).isItem == ((TileEntityLaserRelay)tile).isItem && LaserRelayConnectionHandler.getInstance().addConnection(savedPos, pos)){
+                            ItemPhantomConnector.clearStorage(stack);
 
-                        ((TileEntityLaserRelay)world.getTileEntity(savedPos)).sendUpdate();
-                        ((TileEntityLaserRelay)world.getTileEntity(pos)).sendUpdate();
+                            ((TileEntityLaserRelay)world.getTileEntity(savedPos)).sendUpdate();
+                            ((TileEntityLaserRelay)world.getTileEntity(pos)).sendUpdate();
 
-                        player.addChatComponentMessage(new TextComponentString(StringUtil.localize("tooltip."+ModUtil.MOD_ID+".laser.connected.desc")));
-                    }
-                    else{
-                        player.addChatComponentMessage(new TextComponentString(StringUtil.localize("tooltip."+ModUtil.MOD_ID+".laser.cantConnect.desc")));
-                        ItemPhantomConnector.clearStorage(stack);
+                            player.addChatComponentMessage(new TextComponentString(StringUtil.localize("tooltip."+ModUtil.MOD_ID+".laser.connected.desc")));
+                        }
+                        else{
+                            player.addChatComponentMessage(new TextComponentString(StringUtil.localize("tooltip."+ModUtil.MOD_ID+".laser.cantConnect.desc")));
+                            ItemPhantomConnector.clearStorage(stack);
+                        }
                     }
                 }
                 return EnumActionResult.SUCCESS;

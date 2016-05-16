@@ -1,3 +1,13 @@
+/*
+ * This file ("TileEntityItemViewer.java") is part of the Actually Additions mod for Minecraft.
+ * It is created and owned by Ellpeck and distributed
+ * under the Actually Additions License to be found at
+ * http://ellpeck.de/actaddlicense
+ * View the source code at https://github.com/Ellpeck/ActuallyAdditions
+ *
+ * © 2015-2016 Ellpeck Ellpeck
+ */
+
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.misc.LaserRelayConnectionHandler;
@@ -8,6 +18,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.items.IItemHandler;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -31,17 +42,19 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
 
     private SpecificItemHandlerInfo getSwitchedIndexHandler(int i){
         List<GenericItemHandlerInfo> infos = this.getItemHandlerInfos();
-        Collections.sort(infos);
-        int currentI = 0;
         if(infos != null && !infos.isEmpty()){
-            for(GenericItemHandlerInfo info : infos){
-                for(IItemHandler handler : info.handlers){
-                    int slotAmount = handler.getSlots();
-                    if(currentI+slotAmount > i){
-                        return new SpecificItemHandlerInfo(handler, i-currentI, info.relayInQuestion);
-                    }
-                    else{
-                        currentI += slotAmount;
+            Collections.sort(infos);
+            int currentI = 0;
+            if(!infos.isEmpty()){
+                for(GenericItemHandlerInfo info : infos){
+                    for(IItemHandler handler : info.handlers){
+                        int slotAmount = handler.getSlots();
+                        if(currentI+slotAmount > i){
+                            return new SpecificItemHandlerInfo(handler, i-currentI, info.relayInQuestion);
+                        }
+                        else{
+                            currentI += slotAmount;
+                        }
                     }
                 }
             }
@@ -92,7 +105,7 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
     private boolean isWhitelisted(SpecificItemHandlerInfo handler, ItemStack stack){
         boolean whitelisted = handler.relayInQuestion.isWhitelisted(stack);
         TileEntityLaserRelayItem connected = this.getConnectedRelay();
-        if(connected != handler.relayInQuestion){
+        if(connected != null && connected != handler.relayInQuestion){
             return whitelisted && connected.isWhitelisted(stack);
         }
         else{
@@ -223,19 +236,19 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
         }
 
         @Override
-        public int compareTo(GenericItemHandlerInfo other){
-            if(other != null){
-                boolean thisWhitelist = this.relayInQuestion instanceof TileEntityLaserRelayItemWhitelist;
-                boolean otherWhitelist = other.relayInQuestion instanceof TileEntityLaserRelayItemWhitelist;
+        public int compareTo(@Nonnull GenericItemHandlerInfo other){
+            boolean thisWhitelist = this.relayInQuestion instanceof TileEntityLaserRelayItemWhitelist;
+            boolean otherWhitelist = other.relayInQuestion instanceof TileEntityLaserRelayItemWhitelist;
 
-                if(!thisWhitelist && otherWhitelist){
-                    return 1;
-                }
-                else if(thisWhitelist && !otherWhitelist){
-                    return -1;
-                }
+            if(!thisWhitelist && otherWhitelist){
+                return 1;
             }
-            return 0;
+            else if(thisWhitelist && !otherWhitelist){
+                return -1;
+            }
+            else{
+                return 0;
+            }
         }
     }
 }

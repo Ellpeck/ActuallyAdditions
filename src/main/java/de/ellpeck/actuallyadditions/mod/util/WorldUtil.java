@@ -1,11 +1,11 @@
 /*
- * This file ("WorldUtil.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("WorldUtil.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.util;
@@ -79,10 +79,7 @@ public class WorldUtil{
 
     public static TileEntity getTileEntityFromSide(EnumFacing side, World world, BlockPos pos){
         BlockPos c = getCoordsFromSide(side, pos, 0);
-        if(c != null){
-            return world.getTileEntity(c);
-        }
-        return null;
+        return world.getTileEntity(c);
     }
 
     /**
@@ -169,13 +166,11 @@ public class WorldUtil{
 
     public static void dropItemAtSide(EnumFacing side, World world, BlockPos pos, ItemStack stack){
         BlockPos coords = getCoordsFromSide(side, pos, 0);
-        if(coords != null){
-            EntityItem item = new EntityItem(world, coords.getX()+0.5, coords.getY()+0.5, coords.getZ()+0.5, stack);
-            item.motionX = 0;
-            item.motionY = 0;
-            item.motionZ = 0;
-            world.spawnEntityInWorld(item);
-        }
+        EntityItem item = new EntityItem(world, coords.getX()+0.5, coords.getY()+0.5, coords.getZ()+0.5, stack);
+        item.motionX = 0;
+        item.motionY = 0;
+        item.motionZ = 0;
+        world.spawnEntityInWorld(item);
     }
 
     public static EnumFacing getDirectionBySidesInOrder(int side){
@@ -259,7 +254,7 @@ public class WorldUtil{
         }
 
         //Load the slots again
-        if(!actuallyDo && backupSlots != null){
+        if(!actuallyDo){
             for(int i = 0; i < backupSlots.length; i++){
                 inventory.setInventorySlotContents(i, backupSlots[i]);
             }

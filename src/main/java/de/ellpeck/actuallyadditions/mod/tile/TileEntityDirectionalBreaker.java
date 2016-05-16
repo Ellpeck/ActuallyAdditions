@@ -1,11 +1,11 @@
 /*
- * This file ("TileEntityDirectionalBreaker.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("TileEntityDirectionalBreaker.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.tile;
@@ -84,22 +84,20 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase implem
 
             for(int i = 0; i < RANGE; i++){
                 BlockPos coordsBlock = WorldUtil.getCoordsFromSide(sideToManipulate, this.pos, i);
-                if(coordsBlock != null){
-                    Block blockToBreak = PosUtil.getBlock(coordsBlock, this.worldObj);
-                    if(blockToBreak != null && !(blockToBreak instanceof BlockAir) && blockToBreak.getBlockHardness(this.worldObj.getBlockState(coordsBlock), this.worldObj, this.pos) > -1.0F){
-                        List<ItemStack> drops = blockToBreak.getDrops(this.worldObj, coordsBlock, this.worldObj.getBlockState(coordsBlock), 0);
-                        float chance = ForgeEventFactory.fireBlockHarvesting(drops, this.worldObj, coordsBlock, this.worldObj.getBlockState(coordsBlock), 0, 1, false, null);
+                Block blockToBreak = PosUtil.getBlock(coordsBlock, this.worldObj);
+                if(blockToBreak != null && !(blockToBreak instanceof BlockAir) && blockToBreak.getBlockHardness(this.worldObj.getBlockState(coordsBlock), this.worldObj, this.pos) > -1.0F){
+                    List<ItemStack> drops = blockToBreak.getDrops(this.worldObj, coordsBlock, this.worldObj.getBlockState(coordsBlock), 0);
+                    float chance = ForgeEventFactory.fireBlockHarvesting(drops, this.worldObj, coordsBlock, this.worldObj.getBlockState(coordsBlock), 0, 1, false, null);
 
-                        if(Util.RANDOM.nextFloat() <= chance){
-                            if(WorldUtil.addToInventory(this, drops, false, true)){
-                                if(!ConfigValues.lessBlockBreakingEffects){
-                                    this.worldObj.playAuxSFX(2001, coordsBlock, Block.getStateId(this.worldObj.getBlockState(coordsBlock)));
-                                }
-                                WorldUtil.breakBlockAtSide(sideToManipulate, this.worldObj, this.getPos(), i);
-                                WorldUtil.addToInventory(this, drops, true, true);
-                                this.storage.extractEnergy(ENERGY_USE, false);
-                                this.markDirty();
+                    if(Util.RANDOM.nextFloat() <= chance){
+                        if(WorldUtil.addToInventory(this, drops, false, true)){
+                            if(!ConfigValues.lessBlockBreakingEffects){
+                                this.worldObj.playAuxSFX(2001, coordsBlock, Block.getStateId(this.worldObj.getBlockState(coordsBlock)));
                             }
+                            WorldUtil.breakBlockAtSide(sideToManipulate, this.worldObj, this.getPos(), i);
+                            WorldUtil.addToInventory(this, drops, true, true);
+                            this.storage.extractEnergy(ENERGY_USE, false);
+                            this.markDirty();
                         }
                     }
                 }

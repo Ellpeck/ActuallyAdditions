@@ -1,11 +1,11 @@
 /*
- * This file ("PersistentClientData.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("PersistentClientData.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.util.playerdata;
@@ -34,20 +34,20 @@ public class PersistentClientData{
     public static void saveBookPage(GuiBooklet gui){
         NBTTagCompound baseCompound = getBaseCompound();
         NBTTagCompound worldCompound = getCompoundForWorld(baseCompound);
-        //Save Entry etc.
         if(worldCompound != null){
+            //Save Entry etc.
             worldCompound.setTag("SavedEntry", gui.currentEntrySet.writeToNBT());
             worldCompound.setString("SearchWord", gui.searchField.getText());
-        }
 
-        //Save Bookmarks
-        NBTTagList list = new NBTTagList();
-        for(int i = 0; i < gui.bookmarkButtons.length; i++){
-            BookmarkButton button = (BookmarkButton)gui.bookmarkButtons[i];
+            //Save Bookmarks
+            NBTTagList list = new NBTTagList();
+            for(int i = 0; i < gui.bookmarkButtons.length; i++){
+                BookmarkButton button = (BookmarkButton)gui.bookmarkButtons[i];
 
-            list.appendTag(button.assignedEntry.writeToNBT());
+                list.appendTag(button.assignedEntry.writeToNBT());
+            }
+            worldCompound.setTag("Bookmarks", list);
         }
-        worldCompound.setTag("Bookmarks", list);
 
         writeCompound(baseCompound, worldCompound);
     }

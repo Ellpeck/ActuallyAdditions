@@ -1,11 +1,11 @@
 /*
- * This file ("TileEntityBreaker.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("TileEntityBreaker.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.tile;
@@ -81,30 +81,28 @@ public class TileEntityBreaker extends TileEntityInventoryBase implements IRedst
         EnumFacing sideToManipulate = WorldUtil.getDirectionByPistonRotation(PosUtil.getMetadata(this.pos, this.worldObj));
 
         BlockPos coordsBlock = WorldUtil.getCoordsFromSide(sideToManipulate, this.pos, 0);
-        if(coordsBlock != null){
-            Block blockToBreak = PosUtil.getBlock(coordsBlock, this.worldObj);
-            IBlockState stateToBreak = this.worldObj.getBlockState(coordsBlock);
-            if(!this.isPlacer && blockToBreak != null && !(blockToBreak instanceof BlockAir) && blockToBreak.getBlockHardness(stateToBreak, this.worldObj, coordsBlock) > -1.0F){
-                List<ItemStack> drops = blockToBreak.getDrops(this.worldObj, coordsBlock, stateToBreak, 0);
-                float chance = ForgeEventFactory.fireBlockHarvesting(drops, this.worldObj, coordsBlock, this.worldObj.getBlockState(coordsBlock), 0, 1, false, null);
+        Block blockToBreak = PosUtil.getBlock(coordsBlock, this.worldObj);
+        IBlockState stateToBreak = this.worldObj.getBlockState(coordsBlock);
+        if(!this.isPlacer && blockToBreak != null && !(blockToBreak instanceof BlockAir) && blockToBreak.getBlockHardness(stateToBreak, this.worldObj, coordsBlock) > -1.0F){
+            List<ItemStack> drops = blockToBreak.getDrops(this.worldObj, coordsBlock, stateToBreak, 0);
+            float chance = ForgeEventFactory.fireBlockHarvesting(drops, this.worldObj, coordsBlock, this.worldObj.getBlockState(coordsBlock), 0, 1, false, null);
 
-                if(Util.RANDOM.nextFloat() <= chance){
-                    if(WorldUtil.addToInventory(this, drops, false, true)){
-                        if(!ConfigValues.lessBlockBreakingEffects){
-                            this.worldObj.playAuxSFX(2001, coordsBlock, Block.getStateId(stateToBreak));
-                        }
-                        WorldUtil.breakBlockAtSide(sideToManipulate, this.worldObj, this.pos);
-                        WorldUtil.addToInventory(this, drops, true, true);
-                        this.markDirty();
+            if(Util.RANDOM.nextFloat() <= chance){
+                if(WorldUtil.addToInventory(this, drops, false, true)){
+                    if(!ConfigValues.lessBlockBreakingEffects){
+                        this.worldObj.playAuxSFX(2001, coordsBlock, Block.getStateId(stateToBreak));
                     }
+                    WorldUtil.breakBlockAtSide(sideToManipulate, this.worldObj, this.pos);
+                    WorldUtil.addToInventory(this, drops, true, true);
+                    this.markDirty();
                 }
             }
-            else if(this.isPlacer){
-                int theSlot = WorldUtil.findFirstFilledSlot(this.slots);
-                this.setInventorySlotContents(theSlot, WorldUtil.useItemAtSide(sideToManipulate, this.worldObj, this.pos, this.slots[theSlot]));
-                if(this.slots[theSlot] != null && this.slots[theSlot].stackSize <= 0){
-                    this.slots[theSlot] = null;
-                }
+        }
+        else if(this.isPlacer){
+            int theSlot = WorldUtil.findFirstFilledSlot(this.slots);
+            this.setInventorySlotContents(theSlot, WorldUtil.useItemAtSide(sideToManipulate, this.worldObj, this.pos, this.slots[theSlot]));
+            if(this.slots[theSlot] != null && this.slots[theSlot].stackSize <= 0){
+                this.slots[theSlot] = null;
             }
         }
     }

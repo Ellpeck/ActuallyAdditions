@@ -1,11 +1,11 @@
 /*
- * This file ("BlockLampPowerer.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("BlockLampPowerer.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.blocks;
@@ -59,7 +59,7 @@ public class BlockLampPowerer extends BlockBase{
     private void updateLamp(World world, BlockPos pos){
         if(!world.isRemote){
             BlockPos coords = WorldUtil.getCoordsFromSide(WorldUtil.getDirectionByPistonRotation(PosUtil.getMetadata(pos, world)), pos, 0);
-            if(coords != null && PosUtil.getBlock(coords, world) instanceof BlockColoredLamp){
+            if(PosUtil.getBlock(coords, world) instanceof BlockColoredLamp){
                 if(world.isBlockIndirectlyGettingPowered(pos) > 0){
                     if(!((BlockColoredLamp)PosUtil.getBlock(coords, world)).isOn){
                         PosUtil.setBlock(coords, world, InitBlocks.blockColoredLampOn, PosUtil.getMetadata(coords, world), 2);

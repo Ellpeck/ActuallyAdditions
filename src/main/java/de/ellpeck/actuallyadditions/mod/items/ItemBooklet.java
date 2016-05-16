@@ -1,11 +1,11 @@
 /*
- * This file ("ItemBooklet.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("ItemBooklet.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.items;
@@ -60,15 +60,13 @@ public class ItemBooklet extends ItemBase implements IHudDisplay{
         if(player.isSneaking()){
             Block block = PosUtil.getBlock(pos, world);
             ItemStack blockStack = new ItemStack(block, 1, PosUtil.getMetadata(pos, world));
-            if(blockStack != null){
-                BookletPage page = BookletUtils.getFirstPageForStack(blockStack);
-                if(page != null){
-                    if(world.isRemote){
-                        forcedEntry = new EntrySet(page, page.getChapter(), page.getChapter().getEntry(), ActuallyAdditionsAPI.bookletEntries.indexOf(page.getChapter().getEntry())/GuiBooklet.CHAPTER_BUTTONS_AMOUNT+1);
-                    }
-                    this.onItemRightClick(stack, world, player, hand);
-                    return EnumActionResult.SUCCESS;
+            BookletPage page = BookletUtils.getFirstPageForStack(blockStack);
+            if(page != null){
+                if(world.isRemote){
+                    forcedEntry = new EntrySet(page, page.getChapter(), page.getChapter().getEntry(), ActuallyAdditionsAPI.bookletEntries.indexOf(page.getChapter().getEntry())/GuiBooklet.CHAPTER_BUTTONS_AMOUNT+1);
                 }
+                this.onItemRightClick(stack, world, player, hand);
+                return EnumActionResult.SUCCESS;
             }
         }
         return EnumActionResult.FAIL;
@@ -101,29 +99,27 @@ public class ItemBooklet extends ItemBase implements IHudDisplay{
             Block block = PosUtil.getBlock(posHit.getBlockPos(), minecraft.theWorld);
             if(block != null && !block.isAir(minecraft.theWorld.getBlockState(posHit.getBlockPos()), minecraft.theWorld, posHit.getBlockPos())){
                 ItemStack blockStack = new ItemStack(block, 1, PosUtil.getMetadata(posHit.getBlockPos(), minecraft.theWorld));
-                if(blockStack != null){
-                    int height = resolution.getScaledHeight()/5*3;
-                    if(player.isSneaking()){
-                        BookletPage page = BookletUtils.getFirstPageForStack(blockStack);
-                        if(page != null){
-                            String strg1 = page.getChapter().getLocalizedName();
-                            String strg2 = "Page "+page.getID();
-                            String strg3 = "Right-Click to open...";
+                int height = resolution.getScaledHeight()/5*3;
+                if(player.isSneaking()){
+                    BookletPage page = BookletUtils.getFirstPageForStack(blockStack);
+                    if(page != null){
+                        String strg1 = page.getChapter().getLocalizedName();
+                        String strg2 = "Page "+page.getID();
+                        String strg3 = "Right-Click to open...";
 
-                            AssetUtil.renderStackToGui(page.getChapter().getDisplayItemStack() != null ? page.getChapter().getDisplayItemStack() : new ItemStack(InitItems.itemBooklet), resolution.getScaledWidth()/2-10, height+41, 1F);
-                            minecraft.fontRendererObj.drawStringWithShadow(TextFormatting.YELLOW+""+TextFormatting.ITALIC+strg1, resolution.getScaledWidth()/2-minecraft.fontRendererObj.getStringWidth(strg1)/2, height+20, StringUtil.DECIMAL_COLOR_WHITE);
-                            minecraft.fontRendererObj.drawStringWithShadow(TextFormatting.YELLOW+""+TextFormatting.ITALIC+strg2, resolution.getScaledWidth()/2-minecraft.fontRendererObj.getStringWidth(strg2)/2, height+30, StringUtil.DECIMAL_COLOR_WHITE);
-                            minecraft.fontRendererObj.drawStringWithShadow(TextFormatting.GOLD+strg3, resolution.getScaledWidth()/2-minecraft.fontRendererObj.getStringWidth(strg3)/2, height+60, StringUtil.DECIMAL_COLOR_WHITE);
-                        }
-                        else{
-                            String strg = TextFormatting.DARK_RED+"No Info available! Sorry :(";
-                            minecraft.fontRendererObj.drawStringWithShadow(strg, resolution.getScaledWidth()/2-minecraft.fontRendererObj.getStringWidth(strg)/2, height+60, StringUtil.DECIMAL_COLOR_WHITE);
-                        }
+                        AssetUtil.renderStackToGui(page.getChapter().getDisplayItemStack() != null ? page.getChapter().getDisplayItemStack() : new ItemStack(InitItems.itemBooklet), resolution.getScaledWidth()/2-10, height+41, 1F);
+                        minecraft.fontRendererObj.drawStringWithShadow(TextFormatting.YELLOW+""+TextFormatting.ITALIC+strg1, resolution.getScaledWidth()/2-minecraft.fontRendererObj.getStringWidth(strg1)/2, height+20, StringUtil.DECIMAL_COLOR_WHITE);
+                        minecraft.fontRendererObj.drawStringWithShadow(TextFormatting.YELLOW+""+TextFormatting.ITALIC+strg2, resolution.getScaledWidth()/2-minecraft.fontRendererObj.getStringWidth(strg2)/2, height+30, StringUtil.DECIMAL_COLOR_WHITE);
+                        minecraft.fontRendererObj.drawStringWithShadow(TextFormatting.GOLD+strg3, resolution.getScaledWidth()/2-minecraft.fontRendererObj.getStringWidth(strg3)/2, height+60, StringUtil.DECIMAL_COLOR_WHITE);
                     }
                     else{
-                        String strg = TextFormatting.DARK_GREEN+""+TextFormatting.ITALIC+"Sneak!";
+                        String strg = TextFormatting.DARK_RED+"No Info available! Sorry :(";
                         minecraft.fontRendererObj.drawStringWithShadow(strg, resolution.getScaledWidth()/2-minecraft.fontRendererObj.getStringWidth(strg)/2, height+60, StringUtil.DECIMAL_COLOR_WHITE);
                     }
+                }
+                else{
+                    String strg = TextFormatting.DARK_GREEN+""+TextFormatting.ITALIC+"Sneak!";
+                    minecraft.fontRendererObj.drawStringWithShadow(strg, resolution.getScaledWidth()/2-minecraft.fontRendererObj.getStringWidth(strg)/2, height+60, StringUtil.DECIMAL_COLOR_WHITE);
                 }
             }
         }
