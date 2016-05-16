@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.util;
 
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.dispenser.BehaviorDefaultDispenseItem;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.util.text.TextFormatting;
@@ -20,6 +21,7 @@ import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 
+import java.util.Locale;
 import java.util.Random;
 
 @SuppressWarnings("unused")
@@ -29,12 +31,12 @@ public class Util{
     public static final int WILDCARD = OreDictionary.WILDCARD_VALUE;
     public static final int BUCKET = FluidContainerRegistry.BUCKET_VOLUME;
 
-    public static final EnumRarity CRYSTAL_RED_RARITY = EnumHelper.addRarity(ModUtil.MOD_ID+"crystalRed", TextFormatting.DARK_RED, ModUtil.NAME+" Red Crystal");
-    public static final EnumRarity CRYSTAL_BLUE_RARITY = EnumHelper.addRarity(ModUtil.MOD_ID+"crystalBlue", TextFormatting.DARK_BLUE, ModUtil.NAME+" Blue Crystal");
-    public static final EnumRarity CRYSTAL_LIGHT_BLUE_RARITY = EnumHelper.addRarity(ModUtil.MOD_ID+"crystalLightBlue", TextFormatting.BLUE, ModUtil.NAME+" Light Blue Crystal");
-    public static final EnumRarity CRYSTAL_BLACK_RARITY = EnumHelper.addRarity(ModUtil.MOD_ID+"crystalBlack", TextFormatting.DARK_GRAY, ModUtil.NAME+" Black Crystal");
-    public static final EnumRarity CRYSTAL_GREEN_RARITY = EnumHelper.addRarity(ModUtil.MOD_ID+"crystalGreen", TextFormatting.DARK_GREEN, ModUtil.NAME+" Green Crystal");
-    public static final EnumRarity CRYSTAL_WHITE_RARITY = EnumHelper.addRarity(ModUtil.MOD_ID+"crystalWhite", TextFormatting.GRAY, ModUtil.NAME+" White Crystal");
+    public static final EnumRarity CRYSTAL_RED_RARITY = addRarity(ModUtil.MOD_ID+"crystalRed", TextFormatting.DARK_RED, ModUtil.NAME+" Red Crystal");
+    public static final EnumRarity CRYSTAL_BLUE_RARITY = addRarity(ModUtil.MOD_ID+"crystalBlue", TextFormatting.DARK_BLUE, ModUtil.NAME+" Blue Crystal");
+    public static final EnumRarity CRYSTAL_LIGHT_BLUE_RARITY = addRarity(ModUtil.MOD_ID+"crystalLightBlue", TextFormatting.BLUE, ModUtil.NAME+" Light Blue Crystal");
+    public static final EnumRarity CRYSTAL_BLACK_RARITY = addRarity(ModUtil.MOD_ID+"crystalBlack", TextFormatting.DARK_GRAY, ModUtil.NAME+" Black Crystal");
+    public static final EnumRarity CRYSTAL_GREEN_RARITY = addRarity(ModUtil.MOD_ID+"crystalGreen", TextFormatting.DARK_GREEN, ModUtil.NAME+" Green Crystal");
+    public static final EnumRarity CRYSTAL_WHITE_RARITY = addRarity(ModUtil.MOD_ID+"crystalWhite", TextFormatting.GRAY, ModUtil.NAME+" White Crystal");
 
     public static final EnumRarity FALLBACK_RARITY = EnumHelper.addRarity(ModUtil.MOD_ID+".fallback", TextFormatting.STRIKETHROUGH, ModUtil.NAME+" Fallback");
 
@@ -42,12 +44,12 @@ public class Util{
         MinecraftForge.EVENT_BUS.register(o);
     }
 
-    public static boolean isDevVersion(){
-        return ModUtil.VERSION.equals("@VERSION@");
+    private static EnumRarity addRarity(String name, TextFormatting color, String displayName){
+        return EnumHelper.addRarity((ModUtil.MOD_ID+"_"+name).toUpperCase(Locale.ROOT), color, displayName);
     }
 
-    public static void registerDispenserHandler(Item item, BehaviorDefaultDispenseItem handler){
-        BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(item, handler);
+    public static boolean isDevVersion(){
+        return ModUtil.VERSION.equals("@VERSION@");
     }
 
     public static int arrayContains(Object[] array, Object obj){

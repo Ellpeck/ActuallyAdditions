@@ -484,6 +484,7 @@ item.actuallyadditions.itemFoodBacon.name=Bacon
 item.actuallyadditions.itemMiscEnderStar.name=Ender Star
 item.actuallyadditions.itemSpawnerChanger.name=Spawner Changer
 item.actuallyadditions.itemMiscSpawnerShard.name=Spawner Shards
+item.actuallyadditions.itemMinecartFireworkBox.name=Firework Box Cart
 
 #Tooltips
 tooltip.actuallyadditions.onSuffix.desc=On

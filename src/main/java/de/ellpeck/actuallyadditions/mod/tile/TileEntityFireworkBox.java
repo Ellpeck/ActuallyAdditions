@@ -21,6 +21,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -71,26 +72,30 @@ public class TileEntityFireworkBox extends TileEntityBase implements IEnergyRece
 
     private void doWork(){
         if(this.storage.getEnergyStored() >= USE_PER_SHOT){
-            int range = 4;
-            int amount = Util.RANDOM.nextInt(5)+1;
-            for(int i = 0; i < amount; i++){
-                ItemStack firework = this.makeFirework();
-
-                double x = this.pos.getX()+MathHelper.getRandomDoubleInRange(Util.RANDOM, 0, range*2)-range;
-                double z = this.pos.getZ()+MathHelper.getRandomDoubleInRange(Util.RANDOM, 0, range*2)-range;
-                EntityFireworkRocket rocket = new EntityFireworkRocket(this.worldObj, x, this.pos.getY()+0.5, z, firework);
-                this.worldObj.spawnEntityInWorld(rocket);
-            }
+            spawnFireworks(this.worldObj, this.pos.getX(), this.pos.getY(), this.pos.getZ());
 
             this.storage.extractEnergy(USE_PER_SHOT, false);
         }
     }
 
-    private ItemStack makeFirework(){
+    public static void spawnFireworks(World world, double x, double y, double z){
+        int range = 4;
+        int amount = Util.RANDOM.nextInt(5)+1;
+        for(int i = 0; i < amount; i++){
+            ItemStack firework = makeFirework();
+
+            double newX = x+MathHelper.getRandomDoubleInRange(Util.RANDOM, 0, range*2)-range;
+            double newZ = z+MathHelper.getRandomDoubleInRange(Util.RANDOM, 0, range*2)-range;
+            EntityFireworkRocket rocket = new EntityFireworkRocket(world, newX, y+0.5, newZ, firework);
+            world.spawnEntityInWorld(rocket);
+        }
+    }
+
+    private static ItemStack makeFirework(){
         NBTTagList list = new NBTTagList();
         int chargesAmount = Util.RANDOM.nextInt(2)+1;
         for(int i = 0; i < chargesAmount; i++){
-            list.appendTag(this.makeFireworkCharge());
+            list.appendTag(makeFireworkCharge());
         }
 
         NBTTagCompound compound1 = new NBTTagCompound();
@@ -106,7 +111,7 @@ public class TileEntityFireworkBox extends TileEntityBase implements IEnergyRece
         return firework;
     }
 
-    private NBTTagCompound makeFireworkCharge(){
+    private static NBTTagCompound makeFireworkCharge(){
         NBTTagCompound compound = new NBTTagCompound();
 
         if(Util.RANDOM.nextFloat() >= 0.65F){

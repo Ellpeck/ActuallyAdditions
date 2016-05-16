@@ -11,6 +11,8 @@
 package de.ellpeck.actuallyadditions.mod.items;
 
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
+import de.ellpeck.actuallyadditions.mod.misc.DispenserHandlerFertilize;
+import net.minecraft.block.BlockDispenser;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemDye;
@@ -25,6 +27,8 @@ public class ItemFertilizer extends ItemBase{
 
     public ItemFertilizer(String name){
         super(name);
+
+        BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(this, new DispenserHandlerFertilize());
     }
 
     @Override
