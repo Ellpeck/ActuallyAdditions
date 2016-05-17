@@ -51,7 +51,7 @@ public class CaveWorldType extends WorldType{
     }
 
     @SubscribeEvent
-    public void onSpawn(LivingEvent.LivingUpdateEvent event){
+    public void onUpdate(LivingEvent.LivingUpdateEvent event){
         if(event.getEntity() instanceof EntityPlayerMP){
             EntityPlayerMP player = (EntityPlayerMP)event.getEntity();
             if(isCave(player.worldObj) && !player.worldObj.isRemote){
