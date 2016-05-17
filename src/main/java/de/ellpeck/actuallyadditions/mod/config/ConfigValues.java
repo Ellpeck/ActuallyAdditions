@@ -41,6 +41,8 @@ public class ConfigValues{
     public static boolean lessParticles;
     public static boolean lessBlockBreakingEffects;
 
+    public static boolean caveWorld = true; //TODO Make this proper
+
     public static void defineConfigValues(Configuration config){
 
         for(ConfigCrafting currConf : craftingConfig){

@@ -14,6 +14,7 @@ import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.mod.achievement.InitAchievements;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.booklet.InitBooklet;
+import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
 import de.ellpeck.actuallyadditions.mod.config.ConfigurationHandler;
 import de.ellpeck.actuallyadditions.mod.crafting.CrusherCrafting;
 import de.ellpeck.actuallyadditions.mod.crafting.InitCrafting;
@@ -21,6 +22,7 @@ import de.ellpeck.actuallyadditions.mod.crafting.ItemCrafting;
 import de.ellpeck.actuallyadditions.mod.entity.InitEntities;
 import de.ellpeck.actuallyadditions.mod.event.InitEvents;
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
+import de.ellpeck.actuallyadditions.mod.gen.CaveWorldType;
 import de.ellpeck.actuallyadditions.mod.gen.InitVillager;
 import de.ellpeck.actuallyadditions.mod.gen.OreGen;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
@@ -104,6 +106,11 @@ public class ActuallyAdditions{
         InitEvents.init();
         InitCrafting.init();
         DungeonLoot.init();
+
+        if(ConfigValues.caveWorld){
+            new CaveWorldType();
+        }
+
         proxy.init(event);
 
         ModUtil.LOGGER.info("Initialization Finished.");

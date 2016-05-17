@@ -21,7 +21,9 @@ import net.minecraft.world.WorldSavedData;
 public class WorldData extends WorldSavedData{
 
     public static final String DATA_TAG = ModUtil.MOD_ID+"WorldData";
-    public static WorldData instance;
+    private static WorldData instance;
+
+    public static NBTTagCompound additionalData = new NBTTagCompound();
 
     public WorldData(String tag){
         super(tag);
@@ -40,13 +42,13 @@ public class WorldData extends WorldSavedData{
                 clearOldData();
                 ModUtil.LOGGER.info("Loading WorldData!");
 
-                WorldData savedData = (WorldData)world.loadItemData(WorldData.class, WorldData.DATA_TAG);
+                WorldData savedData = (WorldData)world.loadItemData(WorldData.class, DATA_TAG);
                 //Generate new SavedData
                 if(savedData == null){
                     ModUtil.LOGGER.info("No WorldData found, creating...");
 
-                    savedData = new WorldData(WorldData.DATA_TAG);
-                    world.setItemData(WorldData.DATA_TAG, savedData);
+                    savedData = new WorldData(DATA_TAG);
+                    world.setItemData(DATA_TAG, savedData);
                 }
                 else{
                     ModUtil.LOGGER.info("WorldData sucessfully received!");
@@ -67,40 +69,50 @@ public class WorldData extends WorldSavedData{
             ModUtil.LOGGER.info("Clearing leftover Persistent Server Data from other worlds!");
             PersistentServerData.playerSaveData.clear();
         }
+        if(!additionalData.hasNoTags()){
+            ModUtil.LOGGER.info("Clearing leftover Additional Data from other worlds!");
+            additionalData = new NBTTagCompound();
+        }
     }
 
     @Override
     public void readFromNBT(NBTTagCompound compound){
-        //Laser World Data
-        NBTTagList networkList = compound.getTagList("Networks", 10);
-        for(int i = 0; i < networkList.tagCount(); i++){
-            LaserRelayConnectionHandler.Network network = LaserRelayConnectionHandler.getInstance().readNetworkFromNBT(networkList.getCompoundTagAt(i));
-            LaserRelayConnectionHandler.getInstance().networks.add(network);
-        }
+            //Laser World Data
+            NBTTagList networkList = compound.getTagList("Networks", 10);
+            for(int i = 0; i < networkList.tagCount(); i++){
+                LaserRelayConnectionHandler.Network network = LaserRelayConnectionHandler.getInstance().readNetworkFromNBT(networkList.getCompoundTagAt(i));
+                LaserRelayConnectionHandler.getInstance().networks.add(network);
+            }
 
-        //Player Data
-        NBTTagList playerList = compound.getTagList("PlayerData", 10);
-        for(int i = 0; i < playerList.tagCount(); i++){
-            PersistentServerData.PlayerSave aSave = PersistentServerData.PlayerSave.fromNBT(playerList.getCompoundTagAt(i));
-            PersistentServerData.playerSaveData.add(aSave);
-        }
+            //Player Data
+            NBTTagList playerList = compound.getTagList("PlayerData", 10);
+            for(int i = 0; i < playerList.tagCount(); i++){
+                PersistentServerData.PlayerSave aSave = PersistentServerData.PlayerSave.fromNBT(playerList.getCompoundTagAt(i));
+                PersistentServerData.playerSaveData.add(aSave);
+            }
+
+            //Additional Data
+            additionalData = compound.getCompoundTag("Additional");
     }
 
     @Override
     public void writeToNBT(NBTTagCompound compound){
-        //Laser World Data
-        NBTTagList networkList = new NBTTagList();
-        for(LaserRelayConnectionHandler.Network network : LaserRelayConnectionHandler.getInstance().networks){
-            networkList.appendTag(LaserRelayConnectionHandler.getInstance().writeNetworkToNBT(network));
-        }
-        compound.setTag("Networks", networkList);
+            //Laser World Data
+            NBTTagList networkList = new NBTTagList();
+            for(LaserRelayConnectionHandler.Network network : LaserRelayConnectionHandler.getInstance().networks){
+                networkList.appendTag(LaserRelayConnectionHandler.getInstance().writeNetworkToNBT(network));
+            }
+            compound.setTag("Networks", networkList);
 
-        //Player Data
-        NBTTagList playerList = new NBTTagList();
-        for(int i = 0; i < PersistentServerData.playerSaveData.size(); i++){
-            PersistentServerData.PlayerSave theSave = PersistentServerData.playerSaveData.get(i);
-            playerList.appendTag(theSave.toNBT());
-        }
-        compound.setTag("PlayerData", playerList);
+            //Player Data
+            NBTTagList playerList = new NBTTagList();
+            for(int i = 0; i < PersistentServerData.playerSaveData.size(); i++){
+                PersistentServerData.PlayerSave theSave = PersistentServerData.playerSaveData.get(i);
+                playerList.appendTag(theSave.toNBT());
+            }
+            compound.setTag("PlayerData", playerList);
+
+            //Additional Data
+            compound.setTag("Additional", additionalData);
     }
 }

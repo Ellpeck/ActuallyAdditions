@@ -142,10 +142,10 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
                 return level*17;
             }
             else if(level > 15 && level < 31){
-                return (int)(1.5*Math.pow(level, 2)-29.5*level+360);
+                return (int)(1.5*(level*level)-29.5*level+360);
             }
             else{
-                return (int)(3.5*Math.pow(level, 2)-151.5*level+2220);
+                return (int)(3.5*(level*level)-151.5*level+2220);
             }
         }
         return 0;

@@ -59,7 +59,6 @@ public class ClientProxy implements IProxy{
 
     private static List<Item> colorProdividingItemsForRegistering = new ArrayList<Item>();
     private static Map<ItemStack, ModelResourceLocation> modelLocationsForRegistering = new HashMap<ItemStack, ModelResourceLocation>();
-    private static Map<Item, ResourceLocation[]> modelVariantsForRegistering = new HashMap<Item, ResourceLocation[]>();
 
     private static void countBookletWords(){
         bookletWordCount = 0;
@@ -99,9 +98,6 @@ public class ClientProxy implements IProxy{
 
         for(Map.Entry<ItemStack, ModelResourceLocation> entry : modelLocationsForRegistering.entrySet()){
             ModelLoader.setCustomModelResourceLocation(entry.getKey().getItem(), entry.getKey().getItemDamage(), entry.getValue());
-        }
-        for(Map.Entry<Item, ResourceLocation[]> entry : modelVariantsForRegistering.entrySet()){
-            ModelBakery.registerItemVariants(entry.getKey(), entry.getValue());
         }
 
         this.registerCustomFluidBlockRenderer(InitFluids.fluidCanolaOil);
