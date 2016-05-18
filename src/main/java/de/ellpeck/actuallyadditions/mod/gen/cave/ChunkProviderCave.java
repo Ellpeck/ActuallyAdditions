@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.gen.cave;
 
-import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
@@ -19,21 +18,23 @@ import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.chunk.IChunkGenerator;
-import net.minecraft.world.gen.MapGenBase;
-import net.minecraft.world.gen.MapGenCaves;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
 import java.util.List;
+import java.util.Random;
 
 public class ChunkProviderCave implements IChunkGenerator{
 
     private boolean generatedSpawn;
     private World world;
+    private Random rand;
 
-    private WorldGenerator spawnGenerator = new WorldGenCaveSpawn();
+    private WorldGenerator spawnGenerator;
 
     public ChunkProviderCave(World world){
         this.world = world;
+        this.rand = new Random(world.getSeed());
+        this.spawnGenerator = new WorldGenCaveSpawn(this.rand);
     }
 
     @Override
@@ -47,9 +48,9 @@ public class ChunkProviderCave implements IChunkGenerator{
                         primer.setBlockState(x, y, z, Blocks.BEDROCK.getDefaultState());
                     }
                     else{
-                        if(Util.RANDOM.nextInt(5) <= 0){
-                            if(Util.RANDOM.nextFloat() <= 0.95F){
-                                primer.setBlockState(x, y, z, (Util.RANDOM.nextFloat() >= 0.85F ? Blocks.MOSSY_COBBLESTONE : Blocks.COBBLESTONE).getDefaultState());
+                        if(this.rand.nextInt(5) <= 0){
+                            if(this.rand.nextFloat() <= 0.95F){
+                                primer.setBlockState(x, y, z, (this.rand.nextFloat() >= 0.85F ? Blocks.MOSSY_COBBLESTONE : Blocks.COBBLESTONE).getDefaultState());
                             }
                             else{
                                 primer.setBlockState(x, y, z, Blocks.GLOWSTONE.getDefaultState());
@@ -74,7 +75,7 @@ public class ChunkProviderCave implements IChunkGenerator{
             BlockPos spawn = this.world.getSpawnPoint();
             Chunk chunk = this.world.getChunkFromBlockCoords(spawn);
             if(chunk.xPosition == x && chunk.zPosition == z){
-                this.generatedSpawn = this.spawnGenerator.generate(this.world, this.world.rand, spawn);
+                this.generatedSpawn = this.spawnGenerator.generate(this.world, this.rand, spawn);
             }
         }
     }

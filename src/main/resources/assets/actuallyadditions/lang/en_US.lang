@@ -206,6 +206,7 @@ tile.actuallyadditions.blockPillarQuartzSlab.name=Black Quartz Pillar Slab
 tile.actuallyadditions.blockLaserRelayItem.name=Item Laser Relay
 tile.actuallyadditions.blockLaserRelayItemWhitelist.name=Advanced Item Laser Relay
 tile.actuallyadditions.blockItemViewer.name=Item Interface
+tile.actuallyadditions.blockImpureIron.name=Impure Iron
 
 #ESD
 tile.actuallyadditions.blockInputter.name=ESD

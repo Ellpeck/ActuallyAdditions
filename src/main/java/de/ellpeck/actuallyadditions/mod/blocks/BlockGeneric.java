@@ -19,11 +19,15 @@ import net.minecraft.item.ItemStack;
 public class BlockGeneric extends BlockBase{
 
     public BlockGeneric(String name){
-        super(Material.ROCK, name);
-        this.setHarvestLevel("pickaxe", 0);
-        this.setHardness(1.5F);
-        this.setResistance(10.0F);
-        this.setSoundType(SoundType.STONE);
+        this(name, Material.ROCK, SoundType.STONE, 1.5F, 10.0F, "pickaxe", 0);
+    }
+
+    public BlockGeneric(String name, Material material, SoundType sound, float hardness, float resistance, String harvestTool, int harvestLevel){
+        super(material, name);
+        this.setHarvestLevel(harvestTool, harvestLevel);
+        this.setHardness(hardness);
+        this.setResistance(resistance);
+        this.setSoundType(sound);
     }
 
     @Override

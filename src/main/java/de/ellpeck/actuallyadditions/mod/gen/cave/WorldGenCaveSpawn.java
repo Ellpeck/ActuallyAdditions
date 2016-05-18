@@ -29,6 +29,12 @@ import java.util.Random;
 
 public class WorldGenCaveSpawn extends WorldGenerator{
 
+    private Random rand;
+
+    public WorldGenCaveSpawn(Random rand){
+        this.rand = rand;
+    }
+
     @Override
     public boolean generate(World world, Random rand, BlockPos position){
         this.generateCave(world, position);
@@ -49,9 +55,9 @@ public class WorldGenCaveSpawn extends WorldGenerator{
 
         world.setBlockState(center.add(-1, -5, -8), Blocks.DIRT.getStateFromMeta(1));
         WorldGenTrees trees = new WorldGenTrees(true);
-        trees.generate(world, Util.RANDOM, center.add(-1, -4, -8));
+        trees.generate(world, this.rand, center.add(-1, -4, -8));
 
-        int length = Util.RANDOM.nextInt(20)+20;
+        int length = this.rand.nextInt(20)+20;
         for(int z = 0; z <= length; z++){
             for(int x = 0; x < 5; x++){
                 for(int y = 0; y < 4; y++){
@@ -63,7 +69,7 @@ public class WorldGenCaveSpawn extends WorldGenerator{
                     else if((z%4 == 0 || x == 0 || x == 4) && y == 3){
                         world.setBlockState(pos, Blocks.PLANKS.getStateFromMeta(1));
                     }
-                    else if(!((y == 0 || y == 3) && Util.RANDOM.nextInt(5) <= 0)){
+                    else if(!((y == 0 || y == 3) && this.rand.nextInt(5) <= 0)){
                         world.setBlockToAir(pos);
                     }
                 }
@@ -74,7 +80,7 @@ public class WorldGenCaveSpawn extends WorldGenerator{
         TileEntity tile = world.getTileEntity(chestPos);
         if(tile instanceof TileEntityChest){
             TileEntityChest chest = (TileEntityChest)tile;
-            chest.setInventorySlotContents(12, new ItemStack(InitItems.itemFoods, MathHelper.getRandomIntegerInRange(Util.RANDOM, 5, 15), Util.RANDOM.nextInt(TheFoods.values().length)));
+            chest.setInventorySlotContents(12, new ItemStack(InitItems.itemFoods, MathHelper.getRandomIntegerInRange(this.rand, 5, 15), this.rand.nextInt(TheFoods.values().length)));
             chest.setInventorySlotContents(14, new ItemStack(InitItems.itemAxeCrystalBlack));
         }
 

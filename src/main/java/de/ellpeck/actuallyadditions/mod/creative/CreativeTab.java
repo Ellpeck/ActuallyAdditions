@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.creative;
 
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
+import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.items.InitForeignPaxels;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
@@ -303,6 +304,10 @@ public class CreativeTab extends CreativeTabs{
         this.add(InitItems.itemChestCrystalWhite);
         this.add(InitItems.itemPantsCrystalWhite);
         this.add(InitItems.itemBootsCrystalWhite);
+
+        if(ConfigValues.caveWorld){
+            this.add(InitBlocks.blockImpureIron);
+        }
     }
 
     public void add(Item item){

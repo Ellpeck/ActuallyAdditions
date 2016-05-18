@@ -14,6 +14,7 @@ import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheMiscBlocks;
 import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
+import de.ellpeck.actuallyadditions.mod.gen.cave.CaveWorldType;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.block.Block;
@@ -43,31 +44,22 @@ public class OreGen implements IWorldGenerator{
 
     @Override
     public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider){
-        if(world.getWorldType() != WorldType.FLAT && Util.arrayContains(ConfigValues.oreGenDimensionBlacklist, world.provider.getDimension()) < 0){
-            switch(world.provider.getDimension()){
-                case -1:
-                    this.generateNether(world, random, chunkX*16, chunkZ*16);
-                    //case 0:
-                    //   generateSurface(world, random, chunkX*16, chunkZ*16);
-                case 1:
-                    this.generateEnd(world, random, chunkX*16, chunkZ*16);
-                default:
-                    this.generateSurface(world, random, chunkX*16, chunkZ*16);
+        int dimension = world.provider.getDimension();
+        if(dimension != -1 && dimension != 1){
+            if(CaveWorldType.isCave(world)){
+                this.generateCave(world, random, chunkX*16, chunkZ*16);
+            }
+            else if(world.getWorldType() != WorldType.FLAT && Util.arrayContains(ConfigValues.oreGenDimensionBlacklist, world.provider.getDimension()) < 0){
+                this.generateDefault(world, random, chunkX*16, chunkZ*16);
             }
         }
     }
 
-    @SuppressWarnings("unused")
-    private void generateNether(World world, Random random, int x, int z){
-
+    private void generateCave(World world, Random random, int x, int z){
+        this.addOreSpawn(InitBlocks.blockImpureIron, 0, Blocks.STONE, world, random, x, z, MathHelper.getRandomIntegerInRange(random, 5, 10), 60, 0, world.getHeight());
     }
 
-    @SuppressWarnings("unused")
-    private void generateEnd(World world, Random random, int x, int z){
-
-    }
-
-    private void generateSurface(World world, Random random, int x, int z){
+    private void generateDefault(World world, Random random, int x, int z){
         if(ConfigBoolValues.GENERATE_QUARTZ.isEnabled()){
             this.addOreSpawn(InitBlocks.blockMisc, TheMiscBlocks.ORE_QUARTZ.ordinal(), Blocks.STONE, world, random, x, z, MathHelper.getRandomIntegerInRange(random, 5, 8), 10, QUARTZ_MIN, QUARTZ_MAX);
         }

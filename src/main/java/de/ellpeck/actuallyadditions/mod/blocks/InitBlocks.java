@@ -13,9 +13,12 @@ package de.ellpeck.actuallyadditions.mod.blocks;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockPlant;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockStair;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheMiscBlocks;
+import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
 import de.ellpeck.actuallyadditions.mod.util.CompatUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.block.Block;
+import net.minecraft.block.SoundType;
+import net.minecraft.block.material.Material;
 
 public class InitBlocks{
 
@@ -114,8 +117,14 @@ public class InitBlocks{
     public static Block blockPillarQuartzStair;
     public static Block blockPillarQuartzSlab;
 
+    public static Block blockImpureIron;
+
     public static void init(){
         ModUtil.LOGGER.info("Initializing Blocks...");
+
+        if(ConfigValues.caveWorld){
+            blockImpureIron = new BlockGeneric("blockImpureIron", Material.ROCK, SoundType.STONE, 3.5F, 12.5F, "pickaxe", 1);
+        }
 
         blockItemViewer = new BlockItemViewer("blockItemViewer");
         blockFireworkBox = new BlockFireworkBox("blockFireworkBox");
