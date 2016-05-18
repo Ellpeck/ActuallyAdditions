@@ -123,7 +123,7 @@ public class InitBlocks{
         ModUtil.LOGGER.info("Initializing Blocks...");
 
         if(ConfigValues.caveWorld){
-            blockImpureIron = new BlockGeneric("blockImpureIron", Material.ROCK, SoundType.STONE, 3.5F, 12.5F, "pickaxe", 1);
+            blockImpureIron = new BlockImpureIron("blockImpureIron");
         }
 
         blockItemViewer = new BlockItemViewer("blockItemViewer");

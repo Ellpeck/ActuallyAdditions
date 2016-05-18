@@ -12,8 +12,11 @@ package de.ellpeck.actuallyadditions.mod.crafting;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.recipe.CrusherRecipe;
+import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
+import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigCrafting;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
+import de.ellpeck.actuallyadditions.mod.items.metalists.TheDusts;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheFoods;
 import de.ellpeck.actuallyadditions.mod.recipe.CrusherRecipeRegistry;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
@@ -33,6 +36,10 @@ public class CrusherCrafting{
 
     public static void init(){
         ModUtil.LOGGER.info("Initializing Crusher Recipes...");
+
+        if(ConfigValues.caveWorld){
+            ActuallyAdditionsAPI.addCrusherRecipe(new ItemStack(InitBlocks.blockImpureIron), new ItemStack(InitItems.itemDust, 2, TheDusts.IRON.ordinal()));
+        }
 
         ActuallyAdditionsAPI.addCrusherRecipe(new ItemStack(Items.BONE), new ItemStack(Items.DYE, 6, 15));
         miscRecipes.add(RecipeUtil.lastCrusherRecipe());
