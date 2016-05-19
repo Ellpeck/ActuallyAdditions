@@ -45,7 +45,7 @@ dependencies {
     //compile "codechicken:CodeChickenCore:1.8-1.0.5.36:dev"
     //compile "codechicken:NotEnoughItems:1.8-1.0.5.104:dev"
 
-    deobfCompile "mezz.jei:jei_1.9:3.3.3.197"
+    deobfCompile "mezz.jei:jei_1.9.4:3.4.0.202"
     compile files("lib/Rarmor.jar")
 }
 
