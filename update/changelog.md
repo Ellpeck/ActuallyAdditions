@@ -1,3 +1,10 @@
+# 1.9.4-r34
+### MINECRAFT 1.9.4!!
+* Made special drops dependent on the looting level you have
+* Made drop chances for wings, solid xp and cobweb more common
+* Added spawner changer to creative tab
+* API Version 14 because of multiple changes
+
 # 1.9-r33
 * Made Growth Ring performance better
 * Centered page number in booklet
