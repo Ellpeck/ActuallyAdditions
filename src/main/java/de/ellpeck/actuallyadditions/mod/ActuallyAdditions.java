@@ -19,7 +19,6 @@ import de.ellpeck.actuallyadditions.mod.config.ConfigurationHandler;
 import de.ellpeck.actuallyadditions.mod.crafting.CrusherCrafting;
 import de.ellpeck.actuallyadditions.mod.crafting.InitCrafting;
 import de.ellpeck.actuallyadditions.mod.crafting.ItemCrafting;
-import de.ellpeck.actuallyadditions.mod.entity.InitEntities;
 import de.ellpeck.actuallyadditions.mod.event.InitEvents;
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.gen.cave.CaveWorldType;
@@ -80,7 +79,6 @@ public class ActuallyAdditions{
         PacketHandler.init();
         InitToolMaterials.init();
         InitArmorMaterials.init();
-        InitEntities.init();
         InitBlocks.init();
         InitFluids.init();
         InitItems.init();

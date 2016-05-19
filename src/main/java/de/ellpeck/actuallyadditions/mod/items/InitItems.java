@@ -206,12 +206,9 @@ public class InitItems{
 
     public static Item itemRarmorModuleReconstructor;
 
-    public static Item itemMinecartFireworkBox;
-
     public static void init(){
         ModUtil.LOGGER.info("Initializing Items...");
 
-        itemMinecartFireworkBox = new ItemFireworkBoxMinecart("itemMinecartFireworkBox");
         itemSpawnerChanger = new ItemSpawnerChanger("itemSpawnerChanger");
         itemMisc = new ItemMisc("itemMisc");
         itemCrateKeeper = new ItemGeneric("itemCrateKeeper");
