@@ -39,9 +39,11 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
+
 public class BlockPhantom extends BlockContainerBase implements IHudDisplay{
 
-    public Type type;
+    public final Type type;
 
     public BlockPhantom(Type type, String name){
         super(Material.ROCK, name);
@@ -80,15 +82,16 @@ public class BlockPhantom extends BlockContainerBase implements IHudDisplay{
     }
 
     @Override
-    public void breakBlock(World world, BlockPos pos, IBlockState state){
+    public void breakBlock(World world, @Nonnull BlockPos pos, @Nonnull IBlockState state){
         if(this.type == Type.PLACER || this.type == Type.BREAKER){
             this.dropInventory(world, pos);
         }
         super.breakBlock(world, pos, state);
     }
 
+    @Nonnull
     @Override
-    public TileEntity createNewTileEntity(World world, int par2){
+    public TileEntity createNewTileEntity(@Nonnull World world, int par2){
         switch(this.type){
             case PLACER:
                 return new TileEntityPhantomPlacer();

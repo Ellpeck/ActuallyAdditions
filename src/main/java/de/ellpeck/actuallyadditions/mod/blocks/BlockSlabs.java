@@ -31,14 +31,16 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
+
 public class BlockSlabs extends BlockBase{
 
     private static final AxisAlignedBB AABB_BOTTOM_HALF = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.5D, 1.0D);
     private static final AxisAlignedBB AABB_TOP_HALF = new AxisAlignedBB(0.0D, 0.5D, 0.0D, 1.0D, 1.0D, 1.0D);
 
     private static final PropertyInteger META = PropertyInteger.create("meta", 0, 1);
-    private Block fullBlock;
-    private int meta;
+    private final Block fullBlock;
+    private final int meta;
 
     public BlockSlabs(String name, Block fullBlock){
         this(name, fullBlock, 0);
@@ -76,6 +78,7 @@ public class BlockSlabs extends BlockBase{
         return false;
     }
 
+    @Nonnull
     @Override
     public IBlockState onBlockPlaced(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer){
         if(facing.ordinal() == 1){
@@ -87,6 +90,7 @@ public class BlockSlabs extends BlockBase{
         return this.getStateFromMeta(meta);
     }
 
+    @Nonnull
     @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos){
         return state.getValue(META) == 1 ? AABB_TOP_HALF : AABB_BOTTOM_HALF;
@@ -115,8 +119,9 @@ public class BlockSlabs extends BlockBase{
             this.setMaxDamage(0);
         }
 
+        @Nonnull
         @Override
-        public EnumActionResult onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ){
+        public EnumActionResult onItemUse(ItemStack stack, @Nonnull EntityPlayer playerIn, World worldIn, @Nonnull BlockPos pos, EnumHand hand, @Nonnull EnumFacing facing, float hitX, float hitY, float hitZ){
             if(stack.stackSize != 0 && playerIn.canPlayerEdit(pos.offset(facing), facing, stack)){
                 IBlockState state = worldIn.getBlockState(pos);
 
@@ -145,7 +150,7 @@ public class BlockSlabs extends BlockBase{
 
         @Override
         @SideOnly(Side.CLIENT)
-        public boolean canPlaceBlockOnSide(World worldIn, BlockPos pos, EnumFacing side, EntityPlayer player, ItemStack stack){
+        public boolean canPlaceBlockOnSide(World worldIn, @Nonnull BlockPos pos, @Nonnull EnumFacing side, EntityPlayer player, @Nonnull ItemStack stack){
             IBlockState state = worldIn.getBlockState(pos);
 
             if(state.getBlock() == this.block){
@@ -177,6 +182,7 @@ public class BlockSlabs extends BlockBase{
             return false;
         }
 
+        @Nonnull
         @Override
         public String getUnlocalizedName(ItemStack stack){
             return this.getUnlocalizedName();

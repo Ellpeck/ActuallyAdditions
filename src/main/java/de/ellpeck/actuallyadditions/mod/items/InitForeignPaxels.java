@@ -40,9 +40,9 @@ public class InitForeignPaxels{
     private static final String SIMPLE_ORES = "simpleores";
     private static final String[] SO_NAMES = new String[]{"tin", "mythril", "copper", "onyx", "adamantium"};
     private static final String[] SO_REPAIR_NAMES = new String[]{"ingotTin", "ingotMythril", "ingotCopper", "gemOnyx", "ingotAdamantium"};
-    public static Item[] tfPaxels = new Item[9];
-    public static Item[] soPaxels = new Item[5];
-    private static Item[] mtPaxels = new Item[6];
+    public static final Item[] tfPaxels = new Item[9];
+    public static final Item[] soPaxels = new Item[5];
+    private static final Item[] mtPaxels = new Item[6];
 
     public static void init(){
         //SimpleOres

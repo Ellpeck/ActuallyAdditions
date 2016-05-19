@@ -34,14 +34,14 @@ import java.util.Collections;
 public class GuiRangedCollector extends GuiContainer{
 
     private static final ResourceLocation resLoc = AssetUtil.getGuiLocation("guiRangedCollector");
-    private TileEntityRangedCollector collector;
+    private final TileEntityRangedCollector collector;
 
     private GuiInputter.SmallerButton whitelistButton;
 
-    private int x;
-    private int y;
-    private int z;
-    private World world;
+    private final int x;
+    private final int y;
+    private final int z;
+    private final World world;
 
     public GuiRangedCollector(InventoryPlayer inventory, TileEntityBase tile, int x, int y, int z, World world){
         super(new ContainerRangedCollector(inventory, tile));

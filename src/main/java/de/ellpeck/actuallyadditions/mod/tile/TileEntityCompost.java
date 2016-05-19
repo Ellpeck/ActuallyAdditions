@@ -18,6 +18,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 
+import javax.annotation.Nonnull;
+
 public class TileEntityCompost extends TileEntityInventoryBase{
 
     public static final int AMOUNT = 10;
@@ -72,7 +74,7 @@ public class TileEntityCompost extends TileEntityInventoryBase{
     }
 
     @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
+    public boolean isItemValidForSlot(int i, @Nonnull ItemStack stack){
         return stack.getItem() instanceof ItemMisc && stack.getItemDamage() == TheMiscItems.MASHED_FOOD.ordinal();
     }
 
@@ -83,12 +85,12 @@ public class TileEntityCompost extends TileEntityInventoryBase{
     }
 
     @Override
-    public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
+    public boolean canInsertItem(int slot, @Nonnull ItemStack stack, @Nonnull EnumFacing side){
         return this.isItemValidForSlot(slot, stack);
     }
 
     @Override
-    public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
+    public boolean canExtractItem(int slot, @Nonnull ItemStack stack, @Nonnull EnumFacing side){
         return stack.getItem() instanceof ItemFertilizer;
     }
 }

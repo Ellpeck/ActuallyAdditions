@@ -28,7 +28,7 @@ import java.util.Collections;
 public class GuiFermentingBarrel extends GuiContainer{
 
     private static final ResourceLocation resLoc = AssetUtil.getGuiLocation("guiFermentingBarrel");
-    private TileEntityFermentingBarrel press;
+    private final TileEntityFermentingBarrel press;
 
     public GuiFermentingBarrel(InventoryPlayer inventory, TileEntityBase tile){
         super(new ContainerFermentingBarrel(inventory, tile));

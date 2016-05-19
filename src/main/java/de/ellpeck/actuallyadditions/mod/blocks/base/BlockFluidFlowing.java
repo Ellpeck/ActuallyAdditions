@@ -24,7 +24,7 @@ import net.minecraftforge.fluids.Fluid;
 
 public class BlockFluidFlowing extends BlockFluidClassic{
 
-    private String name;
+    private final String name;
 
     public BlockFluidFlowing(Fluid fluid, Material material, String unlocalizedName){
         super(fluid, material);

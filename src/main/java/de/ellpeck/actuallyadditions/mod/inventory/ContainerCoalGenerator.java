@@ -20,10 +20,12 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityFurnace;
 
+import javax.annotation.Nonnull;
+
 
 public class ContainerCoalGenerator extends Container{
 
-    private TileEntityCoalGenerator generator;
+    private final TileEntityCoalGenerator generator;
 
     public ContainerCoalGenerator(InventoryPlayer inventory, TileEntityBase tile){
         this.generator = (TileEntityCoalGenerator)tile;
@@ -94,7 +96,7 @@ public class ContainerCoalGenerator extends Container{
     }
 
     @Override
-    public boolean canInteractWith(EntityPlayer player){
+    public boolean canInteractWith(@Nonnull EntityPlayer player){
         return this.generator.isUseableByPlayer(player);
     }
 }

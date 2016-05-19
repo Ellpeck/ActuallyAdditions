@@ -45,6 +45,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
+import javax.annotation.Nonnull;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -61,11 +62,11 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
     public static final int CHAPTER_BUTTONS_AMOUNT = 13;
     public static final int INDEX_BUTTONS_OFFSET = 3;
     private static final int[] AND_HIS_NAME_IS = new int[]{Keyboard.KEY_C, Keyboard.KEY_E, Keyboard.KEY_N, Keyboard.KEY_A};
-    public int xSize;
-    public int ySize;
+    public final int xSize;
+    public final int ySize;
     public int guiLeft;
     public int guiTop;
-    public IEntrySet currentEntrySet = new EntrySet(null);
+    public final IEntrySet currentEntrySet = new EntrySet(null);
     public int indexPageAmount;
     public GuiButton buttonForward;
     public GuiButton buttonBackward;
@@ -77,14 +78,14 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
     public GuiButton buttonConfig;
     public GuiButton buttonWebsite;
     public GuiButton buttonPatreon;
-    public GuiButton[] chapterButtons = new GuiButton[CHAPTER_BUTTONS_AMOUNT];
-    public GuiButton[] bookmarkButtons = new GuiButton[8];
+    public final GuiButton[] chapterButtons = new GuiButton[CHAPTER_BUTTONS_AMOUNT];
+    public final GuiButton[] bookmarkButtons = new GuiButton[8];
     public GuiTextField searchField;
-    public GuiScreen parentScreen;
+    public final GuiScreen parentScreen;
     private int ticksElapsed;
     private boolean mousePressed;
-    private boolean tryOpenMainPage;
-    private boolean saveOnClose;
+    private final boolean tryOpenMainPage;
+    private final boolean saveOnClose;
     private int hisNameIsAt;
 
     public GuiBooklet(GuiScreen parentScreen, boolean tryOpenMainPage, boolean saveOnClose){
@@ -197,7 +198,7 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
     }
 
     @Override
-    public void drawHoveringText(List list, int x, int y){
+    public void drawHoveringText(@Nonnull List list, int x, int y){
         super.drawHoveringText(list, x, y);
     }
 
@@ -440,7 +441,7 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
                 list.add(from.getClickToSeeRecipeString());
 
                 if(mousePressed){
-                    BookletUtils.openIndexEntry(this, page.getChapter().getEntry(), ActuallyAdditionsAPI.bookletEntries.indexOf(page.getChapter().getEntry())/GuiBooklet.CHAPTER_BUTTONS_AMOUNT+1, true);
+                    BookletUtils.openIndexEntry(this, page.getChapter().getEntry(), ActuallyAdditionsAPI.BOOKLET_ENTRIES.indexOf(page.getChapter().getEntry())/GuiBooklet.CHAPTER_BUTTONS_AMOUNT+1, true);
                     BookletUtils.openChapter(this, page.getChapter(), page);
                     Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0F));
                 }

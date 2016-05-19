@@ -21,12 +21,13 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
+import javax.annotation.Nonnull;
 
 
 public class ContainerGrinder extends Container{
 
-    public TileEntityGrinder tileGrinder;
-    private boolean isDouble;
+    public final TileEntityGrinder tileGrinder;
+    private final boolean isDouble;
 
     public ContainerGrinder(InventoryPlayer inventory, TileEntityBase tile, boolean isDouble){
         this.tileGrinder = (TileEntityGrinder)tile;
@@ -119,7 +120,7 @@ public class ContainerGrinder extends Container{
     }
 
     @Override
-    public boolean canInteractWith(EntityPlayer player){
+    public boolean canInteractWith(@Nonnull EntityPlayer player){
         return this.tileGrinder.isUseableByPlayer(player);
     }
 }

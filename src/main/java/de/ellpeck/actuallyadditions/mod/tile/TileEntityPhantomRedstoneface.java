@@ -18,11 +18,11 @@ import java.util.Arrays;
 
 public class TileEntityPhantomRedstoneface extends TileEntityPhantomface{
 
-    public int[] providesStrong = new int[EnumFacing.values().length];
-    public int[] providesWeak = new int[EnumFacing.values().length];
+    public final int[] providesStrong = new int[EnumFacing.values().length];
+    public final int[] providesWeak = new int[EnumFacing.values().length];
 
-    private int[] lastProvidesStrong = new int[this.providesStrong.length];
-    private int[] lastProvidesWeak = new int[this.providesWeak.length];
+    private final int[] lastProvidesStrong = new int[this.providesStrong.length];
+    private final int[] lastProvidesWeak = new int[this.providesWeak.length];
 
     public TileEntityPhantomRedstoneface(){
         super("redstoneface");

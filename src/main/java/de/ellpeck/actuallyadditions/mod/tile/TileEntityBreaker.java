@@ -24,6 +24,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.event.ForgeEventFactory;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 public class TileEntityBreaker extends TileEntityInventoryBase implements IRedstoneToggle{
@@ -73,7 +74,7 @@ public class TileEntityBreaker extends TileEntityInventoryBase implements IRedst
     }
 
     @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
+    public boolean isItemValidForSlot(int i, @Nonnull ItemStack stack){
         return this.isPlacer;
     }
 
@@ -90,7 +91,7 @@ public class TileEntityBreaker extends TileEntityInventoryBase implements IRedst
             if(Util.RANDOM.nextFloat() <= chance){
                 if(WorldUtil.addToInventory(this, drops, false, true)){
                     if(!ConfigValues.lessBlockBreakingEffects){
-                        this.worldObj.playAuxSFX(2001, coordsBlock, Block.getStateId(stateToBreak));
+                        this.worldObj.playBroadcastSound(2001, coordsBlock, Block.getStateId(stateToBreak));
                     }
                     WorldUtil.breakBlockAtSide(sideToManipulate, this.worldObj, this.pos);
                     WorldUtil.addToInventory(this, drops, true, true);
@@ -108,12 +109,12 @@ public class TileEntityBreaker extends TileEntityInventoryBase implements IRedst
     }
 
     @Override
-    public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
+    public boolean canInsertItem(int slot, @Nonnull ItemStack stack, @Nonnull EnumFacing side){
         return this.isItemValidForSlot(slot, stack);
     }
 
     @Override
-    public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
+    public boolean canExtractItem(int slot, @Nonnull ItemStack stack, @Nonnull EnumFacing side){
         return true;
     }
 

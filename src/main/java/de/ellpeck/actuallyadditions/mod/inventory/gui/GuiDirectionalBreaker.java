@@ -27,7 +27,7 @@ import java.util.Collections;
 public class GuiDirectionalBreaker extends GuiContainer{
 
     private static final ResourceLocation resLoc = AssetUtil.getGuiLocation("guiDirectionalBreaker");
-    private TileEntityDirectionalBreaker breaker;
+    private final TileEntityDirectionalBreaker breaker;
 
     public GuiDirectionalBreaker(InventoryPlayer inventory, TileEntityBase tile){
         super(new ContainerDirectionalBreaker(inventory, tile));

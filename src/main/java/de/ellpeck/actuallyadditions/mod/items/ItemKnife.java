@@ -18,6 +18,8 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 
+import javax.annotation.Nonnull;
+
 public class ItemKnife extends ItemBase{
 
     public ItemKnife(String name){
@@ -33,14 +35,16 @@ public class ItemKnife extends ItemBase{
         return true;
     }
 
+    @Nonnull
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.EPIC;
     }
 
+    @Nonnull
     @SuppressWarnings("unchecked")
     @Override
-    public Multimap getAttributeModifiers(EntityEquipmentSlot slot, ItemStack stack){
+    public Multimap getAttributeModifiers(@Nonnull EntityEquipmentSlot slot, ItemStack stack){
         Multimap map = super.getAttributeModifiers(slot, stack);
         if(slot == EntityEquipmentSlot.MAINHAND){
             map.put(SharedMonsterAttributes.ATTACK_DAMAGE.getAttributeUnlocalizedName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Knife Modifier", 3, 0));
@@ -48,8 +52,9 @@ public class ItemKnife extends ItemBase{
         return map;
     }
 
+    @Nonnull
     @Override
-    public ItemStack getContainerItem(ItemStack stack){
+    public ItemStack getContainerItem(@Nonnull ItemStack stack){
         ItemStack theStack = stack.copy();
         theStack.setItemDamage(theStack.getItemDamage()+1);
         theStack.stackSize = 1;

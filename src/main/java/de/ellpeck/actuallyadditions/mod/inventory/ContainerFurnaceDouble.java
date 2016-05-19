@@ -21,10 +21,12 @@ import net.minecraft.inventory.SlotFurnaceOutput;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 
+import javax.annotation.Nonnull;
+
 
 public class ContainerFurnaceDouble extends Container{
 
-    private TileEntityFurnaceDouble tileFurnace;
+    private final TileEntityFurnaceDouble tileFurnace;
 
     public ContainerFurnaceDouble(InventoryPlayer inventory, TileEntityBase tile){
         this.tileFurnace = (TileEntityFurnaceDouble)tile;
@@ -107,7 +109,7 @@ public class ContainerFurnaceDouble extends Container{
     }
 
     @Override
-    public boolean canInteractWith(EntityPlayer player){
+    public boolean canInteractWith(@Nonnull EntityPlayer player){
         return this.tileFurnace.isUseableByPlayer(player);
     }
 }

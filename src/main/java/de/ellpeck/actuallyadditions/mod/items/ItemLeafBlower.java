@@ -30,6 +30,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -43,12 +44,14 @@ public class ItemLeafBlower extends ItemBase{
         this.setMaxStackSize(1);
     }
 
+    @Nonnull
     @Override
-    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand){
+    public ActionResult<ItemStack> onItemRightClick(@Nonnull ItemStack stack, World world, EntityPlayer player, EnumHand hand){
         player.setActiveHand(hand);
         return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
     }
 
+    @Nonnull
     @Override
     public EnumAction getItemUseAction(ItemStack stack){
         return EnumAction.BOW;
@@ -60,6 +63,7 @@ public class ItemLeafBlower extends ItemBase{
         return Integer.MAX_VALUE;
     }
 
+    @Nonnull
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return this.isAdvanced ? EnumRarity.EPIC : EnumRarity.RARE;
@@ -117,7 +121,7 @@ public class ItemLeafBlower extends ItemBase{
 
             //Plays the Breaking Sound
             if(!ConfigValues.lessBlockBreakingEffects){
-                world.playAuxSFX(2001, theCoord, Block.getStateId(world.getBlockState(theCoord)));
+                world.playBroadcastSound(2001, theCoord, Block.getStateId(world.getBlockState(theCoord)));
             }
 
             //Deletes the Block

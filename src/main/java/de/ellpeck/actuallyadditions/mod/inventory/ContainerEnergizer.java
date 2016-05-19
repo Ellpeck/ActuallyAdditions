@@ -25,11 +25,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
+
 
 public class ContainerEnergizer extends Container{
 
     public static final EntityEquipmentSlot[] VALID_EQUIPMENT_SLOTS = new EntityEquipmentSlot[]{EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET};
-    private TileEntityEnergizer energizer;
+    private final TileEntityEnergizer energizer;
 
     public ContainerEnergizer(final EntityPlayer player, TileEntityBase tile){
         this.energizer = (TileEntityEnergizer)tile;
@@ -130,7 +132,7 @@ public class ContainerEnergizer extends Container{
     }
 
     @Override
-    public boolean canInteractWith(EntityPlayer player){
+    public boolean canInteractWith(@Nonnull EntityPlayer player){
         return this.energizer.isUseableByPlayer(player);
     }
 }

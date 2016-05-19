@@ -32,7 +32,7 @@ public class NEIBookletRecipe/* extends TemplateRecipeHandler implements INEIRec
     @Override
     public void loadCraftingRecipes(String outputId, Object... results){
         if(outputId.equals(NAME) && getClass() == NEIBookletRecipe.class){
-            for(BookletPage page : ActuallyAdditionsAPI.bookletPagesWithItemStackData){
+            for(BookletPage page : ActuallyAdditionsAPI.BOOKLET_PAGES_WITH_ITEM_DATA){
                 ItemStack[] stacks = page.getItemStacksForPage();
 
                 //So that you don't see things like Mashed Food more than once

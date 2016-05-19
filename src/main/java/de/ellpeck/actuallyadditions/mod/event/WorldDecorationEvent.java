@@ -22,7 +22,7 @@ import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.biome.BiomeGenOcean;
+import net.minecraft.world.biome.BiomeOcean;
 import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -48,9 +48,9 @@ public class WorldDecorationEvent{
                     BlockPos randomPos = new BlockPos(event.getPos().getX()+event.getRand().nextInt(16)+8, 0, event.getPos().getZ()+event.getRand().nextInt(16)+8);
                     randomPos = event.getWorld().getTopSolidOrLiquidBlock(randomPos);
 
-                    if(event.getWorld().getBiomeGenForCoords(randomPos) instanceof BiomeGenOcean){
+                    if(event.getWorld().getBiomeGenForCoords(randomPos) instanceof BiomeOcean){
                         if(randomPos.getY() >= 25 && randomPos.getY() <= 45){
-                            if(PosUtil.getBlock(randomPos, event.getWorld()).getMaterial(event.getWorld().getBlockState(randomPos)) == Material.WATER){
+                            if(event.getWorld().getBlockState(randomPos).getMaterial() == Material.WATER){
                                 if(PosUtil.getMaterial(PosUtil.offset(randomPos, 0, -1, 0), event.getWorld()).isSolid()){
                                     PosUtil.setBlock(randomPos, event.getWorld(), InitBlocks.blockTreasureChest, event.getRand().nextInt(4), 2);
                                 }

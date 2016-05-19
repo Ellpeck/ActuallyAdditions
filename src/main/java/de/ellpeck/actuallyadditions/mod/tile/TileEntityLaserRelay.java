@@ -10,30 +10,16 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import cofh.api.energy.IEnergyReceiver;
 import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
-import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.misc.LaserRelayConnectionHandler;
 import de.ellpeck.actuallyadditions.mod.network.PacketParticle;
-import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.util.*;
 import io.netty.util.internal.ConcurrentSet;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraftforge.items.IItemHandler;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public abstract class TileEntityLaserRelay extends TileEntityBase{
 
@@ -41,7 +27,7 @@ public abstract class TileEntityLaserRelay extends TileEntityBase{
     private static final float[] COLOR = new float[]{1F, 0F, 0F};
     private static final float[] COLOR_ITEM = new float[]{139F/255F, 94F/255F, 1F};
 
-    public boolean isItem;
+    public final boolean isItem;
 
     public TileEntityLaserRelay(String name, boolean isItem){
         super(name);

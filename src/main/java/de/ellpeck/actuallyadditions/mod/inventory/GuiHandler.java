@@ -192,7 +192,7 @@ public class GuiHandler implements IGuiHandler{
         MINER,
         LASER_RELAY_ITEM_WHITELIST;
 
-        public boolean checkTileEntity;
+        public final boolean checkTileEntity;
 
         GuiTypes(){
             this(true);

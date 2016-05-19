@@ -20,6 +20,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 public class TileEntityFeeder extends TileEntityInventoryBase{
@@ -110,7 +111,7 @@ public class TileEntityFeeder extends TileEntityInventoryBase{
     }
 
     @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
+    public boolean isItemValidForSlot(int i, @Nonnull ItemStack stack){
         return true;
     }
 
@@ -125,12 +126,12 @@ public class TileEntityFeeder extends TileEntityInventoryBase{
     }
 
     @Override
-    public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
+    public boolean canInsertItem(int slot, @Nonnull ItemStack stack, @Nonnull EnumFacing side){
         return this.isItemValidForSlot(slot, stack);
     }
 
     @Override
-    public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
+    public boolean canExtractItem(int slot, @Nonnull ItemStack stack, @Nonnull EnumFacing side){
         return false;
     }
 }

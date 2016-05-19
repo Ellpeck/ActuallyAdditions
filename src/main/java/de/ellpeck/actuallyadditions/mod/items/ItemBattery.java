@@ -14,6 +14,8 @@ import de.ellpeck.actuallyadditions.mod.items.base.ItemEnergy;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 
+import javax.annotation.Nonnull;
+
 public class ItemBattery extends ItemEnergy{
 
     public ItemBattery(String name, int capacity, int transfer){
@@ -21,6 +23,7 @@ public class ItemBattery extends ItemEnergy{
         this.setMaxStackSize(1);
     }
 
+    @Nonnull
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.RARE;

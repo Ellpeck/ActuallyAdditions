@@ -25,6 +25,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -76,7 +77,7 @@ public class ItemGrowthRing extends ItemEnergy{
 
                             //Show Particles if Metadata changed
                             if(PosUtil.getMetadata(pos, world) != metaBefore){
-                                world.playAuxSFX(2005, pos, 0);
+                                world.playBroadcastSound(2005, pos, 0);
                             }
 
                             if(!player.capabilities.isCreativeMode){
@@ -92,6 +93,7 @@ public class ItemGrowthRing extends ItemEnergy{
         }
     }
 
+    @Nonnull
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.EPIC;

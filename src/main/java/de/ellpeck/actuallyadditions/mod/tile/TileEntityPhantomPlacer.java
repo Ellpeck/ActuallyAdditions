@@ -27,6 +27,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 
 public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements IPhantomTile, IRedstoneToggle{
@@ -130,7 +131,7 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
 
                 if(WorldUtil.addToInventory(this, drops, false, true)){
                     if(!ConfigValues.lessBlockBreakingEffects){
-                        this.worldObj.playAuxSFX(2001, this.boundPosition, Block.getStateId(this.worldObj.getBlockState(this.boundPosition)));
+                        this.worldObj.playBroadcastSound(2001, this.boundPosition, Block.getStateId(this.worldObj.getBlockState(this.boundPosition)));
                     }
                     this.worldObj.setBlockToAir(this.boundPosition);
                     WorldUtil.addToInventory(this, drops, true, true);
@@ -192,17 +193,17 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
     }
 
     @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
+    public boolean isItemValidForSlot(int i, @Nonnull ItemStack stack){
         return !this.isBreaker;
     }
 
     @Override
-    public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
+    public boolean canInsertItem(int slot, @Nonnull ItemStack stack, @Nonnull EnumFacing side){
         return this.isItemValidForSlot(slot, stack);
     }
 
     @Override
-    public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
+    public boolean canExtractItem(int slot, @Nonnull ItemStack stack, @Nonnull EnumFacing side){
         return this.isBreaker;
     }
 

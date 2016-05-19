@@ -39,6 +39,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 public class BlockCompost extends BlockContainerBase implements IHudDisplay{
@@ -60,13 +61,14 @@ public class BlockCompost extends BlockContainerBase implements IHudDisplay{
         //this.setBlockBoundsForItemRender();
     }
 
+    @Nonnull
     @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos){
         return AABB;
     }
 
     @Override
-    public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, Entity entityIn){
+    public void addCollisionBoxToList(IBlockState state, @Nonnull World worldIn, @Nonnull BlockPos pos, @Nonnull AxisAlignedBB entityBox, @Nonnull List<AxisAlignedBB> collidingBoxes, Entity entityIn){
         addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_LEGS);
         addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_WALL_WEST);
         addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_WALL_NORTH);
@@ -88,42 +90,45 @@ public class BlockCompost extends BlockContainerBase implements IHudDisplay{
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack stackPlayer, EnumFacing f6, float f7, float f8, float f9){
         if(!world.isRemote){
             TileEntityCompost tile = (TileEntityCompost)world.getTileEntity(pos);
-            //Add items to be composted
-            if(stackPlayer != null && stackPlayer.getItem() instanceof ItemMisc && stackPlayer.getItemDamage() == TheMiscItems.MASHED_FOOD.ordinal() && (tile.slots[0] == null || (!(tile.slots[0].getItem() instanceof ItemFertilizer) && tile.slots[0].stackSize < TileEntityCompost.AMOUNT))){
-                if(tile.slots[0] == null){
-                    tile.slots[0] = new ItemStack(stackPlayer.getItem(), 1, TheMiscItems.MASHED_FOOD.ordinal());
+            if(tile != null){
+                //Add items to be composted
+                if(stackPlayer != null && stackPlayer.getItem() instanceof ItemMisc && stackPlayer.getItemDamage() == TheMiscItems.MASHED_FOOD.ordinal() && (tile.slots[0] == null || (!(tile.slots[0].getItem() instanceof ItemFertilizer) && tile.slots[0].stackSize < TileEntityCompost.AMOUNT))){
+                    if(tile.slots[0] == null){
+                        tile.slots[0] = new ItemStack(stackPlayer.getItem(), 1, TheMiscItems.MASHED_FOOD.ordinal());
+                    }
+                    else{
+                        tile.slots[0].stackSize++;
+                    }
+                    if(!player.capabilities.isCreativeMode){
+                        stackPlayer.stackSize--;
+                    }
+                    tile.markDirty();
                 }
-                else{
-                    tile.slots[0].stackSize++;
-                }
-                if(!player.capabilities.isCreativeMode){
-                    player.inventory.getCurrentItem().stackSize--;
-                }
-                tile.markDirty();
-            }
 
-            //Add Fertilizer to player's inventory
-            else if(tile.slots[0] != null && (stackPlayer == null || (stackPlayer.getItem() instanceof ItemFertilizer && stackPlayer.stackSize <= stackPlayer.getMaxStackSize()-tile.slots[0].stackSize)) && tile.slots[0].getItem() instanceof ItemFertilizer){
-                if(stackPlayer == null){
-                    player.inventory.setInventorySlotContents(player.inventory.currentItem, tile.slots[0].copy());
+                //Add Fertilizer to player's inventory
+                else if(tile.slots[0] != null && (stackPlayer == null || (stackPlayer.getItem() instanceof ItemFertilizer && stackPlayer.stackSize <= stackPlayer.getMaxStackSize()-tile.slots[0].stackSize)) && tile.slots[0].getItem() instanceof ItemFertilizer){
+                    if(stackPlayer == null){
+                        player.inventory.setInventorySlotContents(player.inventory.currentItem, tile.slots[0].copy());
+                    }
+                    else{
+                        stackPlayer.stackSize += tile.slots[0].stackSize;
+                    }
+                    tile.slots[0] = null;
+                    tile.markDirty();
                 }
-                else{
-                    stackPlayer.stackSize += tile.slots[0].stackSize;
-                }
-                tile.slots[0] = null;
-                tile.markDirty();
             }
         }
         return true;
     }
 
+    @Nonnull
     @Override
-    public TileEntity createNewTileEntity(World world, int meta){
+    public TileEntity createNewTileEntity(@Nonnull World world, int meta){
         return new TileEntityCompost();
     }
 
     @Override
-    public void breakBlock(World world, BlockPos pos, IBlockState state){
+    public void breakBlock(World world, @Nonnull BlockPos pos, @Nonnull IBlockState state){
         this.dropInventory(world, pos);
         super.breakBlock(world, pos, state);
     }

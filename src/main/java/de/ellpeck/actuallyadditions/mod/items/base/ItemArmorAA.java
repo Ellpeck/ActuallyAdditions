@@ -18,11 +18,13 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 
+import javax.annotation.Nonnull;
+
 public class ItemArmorAA extends ItemArmor{
 
-    private ItemStack repairItem;
-    private String name;
-    private EnumRarity rarity;
+    private final ItemStack repairItem;
+    private final String name;
+    private final EnumRarity rarity;
 
     public ItemArmorAA(String name, ArmorMaterial material, int type, ItemStack repairItem){
         this(name, material, type, repairItem, EnumRarity.RARE);
@@ -55,6 +57,7 @@ public class ItemArmorAA extends ItemArmor{
         ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this), new ModelResourceLocation(this.getRegistryName(), "inventory"));
     }
 
+    @Nonnull
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return this.rarity;

@@ -26,6 +26,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
+
 public class TileEntityPhantomface extends TileEntityInventoryBase implements IPhantomTile{
 
     public static final int RANGE = 16;
@@ -116,7 +118,7 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
     }
 
     @Override
-    public boolean isItemValidForSlot(int slot, ItemStack stack){
+    public boolean isItemValidForSlot(int slot, @Nonnull ItemStack stack){
         return false;
     }
 
@@ -177,12 +179,12 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
     }
 
     @Override
-    public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
+    public boolean canInsertItem(int slot, @Nonnull ItemStack stack, @Nonnull EnumFacing side){
         return false;
     }
 
     @Override
-    public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
+    public boolean canExtractItem(int slot, @Nonnull ItemStack stack, @Nonnull EnumFacing side){
         return false;
     }
 

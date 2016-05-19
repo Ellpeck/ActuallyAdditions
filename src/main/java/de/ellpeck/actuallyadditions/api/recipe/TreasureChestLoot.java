@@ -15,9 +15,9 @@ import net.minecraft.util.WeightedRandom;
 
 public class TreasureChestLoot extends WeightedRandom.Item{
 
-    public ItemStack returnItem;
-    public int minAmount;
-    public int maxAmount;
+    public final ItemStack returnItem;
+    public final int minAmount;
+    public final int maxAmount;
 
     public TreasureChestLoot(ItemStack returnItem, int chance, int minAmount, int maxAmount){
         super(chance);

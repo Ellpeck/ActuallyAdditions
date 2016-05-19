@@ -28,7 +28,7 @@ import java.util.Collections;
 public class GuiFluidCollector extends GuiContainer{
 
     private static final ResourceLocation resLoc = AssetUtil.getGuiLocation("guiFluidCollector");
-    private TileEntityFluidCollector collector;
+    private final TileEntityFluidCollector collector;
 
     public GuiFluidCollector(InventoryPlayer inventory, TileEntityBase tile){
         super(new ContainerFluidCollector(inventory, tile));

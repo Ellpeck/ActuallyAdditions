@@ -23,10 +23,12 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
+import javax.annotation.Nonnull;
+
 
 public class ContainerCoffeeMachine extends Container{
 
-    private TileEntityCoffeeMachine machine;
+    private final TileEntityCoffeeMachine machine;
 
     public ContainerCoffeeMachine(InventoryPlayer inventory, TileEntityBase tile){
         this.machine = (TileEntityCoffeeMachine)tile;
@@ -122,7 +124,7 @@ public class ContainerCoffeeMachine extends Container{
     }
 
     @Override
-    public boolean canInteractWith(EntityPlayer player){
+    public boolean canInteractWith(@Nonnull EntityPlayer player){
         return this.machine.isUseableByPlayer(player);
     }
 }

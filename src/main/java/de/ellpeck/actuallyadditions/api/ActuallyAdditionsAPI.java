@@ -29,7 +29,7 @@ public class ActuallyAdditionsAPI{
 
     public static final String MOD_ID = "actuallyadditions";
     public static final String API_ID = MOD_ID+"api";
-    public static final String API_VERSION = "13";
+    public static final String API_VERSION = "14";
 
     /**
      * Use this to handle things that aren't based in the API itself
@@ -38,15 +38,15 @@ public class ActuallyAdditionsAPI{
      */
     public static IMethodHandler methodHandler;
 
-    public static List<CrusherRecipe> crusherRecipes = new ArrayList<CrusherRecipe>();
-    public static List<BallOfFurReturn> ballOfFurReturnItems = new ArrayList<BallOfFurReturn>();
-    public static List<TreasureChestLoot> treasureChestLoot = new ArrayList<TreasureChestLoot>();
-    public static List<LensConversionRecipe> reconstructorLensConversionRecipes = new ArrayList<LensConversionRecipe>();
-    public static Map<Item, IColorLensChanger> reconstructorLensColorChangers = new HashMap<Item, IColorLensChanger>();
-    public static List<CoffeeIngredient> coffeeMachineIngredients = new ArrayList<CoffeeIngredient>();
+    public static final List<CrusherRecipe> CRUSHER_RECIPES = new ArrayList<CrusherRecipe>();
+    public static final List<BallOfFurReturn> BALL_OF_FUR_RETURN_ITEMS = new ArrayList<BallOfFurReturn>();
+    public static final List<TreasureChestLoot> TREASURE_CHEST_LOOT = new ArrayList<TreasureChestLoot>();
+    public static final List<LensConversionRecipe> RECONSTRUCTOR_LENS_CONVERSION_RECIPES = new ArrayList<LensConversionRecipe>();
+    public static final Map<Item, IColorLensChanger> RECONSTRUCTOR_LENS_COLOR_CHANGERS = new HashMap<Item, IColorLensChanger>();
+    public static final List<CoffeeIngredient> COFFEE_MACHINE_INGREDIENTS = new ArrayList<CoffeeIngredient>();
 
-    public static List<IBookletEntry> bookletEntries = new ArrayList<IBookletEntry>();
-    public static List<BookletPage> bookletPagesWithItemStackData = new ArrayList<BookletPage>();
+    public static final List<IBookletEntry> BOOKLET_ENTRIES = new ArrayList<IBookletEntry>();
+    public static final List<BookletPage> BOOKLET_PAGES_WITH_ITEM_DATA = new ArrayList<BookletPage>();
 
     //These are getting initialized in Actually Additions' PreInit phase
     //DO NOT CHANGE/OVERRIDE THESE!!
@@ -92,7 +92,7 @@ public class ActuallyAdditionsAPI{
      */
     public static void addCrusherRecipe(String input, String outputOne, int outputOneAmount, String outputTwo, int outputTwoAmount, int outputTwoChance){
         if(!OreDictionary.getOres(input, false).isEmpty() && !OreDictionary.getOres(outputOne, false).isEmpty() && (outputTwo == null || outputTwo.isEmpty() || !OreDictionary.getOres(outputTwo, false).isEmpty())){
-            crusherRecipes.add(new CrusherRecipe(input, outputOne, outputOneAmount, outputTwo, outputTwoAmount, outputTwoChance));
+            CRUSHER_RECIPES.add(new CrusherRecipe(input, outputOne, outputOneAmount, outputTwo, outputTwoAmount, outputTwoChance));
         }
     }
 
@@ -117,7 +117,7 @@ public class ActuallyAdditionsAPI{
      * @param outputTwoChance The chance of the second output (0 won't occur at all, 100 will all the time)
      */
     public static void addCrusherRecipe(ItemStack input, ItemStack outputOne, ItemStack outputTwo, int outputTwoChance){
-        crusherRecipes.add(new CrusherRecipe(input, outputOne, outputTwo, outputTwoChance));
+        CRUSHER_RECIPES.add(new CrusherRecipe(input, outputOne, outputTwo, outputTwoChance));
     }
 
     /**
@@ -130,7 +130,7 @@ public class ActuallyAdditionsAPI{
      */
     public static void addCrusherRecipe(ItemStack input, String outputOne, int outputOneAmount){
         if(!OreDictionary.getOres(outputOne, false).isEmpty()){
-            crusherRecipes.add(new CrusherRecipe(input, outputOne, outputOneAmount));
+            CRUSHER_RECIPES.add(new CrusherRecipe(input, outputOne, outputOneAmount));
         }
     }
 
@@ -141,7 +141,7 @@ public class ActuallyAdditionsAPI{
      * @param chance The chance (this is from WeightedRandom.Item)
      */
     public static void addBallOfFurReturnItem(ItemStack stack, int chance){
-        ballOfFurReturnItems.add(new BallOfFurReturn(stack, chance));
+        BALL_OF_FUR_RETURN_ITEMS.add(new BallOfFurReturn(stack, chance));
     }
 
     /**
@@ -153,7 +153,7 @@ public class ActuallyAdditionsAPI{
      * @param maxAmount The maximum stacksize of the returned stack
      */
     public static void addTreasureChestLoot(ItemStack stack, int chance, int minAmount, int maxAmount){
-        treasureChestLoot.add(new TreasureChestLoot(stack, chance, minAmount, maxAmount));
+        TREASURE_CHEST_LOOT.add(new TreasureChestLoot(stack, chance, minAmount, maxAmount));
     }
 
     /**
@@ -167,7 +167,7 @@ public class ActuallyAdditionsAPI{
      *                  Note how this always has to be the same instance of the lens type that the item also has for it to work!
      */
     public static void addReconstructorLensConversionRecipe(ItemStack input, ItemStack output, int energyUse, LensConversion type){
-        reconstructorLensConversionRecipes.add(new LensConversionRecipe(input, output, energyUse, type));
+        RECONSTRUCTOR_LENS_CONVERSION_RECIPES.add(new LensConversionRecipe(input, output, energyUse, type));
     }
 
     public static void addReconstructorLensConversionRecipe(ItemStack input, ItemStack output, int energyUse){
@@ -184,7 +184,7 @@ public class ActuallyAdditionsAPI{
      *                  Note how this always has to be the same instance of the lens type that the item also has for it to work!
      */
     public static void addReconstructorLensConversionRecipe(String input, String output, int energyUse, LensConversion type){
-        reconstructorLensConversionRecipes.add(new LensConversionRecipe(input, output, energyUse, type));
+        RECONSTRUCTOR_LENS_CONVERSION_RECIPES.add(new LensConversionRecipe(input, output, energyUse, type));
     }
 
     public static void addReconstructorLensConversionRecipe(String input, String output, int energyUse){
@@ -201,7 +201,7 @@ public class ActuallyAdditionsAPI{
      * @param changer The change mechanism
      */
     public static void addReconstructorLensColorChangeItem(Item item, IColorLensChanger changer){
-        reconstructorLensColorChangers.put(item, changer);
+        RECONSTRUCTOR_LENS_COLOR_CHANGERS.put(item, changer);
     }
 
     /**
@@ -210,7 +210,7 @@ public class ActuallyAdditionsAPI{
      * @param ingredient The ingredient to add
      */
     public static void addCoffeeMachineIngredient(CoffeeIngredient ingredient){
-        coffeeMachineIngredients.add(ingredient);
+        COFFEE_MACHINE_INGREDIENTS.add(ingredient);
     }
 
     /**
@@ -219,7 +219,7 @@ public class ActuallyAdditionsAPI{
      * @param entry The entry to add
      */
     public static void addBookletEntry(IBookletEntry entry){
-        bookletEntries.add(entry);
+        BOOKLET_ENTRIES.add(entry);
     }
 
     /**
@@ -229,6 +229,6 @@ public class ActuallyAdditionsAPI{
      * @param page The page to add
      */
     public static void addPageWithItemStackData(BookletPage page){
-        bookletPagesWithItemStackData.add(page);
+        BOOKLET_PAGES_WITH_ITEM_DATA.add(page);
     }
 }

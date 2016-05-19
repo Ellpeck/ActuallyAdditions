@@ -24,7 +24,7 @@ public class LaserRelayConnectionHandler{
     /**
      * All of the Networks
      */
-    public ConcurrentSet<Network> networks = new ConcurrentSet<Network>();
+    public final ConcurrentSet<Network> networks = new ConcurrentSet<Network>();
 
     public static LaserRelayConnectionHandler getInstance(){
         if(instance == null){
@@ -157,8 +157,8 @@ public class LaserRelayConnectionHandler{
 
     public static class ConnectionPair{
 
-        public BlockPos firstRelay;
-        public BlockPos secondRelay;
+        public final BlockPos firstRelay;
+        public final BlockPos secondRelay;
 
         public ConnectionPair(BlockPos firstRelay, BlockPos secondRelay){
             this.firstRelay = firstRelay;
@@ -202,7 +202,7 @@ public class LaserRelayConnectionHandler{
 
     public static class Network{
 
-        public ConcurrentSet<ConnectionPair> connections = new ConcurrentSet<ConnectionPair>();
+        public final ConcurrentSet<ConnectionPair> connections = new ConcurrentSet<ConnectionPair>();
 
         @Override
         public String toString(){

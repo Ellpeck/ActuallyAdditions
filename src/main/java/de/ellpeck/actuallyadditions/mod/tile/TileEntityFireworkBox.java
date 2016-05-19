@@ -28,7 +28,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class TileEntityFireworkBox extends TileEntityBase implements IEnergyReceiver, IRedstoneToggle, IEnergyDisplay, IEnergySaver{
 
     public static final int USE_PER_SHOT = 300;
-    public EnergyStorage storage = new EnergyStorage(20000);
+    public final EnergyStorage storage = new EnergyStorage(20000);
     private int timeUntilNextFirework;
     private boolean activateOnceWithSignal;
     private int oldEnergy;

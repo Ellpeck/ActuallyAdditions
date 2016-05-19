@@ -25,6 +25,7 @@ import net.minecraft.util.SoundCategory;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 public class TileEntityGrinder extends TileEntityInventoryBase implements IEnergyReceiver, IEnergySaver{
@@ -36,7 +37,7 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
     public static final int SLOT_OUTPUT_2_1 = 4;
     public static final int SLOT_OUTPUT_2_2 = 5;
     public static final int ENERGY_USE = 40;
-    public EnergyStorage storage = new EnergyStorage(60000);
+    public final EnergyStorage storage = new EnergyStorage(60000);
     public int firstCrushTime;
     public int secondCrushTime;
     public boolean isDouble;
@@ -166,7 +167,7 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
     }
 
     @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
+    public boolean isItemValidForSlot(int i, @Nonnull ItemStack stack){
         return (i == SLOT_INPUT_1 || i == SLOT_INPUT_2) && CrusherRecipeRegistry.getRecipeFromInput(stack) != null;
     }
 
@@ -255,12 +256,12 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
     }
 
     @Override
-    public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
+    public boolean canInsertItem(int slot, @Nonnull ItemStack stack, @Nonnull EnumFacing side){
         return this.isItemValidForSlot(slot, stack);
     }
 
     @Override
-    public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
+    public boolean canExtractItem(int slot, @Nonnull ItemStack stack, @Nonnull EnumFacing side){
         return slot == SLOT_OUTPUT_1_1 || slot == SLOT_OUTPUT_1_2 || slot == SLOT_OUTPUT_2_1 || slot == SLOT_OUTPUT_2_2;
     }
 

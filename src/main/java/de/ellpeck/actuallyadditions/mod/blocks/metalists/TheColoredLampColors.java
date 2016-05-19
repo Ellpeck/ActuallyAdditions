@@ -31,7 +31,7 @@ public enum TheColoredLampColors{
     RED("Red"),
     BLACK("Black");
 
-    public String name;
+    public final String name;
 
     TheColoredLampColors(String name){
         this.name = name;

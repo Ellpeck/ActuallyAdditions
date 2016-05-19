@@ -21,6 +21,7 @@ import net.minecraft.world.gen.structure.StructureBoundingBox;
 import net.minecraft.world.gen.structure.StructureComponent;
 import net.minecraft.world.gen.structure.StructureVillagePieces;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.Random;
 
@@ -48,7 +49,7 @@ public class VillageComponentCustomCropField extends StructureVillagePieces.Hous
     }
 
     @Override
-    public boolean addComponentParts(World world, Random rand, StructureBoundingBox sbb){
+    public boolean addComponentParts(@Nonnull World world, @Nonnull Random rand, @Nonnull StructureBoundingBox sbb){
         if(this.averageGroundLevel < 0){
             this.averageGroundLevel = this.getAverageGroundLevel(world, sbb);
             if(this.averageGroundLevel < 0){

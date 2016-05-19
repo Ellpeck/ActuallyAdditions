@@ -24,8 +24,8 @@ import java.util.Map;
 
 public class BookletPageAA extends BookletPage{
 
-    protected int localizationKey;
-    private HashMap<String, String> textReplacements = new HashMap<String, String>();
+    protected final int localizationKey;
+    private final HashMap<String, String> textReplacements = new HashMap<String, String>();
     private boolean hasNoText;
 
     public BookletPageAA(int localizationKey){
@@ -98,7 +98,7 @@ public class BookletPageAA extends BookletPage{
     }
 
     public void addToPagesWithItemStackData(){
-        if(!ActuallyAdditionsAPI.bookletPagesWithItemStackData.contains(this)){
+        if(!ActuallyAdditionsAPI.BOOKLET_PAGES_WITH_ITEM_DATA.contains(this)){
             ItemStack[] stacks = this.getItemStacksForPage();
             if(stacks != null && stacks.length > 0){
                 //Ensure that there is at least one ItemStack

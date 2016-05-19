@@ -19,10 +19,12 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
+import javax.annotation.Nonnull;
+
 
 public class ContainerMiner extends Container{
 
-    private TileEntityMiner miner;
+    private final TileEntityMiner miner;
 
     public ContainerMiner(InventoryPlayer inventory, TileEntityBase tile){
         this.miner = (TileEntityMiner)tile;
@@ -93,7 +95,7 @@ public class ContainerMiner extends Container{
     }
 
     @Override
-    public boolean canInteractWith(EntityPlayer player){
+    public boolean canInteractWith(@Nonnull EntityPlayer player){
         return this.miner.isUseableByPlayer(player);
     }
 }

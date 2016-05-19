@@ -85,7 +85,7 @@ public class LensColor extends Lens{
         if(stack != null){
             Item item = stack.getItem();
             if(item != null){
-                for(Map.Entry<Item, IColorLensChanger> changer : ActuallyAdditionsAPI.reconstructorLensColorChangers.entrySet()){
+                for(Map.Entry<Item, IColorLensChanger> changer : ActuallyAdditionsAPI.RECONSTRUCTOR_LENS_COLOR_CHANGERS.entrySet()){
                     if(item == changer.getKey()){
                         return changer.getValue().modifyItem(stack, hitState, hitBlock, tile);
                     }

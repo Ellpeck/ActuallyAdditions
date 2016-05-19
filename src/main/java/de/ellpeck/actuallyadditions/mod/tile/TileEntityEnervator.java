@@ -20,9 +20,11 @@ import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
+
 public class TileEntityEnervator extends TileEntityInventoryBase implements IEnergyProvider, IEnergySaver{
 
-    public EnergyStorage storage = new EnergyStorage(500000);
+    public final EnergyStorage storage = new EnergyStorage(500000);
     private int lastEnergy;
 
     public TileEntityEnervator(){
@@ -71,7 +73,7 @@ public class TileEntityEnervator extends TileEntityInventoryBase implements IEne
     }
 
     @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
+    public boolean isItemValidForSlot(int i, @Nonnull ItemStack stack){
         return i == 0 && stack.getItem() instanceof IEnergyContainerItem;
     }
 
@@ -101,12 +103,12 @@ public class TileEntityEnervator extends TileEntityInventoryBase implements IEne
     }
 
     @Override
-    public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
+    public boolean canInsertItem(int slot, @Nonnull ItemStack stack, @Nonnull EnumFacing side){
         return this.isItemValidForSlot(slot, stack);
     }
 
     @Override
-    public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
+    public boolean canExtractItem(int slot, @Nonnull ItemStack stack, @Nonnull EnumFacing side){
         return slot == 1;
     }
 

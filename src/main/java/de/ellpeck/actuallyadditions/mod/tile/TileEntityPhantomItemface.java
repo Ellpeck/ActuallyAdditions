@@ -18,6 +18,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 
+import javax.annotation.Nonnull;
+
 public class TileEntityPhantomItemface extends TileEntityPhantomface{
 
     public TileEntityPhantomItemface(){
@@ -25,8 +27,9 @@ public class TileEntityPhantomItemface extends TileEntityPhantomface{
         this.type = BlockPhantom.Type.FACE;
     }
 
+    @Nonnull
     @Override
-    public int[] getSlotsForFace(EnumFacing side){
+    public int[] getSlotsForFace(@Nonnull EnumFacing side){
         if(this.isBoundThingInRange()){
             if(this.getSided() != null){
                 return this.getSided().getSlotsForFace(side);
@@ -100,7 +103,7 @@ public class TileEntityPhantomItemface extends TileEntityPhantomface{
     }
 
     @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
+    public boolean isItemValidForSlot(int i, @Nonnull ItemStack stack){
         return this.isBoundThingInRange() && this.getInventory().isItemValidForSlot(i, stack);
     }
 
@@ -110,17 +113,18 @@ public class TileEntityPhantomItemface extends TileEntityPhantomface{
     }
 
     @Override
-    public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
+    public boolean canInsertItem(int slot, @Nonnull ItemStack stack, @Nonnull EnumFacing side){
         return this.isBoundThingInRange() && (this.getSided() == null || this.getSided().canInsertItem(slot, stack, side));
     }
 
     @Override
-    public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
+    public boolean canExtractItem(int slot, @Nonnull ItemStack stack, @Nonnull EnumFacing side){
         return this.isBoundThingInRange() && (this.getSided() == null || this.getSided().canExtractItem(slot, stack, side));
     }
 
+    @Nonnull
     @Override
-    public <T> T getCapability(Capability<T> capability, EnumFacing facing){
+    public <T> T getCapability(@Nonnull Capability<T> capability, @Nonnull EnumFacing facing){
         return this.isBoundThingInRange() ? this.worldObj.getTileEntity(this.boundPosition).getCapability(capability, facing) : super.getCapability(capability, facing);
     }
 }

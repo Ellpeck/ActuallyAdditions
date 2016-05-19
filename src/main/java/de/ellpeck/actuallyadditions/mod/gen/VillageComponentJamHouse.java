@@ -21,6 +21,7 @@ import net.minecraft.world.gen.structure.StructureBoundingBox;
 import net.minecraft.world.gen.structure.StructureComponent;
 import net.minecraft.world.gen.structure.StructureVillagePieces;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.Random;
 
@@ -48,7 +49,7 @@ public class VillageComponentJamHouse extends StructureVillagePieces.House1{
     }
 
     @Override
-    public boolean addComponentParts(World world, Random rand, StructureBoundingBox sbb){
+    public boolean addComponentParts(@Nonnull World world, @Nonnull Random rand, @Nonnull StructureBoundingBox sbb){
         if(this.averageGroundLevel < 0){
             this.averageGroundLevel = this.getAverageGroundLevel(world, sbb);
             if(this.averageGroundLevel < 0){
@@ -186,7 +187,7 @@ public class VillageComponentJamHouse extends StructureVillagePieces.House1{
 
         //Loot Chest
         this.setBlockState(world, Blocks.CHEST.getDefaultState(), 8, 1, 6, sbb);
-        TileEntity chest = world.getTileEntity(new BlockPos(this.getXWithOffset(8, 6), this.getYWithOffset(1), this.getZWithOffset(8, 6)));
+        //TileEntity chest = world.getTileEntity(new BlockPos(this.getXWithOffset(8, 6), this.getYWithOffset(1), this.getZWithOffset(8, 6)));
         //TODO Chest content
         /*if(chest != null && chest instanceof TileEntityChest){
             WeightedRandomChestContent.generateChestContents(rand, ChestGenHooks.getItems(InitVillager.JAM_HOUSE_CHEST_NAME, rand), (TileEntityChest)chest, ChestGenHooks.getCount(InitVillager.JAM_HOUSE_CHEST_NAME, rand));

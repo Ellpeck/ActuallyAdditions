@@ -17,9 +17,9 @@ import net.minecraftforge.common.config.Configuration;
 
 public class ConfigValues{
 
-    public static ConfigCrafting[] craftingConfig = ConfigCrafting.values();
-    public static ConfigIntValues[] intConfig = ConfigIntValues.values();
-    public static ConfigBoolValues[] boolConfig = ConfigBoolValues.values();
+    public static final ConfigCrafting[] CRAFTING_CONFIG = ConfigCrafting.values();
+    public static final ConfigIntValues[] INT_CONFIG = ConfigIntValues.values();
+    public static final ConfigBoolValues[] BOOL_CONFIG = ConfigBoolValues.values();
 
     public static String[] crusherRecipeExceptions;
     public static String[] mashedFoodCraftingExceptions;
@@ -45,13 +45,13 @@ public class ConfigValues{
 
     public static void defineConfigValues(Configuration config){
 
-        for(ConfigCrafting currConf : craftingConfig){
+        for(ConfigCrafting currConf : CRAFTING_CONFIG){
             currConf.currentValue = config.get(currConf.category, currConf.name, currConf.defaultValue, "If the Recipe for the "+currConf.name+" is Enabled").getBoolean();
         }
-        for(ConfigIntValues currConf : intConfig){
+        for(ConfigIntValues currConf : INT_CONFIG){
             currConf.currentValue = config.get(currConf.category, currConf.name, currConf.defaultValue, currConf.desc, currConf.min, currConf.max).getInt();
         }
-        for(ConfigBoolValues currConf : boolConfig){
+        for(ConfigBoolValues currConf : BOOL_CONFIG){
             currConf.currentValue = config.get(currConf.category, currConf.name, currConf.defaultValue, currConf.desc).getBoolean();
         }
 

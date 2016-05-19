@@ -33,6 +33,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
 import java.util.Random;
 
 public class BlockCoalGenerator extends BlockContainerBase{
@@ -48,8 +49,9 @@ public class BlockCoalGenerator extends BlockContainerBase{
         this.setTickRandomly(true);
     }
 
+    @Nonnull
     @Override
-    public TileEntity createNewTileEntity(World world, int par2){
+    public TileEntity createNewTileEntity(@Nonnull World world, int par2){
         return new TileEntityCoalGenerator();
     }
 
@@ -88,7 +90,7 @@ public class BlockCoalGenerator extends BlockContainerBase{
     }
 
     @Override
-    public void breakBlock(World world, BlockPos pos, IBlockState state){
+    public void breakBlock(World world, @Nonnull BlockPos pos, @Nonnull IBlockState state){
         this.dropInventory(world, pos);
         super.breakBlock(world, pos, state);
     }

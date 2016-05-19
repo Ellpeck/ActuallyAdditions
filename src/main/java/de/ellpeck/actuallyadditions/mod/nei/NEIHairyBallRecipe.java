@@ -37,7 +37,7 @@ public class NEIHairyBallRecipe/* extends TemplateRecipeHandler implements INEIR
     @Override
     public void loadCraftingRecipes(String outputId, Object... results){
         if(outputId.equals(NAME) && getClass() == NEIHairyBallRecipe.class){
-            List<BallOfFurReturn> recipes = ActuallyAdditionsAPI.ballOfFurReturnItems;
+            List<BallOfFurReturn> recipes = ActuallyAdditionsAPI.BALL_OF_FUR_RETURN_ITEMS;
             for(BallOfFurReturn recipe : recipes){
                 arecipes.add(new CachedBallRecipe(new ItemStack(InitItems.itemHairyBall), recipe.returnItem, recipe.itemWeight));
             }
@@ -49,7 +49,7 @@ public class NEIHairyBallRecipe/* extends TemplateRecipeHandler implements INEIR
 
     @Override
     public void loadCraftingRecipes(ItemStack result){
-        List<BallOfFurReturn> recipes = ActuallyAdditionsAPI.ballOfFurReturnItems;
+        List<BallOfFurReturn> recipes = ActuallyAdditionsAPI.BALL_OF_FUR_RETURN_ITEMS;
         for(BallOfFurReturn recipe : recipes){
             if(NEIServerUtils.areStacksSameType(recipe.returnItem, result)){
                 arecipes.add(new CachedBallRecipe(new ItemStack(InitItems.itemHairyBall), recipe.returnItem, recipe.itemWeight));
@@ -59,7 +59,7 @@ public class NEIHairyBallRecipe/* extends TemplateRecipeHandler implements INEIR
 
     @Override
     public void loadUsageRecipes(ItemStack ingredient){
-        List<BallOfFurReturn> recipes = ActuallyAdditionsAPI.ballOfFurReturnItems;
+        List<BallOfFurReturn> recipes = ActuallyAdditionsAPI.BALL_OF_FUR_RETURN_ITEMS;
         for(BallOfFurReturn recipe : recipes){
             ItemStack stack = new ItemStack(InitItems.itemHairyBall);
             if(NEIServerUtils.areStacksSameTypeCrafting(stack, ingredient)){

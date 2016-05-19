@@ -30,6 +30,8 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import javax.annotation.Nonnull;
+
 public class BlockDropper extends BlockContainerBase{
 
     private static final PropertyInteger META = PropertyInteger.create("meta", 0, 5);
@@ -42,8 +44,9 @@ public class BlockDropper extends BlockContainerBase{
         this.setSoundType(SoundType.STONE);
     }
 
+    @Nonnull
     @Override
-    public TileEntity createNewTileEntity(World world, int par2){
+    public TileEntity createNewTileEntity(@Nonnull World world, int par2){
         return new TileEntityDropper();
     }
 
@@ -81,7 +84,7 @@ public class BlockDropper extends BlockContainerBase{
     }
 
     @Override
-    public void breakBlock(World world, BlockPos pos, IBlockState state){
+    public void breakBlock(World world, @Nonnull BlockPos pos, @Nonnull IBlockState state){
         this.dropInventory(world, pos);
         super.breakBlock(world, pos, state);
     }

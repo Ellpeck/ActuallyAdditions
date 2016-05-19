@@ -26,8 +26,8 @@ public class TileEntityOilGenerator extends TileEntityBase implements IEnergyPro
 
     public static final int ENERGY_PRODUCED = 76;
     private static final int BURN_TIME = 100;
-    public EnergyStorage storage = new EnergyStorage(50000);
-    public FluidTank tank = new FluidTank(2*Util.BUCKET);
+    public final EnergyStorage storage = new EnergyStorage(50000);
+    public final FluidTank tank = new FluidTank(2*Util.BUCKET);
     public int currentBurnTime;
     private int lastEnergy;
     private int lastTank;

@@ -16,9 +16,7 @@ import de.canitzp.rarmor.api.modules.IRarmorModule;
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
-import de.ellpeck.actuallyadditions.api.lens.LensConversion;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
-import de.ellpeck.actuallyadditions.mod.items.lens.Lenses;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityAtomicReconstructor;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.entity.player.EntityPlayer;
@@ -32,6 +30,7 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.Optional;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,6 +48,7 @@ public class ItemRarmorModuleReconstructor extends ItemBase implements IRarmorMo
         return this.getRegistryName().toString();
     }
 
+    @Nonnull
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.RARE;

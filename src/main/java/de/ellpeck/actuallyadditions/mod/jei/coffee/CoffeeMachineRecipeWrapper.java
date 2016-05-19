@@ -33,10 +33,10 @@ import java.util.List;
 
 public class CoffeeMachineRecipeWrapper extends RecipeWrapperWithButton implements IRecipeWrapper{
 
-    public CoffeeIngredient theIngredient;
-    public ItemStack theOutput;
-    public ItemStack cup = new ItemStack(InitItems.itemMisc, 1, TheMiscItems.CUP.ordinal());
-    public ItemStack coffeeBeans = new ItemStack(InitItems.itemCoffeeBean);
+    public final CoffeeIngredient theIngredient;
+    public final ItemStack theOutput;
+    public final ItemStack cup = new ItemStack(InitItems.itemMisc, 1, TheMiscItems.CUP.ordinal());
+    public final ItemStack coffeeBeans = new ItemStack(InitItems.itemCoffeeBean);
 
     public CoffeeMachineRecipeWrapper(CoffeeIngredient ingredient){
         this.theIngredient = ingredient;

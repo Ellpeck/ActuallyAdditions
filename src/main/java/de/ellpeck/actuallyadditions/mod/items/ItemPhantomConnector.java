@@ -32,6 +32,7 @@ import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 public class ItemPhantomConnector extends ItemBase{
@@ -80,6 +81,7 @@ public class ItemPhantomConnector extends ItemBase{
         stack.setTagCompound(tag);
     }
 
+    @Nonnull
     @Override
     public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing par7, float par8, float par9, float par10){
         if(!world.isRemote){
@@ -146,6 +148,7 @@ public class ItemPhantomConnector extends ItemBase{
         }
     }
 
+    @Nonnull
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.EPIC;

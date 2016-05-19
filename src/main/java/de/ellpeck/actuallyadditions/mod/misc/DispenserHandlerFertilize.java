@@ -19,8 +19,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 
+import javax.annotation.Nonnull;
+
 public class DispenserHandlerFertilize extends BehaviorDefaultDispenseItem{
 
+    @Nonnull
     @Override
     public ItemStack dispenseStack(IBlockSource source, ItemStack stack){
         EnumFacing facing = BlockDispenser.getFacing(source.getBlockMetadata());
@@ -29,8 +32,8 @@ public class DispenserHandlerFertilize extends BehaviorDefaultDispenseItem{
         int z = source.getBlockTileEntity().getPos().getZ()+facing.getFrontOffsetZ();
         BlockPos pos = new BlockPos(x, y, z);
 
-        if(ItemDye.applyBonemeal(stack, source.getWorld(), pos, null)){
-            source.getWorld().playAuxSFX(2005, pos, 0);
+        if(ItemDye.applyBonemeal(stack, source.getWorld(), pos)){
+            source.getWorld().playBroadcastSound(2005, pos, 0);
         }
         return stack;
     }

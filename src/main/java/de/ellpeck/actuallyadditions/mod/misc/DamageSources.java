@@ -18,17 +18,20 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 
+import javax.annotation.Nonnull;
+
 public class DamageSources extends DamageSource{
 
     public static final DamageSource DAMAGE_ATOMIC_RECONSTRUCTOR = new DamageSources("atomicReconstructor", 5).setDamageBypassesArmor();
 
-    private int messageCount;
+    private final int messageCount;
 
     public DamageSources(String name, int messageCount){
         super(name);
         this.messageCount = messageCount;
     }
 
+    @Nonnull
     @Override
     public ITextComponent getDeathMessage(EntityLivingBase entity){
         String locTag = "death."+ModUtil.MOD_ID+"."+this.damageType+"."+(Util.RANDOM.nextInt(this.messageCount)+1);

@@ -16,6 +16,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 
+import javax.annotation.Nonnull;
+
 public class TileEntityDropper extends TileEntityInventoryBase implements IRedstoneToggle{
 
     private int currentTime;
@@ -57,7 +59,7 @@ public class TileEntityDropper extends TileEntityInventoryBase implements IRedst
     }
 
     @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
+    public boolean isItemValidForSlot(int i, @Nonnull ItemStack stack){
         return true;
     }
 
@@ -86,12 +88,12 @@ public class TileEntityDropper extends TileEntityInventoryBase implements IRedst
     }
 
     @Override
-    public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
+    public boolean canInsertItem(int slot, @Nonnull ItemStack stack, @Nonnull EnumFacing side){
         return this.isItemValidForSlot(slot, stack);
     }
 
     @Override
-    public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
+    public boolean canExtractItem(int slot, @Nonnull ItemStack stack, @Nonnull EnumFacing side){
         return true;
     }
 

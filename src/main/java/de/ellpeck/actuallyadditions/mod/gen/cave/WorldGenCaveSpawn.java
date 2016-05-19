@@ -12,7 +12,6 @@ package de.ellpeck.actuallyadditions.mod.gen.cave;
 
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheFoods;
-import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.block.BlockLadder;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -25,18 +24,19 @@ import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenTrees;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
+import javax.annotation.Nonnull;
 import java.util.Random;
 
 public class WorldGenCaveSpawn extends WorldGenerator{
 
-    private Random rand;
+    private final Random rand;
 
     public WorldGenCaveSpawn(Random rand){
         this.rand = rand;
     }
 
     @Override
-    public boolean generate(World world, Random rand, BlockPos position){
+    public boolean generate(@Nonnull World world, @Nonnull Random rand, @Nonnull BlockPos position){
         this.generateCave(world, position);
         return true;
     }

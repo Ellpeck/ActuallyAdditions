@@ -37,7 +37,7 @@ public class NEITreasureChestRecipe/* extends TemplateRecipeHandler implements I
     @Override
     public void loadCraftingRecipes(String outputId, Object... results){
         if(outputId.equals(NAME) && getClass() == NEITreasureChestRecipe.class){
-            List<TreasureChestLoot> recipes = ActuallyAdditionsAPI.treasureChestLoot;
+            List<TreasureChestLoot> recipes = ActuallyAdditionsAPI.TREASURE_CHEST_LOOT;
             for(TreasureChestLoot recipe : recipes){
                 arecipes.add(new CachedTreasure(new ItemStack(InitBlocks.blockTreasureChest), recipe.returnItem, recipe.itemWeight, recipe.minAmount, recipe.maxAmount));
             }
@@ -49,7 +49,7 @@ public class NEITreasureChestRecipe/* extends TemplateRecipeHandler implements I
 
     @Override
     public void loadCraftingRecipes(ItemStack result){
-        List<TreasureChestLoot> recipes = ActuallyAdditionsAPI.treasureChestLoot;
+        List<TreasureChestLoot> recipes = ActuallyAdditionsAPI.TREASURE_CHEST_LOOT;
         for(TreasureChestLoot recipe : recipes){
             if(NEIServerUtils.areStacksSameType(recipe.returnItem, result)){
                 arecipes.add(new CachedTreasure(new ItemStack(InitBlocks.blockTreasureChest), recipe.returnItem, recipe.itemWeight, recipe.minAmount, recipe.maxAmount));
@@ -59,7 +59,7 @@ public class NEITreasureChestRecipe/* extends TemplateRecipeHandler implements I
 
     @Override
     public void loadUsageRecipes(ItemStack ingredient){
-        List<TreasureChestLoot> recipes = ActuallyAdditionsAPI.treasureChestLoot;
+        List<TreasureChestLoot> recipes = ActuallyAdditionsAPI.TREASURE_CHEST_LOOT;
         for(TreasureChestLoot recipe : recipes){
             ItemStack stack = new ItemStack(InitBlocks.blockTreasureChest);
             if(NEIServerUtils.areStacksSameTypeCrafting(stack, ingredient)){

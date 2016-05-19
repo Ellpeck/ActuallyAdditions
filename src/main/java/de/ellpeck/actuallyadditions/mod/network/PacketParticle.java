@@ -10,7 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.network;
 
-import de.ellpeck.actuallyadditions.mod.misc.EntityColoredParticleFX;
+import de.ellpeck.actuallyadditions.mod.misc.ParticleColored;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.math.Vec3d;
@@ -62,7 +62,7 @@ public class PacketParticle implements IMessage{
 
             for(int times = 0; times < Math.max(particleAmount/2, 1); times++){
                 for(double i = 0; i <= 1; i += 1/(distance*particleAmount)){
-                    EntityColoredParticleFX fx = new EntityColoredParticleFX(world, (difX*i)+endX+0.5, (difY*i)+endY+0.5, (difZ*i)+endZ+0.5, particleSize, color[0], color[1], color[2], ageMultiplier);
+                    ParticleColored fx = new ParticleColored(world, (difX*i)+endX+0.5, (difY*i)+endY+0.5, (difZ*i)+endZ+0.5, particleSize, color[0], color[1], color[2], ageMultiplier);
                     Minecraft.getMinecraft().effectRenderer.addEffect(fx);
                 }
             }

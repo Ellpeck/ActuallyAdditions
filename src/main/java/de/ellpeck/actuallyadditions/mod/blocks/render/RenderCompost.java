@@ -19,10 +19,12 @@ import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
 
+import javax.annotation.Nonnull;
+
 public class RenderCompost extends TileEntitySpecialRenderer{
 
     @Override
-    public void renderTileEntityAt(TileEntity te, double x, double y, double z, float partialTicks, int destroyStage){
+    public void renderTileEntityAt(@Nonnull TileEntity te, double x, double y, double z, float partialTicks, int destroyStage){
         if(te instanceof TileEntityCompost){
             TileEntityCompost compost = (TileEntityCompost)te;
             if(compost.getStackInSlot(0) != null){

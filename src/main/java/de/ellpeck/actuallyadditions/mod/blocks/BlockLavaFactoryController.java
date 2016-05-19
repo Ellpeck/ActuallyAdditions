@@ -28,6 +28,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
+
 public class BlockLavaFactoryController extends BlockContainerBase implements IHudDisplay{
 
     public BlockLavaFactoryController(String name){
@@ -38,8 +40,9 @@ public class BlockLavaFactoryController extends BlockContainerBase implements IH
         this.setSoundType(SoundType.STONE);
     }
 
+    @Nonnull
     @Override
-    public TileEntity createNewTileEntity(World world, int par2){
+    public TileEntity createNewTileEntity(@Nonnull World world, int par2){
         return new TileEntityLavaFactoryController();
     }
 

@@ -16,9 +16,7 @@ import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.lens.ILensItem;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
-import de.ellpeck.actuallyadditions.api.lens.LensConversion;
 import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
-import de.ellpeck.actuallyadditions.mod.items.lens.Lenses;
 import de.ellpeck.actuallyadditions.mod.misc.SoundHandler;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
 import de.ellpeck.actuallyadditions.mod.network.PacketParticle;
@@ -34,10 +32,12 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
+
 public class TileEntityAtomicReconstructor extends TileEntityInventoryBase implements IEnergyReceiver, IEnergySaver, IRedstoneToggle, IEnergyDisplay, IAtomicReconstructor{
 
     public static final int ENERGY_USE = 1000;
-    public EnergyStorage storage = new EnergyStorage(300000);
+    public final EnergyStorage storage = new EnergyStorage(300000);
     public int counter;
     private int currentTime;
     private boolean activateOnceWithSignal;
@@ -158,7 +158,7 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
     }
 
     @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
+    public boolean isItemValidForSlot(int i, @Nonnull ItemStack stack){
         return stack != null && stack.getItem() instanceof ILensItem;
     }
 
@@ -189,12 +189,12 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
     }
 
     @Override
-    public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
+    public boolean canInsertItem(int slot, @Nonnull ItemStack stack, @Nonnull EnumFacing side){
         return this.isItemValidForSlot(slot, stack);
     }
 
     @Override
-    public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
+    public boolean canExtractItem(int slot, @Nonnull ItemStack stack, @Nonnull EnumFacing side){
         return true;
     }
 

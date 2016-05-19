@@ -23,11 +23,12 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 public abstract class ItemEnergy extends ItemEnergyContainer{
 
-    private String name;
+    private final String name;
 
     public ItemEnergy(int maxPower, int transfer, String name){
         super(maxPower, transfer);
@@ -81,7 +82,7 @@ public abstract class ItemEnergy extends ItemEnergyContainer{
     @Override
     @SuppressWarnings("unchecked")
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item item, CreativeTabs tabs, List list){
+    public void getSubItems(@Nonnull Item item, CreativeTabs tabs, List list){
         ItemStack stackFull = new ItemStack(this);
         this.setEnergy(stackFull, this.getMaxEnergyStored(stackFull));
         list.add(stackFull);

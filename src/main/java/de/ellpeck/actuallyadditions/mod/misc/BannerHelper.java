@@ -43,13 +43,11 @@ public class BannerHelper{
      * @param craftingStack An ItemStack which is used in the crafting recipe for this pattern.
      *                      An example of this would be the creeper skull being used for the creeper
      *                      pattern.
-     * @return EnumBannerPattern: A reference to the new EnumBannerPattern entry that has been
-     * created.
      */
-    public static EnumBannerPattern addCraftingPattern(String name, ItemStack craftingStack){
-        Class<?>[] paramTypes = {String.class, String.class, ItemStack.class};
+    public static void addCraftingPattern(String name, ItemStack craftingStack){
+        Class[] paramTypes = {String.class, String.class, ItemStack.class};
         Object[] paramValues = {ModUtil.MOD_ID+name, ModUtil.MOD_ID+name, craftingStack};
-        return EnumHelper.addEnum(EnumBannerPattern.class, (ModUtil.MOD_ID+"_"+name).toUpperCase(Locale.ROOT), paramTypes, paramValues);
+        EnumHelper.addEnum(EnumBannerPattern.class, (ModUtil.MOD_ID+"_"+name).toUpperCase(Locale.ROOT), paramTypes, paramValues);
     }
 
 }

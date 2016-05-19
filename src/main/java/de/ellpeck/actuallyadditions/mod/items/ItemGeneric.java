@@ -14,6 +14,8 @@ import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 
+import javax.annotation.Nonnull;
+
 public class ItemGeneric extends ItemBase{
 
     public ItemGeneric(String name){
@@ -21,6 +23,7 @@ public class ItemGeneric extends ItemBase{
         this.setMaxDamage(0);
     }
 
+    @Nonnull
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.UNCOMMON;

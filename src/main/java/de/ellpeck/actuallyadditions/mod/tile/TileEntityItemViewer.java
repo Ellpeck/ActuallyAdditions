@@ -84,12 +84,12 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
     }
 
     @Override
-    public boolean canInsertItem(int index, ItemStack stack, EnumFacing direction){
+    public boolean canInsertItem(int index, @Nonnull ItemStack stack, @Nonnull EnumFacing direction){
         return this.isItemValidForSlot(index, stack);
     }
 
     @Override
-    public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction){
+    public boolean canExtractItem(int index, @Nonnull ItemStack stack, @Nonnull EnumFacing direction){
         SpecificItemHandlerInfo handler = this.getSwitchedIndexHandler(index);
         if(handler != null){
             if(this.isWhitelisted(handler, stack)){
@@ -114,7 +114,7 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
     }
 
     @Override
-    public boolean isItemValidForSlot(int index, ItemStack stack){
+    public boolean isItemValidForSlot(int index, @Nonnull ItemStack stack){
         SpecificItemHandlerInfo handler = this.getSwitchedIndexHandler(index);
         if(handler != null){
             if(this.isWhitelisted(handler, stack)){
@@ -197,9 +197,9 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
 
     private static class SpecificItemHandlerInfo{
 
-        public IItemHandler handler;
-        public int switchedIndex;
-        public TileEntityLaserRelayItem relayInQuestion;
+        public final IItemHandler handler;
+        public final int switchedIndex;
+        public final TileEntityLaserRelayItem relayInQuestion;
 
         public SpecificItemHandlerInfo(IItemHandler handler, int switchedIndex, TileEntityLaserRelayItem relayInQuestion){
             this.handler = handler;
@@ -210,8 +210,8 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
 
     public static class GenericItemHandlerInfo implements Comparable<GenericItemHandlerInfo>{
 
-        public List<IItemHandler> handlers = new ArrayList<IItemHandler>();
-        public TileEntityLaserRelayItem relayInQuestion;
+        public final List<IItemHandler> handlers = new ArrayList<IItemHandler>();
+        public final TileEntityLaserRelayItem relayInQuestion;
 
         public GenericItemHandlerInfo(TileEntityLaserRelayItem relayInQuestion){
             this.relayInQuestion = relayInQuestion;

@@ -20,8 +20,8 @@ import java.util.List;
 
 public class LensConversionRecipe{
 
-    public int energyUse;
-    public LensConversion type;
+    public final int energyUse;
+    public final LensConversion type;
     private String input;
     private String output;
     private ItemStack inputStack;

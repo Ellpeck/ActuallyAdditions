@@ -10,11 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.util;
 
-import net.minecraft.block.BlockDispenser;
-import net.minecraft.dispenser.BehaviorDefaultDispenseItem;
-import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.EnumRarity;
-import net.minecraft.item.Item;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.EnumHelper;

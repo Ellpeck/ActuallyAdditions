@@ -23,7 +23,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class TileEntityFurnaceSolar extends TileEntityBase implements IEnergyProvider, IEnergySaver, IEnergyDisplay{
 
     public static final int PRODUCE = 8;
-    public EnergyStorage storage = new EnergyStorage(30000);
+    public final EnergyStorage storage = new EnergyStorage(30000);
     private int oldEnergy;
 
     public TileEntityFurnaceSolar(){

@@ -14,6 +14,8 @@ import de.ellpeck.actuallyadditions.mod.items.base.ItemFoodBase;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 
+import javax.annotation.Nonnull;
+
 public class ItemCoffeeBean extends ItemFoodBase{
 
     public ItemCoffeeBean(String name){
@@ -21,6 +23,7 @@ public class ItemCoffeeBean extends ItemFoodBase{
         this.setMaxDamage(0);
     }
 
+    @Nonnull
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.RARE;

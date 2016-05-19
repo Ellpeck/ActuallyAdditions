@@ -19,10 +19,12 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
+import javax.annotation.Nonnull;
+
 
 public class ContainerFeeder extends Container{
 
-    private TileEntityFeeder tileFeeder;
+    private final TileEntityFeeder tileFeeder;
 
     public ContainerFeeder(InventoryPlayer inventory, TileEntityBase tile){
         this.tileFeeder = (TileEntityFeeder)tile;
@@ -88,7 +90,7 @@ public class ContainerFeeder extends Container{
     }
 
     @Override
-    public boolean canInteractWith(EntityPlayer player){
+    public boolean canInteractWith(@Nonnull EntityPlayer player){
         return this.tileFeeder.isUseableByPlayer(player);
     }
 }

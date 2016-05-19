@@ -33,7 +33,7 @@ public class BookletChapterCoffee extends BookletChapter{
         ArrayList<BookletPage> allPages = new ArrayList<BookletPage>();
         allPages.addAll(Arrays.asList(pages));
 
-        for(CoffeeIngredient ingredient : ActuallyAdditionsAPI.coffeeMachineIngredients){
+        for(CoffeeIngredient ingredient : ActuallyAdditionsAPI.COFFEE_MACHINE_INGREDIENTS){
             BookletPageAA page = new PageCoffeeRecipe(allPages.size()+1, ingredient);
             if(!(ingredient instanceof ItemCoffee.MilkIngredient)){
                 page.setNoText();

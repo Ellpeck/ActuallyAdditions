@@ -19,10 +19,12 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
+import javax.annotation.Nonnull;
+
 
 public class ContainerDropper extends Container{
 
-    private TileEntityDropper dropper;
+    private final TileEntityDropper dropper;
 
     public ContainerDropper(InventoryPlayer inventory, TileEntityBase tile){
         this.dropper = (TileEntityDropper)tile;
@@ -93,7 +95,7 @@ public class ContainerDropper extends Container{
     }
 
     @Override
-    public boolean canInteractWith(EntityPlayer player){
+    public boolean canInteractWith(@Nonnull EntityPlayer player){
         return this.dropper.isUseableByPlayer(player);
     }
 }

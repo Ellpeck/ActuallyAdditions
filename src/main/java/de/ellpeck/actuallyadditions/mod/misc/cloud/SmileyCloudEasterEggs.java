@@ -26,7 +26,7 @@ import java.util.List;
 
 public class SmileyCloudEasterEggs{
 
-    public static List<ISmileyCloudEasterEgg> cloudStuff = new ArrayList<ISmileyCloudEasterEgg>();
+    public static final List<ISmileyCloudEasterEgg> cloudStuff = new ArrayList<ISmileyCloudEasterEgg>();
 
     static{
         //Glenthor

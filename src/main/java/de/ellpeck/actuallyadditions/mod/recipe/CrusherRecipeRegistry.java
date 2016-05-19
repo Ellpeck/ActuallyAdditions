@@ -24,11 +24,11 @@ import java.util.List;
 
 public class CrusherRecipeRegistry{
 
-    public static ArrayList<SearchCase> searchCases = new ArrayList<SearchCase>();
+    public static final ArrayList<SearchCase> searchCases = new ArrayList<SearchCase>();
 
     public static void registerFinally(){
         ArrayList<String> oresNoResult = new ArrayList<String>();
-        int recipeStartedAt = ActuallyAdditionsAPI.crusherRecipes.size();
+        int recipeStartedAt = ActuallyAdditionsAPI.CRUSHER_RECIPES.size();
 
         for(String ore : OreDictionary.getOreNames()){
             if(!hasException(ore)){
@@ -54,8 +54,8 @@ public class CrusherRecipeRegistry{
         }
 
         ArrayList<String> addedRecipes = new ArrayList<String>();
-        for(int i = recipeStartedAt; i < ActuallyAdditionsAPI.crusherRecipes.size(); i++){
-            CrusherRecipe recipe = ActuallyAdditionsAPI.crusherRecipes.get(i);
+        for(int i = recipeStartedAt; i < ActuallyAdditionsAPI.CRUSHER_RECIPES.size(); i++){
+            CrusherRecipe recipe = ActuallyAdditionsAPI.CRUSHER_RECIPES.get(i);
             addedRecipes.add(recipe.input+" -> "+recipe.outputOneAmount+"x "+recipe.outputOne);
         }
         ModUtil.LOGGER.info("Added "+addedRecipes.size()+" Crusher Recipes automatically: "+addedRecipes.toString());
@@ -72,7 +72,7 @@ public class CrusherRecipeRegistry{
     }
 
     public static boolean hasOreRecipe(String input){
-        for(CrusherRecipe recipe : ActuallyAdditionsAPI.crusherRecipes){
+        for(CrusherRecipe recipe : ActuallyAdditionsAPI.CRUSHER_RECIPES){
             if(recipe.input != null && recipe.input.equals(input)){
                 return true;
             }
@@ -86,7 +86,7 @@ public class CrusherRecipeRegistry{
     }
 
     public static CrusherRecipe getRecipeFromInput(ItemStack input){
-        for(CrusherRecipe recipe : ActuallyAdditionsAPI.crusherRecipes){
+        for(CrusherRecipe recipe : ActuallyAdditionsAPI.CRUSHER_RECIPES){
             if(ItemUtil.contains(recipe.getRecipeInputs(), input, true)){
                 return recipe;
             }
@@ -106,9 +106,9 @@ public class CrusherRecipeRegistry{
 
     public static class SearchCase{
 
-        String theCase;
-        int resultAmount;
-        String resultPreString;
+        final String theCase;
+        final int resultAmount;
+        final String resultPreString;
 
         public SearchCase(String theCase, int resultAmount){
             this(theCase, resultAmount, "dust");

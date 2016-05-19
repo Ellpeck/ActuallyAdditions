@@ -25,22 +25,25 @@ import net.minecraftforge.fluids.UniversalBucket;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 public class CreativeTab extends CreativeTabs{
 
-    public static CreativeTab instance = new CreativeTab();
+    public static final CreativeTab instance = new CreativeTab();
     private List<ItemStack> list;
 
     public CreativeTab(){
         super(ModUtil.MOD_ID);
     }
 
+    @Nonnull
     @Override
     public ItemStack getIconItemStack(){
         return new ItemStack(this.getTabIconItem());
     }
 
+    @Nonnull
     @Override
     public Item getTabIconItem(){
         return InitItems.itemBooklet;
@@ -48,7 +51,7 @@ public class CreativeTab extends CreativeTabs{
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void displayAllRelevantItems(List<ItemStack> list){
+    public void displayAllRelevantItems(@Nonnull List<ItemStack> list){
         this.list = list;
 
         this.add(InitItems.itemBooklet);

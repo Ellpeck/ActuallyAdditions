@@ -25,18 +25,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class GuiDropper extends GuiContainer{
 
     private static final ResourceLocation resLoc = AssetUtil.getGuiLocation("guiBreaker");
-    private TileEntityDropper dropper;
+    private final TileEntityDropper dropper;
 
     public GuiDropper(InventoryPlayer inventory, TileEntityBase tile){
         super(new ContainerDropper(inventory, tile));
         this.dropper = (TileEntityDropper)tile;
         this.xSize = 176;
         this.ySize = 93+86;
-    }
-
-    @Override
-    public void drawScreen(int x, int y, float f){
-        super.drawScreen(x, y, f);
     }
 
     @Override

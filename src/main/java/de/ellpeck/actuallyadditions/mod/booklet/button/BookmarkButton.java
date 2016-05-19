@@ -22,13 +22,14 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 
 public class BookmarkButton extends GuiButton{
 
     public EntrySet assignedEntry = new EntrySet(null);
 
-    private GuiBooklet booklet;
+    private final GuiBooklet booklet;
 
     public BookmarkButton(int id, int x, int y, GuiBooklet booklet){
         super(id, x, y, 16, 16, "");
@@ -53,7 +54,7 @@ public class BookmarkButton extends GuiButton{
     }
 
     @Override
-    public void drawButton(Minecraft minecraft, int x, int y){
+    public void drawButton(@Nonnull Minecraft minecraft, int x, int y){
         if(this.visible){
             minecraft.getTextureManager().bindTexture(GuiBooklet.resLoc);
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);

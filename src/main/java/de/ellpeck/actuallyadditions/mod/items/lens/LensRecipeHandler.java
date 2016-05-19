@@ -30,7 +30,7 @@ import java.util.ArrayList;
 
 public class LensRecipeHandler{
 
-    public static ArrayList<LensConversionRecipe> mainPageRecipes = new ArrayList<LensConversionRecipe>();
+    public static final ArrayList<LensConversionRecipe> mainPageRecipes = new ArrayList<LensConversionRecipe>();
     public static LensConversionRecipe recipeColorLens;
     public static LensConversionRecipe recipeSoulSand;
     public static LensConversionRecipe recipeGreenWall;
@@ -114,7 +114,7 @@ public class LensRecipeHandler{
 
     public static ArrayList<LensConversionRecipe> getRecipesFor(ItemStack input){
         ArrayList<LensConversionRecipe> possibleRecipes = new ArrayList<LensConversionRecipe>();
-        for(LensConversionRecipe recipe : ActuallyAdditionsAPI.reconstructorLensConversionRecipes){
+        for(LensConversionRecipe recipe : ActuallyAdditionsAPI.RECONSTRUCTOR_LENS_CONVERSION_RECIPES){
             if(ItemUtil.contains(recipe.getInputs(), input, true)){
                 possibleRecipes.add(recipe);
             }

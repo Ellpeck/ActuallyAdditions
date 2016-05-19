@@ -18,9 +18,11 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
+import javax.annotation.Nonnull;
+
 public class ContainerOilGenerator extends Container{
 
-    private TileEntityOilGenerator generator;
+    private final TileEntityOilGenerator generator;
 
     public ContainerOilGenerator(InventoryPlayer inventory, TileEntityBase tile){
         this.generator = (TileEntityOilGenerator)tile;
@@ -81,7 +83,7 @@ public class ContainerOilGenerator extends Container{
     }
 
     @Override
-    public boolean canInteractWith(EntityPlayer player){
+    public boolean canInteractWith(@Nonnull EntityPlayer player){
         return this.generator.canPlayerUse(player);
     }
 }

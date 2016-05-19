@@ -36,14 +36,14 @@ public class GuiSmileyCloud extends GuiContainer{
 
     private static final ResourceLocation resLoc = AssetUtil.getGuiLocation("guiSmileyCloud");
 
-    private int x;
-    private int y;
-    private int z;
-    private World world;
+    private final int x;
+    private final int y;
+    private final int z;
+    private final World world;
 
     private GuiTextField nameField;
 
-    private TileEntitySmileyCloud cloud;
+    private final TileEntitySmileyCloud cloud;
 
     public GuiSmileyCloud(TileEntityBase tile, int x, int y, int z, World world){
         super(new ContainerSmileyCloud());
@@ -65,12 +65,6 @@ public class GuiSmileyCloud extends GuiContainer{
         this.nameField.setMaxStringLength(20);
         this.nameField.setEnableBackgroundDrawing(false);
         this.nameField.setFocused(true);
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public void drawScreen(int x, int y, float f){
-        super.drawScreen(x, y, f);
     }
 
     @Override

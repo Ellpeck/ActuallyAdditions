@@ -30,7 +30,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class GuiMiner extends GuiContainer{
 
     private static final ResourceLocation resLoc = AssetUtil.getGuiLocation("guiBreaker");
-    private TileEntityMiner miner;
+    private final TileEntityMiner miner;
 
     public GuiMiner(InventoryPlayer inventory, TileEntityBase tile){
         super(new ContainerMiner(inventory, tile));
@@ -49,11 +49,6 @@ public class GuiMiner extends GuiContainer{
 
         GuiButton buttonReset = new GuiButton(1, this.guiLeft+this.xSize/2+1, this.guiTop+75, 50, 20, "Reset");
         this.buttonList.add(buttonReset);
-    }
-
-    @Override
-    public void drawScreen(int x, int y, float f){
-        super.drawScreen(x, y, f);
     }
 
     @Override

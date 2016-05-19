@@ -19,10 +19,12 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
+import javax.annotation.Nonnull;
+
 
 public class ContainerFermentingBarrel extends Container{
 
-    private TileEntityFermentingBarrel barrel;
+    private final TileEntityFermentingBarrel barrel;
 
     public ContainerFermentingBarrel(InventoryPlayer inventory, TileEntityBase tile){
         this.barrel = (TileEntityFermentingBarrel)tile;
@@ -83,7 +85,7 @@ public class ContainerFermentingBarrel extends Container{
     }
 
     @Override
-    public boolean canInteractWith(EntityPlayer player){
+    public boolean canInteractWith(@Nonnull EntityPlayer player){
         return this.barrel.canPlayerUse(player);
     }
 }

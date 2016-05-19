@@ -27,14 +27,17 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
+import javax.annotation.Nonnull;
+
 public class ItemTeleStaff extends ItemEnergy{
 
     public ItemTeleStaff(String name){
         super(500000, 10000, name);
     }
 
+    @Nonnull
     @Override
-    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand){
+    public ActionResult<ItemStack> onItemRightClick(@Nonnull ItemStack stack, World world, EntityPlayer player, EnumHand hand){
         if(!world.isRemote){
             if(this.getWaitTime(stack) <= 0){
                 RayTraceResult pos = WorldUtil.getNearestPositionWithAir(world, player, 100);
@@ -47,7 +50,7 @@ public class ItemTeleStaff extends ItemEnergy{
                         int baseUse = 200;
                         int use = baseUse+(int)(baseUse*pos.hitVec.distanceTo(new Vec3d(player.posX, player.posY+(player.getEyeHeight()-player.getDefaultEyeHeight()), player.posZ)));
                         if(this.getEnergyStored(stack) >= use){
-                            ((EntityPlayerMP)player).playerNetServerHandler.setPlayerLocation(x, y, z, player.rotationYaw, player.rotationPitch);
+                            ((EntityPlayerMP)player).connection.setPlayerLocation(x, y, z, player.rotationYaw, player.rotationPitch);
                             player.dismountRidingEntity();
                             world.playSound(null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.PLAYERS, 1.0F, 1.0F);
                             if(!player.capabilities.isCreativeMode){
@@ -72,6 +75,7 @@ public class ItemTeleStaff extends ItemEnergy{
         }
     }
 
+    @Nonnull
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.EPIC;

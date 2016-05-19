@@ -24,13 +24,15 @@ import net.minecraftforge.fluids.*;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
+
 public class TileEntityCanolaPress extends TileEntityInventoryBase implements IEnergyReceiver, IFluidHandler, IEnergySaver, IFluidSaver{
 
     public static final int PRODUCE = 80;
     public static final int ENERGY_USE = 35;
     private static final int TIME = 30;
-    public EnergyStorage storage = new EnergyStorage(40000);
-    public FluidTank tank = new FluidTank(2*Util.BUCKET);
+    public final EnergyStorage storage = new EnergyStorage(40000);
+    public final FluidTank tank = new FluidTank(2*Util.BUCKET);
     public int currentProcessTime;
     private int lastEnergyStored;
     private int lastTankAmount;
@@ -116,7 +118,7 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IE
     }
 
     @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
+    public boolean isItemValidForSlot(int i, @Nonnull ItemStack stack){
         return (i == 0 && stack.getItem() == InitItems.itemMisc && stack.getItemDamage() == TheMiscItems.CANOLA.ordinal());
     }
 
@@ -125,12 +127,12 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IE
     }
 
     @Override
-    public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
+    public boolean canInsertItem(int slot, @Nonnull ItemStack stack, @Nonnull EnumFacing side){
         return this.isItemValidForSlot(slot, stack);
     }
 
     @Override
-    public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
+    public boolean canExtractItem(int slot, @Nonnull ItemStack stack, @Nonnull EnumFacing side){
         return false;
     }
 

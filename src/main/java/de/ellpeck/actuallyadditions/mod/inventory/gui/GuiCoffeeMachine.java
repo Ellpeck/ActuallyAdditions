@@ -34,11 +34,11 @@ import java.util.Collections;
 public class GuiCoffeeMachine extends GuiContainer{
 
     private static final ResourceLocation resLoc = AssetUtil.getGuiLocation("guiCoffeeMachine");
-    private TileEntityCoffeeMachine machine;
-    private int x;
-    private int y;
-    private int z;
-    private World world;
+    private final TileEntityCoffeeMachine machine;
+    private final int x;
+    private final int y;
+    private final int z;
+    private final World world;
 
     public GuiCoffeeMachine(InventoryPlayer inventory, TileEntityBase tile, int x, int y, int z, World world){
         super(new ContainerCoffeeMachine(inventory, tile));

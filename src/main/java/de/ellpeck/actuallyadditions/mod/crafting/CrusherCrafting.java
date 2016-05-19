@@ -32,7 +32,7 @@ public class CrusherCrafting{
     public static CrusherRecipe recipeIronHorseArmor;
     public static CrusherRecipe recipeGoldHorseArmor;
     public static CrusherRecipe recipeDiamondHorseArmor;
-    public static ArrayList<CrusherRecipe> miscRecipes = new ArrayList<CrusherRecipe>();
+    public static final ArrayList<CrusherRecipe> miscRecipes = new ArrayList<CrusherRecipe>();
 
     public static void init(){
         ModUtil.LOGGER.info("Initializing Crusher Recipes...");

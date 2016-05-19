@@ -21,11 +21,12 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.items.IItemHandler;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 public class TileEntityLaserRelayItemWhitelist extends TileEntityLaserRelayItem implements IButtonReactor{
 
-    public IInventory filterInventory;
+    public final IInventory filterInventory;
     public boolean isLeftWhitelist;
     public boolean isRightWhitelist;
     private ItemStack[] slots = new ItemStack[24];
@@ -44,6 +45,7 @@ public class TileEntityLaserRelayItemWhitelist extends TileEntityLaserRelayItem 
                 return this;
             }
 
+            @Nonnull
             @Override
             public String getName(){
                 return this.tile.name;
@@ -60,17 +62,17 @@ public class TileEntityLaserRelayItemWhitelist extends TileEntityLaserRelayItem 
             }
 
             @Override
-            public boolean isUseableByPlayer(EntityPlayer player){
+            public boolean isUseableByPlayer(@Nonnull EntityPlayer player){
                 return this.tile.canPlayerUse(player);
             }
 
             @Override
-            public void openInventory(EntityPlayer player){
+            public void openInventory(@Nonnull EntityPlayer player){
 
             }
 
             @Override
-            public void closeInventory(EntityPlayer player){
+            public void closeInventory(@Nonnull EntityPlayer player){
 
             }
 
@@ -148,13 +150,14 @@ public class TileEntityLaserRelayItemWhitelist extends TileEntityLaserRelayItem 
                 return false;
             }
 
+            @Nonnull
             @Override
             public ITextComponent getDisplayName(){
                 return new TextComponentString(StringUtil.localize(this.getName()));
             }
 
             @Override
-            public boolean isItemValidForSlot(int index, ItemStack stack){
+            public boolean isItemValidForSlot(int index, @Nonnull ItemStack stack){
                 return false;
             }
         }.setTile(this);

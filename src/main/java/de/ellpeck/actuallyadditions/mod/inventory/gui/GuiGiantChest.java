@@ -26,7 +26,7 @@ public class GuiGiantChest extends GuiContainer{
 
     private static final ResourceLocation resLoc = AssetUtil.getGuiLocation("guiGiantChest");
 
-    TileEntityGiantChest chest;
+    final TileEntityGiantChest chest;
 
     public GuiGiantChest(InventoryPlayer inventory, TileEntityBase tile){
         super(new ContainerGiantChest(inventory, tile));

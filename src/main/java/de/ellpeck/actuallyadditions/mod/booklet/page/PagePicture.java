@@ -20,8 +20,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class PagePicture extends PageTextOnly{
 
-    private ResourceLocation resLoc;
-    private int textStartY;
+    private final ResourceLocation resLoc;
+    private final int textStartY;
 
     public PagePicture(int id, String resLocName, int textStartY){
         super(id);

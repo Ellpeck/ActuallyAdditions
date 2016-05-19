@@ -27,7 +27,7 @@ import java.util.Collections;
 public class GuiFurnaceDouble extends GuiContainer{
 
     private static final ResourceLocation resLoc = AssetUtil.getGuiLocation("guiFurnaceDouble");
-    private TileEntityFurnaceDouble tileFurnace;
+    private final TileEntityFurnaceDouble tileFurnace;
 
     public GuiFurnaceDouble(InventoryPlayer inventory, TileEntityBase tile){
         super(new ContainerFurnaceDouble(inventory, tile));

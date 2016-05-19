@@ -23,6 +23,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+import javax.annotation.Nonnull;
+
 public class BlockPhantomBooster extends BlockContainerBase{
 
     private static final AxisAlignedBB AABB = new AxisAlignedBB(2*0.0625, 0, 2*0.0625, 1-2*0.0625, 1, 1-2*0.0625);
@@ -35,6 +37,7 @@ public class BlockPhantomBooster extends BlockContainerBase{
         this.setSoundType(SoundType.STONE);
     }
 
+    @Nonnull
     @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos){
         return AABB;
@@ -55,8 +58,9 @@ public class BlockPhantomBooster extends BlockContainerBase{
         return EnumRarity.EPIC;
     }
 
+    @Nonnull
     @Override
-    public TileEntity createNewTileEntity(World world, int i){
+    public TileEntity createNewTileEntity(@Nonnull World world, int i){
         return new TileEntityPhantomBooster();
     }
 }

@@ -21,10 +21,12 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
+import javax.annotation.Nonnull;
+
 
 public class ContainerCanolaPress extends Container{
 
-    private TileEntityCanolaPress press;
+    private final TileEntityCanolaPress press;
 
     public ContainerCanolaPress(InventoryPlayer inventory, TileEntityBase tile){
         this.press = (TileEntityCanolaPress)tile;
@@ -95,7 +97,7 @@ public class ContainerCanolaPress extends Container{
     }
 
     @Override
-    public boolean canInteractWith(EntityPlayer player){
+    public boolean canInteractWith(@Nonnull EntityPlayer player){
         return this.press.isUseableByPlayer(player);
     }
 }

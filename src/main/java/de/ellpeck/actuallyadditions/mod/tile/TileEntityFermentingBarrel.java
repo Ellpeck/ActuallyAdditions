@@ -22,8 +22,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class TileEntityFermentingBarrel extends TileEntityBase implements IFluidHandler, IFluidSaver{
 
     private static final int PROCESS_TIME = 100;
-    public FluidTank canolaTank = new FluidTank(2*Util.BUCKET);
-    public FluidTank oilTank = new FluidTank(2*Util.BUCKET);
+    public final FluidTank canolaTank = new FluidTank(2*Util.BUCKET);
+    public final FluidTank oilTank = new FluidTank(2*Util.BUCKET);
     public int currentProcessTime;
     private int lastCanola;
     private int lastOil;

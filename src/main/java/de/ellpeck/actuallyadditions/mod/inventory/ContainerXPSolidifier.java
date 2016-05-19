@@ -20,10 +20,12 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
+import javax.annotation.Nonnull;
+
 
 public class ContainerXPSolidifier extends Container{
 
-    private TileEntityXPSolidifier solidifier;
+    private final TileEntityXPSolidifier solidifier;
 
     public ContainerXPSolidifier(InventoryPlayer inventory, TileEntityBase tile){
         this.solidifier = (TileEntityXPSolidifier)tile;
@@ -86,7 +88,7 @@ public class ContainerXPSolidifier extends Container{
     }
 
     @Override
-    public boolean canInteractWith(EntityPlayer player){
+    public boolean canInteractWith(@Nonnull EntityPlayer player){
         return this.solidifier.isUseableByPlayer(player);
     }
 }

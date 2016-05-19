@@ -21,9 +21,11 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 
+import javax.annotation.Nonnull;
+
 public class BlockBushBase extends BlockBush{
 
-    private String name;
+    private final String name;
 
     public BlockBushBase(String name){
         this.name = name;
@@ -58,6 +60,7 @@ public class BlockBushBase extends BlockBush{
         return EnumRarity.COMMON;
     }
 
+    @Nonnull
     @Override
     public IBlockState getStateFromMeta(int meta){
         return this.getMetaProperty() == null ? super.getStateFromMeta(meta) : this.getDefaultState().withProperty(this.getMetaProperty(), meta);
@@ -68,6 +71,7 @@ public class BlockBushBase extends BlockBush{
         return this.getMetaProperty() == null ? super.getMetaFromState(state) : state.getValue(this.getMetaProperty());
     }
 
+    @Nonnull
     @Override
     protected BlockStateContainer createBlockState(){
         return this.getMetaProperty() == null ? super.createBlockState() : new BlockStateContainer(this, this.getMetaProperty());

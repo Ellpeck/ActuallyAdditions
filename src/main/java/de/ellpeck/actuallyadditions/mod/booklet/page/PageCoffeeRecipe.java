@@ -27,7 +27,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class PageCoffeeRecipe extends BookletPageAA{
 
-    public CoffeeIngredient ingredient;
+    public final CoffeeIngredient ingredient;
 
     public PageCoffeeRecipe(int id, CoffeeIngredient ingredient){
         super(id);

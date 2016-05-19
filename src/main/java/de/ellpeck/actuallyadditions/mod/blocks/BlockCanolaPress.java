@@ -26,6 +26,8 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import javax.annotation.Nonnull;
+
 public class BlockCanolaPress extends BlockContainerBase{
 
     public BlockCanolaPress(String name){
@@ -36,8 +38,9 @@ public class BlockCanolaPress extends BlockContainerBase{
         this.setSoundType(SoundType.STONE);
     }
 
+    @Nonnull
     @Override
-    public TileEntity createNewTileEntity(World world, int par2){
+    public TileEntity createNewTileEntity(@Nonnull World world, int par2){
         return new TileEntityCanolaPress();
     }
 
@@ -46,7 +49,7 @@ public class BlockCanolaPress extends BlockContainerBase{
         if(!world.isRemote){
             TileEntityCanolaPress press = (TileEntityCanolaPress)world.getTileEntity(pos);
             if(press != null){
-                if(!this.tryUseItemOnTank(player, stack, side, press)){
+                if(this.checkFailUseItemOnTank(player, stack, side, press)){
                     player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.CANOLA_PRESS.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
                 }
             }
@@ -61,7 +64,7 @@ public class BlockCanolaPress extends BlockContainerBase{
     }
 
     @Override
-    public void breakBlock(World world, BlockPos pos, IBlockState state){
+    public void breakBlock(World world, @Nonnull BlockPos pos, @Nonnull IBlockState state){
         this.dropInventory(world, pos);
         super.breakBlock(world, pos, state);
     }

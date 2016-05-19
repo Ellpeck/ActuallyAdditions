@@ -29,7 +29,7 @@ public class TileEntityHeatCollector extends TileEntityBase implements IEnergyPr
 
     public static final int ENERGY_PRODUCE = 40;
     public static final int BLOCKS_NEEDED = 4;
-    public EnergyStorage storage = new EnergyStorage(30000);
+    public final EnergyStorage storage = new EnergyStorage(30000);
     private int oldEnergy;
 
     public TileEntityHeatCollector(){

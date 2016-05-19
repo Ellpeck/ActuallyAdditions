@@ -15,7 +15,7 @@ import net.minecraft.util.WeightedRandom;
 
 public class BallOfFurReturn extends WeightedRandom.Item{
 
-    public ItemStack returnItem;
+    public final ItemStack returnItem;
 
     public BallOfFurReturn(ItemStack returnItem, int chance){
         super(chance);

@@ -24,7 +24,7 @@ import java.util.Arrays;
 
 public class BookletRecipeCategory implements IRecipeCategory{
 
-    private IDrawable background;
+    private final IDrawable background;
 
     public BookletRecipeCategory(IGuiHelper helper){
         this.background = helper.createBlankDrawable(160, 100);

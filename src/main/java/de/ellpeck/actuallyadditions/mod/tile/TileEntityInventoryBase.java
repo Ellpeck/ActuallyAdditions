@@ -23,10 +23,12 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.wrapper.SidedInvWrapper;
 
+import javax.annotation.Nonnull;
+
 public abstract class TileEntityInventoryBase extends TileEntityBase implements ISidedInventory{
 
     public ItemStack slots[];
-    private SidedInvWrapper[] invWrappers = new SidedInvWrapper[6];
+    private final SidedInvWrapper[] invWrappers = new SidedInvWrapper[6];
 
     public TileEntityInventoryBase(int slots, String name){
         super(name);
@@ -92,8 +94,9 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
         }
     }
 
+    @Nonnull
     @Override
-    public int[] getSlotsForFace(EnumFacing side){
+    public int[] getSlotsForFace(@Nonnull EnumFacing side){
         int invSize = this.getSizeInventory();
         if(invSize > 0){
             int[] theInt = new int[invSize];
@@ -113,22 +116,22 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
     }
 
     @Override
-    public boolean isUseableByPlayer(EntityPlayer player){
+    public boolean isUseableByPlayer(@Nonnull EntityPlayer player){
         return this.canPlayerUse(player);
     }
 
     @Override
-    public void openInventory(EntityPlayer player){
+    public void openInventory(@Nonnull EntityPlayer player){
 
     }
 
     @Override
-    public void closeInventory(EntityPlayer player){
+    public void closeInventory(@Nonnull EntityPlayer player){
 
     }
 
     @Override
-    public boolean isItemValidForSlot(int index, ItemStack stack){
+    public boolean isItemValidForSlot(int index, @Nonnull ItemStack stack){
         return false;
     }
 
@@ -200,6 +203,7 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
         return stack;
     }
 
+    @Nonnull
     @Override
     public String getName(){
         return this.name;
@@ -210,18 +214,20 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
         return false;
     }
 
+    @Nonnull
     @Override
     public ITextComponent getDisplayName(){
         return new TextComponentString(StringUtil.localize(this.getName()));
     }
 
     @Override
-    public boolean hasCapability(Capability<?> capability, EnumFacing facing){
+    public boolean hasCapability(@Nonnull Capability<?> capability, @Nonnull EnumFacing facing){
         return this.getCapability(capability, facing) != null;
     }
 
+    @Nonnull
     @Override
-    public <T> T getCapability(Capability<T> capability, EnumFacing facing){
+    public <T> T getCapability(@Nonnull Capability<T> capability, @Nonnull EnumFacing facing){
         if(this.hasInvWrapperCapabilities() && capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY){
             return (T)this.invWrappers[facing.ordinal()];
         }

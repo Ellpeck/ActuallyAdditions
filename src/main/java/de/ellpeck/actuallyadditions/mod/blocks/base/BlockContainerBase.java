@@ -40,12 +40,13 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.IFluidHandler;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Random;
 
 public abstract class BlockContainerBase extends BlockContainer{
 
-    private String name;
+    private final String name;
 
     public BlockContainerBase(Material material, String name){
         super(material);
@@ -101,9 +102,6 @@ public abstract class BlockContainerBase extends BlockContainer{
             float dY = Util.RANDOM.nextFloat()*0.8F+0.1F;
             float dZ = Util.RANDOM.nextFloat()*0.8F+0.1F;
             EntityItem entityItem = new EntityItem(world, pos.getX()+dX, pos.getY()+dY, pos.getZ()+dZ, stack.copy());
-            if(stack.hasTagCompound()){
-                entityItem.getEntityItem().setTagCompound((NBTTagCompound)stack.getTagCompound().copy());
-            }
             float factor = 0.05F;
             entityItem.motionX = Util.RANDOM.nextGaussian()*factor;
             entityItem.motionY = Util.RANDOM.nextGaussian()*factor+0.2F;
@@ -131,6 +129,7 @@ public abstract class BlockContainerBase extends BlockContainer{
         return false;
     }
 
+    @Nonnull
     @Override
     public IBlockState getStateFromMeta(int meta){
         return this.getMetaProperty() == null ? super.getStateFromMeta(meta) : this.getDefaultState().withProperty(this.getMetaProperty(), meta);
@@ -152,8 +151,8 @@ public abstract class BlockContainerBase extends BlockContainer{
     }
 
     @Override
-    public void onNeighborBlockChange(World world, BlockPos pos, IBlockState state, Block neighborBlock){
-        this.updateRedstoneState(world, pos);
+    public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn){
+        this.updateRedstoneState(worldIn, pos);
     }
 
     public void updateRedstoneState(World world, BlockPos pos){
@@ -175,8 +174,8 @@ public abstract class BlockContainerBase extends BlockContainer{
         }
     }
 
-    protected boolean tryUseItemOnTank(EntityPlayer player, ItemStack heldItem, EnumFacing sideHit, IFluidHandler tank){
-        return heldItem != null && FluidUtil.interactWithTank(heldItem, player, tank, sideHit);
+    protected boolean checkFailUseItemOnTank(EntityPlayer player, ItemStack heldItem, EnumFacing sideHit, IFluidHandler tank){
+        return heldItem == null || !FluidUtil.interactWithTank(heldItem, player, tank, sideHit);
     }
 
     @Override
@@ -238,13 +237,15 @@ public abstract class BlockContainerBase extends BlockContainer{
         return 0;
     }
 
+    @Nonnull
     @Override
     protected BlockStateContainer createBlockState(){
         return this.getMetaProperty() == null ? super.createBlockState() : new BlockStateContainer(this, this.getMetaProperty());
     }
 
+    @Nonnull
     @Override
-    public ArrayList<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune){
+    public ArrayList<ItemStack> getDrops(IBlockAccess world, BlockPos pos, @Nonnull IBlockState state, int fortune){
         ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
 
         TileEntity tile = world.getTileEntity(pos);
@@ -290,6 +291,7 @@ public abstract class BlockContainerBase extends BlockContainer{
         return null;
     }
 
+    @Nonnull
     @Override
     public EnumBlockRenderType getRenderType(IBlockState state){
         return EnumBlockRenderType.MODEL;

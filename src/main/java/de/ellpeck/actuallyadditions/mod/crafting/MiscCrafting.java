@@ -26,8 +26,8 @@ import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 public class MiscCrafting{
 
-    public static IRecipe[] recipesCrystals = new IRecipe[TheCrystals.values().length];
-    public static IRecipe[] recipesCrystalBlocks = new IRecipe[TheCrystals.values().length];
+    public static final IRecipe[] recipesCrystals = new IRecipe[TheCrystals.values().length];
+    public static final IRecipe[] recipesCrystalBlocks = new IRecipe[TheCrystals.values().length];
 
     public static void init(){
 

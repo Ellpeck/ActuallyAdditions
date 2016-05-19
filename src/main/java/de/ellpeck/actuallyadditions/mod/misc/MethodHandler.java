@@ -10,16 +10,10 @@
 
 package de.ellpeck.actuallyadditions.mod.misc;
 
-import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
-import de.ellpeck.actuallyadditions.api.booklet.BookletPage;
-import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
-import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
-import de.ellpeck.actuallyadditions.api.internal.IEntrySet;
 import de.ellpeck.actuallyadditions.api.internal.IMethodHandler;
 import de.ellpeck.actuallyadditions.api.recipe.CoffeeIngredient;
 import de.ellpeck.actuallyadditions.api.recipe.LensConversionRecipe;
-import de.ellpeck.actuallyadditions.mod.booklet.entry.EntrySet;
 import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
 import de.ellpeck.actuallyadditions.mod.items.lens.LensRecipeHandler;
 import de.ellpeck.actuallyadditions.mod.util.PosUtil;
@@ -142,7 +136,7 @@ public class MethodHandler implements IMethodHandler{
                                     ItemStack output = outputs.get(0);
                                     if(output.getItem() instanceof ItemBlock){
                                         if(!ConfigValues.lessBlockBreakingEffects){
-                                            tile.getWorldObject().playAuxSFX(2001, pos, Block.getStateId(tile.getWorldObject().getBlockState(pos)));
+                                            tile.getWorldObject().playBroadcastSound(2001, pos, Block.getStateId(tile.getWorldObject().getBlockState(pos)));
                                         }
                                         PosUtil.setBlock(pos, tile.getWorldObject(), Block.getBlockFromItem(output.getItem()), output.getItemDamage(), 2);
                                     }

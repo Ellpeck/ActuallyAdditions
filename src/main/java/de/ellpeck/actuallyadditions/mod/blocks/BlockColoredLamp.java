@@ -37,14 +37,15 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.Random;
 
 public class BlockColoredLamp extends BlockBase{
 
-    public static TheColoredLampColors[] allLampTypes = TheColoredLampColors.values();
+    public static final TheColoredLampColors[] allLampTypes = TheColoredLampColors.values();
     private static final PropertyInteger META = PropertyInteger.create("meta", 0, allLampTypes.length-1);
-    public boolean isOn;
+    public final boolean isOn;
 
     public BlockColoredLamp(boolean isOn, String name){
         super(Material.REDSTONE_LIGHT, name);
@@ -100,7 +101,7 @@ public class BlockColoredLamp extends BlockBase{
     }
 
     @Override
-    public ItemStack createStackedBlock(IBlockState state){
+    public ItemStack createStackedBlock(@Nonnull IBlockState state){
         return new ItemStack(InitBlocks.blockColoredLamp, 1, this.getMetaFromState(state));
     }
 
@@ -113,7 +114,7 @@ public class BlockColoredLamp extends BlockBase{
     }
 
     @Override
-    public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos){
+    public int getLightValue(@Nonnull IBlockState state, IBlockAccess world, @Nonnull BlockPos pos){
         return this.isOn ? 15 : 0;
     }
 
@@ -147,14 +148,16 @@ public class BlockColoredLamp extends BlockBase{
             this.setMaxDamage(0);
         }
 
+        @Nonnull
         @Override
-        public String getItemStackDisplayName(ItemStack stack){
+        public String getItemStackDisplayName(@Nonnull ItemStack stack){
             if(stack.getItemDamage() >= allLampTypes.length){
-                return null;
+                return StringUtil.BUGGED_ITEM_NAME;
             }
             return StringUtil.localize(this.getUnlocalizedName(stack)+".name")+(((BlockColoredLamp)this.block).isOn ? " ("+StringUtil.localize("tooltip."+ModUtil.MOD_ID+".onSuffix.desc")+")" : "");
         }
 
+        @Nonnull
         @Override
         public String getUnlocalizedName(ItemStack stack){
             return InitBlocks.blockColoredLamp.getUnlocalizedName()+allLampTypes[stack.getItemDamage()].name;

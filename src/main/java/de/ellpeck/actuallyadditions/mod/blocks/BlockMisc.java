@@ -27,12 +27,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 public class BlockMisc extends BlockBase{
 
-    public static final TheMiscBlocks[] allMiscBlocks = TheMiscBlocks.values();
-    private static final PropertyInteger META = PropertyInteger.create("meta", 0, allMiscBlocks.length-1);
+    public static final TheMiscBlocks[] ALL_MISC_BLOCKS = TheMiscBlocks.values();
+    private static final PropertyInteger META = PropertyInteger.create("meta", 0, ALL_MISC_BLOCKS.length-1);
 
     public BlockMisc(String name){
         super(Material.ROCK, name);
@@ -49,7 +50,7 @@ public class BlockMisc extends BlockBase{
     @SuppressWarnings("all")
     @SideOnly(Side.CLIENT)
     public void getSubBlocks(Item item, CreativeTabs tab, List list){
-        for(int j = 0; j < allMiscBlocks.length; j++){
+        for(int j = 0; j < ALL_MISC_BLOCKS.length; j++){
             list.add(new ItemStack(item, 1, j));
         }
     }
@@ -61,14 +62,14 @@ public class BlockMisc extends BlockBase{
 
     @Override
     protected void registerRendering(){
-        for(int i = 0; i < allMiscBlocks.length; i++){
+        for(int i = 0; i < ALL_MISC_BLOCKS.length; i++){
             ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), new ModelResourceLocation(this.getRegistryName(), META.getName()+"="+i));
         }
     }
 
     @Override
     public EnumRarity getRarity(ItemStack stack){
-        return stack.getItemDamage() >= allMiscBlocks.length ? EnumRarity.COMMON : allMiscBlocks[stack.getItemDamage()].rarity;
+        return stack.getItemDamage() >= ALL_MISC_BLOCKS.length ? EnumRarity.COMMON : ALL_MISC_BLOCKS[stack.getItemDamage()].rarity;
     }
 
     @Override
@@ -84,9 +85,10 @@ public class BlockMisc extends BlockBase{
             this.setMaxDamage(0);
         }
 
+        @Nonnull
         @Override
         public String getUnlocalizedName(ItemStack stack){
-            return stack.getItemDamage() >= allMiscBlocks.length ? StringUtil.BUGGED_ITEM_NAME : this.getUnlocalizedName()+allMiscBlocks[stack.getItemDamage()].name;
+            return stack.getItemDamage() >= ALL_MISC_BLOCKS.length ? StringUtil.BUGGED_ITEM_NAME : this.getUnlocalizedName()+ALL_MISC_BLOCKS[stack.getItemDamage()].name;
         }
     }
 }

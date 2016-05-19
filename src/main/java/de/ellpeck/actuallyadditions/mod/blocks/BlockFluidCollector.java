@@ -32,11 +32,13 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import javax.annotation.Nonnull;
+
 public class BlockFluidCollector extends BlockContainerBase{
 
     private static final PropertyInteger META = PropertyInteger.create("meta", 0, 5);
 
-    private boolean isPlacer;
+    private final boolean isPlacer;
 
     public BlockFluidCollector(boolean isPlacer, String name){
         super(Material.ROCK, name);
@@ -47,8 +49,9 @@ public class BlockFluidCollector extends BlockContainerBase{
         this.setSoundType(SoundType.STONE);
     }
 
+    @Nonnull
     @Override
-    public TileEntity createNewTileEntity(World world, int par2){
+    public TileEntity createNewTileEntity(@Nonnull World world, int par2){
         return this.isPlacer ? new TileEntityFluidPlacer() : new TileEntityFluidCollector();
     }
 
@@ -60,7 +63,7 @@ public class BlockFluidCollector extends BlockContainerBase{
         if(!world.isRemote){
             TileEntityFluidCollector collector = (TileEntityFluidCollector)world.getTileEntity(pos);
             if(collector != null){
-                if(!this.tryUseItemOnTank(player, stack, par6, collector)){
+                if(this.checkFailUseItemOnTank(player, stack, par6, collector)){
                     player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.FLUID_COLLECTOR.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
                 }
             }
@@ -88,7 +91,7 @@ public class BlockFluidCollector extends BlockContainerBase{
     }
 
     @Override
-    public void breakBlock(World world, BlockPos pos, IBlockState state){
+    public void breakBlock(World world, @Nonnull BlockPos pos, @Nonnull IBlockState state){
         this.dropInventory(world, pos);
         super.breakBlock(world, pos, state);
     }

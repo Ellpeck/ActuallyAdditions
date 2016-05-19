@@ -19,14 +19,17 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 
+import javax.annotation.Nonnull;
+
 public class ItemResonantRice extends ItemBase{
 
     public ItemResonantRice(String name){
         super(name);
     }
 
+    @Nonnull
     @Override
-    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand){
+    public ActionResult<ItemStack> onItemRightClick(@Nonnull ItemStack stack, World world, EntityPlayer player, EnumHand hand){
         if(!world.isRemote){
             stack.stackSize--;
             world.createExplosion(null, player.posX, player.posY, player.posZ, 0.5F, true);
@@ -34,6 +37,7 @@ public class ItemResonantRice extends ItemBase{
         return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
     }
 
+    @Nonnull
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.EPIC;

@@ -24,11 +24,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 
+import javax.annotation.Nonnull;
+
 public class ItemSeed extends ItemSeeds{
 
-    public Block plant;
-    public String name;
-    public String oredictName;
+    public final Block plant;
+    public final String name;
+    public final String oredictName;
 
     public ItemSeed(String name, String oredictName, Block plant, Item returnItem, int returnMeta){
         super(plant, Blocks.FARMLAND);
@@ -63,11 +65,13 @@ public class ItemSeed extends ItemSeeds{
         ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this), new ModelResourceLocation(this.getRegistryName(), "inventory"));
     }
 
+    @Nonnull
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.RARE;
     }
 
+    @Nonnull
     @Override
     public IBlockState getPlant(IBlockAccess world, BlockPos pos){
         return this.plant.getDefaultState();

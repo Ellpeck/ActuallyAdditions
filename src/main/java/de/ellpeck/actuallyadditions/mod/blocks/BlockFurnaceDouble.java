@@ -35,6 +35,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
 import java.util.Random;
 
 public class BlockFurnaceDouble extends BlockContainerBase{
@@ -50,8 +51,9 @@ public class BlockFurnaceDouble extends BlockContainerBase{
         this.setTickRandomly(true);
     }
 
+    @Nonnull
     @Override
-    public TileEntity createNewTileEntity(World world, int par2){
+    public TileEntity createNewTileEntity(@Nonnull World world, int par2){
         return new TileEntityFurnaceDouble();
     }
 
@@ -103,7 +105,7 @@ public class BlockFurnaceDouble extends BlockContainerBase{
     }
 
     @Override
-    public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos){
+    public int getLightValue(@Nonnull IBlockState state, IBlockAccess world, @Nonnull BlockPos pos){
         return PosUtil.getMetadata(state) > 3 ? 12 : 0;
     }
 
@@ -138,7 +140,7 @@ public class BlockFurnaceDouble extends BlockContainerBase{
     }
 
     @Override
-    public void breakBlock(World world, BlockPos pos, IBlockState state){
+    public void breakBlock(World world, @Nonnull BlockPos pos, @Nonnull IBlockState state){
         this.dropInventory(world, pos);
         super.breakBlock(world, pos, state);
     }

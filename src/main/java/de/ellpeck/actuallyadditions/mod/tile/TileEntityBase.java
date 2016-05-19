@@ -18,7 +18,6 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
-import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
@@ -27,10 +26,12 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
+import javax.annotation.Nonnull;
+
 public abstract class TileEntityBase extends TileEntity implements ITickable{
 
     public boolean isRedstonePowered;
-    public String name;
+    public final String name;
     protected int ticksElapsed;
 
     public TileEntityBase(String name){
@@ -95,15 +96,17 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
         this.readSyncableNBT(compound, false);
     }
 
+    @Nonnull
     @Override
-    public final void writeToNBT(NBTTagCompound compound){
-        super.writeToNBT(compound);
-        compound.setBoolean("Redstone", this.isRedstonePowered);
-        this.writeSyncableNBT(compound, false);
+    public final NBTTagCompound writeToNBT(NBTTagCompound compound){
+        NBTTagCompound newCompound = super.writeToNBT(compound);
+        newCompound.setBoolean("Redstone", this.isRedstonePowered);
+        this.writeSyncableNBT(newCompound, false);
+        return newCompound;
     }
 
     @Override
-    public final Packet getDescriptionPacket(){
+    public final SPacketUpdateTileEntity getUpdatePacket(){
         NBTTagCompound compound = this.getSyncCompound();
         if(compound != null){
             return new SPacketUpdateTileEntity(this.pos, 3, compound);
@@ -121,7 +124,7 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
     }
 
     @Override
-    public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newState){
+    public boolean shouldRefresh(World world, BlockPos pos, @Nonnull IBlockState oldState, @Nonnull IBlockState newState){
         return !(oldState.getBlock().isAssociatedBlock(newState.getBlock()));
     }
 

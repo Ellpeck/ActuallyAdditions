@@ -19,10 +19,12 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
+import javax.annotation.Nonnull;
+
 
 public class ContainerFluidCollector extends Container{
 
-    private TileEntityFluidCollector collector;
+    private final TileEntityFluidCollector collector;
 
     public ContainerFluidCollector(InventoryPlayer inventory, TileEntityBase tile){
         this.collector = (TileEntityFluidCollector)tile;
@@ -90,7 +92,7 @@ public class ContainerFluidCollector extends Container{
     }
 
     @Override
-    public boolean canInteractWith(EntityPlayer player){
+    public boolean canInteractWith(@Nonnull EntityPlayer player){
         return this.collector.canPlayerUse(player);
     }
 }

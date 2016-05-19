@@ -59,7 +59,7 @@ public class NEIScreenEvents{
                 if(page != null){
                     GuiBooklet book = new GuiBooklet(Minecraft.getMinecraft().currentScreen, false, true);
                     Minecraft.getMinecraft().displayGuiScreen(book);
-                    BookletUtils.openIndexEntry(book, page.getChapter().getEntry(), ActuallyAdditionsAPI.bookletEntries.indexOf(page.getChapter().getEntry())/GuiBooklet.CHAPTER_BUTTONS_AMOUNT+1, true);
+                    BookletUtils.openIndexEntry(book, page.getChapter().getEntry(), ActuallyAdditionsAPI.BOOKLET_ENTRIES.indexOf(page.getChapter().getEntry())/GuiBooklet.CHAPTER_BUTTONS_AMOUNT+1, true);
                     BookletUtils.openChapter(book, page.getChapter(), page);
                 }
             }

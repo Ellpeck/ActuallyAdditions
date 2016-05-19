@@ -18,10 +18,12 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
+import javax.annotation.Nonnull;
+
 
 public class ContainerBreaker extends Container{
 
-    private TileEntityBreaker breaker;
+    private final TileEntityBreaker breaker;
 
     public ContainerBreaker(InventoryPlayer inventory, TileEntityBase tile){
         this.breaker = (TileEntityBreaker)tile;
@@ -92,7 +94,7 @@ public class ContainerBreaker extends Container{
     }
 
     @Override
-    public boolean canInteractWith(EntityPlayer player){
+    public boolean canInteractWith(@Nonnull EntityPlayer player){
         return this.breaker.isUseableByPlayer(player);
     }
 }

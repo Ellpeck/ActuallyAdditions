@@ -18,7 +18,7 @@ import java.util.UUID;
 
 public class PersistentServerData{
 
-    public static ArrayList<PlayerSave> playerSaveData = new ArrayList<PlayerSave>();
+    public static final ArrayList<PlayerSave> playerSaveData = new ArrayList<PlayerSave>();
 
     public static NBTTagCompound getDataFromPlayer(EntityPlayer player){
         //Get Data from existing data
@@ -36,8 +36,8 @@ public class PersistentServerData{
 
     public static class PlayerSave{
 
-        public UUID thePlayerUUID;
-        public NBTTagCompound theCompound;
+        public final UUID thePlayerUUID;
+        public final NBTTagCompound theCompound;
 
         public PlayerSave(UUID theUUID, NBTTagCompound theCompound){
             this.thePlayerUUID = theUUID;

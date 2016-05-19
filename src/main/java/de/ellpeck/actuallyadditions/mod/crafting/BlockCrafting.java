@@ -71,7 +71,7 @@ public class BlockCrafting{
     public static IRecipe recipeCrate;
     public static IRecipe recipeFermentingBarrel;
     public static IRecipe recipeCanolaPress;
-    public static IRecipe[] recipesLamps = new IRecipe[BlockColoredLamp.allLampTypes.length];
+    public static final IRecipe[] recipesLamps = new IRecipe[BlockColoredLamp.allLampTypes.length];
     public static IRecipe recipePowerer;
     public static IRecipe recipeLeafGen;
     public static IRecipe recipeDirectionalBreaker;

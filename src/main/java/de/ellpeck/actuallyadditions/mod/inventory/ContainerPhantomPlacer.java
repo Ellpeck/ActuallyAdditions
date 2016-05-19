@@ -19,10 +19,12 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
+import javax.annotation.Nonnull;
+
 
 public class ContainerPhantomPlacer extends Container{
 
-    private TileEntityPhantomPlacer placer;
+    private final TileEntityPhantomPlacer placer;
 
     public ContainerPhantomPlacer(InventoryPlayer inventory, TileEntityBase tile){
         this.placer = (TileEntityPhantomPlacer)tile;
@@ -93,7 +95,7 @@ public class ContainerPhantomPlacer extends Container{
     }
 
     @Override
-    public boolean canInteractWith(EntityPlayer player){
+    public boolean canInteractWith(@Nonnull EntityPlayer player){
         return this.placer.isUseableByPlayer(player);
     }
 }

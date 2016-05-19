@@ -31,10 +31,12 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import javax.annotation.Nonnull;
+
 public class BlockLaserRelay extends BlockContainerBase{
 
     private static final PropertyInteger META = PropertyInteger.create("meta", 0, 5);
-    private Type type;
+    private final Type type;
 
     public BlockLaserRelay(String name, Type type){
         super(Material.ROCK, name);
@@ -56,6 +58,7 @@ public class BlockLaserRelay extends BlockContainerBase{
         return false;
     }
 
+    @Nonnull
     @Override
     public IBlockState onBlockPlaced(World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, int meta, EntityLivingBase base){
         return this.getStateFromMeta(side.ordinal());
@@ -85,8 +88,9 @@ public class BlockLaserRelay extends BlockContainerBase{
         return false;
     }
 
+    @Nonnull
     @Override
-    public TileEntity createNewTileEntity(World world, int i){
+    public TileEntity createNewTileEntity(@Nonnull World world, int i){
         switch(this.type){
             case ITEM:
                 return new TileEntityLaserRelayItem();

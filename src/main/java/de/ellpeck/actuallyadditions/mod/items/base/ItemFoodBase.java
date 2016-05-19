@@ -19,7 +19,7 @@ import net.minecraft.item.ItemStack;
 
 public class ItemFoodBase extends ItemFood{
 
-    private String name;
+    private final String name;
 
     public ItemFoodBase(int heal, float saturation, boolean wolfFood, String name){
         super(heal, saturation, wolfFood);

@@ -12,8 +12,6 @@ package de.ellpeck.actuallyadditions.mod.material;
 
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.item.Item.ToolMaterial;
-import net.minecraft.item.ItemArmor;
-import net.minecraft.util.SoundEvent;
 import net.minecraftforge.common.util.EnumHelper;
 
 import java.util.Locale;

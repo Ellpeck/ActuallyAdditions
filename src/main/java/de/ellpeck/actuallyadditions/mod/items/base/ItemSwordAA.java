@@ -18,11 +18,13 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 
+import javax.annotation.Nonnull;
+
 public class ItemSwordAA extends ItemSword{
 
-    private String name;
-    private EnumRarity rarity;
-    private ItemStack repairItem;
+    private final String name;
+    private final EnumRarity rarity;
+    private final ItemStack repairItem;
 
     public ItemSwordAA(ToolMaterial toolMat, ItemStack repairItem, String unlocalizedName, EnumRarity rarity){
         super(toolMat);
@@ -57,10 +59,11 @@ public class ItemSwordAA extends ItemSword{
     }
 
     @Override
-    public boolean getIsRepairable(ItemStack itemToRepair, ItemStack stack){
+    public boolean getIsRepairable(ItemStack itemToRepair, @Nonnull ItemStack stack){
         return ItemUtil.areItemsEqual(this.repairItem, stack, false);
     }
 
+    @Nonnull
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return this.rarity;

@@ -29,7 +29,7 @@ public class TileEntityLavaFactoryController extends TileEntityBase implements I
     public static final int HAS_LAVA = 1;
     public static final int HAS_AIR = 2;
     public static final int ENERGY_USE = 150000;
-    public EnergyStorage storage = new EnergyStorage(3000000);
+    public final EnergyStorage storage = new EnergyStorage(3000000);
     private int currentWorkTime;
     private int oldEnergy;
 

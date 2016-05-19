@@ -34,6 +34,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
+import javax.annotation.Nonnull;
+
 public class BlockXPSolidifier extends BlockContainerBase{
 
     private static final PropertyInteger META = PropertyInteger.create("meta", 0, 3);
@@ -46,8 +48,9 @@ public class BlockXPSolidifier extends BlockContainerBase{
         this.setSoundType(SoundType.STONE);
     }
 
+    @Nonnull
     @Override
-    public TileEntity createNewTileEntity(World world, int par2){
+    public TileEntity createNewTileEntity(@Nonnull World world, int par2){
         return new TileEntityXPSolidifier();
     }
 
@@ -94,7 +97,7 @@ public class BlockXPSolidifier extends BlockContainerBase{
     }
 
     @Override
-    public void breakBlock(World world, BlockPos pos, IBlockState state){
+    public void breakBlock(World world, @Nonnull BlockPos pos, @Nonnull IBlockState state){
         this.dropInventory(world, pos);
         TileEntity tile = world.getTileEntity(pos);
         if(tile instanceof TileEntityXPSolidifier){

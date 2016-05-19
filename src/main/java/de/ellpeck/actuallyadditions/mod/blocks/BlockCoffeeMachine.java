@@ -32,6 +32,8 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+import javax.annotation.Nonnull;
+
 public class BlockCoffeeMachine extends BlockContainerBase{
 
     private static final AxisAlignedBB AABB = new AxisAlignedBB(0.0625, 0, 0.0625, 1-0.0625, 1-0.0625*2, 1-0.0625);
@@ -46,6 +48,7 @@ public class BlockCoffeeMachine extends BlockContainerBase{
         this.setSoundType(SoundType.STONE);
     }
 
+    @Nonnull
     @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos){
         return AABB;
@@ -66,7 +69,7 @@ public class BlockCoffeeMachine extends BlockContainerBase{
         if(!world.isRemote){
             TileEntityCoffeeMachine machine = (TileEntityCoffeeMachine)world.getTileEntity(pos);
             if(machine != null){
-                if(!this.tryUseItemOnTank(player, stack, f6, machine)){
+                if(this.checkFailUseItemOnTank(player, stack, f6, machine)){
                     player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.COFFEE_MACHINE.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
                 }
             }
@@ -75,13 +78,14 @@ public class BlockCoffeeMachine extends BlockContainerBase{
         return true;
     }
 
+    @Nonnull
     @Override
-    public TileEntity createNewTileEntity(World world, int meta){
+    public TileEntity createNewTileEntity(@Nonnull World world, int meta){
         return new TileEntityCoffeeMachine();
     }
 
     @Override
-    public void breakBlock(World world, BlockPos pos, IBlockState state){
+    public void breakBlock(World world, @Nonnull BlockPos pos, @Nonnull IBlockState state){
         this.dropInventory(world, pos);
         super.breakBlock(world, pos, state);
     }

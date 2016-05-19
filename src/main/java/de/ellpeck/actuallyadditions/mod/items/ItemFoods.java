@@ -23,11 +23,11 @@ import net.minecraft.item.EnumAction;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 public class ItemFoods extends ItemFoodBase{
@@ -42,7 +42,7 @@ public class ItemFoods extends ItemFoodBase{
     }
 
     @Override
-    public ItemStack onItemUseFinish(ItemStack stack, World world, EntityLivingBase player){
+    public ItemStack onItemUseFinish(ItemStack stack, @Nonnull World world, EntityLivingBase player){
         ItemStack stackToReturn = super.onItemUseFinish(stack, world, player);
         ItemStack returnItem = stack.getItemDamage() >= allFoods.length ? null : allFoods[stack.getItemDamage()].returnItem;
         if(returnItem != null && player instanceof EntityPlayer){
@@ -62,6 +62,7 @@ public class ItemFoods extends ItemFoodBase{
         return stack.getItemDamage() >= allFoods.length ? 0 : allFoods[stack.getItemDamage()].useDuration;
     }
 
+    @Nonnull
     @Override
     public EnumAction getItemUseAction(ItemStack stack){
         return stack.getItemDamage() >= allFoods.length ? EnumAction.EAT : (allFoods[stack.getItemDamage()].getsDrunken ? EnumAction.DRINK : EnumAction.EAT);
@@ -82,11 +83,13 @@ public class ItemFoods extends ItemFoodBase{
         return damage;
     }
 
+    @Nonnull
     @Override
     public String getUnlocalizedName(ItemStack stack){
         return stack.getItemDamage() >= allFoods.length ? StringUtil.BUGGED_ITEM_NAME : this.getUnlocalizedName()+allFoods[stack.getItemDamage()].name;
     }
 
+    @Nonnull
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return stack.getItemDamage() >= allFoods.length ? EnumRarity.COMMON : allFoods[stack.getItemDamage()].rarity;

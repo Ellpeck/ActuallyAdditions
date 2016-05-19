@@ -31,6 +31,7 @@ import net.minecraft.util.StringUtils;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.Loader;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,7 +65,7 @@ public class ItemCoffee extends ItemFoodBase{
     }
 
     public static CoffeeIngredient getIngredientFromStack(ItemStack stack){
-        for(CoffeeIngredient ingredient : ActuallyAdditionsAPI.coffeeMachineIngredients){
+        for(CoffeeIngredient ingredient : ActuallyAdditionsAPI.COFFEE_MACHINE_INGREDIENTS){
             if(ingredient.ingredient.copy().isItemEqual(stack)){
                 return ingredient;
             }
@@ -82,7 +83,7 @@ public class ItemCoffee extends ItemFoodBase{
     }
 
     @Override
-    public ItemStack onItemUseFinish(ItemStack stack, World world, EntityLivingBase player){
+    public ItemStack onItemUseFinish(ItemStack stack, @Nonnull World world, EntityLivingBase player){
         ItemStack theStack = stack.copy();
         super.onItemUseFinish(stack, world, player);
         applyPotionEffectsFromStack(stack, player);
@@ -95,6 +96,7 @@ public class ItemCoffee extends ItemFoodBase{
         }
     }
 
+    @Nonnull
     @Override
     public EnumAction getItemUseAction(ItemStack stack){
         return EnumAction.DRINK;
@@ -124,6 +126,7 @@ public class ItemCoffee extends ItemFoodBase{
         }
     }
 
+    @Nonnull
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.RARE;

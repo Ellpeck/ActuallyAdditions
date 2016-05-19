@@ -30,7 +30,7 @@ import java.util.List;
 
 public class PageReconstructor extends BookletPageAA{
 
-    private LensConversionRecipe[] recipes;
+    private final LensConversionRecipe[] recipes;
     private int recipePos;
 
     public PageReconstructor(int id, ArrayList<LensConversionRecipe> recipes){

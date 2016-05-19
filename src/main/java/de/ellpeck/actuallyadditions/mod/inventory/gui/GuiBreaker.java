@@ -25,18 +25,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class GuiBreaker extends GuiContainer{
 
     private static final ResourceLocation resLoc = AssetUtil.getGuiLocation("guiBreaker");
-    private TileEntityBreaker breaker;
+    private final TileEntityBreaker breaker;
 
     public GuiBreaker(InventoryPlayer inventory, TileEntityBase tile){
         super(new ContainerBreaker(inventory, tile));
         this.breaker = (TileEntityBreaker)tile;
         this.xSize = 176;
         this.ySize = 93+86;
-    }
-
-    @Override
-    public void drawScreen(int x, int y, float f){
-        super.drawScreen(x, y, f);
     }
 
     @Override

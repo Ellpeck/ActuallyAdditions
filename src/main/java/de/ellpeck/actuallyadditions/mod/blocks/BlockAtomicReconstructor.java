@@ -40,6 +40,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 public class BlockAtomicReconstructor extends BlockContainerBase implements IHudDisplay{
@@ -84,8 +85,9 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
                     }
                 }
                 else{
-                    if(reconstructor.getStackInSlot(0) != null){
-                        player.inventory.setInventorySlotContents(player.inventory.currentItem, reconstructor.getStackInSlot(0).copy());
+                    ItemStack slot = reconstructor.getStackInSlot(0);
+                    if(slot != null){
+                        player.inventory.setInventorySlotContents(player.inventory.currentItem, slot.copy());
                         reconstructor.setInventorySlotContents(0, null);
                     }
                 }
@@ -94,13 +96,14 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
         return true;
     }
 
+    @Nonnull
     @Override
-    public TileEntity createNewTileEntity(World world, int i){
+    public TileEntity createNewTileEntity(@Nonnull World world, int i){
         return new TileEntityAtomicReconstructor();
     }
 
     @Override
-    public void breakBlock(World world, BlockPos pos, IBlockState state){
+    public void breakBlock(World world, @Nonnull BlockPos pos, @Nonnull IBlockState state){
         this.dropInventory(world, pos);
         super.breakBlock(world, pos, state);
     }
@@ -159,6 +162,7 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
             this.setMaxDamage(0);
         }
 
+        @Nonnull
         @Override
         public String getUnlocalizedName(ItemStack stack){
             return this.getUnlocalizedName();
@@ -170,7 +174,7 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
         }
 
         @Override
-        public void addInformation(ItemStack stack, EntityPlayer player, List<String> list, boolean bool){
+        public void addInformation(@Nonnull ItemStack stack, @Nonnull EntityPlayer player, @Nonnull List<String> list, boolean bool){
             long sysTime = System.currentTimeMillis();
 
             if(this.lastSysTime+3000 < sysTime){

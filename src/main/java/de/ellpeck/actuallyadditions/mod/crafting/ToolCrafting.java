@@ -28,7 +28,7 @@ import java.util.ArrayList;
 
 public class ToolCrafting{
 
-    public static ArrayList<IRecipe> recipesPaxels = new ArrayList<IRecipe>();
+    public static final ArrayList<IRecipe> recipesPaxels = new ArrayList<IRecipe>();
 
     public static void init(){
 

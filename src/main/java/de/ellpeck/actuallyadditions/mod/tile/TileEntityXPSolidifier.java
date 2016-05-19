@@ -19,11 +19,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 
+import javax.annotation.Nonnull;
+
 public class TileEntityXPSolidifier extends TileEntityInventoryBase implements IButtonReactor{
 
     public short amount;
     private short lastAmount;
-    private int[] buttonAmounts = new int[]{1, 5, 10, 20, 30, 40, 50, 64, -999};
+    private final int[] buttonAmounts = new int[]{1, 5, 10, 20, 30, 40, 50, 64, -999};
 
     public TileEntityXPSolidifier(){
         super(1, "xpSolidifier");
@@ -66,17 +68,17 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
     }
 
     @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
+    public boolean isItemValidForSlot(int i, @Nonnull ItemStack stack){
         return false;
     }
 
     @Override
-    public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
+    public boolean canInsertItem(int slot, @Nonnull ItemStack stack, @Nonnull EnumFacing side){
         return this.isItemValidForSlot(slot, stack);
     }
 
     @Override
-    public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
+    public boolean canExtractItem(int slot, @Nonnull ItemStack stack, @Nonnull EnumFacing side){
         return true;
     }
 

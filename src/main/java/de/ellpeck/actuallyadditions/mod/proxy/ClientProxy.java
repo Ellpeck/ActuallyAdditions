@@ -31,14 +31,12 @@ import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.playerdata.PersistentClientData;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.resources.IReloadableResourceManager;
 import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.client.resources.IResourceManagerReloadListener;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
@@ -46,6 +44,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
+import javax.annotation.Nonnull;
 import java.io.File;
 import java.util.*;
 
@@ -57,14 +56,14 @@ public class ClientProxy implements IProxy{
     public static int bookletWordCount;
     public static int bookletCharCount;
 
-    private static List<Item> colorProdividingItemsForRegistering = new ArrayList<Item>();
-    private static Map<ItemStack, ModelResourceLocation> modelLocationsForRegistering = new HashMap<ItemStack, ModelResourceLocation>();
+    private static final List<Item> colorProdividingItemsForRegistering = new ArrayList<Item>();
+    private static final Map<ItemStack, ModelResourceLocation> modelLocationsForRegistering = new HashMap<ItemStack, ModelResourceLocation>();
 
     private static void countBookletWords(){
         bookletWordCount = 0;
         bookletCharCount = 0;
 
-        for(IBookletEntry entry : ActuallyAdditionsAPI.bookletEntries){
+        for(IBookletEntry entry : ActuallyAdditionsAPI.BOOKLET_ENTRIES){
             for(IBookletChapter chapter : entry.getChapters()){
                 for(BookletPage page : chapter.getPages()){
                     if(page.getText() != null){
@@ -107,7 +106,7 @@ public class ClientProxy implements IProxy{
         if(manager instanceof IReloadableResourceManager){
             ((IReloadableResourceManager)manager).registerReloadListener(new IResourceManagerReloadListener(){
                 @Override
-                public void onResourceManagerReload(IResourceManager resourceManager){
+                public void onResourceManagerReload(@Nonnull IResourceManager resourceManager){
                     countBookletWords();
                 }
             });

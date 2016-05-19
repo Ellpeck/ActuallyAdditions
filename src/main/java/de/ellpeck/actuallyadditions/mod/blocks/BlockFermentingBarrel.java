@@ -26,6 +26,8 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import javax.annotation.Nonnull;
+
 public class BlockFermentingBarrel extends BlockContainerBase{
 
     public BlockFermentingBarrel(String name){
@@ -36,13 +38,14 @@ public class BlockFermentingBarrel extends BlockContainerBase{
         this.setSoundType(SoundType.WOOD);
     }
 
+    @Nonnull
     @Override
-    public TileEntity createNewTileEntity(World world, int par2){
+    public TileEntity createNewTileEntity(@Nonnull World world, int par2){
         return new TileEntityFermentingBarrel();
     }
 
     @Override
-    public void breakBlock(World world, BlockPos pos, IBlockState state){
+    public void breakBlock(World world, @Nonnull BlockPos pos, @Nonnull IBlockState state){
         this.dropInventory(world, pos);
         super.breakBlock(world, pos, state);
     }
@@ -52,7 +55,7 @@ public class BlockFermentingBarrel extends BlockContainerBase{
         if(!world.isRemote){
             TileEntityFermentingBarrel press = (TileEntityFermentingBarrel)world.getTileEntity(pos);
             if(press != null){
-                if(!this.tryUseItemOnTank(player, heldItem, par6, press)){
+                if(this.checkFailUseItemOnTank(player, heldItem, par6, press)){
                     player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.FERMENTING_BARREL.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
                 }
             }

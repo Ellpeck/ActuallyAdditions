@@ -19,10 +19,10 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 public class ItemMisc extends ItemBase{
@@ -39,11 +39,13 @@ public class ItemMisc extends ItemBase{
         return damage;
     }
 
+    @Nonnull
     @Override
     public String getUnlocalizedName(ItemStack stack){
         return stack.getItemDamage() >= allMiscItems.length ? StringUtil.BUGGED_ITEM_NAME : this.getUnlocalizedName()+allMiscItems[stack.getItemDamage()].name;
     }
 
+    @Nonnull
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return stack.getItemDamage() >= allMiscItems.length ? EnumRarity.COMMON : allMiscItems[stack.getItemDamage()].rarity;

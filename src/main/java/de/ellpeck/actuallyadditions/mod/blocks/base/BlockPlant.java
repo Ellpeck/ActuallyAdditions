@@ -27,6 +27,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.EnumPlantType;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.Random;
 
@@ -35,9 +36,9 @@ public class BlockPlant extends BlockCrops{
     public Item seedItem;
     public Item returnItem;
     public int returnMeta;
-    private String name;
-    private int minDropAmount;
-    private int addDropAmount;
+    private final String name;
+    private final int minDropAmount;
+    private final int addDropAmount;
 
     public BlockPlant(String name, int minDropAmount, int addDropAmount){
         this.name = name;
@@ -72,6 +73,7 @@ public class BlockPlant extends BlockCrops{
         return EnumRarity.RARE;
     }
 
+    @Nonnull
     @Override
     public EnumPlantType getPlantType(IBlockAccess world, BlockPos pos){
         return EnumPlantType.Crop;
@@ -110,16 +112,18 @@ public class BlockPlant extends BlockCrops{
         return false;
     }
 
+    @Nonnull
     @Override
     public Item getSeed(){
         return this.seedItem;
     }
 
     @Override
-    public int quantityDropped(IBlockState state, int fortune, Random random){
+    public int quantityDropped(IBlockState state, int fortune, @Nonnull Random random){
         return this.getMetaFromState(state) >= 7 ? random.nextInt(this.addDropAmount)+this.minDropAmount : super.quantityDropped(state, fortune, random);
     }
 
+    @Nonnull
     @Override
     public Item getCrop(){
         return this.returnItem;
@@ -127,7 +131,7 @@ public class BlockPlant extends BlockCrops{
 
 
     @Override
-    public Item getItemDropped(IBlockState state, Random rand, int par3){
+    public Item getItemDropped(@Nonnull IBlockState state, Random rand, int par3){
         return this.getMetaFromState(state) >= 7 ? this.getCrop() : this.getSeed();
     }
 

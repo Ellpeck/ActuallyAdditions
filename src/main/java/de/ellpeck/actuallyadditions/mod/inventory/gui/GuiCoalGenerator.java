@@ -27,7 +27,7 @@ import java.util.Collections;
 public class GuiCoalGenerator extends GuiContainer{
 
     private static final ResourceLocation resLoc = AssetUtil.getGuiLocation("guiCoalGenerator");
-    private TileEntityCoalGenerator generator;
+    private final TileEntityCoalGenerator generator;
 
     public GuiCoalGenerator(InventoryPlayer inventory, TileEntityBase tile){
         super(new ContainerCoalGenerator(inventory, tile));

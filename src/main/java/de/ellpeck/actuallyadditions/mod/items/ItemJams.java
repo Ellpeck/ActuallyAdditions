@@ -31,6 +31,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 public class ItemJams extends ItemFoodBase implements IColorProvidingItem{
@@ -49,11 +50,13 @@ public class ItemJams extends ItemFoodBase implements IColorProvidingItem{
         return damage;
     }
 
+    @Nonnull
     @Override
     public String getUnlocalizedName(ItemStack stack){
         return stack.getItemDamage() >= allJams.length ? StringUtil.BUGGED_ITEM_NAME : this.getUnlocalizedName()+allJams[stack.getItemDamage()].name;
     }
 
+    @Nonnull
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return stack.getItemDamage() >= allJams.length ? EnumRarity.COMMON : allJams[stack.getItemDamage()].rarity;
@@ -68,7 +71,7 @@ public class ItemJams extends ItemFoodBase implements IColorProvidingItem{
     }
 
     @Override
-    public ItemStack onItemUseFinish(ItemStack stack, World world, EntityLivingBase player){
+    public ItemStack onItemUseFinish(ItemStack stack, @Nonnull World world, EntityLivingBase player){
         ItemStack stackToReturn = super.onItemUseFinish(stack, world, player);
 
         if(player instanceof EntityPlayer && !world.isRemote && stack.getItemDamage() < allJams.length){
@@ -110,7 +113,7 @@ public class ItemJams extends ItemFoodBase implements IColorProvidingItem{
     public IItemColor getColor(){
         return new IItemColor(){
             @Override
-            public int getColorFromItemstack(ItemStack stack, int pass){
+            public int getColorFromItemstack(@Nonnull ItemStack stack, int pass){
                 return pass > 0 ? (stack.getItemDamage() >= allJams.length ? 0xFFFFFF : allJams[stack.getItemDamage()].color) : 0xFFFFFF;
             }
         };

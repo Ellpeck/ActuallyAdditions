@@ -21,12 +21,12 @@ import java.util.List;
 public class RecipeUtil{
 
     public static LensConversionRecipe lastReconstructorRecipe(){
-        List<LensConversionRecipe> list = ActuallyAdditionsAPI.reconstructorLensConversionRecipes;
+        List<LensConversionRecipe> list = ActuallyAdditionsAPI.RECONSTRUCTOR_LENS_CONVERSION_RECIPES;
         return list.get(list.size()-1);
     }
 
     public static CrusherRecipe lastCrusherRecipe(){
-        List<CrusherRecipe> list = ActuallyAdditionsAPI.crusherRecipes;
+        List<CrusherRecipe> list = ActuallyAdditionsAPI.CRUSHER_RECIPES;
         return list.get(list.size()-1);
     }
 

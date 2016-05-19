@@ -27,7 +27,6 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -35,6 +34,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
 import java.util.Random;
 
 public class BlockTreasureChest extends BlockBase{
@@ -98,13 +98,13 @@ public class BlockTreasureChest extends BlockBase{
     }
 
     @Override
-    public boolean canSilkHarvest(World world, BlockPos pos, IBlockState state, EntityPlayer player){
+    public boolean canSilkHarvest(World world, BlockPos pos, @Nonnull IBlockState state, EntityPlayer player){
         return false;
     }
 
     private void dropItems(World world, BlockPos pos){
         for(int i = 0; i < MathHelper.getRandomIntegerInRange(Util.RANDOM, 3, 6); i++){
-            TreasureChestLoot theReturn = WeightedRandom.getRandomItem(Util.RANDOM, ActuallyAdditionsAPI.treasureChestLoot);
+            TreasureChestLoot theReturn = WeightedRandom.getRandomItem(Util.RANDOM, ActuallyAdditionsAPI.TREASURE_CHEST_LOOT);
             ItemStack itemStack = theReturn.returnItem.copy();
             itemStack.stackSize = MathHelper.getRandomIntegerInRange(Util.RANDOM, theReturn.minAmount, theReturn.maxAmount);
 
@@ -112,9 +112,6 @@ public class BlockTreasureChest extends BlockBase{
             float dY = Util.RANDOM.nextFloat()*0.8F+0.1F;
             float dZ = Util.RANDOM.nextFloat()*0.8F+0.1F;
             EntityItem entityItem = new EntityItem(world, pos.getX()+dX, pos.getY()+dY, pos.getZ()+dZ, itemStack.copy());
-            if(itemStack.hasTagCompound()){
-                entityItem.getEntityItem().setTagCompound((NBTTagCompound)itemStack.getTagCompound().copy());
-            }
             float factor = 0.05F;
             entityItem.motionX = Util.RANDOM.nextGaussian()*factor;
             entityItem.motionY = Util.RANDOM.nextGaussian()*factor+0.2F;

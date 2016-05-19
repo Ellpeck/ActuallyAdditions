@@ -27,6 +27,8 @@ import net.minecraft.world.chunk.IChunkGenerator;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+import javax.annotation.Nonnull;
+
 public class CaveWorldType extends WorldType{
 
     public CaveWorldType(){
@@ -40,13 +42,14 @@ public class CaveWorldType extends WorldType{
         return ConfigValues.caveWorld && world.getWorldType() instanceof CaveWorldType;
     }
 
+    @Nonnull
     @Override
-    public IChunkGenerator getChunkGenerator(World world, String generatorOptions){
+    public IChunkGenerator getChunkGenerator(@Nonnull World world, String generatorOptions){
         return new ChunkProviderCave(world);
     }
 
     @Override
-    public int getSpawnFuzz(WorldServer world, MinecraftServer server){
+    public int getSpawnFuzz(@Nonnull WorldServer world, MinecraftServer server){
         return 1;
     }
 
@@ -57,7 +60,7 @@ public class CaveWorldType extends WorldType{
             if(isCave(player.worldObj) && !player.worldObj.isRemote){
                 if(player.posY >= player.worldObj.getHeight() && !player.isSpectator()){
                     BlockPos spawn = player.worldObj.getSpawnPoint();
-                    player.playerNetServerHandler.setPlayerLocation(spawn.getX()+0.5, spawn.getY()+1, spawn.getZ()+0.5, player.rotationYaw, player.rotationPitch);
+                    player.connection.setPlayerLocation(spawn.getX()+0.5, spawn.getY()+1, spawn.getZ()+0.5, player.rotationYaw, player.rotationPitch);
                 }
 
                 NBTTagCompound playerData = PersistentServerData.getDataFromPlayer(player);

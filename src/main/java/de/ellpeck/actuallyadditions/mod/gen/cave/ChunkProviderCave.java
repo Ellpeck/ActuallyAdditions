@@ -14,22 +14,24 @@ import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.chunk.IChunkGenerator;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
+import javax.annotation.Nonnull;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
 public class ChunkProviderCave implements IChunkGenerator{
 
     private boolean generatedSpawn;
-    private World world;
-    private Random rand;
+    private final World world;
+    private final Random rand;
 
-    private WorldGenerator spawnGenerator;
+    private final WorldGenerator spawnGenerator;
 
     public ChunkProviderCave(World world){
         this.world = world;
@@ -37,6 +39,7 @@ public class ChunkProviderCave implements IChunkGenerator{
         this.spawnGenerator = new WorldGenCaveSpawn(this.rand);
     }
 
+    @Nonnull
     @Override
     public Chunk provideChunk(int chunkX, int chunkZ){
         ChunkPrimer primer = new ChunkPrimer();
@@ -81,22 +84,23 @@ public class ChunkProviderCave implements IChunkGenerator{
     }
 
     @Override
-    public boolean generateStructures(Chunk chunkIn, int x, int z){
+    public boolean generateStructures(@Nonnull Chunk chunkIn, int x, int z){
         return false;
     }
 
+    @Nonnull
     @Override
-    public List<BiomeGenBase.SpawnListEntry> getPossibleCreatures(EnumCreatureType creatureType, BlockPos pos){
+    public List<Biome.SpawnListEntry> getPossibleCreatures(@Nonnull EnumCreatureType creatureType, @Nonnull BlockPos pos){
+        return Collections.emptyList();
+    }
+
+    @Override
+    public BlockPos getStrongholdGen(@Nonnull World worldIn, @Nonnull String structureName, @Nonnull BlockPos position){
         return null;
     }
 
     @Override
-    public BlockPos getStrongholdGen(World worldIn, String structureName, BlockPos position){
-        return null;
-    }
-
-    @Override
-    public void recreateStructures(Chunk chunkIn, int x, int z){
+    public void recreateStructures(@Nonnull Chunk chunkIn, int x, int z){
 
     }
 }

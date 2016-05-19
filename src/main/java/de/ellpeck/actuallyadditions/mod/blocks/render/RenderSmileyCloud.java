@@ -21,12 +21,13 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 
+import javax.annotation.Nonnull;
 import java.util.Locale;
 
 public class RenderSmileyCloud extends TileEntitySpecialRenderer{
 
     @Override
-    public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float par5, int partial){
+    public void renderTileEntityAt(@Nonnull TileEntity tile, double x, double y, double z, float par5, int partial){
         if(tile instanceof TileEntitySmileyCloud){
             TileEntitySmileyCloud theCloud = (TileEntitySmileyCloud)tile;
 

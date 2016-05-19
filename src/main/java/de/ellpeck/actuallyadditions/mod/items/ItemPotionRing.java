@@ -29,13 +29,14 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 public class ItemPotionRing extends ItemBase implements IColorProvidingItem{
 
     public static final ThePotionRings[] allRings = ThePotionRings.values();
 
-    private boolean isAdvanced;
+    private final boolean isAdvanced;
 
     public ItemPotionRing(boolean isAdvanced, String name){
         super(name);
@@ -49,6 +50,7 @@ public class ItemPotionRing extends ItemBase implements IColorProvidingItem{
         return damage;
     }
 
+    @Nonnull
     @Override
     public String getUnlocalizedName(ItemStack stack){
         return stack.getItemDamage() >= allRings.length ? StringUtil.BUGGED_ITEM_NAME : this.getUnlocalizedName()+allRings[stack.getItemDamage()].name;
@@ -80,8 +82,9 @@ public class ItemPotionRing extends ItemBase implements IColorProvidingItem{
         }
     }
 
+    @Nonnull
     @Override
-    public String getItemStackDisplayName(ItemStack stack){
+    public String getItemStackDisplayName(@Nonnull ItemStack stack){
         String standardName = StringUtil.localize(this.getUnlocalizedName()+".name");
         if(stack.getItemDamage() < allRings.length){
             String effect = StringUtil.localize(allRings[stack.getItemDamage()].name);
@@ -90,6 +93,7 @@ public class ItemPotionRing extends ItemBase implements IColorProvidingItem{
         return standardName;
     }
 
+    @Nonnull
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return stack.getItemDamage() >= allRings.length ? EnumRarity.COMMON : allRings[stack.getItemDamage()].rarity;
@@ -115,7 +119,7 @@ public class ItemPotionRing extends ItemBase implements IColorProvidingItem{
     public IItemColor getColor(){
         return new IItemColor(){
             @Override
-            public int getColorFromItemstack(ItemStack stack, int tintIndex){
+            public int getColorFromItemstack(@Nonnull ItemStack stack, int tintIndex){
                 return stack.getItemDamage() >= allRings.length ? 0xFFFFFF : allRings[stack.getItemDamage()].color;
             }
         };

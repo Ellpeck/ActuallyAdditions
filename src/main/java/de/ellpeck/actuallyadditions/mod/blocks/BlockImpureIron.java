@@ -25,6 +25,8 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.WorldServer;
 
+import javax.annotation.Nonnull;
+
 public class BlockImpureIron extends BlockGeneric{
 
     public BlockImpureIron(String name){
@@ -44,6 +46,7 @@ public class BlockImpureIron extends BlockGeneric{
             this.setMaxDamage(0);
         }
 
+        @Nonnull
         @Override
         public String getUnlocalizedName(ItemStack stack){
             return this.getUnlocalizedName();

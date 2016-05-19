@@ -32,6 +32,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 
 public class BlockGiantChest extends BlockContainerBase{
@@ -44,8 +45,9 @@ public class BlockGiantChest extends BlockContainerBase{
         this.setSoundType(SoundType.WOOD);
     }
 
+    @Nonnull
     @Override
-    public TileEntity createNewTileEntity(World world, int par2){
+    public TileEntity createNewTileEntity(@Nonnull World world, int par2){
         return new TileEntityGiantChest();
     }
 
@@ -83,8 +85,9 @@ public class BlockGiantChest extends BlockContainerBase{
         super.onBlockPlacedBy(world, pos, state, entity, stack);
     }
 
+    @Nonnull
     @Override
-    public ArrayList<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune){
+    public ArrayList<ItemStack> getDrops(IBlockAccess world, BlockPos pos, @Nonnull IBlockState state, int fortune){
         ArrayList<ItemStack> drops = super.getDrops(world, pos, state, fortune);
 
         TileEntity tile = world.getTileEntity(pos);
@@ -118,7 +121,7 @@ public class BlockGiantChest extends BlockContainerBase{
     }
 
     @Override
-    public void breakBlock(World world, BlockPos pos, IBlockState state){
+    public void breakBlock(World world, @Nonnull BlockPos pos, @Nonnull IBlockState state){
         TileEntity tile = world.getTileEntity(pos);
         if(tile instanceof TileEntityGiantChest){
             if(!ItemUtil.contains(((TileEntityGiantChest)tile).slots, new ItemStack(InitItems.itemCrateKeeper), false)){

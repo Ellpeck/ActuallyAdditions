@@ -18,11 +18,13 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemHoe;
 import net.minecraft.item.ItemStack;
 
+import javax.annotation.Nonnull;
+
 public class ItemHoeAA extends ItemHoe{
 
-    private String name;
-    private EnumRarity rarity;
-    private ItemStack repairItem;
+    private final String name;
+    private final EnumRarity rarity;
+    private final ItemStack repairItem;
 
     public ItemHoeAA(Item.ToolMaterial toolMat, ItemStack repairItem, String unlocalizedName, EnumRarity rarity){
         super(toolMat);
@@ -52,6 +54,7 @@ public class ItemHoeAA extends ItemHoe{
         ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this), new ModelResourceLocation(this.getRegistryName(), "inventory"));
     }
 
+    @Nonnull
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return this.rarity;

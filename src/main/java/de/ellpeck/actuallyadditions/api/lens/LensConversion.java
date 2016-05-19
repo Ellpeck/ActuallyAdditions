@@ -18,7 +18,7 @@ import net.minecraft.util.math.BlockPos;
 
 /**
  * This is the base class for a Reconstructor Lens Type that converts two items
- * via the ActuallyAdditionsAPI.reconstructorLensConversionRecipes list.
+ * via the ActuallyAdditionsAPI.RECONSTRUCTOR_LENS_CONVERSION_RECIPES list.
  *
  * If you want to make a new type of conversion, just use your type in the recipe
  * If you want to use the default type of conversion, use ActuallyAdditionsAPI.lensDefaultConversion.

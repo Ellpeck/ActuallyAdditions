@@ -14,7 +14,7 @@ import de.ellpeck.actuallyadditions.mod.achievement.InitAchievements;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.achievement.GuiAchievements;
-import net.minecraft.stats.StatFileWriter;
+import net.minecraft.stats.StatisticsManager;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
 /**
@@ -22,8 +22,8 @@ import net.minecraftforge.fml.relauncher.ReflectionHelper;
  */
 public class GuiAAAchievements extends GuiAchievements{
 
-    public GuiAAAchievements(GuiScreen screen, StatFileWriter writer){
-        super(screen, writer);
+    public GuiAAAchievements(GuiScreen screen, StatisticsManager statistics){
+        super(screen, statistics);
         try{
             ReflectionHelper.setPrivateValue(GuiAchievements.class, this, InitAchievements.pageNumber, 20);
         }

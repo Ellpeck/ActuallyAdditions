@@ -37,7 +37,7 @@ import java.util.List;
 public class GuiLaserRelayItemWhitelist extends GuiContainer{
 
     private static final ResourceLocation resLoc = AssetUtil.getGuiLocation("guiLaserRelayItemWhitelist");
-    private TileEntityLaserRelayItemWhitelist tile;
+    private final TileEntityLaserRelayItemWhitelist tile;
 
     private SmallerButton whitelistLeft;
     private SmallerButton whitelistRight;

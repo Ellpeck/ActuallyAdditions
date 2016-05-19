@@ -26,13 +26,15 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 
+import javax.annotation.Nonnull;
+
 
 public class ContainerDrill extends Container{
 
     public static final int SLOT_AMOUNT = 5;
 
-    private InventoryDrill drillInventory = new InventoryDrill();
-    private InventoryPlayer inventory;
+    private final InventoryDrill drillInventory = new InventoryDrill();
+    private final InventoryPlayer inventory;
 
     public ContainerDrill(InventoryPlayer inventory){
         this.inventory = inventory;
@@ -142,7 +144,7 @@ public class ContainerDrill extends Container{
     }
 
     @Override
-    public boolean canInteractWith(EntityPlayer player){
+    public boolean canInteractWith(@Nonnull EntityPlayer player){
         return this.drillInventory.isUseableByPlayer(player);
     }
 
@@ -150,6 +152,7 @@ public class ContainerDrill extends Container{
 
         public ItemStack[] slots = new ItemStack[SLOT_AMOUNT];
 
+        @Nonnull
         @Override
         public String getName(){
             return "drill";
@@ -166,22 +169,22 @@ public class ContainerDrill extends Container{
         }
 
         @Override
-        public boolean isUseableByPlayer(EntityPlayer player){
+        public boolean isUseableByPlayer(@Nonnull EntityPlayer player){
             return true;
         }
 
         @Override
-        public void openInventory(EntityPlayer player){
+        public void openInventory(@Nonnull EntityPlayer player){
 
         }
 
         @Override
-        public void closeInventory(EntityPlayer player){
+        public void closeInventory(@Nonnull EntityPlayer player){
 
         }
 
         @Override
-        public boolean isItemValidForSlot(int index, ItemStack stack){
+        public boolean isItemValidForSlot(int index, @Nonnull ItemStack stack){
             return true;
         }
 
@@ -259,6 +262,7 @@ public class ContainerDrill extends Container{
             return false;
         }
 
+        @Nonnull
         @Override
         public ITextComponent getDisplayName(){
             return new TextComponentString(StringUtil.localize(this.getName()));

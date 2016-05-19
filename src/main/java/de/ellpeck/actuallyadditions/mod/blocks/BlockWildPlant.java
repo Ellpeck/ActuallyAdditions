@@ -37,6 +37,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 public class BlockWildPlant extends BlockBushBase{
@@ -55,9 +56,10 @@ public class BlockWildPlant extends BlockBushBase{
         return PosUtil.getMetadata(state) == TheWildPlants.RICE.ordinal() ? PosUtil.getMaterial(offset, world) == Material.WATER : PosUtil.getBlock(offset, world).canSustainPlant(world.getBlockState(offset), world, offset, EnumFacing.UP, this);
     }
 
+    @Nonnull
     @Override
     @SideOnly(Side.CLIENT)
-    public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player){
+    public ItemStack getPickBlock(@Nonnull IBlockState state, RayTraceResult target, @Nonnull World world, @Nonnull BlockPos pos, EntityPlayer player){
         int metadata = PosUtil.getMetadata(pos, world);
         return metadata >= allWildPlants.length ? null : new ItemStack(((BlockPlant)allWildPlants[metadata].wildVersionOf).seedItem);
     }
@@ -70,14 +72,15 @@ public class BlockWildPlant extends BlockBushBase{
         }
     }
 
+    @Nonnull
     @Override
-    public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune){
+    public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, @Nonnull IBlockState state, int fortune){
         int metadata = PosUtil.getMetadata(state);
         return metadata >= allWildPlants.length ? null : allWildPlants[metadata].wildVersionOf.getDrops(world, pos, allWildPlants[metadata].wildVersionOf.getStateFromMeta(7), fortune);
     }
 
     @Override
-    public boolean canSilkHarvest(World world, BlockPos pos, IBlockState state, EntityPlayer player){
+    public boolean canSilkHarvest(World world, BlockPos pos, @Nonnull IBlockState state, EntityPlayer player){
         return false;
     }
 
@@ -116,6 +119,7 @@ public class BlockWildPlant extends BlockBushBase{
             this.setMaxDamage(0);
         }
 
+        @Nonnull
         @Override
         public String getUnlocalizedName(ItemStack stack){
             return stack.getItemDamage() >= allWildPlants.length ? StringUtil.BUGGED_ITEM_NAME : this.getUnlocalizedName()+allWildPlants[stack.getItemDamage()].name;

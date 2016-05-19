@@ -18,23 +18,19 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.world.World;
 
+import javax.annotation.Nonnull;
+
 
 public class ContainerCrafter extends Container{
 
-    public final int x;
-    public final int y;
-    public final int z;
     public final World world;
-    public InventoryCrafting craftMatrix = new InventoryCrafting(this, 3, 3);
-    public IInventory craftResult = new InventoryCraftResult();
+    public final InventoryCrafting craftMatrix = new InventoryCrafting(this, 3, 3);
+    public final IInventory craftResult = new InventoryCraftResult();
 
     public ContainerCrafter(EntityPlayer player){
         InventoryPlayer inventory = player.inventory;
 
         this.world = player.worldObj;
-        this.x = (int)player.posX;
-        this.y = (int)player.posY;
-        this.z = (int)player.posZ;
 
         this.addSlotToContainer(new SlotCrafting(inventory.player, this.craftMatrix, this.craftResult, 0, 124, 35));
         for(int i = 0; i < 3; i++){
@@ -116,7 +112,7 @@ public class ContainerCrafter extends Container{
     }
 
     @Override
-    public boolean canInteractWith(EntityPlayer player){
+    public boolean canInteractWith(@Nonnull EntityPlayer player){
         return true;
     }
 }

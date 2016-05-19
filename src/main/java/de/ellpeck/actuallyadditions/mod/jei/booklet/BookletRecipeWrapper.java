@@ -29,7 +29,7 @@ import java.util.List;
 
 public class BookletRecipeWrapper extends RecipeWrapperWithButton implements IRecipeWrapper{
 
-    public BookletPage thePage;
+    public final BookletPage thePage;
 
     public BookletRecipeWrapper(BookletPage page){
         this.thePage = page;

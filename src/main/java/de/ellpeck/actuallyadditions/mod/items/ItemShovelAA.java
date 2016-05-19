@@ -26,6 +26,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import javax.annotation.Nonnull;
 import java.util.Set;
 
 public class ItemShovelAA extends ItemToolAA{
@@ -46,6 +47,7 @@ public class ItemShovelAA extends ItemToolAA{
         return block == Blocks.SNOW_LAYER || block == Blocks.SNOW;
     }
 
+    @Nonnull
     @Override
     public EnumActionResult onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ){
         return Items.IRON_HOE.onItemUse(stack, playerIn, worldIn, pos, hand, facing, hitX, hitY, hitZ);

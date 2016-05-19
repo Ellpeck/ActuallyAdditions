@@ -19,6 +19,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
+import javax.annotation.Nonnull;
+
 public class BlockItemViewer extends BlockContainerBase{
 
     public BlockItemViewer(String name){
@@ -29,8 +31,9 @@ public class BlockItemViewer extends BlockContainerBase{
         this.setSoundType(SoundType.STONE);
     }
 
+    @Nonnull
     @Override
-    public TileEntity createNewTileEntity(World worldIn, int meta){
+    public TileEntity createNewTileEntity(@Nonnull World worldIn, int meta){
         return new TileEntityItemViewer();
     }
 

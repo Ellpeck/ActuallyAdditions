@@ -19,7 +19,7 @@ import net.minecraft.item.ItemStack;
 
 public class ItemBase extends Item{
 
-    private String name;
+    private final String name;
 
     public ItemBase(String name){
         this.name = name;

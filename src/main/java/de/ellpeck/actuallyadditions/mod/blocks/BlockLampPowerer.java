@@ -39,8 +39,8 @@ public class BlockLampPowerer extends BlockBase{
     }
 
     @Override
-    public void onNeighborBlockChange(World world, BlockPos pos, IBlockState state, Block neighborBlock){
-        this.updateLamp(world, pos);
+    public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn){
+        this.updateLamp(worldIn, pos);
     }
 
     @Override

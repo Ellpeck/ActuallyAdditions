@@ -33,6 +33,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
 import java.util.Random;
 
 public class BlockOilGenerator extends BlockContainerBase{
@@ -48,8 +49,9 @@ public class BlockOilGenerator extends BlockContainerBase{
         this.setTickRandomly(true);
     }
 
+    @Nonnull
     @Override
-    public TileEntity createNewTileEntity(World world, int par2){
+    public TileEntity createNewTileEntity(@Nonnull World world, int par2){
         return new TileEntityOilGenerator();
     }
 
@@ -68,7 +70,7 @@ public class BlockOilGenerator extends BlockContainerBase{
         if(!world.isRemote){
             TileEntityOilGenerator generator = (TileEntityOilGenerator)world.getTileEntity(pos);
             if(generator != null){
-                if(!this.tryUseItemOnTank(player, stack, par6, generator)){
+                if(this.checkFailUseItemOnTank(player, stack, par6, generator)){
                     player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.OIL_GENERATOR.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
                 }
             }
@@ -88,7 +90,7 @@ public class BlockOilGenerator extends BlockContainerBase{
     }
 
     @Override
-    public void breakBlock(World world, BlockPos pos, IBlockState state){
+    public void breakBlock(World world, @Nonnull BlockPos pos, @Nonnull IBlockState state){
         this.dropInventory(world, pos);
         super.breakBlock(world, pos, state);
     }

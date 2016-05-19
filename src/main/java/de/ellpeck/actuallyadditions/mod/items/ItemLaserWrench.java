@@ -30,6 +30,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 public class ItemLaserWrench extends ItemBase{
@@ -39,6 +40,7 @@ public class ItemLaserWrench extends ItemBase{
         this.setMaxStackSize(1);
     }
 
+    @Nonnull
     @Override
     public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing par7, float par8, float par9, float par10){
         if(!world.isRemote){
@@ -98,6 +100,7 @@ public class ItemLaserWrench extends ItemBase{
         }
     }
 
+    @Nonnull
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.EPIC;

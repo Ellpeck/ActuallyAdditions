@@ -270,10 +270,10 @@ public class BookletUtils{
             IndexButton button = (IndexButton)booklet.chapterButtons[i];
             if(entry == null){
                 if(i >= GuiBooklet.INDEX_BUTTONS_OFFSET){
-                    boolean entryExists = ActuallyAdditionsAPI.bookletEntries.size() > i-GuiBooklet.INDEX_BUTTONS_OFFSET;
+                    boolean entryExists = ActuallyAdditionsAPI.BOOKLET_ENTRIES.size() > i-GuiBooklet.INDEX_BUTTONS_OFFSET;
                     button.visible = entryExists;
                     if(entryExists){
-                        button.displayString = "◦ "+ActuallyAdditionsAPI.bookletEntries.get(i-GuiBooklet.INDEX_BUTTONS_OFFSET).getLocalizedNameWithFormatting();
+                        button.displayString = "◦ "+ActuallyAdditionsAPI.BOOKLET_ENTRIES.get(i-GuiBooklet.INDEX_BUTTONS_OFFSET).getLocalizedNameWithFormatting();
                         button.chap = null;
                     }
                 }
@@ -308,8 +308,8 @@ public class BookletUtils{
                 }
             }
             else{
-                if(place-GuiBooklet.INDEX_BUTTONS_OFFSET < ActuallyAdditionsAPI.bookletEntries.size()){
-                    openIndexEntry(booklet, ActuallyAdditionsAPI.bookletEntries.get(place-GuiBooklet.INDEX_BUTTONS_OFFSET), 1, true);
+                if(place-GuiBooklet.INDEX_BUTTONS_OFFSET < ActuallyAdditionsAPI.BOOKLET_ENTRIES.size()){
+                    openIndexEntry(booklet, ActuallyAdditionsAPI.BOOKLET_ENTRIES.get(place-GuiBooklet.INDEX_BUTTONS_OFFSET), 1, true);
                 }
             }
         }
@@ -431,7 +431,7 @@ public class BookletUtils{
 
     public static ArrayList<BookletPage> getPagesForStack(ItemStack stack){
         ArrayList<BookletPage> possiblePages = new ArrayList<BookletPage>();
-        for(BookletPage page : ActuallyAdditionsAPI.bookletPagesWithItemStackData){
+        for(BookletPage page : ActuallyAdditionsAPI.BOOKLET_PAGES_WITH_ITEM_DATA){
             if(ItemUtil.contains(page.getItemStacksForPage(), stack, page.arePageStacksWildcard)){
                 possiblePages.add(page);
             }

@@ -29,6 +29,8 @@ import net.minecraftforge.fluids.*;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
+
 public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements IButtonReactor, IEnergyReceiver, IFluidSaver, IFluidHandler, IEnergySaver{
 
     public static final int SLOT_COFFEE_BEANS = 0;
@@ -39,8 +41,8 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
     public static final int WATER_USE = 500;
     public static final int COFFEE_CACHE_MAX_AMOUNT = 300;
     private static final int TIME_USED = 500;
-    public EnergyStorage storage = new EnergyStorage(300000);
-    public FluidTank tank = new FluidTank(4*Util.BUCKET);
+    public final EnergyStorage storage = new EnergyStorage(300000);
+    public final FluidTank tank = new FluidTank(4*Util.BUCKET);
     public int coffeeCacheAmount;
     public int brewTime;
     private int lastEnergy;
@@ -110,7 +112,7 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
     }
 
     @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
+    public boolean isItemValidForSlot(int i, @Nonnull ItemStack stack){
         return (i >= 3 && ItemCoffee.getIngredientFromStack(stack) != null) || (i == SLOT_COFFEE_BEANS && stack.getItem() == InitItems.itemCoffeeBean) || (i == SLOT_INPUT && stack.getItem() == InitItems.itemMisc && stack.getItemDamage() == TheMiscItems.CUP.ordinal());
     }
 
@@ -170,12 +172,12 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
     }
 
     @Override
-    public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
+    public boolean canInsertItem(int slot, @Nonnull ItemStack stack, @Nonnull EnumFacing side){
         return this.isItemValidForSlot(slot, stack);
     }
 
     @Override
-    public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
+    public boolean canExtractItem(int slot, @Nonnull ItemStack stack, @Nonnull EnumFacing side){
         return slot == SLOT_OUTPUT || (slot >= 3 && slot < this.slots.length-2 && ItemCoffee.getIngredientFromStack(stack) == null);
     }
 

@@ -17,8 +17,6 @@ import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
 import de.ellpeck.actuallyadditions.mod.util.CompatUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.block.Block;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
 
 public class InitBlocks{
 

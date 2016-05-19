@@ -33,7 +33,7 @@ public class TileEntityLeafGenerator extends TileEntityBase implements IEnergyPr
 
     public static final int RANGE = 7;
     public static final int ENERGY_PRODUCED = 300;
-    public EnergyStorage storage = new EnergyStorage(35000);
+    public final EnergyStorage storage = new EnergyStorage(35000);
     private int nextUseCounter;
     private int oldEnergy;
 
@@ -83,7 +83,7 @@ public class TileEntityLeafGenerator extends TileEntityBase implements IEnergyPr
                             BlockPos theCoord = breakPositions.get(0);
 
                             if(!ConfigValues.lessBlockBreakingEffects){
-                                this.worldObj.playAuxSFX(2001, theCoord, Block.getStateId(this.worldObj.getBlockState(theCoord)));
+                                this.worldObj.playBroadcastSound(2001, theCoord, Block.getStateId(this.worldObj.getBlockState(theCoord)));
                             }
 
                             this.worldObj.setBlockToAir(theCoord);

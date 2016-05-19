@@ -21,7 +21,7 @@ public class InitAchievements{
 
     public static int pageNumber;
     public static AchievementPage theAchievementPage;
-    public static ArrayList<Achievement> achievementList = new ArrayList<Achievement>();
+    public static final ArrayList<Achievement> achievementList = new ArrayList<Achievement>();
 
     public static void init(){
         ModUtil.LOGGER.info("Initializing Achievements...");

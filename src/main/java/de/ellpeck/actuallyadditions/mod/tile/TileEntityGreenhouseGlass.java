@@ -54,7 +54,7 @@ public class TileEntityGreenhouseGlass extends TileEntityBase{
                             PosUtil.getBlock(blockToFert, this.worldObj).updateTick(this.worldObj, blockToFert, this.worldObj.getBlockState(blockToFert), Util.RANDOM);
 
                             if(PosUtil.getMetadata(blockToFert, this.worldObj) != metaBefore){
-                                this.worldObj.playAuxSFX(2005, blockToFert, 0);
+                                this.worldObj.playBroadcastSound(2005, blockToFert, 0);
                             }
                         }
                     }

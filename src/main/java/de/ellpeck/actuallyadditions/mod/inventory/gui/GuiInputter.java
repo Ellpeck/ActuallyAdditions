@@ -32,6 +32,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Keyboard;
 
+import javax.annotation.Nonnull;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,18 +51,18 @@ public class GuiInputter extends GuiContainer{
             StringUtil.localize("info."+ModUtil.MOD_ID+".gui.west")};
     private static final ResourceLocation resLoc = AssetUtil.getGuiLocation("guiInputter");
     private static final ResourceLocation resLocAdvanced = AssetUtil.getGuiLocation("guiInputterAdvanced");
-    public TileEntityInputter tileInputter;
-    private int x;
-    private int y;
-    private int z;
-    private World world;
+    public final TileEntityInputter tileInputter;
+    private final int x;
+    private final int y;
+    private final int z;
+    private final World world;
     private SmallerButton whitelistPut;
     private SmallerButton whitelistPull;
     private GuiTextField fieldPutStart;
     private GuiTextField fieldPutEnd;
     private GuiTextField fieldPullStart;
     private GuiTextField fieldPullEnd;
-    private boolean isAdvanced;
+    private final boolean isAdvanced;
 
     public GuiInputter(InventoryPlayer inventory, TileEntityBase tile, int x, int y, int z, World world, boolean isAdvanced){
         super(new ContainerInputter(inventory, tile, isAdvanced));
@@ -278,7 +279,7 @@ public class GuiInputter extends GuiContainer{
         }
 
         @Override
-        public void drawButton(Minecraft mc, int x, int y){
+        public void drawButton(@Nonnull Minecraft mc, int x, int y){
             if(this.visible){
                 mc.getTextureManager().bindTexture(this.resLoc);
                 GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
@@ -315,7 +316,7 @@ public class GuiInputter extends GuiContainer{
         }
 
         @Override
-        public void drawButton(Minecraft mc, int x, int y){
+        public void drawButton(@Nonnull Minecraft mc, int x, int y){
             if(this.visible){
                 mc.getTextureManager().bindTexture(this.resLoc);
                 GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);

@@ -29,7 +29,7 @@ import java.util.List;
 
 public class PageCrusherRecipe extends BookletPageAA{
 
-    public CrusherRecipe recipe;
+    public final CrusherRecipe recipe;
 
     private int recipePos;
 

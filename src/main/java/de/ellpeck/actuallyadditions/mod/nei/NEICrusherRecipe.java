@@ -29,7 +29,7 @@ public class NEICrusherRecipe/* extends TemplateRecipeHandler implements INEIRec
     @Override
     public void loadCraftingRecipes(String outputId, Object... results){
         if(outputId.equals(this.getBaseName()) && (getClass() == NEICrusherRecipe.class || getClass() == Double.class)){
-            for(CrusherRecipe recipe : ActuallyAdditionsAPI.crusherRecipes){
+            for(CrusherRecipe recipe : ActuallyAdditionsAPI.CRUSHER_RECIPES){
                 arecipes.add(new CachedCrush(recipe.getRecipeInputs(), recipe.getRecipeOutputOnes(), recipe.getRecipeOutputTwos(), recipe.outputTwoChance, this));
             }
         }
@@ -40,7 +40,7 @@ public class NEICrusherRecipe/* extends TemplateRecipeHandler implements INEIRec
 
     @Override
     public void loadCraftingRecipes(ItemStack result){
-        for(CrusherRecipe recipe : ActuallyAdditionsAPI.crusherRecipes){
+        for(CrusherRecipe recipe : ActuallyAdditionsAPI.CRUSHER_RECIPES){
             if(ItemUtil.contains(recipe.getRecipeOutputOnes(), result, true) || ItemUtil.contains(recipe.getRecipeOutputTwos(), result, true)){
                 arecipes.add(new CachedCrush(recipe.getRecipeInputs(), recipe.getRecipeOutputOnes(), recipe.getRecipeOutputTwos(), recipe.outputTwoChance, this));
             }
@@ -49,7 +49,7 @@ public class NEICrusherRecipe/* extends TemplateRecipeHandler implements INEIRec
 
     @Override
     public void loadUsageRecipes(ItemStack ingredient){
-        for(CrusherRecipe recipe : ActuallyAdditionsAPI.crusherRecipes){
+        for(CrusherRecipe recipe : ActuallyAdditionsAPI.CRUSHER_RECIPES){
             if(ItemUtil.contains(recipe.getRecipeInputs(), ingredient, true)){
                 CachedCrush theRecipe = new CachedCrush(recipe.getRecipeInputs(), recipe.getRecipeOutputOnes(), recipe.getRecipeOutputTwos(), recipe.outputTwoChance, this);
                 theRecipe.setIngredientPermutation(Collections.singletonList(theRecipe.ingredient), ingredient);

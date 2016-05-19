@@ -19,14 +19,16 @@ import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.Minecraft;
 
+import javax.annotation.Nonnull;
+
 public abstract class RecipeWrapperWithButton{
 
-    protected TexturedButton theButton;
+    protected final TexturedButton theButton;
 
     public RecipeWrapperWithButton(){
         this.theButton = new TexturedButton(23782, this.getButtonX(), this.getButtonY(), 146, 154, 20, 20){
             @Override
-            public void drawButton(Minecraft minecraft, int x, int y){
+            public void drawButton(@Nonnull Minecraft minecraft, int x, int y){
                 super.drawButton(minecraft, x, y);
                 if(this.visible && this.hovered){
                     String text = StringUtil.localize("booklet."+ModUtil.MOD_ID+".clickToSeeRecipe");
@@ -48,7 +50,7 @@ public abstract class RecipeWrapperWithButton{
             if(page != null){
                 GuiBooklet book = new GuiBooklet(Minecraft.getMinecraft().currentScreen, false, true);
                 Minecraft.getMinecraft().displayGuiScreen(book);
-                BookletUtils.openIndexEntry(book, page.getChapter().getEntry(), ActuallyAdditionsAPI.bookletEntries.indexOf(page.getChapter().getEntry())/GuiBooklet.CHAPTER_BUTTONS_AMOUNT+1, true);
+                BookletUtils.openIndexEntry(book, page.getChapter().getEntry(), ActuallyAdditionsAPI.BOOKLET_ENTRIES.indexOf(page.getChapter().getEntry())/GuiBooklet.CHAPTER_BUTTONS_AMOUNT+1, true);
                 BookletUtils.openChapter(book, page.getChapter(), page);
                 return true;
             }

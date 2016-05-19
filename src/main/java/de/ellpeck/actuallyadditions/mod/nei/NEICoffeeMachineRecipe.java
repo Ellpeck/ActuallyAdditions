@@ -33,7 +33,7 @@ public class NEICoffeeMachineRecipe/* extends TemplateRecipeHandler implements I
     @Override
     public void loadCraftingRecipes(String outputId, Object... results){
         if(outputId.equals(NAME) && getClass() == NEICoffeeMachineRecipe.class){
-            List<CoffeeIngredient> ingredients = ActuallyAdditionsAPI.coffeeMachineIngredients;
+            List<CoffeeIngredient> ingredients = ActuallyAdditionsAPI.COFFEE_MACHINE_INGREDIENTS;
             for(CoffeeIngredient ingredient : ingredients){
                 arecipes.add(new CachedCoffee(ingredient));
             }
@@ -45,7 +45,7 @@ public class NEICoffeeMachineRecipe/* extends TemplateRecipeHandler implements I
 
     @Override
     public void loadCraftingRecipes(ItemStack result){
-        List<CoffeeIngredient> ingredients = ActuallyAdditionsAPI.coffeeMachineIngredients;
+        List<CoffeeIngredient> ingredients = ActuallyAdditionsAPI.COFFEE_MACHINE_INGREDIENTS;
         for(CoffeeIngredient ingredient : ingredients){
             if(result.getItem() instanceof ItemCoffee){
                 arecipes.add(new CachedCoffee(ingredient));
@@ -56,7 +56,7 @@ public class NEICoffeeMachineRecipe/* extends TemplateRecipeHandler implements I
     @Override
     public void loadUsageRecipes(ItemStack ingredient){
 
-        List<CoffeeIngredient> ingredients = ActuallyAdditionsAPI.coffeeMachineIngredients;
+        List<CoffeeIngredient> ingredients = ActuallyAdditionsAPI.COFFEE_MACHINE_INGREDIENTS;
         for(CoffeeIngredient ingr : ingredients){
             if(NEIServerUtils.areStacksSameTypeCrafting(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.CUP.ordinal()), ingredient) || NEIServerUtils.areStacksSameTypeCrafting(new ItemStack(InitItems.itemCoffeeBean), ingredient) || NEIServerUtils.areStacksSameTypeCrafting(ingr.ingredient.copy(), ingredient)){
                 CachedCoffee theRecipe = new CachedCoffee(ingr);

@@ -37,7 +37,7 @@ public class NEIReconstructorRecipe/* extends TemplateRecipeHandler implements I
     @Override
     public void loadCraftingRecipes(String outputId, Object... results){
         if(outputId.equals(NAME) && getClass() == NEIReconstructorRecipe.class){
-            List<LensNoneRecipe> recipes = ActuallyAdditionsAPI.reconstructorLensConversionRecipes;
+            List<LensNoneRecipe> recipes = ActuallyAdditionsAPI.RECONSTRUCTOR_LENS_CONVERSION_RECIPES;
             //Default Recipes
             for(LensNoneRecipe recipe : recipes){
                 arecipes.add(new CachedReconstructorRecipe(recipe, false));
@@ -66,7 +66,7 @@ public class NEIReconstructorRecipe/* extends TemplateRecipeHandler implements I
 
     @Override
     public void loadCraftingRecipes(ItemStack result){
-        List<LensNoneRecipe> recipes = ActuallyAdditionsAPI.reconstructorLensConversionRecipes;
+        List<LensNoneRecipe> recipes = ActuallyAdditionsAPI.RECONSTRUCTOR_LENS_CONVERSION_RECIPES;
         //Default Recipes
         for(LensNoneRecipe recipe : recipes){
             if(ItemUtil.contains(recipe.getOutputs(), result, true)){
@@ -84,7 +84,7 @@ public class NEIReconstructorRecipe/* extends TemplateRecipeHandler implements I
 
     @Override
     public void loadUsageRecipes(ItemStack ingredient){
-        List<LensNoneRecipe> recipes = ActuallyAdditionsAPI.reconstructorLensConversionRecipes;
+        List<LensNoneRecipe> recipes = ActuallyAdditionsAPI.RECONSTRUCTOR_LENS_CONVERSION_RECIPES;
         //Default Recipes
         for(LensNoneRecipe recipe : recipes){
             if(ItemUtil.contains(recipe.getInputs(), ingredient, true)){

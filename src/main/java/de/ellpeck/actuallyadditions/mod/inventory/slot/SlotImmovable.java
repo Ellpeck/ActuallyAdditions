@@ -15,6 +15,8 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
+import javax.annotation.Nonnull;
+
 public class SlotImmovable extends Slot{
 
     public SlotImmovable(IInventory inventory, int id, int x, int y){
@@ -31,6 +33,7 @@ public class SlotImmovable extends Slot{
 
     }
 
+    @Nonnull
     @Override
     public ItemStack decrStackSize(int i){
         return null;

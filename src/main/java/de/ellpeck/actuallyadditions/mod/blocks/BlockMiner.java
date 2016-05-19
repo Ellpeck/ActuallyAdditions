@@ -34,6 +34,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
+
 public class BlockMiner extends BlockContainerBase implements IHudDisplay{
 
     public BlockMiner(String name){
@@ -65,13 +67,14 @@ public class BlockMiner extends BlockContainerBase implements IHudDisplay{
         return EnumRarity.RARE;
     }
 
+    @Nonnull
     @Override
-    public TileEntity createNewTileEntity(World world, int i){
+    public TileEntity createNewTileEntity(@Nonnull World world, int i){
         return new TileEntityMiner();
     }
 
     @Override
-    public void breakBlock(World world, BlockPos pos, IBlockState state){
+    public void breakBlock(World world, @Nonnull BlockPos pos, @Nonnull IBlockState state){
         this.dropInventory(world, pos);
         super.breakBlock(world, pos, state);
     }

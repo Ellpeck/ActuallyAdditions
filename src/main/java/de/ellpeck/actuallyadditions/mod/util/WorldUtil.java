@@ -328,7 +328,7 @@ public class WorldUtil{
         }
         else{
             //Shows the Harvest Particles and plays the Block's Sound
-            world.playAuxSFX(2001, pos, Block.getStateId(state));
+            world.playBroadcastSound(2001, pos, Block.getStateId(state));
         }
 
         //If the Block was actually "removed", meaning it will drop an Item
@@ -355,12 +355,12 @@ public class WorldUtil{
         if(!world.isRemote){
             //Update the Client of a Block Change
             if(player instanceof EntityPlayerMP){
-                ((EntityPlayerMP)player).playerNetServerHandler.sendPacket(new SPacketBlockChange(world, pos));
+                ((EntityPlayerMP)player).connection.sendPacket(new SPacketBlockChange(world, pos));
             }
         }
         else{
             //Check the Server if a Block that changed on the Client really changed, if not, revert the change
-            Minecraft.getMinecraft().getNetHandler().addToSendQueue(new CPacketPlayerDigging(CPacketPlayerDigging.Action.STOP_DESTROY_BLOCK, pos, Minecraft.getMinecraft().objectMouseOver.sideHit));
+            Minecraft.getMinecraft().getConnection().sendPacket(new CPacketPlayerDigging(CPacketPlayerDigging.Action.STOP_DESTROY_BLOCK, pos, Minecraft.getMinecraft().objectMouseOver.sideHit));
         }
         return removed;
     }

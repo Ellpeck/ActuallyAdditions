@@ -15,6 +15,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 
 public class ItemWingsOfTheBats extends ItemBase{
@@ -29,7 +30,7 @@ public class ItemWingsOfTheBats extends ItemBase{
      * <p>
      * (Partially excerpted from Botania's Wing System by Vazkii (as I had fiddled around with the system and couldn't make it work) with permission, thanks!)
      */
-    public static ArrayList<String> wingedPlayers = new ArrayList<String>();
+    public static final ArrayList<String> wingedPlayers = new ArrayList<String>();
 
     public ItemWingsOfTheBats(String name){
         super(name);
@@ -87,6 +88,7 @@ public class ItemWingsOfTheBats extends ItemBase{
         return null;
     }
 
+    @Nonnull
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.EPIC;

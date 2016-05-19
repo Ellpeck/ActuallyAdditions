@@ -21,10 +21,12 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
+import javax.annotation.Nonnull;
+
 
 public class ContainerLaserRelayItemWhitelist extends Container{
 
-    private TileEntityLaserRelayItemWhitelist tile;
+    private final TileEntityLaserRelayItemWhitelist tile;
 
     public ContainerLaserRelayItemWhitelist(InventoryPlayer inventory, TileEntityBase tile){
         this.tile = (TileEntityLaserRelayItemWhitelist)tile;
@@ -104,7 +106,7 @@ public class ContainerLaserRelayItemWhitelist extends Container{
     }
 
     @Override
-    public boolean canInteractWith(EntityPlayer player){
+    public boolean canInteractWith(@Nonnull EntityPlayer player){
         return this.tile.canPlayerUse(player);
     }
 }

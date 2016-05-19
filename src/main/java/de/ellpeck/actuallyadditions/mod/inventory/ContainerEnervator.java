@@ -25,10 +25,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
+
 
 public class ContainerEnervator extends Container{
 
-    private TileEntityEnervator enervator;
+    private final TileEntityEnervator enervator;
 
     public ContainerEnervator(final EntityPlayer player, TileEntityBase tile){
         this.enervator = (TileEntityEnervator)tile;
@@ -129,7 +131,7 @@ public class ContainerEnervator extends Container{
     }
 
     @Override
-    public boolean canInteractWith(EntityPlayer player){
+    public boolean canInteractWith(@Nonnull EntityPlayer player){
         return this.enervator.isUseableByPlayer(player);
     }
 }

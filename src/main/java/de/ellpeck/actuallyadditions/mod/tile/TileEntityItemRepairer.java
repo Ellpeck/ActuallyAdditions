@@ -20,12 +20,14 @@ import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
+
 public class TileEntityItemRepairer extends TileEntityInventoryBase implements IEnergyReceiver, IEnergySaver{
 
     public static final int SLOT_INPUT = 0;
     public static final int SLOT_OUTPUT = 1;
     public static final int ENERGY_USE = 1500;
-    public EnergyStorage storage = new EnergyStorage(300000);
+    public final EnergyStorage storage = new EnergyStorage(300000);
     public int nextRepairTick;
     private int lastEnergy;
 
@@ -102,7 +104,7 @@ public class TileEntityItemRepairer extends TileEntityInventoryBase implements I
     }
 
     @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
+    public boolean isItemValidForSlot(int i, @Nonnull ItemStack stack){
         return i == SLOT_INPUT;
     }
 
@@ -120,12 +122,12 @@ public class TileEntityItemRepairer extends TileEntityInventoryBase implements I
     }
 
     @Override
-    public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
+    public boolean canInsertItem(int slot, @Nonnull ItemStack stack, @Nonnull EnumFacing side){
         return this.isItemValidForSlot(slot, stack);
     }
 
     @Override
-    public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
+    public boolean canExtractItem(int slot, @Nonnull ItemStack stack, @Nonnull EnumFacing side){
         return slot == SLOT_OUTPUT;
     }
 

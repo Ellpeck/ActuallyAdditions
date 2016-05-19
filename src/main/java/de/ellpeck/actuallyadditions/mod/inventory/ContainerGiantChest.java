@@ -18,9 +18,11 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
+import javax.annotation.Nonnull;
+
 public class ContainerGiantChest extends Container{
 
-    public TileEntityGiantChest tileChest;
+    public final TileEntityGiantChest tileChest;
 
     public ContainerGiantChest(InventoryPlayer inventory, TileEntityBase tile){
         this.tileChest = (TileEntityGiantChest)tile;
@@ -91,7 +93,7 @@ public class ContainerGiantChest extends Container{
     }
 
     @Override
-    public boolean canInteractWith(EntityPlayer player){
+    public boolean canInteractWith(@Nonnull EntityPlayer player){
         return this.tileChest.isUseableByPlayer(player);
     }
 }

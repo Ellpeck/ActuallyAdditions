@@ -34,11 +34,13 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import javax.annotation.Nonnull;
+
 public class BlockInputter extends BlockContainerBase{
 
     public static final int NAME_FLAVOR_AMOUNTS = 15;
 
-    public boolean isAdvanced;
+    public final boolean isAdvanced;
 
     public BlockInputter(boolean isAdvanced, String name){
         super(Material.ROCK, name);
@@ -50,8 +52,9 @@ public class BlockInputter extends BlockContainerBase{
         this.isAdvanced = isAdvanced;
     }
 
+    @Nonnull
     @Override
-    public TileEntity createNewTileEntity(World world, int par2){
+    public TileEntity createNewTileEntity(@Nonnull World world, int par2){
         return this.isAdvanced ? new TileEntityInputterAdvanced() : new TileEntityInputter();
     }
 
@@ -68,7 +71,7 @@ public class BlockInputter extends BlockContainerBase{
     }
 
     @Override
-    public void breakBlock(World world, BlockPos pos, IBlockState state){
+    public void breakBlock(World world, @Nonnull BlockPos pos, @Nonnull IBlockState state){
         if(!world.isRemote){
             TileEntity aTile = world.getTileEntity(pos);
             if(aTile instanceof TileEntityInventoryBase){
@@ -100,6 +103,7 @@ public class BlockInputter extends BlockContainerBase{
             this.setMaxDamage(0);
         }
 
+        @Nonnull
         @Override
         public String getUnlocalizedName(ItemStack stack){
             return this.getUnlocalizedName();
@@ -110,8 +114,9 @@ public class BlockInputter extends BlockContainerBase{
             return damage;
         }
 
+        @Nonnull
         @Override
-        public String getItemStackDisplayName(ItemStack stack){
+        public String getItemStackDisplayName(@Nonnull ItemStack stack){
             long sysTime = System.currentTimeMillis();
 
             if(this.lastSysTime+5000 < sysTime){

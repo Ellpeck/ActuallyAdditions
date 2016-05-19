@@ -28,7 +28,7 @@ import java.util.Collections;
 public class GuiCanolaPress extends GuiContainer{
 
     private static final ResourceLocation resLoc = AssetUtil.getGuiLocation("guiCanolaPress");
-    private TileEntityCanolaPress press;
+    private final TileEntityCanolaPress press;
 
     public GuiCanolaPress(InventoryPlayer inventory, TileEntityBase tile){
         super(new ContainerCanolaPress(inventory, tile));

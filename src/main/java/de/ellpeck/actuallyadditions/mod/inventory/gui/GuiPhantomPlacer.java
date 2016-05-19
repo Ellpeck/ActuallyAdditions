@@ -25,18 +25,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class GuiPhantomPlacer extends GuiContainer{
 
     private static final ResourceLocation resLoc = AssetUtil.getGuiLocation("guiBreaker");
-    private TileEntityPhantomPlacer placer;
+    private final TileEntityPhantomPlacer placer;
 
     public GuiPhantomPlacer(InventoryPlayer inventory, TileEntityBase tile){
         super(new ContainerPhantomPlacer(inventory, tile));
         this.placer = (TileEntityPhantomPlacer)tile;
         this.xSize = 176;
         this.ySize = 93+86;
-    }
-
-    @Override
-    public void drawScreen(int x, int y, float f){
-        super.drawScreen(x, y, f);
     }
 
     @Override

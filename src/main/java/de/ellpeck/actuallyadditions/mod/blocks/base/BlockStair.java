@@ -21,7 +21,7 @@ import net.minecraft.item.ItemStack;
 
 public class BlockStair extends BlockStairs{
 
-    private String name;
+    private final String name;
 
     public BlockStair(Block block, String name){
         this(block, name, 0);

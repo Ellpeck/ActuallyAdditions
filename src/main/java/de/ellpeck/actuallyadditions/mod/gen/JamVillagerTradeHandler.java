@@ -25,7 +25,7 @@ import java.util.Random;
 
 public class JamVillagerTradeHandler{
 
-    private ArrayList<Trade> trades = new ArrayList<Trade>();
+    private final ArrayList<Trade> trades = new ArrayList<Trade>();
 
     public JamVillagerTradeHandler(){
         this.addWants("ingotGold", 5, 7);

@@ -19,6 +19,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
+import javax.annotation.Nonnull;
+
 public class BlockHeatCollector extends BlockContainerBase{
 
     public BlockHeatCollector(String name){
@@ -29,8 +31,9 @@ public class BlockHeatCollector extends BlockContainerBase{
         this.setSoundType(SoundType.STONE);
     }
 
+    @Nonnull
     @Override
-    public TileEntity createNewTileEntity(World world, int par2){
+    public TileEntity createNewTileEntity(@Nonnull World world, int par2){
         return new TileEntityHeatCollector();
     }
 

@@ -31,11 +31,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class GuiXPSolidifier extends GuiContainer{
 
     private static final ResourceLocation resLoc = AssetUtil.getGuiLocation("guiXPSolidifier");
-    private TileEntityXPSolidifier solidifier;
-    private int x;
-    private int y;
-    private int z;
-    private World world;
+    private final TileEntityXPSolidifier solidifier;
+    private final int x;
+    private final int y;
+    private final int z;
+    private final World world;
 
     public GuiXPSolidifier(InventoryPlayer inventory, TileEntityBase tile, int x, int y, int z, World world){
         super(new ContainerXPSolidifier(inventory, tile));
@@ -72,11 +72,6 @@ public class GuiXPSolidifier extends GuiContainer{
         this.buttonList.add(buttonFifty);
         this.buttonList.add(buttonSixtyFour);
         this.buttonList.add(buttonAll);
-    }
-
-    @Override
-    public void drawScreen(int x, int y, float f){
-        super.drawScreen(x, y, f);
     }
 
     @Override

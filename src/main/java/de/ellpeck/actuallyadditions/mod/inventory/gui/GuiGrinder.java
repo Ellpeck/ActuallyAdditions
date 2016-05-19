@@ -28,8 +28,8 @@ public class GuiGrinder extends GuiContainer{
 
     private static final ResourceLocation resLoc = AssetUtil.getGuiLocation("guiGrinder");
     private static final ResourceLocation resLocDouble = AssetUtil.getGuiLocation("guiGrinderDouble");
-    private TileEntityGrinder tileGrinder;
-    private boolean isDouble;
+    private final TileEntityGrinder tileGrinder;
+    private final boolean isDouble;
 
     public GuiGrinder(InventoryPlayer inventoryPlayer, TileEntityBase tile){
         this(inventoryPlayer, tile, false);

@@ -20,10 +20,12 @@ import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 
+import javax.annotation.Nonnull;
+
 public class RenderReconstructorLens extends TileEntitySpecialRenderer{
 
     @Override
-    public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float par5, int par6){
+    public void renderTileEntityAt(@Nonnull TileEntity tile, double x, double y, double z, float par5, int par6){
         if(!(tile instanceof TileEntityAtomicReconstructor)){
             return;
         }

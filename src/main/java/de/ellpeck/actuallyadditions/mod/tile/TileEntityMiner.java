@@ -21,6 +21,7 @@ import de.ellpeck.actuallyadditions.mod.util.Util;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -33,13 +34,14 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyReceiver, IButtonReactor, IEnergySaver, IEnergyDisplay{
 
     public static final int ENERGY_USE_PER_BLOCK = 500;
     public static final int DEFAULT_RANGE = 2;
-    public EnergyStorage storage = new EnergyStorage(1000000);
+    public final EnergyStorage storage = new EnergyStorage(1000000);
     public int layerAt = -1;
     public boolean onlyMineOres = true;
     private int oldLayerAt;
@@ -96,17 +98,18 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyR
                 if(this.storage.getEnergyStored() >= actualUse){
                     BlockPos pos = new BlockPos(this.pos.getX()+anX, this.layerAt, this.pos.getZ()+aZ);
 
-                    Block block = PosUtil.getBlock(pos, this.worldObj);
+                    IBlockState state = this.worldObj.getBlockState(pos);
+                    Block block = state.getBlock();
                     int meta = PosUtil.getMetadata(pos, this.worldObj);
-                    if(block != null && !block.isAir(this.worldObj.getBlockState(pos), this.worldObj, pos)){
-                        if(block.getHarvestLevel(this.worldObj.getBlockState(pos)) <= 3F && block.getBlockHardness(this.worldObj.getBlockState(pos), this.worldObj, pos) >= 0F && !(block instanceof BlockLiquid) && !(block instanceof IFluidBlock) && this.isMinable(block, meta)){
+                    if(!block.isAir(this.worldObj.getBlockState(pos), this.worldObj, pos)){
+                        if(block.getHarvestLevel(this.worldObj.getBlockState(pos)) <= 3F && state.getBlockHardness(this.worldObj, pos) >= 0F && !(block instanceof BlockLiquid) && !(block instanceof IFluidBlock) && this.isMinable(block, meta)){
                             List<ItemStack> drops = block.getDrops(this.worldObj, pos, this.worldObj.getBlockState(pos), 0);
                             float chance = ForgeEventFactory.fireBlockHarvesting(drops, this.worldObj, pos, this.worldObj.getBlockState(pos), 0, 1, false, null);
 
                             if(Util.RANDOM.nextFloat() <= chance){
                                 if(WorldUtil.addToInventory(this, drops, false, true)){
                                     if(!ConfigValues.lessBlockBreakingEffects){
-                                        this.worldObj.playAuxSFX(2001, pos, Block.getStateId(this.worldObj.getBlockState(pos)));
+                                        this.worldObj.playBroadcastSound(2001, pos, Block.getStateId(this.worldObj.getBlockState(pos)));
                                     }
                                     this.worldObj.setBlockToAir(pos);
 
@@ -145,7 +148,7 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyR
                     }
 
                     String reg = block.getRegistryName().toString();
-                    if(reg != null && !reg.isEmpty()){
+                    if(!reg.isEmpty()){
                         for(String string : ConfigValues.minerExtraWhitelist){
                             if(reg.equals(string)){
                                 return true;
@@ -167,7 +170,7 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyR
 
     private boolean isBlacklisted(Block block){
         String reg = block.getRegistryName().toString();
-        if(reg != null && !reg.isEmpty()){
+        if(!reg.isEmpty()){
             for(String string : ConfigValues.minerBlacklist){
                 if(reg.equals(string)){
                     return true;
@@ -178,7 +181,7 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyR
     }
 
     @Override
-    public boolean isItemValidForSlot(int slot, ItemStack stack){
+    public boolean isItemValidForSlot(int slot, @Nonnull ItemStack stack){
         return false;
     }
 
@@ -203,12 +206,12 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyR
     }
 
     @Override
-    public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
+    public boolean canInsertItem(int slot, @Nonnull ItemStack stack, @Nonnull EnumFacing side){
         return this.isItemValidForSlot(slot, stack);
     }
 
     @Override
-    public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
+    public boolean canExtractItem(int slot, @Nonnull ItemStack stack, @Nonnull EnumFacing side){
         return true;
     }
 

@@ -27,7 +27,7 @@ import java.util.Collections;
 public class GuiEnergizer extends GuiContainer{
 
     private static final ResourceLocation resLoc = AssetUtil.getGuiLocation("guiEnergizer");
-    private TileEntityEnergizer energizer;
+    private final TileEntityEnergizer energizer;
 
     public GuiEnergizer(EntityPlayer inventory, TileEntityBase tile){
         super(new ContainerEnergizer(inventory, tile));

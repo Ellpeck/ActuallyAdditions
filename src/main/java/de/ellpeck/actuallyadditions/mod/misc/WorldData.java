@@ -18,6 +18,8 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldSavedData;
 
+import javax.annotation.Nonnull;
+
 public class WorldData extends WorldSavedData{
 
     public static final String DATA_TAG = ModUtil.MOD_ID+"WorldData";
@@ -76,43 +78,46 @@ public class WorldData extends WorldSavedData{
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound compound){
-            //Laser World Data
-            NBTTagList networkList = compound.getTagList("Networks", 10);
-            for(int i = 0; i < networkList.tagCount(); i++){
-                LaserRelayConnectionHandler.Network network = LaserRelayConnectionHandler.getInstance().readNetworkFromNBT(networkList.getCompoundTagAt(i));
-                LaserRelayConnectionHandler.getInstance().networks.add(network);
-            }
+    public void readFromNBT(@Nonnull NBTTagCompound compound){
+        //Laser World Data
+        NBTTagList networkList = compound.getTagList("Networks", 10);
+        for(int i = 0; i < networkList.tagCount(); i++){
+            LaserRelayConnectionHandler.Network network = LaserRelayConnectionHandler.getInstance().readNetworkFromNBT(networkList.getCompoundTagAt(i));
+            LaserRelayConnectionHandler.getInstance().networks.add(network);
+        }
 
-            //Player Data
-            NBTTagList playerList = compound.getTagList("PlayerData", 10);
-            for(int i = 0; i < playerList.tagCount(); i++){
-                PersistentServerData.PlayerSave aSave = PersistentServerData.PlayerSave.fromNBT(playerList.getCompoundTagAt(i));
-                PersistentServerData.playerSaveData.add(aSave);
-            }
+        //Player Data
+        NBTTagList playerList = compound.getTagList("PlayerData", 10);
+        for(int i = 0; i < playerList.tagCount(); i++){
+            PersistentServerData.PlayerSave aSave = PersistentServerData.PlayerSave.fromNBT(playerList.getCompoundTagAt(i));
+            PersistentServerData.playerSaveData.add(aSave);
+        }
 
-            //Additional Data
-            additionalData = compound.getCompoundTag("Additional");
+        //Additional Data
+        additionalData = compound.getCompoundTag("Additional");
     }
 
+    @Nonnull
     @Override
-    public void writeToNBT(NBTTagCompound compound){
-            //Laser World Data
-            NBTTagList networkList = new NBTTagList();
-            for(LaserRelayConnectionHandler.Network network : LaserRelayConnectionHandler.getInstance().networks){
-                networkList.appendTag(LaserRelayConnectionHandler.getInstance().writeNetworkToNBT(network));
-            }
-            compound.setTag("Networks", networkList);
+    public NBTTagCompound writeToNBT(@Nonnull NBTTagCompound compound){
+        //Laser World Data
+        NBTTagList networkList = new NBTTagList();
+        for(LaserRelayConnectionHandler.Network network : LaserRelayConnectionHandler.getInstance().networks){
+            networkList.appendTag(LaserRelayConnectionHandler.getInstance().writeNetworkToNBT(network));
+        }
+        compound.setTag("Networks", networkList);
 
-            //Player Data
-            NBTTagList playerList = new NBTTagList();
-            for(int i = 0; i < PersistentServerData.playerSaveData.size(); i++){
-                PersistentServerData.PlayerSave theSave = PersistentServerData.playerSaveData.get(i);
-                playerList.appendTag(theSave.toNBT());
-            }
-            compound.setTag("PlayerData", playerList);
+        //Player Data
+        NBTTagList playerList = new NBTTagList();
+        for(int i = 0; i < PersistentServerData.playerSaveData.size(); i++){
+            PersistentServerData.PlayerSave theSave = PersistentServerData.playerSaveData.get(i);
+            playerList.appendTag(theSave.toNBT());
+        }
+        compound.setTag("PlayerData", playerList);
 
-            //Additional Data
-            compound.setTag("Additional", additionalData);
+        //Additional Data
+        compound.setTag("Additional", additionalData);
+
+        return compound;
     }
 }

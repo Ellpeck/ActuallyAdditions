@@ -20,6 +20,8 @@ import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
+
 public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements IEnergyReceiver, IEnergySaver{
 
     public static final int SLOT_INPUT_1 = 0;
@@ -28,7 +30,7 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
     public static final int SLOT_OUTPUT_2 = 3;
     public static final int ENERGY_USE = 25;
     private static final int SMELT_TIME = 80;
-    public EnergyStorage storage = new EnergyStorage(30000);
+    public final EnergyStorage storage = new EnergyStorage(30000);
     public int firstSmeltTime;
     public int secondSmeltTime;
     private int lastEnergy;
@@ -115,7 +117,7 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
     }
 
     @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
+    public boolean isItemValidForSlot(int i, @Nonnull ItemStack stack){
         return (i == SLOT_INPUT_1 || i == SLOT_INPUT_2) && FurnaceRecipes.instance().getSmeltingResult(stack) != null;
     }
 
@@ -164,12 +166,12 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
     }
 
     @Override
-    public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
+    public boolean canInsertItem(int slot, @Nonnull ItemStack stack, @Nonnull EnumFacing side){
         return this.isItemValidForSlot(slot, stack);
     }
 
     @Override
-    public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
+    public boolean canExtractItem(int slot, @Nonnull ItemStack stack, @Nonnull EnumFacing side){
         return slot == SLOT_OUTPUT_1 || slot == SLOT_OUTPUT_2;
     }
 

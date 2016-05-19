@@ -21,10 +21,12 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.text.TextFormatting;
 
+import javax.annotation.Nonnull;
+
 public class IndexButton extends GuiButton{
 
     public IBookletChapter chap;
-    private GuiBooklet gui;
+    private final GuiBooklet gui;
 
     public IndexButton(int id, int x, int y, int width, int height, String text, GuiBooklet gui){
         super(id, x, y, width, height, text);
@@ -32,7 +34,7 @@ public class IndexButton extends GuiButton{
     }
 
     @Override
-    public void drawButton(Minecraft minecraft, int mouseX, int mouseY){
+    public void drawButton(@Nonnull Minecraft minecraft, int mouseX, int mouseY){
         if(this.visible){
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             this.hovered = mouseX >= this.xPosition && mouseY >= this.yPosition && mouseX < this.xPosition+this.width && mouseY < this.yPosition+this.height;

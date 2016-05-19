@@ -39,7 +39,7 @@ public class EntrySet implements IEntrySet{
                 int chapter = compound.getInteger("Chapter");
                 int page = compound.getInteger("Page");
 
-                IBookletEntry currentEntry = entry == -1 ? null : ActuallyAdditionsAPI.bookletEntries.get(entry);
+                IBookletEntry currentEntry = entry == -1 ? null : ActuallyAdditionsAPI.BOOKLET_ENTRIES.get(entry);
                 IBookletChapter currentChapter = chapter == -1 || entry == -1 || currentEntry.getChapters().size() <= chapter ? null : currentEntry.getChapters().get(chapter);
                 BookletPage currentPage = chapter == -1 || currentChapter == null || currentChapter.getPages().length <= page-1 ? null : currentChapter.getPages()[page-1];
                 int pageInIndex = compound.getInteger("PageInIndex");
@@ -66,7 +66,7 @@ public class EntrySet implements IEntrySet{
     @Override
     public NBTTagCompound writeToNBT(){
         NBTTagCompound compound = new NBTTagCompound();
-        compound.setInteger("Entry", this.entry == null ? -1 : ActuallyAdditionsAPI.bookletEntries.indexOf(this.entry));
+        compound.setInteger("Entry", this.entry == null ? -1 : ActuallyAdditionsAPI.BOOKLET_ENTRIES.indexOf(this.entry));
         compound.setInteger("Chapter", this.entry == null || this.chapter == null ? -1 : this.entry.getChapters().indexOf(this.chapter));
         compound.setInteger("Page", this.page == null ? -1 : this.page.getID());
         compound.setInteger("PageInIndex", this.pageInIndex);

@@ -27,7 +27,7 @@ import java.util.List;
 
 public class ReconstructorRecipeWrapper extends RecipeWrapperWithButton implements IRecipeWrapper{
 
-    public LensConversionRecipe theRecipe;
+    public final LensConversionRecipe theRecipe;
 
     public ReconstructorRecipeWrapper(LensConversionRecipe recipe){
         this.theRecipe = recipe;

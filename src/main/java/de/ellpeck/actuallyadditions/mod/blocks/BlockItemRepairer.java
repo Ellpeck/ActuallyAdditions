@@ -29,6 +29,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+import javax.annotation.Nonnull;
+
 public class BlockItemRepairer extends BlockContainerBase{
 
     public BlockItemRepairer(String name){
@@ -40,8 +42,9 @@ public class BlockItemRepairer extends BlockContainerBase{
         this.setTickRandomly(true);
     }
 
+    @Nonnull
     @Override
-    public TileEntity createNewTileEntity(World world, int par2){
+    public TileEntity createNewTileEntity(@Nonnull World world, int par2){
         return new TileEntityItemRepairer();
     }
 
@@ -58,7 +61,7 @@ public class BlockItemRepairer extends BlockContainerBase{
     }
 
     @Override
-    public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos){
+    public int getLightValue(@Nonnull IBlockState state, IBlockAccess world, @Nonnull BlockPos pos){
         return PosUtil.getMetadata(pos, world) == 1 ? 12 : 0;
     }
 
@@ -68,7 +71,7 @@ public class BlockItemRepairer extends BlockContainerBase{
     }
 
     @Override
-    public void breakBlock(World world, BlockPos pos, IBlockState state){
+    public void breakBlock(World world, @Nonnull BlockPos pos, @Nonnull IBlockState state){
         this.dropInventory(world, pos);
         super.breakBlock(world, pos, state);
     }

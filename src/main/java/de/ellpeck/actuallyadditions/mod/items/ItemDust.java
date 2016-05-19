@@ -24,6 +24,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 public class ItemDust extends ItemBase implements IColorProvidingItem{
@@ -40,11 +41,13 @@ public class ItemDust extends ItemBase implements IColorProvidingItem{
         return damage;
     }
 
+    @Nonnull
     @Override
     public String getUnlocalizedName(ItemStack stack){
         return stack.getItemDamage() >= allDusts.length ? StringUtil.BUGGED_ITEM_NAME : this.getUnlocalizedName()+allDusts[stack.getItemDamage()].name;
     }
 
+    @Nonnull
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return stack.getItemDamage() >= allDusts.length ? EnumRarity.COMMON : allDusts[stack.getItemDamage()].rarity;
@@ -70,7 +73,7 @@ public class ItemDust extends ItemBase implements IColorProvidingItem{
     public IItemColor getColor(){
         return new IItemColor(){
             @Override
-            public int getColorFromItemstack(ItemStack stack, int pass){
+            public int getColorFromItemstack(@Nonnull ItemStack stack, int pass){
                 return stack.getItemDamage() >= allDusts.length ? 0xFFFFFF : allDusts[stack.getItemDamage()].color;
             }
         };

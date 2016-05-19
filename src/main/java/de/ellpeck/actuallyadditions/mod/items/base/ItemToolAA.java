@@ -19,13 +19,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
 import net.minecraftforge.oredict.OreDictionary;
 
+import javax.annotation.Nonnull;
 import java.util.Set;
 
 public class ItemToolAA extends ItemTool{
 
-    private String name;
-    private EnumRarity rarity;
-    private ItemStack repairItem;
+    private final String name;
+    private final EnumRarity rarity;
+    private final ItemStack repairItem;
     private String repairOredict;
 
     public ItemToolAA(float attack, float speed, ToolMaterial toolMat, String repairItem, String unlocalizedName, EnumRarity rarity, Set<Block> effectiveStuff){
@@ -61,13 +62,14 @@ public class ItemToolAA extends ItemTool{
         ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this), new ModelResourceLocation(this.getRegistryName(), "inventory"));
     }
 
+    @Nonnull
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return this.rarity;
     }
 
     @Override
-    public boolean getIsRepairable(ItemStack itemToRepair, ItemStack stack){
+    public boolean getIsRepairable(ItemStack itemToRepair, @Nonnull ItemStack stack){
         if(this.repairItem != null){
             return ItemUtil.areItemsEqual(this.repairItem, stack, false);
         }

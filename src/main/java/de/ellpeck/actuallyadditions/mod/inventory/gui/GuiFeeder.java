@@ -29,7 +29,7 @@ import java.util.Arrays;
 public class GuiFeeder extends GuiContainer{
 
     private static final ResourceLocation resLoc = AssetUtil.getGuiLocation("guiFeeder");
-    public TileEntityFeeder tileFeeder;
+    public final TileEntityFeeder tileFeeder;
 
     public GuiFeeder(InventoryPlayer inventory, TileEntityBase tile){
         super(new ContainerFeeder(inventory, tile));

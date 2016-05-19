@@ -27,7 +27,7 @@ import java.util.Collections;
 public class GuiRepairer extends GuiContainer{
 
     private static final ResourceLocation resLoc = AssetUtil.getGuiLocation("guiRepairer");
-    private TileEntityItemRepairer tileRepairer;
+    private final TileEntityItemRepairer tileRepairer;
 
     public GuiRepairer(InventoryPlayer inventory, TileEntityBase tile){
         super(new ContainerRepairer(inventory, tile));

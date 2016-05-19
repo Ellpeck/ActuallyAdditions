@@ -26,13 +26,14 @@ import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 public class TileEntityDirectionalBreaker extends TileEntityInventoryBase implements IEnergyReceiver, IEnergySaver, IRedstoneToggle{
 
     public static final int RANGE = 8;
     public static final int ENERGY_USE = 5;
-    public EnergyStorage storage = new EnergyStorage(10000);
+    public final EnergyStorage storage = new EnergyStorage(10000);
     private int lastEnergy;
     private int currentTime;
     private boolean activateOnceWithSignal;
@@ -92,7 +93,7 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase implem
                     if(Util.RANDOM.nextFloat() <= chance){
                         if(WorldUtil.addToInventory(this, drops, false, true)){
                             if(!ConfigValues.lessBlockBreakingEffects){
-                                this.worldObj.playAuxSFX(2001, coordsBlock, Block.getStateId(this.worldObj.getBlockState(coordsBlock)));
+                                this.worldObj.playBroadcastSound(2001, coordsBlock, Block.getStateId(this.worldObj.getBlockState(coordsBlock)));
                             }
                             WorldUtil.breakBlockAtSide(sideToManipulate, this.worldObj, this.getPos(), i);
                             WorldUtil.addToInventory(this, drops, true, true);
@@ -106,7 +107,7 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase implem
     }
 
     @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
+    public boolean isItemValidForSlot(int i, @Nonnull ItemStack stack){
         return false;
     }
 
@@ -116,12 +117,12 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase implem
     }
 
     @Override
-    public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
+    public boolean canInsertItem(int slot, @Nonnull ItemStack stack, @Nonnull EnumFacing side){
         return this.isItemValidForSlot(slot, stack);
     }
 
     @Override
-    public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
+    public boolean canExtractItem(int slot, @Nonnull ItemStack stack, @Nonnull EnumFacing side){
         return true;
     }
 

@@ -75,14 +75,12 @@ public class BookletChapter implements IBookletChapter{
         return this.displayStack;
     }
 
-    public BookletChapter setIncomplete(){
+    public void setIncomplete(){
         this.isIncomplete = true;
-        return this;
     }
 
-    public BookletChapter setImportant(){
+    public void setImportant(){
         this.color = TextFormatting.DARK_GREEN;
-        return this;
     }
 
     public BookletChapter setSpecial(){

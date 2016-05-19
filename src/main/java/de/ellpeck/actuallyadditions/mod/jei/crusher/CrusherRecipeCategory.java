@@ -27,7 +27,7 @@ public class CrusherRecipeCategory implements IRecipeCategory{
 
     public static final String NAME = "actuallyadditions.crushing";
 
-    private IDrawable background;
+    private final IDrawable background;
 
     public CrusherRecipeCategory(IGuiHelper helper){
         this.background = helper.createDrawable(AssetUtil.getGuiLocation("guiGrinder"), 60, 13, 56, 79);

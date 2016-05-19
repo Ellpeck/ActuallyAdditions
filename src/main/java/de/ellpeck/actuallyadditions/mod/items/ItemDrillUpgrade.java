@@ -19,9 +19,11 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 
+import javax.annotation.Nonnull;
+
 public class ItemDrillUpgrade extends ItemBase{
 
-    public UpgradeType type;
+    public final UpgradeType type;
 
     public ItemDrillUpgrade(UpgradeType type, String unlocName){
         super(unlocName);
@@ -37,8 +39,9 @@ public class ItemDrillUpgrade extends ItemBase{
         return -1;
     }
 
+    @Nonnull
     @Override
-    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand){
+    public ActionResult<ItemStack> onItemRightClick(@Nonnull ItemStack stack, World world, EntityPlayer player, EnumHand hand){
         if(!world.isRemote && this.type == UpgradeType.PLACER){
             this.setSlotToPlaceFrom(stack, player.inventory.currentItem);
             return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);

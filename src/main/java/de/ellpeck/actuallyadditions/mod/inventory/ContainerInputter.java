@@ -22,12 +22,14 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
+import javax.annotation.Nonnull;
+
 
 public class ContainerInputter extends Container{
 
-    private TileEntityInputter tileInputter;
+    private final TileEntityInputter tileInputter;
 
-    private boolean isAdvanced;
+    private final boolean isAdvanced;
 
     public ContainerInputter(InventoryPlayer inventory, TileEntityBase tile, boolean isAdvanced){
         this.tileInputter = (TileEntityInputter)tile;
@@ -116,7 +118,7 @@ public class ContainerInputter extends Container{
     }
 
     @Override
-    public boolean canInteractWith(EntityPlayer player){
+    public boolean canInteractWith(@Nonnull EntityPlayer player){
         return this.tileInputter.isUseableByPlayer(player);
     }
 }

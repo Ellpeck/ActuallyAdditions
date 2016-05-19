@@ -28,7 +28,7 @@ import java.util.List;
 
 public class CrusherRecipeWrapper extends RecipeWrapperWithButton implements IRecipeWrapper{
 
-    public CrusherRecipe theRecipe;
+    public final CrusherRecipe theRecipe;
 
     public CrusherRecipeWrapper(CrusherRecipe recipe){
         this.theRecipe = recipe;
