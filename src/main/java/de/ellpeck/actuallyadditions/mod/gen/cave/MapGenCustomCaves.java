@@ -25,21 +25,7 @@ import javax.annotation.Nonnull;
 import java.util.Random;
 
 //This is hideous. It's mostly copied from MapGenCaves and changed slightly.
-//I also have no idea what I'm actually doing here as all of the variables have
-//horrible names and I don't know what half of them do so I just try it out.
 public class MapGenCustomCaves extends MapGenCaves{
-
-    private static final Block[] NO_REPLACEY = new Block[]{
-            Blocks.BEDROCK,
-            Blocks.LOG,
-            Blocks.LOG2,
-            Blocks.LEAVES,
-            Blocks.DIRT,
-            Blocks.PLANKS,
-            Blocks.OAK_FENCE,
-            Blocks.CHEST,
-            Blocks.LADDER
-    };
 
     @Override
     protected void addRoom(long probablySeed, int chunkX, int chunkZ, @Nonnull ChunkPrimer primer, double x, double y, double z){
@@ -139,16 +125,10 @@ public class MapGenCustomCaves extends MapGenCaves{
                         i1 = 16;
                     }
 
-                    boolean flag3 = false;
-
-                    for(int j1 = k2; !flag3 && j1 < k; ++j1){
-                        for(int k1 = i3; !flag3 && k1 < i1; ++k1){
-                            for(int l1 = l+1; !flag3 && l1 >= l2-1; --l1){
+                    for(int j1 = k2; j1 < k; ++j1){
+                        for(int k1 = i3; k1 < i1; ++k1){
+                            for(int l1 = l+1; l1 >= l2-1; --l1){
                                 if(l1 >= 0 && l1 < 256){
-                                    if(this.isOceanBlock(primer, j1, l1, k1, chunkX, chunkZ)){
-                                        flag3 = true;
-                                    }
-
                                     if(l1 != l2-1 && j1 != k2 && j1 != k-1 && k1 != i3 && k1 != i1-1){
                                         l1 = l2;
                                     }
@@ -157,7 +137,6 @@ public class MapGenCustomCaves extends MapGenCaves{
                         }
                     }
 
-                    if(!flag3){
                         for(int j3 = k2; j3 < k; ++j3){
                             double d10 = ((double)(j3+chunkX*16)+0.5D-x)/d2;
 
@@ -184,14 +163,13 @@ public class MapGenCustomCaves extends MapGenCaves{
                             break;
                         }
                     }
-                }
             }
         }
     }
 
     @Override
     protected boolean canReplaceBlock(IBlockState first, @Nonnull IBlockState second){
-        return Util.arrayContains(NO_REPLACEY, first.getBlock()) < 0;
+        return true;
     }
 
     @Override
@@ -215,7 +193,7 @@ public class MapGenCustomCaves extends MapGenCaves{
 
         for(int j = 0; j < i; ++j){
             double d0 = (double)(chunkX*16+this.rand.nextInt(16));
-            double d1 = (double)this.rand.nextInt(this.rand.nextInt(244)+8);
+            double d1 = (double)this.rand.nextInt(this.rand.nextInt(236)+16);
             double d2 = (double)(chunkZ*16+this.rand.nextInt(16));
             int k = 1;
 

@@ -55,7 +55,7 @@ public class WorldGenCaveSpawn extends WorldGenerator{
         this.makeSphere(world, center.add(-2, -1, 8), 3);
 
         world.setBlockState(center.add(-1, -5, -8), Blocks.DIRT.getStateFromMeta(1));
-        WorldGenTrees trees = new WorldGenTrees(true);
+        WorldGenTrees trees = new WorldGenTrees(false);
         trees.generate(world, this.rand, center.add(-1, -4, -8));
 
         int length = this.rand.nextInt(20)+20;

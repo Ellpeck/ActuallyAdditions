@@ -14,6 +14,7 @@ import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.Chunk;
@@ -33,12 +34,14 @@ public class ChunkProviderCave implements IChunkGenerator{
     private final Random rand;
 
     private final WorldGenerator spawnGenerator;
+    private final WorldGenerator lushCaveGenerator;
 
     private final MapGenBase caveGenerator = new MapGenCustomCaves();
 
     public ChunkProviderCave(World world){
         this.world = world;
         this.rand = new Random(world.getSeed());
+        this.lushCaveGenerator = new WorldGenLushCaves(this.rand);
         this.spawnGenerator = new WorldGenCaveSpawn(this.rand);
     }
 
@@ -84,6 +87,12 @@ public class ChunkProviderCave implements IChunkGenerator{
         if(chunk.xPosition == x && chunk.zPosition == z){
             this.spawnGenerator.generate(this.world, this.rand, spawn);
             ModUtil.LOGGER.info("Generating spawn cave...");
+        }
+        else{
+            if(this.rand.nextInt(3) <= 0){
+                BlockPos pos = new BlockPos(x*16+this.rand.nextInt(16)+8, MathHelper.getRandomIntegerInRange(this.rand, 12, 244), z*16+this.rand.nextInt(16)+8);
+                this.lushCaveGenerator.generate(this.world, this.rand, pos);
+            }
         }
     }
 
