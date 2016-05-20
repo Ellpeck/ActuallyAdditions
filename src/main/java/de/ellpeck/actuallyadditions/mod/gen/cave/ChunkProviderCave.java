@@ -19,6 +19,7 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.chunk.IChunkGenerator;
+import net.minecraft.world.gen.MapGenBase;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
 import javax.annotation.Nonnull;
@@ -32,6 +33,8 @@ public class ChunkProviderCave implements IChunkGenerator{
     private final Random rand;
 
     private final WorldGenerator spawnGenerator;
+
+    private final MapGenBase caveGenerator = new MapGenCustomCaves();
 
     public ChunkProviderCave(World world){
         this.world = world;
@@ -66,6 +69,8 @@ public class ChunkProviderCave implements IChunkGenerator{
                 }
             }
         }
+
+        this.caveGenerator.generate(this.world, chunkX, chunkZ, primer);
 
         Chunk chunk = new Chunk(this.world, primer, chunkX, chunkZ);
         chunk.generateSkylightMap();
