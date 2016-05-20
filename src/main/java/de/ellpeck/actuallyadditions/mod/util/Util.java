@@ -25,6 +25,7 @@ public class Util{
 
     public static final Random RANDOM = new Random();
     public static final int WILDCARD = OreDictionary.WILDCARD_VALUE;
+    @SuppressWarnings("deprecation")
     public static final int BUCKET = FluidContainerRegistry.BUCKET_VOLUME;
 
     public static final EnumRarity CRYSTAL_RED_RARITY = addRarity(ModUtil.MOD_ID+"crystalRed", TextFormatting.DARK_RED, ModUtil.NAME+" Red Crystal");

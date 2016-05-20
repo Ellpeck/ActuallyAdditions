@@ -65,6 +65,7 @@ public class ItemAllToolAA extends ItemToolAA implements IColorProvidingItem{
         return Items.IRON_HOE.onItemUse(stack, playerIn, worldIn, pos, hand, side, hitX, hitY, hitZ);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public boolean canHarvestBlock(@Nonnull IBlockState state, ItemStack stack){
 

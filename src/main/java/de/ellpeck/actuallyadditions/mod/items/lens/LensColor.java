@@ -49,7 +49,6 @@ public class LensColor extends Lens{
             {86F, 51F, 28F}, //Brown
     };
 
-    @SuppressWarnings("unchecked")
     @Override
     public boolean invoke(IBlockState hitState, BlockPos hitBlock, IAtomicReconstructor tile){
         if(hitBlock != null){

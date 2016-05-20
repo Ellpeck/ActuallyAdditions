@@ -60,6 +60,7 @@ public class BlockBushBase extends BlockBush{
         return EnumRarity.COMMON;
     }
 
+    @SuppressWarnings("deprecation")
     @Nonnull
     @Override
     public IBlockState getStateFromMeta(int meta){

@@ -110,6 +110,7 @@ public class WorldUtil{
         }
     }
 
+    @SuppressWarnings("deprecation")
     public static ItemStack useItemAtSide(EnumFacing side, World world, BlockPos pos, ItemStack stack){
         if(world instanceof WorldServer && stack != null && stack.getItem() != null){
             BlockPos offsetPos = pos.offset(side);

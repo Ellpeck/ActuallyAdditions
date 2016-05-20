@@ -12,9 +12,6 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.recipe.CompostRecipe;
-import de.ellpeck.actuallyadditions.mod.items.ItemFertilizer;
-import de.ellpeck.actuallyadditions.mod.items.ItemMisc;
-import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;

@@ -263,6 +263,7 @@ public class ItemDrill extends ItemEnergy{
         return toReturn;
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public boolean canHarvestBlock(@Nonnull IBlockState state, ItemStack stack){
         int harvestLevel = this.getHarvestLevel(stack, "");
@@ -414,6 +415,7 @@ public class ItemDrill extends ItemEnergy{
      * @param world  The World
      * @param player The Player who breaks the Blocks
      */
+    @SuppressWarnings("deprecation")
     public boolean breakBlocks(ItemStack stack, int radius, World world, BlockPos aPos, EntityPlayer player){
         int xRange = radius;
         int yRange = radius;
@@ -485,6 +487,7 @@ public class ItemDrill extends ItemEnergy{
      * @param player  The Player breaking the Blocks
      * @param use     The Energy that should be extracted per Block
      */
+    @SuppressWarnings("deprecation")
     private boolean tryHarvestBlock(World world, BlockPos pos, boolean isExtra, ItemStack stack, EntityPlayer player, int use){
         Block block = PosUtil.getBlock(pos, world);
         IBlockState state = world.getBlockState(pos);

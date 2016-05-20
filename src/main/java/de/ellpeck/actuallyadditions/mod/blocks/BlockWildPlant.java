@@ -72,6 +72,7 @@ public class BlockWildPlant extends BlockBushBase{
         }
     }
 
+    @SuppressWarnings("deprecation")
     @Nonnull
     @Override
     public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, @Nonnull IBlockState state, int fortune){

@@ -57,12 +57,14 @@ public class BlockCompost extends BlockContainerBase implements IHudDisplay{
         this.setSoundType(SoundType.WOOD);
     }
 
+    @SuppressWarnings("deprecation")
     @Nonnull
     @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos){
         return AABB;
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void addCollisionBoxToList(IBlockState state, @Nonnull World worldIn, @Nonnull BlockPos pos, @Nonnull AxisAlignedBB entityBox, @Nonnull List<AxisAlignedBB> collidingBoxes, Entity entityIn){
         addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_LEGS);
@@ -72,11 +74,13 @@ public class BlockCompost extends BlockContainerBase implements IHudDisplay{
         addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_WALL_SOUTH);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public boolean isOpaqueCube(IBlockState state){
         return false;
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public boolean isFullCube(IBlockState state){
         return false;

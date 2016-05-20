@@ -78,6 +78,7 @@ public class TileEntityBreaker extends TileEntityInventoryBase implements IRedst
         return this.isPlacer;
     }
 
+    @SuppressWarnings("deprecation")
     private void doWork(){
         EnumFacing sideToManipulate = WorldUtil.getDirectionByPistonRotation(PosUtil.getMetadata(this.pos, this.worldObj));
 

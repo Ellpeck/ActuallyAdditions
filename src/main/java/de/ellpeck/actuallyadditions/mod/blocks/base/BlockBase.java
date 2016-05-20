@@ -60,6 +60,7 @@ public class BlockBase extends Block{
         return EnumRarity.COMMON;
     }
 
+    @SuppressWarnings("deprecation")
     @Nonnull
     @Override
     public IBlockState getStateFromMeta(int meta){

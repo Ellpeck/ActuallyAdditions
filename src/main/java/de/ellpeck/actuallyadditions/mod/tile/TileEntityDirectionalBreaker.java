@@ -79,6 +79,7 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase implem
         }
     }
 
+    @SuppressWarnings("deprecation")
     private void doWork(){
         if(this.storage.getEnergyStored() >= ENERGY_USE*RANGE){
             EnumFacing sideToManipulate = WorldUtil.getDirectionByPistonRotation(PosUtil.getMetadata(this.pos, this.worldObj));

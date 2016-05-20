@@ -129,6 +129,7 @@ public abstract class BlockContainerBase extends BlockContainer{
         return false;
     }
 
+    @SuppressWarnings("deprecation")
     @Nonnull
     @Override
     public IBlockState getStateFromMeta(int meta){
@@ -150,6 +151,7 @@ public abstract class BlockContainerBase extends BlockContainer{
         }
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn){
         this.updateRedstoneState(worldIn, pos);
@@ -223,11 +225,13 @@ public abstract class BlockContainerBase extends BlockContainer{
         }
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public boolean hasComparatorInputOverride(IBlockState state){
         return true;
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public int getComparatorInputOverride(IBlockState state, World world, BlockPos pos){
         TileEntity tile = world.getTileEntity(pos);

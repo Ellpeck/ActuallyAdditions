@@ -41,6 +41,7 @@ public class WorldGenCaveSpawn extends WorldGenerator{
         return true;
     }
 
+    @SuppressWarnings("deprecation")
     private void generateCave(World world, BlockPos center){
         this.makeSphere(world, center, 8);
         this.makeSphere(world, center.add(-3, 4, 3), 4);

@@ -23,7 +23,6 @@ import java.util.ArrayList;
 
 public class LensDeath extends Lens{
 
-    @SuppressWarnings("unchecked")
     @Override
     public boolean invoke(IBlockState hitState, BlockPos hitBlock, IAtomicReconstructor tile){
         int use = 150; //Per Block (because it doesn't only activate when something is hit like the other lenses!)

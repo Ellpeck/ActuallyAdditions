@@ -46,6 +46,7 @@ public class BlockMiner extends BlockContainerBase implements IHudDisplay{
         this.setSoundType(SoundType.STONE);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public boolean isOpaqueCube(IBlockState state){
         return false;

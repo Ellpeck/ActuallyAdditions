@@ -25,7 +25,6 @@ import net.minecraft.util.math.BlockPos;
  */
 public class LensConversion extends Lens{
 
-    @SuppressWarnings("unchecked")
     @Override
     public boolean invoke(IBlockState hitState, BlockPos hitBlock, IAtomicReconstructor tile){
         return ActuallyAdditionsAPI.methodHandler.invokeConversionLens(hitState, hitBlock, tile);

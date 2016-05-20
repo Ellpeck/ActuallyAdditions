@@ -27,6 +27,7 @@ public class BlockStair extends BlockStairs{
         this(block, name, 0);
     }
 
+    @SuppressWarnings("deprecation")
     public BlockStair(Block block, String name, int meta){
         super(block.getStateFromMeta(meta));
         this.name = name;

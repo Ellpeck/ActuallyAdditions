@@ -22,6 +22,7 @@ import net.minecraft.world.World;
 
 public class PosUtil{
 
+    @SuppressWarnings("deprecation")
     public static Material getMaterial(BlockPos pos, IBlockAccess world){
         return getBlock(pos, world).getMaterial(world.getBlockState(pos));
     }
@@ -50,6 +51,7 @@ public class PosUtil{
         return new BlockPos(pos.getX()+x, pos.getY()+y, pos.getZ()+z);
     }
 
+    @SuppressWarnings("deprecation")
     public static boolean setBlock(BlockPos pos, World world, Block block, int meta, int flag){
         return world.setBlockState(pos, block.getStateFromMeta(meta), flag);
     }
@@ -70,6 +72,7 @@ public class PosUtil{
         return null;
     }
 
+    @SuppressWarnings("deprecation")
     public static void setMetadata(BlockPos pos, World world, int meta, int flag){
         world.setBlockState(pos, getBlock(pos, world).getStateFromMeta(meta), flag);
     }

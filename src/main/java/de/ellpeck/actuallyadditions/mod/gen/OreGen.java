@@ -65,6 +65,7 @@ public class OreGen implements IWorldGenerator{
         }
     }
 
+    @SuppressWarnings("deprecation")
     public void addOreSpawn(Block block, int meta, Block blockIn, World world, Random random, int blockXPos, int blockZPos, int maxVeinSize, int chancesToSpawn, int minY, int maxY){
         if(maxY > minY){
             int yDiff = maxY-minY;

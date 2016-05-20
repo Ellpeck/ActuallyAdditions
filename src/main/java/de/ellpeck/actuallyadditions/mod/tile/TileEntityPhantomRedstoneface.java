@@ -28,6 +28,7 @@ public class TileEntityPhantomRedstoneface extends TileEntityPhantomface{
         super("redstoneface");
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void updateEntity(){
         if(!this.worldObj.isRemote){

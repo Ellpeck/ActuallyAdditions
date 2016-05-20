@@ -54,11 +54,13 @@ public class BlockPhantom extends BlockContainerBase implements IHudDisplay{
         this.setSoundType(SoundType.STONE);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public boolean canProvidePower(IBlockState state){
         return this.type == Type.REDSTONEFACE;
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public int getWeakPower(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing side){
         if(this.type == Type.REDSTONEFACE){
@@ -70,6 +72,7 @@ public class BlockPhantom extends BlockContainerBase implements IHudDisplay{
         return super.getWeakPower(state, world, pos, side);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public int getStrongPower(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing side){
         if(this.type == Type.REDSTONEFACE){

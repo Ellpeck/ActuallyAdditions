@@ -48,6 +48,7 @@ public class TileEntityHeatCollector extends TileEntityBase implements IEnergyPr
         this.storage.readFromNBT(compound);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void updateEntity(){
         super.updateEntity();

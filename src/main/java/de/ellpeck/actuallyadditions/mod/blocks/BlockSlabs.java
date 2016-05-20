@@ -46,6 +46,7 @@ public class BlockSlabs extends BlockBase{
         this(name, fullBlock, 0);
     }
 
+    @SuppressWarnings("deprecation")
     public BlockSlabs(String name, Block fullBlock, int meta){
         super(fullBlock.getMaterial(fullBlock.getDefaultState()), name);
         this.setHardness(1.5F);
@@ -73,6 +74,7 @@ public class BlockSlabs extends BlockBase{
         this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.5F, 1.0F);
     }*/
 
+    @SuppressWarnings("deprecation")
     @Override
     public boolean isOpaqueCube(IBlockState state){
         return false;
@@ -90,6 +92,7 @@ public class BlockSlabs extends BlockBase{
         return this.getStateFromMeta(meta);
     }
 
+    @SuppressWarnings("deprecation")
     @Nonnull
     @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos){
@@ -119,6 +122,7 @@ public class BlockSlabs extends BlockBase{
             this.setMaxDamage(0);
         }
 
+        @SuppressWarnings("deprecation")
         @Nonnull
         @Override
         public EnumActionResult onItemUse(ItemStack stack, @Nonnull EntityPlayer playerIn, World worldIn, @Nonnull BlockPos pos, EnumHand hand, @Nonnull EnumFacing facing, float hitX, float hitY, float hitZ){
@@ -162,6 +166,7 @@ public class BlockSlabs extends BlockBase{
             return worldIn.getBlockState(pos.offset(side)).getBlock() == this.block || super.canPlaceBlockOnSide(worldIn, pos, side, player, stack);
         }
 
+        @SuppressWarnings("deprecation")
         private boolean tryPlace(EntityPlayer player, ItemStack stack, World worldIn, BlockPos pos){
             IBlockState iblockstate = worldIn.getBlockState(pos);
 
