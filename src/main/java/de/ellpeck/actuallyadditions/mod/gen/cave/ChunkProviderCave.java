@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.gen.cave;
 
+import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
@@ -27,7 +28,6 @@ import java.util.Random;
 
 public class ChunkProviderCave implements IChunkGenerator{
 
-    private boolean generatedSpawn;
     private final World world;
     private final Random rand;
 
@@ -74,12 +74,11 @@ public class ChunkProviderCave implements IChunkGenerator{
 
     @Override
     public void populate(int x, int z){
-        if(!this.generatedSpawn){
-            BlockPos spawn = this.world.getSpawnPoint();
-            Chunk chunk = this.world.getChunkFromBlockCoords(spawn);
-            if(chunk.xPosition == x && chunk.zPosition == z){
-                this.generatedSpawn = this.spawnGenerator.generate(this.world, this.rand, spawn);
-            }
+        BlockPos spawn = this.world.getSpawnPoint();
+        Chunk chunk = this.world.getChunkFromBlockCoords(spawn);
+        if(chunk.xPosition == x && chunk.zPosition == z){
+            this.spawnGenerator.generate(this.world, this.rand, spawn);
+            ModUtil.LOGGER.info("Generating spawn cave...");
         }
     }
 

@@ -25,8 +25,6 @@ public class WorldData extends WorldSavedData{
     public static final String DATA_TAG = ModUtil.MOD_ID+"WorldData";
     private static WorldData instance;
 
-    public static NBTTagCompound additionalData = new NBTTagCompound();
-
     public WorldData(String tag){
         super(tag);
     }
@@ -71,10 +69,6 @@ public class WorldData extends WorldSavedData{
             ModUtil.LOGGER.info("Clearing leftover Persistent Server Data from other worlds!");
             PersistentServerData.playerSaveData.clear();
         }
-        if(!additionalData.hasNoTags()){
-            ModUtil.LOGGER.info("Clearing leftover Additional Data from other worlds!");
-            additionalData = new NBTTagCompound();
-        }
     }
 
     @Override
@@ -92,9 +86,6 @@ public class WorldData extends WorldSavedData{
             PersistentServerData.PlayerSave aSave = PersistentServerData.PlayerSave.fromNBT(playerList.getCompoundTagAt(i));
             PersistentServerData.playerSaveData.add(aSave);
         }
-
-        //Additional Data
-        additionalData = compound.getCompoundTag("Additional");
     }
 
     @Nonnull
@@ -114,9 +105,6 @@ public class WorldData extends WorldSavedData{
             playerList.appendTag(theSave.toNBT());
         }
         compound.setTag("PlayerData", playerList);
-
-        //Additional Data
-        compound.setTag("Additional", additionalData);
 
         return compound;
     }
