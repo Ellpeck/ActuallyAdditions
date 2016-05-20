@@ -10,7 +10,8 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import de.ellpeck.actuallyadditions.mod.items.InitItems;
+import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
+import de.ellpeck.actuallyadditions.api.recipe.CompostRecipe;
 import de.ellpeck.actuallyadditions.mod.items.ItemFertilizer;
 import de.ellpeck.actuallyadditions.mod.items.ItemMisc;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
@@ -22,7 +23,6 @@ import javax.annotation.Nonnull;
 
 public class TileEntityCompost extends TileEntityInventoryBase{
 
-    public static final int AMOUNT = 10;
     public int conversionTime;
 
     public TileEntityCompost(){
@@ -33,10 +33,6 @@ public class TileEntityCompost extends TileEntityInventoryBase{
     public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
         super.writeSyncableNBT(compound, sync);
         compound.setInteger("ConversionTime", this.conversionTime);
-    }
-
-    public float getAmount(){
-        return this.getStackInSlot(0) != null ? this.getStackInSlot(0).stackSize : 0F;
     }
 
     @Override
@@ -55,13 +51,22 @@ public class TileEntityCompost extends TileEntityInventoryBase{
         super.updateEntity();
         if(!this.worldObj.isRemote){
             boolean theFlag = this.conversionTime > 0;
-            if(this.slots[0] != null && !(this.slots[0].getItem() instanceof ItemFertilizer) && this.slots[0].stackSize >= AMOUNT){
-                this.conversionTime++;
-                if(this.conversionTime >= 2000){
-                    this.slots[0] = new ItemStack(InitItems.itemFertilizer, AMOUNT);
+
+            if(this.slots[0] != null){
+                CompostRecipe recipe = getRecipeForInput(this.slots[0]);
+                if(recipe != null && this.slots[0].isItemEqual(recipe.input) && this.slots[0].stackSize >= recipe.input.stackSize){
+                    this.conversionTime++;
+                    if(this.conversionTime >= 3000){
+                        this.slots[0] = recipe.output.copy();
+                        this.conversionTime = 0;
+                        this.markDirty();
+                    }
+                }
+                else{
                     this.conversionTime = 0;
                 }
             }
+
             if(theFlag != this.conversionTime > 0){
                 this.markDirty();
             }
@@ -69,13 +74,8 @@ public class TileEntityCompost extends TileEntityInventoryBase{
     }
 
     @Override
-    public int getInventoryStackLimit(){
-        return AMOUNT;
-    }
-
-    @Override
     public boolean isItemValidForSlot(int i, @Nonnull ItemStack stack){
-        return stack.getItem() instanceof ItemMisc && stack.getItemDamage() == TheMiscItems.MASHED_FOOD.ordinal();
+        return getRecipeForInput(stack) != null;
     }
 
     @Override
@@ -91,6 +91,17 @@ public class TileEntityCompost extends TileEntityInventoryBase{
 
     @Override
     public boolean canExtractItem(int slot, @Nonnull ItemStack stack, @Nonnull EnumFacing side){
-        return stack.getItem() instanceof ItemFertilizer;
+        return getRecipeForInput(stack) == null;
+    }
+
+    public static CompostRecipe getRecipeForInput(ItemStack input){
+        if(input != null){
+            for(CompostRecipe recipe : ActuallyAdditionsAPI.COMPOST_RECIPES){
+                if(input.isItemEqual(recipe.input)){
+                    return recipe;
+                }
+            }
+        }
+        return null;
     }
 }

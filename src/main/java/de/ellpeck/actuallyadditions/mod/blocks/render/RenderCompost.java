@@ -10,13 +10,15 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks.render;
 
-import de.ellpeck.actuallyadditions.mod.items.InitItems;
+import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
+import de.ellpeck.actuallyadditions.api.recipe.CompostRecipe;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityCompost;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 
 import javax.annotation.Nonnull;
@@ -27,17 +29,35 @@ public class RenderCompost extends TileEntitySpecialRenderer{
     public void renderTileEntityAt(@Nonnull TileEntity te, double x, double y, double z, float partialTicks, int destroyStage){
         if(te instanceof TileEntityCompost){
             TileEntityCompost compost = (TileEntityCompost)te;
-            if(compost.getStackInSlot(0) != null){
-                float i = compost.getAmount()/TileEntityCompost.AMOUNT;
-                GlStateManager.pushMatrix();
-                GlStateManager.translate((float)x+0.5F, (float)y+(i/3F)+0.01F, (float)z+0.5F);
-                //Hehe
-                if("ShadowfactsDev".equals(Minecraft.getMinecraft().thePlayer.getName())){
-                    GlStateManager.translate(0F, 1F, 0F);
+            ItemStack slot = compost.getStackInSlot(0);
+
+            if(slot != null){
+                Block display = null;
+                int maxAmount = 0;
+                for(CompostRecipe aRecipe : ActuallyAdditionsAPI.COMPOST_RECIPES){
+                    if(slot.isItemEqual(aRecipe.input)){
+                        display = aRecipe.inputDisplay;
+                        maxAmount = aRecipe.input.stackSize;
+                        break;
+                    }
+                    else if(slot.isItemEqual(aRecipe.output)){
+                        display = aRecipe.outputDisplay;
+                        maxAmount = aRecipe.output.stackSize;
+                        break;
+                    }
                 }
-                GlStateManager.scale(1.5F, i, 1.5F);
-                AssetUtil.renderBlockInWorld(Blocks.DIRT, compost.getStackInSlot(0).getItem() == InitItems.itemFertilizer ? 1 : 0);
-                GlStateManager.popMatrix();
+                if(display != null){
+                    float i = (float)slot.stackSize/(float)maxAmount;
+                    GlStateManager.pushMatrix();
+                    GlStateManager.translate((float)x+0.5F, (float)y+(i/3F)+0.01F, (float)z+0.5F);
+                    //Hehe
+                    if("ShadowfactsDev".equals(Minecraft.getMinecraft().thePlayer.getName())){
+                        GlStateManager.translate(0F, 1F, 0F);
+                    }
+                    GlStateManager.scale(1.5F, i, 1.5F);
+                    AssetUtil.renderBlockInWorld(display, 0);
+                    GlStateManager.popMatrix();
+                }
             }
         }
     }

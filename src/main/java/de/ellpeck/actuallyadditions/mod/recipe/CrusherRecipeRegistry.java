@@ -24,7 +24,7 @@ import java.util.List;
 
 public class CrusherRecipeRegistry{
 
-    public static final ArrayList<SearchCase> searchCases = new ArrayList<SearchCase>();
+    public static final ArrayList<SearchCase> SEARCH_CASES = new ArrayList<SearchCase>();
 
     public static void registerFinally(){
         ArrayList<String> oresNoResult = new ArrayList<String>();
@@ -32,7 +32,7 @@ public class CrusherRecipeRegistry{
 
         for(String ore : OreDictionary.getOreNames()){
             if(!hasException(ore)){
-                for(SearchCase theCase : searchCases){
+                for(SearchCase theCase : SEARCH_CASES){
                     if(ore.length() > theCase.theCase.length()){
                         if(ore.substring(0, theCase.theCase.length()).equals(theCase.theCase)){
                             String output = theCase.resultPreString+ore.substring(theCase.theCase.length());

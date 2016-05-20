@@ -16,6 +16,7 @@ import de.ellpeck.actuallyadditions.api.internal.IMethodHandler;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
 import de.ellpeck.actuallyadditions.api.lens.LensConversion;
 import de.ellpeck.actuallyadditions.api.recipe.*;
+import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
@@ -29,7 +30,7 @@ public class ActuallyAdditionsAPI{
 
     public static final String MOD_ID = "actuallyadditions";
     public static final String API_ID = MOD_ID+"api";
-    public static final String API_VERSION = "14";
+    public static final String API_VERSION = "15";
 
     /**
      * Use this to handle things that aren't based in the API itself
@@ -44,6 +45,7 @@ public class ActuallyAdditionsAPI{
     public static final List<LensConversionRecipe> RECONSTRUCTOR_LENS_CONVERSION_RECIPES = new ArrayList<LensConversionRecipe>();
     public static final Map<Item, IColorLensChanger> RECONSTRUCTOR_LENS_COLOR_CHANGERS = new HashMap<Item, IColorLensChanger>();
     public static final List<CoffeeIngredient> COFFEE_MACHINE_INGREDIENTS = new ArrayList<CoffeeIngredient>();
+    public static final List<CompostRecipe> COMPOST_RECIPES = new ArrayList<CompostRecipe>();
 
     public static final List<IBookletEntry> BOOKLET_ENTRIES = new ArrayList<IBookletEntry>();
     public static final List<BookletPage> BOOKLET_PAGES_WITH_ITEM_DATA = new ArrayList<BookletPage>();
@@ -132,6 +134,19 @@ public class ActuallyAdditionsAPI{
         if(!OreDictionary.getOres(outputOne, false).isEmpty()){
             CRUSHER_RECIPES.add(new CrusherRecipe(input, outputOne, outputOneAmount));
         }
+    }
+
+    /**
+     * Adds a new conversion recipe to the compost.
+     * StackSize is regarded on both input and output and they can be different.
+     *
+     * @param input The itemstack to be input into the compost
+     * @param inputDisplay The block to display when there is input in the compost
+     * @param output The itemstack to be output from the compost once conversion finishes
+     * @param outputDisplay The block to display when there is output in the compost
+     */
+    public static void addCompostRecipe(ItemStack input, Block inputDisplay, ItemStack output, Block outputDisplay){
+        COMPOST_RECIPES.add(new CompostRecipe(input, inputDisplay, output, outputDisplay));
     }
 
     /**

@@ -10,10 +10,8 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
+import de.ellpeck.actuallyadditions.api.recipe.CompostRecipe;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
-import de.ellpeck.actuallyadditions.mod.items.ItemFertilizer;
-import de.ellpeck.actuallyadditions.mod.items.ItemMisc;
-import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityCompost;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
@@ -57,8 +55,6 @@ public class BlockCompost extends BlockContainerBase implements IHudDisplay{
         this.setHardness(0.5F);
         this.setResistance(5.0F);
         this.setSoundType(SoundType.WOOD);
-
-        //this.setBlockBoundsForItemRender();
     }
 
     @Nonnull
@@ -89,36 +85,59 @@ public class BlockCompost extends BlockContainerBase implements IHudDisplay{
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack stackPlayer, EnumFacing f6, float f7, float f8, float f9){
         if(!world.isRemote){
-            TileEntityCompost tile = (TileEntityCompost)world.getTileEntity(pos);
-            if(tile != null){
-                //Add items to be composted
-                if(stackPlayer != null && stackPlayer.getItem() instanceof ItemMisc && stackPlayer.getItemDamage() == TheMiscItems.MASHED_FOOD.ordinal() && (tile.slots[0] == null || (!(tile.slots[0].getItem() instanceof ItemFertilizer) && tile.slots[0].stackSize < TileEntityCompost.AMOUNT))){
-                    if(tile.slots[0] == null){
-                        tile.slots[0] = new ItemStack(stackPlayer.getItem(), 1, TheMiscItems.MASHED_FOOD.ordinal());
-                    }
-                    else{
-                        tile.slots[0].stackSize++;
-                    }
-                    if(!player.capabilities.isCreativeMode){
-                        stackPlayer.stackSize--;
-                    }
-                    tile.markDirty();
-                }
+            TileEntity tile = world.getTileEntity(pos);
+            if(tile instanceof TileEntityCompost){
+                TileEntityCompost compost = (TileEntityCompost)tile;
+                ItemStack slot = compost.getStackInSlot(0);
+                CompostRecipe recipeIn = TileEntityCompost.getRecipeForInput(slot);
+                if(slot == null || recipeIn != null){
+                    if(stackPlayer != null){
+                        CompostRecipe recipeHand = TileEntityCompost.getRecipeForInput(stackPlayer);
+                        if(recipeHand != null && (recipeIn == null || recipeIn == recipeHand)){
+                            int maxAdd = Math.min(recipeHand.input.stackSize, stackPlayer.stackSize);
 
-                //Add Fertilizer to player's inventory
-                else if(tile.slots[0] != null && (stackPlayer == null || (stackPlayer.getItem() instanceof ItemFertilizer && stackPlayer.stackSize <= stackPlayer.getMaxStackSize()-tile.slots[0].stackSize)) && tile.slots[0].getItem() instanceof ItemFertilizer){
+                            if(slot == null){
+                                ItemStack stackToAdd = stackPlayer.copy();
+                                stackToAdd.stackSize = maxAdd;
+                                compost.setInventorySlotContents(0, stackToAdd);
+                                player.inventory.decrStackSize(player.inventory.currentItem, maxAdd);
+                                return true;
+                            }
+                            else{
+                                ItemStack stackIn = slot.copy();
+                                if(stackIn.stackSize < recipeHand.input.stackSize){
+                                    int sizeAdded = Math.min(maxAdd, recipeHand.input.stackSize-stackIn.stackSize);
+                                    stackIn.stackSize+=sizeAdded;
+                                    compost.setInventorySlotContents(0, stackIn);
+                                    player.inventory.decrStackSize(player.inventory.currentItem, sizeAdded);
+                                    return true;
+                                }
+                            }
+                        }
+                    }
+                }
+                else{
                     if(stackPlayer == null){
-                        player.inventory.setInventorySlotContents(player.inventory.currentItem, tile.slots[0].copy());
+                        player.inventory.setInventorySlotContents(player.inventory.currentItem, slot.copy());
+                        compost.setInventorySlotContents(0, null);
+                        return true;
                     }
-                    else{
-                        stackPlayer.stackSize += tile.slots[0].stackSize;
+                    else if(stackPlayer.isItemEqual(slot)){
+                        int addedStackSize = Math.min(slot.stackSize, stackPlayer.getMaxStackSize()-stackPlayer.stackSize);
+                        ItemStack stackToAdd = stackPlayer.copy();
+                        stackToAdd.stackSize += addedStackSize;
+                        player.inventory.setInventorySlotContents(player.inventory.currentItem, stackToAdd);
+                        compost.decrStackSize(0, addedStackSize);
+                        return true;
+
                     }
-                    tile.slots[0] = null;
-                    tile.markDirty();
                 }
             }
         }
-        return true;
+        else{
+            return true;
+        }
+        return false;
     }
 
     @Nonnull

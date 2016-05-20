@@ -10,7 +10,12 @@
 
 package de.ellpeck.actuallyadditions.mod.crafting;
 
+import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
+import de.ellpeck.actuallyadditions.mod.items.InitItems;
+import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
 
 public class InitCrafting{
 
@@ -22,6 +27,8 @@ public class InitCrafting{
         MiscCrafting.init();
         FoodCrafting.init();
         ToolCrafting.init();
+
+        ActuallyAdditionsAPI.addCompostRecipe(new ItemStack(InitItems.itemMisc, 10, TheMiscItems.MASHED_FOOD.ordinal()), Blocks.LEAVES, new ItemStack(InitItems.itemFertilizer, 10), Blocks.DIRT);
     }
 
 }

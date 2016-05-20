@@ -13,6 +13,7 @@ package de.ellpeck.actuallyadditions.mod.gen.cave;
 import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.misc.WorldData;
+import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import de.ellpeck.actuallyadditions.mod.util.playerdata.PersistentServerData;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -36,6 +37,8 @@ public class CaveWorldType extends WorldType{
         super("actaddcaveworld");
 
         Util.registerEvent(this);
+
+        ModUtil.LOGGER.info("Cave World config enabled! Registering cave world type...");
     }
 
     public static boolean isCave(World world){
