@@ -14,6 +14,7 @@ import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheMiscBlocks;
 import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.block.Block;
@@ -36,6 +37,8 @@ public class OreGen implements IWorldGenerator{
     public static final int QUARTZ_MIN = 0;
     public static final int QUARTZ_MAX = 45;
 
+    private final WorldGenLushCaves caveGen = new WorldGenLushCaves();
+
     public static void init(){
         ModUtil.LOGGER.info("Registering World Generator...");
         GameRegistry.registerWorldGenerator(new OreGen(), 10);
@@ -54,6 +57,11 @@ public class OreGen implements IWorldGenerator{
     private void generateDefault(World world, Random random, int x, int z){
         if(ConfigBoolValues.GENERATE_QUARTZ.isEnabled()){
             this.addOreSpawn(InitBlocks.blockMisc, TheMiscBlocks.ORE_QUARTZ.ordinal(), Blocks.STONE, world, random, x, z, MathHelper.getRandomIntegerInRange(random, 5, 8), 10, QUARTZ_MIN, QUARTZ_MAX);
+        }
+
+        if(ConfigBoolValues.GEN_LUSH_CAVES.isEnabled() && random.nextInt(ConfigIntValues.LUSH_CAVE_CHANCE.getValue()) <= 0){
+            BlockPos posAtHeight = world.getTopSolidOrLiquidBlock(new BlockPos(x+random.nextInt(16)+8, 0, z+random.nextInt(16)+8));
+            this.caveGen.generate(world, random, posAtHeight.down(MathHelper.getRandomIntegerInRange(random, 10, posAtHeight.getY()-10)));
         }
     }
 
