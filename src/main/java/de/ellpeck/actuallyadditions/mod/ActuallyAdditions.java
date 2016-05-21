@@ -21,7 +21,6 @@ import de.ellpeck.actuallyadditions.mod.crafting.InitCrafting;
 import de.ellpeck.actuallyadditions.mod.crafting.ItemCrafting;
 import de.ellpeck.actuallyadditions.mod.event.InitEvents;
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
-import de.ellpeck.actuallyadditions.mod.gen.cave.CaveWorldType;
 import de.ellpeck.actuallyadditions.mod.gen.InitVillager;
 import de.ellpeck.actuallyadditions.mod.gen.OreGen;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
@@ -103,10 +102,6 @@ public class ActuallyAdditions{
         InitEvents.init();
         InitCrafting.init();
         DungeonLoot.init();
-
-        if(ConfigValues.caveWorld){
-            new CaveWorldType();
-        }
 
         proxy.init(event);
 

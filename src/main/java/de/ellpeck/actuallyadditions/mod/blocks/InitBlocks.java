@@ -115,14 +115,8 @@ public class InitBlocks{
     public static Block blockPillarQuartzStair;
     public static Block blockPillarQuartzSlab;
 
-    public static Block blockImpureIron;
-
     public static void init(){
         ModUtil.LOGGER.info("Initializing Blocks...");
-
-        if(ConfigValues.caveWorld){
-            blockImpureIron = new BlockImpureIron("blockImpureIron");
-        }
 
         blockItemViewer = new BlockItemViewer("blockItemViewer");
         blockFireworkBox = new BlockFireworkBox("blockFireworkBox");

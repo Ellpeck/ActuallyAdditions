@@ -306,10 +306,6 @@ public class CreativeTab extends CreativeTabs{
         this.add(InitItems.itemChestCrystalWhite);
         this.add(InitItems.itemPantsCrystalWhite);
         this.add(InitItems.itemBootsCrystalWhite);
-
-        if(ConfigValues.caveWorld){
-            this.add(InitBlocks.blockImpureIron);
-        }
     }
 
     public void add(Item item){

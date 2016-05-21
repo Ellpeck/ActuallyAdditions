@@ -14,7 +14,6 @@ import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheMiscBlocks;
 import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
-import de.ellpeck.actuallyadditions.mod.gen.cave.CaveWorldType;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.block.Block;
@@ -46,17 +45,10 @@ public class OreGen implements IWorldGenerator{
     public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider){
         int dimension = world.provider.getDimension();
         if(dimension != -1 && dimension != 1){
-            if(CaveWorldType.isCave(world)){
-                this.generateCave(world, random, chunkX*16, chunkZ*16);
-            }
-            else if(world.getWorldType() != WorldType.FLAT && Util.arrayContains(ConfigValues.oreGenDimensionBlacklist, world.provider.getDimension()) < 0){
+            if(world.getWorldType() != WorldType.FLAT && Util.arrayContains(ConfigValues.oreGenDimensionBlacklist, world.provider.getDimension()) < 0){
                 this.generateDefault(world, random, chunkX*16, chunkZ*16);
             }
         }
-    }
-
-    private void generateCave(World world, Random random, int x, int z){
-        this.addOreSpawn(InitBlocks.blockImpureIron, 0, Blocks.STONE, world, random, x, z, MathHelper.getRandomIntegerInRange(random, 5, 10), 60, 0, world.getHeight());
     }
 
     private void generateDefault(World world, Random random, int x, int z){

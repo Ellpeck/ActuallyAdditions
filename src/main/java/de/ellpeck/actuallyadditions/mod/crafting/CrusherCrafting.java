@@ -37,10 +37,6 @@ public class CrusherCrafting{
     public static void init(){
         ModUtil.LOGGER.info("Initializing Crusher Recipes...");
 
-        if(ConfigValues.caveWorld){
-            ActuallyAdditionsAPI.addCrusherRecipe(new ItemStack(InitBlocks.blockImpureIron), new ItemStack(InitItems.itemDust, 2, TheDusts.IRON.ordinal()));
-        }
-
         ActuallyAdditionsAPI.addCrusherRecipe(new ItemStack(Items.BONE), new ItemStack(Items.DYE, 6, 15));
         miscRecipes.add(RecipeUtil.lastCrusherRecipe());
         ActuallyAdditionsAPI.addCrusherRecipe(new ItemStack(Items.REEDS), new ItemStack(Items.SUGAR, 3));
