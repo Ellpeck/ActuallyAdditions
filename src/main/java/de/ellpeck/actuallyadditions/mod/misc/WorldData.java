@@ -22,7 +22,7 @@ import javax.annotation.Nonnull;
 
 public class WorldData extends WorldSavedData{
 
-    public static final String DATA_TAG = ModUtil.MOD_ID+"WorldData";
+    public static final String DATA_TAG = ModUtil.MOD_ID+"worlddata";
     private static WorldData instance;
 
     public WorldData(String tag){
