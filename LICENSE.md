@@ -11,10 +11,8 @@ Everything that is not listed below applies to the above.
 * Make Let's Play (and similar) videos containing the mod.
 
 ### YOU CAN NOT
-* Copy the entire code or claim it is yours.
+* Copy entire classes, methods or other big parts of code or claim you made them.
 * Redistribute the mod. This does not apply, however, when it comes to pre-packaged modpacks.
-* Redistribute the code or claim you made it.
-* Copy entire classes, methods or other big parts of code.
 
 ### YOU HAVE TO
 * Always credit me in some way.
