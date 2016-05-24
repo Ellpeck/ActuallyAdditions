@@ -12,11 +12,12 @@ Everything that is not listed below applies to the above.
 
 ### YOU CAN NOT
 * Copy the entire code or claim it is yours.
-* Reupload the code or mod to another website or claim you made it.
+* Redistribute the mod. This does not apply, however, when it comes to pre-packaged modpacks.
+* Redistribute the code or claim you made it.
 * Copy entire classes, methods or other big parts of code.
 
 ### YOU HAVE TO
-* Always credit me. Don't be a jerk and copy entire portions of the code and claim they're yours.
+* Always credit me in some way.
 * When it comes to the code, always link back to the official repository.
 * When it comes to the Mod, always link back to the the official Minecraft Forum thread or CurseForge page.
 
@@ -25,6 +26,6 @@ Everything that is not listed below applies to the above.
 * The above License only applies for code I wrote myself, any APIs used (such as the CoFH API) have their own License that is being respected.
 * There are some excerpts from other code used (such as the OpenBlocks XP system). Credit to the creators of these parts is always given and their permission is granted or their license is respected.
 * Almost all of the assets used in this mod are made by Glenthor and are owned by me. You are not allowed to copy them for any other project.
-* Parts of this license, especially restrictive ones, can be ignored with personal permission. Said permission, however, will only be given to people I know or someone who has a very good reason for needing it. If you don't, don't ask.
+* Parts of this license, especially restrictive ones, can be ignored with personal permission. Said permission, however, will only be given to people I know or someone who has a very good reason for needing it.
 
 © 2015-2016 Ellpeck
