@@ -17,7 +17,7 @@ Everything that is not listed below applies to the above.
 ### YOU HAVE TO
 * Always credit me in some way.
 * When it comes to the code, always link back to the official repository.
-* When it comes to the Mod, always link back to the the official Minecraft Forum thread or CurseForge page.
+* When it comes to the mod, always link back to the the official Minecraft Forum thread or CurseForge page.
 
 ### NOTES
 * The Actually Additions API can be excerpted for use in other projects, however it should not be modified. It can be redistributed with other mods (if it is getting used), however it should still be visible that it is a part of Actually Additions. Do not remove the copyright header from any of the API's files.
