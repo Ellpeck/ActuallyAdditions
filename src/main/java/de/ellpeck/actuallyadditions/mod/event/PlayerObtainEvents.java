@@ -29,8 +29,7 @@ import java.util.Locale;
 public class PlayerObtainEvents{
 
     public static void checkAchievements(ItemStack gotten, EntityPlayer player, InitAchievements.Type type){
-        for(int i = 0; i < TheAchievements.values().length; i++){
-            TheAchievements ach = TheAchievements.values()[i];
+        for(TheAchievements ach : TheAchievements.values()){
             if(ach.type == type){
                 if(gotten != null && ach.ach.theItemStack != null && gotten.getItem() == ach.ach.theItemStack.getItem()){
                     if(gotten.getItemDamage() == ach.ach.theItemStack.getItemDamage()){
