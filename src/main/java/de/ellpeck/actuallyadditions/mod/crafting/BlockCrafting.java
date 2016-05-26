@@ -85,8 +85,13 @@ public class BlockCrafting{
     public static IRecipe recipeLaserRelayItem;
     public static IRecipe recipeLaserRelayItemWhitelist;
     public static IRecipe recipeItemInterface;
+    public static IRecipe recipeBookStand;
 
     public static void init(){
+
+        //Book Stand
+        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitBlocks.blockBookletStand), new ItemStack(InitItems.itemBooklet), "plankWood"));
+        recipeBookStand = RecipeUtil.lastIRecipe();
 
         //Firework Box
         if(ConfigCrafting.FIREWORK_BOX.isEnabled()){

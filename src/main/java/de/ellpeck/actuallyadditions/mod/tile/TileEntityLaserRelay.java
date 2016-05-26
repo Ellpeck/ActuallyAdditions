@@ -21,6 +21,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
+
 public abstract class TileEntityLaserRelay extends TileEntityBase{
 
     public static final int MAX_DISTANCE = 15;
@@ -53,9 +55,10 @@ public abstract class TileEntityLaserRelay extends TileEntityBase{
         super.receiveSyncCompound(compound);
     }
 
+    @Nonnull
     @Override
-    public NBTTagCompound getSyncCompound(){
-        NBTTagCompound compound = super.getSyncCompound();
+    public NBTTagCompound getUpdateTag(){
+        NBTTagCompound compound = super.getUpdateTag();
 
         BlockPos thisPos = this.pos;
         ConcurrentSet<LaserRelayConnectionHandler.ConnectionPair> connections = LaserRelayConnectionHandler.getInstance().getConnectionsFor(thisPos);

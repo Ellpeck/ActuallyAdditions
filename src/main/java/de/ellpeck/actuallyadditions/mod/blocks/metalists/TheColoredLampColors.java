@@ -43,7 +43,7 @@ public enum TheColoredLampColors{
             for(int i = 0; i < values().length; i++){
                 String aName = values()[i].name;
                 if(aName != null){
-                    if(aName.toLowerCase(Locale.ROOT).equals(actualName.toLowerCase(Locale.ROOT))){
+                    if(aName.equalsIgnoreCase(actualName)){
                         return values()[i];
                     }
                 }

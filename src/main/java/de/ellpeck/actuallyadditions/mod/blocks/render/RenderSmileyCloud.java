@@ -43,7 +43,7 @@ public class RenderSmileyCloud extends TileEntitySpecialRenderer{
                 for(ISmileyCloudEasterEgg cloud : SmileyCloudEasterEggs.cloudStuff){
                     for(String triggerName : cloud.getTriggerNames()){
                         if(triggerName != null && theCloud.name != null){
-                            if(triggerName.toLowerCase(Locale.ROOT).equals(theCloud.name.toLowerCase(Locale.ROOT))){
+                            if(triggerName.equalsIgnoreCase(theCloud.name)){
                                 GlStateManager.pushMatrix();
                                 switch(PosUtil.getMetadata(theCloud.getPos(), theCloud.getWorld())){
                                     case 1:

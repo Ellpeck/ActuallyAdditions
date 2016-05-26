@@ -74,7 +74,7 @@ public class SpecialRenderInit{
                 //Does the player have one of the names from the list?
                 String playerName = event.getEntityPlayer().getName();
                 if(entry.getKey() != null && playerName != null){
-                    if(entry.getKey().toLowerCase(Locale.ROOT).equals(playerName.toLowerCase(Locale.ROOT))){
+                    if(entry.getKey().equalsIgnoreCase(playerName)){
                         //Render the special Item/Block
                         entry.getValue().render(event.getEntityPlayer(), event.getPartialRenderTick());
                         break;

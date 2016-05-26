@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.inventory;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.booklet.GuiBooklet;
+import de.ellpeck.actuallyadditions.mod.booklet.GuiBookletStand;
 import de.ellpeck.actuallyadditions.mod.inventory.gui.*;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
@@ -155,6 +156,8 @@ public class GuiHandler implements IGuiHandler{
                 return new GuiRangedCollector(entityPlayer.inventory, tile, x, y, z, world);
             case MINER:
                 return new GuiMiner(entityPlayer.inventory, tile);
+            case BOOK_STAND:
+                return new GuiBookletStand(tile);
             case LASER_RELAY_ITEM_WHITELIST:
                 return new GuiLaserRelayItemWhitelist(entityPlayer.inventory, tile);
             default:
@@ -190,6 +193,7 @@ public class GuiHandler implements IGuiHandler{
         DIRECTIONAL_BREAKER,
         RANGED_COLLECTOR,
         MINER,
+        BOOK_STAND,
         LASER_RELAY_ITEM_WHITELIST;
 
         public final boolean checkTileEntity;

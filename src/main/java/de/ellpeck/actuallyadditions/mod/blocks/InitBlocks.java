@@ -115,9 +115,12 @@ public class InitBlocks{
     public static Block blockPillarQuartzStair;
     public static Block blockPillarQuartzSlab;
 
+    public static Block blockBookletStand;
+
     public static void init(){
         ModUtil.LOGGER.info("Initializing Blocks...");
 
+        blockBookletStand = new BlockBookletStand("blockBookletStand");
         blockItemViewer = new BlockItemViewer("blockItemViewer");
         blockFireworkBox = new BlockFireworkBox("blockFireworkBox");
         blockMiner = new BlockMiner("blockMiner");

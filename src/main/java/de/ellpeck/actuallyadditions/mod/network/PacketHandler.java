@@ -30,5 +30,6 @@ public class PacketHandler{
         theNetwork.registerMessage(PacketGuiString.Handler.class, PacketGuiString.class, 2, Side.SERVER);
         theNetwork.registerMessage(PacketParticle.Handler.class, PacketParticle.class, 3, Side.CLIENT);
         theNetwork.registerMessage(PacketUpdateTileEntity.Handler.class, PacketUpdateTileEntity.class, 4, Side.CLIENT);
+        theNetwork.registerMessage(PacketBookletStandButton.Handler.class, PacketBookletStandButton.class, 5, Side.SERVER);
     }
 }
