@@ -87,29 +87,28 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
         GameRegistry.registerTileEntity(TileEntityLaserRelayEnergy.class, ModUtil.MOD_ID+":tileEntityLaserRelay");
         GameRegistry.registerTileEntity(TileEntityLaserRelayItemWhitelist.class, ModUtil.MOD_ID+":tileEntityLaserRelayItemWhitelist");
         GameRegistry.registerTileEntity(TileEntityItemViewer.class, ModUtil.MOD_ID+":tileItemViewer");
+        GameRegistry.registerTileEntity(TileEntityBookletStand.class, ModUtil.MOD_ID+":tileEntityBookletStand");
     }
 
     @Override
-    public final void readFromNBT(NBTTagCompound compound){
+    public void readFromNBT(NBTTagCompound compound){
         super.readFromNBT(compound);
-        this.isRedstonePowered = compound.getBoolean("Redstone");
         this.readSyncableNBT(compound, false);
     }
 
     @Nonnull
     @Override
-    public final NBTTagCompound writeToNBT(NBTTagCompound compound){
-        NBTTagCompound newCompound = super.writeToNBT(compound);
-        newCompound.setBoolean("Redstone", this.isRedstonePowered);
-        this.writeSyncableNBT(newCompound, false);
-        return newCompound;
+    public NBTTagCompound writeToNBT(NBTTagCompound compound){
+        compound = super.writeToNBT(compound);
+        this.writeSyncableNBT(compound, false);
+        return compound;
     }
 
     @Override
-    public final SPacketUpdateTileEntity getUpdatePacket(){
-        NBTTagCompound compound = this.getSyncCompound();
+    public SPacketUpdateTileEntity getUpdatePacket(){
+        NBTTagCompound compound = this.getUpdateTag();
         if(compound != null){
-            return new SPacketUpdateTileEntity(this.pos, 3, compound);
+            return new SPacketUpdateTileEntity(this.pos, 0, compound);
         }
         else{
             return null;
@@ -117,7 +116,7 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
     }
 
     @Override
-    public final void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt){
+    public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt){
         if(pkt != null){
             this.receiveSyncCompound(pkt.getNbtCompound());
         }
@@ -132,26 +131,34 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
         this.readSyncableNBT(compound, true);
     }
 
-    public NBTTagCompound getSyncCompound(){
-        NBTTagCompound tag = new NBTTagCompound();
+    @Nonnull
+    @Override
+    public NBTTagCompound getUpdateTag(){
+        NBTTagCompound tag = super.getUpdateTag();
         this.writeSyncableNBT(tag, true);
         return tag;
     }
 
     public void writeSyncableNBT(NBTTagCompound compound, boolean isForSync){
+        if(!isForSync){
+            compound.setBoolean("Redstone", this.isRedstonePowered);
+        }
         if(this instanceof IRedstoneToggle){
             compound.setBoolean("IsPulseMode", ((IRedstoneToggle)this).isPulseMode());
         }
     }
 
     public void readSyncableNBT(NBTTagCompound compound, boolean isForSync){
+        if(!isForSync){
+            this.isRedstonePowered = compound.getBoolean("Redstone");
+        }
         if(this instanceof IRedstoneToggle){
             ((IRedstoneToggle)this).toggle(compound.getBoolean("IsPulseMode"));
         }
     }
 
     @Override
-    public final void update(){
+    public void update(){
         this.updateEntity();
     }
 
@@ -159,7 +166,7 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
         this.ticksElapsed++;
     }
 
-    public final void setRedstonePowered(boolean powered){
+    public void setRedstonePowered(boolean powered){
         this.isRedstonePowered = powered;
         this.markDirty();
     }
@@ -168,7 +175,7 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
         return player.getDistanceSq(this.getPos().getX()+0.5D, this.pos.getY()+0.5D, this.pos.getZ()+0.5D) <= 64 && !this.isInvalid() && this.worldObj.getTileEntity(this.pos) == this;
     }
 
-    protected final boolean sendUpdateWithInterval(){
+    protected boolean sendUpdateWithInterval(){
         if(this.ticksElapsed%ConfigIntValues.TILE_ENTITY_UPDATE_INTERVAL.getValue() == 0){
             this.sendUpdate();
             return true;
@@ -178,9 +185,9 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
         }
     }
 
-    public final void sendUpdate(){
+    public void sendUpdate(){
         if(!this.worldObj.isRemote){
-            NBTTagCompound compound = this.getSyncCompound();
+            NBTTagCompound compound = this.getUpdateTag();
             if(compound != null){
                 PacketHandler.theNetwork.sendToAllAround(new PacketUpdateTileEntity(compound, this.getPos()), new NetworkRegistry.TargetPoint(this.worldObj.provider.getDimension(), this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), 64));
             }
