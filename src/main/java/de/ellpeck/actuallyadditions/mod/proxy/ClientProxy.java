@@ -18,6 +18,7 @@ import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
 import de.ellpeck.actuallyadditions.mod.blocks.render.RenderCompost;
 import de.ellpeck.actuallyadditions.mod.blocks.render.RenderReconstructorLens;
 import de.ellpeck.actuallyadditions.mod.blocks.render.RenderSmileyCloud;
+import de.ellpeck.actuallyadditions.mod.booklet.InitBooklet;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.event.InitEvents;
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
@@ -68,26 +69,28 @@ public class ClientProxy implements IProxy{
         String bookletText = "";
 
         for(IBookletEntry entry : ActuallyAdditionsAPI.BOOKLET_ENTRIES){
-            bookletWordCount += entry.getLocalizedName().split(" ").length;
-            bookletCharCount += entry.getLocalizedName().length();
-            bookletText+=entry.getLocalizedName()+"\n\n";
+            if(entry != ActuallyAdditionsAPI.allAndSearch){
+                bookletWordCount += entry.getLocalizedName().split(" ").length;
+                bookletCharCount += entry.getLocalizedName().length();
+                bookletText += entry.getLocalizedName()+"\n\n";
 
-            for(IBookletChapter chapter : entry.getChapters()){
-                bookletWordCount += chapter.getLocalizedName().split(" ").length;
-                bookletCharCount += chapter.getLocalizedName().length();
-                bookletText+=chapter.getLocalizedName()+"\n";
+                for(IBookletChapter chapter : entry.getChapters()){
+                    bookletWordCount += chapter.getLocalizedName().split(" ").length;
+                    bookletCharCount += chapter.getLocalizedName().length();
+                    bookletText += chapter.getLocalizedName()+"\n";
 
-                for(BookletPage page : chapter.getPages()){
-                    if(page.getText() != null){
-                        bookletWordCount += page.getText().split(" ").length;
-                        bookletCharCount += page.getText().length();
-                        bookletText +=page.getText()+"\n";
+                    for(BookletPage page : chapter.getPages()){
+                        if(page.getText() != null){
+                            bookletWordCount += page.getText().split(" ").length;
+                            bookletCharCount += page.getText().length();
+                            bookletText += page.getText()+"\n";
+                        }
                     }
-                }
-                bookletText+="\n";
+                    bookletText += "\n";
 
+                }
+                bookletText += "\n";
             }
-            bookletText+="\n";
         }
 
         if(ConfigBoolValues.BOOKLET_TEXT_TO_FILE.isEnabled()){
