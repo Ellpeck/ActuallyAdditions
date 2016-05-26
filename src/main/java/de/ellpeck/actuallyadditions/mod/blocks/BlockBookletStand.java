@@ -21,22 +21,24 @@ import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.profiler.Profiler;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -46,6 +48,13 @@ import javax.annotation.Nonnull;
 @SuppressWarnings("deprecation")
 public class BlockBookletStand extends BlockContainerBase implements IHudDisplay{
 
+    private static final PropertyInteger META = PropertyInteger.create("meta", 0, 3);
+
+    private static final AxisAlignedBB AABB_1 = new AxisAlignedBB(0, 3*0.0625, 0, 1, 14*0.0625, 0.0625);
+    private static final AxisAlignedBB AABB_2 = new AxisAlignedBB(0, 3*0.0625, 0, 0.0625, 14*0.0625, 1);
+    private static final AxisAlignedBB AABB_3 = new AxisAlignedBB(1-0.0625, 3*0.0625, 0, 1, 14*0.0625, 1);
+    private static final AxisAlignedBB AABB_4 = new AxisAlignedBB(1, 3*0.0625, 1-0.0625, 0, 14*0.0625, 1);
+
     public BlockBookletStand(String name){
         super(Material.WOOD, name);
         this.setHarvestLevel("axe", 0);
@@ -54,6 +63,31 @@ public class BlockBookletStand extends BlockContainerBase implements IHudDisplay
         this.setSoundType(SoundType.WOOD);
     }
 
+    @SuppressWarnings("deprecation")
+    @Nonnull
+    @Override
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos){
+        int meta = this.getMetaFromState(state);
+        switch(meta){
+            case 0:
+                return AABB_4;
+            case 1:
+                return AABB_1;
+            case 2:
+                return AABB_3;
+            case 3:
+                return AABB_2;
+        }
+        return super.getBoundingBox(state, source, pos);
+    }
+
+    @SuppressWarnings("deprecation")
+    @Override
+    public boolean isFullCube(IBlockState state){
+        return false;
+    }
+
+    @SuppressWarnings("deprecation")
     @Override
     public boolean isOpaqueCube(IBlockState state){
         return false;
@@ -131,5 +165,10 @@ public class BlockBookletStand extends BlockContainerBase implements IHudDisplay
             minecraft.fontRendererObj.drawStringWithShadow(TextFormatting.YELLOW+""+TextFormatting.ITALIC+strg1, resolution.getScaledWidth()/2+25, resolution.getScaledHeight()/2+8, StringUtil.DECIMAL_COLOR_WHITE);
             minecraft.fontRendererObj.drawStringWithShadow(TextFormatting.YELLOW+""+TextFormatting.ITALIC+strg2, resolution.getScaledWidth()/2+25, resolution.getScaledHeight()/2+18, StringUtil.DECIMAL_COLOR_WHITE);
         }
+    }
+
+    @Override
+    protected PropertyInteger getMetaProperty(){
+        return META;
     }
 }
