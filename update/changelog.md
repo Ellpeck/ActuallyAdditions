@@ -1,3 +1,9 @@
+# 1.9.4-r35
+* Added lush caves that spawn randomly in the overworld. Turn them off or change their spawn rate in the config if you don't like them.
+* Changed some world data mechanics. Might break some Laser Relay Networks. Sorry about that, just reconnect them.
+* Fixed a massive bug with TileEntities not syncing properly when re-entering unloaded chunks
+* Re-added booklet stand. Is now a thing on the wall. But works the same.
+
 # 1.9.4-r34
 ### MINECRAFT 1.9.4!!
 * Made special drops dependent on the looting level you have

@@ -15,7 +15,7 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 //I'm doing this because people made me do it. Even though it never worked properly when I tried it. Sigh.
 apply plugin: 'idea'
 
-version = "1.9.4-r34"
+version = "1.9.4-r35"
 group = "de.ellpeck.actuallyadditions"
 archivesBaseName = "ActuallyAdditions"
 
