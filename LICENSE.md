@@ -6,12 +6,12 @@ Everything that is not listed below applies to the above.
 ### YOU MAY
 * Fork and modify the code.
 * Submit pull requests.
-* Copy (SMALL!) parts of the code for other projects.
+* Copy small parts of code for other projects.
 * Make a review/spotlight of the mod or use it in a modpack.
 * Make Let's Play (and similar) videos containing the mod.
 
 ### YOU CAN NOT
-* Copy entire classes, methods or other big parts of code or claim you made them.
+* Copy entire classes, methods or features or claim you made them.
 * Redistribute the mod. This does not apply, however, when it comes to pre-packaged modpacks.
 
 ### YOU HAVE TO
