@@ -45,7 +45,9 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 import javax.annotation.Nonnull;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.util.*;
 
 public class ClientProxy implements IProxy{
@@ -56,26 +58,49 @@ public class ClientProxy implements IProxy{
     public static int bookletWordCount;
     public static int bookletCharCount;
 
-    private static final List<Item> colorProdividingItemsForRegistering = new ArrayList<Item>();
-    private static final Map<ItemStack, ModelResourceLocation> modelLocationsForRegistering = new HashMap<ItemStack, ModelResourceLocation>();
+    private static final List<Item> COLOR_PRODIVIDING_ITEMS_FOR_REGISTERING = new ArrayList<Item>();
+    private static final Map<ItemStack, ModelResourceLocation> MODEL_LOCATIONS_FOR_REGISTERING = new HashMap<ItemStack, ModelResourceLocation>();
 
     private static void countBookletWords(){
         bookletWordCount = 0;
         bookletCharCount = 0;
+        String bookletText = "";
 
         for(IBookletEntry entry : ActuallyAdditionsAPI.BOOKLET_ENTRIES){
+            bookletWordCount += entry.getLocalizedName().split(" ").length;
+            bookletCharCount += entry.getLocalizedName().length();
+            bookletText+=entry.getLocalizedName()+"\n\n";
+
             for(IBookletChapter chapter : entry.getChapters()){
+                bookletWordCount += chapter.getLocalizedName().split(" ").length;
+                bookletCharCount += chapter.getLocalizedName().length();
+                bookletText+=chapter.getLocalizedName()+"\n";
+
                 for(BookletPage page : chapter.getPages()){
                     if(page.getText() != null){
                         bookletWordCount += page.getText().split(" ").length;
                         bookletCharCount += page.getText().length();
+                        bookletText +=page.getText()+"\n";
                     }
                 }
-                bookletWordCount += chapter.getLocalizedName().split(" ").length;
-                bookletCharCount += chapter.getLocalizedName().length();
+                bookletText+="\n";
+
             }
-            bookletWordCount += entry.getLocalizedName().split(" ").length;
-            bookletCharCount += entry.getLocalizedName().length();
+            bookletText+="\n";
+        }
+
+        if(ConfigBoolValues.BOOKLET_TEXT_TO_FILE.isEnabled()){
+            File file = new File(Minecraft.getMinecraft().mcDataDir, ModUtil.MOD_ID+"booklettext.txt");
+            try{
+                file.createNewFile();
+                BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+                writer.write(bookletText);
+                writer.close();
+                ModUtil.LOGGER.info("Wrote booklet text to file!");
+            }
+            catch(Exception e){
+                ModUtil.LOGGER.error("Couldn't write booklet text to file!", e);
+            }
         }
     }
 
@@ -95,7 +120,7 @@ public class ClientProxy implements IProxy{
 
         PersistentClientData.setTheFile(new File(Minecraft.getMinecraft().mcDataDir, ModUtil.MOD_ID+"data.dat"));
 
-        for(Map.Entry<ItemStack, ModelResourceLocation> entry : modelLocationsForRegistering.entrySet()){
+        for(Map.Entry<ItemStack, ModelResourceLocation> entry : MODEL_LOCATIONS_FOR_REGISTERING.entrySet()){
             ModelLoader.setCustomModelResourceLocation(entry.getKey().getItem(), entry.getKey().getItemDamage(), entry.getValue());
         }
 
@@ -138,7 +163,7 @@ public class ClientProxy implements IProxy{
 
         //VillagerRegistry.instance().registerVillagerSkin(ConfigIntValues.JAM_VILLAGER_ID.getValue(), new ResourceLocation(ModUtil.MOD_ID, "textures/entity/villager/jamVillager.png"));
 
-        for(Item item : colorProdividingItemsForRegistering){
+        for(Item item : COLOR_PRODIVIDING_ITEMS_FOR_REGISTERING){
             if(item instanceof IColorProvidingItem){
                 Minecraft.getMinecraft().getItemColors().registerItemColorHandler(((IColorProvidingItem)item).getColor(), item);
             }
@@ -150,17 +175,15 @@ public class ClientProxy implements IProxy{
         ModUtil.LOGGER.info("PostInitializing ClientProxy...");
 
         SpecialRenderInit.init();
-
-        countBookletWords();
     }
 
     @Override
     public void addRenderRegister(ItemStack stack, ModelResourceLocation location){
-        modelLocationsForRegistering.put(stack, location);
+        MODEL_LOCATIONS_FOR_REGISTERING.put(stack, location);
     }
 
     @Override
     public void addColoredItem(Item item){
-        colorProdividingItemsForRegistering.add(item);
+        COLOR_PRODIVIDING_ITEMS_FOR_REGISTERING.add(item);
     }
 }
