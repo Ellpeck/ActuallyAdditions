@@ -37,6 +37,7 @@ import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.client.resources.IResourceManagerReloadListener;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
@@ -94,7 +95,7 @@ public class ClientProxy implements IProxy{
             try{
                 file.createNewFile();
                 BufferedWriter writer = new BufferedWriter(new FileWriter(file));
-                writer.write(bookletText);
+                writer.write(TextFormatting.getTextWithoutFormattingCodes(bookletText));
                 writer.close();
                 ModUtil.LOGGER.info("Wrote booklet text to file!");
             }
