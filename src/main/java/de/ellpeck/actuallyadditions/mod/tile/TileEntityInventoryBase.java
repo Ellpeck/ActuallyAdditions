@@ -19,6 +19,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.wrapper.SidedInvWrapper;
@@ -217,7 +218,7 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
     @Nonnull
     @Override
     public ITextComponent getDisplayName(){
-        return new TextComponentString(StringUtil.localize(this.getName()));
+        return new TextComponentTranslation(this.getName());
     }
 
     @Override

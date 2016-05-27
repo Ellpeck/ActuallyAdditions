@@ -11,7 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.misc;
 
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
-import de.ellpeck.actuallyadditions.mod.util.playerdata.PersistentServerData;
+import de.ellpeck.actuallyadditions.mod.util.playerdata.PlayerServerData;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.server.MinecraftServer;
@@ -65,9 +65,9 @@ public class WorldData extends WorldSavedData{
             ModUtil.LOGGER.info("Clearing leftover Laser Relay Connection Data from other worlds!");
             LaserRelayConnectionHandler.getInstance().networks.clear();
         }
-        if(!PersistentServerData.playerSaveData.isEmpty()){
+        if(!PlayerServerData.playerSaveData.isEmpty()){
             ModUtil.LOGGER.info("Clearing leftover Persistent Server Data from other worlds!");
-            PersistentServerData.playerSaveData.clear();
+            PlayerServerData.playerSaveData.clear();
         }
     }
 
@@ -83,8 +83,8 @@ public class WorldData extends WorldSavedData{
         //Player Data
         NBTTagList playerList = compound.getTagList("PlayerData", 10);
         for(int i = 0; i < playerList.tagCount(); i++){
-            PersistentServerData.PlayerSave aSave = PersistentServerData.PlayerSave.fromNBT(playerList.getCompoundTagAt(i));
-            PersistentServerData.playerSaveData.add(aSave);
+            PlayerServerData.PlayerSave aSave = PlayerServerData.PlayerSave.fromNBT(playerList.getCompoundTagAt(i));
+            PlayerServerData.playerSaveData.add(aSave);
         }
     }
 
@@ -100,8 +100,8 @@ public class WorldData extends WorldSavedData{
 
         //Player Data
         NBTTagList playerList = new NBTTagList();
-        for(int i = 0; i < PersistentServerData.playerSaveData.size(); i++){
-            PersistentServerData.PlayerSave theSave = PersistentServerData.playerSaveData.get(i);
+        for(int i = 0; i < PlayerServerData.playerSaveData.size(); i++){
+            PlayerServerData.PlayerSave theSave = PlayerServerData.playerSaveData.get(i);
             playerList.appendTag(theSave.toNBT());
         }
         compound.setTag("PlayerData", playerList);

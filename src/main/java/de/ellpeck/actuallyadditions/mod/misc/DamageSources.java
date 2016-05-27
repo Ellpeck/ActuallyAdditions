@@ -17,6 +17,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextComponentTranslation;
 
 import javax.annotation.Nonnull;
 
@@ -35,6 +36,6 @@ public class DamageSources extends DamageSource{
     @Override
     public ITextComponent getDeathMessage(EntityLivingBase entity){
         String locTag = "death."+ModUtil.MOD_ID+"."+this.damageType+"."+(Util.RANDOM.nextInt(this.messageCount)+1);
-        return new TextComponentString(StringUtil.localizeFormatted(locTag, entity.getName()));
+        return new TextComponentTranslation(String.format(locTag, entity.getName()));
     }
 }

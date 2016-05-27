@@ -18,7 +18,6 @@ import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
 import de.ellpeck.actuallyadditions.mod.blocks.render.RenderCompost;
 import de.ellpeck.actuallyadditions.mod.blocks.render.RenderReconstructorLens;
 import de.ellpeck.actuallyadditions.mod.blocks.render.RenderSmileyCloud;
-import de.ellpeck.actuallyadditions.mod.booklet.InitBooklet;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.event.InitEvents;
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
@@ -29,7 +28,7 @@ import de.ellpeck.actuallyadditions.mod.tile.TileEntitySmileyCloud;
 import de.ellpeck.actuallyadditions.mod.util.FluidStateMapper;
 import de.ellpeck.actuallyadditions.mod.util.IColorProvidingItem;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
-import de.ellpeck.actuallyadditions.mod.util.playerdata.PersistentClientData;
+import de.ellpeck.actuallyadditions.mod.util.playerdata.ExtraClientData;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -122,7 +121,7 @@ public class ClientProxy implements IProxy{
             ModUtil.LOGGER.warn("You have turned Seasonal Mode off. Therefore, you are evil.");
         }
 
-        PersistentClientData.setTheFile(new File(Minecraft.getMinecraft().mcDataDir, ModUtil.MOD_ID+"data.dat"));
+        ExtraClientData.setTheFile(new File(Minecraft.getMinecraft().mcDataDir, ModUtil.MOD_ID+"data.dat"));
 
         for(Map.Entry<ItemStack, ModelResourceLocation> entry : MODEL_LOCATIONS_FOR_REGISTERING.entrySet()){
             ModelLoader.setCustomModelResourceLocation(entry.getKey().getItem(), entry.getKey().getItemDamage(), entry.getValue());

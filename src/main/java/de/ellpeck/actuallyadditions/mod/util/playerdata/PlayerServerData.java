@@ -16,7 +16,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class PersistentServerData{
+public class PlayerServerData{
 
     public static final ArrayList<PlayerSave> playerSaveData = new ArrayList<PlayerSave>();
 

@@ -26,6 +26,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
@@ -96,7 +97,7 @@ public class ItemPhantomConnector extends ItemBase{
                             ((TileEntityBase)tile).sendUpdate();
                         }
                         clearStorage(stack);
-                        player.addChatComponentMessage(new TextComponentString(StringUtil.localize("tooltip."+ModUtil.MOD_ID+".phantom.connected.desc")));
+                        player.addChatComponentMessage(new TextComponentTranslation("tooltip."+ModUtil.MOD_ID+".phantom.connected.desc"));
                         return EnumActionResult.SUCCESS;
                     }
                     return EnumActionResult.FAIL;
@@ -104,7 +105,7 @@ public class ItemPhantomConnector extends ItemBase{
             }
             //Storing Connections
             storeConnection(stack, pos.getX(), pos.getY(), pos.getZ(), world);
-            player.addChatComponentMessage(new TextComponentString(StringUtil.localize("tooltip."+ModUtil.MOD_ID+".phantom.stored.desc")));
+            player.addChatComponentMessage(new TextComponentTranslation("tooltip."+ModUtil.MOD_ID+".phantom.stored.desc"));
         }
         return EnumActionResult.SUCCESS;
     }
@@ -117,7 +118,7 @@ public class ItemPhantomConnector extends ItemBase{
             if(tile instanceof IPhantomTile){
                 ((IPhantomTile)tile).setBoundPosition(null);
             }
-            player.addChatComponentMessage(new TextComponentString(StringUtil.localize("tooltip."+ModUtil.MOD_ID+".phantom.unbound.desc")));
+            player.addChatComponentMessage(new TextComponentTranslation("tooltip."+ModUtil.MOD_ID+".phantom.unbound.desc"));
             return false;
         }
     }

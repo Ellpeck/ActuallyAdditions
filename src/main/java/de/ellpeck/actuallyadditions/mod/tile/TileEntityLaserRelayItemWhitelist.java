@@ -19,6 +19,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nonnull;
@@ -38,9 +39,9 @@ public class TileEntityLaserRelayItemWhitelist extends TileEntityLaserRelayItem 
 
         this.filterInventory = new IInventory(){
 
-            private de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayItemWhitelist tile;
+            private TileEntityLaserRelayItemWhitelist tile;
 
-            private IInventory setTile(de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayItemWhitelist tile){
+            private IInventory setTile(TileEntityLaserRelayItemWhitelist tile){
                 this.tile = tile;
                 return this;
             }
@@ -153,7 +154,7 @@ public class TileEntityLaserRelayItemWhitelist extends TileEntityLaserRelayItem 
             @Nonnull
             @Override
             public ITextComponent getDisplayName(){
-                return new TextComponentString(StringUtil.localize(this.getName()));
+                return new TextComponentTranslation(this.getName());
             }
 
             @Override

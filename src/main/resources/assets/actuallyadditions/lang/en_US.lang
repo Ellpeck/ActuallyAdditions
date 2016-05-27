@@ -547,6 +547,7 @@ info.actuallyadditions.noLens=No Lens
 info.actuallyadditions.booklet.manualName.1=Actually Additions
 info.actuallyadditions.booklet.manualName.2=Manual
 info.actuallyadditions.booklet.edition=Edition
+info.actuallyadditions.deathRecorded=Your death has been recorded. Use a Death Tracker to find the death location!
 
 #Container Names
 container.actuallyadditions.inputter.name=ESD

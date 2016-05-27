@@ -24,8 +24,7 @@ public class InitEvents{
         ModUtil.LOGGER.info("Initializing Events...");
 
         Util.registerEvent(new PlayerObtainEvents());
-        Util.registerEvent(new LivingDropEvent());
-        Util.registerEvent(new EntityLivingEvent());
+        Util.registerEvent(new EntityLivingEvents());
         Util.registerEvent(new LogoutEvent());
         Util.registerEvent(new WorldLoadingEvents());
         Util.registerEvent(new BreakEvent());

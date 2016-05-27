@@ -27,7 +27,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 
 @SideOnly(Side.CLIENT)
-public class PersistentClientData{
+public class ExtraClientData{
 
     private static File theFile;
 

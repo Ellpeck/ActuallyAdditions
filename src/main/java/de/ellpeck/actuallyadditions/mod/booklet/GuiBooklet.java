@@ -27,7 +27,7 @@ import de.ellpeck.actuallyadditions.mod.update.UpdateChecker;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
-import de.ellpeck.actuallyadditions.mod.util.playerdata.PersistentClientData;
+import de.ellpeck.actuallyadditions.mod.util.playerdata.ExtraClientData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.gui.FontRenderer;
@@ -353,14 +353,14 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
 
         if(ItemBooklet.forcedEntry == null){
             //Open last entry or introductory entry
-            if(this.tryOpenMainPage && !PersistentClientData.getBoolean("BookAlreadyOpened")){
+            if(this.tryOpenMainPage && !ExtraClientData.getBoolean("BookAlreadyOpened")){
                 BookletUtils.openIndexEntry(this, InitBooklet.chapterIntro.entry, 1, true);
                 BookletUtils.openChapter(this, InitBooklet.chapterIntro, null);
 
-                PersistentClientData.setBoolean("BookAlreadyOpened", true);
+                ExtraClientData.setBoolean("BookAlreadyOpened", true);
             }
             else{
-                PersistentClientData.openLastBookPage(this);
+                ExtraClientData.openLastBookPage(this);
             }
         }
         else{
@@ -410,7 +410,7 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
     @Override
     public void onGuiClosed(){
         if(this.saveOnClose){
-            PersistentClientData.saveBookPage(this);
+            ExtraClientData.saveBookPage(this);
         }
     }
 

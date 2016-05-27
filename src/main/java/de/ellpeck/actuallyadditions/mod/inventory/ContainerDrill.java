@@ -25,6 +25,7 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextComponentTranslation;
 
 import javax.annotation.Nonnull;
 
@@ -265,7 +266,7 @@ public class ContainerDrill extends Container{
         @Nonnull
         @Override
         public ITextComponent getDisplayName(){
-            return new TextComponentString(StringUtil.localize(this.getName()));
+            return new TextComponentTranslation(this.getName());
         }
     }
 }
