@@ -30,36 +30,36 @@ public class BookletRecipeCategory implements IRecipeCategory{
         this.background = helper.createBlankDrawable(160, 100);
     }
 
-    @Nonnull
+
     @Override
     public String getUid(){
         return NEIBookletRecipe.NAME;
     }
 
-    @Nonnull
+
     @Override
     public String getTitle(){
         return StringUtil.localize("container.nei."+NEIBookletRecipe.NAME+".name");
     }
 
-    @Nonnull
+
     @Override
     public IDrawable getBackground(){
         return this.background;
     }
 
     @Override
-    public void drawExtras(@Nonnull Minecraft minecraft){
+    public void drawExtras(Minecraft minecraft){
 
     }
 
     @Override
-    public void drawAnimations(@Nonnull Minecraft minecraft){
+    public void drawAnimations(Minecraft minecraft){
 
     }
 
     @Override
-    public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull IRecipeWrapper recipeWrapper){
+    public void setRecipe(IRecipeLayout recipeLayout, IRecipeWrapper recipeWrapper){
         if(recipeWrapper instanceof BookletRecipeWrapper){
             BookletRecipeWrapper wrapper = (BookletRecipeWrapper)recipeWrapper;
             recipeLayout.getItemStacks().init(0, true, 70, -4);

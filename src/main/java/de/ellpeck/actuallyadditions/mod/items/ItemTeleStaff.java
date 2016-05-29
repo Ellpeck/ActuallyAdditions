@@ -35,9 +35,9 @@ public class ItemTeleStaff extends ItemEnergy{
         super(500000, 10000, name);
     }
 
-    @Nonnull
+
     @Override
-    public ActionResult<ItemStack> onItemRightClick(@Nonnull ItemStack stack, World world, EntityPlayer player, EnumHand hand){
+    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand){
         if(!world.isRemote){
             if(this.getWaitTime(stack) <= 0){
                 RayTraceResult pos = WorldUtil.getNearestPositionWithAir(world, player, 100);
@@ -75,7 +75,7 @@ public class ItemTeleStaff extends ItemEnergy{
         }
     }
 
-    @Nonnull
+
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.EPIC;

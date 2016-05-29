@@ -118,7 +118,7 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
     }
 
     @Override
-    public boolean isItemValidForSlot(int slot, @Nonnull ItemStack stack){
+    public boolean isItemValidForSlot(int slot, ItemStack stack){
         return false;
     }
 
@@ -179,12 +179,12 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
     }
 
     @Override
-    public boolean canInsertItem(int slot, @Nonnull ItemStack stack, @Nonnull EnumFacing side){
+    public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
         return false;
     }
 
     @Override
-    public boolean canExtractItem(int slot, @Nonnull ItemStack stack, @Nonnull EnumFacing side){
+    public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
         return false;
     }
 

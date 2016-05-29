@@ -130,7 +130,7 @@ public abstract class BlockContainerBase extends BlockContainer{
     }
 
     @SuppressWarnings("deprecation")
-    @Nonnull
+
     @Override
     public IBlockState getStateFromMeta(int meta){
         return this.getMetaProperty() == null ? super.getStateFromMeta(meta) : this.getDefaultState().withProperty(this.getMetaProperty(), meta);
@@ -241,15 +241,15 @@ public abstract class BlockContainerBase extends BlockContainer{
         return 0;
     }
 
-    @Nonnull
+
     @Override
     protected BlockStateContainer createBlockState(){
         return this.getMetaProperty() == null ? super.createBlockState() : new BlockStateContainer(this, this.getMetaProperty());
     }
 
-    @Nonnull
+
     @Override
-    public ArrayList<ItemStack> getDrops(IBlockAccess world, BlockPos pos, @Nonnull IBlockState state, int fortune){
+    public ArrayList<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune){
         ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
 
         TileEntity tile = world.getTileEntity(pos);
@@ -295,7 +295,7 @@ public abstract class BlockContainerBase extends BlockContainer{
         return null;
     }
 
-    @Nonnull
+
     @Override
     public EnumBlockRenderType getRenderType(IBlockState state){
         return EnumBlockRenderType.MODEL;

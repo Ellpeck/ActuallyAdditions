@@ -27,9 +27,9 @@ public class TileEntityPhantomItemface extends TileEntityPhantomface{
         this.type = BlockPhantom.Type.FACE;
     }
 
-    @Nonnull
+
     @Override
-    public int[] getSlotsForFace(@Nonnull EnumFacing side){
+    public int[] getSlotsForFace(EnumFacing side){
         if(this.isBoundThingInRange()){
             if(this.getSided() != null){
                 return this.getSided().getSlotsForFace(side);
@@ -103,7 +103,7 @@ public class TileEntityPhantomItemface extends TileEntityPhantomface{
     }
 
     @Override
-    public boolean isItemValidForSlot(int i, @Nonnull ItemStack stack){
+    public boolean isItemValidForSlot(int i, ItemStack stack){
         return this.isBoundThingInRange() && this.getInventory().isItemValidForSlot(i, stack);
     }
 
@@ -113,23 +113,23 @@ public class TileEntityPhantomItemface extends TileEntityPhantomface{
     }
 
     @Override
-    public boolean canInsertItem(int slot, @Nonnull ItemStack stack, @Nonnull EnumFacing side){
+    public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
         return this.isBoundThingInRange() && (this.getSided() == null || this.getSided().canInsertItem(slot, stack, side));
     }
 
     @Override
-    public boolean canExtractItem(int slot, @Nonnull ItemStack stack, @Nonnull EnumFacing side){
+    public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
         return this.isBoundThingInRange() && (this.getSided() == null || this.getSided().canExtractItem(slot, stack, side));
     }
 
     @Override
-    public boolean hasCapability(@Nonnull Capability<?> capability, @Nonnull EnumFacing facing){
+    public boolean hasCapability(Capability<?> capability, EnumFacing facing){
         return this.isBoundThingInRange() ? this.worldObj.getTileEntity(this.boundPosition).hasCapability(capability, facing) : super.hasCapability(capability, facing);
     }
 
-    @Nonnull
+
     @Override
-    public <T> T getCapability(@Nonnull Capability<T> capability, @Nonnull EnumFacing facing){
+    public <T> T getCapability(Capability<T> capability, EnumFacing facing){
         return this.isBoundThingInRange() ? this.worldObj.getTileEntity(this.boundPosition).getCapability(capability, facing) : super.getCapability(capability, facing);
     }
 }

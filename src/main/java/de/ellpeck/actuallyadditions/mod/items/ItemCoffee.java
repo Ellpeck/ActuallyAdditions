@@ -83,7 +83,7 @@ public class ItemCoffee extends ItemFoodBase{
     }
 
     @Override
-    public ItemStack onItemUseFinish(ItemStack stack, @Nonnull World world, EntityLivingBase player){
+    public ItemStack onItemUseFinish(ItemStack stack, World world, EntityLivingBase player){
         ItemStack theStack = stack.copy();
         super.onItemUseFinish(stack, world, player);
         applyPotionEffectsFromStack(stack, player);
@@ -96,7 +96,7 @@ public class ItemCoffee extends ItemFoodBase{
         }
     }
 
-    @Nonnull
+
     @Override
     public EnumAction getItemUseAction(ItemStack stack){
         return EnumAction.DRINK;
@@ -126,7 +126,7 @@ public class ItemCoffee extends ItemFoodBase{
         }
     }
 
-    @Nonnull
+
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.RARE;

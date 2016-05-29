@@ -48,7 +48,7 @@ public class BlockGreenhouseGlass extends BlockContainerBase{
     @SuppressWarnings("deprecation")
     @Override
     @SideOnly(Side.CLIENT)
-    public boolean shouldSideBeRendered(IBlockState state, @Nonnull IBlockAccess worldIn, @Nonnull BlockPos pos, EnumFacing side){
+    public boolean shouldSideBeRendered(IBlockState state, IBlockAccess worldIn, BlockPos pos, EnumFacing side){
         Block block = state.getBlock();
         return worldIn.getBlockState(pos.offset(side.getOpposite())) != state || block != this && block != this && super.shouldSideBeRendered(state, worldIn, pos, side);
 
@@ -60,7 +60,7 @@ public class BlockGreenhouseGlass extends BlockContainerBase{
         return false;
     }
 
-    @Nonnull
+
     @Override
     @SideOnly(Side.CLIENT)
     public BlockRenderLayer getBlockLayer(){
@@ -72,9 +72,9 @@ public class BlockGreenhouseGlass extends BlockContainerBase{
         return EnumRarity.EPIC;
     }
 
-    @Nonnull
+
     @Override
-    public TileEntity createNewTileEntity(@Nonnull World world, int par2){
+    public TileEntity createNewTileEntity(World world, int par2){
         return new TileEntityGreenhouseGlass();
     }
 }

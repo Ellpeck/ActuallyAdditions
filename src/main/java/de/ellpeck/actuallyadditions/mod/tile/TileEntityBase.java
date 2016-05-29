@@ -96,7 +96,7 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
         this.readSyncableNBT(compound, false);
     }
 
-    @Nonnull
+
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound){
         compound = super.writeToNBT(compound);
@@ -123,7 +123,7 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
     }
 
     @Override
-    public boolean shouldRefresh(World world, BlockPos pos, @Nonnull IBlockState oldState, @Nonnull IBlockState newState){
+    public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newState){
         return !(oldState.getBlock().isAssociatedBlock(newState.getBlock()));
     }
 
@@ -131,7 +131,7 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
         this.readSyncableNBT(compound, true);
     }
 
-    @Nonnull
+
     @Override
     public NBTTagCompound getUpdateTag(){
         NBTTagCompound tag = super.getUpdateTag();

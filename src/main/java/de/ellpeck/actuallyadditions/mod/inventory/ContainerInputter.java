@@ -118,7 +118,7 @@ public class ContainerInputter extends Container{
     }
 
     @Override
-    public boolean canInteractWith(@Nonnull EntityPlayer player){
+    public boolean canInteractWith(EntityPlayer player){
         return this.tileInputter.isUseableByPlayer(player);
     }
 }

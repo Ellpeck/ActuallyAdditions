@@ -70,7 +70,7 @@ public class CoffeeMachineRecipeWrapper extends RecipeWrapperWithButton implemen
     }
 
     @Override
-    public void drawInfo(@Nonnull Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY){
+    public void drawInfo(Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY){
         this.updateButton(minecraft, mouseX, mouseY);
 
         if(this.theIngredient.getExtraText() != null){
@@ -84,7 +84,7 @@ public class CoffeeMachineRecipeWrapper extends RecipeWrapperWithButton implemen
     }
 
     @Override
-    public void drawAnimations(@Nonnull Minecraft minecraft, int recipeWidth, int recipeHeight){
+    public void drawAnimations(Minecraft minecraft, int recipeWidth, int recipeHeight){
 
     }
 
@@ -95,7 +95,7 @@ public class CoffeeMachineRecipeWrapper extends RecipeWrapperWithButton implemen
     }
 
     @Override
-    public boolean handleClick(@Nonnull Minecraft minecraft, int mouseX, int mouseY, int mouseButton){
+    public boolean handleClick(Minecraft minecraft, int mouseX, int mouseY, int mouseButton){
         return this.handleClick(minecraft, mouseX, mouseY);
     }
 

@@ -55,7 +55,7 @@ public abstract class TileEntityLaserRelay extends TileEntityBase{
         super.receiveSyncCompound(compound);
     }
 
-    @Nonnull
+
     @Override
     public NBTTagCompound getUpdateTag(){
         NBTTagCompound compound = super.getUpdateTag();

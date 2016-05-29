@@ -37,13 +37,13 @@ public class CreativeTab extends CreativeTabs{
         super(ModUtil.MOD_ID);
     }
 
-    @Nonnull
+
     @Override
     public ItemStack getIconItemStack(){
         return new ItemStack(this.getTabIconItem());
     }
 
-    @Nonnull
+
     @Override
     public Item getTabIconItem(){
         return InitItems.itemBooklet;
@@ -51,7 +51,7 @@ public class CreativeTab extends CreativeTabs{
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void displayAllRelevantItems(@Nonnull List<ItemStack> list){
+    public void displayAllRelevantItems(List<ItemStack> list){
         this.list = list;
 
         this.add(InitItems.itemBooklet);

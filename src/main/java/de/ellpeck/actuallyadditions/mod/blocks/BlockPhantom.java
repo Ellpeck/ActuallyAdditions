@@ -85,16 +85,16 @@ public class BlockPhantom extends BlockContainerBase implements IHudDisplay{
     }
 
     @Override
-    public void breakBlock(World world, @Nonnull BlockPos pos, @Nonnull IBlockState state){
+    public void breakBlock(World world, BlockPos pos, IBlockState state){
         if(this.type == Type.PLACER || this.type == Type.BREAKER){
             this.dropInventory(world, pos);
         }
         super.breakBlock(world, pos, state);
     }
 
-    @Nonnull
+
     @Override
-    public TileEntity createNewTileEntity(@Nonnull World world, int par2){
+    public TileEntity createNewTileEntity(World world, int par2){
         switch(this.type){
             case PLACER:
                 return new TileEntityPhantomPlacer();

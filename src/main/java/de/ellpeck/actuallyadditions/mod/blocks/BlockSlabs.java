@@ -80,7 +80,7 @@ public class BlockSlabs extends BlockBase{
         return false;
     }
 
-    @Nonnull
+
     @Override
     public IBlockState onBlockPlaced(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer){
         if(facing.ordinal() == 1){
@@ -93,7 +93,7 @@ public class BlockSlabs extends BlockBase{
     }
 
     @SuppressWarnings("deprecation")
-    @Nonnull
+
     @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos){
         return state.getValue(META) == 1 ? AABB_TOP_HALF : AABB_BOTTOM_HALF;
@@ -123,9 +123,9 @@ public class BlockSlabs extends BlockBase{
         }
 
         @SuppressWarnings("deprecation")
-        @Nonnull
+
         @Override
-        public EnumActionResult onItemUse(ItemStack stack, @Nonnull EntityPlayer playerIn, World worldIn, @Nonnull BlockPos pos, EnumHand hand, @Nonnull EnumFacing facing, float hitX, float hitY, float hitZ){
+        public EnumActionResult onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ){
             if(stack.stackSize != 0 && playerIn.canPlayerEdit(pos.offset(facing), facing, stack)){
                 IBlockState state = worldIn.getBlockState(pos);
 
@@ -154,7 +154,7 @@ public class BlockSlabs extends BlockBase{
 
         @Override
         @SideOnly(Side.CLIENT)
-        public boolean canPlaceBlockOnSide(World worldIn, @Nonnull BlockPos pos, @Nonnull EnumFacing side, EntityPlayer player, @Nonnull ItemStack stack){
+        public boolean canPlaceBlockOnSide(World worldIn, BlockPos pos, EnumFacing side, EntityPlayer player, ItemStack stack){
             IBlockState state = worldIn.getBlockState(pos);
 
             if(state.getBlock() == this.block){
@@ -187,7 +187,7 @@ public class BlockSlabs extends BlockBase{
             return false;
         }
 
-        @Nonnull
+
         @Override
         public String getUnlocalizedName(ItemStack stack){
             return this.getUnlocalizedName();

@@ -39,13 +39,13 @@ public class ItemMisc extends ItemBase{
         return damage;
     }
 
-    @Nonnull
+
     @Override
     public String getUnlocalizedName(ItemStack stack){
         return stack.getItemDamage() >= allMiscItems.length ? StringUtil.BUGGED_ITEM_NAME : this.getUnlocalizedName()+allMiscItems[stack.getItemDamage()].name;
     }
 
-    @Nonnull
+
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return stack.getItemDamage() >= allMiscItems.length ? EnumRarity.COMMON : allMiscItems[stack.getItemDamage()].rarity;

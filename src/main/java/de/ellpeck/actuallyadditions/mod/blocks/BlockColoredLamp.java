@@ -101,7 +101,7 @@ public class BlockColoredLamp extends BlockBase{
     }
 
     @Override
-    public ItemStack createStackedBlock(@Nonnull IBlockState state){
+    public ItemStack createStackedBlock(IBlockState state){
         return new ItemStack(InitBlocks.blockColoredLamp, 1, this.getMetaFromState(state));
     }
 
@@ -114,7 +114,7 @@ public class BlockColoredLamp extends BlockBase{
     }
 
     @Override
-    public int getLightValue(@Nonnull IBlockState state, IBlockAccess world, @Nonnull BlockPos pos){
+    public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos){
         return this.isOn ? 15 : 0;
     }
 
@@ -148,16 +148,16 @@ public class BlockColoredLamp extends BlockBase{
             this.setMaxDamage(0);
         }
 
-        @Nonnull
+
         @Override
-        public String getItemStackDisplayName(@Nonnull ItemStack stack){
+        public String getItemStackDisplayName(ItemStack stack){
             if(stack.getItemDamage() >= allLampTypes.length){
                 return StringUtil.BUGGED_ITEM_NAME;
             }
             return StringUtil.localize(this.getUnlocalizedName(stack)+".name")+(((BlockColoredLamp)this.block).isOn ? " ("+StringUtil.localize("tooltip."+ModUtil.MOD_ID+".onSuffix.desc")+")" : "");
         }
 
-        @Nonnull
+
         @Override
         public String getUnlocalizedName(ItemStack stack){
             return InitBlocks.blockColoredLamp.getUnlocalizedName()+allLampTypes[stack.getItemDamage()].name;

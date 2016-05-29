@@ -19,26 +19,26 @@ import javax.annotation.Nonnull;
 
 public class ReconstructorRecipeHandler implements IRecipeHandler<LensConversionRecipe>{
 
-    @Nonnull
+
     @Override
     public Class getRecipeClass(){
         return LensConversionRecipe.class;
     }
 
-    @Nonnull
+
     @Override
     public String getRecipeCategoryUid(){
         return NEIReconstructorRecipe.NAME;
     }
 
-    @Nonnull
+
     @Override
-    public IRecipeWrapper getRecipeWrapper(@Nonnull LensConversionRecipe recipe){
+    public IRecipeWrapper getRecipeWrapper(LensConversionRecipe recipe){
         return new ReconstructorRecipeWrapper(recipe);
     }
 
     @Override
-    public boolean isRecipeValid(@Nonnull LensConversionRecipe recipe){
+    public boolean isRecipeValid(LensConversionRecipe recipe){
         return true;
     }
 }

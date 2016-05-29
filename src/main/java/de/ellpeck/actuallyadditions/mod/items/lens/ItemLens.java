@@ -29,7 +29,7 @@ public class ItemLens extends ItemBase implements ILensItem{
         this.setMaxStackSize(1);
     }
 
-    @Nonnull
+
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.UNCOMMON;

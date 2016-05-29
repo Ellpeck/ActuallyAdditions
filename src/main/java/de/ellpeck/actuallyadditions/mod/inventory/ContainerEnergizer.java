@@ -132,7 +132,7 @@ public class ContainerEnergizer extends Container{
     }
 
     @Override
-    public boolean canInteractWith(@Nonnull EntityPlayer player){
+    public boolean canInteractWith(EntityPlayer player){
         return this.energizer.isUseableByPlayer(player);
     }
 }

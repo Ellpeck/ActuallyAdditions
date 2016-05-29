@@ -25,7 +25,7 @@ import javax.annotation.Nonnull;
 public class RenderReconstructorLens extends TileEntitySpecialRenderer{
 
     @Override
-    public void renderTileEntityAt(@Nonnull TileEntity tile, double x, double y, double z, float par5, int par6){
+    public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float par5, int par6){
         if(!(tile instanceof TileEntityAtomicReconstructor)){
             return;
         }

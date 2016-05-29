@@ -62,14 +62,14 @@ public class ItemToolAA extends ItemTool{
         ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this), new ModelResourceLocation(this.getRegistryName(), "inventory"));
     }
 
-    @Nonnull
+
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return this.rarity;
     }
 
     @Override
-    public boolean getIsRepairable(ItemStack itemToRepair, @Nonnull ItemStack stack){
+    public boolean getIsRepairable(ItemStack itemToRepair, ItemStack stack){
         if(this.repairItem != null){
             return ItemUtil.areItemsEqual(this.repairItem, stack, false);
         }

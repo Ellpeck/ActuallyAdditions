@@ -48,7 +48,7 @@ public class ItemRarmorModuleReconstructor extends ItemBase implements IRarmorMo
         return this.getRegistryName().toString();
     }
 
-    @Nonnull
+
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.RARE;

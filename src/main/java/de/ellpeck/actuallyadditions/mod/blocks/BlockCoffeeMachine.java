@@ -49,7 +49,7 @@ public class BlockCoffeeMachine extends BlockContainerBase{
     }
 
     @SuppressWarnings("deprecation")
-    @Nonnull
+
     @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos){
         return AABB;
@@ -81,14 +81,14 @@ public class BlockCoffeeMachine extends BlockContainerBase{
         return true;
     }
 
-    @Nonnull
+
     @Override
-    public TileEntity createNewTileEntity(@Nonnull World world, int meta){
+    public TileEntity createNewTileEntity(World world, int meta){
         return new TileEntityCoffeeMachine();
     }
 
     @Override
-    public void breakBlock(World world, @Nonnull BlockPos pos, @Nonnull IBlockState state){
+    public void breakBlock(World world, BlockPos pos, IBlockState state){
         this.dropInventory(world, pos);
         super.breakBlock(world, pos, state);
     }

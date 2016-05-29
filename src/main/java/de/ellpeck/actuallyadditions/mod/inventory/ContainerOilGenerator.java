@@ -83,7 +83,7 @@ public class ContainerOilGenerator extends Container{
     }
 
     @Override
-    public boolean canInteractWith(@Nonnull EntityPlayer player){
+    public boolean canInteractWith(EntityPlayer player){
         return this.generator.canPlayerUse(player);
     }
 }

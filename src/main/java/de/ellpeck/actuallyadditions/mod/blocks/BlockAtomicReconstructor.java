@@ -97,14 +97,14 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
         return true;
     }
 
-    @Nonnull
+
     @Override
-    public TileEntity createNewTileEntity(@Nonnull World world, int i){
+    public TileEntity createNewTileEntity(World world, int i){
         return new TileEntityAtomicReconstructor();
     }
 
     @Override
-    public void breakBlock(World world, @Nonnull BlockPos pos, @Nonnull IBlockState state){
+    public void breakBlock(World world, BlockPos pos, IBlockState state){
         this.dropInventory(world, pos);
         super.breakBlock(world, pos, state);
     }
@@ -163,7 +163,7 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
             this.setMaxDamage(0);
         }
 
-        @Nonnull
+
         @Override
         public String getUnlocalizedName(ItemStack stack){
             return this.getUnlocalizedName();
@@ -175,7 +175,7 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
         }
 
         @Override
-        public void addInformation(@Nonnull ItemStack stack, @Nonnull EntityPlayer player, @Nonnull List<String> list, boolean bool){
+        public void addInformation(ItemStack stack, EntityPlayer player, List<String> list, boolean bool){
             long sysTime = System.currentTimeMillis();
 
             if(this.lastSysTime+3000 < sysTime){

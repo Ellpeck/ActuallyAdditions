@@ -30,9 +30,9 @@ public class ItemSolidifiedExperience extends ItemBase{
         super(name);
     }
 
-    @Nonnull
+
     @Override
-    public ActionResult<ItemStack> onItemRightClick(@Nonnull ItemStack stack, World world, EntityPlayer player, EnumHand hand){
+    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand){
         if(!world.isRemote){
             if(!player.isSneaking()){
                 world.spawnEntityInWorld(new EntityXPOrb(world, player.posX+0.5, player.posY+0.5, player.posZ+0.5, SOLID_XP_AMOUNT));
@@ -50,7 +50,7 @@ public class ItemSolidifiedExperience extends ItemBase{
         return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
     }
 
-    @Nonnull
+
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.UNCOMMON;

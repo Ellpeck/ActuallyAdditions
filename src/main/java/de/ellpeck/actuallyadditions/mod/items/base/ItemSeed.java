@@ -65,13 +65,13 @@ public class ItemSeed extends ItemSeeds{
         ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this), new ModelResourceLocation(this.getRegistryName(), "inventory"));
     }
 
-    @Nonnull
+
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.RARE;
     }
 
-    @Nonnull
+
     @Override
     public IBlockState getPlant(IBlockAccess world, BlockPos pos){
         return this.plant.getDefaultState();

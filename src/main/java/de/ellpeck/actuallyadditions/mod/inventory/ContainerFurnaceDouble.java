@@ -109,7 +109,7 @@ public class ContainerFurnaceDouble extends Container{
     }
 
     @Override
-    public boolean canInteractWith(@Nonnull EntityPlayer player){
+    public boolean canInteractWith(EntityPlayer player){
         return this.tileFurnace.isUseableByPlayer(player);
     }
 }

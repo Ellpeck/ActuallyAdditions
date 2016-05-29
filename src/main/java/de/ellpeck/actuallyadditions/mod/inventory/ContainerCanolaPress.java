@@ -97,7 +97,7 @@ public class ContainerCanolaPress extends Container{
     }
 
     @Override
-    public boolean canInteractWith(@Nonnull EntityPlayer player){
+    public boolean canInteractWith(EntityPlayer player){
         return this.press.isUseableByPlayer(player);
     }
 }

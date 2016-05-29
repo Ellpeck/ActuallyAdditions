@@ -30,36 +30,36 @@ public class CoffeeMachineRecipeCategory implements IRecipeCategory{
         this.background = helper.createDrawable(AssetUtil.getGuiLocation("guiNEICoffeeMachine"), 0, 0, 126, 88);
     }
 
-    @Nonnull
+
     @Override
     public String getUid(){
         return NEICoffeeMachineRecipe.NAME;
     }
 
-    @Nonnull
+
     @Override
     public String getTitle(){
         return StringUtil.localize("container.nei."+NEICoffeeMachineRecipe.NAME+".name");
     }
 
-    @Nonnull
+
     @Override
     public IDrawable getBackground(){
         return this.background;
     }
 
     @Override
-    public void drawExtras(@Nonnull Minecraft minecraft){
+    public void drawExtras(Minecraft minecraft){
 
     }
 
     @Override
-    public void drawAnimations(@Nonnull Minecraft minecraft){
+    public void drawAnimations(Minecraft minecraft){
 
     }
 
     @Override
-    public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull IRecipeWrapper recipeWrapper){
+    public void setRecipe(IRecipeLayout recipeLayout, IRecipeWrapper recipeWrapper){
         if(recipeWrapper instanceof CoffeeMachineRecipeWrapper){
             CoffeeMachineRecipeWrapper wrapper = (CoffeeMachineRecipeWrapper)recipeWrapper;
 

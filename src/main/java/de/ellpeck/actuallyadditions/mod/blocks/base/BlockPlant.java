@@ -73,7 +73,7 @@ public class BlockPlant extends BlockCrops{
         return EnumRarity.RARE;
     }
 
-    @Nonnull
+
     @Override
     public EnumPlantType getPlantType(IBlockAccess world, BlockPos pos){
         return EnumPlantType.Crop;
@@ -112,18 +112,18 @@ public class BlockPlant extends BlockCrops{
         return false;
     }
 
-    @Nonnull
+
     @Override
     public Item getSeed(){
         return this.seedItem;
     }
 
     @Override
-    public int quantityDropped(IBlockState state, int fortune, @Nonnull Random random){
+    public int quantityDropped(IBlockState state, int fortune, Random random){
         return this.getMetaFromState(state) >= 7 ? random.nextInt(this.addDropAmount)+this.minDropAmount : super.quantityDropped(state, fortune, random);
     }
 
-    @Nonnull
+
     @Override
     public Item getCrop(){
         return this.returnItem;
@@ -131,7 +131,7 @@ public class BlockPlant extends BlockCrops{
 
 
     @Override
-    public Item getItemDropped(@Nonnull IBlockState state, Random rand, int par3){
+    public Item getItemDropped(IBlockState state, Random rand, int par3){
         return this.getMetaFromState(state) >= 7 ? this.getCrop() : this.getSeed();
     }
 

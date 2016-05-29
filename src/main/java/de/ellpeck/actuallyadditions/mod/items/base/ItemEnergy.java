@@ -82,7 +82,7 @@ public abstract class ItemEnergy extends ItemEnergyContainer{
     @Override
     @SuppressWarnings("unchecked")
     @SideOnly(Side.CLIENT)
-    public void getSubItems(@Nonnull Item item, CreativeTabs tabs, List list){
+    public void getSubItems(Item item, CreativeTabs tabs, List list){
         ItemStack stackFull = new ItemStack(this);
         this.setEnergy(stackFull, this.getMaxEnergyStored(stackFull));
         list.add(stackFull);

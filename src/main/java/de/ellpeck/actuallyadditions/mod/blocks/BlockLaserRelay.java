@@ -60,7 +60,7 @@ public class BlockLaserRelay extends BlockContainerBase{
         return false;
     }
 
-    @Nonnull
+
     @Override
     public IBlockState onBlockPlaced(World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, int meta, EntityLivingBase base){
         return this.getStateFromMeta(side.ordinal());
@@ -90,9 +90,9 @@ public class BlockLaserRelay extends BlockContainerBase{
         return false;
     }
 
-    @Nonnull
+
     @Override
-    public TileEntity createNewTileEntity(@Nonnull World world, int i){
+    public TileEntity createNewTileEntity(World world, int i){
         switch(this.type){
             case ITEM:
                 return new TileEntityLaserRelayItem();

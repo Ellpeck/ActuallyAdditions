@@ -52,9 +52,9 @@ public class BlockGrinder extends BlockContainerBase{
         this.setTickRandomly(true);
     }
 
-    @Nonnull
+
     @Override
-    public TileEntity createNewTileEntity(@Nonnull World world, int par2){
+    public TileEntity createNewTileEntity(World world, int par2){
         return this.isDouble ? new TileEntityGrinderDouble() : new TileEntityGrinder();
     }
 
@@ -86,7 +86,7 @@ public class BlockGrinder extends BlockContainerBase{
     }
 
     @Override
-    public int getLightValue(@Nonnull IBlockState state, IBlockAccess world, @Nonnull BlockPos pos){
+    public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos){
         return PosUtil.getMetadata(pos, world) == 1 ? 12 : 0;
     }
 
@@ -101,7 +101,7 @@ public class BlockGrinder extends BlockContainerBase{
     }
 
     @Override
-    public void breakBlock(World world, @Nonnull BlockPos pos, @Nonnull IBlockState state){
+    public void breakBlock(World world, BlockPos pos, IBlockState state){
         this.dropInventory(world, pos);
         super.breakBlock(world, pos, state);
     }

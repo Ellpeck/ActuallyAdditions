@@ -29,7 +29,7 @@ import java.util.Random;
 public class WorldGenLushCaves extends WorldGenerator{
 
     @Override
-    public boolean generate(@Nonnull World world, @Nonnull Random rand, @Nonnull BlockPos position){
+    public boolean generate(World world, Random rand, BlockPos position){
         this.generateCave(world, position, rand);
         return true;
     }

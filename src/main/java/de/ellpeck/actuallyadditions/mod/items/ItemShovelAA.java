@@ -47,7 +47,7 @@ public class ItemShovelAA extends ItemToolAA{
         return block == Blocks.SNOW_LAYER || block == Blocks.SNOW;
     }
 
-    @Nonnull
+
     @Override
     public EnumActionResult onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ){
         return Items.IRON_HOE.onItemUse(stack, playerIn, worldIn, pos, hand, facing, hitX, hitY, hitZ);

@@ -59,11 +59,11 @@ public class ItemSwordAA extends ItemSword{
     }
 
     @Override
-    public boolean getIsRepairable(ItemStack itemToRepair, @Nonnull ItemStack stack){
+    public boolean getIsRepairable(ItemStack itemToRepair, ItemStack stack){
         return ItemUtil.areItemsEqual(this.repairItem, stack, false);
     }
 
-    @Nonnull
+
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return this.rarity;

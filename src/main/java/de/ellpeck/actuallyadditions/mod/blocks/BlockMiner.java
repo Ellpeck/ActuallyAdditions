@@ -68,14 +68,14 @@ public class BlockMiner extends BlockContainerBase implements IHudDisplay{
         return EnumRarity.RARE;
     }
 
-    @Nonnull
+
     @Override
-    public TileEntity createNewTileEntity(@Nonnull World world, int i){
+    public TileEntity createNewTileEntity(World world, int i){
         return new TileEntityMiner();
     }
 
     @Override
-    public void breakBlock(World world, @Nonnull BlockPos pos, @Nonnull IBlockState state){
+    public void breakBlock(World world, BlockPos pos, IBlockState state){
         this.dropInventory(world, pos);
         super.breakBlock(world, pos, state);
     }

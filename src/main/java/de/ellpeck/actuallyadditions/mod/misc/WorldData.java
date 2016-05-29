@@ -72,7 +72,7 @@ public class WorldData extends WorldSavedData{
     }
 
     @Override
-    public void readFromNBT(@Nonnull NBTTagCompound compound){
+    public void readFromNBT(NBTTagCompound compound){
         //Laser World Data
         NBTTagList networkList = compound.getTagList("Networks", 10);
         for(int i = 0; i < networkList.tagCount(); i++){
@@ -88,9 +88,9 @@ public class WorldData extends WorldSavedData{
         }
     }
 
-    @Nonnull
+
     @Override
-    public NBTTagCompound writeToNBT(@Nonnull NBTTagCompound compound){
+    public NBTTagCompound writeToNBT(NBTTagCompound compound){
         //Laser World Data
         NBTTagList networkList = new NBTTagList();
         for(LaserRelayConnectionHandler.Network network : LaserRelayConnectionHandler.getInstance().networks){

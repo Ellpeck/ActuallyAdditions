@@ -38,13 +38,13 @@ public class ItemCrystal extends ItemBase{
         return damage;
     }
 
-    @Nonnull
+
     @Override
     public String getUnlocalizedName(ItemStack stack){
         return stack.getItemDamage() >= BlockCrystal.allCrystals.length ? StringUtil.BUGGED_ITEM_NAME : this.getUnlocalizedName()+BlockCrystal.allCrystals[stack.getItemDamage()].name;
     }
 
-    @Nonnull
+
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return stack.getItemDamage() >= BlockCrystal.allCrystals.length ? EnumRarity.COMMON : BlockCrystal.allCrystals[stack.getItemDamage()].rarity;

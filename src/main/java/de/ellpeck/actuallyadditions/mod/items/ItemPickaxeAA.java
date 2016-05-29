@@ -77,7 +77,7 @@ public class ItemPickaxeAA extends ItemToolAA{
     }
 
     @Override
-    public float getStrVsBlock(@Nonnull ItemStack stack, IBlockState state){
+    public float getStrVsBlock(ItemStack stack, IBlockState state){
         Material material = state.getMaterial();
         return material != Material.IRON && material != Material.ANVIL && material != Material.ROCK ? super.getStrVsBlock(stack, state) : this.efficiencyOnProperMaterial;
     }

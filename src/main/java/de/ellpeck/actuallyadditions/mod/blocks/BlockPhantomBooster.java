@@ -38,7 +38,7 @@ public class BlockPhantomBooster extends BlockContainerBase{
     }
 
     @SuppressWarnings("deprecation")
-    @Nonnull
+
     @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos){
         return AABB;
@@ -61,9 +61,9 @@ public class BlockPhantomBooster extends BlockContainerBase{
         return EnumRarity.EPIC;
     }
 
-    @Nonnull
+
     @Override
-    public TileEntity createNewTileEntity(@Nonnull World world, int i){
+    public TileEntity createNewTileEntity(World world, int i){
         return new TileEntityPhantomBooster();
     }
 }

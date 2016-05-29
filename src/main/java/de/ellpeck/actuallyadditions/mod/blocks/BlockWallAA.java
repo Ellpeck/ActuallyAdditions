@@ -80,9 +80,9 @@ public class BlockWallAA extends BlockBase{
     }
 
     @SuppressWarnings("deprecation")
-    @Nonnull
+
     @Override
-    public IBlockState getActualState(@Nonnull IBlockState state, IBlockAccess worldIn, BlockPos pos){
+    public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos){
         boolean flag = this.canConnectTo(worldIn, pos.north());
         boolean flag1 = this.canConnectTo(worldIn, pos.east());
         boolean flag2 = this.canConnectTo(worldIn, pos.south());
@@ -105,12 +105,12 @@ public class BlockWallAA extends BlockBase{
     @SuppressWarnings("deprecation")
     @Override
     @SideOnly(Side.CLIENT)
-    public boolean shouldSideBeRendered(IBlockState blockState, @Nonnull IBlockAccess blockAccess, @Nonnull BlockPos pos, EnumFacing side){
+    public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side){
         return side != EnumFacing.DOWN || super.shouldSideBeRendered(blockState, blockAccess, pos, side);
     }
 
     @SuppressWarnings("deprecation")
-    @Nonnull
+
     @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos){
         state = this.getActualState(state, source, pos);
@@ -119,7 +119,7 @@ public class BlockWallAA extends BlockBase{
 
     @SuppressWarnings("deprecation")
     @Override
-    public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, @Nonnull World worldIn, @Nonnull BlockPos pos){
+    public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, World worldIn, BlockPos pos){
         blockState = this.getActualState(blockState, worldIn, pos);
         return CLIP_AABB_BY_INDEX[yesThisIsCopyPastedFromBlockWallAndIHaveNoIdeaWhatThisMethodDoes(blockState)];
     }
@@ -138,7 +138,7 @@ public class BlockWallAA extends BlockBase{
     @SuppressWarnings("unchecked")
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubBlocks(@Nonnull Item item, CreativeTabs tab, List list){
+    public void getSubBlocks(Item item, CreativeTabs tab, List list){
         list.add(new ItemStack(item, 1, 0));
     }
 
@@ -149,7 +149,7 @@ public class BlockWallAA extends BlockBase{
         return block != Blocks.BARRIER && (!(block != this && !(block instanceof BlockFenceGate)) || ((block.getMaterial(state).isOpaque() && block.isFullCube(state)) && block.getMaterial(state) != Material.GOURD));
     }
 
-    @Nonnull
+
     @Override
     public IBlockState getStateFromMeta(int meta){
         return this.getDefaultState();
@@ -160,7 +160,7 @@ public class BlockWallAA extends BlockBase{
         return 0;
     }
 
-    @Nonnull
+
     @Override
     protected BlockStateContainer createBlockState(){
         return new BlockStateContainer(this, BlockWall.UP, BlockWall.NORTH, BlockWall.EAST, BlockWall.WEST, BlockWall.SOUTH);

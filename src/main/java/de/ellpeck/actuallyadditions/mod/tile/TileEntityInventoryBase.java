@@ -95,9 +95,9 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
         }
     }
 
-    @Nonnull
+
     @Override
-    public int[] getSlotsForFace(@Nonnull EnumFacing side){
+    public int[] getSlotsForFace(EnumFacing side){
         int invSize = this.getSizeInventory();
         if(invSize > 0){
             int[] theInt = new int[invSize];
@@ -117,22 +117,22 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
     }
 
     @Override
-    public boolean isUseableByPlayer(@Nonnull EntityPlayer player){
+    public boolean isUseableByPlayer(EntityPlayer player){
         return this.canPlayerUse(player);
     }
 
     @Override
-    public void openInventory(@Nonnull EntityPlayer player){
+    public void openInventory(EntityPlayer player){
 
     }
 
     @Override
-    public void closeInventory(@Nonnull EntityPlayer player){
+    public void closeInventory(EntityPlayer player){
 
     }
 
     @Override
-    public boolean isItemValidForSlot(int index, @Nonnull ItemStack stack){
+    public boolean isItemValidForSlot(int index, ItemStack stack){
         return false;
     }
 
@@ -204,7 +204,7 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
         return stack;
     }
 
-    @Nonnull
+
     @Override
     public String getName(){
         return this.name;
@@ -215,30 +215,26 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
         return false;
     }
 
-    @Nonnull
+
     @Override
     public ITextComponent getDisplayName(){
         return new TextComponentTranslation(this.getName());
     }
 
     @Override
-    public boolean hasCapability(@Nonnull Capability<?> capability, @Nonnull EnumFacing facing){
-        return this.canHandleCapability(capability) || super.hasCapability(capability, facing);
+    public boolean hasCapability(Capability<?> capability, EnumFacing facing){
+        return this.getCapability(capability, facing) != null;
     }
 
-    @Nonnull
+
     @Override
-    public <T> T getCapability(@Nonnull Capability<T> capability, @Nonnull EnumFacing facing){
-        if(this.canHandleCapability(capability)){
+    public <T> T getCapability(Capability<T> capability, EnumFacing facing){
+        if(this.hasInvWrapperCapabilities() && capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY){
             return (T)this.invWrappers[facing.ordinal()];
         }
         else{
             return super.getCapability(capability, facing);
         }
-    }
-
-    private boolean canHandleCapability(Capability capability){
-        return this.hasInvWrapperCapabilities() && capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY;
     }
 
     public boolean hasInvWrapperCapabilities(){

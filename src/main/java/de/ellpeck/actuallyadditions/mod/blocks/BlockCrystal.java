@@ -85,7 +85,7 @@ public class BlockCrystal extends BlockBase{
             this.setMaxDamage(0);
         }
 
-        @Nonnull
+
         @Override
         public String getUnlocalizedName(ItemStack stack){
             return stack.getItemDamage() >= allCrystals.length ? StringUtil.BUGGED_ITEM_NAME : this.getUnlocalizedName()+allCrystals[stack.getItemDamage()].name;

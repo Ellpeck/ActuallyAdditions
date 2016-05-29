@@ -26,7 +26,7 @@ public class ItemBlockBase extends ItemBlock{
         this.setMaxDamage(0);
     }
 
-    @Nonnull
+
     @Override
     public String getUnlocalizedName(ItemStack stack){
         return this.getUnlocalizedName();
@@ -37,7 +37,7 @@ public class ItemBlockBase extends ItemBlock{
         return damage;
     }
 
-    @Nonnull
+
     @Override
     public EnumRarity getRarity(ItemStack stack){
         if(this.block instanceof BlockBase){

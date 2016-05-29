@@ -28,7 +28,7 @@ public abstract class RecipeWrapperWithButton{
     public RecipeWrapperWithButton(){
         this.theButton = new TexturedButton(23782, this.getButtonX(), this.getButtonY(), 146, 154, 20, 20){
             @Override
-            public void drawButton(@Nonnull Minecraft minecraft, int x, int y){
+            public void drawButton(Minecraft minecraft, int x, int y){
                 super.drawButton(minecraft, x, y);
                 if(this.visible && this.hovered){
                     String text = StringUtil.localize("booklet."+ModUtil.MOD_ID+".clickToSeeRecipe");

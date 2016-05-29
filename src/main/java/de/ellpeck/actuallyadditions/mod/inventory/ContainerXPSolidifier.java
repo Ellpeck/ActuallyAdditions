@@ -88,7 +88,7 @@ public class ContainerXPSolidifier extends Container{
     }
 
     @Override
-    public boolean canInteractWith(@Nonnull EntityPlayer player){
+    public boolean canInteractWith(EntityPlayer player){
         return this.solidifier.isUseableByPlayer(player);
     }
 }

@@ -33,36 +33,36 @@ public class ReconstructorRecipeCategory implements IRecipeCategory{
         this.background = helper.createDrawable(AssetUtil.getGuiLocation("guiNEIAtomicReconstructor"), 0, 0, 96, 60);
     }
 
-    @Nonnull
+
     @Override
     public String getUid(){
         return NEIReconstructorRecipe.NAME;
     }
 
-    @Nonnull
+
     @Override
     public String getTitle(){
         return StringUtil.localize("container.nei."+NEIReconstructorRecipe.NAME+".name");
     }
 
-    @Nonnull
+
     @Override
     public IDrawable getBackground(){
         return this.background;
     }
 
     @Override
-    public void drawExtras(@Nonnull Minecraft minecraft){
+    public void drawExtras(Minecraft minecraft){
         AssetUtil.renderStackToGui(RECONSTRUCTOR, 34, 19, 1.0F);
     }
 
     @Override
-    public void drawAnimations(@Nonnull Minecraft minecraft){
+    public void drawAnimations(Minecraft minecraft){
 
     }
 
     @Override
-    public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull IRecipeWrapper recipeWrapper){
+    public void setRecipe(IRecipeLayout recipeLayout, IRecipeWrapper recipeWrapper){
         if(recipeWrapper instanceof ReconstructorRecipeWrapper){
             ReconstructorRecipeWrapper wrapper = (ReconstructorRecipeWrapper)recipeWrapper;
 

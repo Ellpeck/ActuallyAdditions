@@ -29,9 +29,9 @@ public class ItemHairyBall extends ItemBase{
         super(name);
     }
 
-    @Nonnull
+
     @Override
-    public ActionResult<ItemStack> onItemRightClick(@Nonnull ItemStack stack, World world, EntityPlayer player, EnumHand hand){
+    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand){
         if(!world.isRemote){
             ItemStack returnItem = this.getRandomReturnItem();
             if(!player.inventory.addItemStackToInventory(returnItem)){
@@ -50,7 +50,7 @@ public class ItemHairyBall extends ItemBase{
         return WeightedRandom.getRandomItem(Util.RANDOM, ActuallyAdditionsAPI.BALL_OF_FUR_RETURN_ITEMS).returnItem.copy();
     }
 
-    @Nonnull
+
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.EPIC;

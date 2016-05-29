@@ -120,7 +120,7 @@ public class ContainerGrinder extends Container{
     }
 
     @Override
-    public boolean canInteractWith(@Nonnull EntityPlayer player){
+    public boolean canInteractWith(EntityPlayer player){
         return this.tileGrinder.isUseableByPlayer(player);
     }
 }

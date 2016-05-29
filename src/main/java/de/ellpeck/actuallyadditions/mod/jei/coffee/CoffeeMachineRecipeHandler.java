@@ -19,26 +19,26 @@ import javax.annotation.Nonnull;
 
 public class CoffeeMachineRecipeHandler implements IRecipeHandler<CoffeeIngredient>{
 
-    @Nonnull
+
     @Override
     public Class getRecipeClass(){
         return CoffeeIngredient.class;
     }
 
-    @Nonnull
+
     @Override
     public String getRecipeCategoryUid(){
         return NEICoffeeMachineRecipe.NAME;
     }
 
-    @Nonnull
+
     @Override
-    public IRecipeWrapper getRecipeWrapper(@Nonnull CoffeeIngredient recipe){
+    public IRecipeWrapper getRecipeWrapper(CoffeeIngredient recipe){
         return new CoffeeMachineRecipeWrapper(recipe);
     }
 
     @Override
-    public boolean isRecipeValid(@Nonnull CoffeeIngredient recipe){
+    public boolean isRecipeValid(CoffeeIngredient recipe){
         return true;
     }
 }

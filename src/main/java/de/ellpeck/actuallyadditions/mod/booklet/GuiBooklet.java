@@ -200,7 +200,7 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
     }
 
     @Override
-    public void drawHoveringText(@Nonnull List list, int x, int y){
+    public void drawHoveringText(List list, int x, int y){
         super.drawHoveringText(list, x, y);
     }
 

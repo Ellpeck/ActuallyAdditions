@@ -88,7 +88,7 @@ public class ItemWingsOfTheBats extends ItemBase{
         return null;
     }
 
-    @Nonnull
+
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.EPIC;

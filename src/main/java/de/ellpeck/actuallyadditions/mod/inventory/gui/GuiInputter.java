@@ -279,7 +279,7 @@ public class GuiInputter extends GuiContainer{
         }
 
         @Override
-        public void drawButton(@Nonnull Minecraft mc, int x, int y){
+        public void drawButton(Minecraft mc, int x, int y){
             if(this.visible){
                 mc.getTextureManager().bindTexture(this.resLoc);
                 GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
@@ -316,7 +316,7 @@ public class GuiInputter extends GuiContainer{
         }
 
         @Override
-        public void drawButton(@Nonnull Minecraft mc, int x, int y){
+        public void drawButton(Minecraft mc, int x, int y){
             if(this.visible){
                 mc.getTextureManager().bindTexture(this.resLoc);
                 GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);

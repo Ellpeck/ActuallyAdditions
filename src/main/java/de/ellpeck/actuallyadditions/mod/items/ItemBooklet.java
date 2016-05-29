@@ -56,7 +56,7 @@ public class ItemBooklet extends ItemBase implements IHudDisplay{
         this.setMaxDamage(0);
     }
 
-    @Nonnull
+
     @Override
     public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing face, float hitX, float hitY, float hitZ){
         if(player.isSneaking()){
@@ -74,9 +74,9 @@ public class ItemBooklet extends ItemBase implements IHudDisplay{
         return EnumActionResult.FAIL;
     }
 
-    @Nonnull
+
     @Override
-    public ActionResult<ItemStack> onItemRightClick(@Nonnull ItemStack stack, World world, EntityPlayer player, EnumHand hand){
+    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand){
         player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.BOOK.ordinal(), world, (int)player.posX, (int)player.posY, (int)player.posZ);
 
         if(!world.isRemote){
@@ -91,7 +91,7 @@ public class ItemBooklet extends ItemBase implements IHudDisplay{
         list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID+"."+this.getBaseName()+".desc"));
     }
 
-    @Nonnull
+
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.EPIC;

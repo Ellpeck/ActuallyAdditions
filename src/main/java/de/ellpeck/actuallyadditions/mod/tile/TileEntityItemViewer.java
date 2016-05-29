@@ -84,12 +84,12 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
     }
 
     @Override
-    public boolean canInsertItem(int index, @Nonnull ItemStack stack, @Nonnull EnumFacing direction){
+    public boolean canInsertItem(int index, ItemStack stack, EnumFacing direction){
         return this.isItemValidForSlot(index, stack);
     }
 
     @Override
-    public boolean canExtractItem(int index, @Nonnull ItemStack stack, @Nonnull EnumFacing direction){
+    public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction){
         SpecificItemHandlerInfo handler = this.getSwitchedIndexHandler(index);
         if(handler != null){
             if(this.isWhitelisted(handler, stack)){
@@ -114,7 +114,7 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
     }
 
     @Override
-    public boolean isItemValidForSlot(int index, @Nonnull ItemStack stack){
+    public boolean isItemValidForSlot(int index, ItemStack stack){
         SpecificItemHandlerInfo handler = this.getSwitchedIndexHandler(index);
         if(handler != null){
             if(this.isWhitelisted(handler, stack)){
@@ -236,7 +236,7 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
         }
 
         @Override
-        public int compareTo(@Nonnull GenericItemHandlerInfo other){
+        public int compareTo(GenericItemHandlerInfo other){
             boolean thisWhitelist = this.relayInQuestion instanceof TileEntityLaserRelayItemWhitelist;
             boolean otherWhitelist = other.relayInQuestion instanceof TileEntityLaserRelayItemWhitelist;
 

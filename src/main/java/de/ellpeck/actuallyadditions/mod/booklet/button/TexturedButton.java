@@ -44,7 +44,7 @@ public class TexturedButton extends GuiButton{
     }
 
     @Override
-    public void drawButton(@Nonnull Minecraft minecraft, int x, int y){
+    public void drawButton(Minecraft minecraft, int x, int y){
         if(this.visible){
             minecraft.getTextureManager().bindTexture(GuiBooklet.resLoc);
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);

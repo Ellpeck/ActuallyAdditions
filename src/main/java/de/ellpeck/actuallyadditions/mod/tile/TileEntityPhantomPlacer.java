@@ -194,17 +194,17 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
     }
 
     @Override
-    public boolean isItemValidForSlot(int i, @Nonnull ItemStack stack){
+    public boolean isItemValidForSlot(int i, ItemStack stack){
         return !this.isBreaker;
     }
 
     @Override
-    public boolean canInsertItem(int slot, @Nonnull ItemStack stack, @Nonnull EnumFacing side){
+    public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
         return this.isItemValidForSlot(slot, stack);
     }
 
     @Override
-    public boolean canExtractItem(int slot, @Nonnull ItemStack stack, @Nonnull EnumFacing side){
+    public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
         return this.isBreaker;
     }
 

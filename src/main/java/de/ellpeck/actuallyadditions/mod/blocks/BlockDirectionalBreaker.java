@@ -45,9 +45,9 @@ public class BlockDirectionalBreaker extends BlockContainerBase{
         this.setSoundType(SoundType.STONE);
     }
 
-    @Nonnull
+
     @Override
-    public TileEntity createNewTileEntity(@Nonnull World world, int par2){
+    public TileEntity createNewTileEntity(World world, int par2){
         return new TileEntityDirectionalBreaker();
     }
 
@@ -85,7 +85,7 @@ public class BlockDirectionalBreaker extends BlockContainerBase{
     }
 
     @Override
-    public void breakBlock(World world, @Nonnull BlockPos pos, @Nonnull IBlockState state){
+    public void breakBlock(World world, BlockPos pos, IBlockState state){
         this.dropInventory(world, pos);
         super.breakBlock(world, pos, state);
     }

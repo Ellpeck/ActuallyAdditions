@@ -23,7 +23,7 @@ public class ItemCoffeeBean extends ItemFoodBase{
         this.setMaxDamage(0);
     }
 
-    @Nonnull
+
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.RARE;

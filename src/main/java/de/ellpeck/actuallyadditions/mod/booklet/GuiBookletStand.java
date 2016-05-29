@@ -54,7 +54,7 @@ public class GuiBookletStand extends GuiBooklet{
 
         this.buttonSetPage = new GuiButton(-100, this.guiLeft+this.xSize+10, this.guiTop+10, 100, 20, "Set Page"){
             @Override
-            public void drawButton(@Nonnull Minecraft mc, int x, int y){
+            public void drawButton(Minecraft mc, int x, int y){
                 boolean unicodeBefore = mc.fontRendererObj.getUnicodeFlag();
                 mc.fontRendererObj.setUnicodeFlag(false);
                 super.drawButton(mc, x, y);

@@ -76,7 +76,7 @@ public class ItemDrill extends ItemEnergy{
         this.setHarvestLevel("pickaxe", HARVEST_LEVEL);
     }
 
-    @Nonnull
+
     @Override
     //Places Blocks if the Placing Upgrade is installed
     public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ){
@@ -159,9 +159,9 @@ public class ItemDrill extends ItemEnergy{
         return slots;
     }
 
-    @Nonnull
+
     @Override
-    public ActionResult<ItemStack> onItemRightClick(@Nonnull ItemStack stack, World world, EntityPlayer player, EnumHand hand){
+    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand){
         if(!world.isRemote && player.isSneaking()){
             player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.DRILL.ordinal(), world, (int)player.posX, (int)player.posY, (int)player.posZ);
         }
@@ -204,15 +204,15 @@ public class ItemDrill extends ItemEnergy{
         }
     }
 
-    @Nonnull
+
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.EPIC;
     }
 
-    @Nonnull
+
     @Override
-    public Multimap<String, AttributeModifier> getAttributeModifiers(@Nonnull EntityEquipmentSlot slot, ItemStack stack){
+    public Multimap<String, AttributeModifier> getAttributeModifiers(EntityEquipmentSlot slot, ItemStack stack){
         Multimap<String, AttributeModifier> map = super.getAttributeModifiers(slot, stack);
 
         if(slot == EntityEquipmentSlot.MAINHAND){
@@ -265,13 +265,13 @@ public class ItemDrill extends ItemEnergy{
 
     @SuppressWarnings("deprecation")
     @Override
-    public boolean canHarvestBlock(@Nonnull IBlockState state, ItemStack stack){
+    public boolean canHarvestBlock(IBlockState state, ItemStack stack){
         int harvestLevel = this.getHarvestLevel(stack, "");
         Block block = state.getBlock();
         return this.getEnergyStored(stack) >= this.getEnergyUsePerBlock(stack) && (this.hasExtraWhitelist(block) || block.getMaterial(state).isToolNotRequired() || (block == Blocks.SNOW_LAYER || block == Blocks.SNOW || (block == Blocks.OBSIDIAN ? harvestLevel >= 3 : (block != Blocks.DIAMOND_BLOCK && block != Blocks.DIAMOND_ORE ? (block != Blocks.EMERALD_ORE && block != Blocks.EMERALD_BLOCK ? (block != Blocks.GOLD_BLOCK && block != Blocks.GOLD_ORE ? (block != Blocks.IRON_BLOCK && block != Blocks.IRON_ORE ? (block != Blocks.LAPIS_BLOCK && block != Blocks.LAPIS_ORE ? (block != Blocks.REDSTONE_ORE && block != Blocks.LIT_REDSTONE_ORE ? (block.getMaterial(state) == Material.ROCK || (block.getMaterial(state) == Material.IRON || block.getMaterial(state) == Material.ANVIL)) : harvestLevel >= 2) : harvestLevel >= 1) : harvestLevel >= 1) : harvestLevel >= 2) : harvestLevel >= 2) : harvestLevel >= 2))));
     }
 
-    @Nonnull
+
     @Override
     public Set<String> getToolClasses(ItemStack stack){
         HashSet<String> hashSet = new HashSet<String>();
@@ -281,7 +281,7 @@ public class ItemDrill extends ItemEnergy{
     }
 
     @Override
-    public int getHarvestLevel(ItemStack stack, @Nonnull String toolClass){
+    public int getHarvestLevel(ItemStack stack, String toolClass){
         return HARVEST_LEVEL;
     }
 
@@ -351,7 +351,7 @@ public class ItemDrill extends ItemEnergy{
     @Override
     @SuppressWarnings("unchecked")
     @SideOnly(Side.CLIENT)
-    public void getSubItems(@Nonnull Item item, CreativeTabs tabs, List list){
+    public void getSubItems(Item item, CreativeTabs tabs, List list){
         for(int i = 0; i < 16; i++){
             this.addDrillStack(list, i);
         }

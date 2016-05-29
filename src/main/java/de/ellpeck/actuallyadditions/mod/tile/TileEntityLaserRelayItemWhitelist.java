@@ -46,7 +46,7 @@ public class TileEntityLaserRelayItemWhitelist extends TileEntityLaserRelayItem 
                 return this;
             }
 
-            @Nonnull
+
             @Override
             public String getName(){
                 return this.tile.name;
@@ -63,17 +63,17 @@ public class TileEntityLaserRelayItemWhitelist extends TileEntityLaserRelayItem 
             }
 
             @Override
-            public boolean isUseableByPlayer(@Nonnull EntityPlayer player){
+            public boolean isUseableByPlayer(EntityPlayer player){
                 return this.tile.canPlayerUse(player);
             }
 
             @Override
-            public void openInventory(@Nonnull EntityPlayer player){
+            public void openInventory(EntityPlayer player){
 
             }
 
             @Override
-            public void closeInventory(@Nonnull EntityPlayer player){
+            public void closeInventory(EntityPlayer player){
 
             }
 
@@ -151,14 +151,14 @@ public class TileEntityLaserRelayItemWhitelist extends TileEntityLaserRelayItem 
                 return false;
             }
 
-            @Nonnull
+
             @Override
             public ITextComponent getDisplayName(){
                 return new TextComponentTranslation(this.getName());
             }
 
             @Override
-            public boolean isItemValidForSlot(int index, @Nonnull ItemStack stack){
+            public boolean isItemValidForSlot(int index, ItemStack stack){
                 return false;
             }
         }.setTile(this);

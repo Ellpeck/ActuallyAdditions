@@ -23,7 +23,7 @@ import javax.annotation.Nonnull;
 
 public class DispenserHandlerFertilize extends BehaviorDefaultDispenseItem{
 
-    @Nonnull
+
     @Override
     public ItemStack dispenseStack(IBlockSource source, ItemStack stack){
         EnumFacing facing = BlockDispenser.getFacing(source.getBlockMetadata());

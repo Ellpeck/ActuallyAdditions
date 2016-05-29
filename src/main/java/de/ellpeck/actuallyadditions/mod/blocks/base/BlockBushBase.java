@@ -61,7 +61,7 @@ public class BlockBushBase extends BlockBush{
     }
 
     @SuppressWarnings("deprecation")
-    @Nonnull
+
     @Override
     public IBlockState getStateFromMeta(int meta){
         return this.getMetaProperty() == null ? super.getStateFromMeta(meta) : this.getDefaultState().withProperty(this.getMetaProperty(), meta);
@@ -72,7 +72,7 @@ public class BlockBushBase extends BlockBush{
         return this.getMetaProperty() == null ? super.getMetaFromState(state) : state.getValue(this.getMetaProperty());
     }
 
-    @Nonnull
+
     @Override
     protected BlockStateContainer createBlockState(){
         return this.getMetaProperty() == null ? super.createBlockState() : new BlockStateContainer(this, this.getMetaProperty());

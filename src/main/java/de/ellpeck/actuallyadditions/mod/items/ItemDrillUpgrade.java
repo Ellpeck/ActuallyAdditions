@@ -39,9 +39,9 @@ public class ItemDrillUpgrade extends ItemBase{
         return -1;
     }
 
-    @Nonnull
+
     @Override
-    public ActionResult<ItemStack> onItemRightClick(@Nonnull ItemStack stack, World world, EntityPlayer player, EnumHand hand){
+    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand){
         if(!world.isRemote && this.type == UpgradeType.PLACER){
             this.setSlotToPlaceFrom(stack, player.inventory.currentItem);
             return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);

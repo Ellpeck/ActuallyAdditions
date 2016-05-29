@@ -85,7 +85,7 @@ public class BlockMisc extends BlockBase{
             this.setMaxDamage(0);
         }
 
-        @Nonnull
+
         @Override
         public String getUnlocalizedName(ItemStack stack){
             return stack.getItemDamage() >= ALL_MISC_BLOCKS.length ? StringUtil.BUGGED_ITEM_NAME : this.getUnlocalizedName()+ALL_MISC_BLOCKS[stack.getItemDamage()].name;

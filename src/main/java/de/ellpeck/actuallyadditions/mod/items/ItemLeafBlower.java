@@ -44,14 +44,14 @@ public class ItemLeafBlower extends ItemBase{
         this.setMaxStackSize(1);
     }
 
-    @Nonnull
+
     @Override
-    public ActionResult<ItemStack> onItemRightClick(@Nonnull ItemStack stack, World world, EntityPlayer player, EnumHand hand){
+    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand){
         player.setActiveHand(hand);
         return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
     }
 
-    @Nonnull
+
     @Override
     public EnumAction getItemUseAction(ItemStack stack){
         return EnumAction.BOW;
@@ -63,7 +63,7 @@ public class ItemLeafBlower extends ItemBase{
         return Integer.MAX_VALUE;
     }
 
-    @Nonnull
+
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return this.isAdvanced ? EnumRarity.EPIC : EnumRarity.RARE;

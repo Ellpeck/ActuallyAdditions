@@ -38,9 +38,9 @@ public class BlockRangedCollector extends BlockContainerBase{
         this.setSoundType(SoundType.STONE);
     }
 
-    @Nonnull
+
     @Override
-    public TileEntity createNewTileEntity(@Nonnull World world, int par2){
+    public TileEntity createNewTileEntity(World world, int par2){
         return new TileEntityRangedCollector();
     }
 
@@ -62,7 +62,7 @@ public class BlockRangedCollector extends BlockContainerBase{
     }
 
     @Override
-    public void breakBlock(World world, @Nonnull BlockPos pos, @Nonnull IBlockState state){
+    public void breakBlock(World world, BlockPos pos, IBlockState state){
         if(!world.isRemote){
             TileEntity aTile = world.getTileEntity(pos);
             if(aTile instanceof TileEntityRangedCollector){

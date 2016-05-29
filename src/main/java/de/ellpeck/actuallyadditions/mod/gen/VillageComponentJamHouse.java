@@ -47,7 +47,7 @@ public class VillageComponentJamHouse extends StructureVillagePieces.House1{
     }
 
     @Override
-    public boolean addComponentParts(@Nonnull World world, @Nonnull Random rand, @Nonnull StructureBoundingBox sbb){
+    public boolean addComponentParts(World world, Random rand, StructureBoundingBox sbb){
         if(this.averageGroundLevel < 0){
             this.averageGroundLevel = this.getAverageGroundLevel(world, sbb);
             if(this.averageGroundLevel < 0){

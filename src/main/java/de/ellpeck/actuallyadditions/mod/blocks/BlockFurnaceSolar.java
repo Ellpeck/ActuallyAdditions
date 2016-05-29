@@ -38,15 +38,15 @@ public class BlockFurnaceSolar extends BlockContainerBase{
     }
 
     @SuppressWarnings("deprecation")
-    @Nonnull
+
     @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos){
         return AABB;
     }
 
-    @Nonnull
+
     @Override
-    public TileEntity createNewTileEntity(@Nonnull World world, int par2){
+    public TileEntity createNewTileEntity(World world, int par2){
         return new TileEntityFurnaceSolar();
     }
 

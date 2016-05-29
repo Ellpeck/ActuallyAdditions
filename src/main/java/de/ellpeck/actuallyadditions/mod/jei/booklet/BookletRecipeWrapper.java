@@ -56,7 +56,7 @@ public class BookletRecipeWrapper extends RecipeWrapperWithButton implements IRe
     }
 
     @Override
-    public void drawInfo(@Nonnull Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY){
+    public void drawInfo(Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY){
         List header = minecraft.fontRendererObj.listFormattedStringToWidth(StringUtil.localize("container.nei."+ModUtil.MOD_ID+".booklet.header").replaceAll("<item>", TextFormatting.BLUE+"").replaceAll("<r>", TextFormatting.BLACK+""), 150);
         for(int i = 0; i < header.size(); i++){
             minecraft.fontRendererObj.drawString((String)header.get(i), 0, 17+i*(minecraft.fontRendererObj.FONT_HEIGHT+1), 0, false);
@@ -76,7 +76,7 @@ public class BookletRecipeWrapper extends RecipeWrapperWithButton implements IRe
     }
 
     @Override
-    public void drawAnimations(@Nonnull Minecraft minecraft, int recipeWidth, int recipeHeight){
+    public void drawAnimations(Minecraft minecraft, int recipeWidth, int recipeHeight){
 
     }
 
@@ -87,7 +87,7 @@ public class BookletRecipeWrapper extends RecipeWrapperWithButton implements IRe
     }
 
     @Override
-    public boolean handleClick(@Nonnull Minecraft minecraft, int mouseX, int mouseY, int mouseButton){
+    public boolean handleClick(Minecraft minecraft, int mouseX, int mouseY, int mouseButton){
         return this.handleClick(minecraft, mouseX, mouseY);
     }
 

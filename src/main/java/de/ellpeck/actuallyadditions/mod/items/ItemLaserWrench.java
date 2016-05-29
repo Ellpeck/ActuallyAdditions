@@ -41,7 +41,7 @@ public class ItemLaserWrench extends ItemBase{
         this.setMaxStackSize(1);
     }
 
-    @Nonnull
+
     @Override
     public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing par7, float par8, float par9, float par10){
         if(!world.isRemote){
@@ -101,7 +101,7 @@ public class ItemLaserWrench extends ItemBase{
         }
     }
 
-    @Nonnull
+
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.EPIC;

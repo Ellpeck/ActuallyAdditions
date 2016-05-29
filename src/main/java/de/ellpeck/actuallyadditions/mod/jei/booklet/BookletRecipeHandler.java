@@ -19,26 +19,26 @@ import javax.annotation.Nonnull;
 
 public class BookletRecipeHandler implements IRecipeHandler<BookletPage>{
 
-    @Nonnull
+
     @Override
     public Class getRecipeClass(){
         return BookletPage.class;
     }
 
-    @Nonnull
+
     @Override
     public String getRecipeCategoryUid(){
         return NEIBookletRecipe.NAME;
     }
 
-    @Nonnull
+
     @Override
-    public IRecipeWrapper getRecipeWrapper(@Nonnull BookletPage recipe){
+    public IRecipeWrapper getRecipeWrapper(BookletPage recipe){
         return new BookletRecipeWrapper(recipe);
     }
 
     @Override
-    public boolean isRecipeValid(@Nonnull BookletPage recipe){
+    public boolean isRecipeValid(BookletPage recipe){
         return true;
     }
 }

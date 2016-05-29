@@ -36,7 +36,7 @@ public class ItemAxeAA extends ItemToolAA{
     }
 
     @Override
-    public float getStrVsBlock(@Nonnull ItemStack stack, IBlockState state){
+    public float getStrVsBlock(ItemStack stack, IBlockState state){
         Material material = state.getMaterial();
         return material != Material.WOOD && material != Material.PLANTS && material != Material.VINE ? super.getStrVsBlock(stack, state) : this.efficiencyOnProperMaterial;
     }

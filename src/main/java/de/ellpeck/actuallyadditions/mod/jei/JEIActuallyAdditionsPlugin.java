@@ -40,7 +40,7 @@ import javax.annotation.Nonnull;
 public class JEIActuallyAdditionsPlugin implements IModPlugin{
 
     @Override
-    public void register(@Nonnull IModRegistry registry){
+    public void register(IModRegistry registry){
         IJeiHelpers helpers = registry.getJeiHelpers();
 
         registry.addRecipeCategories(
@@ -100,7 +100,7 @@ public class JEIActuallyAdditionsPlugin implements IModPlugin{
     }
 
     @Override
-    public void onRuntimeAvailable(@Nonnull IJeiRuntime jeiRuntime){
+    public void onRuntimeAvailable(IJeiRuntime jeiRuntime){
 
     }
 }

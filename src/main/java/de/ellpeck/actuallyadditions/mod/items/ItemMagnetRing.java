@@ -65,7 +65,7 @@ public class ItemMagnetRing extends ItemEnergy{
         }
     }
 
-    @Nonnull
+
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.EPIC;

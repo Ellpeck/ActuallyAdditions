@@ -131,7 +131,7 @@ public class ContainerEnervator extends Container{
     }
 
     @Override
-    public boolean canInteractWith(@Nonnull EntityPlayer player){
+    public boolean canInteractWith(EntityPlayer player){
         return this.enervator.isUseableByPlayer(player);
     }
 }

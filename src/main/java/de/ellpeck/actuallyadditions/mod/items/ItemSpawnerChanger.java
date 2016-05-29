@@ -42,7 +42,7 @@ public class ItemSpawnerChanger extends ItemBase{
         this.setMaxStackSize(1);
     }
 
-    @Nonnull
+
     @Override
     public EnumActionResult onItemUse(ItemStack aStack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ){
         if(!world.isRemote){

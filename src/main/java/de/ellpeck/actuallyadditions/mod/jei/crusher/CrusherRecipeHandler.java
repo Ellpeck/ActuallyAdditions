@@ -18,26 +18,26 @@ import javax.annotation.Nonnull;
 
 public class CrusherRecipeHandler implements IRecipeHandler<CrusherRecipe>{
 
-    @Nonnull
+
     @Override
     public Class getRecipeClass(){
         return CrusherRecipe.class;
     }
 
-    @Nonnull
+
     @Override
     public String getRecipeCategoryUid(){
         return CrusherRecipeCategory.NAME;
     }
 
-    @Nonnull
+
     @Override
-    public IRecipeWrapper getRecipeWrapper(@Nonnull CrusherRecipe recipe){
+    public IRecipeWrapper getRecipeWrapper(CrusherRecipe recipe){
         return new CrusherRecipeWrapper(recipe);
     }
 
     @Override
-    public boolean isRecipeValid(@Nonnull CrusherRecipe recipe){
+    public boolean isRecipeValid(CrusherRecipe recipe){
         return true;
     }
 }

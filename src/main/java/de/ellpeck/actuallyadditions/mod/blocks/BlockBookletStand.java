@@ -64,7 +64,7 @@ public class BlockBookletStand extends BlockContainerBase implements IHudDisplay
     }
 
     @SuppressWarnings("deprecation")
-    @Nonnull
+
     @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos){
         int meta = this.getMetaFromState(state);
@@ -133,9 +133,9 @@ public class BlockBookletStand extends BlockContainerBase implements IHudDisplay
         super.onBlockPlacedBy(world, pos, state, player, stack);
     }
 
-    @Nonnull
+
     @Override
-    public TileEntity createNewTileEntity(@Nonnull World world, int par2){
+    public TileEntity createNewTileEntity(World world, int par2){
         return new TileEntityBookletStand();
     }
 

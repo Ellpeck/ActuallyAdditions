@@ -63,7 +63,7 @@ public class CrusherRecipeWrapper extends RecipeWrapperWithButton implements IRe
     }
 
     @Override
-    public void drawInfo(@Nonnull Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY){
+    public void drawInfo(Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY){
         this.updateButton(minecraft, mouseX, mouseY);
 
         List<ItemStack> outputTwos = this.theRecipe.getRecipeOutputTwos();
@@ -73,7 +73,7 @@ public class CrusherRecipeWrapper extends RecipeWrapperWithButton implements IRe
     }
 
     @Override
-    public void drawAnimations(@Nonnull Minecraft minecraft, int recipeWidth, int recipeHeight){
+    public void drawAnimations(Minecraft minecraft, int recipeWidth, int recipeHeight){
 
     }
 
@@ -84,7 +84,7 @@ public class CrusherRecipeWrapper extends RecipeWrapperWithButton implements IRe
     }
 
     @Override
-    public boolean handleClick(@Nonnull Minecraft minecraft, int mouseX, int mouseY, int mouseButton){
+    public boolean handleClick(Minecraft minecraft, int mouseX, int mouseY, int mouseButton){
         return this.handleClick(minecraft, mouseX, mouseY);
     }
 

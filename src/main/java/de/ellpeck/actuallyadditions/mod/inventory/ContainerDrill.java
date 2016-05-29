@@ -145,7 +145,7 @@ public class ContainerDrill extends Container{
     }
 
     @Override
-    public boolean canInteractWith(@Nonnull EntityPlayer player){
+    public boolean canInteractWith(EntityPlayer player){
         return this.drillInventory.isUseableByPlayer(player);
     }
 
@@ -153,7 +153,7 @@ public class ContainerDrill extends Container{
 
         public ItemStack[] slots = new ItemStack[SLOT_AMOUNT];
 
-        @Nonnull
+
         @Override
         public String getName(){
             return "drill";
@@ -170,22 +170,22 @@ public class ContainerDrill extends Container{
         }
 
         @Override
-        public boolean isUseableByPlayer(@Nonnull EntityPlayer player){
+        public boolean isUseableByPlayer(EntityPlayer player){
             return true;
         }
 
         @Override
-        public void openInventory(@Nonnull EntityPlayer player){
+        public void openInventory(EntityPlayer player){
 
         }
 
         @Override
-        public void closeInventory(@Nonnull EntityPlayer player){
+        public void closeInventory(EntityPlayer player){
 
         }
 
         @Override
-        public boolean isItemValidForSlot(int index, @Nonnull ItemStack stack){
+        public boolean isItemValidForSlot(int index, ItemStack stack){
             return true;
         }
 
@@ -263,7 +263,7 @@ public class ContainerDrill extends Container{
             return false;
         }
 
-        @Nonnull
+
         @Override
         public ITextComponent getDisplayName(){
             return new TextComponentTranslation(this.getName());

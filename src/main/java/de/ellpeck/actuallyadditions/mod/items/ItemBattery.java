@@ -23,7 +23,7 @@ public class ItemBattery extends ItemEnergy{
         this.setMaxStackSize(1);
     }
 
-    @Nonnull
+
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.RARE;

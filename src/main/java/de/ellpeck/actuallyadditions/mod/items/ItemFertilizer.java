@@ -33,7 +33,7 @@ public class ItemFertilizer extends ItemBase{
         BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(this, new DispenserHandlerFertilize());
     }
 
-    @Nonnull
+
     @Override
     public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float par8, float par9, float par10){
         if(ItemDye.applyBonemeal(stack, world, pos, player)){
@@ -45,7 +45,7 @@ public class ItemFertilizer extends ItemBase{
         return super.onItemUse(stack, player, world, pos, hand, side, par8, par9, par10);
     }
 
-    @Nonnull
+
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.RARE;

@@ -36,7 +36,7 @@ public class ItemChestToCrateUpgrade extends ItemBase{
         super(name);
     }
 
-    @Nonnull
+
     @Override
     public EnumActionResult onItemUse(ItemStack heldStack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float par8, float par9, float par10){
         if(player.isSneaking()){
@@ -86,7 +86,7 @@ public class ItemChestToCrateUpgrade extends ItemBase{
         return super.onItemUse(heldStack, player, world, pos, hand, facing, par8, par9, par10);
     }
 
-    @Nonnull
+
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.RARE;

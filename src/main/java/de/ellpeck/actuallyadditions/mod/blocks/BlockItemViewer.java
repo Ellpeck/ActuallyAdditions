@@ -31,9 +31,9 @@ public class BlockItemViewer extends BlockContainerBase{
         this.setSoundType(SoundType.STONE);
     }
 
-    @Nonnull
+
     @Override
-    public TileEntity createNewTileEntity(@Nonnull World worldIn, int meta){
+    public TileEntity createNewTileEntity(World worldIn, int meta){
         return new TileEntityItemViewer();
     }
 

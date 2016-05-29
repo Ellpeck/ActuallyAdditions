@@ -134,7 +134,7 @@ public class ClientProxy implements IProxy{
         if(manager instanceof IReloadableResourceManager){
             ((IReloadableResourceManager)manager).registerReloadListener(new IResourceManagerReloadListener(){
                 @Override
-                public void onResourceManagerReload(@Nonnull IResourceManager resourceManager){
+                public void onResourceManagerReload(IResourceManager resourceManager){
                     countBookletWords();
                 }
             });

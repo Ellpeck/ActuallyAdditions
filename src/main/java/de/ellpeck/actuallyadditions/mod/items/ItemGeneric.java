@@ -23,7 +23,7 @@ public class ItemGeneric extends ItemBase{
         this.setMaxDamage(0);
     }
 
-    @Nonnull
+
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.UNCOMMON;

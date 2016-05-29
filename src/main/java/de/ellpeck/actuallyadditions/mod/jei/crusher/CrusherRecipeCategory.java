@@ -33,36 +33,36 @@ public class CrusherRecipeCategory implements IRecipeCategory{
         this.background = helper.createDrawable(AssetUtil.getGuiLocation("guiGrinder"), 60, 13, 56, 79);
     }
 
-    @Nonnull
+
     @Override
     public String getUid(){
         return NAME;
     }
 
-    @Nonnull
+
     @Override
     public String getTitle(){
         return StringUtil.localize("container.nei."+NAME+".name");
     }
 
-    @Nonnull
+
     @Override
     public IDrawable getBackground(){
         return this.background;
     }
 
     @Override
-    public void drawExtras(@Nonnull Minecraft minecraft){
+    public void drawExtras(Minecraft minecraft){
 
     }
 
     @Override
-    public void drawAnimations(@Nonnull Minecraft minecraft){
+    public void drawAnimations(Minecraft minecraft){
 
     }
 
     @Override
-    public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull IRecipeWrapper recipeWrapper){
+    public void setRecipe(IRecipeLayout recipeLayout, IRecipeWrapper recipeWrapper){
         if(recipeWrapper instanceof CrusherRecipeWrapper){
             CrusherRecipeWrapper wrapper = (CrusherRecipeWrapper)recipeWrapper;
 
