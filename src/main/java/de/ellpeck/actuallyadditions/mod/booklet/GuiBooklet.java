@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.booklet;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.booklet.BookletPage;
+import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
 import de.ellpeck.actuallyadditions.api.internal.IEntrySet;
 import de.ellpeck.actuallyadditions.api.internal.IBookletGui;
 import de.ellpeck.actuallyadditions.mod.booklet.button.BookmarkButton;
@@ -78,6 +79,7 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
     public GuiButton buttonConfig;
     public GuiButton buttonWebsite;
     public GuiButton buttonPatreon;
+    public GuiButton buttonViewOnline;
     public final GuiButton[] chapterButtons = new GuiButton[CHAPTER_BUTTONS_AMOUNT];
     public final GuiButton[] bookmarkButtons = new GuiButton[8];
     public GuiTextField searchField;
@@ -229,6 +231,13 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
                 BookletUtils.openBrowser(UpdateChecker.CHANGELOG_LINK, UpdateChecker.DOWNLOAD_LINK);
             }
         }
+        //Handles View Online
+        else if(button == this.buttonViewOnline){
+            IBookletChapter chapter = this.currentEntrySet.getCurrentChapter();
+            if(chapter != null){
+                BookletUtils.openBrowser("http://ellpeck.de/actaddmanual/#"+chapter.getUnlocalizedName());
+            }
+        }
         //Handles Website
         else if(button == this.buttonWebsite){
             BookletUtils.openBrowser("http://ellpeck.de");
@@ -302,7 +311,7 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
             updateHover.add(StringUtil.localize("info."+ModUtil.MOD_ID+".update.buttonOptions"));
         }
         this.buttonUpdate = new TexturedButton(4, this.guiLeft-11, this.guiTop-11, 245, 0, 11, 11, updateHover);
-        this.buttonUpdate.visible = UpdateChecker.needsUpdateNotify;
+        this.buttonUpdate.visible = UpdateChecker.needsUpdateNotify || UpdateChecker.checkFailed;
         this.buttonList.add(this.buttonUpdate);
 
         this.buttonTwitter = new TexturedButton(5, this.guiLeft, this.guiTop+10, 213, 0, 8, 8, Collections.singletonList(TextFormatting.GOLD+"Open @ActAddMod on Twitter in Browser"));
@@ -326,6 +335,9 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
         patreonHover.add("Why don't support me on "+TextFormatting.GOLD+"Patreon"+TextFormatting.RESET+"?");
         this.buttonPatreon = new TexturedButton(-100, this.guiLeft, this.guiTop, 237, 0, 8, 8, patreonHover);
         this.buttonList.add(this.buttonPatreon);
+
+        this.buttonViewOnline = new TexturedButton(-101, this.guiLeft+146, this.guiTop+180, 245, 44, 11, 11, Collections.singletonList(TextFormatting.GOLD+"View Online"));
+        this.buttonList.add(this.buttonViewOnline);
 
         ArrayList configHover = new ArrayList();
         configHover.add(TextFormatting.GOLD+"Show Configuration GUI");
@@ -395,7 +407,7 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
             this.currentEntrySet.getCurrentPage().updateScreen(this.ticksElapsed);
         }
 
-        boolean buttonThere = UpdateChecker.needsUpdateNotify;
+        boolean buttonThere = UpdateChecker.needsUpdateNotify || UpdateChecker.checkFailed;
         this.buttonUpdate.visible = buttonThere;
         if(buttonThere){
             if(this.ticksElapsed%8 == 0){

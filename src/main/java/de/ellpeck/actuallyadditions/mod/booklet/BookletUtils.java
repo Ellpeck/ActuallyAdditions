@@ -266,6 +266,8 @@ public class BookletUtils{
         booklet.buttonForward.visible = booklet.currentEntrySet.getPageInIndex() < booklet.indexPageAmount;
         booklet.buttonBackward.visible = booklet.currentEntrySet.getPageInIndex() > 1;
 
+        booklet.buttonViewOnline.visible = false;
+
         for(int i = 0; i < booklet.chapterButtons.length; i++){
             IndexButton button = (IndexButton)booklet.chapterButtons[i];
             if(entry == null){
@@ -334,6 +336,8 @@ public class BookletUtils{
         booklet.buttonForward.visible = getNextPage(chapter, booklet.currentEntrySet.getCurrentPage()) != null;
         booklet.buttonBackward.visible = getPrevPage(chapter, booklet.currentEntrySet.getCurrentPage()) != null;
         booklet.buttonPreviousScreen.visible = true;
+
+        booklet.buttonViewOnline.visible = true;
 
         for(GuiButton chapterButton : booklet.chapterButtons){
             chapterButton.visible = false;
