@@ -16,6 +16,8 @@ import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.common.util.EnumHelper;
 
+import java.util.Locale;
+
 public class InitArmorMaterials{
 
     public static ArmorMaterial armorMaterialEmerald;
@@ -45,8 +47,6 @@ public class InitArmorMaterials{
     }
 
     private static ArmorMaterial addArmorMaterial(String name, String textureName, int durability, int[] reductionAmounts, int enchantability, SoundEvent soundOnEquip){
-        //TODO Fuck forge because this broke
-        //return EnumHelper.addArmorMaterial((ModUtil.MOD_ID+"_"+name).toUpperCase(Locale.ROOT), textureName, durability, reductionAmounts, enchantability, soundOnEquip);
-        return EnumHelper.addEnum(ArmorMaterial.class, name, new Class[]{String.class, int.class, int[].class, int.class, SoundEvent.class, float.class}, textureName, durability, reductionAmounts, enchantability, soundOnEquip, 0F);
+        return EnumHelper.addArmorMaterial((ModUtil.MOD_ID+"_"+name).toUpperCase(Locale.ROOT), textureName, durability, reductionAmounts, enchantability, soundOnEquip, 0F);
     }
 }

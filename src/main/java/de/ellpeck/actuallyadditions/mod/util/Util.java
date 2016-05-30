@@ -28,14 +28,14 @@ public class Util{
     @SuppressWarnings("deprecation")
     public static final int BUCKET = FluidContainerRegistry.BUCKET_VOLUME;
 
-    public static final EnumRarity CRYSTAL_RED_RARITY = addRarity(ModUtil.MOD_ID+"crystalRed", TextFormatting.DARK_RED, ModUtil.NAME+" Red Crystal");
-    public static final EnumRarity CRYSTAL_BLUE_RARITY = addRarity(ModUtil.MOD_ID+"crystalBlue", TextFormatting.DARK_BLUE, ModUtil.NAME+" Blue Crystal");
-    public static final EnumRarity CRYSTAL_LIGHT_BLUE_RARITY = addRarity(ModUtil.MOD_ID+"crystalLightBlue", TextFormatting.BLUE, ModUtil.NAME+" Light Blue Crystal");
-    public static final EnumRarity CRYSTAL_BLACK_RARITY = addRarity(ModUtil.MOD_ID+"crystalBlack", TextFormatting.DARK_GRAY, ModUtil.NAME+" Black Crystal");
-    public static final EnumRarity CRYSTAL_GREEN_RARITY = addRarity(ModUtil.MOD_ID+"crystalGreen", TextFormatting.DARK_GREEN, ModUtil.NAME+" Green Crystal");
-    public static final EnumRarity CRYSTAL_WHITE_RARITY = addRarity(ModUtil.MOD_ID+"crystalWhite", TextFormatting.GRAY, ModUtil.NAME+" White Crystal");
+    public static final EnumRarity CRYSTAL_RED_RARITY = addRarity("crystalRed", TextFormatting.DARK_RED, ModUtil.NAME+" Red Crystal");
+    public static final EnumRarity CRYSTAL_BLUE_RARITY = addRarity("crystalBlue", TextFormatting.DARK_BLUE, ModUtil.NAME+" Blue Crystal");
+    public static final EnumRarity CRYSTAL_LIGHT_BLUE_RARITY = addRarity("crystalLightBlue", TextFormatting.BLUE, ModUtil.NAME+" Light Blue Crystal");
+    public static final EnumRarity CRYSTAL_BLACK_RARITY = addRarity("crystalBlack", TextFormatting.DARK_GRAY, ModUtil.NAME+" Black Crystal");
+    public static final EnumRarity CRYSTAL_GREEN_RARITY = addRarity("crystalGreen", TextFormatting.DARK_GREEN, ModUtil.NAME+" Green Crystal");
+    public static final EnumRarity CRYSTAL_WHITE_RARITY = addRarity("crystalWhite", TextFormatting.GRAY, ModUtil.NAME+" White Crystal");
 
-    public static final EnumRarity FALLBACK_RARITY = EnumHelper.addRarity(ModUtil.MOD_ID+".fallback", TextFormatting.STRIKETHROUGH, ModUtil.NAME+" Fallback");
+    public static final EnumRarity FALLBACK_RARITY = addRarity("fallback", TextFormatting.STRIKETHROUGH, ModUtil.NAME+" Fallback");
 
     public static void registerEvent(Object o){
         MinecraftForge.EVENT_BUS.register(o);
