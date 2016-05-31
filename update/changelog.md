@@ -1,3 +1,11 @@
+# 1.9.4-r36
+* Added a config option to print all of the booklet's text into a file on startup
+* Made booklet words and characters not be more than they should be because everything was being done twice
+* Added view online button to booklet
+* Fixed a bug with some other mods causing NullPointerExceptions in ActAdd TileEntities
+* Fixed ArmorMaterial (sokratis12GR)
+* Removed ModelResourceLocation on server making servers not crash on startup anymore.
+
 # 1.9.4-r35
 * Added lush caves that spawn randomly in the overworld. Turn them off or change their spawn rate in the config if you don't like them.
 * Changed some world data mechanics. Might break some Laser Relay Networks. Sorry about that, just reconnect them.
