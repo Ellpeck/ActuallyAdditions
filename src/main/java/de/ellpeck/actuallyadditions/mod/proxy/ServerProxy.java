@@ -14,6 +14,7 @@ import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -37,7 +38,7 @@ public class ServerProxy implements IProxy{
     }
 
     @Override
-    public void addRenderRegister(ItemStack stack, ModelResourceLocation location){
+    public void addRenderRegister(ItemStack stack, ResourceLocation location, String variant){
 
     }
 

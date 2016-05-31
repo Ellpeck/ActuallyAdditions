@@ -51,7 +51,7 @@ public class ItemSwordAA extends ItemSword{
     }
 
     protected void registerRendering(){
-        ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this), new ModelResourceLocation(this.getRegistryName(), "inventory"));
+        ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this), this.getRegistryName(), "inventory");
     }
 
     protected Class<? extends ItemBlockBase> getItemBlock(){

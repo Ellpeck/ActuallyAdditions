@@ -37,6 +37,7 @@ import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.client.resources.IResourceManagerReloadListener;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fluids.Fluid;
@@ -181,8 +182,8 @@ public class ClientProxy implements IProxy{
     }
 
     @Override
-    public void addRenderRegister(ItemStack stack, ModelResourceLocation location){
-        MODEL_LOCATIONS_FOR_REGISTERING.put(stack, location);
+    public void addRenderRegister(ItemStack stack, ResourceLocation location, String variant){
+        MODEL_LOCATIONS_FOR_REGISTERING.put(stack, new ModelResourceLocation(location, variant));
     }
 
     @Override

@@ -19,6 +19,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -62,7 +63,7 @@ public class ItemCrystal extends ItemBase{
     protected void registerRendering(){
         for(int i = 0; i < BlockCrystal.allCrystals.length; i++){
             String name = this.getRegistryName()+BlockCrystal.allCrystals[i].name;
-            ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), new ModelResourceLocation(name, "inventory"));
+            ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), new ResourceLocation(name), "inventory");
         }
     }
 }

@@ -54,7 +54,7 @@ public class ItemArmorAA extends ItemArmor{
     }
 
     protected void registerRendering(){
-        ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this), new ModelResourceLocation(this.getRegistryName(), "inventory"));
+        ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this), this.getRegistryName(), "inventory");
     }
 
 

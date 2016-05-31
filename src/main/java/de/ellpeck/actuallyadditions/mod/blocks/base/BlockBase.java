@@ -53,7 +53,7 @@ public class BlockBase extends Block{
     }
 
     protected void registerRendering(){
-        ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this), new ModelResourceLocation(this.getRegistryName(), "inventory"));
+        ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this), this.getRegistryName(), "inventory");
     }
 
     public EnumRarity getRarity(ItemStack stack){

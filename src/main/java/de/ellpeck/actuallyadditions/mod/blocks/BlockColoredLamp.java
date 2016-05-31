@@ -126,7 +126,7 @@ public class BlockColoredLamp extends BlockBase{
     @Override
     protected void registerRendering(){
         for(int i = 0; i < allLampTypes.length; i++){
-            ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), new ModelResourceLocation(this.getRegistryName(), META.getName()+"="+i));
+            ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), this.getRegistryName(), META.getName()+"="+i);
         }
     }
 

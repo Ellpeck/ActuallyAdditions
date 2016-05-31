@@ -64,7 +64,7 @@ public class ItemDust extends ItemBase implements IColorProvidingItem{
     @Override
     protected void registerRendering(){
         for(int i = 0; i < allDusts.length; i++){
-            ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), new ModelResourceLocation(this.getRegistryName(), "inventory"));
+            ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), this.getRegistryName(), "inventory");
         }
     }
 

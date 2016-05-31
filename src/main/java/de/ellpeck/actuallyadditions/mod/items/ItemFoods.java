@@ -107,7 +107,7 @@ public class ItemFoods extends ItemFoodBase{
     protected void registerRendering(){
         for(int i = 0; i < allFoods.length; i++){
             String name = this.getRegistryName()+allFoods[i].name;
-            ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), new ModelResourceLocation(name, "inventory"));
+            ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), new ModelResourceLocation(name), "inventory");
         }
     }
 }
