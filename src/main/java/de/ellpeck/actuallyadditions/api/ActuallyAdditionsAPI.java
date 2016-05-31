@@ -31,14 +31,6 @@ public class ActuallyAdditionsAPI{
     public static final String MOD_ID = "actuallyadditions";
     public static final String API_ID = MOD_ID+"api";
     public static final String API_VERSION = "15";
-
-    /**
-     * Use this to handle things that aren't based in the API itself
-     * DO NOT CHANGE/OVERRIDE THIS!!
-     * This is getting initialized in Actually Additions' PreInit phase
-     */
-    public static IMethodHandler methodHandler;
-
     public static final List<CrusherRecipe> CRUSHER_RECIPES = new ArrayList<CrusherRecipe>();
     public static final List<BallOfFurReturn> BALL_OF_FUR_RETURN_ITEMS = new ArrayList<BallOfFurReturn>();
     public static final List<TreasureChestLoot> TREASURE_CHEST_LOOT = new ArrayList<TreasureChestLoot>();
@@ -46,10 +38,14 @@ public class ActuallyAdditionsAPI{
     public static final Map<Item, IColorLensChanger> RECONSTRUCTOR_LENS_COLOR_CHANGERS = new HashMap<Item, IColorLensChanger>();
     public static final List<CoffeeIngredient> COFFEE_MACHINE_INGREDIENTS = new ArrayList<CoffeeIngredient>();
     public static final List<CompostRecipe> COMPOST_RECIPES = new ArrayList<CompostRecipe>();
-
     public static final List<IBookletEntry> BOOKLET_ENTRIES = new ArrayList<IBookletEntry>();
     public static final List<BookletPage> BOOKLET_PAGES_WITH_ITEM_DATA = new ArrayList<BookletPage>();
-
+    /**
+     * Use this to handle things that aren't based in the API itself
+     * DO NOT CHANGE/OVERRIDE THIS!!
+     * This is getting initialized in Actually Additions' PreInit phase
+     */
+    public static IMethodHandler methodHandler;
     //These are getting initialized in Actually Additions' PreInit phase
     //DO NOT CHANGE/OVERRIDE THESE!!
     public static IBookletEntry entryGettingStarted;
@@ -140,9 +136,9 @@ public class ActuallyAdditionsAPI{
      * Adds a new conversion recipe to the compost.
      * StackSize is regarded on both input and output and they can be different.
      *
-     * @param input The itemstack to be input into the compost
-     * @param inputDisplay The block to display when there is input in the compost
-     * @param output The itemstack to be output from the compost once conversion finishes
+     * @param input         The itemstack to be input into the compost
+     * @param inputDisplay  The block to display when there is input in the compost
+     * @param output        The itemstack to be output from the compost once conversion finishes
      * @param outputDisplay The block to display when there is output in the compost
      */
     public static void addCompostRecipe(ItemStack input, Block inputDisplay, ItemStack output, Block outputDisplay){

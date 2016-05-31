@@ -14,8 +14,6 @@ import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 
-import javax.annotation.Nonnull;
-
 public class ItemGeneric extends ItemBase{
 
     public ItemGeneric(String name){

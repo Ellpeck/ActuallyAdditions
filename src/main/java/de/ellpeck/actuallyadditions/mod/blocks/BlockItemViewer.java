@@ -19,8 +19,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
-import javax.annotation.Nonnull;
-
 public class BlockItemViewer extends BlockContainerBase{
 
     public BlockItemViewer(String name){

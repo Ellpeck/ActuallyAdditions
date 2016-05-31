@@ -20,8 +20,6 @@ import mezz.jei.api.recipe.IRecipeCategory;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.client.Minecraft;
 
-import javax.annotation.Nonnull;
-
 public class CoffeeMachineRecipeCategory implements IRecipeCategory{
 
     private final IDrawable background;

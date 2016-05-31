@@ -31,7 +31,6 @@ import net.minecraft.util.StringUtils;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.Loader;
 
-import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 

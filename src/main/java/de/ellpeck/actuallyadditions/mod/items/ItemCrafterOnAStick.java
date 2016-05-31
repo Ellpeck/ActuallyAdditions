@@ -21,8 +21,6 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 
-import javax.annotation.Nonnull;
-
 public class ItemCrafterOnAStick extends ItemBase{
 
     public ItemCrafterOnAStick(String name){

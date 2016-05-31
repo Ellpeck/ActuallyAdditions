@@ -16,14 +16,23 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 
-import javax.annotation.Nonnull;
-
 public class TileEntityCompost extends TileEntityInventoryBase{
 
     public int conversionTime;
 
     public TileEntityCompost(){
         super(1, "compost");
+    }
+
+    public static CompostRecipe getRecipeForInput(ItemStack input){
+        if(input != null){
+            for(CompostRecipe recipe : ActuallyAdditionsAPI.COMPOST_RECIPES){
+                if(input.isItemEqual(recipe.input)){
+                    return recipe;
+                }
+            }
+        }
+        return null;
     }
 
     @Override
@@ -89,16 +98,5 @@ public class TileEntityCompost extends TileEntityInventoryBase{
     @Override
     public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
         return getRecipeForInput(stack) == null;
-    }
-
-    public static CompostRecipe getRecipeForInput(ItemStack input){
-        if(input != null){
-            for(CompostRecipe recipe : ActuallyAdditionsAPI.COMPOST_RECIPES){
-                if(input.isItemEqual(recipe.input)){
-                    return recipe;
-                }
-            }
-        }
-        return null;
     }
 }

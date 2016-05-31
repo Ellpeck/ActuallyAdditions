@@ -10,8 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks.metalists;
 
-import java.util.Locale;
-
 public enum TheColoredLampColors{
 
     WHITE("White"),

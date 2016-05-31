@@ -21,9 +21,6 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 
-import javax.annotation.Nonnull;
-import java.util.Locale;
-
 public class RenderSmileyCloud extends TileEntitySpecialRenderer{
 
     @Override

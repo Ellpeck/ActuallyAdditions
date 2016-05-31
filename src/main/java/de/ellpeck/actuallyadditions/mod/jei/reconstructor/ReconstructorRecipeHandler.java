@@ -15,8 +15,6 @@ import de.ellpeck.actuallyadditions.mod.nei.NEIReconstructorRecipe;
 import mezz.jei.api.recipe.IRecipeHandler;
 import mezz.jei.api.recipe.IRecipeWrapper;
 
-import javax.annotation.Nonnull;
-
 public class ReconstructorRecipeHandler implements IRecipeHandler<LensConversionRecipe>{
 
 

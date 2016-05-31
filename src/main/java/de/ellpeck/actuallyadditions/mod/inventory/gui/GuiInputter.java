@@ -32,7 +32,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Keyboard;
 
-import javax.annotation.Nonnull;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -56,13 +55,13 @@ public class GuiInputter extends GuiContainer{
     private final int y;
     private final int z;
     private final World world;
+    private final boolean isAdvanced;
     private SmallerButton whitelistPut;
     private SmallerButton whitelistPull;
     private GuiTextField fieldPutStart;
     private GuiTextField fieldPutEnd;
     private GuiTextField fieldPullStart;
     private GuiTextField fieldPullEnd;
-    private final boolean isAdvanced;
 
     public GuiInputter(InventoryPlayer inventory, TileEntityBase tile, int x, int y, int z, World world, boolean isAdvanced){
         super(new ContainerInputter(inventory, tile, isAdvanced));

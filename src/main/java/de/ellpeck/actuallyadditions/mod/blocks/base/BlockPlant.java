@@ -14,7 +14,6 @@ import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import net.minecraft.block.BlockCrops;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
@@ -27,18 +26,17 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.EnumPlantType;
 
-import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.Random;
 
 public class BlockPlant extends BlockCrops{
 
-    public Item seedItem;
-    public Item returnItem;
-    public int returnMeta;
     private final String name;
     private final int minDropAmount;
     private final int addDropAmount;
+    public Item seedItem;
+    public Item returnItem;
+    public int returnMeta;
 
     public BlockPlant(String name, int minDropAmount, int addDropAmount){
         this.name = name;

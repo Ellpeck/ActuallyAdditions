@@ -19,13 +19,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 
-import javax.annotation.Nonnull;
-
 public class TileEntityXPSolidifier extends TileEntityInventoryBase implements IButtonReactor{
 
+    private final int[] buttonAmounts = new int[]{1, 5, 10, 20, 30, 40, 50, 64, -999};
     public short amount;
     private short lastAmount;
-    private final int[] buttonAmounts = new int[]{1, 5, 10, 20, 30, 40, 50, 64, -999};
 
     public TileEntityXPSolidifier(){
         super(1, "xpSolidifier");

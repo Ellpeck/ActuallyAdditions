@@ -36,7 +36,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.Nonnull;
 import java.util.Random;
 
 public class BlockSmileyCloud extends BlockContainerBase{

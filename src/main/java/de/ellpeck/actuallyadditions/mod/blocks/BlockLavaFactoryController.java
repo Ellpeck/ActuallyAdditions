@@ -28,8 +28,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.Nonnull;
-
 public class BlockLavaFactoryController extends BlockContainerBase implements IHudDisplay{
 
     public BlockLavaFactoryController(String name){

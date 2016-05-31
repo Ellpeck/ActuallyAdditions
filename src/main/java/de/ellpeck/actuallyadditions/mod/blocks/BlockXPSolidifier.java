@@ -34,8 +34,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
-import javax.annotation.Nonnull;
-
 public class BlockXPSolidifier extends BlockContainerBase{
 
     private static final PropertyInteger META = PropertyInteger.create("meta", 0, 3);

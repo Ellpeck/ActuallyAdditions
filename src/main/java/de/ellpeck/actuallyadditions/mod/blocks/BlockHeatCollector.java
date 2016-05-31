@@ -19,8 +19,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
-import javax.annotation.Nonnull;
-
 public class BlockHeatCollector extends BlockContainerBase{
 
     public BlockHeatCollector(String name){

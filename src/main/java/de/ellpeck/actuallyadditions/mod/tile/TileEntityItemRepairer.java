@@ -20,8 +20,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.Nonnull;
-
 public class TileEntityItemRepairer extends TileEntityInventoryBase implements IEnergyReceiver, IEnergySaver{
 
     public static final int SLOT_INPUT = 0;

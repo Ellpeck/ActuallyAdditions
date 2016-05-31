@@ -20,8 +20,6 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.Nonnull;
-
 /**
  * (Excerpted from Tinkers' Construct with permission, thanks guys!)
  */

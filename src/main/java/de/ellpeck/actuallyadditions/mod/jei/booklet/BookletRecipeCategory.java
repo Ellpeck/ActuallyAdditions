@@ -19,7 +19,6 @@ import mezz.jei.api.recipe.IRecipeCategory;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.client.Minecraft;
 
-import javax.annotation.Nonnull;
 import java.util.Arrays;
 
 public class BookletRecipeCategory implements IRecipeCategory{

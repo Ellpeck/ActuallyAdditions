@@ -15,8 +15,6 @@ import de.ellpeck.actuallyadditions.mod.nei.NEIBookletRecipe;
 import mezz.jei.api.recipe.IRecipeHandler;
 import mezz.jei.api.recipe.IRecipeWrapper;
 
-import javax.annotation.Nonnull;
-
 public class BookletRecipeHandler implements IRecipeHandler<BookletPage>{
 
 

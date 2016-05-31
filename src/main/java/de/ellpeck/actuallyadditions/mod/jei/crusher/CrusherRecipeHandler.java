@@ -14,8 +14,6 @@ import de.ellpeck.actuallyadditions.api.recipe.CrusherRecipe;
 import mezz.jei.api.recipe.IRecipeHandler;
 import mezz.jei.api.recipe.IRecipeWrapper;
 
-import javax.annotation.Nonnull;
-
 public class CrusherRecipeHandler implements IRecipeHandler<CrusherRecipe>{
 
 

@@ -27,8 +27,6 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-import javax.annotation.Nonnull;
-
 public class BlockEnergizer extends BlockContainerBase{
 
     private final boolean isEnergizer;

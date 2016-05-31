@@ -14,8 +14,6 @@ import de.ellpeck.actuallyadditions.mod.items.base.ItemFoodBase;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 
-import javax.annotation.Nonnull;
-
 public class ItemCoffeeBean extends ItemFoodBase{
 
     public ItemCoffeeBean(String name){

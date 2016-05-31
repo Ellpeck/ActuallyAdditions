@@ -37,7 +37,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.Nonnull;
 import java.util.List;
 
 public class BlockCompost extends BlockContainerBase implements IHudDisplay{
@@ -111,7 +110,7 @@ public class BlockCompost extends BlockContainerBase implements IHudDisplay{
                                 ItemStack stackIn = slot.copy();
                                 if(stackIn.stackSize < recipeHand.input.stackSize){
                                     int sizeAdded = Math.min(maxAdd, recipeHand.input.stackSize-stackIn.stackSize);
-                                    stackIn.stackSize+=sizeAdded;
+                                    stackIn.stackSize += sizeAdded;
                                     compost.setInventorySlotContents(0, stackIn);
                                     player.inventory.decrStackSize(player.inventory.currentItem, sizeAdded);
                                     return true;

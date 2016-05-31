@@ -29,7 +29,7 @@ public class BannerHelper{
 
     /**
      * (Excerpted from Additional Banners by Darkhax with permission, thanks!)
-     *
+     * <p>
      * Adds a new banner pattern to the game. This banner pattern will be applied by using the
      * provided item in a crafting recipe with the banner.
      *
@@ -37,7 +37,7 @@ public class BannerHelper{
      *                      also converted into upper case and used for the enum entry. Given how this
      *                      system works, it's critical that this value is unique, consider adding the
      *                      mod id to the name.
-     * //@param id            A small string used to represent the pattern without taking up much space. An
+     *                      //@param id            A small string used to represent the pattern without taking up much space. An
      *                      example of this is "bri". Given how the system works, it is critical that
      *                      this is a unique value. please consider adding the mod id to the pattern id.
      * @param craftingStack An ItemStack which is used in the crafting recipe for this pattern.

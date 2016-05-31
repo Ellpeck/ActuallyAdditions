@@ -16,8 +16,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 
-import javax.annotation.Nonnull;
-
 public class TileEntityDropper extends TileEntityInventoryBase implements IRedstoneToggle{
 
     private int currentTime;

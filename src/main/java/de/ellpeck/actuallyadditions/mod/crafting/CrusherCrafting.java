@@ -12,11 +12,8 @@ package de.ellpeck.actuallyadditions.mod.crafting;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.recipe.CrusherRecipe;
-import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
-import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigCrafting;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
-import de.ellpeck.actuallyadditions.mod.items.metalists.TheDusts;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheFoods;
 import de.ellpeck.actuallyadditions.mod.recipe.CrusherRecipeRegistry;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
@@ -29,10 +26,10 @@ import java.util.ArrayList;
 
 public class CrusherCrafting{
 
+    public static final ArrayList<CrusherRecipe> miscRecipes = new ArrayList<CrusherRecipe>();
     public static CrusherRecipe recipeIronHorseArmor;
     public static CrusherRecipe recipeGoldHorseArmor;
     public static CrusherRecipe recipeDiamondHorseArmor;
-    public static final ArrayList<CrusherRecipe> miscRecipes = new ArrayList<CrusherRecipe>();
 
     public static void init(){
         ModUtil.LOGGER.info("Initializing Crusher Recipes...");

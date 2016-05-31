@@ -20,7 +20,6 @@ import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 
-import javax.annotation.Nonnull;
 import java.util.List;
 
 public class CrusherRecipeCategory implements IRecipeCategory{

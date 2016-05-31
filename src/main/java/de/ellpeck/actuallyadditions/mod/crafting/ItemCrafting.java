@@ -38,15 +38,16 @@ import java.util.ArrayList;
 
 public class ItemCrafting{
 
+    public static final ArrayList<IRecipe> recipesMashedFood = new ArrayList<IRecipe>();
+    public static final ArrayList<IRecipe> recipesDrillColoring = new ArrayList<IRecipe>();
+    public static final ArrayList<IRecipe> recipesPotionRings = new ArrayList<IRecipe>();
     public static IRecipe recipePhantomConnector;
     public static IRecipe recipeCoil;
     public static IRecipe recipeCoilAdvanced;
     public static IRecipe recipeBook;
     public static IRecipe recipeTinyCoal;
     public static IRecipe recipeTinyChar;
-    public static final ArrayList<IRecipe> recipesMashedFood = new ArrayList<IRecipe>();
     public static IRecipe recipeDrill;
-    public static final ArrayList<IRecipe> recipesDrillColoring = new ArrayList<IRecipe>();
     public static IRecipe recipeDrillSpeedI;
     public static IRecipe recipeDrillSpeedII;
     public static IRecipe recipeDrillSpeedIII;
@@ -75,7 +76,6 @@ public class ItemCrafting{
     public static IRecipe recipeRiceDough;
     public static IRecipe recipeLeafBlower;
     public static IRecipe recipeLeafBlowerAdvanced;
-    public static final ArrayList<IRecipe> recipesPotionRings = new ArrayList<IRecipe>();
     public static IRecipe recipeChestToCrateUpgrade;
     public static IRecipe recipeLaserWrench;
     public static IRecipe recipeDrillCore;

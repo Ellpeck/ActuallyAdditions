@@ -34,8 +34,6 @@ import mezz.jei.api.recipe.VanillaRecipeCategoryUid;
 import mezz.jei.api.recipe.transfer.IRecipeTransferRegistry;
 import net.minecraft.item.ItemStack;
 
-import javax.annotation.Nonnull;
-
 @JEIPlugin
 public class JEIActuallyAdditionsPlugin implements IModPlugin{
 

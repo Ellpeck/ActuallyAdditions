@@ -26,8 +26,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.Nonnull;
-
 public class TileEntityPhantomface extends TileEntityInventoryBase implements IPhantomTile{
 
     public static final int RANGE = 16;

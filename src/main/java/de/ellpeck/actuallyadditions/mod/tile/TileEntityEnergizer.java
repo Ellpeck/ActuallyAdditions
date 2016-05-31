@@ -19,8 +19,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.Nonnull;
-
 public class TileEntityEnergizer extends TileEntityInventoryBase implements IEnergyReceiver, IEnergySaver{
 
     public final EnergyStorage storage = new EnergyStorage(500000);

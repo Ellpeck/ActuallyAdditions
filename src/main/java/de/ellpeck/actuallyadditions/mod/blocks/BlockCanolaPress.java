@@ -26,8 +26,6 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-import javax.annotation.Nonnull;
-
 public class BlockCanolaPress extends BlockContainerBase{
 
     public BlockCanolaPress(String name){

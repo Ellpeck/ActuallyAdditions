@@ -21,8 +21,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.Nonnull;
-
 public class TileEntityCoalGenerator extends TileEntityInventoryBase implements IEnergyProvider, IEnergySaver{
 
     public static final int PRODUCE = 30;

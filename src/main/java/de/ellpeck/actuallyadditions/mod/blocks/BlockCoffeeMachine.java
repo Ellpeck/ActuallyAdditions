@@ -32,8 +32,6 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-import javax.annotation.Nonnull;
-
 public class BlockCoffeeMachine extends BlockContainerBase{
 
     private static final AxisAlignedBB AABB = new AxisAlignedBB(0.0625, 0, 0.0625, 1-0.0625, 1-0.0625*2, 1-0.0625);

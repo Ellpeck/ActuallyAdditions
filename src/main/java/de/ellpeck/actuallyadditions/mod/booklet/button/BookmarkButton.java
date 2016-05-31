@@ -10,9 +10,9 @@
 
 package de.ellpeck.actuallyadditions.mod.booklet.button;
 
-import de.ellpeck.actuallyadditions.mod.booklet.entry.EntrySet;
 import de.ellpeck.actuallyadditions.mod.booklet.BookletUtils;
 import de.ellpeck.actuallyadditions.mod.booklet.GuiBooklet;
+import de.ellpeck.actuallyadditions.mod.booklet.entry.EntrySet;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import net.minecraft.client.Minecraft;
@@ -22,14 +22,12 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
 
-import javax.annotation.Nonnull;
 import java.util.ArrayList;
 
 public class BookmarkButton extends GuiButton{
 
-    public EntrySet assignedEntry = new EntrySet(null);
-
     private final GuiBooklet booklet;
+    public EntrySet assignedEntry = new EntrySet(null);
 
     public BookmarkButton(int id, int x, int y, GuiBooklet booklet){
         super(id, x, y, 16, 16, "");

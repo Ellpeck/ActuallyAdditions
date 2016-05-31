@@ -13,8 +13,8 @@ package de.ellpeck.actuallyadditions.mod.booklet;
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.booklet.BookletPage;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
-import de.ellpeck.actuallyadditions.api.internal.IEntrySet;
 import de.ellpeck.actuallyadditions.api.internal.IBookletGui;
+import de.ellpeck.actuallyadditions.api.internal.IEntrySet;
 import de.ellpeck.actuallyadditions.mod.booklet.button.BookmarkButton;
 import de.ellpeck.actuallyadditions.mod.booklet.button.IndexButton;
 import de.ellpeck.actuallyadditions.mod.booklet.button.TexturedButton;
@@ -46,7 +46,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
-import javax.annotation.Nonnull;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -65,9 +64,14 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
     private static final int[] AND_HIS_NAME_IS = new int[]{Keyboard.KEY_C, Keyboard.KEY_E, Keyboard.KEY_N, Keyboard.KEY_A};
     public final int xSize;
     public final int ySize;
+    public final IEntrySet currentEntrySet = new EntrySet(null);
+    public final GuiButton[] chapterButtons = new GuiButton[CHAPTER_BUTTONS_AMOUNT];
+    public final GuiButton[] bookmarkButtons = new GuiButton[8];
+    public final GuiScreen parentScreen;
+    private final boolean tryOpenMainPage;
+    private final boolean saveOnClose;
     public int guiLeft;
     public int guiTop;
-    public final IEntrySet currentEntrySet = new EntrySet(null);
     public int indexPageAmount;
     public GuiButton buttonForward;
     public GuiButton buttonBackward;
@@ -80,14 +84,9 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
     public GuiButton buttonWebsite;
     public GuiButton buttonPatreon;
     public GuiButton buttonViewOnline;
-    public final GuiButton[] chapterButtons = new GuiButton[CHAPTER_BUTTONS_AMOUNT];
-    public final GuiButton[] bookmarkButtons = new GuiButton[8];
     public GuiTextField searchField;
-    public final GuiScreen parentScreen;
     private int ticksElapsed;
     private boolean mousePressed;
-    private final boolean tryOpenMainPage;
-    private final boolean saveOnClose;
     private int hisNameIsAt;
 
     public GuiBooklet(GuiScreen parentScreen, boolean tryOpenMainPage, boolean saveOnClose){

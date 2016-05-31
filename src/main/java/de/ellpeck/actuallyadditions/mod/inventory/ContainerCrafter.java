@@ -18,8 +18,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.world.World;
 
-import javax.annotation.Nonnull;
-
 
 public class ContainerCrafter extends Container{
 

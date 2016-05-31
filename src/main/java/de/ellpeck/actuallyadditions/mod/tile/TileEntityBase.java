@@ -26,12 +26,10 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-import javax.annotation.Nonnull;
-
 public abstract class TileEntityBase extends TileEntity implements ITickable{
 
-    public boolean isRedstonePowered;
     public final String name;
+    public boolean isRedstonePowered;
     protected int ticksElapsed;
 
     public TileEntityBase(String name){

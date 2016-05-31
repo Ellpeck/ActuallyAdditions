@@ -24,7 +24,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.event.ForgeEventFactory;
 
-import javax.annotation.Nonnull;
 import java.util.List;
 
 public class TileEntityBreaker extends TileEntityInventoryBase implements IRedstoneToggle{

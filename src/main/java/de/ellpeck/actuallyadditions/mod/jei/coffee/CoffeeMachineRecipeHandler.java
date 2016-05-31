@@ -15,8 +15,6 @@ import de.ellpeck.actuallyadditions.mod.nei.NEICoffeeMachineRecipe;
 import mezz.jei.api.recipe.IRecipeHandler;
 import mezz.jei.api.recipe.IRecipeWrapper;
 
-import javax.annotation.Nonnull;
-
 public class CoffeeMachineRecipeHandler implements IRecipeHandler<CoffeeIngredient>{
 
 

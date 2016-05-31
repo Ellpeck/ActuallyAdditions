@@ -19,7 +19,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 
-import javax.annotation.Nonnull;
 import java.util.ArrayList;
 
 public class TileEntityRangedCollector extends TileEntityInventoryBase implements IButtonReactor{

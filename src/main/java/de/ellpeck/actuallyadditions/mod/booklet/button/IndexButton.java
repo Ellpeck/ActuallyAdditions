@@ -21,12 +21,10 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.text.TextFormatting;
 
-import javax.annotation.Nonnull;
-
 public class IndexButton extends GuiButton{
 
-    public IBookletChapter chap;
     private final GuiBooklet gui;
+    public IBookletChapter chap;
 
     public IndexButton(int id, int x, int y, int width, int height, String text, GuiBooklet gui){
         super(id, x, y, width, height, text);

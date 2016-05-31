@@ -14,8 +14,6 @@ package de.ellpeck.actuallyadditions.mod.tile;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 
-import javax.annotation.Nonnull;
-
 public class TileEntityGiantChest extends TileEntityInventoryBase{
 
     public TileEntityGiantChest(){

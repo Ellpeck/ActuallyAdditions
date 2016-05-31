@@ -20,7 +20,6 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
-import javax.annotation.Nonnull;
 import java.util.Set;
 
 public class ItemPickaxeAA extends ItemToolAA{

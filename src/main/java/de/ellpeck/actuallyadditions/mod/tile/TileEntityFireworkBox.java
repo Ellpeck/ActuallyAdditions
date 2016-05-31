@@ -37,47 +37,6 @@ public class TileEntityFireworkBox extends TileEntityBase implements IEnergyRece
         super("fireworkBox");
     }
 
-    @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.writeSyncableNBT(compound, sync);
-        this.storage.writeToNBT(compound);
-    }
-
-    @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.readSyncableNBT(compound, sync);
-        this.storage.readFromNBT(compound);
-    }
-
-    @Override
-    public void updateEntity(){
-        if(!this.worldObj.isRemote){
-            if(!this.isRedstonePowered && !this.activateOnceWithSignal){
-                if(this.timeUntilNextFirework > 0){
-                    this.timeUntilNextFirework--;
-                    if(this.timeUntilNextFirework <= 0){
-                        this.doWork();
-                    }
-                }
-                else{
-                    this.timeUntilNextFirework = 100;
-                }
-            }
-
-            if(this.oldEnergy != this.storage.getEnergyStored() && this.sendUpdateWithInterval()){
-                this.oldEnergy = this.storage.getEnergyStored();
-            }
-        }
-    }
-
-    private void doWork(){
-        if(this.storage.getEnergyStored() >= USE_PER_SHOT){
-            spawnFireworks(this.worldObj, this.pos.getX(), this.pos.getY(), this.pos.getZ());
-
-            this.storage.extractEnergy(USE_PER_SHOT, false);
-        }
-    }
-
     public static void spawnFireworks(World world, double x, double y, double z){
         int range = 4;
         int amount = Util.RANDOM.nextInt(5)+1;
@@ -132,6 +91,47 @@ public class TileEntityFireworkBox extends TileEntityBase implements IEnergyRece
         compound.setByte("Type", (byte)Util.RANDOM.nextInt(5));
 
         return compound;
+    }
+
+    @Override
+    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.writeSyncableNBT(compound, sync);
+        this.storage.writeToNBT(compound);
+    }
+
+    @Override
+    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
+        super.readSyncableNBT(compound, sync);
+        this.storage.readFromNBT(compound);
+    }
+
+    @Override
+    public void updateEntity(){
+        if(!this.worldObj.isRemote){
+            if(!this.isRedstonePowered && !this.activateOnceWithSignal){
+                if(this.timeUntilNextFirework > 0){
+                    this.timeUntilNextFirework--;
+                    if(this.timeUntilNextFirework <= 0){
+                        this.doWork();
+                    }
+                }
+                else{
+                    this.timeUntilNextFirework = 100;
+                }
+            }
+
+            if(this.oldEnergy != this.storage.getEnergyStored() && this.sendUpdateWithInterval()){
+                this.oldEnergy = this.storage.getEnergyStored();
+            }
+        }
+    }
+
+    private void doWork(){
+        if(this.storage.getEnergyStored() >= USE_PER_SHOT){
+            spawnFireworks(this.worldObj, this.pos.getX(), this.pos.getY(), this.pos.getZ());
+
+            this.storage.extractEnergy(USE_PER_SHOT, false);
+        }
     }
 
     @Override

@@ -19,8 +19,6 @@ import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.Minecraft;
 
-import javax.annotation.Nonnull;
-
 public abstract class RecipeWrapperWithButton{
 
     protected final TexturedButton theButton;

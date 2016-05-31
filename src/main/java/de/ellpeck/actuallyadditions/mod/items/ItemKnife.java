@@ -18,8 +18,6 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 
-import javax.annotation.Nonnull;
-
 public class ItemKnife extends ItemBase{
 
     public ItemKnife(String name){

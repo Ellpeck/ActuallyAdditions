@@ -15,16 +15,14 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
 
-import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TexturedButton extends GuiButton{
 
+    public final List textList = new ArrayList();
     public int texturePosX;
     public int texturePosY;
-
-    public final List textList = new ArrayList();
 
     public TexturedButton(int id, int x, int y, int texturePosX, int texturePosY, int width, int height){
         this(id, x, y, texturePosX, texturePosY, width, height, new ArrayList());

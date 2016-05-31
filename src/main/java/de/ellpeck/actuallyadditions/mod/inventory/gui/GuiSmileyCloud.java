@@ -40,10 +40,8 @@ public class GuiSmileyCloud extends GuiContainer{
     private final int y;
     private final int z;
     private final World world;
-
-    private GuiTextField nameField;
-
     private final TileEntitySmileyCloud cloud;
+    private GuiTextField nameField;
 
     public GuiSmileyCloud(TileEntityBase tile, int x, int y, int z, World world){
         super(new ContainerSmileyCloud());

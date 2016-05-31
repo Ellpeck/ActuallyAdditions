@@ -10,10 +10,10 @@
 
 package de.ellpeck.actuallyadditions.mod.util.playerdata;
 
-import de.ellpeck.actuallyadditions.mod.booklet.entry.EntrySet;
 import de.ellpeck.actuallyadditions.mod.booklet.BookletUtils;
 import de.ellpeck.actuallyadditions.mod.booklet.GuiBooklet;
 import de.ellpeck.actuallyadditions.mod.booklet.button.BookmarkButton;
+import de.ellpeck.actuallyadditions.mod.booklet.entry.EntrySet;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompressedStreamTools;

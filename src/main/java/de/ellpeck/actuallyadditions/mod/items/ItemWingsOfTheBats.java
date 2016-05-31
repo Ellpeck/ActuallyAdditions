@@ -15,7 +15,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 
-import javax.annotation.Nonnull;
 import java.util.ArrayList;
 
 public class ItemWingsOfTheBats extends ItemBase{

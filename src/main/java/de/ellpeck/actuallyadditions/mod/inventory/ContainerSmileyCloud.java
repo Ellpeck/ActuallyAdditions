@@ -14,8 +14,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
 
-import javax.annotation.Nonnull;
-
 public class ContainerSmileyCloud extends Container{
 
     @Override

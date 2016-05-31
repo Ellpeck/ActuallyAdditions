@@ -30,7 +30,6 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.Optional;
 
-import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 

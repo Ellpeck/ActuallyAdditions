@@ -11,7 +11,6 @@
 package de.ellpeck.actuallyadditions.mod.proxy;
 
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;

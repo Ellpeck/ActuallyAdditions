@@ -19,7 +19,6 @@ import net.minecraft.world.gen.structure.StructureBoundingBox;
 import net.minecraft.world.gen.structure.StructureComponent;
 import net.minecraft.world.gen.structure.StructureVillagePieces;
 
-import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.Random;
 

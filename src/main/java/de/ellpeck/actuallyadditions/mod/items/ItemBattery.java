@@ -14,8 +14,6 @@ import de.ellpeck.actuallyadditions.mod.items.base.ItemEnergy;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 
-import javax.annotation.Nonnull;
-
 public class ItemBattery extends ItemEnergy{
 
     public ItemBattery(String name, int capacity, int transfer){

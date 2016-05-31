@@ -18,8 +18,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 
-import javax.annotation.Nonnull;
-
 public class TileEntityPhantomItemface extends TileEntityPhantomface{
 
     public TileEntityPhantomItemface(){

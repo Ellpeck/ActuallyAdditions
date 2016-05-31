@@ -30,6 +30,8 @@ public class InitForeignPaxels{
     public static final String[] MT_NAMES = new String[]{"Obsidian", "LapisLazuli", "Osmium", "Bronze", "Glowstone", "Steel"};
     public static final int[] TF_COLORS = new int[]{13332762, 5407943, 5407895, 5394789, 12960613, 12960653, 12410135, 2999795, 10143162};
     public static final int[] SO_COLORS = new int[]{9409450, 2040021, 5714944, 526344, 545032};
+    public static final Item[] tfPaxels = new Item[9];
+    public static final Item[] soPaxels = new Item[5];
     //MekanismTools
     private static final String MEKANISM_TOOLS = "MekanismTools";
     private static final String[] MT_REPAIR_NAMES = new String[]{"ingotRefinedObsidian", "gemLapis", "ingotOsmium", "ingotBronze", "ingotRefinedGlowstone", "ingotSteel"};
@@ -40,8 +42,6 @@ public class InitForeignPaxels{
     private static final String SIMPLE_ORES = "simpleores";
     private static final String[] SO_NAMES = new String[]{"tin", "mythril", "copper", "onyx", "adamantium"};
     private static final String[] SO_REPAIR_NAMES = new String[]{"ingotTin", "ingotMythril", "ingotCopper", "gemOnyx", "ingotAdamantium"};
-    public static final Item[] tfPaxels = new Item[9];
-    public static final Item[] soPaxels = new Item[5];
     private static final Item[] mtPaxels = new Item[6];
 
     public static void init(){

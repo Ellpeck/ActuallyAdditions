@@ -19,8 +19,6 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 
-import javax.annotation.Nonnull;
-
 public class ItemResonantRice extends ItemBase{
 
     public ItemResonantRice(String name){
