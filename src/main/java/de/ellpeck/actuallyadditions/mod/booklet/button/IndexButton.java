@@ -20,7 +20,10 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
+@SideOnly(Side.CLIENT)
 public class IndexButton extends GuiButton{
 
     private final GuiBooklet gui;
@@ -58,12 +61,6 @@ public class IndexButton extends GuiButton{
             }
 
             this.gui.getFontRenderer().drawString(this.displayString, this.xPosition+textOffsetX, this.yPosition+(this.height-8)/2, 0);
-        }
-    }
-
-    public void drawHover(int mouseX, int mouseY){
-        if(this.chap instanceof BookletChapter && ((BookletChapter)this.chap).isIncomplete){
-            this.gui.drawHoveringText(this.gui.getFontRenderer().listFormattedStringToWidth(TextFormatting.RED+StringUtil.localize("booklet."+ModUtil.MOD_ID+".unavailable"), 250), mouseX, mouseY);
         }
     }
 }

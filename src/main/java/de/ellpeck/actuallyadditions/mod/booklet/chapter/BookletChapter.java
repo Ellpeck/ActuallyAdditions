@@ -27,8 +27,6 @@ public class BookletChapter implements IBookletChapter{
     private final String unlocalizedName;
     public TextFormatting color;
 
-    public boolean isIncomplete;
-
     public BookletChapter(String unlocalizedName, IBookletEntry entry, ItemStack displayStack, BookletPage... pages){
         this.pages = pages.clone();
 
@@ -73,10 +71,6 @@ public class BookletChapter implements IBookletChapter{
     @Override
     public ItemStack getDisplayItemStack(){
         return this.displayStack;
-    }
-
-    public void setIncomplete(){
-        this.isIncomplete = true;
     }
 
     public void setImportant(){

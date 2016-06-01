@@ -269,6 +269,7 @@ public class GuiInputter extends GuiContainer{
         }
     }
 
+    @SideOnly(Side.CLIENT)
     public static class SmallerButton extends GuiButton{
 
         public final ResourceLocation resLoc = AssetUtil.getGuiLocation("guiInputter");
@@ -306,6 +307,7 @@ public class GuiInputter extends GuiContainer{
         }
     }
 
+    @SideOnly(Side.CLIENT)
     public static class TinyButton extends GuiButton{
 
         public final ResourceLocation resLoc = AssetUtil.getGuiLocation("guiInputter");

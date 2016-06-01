@@ -14,10 +14,13 @@ import de.ellpeck.actuallyadditions.mod.booklet.GuiBooklet;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@SideOnly(Side.CLIENT)
 public class TexturedButton extends GuiButton{
 
     public final List textList = new ArrayList();
