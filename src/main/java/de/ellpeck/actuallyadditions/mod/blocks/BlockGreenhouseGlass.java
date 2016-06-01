@@ -16,6 +16,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -46,9 +47,11 @@ public class BlockGreenhouseGlass extends BlockContainerBase{
     @SuppressWarnings("deprecation")
     @Override
     @SideOnly(Side.CLIENT)
-    public boolean shouldSideBeRendered(IBlockState state, IBlockAccess worldIn, BlockPos pos, EnumFacing side){
-        Block block = state.getBlock();
-        return worldIn.getBlockState(pos.offset(side.getOpposite())) != state || block != this && block != this && super.shouldSideBeRendered(state, worldIn, pos, side);
+    public boolean shouldSideBeRendered(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing side){
+        IBlockState otherState = world.getBlockState(pos.offset(side));
+        Block block = otherState.getBlock();
+
+        return state != otherState || block != this && super.shouldSideBeRendered(state, world, pos, side);
 
     }
 
@@ -57,7 +60,6 @@ public class BlockGreenhouseGlass extends BlockContainerBase{
     public boolean isOpaqueCube(IBlockState state){
         return false;
     }
-
 
     @Override
     @SideOnly(Side.CLIENT)
@@ -69,7 +71,6 @@ public class BlockGreenhouseGlass extends BlockContainerBase{
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.EPIC;
     }
-
 
     @Override
     public TileEntity createNewTileEntity(World world, int par2){
