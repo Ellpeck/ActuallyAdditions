@@ -295,7 +295,11 @@ public class WorldUtil{
     }
 
     public static RayTraceResult getNearestBlockWithDefaultReachDistance(World world, EntityPlayer player){
-        return getMovingObjectPosWithReachDistance(world, player, player instanceof EntityPlayerMP ? ((EntityPlayerMP)player).interactionManager.getBlockReachDistance() : 5.0D, false, true, false);
+        return getNearestBlockWithDefaultReachDistance(world, player, false, true, false);
+    }
+
+    public static RayTraceResult getNearestBlockWithDefaultReachDistance(World world, EntityPlayer player, boolean stopOnLiquids, boolean ignoreBlockWithoutBoundingBox, boolean returnLastUncollidableBlock){
+        return getMovingObjectPosWithReachDistance(world, player, player instanceof EntityPlayerMP ? ((EntityPlayerMP)player).interactionManager.getBlockReachDistance() : 5.0D, stopOnLiquids, ignoreBlockWithoutBoundingBox, returnLastUncollidableBlock);
     }
 
     /**

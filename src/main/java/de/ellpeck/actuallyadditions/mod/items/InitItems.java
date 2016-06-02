@@ -207,11 +207,14 @@ public class InitItems{
     public static Item itemBootsCrystalWhite;
     public static Item itemPaxelCrystalWhite;
 
+    public static Item itemWaterBowl;
+
     public static Item itemRarmorModuleReconstructor;
 
     public static void init(){
         ModUtil.LOGGER.info("Initializing Items...");
 
+        itemWaterBowl = new ItemWaterBowl("itemWaterBowl");
         itemSpawnerChanger = new ItemSpawnerChanger("itemSpawnerChanger");
         itemMisc = new ItemMisc("itemMisc");
         itemCrateKeeper = new ItemGeneric("itemCrateKeeper");

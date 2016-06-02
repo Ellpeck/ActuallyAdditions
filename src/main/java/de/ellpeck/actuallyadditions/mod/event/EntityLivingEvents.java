@@ -16,7 +16,11 @@ import de.ellpeck.actuallyadditions.mod.items.ItemWingsOfTheBats;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
 import de.ellpeck.actuallyadditions.mod.misc.WorldData;
 import de.ellpeck.actuallyadditions.mod.util.Util;
+import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import de.ellpeck.actuallyadditions.mod.util.playerdata.PlayerServerData;
+import net.minecraft.block.BlockLiquid;
+import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
@@ -25,12 +29,18 @@ import net.minecraft.entity.passive.EntityBat;
 import net.minecraft.entity.passive.EntityOcelot;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.UUID;
@@ -78,6 +88,38 @@ public class EntityLivingEvents{
 
             //player.addChatComponentMessage(new TextComponentTranslation("info."+ModUtil.MOD_ID+".deathRecorded"));
             WorldData.makeDirty();
+        }
+    }
+
+    @SubscribeEvent
+    public void onPlayerInteractEvent(PlayerInteractEvent event){
+        if(event.getWorld() != null){
+            if(event.getItemStack() != null && event.getItemStack().getItem() == Items.BOWL){
+                RayTraceResult trace = WorldUtil.getNearestBlockWithDefaultReachDistance(event.getWorld(), event.getEntityPlayer(), true, false, false);
+                ActionResult<ItemStack> result = ForgeEventFactory.onBucketUse(event.getEntityPlayer(), event.getWorld(), event.getItemStack(), trace);
+                if(result == null && trace != null && trace.getBlockPos() != null){
+                    if(event.getEntityPlayer().canPlayerEdit(trace.getBlockPos().offset(trace.sideHit), trace.sideHit, event.getItemStack())){
+                        IBlockState state = event.getWorld().getBlockState(trace.getBlockPos());
+                        Material material = state.getMaterial();
+
+                        if(material == Material.WATER && state.getValue(BlockLiquid.LEVEL) == 0){
+                            event.getEntityPlayer().playSound(SoundEvents.ITEM_BUCKET_FILL, 1.0F, 1.0F);
+
+                            if(!event.getWorld().isRemote){
+                                event.getWorld().setBlockState(trace.getBlockPos(), Blocks.AIR.getDefaultState(), 11);
+                                event.getItemStack().stackSize--;
+
+                                ItemStack bowl = new ItemStack(InitItems.itemWaterBowl);
+                                if(!event.getEntityPlayer().inventory.addItemStackToInventory(bowl.copy())){
+                                    EntityItem entityItem = new EntityItem(event.getWorld(), event.getEntityPlayer().posX, event.getEntityPlayer().posY, event.getEntityPlayer().posZ, bowl.copy());
+                                    entityItem.setPickupDelay(0);
+                                    event.getWorld().spawnEntityInWorld(entityItem);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 
