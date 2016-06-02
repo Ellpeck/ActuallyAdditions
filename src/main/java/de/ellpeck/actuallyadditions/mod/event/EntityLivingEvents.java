@@ -94,26 +94,28 @@ public class EntityLivingEvents{
     @SubscribeEvent
     public void onPlayerInteractEvent(PlayerInteractEvent event){
         if(event.getWorld() != null){
-            if(event.getItemStack() != null && event.getItemStack().getItem() == Items.BOWL){
-                RayTraceResult trace = WorldUtil.getNearestBlockWithDefaultReachDistance(event.getWorld(), event.getEntityPlayer(), true, false, false);
-                ActionResult<ItemStack> result = ForgeEventFactory.onBucketUse(event.getEntityPlayer(), event.getWorld(), event.getItemStack(), trace);
-                if(result == null && trace != null && trace.getBlockPos() != null){
-                    if(event.getEntityPlayer().canPlayerEdit(trace.getBlockPos().offset(trace.sideHit), trace.sideHit, event.getItemStack())){
-                        IBlockState state = event.getWorld().getBlockState(trace.getBlockPos());
-                        Material material = state.getMaterial();
+            if(ConfigBoolValues.WATER_BOWL.isEnabled()){
+                if(event.getItemStack() != null && event.getItemStack().getItem() == Items.BOWL){
+                    RayTraceResult trace = WorldUtil.getNearestBlockWithDefaultReachDistance(event.getWorld(), event.getEntityPlayer(), true, false, false);
+                    ActionResult<ItemStack> result = ForgeEventFactory.onBucketUse(event.getEntityPlayer(), event.getWorld(), event.getItemStack(), trace);
+                    if(result == null && trace != null && trace.getBlockPos() != null){
+                        if(event.getEntityPlayer().canPlayerEdit(trace.getBlockPos().offset(trace.sideHit), trace.sideHit, event.getItemStack())){
+                            IBlockState state = event.getWorld().getBlockState(trace.getBlockPos());
+                            Material material = state.getMaterial();
 
-                        if(material == Material.WATER && state.getValue(BlockLiquid.LEVEL) == 0){
-                            event.getEntityPlayer().playSound(SoundEvents.ITEM_BUCKET_FILL, 1.0F, 1.0F);
+                            if(material == Material.WATER && state.getValue(BlockLiquid.LEVEL) == 0){
+                                event.getEntityPlayer().playSound(SoundEvents.ITEM_BUCKET_FILL, 1.0F, 1.0F);
 
-                            if(!event.getWorld().isRemote){
-                                event.getWorld().setBlockState(trace.getBlockPos(), Blocks.AIR.getDefaultState(), 11);
-                                event.getItemStack().stackSize--;
+                                if(!event.getWorld().isRemote){
+                                    event.getWorld().setBlockState(trace.getBlockPos(), Blocks.AIR.getDefaultState(), 11);
+                                    event.getItemStack().stackSize--;
 
-                                ItemStack bowl = new ItemStack(InitItems.itemWaterBowl);
-                                if(!event.getEntityPlayer().inventory.addItemStackToInventory(bowl.copy())){
-                                    EntityItem entityItem = new EntityItem(event.getWorld(), event.getEntityPlayer().posX, event.getEntityPlayer().posY, event.getEntityPlayer().posZ, bowl.copy());
-                                    entityItem.setPickupDelay(0);
-                                    event.getWorld().spawnEntityInWorld(entityItem);
+                                    ItemStack bowl = new ItemStack(InitItems.itemWaterBowl);
+                                    if(!event.getEntityPlayer().inventory.addItemStackToInventory(bowl.copy())){
+                                        EntityItem entityItem = new EntityItem(event.getWorld(), event.getEntityPlayer().posX, event.getEntityPlayer().posY, event.getEntityPlayer().posZ, bowl.copy());
+                                        entityItem.setPickupDelay(0);
+                                        event.getWorld().spawnEntityInWorld(entityItem);
+                                    }
                                 }
                             }
                         }
