@@ -36,7 +36,7 @@ public class ItemFertilizer extends ItemBase{
     public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float par8, float par9, float par10){
         if(ItemDye.applyBonemeal(stack, world, pos, player)){
             if(!world.isRemote){
-                world.playBroadcastSound(2005, pos, 0);
+                world.playEvent(2005, pos, 0);
             }
             return EnumActionResult.SUCCESS;
         }

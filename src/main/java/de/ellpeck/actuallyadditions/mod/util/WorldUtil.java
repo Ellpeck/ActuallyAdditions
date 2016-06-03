@@ -333,7 +333,7 @@ public class WorldUtil{
         }
         else{
             //Shows the Harvest Particles and plays the Block's Sound
-            world.playBroadcastSound(2001, pos, Block.getStateId(state));
+            world.playEvent(2001, pos, Block.getStateId(state));
         }
 
         //If the Block was actually "removed", meaning it will drop an Item

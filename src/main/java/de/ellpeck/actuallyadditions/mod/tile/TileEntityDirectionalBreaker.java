@@ -93,7 +93,7 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase implem
                     if(Util.RANDOM.nextFloat() <= chance){
                         if(WorldUtil.addToInventory(this, drops, false, true)){
                             if(!ConfigValues.lessBlockBreakingEffects){
-                                this.worldObj.playBroadcastSound(2001, coordsBlock, Block.getStateId(this.worldObj.getBlockState(coordsBlock)));
+                                this.worldObj.playEvent(2001, coordsBlock, Block.getStateId(this.worldObj.getBlockState(coordsBlock)));
                             }
                             WorldUtil.breakBlockAtSide(sideToManipulate, this.worldObj, this.getPos(), i);
                             WorldUtil.addToInventory(this, drops, true, true);

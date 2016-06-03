@@ -120,7 +120,7 @@ public class ItemLeafBlower extends ItemBase{
 
             //Plays the Breaking Sound
             if(!ConfigValues.lessBlockBreakingEffects){
-                world.playBroadcastSound(2001, theCoord, Block.getStateId(world.getBlockState(theCoord)));
+                world.playEvent(2001, theCoord, Block.getStateId(world.getBlockState(theCoord)));
             }
 
             //Deletes the Block

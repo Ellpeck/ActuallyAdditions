@@ -83,7 +83,7 @@ public class TileEntityLeafGenerator extends TileEntityBase implements IEnergyPr
                             BlockPos theCoord = breakPositions.get(0);
 
                             if(!ConfigValues.lessBlockBreakingEffects){
-                                this.worldObj.playBroadcastSound(2001, theCoord, Block.getStateId(this.worldObj.getBlockState(theCoord)));
+                                this.worldObj.playEvent(2001, theCoord, Block.getStateId(this.worldObj.getBlockState(theCoord)));
                             }
 
                             this.worldObj.setBlockToAir(theCoord);

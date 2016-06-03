@@ -108,7 +108,7 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyR
                             if(Util.RANDOM.nextFloat() <= chance){
                                 if(WorldUtil.addToInventory(this, drops, false, true)){
                                     if(!ConfigValues.lessBlockBreakingEffects){
-                                        this.worldObj.playBroadcastSound(2001, pos, Block.getStateId(this.worldObj.getBlockState(pos)));
+                                        this.worldObj.playEvent(2001, pos, Block.getStateId(this.worldObj.getBlockState(pos)));
                                     }
                                     this.worldObj.setBlockToAir(pos);
 

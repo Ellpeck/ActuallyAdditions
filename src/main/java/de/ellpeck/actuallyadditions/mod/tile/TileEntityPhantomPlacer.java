@@ -131,7 +131,7 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
 
                 if(WorldUtil.addToInventory(this, drops, false, true)){
                     if(!ConfigValues.lessBlockBreakingEffects){
-                        this.worldObj.playBroadcastSound(2001, this.boundPosition, Block.getStateId(this.worldObj.getBlockState(this.boundPosition)));
+                        this.worldObj.playEvent(2001, this.boundPosition, Block.getStateId(this.worldObj.getBlockState(this.boundPosition)));
                     }
                     this.worldObj.setBlockToAir(this.boundPosition);
                     WorldUtil.addToInventory(this, drops, true, true);

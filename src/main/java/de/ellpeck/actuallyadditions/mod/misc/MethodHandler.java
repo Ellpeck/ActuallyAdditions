@@ -136,7 +136,7 @@ public class MethodHandler implements IMethodHandler{
                                     ItemStack output = outputs.get(0);
                                     if(output.getItem() instanceof ItemBlock){
                                         if(!ConfigValues.lessBlockBreakingEffects){
-                                            tile.getWorldObject().playBroadcastSound(2001, pos, Block.getStateId(tile.getWorldObject().getBlockState(pos)));
+                                            tile.getWorldObject().playEvent(2001, pos, Block.getStateId(tile.getWorldObject().getBlockState(pos)));
                                         }
                                         PosUtil.setBlock(pos, tile.getWorldObject(), Block.getBlockFromItem(output.getItem()), output.getItemDamage(), 2);
                                     }

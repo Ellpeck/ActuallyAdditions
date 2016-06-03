@@ -31,7 +31,7 @@ public class DispenserHandlerFertilize extends BehaviorDefaultDispenseItem{
         BlockPos pos = new BlockPos(x, y, z);
 
         if(ItemDye.applyBonemeal(stack, source.getWorld(), pos)){
-            source.getWorld().playBroadcastSound(2005, pos, 0);
+            source.getWorld().playEvent(2005, pos, 0);
         }
         return stack;
     }

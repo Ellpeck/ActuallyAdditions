@@ -76,7 +76,7 @@ public class ItemGrowthRing extends ItemEnergy{
 
                             //Show Particles if Metadata changed
                             if(PosUtil.getMetadata(pos, world) != metaBefore){
-                                world.playBroadcastSound(2005, pos, 0);
+                                world.playEvent(2005, pos, 0);
                             }
 
                             if(!player.capabilities.isCreativeMode){

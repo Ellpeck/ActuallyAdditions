@@ -56,7 +56,7 @@ public class ItemChestToCrateUpgrade extends ItemBase{
 
                     //Set New Block
                     if(!ConfigValues.lessBlockBreakingEffects){
-                        world.playBroadcastSound(2001, pos, Block.getStateId(world.getBlockState(pos)));
+                        world.playEvent(2001, pos, Block.getStateId(world.getBlockState(pos)));
                     }
                     PosUtil.setBlock(pos, world, InitBlocks.blockGiantChest, 0, 2);
 
