@@ -20,14 +20,14 @@ public class WorldLoadingEvents{
     @SubscribeEvent
     public void onLoad(WorldEvent.Load event){
         if(!event.getWorld().isRemote){
-            WorldData.get(event.getWorld());
+            WorldData.loadOrGet(event.getWorld());
         }
     }
 
     @SubscribeEvent
     public void onUnload(WorldEvent.Unload event){
         if(!event.getWorld().isRemote){
-            WorldData.get(event.getWorld()).markDirty();
+            WorldData.markDirty(event.getWorld());
             FakePlayerUtil.unloadFakePlayer();
         }
     }

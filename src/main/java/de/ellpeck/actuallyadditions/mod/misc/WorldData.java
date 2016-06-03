@@ -25,7 +25,7 @@ public class WorldData extends WorldSavedData{
         super(tag);
     }
 
-    public static WorldData get(World world){
+    public static WorldData loadOrGet(World world){
         if(world.getMapStorage() != null){
             WorldData data = (WorldData)world.getMapStorage().getOrLoadData(WorldData.class, DATA_TAG);
             if(data == null){
@@ -38,6 +38,13 @@ public class WorldData extends WorldSavedData{
         }
         else{
             return null;
+        }
+    }
+
+    public static void markDirty(World world){
+        WorldData data = loadOrGet(world);
+        if(data != null){
+            data.markDirty();
         }
     }
 

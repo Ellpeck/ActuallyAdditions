@@ -60,7 +60,7 @@ public class ItemLaserWrench extends ItemBase{
                             ((TileEntityLaserRelay)world.getTileEntity(savedPos)).sendUpdate();
                             ((TileEntityLaserRelay)world.getTileEntity(pos)).sendUpdate();
 
-                            WorldData.get(world).markDirty();
+                            WorldData.markDirty(world);
 
                             player.addChatComponentMessage(new TextComponentTranslation("tooltip."+ModUtil.MOD_ID+".laser.connected.desc"));
                         }

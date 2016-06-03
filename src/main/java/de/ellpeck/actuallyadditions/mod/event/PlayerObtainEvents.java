@@ -52,7 +52,7 @@ public class PlayerObtainEvents{
                     NBTTagCompound compound = PlayerServerData.getDataFromPlayer(event.player);
                     if(compound != null && !compound.getBoolean("BookGottenAlready")){
                         compound.setBoolean("BookGottenAlready", true);
-                        WorldData.get(event.player.worldObj).markDirty();
+                        WorldData.markDirty(event.player.worldObj);
 
                         EntityItem entityItem = new EntityItem(event.player.worldObj, event.player.posX, event.player.posY, event.player.posZ, new ItemStack(InitItems.itemBooklet));
                         entityItem.setPickupDelay(0);

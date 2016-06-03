@@ -100,7 +100,7 @@ public abstract class TileEntityLaserRelay extends TileEntityBase{
     public void invalidate(){
         super.invalidate();
         LaserRelayConnectionHandler.getInstance().removeRelayFromNetwork(this.pos);
-        WorldData.get(this.worldObj).markDirty();
+        WorldData.markDirty(this.worldObj);
     }
 
 }
