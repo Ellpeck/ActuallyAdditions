@@ -44,11 +44,15 @@ public class ItemAllToolAA extends ItemToolAA implements IColorProvidingItem{
     public ItemAllToolAA(ToolMaterial toolMat, String repairItem, String unlocalizedName, EnumRarity rarity, int color){
         super(4.0F, -2F, toolMat, repairItem, unlocalizedName, rarity, new HashSet<Block>());
         this.color = color;
+
+        this.setMaxDamage(this.getMaxDamage()*4);
     }
 
     public ItemAllToolAA(ToolMaterial toolMat, ItemStack repairItem, String unlocalizedName, EnumRarity rarity, int color){
         super(4.0F, -2F, toolMat, repairItem, unlocalizedName, rarity, new HashSet<Block>());
         this.color = color;
+
+        this.setMaxDamage(this.getMaxDamage()*4);
     }
 
     @Override
