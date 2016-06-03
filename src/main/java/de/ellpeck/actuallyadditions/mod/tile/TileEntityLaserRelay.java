@@ -38,18 +38,14 @@ public abstract class TileEntityLaserRelay extends TileEntityBase{
 
     @Override
     public void receiveSyncCompound(NBTTagCompound compound){
-        BlockPos thisPos = this.pos;
-        if(compound != null){
-            LaserRelayConnectionHandler.getInstance().removeRelayFromNetwork(thisPos);
+        LaserRelayConnectionHandler.getInstance().removeRelayFromNetwork(this.pos);
 
-            NBTTagList list = compound.getTagList("Connections", 10);
+        NBTTagList list = compound.getTagList("Connections", 10);
+        if(!list.hasNoTags()){
             for(int i = 0; i < list.tagCount(); i++){
                 LaserRelayConnectionHandler.ConnectionPair pair = LaserRelayConnectionHandler.ConnectionPair.readFromNBT(list.getCompoundTagAt(i));
                 LaserRelayConnectionHandler.getInstance().addConnection(pair.firstRelay, pair.secondRelay);
             }
-        }
-        else{
-            LaserRelayConnectionHandler.getInstance().removeRelayFromNetwork(thisPos);
         }
 
         super.receiveSyncCompound(compound);
@@ -59,17 +55,16 @@ public abstract class TileEntityLaserRelay extends TileEntityBase{
     @Override
     public NBTTagCompound getUpdateTag(){
         NBTTagCompound compound = super.getUpdateTag();
+        NBTTagList list = new NBTTagList();
 
-        BlockPos thisPos = this.pos;
-        ConcurrentSet<LaserRelayConnectionHandler.ConnectionPair> connections = LaserRelayConnectionHandler.getInstance().getConnectionsFor(thisPos);
-
-        if(connections != null){
-            NBTTagList list = new NBTTagList();
+        ConcurrentSet<LaserRelayConnectionHandler.ConnectionPair> connections = LaserRelayConnectionHandler.getInstance().getConnectionsFor(this.pos);
+        if(connections != null && !connections.isEmpty()){
             for(LaserRelayConnectionHandler.ConnectionPair pair : connections){
                 list.appendTag(pair.writeToNBT());
             }
-            compound.setTag("Connections", list);
         }
+
+        compound.setTag("Connections", list);
         return compound;
     }
 

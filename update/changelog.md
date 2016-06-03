@@ -8,6 +8,7 @@
 * Made shovels make path blocks instead of farmland
 * Changed world data save system to hopefully make laser relays not disconnect on certain occasions but only on the server and I don't get why this is happening
 * Made tools be held like tools and not like normal items in third person
+* Fixed a syncing bug with tileentities on world join
 
 # 1.9.4-r36
 * Added a config option to print all of the booklet's text into a file on startup

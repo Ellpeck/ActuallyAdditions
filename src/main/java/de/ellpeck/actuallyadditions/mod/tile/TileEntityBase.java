@@ -129,12 +129,16 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
         this.readSyncableNBT(compound, true);
     }
 
-
     @Override
     public NBTTagCompound getUpdateTag(){
         NBTTagCompound tag = super.getUpdateTag();
         this.writeSyncableNBT(tag, true);
         return tag;
+    }
+
+    @Override
+    public void handleUpdateTag(NBTTagCompound compound){
+        this.receiveSyncCompound(compound);
     }
 
     public void writeSyncableNBT(NBTTagCompound compound, boolean isForSync){
