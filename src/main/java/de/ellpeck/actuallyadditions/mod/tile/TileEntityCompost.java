@@ -91,6 +91,17 @@ public class TileEntityCompost extends TileEntityInventoryBase{
     }
 
     @Override
+    public int getInventoryStackLimit(){
+        if(this.slots[0] != null){
+            CompostRecipe recipe = getRecipeForInput(this.slots[0]);
+            if(recipe != null && recipe.input != null){
+                return recipe.input.stackSize;
+            }
+        }
+        return super.getInventoryStackLimit();
+    }
+
+    @Override
     public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
         return this.isItemValidForSlot(slot, stack);
     }
