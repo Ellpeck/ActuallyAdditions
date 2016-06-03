@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.items;
 
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.misc.LaserRelayConnectionHandler;
+import de.ellpeck.actuallyadditions.mod.misc.WorldData;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelay;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
@@ -58,6 +59,8 @@ public class ItemLaserWrench extends ItemBase{
 
                             ((TileEntityLaserRelay)world.getTileEntity(savedPos)).sendUpdate();
                             ((TileEntityLaserRelay)world.getTileEntity(pos)).sendUpdate();
+
+                            WorldData.get(world).markDirty();
 
                             player.addChatComponentMessage(new TextComponentTranslation("tooltip."+ModUtil.MOD_ID+".laser.connected.desc"));
                         }

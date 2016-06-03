@@ -14,64 +14,38 @@ import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.playerdata.PlayerServerData;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldSavedData;
 
 public class WorldData extends WorldSavedData{
 
     public static final String DATA_TAG = ModUtil.MOD_ID+"worlddata";
-    private static WorldData instance;
 
     public WorldData(String tag){
         super(tag);
     }
 
-    public static void makeDirty(){
-        if(instance != null){
-            instance.markDirty();
-        }
-    }
-
-    public static void init(MinecraftServer server){
-        if(server != null){
-            World world = server.getEntityWorld();
-            if(!world.isRemote){
-                clearOldData();
-                ModUtil.LOGGER.info("Loading WorldData!");
-
-                WorldData savedData = (WorldData)world.loadItemData(WorldData.class, DATA_TAG);
-                //Generate new SavedData
-                if(savedData == null){
-                    ModUtil.LOGGER.info("No WorldData found, creating...");
-
-                    savedData = new WorldData(DATA_TAG);
-                    world.setItemData(DATA_TAG, savedData);
-                }
-                else{
-                    ModUtil.LOGGER.info("WorldData sucessfully received!");
-                }
-
-                //Set the current SavedData to the retreived one
-                WorldData.instance = savedData;
+    public static WorldData get(World world){
+        if(world.getMapStorage() != null){
+            WorldData data = (WorldData)world.getMapStorage().getOrLoadData(WorldData.class, DATA_TAG);
+            if(data == null){
+                data = new WorldData(DATA_TAG);
+                data.markDirty();
+                world.getMapStorage().setData(DATA_TAG, data);
             }
-        }
-    }
 
-    public static void clearOldData(){
-        if(!LaserRelayConnectionHandler.getInstance().networks.isEmpty()){
-            ModUtil.LOGGER.info("Clearing leftover Laser Relay Connection Data from other worlds!");
-            LaserRelayConnectionHandler.getInstance().networks.clear();
+            return data;
         }
-        if(!PlayerServerData.playerSaveData.isEmpty()){
-            ModUtil.LOGGER.info("Clearing leftover Persistent Server Data from other worlds!");
-            PlayerServerData.playerSaveData.clear();
+        else{
+            return null;
         }
     }
 
     @Override
     public void readFromNBT(NBTTagCompound compound){
         //Laser World Data
+        LaserRelayConnectionHandler.getInstance().networks.clear();
+
         NBTTagList networkList = compound.getTagList("Networks", 10);
         for(int i = 0; i < networkList.tagCount(); i++){
             LaserRelayConnectionHandler.Network network = LaserRelayConnectionHandler.getInstance().readNetworkFromNBT(networkList.getCompoundTagAt(i));
@@ -79,6 +53,8 @@ public class WorldData extends WorldSavedData{
         }
 
         //Player Data
+        PlayerServerData.playerSaveData.clear();
+
         NBTTagList playerList = compound.getTagList("PlayerData", 10);
         for(int i = 0; i < playerList.tagCount(); i++){
             PlayerServerData.PlayerSave aSave = PlayerServerData.PlayerSave.fromNBT(playerList.getCompoundTagAt(i));

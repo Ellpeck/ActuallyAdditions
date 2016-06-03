@@ -87,7 +87,7 @@ public class EntityLivingEvents{
             data.setTag("Deaths", deaths);
 
             //player.addChatComponentMessage(new TextComponentTranslation("info."+ModUtil.MOD_ID+".deathRecorded"));
-            WorldData.makeDirty();
+            WorldData.get(((EntityPlayer)event.getEntityLiving()).worldObj).markDirty();
         }
     }
 

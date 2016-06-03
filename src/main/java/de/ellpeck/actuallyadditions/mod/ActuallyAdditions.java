@@ -128,11 +128,6 @@ public class ActuallyAdditions{
     }
 
     @EventHandler
-    public void serverStarting(FMLServerStartingEvent event){
-        WorldData.init(event.getServer());
-    }
-
-    @EventHandler
     public void missingMapping(FMLMissingMappingsEvent event){
         for(FMLMissingMappingsEvent.MissingMapping mapping : event.getAll()){
             if(mapping.name != null){

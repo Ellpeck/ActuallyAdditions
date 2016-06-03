@@ -19,17 +19,17 @@ public class WorldLoadingEvents{
 
     @SubscribeEvent
     public void onLoad(WorldEvent.Load event){
-        WorldData.makeDirty();
+        if(!event.getWorld().isRemote){
+            WorldData.get(event.getWorld());
+        }
     }
 
     @SubscribeEvent
     public void onUnload(WorldEvent.Unload event){
-        WorldData.makeDirty();
-        FakePlayerUtil.unloadFakePlayer();
+        if(!event.getWorld().isRemote){
+            WorldData.get(event.getWorld()).markDirty();
+            FakePlayerUtil.unloadFakePlayer();
+        }
     }
 
-    @SubscribeEvent
-    public void onSave(WorldEvent.Save event){
-        WorldData.makeDirty();
-    }
 }

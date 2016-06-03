@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
 import de.ellpeck.actuallyadditions.mod.misc.LaserRelayConnectionHandler;
+import de.ellpeck.actuallyadditions.mod.misc.WorldData;
 import de.ellpeck.actuallyadditions.mod.network.PacketParticle;
 import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
@@ -99,6 +100,7 @@ public abstract class TileEntityLaserRelay extends TileEntityBase{
     public void invalidate(){
         super.invalidate();
         LaserRelayConnectionHandler.getInstance().removeRelayFromNetwork(this.pos);
+        WorldData.get(this.worldObj).markDirty();
     }
 
 }
