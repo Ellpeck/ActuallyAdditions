@@ -31,7 +31,7 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
     private List<GenericItemHandlerInfo> getItemHandlerInfos(){
         TileEntityLaserRelayItem relay = this.getConnectedRelay();
         if(relay != null){
-            LaserRelayConnectionHandler.Network network = LaserRelayConnectionHandler.getNetworkFor(relay.getPos(), this.worldObj.provider.getDimension());
+            LaserRelayConnectionHandler.Network network = LaserRelayConnectionHandler.getNetworkFor(relay.getPos(), this.worldObj);
             if(network != null){
                 return relay.getItemHandlersInNetwork(network);
             }

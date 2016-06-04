@@ -17,6 +17,7 @@ import io.netty.util.internal.ConcurrentSet;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 public class LaserRelayConnectionHandler{
 
@@ -42,7 +43,7 @@ public class LaserRelayConnectionHandler{
     /**
      * Gets all Connections for a Relay
      */
-    public static ConcurrentSet<ConnectionPair> getConnectionsFor(BlockPos relay, int world){
+    public static ConcurrentSet<ConnectionPair> getConnectionsFor(BlockPos relay, World world){
         ConcurrentSet<ConnectionPair> allPairs = new ConcurrentSet<ConnectionPair>();
         for(Network aNetwork : WorldData.getDataForWorld(world).laserRelayNetworks){
             for(ConnectionPair pair : aNetwork.connections){
@@ -57,7 +58,7 @@ public class LaserRelayConnectionHandler{
     /**
      * Removes a Relay from its Network
      */
-    public static void removeRelayFromNetwork(BlockPos relay, int world){
+    public static void removeRelayFromNetwork(BlockPos relay, World world){
         Network network = getNetworkFor(relay, world);
         if(network != null){
             //Setup new network (so that splitting a network will cause it to break into two)
@@ -74,7 +75,7 @@ public class LaserRelayConnectionHandler{
     /**
      * Gets a Network for a Relay
      */
-    public static Network getNetworkFor(BlockPos relay, int world){
+    public static Network getNetworkFor(BlockPos relay, World world){
         for(Network aNetwork : WorldData.getDataForWorld(world).laserRelayNetworks){
             for(ConnectionPair pair : aNetwork.connections){
                 if(pair.contains(relay)){
@@ -89,7 +90,7 @@ public class LaserRelayConnectionHandler{
      * Adds a new connection between two relays
      * (Puts it into the correct network!)
      */
-    public static boolean addConnection(BlockPos firstRelay, BlockPos secondRelay, int world){
+    public static boolean addConnection(BlockPos firstRelay, BlockPos secondRelay, World world){
         int distance = (int)PosUtil.toVec(firstRelay).distanceTo(PosUtil.toVec(secondRelay));
         if(distance > TileEntityLaserRelay.MAX_DISTANCE || PosUtil.areSamePos(firstRelay, secondRelay)){
             return false;
@@ -131,7 +132,7 @@ public class LaserRelayConnectionHandler{
      * Merges two laserRelayNetworks together
      * (Actually puts everything from the second network into the first one and removes the second one)
      */
-    public static void mergeNetworks(Network firstNetwork, Network secondNetwork, int world){
+    public static void mergeNetworks(Network firstNetwork, Network secondNetwork, World world){
         for(ConnectionPair secondPair : secondNetwork.connections){
             firstNetwork.connections.add(secondPair);
         }

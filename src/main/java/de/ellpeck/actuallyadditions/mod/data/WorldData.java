@@ -46,8 +46,17 @@ public class WorldData{
         this.dimension = dimension;
     }
 
-    public static WorldData getDataForWorld(int world){
-        return worldData.get(world);
+    public static WorldData getDataForWorld(World world){
+        int dim = world.provider.getDimension();
+        WorldData data = worldData.get(dim);
+
+        if(data == null && world.isRemote){
+            data = new WorldData(null, dim);
+            worldData.put(dim, data);
+            ModUtil.LOGGER.info("Creating temporary WorldData for world "+dim+" on the client!");
+        }
+
+        return data;
     }
 
     private void readFromNBT(NBTTagCompound compound){
@@ -142,7 +151,7 @@ public class WorldData{
                 }
             }
             else{
-                ModUtil.LOGGER.error("Tried to save WorldData without any data being present!?");
+                ModUtil.LOGGER.error("Tried to save WorldData for "+world.provider.getDimension()+" without any data being present!?");
             }
         }
     }
@@ -150,9 +159,9 @@ public class WorldData{
     public static void unload(World world){
         if(!world.isRemote){
             save(world);
-            int dim = world.provider.getDimension();
-            worldData.remove(dim);
-            ModUtil.LOGGER.info("Unloading WorldData for world "+dim+"!");
+
+            worldData.remove(world.provider.getDimension());
+            ModUtil.LOGGER.info("Unloading WorldData for world "+world.provider.getDimension()+"!");
         }
     }
 }

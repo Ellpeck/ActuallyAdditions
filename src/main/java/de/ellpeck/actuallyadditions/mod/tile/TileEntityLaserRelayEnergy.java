@@ -46,7 +46,7 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay implements 
     public int transmitEnergy(BlockPos blockFrom, int maxTransmit, boolean simulate){
         int transmitted = 0;
         if(maxTransmit > 0){
-            LaserRelayConnectionHandler.Network network = LaserRelayConnectionHandler.getNetworkFor(this.pos, this.worldObj.provider.getDimension());
+            LaserRelayConnectionHandler.Network network = LaserRelayConnectionHandler.getNetworkFor(this.pos, this.worldObj);
             if(network != null){
                 transmitted = this.transferEnergyToReceiverInNeed(blockFrom, network, Math.min(ConfigIntValues.LASER_RELAY_MAX_TRANSFER.getValue(), maxTransmit), simulate);
             }

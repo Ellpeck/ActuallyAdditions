@@ -37,13 +37,13 @@ public abstract class TileEntityLaserRelay extends TileEntityBase{
 
     @Override
     public void receiveSyncCompound(NBTTagCompound compound){
-        LaserRelayConnectionHandler.removeRelayFromNetwork(this.pos, this.worldObj.provider.getDimension());
+        LaserRelayConnectionHandler.removeRelayFromNetwork(this.pos, this.worldObj);
 
         NBTTagList list = compound.getTagList("Connections", 10);
         if(!list.hasNoTags()){
             for(int i = 0; i < list.tagCount(); i++){
                 LaserRelayConnectionHandler.ConnectionPair pair = LaserRelayConnectionHandler.ConnectionPair.readFromNBT(list.getCompoundTagAt(i));
-                LaserRelayConnectionHandler.addConnection(pair.firstRelay, pair.secondRelay, this.worldObj.provider.getDimension());
+                LaserRelayConnectionHandler.addConnection(pair.firstRelay, pair.secondRelay, this.worldObj);
             }
         }
 
@@ -56,7 +56,7 @@ public abstract class TileEntityLaserRelay extends TileEntityBase{
         NBTTagCompound compound = super.getUpdateTag();
         NBTTagList list = new NBTTagList();
 
-        ConcurrentSet<LaserRelayConnectionHandler.ConnectionPair> connections = LaserRelayConnectionHandler.getConnectionsFor(this.pos, this.worldObj.provider.getDimension());
+        ConcurrentSet<LaserRelayConnectionHandler.ConnectionPair> connections = LaserRelayConnectionHandler.getConnectionsFor(this.pos, this.worldObj);
         if(connections != null && !connections.isEmpty()){
             for(LaserRelayConnectionHandler.ConnectionPair pair : connections){
                 list.appendTag(pair.writeToNBT());
@@ -79,7 +79,7 @@ public abstract class TileEntityLaserRelay extends TileEntityBase{
     public void renderParticles(){
         if(Util.RANDOM.nextInt(ConfigValues.lessParticles ? 16 : 8) == 0){
             BlockPos thisPos = this.pos;
-            LaserRelayConnectionHandler.Network network = LaserRelayConnectionHandler.getNetworkFor(thisPos, this.worldObj.provider.getDimension());
+            LaserRelayConnectionHandler.Network network = LaserRelayConnectionHandler.getNetworkFor(thisPos, this.worldObj);
             if(network != null){
                 for(LaserRelayConnectionHandler.ConnectionPair aPair : network.connections){
                     if(aPair.contains(thisPos) && PosUtil.areSamePos(thisPos, aPair.firstRelay)){
@@ -93,7 +93,7 @@ public abstract class TileEntityLaserRelay extends TileEntityBase{
     @Override
     public void invalidate(){
         super.invalidate();
-        LaserRelayConnectionHandler.removeRelayFromNetwork(this.pos, this.worldObj.provider.getDimension());
+        LaserRelayConnectionHandler.removeRelayFromNetwork(this.pos, this.worldObj);
     }
 
 }

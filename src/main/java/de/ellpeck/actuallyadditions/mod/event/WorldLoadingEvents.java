@@ -19,24 +19,18 @@ public class WorldLoadingEvents{
 
     @SubscribeEvent
     public void onLoad(WorldEvent.Load event){
-        if(!event.getWorld().isRemote){
-            WorldData.load(event.getWorld());
-        }
+        WorldData.load(event.getWorld());
     }
 
     @SubscribeEvent
     public void onUnload(WorldEvent.Unload event){
-        if(!event.getWorld().isRemote){
-            WorldData.unload(event.getWorld());
-            FakePlayerUtil.unloadFakePlayer();
-        }
+        WorldData.unload(event.getWorld());
+        FakePlayerUtil.unloadFakePlayer();
     }
 
     @SubscribeEvent
     public void onSave(WorldEvent.Save event){
-        if(!event.getWorld().isRemote){
-            WorldData.save(event.getWorld());
-        }
+        WorldData.save(event.getWorld());
     }
 
 }
