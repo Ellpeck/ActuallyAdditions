@@ -19,7 +19,7 @@ import java.util.UUID;
 public class PlayerServerData{
 
     public static NBTTagCompound getDataFromPlayer(EntityPlayer player){
-        ArrayList<PlayerSave> data = WorldData.getDataForWorld(player.worldObj.provider.getDimension()).PLAYER_SAVE_DATA;
+        ArrayList<PlayerSave> data = WorldData.PLAYER_SAVE_DATA;
         //Get Data from existing data
         for(PlayerSave save : data){
             if(save.thePlayerUUID.equals(player.getUniqueID())){
