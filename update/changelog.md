@@ -1,3 +1,7 @@
+# 1.9.4-r38
+* Added custom system to save world data because the Minecraft one always failed on me.
+* Note: This WILL disconnect all of your laser relays, sorry. Just reconnect them again. If you find any bugs with the new system (Laser Relay connections), leave an issue on github. Thanks!
+
 # 1.9.4-r37
 * Fixed rendering bug with Greenhouse Glass
 * Removed unfinished feature tags in booklet
