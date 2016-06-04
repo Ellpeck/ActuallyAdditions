@@ -61,6 +61,8 @@ public class WorldData{
 
     private void readFromNBT(NBTTagCompound compound){
         //Laser World Data
+        this.laserRelayNetworks.clear();
+
         NBTTagList networkList = compound.getTagList("Networks", 10);
         for(int i = 0; i < networkList.tagCount(); i++){
             Network network = LaserRelayConnectionHandler.readNetworkFromNBT(networkList.getCompoundTagAt(i));
