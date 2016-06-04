@@ -12,7 +12,6 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
 import de.ellpeck.actuallyadditions.mod.misc.LaserRelayConnectionHandler;
-import de.ellpeck.actuallyadditions.mod.misc.WorldData;
 import de.ellpeck.actuallyadditions.mod.network.PacketParticle;
 import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
@@ -38,13 +37,13 @@ public abstract class TileEntityLaserRelay extends TileEntityBase{
 
     @Override
     public void receiveSyncCompound(NBTTagCompound compound){
-        LaserRelayConnectionHandler.getInstance().removeRelayFromNetwork(this.pos);
+        LaserRelayConnectionHandler.removeRelayFromNetwork(this.pos, this.worldObj.provider.getDimension());
 
         NBTTagList list = compound.getTagList("Connections", 10);
         if(!list.hasNoTags()){
             for(int i = 0; i < list.tagCount(); i++){
                 LaserRelayConnectionHandler.ConnectionPair pair = LaserRelayConnectionHandler.ConnectionPair.readFromNBT(list.getCompoundTagAt(i));
-                LaserRelayConnectionHandler.getInstance().addConnection(pair.firstRelay, pair.secondRelay);
+                LaserRelayConnectionHandler.addConnection(pair.firstRelay, pair.secondRelay, this.worldObj.provider.getDimension());
             }
         }
 
@@ -57,7 +56,7 @@ public abstract class TileEntityLaserRelay extends TileEntityBase{
         NBTTagCompound compound = super.getUpdateTag();
         NBTTagList list = new NBTTagList();
 
-        ConcurrentSet<LaserRelayConnectionHandler.ConnectionPair> connections = LaserRelayConnectionHandler.getInstance().getConnectionsFor(this.pos);
+        ConcurrentSet<LaserRelayConnectionHandler.ConnectionPair> connections = LaserRelayConnectionHandler.getConnectionsFor(this.pos, this.worldObj.provider.getDimension());
         if(connections != null && !connections.isEmpty()){
             for(LaserRelayConnectionHandler.ConnectionPair pair : connections){
                 list.appendTag(pair.writeToNBT());
@@ -80,7 +79,7 @@ public abstract class TileEntityLaserRelay extends TileEntityBase{
     public void renderParticles(){
         if(Util.RANDOM.nextInt(ConfigValues.lessParticles ? 16 : 8) == 0){
             BlockPos thisPos = this.pos;
-            LaserRelayConnectionHandler.Network network = LaserRelayConnectionHandler.getInstance().getNetworkFor(thisPos);
+            LaserRelayConnectionHandler.Network network = LaserRelayConnectionHandler.getNetworkFor(thisPos, this.worldObj.provider.getDimension());
             if(network != null){
                 for(LaserRelayConnectionHandler.ConnectionPair aPair : network.connections){
                     if(aPair.contains(thisPos) && PosUtil.areSamePos(thisPos, aPair.firstRelay)){
@@ -94,8 +93,7 @@ public abstract class TileEntityLaserRelay extends TileEntityBase{
     @Override
     public void invalidate(){
         super.invalidate();
-        LaserRelayConnectionHandler.getInstance().removeRelayFromNetwork(this.pos);
-        WorldData.markDirty(this.worldObj);
+        LaserRelayConnectionHandler.removeRelayFromNetwork(this.pos, this.worldObj.provider.getDimension());
     }
 
 }

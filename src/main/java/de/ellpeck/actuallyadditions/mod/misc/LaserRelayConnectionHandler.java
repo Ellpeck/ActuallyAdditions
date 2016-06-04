@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.misc;
 
+import de.ellpeck.actuallyadditions.mod.data.WorldData;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelay;
 import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import io.netty.util.internal.ConcurrentSet;
@@ -19,21 +20,7 @@ import net.minecraft.util.math.BlockPos;
 
 public class LaserRelayConnectionHandler{
 
-    private static LaserRelayConnectionHandler instance;
-
-    /**
-     * All of the Networks
-     */
-    public final ConcurrentSet<Network> networks = new ConcurrentSet<Network>();
-
-    public static LaserRelayConnectionHandler getInstance(){
-        if(instance == null){
-            instance = new LaserRelayConnectionHandler();
-        }
-        return instance;
-    }
-
-    public NBTTagCompound writeNetworkToNBT(Network network){
+    public static NBTTagCompound writeNetworkToNBT(Network network){
         NBTTagList list = new NBTTagList();
         for(ConnectionPair pair : network.connections){
             list.appendTag(pair.writeToNBT());
@@ -43,7 +30,7 @@ public class LaserRelayConnectionHandler{
         return compound;
     }
 
-    public Network readNetworkFromNBT(NBTTagCompound tag){
+    public static Network readNetworkFromNBT(NBTTagCompound tag){
         NBTTagList list = tag.getTagList("Network", 10);
         Network network = new Network();
         for(int i = 0; i < list.tagCount(); i++){
@@ -55,9 +42,9 @@ public class LaserRelayConnectionHandler{
     /**
      * Gets all Connections for a Relay
      */
-    public ConcurrentSet<ConnectionPair> getConnectionsFor(BlockPos relay){
+    public static ConcurrentSet<ConnectionPair> getConnectionsFor(BlockPos relay, int world){
         ConcurrentSet<ConnectionPair> allPairs = new ConcurrentSet<ConnectionPair>();
-        for(Network aNetwork : this.networks){
+        for(Network aNetwork : WorldData.getDataForWorld(world).laserRelayNetworks){
             for(ConnectionPair pair : aNetwork.connections){
                 if(pair.contains(relay)){
                     allPairs.add(pair);
@@ -70,14 +57,14 @@ public class LaserRelayConnectionHandler{
     /**
      * Removes a Relay from its Network
      */
-    public void removeRelayFromNetwork(BlockPos relay){
-        Network network = this.getNetworkFor(relay);
+    public static void removeRelayFromNetwork(BlockPos relay, int world){
+        Network network = getNetworkFor(relay, world);
         if(network != null){
             //Setup new network (so that splitting a network will cause it to break into two)
-            this.networks.remove(network);
+            WorldData.getDataForWorld(world).laserRelayNetworks.remove(network);
             for(ConnectionPair pair : network.connections){
                 if(!pair.contains(relay)){
-                    this.addConnection(pair.firstRelay, pair.secondRelay);
+                    addConnection(pair.firstRelay, pair.secondRelay, world);
                 }
             }
             //System.out.println("Removing a Relay from the Network!");
@@ -87,8 +74,8 @@ public class LaserRelayConnectionHandler{
     /**
      * Gets a Network for a Relay
      */
-    public Network getNetworkFor(BlockPos relay){
-        for(Network aNetwork : this.networks){
+    public static Network getNetworkFor(BlockPos relay, int world){
+        for(Network aNetwork : WorldData.getDataForWorld(world).laserRelayNetworks){
             for(ConnectionPair pair : aNetwork.connections){
                 if(pair.contains(relay)){
                     return aNetwork;
@@ -102,28 +89,28 @@ public class LaserRelayConnectionHandler{
      * Adds a new connection between two relays
      * (Puts it into the correct network!)
      */
-    public boolean addConnection(BlockPos firstRelay, BlockPos secondRelay){
+    public static boolean addConnection(BlockPos firstRelay, BlockPos secondRelay, int world){
         int distance = (int)PosUtil.toVec(firstRelay).distanceTo(PosUtil.toVec(secondRelay));
         if(distance > TileEntityLaserRelay.MAX_DISTANCE || PosUtil.areSamePos(firstRelay, secondRelay)){
             return false;
         }
 
-        Network firstNetwork = this.getNetworkFor(firstRelay);
-        Network secondNetwork = this.getNetworkFor(secondRelay);
+        Network firstNetwork = getNetworkFor(firstRelay, world);
+        Network secondNetwork = getNetworkFor(secondRelay, world);
 
         //No Network exists
         if(firstNetwork == null && secondNetwork == null){
             firstNetwork = new Network();
-            this.networks.add(firstNetwork);
+            WorldData.getDataForWorld(world).laserRelayNetworks.add(firstNetwork);
             firstNetwork.connections.add(new ConnectionPair(firstRelay, secondRelay));
         }
         //The same Network
         else if(firstNetwork == secondNetwork){
             return false;
         }
-        //Both relays have networks
+        //Both relays have laserRelayNetworks
         else if(firstNetwork != null && secondNetwork != null){
-            this.mergeNetworks(firstNetwork, secondNetwork);
+            mergeNetworks(firstNetwork, secondNetwork, world);
             firstNetwork.connections.add(new ConnectionPair(firstRelay, secondRelay));
         }
         //Only first network exists
@@ -136,19 +123,19 @@ public class LaserRelayConnectionHandler{
         }
         //System.out.println("Connected "+firstRelay.toString()+" to "+secondRelay.toString());
         //System.out.println(firstNetwork == null ? secondNetwork.toString() : firstNetwork.toString());
-        //System.out.println(this.networks);
+        //System.out.println(laserRelayNetworks);
         return true;
     }
 
     /**
-     * Merges two networks together
+     * Merges two laserRelayNetworks together
      * (Actually puts everything from the second network into the first one and removes the second one)
      */
-    public void mergeNetworks(Network firstNetwork, Network secondNetwork){
+    public static void mergeNetworks(Network firstNetwork, Network secondNetwork, int world){
         for(ConnectionPair secondPair : secondNetwork.connections){
             firstNetwork.connections.add(secondPair);
         }
-        this.networks.remove(secondNetwork);
+        WorldData.getDataForWorld(world).laserRelayNetworks.remove(secondNetwork);
         //System.out.println("Merged Two Networks!");
     }
 

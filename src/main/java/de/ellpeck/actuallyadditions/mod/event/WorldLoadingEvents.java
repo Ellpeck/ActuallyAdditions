@@ -10,7 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.event;
 
-import de.ellpeck.actuallyadditions.mod.misc.WorldData;
+import de.ellpeck.actuallyadditions.mod.data.WorldData;
 import de.ellpeck.actuallyadditions.mod.util.FakePlayerUtil;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -20,15 +20,22 @@ public class WorldLoadingEvents{
     @SubscribeEvent
     public void onLoad(WorldEvent.Load event){
         if(!event.getWorld().isRemote){
-            WorldData.loadOrGet(event.getWorld());
+            WorldData.load(event.getWorld());
         }
     }
 
     @SubscribeEvent
     public void onUnload(WorldEvent.Unload event){
         if(!event.getWorld().isRemote){
-            WorldData.markDirty(event.getWorld());
+            WorldData.unload(event.getWorld());
             FakePlayerUtil.unloadFakePlayer();
+        }
+    }
+
+    @SubscribeEvent
+    public void onSave(WorldEvent.Save event){
+        if(!event.getWorld().isRemote){
+            WorldData.save(event.getWorld());
         }
     }
 

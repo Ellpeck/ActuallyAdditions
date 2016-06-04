@@ -14,10 +14,10 @@ import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.ItemWingsOfTheBats;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
-import de.ellpeck.actuallyadditions.mod.misc.WorldData;
+import de.ellpeck.actuallyadditions.mod.data.WorldData;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
-import de.ellpeck.actuallyadditions.mod.util.playerdata.PlayerServerData;
+import de.ellpeck.actuallyadditions.mod.data.PlayerServerData;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -87,7 +87,6 @@ public class EntityLivingEvents{
             data.setTag("Deaths", deaths);
 
             //player.addChatComponentMessage(new TextComponentTranslation("info."+ModUtil.MOD_ID+".deathRecorded"));
-            WorldData.markDirty(event.getEntityLiving().getEntityWorld());
         }
     }
 

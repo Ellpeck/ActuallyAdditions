@@ -12,7 +12,7 @@ package de.ellpeck.actuallyadditions.mod.items;
 
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.misc.LaserRelayConnectionHandler;
-import de.ellpeck.actuallyadditions.mod.misc.WorldData;
+import de.ellpeck.actuallyadditions.mod.data.WorldData;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelay;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
@@ -54,13 +54,11 @@ public class ItemLaserWrench extends ItemBase{
                     BlockPos savedPos = ItemPhantomConnector.getStoredPosition(stack);
                     if(savedPos != null){
                         TileEntity savedTile = world.getTileEntity(savedPos);
-                        if(ItemPhantomConnector.getStoredWorld(stack) == world && savedTile instanceof TileEntityLaserRelay && ((TileEntityLaserRelay)savedTile).isItem == ((TileEntityLaserRelay)tile).isItem && LaserRelayConnectionHandler.getInstance().addConnection(savedPos, pos)){
+                        if(ItemPhantomConnector.getStoredWorld(stack) == world && savedTile instanceof TileEntityLaserRelay && ((TileEntityLaserRelay)savedTile).isItem == ((TileEntityLaserRelay)tile).isItem && LaserRelayConnectionHandler.addConnection(savedPos, pos, world.provider.getDimension())){
                             ItemPhantomConnector.clearStorage(stack);
 
                             ((TileEntityLaserRelay)world.getTileEntity(savedPos)).sendUpdate();
                             ((TileEntityLaserRelay)world.getTileEntity(pos)).sendUpdate();
-
-                            WorldData.markDirty(world);
 
                             player.addChatComponentMessage(new TextComponentTranslation("tooltip."+ModUtil.MOD_ID+".laser.connected.desc"));
                         }

@@ -8,7 +8,7 @@
  * © 2015-2016 Ellpeck
  */
 
-package de.ellpeck.actuallyadditions.mod.util.playerdata;
+package de.ellpeck.actuallyadditions.mod.data;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -18,11 +18,10 @@ import java.util.UUID;
 
 public class PlayerServerData{
 
-    public static final ArrayList<PlayerSave> playerSaveData = new ArrayList<PlayerSave>();
-
     public static NBTTagCompound getDataFromPlayer(EntityPlayer player){
+        ArrayList<PlayerSave> data = WorldData.getDataForWorld(player.worldObj.provider.getDimension()).PLAYER_SAVE_DATA;
         //Get Data from existing data
-        for(PlayerSave save : playerSaveData){
+        for(PlayerSave save : data){
             if(save.thePlayerUUID.equals(player.getUniqueID())){
                 return save.theCompound;
             }
@@ -30,7 +29,7 @@ public class PlayerServerData{
 
         //Add Data if none is existant
         PlayerSave aSave = new PlayerSave(player.getUniqueID(), new NBTTagCompound());
-        playerSaveData.add(aSave);
+        data.add(aSave);
         return aSave.theCompound;
     }
 
