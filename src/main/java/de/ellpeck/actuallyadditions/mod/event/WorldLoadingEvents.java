@@ -12,7 +12,6 @@ package de.ellpeck.actuallyadditions.mod.event;
 
 import de.ellpeck.actuallyadditions.mod.data.WorldData;
 import de.ellpeck.actuallyadditions.mod.util.FakePlayerUtil;
-import net.minecraftforge.event.world.ChunkDataEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -31,12 +30,7 @@ public class WorldLoadingEvents{
 
     @SubscribeEvent
     public void onSave(WorldEvent.Save event){
-        WorldData.save(event.getWorld(), true);
-    }
-
-    @SubscribeEvent
-    public void onChunkUnload(ChunkDataEvent.Save event){
-        WorldData.save(event.getWorld(), false);
+        WorldData.save(event.getWorld());
     }
 
 }

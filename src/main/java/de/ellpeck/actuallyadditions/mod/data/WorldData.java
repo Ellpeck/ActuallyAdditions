@@ -126,7 +126,7 @@ public class WorldData{
         }
     }
 
-    public static void save(World world, boolean doMessage){
+    public static void save(World world){
         if(!world.isRemote){
             WorldData data = worldData.get(world.provider.getDimension());
             if(data != null && data.handler != null){
@@ -145,9 +145,7 @@ public class WorldData{
                         CompressedStreamTools.writeCompressed(compound, stream);
                         stream.close();
 
-                        if(doMessage){
-                            ModUtil.LOGGER.info("Saved WorldData for world "+data.dimension+"!");
-                        }
+                        ModUtil.LOGGER.info("Saved WorldData for world "+data.dimension+"!");
                     }
                 }
                 catch(Exception e){
@@ -162,7 +160,7 @@ public class WorldData{
 
     public static void unload(World world){
         if(!world.isRemote){
-            save(world, true);
+            save(world);
 
             worldData.remove(world.provider.getDimension());
             ModUtil.LOGGER.info("Unloading WorldData for world "+world.provider.getDimension()+"!");
