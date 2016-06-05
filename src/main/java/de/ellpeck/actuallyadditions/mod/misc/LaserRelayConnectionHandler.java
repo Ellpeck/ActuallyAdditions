@@ -18,6 +18,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import sun.nio.ch.Net;
 
 public class LaserRelayConnectionHandler{
 
@@ -183,6 +184,19 @@ public class LaserRelayConnectionHandler{
             }
             return compound;
         }
+
+        @Override
+        public boolean equals(Object obj){
+            if(obj instanceof ConnectionPair){
+                ConnectionPair pair = (ConnectionPair)obj;
+                if(this.firstRelay != null && this.firstRelay.equals(pair.firstRelay)){
+                    if(this.secondRelay != null && this.secondRelay.equals(pair.secondRelay)){
+                        return true;
+                    }
+                }
+            }
+            return super.equals(obj);
+        }
     }
 
     public static class Network{
@@ -192,6 +206,16 @@ public class LaserRelayConnectionHandler{
         @Override
         public String toString(){
             return this.connections.toString();
+        }
+
+        @Override
+        public boolean equals(Object obj){
+            if(obj instanceof Network){
+                if(this.connections.equals(((Network)obj).connections)){
+                    return true;
+                }
+            }
+            return super.equals(obj);
         }
     }
 }
