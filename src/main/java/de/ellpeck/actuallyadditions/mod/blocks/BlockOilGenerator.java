@@ -69,7 +69,7 @@ public class BlockOilGenerator extends BlockContainerBase{
         if(!world.isRemote){
             TileEntityOilGenerator generator = (TileEntityOilGenerator)world.getTileEntity(pos);
             if(generator != null){
-                if(this.checkFailUseItemOnTank(player, stack, par6, generator)){
+                if(this.checkFailUseItemOnTank(player, stack, generator.tank)){
                     player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.OIL_GENERATOR.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
                 }
             }

@@ -24,13 +24,18 @@ import net.minecraftforge.fluids.*;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityCanolaPress extends TileEntityInventoryBase implements IEnergyReceiver, IFluidHandler, IEnergySaver, IFluidSaver{
+public class TileEntityCanolaPress extends TileEntityInventoryBase implements IEnergyReceiver, IEnergySaver, IFluidSaver{
 
     public static final int PRODUCE = 80;
     public static final int ENERGY_USE = 35;
     private static final int TIME = 30;
     public final EnergyStorage storage = new EnergyStorage(40000);
-    public final FluidTank tank = new FluidTank(2*Util.BUCKET);
+    public final FluidTank tank = new FluidTank(2*Util.BUCKET){
+        @Override
+        public boolean canFill(){
+            return false;
+        }
+    };
     public int currentProcessTime;
     private int lastEnergyStored;
     private int lastTankAmount;
@@ -88,7 +93,7 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IE
                             this.slots[0] = null;
                         }
 
-                        this.tank.fill(new FluidStack(InitFluids.fluidCanolaOil, PRODUCE), true);
+                        this.tank.fillInternal(new FluidStack(InitFluids.fluidCanolaOil, PRODUCE), true);
                         this.markDirty();
                     }
                 }
@@ -98,12 +103,12 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IE
             }
 
             if(this.tank.getFluidAmount() > 0){
-                WorldUtil.pushFluid(this.worldObj, this.pos, EnumFacing.DOWN, this.tank);
+                WorldUtil.pushFluid(this, EnumFacing.DOWN);
                 if(!this.isRedstonePowered){
-                    WorldUtil.pushFluid(this.worldObj, this.pos, EnumFacing.NORTH, this.tank);
-                    WorldUtil.pushFluid(this.worldObj, this.pos, EnumFacing.EAST, this.tank);
-                    WorldUtil.pushFluid(this.worldObj, this.pos, EnumFacing.SOUTH, this.tank);
-                    WorldUtil.pushFluid(this.worldObj, this.pos, EnumFacing.WEST, this.tank);
+                    WorldUtil.pushFluid(this, EnumFacing.NORTH);
+                    WorldUtil.pushFluid(this, EnumFacing.EAST);
+                    WorldUtil.pushFluid(this, EnumFacing.SOUTH);
+                    WorldUtil.pushFluid(this, EnumFacing.WEST);
                 }
             }
 
@@ -155,39 +160,6 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IE
     }
 
     @Override
-    public int fill(EnumFacing from, FluidStack resource, boolean doFill){
-        return 0;
-    }
-
-    @Override
-    public FluidStack drain(EnumFacing from, FluidStack resource, boolean doDrain){
-        if(resource.getFluid() == InitFluids.fluidCanolaOil){
-            return this.tank.drain(resource.amount, doDrain);
-        }
-        return null;
-    }
-
-    @Override
-    public FluidStack drain(EnumFacing from, int maxDrain, boolean doDrain){
-        return this.tank.drain(maxDrain, doDrain);
-    }
-
-    @Override
-    public boolean canFill(EnumFacing from, Fluid fluid){
-        return false;
-    }
-
-    @Override
-    public boolean canDrain(EnumFacing from, Fluid fluid){
-        return from != EnumFacing.UP;
-    }
-
-    @Override
-    public FluidTankInfo[] getTankInfo(EnumFacing from){
-        return new FluidTankInfo[]{this.tank.getInfo()};
-    }
-
-    @Override
     public int getEnergy(){
         return this.storage.getEnergyStored();
     }
@@ -205,5 +177,10 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IE
     @Override
     public void setFluids(FluidStack[] fluids){
         this.tank.setFluid(fluids[0]);
+    }
+
+    @Override
+    public FluidTank getFluidHandler(EnumFacing facing){
+        return facing != EnumFacing.UP ? this.tank : null;
     }
 }

@@ -61,7 +61,7 @@ public class BlockFluidCollector extends BlockContainerBase{
         if(!world.isRemote){
             TileEntityFluidCollector collector = (TileEntityFluidCollector)world.getTileEntity(pos);
             if(collector != null){
-                if(this.checkFailUseItemOnTank(player, stack, par6, collector)){
+                if(this.checkFailUseItemOnTank(player, stack, collector.tank)){
                     player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.FLUID_COLLECTOR.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
                 }
             }

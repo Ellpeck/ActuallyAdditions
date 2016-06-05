@@ -16,14 +16,32 @@ import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fluids.*;
+import net.minecraftforge.fluids.capability.*;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.templates.FluidHandlerFluidMap;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityFermentingBarrel extends TileEntityBase implements IFluidHandler, IFluidSaver{
+public class TileEntityFermentingBarrel extends TileEntityBase implements IFluidSaver{
 
     private static final int PROCESS_TIME = 100;
-    public final FluidTank canolaTank = new FluidTank(2*Util.BUCKET);
-    public final FluidTank oilTank = new FluidTank(2*Util.BUCKET);
+    public final FluidTank canolaTank = new FluidTank(2*Util.BUCKET){
+        @Override
+        public boolean canDrain(){
+            return false;
+        }
+
+        @Override
+        public boolean canFillFluidType(FluidStack fluid){
+            return fluid.getFluid() == InitFluids.fluidCanolaOil;
+        }
+    };
+    public final FluidTank oilTank = new FluidTank(2*Util.BUCKET){
+        @Override
+        public boolean canFill(){
+            return false;
+        }
+    };
     public int currentProcessTime;
     private int lastCanola;
     private int lastOil;
@@ -62,8 +80,8 @@ public class TileEntityFermentingBarrel extends TileEntityBase implements IFluid
                 if(this.currentProcessTime >= PROCESS_TIME){
                     this.currentProcessTime = 0;
 
-                    this.oilTank.fill(new FluidStack(InitFluids.fluidOil, produce), true);
-                    this.canolaTank.drain(produce, true);
+                    this.oilTank.fillInternal(new FluidStack(InitFluids.fluidOil, produce), true);
+                    this.canolaTank.drainInternal(produce, true);
                     this.markDirty();
                 }
             }
@@ -72,12 +90,12 @@ public class TileEntityFermentingBarrel extends TileEntityBase implements IFluid
             }
 
             if(this.oilTank.getFluidAmount() > 0){
-                WorldUtil.pushFluid(this.worldObj, this.pos, EnumFacing.DOWN, this.oilTank);
+                WorldUtil.pushFluid(this, EnumFacing.DOWN);
                 if(!this.isRedstonePowered){
-                    WorldUtil.pushFluid(this.worldObj, this.pos, EnumFacing.NORTH, this.oilTank);
-                    WorldUtil.pushFluid(this.worldObj, this.pos, EnumFacing.EAST, this.oilTank);
-                    WorldUtil.pushFluid(this.worldObj, this.pos, EnumFacing.SOUTH, this.oilTank);
-                    WorldUtil.pushFluid(this.worldObj, this.pos, EnumFacing.WEST, this.oilTank);
+                    WorldUtil.pushFluid(this, EnumFacing.NORTH);
+                    WorldUtil.pushFluid(this, EnumFacing.EAST);
+                    WorldUtil.pushFluid(this, EnumFacing.SOUTH);
+                    WorldUtil.pushFluid(this, EnumFacing.WEST);
                 }
             }
 
@@ -105,39 +123,15 @@ public class TileEntityFermentingBarrel extends TileEntityBase implements IFluid
     }
 
     @Override
-    public int fill(EnumFacing from, FluidStack resource, boolean doFill){
-        if(from != EnumFacing.DOWN && resource.getFluid() == InitFluids.fluidCanolaOil){
-            return this.canolaTank.fill(resource, doFill);
+    public IFluidHandler getFluidHandler(EnumFacing facing){
+        FluidHandlerFluidMap map = new FluidHandlerFluidMap();
+        if(facing != EnumFacing.DOWN){
+            map.addHandler(InitFluids.fluidCanolaOil, this.canolaTank);
         }
-        return 0;
-    }
-
-    @Override
-    public FluidStack drain(EnumFacing from, FluidStack resource, boolean doDrain){
-        if(resource.getFluid() == InitFluids.fluidOil){
-            return this.oilTank.drain(resource.amount, doDrain);
+        if(facing != EnumFacing.UP){
+            map.addHandler(InitFluids.fluidOil, this.oilTank);
         }
-        return null;
-    }
-
-    @Override
-    public FluidStack drain(EnumFacing from, int maxDrain, boolean doDrain){
-        return this.oilTank.drain(maxDrain, doDrain);
-    }
-
-    @Override
-    public boolean canFill(EnumFacing from, Fluid fluid){
-        return from != EnumFacing.DOWN && fluid == InitFluids.fluidCanolaOil;
-    }
-
-    @Override
-    public boolean canDrain(EnumFacing from, Fluid fluid){
-        return from != EnumFacing.UP && fluid == InitFluids.fluidOil;
-    }
-
-    @Override
-    public FluidTankInfo[] getTankInfo(EnumFacing from){
-        return new FluidTankInfo[]{this.canolaTank.getInfo(), this.oilTank.getInfo()};
+        return map;
     }
 
     @Override

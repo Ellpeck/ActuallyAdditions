@@ -19,15 +19,27 @@ import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fluids.*;
+import net.minecraftforge.fluids.capability.*;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityOilGenerator extends TileEntityBase implements IEnergyProvider, IFluidHandler, IEnergySaver, IFluidSaver{
+public class TileEntityOilGenerator extends TileEntityBase implements IEnergyProvider, IEnergySaver, IFluidSaver{
 
     public static final int ENERGY_PRODUCED = 76;
     private static final int BURN_TIME = 100;
     public final EnergyStorage storage = new EnergyStorage(50000);
-    public final FluidTank tank = new FluidTank(2*Util.BUCKET);
+    public final FluidTank tank = new FluidTank(2*Util.BUCKET){
+        @Override
+        public boolean canDrain(){
+            return false;
+        }
+
+        @Override
+        public boolean canFillFluidType(FluidStack fluid){
+            return fluid.getFluid() == InitFluids.fluidOil;
+        }
+    };
     public int currentBurnTime;
     private int lastEnergy;
     private int lastTank;
@@ -84,7 +96,7 @@ public class TileEntityOilGenerator extends TileEntityBase implements IEnergyPro
             if(ENERGY_PRODUCED*BURN_TIME <= this.storage.getMaxEnergyStored()-this.storage.getEnergyStored()){
                 if(this.currentBurnTime <= 0 && this.tank.getFluidAmount() >= fuelUsed){
                     this.currentBurnTime = BURN_TIME;
-                    this.tank.drain(fuelUsed, true);
+                    this.tank.drainInternal(fuelUsed, true);
                 }
             }
 
@@ -134,36 +146,8 @@ public class TileEntityOilGenerator extends TileEntityBase implements IEnergyPro
     }
 
     @Override
-    public int fill(EnumFacing from, FluidStack resource, boolean doFill){
-        if(resource.getFluid() == InitFluids.fluidOil){
-            return this.tank.fill(resource, doFill);
-        }
-        return 0;
-    }
-
-    @Override
-    public FluidStack drain(EnumFacing from, FluidStack resource, boolean doDrain){
-        return null;
-    }
-
-    @Override
-    public FluidStack drain(EnumFacing from, int maxDrain, boolean doDrain){
-        return null;
-    }
-
-    @Override
-    public boolean canFill(EnumFacing from, Fluid fluid){
-        return from != EnumFacing.DOWN && fluid == InitFluids.fluidOil;
-    }
-
-    @Override
-    public boolean canDrain(EnumFacing from, Fluid fluid){
-        return false;
-    }
-
-    @Override
-    public FluidTankInfo[] getTankInfo(EnumFacing from){
-        return new FluidTankInfo[]{this.tank.getInfo()};
+    public IFluidHandler getFluidHandler(EnumFacing facing){
+        return facing != EnumFacing.DOWN ? this.tank : null;
     }
 
     @Override

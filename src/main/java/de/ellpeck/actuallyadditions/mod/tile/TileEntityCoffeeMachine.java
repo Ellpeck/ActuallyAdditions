@@ -29,7 +29,7 @@ import net.minecraftforge.fluids.*;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements IButtonReactor, IEnergyReceiver, IFluidSaver, IFluidHandler, IEnergySaver{
+public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements IButtonReactor, IEnergyReceiver, IFluidSaver, IEnergySaver{
 
     public static final int SLOT_COFFEE_BEANS = 0;
     public static final int SLOT_INPUT = 1;
@@ -40,7 +40,17 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
     public static final int COFFEE_CACHE_MAX_AMOUNT = 300;
     private static final int TIME_USED = 500;
     public final EnergyStorage storage = new EnergyStorage(300000);
-    public final FluidTank tank = new FluidTank(4*Util.BUCKET);
+    public final FluidTank tank = new FluidTank(4*Util.BUCKET){
+        @Override
+        public boolean canDrain(){
+            return false;
+        }
+
+        @Override
+        public boolean canFillFluidType(FluidStack fluid){
+            return fluid.getFluid() == FluidRegistry.WATER;
+        }
+    };
     public int coffeeCacheAmount;
     public int brewTime;
     private int lastEnergy;
@@ -159,7 +169,7 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
                             this.slots[SLOT_INPUT] = null;
                         }
                         this.coffeeCacheAmount -= CACHE_USE;
-                        this.tank.drain(WATER_USE, true);
+                        this.tank.drainInternal(WATER_USE, true);
                     }
                 }
             }
@@ -207,36 +217,6 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
     }
 
     @Override
-    public int fill(EnumFacing from, FluidStack resource, boolean doFill){
-        return resource.getFluid() == FluidRegistry.WATER && from != EnumFacing.DOWN ? this.tank.fill(resource, doFill) : 0;
-    }
-
-    @Override
-    public FluidStack drain(EnumFacing from, FluidStack resource, boolean doDrain){
-        return null;
-    }
-
-    @Override
-    public FluidStack drain(EnumFacing from, int maxDrain, boolean doDrain){
-        return null;
-    }
-
-    @Override
-    public boolean canFill(EnumFacing from, Fluid fluid){
-        return true;
-    }
-
-    @Override
-    public boolean canDrain(EnumFacing from, Fluid fluid){
-        return false;
-    }
-
-    @Override
-    public FluidTankInfo[] getTankInfo(EnumFacing from){
-        return new FluidTankInfo[]{this.tank.getInfo()};
-    }
-
-    @Override
     public int getEnergy(){
         return this.storage.getEnergyStored();
     }
@@ -254,5 +234,10 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
     @Override
     public void setFluids(FluidStack[] fluids){
         this.tank.setFluid(fluids[0]);
+    }
+
+    @Override
+    public FluidTank getFluidHandler(EnumFacing facing){
+        return facing != EnumFacing.DOWN ? this.tank : null;
     }
 }

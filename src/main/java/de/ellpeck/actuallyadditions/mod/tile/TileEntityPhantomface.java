@@ -23,6 +23,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -189,5 +190,15 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
     @Override
     public boolean hasInvWrapperCapabilities(){
         return false;
+    }
+
+    @Override
+    public boolean hasCapability(Capability<?> capability, EnumFacing facing){
+        return this.isBoundThingInRange() ? this.worldObj.getTileEntity(this.boundPosition).hasCapability(capability, facing) : super.hasCapability(capability, facing);
+    }
+
+    @Override
+    public <T> T getCapability(Capability<T> capability, EnumFacing facing){
+        return this.isBoundThingInRange() ? this.worldObj.getTileEntity(this.boundPosition).getCapability(capability, facing) : super.getCapability(capability, facing);
     }
 }

@@ -47,7 +47,7 @@ public class BlockCanolaPress extends BlockContainerBase{
         if(!world.isRemote){
             TileEntityCanolaPress press = (TileEntityCanolaPress)world.getTileEntity(pos);
             if(press != null){
-                if(this.checkFailUseItemOnTank(player, stack, side, press)){
+                if(this.checkFailUseItemOnTank(player, stack, press.tank)){
                     player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.CANOLA_PRESS.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
                 }
             }

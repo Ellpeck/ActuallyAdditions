@@ -218,12 +218,6 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
     }
 
     @Override
-    public boolean hasCapability(Capability<?> capability, EnumFacing facing){
-        return this.getCapability(capability, facing) != null;
-    }
-
-
-    @Override
     public <T> T getCapability(Capability<T> capability, EnumFacing facing){
         if(this.hasInvWrapperCapabilities() && capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY){
             return (T)this.invWrappers[facing.ordinal()];

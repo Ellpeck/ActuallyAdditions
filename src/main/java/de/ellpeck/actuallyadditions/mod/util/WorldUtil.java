@@ -40,6 +40,8 @@ import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.fluids.*;
+import net.minecraftforge.fluids.capability.*;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -100,12 +102,17 @@ public class WorldUtil{
         return true;
     }
 
-    public static void pushFluid(World world, BlockPos pos, EnumFacing side, FluidTank tank){
-        TileEntity tile = getTileEntityFromSide(side, world, pos);
-        if(tile != null && tank.getFluid() != null && tile instanceof IFluidHandler){
-            if(((IFluidHandler)tile).canFill(side.getOpposite(), tank.getFluid().getFluid())){
-                int receive = ((IFluidHandler)tile).fill(side.getOpposite(), tank.getFluid(), true);
-                tank.drain(receive, true);
+    public static void pushFluid(TileEntity tileFrom, EnumFacing side){
+        TileEntity tileTo = getTileEntityFromSide(side, tileFrom.getWorld(), tileFrom.getPos());
+        if(tileTo != null){
+            IFluidHandler handlerFrom = tileFrom.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side);
+            IFluidHandler handlerTo = tileTo.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side.getOpposite());
+            if(handlerFrom != null && handlerTo != null){
+                FluidStack drain = handlerFrom.drain(Integer.MAX_VALUE, false);
+                if(drain != null){
+                    int filled = handlerTo.fill(drain.copy(), true);
+                    handlerFrom.drain(filled, true);
+                }
             }
         }
     }

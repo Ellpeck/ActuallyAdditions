@@ -119,15 +119,4 @@ public class TileEntityPhantomItemface extends TileEntityPhantomface{
     public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
         return this.isBoundThingInRange() && (this.getSided() == null || this.getSided().canExtractItem(slot, stack, side));
     }
-
-    @Override
-    public boolean hasCapability(Capability<?> capability, EnumFacing facing){
-        return this.isBoundThingInRange() ? this.worldObj.getTileEntity(this.boundPosition).hasCapability(capability, facing) : super.hasCapability(capability, facing);
-    }
-
-
-    @Override
-    public <T> T getCapability(Capability<T> capability, EnumFacing facing){
-        return this.isBoundThingInRange() ? this.worldObj.getTileEntity(this.boundPosition).getCapability(capability, facing) : super.getCapability(capability, facing);
-    }
 }

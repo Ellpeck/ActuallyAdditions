@@ -20,9 +20,13 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -194,5 +198,25 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
                 PacketHandler.theNetwork.sendToAllAround(new PacketUpdateTileEntity(compound, this.getPos()), new NetworkRegistry.TargetPoint(this.worldObj.provider.getDimension(), this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), 64));
             }
         }
+    }
+
+    @Override
+    public boolean hasCapability(Capability<?> capability, EnumFacing facing){
+        return this.getCapability(capability, facing) != null;
+    }
+
+    @Override
+    public <T> T getCapability(Capability<T> capability, EnumFacing facing){
+        if(capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY){
+            IFluidHandler tank = this.getFluidHandler(facing);
+            if(tank != null){
+                return (T)tank;
+            }
+        }
+        return super.getCapability(capability, facing);
+    }
+
+    public IFluidHandler getFluidHandler(EnumFacing facing){
+        return null;
     }
 }
