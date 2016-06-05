@@ -188,8 +188,8 @@ public class LaserRelayConnectionHandler{
         public boolean equals(Object obj){
             if(obj instanceof ConnectionPair){
                 ConnectionPair pair = (ConnectionPair)obj;
-                if(this.firstRelay != null && this.firstRelay.equals(pair.firstRelay)){
-                    if(this.secondRelay != null && this.secondRelay.equals(pair.secondRelay)){
+                if(this.firstRelay == pair.firstRelay || (this.firstRelay != null && this.firstRelay.equals(pair.firstRelay))){
+                    if(this.secondRelay == pair.secondRelay && (this.secondRelay != null && this.secondRelay.equals(pair.secondRelay))){
                         return true;
                     }
                 }
