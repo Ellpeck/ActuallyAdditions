@@ -403,7 +403,7 @@ public class BlockCrafting{
         //Player Interface
         if(ConfigCrafting.PLAYER_INTERFACE.isEnabled()){
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockPlayerInterface),
-                    " C ", "EBE", " S ",
+                    "BCB", "EBE", "BSB",
                     'E', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.DIAMOND.ordinal()),
                     'C', new ItemStack(Items.SKULL, 1, 1),
                     'S', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal()),
