@@ -159,8 +159,6 @@ public class WorldData{
 
     public static void unload(World world){
         if(!world.isRemote){
-            save(world);
-
             worldData.remove(world.provider.getDimension());
             ModUtil.LOGGER.info("Unloading WorldData for world "+world.provider.getDimension()+"!");
         }
