@@ -1,3 +1,10 @@
+# 1.9.4-r39
+* Updated to forge's new fluid transfer and storage system
+* Removed a possible memory leak source with world saving
+* Added Player Interface
+* Fixed configs resetting randomly sometimes
+### Sorry for this amount of updates. I've been trying to fix a lot of bugs with them, but it just hasn't been going the way I wanted.
+
 # 1.9.4-r38
 * Added custom system to save world data because the Minecraft one always failed on me.
 * Note: This WILL disconnect all of your laser relays, sorry. Just reconnect them again. If you find any bugs with the new system (Laser Relay connections), leave an issue on github. Thanks!
