@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.misc.LaserRelayConnectionHandler;
+import de.ellpeck.actuallyadditions.mod.misc.LaserRelayConnectionHandler.ConnectionPair;
 import de.ellpeck.actuallyadditions.mod.network.PacketParticle;
 import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
@@ -22,6 +23,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.util.Set;
+
 public abstract class TileEntityLaserRelay extends TileEntityBase{
 
     public static final int MAX_DISTANCE = 15;
@@ -29,6 +32,8 @@ public abstract class TileEntityLaserRelay extends TileEntityBase{
     private static final float[] COLOR_ITEM = new float[]{139F/255F, 94F/255F, 1F};
 
     public final boolean isItem;
+
+    private Set<ConnectionPair> tempConnectionStorage;
 
     public TileEntityLaserRelay(String name, boolean isItem){
         super(name);
@@ -42,7 +47,7 @@ public abstract class TileEntityLaserRelay extends TileEntityBase{
         NBTTagList list = compound.getTagList("Connections", 10);
         if(!list.hasNoTags()){
             for(int i = 0; i < list.tagCount(); i++){
-                LaserRelayConnectionHandler.ConnectionPair pair = LaserRelayConnectionHandler.ConnectionPair.readFromNBT(list.getCompoundTagAt(i));
+                ConnectionPair pair = ConnectionPair.readFromNBT(list.getCompoundTagAt(i));
                 LaserRelayConnectionHandler.addConnection(pair.positions[0], pair.positions[1], this.worldObj);
             }
         }
@@ -56,9 +61,9 @@ public abstract class TileEntityLaserRelay extends TileEntityBase{
         NBTTagCompound compound = super.getUpdateTag();
         NBTTagList list = new NBTTagList();
 
-        ConcurrentSet<LaserRelayConnectionHandler.ConnectionPair> connections = LaserRelayConnectionHandler.getConnectionsFor(this.pos, this.worldObj);
+        ConcurrentSet<ConnectionPair> connections = LaserRelayConnectionHandler.getConnectionsFor(this.pos, this.worldObj);
         if(connections != null && !connections.isEmpty()){
-            for(LaserRelayConnectionHandler.ConnectionPair pair : connections){
+            for(ConnectionPair pair : connections){
                 list.appendTag(pair.writeToNBT());
             }
         }
@@ -81,7 +86,7 @@ public abstract class TileEntityLaserRelay extends TileEntityBase{
             BlockPos thisPos = this.pos;
             LaserRelayConnectionHandler.Network network = LaserRelayConnectionHandler.getNetworkFor(thisPos, this.worldObj);
             if(network != null){
-                for(LaserRelayConnectionHandler.ConnectionPair aPair : network.connections){
+                for(ConnectionPair aPair : network.connections){
                     if(aPair.contains(thisPos) && PosUtil.areSamePos(thisPos, aPair.positions[0])){
                         PacketParticle.renderParticlesFromAToB(aPair.positions[0].getX(), aPair.positions[0].getY(), aPair.positions[0].getZ(), aPair.positions[1].getX(), aPair.positions[1].getY(), aPair.positions[1].getZ(), ConfigBoolValues.LESS_PARTICLES.isEnabled() ? 1 : Util.RANDOM.nextInt(3)+1, 0.8F, this.isItem ? COLOR_ITEM : COLOR, 1F);
                     }
@@ -93,7 +98,22 @@ public abstract class TileEntityLaserRelay extends TileEntityBase{
     @Override
     public void invalidate(){
         super.invalidate();
+        //This is because Minecraft randomly invalidates tiles on world join and then validates them again
+        //We need to compensate for this so that connections don't get broken randomly
+        this.tempConnectionStorage = LaserRelayConnectionHandler.getConnectionsFor(this.pos, this.worldObj);
+
         LaserRelayConnectionHandler.removeRelayFromNetwork(this.pos, this.worldObj);
     }
 
+    @Override
+    public void validate(){
+        if(this.tempConnectionStorage != null){
+            for(ConnectionPair pair : this.tempConnectionStorage){
+                LaserRelayConnectionHandler.addConnection(pair.positions[0], pair.positions[1], this.worldObj);
+            }
+            this.tempConnectionStorage = null;
+        }
+
+        super.validate();
+    }
 }
