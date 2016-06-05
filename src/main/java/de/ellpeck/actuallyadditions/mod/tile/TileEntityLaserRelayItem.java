@@ -55,8 +55,7 @@ public class TileEntityLaserRelayItem extends TileEntityLaserRelay{
     public List<TileEntityItemViewer.GenericItemHandlerInfo> getItemHandlersInNetwork(LaserRelayConnectionHandler.Network network){
         List<TileEntityItemViewer.GenericItemHandlerInfo> handlers = new ArrayList<TileEntityItemViewer.GenericItemHandlerInfo>();
         for(LaserRelayConnectionHandler.ConnectionPair pair : network.connections){
-            BlockPos[] relays = new BlockPos[]{pair.firstRelay, pair.secondRelay};
-            for(BlockPos relay : relays){
+            for(BlockPos relay : pair.positions){
                 if(relay != null){
                     TileEntity aRelayTile = this.worldObj.getTileEntity(relay);
                     if(aRelayTile instanceof de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayItem){

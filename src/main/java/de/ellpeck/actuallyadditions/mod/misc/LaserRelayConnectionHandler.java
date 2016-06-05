@@ -65,7 +65,7 @@ public class LaserRelayConnectionHandler{
             WorldData.getDataForWorld(world).laserRelayNetworks.remove(network);
             for(ConnectionPair pair : network.connections){
                 if(!pair.contains(relay)){
-                    addConnection(pair.firstRelay, pair.secondRelay, world);
+                    addConnection(pair.positions[0], pair.positions[1], world);
                 }
             }
             //System.out.println("Removing a Relay from the Network!");
@@ -142,12 +142,11 @@ public class LaserRelayConnectionHandler{
 
     public static class ConnectionPair{
 
-        public final BlockPos firstRelay;
-        public final BlockPos secondRelay;
+        public final BlockPos[] positions = new BlockPos[2];
 
         public ConnectionPair(BlockPos firstRelay, BlockPos secondRelay){
-            this.firstRelay = firstRelay;
-            this.secondRelay = secondRelay;
+            this.positions[0] = firstRelay;
+            this.positions[1] = secondRelay;
         }
 
         public static ConnectionPair readFromNBT(NBTTagCompound compound){
@@ -165,18 +164,23 @@ public class LaserRelayConnectionHandler{
         }
 
         public boolean contains(BlockPos relay){
-            return (this.firstRelay != null && PosUtil.areSamePos(this.firstRelay, relay)) || (this.secondRelay != null && PosUtil.areSamePos(this.secondRelay, relay));
+            for(BlockPos position : this.positions){
+                if(position != null && PosUtil.areSamePos(position, relay)){
+                    return true;
+                }
+            }
+            return false;
         }
 
         @Override
         public String toString(){
-            return (this.firstRelay == null ? "-" : this.firstRelay.toString())+" | "+(this.secondRelay == null ? "-" : this.secondRelay.toString());
+            return (this.positions[0] == null ? "-" : this.positions[0].toString())+" | "+(this.positions[1] == null ? "-" : this.positions[1].toString());
         }
 
         public NBTTagCompound writeToNBT(){
             NBTTagCompound compound = new NBTTagCompound();
-            for(int i = 0; i < 2; i++){
-                BlockPos relay = i == 0 ? this.firstRelay : this.secondRelay;
+            for(int i = 0; i < this.positions.length; i++){
+                BlockPos relay = this.positions[i];
                 compound.setInteger("x"+i, relay.getX());
                 compound.setInteger("y"+i, relay.getY());
                 compound.setInteger("z"+i, relay.getZ());
@@ -188,8 +192,8 @@ public class LaserRelayConnectionHandler{
         public boolean equals(Object obj){
             if(obj instanceof ConnectionPair){
                 ConnectionPair pair = (ConnectionPair)obj;
-                if(this.firstRelay == pair.firstRelay || (this.firstRelay != null && this.firstRelay.equals(pair.firstRelay))){
-                    if(this.secondRelay == pair.secondRelay && (this.secondRelay != null && this.secondRelay.equals(pair.secondRelay))){
+                for(int i = 0; i < this.positions.length; i++){
+                    if(this.positions[i] == pair.positions[i] || (this.positions[i] != null && this.positions[i].equals(pair.positions[i]))){
                         return true;
                     }
                 }

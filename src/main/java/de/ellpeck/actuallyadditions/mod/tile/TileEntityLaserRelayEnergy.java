@@ -64,9 +64,8 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay implements 
         List<BlockPos> alreadyChecked = new ArrayList<BlockPos>();
         //Go through all of the connections in the network
         for(LaserRelayConnectionHandler.ConnectionPair pair : network.connections){
-            BlockPos[] relays = new BlockPos[]{pair.firstRelay, pair.secondRelay};
             //Go through both relays in the connection
-            for(BlockPos relay : relays){
+            for(BlockPos relay : pair.positions){
                 if(relay != null && !alreadyChecked.contains(relay)){
                     alreadyChecked.add(relay);
                     //Get every side of the relay

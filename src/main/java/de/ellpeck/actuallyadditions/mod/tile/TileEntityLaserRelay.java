@@ -43,7 +43,7 @@ public abstract class TileEntityLaserRelay extends TileEntityBase{
         if(!list.hasNoTags()){
             for(int i = 0; i < list.tagCount(); i++){
                 LaserRelayConnectionHandler.ConnectionPair pair = LaserRelayConnectionHandler.ConnectionPair.readFromNBT(list.getCompoundTagAt(i));
-                LaserRelayConnectionHandler.addConnection(pair.firstRelay, pair.secondRelay, this.worldObj);
+                LaserRelayConnectionHandler.addConnection(pair.positions[0], pair.positions[1], this.worldObj);
             }
         }
 
@@ -82,8 +82,8 @@ public abstract class TileEntityLaserRelay extends TileEntityBase{
             LaserRelayConnectionHandler.Network network = LaserRelayConnectionHandler.getNetworkFor(thisPos, this.worldObj);
             if(network != null){
                 for(LaserRelayConnectionHandler.ConnectionPair aPair : network.connections){
-                    if(aPair.contains(thisPos) && PosUtil.areSamePos(thisPos, aPair.firstRelay)){
-                        PacketParticle.renderParticlesFromAToB(aPair.firstRelay.getX(), aPair.firstRelay.getY(), aPair.firstRelay.getZ(), aPair.secondRelay.getX(), aPair.secondRelay.getY(), aPair.secondRelay.getZ(), ConfigBoolValues.LESS_PARTICLES.isEnabled() ? 1 : Util.RANDOM.nextInt(3)+1, 0.8F, this.isItem ? COLOR_ITEM : COLOR, 1F);
+                    if(aPair.contains(thisPos) && PosUtil.areSamePos(thisPos, aPair.positions[0])){
+                        PacketParticle.renderParticlesFromAToB(aPair.positions[0].getX(), aPair.positions[0].getY(), aPair.positions[0].getZ(), aPair.positions[1].getX(), aPair.positions[1].getY(), aPair.positions[1].getZ(), ConfigBoolValues.LESS_PARTICLES.isEnabled() ? 1 : Util.RANDOM.nextInt(3)+1, 0.8F, this.isItem ? COLOR_ITEM : COLOR, 1F);
                     }
                 }
             }
