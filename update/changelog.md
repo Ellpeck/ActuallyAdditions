@@ -1,3 +1,8 @@
+# 1.9.4-r40
+* Fixed a bug with Laser Relays sometimes randomly disconnecting on chunk load.
+### You only need this when you have been or are wanting to use Laser Relays of any sort. This version fixes a hideous bug that caused them to randomly disconnect when re-loading chunks for a reason that makes absolutely no sense to me and the people I asked. If you want to know what the bug was, [click here](https://github.com/Ellpeck/ActuallyAdditions/commit/d46bb306d87da57ea180afcd9e6cc00fc96637ef).
+#### Again, sorry for the amount of updates, this has just been driving me crazy.
+
 # 1.9.4-r39
 * Updated to forge's new fluid transfer and storage system
 * Removed a possible memory leak source with world saving
