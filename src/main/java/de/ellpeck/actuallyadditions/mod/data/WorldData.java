@@ -33,13 +33,11 @@ import java.util.concurrent.ConcurrentHashMap;
 public class WorldData{
 
     public static final String DATA_TAG = ModUtil.MOD_ID+"data";
+    public static final ArrayList<PlayerSave> PLAYER_SAVE_DATA = new ArrayList<PlayerSave>();
     private static Map<Integer, WorldData> worldData = new ConcurrentHashMap<Integer, WorldData>();
-
+    public final ConcurrentSet<Network> laserRelayNetworks = new ConcurrentSet<Network>();
     private ISaveHandler handler;
     private int dimension;
-
-    public final ConcurrentSet<Network> laserRelayNetworks = new ConcurrentSet<Network>();
-    public static final ArrayList<PlayerSave> PLAYER_SAVE_DATA = new ArrayList<PlayerSave>();
 
     public WorldData(ISaveHandler handler, int dimension){
         this.handler = handler;
@@ -57,46 +55,6 @@ public class WorldData{
         }
 
         return data;
-    }
-
-    private void readFromNBT(NBTTagCompound compound){
-        //Laser World Data
-        this.laserRelayNetworks.clear();
-
-        NBTTagList networkList = compound.getTagList("Networks", 10);
-        for(int i = 0; i < networkList.tagCount(); i++){
-            Network network = LaserRelayConnectionHandler.readNetworkFromNBT(networkList.getCompoundTagAt(i));
-            this.laserRelayNetworks.add(network);
-        }
-
-        if(this.dimension == 0){
-            //Player Data
-            PLAYER_SAVE_DATA.clear();
-
-            NBTTagList playerList = compound.getTagList("PlayerData", 10);
-            for(int i = 0; i < playerList.tagCount(); i++){
-                PlayerSave aSave = PlayerSave.fromNBT(playerList.getCompoundTagAt(i));
-                PLAYER_SAVE_DATA.add(aSave);
-            }
-        }
-    }
-
-    private void writeToNBT(NBTTagCompound compound){
-        //Laser World Data
-        NBTTagList networkList = new NBTTagList();
-        for(Network network : this.laserRelayNetworks){
-            networkList.appendTag(LaserRelayConnectionHandler.writeNetworkToNBT(network));
-        }
-        compound.setTag("Networks", networkList);
-
-        if(this.dimension == 0){
-            //Player Data
-            NBTTagList playerList = new NBTTagList();
-            for(PlayerSave theSave : PLAYER_SAVE_DATA){
-                playerList.appendTag(theSave.toNBT());
-            }
-            compound.setTag("PlayerData", playerList);
-        }
     }
 
     public static void load(World world){
@@ -161,6 +119,46 @@ public class WorldData{
         if(!world.isRemote){
             worldData.remove(world.provider.getDimension());
             ModUtil.LOGGER.info("Unloading WorldData for world "+world.provider.getDimension()+"!");
+        }
+    }
+
+    private void readFromNBT(NBTTagCompound compound){
+        //Laser World Data
+        this.laserRelayNetworks.clear();
+
+        NBTTagList networkList = compound.getTagList("Networks", 10);
+        for(int i = 0; i < networkList.tagCount(); i++){
+            Network network = LaserRelayConnectionHandler.readNetworkFromNBT(networkList.getCompoundTagAt(i));
+            this.laserRelayNetworks.add(network);
+        }
+
+        if(this.dimension == 0){
+            //Player Data
+            PLAYER_SAVE_DATA.clear();
+
+            NBTTagList playerList = compound.getTagList("PlayerData", 10);
+            for(int i = 0; i < playerList.tagCount(); i++){
+                PlayerSave aSave = PlayerSave.fromNBT(playerList.getCompoundTagAt(i));
+                PLAYER_SAVE_DATA.add(aSave);
+            }
+        }
+    }
+
+    private void writeToNBT(NBTTagCompound compound){
+        //Laser World Data
+        NBTTagList networkList = new NBTTagList();
+        for(Network network : this.laserRelayNetworks){
+            networkList.appendTag(LaserRelayConnectionHandler.writeNetworkToNBT(network));
+        }
+        compound.setTag("Networks", networkList);
+
+        if(this.dimension == 0){
+            //Player Data
+            NBTTagList playerList = new NBTTagList();
+            for(PlayerSave theSave : PLAYER_SAVE_DATA){
+                playerList.appendTag(theSave.toNBT());
+            }
+            compound.setTag("PlayerData", playerList);
         }
     }
 }

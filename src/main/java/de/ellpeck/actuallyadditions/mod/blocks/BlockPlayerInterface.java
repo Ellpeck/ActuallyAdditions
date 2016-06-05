@@ -11,7 +11,6 @@
 package de.ellpeck.actuallyadditions.mod.blocks;
 
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityBookletStand;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityPlayerInterface;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
