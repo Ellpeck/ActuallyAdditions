@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.items;
 
 import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import net.minecraft.block.Block;
@@ -75,7 +76,7 @@ public class ItemLeafBlower extends ItemBase{
                 //Breaks the Blocks
                 this.breakStuff(player.worldObj, MathHelper.floor_double(player.posX), MathHelper.floor_double(player.posY), MathHelper.floor_double(player.posZ));
                 //Plays a Minecart sounds (It really sounds like a Leaf Blower!)
-                if(!ConfigValues.lessSound){
+                if(!ConfigBoolValues.LESS_SOUND.isEnabled()){
                     player.worldObj.playSound(null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_MINECART_RIDING, SoundCategory.PLAYERS, 0.3F, 0.001F);
                 }
             }
@@ -119,7 +120,7 @@ public class ItemLeafBlower extends ItemBase{
             drops.addAll(theBlock.getDrops(world, theCoord, world.getBlockState(theCoord), 0));
 
             //Plays the Breaking Sound
-            if(!ConfigValues.lessBlockBreakingEffects){
+            if(!ConfigBoolValues.LESS_BLOCK_BREAKING_EFFECTS.isEnabled()){
                 world.playEvent(2001, theCoord, Block.getStateId(world.getBlockState(theCoord)));
             }
 

@@ -15,6 +15,7 @@ import com.google.common.collect.Multimap;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheColoredLampColors;
 import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigStringListValues;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerDrill;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemEnergy;
@@ -502,7 +503,7 @@ public class ItemDrill extends ItemEnergy{
     private boolean hasExtraWhitelist(Block block){
         String name = block.getRegistryName().toString();
         if(name != null){
-            for(String list : ConfigValues.drillExtraMiningWhitelist){
+            for(String list : ConfigStringListValues.DRILL_EXTRA_MINING_WHITELIST.getValue()){
                 if(list.equals(name)){
                     return true;
                 }

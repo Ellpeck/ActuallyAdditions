@@ -27,13 +27,13 @@ public class ConfigurationHandler{
 
         Util.registerEvent(this);
 
-        if(config == null){
-            config = new Configuration(configFile, true);
-            loadConfig();
-        }
+        config = new Configuration(configFile);
+        config.load();
+
+        redefineConfigs();
     }
 
-    private static void loadConfig(){
+    private static void redefineConfigs(){
         ConfigValues.defineConfigValues(config);
 
         if(config.hasChanged()){
@@ -44,7 +44,7 @@ public class ConfigurationHandler{
     @SubscribeEvent
     public void onConfigurationChangedEvent(ConfigChangedEvent.OnConfigChangedEvent event){
         if(event.getModID().equalsIgnoreCase(ModUtil.MOD_ID)){
-            loadConfig();
+            redefineConfigs();
         }
     }
 }

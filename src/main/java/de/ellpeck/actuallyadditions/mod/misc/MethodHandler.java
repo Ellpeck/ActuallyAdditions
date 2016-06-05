@@ -15,6 +15,7 @@ import de.ellpeck.actuallyadditions.api.internal.IMethodHandler;
 import de.ellpeck.actuallyadditions.api.recipe.CoffeeIngredient;
 import de.ellpeck.actuallyadditions.api.recipe.LensConversionRecipe;
 import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.items.lens.LensRecipeHandler;
 import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import net.minecraft.block.Block;
@@ -135,7 +136,7 @@ public class MethodHandler implements IMethodHandler{
                                 if(outputs != null && !outputs.isEmpty()){
                                     ItemStack output = outputs.get(0);
                                     if(output.getItem() instanceof ItemBlock){
-                                        if(!ConfigValues.lessBlockBreakingEffects){
+                                        if(!ConfigBoolValues.LESS_BLOCK_BREAKING_EFFECTS.isEnabled()){
                                             tile.getWorldObject().playEvent(2001, pos, Block.getStateId(tile.getWorldObject().getBlockState(pos)));
                                         }
                                         PosUtil.setBlock(pos, tile.getWorldObject(), Block.getBlockFromItem(output.getItem()), output.getItemDamage(), 2);

@@ -15,6 +15,7 @@ import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheWildPlants;
 import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntListValues;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
@@ -34,7 +35,7 @@ public class WorldDecorationEvent{
     @SubscribeEvent
     public void onWorldDecoration(DecorateBiomeEvent.Decorate event){
         if((event.getResult() == Event.Result.ALLOW || event.getResult() == Event.Result.DEFAULT)){
-            if(Util.arrayContains(ConfigValues.plantDimensionBlacklist, event.getWorld().provider.getDimension()) < 0){
+            if(Util.arrayContains(ConfigIntListValues.PLANT_DIMENSION_BLACKLIST.getValue(), event.getWorld().provider.getDimension()) < 0){
                 this.generateRice(event);
                 this.genPlantNormally(InitBlocks.blockWildPlant, TheWildPlants.CANOLA.ordinal(), ConfigIntValues.CANOLA_AMOUNT.getValue(), ConfigBoolValues.DO_CANOLA_GEN.isEnabled(), Material.GRASS, event);
                 this.genPlantNormally(InitBlocks.blockWildPlant, TheWildPlants.FLAX.ordinal(), ConfigIntValues.FLAX_AMOUNT.getValue(), ConfigBoolValues.DO_FLAX_GEN.isEnabled(), Material.GRASS, event);

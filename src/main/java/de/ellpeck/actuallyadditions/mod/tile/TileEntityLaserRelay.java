@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.misc.LaserRelayConnectionHandler;
 import de.ellpeck.actuallyadditions.mod.network.PacketParticle;
 import de.ellpeck.actuallyadditions.mod.util.PosUtil;
@@ -77,13 +78,13 @@ public abstract class TileEntityLaserRelay extends TileEntityBase{
 
     @SideOnly(Side.CLIENT)
     public void renderParticles(){
-        if(Util.RANDOM.nextInt(ConfigValues.lessParticles ? 16 : 8) == 0){
+        if(Util.RANDOM.nextInt(ConfigBoolValues.LESS_PARTICLES.isEnabled() ? 16 : 8) == 0){
             BlockPos thisPos = this.pos;
             LaserRelayConnectionHandler.Network network = LaserRelayConnectionHandler.getNetworkFor(thisPos, this.worldObj);
             if(network != null){
                 for(LaserRelayConnectionHandler.ConnectionPair aPair : network.connections){
                     if(aPair.contains(thisPos) && PosUtil.areSamePos(thisPos, aPair.firstRelay)){
-                        PacketParticle.renderParticlesFromAToB(aPair.firstRelay.getX(), aPair.firstRelay.getY(), aPair.firstRelay.getZ(), aPair.secondRelay.getX(), aPair.secondRelay.getY(), aPair.secondRelay.getZ(), ConfigValues.lessParticles ? 1 : Util.RANDOM.nextInt(3)+1, 0.8F, this.isItem ? COLOR_ITEM : COLOR, 1F);
+                        PacketParticle.renderParticlesFromAToB(aPair.firstRelay.getX(), aPair.firstRelay.getY(), aPair.firstRelay.getZ(), aPair.secondRelay.getX(), aPair.secondRelay.getY(), aPair.secondRelay.getZ(), ConfigBoolValues.LESS_PARTICLES.isEnabled() ? 1 : Util.RANDOM.nextInt(3)+1, 0.8F, this.isItem ? COLOR_ITEM : COLOR, 1F);
                     }
                 }
             }

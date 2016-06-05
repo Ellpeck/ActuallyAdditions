@@ -15,6 +15,7 @@ import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheColoredLampColors;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheMiscBlocks;
 import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigCrafting;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigStringListValues;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.metalists.*;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
@@ -572,7 +573,7 @@ public class ItemCrafting{
     }
 
     private static boolean isBlacklisted(Item item){
-        for(String except : ConfigValues.mashedFoodCraftingExceptions){
+        for(String except : ConfigStringListValues.MASHED_FOOD_CRAFTING_EXCEPTIONS.getValue()){
             if(item.getRegistryName().toString().equals(except)){
                 return true;
             }

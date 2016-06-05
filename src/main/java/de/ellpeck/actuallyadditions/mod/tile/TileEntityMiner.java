@@ -13,6 +13,8 @@ package de.ellpeck.actuallyadditions.mod.tile;
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
 import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigStringListValues;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
 import de.ellpeck.actuallyadditions.mod.network.PacketParticle;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
@@ -107,7 +109,7 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyR
 
                             if(Util.RANDOM.nextFloat() <= chance){
                                 if(WorldUtil.addToInventory(this, drops, false, true)){
-                                    if(!ConfigValues.lessBlockBreakingEffects){
+                                    if(!ConfigBoolValues.LESS_BLOCK_BREAKING_EFFECTS.isEnabled()){
                                         this.worldObj.playEvent(2001, pos, Block.getStateId(this.worldObj.getBlockState(pos)));
                                     }
                                     this.worldObj.setBlockToAir(pos);
@@ -148,7 +150,7 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyR
 
                     String reg = block.getRegistryName().toString();
                     if(!reg.isEmpty()){
-                        for(String string : ConfigValues.minerExtraWhitelist){
+                        for(String string : ConfigStringListValues.MINER_EXTRA_WHITELIST.getValue()){
                             if(reg.equals(string)){
                                 return true;
                             }
@@ -162,7 +164,7 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyR
     }
 
     private void shootParticles(int endX, int endY, int endZ){
-        if(!ConfigValues.lessParticles){
+        if(!ConfigBoolValues.LESS_PARTICLES.isEnabled()){
             PacketHandler.theNetwork.sendToAllAround(new PacketParticle(this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), endX, endY, endZ, new float[]{62F/255F, 163F/255F, 74F/255F}, 5, 1.0F), new NetworkRegistry.TargetPoint(this.worldObj.provider.getDimension(), this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), 96));
         }
     }
@@ -170,7 +172,7 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyR
     private boolean isBlacklisted(Block block){
         String reg = block.getRegistryName().toString();
         if(!reg.isEmpty()){
-            for(String string : ConfigValues.minerBlacklist){
+            for(String string : ConfigStringListValues.MINER_BLACKLIST.getValue()){
                 if(reg.equals(string)){
                     return true;
                 }

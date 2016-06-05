@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 
 import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
@@ -90,7 +91,7 @@ public class TileEntityBreaker extends TileEntityInventoryBase implements IRedst
 
             if(Util.RANDOM.nextFloat() <= chance){
                 if(WorldUtil.addToInventory(this, drops, false, true)){
-                    if(!ConfigValues.lessBlockBreakingEffects){
+                    if(!ConfigBoolValues.LESS_BLOCK_BREAKING_EFFECTS.isEnabled()){
                         this.worldObj.playEvent(2001, coordsBlock, Block.getStateId(stateToBreak));
                     }
                     WorldUtil.breakBlockAtSide(sideToManipulate, this.worldObj, this.pos);

@@ -51,7 +51,11 @@ public enum ConfigBoolValues{
 
     BOOKLET_TEXT_TO_FILE("Booklet Text to File", ConfigCategories.OTHER, false, "Should the entire text of the booklet be put into a new file in the Minecraft Folder on startup or resource reload. This is for debug purposes only and shouldn't really ever be needed."),
 
-    WATER_BOWL("Water Bowl", ConfigCategories.OTHER, true, "If right-clicking a bowl on water should create a water bowl");
+    WATER_BOWL("Water Bowl", ConfigCategories.OTHER, true, "If right-clicking a bowl on water should create a water bowl"),
+
+    LESS_SOUND("Less Sound", ConfigCategories.PERFORMANCE, false, "If blocks in Actually Additions should have less sounds"),
+    LESS_PARTICLES("Less Particles", ConfigCategories.PERFORMANCE, false, "If blocks in Actually Additions should have less particles"),
+    LESS_BLOCK_BREAKING_EFFECTS("Less Block Breaking Effects", ConfigCategories.PERFORMANCE, false, "If there should not be a sound effect and particles when a block is being destroyed by a breaker or similar");
 
     public final String name;
     public final String category;

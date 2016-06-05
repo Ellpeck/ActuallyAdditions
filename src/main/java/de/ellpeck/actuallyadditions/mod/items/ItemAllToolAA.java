@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.items;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigStringListValues;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemToolAA;
 import de.ellpeck.actuallyadditions.mod.util.IColorProvidingItem;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
@@ -77,7 +78,7 @@ public class ItemAllToolAA extends ItemToolAA implements IColorProvidingItem{
     private boolean hasExtraWhitelist(Block block){
         String name = block.getRegistryName().toString();
         if(name != null){
-            for(String list : ConfigValues.paxelExtraMiningWhitelist){
+            for(String list : ConfigStringListValues.PAXEL_EXTRA_MINING_WHITELIST.getValue()){
                 if(list.equals(name)){
                     return true;
                 }

@@ -13,6 +13,7 @@ package de.ellpeck.actuallyadditions.mod.tile;
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyProvider;
 import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
 import de.ellpeck.actuallyadditions.mod.network.PacketParticle;
 import de.ellpeck.actuallyadditions.mod.util.PosUtil;
@@ -82,7 +83,7 @@ public class TileEntityLeafGenerator extends TileEntityBase implements IEnergyPr
                             Collections.shuffle(breakPositions);
                             BlockPos theCoord = breakPositions.get(0);
 
-                            if(!ConfigValues.lessBlockBreakingEffects){
+                            if(!ConfigBoolValues.LESS_BLOCK_BREAKING_EFFECTS.isEnabled()){
                                 this.worldObj.playEvent(2001, theCoord, Block.getStateId(this.worldObj.getBlockState(theCoord)));
                             }
 
@@ -90,7 +91,7 @@ public class TileEntityLeafGenerator extends TileEntityBase implements IEnergyPr
 
                             this.storage.receiveEnergy(ENERGY_PRODUCED, false);
 
-                            if(!ConfigValues.lessParticles){
+                            if(!ConfigBoolValues.LESS_PARTICLES.isEnabled()){
                                 PacketHandler.theNetwork.sendToAllAround(new PacketParticle(this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), theCoord.getX(), theCoord.getY(), theCoord.getZ(), new float[]{62F/255F, 163F/255F, 74F/255F}, 5, 1.0F), new NetworkRegistry.TargetPoint(this.worldObj.provider.getDimension(), this.pos.getX(), this.pos.getY(), this.pos.getZ(), 64));
                             }
                         }

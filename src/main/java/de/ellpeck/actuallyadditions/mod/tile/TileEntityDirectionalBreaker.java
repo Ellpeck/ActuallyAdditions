@@ -13,6 +13,7 @@ package de.ellpeck.actuallyadditions.mod.tile;
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
 import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
@@ -92,7 +93,7 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase implem
 
                     if(Util.RANDOM.nextFloat() <= chance){
                         if(WorldUtil.addToInventory(this, drops, false, true)){
-                            if(!ConfigValues.lessBlockBreakingEffects){
+                            if(!ConfigBoolValues.LESS_BLOCK_BREAKING_EFFECTS.isEnabled()){
                                 this.worldObj.playEvent(2001, coordsBlock, Block.getStateId(this.worldObj.getBlockState(coordsBlock)));
                             }
                             WorldUtil.breakBlockAtSide(sideToManipulate, this.worldObj, this.getPos(), i);

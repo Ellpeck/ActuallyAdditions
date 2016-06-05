@@ -17,6 +17,7 @@ import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.lens.ILensItem;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
 import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.misc.SoundHandler;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
 import de.ellpeck.actuallyadditions.mod.network.PacketParticle;
@@ -46,10 +47,10 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
     }
 
     public static void shootLaser(World world, double startX, double startY, double startZ, double endX, double endY, double endZ, Lens currentLens){
-        if(!ConfigValues.lessSound){
+        if(!ConfigBoolValues.LESS_SOUND.isEnabled()){
             world.playSound(null, startX, startY, startZ, SoundHandler.reconstructor, SoundCategory.BLOCKS, 0.35F, 1.0F);
         }
-        PacketHandler.theNetwork.sendToAllAround(new PacketParticle(startX, startY, startZ, endX, endY, endZ, currentLens.getColor(), ConfigValues.lessParticles ? 2 : 8, 2F), new NetworkRegistry.TargetPoint(world.provider.getDimension(), startX, startY, startZ, 64));
+        PacketHandler.theNetwork.sendToAllAround(new PacketParticle(startX, startY, startZ, endX, endY, endZ, currentLens.getColor(), ConfigBoolValues.LESS_PARTICLES.isEnabled() ? 2 : 8, 2F), new NetworkRegistry.TargetPoint(world.provider.getDimension(), startX, startY, startZ, 64));
     }
 
     @Override

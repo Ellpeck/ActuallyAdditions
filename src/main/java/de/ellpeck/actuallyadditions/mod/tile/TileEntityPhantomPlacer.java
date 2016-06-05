@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.api.tile.IPhantomTile;
 import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.network.PacketParticle;
 import de.ellpeck.actuallyadditions.mod.util.PosUtil;
@@ -130,7 +131,7 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
                 drops.addAll(blockToBreak.getDrops(this.worldObj, this.boundPosition, this.worldObj.getBlockState(this.boundPosition), 0));
 
                 if(WorldUtil.addToInventory(this, drops, false, true)){
-                    if(!ConfigValues.lessBlockBreakingEffects){
+                    if(!ConfigBoolValues.LESS_BLOCK_BREAKING_EFFECTS.isEnabled()){
                         this.worldObj.playEvent(2001, this.boundPosition, Block.getStateId(this.worldObj.getBlockState(this.boundPosition)));
                     }
                     this.worldObj.setBlockToAir(this.boundPosition);

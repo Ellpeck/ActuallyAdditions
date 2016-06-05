@@ -10,9 +10,11 @@
 
 package de.ellpeck.actuallyadditions.mod.config;
 
+import java.util.Locale;
+
 public enum ConfigCategories{
 
-    PERFORMANCE("PERFORMANCE", "Performance Settings"),
+    PERFORMANCE("Performance", "Performance Settings"),
     FOOD_CRAFTING("Food Crafting", "Crafting Recipes for Food Items"),
     BLOCKS_CRAFTING("Block Crafting", "Crafting Recipes for Blocks"),
     ITEMS_CRAFTING("Item Crafting", "Crafting Recipes for Items"),
@@ -21,14 +23,13 @@ public enum ConfigCategories{
     MOB_DROPS("Mob Drops", "Everything regarding Item drops from mobs"),
     WORLD_GEN("World Gen", "Everything regarding World Generation"),
     POTION_RING_CRAFTING("Ring Crafting", "Crafting Recipes for Rings"),
-    FLUIDS("Fluids", "Everything regarding fluids"),
     OTHER("Other", "Everything else");
 
     public final String name;
     public final String comment;
 
     ConfigCategories(String name, String comment){
-        this.name = name;
+        this.name = name.toLowerCase(Locale.ROOT);
         this.comment = comment;
     }
 }

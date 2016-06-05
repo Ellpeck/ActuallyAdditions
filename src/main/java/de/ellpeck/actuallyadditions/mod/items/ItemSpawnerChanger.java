@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.items;
 
 import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigStringListValues;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
@@ -95,7 +96,7 @@ public class ItemSpawnerChanger extends ItemBase{
         if(!(entity instanceof EntityPlayer)){
             String entityName = EntityList.getEntityString(entity);
             if(entityName != null && !entityName.isEmpty()){
-                for(String name : ConfigValues.spawnerChangerBlacklist){
+                for(String name : ConfigStringListValues.SPAWNER_CHANGER_BLACKLIST.getValue()){
                     if(entityName.equals(name)){
                         return false;
                     }

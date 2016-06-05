@@ -14,6 +14,7 @@ import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheMiscBlocks;
 import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntListValues;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
@@ -48,7 +49,7 @@ public class OreGen implements IWorldGenerator{
     public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider){
         int dimension = world.provider.getDimension();
         if(dimension != -1 && dimension != 1){
-            if(world.getWorldType() != WorldType.FLAT && Util.arrayContains(ConfigValues.oreGenDimensionBlacklist, world.provider.getDimension()) < 0){
+            if(world.getWorldType() != WorldType.FLAT && Util.arrayContains(ConfigIntListValues.ORE_GEN_DIMENSION_BLACKLIST.getValue(), world.provider.getDimension()) < 0){
                 this.generateDefault(world, random, chunkX*16, chunkZ*16);
             }
         }

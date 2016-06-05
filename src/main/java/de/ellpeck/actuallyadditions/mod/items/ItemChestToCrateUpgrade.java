@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.items;
 
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityGiantChest;
 import de.ellpeck.actuallyadditions.mod.util.PosUtil;
@@ -55,7 +56,7 @@ public class ItemChestToCrateUpgrade extends ItemBase{
                     }
 
                     //Set New Block
-                    if(!ConfigValues.lessBlockBreakingEffects){
+                    if(!ConfigBoolValues.LESS_BLOCK_BREAKING_EFFECTS.isEnabled()){
                         world.playEvent(2001, pos, Block.getStateId(world.getBlockState(pos)));
                     }
                     PosUtil.setBlock(pos, world, InitBlocks.blockGiantChest, 0, 2);

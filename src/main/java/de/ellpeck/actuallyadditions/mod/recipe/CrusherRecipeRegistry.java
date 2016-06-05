@@ -13,6 +13,7 @@ package de.ellpeck.actuallyadditions.mod.recipe;
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.recipe.CrusherRecipe;
 import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigStringListValues;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.item.ItemStack;
@@ -63,7 +64,7 @@ public class CrusherRecipeRegistry{
     }
 
     private static boolean hasException(String ore){
-        for(String conf : ConfigValues.crusherRecipeExceptions){
+        for(String conf : ConfigStringListValues.CRUSHER_RECIPE_EXCEPTIONS.getValue()){
             if(conf.equals(ore)){
                 return true;
             }
