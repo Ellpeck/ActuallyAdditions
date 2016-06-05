@@ -57,6 +57,7 @@ public class InitBlocks{
     public static Block blockPhantomLiquiface;
     public static Block blockPhantomEnergyface;
     public static Block blockPhantomRedstoneface;
+    public static Block blockPlayerInterface;
 
     public static Block blockFluidPlacer;
     public static Block blockFluidCollector;
@@ -119,6 +120,7 @@ public class InitBlocks{
     public static void init(){
         ModUtil.LOGGER.info("Initializing Blocks...");
 
+        blockPlayerInterface = new BlockPlayerInterface("blockPlayerInterface");
         blockBookletStand = new BlockBookletStand("blockBookletStand");
         blockItemViewer = new BlockItemViewer("blockItemViewer");
         blockFireworkBox = new BlockFireworkBox("blockFireworkBox");

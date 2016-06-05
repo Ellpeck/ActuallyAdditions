@@ -67,6 +67,7 @@ public class CreativeTab extends CreativeTabs{
         this.add(InitBlocks.blockPhantomRedstoneface);
         this.add(InitBlocks.blockPhantomPlacer);
         this.add(InitBlocks.blockPhantomBreaker);
+        this.add(InitBlocks.blockPlayerInterface);
         this.add(InitBlocks.blockInputter);
         this.add(InitBlocks.blockInputterAdvanced);
         this.add(InitBlocks.blockPhantomBooster);

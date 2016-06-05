@@ -67,6 +67,7 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
         GameRegistry.registerTileEntity(TileEntityPhantomItemface.class, ModUtil.MOD_ID+":tileEntityPhantomItemface");
         GameRegistry.registerTileEntity(TileEntityPhantomLiquiface.class, ModUtil.MOD_ID+":tileEntityPhantomLiquiface");
         GameRegistry.registerTileEntity(TileEntityPhantomEnergyface.class, ModUtil.MOD_ID+":tileEntityPhantomEnergyface");
+        GameRegistry.registerTileEntity(TileEntityPlayerInterface.class, ModUtil.MOD_ID+":tileEntityPlayerInterface");
         GameRegistry.registerTileEntity(TileEntityPhantomPlacer.class, ModUtil.MOD_ID+":tileEntityPhantomPlacer");
         GameRegistry.registerTileEntity(TileEntityPhantomBreaker.class, ModUtil.MOD_ID+":tileEntityPhantomBreaker");
         GameRegistry.registerTileEntity(TileEntityFluidCollector.class, ModUtil.MOD_ID+":tileEntityFluidCollector");

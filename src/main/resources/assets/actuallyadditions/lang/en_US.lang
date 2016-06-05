@@ -141,6 +141,7 @@ tile.actuallyadditions.blockColoredLampPink.name=Pink Lamp
 tile.actuallyadditions.blockColoredLampCyan.name=Cyan Lamp
 tile.actuallyadditions.blockColoredLampPurple.name=Purple Lamp
 tile.actuallyadditions.blockPhantomface.name=Phantomface
+tile.actuallyadditions.blockPlayerInterface.name=Player Interface
 tile.actuallyadditions.blockPhantomEnergyface.name=Phantom Energyface
 tile.actuallyadditions.blockPhantomRedstoneface.name=Phantom Redstoneface
 tile.actuallyadditions.blockPhantomLiquiface.name=Phantom Liquiface
