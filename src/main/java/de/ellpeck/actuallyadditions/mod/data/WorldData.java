@@ -135,6 +135,7 @@ public class WorldData{
 
                     if(dataFile != null){
                         if(!dataFile.exists()){
+                            dataFile.mkdirs();
                             dataFile.createNewFile();
                             ModUtil.LOGGER.info("Creating new WorldData file for world "+data.dimension+"!");
                         }
@@ -144,8 +145,6 @@ public class WorldData{
                         FileOutputStream stream = new FileOutputStream(dataFile);
                         CompressedStreamTools.writeCompressed(compound, stream);
                         stream.close();
-
-                        ModUtil.LOGGER.info("Saved WorldData for world "+data.dimension+"!");
                     }
                 }
                 catch(Exception e){

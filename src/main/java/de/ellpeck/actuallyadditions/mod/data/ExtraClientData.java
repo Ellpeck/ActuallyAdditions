@@ -78,6 +78,7 @@ public class ExtraClientData{
     public static File getTheFile(){
         try{
             if(!theFile.exists()){
+                theFile.mkdirs();
                 theFile.createNewFile();
             }
         }
