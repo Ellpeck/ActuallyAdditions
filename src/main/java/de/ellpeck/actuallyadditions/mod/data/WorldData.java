@@ -93,7 +93,6 @@ public class WorldData{
 
                     if(dataFile != null){
                         if(!dataFile.exists()){
-                            dataFile.mkdirs();
                             dataFile.createNewFile();
                             ModUtil.LOGGER.info("Creating new WorldData file for world "+data.dimension+"!");
                         }

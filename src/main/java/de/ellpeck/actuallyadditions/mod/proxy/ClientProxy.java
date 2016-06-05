@@ -94,7 +94,6 @@ public class ClientProxy implements IProxy{
         if(ConfigBoolValues.BOOKLET_TEXT_TO_FILE.isEnabled()){
             File file = new File(Minecraft.getMinecraft().mcDataDir, ModUtil.MOD_ID+"booklettext.txt");
             try{
-                file.mkdirs();
                 file.createNewFile();
                 BufferedWriter writer = new BufferedWriter(new FileWriter(file));
                 writer.write(TextFormatting.getTextWithoutFormattingCodes(bookletText));
