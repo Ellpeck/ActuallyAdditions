@@ -887,3 +887,6 @@ booklet.actuallyadditions.chapter.bookStand.text.2=People were using this not to
 
 booklet.actuallyadditions.chapter.waterBowl.name=Bowl of Water
 booklet.actuallyadditions.chapter.waterBowl.text.1=The <item>Bowl of Water<r> can be obtained by <imp>right-cliking a bowl on water<r> anywhere in the world. When the <item>Bowl of Water<r> is then right-clicked onto a block, the water will be placed, much like a <item>Bucket<r>. <n><n>This can be used, for example, for early game farms.
+
+booklet.actuallyadditions.chapter.playerInterface.name=Player Interface
+booklet.actuallyadditions.chapter.playerInterface.text.1=The <item>Player Interface<r> works in a similar way to the <item>Phantomface<r>, except it is <imp>connected to a player<r> instead of a block, and the connection is established by <imp>placing it down<r>. <n>When <imp>inputting items<r>, they will <imp>move to the player's inventory<r>. Also, when <imp>inputting RF<r>, it will <imp>charge the items<r> in the player's inventory. <n>It has a default range of <range> blocks, however, it can be expanded by placing up to 3 <item>Phantom Boosters<r> on top of it.

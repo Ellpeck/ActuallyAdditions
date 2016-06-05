@@ -97,6 +97,7 @@ public enum ConfigCrafting{
     OIL_GENERATOR("Oil Generator", ConfigCategories.BLOCKS_CRAFTING),
     PHANTOMFACE("Phantomface", ConfigCategories.BLOCKS_CRAFTING),
     PHANTOM_CONNECTOR("Phantom Connector", ConfigCategories.ITEMS_CRAFTING),
+    PLAYER_INTERFACE("Player Interface", ConfigCategories.BLOCKS_CRAFTING),
 
     PHANTOM_ENERGYFACE("Phantom Energyface", ConfigCategories.BLOCKS_CRAFTING),
     PHANTOM_REDSTONEFACE("Phantom Redstoneface", ConfigCategories.BLOCKS_CRAFTING),

@@ -86,6 +86,7 @@ public class BlockCrafting{
     public static IRecipe recipeLaserRelayItemWhitelist;
     public static IRecipe recipeItemInterface;
     public static IRecipe recipeBookStand;
+    public static IRecipe recipePlayerInterface;
 
     public static void init(){
 
@@ -397,6 +398,17 @@ public class BlockCrafting{
                     'S', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal()),
                     'B', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.ENDERPEARL_BLOCK.ordinal())));
             recipePhantomface = RecipeUtil.lastIRecipe();
+        }
+
+        //Player Interface
+        if(ConfigCrafting.PLAYER_INTERFACE.isEnabled()){
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockPlayerInterface),
+                    " C ", "EBE", " S ",
+                    'E', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.DIAMOND.ordinal()),
+                    'C', new ItemStack(Items.SKULL, 1, 1),
+                    'S', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal()),
+                    'B', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.ENDER_CASING.ordinal())));
+            recipePlayerInterface = RecipeUtil.lastIRecipe();
         }
 
         //Phantom Placer
