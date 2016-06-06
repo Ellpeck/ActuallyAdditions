@@ -20,6 +20,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.items.IItemHandler;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class TileEntityLaserRelayItemWhitelist extends TileEntityLaserRelayItem implements IButtonReactor{
@@ -162,8 +163,8 @@ public class TileEntityLaserRelayItemWhitelist extends TileEntityLaserRelayItem 
     }
 
     @Override
-    public boolean isWhitelisted(ItemStack stack){
-        return this.checkFilter(stack, true, this.isLeftWhitelist) || this.checkFilter(stack, false, this.isRightWhitelist);
+    public boolean isWhitelisted(ItemStack stack, boolean output){
+        return this.checkFilter(stack, !output, output ? this.isRightWhitelist : this.isLeftWhitelist);
     }
 
     private boolean checkFilter(ItemStack stack, boolean left, boolean isWhitelist){
@@ -207,18 +208,24 @@ public class TileEntityLaserRelayItemWhitelist extends TileEntityLaserRelayItem 
             this.isRightWhitelist = !this.isRightWhitelist;
         }
         else if(buttonID == 2){
-            this.addWhitelistSmart();
+            this.addWhitelistSmart(false);
+        }
+        else if(buttonID == 3){
+            this.addWhitelistSmart(true);
         }
     }
 
-    private void addWhitelistSmart(){
+    private void addWhitelistSmart(boolean output){
+        int slotStart = output ? 12 : 0;
+        int slotStop = slotStart+12;
+
         List<IItemHandler> handlers = this.getAllHandlersAround();
         for(IItemHandler handler : handlers){
             for(int i = 0; i < handler.getSlots(); i++){
                 ItemStack stack = handler.getStackInSlot(i);
                 if(stack != null){
-                    if(!ItemUtil.contains(this.slots, stack, false)){
-                        for(int j = 0; j < this.slots.length; j++){
+                    if(!ItemUtil.contains(Arrays.copyOfRange(this.slots, slotStart, slotStop), stack, false)){
+                        for(int j = slotStart; j < slotStop; j++){
                             if(this.slots[j] == null || this.slots[j].stackSize <= 0){
                                 ItemStack whitelistStack = stack.copy();
                                 whitelistStack.stackSize = 1;

@@ -55,11 +55,13 @@ public class GuiLaserRelayItemWhitelist extends GuiContainer{
 
         this.whitelistLeft = new SmallerButton(0, this.guiLeft+3, this.guiTop+16, "");
         this.whitelistRight = new SmallerButton(1, this.guiLeft+157, this.guiTop+16, "");
-        SmallerButton smartWhitelist = new SmallerButton(2, this.guiLeft+80, this.guiTop+33, "S");
+        SmallerButton smartWhitelistLeft = new SmallerButton(2, this.guiLeft+3, this.guiTop+34, "S");
+        SmallerButton smartWhitelistRight = new SmallerButton(3, this.guiLeft+157, this.guiTop+34, "S");
 
         this.buttonList.add(this.whitelistLeft);
         this.buttonList.add(this.whitelistRight);
-        this.buttonList.add(smartWhitelist);
+        this.buttonList.add(smartWhitelistLeft);
+        this.buttonList.add(smartWhitelistRight);
     }
 
     @Override
@@ -90,7 +92,7 @@ public class GuiLaserRelayItemWhitelist extends GuiContainer{
             list.addAll(infoList);
             this.drawHoveringText(list, x, y);
         }
-        if(x >= this.guiLeft+80 && y >= this.guiTop+33 && x <= this.guiLeft+95 && y <= this.guiTop+46){
+        if(((x >= this.guiLeft+3 && x <= this.guiLeft+3+15) || (x >= this.guiLeft+157 && x <= this.guiLeft+157+15)) && y <= this.guiTop+34+15 && y >= this.guiTop+34){
             List<String> list = new ArrayList<String>();
             list.add(TextFormatting.BOLD+StringUtil.localize("info."+ModUtil.MOD_ID+".gui.smart"));
             list.addAll(this.fontRendererObj.listFormattedStringToWidth(StringUtil.localize("info."+ModUtil.MOD_ID+".gui.smartInfo"), 200));
@@ -101,6 +103,11 @@ public class GuiLaserRelayItemWhitelist extends GuiContainer{
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y){
         AssetUtil.displayNameString(this.fontRendererObj, this.xSize, -10, this.tile.name);
+
+        String s1 = "INBOUND";
+        String s2 = "OUTBOUND";
+        this.fontRendererObj.drawString(s1, 46-this.fontRendererObj.getStringWidth(s1)/2, 80, StringUtil.DECIMAL_COLOR_GRAY_TEXT);
+        this.fontRendererObj.drawString(s2, 131-this.fontRendererObj.getStringWidth(s2)/2, 80, StringUtil.DECIMAL_COLOR_GRAY_TEXT);
     }
 
     @Override

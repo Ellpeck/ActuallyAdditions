@@ -114,7 +114,7 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
                     }
                 }
                 //If ESD has enough Space & Item in question is on whitelist
-                if(tempStack != null && (this.slots[0] == null || (tempStack.isItemEqual(this.slots[0]) && this.slots[0].stackSize < maxSize)) && this.checkBothFilters(tempStack)){
+                if(tempStack != null && (this.slots[0] == null || (tempStack.isItemEqual(this.slots[0]) && this.slots[0].stackSize < maxSize)) && this.checkBothFilters(tempStack, false)){
                     //Deal with ISided
                     if(theSided != null){
                         //Check if Item can be inserted from any Side (Because Sidedness gets ignored!)
@@ -203,7 +203,7 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
                             maxSize = theInventory.getInventoryStackLimit();
                         }
                     }
-                    if(theInventory.isItemValidForSlot(i, this.slots[0]) && (tempStack == null || (tempStack.isItemEqual(this.slots[0]) && tempStack.stackSize < maxSize)) && this.checkBothFilters(this.slots[0])){
+                    if(theInventory.isItemValidForSlot(i, this.slots[0]) && (tempStack == null || (tempStack.isItemEqual(this.slots[0]) && tempStack.stackSize < maxSize)) && this.checkBothFilters(this.slots[0], true)){
                         if(theSided != null){
                             for(int j = 0; j <= 5; j++){
                                 if(theSided.canInsertItem(i, this.slots[0], EnumFacing.values()[j])){
@@ -260,13 +260,12 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
 
     /**
      * Checks if one of the filters contains the ItemStack
-     * (Whitelist or empty Blacklist in one of them always lets the Item through!)
      *
      * @param stack The ItemStack
      * @return If the Item is filtered correctly
      */
-    private boolean checkBothFilters(ItemStack stack){
-        return this.checkFilter(stack, true, this.isPullWhitelist) || this.checkFilter(stack, false, this.isPutWhitelist);
+    private boolean checkBothFilters(ItemStack stack, boolean output){
+        return this.checkFilter(stack, !output, output ? this.isPutWhitelist : this.isPullWhitelist);
     }
 
     /**

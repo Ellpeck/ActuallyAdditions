@@ -32,7 +32,7 @@ public class TileEntityLaserRelayItem extends TileEntityLaserRelay{
         this("laserRelayItem");
     }
 
-    public boolean isWhitelisted(ItemStack stack){
+    public boolean isWhitelisted(ItemStack stack, boolean output){
         return true;
     }
 

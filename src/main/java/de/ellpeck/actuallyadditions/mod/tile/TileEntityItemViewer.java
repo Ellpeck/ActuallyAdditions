@@ -91,7 +91,7 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
     public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction){
         SpecificItemHandlerInfo handler = this.getSwitchedIndexHandler(index);
         if(handler != null){
-            if(this.isWhitelisted(handler, stack)){
+            if(this.isWhitelisted(handler, stack, true)){
                 if(ItemStack.areItemsEqual(handler.handler.getStackInSlot(handler.switchedIndex), stack)){
                     ItemStack gaveBack = handler.handler.extractItem(handler.switchedIndex, stack.stackSize, true);
                     return gaveBack != null;
@@ -101,11 +101,11 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
         return false;
     }
 
-    private boolean isWhitelisted(SpecificItemHandlerInfo handler, ItemStack stack){
-        boolean whitelisted = handler.relayInQuestion.isWhitelisted(stack);
+    private boolean isWhitelisted(SpecificItemHandlerInfo handler, ItemStack stack, boolean output){
+        boolean whitelisted = handler.relayInQuestion.isWhitelisted(stack, output);
         TileEntityLaserRelayItem connected = this.getConnectedRelay();
         if(connected != null && connected != handler.relayInQuestion){
-            return whitelisted && connected.isWhitelisted(stack);
+            return whitelisted && connected.isWhitelisted(stack, !output);
         }
         else{
             return whitelisted;
@@ -116,7 +116,7 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
     public boolean isItemValidForSlot(int index, ItemStack stack){
         SpecificItemHandlerInfo handler = this.getSwitchedIndexHandler(index);
         if(handler != null){
-            if(this.isWhitelisted(handler, stack)){
+            if(this.isWhitelisted(handler, stack, false)){
                 ItemStack gaveBack = handler.handler.insertItem(handler.switchedIndex, stack, true);
                 return !ItemStack.areItemStacksEqual(gaveBack, stack);
             }
