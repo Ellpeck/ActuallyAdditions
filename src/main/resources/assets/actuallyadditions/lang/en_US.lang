@@ -209,6 +209,7 @@ tile.actuallyadditions.blockLaserRelayItemWhitelist.name=Advanced Item Laser Rel
 tile.actuallyadditions.blockItemViewer.name=Item Interface
 tile.actuallyadditions.blockImpureIron.name=Impure Iron
 tile.actuallyadditions.blockBookletStand.name=Wall-Mount Manual
+tile.actuallyadditions.blockDisplayStand.name=Display Stand
 
 #ESD
 tile.actuallyadditions.blockInputter.name=ESD

@@ -10,27 +10,33 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
+import de.ellpeck.actuallyadditions.api.misc.IDisplayStandItem;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.items.metalists.ThePotionRings;
 import de.ellpeck.actuallyadditions.mod.util.IColorProvidingItem;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
+import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.util.Collections;
 import java.util.List;
 
-public class ItemPotionRing extends ItemBase implements IColorProvidingItem{
+public class ItemPotionRing extends ItemBase implements IColorProvidingItem, IDisplayStandItem{
 
     public static final ThePotionRings[] allRings = ThePotionRings.values();
 
@@ -62,24 +68,11 @@ public class ItemPotionRing extends ItemBase implements IColorProvidingItem{
         if(!world.isRemote && stack.getItemDamage() < allRings.length){
             if(player instanceof EntityPlayer){
                 EntityPlayer thePlayer = (EntityPlayer)player;
-                ItemStack equippedStack = ((EntityPlayer)player).getHeldItemMainhand();
-
-                ThePotionRings effect = ThePotionRings.values()[stack.getItemDamage()];
-                Potion potion = Potion.getPotionById(effect.effectID);
-                if(!effect.needsWaitBeforeActivating || !thePlayer.isPotionActive(potion)){
-                    if(!((ItemPotionRing)stack.getItem()).isAdvanced){
-                        if(equippedStack != null && stack == equippedStack){
-                            thePlayer.addPotionEffect(new PotionEffect(potion, effect.activeTime, effect.normalAmplifier, true, false));
-                        }
-                    }
-                    else{
-                        thePlayer.addPotionEffect(new PotionEffect(potion, effect.activeTime, effect.advancedAmplifier, true, false));
-                    }
-                }
+                ItemStack equippedStack = thePlayer.getHeldItemMainhand();
+                this.effectEntity(thePlayer, stack, equippedStack != null && stack == equippedStack);
             }
         }
     }
-
 
     @Override
     public String getItemStackDisplayName(ItemStack stack){
@@ -121,5 +114,65 @@ public class ItemPotionRing extends ItemBase implements IColorProvidingItem{
                 return stack.getItemDamage() >= allRings.length ? 0xFFFFFF : allRings[stack.getItemDamage()].color;
             }
         };
+    }
+
+    @Override
+    public boolean update(ItemStack stack, TileEntity tile, int elapsedTicks){
+        boolean advanced = ((ItemPotionRing)stack.getItem()).isAdvanced;
+        int range = advanced ? 96 : 16;
+        List<EntityLivingBase> entities = tile.getWorld().getEntitiesWithinAABB(EntityLivingBase.class, new AxisAlignedBB(tile.getPos().getX()-range, tile.getPos().getY()-range, tile.getPos().getZ()-range, tile.getPos().getX()+range, tile.getPos().getY()+range, tile.getPos().getZ()+range));
+        if(entities != null && !entities.isEmpty()){
+            if(advanced){
+                //Give all entities the effect
+                for(EntityLivingBase entity : entities){
+                    this.effectEntity(entity, stack, true);
+                }
+                return true;
+            }
+            else{
+                Potion potion = Potion.getPotionById(ThePotionRings.values()[stack.getItemDamage()].effectID);
+                for(EntityLivingBase entity : entities){
+                    if(entity.isPotionActive(potion)){
+                        //Sometimes make the effect switch to someone else
+                        if(Util.RANDOM.nextInt(100) <= 0){
+                            break;
+                        }
+                        else{
+                            //Continue giving the entity that already has the potion effect the effect
+                            //Otherwise, it will randomly switch around to other entities
+                            this.effectEntity(entity, stack, true);
+                            return true;
+                        }
+                    }
+                }
+
+                //Give the effect to someone new if no one had it or it randomly switched
+                Collections.shuffle(entities);
+                this.effectEntity(entities.get(0), stack, true);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public int getUsePerTick(ItemStack stack, TileEntity tile, int elapsedTicks){
+        return 325;
+    }
+
+    private void effectEntity(EntityLivingBase thePlayer, ItemStack stack, boolean canUseBasic){
+        ThePotionRings effect = ThePotionRings.values()[stack.getItemDamage()];
+        Potion potion = Potion.getPotionById(effect.effectID);
+        PotionEffect activeEffect = thePlayer.getActivePotionEffect(potion);
+        if(!effect.needsWaitBeforeActivating || (activeEffect == null || activeEffect.getDuration() <= 1)){
+            if(!((ItemPotionRing)stack.getItem()).isAdvanced){
+                if(canUseBasic){
+                    thePlayer.addPotionEffect(new PotionEffect(potion, effect.activeTime, effect.normalAmplifier, true, false));
+                }
+            }
+            else{
+                thePlayer.addPotionEffect(new PotionEffect(potion, effect.activeTime, effect.advancedAmplifier, true, false));
+            }
+        }
     }
 }

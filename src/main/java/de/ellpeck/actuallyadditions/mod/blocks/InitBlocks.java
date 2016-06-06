@@ -116,10 +116,12 @@ public class InitBlocks{
     public static Block blockPillarQuartzSlab;
 
     public static Block blockBookletStand;
+    public static Block blockDisplayStand;
 
     public static void init(){
         ModUtil.LOGGER.info("Initializing Blocks...");
 
+        blockDisplayStand = new BlockDisplayStand("blockDisplayStand");
         blockPlayerInterface = new BlockPlayerInterface("blockPlayerInterface");
         blockBookletStand = new BlockBookletStand("blockBookletStand");
         blockItemViewer = new BlockItemViewer("blockItemViewer");

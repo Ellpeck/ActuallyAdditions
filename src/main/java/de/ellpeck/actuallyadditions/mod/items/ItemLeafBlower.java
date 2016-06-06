@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
+import de.ellpeck.actuallyadditions.api.misc.IDisplayStandItem;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.util.PosUtil;
@@ -22,6 +23,7 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
@@ -33,7 +35,7 @@ import net.minecraft.world.World;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class ItemLeafBlower extends ItemBase{
+public class ItemLeafBlower extends ItemBase implements IDisplayStandItem{
 
     private final boolean isAdvanced;
 
@@ -70,16 +72,22 @@ public class ItemLeafBlower extends ItemBase{
 
     @Override
     public void onUsingTick(ItemStack stack, EntityLivingBase player, int time){
-        if(!player.worldObj.isRemote){
+        this.doUpdate(player.worldObj, MathHelper.floor_double(player.posX), MathHelper.floor_double(player.posY), MathHelper.floor_double(player.posZ), time, stack);
+    }
+
+    private boolean doUpdate(World world, int x, int y, int z, int time, ItemStack stack){
+        if(!world.isRemote){
             if(time <= this.getMaxItemUseDuration(stack) && (this.isAdvanced || time%3 == 0)){
                 //Breaks the Blocks
-                this.breakStuff(player.worldObj, MathHelper.floor_double(player.posX), MathHelper.floor_double(player.posY), MathHelper.floor_double(player.posZ));
+                boolean broke = this.breakStuff(world, x, y, z);
                 //Plays a Minecart sounds (It really sounds like a Leaf Blower!)
                 if(!ConfigBoolValues.LESS_SOUND.isEnabled()){
-                    player.worldObj.playSound(null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_MINECART_RIDING, SoundCategory.PLAYERS, 0.3F, 0.001F);
+                    world.playSound(null, x, y, z, SoundEvents.ENTITY_MINECART_RIDING, SoundCategory.PLAYERS, 0.3F, 0.001F);
                 }
+                return broke;
             }
         }
+        return false;
     }
 
     /**
@@ -90,7 +98,7 @@ public class ItemLeafBlower extends ItemBase{
      * @param y     The Y Position of the Player
      * @param z     The Z Position of the Player
      */
-    public void breakStuff(World world, int x, int y, int z){
+    public boolean breakStuff(World world, int x, int y, int z){
         ArrayList<BlockPos> breakPositions = new ArrayList<BlockPos>();
 
         int rangeSides = 5;
@@ -130,6 +138,18 @@ public class ItemLeafBlower extends ItemBase{
                 //Drops the Items into the World
                 world.spawnEntityInWorld(new EntityItem(world, theCoord.getX()+0.5, theCoord.getY()+0.5, theCoord.getZ()+0.5, theDrop));
             }
+            return true;
         }
+        return false;
+    }
+
+    @Override
+    public boolean update(ItemStack stack, TileEntity tile, int elapsedTicks){
+        return this.doUpdate(tile.getWorld(), tile.getPos().getX(), tile.getPos().getY(), tile.getPos().getZ(), elapsedTicks, stack);
+    }
+
+    @Override
+    public int getUsePerTick(ItemStack stack, TileEntity tile, int elapsedTicks){
+        return 60;
     }
 }

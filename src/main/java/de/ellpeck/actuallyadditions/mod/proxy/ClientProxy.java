@@ -16,6 +16,7 @@ import de.ellpeck.actuallyadditions.api.booklet.BookletPage;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
 import de.ellpeck.actuallyadditions.mod.blocks.render.RenderCompost;
+import de.ellpeck.actuallyadditions.mod.blocks.render.RenderDisplayStand;
 import de.ellpeck.actuallyadditions.mod.blocks.render.RenderReconstructorLens;
 import de.ellpeck.actuallyadditions.mod.blocks.render.RenderSmileyCloud;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
@@ -25,6 +26,7 @@ import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.misc.special.SpecialRenderInit;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityAtomicReconstructor;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityCompost;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityDisplayStand;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntitySmileyCloud;
 import de.ellpeck.actuallyadditions.mod.util.FluidStateMapper;
 import de.ellpeck.actuallyadditions.mod.util.IColorProvidingItem;
@@ -162,6 +164,7 @@ public class ClientProxy implements IProxy{
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCompost.class, new RenderCompost());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAtomicReconstructor.class, new RenderReconstructorLens());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntitySmileyCloud.class, new RenderSmileyCloud());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityDisplayStand.class, new RenderDisplayStand());
 
         //VillagerRegistry.instance().registerVillagerSkin(ConfigIntValues.JAM_VILLAGER_ID.getValue(), new ResourceLocation(ModUtil.MOD_ID, "textures/entity/villager/jamVillager.png"));
 

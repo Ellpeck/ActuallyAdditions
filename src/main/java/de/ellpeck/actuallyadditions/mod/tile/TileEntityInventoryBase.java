@@ -128,11 +128,6 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
     }
 
     @Override
-    public boolean isItemValidForSlot(int index, ItemStack stack){
-        return false;
-    }
-
-    @Override
     public int getField(int id){
         return 0;
     }
