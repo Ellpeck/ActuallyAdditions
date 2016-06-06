@@ -135,6 +135,7 @@ public class ItemPotionRing extends ItemBase implements IColorProvidingItem, IDi
                     if(entity.isPotionActive(potion)){
                         //Sometimes make the effect switch to someone else
                         if(Util.RANDOM.nextInt(100) <= 0){
+                            entity.removePotionEffect(potion);
                             break;
                         }
                         else{
