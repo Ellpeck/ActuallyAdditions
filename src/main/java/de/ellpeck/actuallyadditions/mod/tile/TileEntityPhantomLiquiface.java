@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.blocks.BlockPhantom;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 
@@ -37,6 +38,12 @@ public class TileEntityPhantomLiquiface extends TileEntityPhantomface{
 
     @Override
     public boolean isBoundThingInRange(){
-        return super.isBoundThingInRange() && this.worldObj.getTileEntity(this.boundPosition).hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null);
+        if(super.isBoundThingInRange()){
+            TileEntity tile = this.worldObj.getTileEntity(this.boundPosition);
+            if(tile != null){
+                return tile.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null);
+            }
+        }
+        return false;
     }
 }
