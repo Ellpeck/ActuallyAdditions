@@ -233,7 +233,7 @@ public class TileEntityLaserRelayItemWhitelist extends TileEntityLaserRelayItem 
         int slotStart = output ? 12 : 0;
         int slotStop = slotStart+12;
 
-        for(int i = 0; i < this.slots.length; i++){
+        for(int i = slotStart; i < slotStop; i++){
             if(this.slots[i] != null){
                 if(this.slots[i].getItem() instanceof ItemFilter){
                     ItemDrill.writeSlotsToNBT(new ItemStack[ContainerFilter.SLOT_AMOUNT], this.slots[i]);
