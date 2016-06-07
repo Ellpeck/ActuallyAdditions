@@ -74,7 +74,7 @@ public class ContainerCrafter extends Container{
                 return null;
             }
 
-            if(savedStack.stackSize == 0){
+            if(savedStack.stackSize <= 0){
                 theSlot.putStack(null);
             }
             else{

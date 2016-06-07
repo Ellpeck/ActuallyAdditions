@@ -490,6 +490,7 @@ item.actuallyadditions.itemSpawnerChanger.name=Spawner Changer
 item.actuallyadditions.itemMiscSpawnerShard.name=Spawner Shards
 item.actuallyadditions.itemMinecartFireworkBox.name=Firework Box Cart
 item.actuallyadditions.itemWaterBowl.name=Bowl of Water
+item.actuallyadditions.itemFilter.name=Item Filter
 
 #Tooltips
 tooltip.actuallyadditions.onSuffix.desc=On
@@ -542,10 +543,10 @@ info.actuallyadditions.gui.coffee=Coffee
 info.actuallyadditions.gui.ok=Ok
 info.actuallyadditions.gui.the=the
 info.actuallyadditions.gui.smart=Smart Whitelist
-info.actuallyadditions.gui.smartInfo=When pressing this, all items from inventories adjacent to this relay will be added to this part of the white- or blacklist.
+info.actuallyadditions.gui.smartInfo=When pressing this, all items from inventories adjacent to this relay will be added to this part of the white- or blacklist. Adding Item Filters to the list before will cause them to also be filled. Caution: Non-Item Filters previously added to the list will be removed and Item Filters will be cleared!
 info.actuallyadditions.inputter.info.1=This is the first Slot in the connected Inventory to <p> at.
 info.actuallyadditions.inputter.info.2=This is the slot after the last Slot in the connected Inventory to <p> at. What that means: If you, for example, write 2 in the field to the left and 5 in this one, it will <p> at Slot 2, 3, and 4.
-info.actuallyadditions.inputter.whitelistInfo=When pressing this, this side's whitelist mode will be changed. To let all items through, an empty blacklist can be used, to let no items through, an empty whitelist can be used. To configure certain items, place them in the slots.
+info.actuallyadditions.inputter.whitelistInfo=When pressing this, this side's whitelist mode will be changed. To let all items through, an empty blacklist can be used, to let no items through, an empty whitelist can be used. To configure certain items, place them or configured Item Filters in the slots.
 info.actuallyadditions.noLens=No Lens
 info.actuallyadditions.booklet.manualName.1=Actually Additions
 info.actuallyadditions.booklet.manualName.2=Manual
@@ -586,6 +587,7 @@ container.actuallyadditions.directionalBreaker.name=Long-Range Breaker
 container.actuallyadditions.rangedCollector.name=Ranged Collector
 container.actuallyadditions.miner.name=Vertical Digger
 container.actuallyadditions.laserRelayItemWhitelist.name=Laser Relay
+container.actuallyadditions.filter.name=Item Filter
 
 #Update Information
 info.actuallyadditions.update.generic=[{"text":"There is an Update for "},{"text":"Actually Additions ","color":"dark_green"},{"text":"available!","color":"none"}]

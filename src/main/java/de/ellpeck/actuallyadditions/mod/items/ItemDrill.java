@@ -126,7 +126,8 @@ public class ItemDrill extends ItemEnergy{
             return null;
         }
 
-        ItemStack[] slots = this.getSlotsFromNBT(stack);
+        ItemStack[] slots = new ItemStack[ContainerDrill.SLOT_AMOUNT];
+        loadSlotsFromNBT(slots, stack);
         if(slots != null && slots.length > 0){
             for(ItemStack slotStack : slots){
                 if(slotStack != null && slotStack.getItem() instanceof ItemDrillUpgrade){
@@ -143,18 +144,12 @@ public class ItemDrill extends ItemEnergy{
      * Gets all of the Slots from NBT
      *
      * @param stack The Drill
-     * @return All of the Slots
      */
-    public ItemStack[] getSlotsFromNBT(ItemStack stack){
+    public static void loadSlotsFromNBT(ItemStack[] slots, ItemStack stack){
         NBTTagCompound compound = stack.getTagCompound();
-        if(compound == null){
-            return null;
+        if(compound != null){
+            TileEntityInventoryBase.loadSlots(slots, compound);
         }
-
-        ItemStack[] slots = new ItemStack[ContainerDrill.SLOT_AMOUNT];
-        TileEntityInventoryBase.loadSlots(slots, compound);
-
-        return slots;
     }
 
 
@@ -183,7 +178,8 @@ public class ItemDrill extends ItemEnergy{
     //Checks for Energy Containers in the Upgrade Slots and charges the Drill from them
     @Override
     public void onUpdate(ItemStack stack, World world, Entity entity, int par4, boolean par5){
-        ItemStack[] slots = this.getSlotsFromNBT(stack);
+        ItemStack[] slots = new ItemStack[ContainerDrill.SLOT_AMOUNT];
+        loadSlotsFromNBT(slots, stack);
         if(slots != null && slots.length > 0){
             for(ItemStack slotStack : slots){
                 if(slotStack != null && slotStack.getItem() instanceof IEnergyContainerItem){
@@ -395,7 +391,7 @@ public class ItemDrill extends ItemEnergy{
      * @param slots The Slots
      * @param stack The Drill
      */
-    public void writeSlotsToNBT(ItemStack[] slots, ItemStack stack){
+    public static void writeSlotsToNBT(ItemStack[] slots, ItemStack stack){
         NBTTagCompound compound = stack.getTagCompound();
         if(compound == null){
             compound = new NBTTagCompound();

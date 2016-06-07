@@ -74,6 +74,8 @@ public class GuiHandler implements IGuiHandler{
                 return new ContainerCoffeeMachine(entityPlayer.inventory, tile);
             case DRILL:
                 return new ContainerDrill(entityPlayer.inventory);
+            case FILTER:
+                return new ContainerFilter(entityPlayer.inventory);
             case ENERGIZER:
                 return new ContainerEnergizer(entityPlayer, tile);
             case ENERVATOR:
@@ -140,6 +142,8 @@ public class GuiHandler implements IGuiHandler{
                 return new GuiCoffeeMachine(entityPlayer.inventory, tile, x, y, z, world);
             case DRILL:
                 return new GuiDrill(entityPlayer.inventory);
+            case FILTER:
+                return new GuiFilter(entityPlayer.inventory);
             case ENERGIZER:
                 return new GuiEnergizer(entityPlayer, tile);
             case ENERVATOR:
@@ -194,7 +198,8 @@ public class GuiHandler implements IGuiHandler{
         RANGED_COLLECTOR,
         MINER,
         BOOK_STAND,
-        LASER_RELAY_ITEM_WHITELIST;
+        LASER_RELAY_ITEM_WHITELIST,
+        FILTER(false);
 
         public final boolean checkTileEntity;
 

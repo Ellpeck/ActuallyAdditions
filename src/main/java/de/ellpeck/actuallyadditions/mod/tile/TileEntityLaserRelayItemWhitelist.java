@@ -10,8 +10,10 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import de.ellpeck.actuallyadditions.mod.inventory.ContainerFilter;
+import de.ellpeck.actuallyadditions.mod.items.ItemDrill;
+import de.ellpeck.actuallyadditions.mod.items.ItemFilter;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
-import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -20,7 +22,6 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.items.IItemHandler;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class TileEntityLaserRelayItemWhitelist extends TileEntityLaserRelayItem implements IButtonReactor{
@@ -164,19 +165,8 @@ public class TileEntityLaserRelayItemWhitelist extends TileEntityLaserRelayItem 
 
     @Override
     public boolean isWhitelisted(ItemStack stack, boolean output){
-        return this.checkFilter(stack, !output, output ? this.isRightWhitelist : this.isLeftWhitelist);
-    }
-
-    private boolean checkFilter(ItemStack stack, boolean left, boolean isWhitelist){
-        int slotStart = left ? 0 : 12;
-        int slotStop = slotStart+12;
-
-        for(int i = slotStart; i < slotStop; i++){
-            if(this.slots[i] != null && this.slots[i].isItemEqual(stack)){
-                return isWhitelist;
-            }
-        }
-        return !isWhitelist;
+        int slotStart = output ? 12 : 0;
+        return checkFilter(stack, output ? this.isRightWhitelist : this.isLeftWhitelist, this.slots, slotStart, slotStart+12);
     }
 
     @Override
@@ -187,6 +177,30 @@ public class TileEntityLaserRelayItemWhitelist extends TileEntityLaserRelayItem 
         }
         compound.setBoolean("LeftWhitelist", this.isLeftWhitelist);
         compound.setBoolean("RightWhitelist", this.isRightWhitelist);
+    }
+
+    public static boolean checkFilter(ItemStack stack, boolean isWhitelist, ItemStack[] slots, int start, int end){
+        if(stack != null){
+            for(int i = start; i < end; i++){
+                if(slots[i] != null){
+                    if(slots[i].isItemEqual(stack)){
+                        return isWhitelist;
+                    }
+                    else if(slots[i].getItem() instanceof ItemFilter){
+                        ItemStack[] filterSlots = new ItemStack[ContainerFilter.SLOT_AMOUNT];
+                        ItemDrill.loadSlotsFromNBT(filterSlots, slots[i]);
+                        if(filterSlots != null && filterSlots.length > 0){
+                            for(ItemStack filterSlot : filterSlots){
+                                if(filterSlot != null && filterSlot.isItemEqual(stack)){
+                                    return isWhitelist;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return !isWhitelist;
     }
 
     @Override
@@ -219,19 +233,51 @@ public class TileEntityLaserRelayItemWhitelist extends TileEntityLaserRelayItem 
         int slotStart = output ? 12 : 0;
         int slotStop = slotStart+12;
 
+        for(int i = 0; i < this.slots.length; i++){
+            if(this.slots[i] != null){
+                if(this.slots[i].getItem() instanceof ItemFilter){
+                    ItemDrill.writeSlotsToNBT(new ItemStack[ContainerFilter.SLOT_AMOUNT], this.slots[i]);
+                }
+                else{
+                    this.slots[i] = null;
+                }
+            }
+        }
+
         List<IItemHandler> handlers = this.getAllHandlersAround();
         for(IItemHandler handler : handlers){
             for(int i = 0; i < handler.getSlots(); i++){
                 ItemStack stack = handler.getStackInSlot(i);
                 if(stack != null){
-                    if(!ItemUtil.contains(Arrays.copyOfRange(this.slots, slotStart, slotStop), stack, false)){
-                        for(int j = slotStart; j < slotStop; j++){
-                            if(this.slots[j] == null || this.slots[j].stackSize <= 0){
-                                ItemStack whitelistStack = stack.copy();
-                                whitelistStack.stackSize = 1;
-                                this.slots[j] = whitelistStack;
-                                break;
+                    ItemStack copy = stack.copy();
+                    copy.stackSize = 1;
+
+                    for(int k = slotStart; k < slotStop; k++){
+                        if(this.slots[k] != null){
+                            if(this.slots[k].getItem() instanceof ItemFilter){
+                                ItemStack[] filterSlots = new ItemStack[ContainerFilter.SLOT_AMOUNT];
+                                ItemDrill.loadSlotsFromNBT(filterSlots, this.slots[k]);
+
+                                boolean did = false;
+                                if(filterSlots != null && filterSlots.length > 0){
+                                    for(int j = 0; j < filterSlots.length; j++){
+                                        if(filterSlots[j] == null || filterSlots[j].stackSize <= 0){
+                                            filterSlots[j] = copy;
+                                            did = true;
+                                            break;
+                                        }
+                                    }
+                                }
+
+                                if(did){
+                                    ItemDrill.writeSlotsToNBT(filterSlots, this.slots[k]);
+                                    break;
+                                }
                             }
+                        }
+                        else{
+                            this.slots[k] = copy;
+                            break;
                         }
                     }
                 }

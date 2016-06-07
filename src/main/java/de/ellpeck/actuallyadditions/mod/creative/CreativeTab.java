@@ -168,7 +168,7 @@ public class CreativeTab extends CreativeTabs{
         this.list.add(UniversalBucket.getFilledBucket(ForgeModContainer.getInstance().universalBucket, InitFluids.fluidOil));
 
         this.add(InitItems.itemPhantomConnector);
-
+        this.add(InitItems.itemFilter);
         this.add(InitItems.itemWingsOfTheBats);
 
         this.add(InitItems.itemCoffeeSeed);

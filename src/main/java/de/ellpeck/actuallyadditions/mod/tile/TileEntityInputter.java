@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 
+import com.sun.org.apache.bcel.internal.generic.PUTFIELD;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.network.gui.INumberReactor;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
@@ -265,31 +266,8 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
      * @return If the Item is filtered correctly
      */
     private boolean checkBothFilters(ItemStack stack, boolean output){
-        return this.checkFilter(stack, !output, output ? this.isPutWhitelist : this.isPullWhitelist);
-    }
-
-    /**
-     * Checks the Whitelist/Blacklist to see if Item fits
-     *
-     * @param stack       The Stack to check for
-     * @param isPull      If we're pulling or putting
-     * @param isWhitelist If it's set to white- or Blacklist
-     * @return Is Item on White-/Blacklist?
-     */
-    private boolean checkFilter(ItemStack stack, boolean isPull, boolean isWhitelist){
-        if(!this.isAdvanced){
-            return true;
-        }
-
-        int slotStart = isPull ? PULL_FILTER_START : PUT_FILTER_START;
-        int slotStop = slotStart+12;
-
-        for(int i = slotStart; i < slotStop; i++){
-            if(this.slots[i] != null && this.slots[i].isItemEqual(stack)){
-                return isWhitelist;
-            }
-        }
-        return !isWhitelist;
+        int slotStart = output ? PUT_FILTER_START : PULL_FILTER_START;
+        return TileEntityLaserRelayItemWhitelist.checkFilter(stack, output ? this.isPutWhitelist : this.isPullWhitelist, this.slots, slotStart, slotStart+12);
     }
 
     /**

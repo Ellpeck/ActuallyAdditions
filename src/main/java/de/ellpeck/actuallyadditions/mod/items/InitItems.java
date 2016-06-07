@@ -208,12 +208,14 @@ public class InitItems{
     public static Item itemPaxelCrystalWhite;
 
     public static Item itemWaterBowl;
+    public static Item itemFilter;
 
     public static Item itemRarmorModuleReconstructor;
 
     public static void init(){
         ModUtil.LOGGER.info("Initializing Items...");
 
+        itemFilter = new ItemFilter("itemFilter");
         itemWaterBowl = new ItemWaterBowl("itemWaterBowl");
         itemSpawnerChanger = new ItemSpawnerChanger("itemSpawnerChanger");
         itemMisc = new ItemMisc("itemMisc");

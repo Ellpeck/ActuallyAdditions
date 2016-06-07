@@ -1,5 +1,5 @@
 /*
- * This file ("ContainerDrill.java") is part of the Actually Additions mod for Minecraft.
+ * This file ("ContainerFilter.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
  * http://ellpeck.de/actaddlicense
@@ -10,10 +10,10 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory;
 
-import cofh.api.energy.IEnergyContainerItem;
+import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotFilter;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotImmovable;
 import de.ellpeck.actuallyadditions.mod.items.ItemDrill;
-import de.ellpeck.actuallyadditions.mod.items.ItemDrillUpgrade;
+import de.ellpeck.actuallyadditions.mod.items.ItemFilter;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.ClickType;
@@ -25,48 +25,45 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 
 
-public class ContainerDrill extends Container{
+public class ContainerFilter extends Container{
 
-    public static final int SLOT_AMOUNT = 5;
+    public static final int SLOT_AMOUNT = 24;
 
-    private final InventoryDrill drillInventory = new InventoryDrill();
+    private final InventoryFilter filterInventory = new InventoryFilter();
     private final InventoryPlayer inventory;
 
-    public ContainerDrill(InventoryPlayer inventory){
+    public ContainerFilter(InventoryPlayer inventory){
         this.inventory = inventory;
 
-        for(int i = 0; i < SLOT_AMOUNT; i++){
-            this.addSlotToContainer(new Slot(this.drillInventory, i, 44+i*18, 19){
-                @Override
-                public boolean isItemValid(ItemStack stack){
-                    return stack.getItem() instanceof ItemDrillUpgrade || stack.getItem() instanceof IEnergyContainerItem;
-                }
-            });
+        for(int i = 0; i < 4; i++){
+            for(int j = 0; j < 6; j++){
+                this.addSlotToContainer(new SlotFilter(this.filterInventory, j+(i*6), 35+j*18, 10+i*18));
+            }
         }
 
         for(int i = 0; i < 3; i++){
             for(int j = 0; j < 9; j++){
-                this.addSlotToContainer(new Slot(inventory, j+i*9+9, 8+j*18, 58+i*18));
+                this.addSlotToContainer(new Slot(inventory, j+i*9+9, 8+j*18, 94+i*18));
             }
         }
         for(int i = 0; i < 9; i++){
             if(i == inventory.currentItem){
-                this.addSlotToContainer(new SlotImmovable(inventory, i, 8+i*18, 116));
+                this.addSlotToContainer(new SlotImmovable(inventory, i, 8+i*18, 152));
             }
             else{
-                this.addSlotToContainer(new Slot(inventory, i, 8+i*18, 116));
+                this.addSlotToContainer(new Slot(inventory, i, 8+i*18, 152));
             }
         }
 
         ItemStack stack = inventory.getCurrentItem();
-        if(stack != null && stack.getItem() instanceof ItemDrill){
-            ItemDrill.loadSlotsFromNBT(this.drillInventory.slots, inventory.getCurrentItem());
+        if(stack != null && stack.getItem() instanceof ItemFilter){
+            ItemDrill.loadSlotsFromNBT(this.filterInventory.slots, inventory.getCurrentItem());
         }
     }
 
     @Override
     public ItemStack transferStackInSlot(EntityPlayer player, int slot){
-        final int inventoryStart = 5;
+        final int inventoryStart = SLOT_AMOUNT;
         final int inventoryEnd = inventoryStart+26;
         final int hotbarStart = inventoryEnd+1;
         final int hotbarEnd = hotbarStart+8;
@@ -80,14 +77,8 @@ public class ContainerDrill extends Container{
             //Other Slots in Inventory excluded
             if(slot >= inventoryStart){
                 //Shift from Inventory
-                if(newStack.getItem() instanceof ItemDrillUpgrade || newStack.getItem() instanceof IEnergyContainerItem){
-                    if(!this.mergeItemStack(newStack, 0, 5, false)){
-                        return null;
-                    }
-                }
                 //
-
-                else if(slot >= inventoryStart && slot <= inventoryEnd){
+                if(slot >= inventoryStart && slot <= inventoryEnd){
                     if(!this.mergeItemStack(newStack, hotbarStart, hotbarEnd+1, false)){
                         return null;
                     }
@@ -100,7 +91,7 @@ public class ContainerDrill extends Container{
                 return null;
             }
 
-            if(newStack.stackSize <= 0){
+            if(newStack.stackSize == 0){
                 theSlot.putStack(null);
             }
             else{
@@ -119,7 +110,11 @@ public class ContainerDrill extends Container{
 
     @Override
     public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, EntityPlayer player){
-        if(clickTypeIn == ClickType.SWAP && dragType == this.inventory.currentItem){
+        if(slotId >= 0 && slotId < this.inventorySlots.size() && this.getSlot(slotId) instanceof SlotFilter){
+            //Calls the Filter's SlotClick function
+            return ((SlotFilter)this.getSlot(slotId)).slotClick(player);
+        }
+        else if(clickTypeIn == ClickType.SWAP && dragType == this.inventory.currentItem){
             return null;
         }
         else{
@@ -130,24 +125,24 @@ public class ContainerDrill extends Container{
     @Override
     public void onContainerClosed(EntityPlayer player){
         ItemStack stack = this.inventory.getCurrentItem();
-        if(stack != null && stack.getItem() instanceof ItemDrill){
-            ItemDrill.writeSlotsToNBT(this.drillInventory.slots, this.inventory.getCurrentItem());
+        if(stack != null && stack.getItem() instanceof ItemFilter){
+            ItemDrill.writeSlotsToNBT(this.filterInventory.slots, this.inventory.getCurrentItem());
         }
         super.onContainerClosed(player);
     }
 
     @Override
     public boolean canInteractWith(EntityPlayer player){
-        return this.drillInventory.isUseableByPlayer(player);
+        return this.filterInventory.isUseableByPlayer(player);
     }
 
-    public static class InventoryDrill implements IInventory{
+    public static class InventoryFilter implements IInventory{
 
         public ItemStack[] slots = new ItemStack[SLOT_AMOUNT];
 
         @Override
         public String getName(){
-            return "drill";
+            return "filter";
         }
 
         @Override

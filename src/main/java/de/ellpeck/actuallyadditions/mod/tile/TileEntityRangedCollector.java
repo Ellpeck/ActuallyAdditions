@@ -55,7 +55,7 @@ public class TileEntityRangedCollector extends TileEntityInventoryBase implement
                     for(EntityItem item : items){
                         if(!item.isDead && item.getEntityItem() != null){
                             ItemStack toAdd = item.getEntityItem().copy();
-                            if(this.checkFilter(toAdd)){
+                            if(TileEntityLaserRelayItemWhitelist.checkFilter(toAdd, this.isWhitelist, this.slots, WHITELIST_START, WHITELIST_START+12)){
                                 ArrayList<ItemStack> checkList = new ArrayList<ItemStack>();
                                 checkList.add(toAdd);
                                 if(WorldUtil.addToInventory(this, 0, WHITELIST_START, checkList, EnumFacing.UP, false, true)){
@@ -72,17 +72,6 @@ public class TileEntityRangedCollector extends TileEntityInventoryBase implement
                 this.lastWhitelist = this.isWhitelist;
             }
         }
-    }
-
-    private boolean checkFilter(ItemStack stack){
-        int slotStop = WHITELIST_START+12;
-
-        for(int i = WHITELIST_START; i < slotStop; i++){
-            if(this.slots[i] != null && this.slots[i].isItemEqual(stack)){
-                return this.isWhitelist;
-            }
-        }
-        return !this.isWhitelist;
     }
 
     @Override
