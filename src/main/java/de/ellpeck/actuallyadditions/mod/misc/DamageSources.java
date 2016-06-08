@@ -32,6 +32,6 @@ public class DamageSources extends DamageSource{
     @Override
     public ITextComponent getDeathMessage(EntityLivingBase entity){
         String locTag = "death."+ModUtil.MOD_ID+"."+this.damageType+"."+(Util.RANDOM.nextInt(this.messageCount)+1);
-        return new TextComponentTranslation(String.format(locTag, entity.getName()));
+        return new TextComponentTranslation(locTag, entity.getName());
     }
 }
