@@ -52,6 +52,7 @@ public enum ConfigBoolValues{
     BOOKLET_TEXT_TO_FILE("Booklet Text to File", ConfigCategories.OTHER, false, "Should the entire text of the booklet be put into a new file in the Minecraft Folder on startup or resource reload. This is for debug purposes only and shouldn't really ever be needed."),
 
     WATER_BOWL("Water Bowl", ConfigCategories.OTHER, true, "If right-clicking a bowl on water should create a water bowl"),
+    LASER_WRENCH_HOLDING_PARTICLES("Laser Wrench Holding Particles", ConfigCategories.OTHER, false, "If particles of laser devices should only render when holding a Laser Wrench"),
 
     LESS_SOUND("Less Sound", ConfigCategories.PERFORMANCE, false, "If blocks in Actually Additions should have less sounds"),
     LESS_PARTICLES("Less Particles", ConfigCategories.PERFORMANCE, false, "If blocks in Actually Additions should have less particles"),
