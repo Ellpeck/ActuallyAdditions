@@ -139,19 +139,22 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyR
                     return true;
                 }
                 else{
-                    int[] ids = OreDictionary.getOreIDs(new ItemStack(block, 1, meta));
-                    for(int id : ids){
-                        String name = OreDictionary.getOreName(id);
-                        if(name.startsWith("ore") || name.startsWith("denseore")){
-                            return true;
-                        }
-                    }
-
-                    String reg = block.getRegistryName().toString();
-                    if(!reg.isEmpty()){
-                        for(String string : ConfigStringListValues.MINER_EXTRA_WHITELIST.getValue()){
-                            if(reg.equals(string)){
+                    ItemStack stack = new ItemStack(block, 1, meta);
+                    if(stack != null){
+                        int[] ids = OreDictionary.getOreIDs(stack);
+                        for(int id : ids){
+                            String name = OreDictionary.getOreName(id);
+                            if(name.startsWith("ore") || name.startsWith("denseore")){
                                 return true;
+                            }
+                        }
+
+                        String reg = block.getRegistryName().toString();
+                        if(!reg.isEmpty()){
+                            for(String string : ConfigStringListValues.MINER_EXTRA_WHITELIST.getValue()){
+                                if(reg.equals(string)){
+                                    return true;
+                                }
                             }
                         }
                     }
