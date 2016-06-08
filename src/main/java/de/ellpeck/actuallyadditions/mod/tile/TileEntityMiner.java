@@ -140,7 +140,7 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyR
                 }
                 else{
                     ItemStack stack = new ItemStack(block, 1, meta);
-                    if(stack != null){
+                    if(stack.getItem() != null){
                         int[] ids = OreDictionary.getOreIDs(stack);
                         for(int id : ids){
                             String name = OreDictionary.getOreName(id);
