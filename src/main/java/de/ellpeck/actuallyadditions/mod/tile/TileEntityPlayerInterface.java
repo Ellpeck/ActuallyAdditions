@@ -20,7 +20,7 @@ import net.minecraft.util.EnumFacing;
 
 import java.util.UUID;
 
-public class TileEntityPlayerInterface extends TileEntityInventoryBase implements IEnergyReceiver{
+public class TileEntityPlayerInterface extends TileEntityInventoryBase implements IEnergyReceiver, IEnergyDisplay{
 
     public static final int DEFAULT_RANGE = 32;
     public UUID connectedPlayer;
@@ -205,5 +205,15 @@ public class TileEntityPlayerInterface extends TileEntityInventoryBase implement
     @Override
     public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
         return true;
+    }
+
+    @Override
+    public int getEnergy(){
+        return this.storage.getEnergyStored();
+    }
+
+    @Override
+    public int getMaxEnergy(){
+        return this.storage.getMaxEnergyStored();
     }
 }
