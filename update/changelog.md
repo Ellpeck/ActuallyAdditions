@@ -1,3 +1,18 @@
+# 1.9.4-r41
+* Changed white- and blacklists of laser relays and ESDs to be for putting and pulling. Check them in your world, they might all not work like you want them to anymore!
+* Added item filters
+* Made ESD's whitelist be a blacklist by default when placing it down
+* Added display stand
+* Made leaf blower work on display stand
+* Made potion rings work on display stand
+* Re-add invtweaks support for the storage crate
+* Fixed a crash when having phantom liquifaces connected to a non-tileentity
+* Made player interface display the amount of RF it has stored
+* Made damage source from Reconstructor display properly
+* Added a config option to only display the laser relay particles when holding a laser wrench
+* Fixed miner sometimes crashing when placed next to certain blocks
+*
+
 # 1.9.4-r40
 * Fixed a bug with Laser Relays sometimes randomly disconnecting on chunk load
 ### You only need this when you have been or are wanting to use Laser Relays of any sort. This version fixes a hideous bug that caused them to randomly disconnect when re-loading chunks for a reason that makes absolutely no sense to me and the people I asked. If you want to know what the bug was, [click here](https://github.com/Ellpeck/ActuallyAdditions/commit/d46bb306d87da57ea180afcd9e6cc00fc96637ef). Again, sorry for the amount of updates, this has just been driving me crazy.
