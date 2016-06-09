@@ -161,7 +161,9 @@ public enum ConfigCrafting{
     FIREWORK_BOX("Firework Box", ConfigCategories.BLOCKS_CRAFTING),
     ENDER_STAR("Ender Star", ConfigCategories.ITEMS_CRAFTING),
     SPAWNER_CHANGER("Spawner Changer", ConfigCategories.ITEMS_CRAFTING),
-    ITEM_INTERFACE("Item Interface", ConfigCategories.BLOCKS_CRAFTING);
+    ITEM_INTERFACE("Item Interface", ConfigCategories.BLOCKS_CRAFTING),
+    DISPLAY_STAND("Display Stand", ConfigCategories.BLOCKS_CRAFTING),
+    FILTER("Item Filter", ConfigCategories.ITEMS_CRAFTING);
 
     public final String name;
     public final String category;

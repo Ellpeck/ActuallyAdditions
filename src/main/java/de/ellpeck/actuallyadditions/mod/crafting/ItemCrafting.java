@@ -85,6 +85,7 @@ public class ItemCrafting{
     public static IRecipe recipeEnderStar;
     public static IRecipe recipeRarmorModuleReconstructor;
     public static IRecipe recipeSpawnerChanger;
+    public static IRecipe recipeFilter;
 
     public static void init(){
 
@@ -115,6 +116,15 @@ public class ItemCrafting{
                     'C', new ItemStack(InitBlocks.blockGiantChest),
                     'W', "plankWood"));
             recipeChestToCrateUpgrade = RecipeUtil.lastIRecipe();
+        }
+
+        //Filter
+        if(ConfigCrafting.FILTER.isEnabled()){
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemFilter),
+                    "III", "IQI", "III",
+                    'I', new ItemStack(Blocks.IRON_BARS),
+                    'Q', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal())));
+            recipeFilter = RecipeUtil.lastIRecipe();
         }
 
         //Crate Keeper

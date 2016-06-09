@@ -87,6 +87,7 @@ public class BlockCrafting{
     public static IRecipe recipeItemInterface;
     public static IRecipe recipeBookStand;
     public static IRecipe recipePlayerInterface;
+    public static IRecipe recipeDisplayStand;
 
     public static void init(){
 
@@ -102,6 +103,16 @@ public class BlockCrafting{
                     'S', new ItemStack(Items.STICK),
                     'C', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.IRON.ordinal())));
             recipeFireworkBox = RecipeUtil.lastIRecipe();
+        }
+
+        //Display Stand
+        if(ConfigCrafting.DISPLAY_STAND.isEnabled()){
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockDisplayStand),
+                    " R ", "EEE", "GGG",
+                    'R', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal()),
+                    'E', new ItemStack(InitBlocks.blockTestifiBucksGreenWall),
+                    'G', new ItemStack(InitBlocks.blockTestifiBucksWhiteWall)));
+            recipeDisplayStand = RecipeUtil.lastIRecipe();
         }
 
         //Miner
