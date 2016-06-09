@@ -266,8 +266,13 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
      * @return If the Item is filtered correctly
      */
     private boolean checkBothFilters(ItemStack stack, boolean output){
-        int slotStart = output ? PUT_FILTER_START : PULL_FILTER_START;
-        return TileEntityLaserRelayItemWhitelist.checkFilter(stack, output ? this.isPutWhitelist : this.isPullWhitelist, this.slots, slotStart, slotStart+12);
+        if(!this.isAdvanced){
+            return true;
+        }
+        else{
+            int slotStart = output ? PUT_FILTER_START : PULL_FILTER_START;
+            return TileEntityLaserRelayItemWhitelist.checkFilter(stack, output ? this.isPutWhitelist : this.isPullWhitelist, this.slots, slotStart, slotStart+12);
+        }
     }
 
     /**
