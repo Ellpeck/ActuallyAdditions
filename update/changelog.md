@@ -11,7 +11,6 @@
 * Made damage source from Reconstructor display properly
 * Added a config option to only display the laser relay particles when holding a laser wrench
 * Fixed miner sometimes crashing when placed next to certain blocks
-*
 
 # 1.9.4-r40
 * Fixed a bug with Laser Relays sometimes randomly disconnecting on chunk load

@@ -382,6 +382,12 @@ public class ItemDrill extends ItemEnergy{
                 efficiency += 8.0F;
             }
         }
+        if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.THREE_BY_THREE)){
+            efficiency *= 0.5F;
+            if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FIVE_BY_FIVE)){
+                efficiency *= 0.35F;
+            }
+        }
         return efficiency;
     }
 
