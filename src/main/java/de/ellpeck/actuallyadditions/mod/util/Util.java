@@ -14,19 +14,17 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.EnumHelper;
-import net.minecraftforge.fluids.FluidContainerRegistry;
+import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.Locale;
 import java.util.Random;
 
-@SuppressWarnings("unused")
 public class Util{
 
     public static final Random RANDOM = new Random();
     public static final int WILDCARD = OreDictionary.WILDCARD_VALUE;
-    @SuppressWarnings("deprecation")
-    public static final int BUCKET = FluidContainerRegistry.BUCKET_VOLUME;
+    public static final int BUCKET = Fluid.BUCKET_VOLUME;
 
     public static final EnumRarity CRYSTAL_RED_RARITY = addRarity("crystalRed", TextFormatting.DARK_RED, ModUtil.NAME+" Red Crystal");
     public static final EnumRarity CRYSTAL_BLUE_RARITY = addRarity("crystalBlue", TextFormatting.DARK_BLUE, ModUtil.NAME+" Blue Crystal");

@@ -56,7 +56,6 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase implem
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public void updateEntity(){
         super.updateEntity();
         if(!this.worldObj.isRemote){
@@ -78,7 +77,6 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase implem
         }
     }
 
-    @SuppressWarnings("deprecation")
     private void doWork(){
         if(this.storage.getEnergyStored() >= ENERGY_USE*RANGE){
             EnumFacing sideToManipulate = WorldUtil.getDirectionByPistonRotation(PosUtil.getMetadata(this.pos, this.worldObj));

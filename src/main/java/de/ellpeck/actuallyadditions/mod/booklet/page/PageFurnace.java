@@ -51,7 +51,6 @@ public class PageFurnace extends BookletPageAA{
         }
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     @SideOnly(Side.CLIENT)
     public void render(IBookletGui gui, int mouseX, int mouseY, int ticksElapsed, boolean mousePressed){

@@ -57,8 +57,6 @@ public class BlockBase extends Block{
         return EnumRarity.COMMON;
     }
 
-    @SuppressWarnings("deprecation")
-
     @Override
     public IBlockState getStateFromMeta(int meta){
         return this.getMetaProperty() == null ? super.getStateFromMeta(meta) : this.getDefaultState().withProperty(this.getMetaProperty(), meta);

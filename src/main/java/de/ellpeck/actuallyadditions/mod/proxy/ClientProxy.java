@@ -154,7 +154,6 @@ public class ClientProxy implements IProxy{
         ModelLoader.setCustomStateMapper(block, mapper);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public void init(FMLInitializationEvent event){
         ModUtil.LOGGER.info("Initializing ClientProxy...");

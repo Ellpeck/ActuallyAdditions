@@ -90,7 +90,6 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public void updateEntity(){
         super.updateEntity();
         if(!this.worldObj.isRemote){

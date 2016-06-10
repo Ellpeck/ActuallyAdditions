@@ -70,7 +70,6 @@ public class TileEntityItemRepairer extends TileEntityInventoryBase implements I
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public void updateEntity(){
         super.updateEntity();
         if(!this.worldObj.isRemote){

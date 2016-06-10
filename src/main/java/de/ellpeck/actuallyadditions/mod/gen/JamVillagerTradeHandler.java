@@ -49,7 +49,6 @@ public class JamVillagerTradeHandler{
     }
 
     //@Override
-    @SuppressWarnings("all")
     public void manipulateTradesForVillager(EntityVillager villager, MerchantRecipeList recipeList, Random rand){
         for(int trade = 0; trade < trades.size(); trade++){
             for(int want = 0; want < trades.get(trade).wants.size(); want++){

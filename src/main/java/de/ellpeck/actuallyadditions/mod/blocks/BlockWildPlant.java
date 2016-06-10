@@ -62,15 +62,13 @@ public class BlockWildPlant extends BlockBushBase{
         return metadata >= allWildPlants.length ? null : new ItemStack(((BlockPlant)allWildPlants[metadata].wildVersionOf).seedItem);
     }
 
-    @SuppressWarnings("all")
+    @Override
     @SideOnly(Side.CLIENT)
     public void getSubBlocks(Item item, CreativeTabs tab, List list){
         for(int j = 0; j < allWildPlants.length; j++){
             list.add(new ItemStack(item, 1, j));
         }
     }
-
-    @SuppressWarnings("deprecation")
 
     @Override
     public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune){

@@ -56,7 +56,6 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
         this.setSoundType(SoundType.STONE);
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public boolean isOpaqueCube(IBlockState state){
         return false;

@@ -30,7 +30,6 @@ public class PacketGuiButton implements IMessage{
     private int buttonID;
     private int playerID;
 
-    @SuppressWarnings("unused")
     public PacketGuiButton(){
 
     }

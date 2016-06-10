@@ -49,7 +49,7 @@ public class ItemCrystal extends ItemBase{
         return stack.getItemDamage() >= BlockCrystal.allCrystals.length ? EnumRarity.COMMON : BlockCrystal.allCrystals[stack.getItemDamage()].rarity;
     }
 
-    @SuppressWarnings("all")
+    @Override
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item item, CreativeTabs tab, List list){
         for(int j = 0; j < BlockCrystal.allCrystals.length; j++){

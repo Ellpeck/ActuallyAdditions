@@ -60,7 +60,7 @@ public class ItemJams extends ItemFoodBase implements IColorProvidingItem{
         return stack.getItemDamage() >= allJams.length ? EnumRarity.COMMON : allJams[stack.getItemDamage()].rarity;
     }
 
-    @SuppressWarnings("all")
+    @Override
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item item, CreativeTabs tab, List list){
         for(int j = 0; j < allJams.length; j++){

@@ -75,7 +75,6 @@ public class GuiInputter extends GuiContainer{
         this.isAdvanced = isAdvanced;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public void initGui(){
         super.initGui();
@@ -116,7 +115,6 @@ public class GuiInputter extends GuiContainer{
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public void drawScreen(int x, int y, float f){
         super.drawScreen(x, y, f);
 

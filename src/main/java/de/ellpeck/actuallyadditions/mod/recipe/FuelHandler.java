@@ -24,7 +24,6 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.HashMap;
 
-@SuppressWarnings("unused")
 public class FuelHandler implements IFuelHandler{
 
     private static HashMap<Pair<Item, Integer>, Integer> fuelList = new HashMap<Pair<Item, Integer>, Integer>();

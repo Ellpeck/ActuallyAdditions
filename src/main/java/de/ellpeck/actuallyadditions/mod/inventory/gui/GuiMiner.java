@@ -39,7 +39,6 @@ public class GuiMiner extends GuiContainer{
         this.ySize = 93+86;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public void initGui(){
         super.initGui();

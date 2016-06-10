@@ -45,7 +45,7 @@ public class BlockMisc extends BlockBase{
         return this.getMetaFromState(state);
     }
 
-    @SuppressWarnings("all")
+    @Override
     @SideOnly(Side.CLIENT)
     public void getSubBlocks(Item item, CreativeTabs tab, List list){
         for(int j = 0; j < ALL_MISC_BLOCKS.length; j++){

@@ -36,7 +36,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.HashSet;
 import java.util.Set;
 
-@SuppressWarnings("unchecked")
 public class ItemAllToolAA extends ItemToolAA implements IColorProvidingItem{
 
     public final int color;
@@ -67,7 +66,6 @@ public class ItemAllToolAA extends ItemToolAA implements IColorProvidingItem{
         return Items.IRON_HOE.onItemUse(stack, playerIn, worldIn, pos, hand, side, hitX, hitY, hitZ);
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public boolean canHarvestBlock(IBlockState state, ItemStack stack){
 

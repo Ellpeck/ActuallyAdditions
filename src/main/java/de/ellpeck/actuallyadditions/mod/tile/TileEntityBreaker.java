@@ -54,7 +54,6 @@ public class TileEntityBreaker extends TileEntityInventoryBase implements IRedst
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public void updateEntity(){
         super.updateEntity();
         if(!this.worldObj.isRemote){
@@ -77,7 +76,6 @@ public class TileEntityBreaker extends TileEntityInventoryBase implements IRedst
         return this.isPlacer;
     }
 
-    @SuppressWarnings("deprecation")
     private void doWork(){
         EnumFacing sideToManipulate = WorldUtil.getDirectionByPistonRotation(PosUtil.getMetadata(this.pos, this.worldObj));
 

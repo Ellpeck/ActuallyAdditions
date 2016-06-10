@@ -70,7 +70,6 @@ public class BlockDisplayStand extends BlockContainerBase{
         }
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public boolean isOpaqueCube(IBlockState state){
         return false;

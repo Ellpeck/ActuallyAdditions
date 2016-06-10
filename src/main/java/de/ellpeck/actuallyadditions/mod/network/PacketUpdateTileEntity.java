@@ -30,7 +30,6 @@ public class PacketUpdateTileEntity implements IMessage{
     private NBTTagCompound compound;
     private BlockPos pos;
 
-    @SuppressWarnings("unused")
     public PacketUpdateTileEntity(){
 
     }

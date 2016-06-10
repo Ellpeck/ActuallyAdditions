@@ -48,7 +48,6 @@ public class GuiXPSolidifier extends GuiContainer{
         this.world = world;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public void initGui(){
         super.initGui();

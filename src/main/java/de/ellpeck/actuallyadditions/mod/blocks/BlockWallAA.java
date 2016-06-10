@@ -44,7 +44,6 @@ public class BlockWallAA extends BlockBase{
     }
 
 
-    @SuppressWarnings("deprecation")
     public BlockWallAA(String name, Block base, int meta){
         super(base.getMaterial(base.getDefaultState()), name);
         this.meta = meta;
@@ -78,8 +77,6 @@ public class BlockWallAA extends BlockBase{
         return i;
     }
 
-    @SuppressWarnings("deprecation")
-
     @Override
     public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos){
         boolean flag = this.canConnectTo(worldIn, pos.north());
@@ -90,7 +87,6 @@ public class BlockWallAA extends BlockBase{
         return state.withProperty(BlockWall.UP, !flag4 || !worldIn.isAirBlock(pos.up())).withProperty(BlockWall.NORTH, flag).withProperty(BlockWall.EAST, flag1).withProperty(BlockWall.SOUTH, flag2).withProperty(BlockWall.WEST, flag3);
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public boolean isFullCube(IBlockState state){
         return false;
@@ -101,14 +97,11 @@ public class BlockWallAA extends BlockBase{
         return false;
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     @SideOnly(Side.CLIENT)
     public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side){
         return side != EnumFacing.DOWN || super.shouldSideBeRendered(blockState, blockAccess, pos, side);
     }
-
-    @SuppressWarnings("deprecation")
 
     @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos){
@@ -116,14 +109,12 @@ public class BlockWallAA extends BlockBase{
         return AABB_BY_INDEX[yesThisIsCopyPastedFromBlockWallAndIHaveNoIdeaWhatThisMethodDoes(state)];
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, World worldIn, BlockPos pos){
         blockState = this.getActualState(blockState, worldIn, pos);
         return CLIP_AABB_BY_INDEX[yesThisIsCopyPastedFromBlockWallAndIHaveNoIdeaWhatThisMethodDoes(blockState)];
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public boolean isOpaqueCube(IBlockState state){
         return false;
@@ -134,14 +125,12 @@ public class BlockWallAA extends BlockBase{
         return this.meta;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     @SideOnly(Side.CLIENT)
     public void getSubBlocks(Item item, CreativeTabs tab, List list){
         list.add(new ItemStack(item, 1, 0));
     }
 
-    @SuppressWarnings("deprecation")
     public boolean canConnectTo(IBlockAccess worldIn, BlockPos pos){
         Block block = PosUtil.getBlock(pos, worldIn);
         IBlockState state = worldIn.getBlockState(pos);

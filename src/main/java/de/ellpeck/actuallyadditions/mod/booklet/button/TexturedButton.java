@@ -31,7 +31,6 @@ public class TexturedButton extends GuiButton{
         this(id, x, y, texturePosX, texturePosY, width, height, new ArrayList());
     }
 
-    @SuppressWarnings("unchecked")
     public TexturedButton(int id, int x, int y, int texturePosX, int texturePosY, int width, int height, List hoverTextList){
         super(id, x, y, width, height, "");
         this.texturePosX = texturePosX;

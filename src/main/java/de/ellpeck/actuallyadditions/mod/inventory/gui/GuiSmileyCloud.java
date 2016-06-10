@@ -54,7 +54,6 @@ public class GuiSmileyCloud extends GuiContainer{
         this.ySize = 20;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public void initGui(){
         super.initGui();

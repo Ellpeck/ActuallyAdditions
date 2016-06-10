@@ -40,7 +40,6 @@ public class GuiBookletStand extends GuiBooklet{
         super.actionPerformed(button);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public void initGui(){
         super.initGui();

@@ -33,7 +33,6 @@ public class PacketParticle implements IMessage{
     private int particleAmount;
     private float particleSize;
 
-    @SuppressWarnings("unused")
     public PacketParticle(){
 
     }

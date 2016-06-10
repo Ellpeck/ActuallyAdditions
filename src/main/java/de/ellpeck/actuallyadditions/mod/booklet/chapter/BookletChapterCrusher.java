@@ -26,7 +26,6 @@ public class BookletChapterCrusher extends BookletChapter{
         super(unlocalizedName, entry, displayStack, getPages(pages));
     }
 
-    @SuppressWarnings("unchecked")
     private static BookletPage[] getPages(BookletPage... pages){
         ArrayList<BookletPage> allPages = new ArrayList<BookletPage>();
         allPages.addAll(Arrays.asList(pages));

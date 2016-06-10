@@ -94,7 +94,7 @@ public class ItemFoods extends ItemFoodBase{
         return stack.getItemDamage() >= allFoods.length ? EnumRarity.COMMON : allFoods[stack.getItemDamage()].rarity;
     }
 
-    @SuppressWarnings("all")
+    @Override
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item item, CreativeTabs tab, List list){
         for(int j = 0; j < allFoods.length; j++){

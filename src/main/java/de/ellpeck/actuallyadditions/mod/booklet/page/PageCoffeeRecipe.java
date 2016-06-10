@@ -41,7 +41,6 @@ public class PageCoffeeRecipe extends BookletPageAA{
         gui.drawRect(gui.getGuiLeft()+19, gui.getGuiTop()+20, 146, 94, 99, 60);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     @SideOnly(Side.CLIENT)
     public void render(IBookletGui gui, int mouseX, int mouseY, int ticksElapsed, boolean mousePressed){

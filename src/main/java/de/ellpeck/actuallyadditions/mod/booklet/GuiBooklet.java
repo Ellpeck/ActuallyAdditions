@@ -285,7 +285,6 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
         }
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public void initGui(){
         this.guiLeft = (this.width-this.xSize)/2;

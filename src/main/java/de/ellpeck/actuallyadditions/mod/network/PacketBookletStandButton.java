@@ -34,7 +34,6 @@ public class PacketBookletStandButton implements IMessage{
     private NBTTagCompound entrySet;
     private BlockPos tilePos;
 
-    @SuppressWarnings("unused")
     public PacketBookletStandButton(){
 
     }

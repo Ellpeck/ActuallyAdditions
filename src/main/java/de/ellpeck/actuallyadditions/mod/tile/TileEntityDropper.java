@@ -38,7 +38,6 @@ public class TileEntityDropper extends TileEntityInventoryBase implements IRedst
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public void updateEntity(){
         super.updateEntity();
         if(!this.worldObj.isRemote){

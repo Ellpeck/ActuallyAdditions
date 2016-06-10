@@ -38,7 +38,6 @@ public class BlockLampPowerer extends BlockBase{
         this.setSoundType(SoundType.STONE);
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn){
         this.updateLamp(worldIn, pos);

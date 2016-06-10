@@ -61,7 +61,6 @@ public class ItemPotionRing extends ItemBase implements IColorProvidingItem, IDi
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public void onUpdate(ItemStack stack, World world, Entity player, int par4, boolean par5){
         super.onUpdate(stack, world, player, par4, par5);
 
@@ -90,7 +89,7 @@ public class ItemPotionRing extends ItemBase implements IColorProvidingItem, IDi
         return stack.getItemDamage() >= allRings.length ? EnumRarity.COMMON : allRings[stack.getItemDamage()].rarity;
     }
 
-    @SuppressWarnings("all")
+    @Override
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item item, CreativeTabs tab, List list){
         for(int j = 0; j < allRings.length; j++){

@@ -29,7 +29,6 @@ public class BookletEntryAllSearch extends BookletEntry{
         this.chapters = (ArrayList<IBookletChapter>)this.allChapters.clone();
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public void addChapter(IBookletChapter chapter){
         this.allChapters.add(chapter);

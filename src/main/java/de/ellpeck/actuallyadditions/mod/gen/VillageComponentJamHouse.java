@@ -30,7 +30,6 @@ public class VillageComponentJamHouse extends StructureVillagePieces.House1{
 
     private int averageGroundLevel = -1;
 
-    @SuppressWarnings("unused")
     public VillageComponentJamHouse(){
 
     }
@@ -74,7 +73,6 @@ public class VillageComponentJamHouse extends StructureVillagePieces.House1{
         this.fillWithBlocks(world, sbb, minX, minY, minZ, maxX, maxY, maxZ, block.getDefaultState(), block.getDefaultState(), false);
     }
 
-    @SuppressWarnings("deprecation")
     public void spawnActualHouse(World world, Random rand, StructureBoundingBox sbb){
         //Base
         this.fillWithBlocks(world, sbb, 1, 0, 8, 9, 0, 10, Blocks.GRASS);

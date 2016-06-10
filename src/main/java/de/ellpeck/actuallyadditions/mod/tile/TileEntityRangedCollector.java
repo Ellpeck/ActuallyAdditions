@@ -45,7 +45,6 @@ public class TileEntityRangedCollector extends TileEntityInventoryBase implement
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public void updateEntity(){
         super.updateEntity();
         if(!this.worldObj.isRemote){

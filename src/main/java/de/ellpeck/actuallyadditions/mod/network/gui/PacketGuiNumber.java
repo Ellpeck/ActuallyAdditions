@@ -31,7 +31,6 @@ public class PacketGuiNumber implements IMessage{
     private int textID;
     private int playerID;
 
-    @SuppressWarnings("unused")
     public PacketGuiNumber(){
 
     }

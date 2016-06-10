@@ -37,13 +37,11 @@ public class BlockGreenhouseGlass extends BlockContainerBase{
         this.setSoundType(SoundType.STONE);
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public boolean isFullCube(IBlockState state){
         return false;
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     @SideOnly(Side.CLIENT)
     public boolean shouldSideBeRendered(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing side){
@@ -54,7 +52,6 @@ public class BlockGreenhouseGlass extends BlockContainerBase{
 
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public boolean isOpaqueCube(IBlockState state){
         return false;

@@ -20,15 +20,13 @@ import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidTank;
-import net.minecraftforge.fluids.IFluidBlock;
+import net.minecraftforge.fluids.*;
 import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityFluidCollector extends TileEntityBase implements IFluidSaver, IRedstoneToggle{
+public class TileEntityFluidCollector extends TileEntityBase implements IFluidSaver, IRedstoneToggle, net.minecraftforge.fluids.IFluidHandler{
 
     public final FluidTank tank = new FluidTank(8*Util.BUCKET);
     public boolean isPlacer;
@@ -121,7 +119,6 @@ public class TileEntityFluidCollector extends TileEntityBase implements IFluidSa
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public void updateEntity(){
         super.updateEntity();
         if(!this.worldObj.isRemote){
@@ -168,4 +165,58 @@ public class TileEntityFluidCollector extends TileEntityBase implements IFluidSa
         this.tank.setFluid(fluids[0]);
     }
 
+    @Override
+    public int fill(EnumFacing from, FluidStack resource, boolean doFill){
+        IFluidHandler handler = this.getFluidHandler(from);
+        return handler == null ? 0 : handler.fill(resource, doFill);
+    }
+
+    @Override
+    public FluidStack drain(EnumFacing from, FluidStack resource, boolean doDrain){
+        IFluidHandler handler = this.getFluidHandler(from);
+        return handler == null ? null : handler.drain(resource, doDrain);
+    }
+
+    @Override
+    public FluidStack drain(EnumFacing from, int maxDrain, boolean doDrain){
+        IFluidHandler handler = this.getFluidHandler(from);
+        return handler == null ? null : handler.drain(maxDrain, doDrain);
+    }
+
+    @Override
+    public boolean canFill(EnumFacing from, Fluid fluid){
+        IFluidHandler handler = this.getFluidHandler(from);
+        if(handler != null){
+            for(IFluidTankProperties prop : handler.getTankProperties()){
+                if(prop != null && prop.canFillFluidType(new FluidStack(fluid, Integer.MAX_VALUE))){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean canDrain(EnumFacing from, Fluid fluid){
+        IFluidHandler handler = this.getFluidHandler(from);
+        if(handler != null){
+            for(IFluidTankProperties prop : handler.getTankProperties()){
+                if(prop != null && prop.canDrainFluidType(new FluidStack(fluid, Integer.MAX_VALUE))){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public FluidTankInfo[] getTankInfo(EnumFacing from){
+        IFluidHandler handler = this.getFluidHandler(from);
+        if(handler instanceof IFluidTank){
+            return new FluidTankInfo[]{((IFluidTank)handler).getInfo()};
+        }
+        else{
+            return null;
+        }
+    }
 }

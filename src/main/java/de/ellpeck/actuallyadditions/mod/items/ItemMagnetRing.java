@@ -28,7 +28,6 @@ public class ItemMagnetRing extends ItemEnergy{
         super(3000000, 5000, name);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public void onUpdate(ItemStack stack, World world, Entity entity, int par4, boolean par5){
         int energyUse = 10;

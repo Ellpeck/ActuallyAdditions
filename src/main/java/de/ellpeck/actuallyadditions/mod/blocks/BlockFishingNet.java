@@ -35,8 +35,6 @@ public class BlockFishingNet extends BlockContainerBase{
         this.setSoundType(SoundType.WOOD);
     }
 
-    @SuppressWarnings("deprecation")
-
     @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos){
         return AABB;
@@ -48,13 +46,11 @@ public class BlockFishingNet extends BlockContainerBase{
         return new TileEntityFishingNet();
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public boolean isFullCube(IBlockState state){
         return false;
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public boolean isOpaqueCube(IBlockState state){
         return false;

@@ -29,7 +29,6 @@ public interface IBookletGui{
      *
      * @param renderTransferButton if the "show more info"-text and clickable part should exist-
      */
-    @SuppressWarnings("unchecked")
     @SideOnly(Side.CLIENT)
     void renderTooltipAndTransferButton(BookletPage from, ItemStack stack, int x, int y, boolean renderTransferButton, boolean mousePressed);
 

@@ -188,7 +188,6 @@ public class BookletUtils{
     /**
      * Draws all of the hovering texts for the buttons that need explanation in the booklet
      */
-    @SuppressWarnings("unchecked")
     public static void doHoverTexts(GuiBooklet booklet, int mouseX, int mouseY){
         //Update all of the buttons' hovering texts
         for(Object button : booklet.getButtonList()){
@@ -206,7 +205,6 @@ public class BookletUtils{
     /**
      * Updates the search bar, should be called when it is getting typed into
      */
-    @SuppressWarnings("unchecked")
     public static void updateSearchBar(GuiBooklet booklet){
         if(booklet.currentEntrySet.getCurrentEntry() instanceof BookletEntryAllSearch){
             BookletEntryAllSearch currentEntry = (BookletEntryAllSearch)booklet.currentEntrySet.getCurrentEntry();
@@ -241,7 +239,6 @@ public class BookletUtils{
         return false;
     }
 
-    @SuppressWarnings("unchecked")
     public static void openIndexEntry(GuiBooklet booklet, IBookletEntry entry, int page, boolean resetTextField){
         booklet.searchField.setVisible(entry instanceof BookletEntryAllSearch);
         booklet.searchField.setFocused(entry instanceof BookletEntryAllSearch);

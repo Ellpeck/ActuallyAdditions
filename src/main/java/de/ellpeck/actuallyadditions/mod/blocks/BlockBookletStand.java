@@ -43,7 +43,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-@SuppressWarnings("deprecation")
 public class BlockBookletStand extends BlockContainerBase implements IHudDisplay{
 
     private static final PropertyInteger META = PropertyInteger.create("meta", 0, 3);
@@ -61,8 +60,6 @@ public class BlockBookletStand extends BlockContainerBase implements IHudDisplay
         this.setSoundType(SoundType.WOOD);
     }
 
-    @SuppressWarnings("deprecation")
-
     @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos){
         int meta = this.getMetaFromState(state);
@@ -79,13 +76,11 @@ public class BlockBookletStand extends BlockContainerBase implements IHudDisplay
         return super.getBoundingBox(state, source, pos);
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public boolean isFullCube(IBlockState state){
         return false;
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public boolean isOpaqueCube(IBlockState state){
         return false;

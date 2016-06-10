@@ -26,7 +26,6 @@ public class StringUtil{
     /**
      * Localizes a given String via StatCollector
      */
-    @SuppressWarnings("deprecation")
     public static String localize(String text){
         return I18n.translateToLocal(text);
     }
@@ -34,7 +33,6 @@ public class StringUtil{
     /**
      * Localizes a given formatted String with the given Replacements
      */
-    @SuppressWarnings("deprecation")
     public static String localizeFormatted(String text, Object... replace){
         return I18n.translateToLocalFormatted(text, replace);
     }

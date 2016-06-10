@@ -45,7 +45,7 @@ public class BlockCrystal extends BlockBase{
         return this.getMetaFromState(state);
     }
 
-    @SuppressWarnings("all")
+    @Override
     @SideOnly(Side.CLIENT)
     public void getSubBlocks(Item item, CreativeTabs tab, List list){
         for(int j = 0; j < allCrystals.length; j++){

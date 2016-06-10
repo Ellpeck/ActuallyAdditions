@@ -121,7 +121,6 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
         return false;
     }
 
-    @SuppressWarnings("deprecation")
     private void doWork(){
         if(this.isBreaker){
             Block blockToBreak = PosUtil.getBlock(this.boundPosition, this.worldObj);

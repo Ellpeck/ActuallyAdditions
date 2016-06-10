@@ -52,7 +52,6 @@ public class GuiRangedCollector extends GuiContainer{
         this.world = world;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public void initGui(){
         super.initGui();
@@ -62,7 +61,6 @@ public class GuiRangedCollector extends GuiContainer{
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public void drawScreen(int x, int y, float f){
         super.drawScreen(x, y, f);
 

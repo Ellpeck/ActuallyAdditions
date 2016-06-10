@@ -29,7 +29,6 @@ public class TooltipEvent{
     private static final String ADVANCED_INFO_TEXT_PRE = TextFormatting.DARK_GRAY+"     ";
     private static final String ADVANCED_INFO_HEADER_PRE = TextFormatting.GRAY+"  -";
 
-    @SuppressWarnings("unchecked")
     @SubscribeEvent
     public void onTooltipEvent(ItemTooltipEvent event){
         //Advanced Item Info

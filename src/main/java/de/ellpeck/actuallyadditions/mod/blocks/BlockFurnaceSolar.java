@@ -35,8 +35,6 @@ public class BlockFurnaceSolar extends BlockContainerBase{
         this.setSoundType(SoundType.STONE);
     }
 
-    @SuppressWarnings("deprecation")
-
     @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos){
         return AABB;
@@ -48,13 +46,11 @@ public class BlockFurnaceSolar extends BlockContainerBase{
         return new TileEntityFurnaceSolar();
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public boolean isFullCube(IBlockState state){
         return false;
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public boolean isOpaqueCube(IBlockState state){
         return false;

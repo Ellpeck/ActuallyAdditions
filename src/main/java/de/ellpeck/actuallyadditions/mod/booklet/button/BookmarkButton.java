@@ -80,7 +80,6 @@ public class BookmarkButton extends GuiButton{
         }
     }
 
-    @SuppressWarnings("unchecked")
     public void drawHover(int mouseX, int mouseY){
         ArrayList list = new ArrayList();
         if(this.assignedEntry.entry != null){

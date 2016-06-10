@@ -52,7 +52,6 @@ public class TileEntityLavaFactoryController extends TileEntityBase implements I
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public void updateEntity(){
         super.updateEntity();
         if(!this.worldObj.isRemote){

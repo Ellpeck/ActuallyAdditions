@@ -53,7 +53,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@SuppressWarnings("unchecked")
 public class ItemDrill extends ItemEnergy{
 
     private static final int ENERGY_USE = 100;
@@ -257,7 +256,6 @@ public class ItemDrill extends ItemEnergy{
         return toReturn;
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public boolean canHarvestBlock(IBlockState state, ItemStack stack){
         int harvestLevel = this.getHarvestLevel(stack, "");
@@ -343,7 +341,6 @@ public class ItemDrill extends ItemEnergy{
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item item, CreativeTabs tabs, List list){
         for(int i = 0; i < 16; i++){
@@ -415,7 +412,6 @@ public class ItemDrill extends ItemEnergy{
      * @param world  The World
      * @param player The Player who breaks the Blocks
      */
-    @SuppressWarnings("deprecation")
     public boolean breakBlocks(ItemStack stack, int radius, World world, BlockPos aPos, EntityPlayer player){
         int xRange = radius;
         int yRange = radius;
@@ -487,7 +483,6 @@ public class ItemDrill extends ItemEnergy{
      * @param player  The Player breaking the Blocks
      * @param use     The Energy that should be extracted per Block
      */
-    @SuppressWarnings("deprecation")
     private boolean tryHarvestBlock(World world, BlockPos pos, boolean isExtra, ItemStack stack, EntityPlayer player, int use){
         Block block = PosUtil.getBlock(pos, world);
         IBlockState state = world.getBlockState(pos);

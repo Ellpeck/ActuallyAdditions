@@ -111,7 +111,6 @@ public class ItemCoffee extends ItemFoodBase{
         return true;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean bool){
         PotionEffect[] effects = ActuallyAdditionsAPI.methodHandler.getEffectsFromStack(stack);

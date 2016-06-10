@@ -40,7 +40,6 @@ public class ItemKnife extends ItemBase{
     }
 
 
-    @SuppressWarnings("unchecked")
     @Override
     public Multimap getAttributeModifiers(EntityEquipmentSlot slot, ItemStack stack){
         Multimap map = super.getAttributeModifiers(slot, stack);

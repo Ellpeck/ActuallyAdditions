@@ -103,7 +103,7 @@ public class BlockColoredLamp extends BlockBase{
         return new ItemStack(InitBlocks.blockColoredLamp, 1, this.getMetaFromState(state));
     }
 
-    @SuppressWarnings("all")
+    @Override
     @SideOnly(Side.CLIENT)
     public void getSubBlocks(Item item, CreativeTabs tab, List list){
         for(int j = 0; j < allLampTypes.length; j++){

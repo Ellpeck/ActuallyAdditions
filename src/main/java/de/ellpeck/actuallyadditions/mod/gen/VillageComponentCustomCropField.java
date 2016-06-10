@@ -32,7 +32,6 @@ public class VillageComponentCustomCropField extends StructureVillagePieces.Hous
 
     private int averageGroundLevel = -1;
 
-    @SuppressWarnings("unused")
     public VillageComponentCustomCropField(){
 
     }
@@ -99,7 +98,6 @@ public class VillageComponentCustomCropField extends StructureVillagePieces.Hous
         }
     }
 
-    @SuppressWarnings("deprecation")
     private IBlockState getRandomCropType(Random rand){
         int randomMeta = MathHelper.getRandomIntegerInRange(rand, 1, 7);
         switch(rand.nextInt(4)){
