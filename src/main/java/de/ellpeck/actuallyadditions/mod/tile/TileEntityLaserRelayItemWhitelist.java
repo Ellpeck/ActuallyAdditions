@@ -233,17 +233,6 @@ public class TileEntityLaserRelayItemWhitelist extends TileEntityLaserRelayItem 
         int slotStart = output ? 12 : 0;
         int slotStop = slotStart+12;
 
-        for(int i = slotStart; i < slotStop; i++){
-            if(this.slots[i] != null){
-                if(this.slots[i].getItem() instanceof ItemFilter){
-                    ItemDrill.writeSlotsToNBT(new ItemStack[ContainerFilter.SLOT_AMOUNT], this.slots[i]);
-                }
-                else{
-                    this.slots[i] = null;
-                }
-            }
-        }
-
         List<IItemHandler> handlers = this.getAllHandlersAround();
         for(IItemHandler handler : handlers){
             for(int i = 0; i < handler.getSlots(); i++){
@@ -252,32 +241,34 @@ public class TileEntityLaserRelayItemWhitelist extends TileEntityLaserRelayItem 
                     ItemStack copy = stack.copy();
                     copy.stackSize = 1;
 
-                    for(int k = slotStart; k < slotStop; k++){
-                        if(this.slots[k] != null){
-                            if(this.slots[k].getItem() instanceof ItemFilter){
-                                ItemStack[] filterSlots = new ItemStack[ContainerFilter.SLOT_AMOUNT];
-                                ItemDrill.loadSlotsFromNBT(filterSlots, this.slots[k]);
+                    if(!checkFilter(copy, true, this.slots, slotStart, slotStop)){
+                        for(int k = slotStart; k < slotStop; k++){
+                            if(this.slots[k] != null){
+                                if(this.slots[k].getItem() instanceof ItemFilter){
+                                    ItemStack[] filterSlots = new ItemStack[ContainerFilter.SLOT_AMOUNT];
+                                    ItemDrill.loadSlotsFromNBT(filterSlots, this.slots[k]);
 
-                                boolean did = false;
-                                if(filterSlots != null && filterSlots.length > 0){
-                                    for(int j = 0; j < filterSlots.length; j++){
-                                        if(filterSlots[j] == null || filterSlots[j].stackSize <= 0){
-                                            filterSlots[j] = copy;
-                                            did = true;
-                                            break;
+                                    boolean did = false;
+                                    if(filterSlots != null && filterSlots.length > 0){
+                                        for(int j = 0; j < filterSlots.length; j++){
+                                            if(filterSlots[j] == null || filterSlots[j].stackSize <= 0){
+                                                filterSlots[j] = copy;
+                                                did = true;
+                                                break;
+                                            }
                                         }
                                     }
-                                }
 
-                                if(did){
-                                    ItemDrill.writeSlotsToNBT(filterSlots, this.slots[k]);
-                                    break;
+                                    if(did){
+                                        ItemDrill.writeSlotsToNBT(filterSlots, this.slots[k]);
+                                        break;
+                                    }
                                 }
                             }
-                        }
-                        else{
-                            this.slots[k] = copy;
-                            break;
+                            else{
+                                this.slots[k] = copy;
+                                break;
+                            }
                         }
                     }
                 }
