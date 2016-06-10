@@ -11,7 +11,6 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 
-import com.sun.org.apache.bcel.internal.generic.PUTFIELD;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.network.gui.INumberReactor;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
@@ -63,17 +62,17 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
     public void onNumberReceived(int text, int textID, EntityPlayer player){
         if(text != -1){
             if(textID == 0){
-                this.slotToPutStart = this.placeToPut instanceof IInventory ? Math.max(Math.min(text, ((IInventory)this.placeToPut).getSizeInventory()-1), 0) : text;
+                this.slotToPutStart = Math.max(text, 0);
             }
             if(textID == 1){
-                this.slotToPutEnd = this.placeToPut instanceof IInventory ? Math.max(Math.min(text, ((IInventory)this.placeToPut).getSizeInventory()), 0) : text;
+                this.slotToPutEnd = Math.max(text, 0);
             }
 
             if(textID == 2){
-                this.slotToPullStart = this.placeToPull instanceof IInventory ? Math.max(Math.min(text, ((IInventory)this.placeToPull).getSizeInventory()-1), 0) : text;
+                this.slotToPullStart = Math.max(text, 0);
             }
             if(textID == 3){
-                this.slotToPullEnd = this.placeToPull instanceof IInventory ? Math.max(Math.min(text, ((IInventory)this.placeToPull).getSizeInventory()), 0) : text;
+                this.slotToPullEnd = Math.max(text, 0);
             }
         }
         this.markDirty();
@@ -279,20 +278,23 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
      * Sets all of the relevant variables
      */
     public void initVars(){
+        if(this.sideToPull != -1){
+            this.placeToPull = WorldUtil.getTileEntityFromSide(WorldUtil.getDirectionBySidesInOrder(this.sideToPull), this.worldObj, this.pos);
 
-        //Gets the Place to put and Pull
-        this.placeToPull = WorldUtil.getTileEntityFromSide(WorldUtil.getDirectionBySidesInOrder(this.sideToPull), this.worldObj, this.pos);
-        this.placeToPut = WorldUtil.getTileEntityFromSide(WorldUtil.getDirectionBySidesInOrder(this.sideToPut), this.worldObj, this.pos);
-
-        //Resets the Variables
-        if(this.placeToPull instanceof IInventory){
-            if(this.slotToPullEnd <= 0){
-                this.slotToPullEnd = ((IInventory)this.placeToPull).getSizeInventory();
+            if(this.placeToPull instanceof IInventory){
+                if(this.slotToPullEnd <= 0){
+                    this.slotToPullEnd = ((IInventory)this.placeToPull).getSizeInventory();
+                }
             }
         }
-        if(this.placeToPut instanceof IInventory){
-            if(this.slotToPutEnd <= 0){
-                this.slotToPutEnd = ((IInventory)this.placeToPut).getSizeInventory();
+
+        if(this.sideToPut != -1){
+            this.placeToPut = WorldUtil.getTileEntityFromSide(WorldUtil.getDirectionBySidesInOrder(this.sideToPut), this.worldObj, this.pos);
+
+            if(this.placeToPut instanceof IInventory){
+                if(this.slotToPutEnd <= 0){
+                    this.slotToPutEnd = ((IInventory)this.placeToPut).getSizeInventory();
+                }
             }
         }
     }

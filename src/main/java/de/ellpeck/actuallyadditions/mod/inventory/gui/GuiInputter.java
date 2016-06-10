@@ -40,7 +40,7 @@ import java.util.List;
 public class GuiInputter extends GuiContainer{
 
     public static final int OFFSET_ADVANCED = 12+36;
-    public static final String[] sideString = new String[]{
+    public static final String[] SIDES = new String[]{
             StringUtil.localize("info."+ModUtil.MOD_ID+".gui.disabled"),
             StringUtil.localize("info."+ModUtil.MOD_ID+".gui.up"),
             StringUtil.localize("info."+ModUtil.MOD_ID+".gui.down"),
@@ -48,8 +48,8 @@ public class GuiInputter extends GuiContainer{
             StringUtil.localize("info."+ModUtil.MOD_ID+".gui.east"),
             StringUtil.localize("info."+ModUtil.MOD_ID+".gui.south"),
             StringUtil.localize("info."+ModUtil.MOD_ID+".gui.west")};
-    private static final ResourceLocation resLoc = AssetUtil.getGuiLocation("guiInputter");
-    private static final ResourceLocation resLocAdvanced = AssetUtil.getGuiLocation("guiInputterAdvanced");
+    private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("guiInputter");
+    private static final ResourceLocation RES_LOC_ADVANCED = AssetUtil.getGuiLocation("guiInputterAdvanced");
     public final TileEntityInputter tileInputter;
     private final int x;
     private final int y;
@@ -71,7 +71,7 @@ public class GuiInputter extends GuiContainer{
         this.z = z;
         this.world = world;
         this.xSize = 176;
-        this.ySize = 93+86+(isAdvanced ? OFFSET_ADVANCED : 0);
+        this.ySize = 97+86+(isAdvanced ? OFFSET_ADVANCED : 0);
         this.isAdvanced = isAdvanced;
     }
 
@@ -80,18 +80,18 @@ public class GuiInputter extends GuiContainer{
     public void initGui(){
         super.initGui();
 
-        this.fieldPullStart = new GuiTextField(3000, this.fontRendererObj, this.guiLeft+13, this.guiTop+80+(this.isAdvanced ? OFFSET_ADVANCED : 0), 27, 8);
-        this.fieldPullStart.setMaxStringLength(4);
+        this.fieldPullStart = new GuiTextField(3000, this.fontRendererObj, this.guiLeft+6, this.guiTop+80+(this.isAdvanced ? OFFSET_ADVANCED : 0), 34, 8);
+        this.fieldPullStart.setMaxStringLength(5);
         this.fieldPullStart.setEnableBackgroundDrawing(false);
-        this.fieldPullEnd = new GuiTextField(3001, this.fontRendererObj, this.guiLeft+50, this.guiTop+80+(this.isAdvanced ? OFFSET_ADVANCED : 0), 27, 8);
-        this.fieldPullEnd.setMaxStringLength(4);
+        this.fieldPullEnd = new GuiTextField(3001, this.fontRendererObj, this.guiLeft+50, this.guiTop+80+(this.isAdvanced ? OFFSET_ADVANCED : 0), 34, 8);
+        this.fieldPullEnd.setMaxStringLength(5);
         this.fieldPullEnd.setEnableBackgroundDrawing(false);
 
-        this.fieldPutStart = new GuiTextField(3002, this.fontRendererObj, this.guiLeft+98, this.guiTop+80+(this.isAdvanced ? OFFSET_ADVANCED : 0), 27, 8);
-        this.fieldPutStart.setMaxStringLength(4);
+        this.fieldPutStart = new GuiTextField(3002, this.fontRendererObj, this.guiLeft+91, this.guiTop+80+(this.isAdvanced ? OFFSET_ADVANCED : 0), 34, 8);
+        this.fieldPutStart.setMaxStringLength(5);
         this.fieldPutStart.setEnableBackgroundDrawing(false);
-        this.fieldPutEnd = new GuiTextField(3004, this.fontRendererObj, this.guiLeft+135, this.guiTop+80+(this.isAdvanced ? OFFSET_ADVANCED : 0), 27, 8);
-        this.fieldPutEnd.setMaxStringLength(4);
+        this.fieldPutEnd = new GuiTextField(3004, this.fontRendererObj, this.guiLeft+135, this.guiTop+80+(this.isAdvanced ? OFFSET_ADVANCED : 0), 34, 8);
+        this.fieldPutEnd.setMaxStringLength(5);
         this.fieldPutEnd.setEnableBackgroundDrawing(false);
 
         SmallerButton buttonSidePutP = new SmallerButton(0, this.guiLeft+155, this.guiTop+43+(this.isAdvanced ? OFFSET_ADVANCED : 0), ">");
@@ -112,7 +112,7 @@ public class GuiInputter extends GuiContainer{
             this.buttonList.add(this.whitelistPull);
         }
 
-        this.buttonList.add(new TinyButton(TileEntityInputter.OKAY_BUTTON_ID, this.guiLeft+84, this.guiTop+80+(this.isAdvanced ? OFFSET_ADVANCED : 0)));
+        this.buttonList.add(new TinyButton(TileEntityInputter.OKAY_BUTTON_ID, this.guiLeft+84, this.guiTop+91+(this.isAdvanced ? OFFSET_ADVANCED : 0)));
     }
 
     @Override
@@ -143,16 +143,16 @@ public class GuiInputter extends GuiContainer{
 
         int newTopOffset = this.guiTop+(this.isAdvanced ? OFFSET_ADVANCED : 0);
         //Info Mode on!
-        if(x >= this.guiLeft+11 && y >= newTopOffset+65 && x <= this.guiLeft+11+31 && y <= newTopOffset+65+12){
+        if(x >= this.guiLeft+4 && y >= newTopOffset+65 && x <= this.guiLeft+4+38 && y <= newTopOffset+65+12){
             this.drawHoveringText(this.fontRendererObj.listFormattedStringToWidth(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID+".inputter.info.1").replace("<p>", StringUtil.localize("info."+ModUtil.MOD_ID+".gui.pull")), 200), x, y);
         }
-        if(x >= this.guiLeft+96 && y >= newTopOffset+65 && x <= this.guiLeft+96+31 && y <= newTopOffset+65+12){
+        if(x >= this.guiLeft+89 && y >= newTopOffset+65 && x <= this.guiLeft+89+38 && y <= newTopOffset+65+12){
             this.drawHoveringText(this.fontRendererObj.listFormattedStringToWidth(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID+".inputter.info.1").replace("<p>", StringUtil.localize("info."+ModUtil.MOD_ID+".gui.put")), 200), x, y);
         }
-        if(x >= this.guiLeft+48 && y >= newTopOffset+65 && x <= this.guiLeft+48+31 && y <= newTopOffset+65+12){
+        if(x >= this.guiLeft+48 && y >= newTopOffset+65 && x <= this.guiLeft+48+38 && y <= newTopOffset+65+12){
             this.drawHoveringText(this.fontRendererObj.listFormattedStringToWidth(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID+".inputter.info.2").replace("<p>", StringUtil.localize("info."+ModUtil.MOD_ID+".gui.pull")), 200), x, y);
         }
-        if(x >= this.guiLeft+133 && y >= newTopOffset+65 && x <= this.guiLeft+133+31 && y <= newTopOffset+65+12){
+        if(x >= this.guiLeft+133 && y >= newTopOffset+65 && x <= this.guiLeft+133+38 && y <= newTopOffset+65+12){
             this.drawHoveringText(this.fontRendererObj.listFormattedStringToWidth(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID+".inputter.info.2").replace("<p>", StringUtil.localize("info."+ModUtil.MOD_ID+".gui.put")), 200), x, y);
         }
     }
@@ -167,20 +167,20 @@ public class GuiInputter extends GuiContainer{
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 
         this.mc.getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
-        this.drawTexturedModalRect(this.guiLeft, this.guiTop+93+(this.isAdvanced ? OFFSET_ADVANCED : 0), 0, 0, 176, 86);
+        this.drawTexturedModalRect(this.guiLeft, this.guiTop+97+(this.isAdvanced ? OFFSET_ADVANCED : 0), 0, 0, 176, 86);
 
-        this.mc.getTextureManager().bindTexture(this.isAdvanced ? resLocAdvanced : resLoc);
-        this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 93+(this.isAdvanced ? OFFSET_ADVANCED : 0));
+        this.mc.getTextureManager().bindTexture(this.isAdvanced ? RES_LOC_ADVANCED : RES_LOC);
+        this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 97+(this.isAdvanced ? OFFSET_ADVANCED : 0));
 
         this.fontRendererObj.drawString("INBOUND", this.guiLeft+23+3, this.guiTop+32+(this.isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_GRAY_TEXT);
         this.fontRendererObj.drawString("OUTBOUND", this.guiLeft+104+3, this.guiTop+32+(this.isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_GRAY_TEXT);
 
-        this.fontRendererObj.drawString(sideString[this.tileInputter.sideToPull+1], this.guiLeft+24+1, this.guiTop+45+3+(this.isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_GRAY_TEXT);
-        this.fontRendererObj.drawString(sideString[this.tileInputter.sideToPut+1], this.guiLeft+109+1, this.guiTop+45+3+(this.isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_GRAY_TEXT);
+        this.fontRendererObj.drawString(SIDES[this.tileInputter.sideToPull+1], this.guiLeft+24+1, this.guiTop+45+3+(this.isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_GRAY_TEXT);
+        this.fontRendererObj.drawString(SIDES[this.tileInputter.sideToPut+1], this.guiLeft+109+1, this.guiTop+45+3+(this.isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_GRAY_TEXT);
 
-        this.fontRendererObj.drawString(Integer.toString(this.tileInputter.slotToPutStart), this.guiLeft+99, this.guiTop+67+(this.isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_WHITE);
+        this.fontRendererObj.drawString(Integer.toString(this.tileInputter.slotToPutStart), this.guiLeft+92, this.guiTop+67+(this.isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_WHITE);
         this.fontRendererObj.drawString(Integer.toString(this.tileInputter.slotToPutEnd), this.guiLeft+136, this.guiTop+67+(this.isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_WHITE);
-        this.fontRendererObj.drawString(Integer.toString(this.tileInputter.slotToPullStart), this.guiLeft+14, this.guiTop+67+(this.isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_WHITE);
+        this.fontRendererObj.drawString(Integer.toString(this.tileInputter.slotToPullStart), this.guiLeft+7, this.guiTop+67+(this.isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_WHITE);
         this.fontRendererObj.drawString(Integer.toString(this.tileInputter.slotToPullEnd), this.guiLeft+51, this.guiTop+67+(this.isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_WHITE);
 
         this.fieldPutStart.drawTextBox();
