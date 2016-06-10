@@ -1,3 +1,9 @@
+# 1.9.4-r42
+### The shut-up-about-EnderIO Update.
+* Changed ESD to allow higher numbers of slots and have no limit on input values so that you can basically make it pull from infintely many slots if the amount of slots present is able to change
+* Only add things to smart item laser relay whitelist when they aren't on it already
+* Re-added IFluidHandler since apparently everyone's moaning about EnderIO not having updated and my stuff breaking because of it or something like that.
+
 # 1.9.4-r41
 * Changed white- and blacklists of laser relays and ESDs to be for putting and pulling. Check them in your world, they might all not work like you want them to anymore!
 * Added item filters
