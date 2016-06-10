@@ -108,13 +108,26 @@ public class WorldUtil{
     public static void pushFluid(TileEntity tileFrom, EnumFacing side){
         TileEntity tileTo = getTileEntityFromSide(side, tileFrom.getWorld(), tileFrom.getPos());
         if(tileTo != null){
-            IFluidHandler handlerFrom = tileFrom.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side);
-            IFluidHandler handlerTo = tileTo.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side.getOpposite());
-            if(handlerFrom != null && handlerTo != null){
-                FluidStack drain = handlerFrom.drain(Integer.MAX_VALUE, false);
+            if(tileFrom instanceof net.minecraftforge.fluids.IFluidHandler && tileTo instanceof net.minecraftforge.fluids.IFluidHandler){
+                net.minecraftforge.fluids.IFluidHandler handlerTo = (net.minecraftforge.fluids.IFluidHandler)tileTo;
+                net.minecraftforge.fluids.IFluidHandler handlerFrom = (net.minecraftforge.fluids.IFluidHandler)tileFrom;
+                FluidStack drain =  handlerFrom.drain(side, Integer.MAX_VALUE, false);
                 if(drain != null){
-                    int filled = handlerTo.fill(drain.copy(), true);
-                    handlerFrom.drain(filled, true);
+                    if(handlerTo.canFill(side.getOpposite(), drain.getFluid())){
+                        int filled = handlerTo.fill(side.getOpposite(), drain.copy(), true);
+                        handlerFrom.drain(side, filled, true);
+                    }
+                }
+            }
+            else{
+                IFluidHandler handlerFrom = tileFrom.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side);
+                IFluidHandler handlerTo = tileTo.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side.getOpposite());
+                if(handlerFrom != null && handlerTo != null){
+                    FluidStack drain = handlerFrom.drain(Integer.MAX_VALUE, false);
+                    if(drain != null){
+                        int filled = handlerTo.fill(drain.copy(), true);
+                        handlerFrom.drain(filled, true);
+                    }
                 }
             }
         }

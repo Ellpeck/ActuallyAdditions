@@ -14,9 +14,13 @@ import de.ellpeck.actuallyadditions.mod.blocks.BlockPhantom;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidTankInfo;
+import net.minecraftforge.fluids.IFluidHandler;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 
-public class TileEntityPhantomLiquiface extends TileEntityPhantomface{
+public class TileEntityPhantomLiquiface extends TileEntityPhantomface implements IFluidHandler{
 
     public TileEntityPhantomLiquiface(){
         super("liquiface");
@@ -41,9 +45,61 @@ public class TileEntityPhantomLiquiface extends TileEntityPhantomface{
         if(super.isBoundThingInRange()){
             TileEntity tile = this.worldObj.getTileEntity(this.boundPosition);
             if(tile != null){
-                return tile.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null);
+                return tile instanceof IFluidHandler || tile.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null);
             }
         }
         return false;
+    }
+
+    @Override
+    public int fill(EnumFacing from, FluidStack resource, boolean doFill){
+        if(this.isBoundThingInRange()){
+            return this.getHandler().fill(from, resource, doFill);
+        }
+        return 0;
+    }
+
+    @Override
+    public FluidStack drain(EnumFacing from, FluidStack resource, boolean doDrain){
+        if(this.isBoundThingInRange()){
+            return this.getHandler().drain(from, resource, doDrain);
+        }
+        return null;
+    }
+
+    @Override
+    public FluidStack drain(EnumFacing from, int maxDrain, boolean doDrain){
+        if(this.isBoundThingInRange()){
+            return this.getHandler().drain(from, maxDrain, doDrain);
+        }
+        return null;
+    }
+
+    @Override
+    public boolean canFill(EnumFacing from, Fluid fluid){
+        return this.isBoundThingInRange() && this.getHandler().canFill(from, fluid);
+    }
+
+    @Override
+    public boolean canDrain(EnumFacing from, Fluid fluid){
+        return this.isBoundThingInRange() && this.getHandler().canDrain(from, fluid);
+    }
+
+    @Override
+    public FluidTankInfo[] getTankInfo(EnumFacing from){
+        if(this.isBoundThingInRange()){
+            return this.getHandler().getTankInfo(from);
+        }
+        return new FluidTankInfo[0];
+    }
+
+    public IFluidHandler getHandler(){
+        if(this.boundPosition != null){
+            TileEntity tile = this.worldObj.getTileEntity(this.boundPosition);
+            if(tile instanceof IFluidHandler){
+                return (IFluidHandler)tile;
+            }
+        }
+        return null;
     }
 }
