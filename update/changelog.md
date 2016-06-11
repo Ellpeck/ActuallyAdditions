@@ -1,3 +1,8 @@
+# 1.9.4-r44
+* Fixed a weird crash with Item Laser Relays.
+* Fixed drills sometimes crashing when breaking certain blocks.
+###### I am extremely sorry for the amount of updates in the last couple of days. This is hopefully the last one for a few weeks as the most significant bugs with the new features have now been fixed. I hope this doesn't diminish your liking for the mod in any way.
+
 # 1.9.4-r43
 ### This update increases the performance of some blocks by a significant bit. If you are experiencing lag in a world with many Laser Relays, install this.
 * More proper laser relay bounding boxes
