@@ -23,7 +23,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -38,6 +37,8 @@ public abstract class TileEntityLaserRelay extends TileEntityBase{
     public final boolean isItem;
 
     private Set<ConnectionPair> tempConnectionStorage;
+
+    private boolean hasCheckedHandlersAround;
 
     public TileEntityLaserRelay(String name, boolean isItem){
         super(name);
@@ -82,6 +83,15 @@ public abstract class TileEntityLaserRelay extends TileEntityBase{
         if(this.worldObj.isRemote){
             this.renderParticles();
         }
+        else if(!this.hasCheckedHandlersAround){
+            this.saveAllHandlersAround();
+            this.hasCheckedHandlersAround = true;
+            System.out.println("Checked handlers around!");
+        }
+    }
+
+    public void saveAllHandlersAround(){
+
     }
 
     @SideOnly(Side.CLIENT)

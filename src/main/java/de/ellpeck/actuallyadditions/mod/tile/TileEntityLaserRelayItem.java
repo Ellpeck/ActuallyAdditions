@@ -27,7 +27,6 @@ import java.util.List;
 public class TileEntityLaserRelayItem extends TileEntityLaserRelay{
 
     public List<IItemHandler> handlersAround = new ArrayList<IItemHandler>();
-    private boolean hasCheckedHandlersOnLoad;
 
     public TileEntityLaserRelayItem(String name){
         super(name, true);
@@ -42,15 +41,6 @@ public class TileEntityLaserRelayItem extends TileEntityLaserRelay{
     }
 
     @Override
-    public void updateEntity(){
-        super.updateEntity();
-
-        if(!this.worldObj.isRemote && !this.hasCheckedHandlersOnLoad){
-            this.saveAllHandlersAround();
-            this.hasCheckedHandlersOnLoad = true;
-        }
-    }
-
     public void saveAllHandlersAround(){
         this.handlersAround.clear();
 

@@ -105,7 +105,7 @@ public class TileEntityPhantomEnergyface extends TileEntityPhantomface implement
         TileEntity tile = WorldUtil.getTileEntityFromSide(side, this.worldObj, this.getPos());
         if(tile != null && tile instanceof IEnergyReceiver && this.getProvider().getEnergyStored(side.getOpposite()) > 0){
             if(((IEnergyReceiver)tile).canConnectEnergy(side.getOpposite()) && this.canConnectEnergy(side)){
-                int receive = this.extractEnergy(side, Math.min(((IEnergyReceiver)tile).getMaxEnergyStored(side.getOpposite())-((IEnergyReceiver)tile).getEnergyStored(side.getOpposite()), this.getEnergyStored(side)), true);
+                int receive = this.extractEnergy(side, Integer.MAX_VALUE, true);
                 int actualReceive = ((IEnergyReceiver)tile).receiveEnergy(side.getOpposite(), receive, false);
                 this.extractEnergy(side, actualReceive, false);
             }
