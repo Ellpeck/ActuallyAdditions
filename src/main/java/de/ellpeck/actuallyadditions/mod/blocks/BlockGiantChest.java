@@ -76,7 +76,10 @@ public class BlockGiantChest extends BlockContainerBase{
                 ItemStack[] slots = ((TileEntityGiantChest)tile).slots;
 
                 for(int i = 0; i < list.tagCount(); i++){
-                    slots[i] = ItemStack.loadItemStackFromNBT(list.getCompoundTagAt(i));
+                    NBTTagCompound compound = list.getCompoundTagAt(i);
+                    if(compound != null && compound.hasKey("id")){
+                        slots[i] = ItemStack.loadItemStackFromNBT(list.getCompoundTagAt(i));
+                    }
                 }
             }
         }

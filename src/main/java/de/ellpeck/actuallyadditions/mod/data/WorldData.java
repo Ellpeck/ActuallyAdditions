@@ -48,10 +48,16 @@ public class WorldData{
         int dim = world.provider.getDimension();
         WorldData data = worldData.get(dim);
 
-        if(data == null && world.isRemote){
+        if(data == null){
             data = new WorldData(null, dim);
-            worldData.put(dim, data);
-            ModUtil.LOGGER.info("Creating temporary WorldData for world "+dim+" on the client!");
+
+            if(world.isRemote){
+                worldData.put(dim, data);
+                ModUtil.LOGGER.info("Creating temporary WorldData for world "+dim+" on the client!");
+            }
+            else{
+                ModUtil.LOGGER.warn("Trying to get WorldData from world "+dim+" that doesn't have any data!? This shouldn't happen!");
+            }
         }
 
         return data;

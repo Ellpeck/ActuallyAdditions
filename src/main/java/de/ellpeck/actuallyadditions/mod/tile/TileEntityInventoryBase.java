@@ -59,9 +59,11 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
             NBTTagList tagList = compound.getTagList("Items", 10);
             for(int i = 0; i < tagList.tagCount(); i++){
                 NBTTagCompound tagCompound = tagList.getCompoundTagAt(i);
-                byte slotIndex = tagCompound.getByte("Slot");
-                if(slotIndex >= 0 && slotIndex < slots.length){
-                    slots[slotIndex] = ItemStack.loadItemStackFromNBT(tagCompound);
+                if(tagCompound != null && tagCompound.hasKey("id")){
+                    byte slotIndex = tagCompound.getByte("Slot");
+                    if(slotIndex >= 0 && slotIndex < slots.length){
+                        slots[slotIndex] = ItemStack.loadItemStackFromNBT(tagCompound);
+                    }
                 }
             }
         }

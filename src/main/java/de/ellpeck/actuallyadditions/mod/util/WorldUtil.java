@@ -340,8 +340,16 @@ public class WorldUtil{
      * @return If the Block could be harvested normally (so that it drops an item)
      */
     public static boolean playerHarvestBlock(World world, BlockPos pos, EntityPlayer player){
-        Block block = PosUtil.getBlock(pos, world);
         IBlockState state = world.getBlockState(pos);
+        if(state == null){
+            return false;
+        }
+
+        Block block = state.getBlock();
+        if(block == null){
+            return false;
+        }
+
         TileEntity tile = world.getTileEntity(pos);
         ItemStack stack = player.getHeldItemMainhand();
 
@@ -351,7 +359,8 @@ public class WorldUtil{
         //Send Block Breaking Event
         int xp = -1;
         if(player instanceof EntityPlayerMP){
-            xp = ForgeHooks.onBlockBreakEvent(world, ((EntityPlayerMP)player).interactionManager.getGameType(), (EntityPlayerMP)player, pos);
+            EntityPlayerMP playerMP = (EntityPlayerMP)player;
+            xp = ForgeHooks.onBlockBreakEvent(world, playerMP.interactionManager.getGameType(), playerMP, pos);
             if(xp == -1){
                 return false;
             }
@@ -397,6 +406,7 @@ public class WorldUtil{
             //Check the Server if a Block that changed on the Client really changed, if not, revert the change
             Minecraft.getMinecraft().getConnection().sendPacket(new CPacketPlayerDigging(CPacketPlayerDigging.Action.STOP_DESTROY_BLOCK, pos, Minecraft.getMinecraft().objectMouseOver.sideHit));
         }
+
         return removed;
     }
 }
