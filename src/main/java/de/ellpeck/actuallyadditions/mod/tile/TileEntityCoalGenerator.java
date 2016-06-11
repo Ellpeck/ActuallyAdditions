@@ -89,15 +89,6 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
 
             if(flag != this.currentBurnTime > 0){
                 this.markDirty();
-                int meta = PosUtil.getMetadata(this.getPos(), this.worldObj);
-                if(meta == 1){
-                    if(!(this.currentBurnTime <= 0 && this.slots[0] != null && TileEntityFurnace.getItemBurnTime(this.slots[0]) > 0 && this.storage.getEnergyStored() < this.storage.getMaxEnergyStored())){
-                        PosUtil.setMetadata(this.pos, this.worldObj, 0, 2);
-                    }
-                }
-                else{
-                    PosUtil.setMetadata(this.pos, this.worldObj, 1, 2);
-                }
             }
 
             if((this.storage.getEnergyStored() != this.lastEnergy || this.currentBurnTime != this.lastCurrentBurnTime || this.lastBurnTime != this.maxBurnTime) && this.sendUpdateWithInterval()){

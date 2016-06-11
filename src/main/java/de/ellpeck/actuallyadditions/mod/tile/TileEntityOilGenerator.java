@@ -105,15 +105,6 @@ public class TileEntityOilGenerator extends TileEntityBase implements IEnergyPro
 
             if(flag != this.currentBurnTime > 0){
                 this.markDirty();
-                int meta = PosUtil.getMetadata(this.pos, this.worldObj);
-                if(meta == 1){
-                    if(!(ENERGY_PRODUCED*BURN_TIME <= this.storage.getMaxEnergyStored()-this.storage.getEnergyStored() && this.currentBurnTime <= 0 && this.tank.getFluidAmount() >= fuelUsed)){
-                        PosUtil.setMetadata(this.pos, this.worldObj, 0, 2);
-                    }
-                }
-                else{
-                    PosUtil.setMetadata(this.pos, this.worldObj, 1, 2);
-                }
             }
 
             if((this.storage.getEnergyStored() != this.lastEnergy || this.tank.getFluidAmount() != this.lastTank || this.lastBurnTime != this.currentBurnTime) && this.sendUpdateWithInterval()){

@@ -37,8 +37,6 @@ import java.util.Random;
 
 public class BlockCoalGenerator extends BlockContainerBase{
 
-    private static final PropertyInteger META = PropertyInteger.create("meta", 0, 1);
-
     public BlockCoalGenerator(String name){
         super(Material.ROCK, name);
         this.setHarvestLevel("pickaxe", 0);
@@ -57,11 +55,12 @@ public class BlockCoalGenerator extends BlockContainerBase{
     @Override
     @SideOnly(Side.CLIENT)
     public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random rand){
-        int meta = PosUtil.getMetadata(state);
-
-        if(meta == 1){
-            for(int i = 0; i < 5; i++){
-                world.spawnParticle(ClientProxy.bulletForMyValentine ? EnumParticleTypes.HEART : EnumParticleTypes.SMOKE_NORMAL, (double)pos.getX()+0.5F, (double)pos.getY()+1.0F, (double)pos.getZ()+0.5F, 0.0D, 0.0D, 0.0D);
+        TileEntity tile = world.getTileEntity(pos);
+        if(tile instanceof TileEntityCoalGenerator){
+            if(((TileEntityCoalGenerator)tile).currentBurnTime > 0){
+                for(int i = 0; i < 5; i++){
+                    world.spawnParticle(ClientProxy.bulletForMyValentine ? EnumParticleTypes.HEART : EnumParticleTypes.SMOKE_NORMAL, (double)pos.getX()+0.5F, (double)pos.getY()+1.0F, (double)pos.getZ()+0.5F, 0.0D, 0.0D, 0.0D);
+                }
             }
         }
     }
@@ -81,11 +80,6 @@ public class BlockCoalGenerator extends BlockContainerBase{
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.RARE;
-    }
-
-    @Override
-    protected PropertyInteger getMetaProperty(){
-        return META;
     }
 
     @Override

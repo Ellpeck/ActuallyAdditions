@@ -15,6 +15,7 @@ import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.proxy.ClientProxy;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityCoalGenerator;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityOilGenerator;
 import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import net.minecraft.block.SoundType;
@@ -37,8 +38,6 @@ import java.util.Random;
 
 public class BlockOilGenerator extends BlockContainerBase{
 
-    private static final PropertyInteger META = PropertyInteger.create("meta", 0, 1);
-
     public BlockOilGenerator(String name){
         super(Material.ROCK, name);
         this.setHarvestLevel("pickaxe", 0);
@@ -57,9 +56,12 @@ public class BlockOilGenerator extends BlockContainerBase{
     @Override
     @SideOnly(Side.CLIENT)
     public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random rand){
-        if(PosUtil.getMetadata(state) == 1){
-            for(int i = 0; i < 5; i++){
-                world.spawnParticle(ClientProxy.bulletForMyValentine ? EnumParticleTypes.HEART : EnumParticleTypes.SMOKE_NORMAL, (double)pos.getX()+0.5F, (double)pos.getY()+1.0F, (double)pos.getZ()+0.5F, 0.0D, 0.0D, 0.0D);
+        TileEntity tile = world.getTileEntity(pos);
+        if(tile instanceof TileEntityOilGenerator){
+            if(((TileEntityOilGenerator)tile).currentBurnTime > 0){
+                for(int i = 0; i < 5; i++){
+                    world.spawnParticle(ClientProxy.bulletForMyValentine ? EnumParticleTypes.HEART : EnumParticleTypes.SMOKE_NORMAL, (double)pos.getX()+0.5F, (double)pos.getY()+1.0F, (double)pos.getZ()+0.5F, 0.0D, 0.0D, 0.0D);
+                }
             }
         }
     }
@@ -81,11 +83,6 @@ public class BlockOilGenerator extends BlockContainerBase{
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.RARE;
-    }
-
-    @Override
-    protected PropertyInteger getMetaProperty(){
-        return META;
     }
 
     @Override
