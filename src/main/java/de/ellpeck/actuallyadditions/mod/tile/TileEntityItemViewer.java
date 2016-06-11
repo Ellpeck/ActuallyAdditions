@@ -38,8 +38,6 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
         if(!this.worldObj.isRemote && !this.hasCheckedRelayOnLoad){
             this.saveConnectedRelay();
             this.hasCheckedRelayOnLoad = true;
-
-            System.out.println("------------Saving relay on load " + this.connectedRelay);
         }
     }
 

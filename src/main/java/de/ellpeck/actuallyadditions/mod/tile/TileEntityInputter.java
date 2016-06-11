@@ -49,6 +49,8 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
     private boolean lastPullWhite;
     private boolean lastPutWhite;
 
+    private boolean hasCheckedTilesAround;
+
     public TileEntityInputter(int slots, String name){
         super(slots, name);
     }
@@ -348,6 +350,7 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
         }
 
         this.markDirty();
+        this.initVars();
     }
 
     @Override
@@ -380,7 +383,10 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
     public void updateEntity(){
         super.updateEntity();
         if(!this.worldObj.isRemote){
-            this.initVars();
+            if(!this.hasCheckedTilesAround){
+                this.initVars();
+                this.hasCheckedTilesAround = true;
+            }
 
             //Is Block not powered by Redstone?
             if(!this.isRedstonePowered){

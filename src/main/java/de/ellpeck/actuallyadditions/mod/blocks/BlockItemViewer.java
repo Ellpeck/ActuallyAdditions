@@ -40,7 +40,6 @@ public class BlockItemViewer extends BlockContainerBase{
             TileEntity tile = world.getTileEntity(pos);
             if(tile instanceof TileEntityItemViewer){
                 ((TileEntityItemViewer)tile).saveConnectedRelay();
-                System.out.println("------------Saving connected on change " + ((TileEntityItemViewer)tile).connectedRelay);
             }
         }
     }

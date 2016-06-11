@@ -118,11 +118,10 @@ public class BlockLaserRelay extends BlockContainerBase{
 
     @Override
     public void neighborChanged(IBlockState state, World world, BlockPos pos, Block block){
-        if(!world.isRemote){
+        if((this.type == Type.ITEM || this.type  == Type.ITEM_WHITELIST) && !world.isRemote){
             TileEntity tile = world.getTileEntity(pos);
             if(tile instanceof TileEntityLaserRelayItem){
                 ((TileEntityLaserRelayItem)tile).saveAllHandlersAround();
-                System.out.println("------------Saving around on change " + ((TileEntityLaserRelayItem)tile).handlersAround);
             }
         }
     }

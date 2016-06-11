@@ -90,6 +90,16 @@ public class BlockInputter extends BlockContainerBase{
         return EnumRarity.EPIC;
     }
 
+    @Override
+    public void neighborChanged(IBlockState state, World world, BlockPos pos, Block block){
+        if(!world.isRemote){
+            TileEntity tile = world.getTileEntity(pos);
+            if(tile instanceof TileEntityInputter){
+                ((TileEntityInputter)tile).initVars();
+            }
+        }
+    }
+
     public static class TheItemBlock extends ItemBlockBase{
 
         private long lastSysTime;

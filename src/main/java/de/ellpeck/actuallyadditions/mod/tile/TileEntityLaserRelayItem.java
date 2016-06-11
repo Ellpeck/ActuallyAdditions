@@ -48,8 +48,6 @@ public class TileEntityLaserRelayItem extends TileEntityLaserRelay{
         if(!this.worldObj.isRemote && !this.hasCheckedHandlersOnLoad){
             this.saveAllHandlersAround();
             this.hasCheckedHandlersOnLoad = true;
-
-            System.out.println("------------Saving around on load " + this.handlersAround);
         }
     }
 
