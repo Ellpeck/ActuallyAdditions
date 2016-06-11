@@ -233,7 +233,7 @@ public class TileEntityLaserRelayItemWhitelist extends TileEntityLaserRelayItem 
         int slotStart = output ? 12 : 0;
         int slotStop = slotStart+12;
 
-        List<IItemHandler> handlers = this.getAllHandlersAround();
+        List<IItemHandler> handlers = this.handlersAround;
         for(IItemHandler handler : handlers){
             for(int i = 0; i < handler.getSlots(); i++){
                 ItemStack stack = handler.getStackInSlot(i);

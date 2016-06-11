@@ -12,11 +12,15 @@ package de.ellpeck.actuallyadditions.mod.blocks;
 
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityItemViewer;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayItem;
+import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class BlockItemViewer extends BlockContainerBase{
@@ -29,6 +33,17 @@ public class BlockItemViewer extends BlockContainerBase{
         this.setSoundType(SoundType.STONE);
     }
 
+
+    @Override
+    public void neighborChanged(IBlockState state, World world, BlockPos pos, Block block){
+        if(!world.isRemote){
+            TileEntity tile = world.getTileEntity(pos);
+            if(tile instanceof TileEntityItemViewer){
+                ((TileEntityItemViewer)tile).saveConnectedRelay();
+                System.out.println("------------Saving connected on change " + ((TileEntityItemViewer)tile).connectedRelay);
+            }
+        }
+    }
 
     @Override
     public TileEntity createNewTileEntity(World worldIn, int meta){

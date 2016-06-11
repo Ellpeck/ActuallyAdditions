@@ -17,6 +17,7 @@ import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelay;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayEnergy;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayItem;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayItemWhitelist;
+import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyInteger;
@@ -115,6 +116,16 @@ public class BlockLaserRelay extends BlockContainerBase{
         return false;
     }
 
+    @Override
+    public void neighborChanged(IBlockState state, World world, BlockPos pos, Block block){
+        if(!world.isRemote){
+            TileEntity tile = world.getTileEntity(pos);
+            if(tile instanceof TileEntityLaserRelayItem){
+                ((TileEntityLaserRelayItem)tile).saveAllHandlersAround();
+                System.out.println("------------Saving around on change " + ((TileEntityLaserRelayItem)tile).handlersAround);
+            }
+        }
+    }
 
     @Override
     public TileEntity createNewTileEntity(World world, int i){

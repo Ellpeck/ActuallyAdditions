@@ -24,12 +24,27 @@ import java.util.List;
 
 public class TileEntityItemViewer extends TileEntityInventoryBase{
 
+    public TileEntityLaserRelayItem connectedRelay;
+    private boolean hasCheckedRelayOnLoad;
+
     public TileEntityItemViewer(){
         super(0, "itemViewer");
     }
 
+    @Override
+    public void updateEntity(){
+        super.updateEntity();
+
+        if(!this.worldObj.isRemote && !this.hasCheckedRelayOnLoad){
+            this.saveConnectedRelay();
+            this.hasCheckedRelayOnLoad = true;
+
+            System.out.println("------------Saving relay on load " + this.connectedRelay);
+        }
+    }
+
     private List<GenericItemHandlerInfo> getItemHandlerInfos(){
-        TileEntityLaserRelayItem relay = this.getConnectedRelay();
+        TileEntityLaserRelayItem relay = this.connectedRelay;
         if(relay != null){
             LaserRelayConnectionHandler.Network network = LaserRelayConnectionHandler.getNetworkFor(relay.getPos(), this.worldObj);
             if(network != null){
@@ -61,7 +76,7 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
         return null;
     }
 
-    private TileEntityLaserRelayItem getConnectedRelay(){
+    public void saveConnectedRelay(){
         TileEntityLaserRelayItem tileFound = null;
         if(this.worldObj != null){ //Why is that even possible..?
             for(int i = 0; i <= 5; i++){
@@ -71,7 +86,8 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
 
                 if(tile instanceof TileEntityLaserRelayItem){
                     if(tileFound != null){
-                        return null;
+                        this.connectedRelay = null;
+                        return;
                     }
                     else{
                         tileFound = (TileEntityLaserRelayItem)tile;
@@ -79,7 +95,7 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
                 }
             }
         }
-        return tileFound;
+        this.connectedRelay = tileFound;
     }
 
     @Override
@@ -103,7 +119,7 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
 
     private boolean isWhitelisted(SpecificItemHandlerInfo handler, ItemStack stack, boolean output){
         boolean whitelisted = handler.relayInQuestion.isWhitelisted(stack, output);
-        TileEntityLaserRelayItem connected = this.getConnectedRelay();
+        TileEntityLaserRelayItem connected = this.connectedRelay;
         if(connected != null && connected != handler.relayInQuestion){
             return whitelisted && connected.isWhitelisted(stack, !output);
         }

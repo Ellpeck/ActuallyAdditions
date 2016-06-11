@@ -11,6 +11,8 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.misc.LaserRelayConnectionHandler;
+import de.ellpeck.actuallyadditions.mod.misc.LaserRelayConnectionHandler.Network;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityItemViewer.GenericItemHandlerInfo;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -24,6 +26,9 @@ import java.util.List;
 
 public class TileEntityLaserRelayItem extends TileEntityLaserRelay{
 
+    public List<IItemHandler> handlersAround = new ArrayList<IItemHandler>();
+    private boolean hasCheckedHandlersOnLoad;
+
     public TileEntityLaserRelayItem(String name){
         super(name, true);
     }
@@ -36,8 +41,21 @@ public class TileEntityLaserRelayItem extends TileEntityLaserRelay{
         return true;
     }
 
-    public List<IItemHandler> getAllHandlersAround(){
-        List<IItemHandler> handlers = new ArrayList<IItemHandler>();
+    @Override
+    public void updateEntity(){
+        super.updateEntity();
+
+        if(!this.worldObj.isRemote && !this.hasCheckedHandlersOnLoad){
+            this.saveAllHandlersAround();
+            this.hasCheckedHandlersOnLoad = true;
+
+            System.out.println("------------Saving around on load " + this.handlersAround);
+        }
+    }
+
+    public void saveAllHandlersAround(){
+        this.handlersAround.clear();
+
         for(int i = 0; i <= 5; i++){
             EnumFacing side = WorldUtil.getDirectionBySidesInOrder(i);
             BlockPos pos = WorldUtil.getCoordsFromSide(side, this.getPos(), 0);
@@ -45,27 +63,26 @@ public class TileEntityLaserRelayItem extends TileEntityLaserRelay{
             if(tile != null && !(tile instanceof TileEntityItemViewer)){
                 IItemHandler handler = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side.getOpposite());
                 if(handler != null){
-                    handlers.add(handler);
+                    this.handlersAround.add(handler);
                 }
             }
         }
-        return handlers;
     }
 
-    public List<TileEntityItemViewer.GenericItemHandlerInfo> getItemHandlersInNetwork(LaserRelayConnectionHandler.Network network){
-        List<TileEntityItemViewer.GenericItemHandlerInfo> handlers = new ArrayList<TileEntityItemViewer.GenericItemHandlerInfo>();
+    public List<GenericItemHandlerInfo> getItemHandlersInNetwork(Network network){
+        List<GenericItemHandlerInfo> handlers = new ArrayList<GenericItemHandlerInfo>();
         for(LaserRelayConnectionHandler.ConnectionPair pair : network.connections){
             for(BlockPos relay : pair.positions){
                 if(relay != null){
                     TileEntity aRelayTile = this.worldObj.getTileEntity(relay);
-                    if(aRelayTile instanceof de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayItem){
-                        de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayItem relayTile = (de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayItem)aRelayTile;
-                        if(!TileEntityItemViewer.GenericItemHandlerInfo.containsTile(handlers, relayTile)){
-                            TileEntityItemViewer.GenericItemHandlerInfo info = new TileEntityItemViewer.GenericItemHandlerInfo(relayTile);
+                    if(aRelayTile instanceof TileEntityLaserRelayItem){
+                        TileEntityLaserRelayItem relayTile = (TileEntityLaserRelayItem)aRelayTile;
+                        if(!GenericItemHandlerInfo.containsTile(handlers, relayTile)){
+                            GenericItemHandlerInfo info = new GenericItemHandlerInfo(relayTile);
 
-                            List<IItemHandler> handlersAroundTile = relayTile.getAllHandlersAround();
+                            List<IItemHandler> handlersAroundTile = relayTile.handlersAround;
                             for(IItemHandler handler : handlersAroundTile){
-                                if(!TileEntityItemViewer.GenericItemHandlerInfo.containsHandler(handlers, handler)){
+                                if(!GenericItemHandlerInfo.containsHandler(handlers, handler)){
                                     info.handlers.add(handler);
                                 }
                             }
