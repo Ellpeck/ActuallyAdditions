@@ -28,10 +28,21 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class BlockLaserRelay extends BlockContainerBase{
+
+    //This took way too much fiddling around. I'm not good with numbers.
+    private static final float F = 1/16F;
+    private static final AxisAlignedBB AABB_UP = new AxisAlignedBB(2*F, 0, 2*F, 1-2*F, 1-F, 1-2*F);
+    private static final AxisAlignedBB AABB_DOWN = new AxisAlignedBB(2*F, F, 2*F, 1-2*F, 1, 1-2*F);
+    private static final AxisAlignedBB AABB_NORTH = new AxisAlignedBB(2*F, F, F, 1-2*F, 1-F, 1);
+    private static final AxisAlignedBB AABB_EAST = new AxisAlignedBB(0, F, 2*F, 1-F, 1-F, 1-2*F);
+    private static final AxisAlignedBB AABB_SOUTH = new AxisAlignedBB(2*F, F, 0, 1-2*F, 1-F, 1-F);
+    private static final AxisAlignedBB AABB_WEST = new AxisAlignedBB(F, F, 2*F, 1, 1-F, 1-2*F);
 
     private static final PropertyInteger META = PropertyInteger.create("meta", 0, 5);
     private final Type type;
@@ -44,6 +55,24 @@ public class BlockLaserRelay extends BlockContainerBase{
         this.setSoundType(SoundType.STONE);
 
         this.type = type;
+    }
+
+    @Override
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos){
+        switch(this.getMetaFromState(state)){
+            case 1:
+                return AABB_UP;
+            case 2:
+                return AABB_NORTH;
+            case 3:
+                return AABB_SOUTH;
+            case 4:
+                return AABB_WEST;
+            case 5:
+                return AABB_EAST;
+            default:
+                return AABB_DOWN;
+        }
     }
 
     @Override
