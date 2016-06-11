@@ -1,3 +1,12 @@
+# 1.9.4-r43
+### This update increases the performance of some blocks by a significant bit. If you are experiencing lag in a world with many Laser Relays, install this.
+* More proper laser relay bounding boxes
+* Significantly upped the performance of Item Laser Relays
+* Increased ESD performance
+* Made Energy Laser Relays less performance intensive
+* Changed energy handling system a bit, should be the same in-game
+* Made coal and oil generator not randomly appear to be on even though they're not
+
 # 1.9.4-r42
 ### The shut-up-about-EnderIO Update.
 * Changed ESD to allow higher numbers of slots and have no limit on input values so that you can basically make it pull from infintely many slots if the amount of slots present is able to change
