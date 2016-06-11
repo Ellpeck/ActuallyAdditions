@@ -122,7 +122,6 @@ public class BlockLaserRelay extends BlockContainerBase{
             TileEntity tile = world.getTileEntity(pos);
             if(tile instanceof TileEntityLaserRelay){
                 ((TileEntityLaserRelay)tile).saveAllHandlersAround();
-                System.out.println("Checked handlers around!");
             }
         }
     }

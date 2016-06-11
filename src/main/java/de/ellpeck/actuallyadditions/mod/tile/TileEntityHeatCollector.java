@@ -74,7 +74,7 @@ public class TileEntityHeatCollector extends TileEntityBase implements IEnergyPr
             }
 
             if(this.storage.getEnergyStored() > 0){
-                WorldUtil.pushEnergy(this.worldObj, this.pos, EnumFacing.UP, this.storage);
+                WorldUtil.pushEnergyToAllSides(this);
             }
 
             if(this.oldEnergy != this.storage.getEnergyStored() && this.sendUpdateWithInterval()){

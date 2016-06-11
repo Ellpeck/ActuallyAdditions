@@ -86,7 +86,6 @@ public abstract class TileEntityLaserRelay extends TileEntityBase{
         else if(!this.hasCheckedHandlersAround){
             this.saveAllHandlersAround();
             this.hasCheckedHandlersAround = true;
-            System.out.println("Checked handlers around!");
         }
     }
 

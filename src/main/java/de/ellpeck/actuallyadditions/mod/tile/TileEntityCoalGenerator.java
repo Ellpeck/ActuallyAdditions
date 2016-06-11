@@ -84,7 +84,7 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
             }
 
             if(this.storage.getEnergyStored() > 0){
-                WorldUtil.pushEnergyToAllSides(this.worldObj, this.pos, this.storage);
+                WorldUtil.pushEnergyToAllSides(this);
             }
 
             if(flag != this.currentBurnTime > 0){

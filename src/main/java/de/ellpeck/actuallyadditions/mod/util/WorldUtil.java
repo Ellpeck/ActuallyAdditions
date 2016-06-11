@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.util;
 
 import cofh.api.energy.EnergyStorage;
+import cofh.api.energy.IEnergyProvider;
 import cofh.api.energy.IEnergyReceiver;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
@@ -63,21 +64,28 @@ public class WorldUtil{
         return new BlockPos(pos.getX()+side.getFrontOffsetX()*(offset+1), pos.getY()+side.getFrontOffsetY()*(offset+1), pos.getZ()+side.getFrontOffsetZ()*(offset+1));
     }
 
-    public static void pushEnergyToAllSides(World world, BlockPos pos, EnergyStorage storage){
-        pushEnergy(world, pos, EnumFacing.UP, storage);
-        pushEnergy(world, pos, EnumFacing.DOWN, storage);
-        pushEnergy(world, pos, EnumFacing.NORTH, storage);
-        pushEnergy(world, pos, EnumFacing.EAST, storage);
-        pushEnergy(world, pos, EnumFacing.SOUTH, storage);
-        pushEnergy(world, pos, EnumFacing.WEST, storage);
+    public static void pushEnergyToAllSides(TileEntity tileFrom){
+        pushEnergy(tileFrom, EnumFacing.UP);
+        pushEnergy(tileFrom, EnumFacing.DOWN);
+        pushEnergy(tileFrom, EnumFacing.NORTH);
+        pushEnergy(tileFrom, EnumFacing.EAST);
+        pushEnergy(tileFrom, EnumFacing.SOUTH);
+        pushEnergy(tileFrom, EnumFacing.WEST);
     }
 
-    public static void pushEnergy(World world, BlockPos pos, EnumFacing side, EnergyStorage storage){
-        TileEntity tile = getTileEntityFromSide(side, world, pos);
-        if(tile != null && tile instanceof IEnergyReceiver && storage.getEnergyStored() > 0){
-            if(((IEnergyReceiver)tile).canConnectEnergy(side.getOpposite())){
-                int receive = ((IEnergyReceiver)tile).receiveEnergy(side.getOpposite(), Math.min(storage.getMaxExtract(), storage.getEnergyStored()), false);
-                storage.extractEnergy(receive, false);
+    public static void pushEnergy(TileEntity tileFrom, EnumFacing side){
+        TileEntity tileTo = getTileEntityFromSide(side, tileFrom.getWorld(), tileFrom.getPos());
+        if(tileTo != null){
+            if(tileFrom instanceof IEnergyProvider && tileTo instanceof IEnergyReceiver){
+                IEnergyReceiver handlerTo = (IEnergyReceiver)tileTo;
+                IEnergyProvider handlerFrom = (IEnergyProvider)tileFrom;
+                int drain =  handlerFrom.extractEnergy(side, Integer.MAX_VALUE, true);
+                if(drain > 0){
+                    if(handlerTo.canConnectEnergy(side.getOpposite())){
+                        int filled = handlerTo.receiveEnergy(side.getOpposite(), drain, false);
+                        handlerFrom.extractEnergy(side, filled, false);
+                    }
+                }
             }
         }
     }

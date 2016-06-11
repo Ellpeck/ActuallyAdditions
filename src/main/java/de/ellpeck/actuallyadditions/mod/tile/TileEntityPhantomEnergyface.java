@@ -86,12 +86,7 @@ public class TileEntityPhantomEnergyface extends TileEntityPhantomface implement
 
         if(!this.worldObj.isRemote){
             if(this.isBoundThingInRange() && this.getProvider() != null){
-                this.pushEnergy(EnumFacing.UP);
-                this.pushEnergy(EnumFacing.DOWN);
-                this.pushEnergy(EnumFacing.NORTH);
-                this.pushEnergy(EnumFacing.EAST);
-                this.pushEnergy(EnumFacing.SOUTH);
-                this.pushEnergy(EnumFacing.WEST);
+                WorldUtil.pushEnergyToAllSides(this);
             }
         }
     }
@@ -99,17 +94,6 @@ public class TileEntityPhantomEnergyface extends TileEntityPhantomface implement
     @Override
     public boolean isBoundThingInRange(){
         return super.isBoundThingInRange() && (this.worldObj.getTileEntity(this.boundPosition) instanceof IEnergyReceiver || this.worldObj.getTileEntity(this.boundPosition) instanceof IEnergyProvider);
-    }
-
-    private void pushEnergy(EnumFacing side){
-        TileEntity tile = WorldUtil.getTileEntityFromSide(side, this.worldObj, this.getPos());
-        if(tile != null && tile instanceof IEnergyReceiver && this.getProvider().getEnergyStored(side.getOpposite()) > 0){
-            if(((IEnergyReceiver)tile).canConnectEnergy(side.getOpposite()) && this.canConnectEnergy(side)){
-                int receive = this.extractEnergy(side, Integer.MAX_VALUE, true);
-                int actualReceive = ((IEnergyReceiver)tile).receiveEnergy(side.getOpposite(), receive, false);
-                this.extractEnergy(side, actualReceive, false);
-            }
-        }
     }
 
     @Override
