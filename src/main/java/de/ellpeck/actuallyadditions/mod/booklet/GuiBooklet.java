@@ -101,6 +101,7 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
         return this.fontRendererObj;
     }
 
+    @Override
     public List getButtonList(){
         return this.buttonList;
     }
@@ -143,8 +144,15 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
         //Pre-Renders the current page's content etc.
         BookletUtils.renderPre(this, x, y, this.ticksElapsed, this.mousePressed);
 
-        //Does vanilla drawing stuff
-        super.drawScreen(x, y, f);
+        //Buttons and search field
+        if(this.currentEntrySet.getCurrentPage() != null){
+            this.fontRendererObj.setUnicodeFlag(false);
+        }
+        for(GuiButton button : this.buttonList){
+            button.drawButton(this.mc, x, y);
+        }
+        this.fontRendererObj.setUnicodeFlag(true);
+
         this.searchField.drawTextBox();
 
         //Renders the current page's content
@@ -156,14 +164,11 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
         this.fontRendererObj.setUnicodeFlag(false);
         BookletUtils.doHoverTexts(this, x, y);
         BookletUtils.drawAchievementInfo(this, false, x, y);
-        this.fontRendererObj.setUnicodeFlag(true);
 
         this.fontRendererObj.setUnicodeFlag(unicodeBefore);
 
         //Resets mouse
-        if(this.mousePressed){
-            this.mousePressed = false;
-        }
+        this.mousePressed = false;
     }
 
     @Override
@@ -224,6 +229,12 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
 
     @Override
     public void actionPerformed(GuiButton button){
+        if(this.currentEntrySet.getCurrentPage() != null){
+            if(this.currentEntrySet.getCurrentPage().onActionPerformed(this, button)){
+                return;
+            }
+        }
+
         //Handles update
         if(button == this.buttonUpdate){
             if(UpdateChecker.needsUpdateNotify){

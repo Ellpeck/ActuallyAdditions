@@ -249,6 +249,9 @@ public class BookletUtils{
             }
         }
 
+        if(booklet.currentEntrySet.getCurrentPage() != null){
+            booklet.currentEntrySet.getCurrentPage().onClosed(booklet);
+        }
         booklet.currentEntrySet.setPage(null);
         booklet.currentEntrySet.setChapter(null);
 
@@ -325,7 +328,13 @@ public class BookletUtils{
         booklet.searchField.setText("");
 
         booklet.currentEntrySet.setChapter(chapter);
-        booklet.currentEntrySet.setPage(page != null && doesChapterHavePage(chapter, page) ? page : chapter.getPages()[0]);
+
+        if(booklet.currentEntrySet.getCurrentPage() != null){
+            booklet.currentEntrySet.getCurrentPage().onClosed(booklet);
+        }
+        BookletPage pageToSet = page != null && doesChapterHavePage(chapter, page) ? page : chapter.getPages()[0];
+        booklet.currentEntrySet.setPage(pageToSet);
+        pageToSet.onOpened(booklet);
 
         booklet.buttonForward.visible = getNextPage(chapter, booklet.currentEntrySet.getCurrentPage()) != null;
         booklet.buttonBackward.visible = getPrevPage(chapter, booklet.currentEntrySet.getCurrentPage()) != null;
@@ -386,7 +395,9 @@ public class BookletUtils{
             if(booklet.currentEntrySet.getCurrentPage() != null){
                 BookletPage page = getNextPage(booklet.currentEntrySet.getCurrentChapter(), booklet.currentEntrySet.getCurrentPage());
                 if(page != null){
+                    booklet.currentEntrySet.getCurrentPage().onClosed(booklet);
                     booklet.currentEntrySet.setPage(page);
+                    page.onOpened(booklet);
                 }
 
                 booklet.buttonForward.visible = getNextPage(booklet.currentEntrySet.getCurrentChapter(), booklet.currentEntrySet.getCurrentPage()) != null;
@@ -408,7 +419,9 @@ public class BookletUtils{
             if(booklet.currentEntrySet.getCurrentPage() != null){
                 BookletPage page = getPrevPage(booklet.currentEntrySet.getCurrentChapter(), booklet.currentEntrySet.getCurrentPage());
                 if(page != null){
+                    booklet.currentEntrySet.getCurrentPage().onClosed(booklet);
                     booklet.currentEntrySet.setPage(page);
+                    page.onOpened(booklet);
                 }
 
                 booklet.buttonForward.visible = getNextPage(booklet.currentEntrySet.getCurrentChapter(), booklet.currentEntrySet.getCurrentPage()) != null;

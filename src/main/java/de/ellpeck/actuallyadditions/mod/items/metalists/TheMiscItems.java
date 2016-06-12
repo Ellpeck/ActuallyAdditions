@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.items.metalists;
 
+import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.item.EnumRarity;
 
 public enum TheMiscItems{
@@ -34,7 +35,8 @@ public enum TheMiscItems{
     BLACK_DYE("BlackDye", EnumRarity.EPIC),
     LENS("Lens", EnumRarity.UNCOMMON),
     ENDER_STAR("EnderStar", EnumRarity.EPIC),
-    SPAWNER_SHARD("SpawnerShard", EnumRarity.EPIC);
+    SPAWNER_SHARD("SpawnerShard", EnumRarity.EPIC),
+    YOUTUBE_ICON("YoutubeIcon", Util.FALLBACK_RARITY);
 
     public final String name;
     public final EnumRarity rarity;

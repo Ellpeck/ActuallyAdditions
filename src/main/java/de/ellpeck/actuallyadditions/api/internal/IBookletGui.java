@@ -11,9 +11,12 @@
 package de.ellpeck.actuallyadditions.api.internal;
 
 import de.ellpeck.actuallyadditions.api.booklet.BookletPage;
+import net.minecraft.client.gui.GuiButton;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import java.util.List;
 
 /**
  * This is a helper interface for BookletPage
@@ -27,7 +30,7 @@ public interface IBookletGui{
      * This method should be used when drawing an ItemStack to a booklet page
      * It displays the hoverover text of the item and also contains the "show more info"-text and clickable part
      *
-     * @param renderTransferButton if the "show more info"-text and clickable part should exist-
+     * @param renderTransferButton if the "show more info"-text and clickable part should exist
      */
     @SideOnly(Side.CLIENT)
     void renderTooltipAndTransferButton(BookletPage from, ItemStack stack, int x, int y, boolean renderTransferButton, boolean mousePressed);
@@ -43,4 +46,6 @@ public interface IBookletGui{
     void drawRect(int startX, int startY, int u, int v, int xSize, int ySize);
 
     IEntrySet getCurrentEntrySet();
+
+    List<GuiButton> getButtonList();
 }

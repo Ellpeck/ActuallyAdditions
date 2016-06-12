@@ -17,6 +17,7 @@ import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiCoffeeMachine;
 import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiFurnaceDouble;
 import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiGrinder;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
+import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
 import de.ellpeck.actuallyadditions.mod.jei.booklet.BookletRecipeCategory;
 import de.ellpeck.actuallyadditions.mod.jei.booklet.BookletRecipeHandler;
 import de.ellpeck.actuallyadditions.mod.jei.coffee.CoffeeMachineRecipeCategory;
@@ -84,6 +85,7 @@ public class JEIActuallyAdditionsPlugin implements IModPlugin{
         blacklist.addItemToBlacklist(new ItemStack(InitBlocks.blockCoffee));
         blacklist.addItemToBlacklist(new ItemStack(InitBlocks.blockWildPlant, 1, Util.WILDCARD));
         blacklist.addItemToBlacklist(new ItemStack(InitBlocks.blockColoredLampOn, 1, Util.WILDCARD));
+        blacklist.addItemToBlacklist(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.YOUTUBE_ICON.ordinal()));
 
         IRecipeTransferRegistry transfer = registry.getRecipeTransferRegistry();
         transfer.addRecipeTransferHandler(ContainerCrafter.class, VanillaRecipeCategoryUid.CRAFTING, 1, 9, 10, 36);

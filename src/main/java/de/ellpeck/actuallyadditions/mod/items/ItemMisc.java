@@ -38,7 +38,6 @@ public class ItemMisc extends ItemBase{
         return damage;
     }
 
-
     @Override
     public String getUnlocalizedName(ItemStack stack){
         return stack.getItemDamage() >= allMiscItems.length ? StringUtil.BUGGED_ITEM_NAME : this.getUnlocalizedName()+allMiscItems[stack.getItemDamage()].name;
@@ -54,7 +53,9 @@ public class ItemMisc extends ItemBase{
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item item, CreativeTabs tab, List list){
         for(int j = 0; j < allMiscItems.length; j++){
-            list.add(new ItemStack(this, 1, j));
+            if(j != TheMiscItems.YOUTUBE_ICON.ordinal()){
+                list.add(new ItemStack(this, 1, j));
+            }
         }
     }
 
