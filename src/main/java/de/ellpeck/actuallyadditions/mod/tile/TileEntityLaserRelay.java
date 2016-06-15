@@ -11,7 +11,9 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
+import de.ellpeck.actuallyadditions.mod.data.PlayerData;
 import de.ellpeck.actuallyadditions.mod.items.ItemLaserWrench;
+import de.ellpeck.actuallyadditions.mod.items.ItemLaserWrench.WrenchMode;
 import de.ellpeck.actuallyadditions.mod.misc.LaserRelayConnectionHandler;
 import de.ellpeck.actuallyadditions.mod.misc.LaserRelayConnectionHandler.ConnectionPair;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
@@ -98,13 +100,17 @@ public abstract class TileEntityLaserRelay extends TileEntityBase{
         if(Util.RANDOM.nextInt(ConfigBoolValues.LESS_PARTICLES.isEnabled() ? 16 : 8) == 0){
             EntityPlayer player = Minecraft.getMinecraft().thePlayer;
             if(player != null){
-                ItemStack stack = player.getHeldItemMainhand();
-                if(!ConfigBoolValues.LASER_WRENCH_HOLDING_PARTICLES.isEnabled() || (stack != null && stack.getItem() instanceof ItemLaserWrench)){
-                    LaserRelayConnectionHandler.Network network = LaserRelayConnectionHandler.getNetworkFor(this.pos, this.worldObj);
-                    if(network != null){
-                        for(ConnectionPair aPair : network.connections){
-                            if(aPair.contains(this.pos) && PosUtil.areSamePos(this.pos, aPair.positions[0])){
-                                AssetUtil.renderParticlesFromAToB(aPair.positions[0].getX(), aPair.positions[0].getY(), aPair.positions[0].getZ(), aPair.positions[1].getX(), aPair.positions[1].getY(), aPair.positions[1].getZ(), ConfigBoolValues.LESS_PARTICLES.isEnabled() ? 1 : Util.RANDOM.nextInt(3)+1, 0.8F, this.isItem ? COLOR_ITEM : COLOR, 1F);
+                PlayerData.PlayerSave data = PlayerData.getDataFromPlayer(player);
+                WrenchMode mode = WrenchMode.values()[data.theCompound.getInteger("LaserWrenchMode")];
+                if(mode != WrenchMode.NO_PARTICLES){
+                    ItemStack stack = player.getHeldItemMainhand();
+                    if(mode == WrenchMode.ALWAYS_PARTICLES || (stack != null && stack.getItem() instanceof ItemLaserWrench)){
+                        LaserRelayConnectionHandler.Network network = LaserRelayConnectionHandler.getNetworkFor(this.pos, this.worldObj);
+                        if(network != null){
+                            for(ConnectionPair aPair : network.connections){
+                                if(aPair.contains(this.pos) && PosUtil.areSamePos(this.pos, aPair.positions[0])){
+                                    AssetUtil.renderParticlesFromAToB(aPair.positions[0].getX(), aPair.positions[0].getY(), aPair.positions[0].getZ(), aPair.positions[1].getX(), aPair.positions[1].getY(), aPair.positions[1].getZ(), ConfigBoolValues.LESS_PARTICLES.isEnabled() ? 1 : Util.RANDOM.nextInt(3)+1, 0.8F, this.isItem ? COLOR_ITEM : COLOR, 1F);
+                                }
                             }
                         }
                     }
