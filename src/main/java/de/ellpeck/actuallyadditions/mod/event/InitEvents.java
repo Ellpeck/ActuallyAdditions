@@ -25,7 +25,7 @@ public class InitEvents{
 
         Util.registerEvent(new PlayerObtainEvents());
         Util.registerEvent(new EntityLivingEvents());
-        Util.registerEvent(new LogoutEvent());
+        Util.registerEvent(new PlayerConnectionEvents());
         Util.registerEvent(new WorldLoadingEvents());
         Util.registerEvent(new BreakEvent());
         MinecraftForge.TERRAIN_GEN_BUS.register(new WorldDecorationEvent());

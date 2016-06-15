@@ -19,7 +19,7 @@ import de.ellpeck.actuallyadditions.api.lens.Lens;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.misc.SoundHandler;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
-import de.ellpeck.actuallyadditions.mod.network.PacketParticle;
+import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.item.ItemStack;
@@ -49,7 +49,7 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
         if(!ConfigBoolValues.LESS_SOUND.isEnabled()){
             world.playSound(null, startX, startY, startZ, SoundHandler.reconstructor, SoundCategory.BLOCKS, 0.35F, 1.0F);
         }
-        PacketHandler.theNetwork.sendToAllAround(new PacketParticle(startX, startY, startZ, endX, endY, endZ, currentLens.getColor(), ConfigBoolValues.LESS_PARTICLES.isEnabled() ? 2 : 8, 2F), new NetworkRegistry.TargetPoint(world.provider.getDimension(), startX, startY, startZ, 64));
+        AssetUtil.shootParticles(world, startX, startY, startZ, endX, endY, endZ, currentLens.getColor(), ConfigBoolValues.LESS_PARTICLES.isEnabled() ? 2 : 8, 2F);
     }
 
     @Override

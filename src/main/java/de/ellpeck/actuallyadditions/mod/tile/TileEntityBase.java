@@ -12,7 +12,7 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
-import de.ellpeck.actuallyadditions.mod.network.PacketUpdateTileEntity;
+import de.ellpeck.actuallyadditions.mod.network.PacketServerToClient;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -197,7 +197,12 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
         if(!this.worldObj.isRemote){
             NBTTagCompound compound = this.getUpdateTag();
             if(compound != null){
-                PacketHandler.theNetwork.sendToAllAround(new PacketUpdateTileEntity(compound, this.getPos()), new NetworkRegistry.TargetPoint(this.worldObj.provider.getDimension(), this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), 64));
+                NBTTagCompound data = new NBTTagCompound();
+                data.setTag("Data", compound);
+                data.setInteger("X", this.pos.getX());
+                data.setInteger("Y", this.pos.getY());
+                data.setInteger("Z", this.pos.getZ());
+                PacketHandler.theNetwork.sendToAllAround(new PacketServerToClient(data, PacketHandler.TILE_ENTITY_HANDLER), new NetworkRegistry.TargetPoint(this.worldObj.provider.getDimension(), this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), 64));
             }
         }
     }

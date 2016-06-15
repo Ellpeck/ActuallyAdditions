@@ -10,6 +10,9 @@
 
 package de.ellpeck.actuallyadditions.mod.util;
 
+import de.ellpeck.actuallyadditions.mod.misc.ParticleColored;
+import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
+import de.ellpeck.actuallyadditions.mod.network.PacketServerToClient;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -20,7 +23,12 @@ import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.World;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
@@ -146,5 +154,43 @@ public class AssetUtil{
         GlStateManager.disableBlend();
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         GlStateManager.popMatrix();
+    }
+
+    public static void shootParticles(World world, double startX, double startY, double startZ, double endX, double endY, double endZ, float[] color, int particleAmount, float particleSize){
+        if(!world.isRemote){
+            NBTTagCompound data = new NBTTagCompound();
+            data.setDouble("StartX", startX);
+            data.setDouble("StartY", startY);
+            data.setDouble("StartZ", startZ);
+            data.setDouble("EndX", endX);
+            data.setDouble("EndY", endY);
+            data.setDouble("EndZ", endZ);
+            data.setFloat("Color1", color[0]);
+            data.setFloat("Color2", color[1]);
+            data.setFloat("Color3", color[2]);
+            data.setInteger("ParticleAmount", particleAmount);
+            data.setFloat("ParticleSize", particleSize);
+            data.setFloat("AgeMultiplier", 1F);
+            PacketHandler.theNetwork.sendToAllAround(new PacketServerToClient(data, PacketHandler.PARTICLE_HANDLER), new NetworkRegistry.TargetPoint(world.provider.getDimension(), startX, startY, startZ, 96));
+        }
+    }
+
+    @SideOnly(Side.CLIENT)
+    public static void renderParticlesFromAToB(double startX, double startY, double startZ, double endX, double endY, double endZ, int particleAmount, float particleSize, float[] color, float ageMultiplier){
+        World world = Minecraft.getMinecraft().theWorld;
+
+        if(Minecraft.getMinecraft().thePlayer.getDistance(startX, startY, startZ) <= 64 || Minecraft.getMinecraft().thePlayer.getDistance(endX, endY, endZ) <= 64){
+            double difX = startX-endX;
+            double difY = startY-endY;
+            double difZ = startZ-endZ;
+            double distance = new Vec3d(startX, startY, startZ).distanceTo(new Vec3d(endX, endY, endZ));
+
+            for(int times = 0; times < Math.max(particleAmount/2, 1); times++){
+                for(double i = 0; i <= 1; i += 1/(distance*particleAmount)){
+                    ParticleColored fx = new ParticleColored(world, (difX*i)+endX+0.5, (difY*i)+endY+0.5, (difZ*i)+endZ+0.5, particleSize, color[0], color[1], color[2], ageMultiplier);
+                    Minecraft.getMinecraft().effectRenderer.addEffect(fx);
+                }
+            }
+        }
     }
 }

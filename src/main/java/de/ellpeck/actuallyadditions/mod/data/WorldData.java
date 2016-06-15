@@ -10,7 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.data;
 
-import de.ellpeck.actuallyadditions.mod.data.PlayerServerData.PlayerSave;
+import de.ellpeck.actuallyadditions.mod.data.PlayerData.PlayerSave;
 import de.ellpeck.actuallyadditions.mod.misc.LaserRelayConnectionHandler;
 import de.ellpeck.actuallyadditions.mod.misc.LaserRelayConnectionHandler.Network;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;

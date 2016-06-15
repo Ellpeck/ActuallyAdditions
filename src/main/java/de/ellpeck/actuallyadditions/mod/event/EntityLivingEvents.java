@@ -11,7 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.event;
 
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
-import de.ellpeck.actuallyadditions.mod.data.PlayerServerData;
+import de.ellpeck.actuallyadditions.mod.data.PlayerData;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.ItemWingsOfTheBats;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
@@ -70,7 +70,7 @@ public class EntityLivingEvents{
     public void livingDeathEvent(LivingDeathEvent event){
         if(event.getEntityLiving().worldObj != null && !event.getEntityLiving().worldObj.isRemote && event.getEntityLiving() instanceof EntityPlayer){
             EntityPlayer player = (EntityPlayer)event.getEntityLiving();
-            NBTTagCompound data = PlayerServerData.getDataFromPlayer(player);
+            NBTTagCompound data = PlayerData.getDataFromPlayer(player);
 
             NBTTagList deaths = data.getTagList("Deaths", 10);
             while(deaths.tagCount() >= 5){

@@ -21,9 +21,11 @@ import de.ellpeck.actuallyadditions.mod.booklet.button.TexturedButton;
 import de.ellpeck.actuallyadditions.mod.booklet.entry.BookletEntryAllSearch;
 import de.ellpeck.actuallyadditions.mod.booklet.entry.EntrySet;
 import de.ellpeck.actuallyadditions.mod.config.GuiConfiguration;
-import de.ellpeck.actuallyadditions.mod.data.ExtraClientData;
+import de.ellpeck.actuallyadditions.mod.data.PlayerData;
 import de.ellpeck.actuallyadditions.mod.items.ItemBooklet;
 import de.ellpeck.actuallyadditions.mod.misc.SoundHandler;
+import de.ellpeck.actuallyadditions.mod.network.PacketClientToServer;
+import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
 import de.ellpeck.actuallyadditions.mod.proxy.ClientProxy;
 import de.ellpeck.actuallyadditions.mod.update.UpdateChecker;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
@@ -38,6 +40,7 @@ import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -88,6 +91,7 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
     private int ticksElapsed;
     private boolean mousePressed;
     private int hisNameIsAt;
+    public boolean changedPageSinceOpen;
 
     public GuiBooklet(GuiScreen parentScreen, boolean tryOpenMainPage, boolean saveOnClose){
         this.xSize = 146;
@@ -374,14 +378,23 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
 
         if(ItemBooklet.forcedEntry == null){
             //Open last entry or introductory entry
-            if(this.tryOpenMainPage && !ExtraClientData.getBoolean("BookAlreadyOpened")){
-                BookletUtils.openIndexEntry(this, InitBooklet.chapterIntro.entry, 1, true);
-                BookletUtils.openChapter(this, InitBooklet.chapterIntro, null);
+            NBTTagCompound data = PlayerData.getDataFromPlayer(Minecraft.getMinecraft().thePlayer);
+            if(data != null){
+                if(this.tryOpenMainPage && !data.getBoolean("BookAlreadyOpened")){
+                    BookletUtils.openIndexEntry(this, InitBooklet.chapterIntro.entry, 1, true);
+                    BookletUtils.openChapter(this, InitBooklet.chapterIntro, null);
 
-                ExtraClientData.setBoolean("BookAlreadyOpened", true);
-            }
-            else{
-                ExtraClientData.openLastBookPage(this);
+                    NBTTagCompound extraData = new NBTTagCompound();
+                    extraData.setBoolean("BookAlreadyOpened", true);
+                    NBTTagCompound dataToSend = new NBTTagCompound();
+                    dataToSend.setTag("Data", extraData);
+                    dataToSend.setInteger("WorldID", Minecraft.getMinecraft().theWorld.provider.getDimension());
+                    dataToSend.setInteger("PlayerID", Minecraft.getMinecraft().thePlayer.getEntityId());
+                    PacketHandler.theNetwork.sendToServer(new PacketClientToServer(dataToSend, PacketHandler.CHANGE_PLAYER_DATA_HANDLER));
+                }
+                else{
+                    BookletUtils.openLastBookPage(this, data.getCompoundTag("BookletData"));
+                }
             }
         }
         else{
@@ -390,6 +403,8 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
             BookletUtils.openChapter(this, ItemBooklet.forcedEntry.chapter, ItemBooklet.forcedEntry.page);
             ItemBooklet.forcedEntry = null;
         }
+
+        this.changedPageSinceOpen = false;
     }
 
     @Override
@@ -430,8 +445,20 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
 
     @Override
     public void onGuiClosed(){
-        if(this.saveOnClose){
-            ExtraClientData.saveBookPage(this);
+        if(this.saveOnClose && this.changedPageSinceOpen){
+            System.out.println("SAVING");
+
+            NBTTagCompound bookletData = new NBTTagCompound();
+            BookletUtils.saveBookPage(this, bookletData);
+
+            NBTTagCompound extraData = new NBTTagCompound();
+            extraData.setTag("BookletData", bookletData);
+
+            NBTTagCompound dataToSend = new NBTTagCompound();
+            dataToSend.setTag("Data", extraData);
+            dataToSend.setInteger("WorldID", Minecraft.getMinecraft().theWorld.provider.getDimension());
+            dataToSend.setInteger("PlayerID", Minecraft.getMinecraft().thePlayer.getEntityId());
+            PacketHandler.theNetwork.sendToServer(new PacketClientToServer(dataToSend, PacketHandler.CHANGE_PLAYER_DATA_HANDLER));
         }
     }
 

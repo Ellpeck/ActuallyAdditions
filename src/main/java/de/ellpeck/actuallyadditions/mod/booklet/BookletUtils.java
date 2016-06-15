@@ -19,6 +19,7 @@ import de.ellpeck.actuallyadditions.mod.booklet.button.BookmarkButton;
 import de.ellpeck.actuallyadditions.mod.booklet.button.IndexButton;
 import de.ellpeck.actuallyadditions.mod.booklet.button.TexturedButton;
 import de.ellpeck.actuallyadditions.mod.booklet.entry.BookletEntryAllSearch;
+import de.ellpeck.actuallyadditions.mod.booklet.entry.EntrySet;
 import de.ellpeck.actuallyadditions.mod.proxy.ClientProxy;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
@@ -28,6 +29,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.stats.Achievement;
 import net.minecraft.util.text.TextFormatting;
 
@@ -290,6 +293,8 @@ public class BookletUtils{
                 }
             }
         }
+
+        booklet.changedPageSinceOpen = true;
     }
 
     /**
@@ -345,6 +350,8 @@ public class BookletUtils{
         for(GuiButton chapterButton : booklet.chapterButtons){
             chapterButton.visible = false;
         }
+
+        booklet.changedPageSinceOpen = true;
     }
 
     /**
@@ -409,6 +416,8 @@ public class BookletUtils{
                 }
             }
         }
+
+        booklet.changedPageSinceOpen = true;
     }
 
     /**
@@ -433,6 +442,8 @@ public class BookletUtils{
                 }
             }
         }
+
+        booklet.changedPageSinceOpen = true;
     }
 
     public static BookletPage getFirstPageForStack(ItemStack stack){
@@ -448,5 +459,51 @@ public class BookletUtils{
             }
         }
         return possiblePages;
+    }
+
+    public static void saveBookPage(GuiBooklet gui, NBTTagCompound compound){
+        //Save Entry etc.
+        compound.setTag("SavedEntry", gui.currentEntrySet.writeToNBT());
+        compound.setString("SearchWord", gui.searchField.getText());
+
+        //Save Bookmarks
+        NBTTagList list = new NBTTagList();
+        for(int i = 0; i < gui.bookmarkButtons.length; i++){
+            BookmarkButton button = (BookmarkButton)gui.bookmarkButtons[i];
+
+            list.appendTag(button.assignedEntry.writeToNBT());
+        }
+        compound.setTag("Bookmarks", list);
+    }
+
+    public static void openLastBookPage(GuiBooklet gui, NBTTagCompound compound){
+        //Open Entry etc.
+        EntrySet set = EntrySet.readFromNBT(compound.getCompoundTag("SavedEntry"));
+        if(set != null){
+
+            BookletUtils.openIndexEntry(gui, set.entry, set.pageInIndex, true);
+            if(set.chapter != null){
+                BookletUtils.openChapter(gui, set.chapter, set.page);
+            }
+
+            String searchText = compound.getString("SearchWord");
+            if(!searchText.isEmpty()){
+                gui.searchField.setText(searchText);
+                BookletUtils.updateSearchBar(gui);
+            }
+        }
+        else{
+            //If everything fails, initialize the front page
+            BookletUtils.openIndexEntry(gui, null, 1, true);
+        }
+
+        //Load Bookmarks
+        NBTTagList list = compound.getTagList("Bookmarks", 10);
+        if(list != null){
+            for(int i = 0; i < list.tagCount(); i++){
+                BookmarkButton button = (BookmarkButton)gui.bookmarkButtons[i];
+                button.assignedEntry = EntrySet.readFromNBT(list.getCompoundTagAt(i));
+            }
+        }
     }
 }

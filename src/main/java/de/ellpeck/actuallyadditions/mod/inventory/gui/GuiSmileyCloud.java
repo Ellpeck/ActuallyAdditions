@@ -11,8 +11,8 @@
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerSmileyCloud;
+import de.ellpeck.actuallyadditions.mod.network.PacketClientToServer;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
-import de.ellpeck.actuallyadditions.mod.network.gui.PacketGuiString;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntitySmileyCloud;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
@@ -22,6 +22,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
@@ -114,6 +115,14 @@ public class GuiSmileyCloud extends GuiContainer{
     }
 
     private void sendPacket(String text, int textID){
-        PacketHandler.theNetwork.sendToServer(new PacketGuiString(this.x, this.y, this.z, this.world, text, textID, Minecraft.getMinecraft().thePlayer));
+        NBTTagCompound compound = new NBTTagCompound();
+        compound.setInteger("X", this.x);
+        compound.setInteger("Y", this.y);
+        compound.setInteger("Z", this.z);
+        compound.setInteger("WorldID", this.world.provider.getDimension());
+        compound.setInteger("PlayerID", Minecraft.getMinecraft().thePlayer.getEntityId());
+        compound.setInteger("TextID", textID);
+        compound.setString("Text", text);
+        PacketHandler.theNetwork.sendToServer(new PacketClientToServer(compound, PacketHandler.GUI_BUTTON_TO_TILE_HANDLER));
     }
 }

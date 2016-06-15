@@ -13,7 +13,7 @@ package de.ellpeck.actuallyadditions.mod.event;
 import de.ellpeck.actuallyadditions.mod.achievement.InitAchievements;
 import de.ellpeck.actuallyadditions.mod.achievement.TheAchievements;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
-import de.ellpeck.actuallyadditions.mod.data.PlayerServerData;
+import de.ellpeck.actuallyadditions.mod.data.PlayerData;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.entity.item.EntityItem;
@@ -48,7 +48,7 @@ public class PlayerObtainEvents{
 
                 String name = event.crafting.getItem().getRegistryName().toString();
                 if(name != null && name.toLowerCase(Locale.ROOT).contains(ModUtil.MOD_ID)){
-                    NBTTagCompound compound = PlayerServerData.getDataFromPlayer(event.player);
+                    NBTTagCompound compound = PlayerData.getDataFromPlayer(event.player);
                     if(compound != null && !compound.getBoolean("BookGottenAlready")){
                         compound.setBoolean("BookGottenAlready", true);
 

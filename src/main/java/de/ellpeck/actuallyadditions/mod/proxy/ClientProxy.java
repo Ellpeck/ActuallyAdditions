@@ -122,8 +122,6 @@ public class ClientProxy implements IProxy{
             ModUtil.LOGGER.warn("You have turned Seasonal Mode off. Therefore, you are evil.");
         }
 
-        ExtraClientData.setTheFile(new File(Minecraft.getMinecraft().mcDataDir, ModUtil.MOD_ID+"data.dat"));
-
         for(Map.Entry<ItemStack, ModelResourceLocation> entry : MODEL_LOCATIONS_FOR_REGISTERING.entrySet()){
             ModelLoader.setCustomModelResourceLocation(entry.getKey().getItem(), entry.getKey().getItemDamage(), entry.getValue());
         }

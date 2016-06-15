@@ -10,13 +10,14 @@
 
 package de.ellpeck.actuallyadditions.mod.booklet;
 
-import de.ellpeck.actuallyadditions.mod.network.PacketBookletStandButton;
+import de.ellpeck.actuallyadditions.mod.network.PacketClientToServer;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBookletStand;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -35,7 +36,14 @@ public class GuiBookletStand extends GuiBooklet{
     @Override
     public void actionPerformed(GuiButton button){
         if(button == this.buttonSetPage){
-            PacketHandler.theNetwork.sendToServer(new PacketBookletStandButton(this.theStand.getPos(), this.theStand.getWorld(), Minecraft.getMinecraft().thePlayer, this.currentEntrySet));
+            NBTTagCompound compound = new NBTTagCompound();
+            compound.setInteger("X", this.theStand.getPos().getX());
+            compound.setInteger("Y", this.theStand.getPos().getY());
+            compound.setInteger("Z", this.theStand.getPos().getZ());
+            compound.setInteger("PlayerID", Minecraft.getMinecraft().thePlayer.getEntityId());
+            compound.setInteger("WorldID", this.theStand.getWorld().provider.getDimension());
+            compound.setTag("EntrySet", this.currentEntrySet.writeToNBT());
+            PacketHandler.theNetwork.sendToServer(new PacketClientToServer(compound, PacketHandler.BOOKLET_STAND_BUTTON_HANDLER));
         }
         super.actionPerformed(button);
     }

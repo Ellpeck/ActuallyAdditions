@@ -12,8 +12,8 @@ package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerLaserRelayItemWhitelist;
 import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiInputter.SmallerButton;
+import de.ellpeck.actuallyadditions.mod.network.PacketClientToServer;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
-import de.ellpeck.actuallyadditions.mod.network.gui.PacketGuiButton;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayItemWhitelist;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
@@ -24,6 +24,7 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
@@ -66,8 +67,14 @@ public class GuiLaserRelayItemWhitelist extends GuiContainer{
 
     @Override
     public void actionPerformed(GuiButton button){
-        BlockPos pos = this.tile.getPos();
-        PacketHandler.theNetwork.sendToServer(new PacketGuiButton(pos.getX(), pos.getY(), pos.getZ(), this.tile.getWorld(), button.id, Minecraft.getMinecraft().thePlayer));
+        NBTTagCompound compound = new NBTTagCompound();
+        compound.setInteger("X", this.tile.getPos().getX());
+        compound.setInteger("Y", this.tile.getPos().getY());
+        compound.setInteger("Z", this.tile.getPos().getZ());
+        compound.setInteger("WorldID", this.tile.getWorld().provider.getDimension());
+        compound.setInteger("PlayerID", Minecraft.getMinecraft().thePlayer.getEntityId());
+        compound.setInteger("ButtonID", button.id);
+        PacketHandler.theNetwork.sendToServer(new PacketClientToServer(compound, PacketHandler.GUI_BUTTON_TO_TILE_HANDLER));
     }
 
     @Override
