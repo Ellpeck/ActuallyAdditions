@@ -16,7 +16,7 @@ import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
 import de.ellpeck.actuallyadditions.mod.network.PacketServerToClient;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 
@@ -30,12 +30,12 @@ public class PlayerConnectionEvents{
     }
 
     @SubscribeEvent
-    public void onLogInEvent(PlayerEvent.PlayerLoggedInEvent event){
-        if(!event.player.worldObj.isRemote && event.player instanceof EntityPlayerMP){
-            NBTTagCompound data = PlayerData.getDataFromPlayer(event.player);
-            if(!data.hasNoTags()){
-                PacketHandler.theNetwork.sendTo(new PacketServerToClient(data, PacketHandler.PLAYER_DATA_TO_CLIENT_HANDLER), (EntityPlayerMP)event.player);
-                ModUtil.LOGGER.info("Sending Player Data to player "+event.player.getName()+"!");
+    public void onLogInEvent(EntityJoinWorldEvent event){
+        if(!event.getEntity().worldObj.isRemote && event.getEntity() instanceof EntityPlayerMP){
+            EntityPlayerMP player = (EntityPlayerMP)event.getEntity();
+            PlayerData.PlayerSave data = PlayerData.getDataFromPlayer(player);
+            if(!data.theCompound.hasNoTags()){
+                PacketHandler.theNetwork.sendTo(new PacketServerToClient(data.theCompound, PacketHandler.PLAYER_DATA_TO_CLIENT_HANDLER), player);
             }
         }
     }

@@ -378,9 +378,9 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
 
         if(ItemBooklet.forcedEntry == null){
             //Open last entry or introductory entry
-            NBTTagCompound data = PlayerData.getDataFromPlayer(Minecraft.getMinecraft().thePlayer);
+            PlayerData.PlayerSave data = PlayerData.getDataFromPlayer(Minecraft.getMinecraft().thePlayer);
             if(data != null){
-                if(this.tryOpenMainPage && !data.getBoolean("BookAlreadyOpened")){
+                if(this.tryOpenMainPage && !data.theCompound.getBoolean("BookAlreadyOpened")){
                     BookletUtils.openIndexEntry(this, InitBooklet.chapterIntro.entry, 1, true);
                     BookletUtils.openChapter(this, InitBooklet.chapterIntro, null);
 
@@ -393,7 +393,7 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
                     PacketHandler.theNetwork.sendToServer(new PacketClientToServer(dataToSend, PacketHandler.CHANGE_PLAYER_DATA_HANDLER));
                 }
                 else{
-                    BookletUtils.openLastBookPage(this, data.getCompoundTag("BookletData"));
+                    BookletUtils.openLastBookPage(this, data.theCompound.getCompoundTag("BookletData"));
                 }
             }
         }
@@ -446,8 +446,6 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
     @Override
     public void onGuiClosed(){
         if(this.saveOnClose && this.changedPageSinceOpen){
-            System.out.println("SAVING");
-
             NBTTagCompound bookletData = new NBTTagCompound();
             BookletUtils.saveBookPage(this, bookletData);
 

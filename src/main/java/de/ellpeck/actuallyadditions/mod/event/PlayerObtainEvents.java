@@ -48,9 +48,9 @@ public class PlayerObtainEvents{
 
                 String name = event.crafting.getItem().getRegistryName().toString();
                 if(name != null && name.toLowerCase(Locale.ROOT).contains(ModUtil.MOD_ID)){
-                    NBTTagCompound compound = PlayerData.getDataFromPlayer(event.player);
-                    if(compound != null && !compound.getBoolean("BookGottenAlready")){
-                        compound.setBoolean("BookGottenAlready", true);
+                    PlayerData.PlayerSave compound = PlayerData.getDataFromPlayer(event.player);
+                    if(compound != null && !compound.theCompound.getBoolean("BookGottenAlready")){
+                        compound.theCompound.setBoolean("BookGottenAlready", true);
 
                         EntityItem entityItem = new EntityItem(event.player.worldObj, event.player.posX, event.player.posY, event.player.posZ, new ItemStack(InitItems.itemBooklet));
                         entityItem.setPickupDelay(0);

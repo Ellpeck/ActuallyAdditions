@@ -18,25 +18,25 @@ import java.util.UUID;
 
 public class PlayerData{
 
-    public static NBTTagCompound getDataFromPlayer(EntityPlayer player){
+    public static PlayerSave getDataFromPlayer(EntityPlayer player){
         ArrayList<PlayerSave> data = WorldData.PLAYER_SAVE_DATA;
         //Get Data from existing data
         for(PlayerSave save : data){
             if(save.thePlayerUUID.equals(player.getUniqueID())){
-                return save.theCompound;
+                return save;
             }
         }
 
         //Add Data if none is existant
         PlayerSave aSave = new PlayerSave(player.getUniqueID(), new NBTTagCompound());
         data.add(aSave);
-        return aSave.theCompound;
+        return aSave;
     }
 
     public static class PlayerSave{
 
         public final UUID thePlayerUUID;
-        public final NBTTagCompound theCompound;
+        public NBTTagCompound theCompound;
 
         public PlayerSave(UUID theUUID, NBTTagCompound theCompound){
             this.thePlayerUUID = theUUID;

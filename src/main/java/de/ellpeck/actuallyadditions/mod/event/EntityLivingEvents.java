@@ -70,9 +70,9 @@ public class EntityLivingEvents{
     public void livingDeathEvent(LivingDeathEvent event){
         if(event.getEntityLiving().worldObj != null && !event.getEntityLiving().worldObj.isRemote && event.getEntityLiving() instanceof EntityPlayer){
             EntityPlayer player = (EntityPlayer)event.getEntityLiving();
-            NBTTagCompound data = PlayerData.getDataFromPlayer(player);
+            PlayerData.PlayerSave data = PlayerData.getDataFromPlayer(player);
 
-            NBTTagList deaths = data.getTagList("Deaths", 10);
+            NBTTagList deaths = data.theCompound.getTagList("Deaths", 10);
             while(deaths.tagCount() >= 5){
                 deaths.removeTag(0);
             }
@@ -83,7 +83,7 @@ public class EntityLivingEvents{
             death.setDouble("Z", player.posZ);
             deaths.appendTag(death);
 
-            data.setTag("Deaths", deaths);
+            data.theCompound.setTag("Deaths", deaths);
 
             //player.addChatComponentMessage(new TextComponentTranslation("info."+ModUtil.MOD_ID+".deathRecorded"));
         }

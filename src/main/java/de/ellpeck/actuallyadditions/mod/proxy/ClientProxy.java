@@ -20,7 +20,6 @@ import de.ellpeck.actuallyadditions.mod.blocks.render.RenderDisplayStand;
 import de.ellpeck.actuallyadditions.mod.blocks.render.RenderReconstructorLens;
 import de.ellpeck.actuallyadditions.mod.blocks.render.RenderSmileyCloud;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
-import de.ellpeck.actuallyadditions.mod.data.ExtraClientData;
 import de.ellpeck.actuallyadditions.mod.event.InitEvents;
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.misc.special.SpecialRenderInit;

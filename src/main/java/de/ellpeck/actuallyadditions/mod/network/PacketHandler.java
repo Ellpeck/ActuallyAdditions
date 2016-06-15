@@ -127,10 +127,10 @@ public final class PacketHandler{
             EntityPlayer player = (EntityPlayer)world.getEntityByID(compound.getInteger("PlayerID"));
 
             if(player != null){
-                NBTTagCompound playerData = PlayerData.getDataFromPlayer(player);
-                playerData.merge(data);
+                PlayerData.PlayerSave playerData = PlayerData.getDataFromPlayer(player);
+                playerData.theCompound.merge(data);
                 if(player instanceof EntityPlayerMP){
-                    PacketHandler.theNetwork.sendTo(new PacketServerToClient(playerData, PLAYER_DATA_TO_CLIENT_HANDLER), (EntityPlayerMP)player);
+                    PacketHandler.theNetwork.sendTo(new PacketServerToClient(playerData.theCompound, PLAYER_DATA_TO_CLIENT_HANDLER), (EntityPlayerMP)player);
                 }
             }
         }
@@ -141,7 +141,9 @@ public final class PacketHandler{
         @SideOnly(Side.CLIENT)
         public void handleData(NBTTagCompound compound){
             EntityPlayer player = Minecraft.getMinecraft().thePlayer;
-            PlayerData.getDataFromPlayer(player).merge(compound);
+            if(player != null){
+                PlayerData.getDataFromPlayer(player).theCompound = compound;
+            }
         }
     };
 
