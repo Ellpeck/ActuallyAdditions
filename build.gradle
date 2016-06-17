@@ -49,7 +49,6 @@ dependencies {
 
     compile "net.darkhax.tesla:Tesla:1.9.4-1.1.0.24"
     deobfCompile "mezz.jei:jei_1.9.4:3.4.0.202"
-    compile files("lib/Rarmor.jar")
 }
 
 processResources {

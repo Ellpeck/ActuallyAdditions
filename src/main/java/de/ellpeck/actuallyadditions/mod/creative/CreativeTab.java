@@ -189,7 +189,6 @@ public class CreativeTab extends CreativeTabs{
         this.add(InitItems.itemSolidifiedExperience);
         this.add(InitItems.itemLeafBlower);
         this.add(InitItems.itemLeafBlowerAdvanced);
-        this.add(InitItems.itemRarmorModuleReconstructor);
 
         this.add(InitItems.woodenPaxel);
         this.add(InitItems.stonePaxel);

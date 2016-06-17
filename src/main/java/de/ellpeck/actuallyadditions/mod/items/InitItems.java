@@ -210,8 +210,6 @@ public class InitItems{
     public static Item itemWaterBowl;
     public static Item itemFilter;
 
-    public static Item itemRarmorModuleReconstructor;
-
     public static void init(){
         ModUtil.LOGGER.info("Initializing Items...");
 
@@ -372,9 +370,5 @@ public class InitItems{
         itemPantsCrystalWhite = new ItemArmorAA("itemPantsCrystalWhite", InitArmorMaterials.armorMaterialCrystalWhite, 2, new ItemStack(InitItems.itemCrystal, 1, TheCrystals.IRON.ordinal()), Util.CRYSTAL_WHITE_RARITY);
         itemBootsCrystalWhite = new ItemArmorAA("itemBootsCrystalWhite", InitArmorMaterials.armorMaterialCrystalWhite, 3, new ItemStack(InitItems.itemCrystal, 1, TheCrystals.IRON.ordinal()), Util.CRYSTAL_WHITE_RARITY);
         itemPaxelCrystalWhite = new ItemAllToolAA(InitToolMaterials.toolMaterialCrystalWhite, new ItemStack(InitItems.itemCrystal, 1, TheCrystals.IRON.ordinal()), "itemPaxelCrystalWhite", Util.CRYSTAL_WHITE_RARITY, 14606302);
-
-        if(Loader.isModLoaded("rarmor")){
-            itemRarmorModuleReconstructor = new ItemRarmorModuleReconstructor("itemRarmorModuleReconstructor");
-        }
     }
 }

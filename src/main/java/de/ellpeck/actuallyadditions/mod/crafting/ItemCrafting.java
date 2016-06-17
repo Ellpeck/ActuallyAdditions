@@ -83,7 +83,6 @@ public class ItemCrafting{
     public static IRecipe recipeLens;
     public static IRecipe recipeCrateKeeper;
     public static IRecipe recipeEnderStar;
-    public static IRecipe recipeRarmorModuleReconstructor;
     public static IRecipe recipeSpawnerChanger;
     public static IRecipe recipeFilter;
 
@@ -470,15 +469,6 @@ public class ItemCrafting{
             GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemCrafterOnAStick),
                     new ItemStack(Blocks.CRAFTING_TABLE),
                     new ItemStack(Items.SIGN)));
-        }
-
-        //Rarmor Reconstructor Module
-        if(Loader.isModLoaded("rarmor") && ConfigCrafting.RARMOR_RECONSTRUCTOR_MODULE.isEnabled()){
-            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemRarmorModuleReconstructor),
-                    " G ", "GSG", " G ",
-                    'G', ItemUtil.getItemFromName("rarmor:ribbonCable"),
-                    'S', new ItemStack(InitBlocks.blockAtomicReconstructor)));
-            recipeRarmorModuleReconstructor = RecipeUtil.lastIRecipe();
         }
 
         //Tiny Coal
