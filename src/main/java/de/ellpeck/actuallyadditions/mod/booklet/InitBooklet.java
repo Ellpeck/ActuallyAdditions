@@ -50,7 +50,6 @@ public class InitBooklet{
         ActuallyAdditionsAPI.entryItemsNonRF = new BookletEntry("itemsNoRF");
         ActuallyAdditionsAPI.entryItemsRF = new BookletEntry("itemsRF").setSpecial();
         ActuallyAdditionsAPI.entryMisc = new BookletEntry("misc");
-        ActuallyAdditionsAPI.entryCrossover = new BookletEntry("crossover");
         ActuallyAdditionsAPI.allAndSearch = new BookletEntryAllSearch("allAndSearch").setSpecial();
     }
 

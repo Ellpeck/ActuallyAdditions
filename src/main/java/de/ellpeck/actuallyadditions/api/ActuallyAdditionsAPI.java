@@ -26,11 +26,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ActuallyAdditionsAPI{
+public final class ActuallyAdditionsAPI{
 
     public static final String MOD_ID = "actuallyadditions";
     public static final String API_ID = MOD_ID+"api";
-    public static final String API_VERSION = "16";
+    public static final String API_VERSION = "17";
     public static final List<CrusherRecipe> CRUSHER_RECIPES = new ArrayList<CrusherRecipe>();
     public static final List<BallOfFurReturn> BALL_OF_FUR_RETURN_ITEMS = new ArrayList<BallOfFurReturn>();
     public static final List<TreasureChestLoot> TREASURE_CHEST_LOOT = new ArrayList<TreasureChestLoot>();
@@ -55,7 +55,6 @@ public class ActuallyAdditionsAPI{
     public static IBookletEntry entryItemsNonRF;
     public static IBookletEntry entryItemsRF;
     public static IBookletEntry entryMisc;
-    public static IBookletEntry entryCrossover;
     public static IBookletEntry allAndSearch;
 
     //These are getting initialized in Actually Additions' PreInit phase
