@@ -64,7 +64,7 @@ public final class TeslaUtil{
         }
 
         if(handlerFrom != null && handlerTo != null){
-            long drain = handlerFrom.takePower(Integer.MAX_VALUE, true);
+            long drain = handlerFrom.takePower(Long.MAX_VALUE, true);
             if(drain > 0){
                 long filled = handlerTo.givePower(drain, false);
                 handlerFrom.takePower(filled, false);
