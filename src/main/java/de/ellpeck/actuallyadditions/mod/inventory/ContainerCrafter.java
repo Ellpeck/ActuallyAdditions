@@ -50,44 +50,55 @@ public class ContainerCrafter extends Container{
     }
 
     @Override
-    public ItemStack transferStackInSlot(EntityPlayer player, int slot){
-        ItemStack stack = null;
-        Slot theSlot = this.inventorySlots.get(slot);
+    public ItemStack transferStackInSlot(EntityPlayer player, int index){
+        ItemStack itemstack = null;
+        Slot slot = this.inventorySlots.get(index);
 
-        if(theSlot != null && theSlot.getHasStack()){
-            ItemStack savedStack = theSlot.getStack();
-            stack = savedStack.copy();
+        if(slot != null && slot.getHasStack()){
+            ItemStack itemstack1 = slot.getStack();
+            itemstack = itemstack1.copy();
 
-            if(slot == 0){
-                if(!this.mergeItemStack(savedStack, 10, 46, true)){
+            if(index == 0){
+                if(!this.mergeItemStack(itemstack1, 10, 46, true)){
                     return null;
                 }
-                theSlot.onSlotChange(savedStack, stack);
+
+                slot.onSlotChange(itemstack1, itemstack);
             }
-            else if(slot >= 10 && slot < 37 && !this.mergeItemStack(savedStack, 37, 46, false)){
-                return null;
+            else if(index >= 10 && index < 37){
+                if(!this.mergeItemStack(itemstack1, 37, 46, false)){
+                    return null;
+                }
             }
-            else if(slot >= 37 && slot < 46 && !this.mergeItemStack(savedStack, 10, 37, false)){
-                return null;
+            else if(index >= 37 && index < 46){
+                if(!this.mergeItemStack(itemstack1, 10, 37, false)){
+                    return null;
+                }
             }
-            else if(!this.mergeItemStack(savedStack, 10, 46, false)){
+            else if(!this.mergeItemStack(itemstack1, 10, 46, false)){
                 return null;
             }
 
-            if(savedStack.stackSize <= 0){
-                theSlot.putStack(null);
+            if(itemstack1.stackSize <= 0){
+                slot.putStack(null);
             }
             else{
-                theSlot.onSlotChanged();
+                slot.onSlotChanged();
             }
 
-            if(savedStack.stackSize == stack.stackSize){
+            if(itemstack1.stackSize == itemstack.stackSize){
                 return null;
             }
 
-            theSlot.onPickupFromSlot(player, savedStack);
+            slot.onPickupFromSlot(player, itemstack1);
         }
-        return stack;
+
+        return itemstack;
+    }
+
+    @Override
+    public boolean canMergeSlot(ItemStack stack, Slot slotIn){
+        return slotIn.inventory != this.craftResult && super.canMergeSlot(stack, slotIn);
     }
 
     @Override
