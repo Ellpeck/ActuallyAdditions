@@ -88,16 +88,6 @@ public class TileEntityFermentingBarrel extends TileEntityBase implements IFluid
                 this.currentProcessTime = 0;
             }
 
-            if(this.oilTank.getFluidAmount() > 0){
-                WorldUtil.pushFluid(this, EnumFacing.DOWN);
-                if(!this.isRedstonePowered){
-                    WorldUtil.pushFluid(this, EnumFacing.NORTH);
-                    WorldUtil.pushFluid(this, EnumFacing.EAST);
-                    WorldUtil.pushFluid(this, EnumFacing.SOUTH);
-                    WorldUtil.pushFluid(this, EnumFacing.WEST);
-                }
-            }
-
             if((this.canolaTank.getFluidAmount() != this.lastCanola || this.oilTank.getFluidAmount() != this.lastOil || this.currentProcessTime != this.lastProcessTime) && this.sendUpdateWithInterval()){
                 this.lastProcessTime = this.currentProcessTime;
                 this.lastCanola = this.canolaTank.getFluidAmount();

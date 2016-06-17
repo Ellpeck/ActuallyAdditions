@@ -81,17 +81,6 @@ public class TileEntityPhantomEnergyface extends TileEntityPhantomface implement
     }
 
     @Override
-    public void updateEntity(){
-        super.updateEntity();
-
-        if(!this.worldObj.isRemote){
-            if(this.isBoundThingInRange() && this.getProvider() != null){
-                WorldUtil.pushEnergyToAllSides(this);
-            }
-        }
-    }
-
-    @Override
     public boolean isBoundThingInRange(){
         return super.isBoundThingInRange() && (this.worldObj.getTileEntity(this.boundPosition) instanceof IEnergyReceiver || this.worldObj.getTileEntity(this.boundPosition) instanceof IEnergyProvider);
     }

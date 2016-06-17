@@ -134,16 +134,6 @@ public class TileEntityFluidCollector extends TileEntityBase implements IFluidSa
                 }
             }
 
-            if(!this.isPlacer && this.tank.getFluidAmount() > 0){
-                WorldUtil.pushFluid(this, EnumFacing.DOWN);
-                if(!this.isRedstonePowered){
-                    WorldUtil.pushFluid(this, EnumFacing.NORTH);
-                    WorldUtil.pushFluid(this, EnumFacing.EAST);
-                    WorldUtil.pushFluid(this, EnumFacing.SOUTH);
-                    WorldUtil.pushFluid(this, EnumFacing.WEST);
-                }
-            }
-
             if(this.lastTankAmount != this.tank.getFluidAmount() && this.sendUpdateWithInterval()){
                 this.lastTankAmount = this.tank.getFluidAmount();
             }

@@ -30,14 +30,6 @@ public class TileEntityPhantomLiquiface extends TileEntityPhantomface implements
     @Override
     public void updateEntity(){
         super.updateEntity();
-
-        if(!this.worldObj.isRemote){
-            if(this.isRedstonePowered && this.isBoundThingInRange()){
-                for(EnumFacing side : EnumFacing.values()){
-                    WorldUtil.pushFluid(this, side);
-                }
-            }
-        }
     }
 
     @Override

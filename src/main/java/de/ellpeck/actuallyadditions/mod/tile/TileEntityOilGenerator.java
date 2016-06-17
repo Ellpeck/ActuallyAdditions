@@ -99,10 +99,6 @@ public class TileEntityOilGenerator extends TileEntityBase implements IEnergyPro
                 }
             }
 
-            if(this.storage.getEnergyStored() > 0){
-                WorldUtil.pushEnergyToAllSides(this);
-            }
-
             if(flag != this.currentBurnTime > 0){
                 this.markDirty();
             }

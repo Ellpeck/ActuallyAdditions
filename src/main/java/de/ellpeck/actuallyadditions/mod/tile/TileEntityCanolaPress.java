@@ -103,16 +103,6 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IE
                 this.currentProcessTime = 0;
             }
 
-            if(this.tank.getFluidAmount() > 0){
-                WorldUtil.pushFluid(this, EnumFacing.DOWN);
-                if(!this.isRedstonePowered){
-                    WorldUtil.pushFluid(this, EnumFacing.NORTH);
-                    WorldUtil.pushFluid(this, EnumFacing.EAST);
-                    WorldUtil.pushFluid(this, EnumFacing.SOUTH);
-                    WorldUtil.pushFluid(this, EnumFacing.WEST);
-                }
-            }
-
             if((this.storage.getEnergyStored() != this.lastEnergyStored || this.tank.getFluidAmount() != this.lastTankAmount | this.currentProcessTime != this.lastProcessTime) && this.sendUpdateWithInterval()){
                 this.lastEnergyStored = this.storage.getEnergyStored();
                 this.lastProcessTime = this.currentProcessTime;

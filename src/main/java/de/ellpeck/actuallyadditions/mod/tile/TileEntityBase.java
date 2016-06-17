@@ -10,10 +10,13 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import cofh.api.energy.IEnergyProvider;
+import cofh.api.energy.IEnergyReceiver;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
 import de.ellpeck.actuallyadditions.mod.network.PacketServerToClient;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -172,6 +175,16 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
 
     public void updateEntity(){
         this.ticksElapsed++;
+
+        if(!this.worldObj.isRemote){
+            if(this instanceof IEnergyReceiver || this instanceof IEnergyProvider){
+                WorldUtil.doEnergyInteraction(this);
+            }
+
+            if(this instanceof net.minecraftforge.fluids.IFluidHandler || this.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null)){
+                WorldUtil.doFluidInteraction(this);
+            }
+        }
     }
 
     public void setRedstonePowered(boolean powered){

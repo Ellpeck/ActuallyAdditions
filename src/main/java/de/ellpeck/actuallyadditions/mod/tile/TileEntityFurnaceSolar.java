@@ -73,10 +73,6 @@ public class TileEntityFurnaceSolar extends TileEntityBase implements IEnergyPro
                 }
             }
 
-            if(this.storage.getEnergyStored() > 0){
-                WorldUtil.pushEnergyToAllSides(this);
-            }
-
             if(this.oldEnergy != this.storage.getEnergyStored() && this.sendUpdateWithInterval()){
                 this.oldEnergy = this.storage.getEnergyStored();
             }

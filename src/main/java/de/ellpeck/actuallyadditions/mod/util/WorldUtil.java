@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.util;
 
-import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyProvider;
 import cofh.api.energy.IEnergyReceiver;
 import net.minecraft.block.Block;
@@ -50,7 +49,7 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WorldUtil{
+public final class WorldUtil{
 
     public static void breakBlockAtSide(EnumFacing side, World world, BlockPos pos){
         breakBlockAtSide(side, world, pos, 0);
@@ -64,26 +63,67 @@ public class WorldUtil{
         return new BlockPos(pos.getX()+side.getFrontOffsetX()*(offset+1), pos.getY()+side.getFrontOffsetY()*(offset+1), pos.getZ()+side.getFrontOffsetZ()*(offset+1));
     }
 
-    public static void pushEnergyToAllSides(TileEntity tileFrom){
-        pushEnergy(tileFrom, EnumFacing.UP);
-        pushEnergy(tileFrom, EnumFacing.DOWN);
-        pushEnergy(tileFrom, EnumFacing.NORTH);
-        pushEnergy(tileFrom, EnumFacing.EAST);
-        pushEnergy(tileFrom, EnumFacing.SOUTH);
-        pushEnergy(tileFrom, EnumFacing.WEST);
+    public static void doEnergyInteraction(TileEntity tile){
+        for(EnumFacing side : EnumFacing.values()){
+            TileEntity otherTile = getTileEntityFromSide(side, tile.getWorld(), tile.getPos());
+            if(otherTile != null){
+                IEnergyReceiver handlerTo = null;
+                IEnergyProvider handlerFrom = null;
+
+                //Push RF
+                if(tile instanceof IEnergyProvider && otherTile instanceof IEnergyReceiver){
+                    handlerTo = (IEnergyReceiver)otherTile;
+                    handlerFrom = (IEnergyProvider)tile;
+                }
+                //Pull RF
+                else if(tile instanceof IEnergyReceiver && otherTile instanceof IEnergyProvider){
+                    handlerTo = (IEnergyReceiver)tile;
+                    handlerFrom = (IEnergyProvider)otherTile;
+                }
+
+                if(handlerFrom != null && handlerTo != null){
+                    int drain = handlerFrom.extractEnergy(side, Integer.MAX_VALUE, true);
+                    if(drain > 0){
+                        if(handlerTo.canConnectEnergy(side.getOpposite())){
+                            int filled = handlerTo.receiveEnergy(side.getOpposite(), drain, false);
+                            handlerFrom.extractEnergy(side, filled, false);
+                        }
+                    }
+                }
+            }
+        }
     }
 
-    public static void pushEnergy(TileEntity tileFrom, EnumFacing side){
-        TileEntity tileTo = getTileEntityFromSide(side, tileFrom.getWorld(), tileFrom.getPos());
-        if(tileTo != null){
-            if(tileFrom instanceof IEnergyProvider && tileTo instanceof IEnergyReceiver){
-                IEnergyReceiver handlerTo = (IEnergyReceiver)tileTo;
-                IEnergyProvider handlerFrom = (IEnergyProvider)tileFrom;
-                int drain =  handlerFrom.extractEnergy(side, Integer.MAX_VALUE, true);
-                if(drain > 0){
-                    if(handlerTo.canConnectEnergy(side.getOpposite())){
-                        int filled = handlerTo.receiveEnergy(side.getOpposite(), drain, false);
-                        handlerFrom.extractEnergy(side, filled, false);
+    public static void doFluidInteraction(TileEntity tile){
+        for(EnumFacing side : EnumFacing.values()){
+            TileEntity otherTile = getTileEntityFromSide(side, tile.getWorld(), tile.getPos());
+            if(otherTile != null){
+                for(int i = 0; i < 2; i++){
+                    //Push and pull with old fluid system
+                    if(tile instanceof net.minecraftforge.fluids.IFluidHandler && otherTile instanceof net.minecraftforge.fluids.IFluidHandler){
+                        net.minecraftforge.fluids.IFluidHandler handlerTo = (net.minecraftforge.fluids.IFluidHandler)(i == 0 ? tile : otherTile);
+                        net.minecraftforge.fluids.IFluidHandler handlerFrom = (net.minecraftforge.fluids.IFluidHandler)(i == 0 ? otherTile : tile);
+                        FluidStack drain = handlerFrom.drain(side, Integer.MAX_VALUE, false);
+                        if(drain != null){
+                            if(handlerTo.canFill(side.getOpposite(), drain.getFluid())){
+                                int filled = handlerTo.fill(side.getOpposite(), drain.copy(), true);
+                                handlerFrom.drain(side, filled, true);
+                                break;
+                            }
+                        }
+                    }
+                    //Push and pull with new fluid system
+                    else{
+                        IFluidHandler handlerFrom = tile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, i == 0 ? side.getOpposite() : side);
+                        IFluidHandler handlerTo = otherTile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, i == 0 ? side : side.getOpposite());
+                        if(handlerFrom != null && handlerTo != null){
+                            FluidStack drain = handlerFrom.drain(Integer.MAX_VALUE, false);
+                            if(drain != null){
+                                int filled = handlerTo.fill(drain.copy(), true);
+                                handlerFrom.drain(filled, true);
+                                break;
+                            }
+                        }
                     }
                 }
             }
@@ -111,34 +151,6 @@ public class WorldUtil{
             }
         }
         return true;
-    }
-
-    public static void pushFluid(TileEntity tileFrom, EnumFacing side){
-        TileEntity tileTo = getTileEntityFromSide(side, tileFrom.getWorld(), tileFrom.getPos());
-        if(tileTo != null){
-            if(tileFrom instanceof net.minecraftforge.fluids.IFluidHandler && tileTo instanceof net.minecraftforge.fluids.IFluidHandler){
-                net.minecraftforge.fluids.IFluidHandler handlerTo = (net.minecraftforge.fluids.IFluidHandler)tileTo;
-                net.minecraftforge.fluids.IFluidHandler handlerFrom = (net.minecraftforge.fluids.IFluidHandler)tileFrom;
-                FluidStack drain =  handlerFrom.drain(side, Integer.MAX_VALUE, false);
-                if(drain != null){
-                    if(handlerTo.canFill(side.getOpposite(), drain.getFluid())){
-                        int filled = handlerTo.fill(side.getOpposite(), drain.copy(), true);
-                        handlerFrom.drain(side, filled, true);
-                    }
-                }
-            }
-            else{
-                IFluidHandler handlerFrom = tileFrom.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side);
-                IFluidHandler handlerTo = tileTo.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side.getOpposite());
-                if(handlerFrom != null && handlerTo != null){
-                    FluidStack drain = handlerFrom.drain(Integer.MAX_VALUE, false);
-                    if(drain != null){
-                        int filled = handlerTo.fill(drain.copy(), true);
-                        handlerFrom.drain(filled, true);
-                    }
-                }
-            }
-        }
     }
 
     public static ItemStack useItemAtSide(EnumFacing side, World world, BlockPos pos, ItemStack stack){

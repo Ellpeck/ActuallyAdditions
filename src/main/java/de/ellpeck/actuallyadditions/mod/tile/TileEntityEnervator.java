@@ -60,10 +60,6 @@ public class TileEntityEnervator extends TileEntityInventoryBase implements IEne
                 }
             }
 
-            if(this.storage.getEnergyStored() > 0){
-                WorldUtil.pushEnergyToAllSides(this);
-            }
-
             if(this.lastEnergy != this.storage.getEnergyStored() && this.sendUpdateWithInterval()){
                 this.lastEnergy = this.storage.getEnergyStored();
             }
