@@ -42,11 +42,10 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
     public static void saveSlots(ItemStack[] slots, NBTTagCompound compound){
         if(slots != null && slots.length > 0){
             NBTTagList tagList = new NBTTagList();
-            for(int currentIndex = 0; currentIndex < slots.length; currentIndex++){
+            for(ItemStack slot : slots){
                 NBTTagCompound tagCompound = new NBTTagCompound();
-                tagCompound.setByte("Slot", (byte)currentIndex);
-                if(slots[currentIndex] != null){
-                    slots[currentIndex].writeToNBT(tagCompound);
+                if(slot != null){
+                    slot.writeToNBT(tagCompound);
                 }
                 tagList.appendTag(tagCompound);
             }
@@ -57,14 +56,9 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
     public static void loadSlots(ItemStack[] slots, NBTTagCompound compound){
         if(slots != null && slots.length > 0){
             NBTTagList tagList = compound.getTagList("Items", 10);
-            for(int i = 0; i < tagList.tagCount(); i++){
+            for(int i = 0; i < slots.length; i++){
                 NBTTagCompound tagCompound = tagList.getCompoundTagAt(i);
-                if(tagCompound != null && tagCompound.hasKey("id")){
-                    byte slotIndex = tagCompound.getByte("Slot");
-                    if(slotIndex >= 0 && slotIndex < slots.length){
-                        slots[slotIndex] = ItemStack.loadItemStackFromNBT(tagCompound);
-                    }
-                }
+                slots[i] = tagCompound != null && tagCompound.hasKey("id") ? ItemStack.loadItemStackFromNBT(tagCompound) : null;
             }
         }
     }
