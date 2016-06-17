@@ -17,6 +17,7 @@ import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
 import de.ellpeck.actuallyadditions.mod.network.PacketServerToClient;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
+import de.ellpeck.actuallyadditions.mod.util.compat.TeslaUtil;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -30,6 +31,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fml.common.ModAPIManager;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -38,6 +40,8 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
     public final String name;
     public boolean isRedstonePowered;
     protected int ticksElapsed;
+
+    public static boolean teslaLoaded;
 
     public TileEntityBase(String name){
         this.name = "container."+ModUtil.MOD_ID+"."+name;
@@ -95,6 +99,14 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
         GameRegistry.registerTileEntity(TileEntityItemViewer.class, ModUtil.MOD_ID+":tileItemViewer");
         GameRegistry.registerTileEntity(TileEntityBookletStand.class, ModUtil.MOD_ID+":tileEntityBookletStand");
         GameRegistry.registerTileEntity(TileEntityDisplayStand.class, ModUtil.MOD_ID+":tileEntityDisplayStand");
+
+        if(ModAPIManager.INSTANCE.hasAPI("Tesla|API")){
+            ModUtil.LOGGER.info("Tesla API loaded... Activating Tesla Power System integration...");
+            teslaLoaded = true;
+        }
+        else{
+            ModUtil.LOGGER.info("Tesla API not found! Skipping Tesla Power System integration.");
+        }
     }
 
     @Override
@@ -231,6 +243,12 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
             IFluidHandler tank = this.getFluidHandler(facing);
             if(tank != null){
                 return (T)tank;
+            }
+        }
+        else if(teslaLoaded){
+            T cap = TeslaUtil.getTeslaCapability(this, capability, facing);
+            if(cap != null){
+                return cap;
             }
         }
         return super.getCapability(capability, facing);

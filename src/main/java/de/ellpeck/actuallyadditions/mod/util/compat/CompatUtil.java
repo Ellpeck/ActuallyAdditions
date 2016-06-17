@@ -8,7 +8,7 @@
  * © 2015-2016 Ellpeck
  */
 
-package de.ellpeck.actuallyadditions.mod.util;
+package de.ellpeck.actuallyadditions.mod.util.compat;
 
 import de.ellpeck.actuallyadditions.mod.items.base.ItemSeed;
 import net.minecraft.block.Block;

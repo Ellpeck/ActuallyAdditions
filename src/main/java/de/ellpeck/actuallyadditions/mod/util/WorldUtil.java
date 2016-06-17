@@ -12,6 +12,8 @@ package de.ellpeck.actuallyadditions.mod.util;
 
 import cofh.api.energy.IEnergyProvider;
 import cofh.api.energy.IEnergyReceiver;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
+import de.ellpeck.actuallyadditions.mod.util.compat.TeslaUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.material.Material;
@@ -30,6 +32,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.client.CPacketPlayerDigging;
 import net.minecraft.network.play.server.SPacketBlockChange;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityBanner;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -90,6 +93,9 @@ public final class WorldUtil{
                         }
                     }
                 }
+                else if(TileEntityBase.teslaLoaded){
+                    TeslaUtil.doTeslaInteraction(tile, otherTile, side);
+                }
             }
         }
     }
@@ -114,8 +120,8 @@ public final class WorldUtil{
                     }
                     //Push and pull with new fluid system
                     else{
-                        IFluidHandler handlerFrom = tile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, i == 0 ? side.getOpposite() : side);
-                        IFluidHandler handlerTo = otherTile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, i == 0 ? side : side.getOpposite());
+                        IFluidHandler handlerFrom = (i == 0 ? tile : otherTile).getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, i == 0 ? side : side.getOpposite());
+                        IFluidHandler handlerTo = (i == 0 ? otherTile : tile).getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, i == 0 ? side.getOpposite() : side);
                         if(handlerFrom != null && handlerTo != null){
                             FluidStack drain = handlerFrom.drain(Integer.MAX_VALUE, false);
                             if(drain != null){
