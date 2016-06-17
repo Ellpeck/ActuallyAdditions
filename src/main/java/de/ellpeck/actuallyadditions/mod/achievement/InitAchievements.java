@@ -17,9 +17,9 @@ import net.minecraftforge.common.AchievementPage;
 
 import java.util.ArrayList;
 
-public class InitAchievements{
+public final class InitAchievements{
 
-    public static final ArrayList<Achievement> achievementList = new ArrayList<Achievement>();
+    public static final ArrayList<Achievement> ACHIEVEMENT_LIST = new ArrayList<Achievement>();
     public static int pageNumber;
     public static AchievementPage theAchievementPage;
 
@@ -27,10 +27,10 @@ public class InitAchievements{
         ModUtil.LOGGER.info("Initializing Achievements...");
 
         for(int i = 0; i < TheAchievements.values().length; i++){
-            achievementList.add(TheAchievements.values()[i].ach);
+            ACHIEVEMENT_LIST.add(TheAchievements.values()[i].chieve);
         }
 
-        theAchievementPage = new AchievementPage(StringUtil.localize("achievement.page."+ModUtil.MOD_ID), achievementList.toArray(new Achievement[achievementList.size()]));
+        theAchievementPage = new AchievementPage(StringUtil.localize("achievement.page."+ModUtil.MOD_ID), ACHIEVEMENT_LIST.toArray(new Achievement[ACHIEVEMENT_LIST.size()]));
         pageNumber = AchievementPage.getAchievementPages().size();
         AchievementPage.registerAchievementPage(theAchievementPage);
     }

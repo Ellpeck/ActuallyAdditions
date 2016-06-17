@@ -131,7 +131,7 @@ public class BookletUtils{
             if(page != null && page.getItemStacksForPage() != null){
                 for(ItemStack stack : page.getItemStacksForPage()){
                     if(stack != null){
-                        for(Achievement achievement : InitAchievements.achievementList){
+                        for(Achievement achievement : InitAchievements.ACHIEVEMENT_LIST){
                             if(achievement.theItemStack != null && ItemUtil.areItemsEqual(stack, achievement.theItemStack, true)){
                                 if(pre){
                                     booklet.mc.getTextureManager().bindTexture(GuiBooklet.resLoc);

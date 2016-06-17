@@ -636,6 +636,12 @@ achievement.actuallyadditions.pickUpCoffee.desc=Harvest some coffee
 achievement.actuallyadditions.craftCoffeeMachine=Addiction in cups
 achievement.actuallyadditions.craftCoffeeMachine.desc=Craft a Coffee Machine
 
+achievement.actuallyadditions.obscured=§ksome chieve name
+achievement.actuallyadditions.obscured.desc=§klolwut y u actually look over meow
+
+achievement.actuallyadditions.craftFireworkBox=Bang Boom Bang
+achievement.actuallyadditions.craftFireworkBox.desc=Craft a Firework Box
+
 #Booklet Recipe Names
 booklet.actuallyadditions.shapelessRecipe=Shapeless Recipe
 booklet.actuallyadditions.shapedRecipe=Shaped Recipe

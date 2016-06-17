@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.blocks;
 
 import de.ellpeck.actuallyadditions.api.lens.ILensItem;
+import de.ellpeck.actuallyadditions.mod.achievement.TheAchievements;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.blocks.base.ItemBlockBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityAtomicReconstructor;
@@ -81,6 +82,7 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
                     else if(item == Items.RECORD_11){
                         reconstructor.counter++;
                         reconstructor.markDirty();
+                        player.addStat(TheAchievements.OBSCURED.chieve);
                     }
                 }
                 else{

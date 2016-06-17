@@ -80,7 +80,7 @@ public class BlockSmileyCloud extends BlockContainerBase{
             if(tile instanceof TileEntitySmileyCloud){
                 player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.CLOUD.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
 
-                player.addStat(TheAchievements.NAME_SMILEY_CLOUD.ach);
+                player.addStat(TheAchievements.NAME_SMILEY_CLOUD.chieve);
             }
         }
         return true;

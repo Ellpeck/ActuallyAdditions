@@ -19,7 +19,6 @@ import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 
@@ -30,9 +29,9 @@ public class PlayerObtainEvents{
     public static void checkAchievements(ItemStack gotten, EntityPlayer player, InitAchievements.Type type){
         for(TheAchievements ach : TheAchievements.values()){
             if(ach.type == type){
-                if(gotten != null && ach.ach.theItemStack != null && gotten.getItem() == ach.ach.theItemStack.getItem()){
-                    if(gotten.getItemDamage() == ach.ach.theItemStack.getItemDamage()){
-                        player.addStat(ach.ach, 1);
+                if(gotten != null && ach.chieve.theItemStack != null && gotten.getItem() == ach.chieve.theItemStack.getItem()){
+                    if(gotten.getItemDamage() == ach.chieve.theItemStack.getItemDamage()){
+                        player.addStat(ach.chieve, 1);
                     }
                 }
             }

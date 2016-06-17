@@ -79,7 +79,7 @@ public class ItemBooklet extends ItemBase implements IHudDisplay{
         player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.BOOK.ordinal(), world, (int)player.posX, (int)player.posY, (int)player.posZ);
 
         if(!world.isRemote){
-            player.addStat(TheAchievements.OPEN_BOOKLET.ach);
+            player.addStat(TheAchievements.OPEN_BOOKLET.chieve);
         }
         return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
     }
