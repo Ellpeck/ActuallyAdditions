@@ -24,7 +24,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import java.util.List;
 
 
-public class ItemUtil{
+public final class ItemUtil{
 
     public static Item getItemFromName(String name){
         ResourceLocation resLoc = new ResourceLocation(name);
@@ -43,7 +43,7 @@ public class ItemUtil{
         itemBlock.setRegistryName(block.getRegistryName());
         GameRegistry.register(itemBlock);
 
-        block.setCreativeTab(addTab ? CreativeTab.instance : null);
+        block.setCreativeTab(addTab ? CreativeTab.INSTANCE : null);
     }
 
     public static void registerItem(Item item, String name, boolean addTab){
@@ -52,7 +52,7 @@ public class ItemUtil{
         item.setRegistryName(ModUtil.MOD_ID, name);
         GameRegistry.register(item);
 
-        item.setCreativeTab(addTab ? CreativeTab.instance : null);
+        item.setCreativeTab(addTab ? CreativeTab.INSTANCE : null);
 
         if(item instanceof IColorProvidingItem){
             ActuallyAdditions.proxy.addColoredItem(item);

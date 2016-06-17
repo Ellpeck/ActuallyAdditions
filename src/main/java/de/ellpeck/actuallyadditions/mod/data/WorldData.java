@@ -34,10 +34,10 @@ public class WorldData{
 
     public static final String DATA_TAG = ModUtil.MOD_ID+"data";
     public static final ArrayList<PlayerSave> PLAYER_SAVE_DATA = new ArrayList<PlayerSave>();
-    private static Map<Integer, WorldData> worldData = new ConcurrentHashMap<Integer, WorldData>();
+    private static final Map<Integer, WorldData> WORLD_DATA = new ConcurrentHashMap<Integer, WorldData>();
     public final ConcurrentSet<Network> laserRelayNetworks = new ConcurrentSet<Network>();
-    private ISaveHandler handler;
-    private int dimension;
+    private final ISaveHandler handler;
+    private final int dimension;
 
     public WorldData(ISaveHandler handler, int dimension){
         this.handler = handler;
@@ -46,13 +46,13 @@ public class WorldData{
 
     public static WorldData getDataForWorld(World world){
         int dim = world.provider.getDimension();
-        WorldData data = worldData.get(dim);
+        WorldData data = WORLD_DATA.get(dim);
 
         if(data == null){
             data = new WorldData(null, dim);
 
             if(world.isRemote){
-                worldData.put(dim, data);
+                WORLD_DATA.put(dim, data);
                 ModUtil.LOGGER.info("Creating temporary WorldData for world "+dim+" on the client!");
             }
             else{
@@ -66,7 +66,7 @@ public class WorldData{
     public static void load(World world){
         if(!world.isRemote && world instanceof WorldServer){
             WorldData data = new WorldData(new WorldSpecificSaveHandler((WorldServer)world, world.getSaveHandler()), world.provider.getDimension());
-            worldData.put(data.dimension, data);
+            WORLD_DATA.put(data.dimension, data);
 
             try{
                 File dataFile = data.handler.getMapFileFromName(DATA_TAG+data.dimension);
@@ -92,7 +92,7 @@ public class WorldData{
 
     public static void save(World world){
         if(!world.isRemote){
-            WorldData data = worldData.get(world.provider.getDimension());
+            WorldData data = WORLD_DATA.get(world.provider.getDimension());
             if(data != null && data.handler != null){
                 try{
                     File dataFile = data.handler.getMapFileFromName(DATA_TAG+data.dimension);
@@ -122,7 +122,7 @@ public class WorldData{
 
     public static void unload(World world){
         if(!world.isRemote){
-            worldData.remove(world.provider.getDimension());
+            WORLD_DATA.remove(world.provider.getDimension());
             ModUtil.LOGGER.info("Unloading WorldData for world "+world.provider.getDimension()+"!");
         }
     }

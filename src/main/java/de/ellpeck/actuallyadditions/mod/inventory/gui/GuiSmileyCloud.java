@@ -35,7 +35,7 @@ import java.io.IOException;
 @SideOnly(Side.CLIENT)
 public class GuiSmileyCloud extends GuiContainer{
 
-    private static final ResourceLocation resLoc = AssetUtil.getGuiLocation("guiSmileyCloud");
+    private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("guiSmileyCloud");
 
     private final int x;
     private final int y;
@@ -76,7 +76,7 @@ public class GuiSmileyCloud extends GuiContainer{
     public void drawGuiContainerBackgroundLayer(float f, int x, int y){
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 
-        this.mc.getTextureManager().bindTexture(resLoc);
+        this.mc.getTextureManager().bindTexture(RES_LOC);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
 
         this.nameField.drawTextBox();

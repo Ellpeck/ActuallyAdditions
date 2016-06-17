@@ -20,7 +20,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class PosUtil{
+public final class PosUtil{
 
     public static Material getMaterial(BlockPos pos, IBlockAccess world){
         return getBlock(pos, world).getMaterial(world.getBlockState(pos));

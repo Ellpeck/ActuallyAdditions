@@ -11,7 +11,6 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.blocks.BlockPhantom;
-import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fluids.Fluid;
@@ -25,11 +24,6 @@ public class TileEntityPhantomLiquiface extends TileEntityPhantomface implements
     public TileEntityPhantomLiquiface(){
         super("liquiface");
         this.type = BlockPhantom.Type.LIQUIFACE;
-    }
-
-    @Override
-    public void updateEntity(){
-        super.updateEntity();
     }
 
     @Override

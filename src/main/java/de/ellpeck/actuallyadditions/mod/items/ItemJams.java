@@ -34,7 +34,7 @@ import java.util.List;
 
 public class ItemJams extends ItemFoodBase implements IColorProvidingItem{
 
-    public static final TheJams[] allJams = TheJams.values();
+    public static final TheJams[] ALL_JAMS = TheJams.values();
 
     public ItemJams(String name){
         super(0, 0.0F, false, name);
@@ -51,19 +51,19 @@ public class ItemJams extends ItemFoodBase implements IColorProvidingItem{
 
     @Override
     public String getUnlocalizedName(ItemStack stack){
-        return stack.getItemDamage() >= allJams.length ? StringUtil.BUGGED_ITEM_NAME : this.getUnlocalizedName()+allJams[stack.getItemDamage()].name;
+        return stack.getItemDamage() >= ALL_JAMS.length ? StringUtil.BUGGED_ITEM_NAME : this.getUnlocalizedName()+ALL_JAMS[stack.getItemDamage()].name;
     }
 
 
     @Override
     public EnumRarity getRarity(ItemStack stack){
-        return stack.getItemDamage() >= allJams.length ? EnumRarity.COMMON : allJams[stack.getItemDamage()].rarity;
+        return stack.getItemDamage() >= ALL_JAMS.length ? EnumRarity.COMMON : ALL_JAMS[stack.getItemDamage()].rarity;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item item, CreativeTabs tab, List list){
-        for(int j = 0; j < allJams.length; j++){
+        for(int j = 0; j < ALL_JAMS.length; j++){
             list.add(new ItemStack(this, 1, j));
         }
     }
@@ -72,11 +72,11 @@ public class ItemJams extends ItemFoodBase implements IColorProvidingItem{
     public ItemStack onItemUseFinish(ItemStack stack, World world, EntityLivingBase player){
         ItemStack stackToReturn = super.onItemUseFinish(stack, world, player);
 
-        if(player instanceof EntityPlayer && !world.isRemote && stack.getItemDamage() < allJams.length){
-            PotionEffect firstEffectToGet = new PotionEffect(Potion.getPotionById(allJams[stack.getItemDamage()].firstEffectToGet), 200);
+        if(player instanceof EntityPlayer && !world.isRemote && stack.getItemDamage() < ALL_JAMS.length){
+            PotionEffect firstEffectToGet = new PotionEffect(Potion.getPotionById(ALL_JAMS[stack.getItemDamage()].firstEffectToGet), 200);
             player.addPotionEffect(firstEffectToGet);
 
-            PotionEffect secondEffectToGet = new PotionEffect(Potion.getPotionById(allJams[stack.getItemDamage()].secondEffectToGet), 600);
+            PotionEffect secondEffectToGet = new PotionEffect(Potion.getPotionById(ALL_JAMS[stack.getItemDamage()].secondEffectToGet), 600);
             player.addPotionEffect(secondEffectToGet);
 
             ItemStack returnItem = new ItemStack(Items.GLASS_BOTTLE);
@@ -91,17 +91,17 @@ public class ItemJams extends ItemFoodBase implements IColorProvidingItem{
 
     @Override
     public int getHealAmount(ItemStack stack){
-        return stack.getItemDamage() >= allJams.length ? 0 : allJams[stack.getItemDamage()].healAmount;
+        return stack.getItemDamage() >= ALL_JAMS.length ? 0 : ALL_JAMS[stack.getItemDamage()].healAmount;
     }
 
     @Override
     public float getSaturationModifier(ItemStack stack){
-        return stack.getItemDamage() >= allJams.length ? 0 : allJams[stack.getItemDamage()].saturation;
+        return stack.getItemDamage() >= ALL_JAMS.length ? 0 : ALL_JAMS[stack.getItemDamage()].saturation;
     }
 
     @Override
     protected void registerRendering(){
-        for(int i = 0; i < allJams.length; i++){
+        for(int i = 0; i < ALL_JAMS.length; i++){
             ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), this.getRegistryName(), "inventory");
         }
     }
@@ -112,7 +112,7 @@ public class ItemJams extends ItemFoodBase implements IColorProvidingItem{
         return new IItemColor(){
             @Override
             public int getColorFromItemstack(ItemStack stack, int pass){
-                return pass > 0 ? (stack.getItemDamage() >= allJams.length ? 0xFFFFFF : allJams[stack.getItemDamage()].color) : 0xFFFFFF;
+                return pass > 0 ? (stack.getItemDamage() >= ALL_JAMS.length ? 0xFFFFFF : ALL_JAMS[stack.getItemDamage()].color) : 0xFFFFFF;
             }
         };
     }

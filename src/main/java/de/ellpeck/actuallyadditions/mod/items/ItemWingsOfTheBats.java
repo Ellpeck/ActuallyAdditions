@@ -29,7 +29,7 @@ public class ItemWingsOfTheBats extends ItemBase{
      * <p>
      * (Partially excerpted from Botania's Wing System by Vazkii (as I had fiddled around with the system and couldn't make it work) with permission, thanks!)
      */
-    public static final ArrayList<String> wingedPlayers = new ArrayList<String>();
+    public static final ArrayList<String> WINGED_PLAYERS = new ArrayList<String>();
 
     public ItemWingsOfTheBats(String name){
         super(name);
@@ -43,7 +43,7 @@ public class ItemWingsOfTheBats extends ItemBase{
      * @return Winged?
      */
     public static boolean isPlayerWinged(EntityPlayer player){
-        return wingedPlayers.contains(player.getUniqueID()+(player.worldObj.isRemote ? "-Remote" : ""));
+        return WINGED_PLAYERS.contains(player.getUniqueID()+(player.worldObj.isRemote ? "-Remote" : ""));
     }
 
     /**
@@ -60,7 +60,7 @@ public class ItemWingsOfTheBats extends ItemBase{
      * @param worldRemote If the World the Player is in is remote
      */
     public static void removeWingsFromPlayer(EntityPlayer player, boolean worldRemote){
-        wingedPlayers.remove(player.getUniqueID()+(worldRemote ? "-Remote" : ""));
+        WINGED_PLAYERS.remove(player.getUniqueID()+(worldRemote ? "-Remote" : ""));
     }
 
     /**
@@ -69,7 +69,7 @@ public class ItemWingsOfTheBats extends ItemBase{
      * @param player The Player
      */
     public static void addWingsToPlayer(EntityPlayer player){
-        wingedPlayers.add(player.getUniqueID()+(player.worldObj.isRemote ? "-Remote" : ""));
+        WINGED_PLAYERS.add(player.getUniqueID()+(player.worldObj.isRemote ? "-Remote" : ""));
     }
 
     /**

@@ -30,7 +30,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class GuiMiner extends GuiContainer{
 
-    private static final ResourceLocation resLoc = AssetUtil.getGuiLocation("guiBreaker");
+    private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("guiBreaker");
     private final TileEntityMiner miner;
 
     public GuiMiner(InventoryPlayer inventory, TileEntityBase tile){
@@ -63,7 +63,7 @@ public class GuiMiner extends GuiContainer{
         this.mc.getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop+93, 0, 0, 176, 86);
 
-        this.mc.getTextureManager().bindTexture(resLoc);
+        this.mc.getTextureManager().bindTexture(RES_LOC);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 93);
 
         String mining = this.miner.onlyMineOres ? "Only Mining Ores" : "Mining Everything";

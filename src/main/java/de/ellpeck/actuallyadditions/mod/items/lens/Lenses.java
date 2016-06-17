@@ -13,7 +13,7 @@ package de.ellpeck.actuallyadditions.mod.items.lens;
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.lens.LensConversion;
 
-public class Lenses{
+public final class Lenses{
 
     public static void init(){
         ActuallyAdditionsAPI.lensDefaultConversion = new LensConversion();

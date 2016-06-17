@@ -57,10 +57,10 @@ import java.util.List;
 @SideOnly(Side.CLIENT)
 public class GuiBooklet extends GuiScreen implements IBookletGui{
 
-    public static final ResourceLocation resLoc = AssetUtil.getBookletGuiLocation("guiBooklet");
-    public static final ResourceLocation resLocHalloween = AssetUtil.getBookletGuiLocation("guiBookletHalloween");
-    public static final ResourceLocation resLocChristmas = AssetUtil.getBookletGuiLocation("guiBookletChristmas");
-    public static final ResourceLocation resLocValentine = AssetUtil.getBookletGuiLocation("guiBookletValentinesDay");
+    public static final ResourceLocation RES_LOC = AssetUtil.getBookletGuiLocation("guiBooklet");
+    public static final ResourceLocation RES_LOC_HALLOWEEN = AssetUtil.getBookletGuiLocation("guiBookletHalloween");
+    public static final ResourceLocation RES_LOC_CHRISTMAS = AssetUtil.getBookletGuiLocation("guiBookletChristmas");
+    public static final ResourceLocation RES_LOC_VALENTINE = AssetUtil.getBookletGuiLocation("guiBookletValentinesDay");
 
     public static final int CHAPTER_BUTTONS_AMOUNT = 13;
     public static final int INDEX_BUTTONS_OFFSET = 3;
@@ -88,10 +88,10 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
     public GuiButton buttonPatreon;
     public GuiButton buttonViewOnline;
     public GuiTextField searchField;
+    public boolean changedPageSinceOpen;
     private int ticksElapsed;
     private boolean mousePressed;
     private int hisNameIsAt;
-    public boolean changedPageSinceOpen;
 
     public GuiBooklet(GuiScreen parentScreen, boolean tryOpenMainPage, boolean saveOnClose){
         this.xSize = 146;
@@ -128,12 +128,12 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
 
         //Draws the Background
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-        this.mc.getTextureManager().bindTexture(ClientProxy.jingleAllTheWay ? resLocChristmas : (ClientProxy.pumpkinBlurPumpkinBlur ? resLocHalloween : (ClientProxy.bulletForMyValentine ? resLocValentine : resLoc)));
+        this.mc.getTextureManager().bindTexture(ClientProxy.jingleAllTheWay ? RES_LOC_CHRISTMAS : (ClientProxy.pumpkinBlurPumpkinBlur ? RES_LOC_HALLOWEEN : (ClientProxy.bulletForMyValentine ? RES_LOC_VALENTINE : RES_LOC)));
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
 
         //Draws the search bar
         if(this.currentEntrySet.getCurrentEntry() instanceof BookletEntryAllSearch && this.currentEntrySet.getCurrentChapter() == null){
-            this.mc.getTextureManager().bindTexture(resLoc);
+            this.mc.getTextureManager().bindTexture(RES_LOC);
             this.drawTexturedModalRect(this.guiLeft+146, this.guiTop+160, 146, 80, 70, 14);
         }
 

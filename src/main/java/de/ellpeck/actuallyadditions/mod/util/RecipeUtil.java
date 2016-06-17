@@ -18,7 +18,7 @@ import net.minecraft.item.crafting.IRecipe;
 
 import java.util.List;
 
-public class RecipeUtil{
+public final class RecipeUtil{
 
     public static LensConversionRecipe lastReconstructorRecipe(){
         List<LensConversionRecipe> list = ActuallyAdditionsAPI.RECONSTRUCTOR_LENS_CONVERSION_RECIPES;

@@ -26,7 +26,7 @@ import java.util.Collections;
 @SideOnly(Side.CLIENT)
 public class GuiRepairer extends GuiContainer{
 
-    private static final ResourceLocation resLoc = AssetUtil.getGuiLocation("guiRepairer");
+    private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("guiRepairer");
     private final TileEntityItemRepairer tileRepairer;
 
     public GuiRepairer(InventoryPlayer inventory, TileEntityBase tile){
@@ -57,7 +57,7 @@ public class GuiRepairer extends GuiContainer{
         this.mc.getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop+93, 0, 0, 176, 86);
 
-        this.mc.getTextureManager().bindTexture(resLoc);
+        this.mc.getTextureManager().bindTexture(RES_LOC);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 93);
 
         if(this.tileRepairer.storage.getEnergyStored() > 0){

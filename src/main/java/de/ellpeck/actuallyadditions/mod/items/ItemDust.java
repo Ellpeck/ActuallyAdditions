@@ -27,7 +27,7 @@ import java.util.List;
 
 public class ItemDust extends ItemBase implements IColorProvidingItem{
 
-    public static final TheDusts[] allDusts = TheDusts.values();
+    public static final TheDusts[] ALL_DUSTS = TheDusts.values();
 
     public ItemDust(String name){
         super(name);
@@ -42,26 +42,26 @@ public class ItemDust extends ItemBase implements IColorProvidingItem{
 
     @Override
     public String getUnlocalizedName(ItemStack stack){
-        return stack.getItemDamage() >= allDusts.length ? StringUtil.BUGGED_ITEM_NAME : this.getUnlocalizedName()+allDusts[stack.getItemDamage()].name;
+        return stack.getItemDamage() >= ALL_DUSTS.length ? StringUtil.BUGGED_ITEM_NAME : this.getUnlocalizedName()+ALL_DUSTS[stack.getItemDamage()].name;
     }
 
 
     @Override
     public EnumRarity getRarity(ItemStack stack){
-        return stack.getItemDamage() >= allDusts.length ? EnumRarity.COMMON : allDusts[stack.getItemDamage()].rarity;
+        return stack.getItemDamage() >= ALL_DUSTS.length ? EnumRarity.COMMON : ALL_DUSTS[stack.getItemDamage()].rarity;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item item, CreativeTabs tab, List list){
-        for(int j = 0; j < allDusts.length; j++){
+        for(int j = 0; j < ALL_DUSTS.length; j++){
             list.add(new ItemStack(this, 1, j));
         }
     }
 
     @Override
     protected void registerRendering(){
-        for(int i = 0; i < allDusts.length; i++){
+        for(int i = 0; i < ALL_DUSTS.length; i++){
             ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), this.getRegistryName(), "inventory");
         }
     }
@@ -72,7 +72,7 @@ public class ItemDust extends ItemBase implements IColorProvidingItem{
         return new IItemColor(){
             @Override
             public int getColorFromItemstack(ItemStack stack, int pass){
-                return stack.getItemDamage() >= allDusts.length ? 0xFFFFFF : allDusts[stack.getItemDamage()].color;
+                return stack.getItemDamage() >= ALL_DUSTS.length ? 0xFFFFFF : ALL_DUSTS[stack.getItemDamage()].color;
             }
         };
     }

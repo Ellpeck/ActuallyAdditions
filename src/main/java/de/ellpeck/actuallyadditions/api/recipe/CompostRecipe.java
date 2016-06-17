@@ -15,10 +15,10 @@ import net.minecraft.item.ItemStack;
 
 public class CompostRecipe{
 
-    public ItemStack input;
-    public ItemStack output;
-    public Block inputDisplay;
-    public Block outputDisplay;
+    public final ItemStack input;
+    public final ItemStack output;
+    public final Block inputDisplay;
+    public final Block outputDisplay;
 
     public CompostRecipe(ItemStack input, Block inputDisplay, ItemStack output, Block outputDisplay){
         this.input = input;

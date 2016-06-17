@@ -136,7 +136,7 @@ public class ItemLaserWrench extends ItemBase{
         NO_PARTICLES("never show particles"),
         HOLDING_PARTICLES("show particles when holding a Laser Wrench");
 
-        public String name;
+        public final String name;
 
         WrenchMode(String name){
             this.name = name;

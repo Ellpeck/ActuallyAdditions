@@ -24,7 +24,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class GuiGiantChest extends GuiContainer{
 
-    private static final ResourceLocation resLoc = AssetUtil.getGuiLocation("guiGiantChest");
+    private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("guiGiantChest");
 
     final TileEntityGiantChest chest;
 
@@ -44,7 +44,7 @@ public class GuiGiantChest extends GuiContainer{
     @Override
     public void drawGuiContainerBackgroundLayer(float f, int x, int y){
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-        this.mc.getTextureManager().bindTexture(resLoc);
+        this.mc.getTextureManager().bindTexture(RES_LOC);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 242, 190);
         this.mc.getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
         this.drawTexturedModalRect(this.guiLeft+33, this.guiTop+172, 0, 0, 176, 86);

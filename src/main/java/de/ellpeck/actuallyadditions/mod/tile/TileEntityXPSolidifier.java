@@ -21,12 +21,80 @@ import net.minecraft.util.EnumFacing;
 
 public class TileEntityXPSolidifier extends TileEntityInventoryBase implements IButtonReactor{
 
+    private static final Integer[] XP_MAP = new Integer[256];
+
+    static{
+        for(int i = 0; i < XP_MAP.length; i++){
+            XP_MAP[i] = getExperienceForLevelImpl(i);
+        }
+    }
+
     private final int[] buttonAmounts = new int[]{1, 5, 10, 20, 30, 40, 50, 64, -999};
     public short amount;
     private short lastAmount;
 
     public TileEntityXPSolidifier(){
         super(1, "xpSolidifier");
+    }
+
+    public static int getExperienceForLevel(int level){
+        if(level >= 0 && level < XP_MAP.length){
+            return XP_MAP[level];
+        }
+        if(level >= 21863){
+            return Integer.MAX_VALUE;
+        }
+        return getExperienceForLevelImpl(level);
+    }
+
+    private static int getExperienceForLevelImpl(int level){
+        int res = 0;
+        for(int i = 0; i < level; i++){
+            res += getXpBarCapacity(i);
+            if(res < 0){
+                return Integer.MAX_VALUE;
+            }
+        }
+        return res;
+    }
+
+    public static int getXpBarCapacity(int level){
+        if(level >= 30){
+            return 112+(level-30)*9;
+        }
+        else if(level >= 15){
+            return 37+(level-15)*5;
+        }
+        return 7+level*2;
+    }
+
+    public static int getLevelForExperience(int experience){
+        for(int i = 0; i < XP_MAP.length; i++){
+            if(XP_MAP[i] > experience){
+                return i-1;
+            }
+        }
+        int i = XP_MAP.length;
+        while(getExperienceForLevel(i) <= experience){
+            i++;
+        }
+        return i-1;
+    }
+
+    public static int getPlayerXP(EntityPlayer player){
+        return (int)(getExperienceForLevel(player.experienceLevel)+(player.experience*player.xpBarCap()));
+    }
+
+    /*
+     * The below methods were excerpted from EnderIO by SleepyTrousers with permission, thanks!
+     */
+
+    public static void addPlayerXP(EntityPlayer player, int amount){
+        int experience = Math.max(0, getPlayerXP(player)+amount);
+        player.experienceTotal = experience;
+        player.experienceLevel = getLevelForExperience(experience);
+        int expForLevel = getExperienceForLevel(player.experienceLevel);
+        player.experience = (float)(experience-expForLevel)/(float)player.xpBarCap();
     }
 
     @Override
@@ -93,73 +161,5 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
                 }
             }
         }
-    }
-
-    /*
-     * The below methods were excerpted from EnderIO by SleepyTrousers with permission, thanks!
-     */
-
-    private static final Integer[] XP_MAP = new Integer[256];
-
-    static{
-        for(int i = 0; i < XP_MAP.length; i++){
-            XP_MAP[i] = getExperienceForLevelImpl(i);
-        }
-    }
-
-    public static int getExperienceForLevel(int level){
-        if(level >= 0 && level < XP_MAP.length){
-            return XP_MAP[level];
-        }
-        if(level >= 21863){
-            return Integer.MAX_VALUE;
-        }
-        return getExperienceForLevelImpl(level);
-    }
-
-    private static int getExperienceForLevelImpl(int level){
-        int res = 0;
-        for(int i = 0; i < level; i++){
-            res += getXpBarCapacity(i);
-            if(res < 0){
-                return Integer.MAX_VALUE;
-            }
-        }
-        return res;
-    }
-
-    public static int getXpBarCapacity(int level){
-        if(level >= 30){
-            return 112+(level-30)*9;
-        }
-        else if(level >= 15){
-            return 37+(level-15)*5;
-        }
-        return 7+level*2;
-    }
-
-    public static int getLevelForExperience(int experience){
-        for(int i = 0; i < XP_MAP.length; i++){
-            if(XP_MAP[i] > experience){
-                return i-1;
-            }
-        }
-        int i = XP_MAP.length;
-        while(getExperienceForLevel(i) <= experience){
-            i++;
-        }
-        return i-1;
-    }
-
-    public static int getPlayerXP(EntityPlayer player){
-        return (int)(getExperienceForLevel(player.experienceLevel)+(player.experience*player.xpBarCap()));
-    }
-
-    public static void addPlayerXP(EntityPlayer player, int amount){
-        int experience = Math.max(0, getPlayerXP(player)+amount);
-        player.experienceTotal = experience;
-        player.experienceLevel = getLevelForExperience(experience);
-        int expForLevel = getExperienceForLevel(player.experienceLevel);
-        player.experience = (float)(experience-expForLevel)/(float)player.xpBarCap();
     }
 }

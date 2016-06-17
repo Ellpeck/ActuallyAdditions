@@ -26,9 +26,9 @@ import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 import java.util.ArrayList;
 
-public class ToolCrafting{
+public final class ToolCrafting{
 
-    public static final ArrayList<IRecipe> recipesPaxels = new ArrayList<IRecipe>();
+    public static final ArrayList<IRecipe> RECIPES_PAXELS = new ArrayList<IRecipe>();
 
     public static void init(){
 
@@ -61,56 +61,56 @@ public class ToolCrafting{
                     new ItemStack(Items.WOODEN_SHOVEL),
                     new ItemStack(Items.WOODEN_SWORD),
                     new ItemStack(Items.WOODEN_HOE)));
-            recipesPaxels.add(RecipeUtil.lastIRecipe());
+            RECIPES_PAXELS.add(RecipeUtil.lastIRecipe());
             GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.stonePaxel),
                     new ItemStack(Items.STONE_AXE),
                     new ItemStack(Items.STONE_PICKAXE),
                     new ItemStack(Items.STONE_SHOVEL),
                     new ItemStack(Items.STONE_SWORD),
                     new ItemStack(Items.STONE_HOE)));
-            recipesPaxels.add(RecipeUtil.lastIRecipe());
+            RECIPES_PAXELS.add(RecipeUtil.lastIRecipe());
             GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.ironPaxel),
                     new ItemStack(Items.IRON_AXE),
                     new ItemStack(Items.IRON_PICKAXE),
                     new ItemStack(Items.IRON_SHOVEL),
                     new ItemStack(Items.IRON_SWORD),
                     new ItemStack(Items.IRON_HOE)));
-            recipesPaxels.add(RecipeUtil.lastIRecipe());
+            RECIPES_PAXELS.add(RecipeUtil.lastIRecipe());
             GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.goldPaxel),
                     new ItemStack(Items.GOLDEN_AXE),
                     new ItemStack(Items.GOLDEN_PICKAXE),
                     new ItemStack(Items.GOLDEN_SHOVEL),
                     new ItemStack(Items.GOLDEN_SWORD),
                     new ItemStack(Items.GOLDEN_HOE)));
-            recipesPaxels.add(RecipeUtil.lastIRecipe());
+            RECIPES_PAXELS.add(RecipeUtil.lastIRecipe());
             GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.diamondPaxel),
                     new ItemStack(Items.DIAMOND_AXE),
                     new ItemStack(Items.DIAMOND_PICKAXE),
                     new ItemStack(Items.DIAMOND_SHOVEL),
                     new ItemStack(Items.DIAMOND_SWORD),
                     new ItemStack(Items.DIAMOND_HOE)));
-            recipesPaxels.add(RecipeUtil.lastIRecipe());
+            RECIPES_PAXELS.add(RecipeUtil.lastIRecipe());
             GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.emeraldPaxel),
                     new ItemStack(InitItems.itemAxeEmerald),
                     new ItemStack(InitItems.itemPickaxeEmerald),
                     new ItemStack(InitItems.itemSwordEmerald),
                     new ItemStack(InitItems.itemShovelEmerald),
                     new ItemStack(InitItems.itemHoeEmerald)));
-            recipesPaxels.add(RecipeUtil.lastIRecipe());
+            RECIPES_PAXELS.add(RecipeUtil.lastIRecipe());
             GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.obsidianPaxel),
                     new ItemStack(InitItems.itemAxeObsidian),
                     new ItemStack(InitItems.itemPickaxeObsidian),
                     new ItemStack(InitItems.itemSwordObsidian),
                     new ItemStack(InitItems.itemShovelObsidian),
                     new ItemStack(InitItems.itemHoeObsidian)));
-            recipesPaxels.add(RecipeUtil.lastIRecipe());
+            RECIPES_PAXELS.add(RecipeUtil.lastIRecipe());
             GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.quartzPaxel),
                     new ItemStack(InitItems.itemAxeQuartz),
                     new ItemStack(InitItems.itemPickaxeQuartz),
                     new ItemStack(InitItems.itemSwordQuartz),
                     new ItemStack(InitItems.itemShovelQuartz),
                     new ItemStack(InitItems.itemHoeQuartz)));
-            recipesPaxels.add(RecipeUtil.lastIRecipe());
+            RECIPES_PAXELS.add(RecipeUtil.lastIRecipe());
 
             GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemPaxelCrystalRed),
                     new ItemStack(InitItems.itemAxeCrystalRed),
@@ -118,42 +118,42 @@ public class ToolCrafting{
                     new ItemStack(InitItems.itemSwordCrystalRed),
                     new ItemStack(InitItems.itemShovelCrystalRed),
                     new ItemStack(InitItems.itemHoeCrystalRed)));
-            recipesPaxels.add(RecipeUtil.lastIRecipe());
+            RECIPES_PAXELS.add(RecipeUtil.lastIRecipe());
             GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemPaxelCrystalGreen),
                     new ItemStack(InitItems.itemAxeCrystalGreen),
                     new ItemStack(InitItems.itemPickaxeCrystalGreen),
                     new ItemStack(InitItems.itemSwordCrystalGreen),
                     new ItemStack(InitItems.itemShovelCrystalGreen),
                     new ItemStack(InitItems.itemHoeCrystalGreen)));
-            recipesPaxels.add(RecipeUtil.lastIRecipe());
+            RECIPES_PAXELS.add(RecipeUtil.lastIRecipe());
             GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemPaxelCrystalBlue),
                     new ItemStack(InitItems.itemAxeCrystalBlue),
                     new ItemStack(InitItems.itemPickaxeCrystalBlue),
                     new ItemStack(InitItems.itemSwordCrystalBlue),
                     new ItemStack(InitItems.itemShovelCrystalBlue),
                     new ItemStack(InitItems.itemHoeCrystalBlue)));
-            recipesPaxels.add(RecipeUtil.lastIRecipe());
+            RECIPES_PAXELS.add(RecipeUtil.lastIRecipe());
             GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemPaxelCrystalLightBlue),
                     new ItemStack(InitItems.itemAxeCrystalLightBlue),
                     new ItemStack(InitItems.itemPickaxeCrystalLightBlue),
                     new ItemStack(InitItems.itemSwordCrystalLightBlue),
                     new ItemStack(InitItems.itemShovelCrystalLightBlue),
                     new ItemStack(InitItems.itemHoeCrystalLightBlue)));
-            recipesPaxels.add(RecipeUtil.lastIRecipe());
+            RECIPES_PAXELS.add(RecipeUtil.lastIRecipe());
             GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemPaxelCrystalBlack),
                     new ItemStack(InitItems.itemAxeCrystalBlack),
                     new ItemStack(InitItems.itemPickaxeCrystalBlack),
                     new ItemStack(InitItems.itemSwordCrystalBlack),
                     new ItemStack(InitItems.itemShovelCrystalBlack),
                     new ItemStack(InitItems.itemHoeCrystalBlack)));
-            recipesPaxels.add(RecipeUtil.lastIRecipe());
+            RECIPES_PAXELS.add(RecipeUtil.lastIRecipe());
             GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemPaxelCrystalWhite),
                     new ItemStack(InitItems.itemAxeCrystalWhite),
                     new ItemStack(InitItems.itemPickaxeCrystalWhite),
                     new ItemStack(InitItems.itemSwordCrystalWhite),
                     new ItemStack(InitItems.itemShovelCrystalWhite),
                     new ItemStack(InitItems.itemHoeCrystalWhite)));
-            recipesPaxels.add(RecipeUtil.lastIRecipe());
+            RECIPES_PAXELS.add(RecipeUtil.lastIRecipe());
         }
     }
 

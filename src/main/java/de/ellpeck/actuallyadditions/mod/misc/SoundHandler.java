@@ -14,7 +14,7 @@ import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 
-public class SoundHandler{
+public final class SoundHandler{
 
     public static SoundEvent duhDuhDuhDuuuh;
     public static SoundEvent coffeeMachine;

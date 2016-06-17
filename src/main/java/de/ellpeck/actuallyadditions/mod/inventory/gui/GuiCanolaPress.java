@@ -27,7 +27,7 @@ import java.util.Collections;
 @SideOnly(Side.CLIENT)
 public class GuiCanolaPress extends GuiContainer{
 
-    private static final ResourceLocation resLoc = AssetUtil.getGuiLocation("guiCanolaPress");
+    private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("guiCanolaPress");
     private final TileEntityCanolaPress press;
 
     public GuiCanolaPress(InventoryPlayer inventory, TileEntityBase tile){
@@ -63,7 +63,7 @@ public class GuiCanolaPress extends GuiContainer{
         this.mc.getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop+93, 0, 0, 176, 86);
 
-        this.mc.getTextureManager().bindTexture(resLoc);
+        this.mc.getTextureManager().bindTexture(RES_LOC);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 93);
 
         if(this.press.storage.getEnergyStored() > 0){

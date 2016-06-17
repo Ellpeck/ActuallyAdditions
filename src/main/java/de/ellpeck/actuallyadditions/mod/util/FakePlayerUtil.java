@@ -18,7 +18,7 @@ import net.minecraftforge.common.util.FakePlayerFactory;
 
 import java.util.UUID;
 
-public class FakePlayerUtil{
+public final class FakePlayerUtil{
 
     private static final String FAKE_NAME = ModUtil.MOD_ID+"fakeplayer";
     private static final GameProfile FAKE_PROFILE = new GameProfile(UUID.nameUUIDFromBytes(FAKE_NAME.getBytes()), FAKE_NAME);

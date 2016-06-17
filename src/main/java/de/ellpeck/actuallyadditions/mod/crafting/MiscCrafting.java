@@ -24,10 +24,10 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
-public class MiscCrafting{
+public final class MiscCrafting{
 
-    public static final IRecipe[] recipesCrystals = new IRecipe[TheCrystals.values().length];
-    public static final IRecipe[] recipesCrystalBlocks = new IRecipe[TheCrystals.values().length];
+    public static final IRecipe[] RECIPES_CRYSTALS = new IRecipe[TheCrystals.values().length];
+    public static final IRecipe[] RECIPES_CRYSTAL_BLOCKS = new IRecipe[TheCrystals.values().length];
 
     public static void init(){
 
@@ -36,9 +36,9 @@ public class MiscCrafting{
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockCrystal, 1, i),
                     "XXX", "XXX", "XXX",
                     'X', new ItemStack(InitItems.itemCrystal, 1, i)));
-            recipesCrystalBlocks[i] = RecipeUtil.lastIRecipe();
+            RECIPES_CRYSTAL_BLOCKS[i] = RecipeUtil.lastIRecipe();
             GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemCrystal, 9, i), new ItemStack(InitBlocks.blockCrystal, 1, i)));
-            recipesCrystals[i] = RecipeUtil.lastIRecipe();
+            RECIPES_CRYSTALS[i] = RecipeUtil.lastIRecipe();
         }
 
         //Dough

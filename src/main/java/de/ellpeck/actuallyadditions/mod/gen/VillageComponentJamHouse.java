@@ -24,9 +24,9 @@ import java.util.Random;
 
 public class VillageComponentJamHouse extends StructureVillagePieces.House1{
 
-    private static final int xSize = 11;
-    private static final int ySize = 8;
-    private static final int zSize = 12;
+    private static final int X_SIZE = 11;
+    private static final int Y_SIZE = 8;
+    private static final int Z_SIZE = 12;
 
     private int averageGroundLevel = -1;
 
@@ -40,7 +40,7 @@ public class VillageComponentJamHouse extends StructureVillagePieces.House1{
     }
 
     public static VillageComponentJamHouse buildComponent(List pieces, int p1, int p2, int p3, EnumFacing p4){
-        StructureBoundingBox boundingBox = StructureBoundingBox.getComponentToAddBoundingBox(p1, p2, p3, 0, 0, 0, xSize, ySize, zSize, p4);
+        StructureBoundingBox boundingBox = StructureBoundingBox.getComponentToAddBoundingBox(p1, p2, p3, 0, 0, 0, X_SIZE, Y_SIZE, Z_SIZE, p4);
         return canVillageGoDeeper(boundingBox) && StructureComponent.findIntersecting(pieces, boundingBox) == null ? new VillageComponentJamHouse(boundingBox, p4) : null;
     }
 
@@ -51,15 +51,15 @@ public class VillageComponentJamHouse extends StructureVillagePieces.House1{
             if(this.averageGroundLevel < 0){
                 return true;
             }
-            this.boundingBox.offset(0, this.averageGroundLevel-this.boundingBox.maxY+ySize-1, 0);
+            this.boundingBox.offset(0, this.averageGroundLevel-this.boundingBox.maxY+Y_SIZE-1, 0);
         }
 
-        this.fillWithBlocks(world, sbb, 0, 0, 0, xSize-1, ySize-1, zSize-1, Blocks.AIR);
+        this.fillWithBlocks(world, sbb, 0, 0, 0, X_SIZE-1, Y_SIZE-1, Z_SIZE-1, Blocks.AIR);
         this.spawnActualHouse(world, rand, sbb);
 
-        for(int i = 0; i < xSize; i++){
-            for(int j = 0; j < zSize; j++){
-                this.clearCurrentPositionBlocksUpwards(world, i, ySize, j, sbb);
+        for(int i = 0; i < X_SIZE; i++){
+            for(int j = 0; j < Z_SIZE; j++){
+                this.clearCurrentPositionBlocksUpwards(world, i, Y_SIZE, j, sbb);
                 this.replaceAirAndLiquidDownwards(world, Blocks.COBBLESTONE.getDefaultState(), i, -1, j, sbb);
             }
         }

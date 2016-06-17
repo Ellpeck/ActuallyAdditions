@@ -25,7 +25,7 @@ import java.util.Properties;
 
 public class SpecialRenderInit{
 
-    public static final HashMap<String, RenderSpecial> specialList = new HashMap<String, RenderSpecial>();
+    public static final HashMap<String, RenderSpecial> SPECIAL_LIST = new HashMap<String, RenderSpecial>();
 
     public static void init(){
         new ThreadSpecialFetcher();
@@ -60,7 +60,7 @@ public class SpecialRenderInit{
 
                 //Add a new Special Renderer to the list
                 if(stack != null){
-                    specialList.put(key, new RenderSpecial(stack));
+                    SPECIAL_LIST.put(key, new RenderSpecial(stack));
                 }
             }
         }
@@ -68,8 +68,8 @@ public class SpecialRenderInit{
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onPlayerRender(RenderPlayerEvent.Pre event){
-        if(!specialList.isEmpty()){
-            for(Map.Entry<String, RenderSpecial> entry : specialList.entrySet()){
+        if(!SPECIAL_LIST.isEmpty()){
+            for(Map.Entry<String, RenderSpecial> entry : SPECIAL_LIST.entrySet()){
                 //Does the player have one of the names from the list?
                 String playerName = event.getEntityPlayer().getName();
                 if(entry.getKey() != null && playerName != null){

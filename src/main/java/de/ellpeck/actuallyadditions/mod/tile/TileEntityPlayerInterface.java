@@ -24,7 +24,7 @@ public class TileEntityPlayerInterface extends TileEntityInventoryBase implement
 
     public static final int DEFAULT_RANGE = 32;
     public UUID connectedPlayer;
-    private EnergyStorage storage = new EnergyStorage(30000);
+    private final EnergyStorage storage = new EnergyStorage(30000);
     private int range;
 
     public TileEntityPlayerInterface(){

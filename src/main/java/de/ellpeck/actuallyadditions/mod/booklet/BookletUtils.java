@@ -40,7 +40,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class BookletUtils{
+public final class BookletUtils{
 
     /**
      * Tries to open a URL in the Browser
@@ -75,7 +75,7 @@ public class BookletUtils{
      * Draws the Title of the current chapter, current index entry or just "Actually Additions" if neither is present
      */
     public static void drawTitle(GuiBooklet booklet){
-        booklet.mc.getTextureManager().bindTexture(GuiBooklet.resLoc);
+        booklet.mc.getTextureManager().bindTexture(GuiBooklet.RES_LOC);
         //Upper title
         booklet.drawTexturedModalRect(booklet.guiLeft+booklet.xSize/2-142/2, booklet.guiTop-12, 0, 240, 142, 12);
         //Lower title
@@ -134,7 +134,7 @@ public class BookletUtils{
                         for(Achievement achievement : InitAchievements.ACHIEVEMENT_LIST){
                             if(achievement.theItemStack != null && ItemUtil.areItemsEqual(stack, achievement.theItemStack, true)){
                                 if(pre){
-                                    booklet.mc.getTextureManager().bindTexture(GuiBooklet.resLoc);
+                                    booklet.mc.getTextureManager().bindTexture(GuiBooklet.RES_LOC);
                                     booklet.drawTexturedModalRect(booklet.guiLeft+booklet.xSize+1, booklet.guiTop-18, 166, 154, 22, 21);
                                     return;
                                 }

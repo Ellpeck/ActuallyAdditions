@@ -13,7 +13,7 @@ package de.ellpeck.actuallyadditions.mod.config;
 import de.ellpeck.actuallyadditions.mod.config.values.*;
 import net.minecraftforge.common.config.Configuration;
 
-public class ConfigValues{
+public final class ConfigValues{
 
     public static void defineConfigValues(Configuration config){
 

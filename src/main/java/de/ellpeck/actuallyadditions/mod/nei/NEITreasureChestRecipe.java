@@ -10,7 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.nei;
 
-public class NEITreasureChestRecipe/* extends TemplateRecipeHandler implements INEIRecipeHandler*/{
+public final class NEITreasureChestRecipe/* extends TemplateRecipeHandler implements INEIRecipeHandler*/{
 
     public static final String NAME = "actuallyadditions.treasureChest";
 

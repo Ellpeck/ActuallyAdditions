@@ -77,8 +77,7 @@ public class BookletChapter implements IBookletChapter{
         this.color = TextFormatting.DARK_GREEN;
     }
 
-    public BookletChapter setSpecial(){
+    public void setSpecial(){
         this.color = TextFormatting.DARK_PURPLE;
-        return this;
     }
 }

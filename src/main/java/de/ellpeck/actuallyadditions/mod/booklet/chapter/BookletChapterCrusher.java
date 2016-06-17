@@ -30,7 +30,7 @@ public class BookletChapterCrusher extends BookletChapter{
         ArrayList<BookletPage> allPages = new ArrayList<BookletPage>();
         allPages.addAll(Arrays.asList(pages));
 
-        for(CrusherRecipe recipe : CrusherCrafting.miscRecipes){
+        for(CrusherRecipe recipe : CrusherCrafting.MISC_RECIPES){
             allPages.add(new PageCrusherRecipe(allPages.size()+1, recipe).setNoText());
         }
 

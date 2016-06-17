@@ -10,7 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.nei;
 
-public class NEIFurnaceDoubleRecipe /*extends TemplateRecipeHandler implements INEIRecipeHandler*/{
+public final class NEIFurnaceDoubleRecipe /*extends TemplateRecipeHandler implements INEIRecipeHandler*/{
 
     public static final String NAME = "actuallyadditions.furnaceDouble";
 
@@ -33,7 +33,7 @@ public class NEIFurnaceDoubleRecipe /*extends TemplateRecipeHandler implements I
     @Override
     public void loadCraftingRecipes(String outputId, Object... results){
         if(outputId.equals(NAME) && getClass() == NEIFurnaceDoubleRecipe.class){
-            Map<ItemStack, ItemStack> recipes = FurnaceRecipes.instance().getSmeltingList();
+            Map<ItemStack, ItemStack> recipes = FurnaceRecipes.INSTANCE().getSmeltingList();
             for(Map.Entry<ItemStack, ItemStack> recipe : recipes.entrySet()){
                 arecipes.add(new CachedFurn(recipe.getKey(), recipe.getValue()));
             }
@@ -46,7 +46,7 @@ public class NEIFurnaceDoubleRecipe /*extends TemplateRecipeHandler implements I
     @SuppressWarnings("unchecked")
     @Override
     public void loadCraftingRecipes(ItemStack result){
-        Map<ItemStack, ItemStack> recipes = FurnaceRecipes.instance().getSmeltingList();
+        Map<ItemStack, ItemStack> recipes = FurnaceRecipes.INSTANCE().getSmeltingList();
         for(Map.Entry<ItemStack, ItemStack> recipe : recipes.entrySet()){
             if(NEIServerUtils.areStacksSameType(recipe.getValue(), result)){
                 arecipes.add(new CachedFurn(recipe.getKey(), recipe.getValue()));
@@ -57,7 +57,7 @@ public class NEIFurnaceDoubleRecipe /*extends TemplateRecipeHandler implements I
     @SuppressWarnings("unchecked")
     @Override
     public void loadUsageRecipes(ItemStack ingredient){
-        Map<ItemStack, ItemStack> recipes = FurnaceRecipes.instance().getSmeltingList();
+        Map<ItemStack, ItemStack> recipes = FurnaceRecipes.INSTANCE().getSmeltingList();
         for(Map.Entry<ItemStack, ItemStack> recipe : recipes.entrySet()){
             if(NEIServerUtils.areStacksSameTypeCrafting(recipe.getKey(), ingredient)){
                 CachedFurn theRecipe = new CachedFurn(recipe.getKey(), recipe.getValue());

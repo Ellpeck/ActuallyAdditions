@@ -31,7 +31,7 @@ import java.util.List;
 
 public class ItemFoods extends ItemFoodBase{
 
-    public static final TheFoods[] allFoods = TheFoods.values();
+    public static final TheFoods[] ALL_FOODS = TheFoods.values();
 
     public ItemFoods(String name){
         super(0, 0.0F, false, name);
@@ -43,7 +43,7 @@ public class ItemFoods extends ItemFoodBase{
     @Override
     public ItemStack onItemUseFinish(ItemStack stack, World world, EntityLivingBase player){
         ItemStack stackToReturn = super.onItemUseFinish(stack, world, player);
-        ItemStack returnItem = stack.getItemDamage() >= allFoods.length ? null : allFoods[stack.getItemDamage()].returnItem;
+        ItemStack returnItem = stack.getItemDamage() >= ALL_FOODS.length ? null : ALL_FOODS[stack.getItemDamage()].returnItem;
         if(returnItem != null && player instanceof EntityPlayer){
             if(!((EntityPlayer)player).inventory.addItemStackToInventory(returnItem.copy())){
                 if(!world.isRemote){
@@ -58,23 +58,23 @@ public class ItemFoods extends ItemFoodBase{
 
     @Override
     public int getMaxItemUseDuration(ItemStack stack){
-        return stack.getItemDamage() >= allFoods.length ? 0 : allFoods[stack.getItemDamage()].useDuration;
+        return stack.getItemDamage() >= ALL_FOODS.length ? 0 : ALL_FOODS[stack.getItemDamage()].useDuration;
     }
 
 
     @Override
     public EnumAction getItemUseAction(ItemStack stack){
-        return stack.getItemDamage() >= allFoods.length ? EnumAction.EAT : (allFoods[stack.getItemDamage()].getsDrunken ? EnumAction.DRINK : EnumAction.EAT);
+        return stack.getItemDamage() >= ALL_FOODS.length ? EnumAction.EAT : (ALL_FOODS[stack.getItemDamage()].getsDrunken ? EnumAction.DRINK : EnumAction.EAT);
     }
 
     @Override
     public int getHealAmount(ItemStack stack){
-        return stack.getItemDamage() >= allFoods.length ? 0 : allFoods[stack.getItemDamage()].healAmount;
+        return stack.getItemDamage() >= ALL_FOODS.length ? 0 : ALL_FOODS[stack.getItemDamage()].healAmount;
     }
 
     @Override
     public float getSaturationModifier(ItemStack stack){
-        return stack.getItemDamage() >= allFoods.length ? 0 : allFoods[stack.getItemDamage()].saturation;
+        return stack.getItemDamage() >= ALL_FOODS.length ? 0 : ALL_FOODS[stack.getItemDamage()].saturation;
     }
 
     @Override
@@ -85,27 +85,27 @@ public class ItemFoods extends ItemFoodBase{
 
     @Override
     public String getUnlocalizedName(ItemStack stack){
-        return stack.getItemDamage() >= allFoods.length ? StringUtil.BUGGED_ITEM_NAME : this.getUnlocalizedName()+allFoods[stack.getItemDamage()].name;
+        return stack.getItemDamage() >= ALL_FOODS.length ? StringUtil.BUGGED_ITEM_NAME : this.getUnlocalizedName()+ALL_FOODS[stack.getItemDamage()].name;
     }
 
 
     @Override
     public EnumRarity getRarity(ItemStack stack){
-        return stack.getItemDamage() >= allFoods.length ? EnumRarity.COMMON : allFoods[stack.getItemDamage()].rarity;
+        return stack.getItemDamage() >= ALL_FOODS.length ? EnumRarity.COMMON : ALL_FOODS[stack.getItemDamage()].rarity;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item item, CreativeTabs tab, List list){
-        for(int j = 0; j < allFoods.length; j++){
+        for(int j = 0; j < ALL_FOODS.length; j++){
             list.add(new ItemStack(this, 1, j));
         }
     }
 
     @Override
     protected void registerRendering(){
-        for(int i = 0; i < allFoods.length; i++){
-            String name = this.getRegistryName()+allFoods[i].name;
+        for(int i = 0; i < ALL_FOODS.length; i++){
+            String name = this.getRegistryName()+ALL_FOODS[i].name;
             ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), new ModelResourceLocation(name), "inventory");
         }
     }

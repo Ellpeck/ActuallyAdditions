@@ -26,8 +26,8 @@ import java.util.Collections;
 @SideOnly(Side.CLIENT)
 public class GuiGrinder extends GuiContainer{
 
-    private static final ResourceLocation resLoc = AssetUtil.getGuiLocation("guiGrinder");
-    private static final ResourceLocation resLocDouble = AssetUtil.getGuiLocation("guiGrinderDouble");
+    private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("guiGrinder");
+    private static final ResourceLocation RES_LOC_DOUBLE = AssetUtil.getGuiLocation("guiGrinderDouble");
     private final TileEntityGrinder tileGrinder;
     private final boolean isDouble;
 
@@ -64,7 +64,7 @@ public class GuiGrinder extends GuiContainer{
         this.mc.getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop+93, 0, 0, 176, 86);
 
-        this.mc.getTextureManager().bindTexture(this.isDouble ? resLocDouble : resLoc);
+        this.mc.getTextureManager().bindTexture(this.isDouble ? RES_LOC_DOUBLE : RES_LOC);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 93);
 
         if(this.tileGrinder.storage.getEnergyStored() > 0){

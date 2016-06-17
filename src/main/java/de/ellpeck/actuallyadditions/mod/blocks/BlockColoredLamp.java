@@ -41,8 +41,8 @@ import java.util.Random;
 
 public class BlockColoredLamp extends BlockBase{
 
-    public static final TheColoredLampColors[] allLampTypes = TheColoredLampColors.values();
-    private static final PropertyInteger META = PropertyInteger.create("meta", 0, allLampTypes.length-1);
+    public static final TheColoredLampColors[] ALL_LAMP_TYPES = TheColoredLampColors.values();
+    private static final PropertyInteger META = PropertyInteger.create("meta", 0, ALL_LAMP_TYPES.length-1);
     public final boolean isOn;
 
     public BlockColoredLamp(boolean isOn, String name){
@@ -106,7 +106,7 @@ public class BlockColoredLamp extends BlockBase{
     @Override
     @SideOnly(Side.CLIENT)
     public void getSubBlocks(Item item, CreativeTabs tab, List list){
-        for(int j = 0; j < allLampTypes.length; j++){
+        for(int j = 0; j < ALL_LAMP_TYPES.length; j++){
             list.add(new ItemStack(item, 1, j));
         }
     }
@@ -123,7 +123,7 @@ public class BlockColoredLamp extends BlockBase{
 
     @Override
     protected void registerRendering(){
-        for(int i = 0; i < allLampTypes.length; i++){
+        for(int i = 0; i < ALL_LAMP_TYPES.length; i++){
             ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), this.getRegistryName(), META.getName()+"="+i);
         }
     }
@@ -149,7 +149,7 @@ public class BlockColoredLamp extends BlockBase{
 
         @Override
         public String getItemStackDisplayName(ItemStack stack){
-            if(stack.getItemDamage() >= allLampTypes.length){
+            if(stack.getItemDamage() >= ALL_LAMP_TYPES.length){
                 return StringUtil.BUGGED_ITEM_NAME;
             }
             return StringUtil.localize(this.getUnlocalizedName(stack)+".name")+(((BlockColoredLamp)this.block).isOn ? " ("+StringUtil.localize("tooltip."+ModUtil.MOD_ID+".onSuffix.desc")+")" : "");
@@ -158,7 +158,7 @@ public class BlockColoredLamp extends BlockBase{
 
         @Override
         public String getUnlocalizedName(ItemStack stack){
-            return InitBlocks.blockColoredLamp.getUnlocalizedName()+allLampTypes[stack.getItemDamage()].name;
+            return InitBlocks.blockColoredLamp.getUnlocalizedName()+ALL_LAMP_TYPES[stack.getItemDamage()].name;
         }
     }
 }

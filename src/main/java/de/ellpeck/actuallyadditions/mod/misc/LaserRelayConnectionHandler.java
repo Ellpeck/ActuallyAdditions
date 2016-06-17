@@ -19,7 +19,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class LaserRelayConnectionHandler{
+public final class LaserRelayConnectionHandler{
 
     public static NBTTagCompound writeNetworkToNBT(Network network){
         NBTTagList list = new NBTTagList();

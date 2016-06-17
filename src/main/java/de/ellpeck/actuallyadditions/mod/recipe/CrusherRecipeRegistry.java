@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class CrusherRecipeRegistry{
+public final class CrusherRecipeRegistry{
 
     public static final ArrayList<SearchCase> SEARCH_CASES = new ArrayList<SearchCase>();
 

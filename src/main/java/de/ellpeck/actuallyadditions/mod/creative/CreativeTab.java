@@ -28,7 +28,7 @@ import java.util.List;
 
 public class CreativeTab extends CreativeTabs{
 
-    public static final CreativeTab instance = new CreativeTab();
+    public static final CreativeTab INSTANCE = new CreativeTab();
     private List<ItemStack> list;
 
     public CreativeTab(){
@@ -310,13 +310,13 @@ public class CreativeTab extends CreativeTabs{
 
     public void add(Item item){
         if(item != null){
-            item.getSubItems(item, instance, this.list);
+            item.getSubItems(item, INSTANCE, this.list);
         }
     }
 
     public void add(Block block){
         if(block != null){
-            block.getSubBlocks(new ItemStack(block).getItem(), instance, this.list);
+            block.getSubBlocks(new ItemStack(block).getItem(), INSTANCE, this.list);
         }
     }
 }

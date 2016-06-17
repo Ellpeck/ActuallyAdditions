@@ -21,24 +21,19 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandler;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public final class TeslaUtil{
 
+    private static final Map<TileEntityBase, TeslaHandler[]> TESLA_MAP = new HashMap<TileEntityBase, TeslaHandler[]>();
     @CapabilityInject(ITeslaConsumer.class)
     public static Capability<ITeslaConsumer> teslaConsumer = null;
-
     @CapabilityInject(ITeslaProducer.class)
     public static Capability<ITeslaProducer> teslaProducer = null;
-
     @CapabilityInject(ITeslaHolder.class)
     public static Capability<ITeslaHolder> teslaHolder = null;
-
-    private static final Map<TileEntityBase, TeslaHandler[]> TESLA_MAP = new HashMap<TileEntityBase, TeslaHandler[]>();
 
     public static <T> T getTeslaCapability(TileEntityBase tile, Capability<T> capability, EnumFacing facing){
         boolean receive = tile instanceof IEnergyReceiver && capability == teslaConsumer;
@@ -52,7 +47,7 @@ public final class TeslaUtil{
         }
     }
 
-    public static boolean doTeslaInteraction(TileEntity tile, TileEntity otherTile, EnumFacing side){
+    public static void doTeslaInteraction(TileEntity tile, TileEntity otherTile, EnumFacing side){
         ITeslaConsumer handlerTo = null;
         ITeslaProducer handlerFrom = null;
 
@@ -68,10 +63,8 @@ public final class TeslaUtil{
             if(drain > 0){
                 long filled = handlerTo.givePower(drain, false);
                 handlerFrom.takePower(filled, false);
-                return true;
             }
         }
-        return false;
     }
 
     private static TeslaHandler getHandler(TileEntityBase tile, EnumFacing facing){

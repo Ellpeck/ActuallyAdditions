@@ -18,7 +18,7 @@ import net.minecraftforge.common.util.EnumHelper;
 
 import java.util.Locale;
 
-public class BannerHelper{
+public final class BannerHelper{
 
     public static void init(){
         addCraftingPattern("Drill", new ItemStack(InitItems.itemDrill));

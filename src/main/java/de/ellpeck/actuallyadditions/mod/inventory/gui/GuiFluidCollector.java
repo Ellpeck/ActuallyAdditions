@@ -27,7 +27,7 @@ import java.util.Collections;
 @SideOnly(Side.CLIENT)
 public class GuiFluidCollector extends GuiContainer{
 
-    private static final ResourceLocation resLoc = AssetUtil.getGuiLocation("guiFluidCollector");
+    private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("guiFluidCollector");
     private final TileEntityFluidCollector collector;
 
     public GuiFluidCollector(InventoryPlayer inventory, TileEntityBase tile){
@@ -59,7 +59,7 @@ public class GuiFluidCollector extends GuiContainer{
         this.mc.getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop+93, 0, 0, 176, 86);
 
-        this.mc.getTextureManager().bindTexture(resLoc);
+        this.mc.getTextureManager().bindTexture(RES_LOC);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 93);
 
         if(this.collector.tank.getFluidAmount() > 0){

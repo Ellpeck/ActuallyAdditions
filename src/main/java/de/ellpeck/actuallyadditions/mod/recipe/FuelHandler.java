@@ -26,7 +26,7 @@ import java.util.HashMap;
 
 public class FuelHandler implements IFuelHandler{
 
-    private static HashMap<Pair<Item, Integer>, Integer> fuelList = new HashMap<Pair<Item, Integer>, Integer>();
+    private static final HashMap<Pair<Item, Integer>, Integer> FUEL_LIST = new HashMap<Pair<Item, Integer>, Integer>();
 
     public static void init(){
         ModUtil.LOGGER.info("Initializing Fuelstuffs...");
@@ -42,7 +42,7 @@ public class FuelHandler implements IFuelHandler{
     }
 
     private static void addFuel(Item item, int metadata, int value){
-        fuelList.put(Pair.of(item, metadata), value);
+        FUEL_LIST.put(Pair.of(item, metadata), value);
     }
 
     private static void addFuel(Block block, int metadata, int value){
@@ -53,13 +53,13 @@ public class FuelHandler implements IFuelHandler{
         if(stack != null && stack.getItem() != null){
             Pair<Item, Integer> pair = Pair.of(stack.getItem(), stack.getItemDamage());
 
-            if(fuelList.containsKey(pair)){
-                return fuelList.get(pair);
+            if(FUEL_LIST.containsKey(pair)){
+                return FUEL_LIST.get(pair);
             }
             else{
                 pair = Pair.of(stack.getItem(), 0);
-                if(fuelList.containsKey(pair)){
-                    return fuelList.get(pair);
+                if(FUEL_LIST.containsKey(pair)){
+                    return FUEL_LIST.get(pair);
                 }
             }
         }

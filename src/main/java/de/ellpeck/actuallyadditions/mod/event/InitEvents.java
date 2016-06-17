@@ -18,7 +18,7 @@ import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Loader;
 
-public class InitEvents{
+public final class InitEvents{
 
     public static void init(){
         ModUtil.LOGGER.info("Initializing Events...");

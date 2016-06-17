@@ -46,7 +46,7 @@ public class PageFurnace extends BookletPageAA{
     @SideOnly(Side.CLIENT)
     public void renderPre(IBookletGui gui, int mouseX, int mouseY, int ticksElapsed, boolean mousePressed){
         if(this.input != null || this.getInputForOutput(this.result) != null){
-            Minecraft.getMinecraft().getTextureManager().bindTexture(ClientProxy.bulletForMyValentine ? GuiBooklet.resLocValentine : GuiBooklet.resLoc);
+            Minecraft.getMinecraft().getTextureManager().bindTexture(ClientProxy.bulletForMyValentine ? GuiBooklet.RES_LOC_VALENTINE : GuiBooklet.RES_LOC);
             gui.drawRect(gui.getGuiLeft()+37, gui.getGuiTop()+20, 0, 180, 60, 60);
         }
     }

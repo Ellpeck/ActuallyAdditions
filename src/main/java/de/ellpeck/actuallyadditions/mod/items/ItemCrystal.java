@@ -40,27 +40,27 @@ public class ItemCrystal extends ItemBase{
 
     @Override
     public String getUnlocalizedName(ItemStack stack){
-        return stack.getItemDamage() >= BlockCrystal.allCrystals.length ? StringUtil.BUGGED_ITEM_NAME : this.getUnlocalizedName()+BlockCrystal.allCrystals[stack.getItemDamage()].name;
+        return stack.getItemDamage() >= BlockCrystal.ALL_CRYSTALS.length ? StringUtil.BUGGED_ITEM_NAME : this.getUnlocalizedName()+BlockCrystal.ALL_CRYSTALS[stack.getItemDamage()].name;
     }
 
 
     @Override
     public EnumRarity getRarity(ItemStack stack){
-        return stack.getItemDamage() >= BlockCrystal.allCrystals.length ? EnumRarity.COMMON : BlockCrystal.allCrystals[stack.getItemDamage()].rarity;
+        return stack.getItemDamage() >= BlockCrystal.ALL_CRYSTALS.length ? EnumRarity.COMMON : BlockCrystal.ALL_CRYSTALS[stack.getItemDamage()].rarity;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item item, CreativeTabs tab, List list){
-        for(int j = 0; j < BlockCrystal.allCrystals.length; j++){
+        for(int j = 0; j < BlockCrystal.ALL_CRYSTALS.length; j++){
             list.add(new ItemStack(this, 1, j));
         }
     }
 
     @Override
     protected void registerRendering(){
-        for(int i = 0; i < BlockCrystal.allCrystals.length; i++){
-            String name = this.getRegistryName()+BlockCrystal.allCrystals[i].name;
+        for(int i = 0; i < BlockCrystal.ALL_CRYSTALS.length; i++){
+            String name = this.getRegistryName()+BlockCrystal.ALL_CRYSTALS[i].name;
             ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), new ResourceLocation(name), "inventory");
         }
     }

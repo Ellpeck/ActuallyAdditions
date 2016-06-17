@@ -26,7 +26,7 @@ public class GuiBookletStand extends GuiBooklet{
 
     private GuiButton buttonSetPage;
 
-    private TileEntityBookletStand theStand;
+    private final TileEntityBookletStand theStand;
 
     public GuiBookletStand(TileEntityBase theStand){
         super(null, false, false);

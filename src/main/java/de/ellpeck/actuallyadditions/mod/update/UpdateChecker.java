@@ -14,7 +14,7 @@ import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 
-public class UpdateChecker{
+public final class UpdateChecker{
 
     public static final String DOWNLOAD_LINK = "http://ellpeck.de/actadddownload";
     public static final String CHANGELOG_LINK = "http://ellpeck.de/actaddchangelog";

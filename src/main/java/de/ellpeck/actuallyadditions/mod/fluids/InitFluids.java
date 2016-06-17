@@ -19,7 +19,7 @@ import net.minecraftforge.fluids.FluidRegistry;
 
 import java.util.Locale;
 
-public class InitFluids{
+public final class InitFluids{
 
     public static Fluid fluidCanolaOil;
     public static Fluid fluidOil;

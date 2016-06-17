@@ -28,7 +28,7 @@ import java.util.Arrays;
 @SideOnly(Side.CLIENT)
 public class GuiFeeder extends GuiContainer{
 
-    private static final ResourceLocation resLoc = AssetUtil.getGuiLocation("guiFeeder");
+    private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("guiFeeder");
     public final TileEntityFeeder tileFeeder;
 
     public GuiFeeder(InventoryPlayer inventory, TileEntityBase tile){
@@ -57,7 +57,7 @@ public class GuiFeeder extends GuiContainer{
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop+70, 0, 0, 176, 86);
-        this.mc.getTextureManager().bindTexture(resLoc);
+        this.mc.getTextureManager().bindTexture(RES_LOC);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 70);
 
         if(this.tileFeeder.currentTimer > 0){

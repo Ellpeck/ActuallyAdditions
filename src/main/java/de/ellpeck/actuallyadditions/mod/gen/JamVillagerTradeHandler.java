@@ -50,17 +50,17 @@ public class JamVillagerTradeHandler{
 
     //@Override
     public void manipulateTradesForVillager(EntityVillager villager, MerchantRecipeList recipeList, Random rand){
-        for(int trade = 0; trade < trades.size(); trade++){
-            for(int want = 0; want < trades.get(trade).wants.size(); want++){
-                ItemStack wantsOne = trades.get(trade).wants.get(want);
-                wantsOne.stackSize = MathHelper.getRandomIntegerInRange(rand, trades.get(trade).minStackSize, trades.get(trade).maxStackSize);
+        for(int trade = 0; trade < this.trades.size(); trade++){
+            for(int want = 0; want < this.trades.get(trade).wants.size(); want++){
+                ItemStack wantsOne = this.trades.get(trade).wants.get(want);
+                wantsOne.stackSize = MathHelper.getRandomIntegerInRange(rand, this.trades.get(trade).minStackSize, this.trades.get(trade).maxStackSize);
 
                 ItemStack wantsTwo = null;
                 if(rand.nextInt(3) == 0){
-                    int randomSecondTrade = rand.nextInt(trades.size());
-                    for(int randomSecondWant = 0; randomSecondWant < trades.get(randomSecondTrade).wants.size(); randomSecondWant++){
-                        wantsTwo = trades.get(randomSecondTrade).wants.get(randomSecondWant);
-                        wantsTwo.stackSize = MathHelper.getRandomIntegerInRange(rand, trades.get(randomSecondTrade).minStackSize, trades.get(randomSecondTrade).maxStackSize);
+                    int randomSecondTrade = rand.nextInt(this.trades.size());
+                    for(int randomSecondWant = 0; randomSecondWant < this.trades.get(randomSecondTrade).wants.size(); randomSecondWant++){
+                        wantsTwo = this.trades.get(randomSecondTrade).wants.get(randomSecondWant);
+                        wantsTwo.stackSize = MathHelper.getRandomIntegerInRange(rand, this.trades.get(randomSecondTrade).minStackSize, this.trades.get(randomSecondTrade).maxStackSize);
                     }
                 }
                 if(wantsOne == wantsTwo){

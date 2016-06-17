@@ -24,9 +24,9 @@ import net.minecraft.item.ItemStack;
 
 import java.util.ArrayList;
 
-public class CrusherCrafting{
+public final class CrusherCrafting{
 
-    public static final ArrayList<CrusherRecipe> miscRecipes = new ArrayList<CrusherRecipe>();
+    public static final ArrayList<CrusherRecipe> MISC_RECIPES = new ArrayList<CrusherRecipe>();
     public static CrusherRecipe recipeIronHorseArmor;
     public static CrusherRecipe recipeGoldHorseArmor;
     public static CrusherRecipe recipeDiamondHorseArmor;
@@ -35,38 +35,38 @@ public class CrusherCrafting{
         ModUtil.LOGGER.info("Initializing Crusher Recipes...");
 
         ActuallyAdditionsAPI.addCrusherRecipe(new ItemStack(Items.BONE), new ItemStack(Items.DYE, 6, 15));
-        miscRecipes.add(RecipeUtil.lastCrusherRecipe());
+        MISC_RECIPES.add(RecipeUtil.lastCrusherRecipe());
         ActuallyAdditionsAPI.addCrusherRecipe(new ItemStack(Items.REEDS), new ItemStack(Items.SUGAR, 3));
-        miscRecipes.add(RecipeUtil.lastCrusherRecipe());
+        MISC_RECIPES.add(RecipeUtil.lastCrusherRecipe());
 
         ActuallyAdditionsAPI.addCrusherRecipe(new ItemStack(Blocks.YELLOW_FLOWER), new ItemStack(Items.DYE, 3, 11));
-        miscRecipes.add(RecipeUtil.lastCrusherRecipe());
+        MISC_RECIPES.add(RecipeUtil.lastCrusherRecipe());
         ActuallyAdditionsAPI.addCrusherRecipe(new ItemStack(Blocks.RED_FLOWER, 1, 0), new ItemStack(Items.DYE, 3, 1));
-        miscRecipes.add(RecipeUtil.lastCrusherRecipe());
+        MISC_RECIPES.add(RecipeUtil.lastCrusherRecipe());
         ActuallyAdditionsAPI.addCrusherRecipe(new ItemStack(Blocks.RED_FLOWER, 1, 1), new ItemStack(Items.DYE, 3, 12));
-        miscRecipes.add(RecipeUtil.lastCrusherRecipe());
+        MISC_RECIPES.add(RecipeUtil.lastCrusherRecipe());
         ActuallyAdditionsAPI.addCrusherRecipe(new ItemStack(Blocks.RED_FLOWER, 1, 2), new ItemStack(Items.DYE, 3, 13));
-        miscRecipes.add(RecipeUtil.lastCrusherRecipe());
+        MISC_RECIPES.add(RecipeUtil.lastCrusherRecipe());
         ActuallyAdditionsAPI.addCrusherRecipe(new ItemStack(Blocks.RED_FLOWER, 1, 3), new ItemStack(Items.DYE, 3, 7));
-        miscRecipes.add(RecipeUtil.lastCrusherRecipe());
+        MISC_RECIPES.add(RecipeUtil.lastCrusherRecipe());
         ActuallyAdditionsAPI.addCrusherRecipe(new ItemStack(Blocks.RED_FLOWER, 1, 4), new ItemStack(Items.DYE, 3, 1));
-        miscRecipes.add(RecipeUtil.lastCrusherRecipe());
+        MISC_RECIPES.add(RecipeUtil.lastCrusherRecipe());
         ActuallyAdditionsAPI.addCrusherRecipe(new ItemStack(Blocks.RED_FLOWER, 1, 5), new ItemStack(Items.DYE, 3, 14));
-        miscRecipes.add(RecipeUtil.lastCrusherRecipe());
+        MISC_RECIPES.add(RecipeUtil.lastCrusherRecipe());
         ActuallyAdditionsAPI.addCrusherRecipe(new ItemStack(Blocks.RED_FLOWER, 1, 6), new ItemStack(Items.DYE, 3, 7));
-        miscRecipes.add(RecipeUtil.lastCrusherRecipe());
+        MISC_RECIPES.add(RecipeUtil.lastCrusherRecipe());
         ActuallyAdditionsAPI.addCrusherRecipe(new ItemStack(Blocks.RED_FLOWER, 1, 7), new ItemStack(Items.DYE, 3, 9));
-        miscRecipes.add(RecipeUtil.lastCrusherRecipe());
+        MISC_RECIPES.add(RecipeUtil.lastCrusherRecipe());
         ActuallyAdditionsAPI.addCrusherRecipe(new ItemStack(Blocks.RED_FLOWER, 1, 8), new ItemStack(Items.DYE, 3, 7));
-        miscRecipes.add(RecipeUtil.lastCrusherRecipe());
+        MISC_RECIPES.add(RecipeUtil.lastCrusherRecipe());
         ActuallyAdditionsAPI.addCrusherRecipe(new ItemStack(Blocks.DOUBLE_PLANT, 1, 0), new ItemStack(Items.DYE, 4, 11));
-        miscRecipes.add(RecipeUtil.lastCrusherRecipe());
+        MISC_RECIPES.add(RecipeUtil.lastCrusherRecipe());
         ActuallyAdditionsAPI.addCrusherRecipe(new ItemStack(Blocks.DOUBLE_PLANT, 1, 1), new ItemStack(Items.DYE, 4, 13));
-        miscRecipes.add(RecipeUtil.lastCrusherRecipe());
+        MISC_RECIPES.add(RecipeUtil.lastCrusherRecipe());
         ActuallyAdditionsAPI.addCrusherRecipe(new ItemStack(Blocks.DOUBLE_PLANT, 1, 4), new ItemStack(Items.DYE, 4, 1));
-        miscRecipes.add(RecipeUtil.lastCrusherRecipe());
+        MISC_RECIPES.add(RecipeUtil.lastCrusherRecipe());
         ActuallyAdditionsAPI.addCrusherRecipe(new ItemStack(Blocks.DOUBLE_PLANT, 1, 5), new ItemStack(Items.DYE, 4, 9));
-        miscRecipes.add(RecipeUtil.lastCrusherRecipe());
+        MISC_RECIPES.add(RecipeUtil.lastCrusherRecipe());
 
         ActuallyAdditionsAPI.addCrusherRecipe("oreRedstone", "dustRedstone", 10);
         ActuallyAdditionsAPI.addCrusherRecipe("oreLapis", "gemLapis", 12);
@@ -79,10 +79,10 @@ public class CrusherCrafting{
         ActuallyAdditionsAPI.addCrusherRecipe("stone", "cobblestone", 1);
 
         ActuallyAdditionsAPI.addCrusherRecipe(new ItemStack(InitItems.itemFoods, 1, TheFoods.RICE.ordinal()), new ItemStack(Items.SUGAR, 2));
-        miscRecipes.add(RecipeUtil.lastCrusherRecipe());
+        MISC_RECIPES.add(RecipeUtil.lastCrusherRecipe());
 
         ActuallyAdditionsAPI.addCrusherRecipe(new ItemStack(Blocks.GLOWSTONE), new ItemStack(Items.GLOWSTONE_DUST, 4));
-        miscRecipes.add(RecipeUtil.lastCrusherRecipe());
+        MISC_RECIPES.add(RecipeUtil.lastCrusherRecipe());
 
         ActuallyAdditionsAPI.addCrusherRecipe("oreNickel", "dustNickel", 2, "dustPlatinum", 1, 15);
         ActuallyAdditionsAPI.addCrusherRecipe("oreIron", "dustIron", 2, "dustGold", 1, 20);

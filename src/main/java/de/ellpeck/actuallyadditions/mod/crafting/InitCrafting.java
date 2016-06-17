@@ -17,7 +17,7 @@ import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 
-public class InitCrafting{
+public final class InitCrafting{
 
     public static void init(){
         ModUtil.LOGGER.info("Initializing Crafting Recipes...");

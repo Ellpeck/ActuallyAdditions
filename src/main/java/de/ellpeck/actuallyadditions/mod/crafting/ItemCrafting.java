@@ -17,7 +17,6 @@ import de.ellpeck.actuallyadditions.mod.config.values.ConfigCrafting;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigStringListValues;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.metalists.*;
-import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.RecipeUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.block.IGrowable;
@@ -28,7 +27,6 @@ import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.common.IPlantable;
-import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
@@ -36,11 +34,11 @@ import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 import java.util.ArrayList;
 
-public class ItemCrafting{
+public final class ItemCrafting{
 
-    public static final ArrayList<IRecipe> recipesMashedFood = new ArrayList<IRecipe>();
-    public static final ArrayList<IRecipe> recipesDrillColoring = new ArrayList<IRecipe>();
-    public static final ArrayList<IRecipe> recipesPotionRings = new ArrayList<IRecipe>();
+    public static final ArrayList<IRecipe> RECIPES_MASHED_FOOD = new ArrayList<IRecipe>();
+    public static final ArrayList<IRecipe> RECIPES_DRILL_COLORING = new ArrayList<IRecipe>();
+    public static final ArrayList<IRecipe> RECIPES_POTION_RINGS = new ArrayList<IRecipe>();
     public static IRecipe recipePhantomConnector;
     public static IRecipe recipeCoil;
     public static IRecipe recipeCoilAdvanced;
@@ -195,7 +193,7 @@ public class ItemCrafting{
             for(int i = 0; i < 16; i++){
                 if(i != TheColoredLampColors.LIGHT_BLUE.ordinal()){
                     GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemDrill, 1, i), lightBlueDrill.copy(), "dye"+TheColoredLampColors.values()[i].name));
-                    recipesDrillColoring.add(RecipeUtil.lastIRecipe());
+                    RECIPES_DRILL_COLORING.add(RecipeUtil.lastIRecipe());
                 }
             }
         }
@@ -552,9 +550,9 @@ public class ItemCrafting{
 
     public static void addRingRecipeWithStack(ItemStack mainStack, int meta){
         GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemPotionRing, 1, meta), mainStack, mainStack, mainStack, mainStack, new ItemStack(InitBlocks.blockCrystal, 1, TheCrystals.DIAMOND.ordinal()), new ItemStack(Items.NETHER_WART), new ItemStack(Items.POTIONITEM), new ItemStack(InitItems.itemMisc, 1, TheMiscItems.RING.ordinal()));
-        recipesPotionRings.add(RecipeUtil.lastIRecipe());
+        RECIPES_POTION_RINGS.add(RecipeUtil.lastIRecipe());
         GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemPotionRingAdvanced, 1, meta), new ItemStack(InitItems.itemPotionRing, 1, meta), new ItemStack(InitItems.itemMisc, 1, TheMiscItems.ENDER_STAR.ordinal()));
-        recipesPotionRings.add(RecipeUtil.lastIRecipe());
+        RECIPES_POTION_RINGS.add(RecipeUtil.lastIRecipe());
     }
 
     public static void initMashedFoodRecipes(){
@@ -564,7 +562,7 @@ public class ItemCrafting{
                     if(!isBlacklisted(item)){
                         ItemStack ingredient = new ItemStack(item, 1, Util.WILDCARD);
                         GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemMisc, 8, TheMiscItems.MASHED_FOOD.ordinal()), ingredient, ingredient, ingredient, ingredient, new ItemStack(InitItems.itemKnife, 1, Util.WILDCARD));
-                        recipesMashedFood.add(RecipeUtil.lastIRecipe());
+                        RECIPES_MASHED_FOOD.add(RecipeUtil.lastIRecipe());
                     }
                 }
             }

@@ -16,7 +16,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class PlayerData{
+public final class PlayerData{
 
     public static PlayerSave getDataFromPlayer(EntityPlayer player){
         ArrayList<PlayerSave> data = WorldData.PLAYER_SAVE_DATA;

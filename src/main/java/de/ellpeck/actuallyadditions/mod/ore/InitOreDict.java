@@ -24,7 +24,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
-public class InitOreDict{
+public final class InitOreDict{
 
     public static void init(){
         ModUtil.LOGGER.info("Initializing OreDictionary Entries...");

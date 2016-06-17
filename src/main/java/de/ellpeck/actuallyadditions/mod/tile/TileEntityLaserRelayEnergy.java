@@ -25,7 +25,7 @@ import java.util.Map;
 
 public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay implements IEnergyReceiver{
 
-    public Map<EnumFacing, IEnergyReceiver> receiversAround = new HashMap<EnumFacing, IEnergyReceiver>();
+    public final Map<EnumFacing, IEnergyReceiver> receiversAround = new HashMap<EnumFacing, IEnergyReceiver>();
 
     public TileEntityLaserRelayEnergy(){
         super("laserRelay", false);

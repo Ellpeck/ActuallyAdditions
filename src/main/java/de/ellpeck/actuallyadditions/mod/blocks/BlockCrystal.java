@@ -30,8 +30,8 @@ import java.util.List;
 
 public class BlockCrystal extends BlockBase{
 
-    public static final TheCrystals[] allCrystals = TheCrystals.values();
-    private static final PropertyInteger META = PropertyInteger.create("meta", 0, allCrystals.length-1);
+    public static final TheCrystals[] ALL_CRYSTALS = TheCrystals.values();
+    private static final PropertyInteger META = PropertyInteger.create("meta", 0, ALL_CRYSTALS.length-1);
 
     public BlockCrystal(String name){
         super(Material.ROCK, name);
@@ -48,7 +48,7 @@ public class BlockCrystal extends BlockBase{
     @Override
     @SideOnly(Side.CLIENT)
     public void getSubBlocks(Item item, CreativeTabs tab, List list){
-        for(int j = 0; j < allCrystals.length; j++){
+        for(int j = 0; j < ALL_CRYSTALS.length; j++){
             list.add(new ItemStack(item, 1, j));
         }
     }
@@ -60,14 +60,14 @@ public class BlockCrystal extends BlockBase{
 
     @Override
     protected void registerRendering(){
-        for(int i = 0; i < allCrystals.length; i++){
+        for(int i = 0; i < ALL_CRYSTALS.length; i++){
             ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), this.getRegistryName(), META.getName()+"="+i);
         }
     }
 
     @Override
     public EnumRarity getRarity(ItemStack stack){
-        return stack.getItemDamage() >= allCrystals.length ? EnumRarity.COMMON : allCrystals[stack.getItemDamage()].rarity;
+        return stack.getItemDamage() >= ALL_CRYSTALS.length ? EnumRarity.COMMON : ALL_CRYSTALS[stack.getItemDamage()].rarity;
     }
 
     @Override
@@ -86,7 +86,7 @@ public class BlockCrystal extends BlockBase{
 
         @Override
         public String getUnlocalizedName(ItemStack stack){
-            return stack.getItemDamage() >= allCrystals.length ? StringUtil.BUGGED_ITEM_NAME : this.getUnlocalizedName()+allCrystals[stack.getItemDamage()].name;
+            return stack.getItemDamage() >= ALL_CRYSTALS.length ? StringUtil.BUGGED_ITEM_NAME : this.getUnlocalizedName()+ALL_CRYSTALS[stack.getItemDamage()].name;
         }
     }
 }

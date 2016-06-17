@@ -37,7 +37,7 @@ public class RenderSmileyCloud extends TileEntitySpecialRenderer{
 
             if(theCloud.name != null && !theCloud.name.isEmpty()){
                 easterEggs:
-                for(ISmileyCloudEasterEgg cloud : SmileyCloudEasterEggs.cloudStuff){
+                for(ISmileyCloudEasterEgg cloud : SmileyCloudEasterEggs.CLOUD_STUFF){
                     for(String triggerName : cloud.getTriggerNames()){
                         if(triggerName != null && theCloud.name != null){
                             if(triggerName.equalsIgnoreCase(theCloud.name)){

@@ -28,9 +28,9 @@ import net.minecraft.item.ItemStack;
 
 import java.util.ArrayList;
 
-public class LensRecipeHandler{
+public final class LensRecipeHandler{
 
-    public static final ArrayList<LensConversionRecipe> mainPageRecipes = new ArrayList<LensConversionRecipe>();
+    public static final ArrayList<LensConversionRecipe> MAIN_PAGE_RECIPES = new ArrayList<LensConversionRecipe>();
     public static LensConversionRecipe recipeColorLens;
     public static LensConversionRecipe recipeSoulSand;
     public static LensConversionRecipe recipeGreenWall;
@@ -43,29 +43,29 @@ public class LensRecipeHandler{
     public static void init(){
         //Crystal Blocks
         ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(new ItemStack(Blocks.REDSTONE_BLOCK), new ItemStack(InitBlocks.blockCrystal, 1, TheCrystals.REDSTONE.ordinal()), 400);
-        mainPageRecipes.add(RecipeUtil.lastReconstructorRecipe());
+        MAIN_PAGE_RECIPES.add(RecipeUtil.lastReconstructorRecipe());
         ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(new ItemStack(Blocks.LAPIS_BLOCK), new ItemStack(InitBlocks.blockCrystal, 1, TheCrystals.LAPIS.ordinal()), 400);
-        mainPageRecipes.add(RecipeUtil.lastReconstructorRecipe());
+        MAIN_PAGE_RECIPES.add(RecipeUtil.lastReconstructorRecipe());
         ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(new ItemStack(Blocks.DIAMOND_BLOCK), new ItemStack(InitBlocks.blockCrystal, 1, TheCrystals.DIAMOND.ordinal()), 600);
-        mainPageRecipes.add(RecipeUtil.lastReconstructorRecipe());
+        MAIN_PAGE_RECIPES.add(RecipeUtil.lastReconstructorRecipe());
         ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(new ItemStack(Blocks.EMERALD_BLOCK), new ItemStack(InitBlocks.blockCrystal, 1, TheCrystals.EMERALD.ordinal()), 1000);
-        mainPageRecipes.add(RecipeUtil.lastReconstructorRecipe());
+        MAIN_PAGE_RECIPES.add(RecipeUtil.lastReconstructorRecipe());
         ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(new ItemStack(Blocks.COAL_BLOCK), new ItemStack(InitBlocks.blockCrystal, 1, TheCrystals.COAL.ordinal()), 600);
-        mainPageRecipes.add(RecipeUtil.lastReconstructorRecipe());
+        MAIN_PAGE_RECIPES.add(RecipeUtil.lastReconstructorRecipe());
         ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(new ItemStack(Blocks.IRON_BLOCK), new ItemStack(InitBlocks.blockCrystal, 1, TheCrystals.IRON.ordinal()), 800);
-        mainPageRecipes.add(RecipeUtil.lastReconstructorRecipe());
+        MAIN_PAGE_RECIPES.add(RecipeUtil.lastReconstructorRecipe());
 
         //Crystal Items
         ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(new ItemStack(Items.REDSTONE), new ItemStack(InitItems.itemCrystal, 1, TheCrystals.REDSTONE.ordinal()), 40);
-        mainPageRecipes.add(RecipeUtil.lastReconstructorRecipe());
+        MAIN_PAGE_RECIPES.add(RecipeUtil.lastReconstructorRecipe());
         ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(new ItemStack(Items.DYE, 1, 4), new ItemStack(InitItems.itemCrystal, 1, TheCrystals.LAPIS.ordinal()), 40);
-        mainPageRecipes.add(RecipeUtil.lastReconstructorRecipe());
+        MAIN_PAGE_RECIPES.add(RecipeUtil.lastReconstructorRecipe());
         ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(new ItemStack(Items.DIAMOND), new ItemStack(InitItems.itemCrystal, 1, TheCrystals.DIAMOND.ordinal()), 60);
-        mainPageRecipes.add(RecipeUtil.lastReconstructorRecipe());
+        MAIN_PAGE_RECIPES.add(RecipeUtil.lastReconstructorRecipe());
         ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(new ItemStack(Items.EMERALD), new ItemStack(InitItems.itemCrystal, 1, TheCrystals.EMERALD.ordinal()), 100);
-        mainPageRecipes.add(RecipeUtil.lastReconstructorRecipe());
+        MAIN_PAGE_RECIPES.add(RecipeUtil.lastReconstructorRecipe());
         ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(new ItemStack(Items.COAL), new ItemStack(InitItems.itemCrystal, 1, TheCrystals.COAL.ordinal()), 60);
-        mainPageRecipes.add(RecipeUtil.lastReconstructorRecipe());
+        MAIN_PAGE_RECIPES.add(RecipeUtil.lastReconstructorRecipe());
         ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(new ItemStack(Items.IRON_INGOT), new ItemStack(InitItems.itemCrystal, 1, TheCrystals.IRON.ordinal()), 80);
 
         //Lenses

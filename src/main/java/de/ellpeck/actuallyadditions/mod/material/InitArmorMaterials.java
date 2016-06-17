@@ -18,7 +18,7 @@ import net.minecraftforge.common.util.EnumHelper;
 
 import java.util.Locale;
 
-public class InitArmorMaterials{
+public final class InitArmorMaterials{
 
     public static ArmorMaterial armorMaterialEmerald;
     public static ArmorMaterial armorMaterialObsidian;

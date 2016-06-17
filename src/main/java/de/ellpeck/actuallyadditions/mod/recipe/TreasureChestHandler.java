@@ -16,7 +16,7 @@ import de.ellpeck.actuallyadditions.mod.items.metalists.TheJams;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
-public class TreasureChestHandler{
+public final class TreasureChestHandler{
 
     public static void init(){
         ActuallyAdditionsAPI.addTreasureChestLoot(new ItemStack(Items.DIAMOND), 5, 1, 2);

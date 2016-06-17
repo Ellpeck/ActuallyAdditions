@@ -14,7 +14,7 @@ import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 
 //TODO Fix dungeon loot (oh god)
-public class DungeonLoot{
+public final class DungeonLoot{
 
     public static void init(){
         if(ConfigBoolValues.DUNGEON_LOOT.isEnabled()){

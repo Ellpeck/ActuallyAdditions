@@ -73,6 +73,32 @@ public class ItemDrill extends ItemEnergy{
         this.setHarvestLevel("pickaxe", HARVEST_LEVEL);
     }
 
+    /**
+     * Gets all of the Slots from NBT
+     *
+     * @param stack The Drill
+     */
+    public static void loadSlotsFromNBT(ItemStack[] slots, ItemStack stack){
+        NBTTagCompound compound = stack.getTagCompound();
+        if(compound != null){
+            TileEntityInventoryBase.loadSlots(slots, compound);
+        }
+    }
+
+    /**
+     * Writes all of the Slots to NBT
+     *
+     * @param slots The Slots
+     * @param stack The Drill
+     */
+    public static void writeSlotsToNBT(ItemStack[] slots, ItemStack stack){
+        NBTTagCompound compound = stack.getTagCompound();
+        if(compound == null){
+            compound = new NBTTagCompound();
+        }
+        TileEntityInventoryBase.saveSlots(slots, compound);
+        stack.setTagCompound(compound);
+    }
 
     @Override
     //Places Blocks if the Placing Upgrade is installed
@@ -139,19 +165,6 @@ public class ItemDrill extends ItemEnergy{
         return null;
     }
 
-    /**
-     * Gets all of the Slots from NBT
-     *
-     * @param stack The Drill
-     */
-    public static void loadSlotsFromNBT(ItemStack[] slots, ItemStack stack){
-        NBTTagCompound compound = stack.getTagCompound();
-        if(compound != null){
-            TileEntityInventoryBase.loadSlots(slots, compound);
-        }
-    }
-
-
     @Override
     public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand){
         if(!world.isRemote && player.isSneaking()){
@@ -197,12 +210,10 @@ public class ItemDrill extends ItemEnergy{
         }
     }
 
-
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.EPIC;
     }
-
 
     @Override
     public Multimap<String, AttributeModifier> getAttributeModifiers(EntityEquipmentSlot slot, ItemStack stack){
@@ -262,7 +273,6 @@ public class ItemDrill extends ItemEnergy{
         Block block = state.getBlock();
         return this.getEnergyStored(stack) >= this.getEnergyUsePerBlock(stack) && (this.hasExtraWhitelist(block) || block.getMaterial(state).isToolNotRequired() || (block == Blocks.SNOW_LAYER || block == Blocks.SNOW || (block == Blocks.OBSIDIAN ? harvestLevel >= 3 : (block != Blocks.DIAMOND_BLOCK && block != Blocks.DIAMOND_ORE ? (block != Blocks.EMERALD_ORE && block != Blocks.EMERALD_BLOCK ? (block != Blocks.GOLD_BLOCK && block != Blocks.GOLD_ORE ? (block != Blocks.IRON_BLOCK && block != Blocks.IRON_ORE ? (block != Blocks.LAPIS_BLOCK && block != Blocks.LAPIS_ORE ? (block != Blocks.REDSTONE_ORE && block != Blocks.LIT_REDSTONE_ORE ? (block.getMaterial(state) == Material.ROCK || (block.getMaterial(state) == Material.IRON || block.getMaterial(state) == Material.ANVIL)) : harvestLevel >= 2) : harvestLevel >= 1) : harvestLevel >= 1) : harvestLevel >= 2) : harvestLevel >= 2) : harvestLevel >= 2))));
     }
-
 
     @Override
     public Set<String> getToolClasses(ItemStack stack){
@@ -386,21 +396,6 @@ public class ItemDrill extends ItemEnergy{
             }
         }
         return efficiency;
-    }
-
-    /**
-     * Writes all of the Slots to NBT
-     *
-     * @param slots The Slots
-     * @param stack The Drill
-     */
-    public static void writeSlotsToNBT(ItemStack[] slots, ItemStack stack){
-        NBTTagCompound compound = stack.getTagCompound();
-        if(compound == null){
-            compound = new NBTTagCompound();
-        }
-        TileEntityInventoryBase.saveSlots(slots, compound);
-        stack.setTagCompound(compound);
     }
 
     /**

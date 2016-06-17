@@ -14,7 +14,7 @@ import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class ModUtil{
+public final class ModUtil{
 
     public static final String VERSION = "@VERSION@"; //build.gradle
 

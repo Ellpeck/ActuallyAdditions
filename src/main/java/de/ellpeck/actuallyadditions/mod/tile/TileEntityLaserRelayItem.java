@@ -26,7 +26,7 @@ import java.util.List;
 
 public class TileEntityLaserRelayItem extends TileEntityLaserRelay{
 
-    public List<IItemHandler> handlersAround = new ArrayList<IItemHandler>();
+    public final List<IItemHandler> handlersAround = new ArrayList<IItemHandler>();
 
     public TileEntityLaserRelayItem(String name){
         super(name, true);

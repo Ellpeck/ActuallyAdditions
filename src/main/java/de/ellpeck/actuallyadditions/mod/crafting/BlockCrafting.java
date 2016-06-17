@@ -27,9 +27,9 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
-public class BlockCrafting{
+public final class BlockCrafting{
 
-    public static final IRecipe[] recipesLamps = new IRecipe[BlockColoredLamp.allLampTypes.length];
+    public static final IRecipe[] RECIPES_LAMPS = new IRecipe[BlockColoredLamp.ALL_LAMP_TYPES.length];
     public static IRecipe recipeSmileyCloud;
     public static IRecipe recipePhantomface;
     public static IRecipe recipeLiquiface;
@@ -704,14 +704,14 @@ public class BlockCrafting{
         }
 
         if(ConfigCrafting.LAMPS.isEnabled()){
-            for(int i = 0; i < BlockColoredLamp.allLampTypes.length; i++){
+            for(int i = 0; i < BlockColoredLamp.ALL_LAMP_TYPES.length; i++){
                 GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockColoredLamp, 6, i),
                         "GCG", "DQD", "GCG",
                         'C', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.LAPIS.ordinal()),
                         'G', "glowstone",
-                        'D', "dye"+BlockColoredLamp.allLampTypes[i].name,
+                        'D', "dye"+BlockColoredLamp.ALL_LAMP_TYPES[i].name,
                         'Q', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal())));
-                recipesLamps[i] = RecipeUtil.lastIRecipe();
+                RECIPES_LAMPS[i] = RecipeUtil.lastIRecipe();
             }
 
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockLampPowerer, 4),

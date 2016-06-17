@@ -23,7 +23,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class GuiCrafter extends GuiContainer{
 
-    private static final ResourceLocation resLoc = new ResourceLocation("textures/gui/container/crafting_table.png");
+    private static final ResourceLocation RES_LOC = new ResourceLocation("textures/gui/container/crafting_table.png");
 
     public GuiCrafter(EntityPlayer player){
         super(new ContainerCrafter(player));
@@ -40,7 +40,7 @@ public class GuiCrafter extends GuiContainer{
     @Override
     public void drawGuiContainerBackgroundLayer(float f, int x, int y){
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-        this.mc.getTextureManager().bindTexture(resLoc);
+        this.mc.getTextureManager().bindTexture(RES_LOC);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
     }
 }

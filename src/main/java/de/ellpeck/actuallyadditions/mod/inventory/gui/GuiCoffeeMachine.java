@@ -34,7 +34,7 @@ import java.util.Collections;
 @SideOnly(Side.CLIENT)
 public class GuiCoffeeMachine extends GuiContainer{
 
-    private static final ResourceLocation resLoc = AssetUtil.getGuiLocation("guiCoffeeMachine");
+    private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("guiCoffeeMachine");
     private final TileEntityCoffeeMachine machine;
     private final int x;
     private final int y;
@@ -91,7 +91,7 @@ public class GuiCoffeeMachine extends GuiContainer{
         this.mc.getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop+93, 0, 0, 176, 86);
 
-        this.mc.getTextureManager().bindTexture(resLoc);
+        this.mc.getTextureManager().bindTexture(RES_LOC);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 93);
 
         if(this.machine.storage.getEnergyStored() > 0){

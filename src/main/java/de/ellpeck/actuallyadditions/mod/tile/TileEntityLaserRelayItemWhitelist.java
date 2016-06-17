@@ -163,22 +163,6 @@ public class TileEntityLaserRelayItemWhitelist extends TileEntityLaserRelayItem 
         }.setTile(this);
     }
 
-    @Override
-    public boolean isWhitelisted(ItemStack stack, boolean output){
-        int slotStart = output ? 12 : 0;
-        return checkFilter(stack, output ? this.isRightWhitelist : this.isLeftWhitelist, this.slots, slotStart, slotStart+12);
-    }
-
-    @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean isForSync){
-        super.writeSyncableNBT(compound, isForSync);
-        if(!isForSync){
-            TileEntityInventoryBase.saveSlots(this.slots, compound);
-        }
-        compound.setBoolean("LeftWhitelist", this.isLeftWhitelist);
-        compound.setBoolean("RightWhitelist", this.isRightWhitelist);
-    }
-
     public static boolean checkFilter(ItemStack stack, boolean isWhitelist, ItemStack[] slots, int start, int end){
         if(stack != null){
             for(int i = start; i < end; i++){
@@ -201,6 +185,22 @@ public class TileEntityLaserRelayItemWhitelist extends TileEntityLaserRelayItem 
             }
         }
         return !isWhitelist;
+    }
+
+    @Override
+    public boolean isWhitelisted(ItemStack stack, boolean output){
+        int slotStart = output ? 12 : 0;
+        return checkFilter(stack, output ? this.isRightWhitelist : this.isLeftWhitelist, this.slots, slotStart, slotStart+12);
+    }
+
+    @Override
+    public void writeSyncableNBT(NBTTagCompound compound, boolean isForSync){
+        super.writeSyncableNBT(compound, isForSync);
+        if(!isForSync){
+            TileEntityInventoryBase.saveSlots(this.slots, compound);
+        }
+        compound.setBoolean("LeftWhitelist", this.isLeftWhitelist);
+        compound.setBoolean("RightWhitelist", this.isRightWhitelist);
     }
 
     @Override

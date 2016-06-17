@@ -24,9 +24,9 @@ import net.minecraft.item.ItemStack;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SmileyCloudEasterEggs{
+public final class SmileyCloudEasterEggs{
 
-    public static final List<ISmileyCloudEasterEgg> cloudStuff = new ArrayList<ISmileyCloudEasterEgg>();
+    public static final List<ISmileyCloudEasterEgg> CLOUD_STUFF = new ArrayList<ISmileyCloudEasterEgg>();
 
     static{
         //Glenthor
@@ -374,7 +374,7 @@ public class SmileyCloudEasterEggs{
     }
 
     private static void register(ISmileyCloudEasterEgg egg){
-        cloudStuff.add(egg);
+        CLOUD_STUFF.add(egg);
     }
 
     private static void renderHoldingItem(boolean leftHand, ItemStack stack){

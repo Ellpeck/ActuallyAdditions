@@ -38,7 +38,7 @@ import java.util.List;
 
 public class ItemPotionRing extends ItemBase implements IColorProvidingItem, IDisplayStandItem{
 
-    public static final ThePotionRings[] allRings = ThePotionRings.values();
+    public static final ThePotionRings[] ALL_RINGS = ThePotionRings.values();
 
     private final boolean isAdvanced;
 
@@ -57,14 +57,14 @@ public class ItemPotionRing extends ItemBase implements IColorProvidingItem, IDi
 
     @Override
     public String getUnlocalizedName(ItemStack stack){
-        return stack.getItemDamage() >= allRings.length ? StringUtil.BUGGED_ITEM_NAME : this.getUnlocalizedName()+allRings[stack.getItemDamage()].name;
+        return stack.getItemDamage() >= ALL_RINGS.length ? StringUtil.BUGGED_ITEM_NAME : this.getUnlocalizedName()+ALL_RINGS[stack.getItemDamage()].name;
     }
 
     @Override
     public void onUpdate(ItemStack stack, World world, Entity player, int par4, boolean par5){
         super.onUpdate(stack, world, player, par4, par5);
 
-        if(!world.isRemote && stack.getItemDamage() < allRings.length){
+        if(!world.isRemote && stack.getItemDamage() < ALL_RINGS.length){
             if(player instanceof EntityPlayer){
                 EntityPlayer thePlayer = (EntityPlayer)player;
                 ItemStack equippedStack = thePlayer.getHeldItemMainhand();
@@ -76,8 +76,8 @@ public class ItemPotionRing extends ItemBase implements IColorProvidingItem, IDi
     @Override
     public String getItemStackDisplayName(ItemStack stack){
         String standardName = StringUtil.localize(this.getUnlocalizedName()+".name");
-        if(stack.getItemDamage() < allRings.length){
-            String effect = StringUtil.localize(allRings[stack.getItemDamage()].name);
+        if(stack.getItemDamage() < ALL_RINGS.length){
+            String effect = StringUtil.localize(ALL_RINGS[stack.getItemDamage()].name);
             return standardName+" "+effect;
         }
         return standardName;
@@ -86,20 +86,20 @@ public class ItemPotionRing extends ItemBase implements IColorProvidingItem, IDi
 
     @Override
     public EnumRarity getRarity(ItemStack stack){
-        return stack.getItemDamage() >= allRings.length ? EnumRarity.COMMON : allRings[stack.getItemDamage()].rarity;
+        return stack.getItemDamage() >= ALL_RINGS.length ? EnumRarity.COMMON : ALL_RINGS[stack.getItemDamage()].rarity;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item item, CreativeTabs tab, List list){
-        for(int j = 0; j < allRings.length; j++){
+        for(int j = 0; j < ALL_RINGS.length; j++){
             list.add(new ItemStack(this, 1, j));
         }
     }
 
     @Override
     protected void registerRendering(){
-        for(int i = 0; i < allRings.length; i++){
+        for(int i = 0; i < ALL_RINGS.length; i++){
             ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), this.getRegistryName(), "inventory");
         }
     }
@@ -110,7 +110,7 @@ public class ItemPotionRing extends ItemBase implements IColorProvidingItem, IDi
         return new IItemColor(){
             @Override
             public int getColorFromItemstack(ItemStack stack, int tintIndex){
-                return stack.getItemDamage() >= allRings.length ? 0xFFFFFF : allRings[stack.getItemDamage()].color;
+                return stack.getItemDamage() >= ALL_RINGS.length ? 0xFFFFFF : ALL_RINGS[stack.getItemDamage()].color;
             }
         };
     }

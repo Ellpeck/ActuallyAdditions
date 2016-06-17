@@ -16,7 +16,7 @@ import net.minecraftforge.common.util.EnumHelper;
 
 import java.util.Locale;
 
-public class InitToolMaterials{
+public final class InitToolMaterials{
 
     public static ToolMaterial toolMaterialEmerald;
     public static ToolMaterial toolMaterialObsidian;

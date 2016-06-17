@@ -16,7 +16,7 @@ import net.minecraftforge.fluids.FluidTank;
 
 import java.util.List;
 
-public class StringUtil{
+public final class StringUtil{
 
     public static final int DECIMAL_COLOR_WHITE = 16777215;
     public static final int DECIMAL_COLOR_GRAY_TEXT = 4210752;

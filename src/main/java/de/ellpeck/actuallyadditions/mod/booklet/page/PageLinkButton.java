@@ -14,7 +14,7 @@ import de.ellpeck.actuallyadditions.mod.booklet.BookletUtils;
 
 public class PageLinkButton extends PageButton{
 
-    private String link;
+    private final String link;
 
     public PageLinkButton(int id, String link){
         super(id);
