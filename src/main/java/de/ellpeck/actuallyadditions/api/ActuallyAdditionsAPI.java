@@ -174,7 +174,7 @@ public final class ActuallyAdditionsAPI{
      * @param output    The output as an ItemStack
      * @param energyUse The amount of RF used per conversion
      * @param type      The type of lens used for the conversion. To use the default type, use method below.
-     *                  Note how this always has to be the same INSTANCE of the lens type that the item also has for it to work!
+     *                  Note how this always has to be the same instance of the lens type that the item also has for it to work!
      */
     public static void addReconstructorLensConversionRecipe(ItemStack input, ItemStack output, int energyUse, LensConversion type){
         RECONSTRUCTOR_LENS_CONVERSION_RECIPES.add(new LensConversionRecipe(input, output, energyUse, type));
@@ -191,7 +191,7 @@ public final class ActuallyAdditionsAPI{
      * @param output    The output's OreDictionary name
      * @param energyUse The amount of RF used per conversion
      * @param type      The type of lens used for the conversion. To use the default type, use method below
-     *                  Note how this always has to be the same INSTANCE of the lens type that the item also has for it to work!
+     *                  Note how this always has to be the same instance of the lens type that the item also has for it to work!
      */
     public static void addReconstructorLensConversionRecipe(String input, String output, int energyUse, LensConversion type){
         RECONSTRUCTOR_LENS_CONVERSION_RECIPES.add(new LensConversionRecipe(input, output, energyUse, type));
@@ -204,7 +204,7 @@ public final class ActuallyAdditionsAPI{
     /**
      * Adds an item and the way it is modified to the Atomic Reconstructor's color lens.
      * This also works for blocks, but they have to be in their item form.
-     * The way it is modified is an INSTANCE of IColorLensChanger. When modifying the item,
+     * The way it is modified is an instance of IColorLensChanger. When modifying the item,
      * its modifyItem() method will be called with a stack containing the item.
      *
      * @param item    The item (or block's item) to add
