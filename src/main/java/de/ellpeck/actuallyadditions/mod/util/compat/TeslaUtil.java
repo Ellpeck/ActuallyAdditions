@@ -57,11 +57,8 @@ public final class TeslaUtil{
         ITeslaProducer handlerFrom = null;
 
         for(int i = 0; i < 2; i++){
-            if(handlerFrom == null){
+            if(handlerFrom == null && handlerTo == null){
                 handlerFrom = (i == 0 ? tile : otherTile).getCapability(teslaProducer, i == 0 ? side : side.getOpposite());
-            }
-
-            if(handlerTo == null){
                 handlerTo = (i == 0 ? otherTile : tile).getCapability(teslaConsumer, i == 0 ? side.getOpposite() : side);
             }
         }
