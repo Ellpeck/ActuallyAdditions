@@ -37,9 +37,9 @@ import java.util.List;
 
 public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyReceiver, IButtonReactor, IEnergySaver, IEnergyDisplay{
 
-    public static final int ENERGY_USE_PER_BLOCK = 500;
+    public static final int ENERGY_USE_PER_BLOCK = 1000;
     public static final int DEFAULT_RANGE = 2;
-    public final EnergyStorage storage = new EnergyStorage(1000000);
+    public final EnergyStorage storage = new EnergyStorage(200000);
     public int layerAt = -1;
     public boolean onlyMineOres = true;
     private int oldLayerAt;
