@@ -15,11 +15,12 @@ import cofh.api.energy.IEnergyProvider;
 import cofh.api.energy.IEnergyReceiver;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import net.darkhax.tesla.api.ITeslaConsumer;
+import net.darkhax.tesla.api.ITeslaHolder;
 import net.darkhax.tesla.api.ITeslaProducer;
-import net.darkhax.tesla.capability.TeslaCapabilities;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.CapabilityInject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,11 +28,17 @@ import java.util.Map;
 public final class TeslaUtil{
 
     private static final Map<TileEntityBase, TeslaHandler[]> TESLA_MAP = new HashMap<TileEntityBase, TeslaHandler[]>();
+    @CapabilityInject(ITeslaConsumer.class)
+    public static Capability<ITeslaConsumer> teslaConsumer;
+    @CapabilityInject(ITeslaProducer.class)
+    public static Capability<ITeslaProducer> teslaProducer;
+    @CapabilityInject(ITeslaHolder.class)
+    public static Capability<ITeslaHolder> teslaHolder;
 
     public static <T> T getTeslaCapability(TileEntityBase tile, Capability<T> capability, EnumFacing facing){
-        boolean receive = tile instanceof IEnergyReceiver && capability == TeslaCapabilities.CAPABILITY_CONSUMER;
-        boolean provide = tile instanceof IEnergyProvider && capability == TeslaCapabilities.CAPABILITY_PRODUCER;
-        boolean hold = tile instanceof IEnergyHandler && capability == TeslaCapabilities.CAPABILITY_HOLDER;
+        boolean receive = tile instanceof IEnergyReceiver && capability == teslaConsumer;
+        boolean provide = tile instanceof IEnergyProvider && capability == teslaProducer;
+        boolean hold = tile instanceof IEnergyHandler && capability == teslaHolder;
         if(receive || provide || hold){
             return (T)getHandler(tile, facing);
         }
@@ -46,8 +53,8 @@ public final class TeslaUtil{
 
         for(int i = 0; i < 2; i++){
             if(handlerFrom == null && handlerTo == null){
-                handlerFrom = (i == 0 ? tile : otherTile).getCapability(TeslaCapabilities.CAPABILITY_PRODUCER, i == 0 ? side : side.getOpposite());
-                handlerTo = (i == 0 ? otherTile : tile).getCapability(TeslaCapabilities.CAPABILITY_CONSUMER, i == 0 ? side.getOpposite() : side);
+                handlerFrom = (i == 0 ? tile : otherTile).getCapability(teslaProducer, i == 0 ? side : side.getOpposite());
+                handlerTo = (i == 0 ? otherTile : tile).getCapability(teslaConsumer, i == 0 ? side.getOpposite() : side);
             }
         }
 
