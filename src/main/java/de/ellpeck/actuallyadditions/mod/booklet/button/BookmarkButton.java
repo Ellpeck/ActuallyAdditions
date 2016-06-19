@@ -41,6 +41,7 @@ public class BookmarkButton extends GuiButton{
         if(this.assignedEntry.entry != null){
             if(GuiScreen.isShiftKeyDown()){
                 this.assignedEntry.removeEntry();
+                this.booklet.shouldSaveDataNextClose = true;
             }
             else{
                 BookletUtils.openIndexEntry(this.booklet, this.assignedEntry.entry, this.assignedEntry.pageInIndex, true);
@@ -50,6 +51,7 @@ public class BookmarkButton extends GuiButton{
         else{
             if(this.booklet.currentEntrySet.getCurrentEntry() != null){
                 this.assignedEntry.setEntry(this.booklet.currentEntrySet.getCurrentPage(), this.booklet.currentEntrySet.getCurrentChapter(), this.booklet.currentEntrySet.getCurrentEntry(), this.booklet.currentEntrySet.getPageInIndex());
+                this.booklet.shouldSaveDataNextClose = true;
             }
         }
     }

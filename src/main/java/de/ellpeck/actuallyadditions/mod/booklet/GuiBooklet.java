@@ -88,7 +88,7 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
     public GuiButton buttonPatreon;
     public GuiButton buttonViewOnline;
     public GuiTextField searchField;
-    public boolean changedPageSinceOpen;
+    public boolean shouldSaveDataNextClose;
     private int ticksElapsed;
     private boolean mousePressed;
     private int hisNameIsAt;
@@ -404,7 +404,7 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
             ItemBooklet.forcedEntry = null;
         }
 
-        this.changedPageSinceOpen = false;
+        this.shouldSaveDataNextClose = false;
     }
 
     @Override
@@ -445,7 +445,7 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
 
     @Override
     public void onGuiClosed(){
-        if(this.saveOnClose && this.changedPageSinceOpen){
+        if(this.saveOnClose && this.shouldSaveDataNextClose){
             NBTTagCompound bookletData = new NBTTagCompound();
             BookletUtils.saveBookPage(this, bookletData);
 

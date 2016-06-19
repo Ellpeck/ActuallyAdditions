@@ -294,7 +294,7 @@ public final class BookletUtils{
             }
         }
 
-        booklet.changedPageSinceOpen = true;
+        booklet.shouldSaveDataNextClose = true;
     }
 
     /**
@@ -351,7 +351,7 @@ public final class BookletUtils{
             chapterButton.visible = false;
         }
 
-        booklet.changedPageSinceOpen = true;
+        booklet.shouldSaveDataNextClose = true;
     }
 
     /**
@@ -417,7 +417,7 @@ public final class BookletUtils{
             }
         }
 
-        booklet.changedPageSinceOpen = true;
+        booklet.shouldSaveDataNextClose = true;
     }
 
     /**
@@ -443,7 +443,7 @@ public final class BookletUtils{
             }
         }
 
-        booklet.changedPageSinceOpen = true;
+        booklet.shouldSaveDataNextClose = true;
     }
 
     public static BookletPage getFirstPageForStack(ItemStack stack){
