@@ -1,3 +1,16 @@
+# 1.9.4-r45
+* Added Tesla Energy System support to all RF-using and generating blocks
+* Added video introduction page to booklet
+* Added Laser Wrench mode switch. Just right-click with one at some point.
+* Fixed XP Solidifier values being off
+* Made crafter on a stick not randomly create stacks with no items in them
+* Changed the way fluids and RF are handled making them both pull AND push to other tiles
+* Removed Rarmor integration (for now!) as the mod is in the process of being re-written
+* Made Reconstructor and Display stand not keep their items on the client when having them removed
+* Updated banner in the mods screen~
+* Fixed nullpointer caused by getting capabilities with a null facing sometimes
+* Made the Miner less carry-around-y.
+
 # 1.9.4-r44
 * Fixed a weird crash with Item Laser Relays.
 * Fixed drills sometimes crashing when breaking certain blocks.
