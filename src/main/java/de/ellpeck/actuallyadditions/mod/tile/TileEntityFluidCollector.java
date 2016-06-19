@@ -28,7 +28,17 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileEntityFluidCollector extends TileEntityBase implements IFluidSaver, IRedstoneToggle, net.minecraftforge.fluids.IFluidHandler{
 
-    public final FluidTank tank = new FluidTank(8*Util.BUCKET);
+    public final FluidTank tank = new FluidTank(8*Util.BUCKET){
+        @Override
+        public boolean canFill(){
+            return TileEntityFluidCollector.this.isPlacer;
+        }
+
+        @Override
+        public boolean canDrain(){
+            return !TileEntityFluidCollector.this.isPlacer;
+        }
+    };
     public boolean isPlacer;
     private int lastTankAmount;
     private int currentTime;
