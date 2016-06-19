@@ -60,12 +60,13 @@ public class WorldGenLushCaves extends WorldGenerator{
         if(!possiblePoses.isEmpty()){
             for(int i = 0; i <= amount; i++){
                 Collections.shuffle(possiblePoses);
+                BlockPos pos = possiblePoses.get(0);
                 if(rand.nextBoolean()){
                     WorldGenAbstractTree trees = rand.nextBoolean() ? (rand.nextBoolean() ? new WorldGenBigTree(false) : new WorldGenShrub(Blocks.LOG.getDefaultState(), Blocks.LEAVES.getDefaultState())) : new WorldGenTrees(false);
-                    trees.generate(world, rand, possiblePoses.get(0).up());
+                    trees.generate(world, rand, pos.up());
                 }
                 else{
-                    ItemDye.applyBonemeal(new ItemStack(Items.DYE, 1, EnumDyeColor.WHITE.getDyeDamage()), world, possiblePoses.get(0));
+                    Blocks.GRASS.grow(world, rand, pos, world.getBlockState(pos));
                 }
             }
         }

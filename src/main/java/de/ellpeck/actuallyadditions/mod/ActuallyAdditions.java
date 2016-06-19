@@ -42,7 +42,6 @@ import de.ellpeck.actuallyadditions.mod.recipe.HairyBallHandler;
 import de.ellpeck.actuallyadditions.mod.recipe.TreasureChestHandler;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.update.UpdateChecker;
-import de.ellpeck.actuallyadditions.mod.util.FakePlayerUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.Mod;
@@ -130,7 +129,6 @@ public class ActuallyAdditions{
         proxy.postInit(event);
 
         ModUtil.LOGGER.info("PostInitialization Finished.");
-        FakePlayerUtil.info();
     }
 
     @EventHandler

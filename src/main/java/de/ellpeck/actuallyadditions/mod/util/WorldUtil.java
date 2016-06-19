@@ -41,6 +41,8 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.IPlantable;
+import net.minecraftforge.common.util.FakePlayer;
+import net.minecraftforge.common.util.FakePlayerFactory;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidBlock;
@@ -167,7 +169,6 @@ public final class WorldUtil{
             //Fluids
             if(replaceable && !(block instanceof IFluidBlock) && !(block instanceof BlockLiquid)){
                 FluidStack fluid = null;
-                //TODO Remove when FluidContainerRegistry is gone
                 if(FluidContainerRegistry.isFilledContainer(stack)){
                     fluid = FluidContainerRegistry.getFluidForFilledItem(stack);
                 }
@@ -201,9 +202,11 @@ public final class WorldUtil{
 
             //Everything else
             try{
-                EntityPlayer fake = FakePlayerUtil.getFakePlayer(world);
-                stack.onItemUse(fake, world, offsetPos, fake.getActiveHand(), side.getOpposite(), 0.5F, 0.5F, 0.5F);
-                return stack;
+                if(world instanceof WorldServer){
+                    FakePlayer fake = FakePlayerFactory.getMinecraft((WorldServer)world);
+                    stack.onItemUse(fake, world, offsetPos, fake.getActiveHand(), side.getOpposite(), 0.5F, 0.5F, 0.5F);
+                    return stack;
+                }
             }
             catch(Exception e){
                 ModUtil.LOGGER.error("Something that places Blocks at "+offsetPos.getX()+", "+offsetPos.getY()+", "+offsetPos.getZ()+" in World "+world.provider.getDimension()+" threw an Exception! Don't let that happen again!", e);
