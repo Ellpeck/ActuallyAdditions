@@ -1,3 +1,9 @@
+# 1.10-r46
+* Updated to 1.10. Obviously.
+* Made booklet actually save its bookmarks
+* Remove custom fake player in favor of vanilla one
+* Made fluid collector not input and output fluids all the time causing infinite loops
+
 # 1.9.4-r45
 * Added Tesla Energy System support to all RF-using and generating blocks
 * Added video introduction page to booklet
