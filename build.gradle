@@ -19,7 +19,7 @@ group = "de.ellpeck.actuallyadditions"
 archivesBaseName = "ActuallyAdditions"
 
 minecraft {
-    version = "1.9.4-12.17.0.1957"
+    version = "1.10-12.18.0.1983-1.10.0"
     runDir = "idea"
 
     mappings = "snapshot_20160519"
