@@ -31,6 +31,10 @@ public final class MiscCrafting{
 
     public static void init(){
 
+        //Bio Coal
+        GameRegistry.addSmelting(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.BIOMASS.ordinal()),
+                new ItemStack(InitItems.itemMisc, 1, TheMiscItems.BIOCOAL.ordinal()), 1.0F);
+
         //Crystals
         for(int i = 0; i < TheCrystals.values().length; i++){
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockCrystal, 1, i),

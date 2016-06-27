@@ -35,14 +35,20 @@ public class BlockPlant extends BlockCrops{
     private final int minDropAmount;
     private final int addDropAmount;
     public Item seedItem;
-    public Item returnItem;
-    public int returnMeta;
+    private Item returnItem;
+    private int returnMeta;
 
     public BlockPlant(String name, int minDropAmount, int addDropAmount){
         this.name = name;
         this.minDropAmount = minDropAmount;
         this.addDropAmount = addDropAmount;
         this.register();
+    }
+
+    public void doStuff(Item seedItem, Item returnItem, int returnMeta){
+        this.seedItem = seedItem;
+        this.returnItem = returnItem;
+        this.returnMeta = returnMeta;
     }
 
     private void register(){
@@ -70,7 +76,6 @@ public class BlockPlant extends BlockCrops{
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.RARE;
     }
-
 
     @Override
     public EnumPlantType getPlantType(IBlockAccess world, BlockPos pos){
@@ -110,7 +115,6 @@ public class BlockPlant extends BlockCrops{
         return false;
     }
 
-
     @Override
     public Item getSeed(){
         return this.seedItem;
@@ -121,12 +125,10 @@ public class BlockPlant extends BlockCrops{
         return this.getMetaFromState(state) >= 7 ? random.nextInt(this.addDropAmount)+this.minDropAmount : super.quantityDropped(state, fortune, random);
     }
 
-
     @Override
     public Item getCrop(){
         return this.returnItem;
     }
-
 
     @Override
     public Item getItemDropped(IBlockState state, Random rand, int par3){

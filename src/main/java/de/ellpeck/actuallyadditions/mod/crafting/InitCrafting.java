@@ -29,6 +29,7 @@ public final class InitCrafting{
         ToolCrafting.init();
 
         ActuallyAdditionsAPI.addCompostRecipe(new ItemStack(InitItems.itemMisc, 10, TheMiscItems.MASHED_FOOD.ordinal()), Blocks.LEAVES, new ItemStack(InitItems.itemFertilizer, 10), Blocks.DIRT);
+        ActuallyAdditionsAPI.addCompostRecipe(new ItemStack(InitItems.itemCanolaSeed, 20), Blocks.DIRT, new ItemStack(InitItems.itemMisc, 1, TheMiscItems.BIOMASS.ordinal()), Blocks.SOUL_SAND);
     }
 
 }

@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.util.compat;
 
-import de.ellpeck.actuallyadditions.mod.items.base.ItemSeed;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -27,10 +26,10 @@ public final class CompatUtil{
         FMLInterModComms.sendMessage("MineFactoryReloaded", "registerFertilizable_Crop", compound);
     }
 
-    public static void registerMFRSeed(Item item){
+    public static void registerMFRSeed(Item item, Block plant){
         NBTTagCompound compound = new NBTTagCompound();
         compound.setString("seed", item.getRegistryName().toString());
-        compound.setString("crop", ((ItemSeed)item).plant.getRegistryName().toString());
+        compound.setString("crop", plant.getRegistryName().toString());
         FMLInterModComms.sendMessage("MineFactoryReloaded", "registerPlantable_Crop", compound);
     }
 

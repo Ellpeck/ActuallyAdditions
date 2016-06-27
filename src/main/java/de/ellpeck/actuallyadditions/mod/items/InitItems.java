@@ -12,10 +12,7 @@ package de.ellpeck.actuallyadditions.mod.items;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
-import de.ellpeck.actuallyadditions.mod.items.base.ItemArmorAA;
-import de.ellpeck.actuallyadditions.mod.items.base.ItemHoeAA;
-import de.ellpeck.actuallyadditions.mod.items.base.ItemSeed;
-import de.ellpeck.actuallyadditions.mod.items.base.ItemSwordAA;
+import de.ellpeck.actuallyadditions.mod.items.base.*;
 import de.ellpeck.actuallyadditions.mod.items.lens.ItemLens;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheCrystals;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheFoods;
@@ -27,9 +24,11 @@ import de.ellpeck.actuallyadditions.mod.util.Util;
 import de.ellpeck.actuallyadditions.mod.util.compat.CompatUtil;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.init.MobEffects;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.PotionEffect;
 
 public final class InitItems{
 
@@ -273,13 +272,13 @@ public final class InitItems{
         itemHairyBall = new ItemHairyBall("itemHairyBall");
         itemCoffeeBean = new ItemCoffeeBean("itemCoffeeBeans");
         itemRiceSeed = new ItemSeed("itemRiceSeed", "seedRice", InitBlocks.blockRice, itemFoods, TheFoods.RICE.ordinal());
-        CompatUtil.registerMFRSeed(itemRiceSeed);
-        itemCanolaSeed = new ItemSeed("itemCanolaSeed", "seedCanola", InitBlocks.blockCanola, itemMisc, TheMiscItems.CANOLA.ordinal());
-        CompatUtil.registerMFRSeed(itemCanolaSeed);
+        CompatUtil.registerMFRSeed(itemRiceSeed, InitBlocks.blockRice);
+        itemCanolaSeed = new ItemFoodSeed("itemCanolaSeed", "seedCanola", InitBlocks.blockCanola, itemMisc, TheMiscItems.CANOLA.ordinal(), 1, 0.01F, 10).setPotionEffect(new PotionEffect(MobEffects.NAUSEA, 1000, 0), 0.2F);
+        CompatUtil.registerMFRSeed(itemCanolaSeed, InitBlocks.blockCanola);
         itemFlaxSeed = new ItemSeed("itemFlaxSeed", "seedFlax", InitBlocks.blockFlax, Items.STRING, 0);
-        CompatUtil.registerMFRSeed(itemFlaxSeed);
+        CompatUtil.registerMFRSeed(itemFlaxSeed, InitBlocks.blockFlax);
         itemCoffeeSeed = new ItemSeed("itemCoffeeSeed", "seedCoffeeBeans", InitBlocks.blockCoffee, itemCoffeeBean, 0);
-        CompatUtil.registerMFRSeed(itemCoffeeSeed);
+        CompatUtil.registerMFRSeed(itemCoffeeSeed, InitBlocks.blockCoffee);
         itemPickaxeEmerald = new ItemPickaxeAA(InitToolMaterials.toolMaterialEmerald, new ItemStack(Items.EMERALD), "itemPickaxeEmerald", EnumRarity.EPIC);
         itemAxeEmerald = new ItemAxeAA(InitToolMaterials.toolMaterialEmerald, new ItemStack(Items.EMERALD), "itemAxeEmerald", EnumRarity.EPIC);
         itemShovelEmerald = new ItemShovelAA(InitToolMaterials.toolMaterialEmerald, new ItemStack(Items.EMERALD), "itemShovelEmerald", EnumRarity.EPIC);
