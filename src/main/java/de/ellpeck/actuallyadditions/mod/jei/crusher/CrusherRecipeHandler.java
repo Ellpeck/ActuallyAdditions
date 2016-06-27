@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.jei.crusher;
 
 import de.ellpeck.actuallyadditions.api.recipe.CrusherRecipe;
+import de.ellpeck.actuallyadditions.api.recipe.LensConversionRecipe;
 import mezz.jei.api.recipe.IRecipeHandler;
 import mezz.jei.api.recipe.IRecipeWrapper;
 
@@ -26,6 +27,11 @@ public class CrusherRecipeHandler implements IRecipeHandler<CrusherRecipe>{
     @Override
     public String getRecipeCategoryUid(){
         return CrusherRecipeCategory.NAME;
+    }
+
+    @Override
+    public String getRecipeCategoryUid(CrusherRecipe recipe){
+        return this.getRecipeCategoryUid();
     }
 
 

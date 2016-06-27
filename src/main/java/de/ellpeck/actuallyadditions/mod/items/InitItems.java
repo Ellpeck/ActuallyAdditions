@@ -215,7 +215,7 @@ public final class InitItems{
         itemWaterBowl = new ItemWaterBowl("itemWaterBowl");
         itemSpawnerChanger = new ItemSpawnerChanger("itemSpawnerChanger");
         itemMisc = new ItemMisc("itemMisc");
-        itemCrateKeeper = new ItemGeneric("itemCrateKeeper");
+        itemCrateKeeper = new ItemGeneric("itemCrateKeeper").setMaxStackSize(1);
         itemColorLens = new ItemLens("itemColorLens", ActuallyAdditionsAPI.lensColor);
         itemExplosionLens = new ItemLens("itemExplosionLens", ActuallyAdditionsAPI.lensDetonation);
         itemDamageLens = new ItemLens("itemDamageLens", ActuallyAdditionsAPI.lensDeath);

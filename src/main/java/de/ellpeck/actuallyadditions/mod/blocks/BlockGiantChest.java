@@ -115,9 +115,11 @@ public class BlockGiantChest extends BlockContainerBase{
                 for(int i = 0; i < slots.length; i++){
                     //Destroy the keeper
                     if(i != place){
+                        NBTTagCompound compound = new NBTTagCompound();
                         if(slots[i] != null){
-                            list.appendTag(slots[i].writeToNBT(new NBTTagCompound()));
+                            slots[i].writeToNBT(compound);
                         }
+                        list.appendTag(compound);
                     }
                 }
 

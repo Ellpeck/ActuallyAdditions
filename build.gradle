@@ -19,7 +19,7 @@ group = "de.ellpeck.actuallyadditions"
 archivesBaseName = "ActuallyAdditions"
 
 minecraft {
-    version = "1.10-12.18.0.1983-1.10.0"
+    version = "1.10-12.18.0.2000-1.10.0"
     runDir = "idea"
 
     mappings = "snapshot_20160519"
@@ -48,7 +48,7 @@ dependencies {
     //compile "codechicken:NotEnoughItems:1.8-1.0.5.104:dev"
 
     compile "net.darkhax.tesla:Tesla:1.9.4-1.1.0.24"
-    deobfCompile "mezz.jei:jei_1.9.4:3.4.0.202"
+    deobfCompile "mezz.jei:jei_1.10:3.7.1.219"
 }
 
 processResources {

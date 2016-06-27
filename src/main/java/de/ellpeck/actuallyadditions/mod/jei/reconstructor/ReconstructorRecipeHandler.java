@@ -15,20 +15,24 @@ import de.ellpeck.actuallyadditions.mod.nei.NEIReconstructorRecipe;
 import mezz.jei.api.recipe.IRecipeHandler;
 import mezz.jei.api.recipe.IRecipeWrapper;
 
-public class ReconstructorRecipeHandler implements IRecipeHandler<LensConversionRecipe>{
+import javax.annotation.Nonnull;
 
+public class ReconstructorRecipeHandler implements IRecipeHandler<LensConversionRecipe>{
 
     @Override
     public Class getRecipeClass(){
         return LensConversionRecipe.class;
     }
 
-
     @Override
     public String getRecipeCategoryUid(){
         return NEIReconstructorRecipe.NAME;
     }
 
+    @Override
+    public String getRecipeCategoryUid(LensConversionRecipe recipe){
+        return this.getRecipeCategoryUid();
+    }
 
     @Override
     public IRecipeWrapper getRecipeWrapper(LensConversionRecipe recipe){
