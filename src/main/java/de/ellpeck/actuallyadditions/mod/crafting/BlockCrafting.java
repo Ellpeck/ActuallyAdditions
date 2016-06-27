@@ -70,6 +70,8 @@ public final class BlockCrafting{
     public static IRecipe recipeFeeder;
     public static IRecipe recipeCompost;
     public static IRecipe recipeCrate;
+    public static IRecipe recipeCrateMedium;
+    public static IRecipe recipeCrateLarge;
     public static IRecipe recipeFermentingBarrel;
     public static IRecipe recipeCanolaPress;
     public static IRecipe recipePowerer;
@@ -660,6 +662,20 @@ public final class BlockCrafting{
                     'D', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.WOOD_CASING.ordinal()),
                     'W', "plankWood"));
             recipeCrate = RecipeUtil.lastIRecipe();
+
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockGiantChestMedium),
+                    "CWC", "WDW", "CWC",
+                    'C', new ItemStack(InitBlocks.blockCrystal, 1, TheCrystals.COAL.ordinal()),
+                    'D', new ItemStack(InitBlocks.blockGiantChest),
+                    'W', "plankWood"));
+            recipeCrateMedium = RecipeUtil.lastIRecipe();
+
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockGiantChestLarge),
+                    "CWC", "WDW", "CWC",
+                    'C', new ItemStack(InitBlocks.blockCrystal, 1, TheCrystals.COAL.ordinal()),
+                    'D', new ItemStack(InitBlocks.blockGiantChestMedium),
+                    'W', "plankWood"));
+            recipeCrateLarge = RecipeUtil.lastIRecipe();
         }
 
         //Greenhouse Glass
