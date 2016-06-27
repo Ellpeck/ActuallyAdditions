@@ -105,7 +105,7 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
 
     @Override
     public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
-        return false;
+        return TileEntityFurnace.getItemBurnTime(this.slots[0]) <= 0;
     }
 
     @Override
