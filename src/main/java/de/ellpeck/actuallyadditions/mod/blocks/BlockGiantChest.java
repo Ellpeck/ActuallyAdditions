@@ -12,10 +12,14 @@ package de.ellpeck.actuallyadditions.mod.blocks;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
+import de.ellpeck.actuallyadditions.mod.blocks.base.ItemBlockBase;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityGiantChest;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityGiantChestLarge;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityGiantChestMedium;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
+import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -29,25 +33,35 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class BlockGiantChest extends BlockContainerBase{
 
-    public BlockGiantChest(String name){
+    public final int type;
+
+    public BlockGiantChest(String name, int type){
         super(Material.WOOD, name);
+        this.type = type;
+
         this.setHarvestLevel("axe", 0);
         this.setHardness(0.5F);
         this.setResistance(15.0F);
         this.setSoundType(SoundType.WOOD);
-    }
 
+    }
 
     @Override
     public TileEntity createNewTileEntity(World world, int par2){
-        return new TileEntityGiantChest();
+        switch(this.type){
+            case 1: return new TileEntityGiantChestMedium();
+            case 2: return new TileEntityGiantChestLarge();
+            default: return new TileEntityGiantChest();
+        }
     }
 
     @Override
@@ -132,5 +146,28 @@ public class BlockGiantChest extends BlockContainerBase{
         }
 
         super.breakBlock(world, pos, state);
+    }
+
+    @Override
+    protected ItemBlockBase getItemBlock(){
+        return new TheItemBlock(this);
+    }
+
+    public static class TheItemBlock extends ItemBlockBase{
+
+        public TheItemBlock(Block block){
+            super(block);
+        }
+
+        @Override
+        public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced){
+            int type = this.block instanceof BlockGiantChest ? ((BlockGiantChest)this.block).type : -1;
+            if(type == 2){
+                tooltip.add(TextFormatting.ITALIC+"Supersolid");
+            }
+            else if(type == 0){
+                tooltip.add(TextFormatting.ITALIC+"'Small'");
+            }
+        }
     }
 }

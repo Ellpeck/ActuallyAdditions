@@ -105,6 +105,8 @@ public class CreativeTab extends CreativeTabs{
         this.add(InitBlocks.blockFeeder);
         this.add(InitBlocks.blockCompost);
         this.add(InitBlocks.blockGiantChest);
+        this.add(InitBlocks.blockGiantChestMedium);
+        this.add(InitBlocks.blockGiantChestLarge);
         this.add(InitBlocks.blockCanolaPress);
         this.add(InitBlocks.blockFermentingBarrel);
 

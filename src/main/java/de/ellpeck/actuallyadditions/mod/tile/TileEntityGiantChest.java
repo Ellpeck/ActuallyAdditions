@@ -11,13 +11,21 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
+import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 
-public class TileEntityGiantChest extends TileEntityInventoryBase{
+public class TileEntityGiantChest extends TileEntityInventoryBase implements IButtonReactor{
+
+    public TileEntityGiantChest(int slotAmount){
+        super(slotAmount, "giantChest");
+    }
 
     public TileEntityGiantChest(){
-        super(9*13, "giantChest");
+        this(9*13);
     }
 
     @Override
@@ -33,5 +41,22 @@ public class TileEntityGiantChest extends TileEntityInventoryBase{
     @Override
     public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
         return true;
+    }
+
+    @Override
+    public void onButtonPressed(int buttonID, EntityPlayer player){
+        GuiHandler.GuiTypes type;
+
+        if(buttonID == 0){
+            type = GuiHandler.GuiTypes.GIANT_CHEST;
+        }
+        else if(buttonID == 1){
+            type = GuiHandler.GuiTypes.GIANT_CHEST_PAGE_2;
+        }
+        else{
+            type = GuiHandler.GuiTypes.GIANT_CHEST_PAGE_3;
+        }
+
+        player.openGui(ActuallyAdditions.instance, type.ordinal(), this.worldObj, this.pos.getX(), this.pos.getY(), this.pos.getZ());
     }
 }

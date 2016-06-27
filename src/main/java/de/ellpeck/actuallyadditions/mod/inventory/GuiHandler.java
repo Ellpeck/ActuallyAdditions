@@ -39,7 +39,11 @@ public class GuiHandler implements IGuiHandler{
             case FEEDER:
                 return new ContainerFeeder(entityPlayer.inventory, tile);
             case GIANT_CHEST:
-                return new ContainerGiantChest(entityPlayer.inventory, tile);
+                return new ContainerGiantChest(entityPlayer.inventory, tile, 0);
+            case GIANT_CHEST_PAGE_2:
+                return new ContainerGiantChest(entityPlayer.inventory, tile, 1);
+            case GIANT_CHEST_PAGE_3:
+                return new ContainerGiantChest(entityPlayer.inventory, tile, 2);
             case CRAFTER:
                 return new ContainerCrafter(entityPlayer);
             case GRINDER:
@@ -107,7 +111,11 @@ public class GuiHandler implements IGuiHandler{
             case FEEDER:
                 return new GuiFeeder(entityPlayer.inventory, tile);
             case GIANT_CHEST:
-                return new GuiGiantChest(entityPlayer.inventory, tile);
+                return new GuiGiantChest(entityPlayer.inventory, tile, 0);
+            case GIANT_CHEST_PAGE_2:
+                return new GuiGiantChest(entityPlayer.inventory, tile, 1);
+            case GIANT_CHEST_PAGE_3:
+                return new GuiGiantChest(entityPlayer.inventory, tile, 2);
             case CRAFTER:
                 return new GuiCrafter(entityPlayer);
             case GRINDER:
@@ -172,6 +180,8 @@ public class GuiHandler implements IGuiHandler{
     public enum GuiTypes{
         FEEDER,
         GIANT_CHEST,
+        GIANT_CHEST_PAGE_2,
+        GIANT_CHEST_PAGE_3,
         CRAFTER(false),
         GRINDER,
         GRINDER_DOUBLE,

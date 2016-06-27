@@ -24,6 +24,8 @@ public final class InitBlocks{
     public static Block blockWildPlant;
     public static Block blockFeeder;
     public static Block blockGiantChest;
+    public static Block blockGiantChestMedium;
+    public static Block blockGiantChestLarge;
 
     public static Block blockGrinder;
     public static Block blockGrinderDouble;
@@ -174,7 +176,9 @@ public final class InitBlocks{
         blockCompost = new BlockCompost("blockCompost");
         blockMisc = new BlockMisc("blockMisc");
         blockFeeder = new BlockFeeder("blockFeeder");
-        blockGiantChest = new BlockGiantChest("blockGiantChest");
+        blockGiantChest = new BlockGiantChest("blockGiantChest", 0);
+        blockGiantChestMedium = new BlockGiantChest("blockGiantChestMedium", 1);
+        blockGiantChestLarge = new BlockGiantChest("blockGiantChestLarge", 2);
         blockGrinder = new BlockGrinder(false, "blockGrinder");
         blockGrinderDouble = new BlockGrinder(true, "blockGrinderDouble");
         blockFurnaceDouble = new BlockFurnaceDouble("blockFurnaceDouble");

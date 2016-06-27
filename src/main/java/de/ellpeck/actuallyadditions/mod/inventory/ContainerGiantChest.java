@@ -24,12 +24,12 @@ public class ContainerGiantChest extends Container{
 
     public final TileEntityGiantChest tileChest;
 
-    public ContainerGiantChest(InventoryPlayer inventory, TileEntityBase tile){
+    public ContainerGiantChest(InventoryPlayer inventory, TileEntityBase tile, int page){
         this.tileChest = (TileEntityGiantChest)tile;
 
         for(int i = 0; i < 9; i++){
             for(int j = 0; j < 13; j++){
-                this.addSlotToContainer(new Slot(this.tileChest, j+(i*13), 5+j*18, 5+i*18));
+                this.addSlotToContainer(new Slot(this.tileChest, (9*13*page)+j+(i*13), 5+j*18, 5+i*18));
             }
         }
 

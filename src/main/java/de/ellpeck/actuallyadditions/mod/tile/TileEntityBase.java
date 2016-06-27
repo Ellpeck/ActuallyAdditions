@@ -53,6 +53,8 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
         GameRegistry.registerTileEntity(TileEntityCompost.class, ModUtil.MOD_ID+":tileEntityCompost");
         GameRegistry.registerTileEntity(TileEntityFeeder.class, ModUtil.MOD_ID+":tileEntityFeeder");
         GameRegistry.registerTileEntity(TileEntityGiantChest.class, ModUtil.MOD_ID+":tileEntityGiantChest");
+        GameRegistry.registerTileEntity(TileEntityGiantChestMedium.class, ModUtil.MOD_ID+":tileEntityGiantChestMedium");
+        GameRegistry.registerTileEntity(TileEntityGiantChestLarge.class, ModUtil.MOD_ID+":tileEntityGiantChestLarge");
         GameRegistry.registerTileEntity(TileEntityGrinder.class, ModUtil.MOD_ID+":tileEntityGrinder");
         GameRegistry.registerTileEntity(TileEntityFurnaceDouble.class, ModUtil.MOD_ID+":tileEntityFurnaceDouble");
         GameRegistry.registerTileEntity(TileEntityInputter.class, ModUtil.MOD_ID+":tileEntityInputter");

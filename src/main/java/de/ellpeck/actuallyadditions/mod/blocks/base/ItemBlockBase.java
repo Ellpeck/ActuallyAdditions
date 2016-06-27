@@ -24,7 +24,6 @@ public class ItemBlockBase extends ItemBlock{
         this.setMaxDamage(0);
     }
 
-
     @Override
     public String getUnlocalizedName(ItemStack stack){
         return this.getUnlocalizedName();
@@ -34,7 +33,6 @@ public class ItemBlockBase extends ItemBlock{
     public int getMetadata(int damage){
         return damage;
     }
-
 
     @Override
     public EnumRarity getRarity(ItemStack stack){
