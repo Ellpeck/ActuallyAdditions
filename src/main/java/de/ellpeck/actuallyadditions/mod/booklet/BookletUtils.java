@@ -233,7 +233,7 @@ public final class BookletUtils{
             ItemStack[] pageStacks = page.getItemStacksForPage();
             if(pageStacks != null){
                 for(ItemStack stack : pageStacks){
-                    if(stack.getDisplayName().toLowerCase(Locale.ROOT).contains(text)){
+                    if(stack != null && stack.getDisplayName().toLowerCase(Locale.ROOT).contains(text)){
                         return true;
                     }
                 }
