@@ -29,7 +29,7 @@ import net.minecraftforge.common.EnumPlantType;
 import java.util.List;
 import java.util.Random;
 
-public class BlockPlant extends BlockCrops{
+public class BlockPlant extends BlockCrops implements ItemBlockBase.ICustomRarity{
 
     private final String name;
     private final int minDropAmount;
@@ -73,6 +73,7 @@ public class BlockPlant extends BlockCrops{
         ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this), this.getRegistryName(), "inventory");
     }
 
+    @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.RARE;
     }

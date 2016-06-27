@@ -18,7 +18,7 @@ import net.minecraft.block.BlockStairs;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 
-public class BlockStair extends BlockStairs{
+public class BlockStair extends BlockStairs implements ItemBlockBase.ICustomRarity{
 
     private final String name;
 
@@ -56,6 +56,7 @@ public class BlockStair extends BlockStairs{
         ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this), this.getRegistryName(), "inventory");
     }
 
+    @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.COMMON;
     }

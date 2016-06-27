@@ -24,6 +24,7 @@ public class ItemBlockBase extends ItemBlock{
         this.setMaxDamage(0);
     }
 
+
     @Override
     public String getUnlocalizedName(ItemStack stack){
         return this.getUnlocalizedName();
@@ -34,28 +35,20 @@ public class ItemBlockBase extends ItemBlock{
         return damage;
     }
 
+
     @Override
     public EnumRarity getRarity(ItemStack stack){
-        if(this.block instanceof BlockBase){
-            return ((BlockBase)this.block).getRarity(stack);
-        }
-        else if(this.block instanceof BlockContainerBase){
-            return ((BlockContainerBase)this.block).getRarity(stack);
-        }
-        else if(this.block instanceof BlockFluidFlowing){
-            return ((BlockFluidFlowing)this.block).getRarity(stack);
-        }
-        else if(this.block instanceof BlockPlant){
-            return ((BlockPlant)this.block).getRarity(stack);
-        }
-        else if(this.block instanceof BlockStair){
-            return ((BlockStair)this.block).getRarity(stack);
-        }
-        else if(this.block instanceof BlockBushBase){
-            return ((BlockBushBase)this.block).getRarity(stack);
+        if(this.block instanceof ICustomRarity){
+            return ((ICustomRarity)this.block).getRarity(stack);
         }
         else{
             return Util.FALLBACK_RARITY;
         }
+    }
+
+    public interface ICustomRarity{
+
+        EnumRarity getRarity(ItemStack stack);
+
     }
 }

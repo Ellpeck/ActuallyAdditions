@@ -20,7 +20,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 
-public class BlockBase extends Block{
+public class BlockBase extends Block implements ItemBlockBase.ICustomRarity{
 
     private final String name;
 
@@ -53,6 +53,7 @@ public class BlockBase extends Block{
         ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this), this.getRegistryName(), "inventory");
     }
 
+    @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.COMMON;
     }

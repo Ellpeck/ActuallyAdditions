@@ -41,7 +41,7 @@ import net.minecraftforge.fluids.FluidUtil;
 import java.util.ArrayList;
 import java.util.Random;
 
-public abstract class BlockContainerBase extends BlockContainer{
+public abstract class BlockContainerBase extends BlockContainer implements ItemBlockBase.ICustomRarity{
 
     private final String name;
 
@@ -74,6 +74,7 @@ public abstract class BlockContainerBase extends BlockContainer{
         ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this), this.getRegistryName(), "inventory");
     }
 
+    @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.COMMON;
     }

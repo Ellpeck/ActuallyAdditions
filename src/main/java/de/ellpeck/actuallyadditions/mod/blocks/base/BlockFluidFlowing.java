@@ -22,7 +22,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fluids.BlockFluidClassic;
 import net.minecraftforge.fluids.Fluid;
 
-public class BlockFluidFlowing extends BlockFluidClassic{
+public class BlockFluidFlowing extends BlockFluidClassic implements ItemBlockBase.ICustomRarity{
 
     private final String name;
 
@@ -60,6 +60,7 @@ public class BlockFluidFlowing extends BlockFluidClassic{
         return !PosUtil.getMaterial(pos, world).isLiquid() && super.displaceIfPossible(world, pos);
     }
 
+    @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.EPIC;
     }
