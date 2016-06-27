@@ -19,14 +19,14 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class PageTextOnly extends BookletPageAA{
 
-    private ItemStack stack;
+    private ItemStack[] stacks;
 
     public PageTextOnly(int id){
         super(id);
     }
 
-    public PageTextOnly setStack(ItemStack stack){
-        this.stack = stack;
+    public PageTextOnly setStacks(ItemStack... stacks){
+        this.stacks = stacks;
         this.addToPagesWithItemStackData();
         return this;
     }
@@ -42,6 +42,6 @@ public class PageTextOnly extends BookletPageAA{
 
     @Override
     public ItemStack[] getItemStacksForPage(){
-        return this.stack == null ? new ItemStack[0] : new ItemStack[]{this.stack};
+        return this.stacks == null ? new ItemStack[0] : this.stacks;
     }
 }
