@@ -1,3 +1,10 @@
+#1.10.2-r47
+* Updated to 1.10.2. Could've guessed that by the name.
+* Fixed a crash when searching the booklet
+* Made empty buckets be able to get pulled out of the coal generator
+* Added biomass and biocoal made from canola seeds and made canola edible
+* Added medium and large storage crates
+
 # 1.10-r46
 * Updated to 1.10. Obviously.
 * Made booklet actually save its bookmarks
