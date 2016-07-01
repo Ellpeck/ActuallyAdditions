@@ -31,6 +31,7 @@ import de.ellpeck.actuallyadditions.mod.update.UpdateChecker;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
+import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.gui.FontRenderer;
@@ -42,6 +43,7 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
@@ -92,6 +94,7 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
     private int ticksElapsed;
     private boolean mousePressed;
     private int hisNameIsAt;
+    public String bookletName;
 
     public GuiBooklet(GuiScreen parentScreen, boolean tryOpenMainPage, boolean saveOnClose){
         this.xSize = 146;
@@ -302,6 +305,12 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
 
     @Override
     public void initGui(){
+        int flavor = 1;
+        if(Util.RANDOM.nextFloat() <= 0.1){
+            flavor = MathHelper.getRandomIntegerInRange(Util.RANDOM, 2, 5);
+        }
+        this.bookletName = "info."+ModUtil.MOD_ID+".booklet.manualName.1."+flavor;
+
         this.guiLeft = (this.width-this.xSize)/2;
         this.guiTop = (this.height-this.ySize)/2;
 
