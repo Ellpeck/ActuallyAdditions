@@ -25,7 +25,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.ArrayList;
 
-public class TileEntityHeatCollector extends TileEntityBase implements IEnergyProvider, IEnergySaver, IEnergyDisplay{
+public class TileEntityHeatCollector extends TileEntityBase implements IEnergyProvider, IEnergyDisplay{
 
     public static final int ENERGY_PRODUCE = 40;
     public static final int BLOCKS_NEEDED = 4;
@@ -37,14 +37,14 @@ public class TileEntityHeatCollector extends TileEntityBase implements IEnergyPr
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean isForSync){
-        super.writeSyncableNBT(compound, isForSync);
+    public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
+        super.writeSyncableNBT(compound, type);
         this.storage.writeToNBT(compound);
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean isForSync){
-        super.readSyncableNBT(compound, isForSync);
+    public void readSyncableNBT(NBTTagCompound compound, NBTType type){
+        super.readSyncableNBT(compound, type);
         this.storage.readFromNBT(compound);
     }
 
@@ -102,11 +102,6 @@ public class TileEntityHeatCollector extends TileEntityBase implements IEnergyPr
     @Override
     public int getEnergy(){
         return this.storage.getEnergyStored();
-    }
-
-    @Override
-    public void setEnergy(int energy){
-        this.storage.setEnergyStored(energy);
     }
 
     @Override

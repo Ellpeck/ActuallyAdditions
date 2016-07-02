@@ -21,7 +21,7 @@ import net.minecraftforge.fluids.capability.templates.FluidHandlerFluidMap;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityFermentingBarrel extends TileEntityBase implements IFluidSaver, net.minecraftforge.fluids.IFluidHandler{
+public class TileEntityFermentingBarrel extends TileEntityBase implements net.minecraftforge.fluids.IFluidHandler{
 
     private static final int PROCESS_TIME = 100;
     public final FluidTank canolaTank = new FluidTank(2*Util.BUCKET){
@@ -51,21 +51,21 @@ public class TileEntityFermentingBarrel extends TileEntityBase implements IFluid
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
+    public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
         compound.setInteger("ProcessTime", this.currentProcessTime);
         this.canolaTank.writeToNBT(compound);
         NBTTagCompound tag = new NBTTagCompound();
         this.oilTank.writeToNBT(tag);
         compound.setTag("OilTank", tag);
-        super.writeSyncableNBT(compound, sync);
+        super.writeSyncableNBT(compound, type);
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
+    public void readSyncableNBT(NBTTagCompound compound, NBTType type){
         this.currentProcessTime = compound.getInteger("ProcessTime");
         this.canolaTank.readFromNBT(compound);
         this.oilTank.readFromNBT((NBTTagCompound)compound.getTag("OilTank"));
-        super.readSyncableNBT(compound, sync);
+        super.readSyncableNBT(compound, type);
     }
 
     @Override
@@ -121,18 +121,6 @@ public class TileEntityFermentingBarrel extends TileEntityBase implements IFluid
         }
         return map;
     }
-
-    @Override
-    public FluidStack[] getFluids(){
-        return new FluidStack[]{this.oilTank.getFluid(), this.canolaTank.getFluid()};
-    }
-
-    @Override
-    public void setFluids(FluidStack[] fluids){
-        this.oilTank.setFluid(fluids[0]);
-        this.canolaTank.setFluid(fluids[1]);
-    }
-
 
     @Override
     public int fill(EnumFacing from, FluidStack resource, boolean doFill){

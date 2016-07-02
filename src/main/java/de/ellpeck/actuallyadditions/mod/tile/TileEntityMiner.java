@@ -35,13 +35,13 @@ import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.List;
 
-public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyReceiver, IButtonReactor, IEnergySaver, IEnergyDisplay{
+public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyReceiver, IButtonReactor, IEnergyDisplay{
 
     public static final int ENERGY_USE_PER_BLOCK = 1000;
     public static final int DEFAULT_RANGE = 2;
     public final EnergyStorage storage = new EnergyStorage(200000);
     public int layerAt = -1;
-    public boolean onlyMineOres = true;
+    public boolean onlyMineOres;
     private int oldLayerAt;
     private int oldEnergy;
 
@@ -50,18 +50,24 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyR
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.writeSyncableNBT(compound, sync);
+    public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
+        super.writeSyncableNBT(compound, type);
         this.storage.writeToNBT(compound);
-        compound.setInteger("Layer", this.layerAt);
-        compound.setBoolean("OnlyOres", this.onlyMineOres);
+        if(type != NBTType.SAVE_BLOCK){
+            compound.setInteger("Layer", this.layerAt);
+        }
+        if(type != NBTType.SAVE_BLOCK || this.onlyMineOres){
+            compound.setBoolean("OnlyOres", this.onlyMineOres);
+        }
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.readSyncableNBT(compound, sync);
+    public void readSyncableNBT(NBTTagCompound compound, NBTType type){
+        super.readSyncableNBT(compound, type);
         this.storage.readFromNBT(compound);
-        this.layerAt = compound.getInteger("Layer");
+        if(type != NBTType.SAVE_BLOCK){
+            this.layerAt = compound.getInteger("Layer");
+        }
         this.onlyMineOres = compound.getBoolean("OnlyOres");
     }
 
@@ -230,11 +236,6 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyR
     @Override
     public int getEnergy(){
         return this.storage.getEnergyStored();
-    }
-
-    @Override
-    public void setEnergy(int energy){
-        this.storage.setEnergyStored(energy);
     }
 
     @Override

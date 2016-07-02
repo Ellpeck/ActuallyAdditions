@@ -27,7 +27,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
-public class TileEntityGrinder extends TileEntityInventoryBase implements IEnergyReceiver, IEnergySaver{
+public class TileEntityGrinder extends TileEntityInventoryBase implements IEnergyReceiver{
 
     public static final int SLOT_INPUT_1 = 0;
     public static final int SLOT_OUTPUT_1_1 = 1;
@@ -74,19 +74,23 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        compound.setInteger("FirstCrushTime", this.firstCrushTime);
-        compound.setInteger("SecondCrushTime", this.secondCrushTime);
+    public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
+        if(type != NBTType.SAVE_BLOCK){
+            compound.setInteger("FirstCrushTime", this.firstCrushTime);
+            compound.setInteger("SecondCrushTime", this.secondCrushTime);
+        }
         this.storage.writeToNBT(compound);
-        super.writeSyncableNBT(compound, sync);
+        super.writeSyncableNBT(compound, type);
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        this.firstCrushTime = compound.getInteger("FirstCrushTime");
-        this.secondCrushTime = compound.getInteger("SecondCrushTime");
+    public void readSyncableNBT(NBTTagCompound compound, NBTType type){
+        if(type != NBTType.SAVE_BLOCK){
+            this.firstCrushTime = compound.getInteger("FirstCrushTime");
+            this.secondCrushTime = compound.getInteger("SecondCrushTime");
+        }
         this.storage.readFromNBT(compound);
-        super.readSyncableNBT(compound, sync);
+        super.readSyncableNBT(compound, type);
     }
 
     @Override
@@ -261,16 +265,6 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
     @Override
     public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
         return slot == SLOT_OUTPUT_1_1 || slot == SLOT_OUTPUT_1_2 || slot == SLOT_OUTPUT_2_1 || slot == SLOT_OUTPUT_2_2;
-    }
-
-    @Override
-    public int getEnergy(){
-        return this.storage.getEnergyStored();
-    }
-
-    @Override
-    public void setEnergy(int energy){
-        this.storage.setEnergyStored(energy);
     }
 
 }

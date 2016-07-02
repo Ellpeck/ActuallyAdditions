@@ -30,13 +30,12 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityAtomicReconstructor extends TileEntityInventoryBase implements IEnergyReceiver, IEnergySaver, IRedstoneToggle, IEnergyDisplay, IAtomicReconstructor{
+public class TileEntityAtomicReconstructor extends TileEntityInventoryBase implements IEnergyReceiver, IEnergyDisplay, IAtomicReconstructor{
 
     public static final int ENERGY_USE = 1000;
     public final EnergyStorage storage = new EnergyStorage(300000);
     public int counter;
     private int currentTime;
-    private boolean activateOnceWithSignal;
     private int oldEnergy;
 
     public TileEntityAtomicReconstructor(){
@@ -51,10 +50,12 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.writeSyncableNBT(compound, sync);
-        compound.setInteger("CurrentTime", this.currentTime);
-        compound.setInteger("Counter", this.counter);
+    public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
+        super.writeSyncableNBT(compound, type);
+        if(type != NBTType.SAVE_BLOCK){
+            compound.setInteger("CurrentTime", this.currentTime);
+            compound.setInteger("Counter", this.counter);
+        }
         this.storage.writeToNBT(compound);
     }
 
@@ -64,10 +65,12 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.readSyncableNBT(compound, sync);
-        this.currentTime = compound.getInteger("CurrentTime");
-        this.counter = compound.getInteger("Counter");
+    public void readSyncableNBT(NBTTagCompound compound, NBTType type){
+        super.readSyncableNBT(compound, type);
+        if(type != NBTType.SAVE_BLOCK){
+            this.currentTime = compound.getInteger("CurrentTime");
+            this.counter = compound.getInteger("Counter");
+        }
         this.storage.readFromNBT(compound);
     }
 
@@ -75,7 +78,7 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
     public void updateEntity(){
         super.updateEntity();
         if(!this.worldObj.isRemote){
-            if(!this.isRedstonePowered && !this.activateOnceWithSignal){
+            if(!this.isRedstonePowered && !this.isPulseMode){
                 if(this.currentTime > 0){
                     this.currentTime--;
                     if(this.currentTime <= 0){
@@ -199,24 +202,14 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
     }
 
     @Override
-    public void setEnergy(int energy){
-        this.storage.setEnergyStored(energy);
-    }
-
-    @Override
     @SideOnly(Side.CLIENT)
     public int getMaxEnergy(){
         return this.storage.getMaxEnergyStored();
     }
 
     @Override
-    public void toggle(boolean to){
-        this.activateOnceWithSignal = to;
-    }
-
-    @Override
-    public boolean isPulseMode(){
-        return this.activateOnceWithSignal;
+    public boolean isRedstoneToggle(){
+        return true;
     }
 
     @Override

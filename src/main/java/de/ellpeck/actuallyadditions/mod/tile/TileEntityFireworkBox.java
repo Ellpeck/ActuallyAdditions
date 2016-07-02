@@ -25,12 +25,11 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityFireworkBox extends TileEntityBase implements IEnergyReceiver, IRedstoneToggle, IEnergyDisplay, IEnergySaver{
+public class TileEntityFireworkBox extends TileEntityBase implements IEnergyReceiver, IEnergyDisplay{
 
     public static final int USE_PER_SHOT = 300;
     public final EnergyStorage storage = new EnergyStorage(20000);
     private int timeUntilNextFirework;
-    private boolean activateOnceWithSignal;
     private int oldEnergy;
 
     public TileEntityFireworkBox(){
@@ -94,21 +93,21 @@ public class TileEntityFireworkBox extends TileEntityBase implements IEnergyRece
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.writeSyncableNBT(compound, sync);
+    public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
+        super.writeSyncableNBT(compound, type);
         this.storage.writeToNBT(compound);
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.readSyncableNBT(compound, sync);
+    public void readSyncableNBT(NBTTagCompound compound, NBTType type){
+        super.readSyncableNBT(compound, type);
         this.storage.readFromNBT(compound);
     }
 
     @Override
     public void updateEntity(){
         if(!this.worldObj.isRemote){
-            if(!this.isRedstonePowered && !this.activateOnceWithSignal){
+            if(!this.isRedstonePowered && !this.isPulseMode){
                 if(this.timeUntilNextFirework > 0){
                     this.timeUntilNextFirework--;
                     if(this.timeUntilNextFirework <= 0){
@@ -155,13 +154,8 @@ public class TileEntityFireworkBox extends TileEntityBase implements IEnergyRece
     }
 
     @Override
-    public void toggle(boolean to){
-        this.activateOnceWithSignal = to;
-    }
-
-    @Override
-    public boolean isPulseMode(){
-        return this.activateOnceWithSignal;
+    public boolean isRedstoneToggle(){
+        return true;
     }
 
     @Override
@@ -172,11 +166,6 @@ public class TileEntityFireworkBox extends TileEntityBase implements IEnergyRece
     @Override
     public int getEnergy(){
         return this.storage.getEnergyStored();
-    }
-
-    @Override
-    public void setEnergy(int energy){
-        this.storage.setEnergyStored(energy);
     }
 
     @Override

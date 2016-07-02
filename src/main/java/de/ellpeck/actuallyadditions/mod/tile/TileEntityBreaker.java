@@ -26,11 +26,10 @@ import net.minecraftforge.event.ForgeEventFactory;
 
 import java.util.List;
 
-public class TileEntityBreaker extends TileEntityInventoryBase implements IRedstoneToggle{
+public class TileEntityBreaker extends TileEntityInventoryBase{
 
     public boolean isPlacer;
     private int currentTime;
-    private boolean activateOnceWithSignal;
 
     public TileEntityBreaker(int slots, String name){
         super(slots, name);
@@ -42,22 +41,26 @@ public class TileEntityBreaker extends TileEntityInventoryBase implements IRedst
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.writeSyncableNBT(compound, sync);
-        compound.setInteger("CurrentTime", this.currentTime);
+    public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
+        super.writeSyncableNBT(compound, type);
+        if(type != NBTType.SAVE_BLOCK){
+            compound.setInteger("CurrentTime", this.currentTime);
+        }
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.readSyncableNBT(compound, sync);
-        this.currentTime = compound.getInteger("CurrentTime");
+    public void readSyncableNBT(NBTTagCompound compound, NBTType type){
+        super.readSyncableNBT(compound, type);
+        if(type != NBTType.SAVE_BLOCK){
+            this.currentTime = compound.getInteger("CurrentTime");
+        }
     }
 
     @Override
     public void updateEntity(){
         super.updateEntity();
         if(!this.worldObj.isRemote){
-            if(!this.isRedstonePowered && !this.activateOnceWithSignal){
+            if(!this.isRedstonePowered && !this.isPulseMode){
                 if(this.currentTime > 0){
                     this.currentTime--;
                     if(this.currentTime <= 0){
@@ -117,13 +120,8 @@ public class TileEntityBreaker extends TileEntityInventoryBase implements IRedst
     }
 
     @Override
-    public void toggle(boolean to){
-        this.activateOnceWithSignal = to;
-    }
-
-    @Override
-    public boolean isPulseMode(){
-        return this.activateOnceWithSignal;
+    public boolean isRedstoneToggle(){
+        return true;
     }
 
     @Override

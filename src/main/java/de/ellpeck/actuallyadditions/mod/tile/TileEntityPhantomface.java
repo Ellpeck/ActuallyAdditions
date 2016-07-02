@@ -57,26 +57,30 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.writeSyncableNBT(compound, sync);
-        compound.setInteger("Range", this.range);
-        if(this.boundPosition != null){
-            compound.setInteger("XCoordOfTileStored", this.boundPosition.getX());
-            compound.setInteger("YCoordOfTileStored", this.boundPosition.getY());
-            compound.setInteger("ZCoordOfTileStored", this.boundPosition.getZ());
+    public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
+        super.writeSyncableNBT(compound, type);
+        if(type != NBTType.SAVE_BLOCK){
+            compound.setInteger("Range", this.range);
+            if(this.boundPosition != null){
+                compound.setInteger("XCoordOfTileStored", this.boundPosition.getX());
+                compound.setInteger("YCoordOfTileStored", this.boundPosition.getY());
+                compound.setInteger("ZCoordOfTileStored", this.boundPosition.getZ());
+            }
         }
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.readSyncableNBT(compound, sync);
-        int x = compound.getInteger("XCoordOfTileStored");
-        int y = compound.getInteger("YCoordOfTileStored");
-        int z = compound.getInteger("ZCoordOfTileStored");
-        this.range = compound.getInteger("Range");
-        if(!(x == 0 && y == 0 && z == 0)){
-            this.boundPosition = new BlockPos(x, y, z);
-            this.markDirty();
+    public void readSyncableNBT(NBTTagCompound compound, NBTType type){
+        super.readSyncableNBT(compound, type);
+        if(type != NBTType.SAVE_BLOCK){
+            int x = compound.getInteger("XCoordOfTileStored");
+            int y = compound.getInteger("YCoordOfTileStored");
+            int z = compound.getInteger("ZCoordOfTileStored");
+            this.range = compound.getInteger("Range");
+            if(!(x == 0 && y == 0 && z == 0)){
+                this.boundPosition = new BlockPos(x, y, z);
+                this.markDirty();
+            }
         }
     }
 

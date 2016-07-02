@@ -23,7 +23,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityLavaFactoryController extends TileEntityBase implements IEnergyReceiver, IEnergySaver, IEnergyDisplay{
+public class TileEntityLavaFactoryController extends TileEntityBase implements IEnergyReceiver, IEnergyDisplay{
 
     public static final int NOT_MULTI = 0;
     public static final int HAS_LAVA = 1;
@@ -38,17 +38,21 @@ public class TileEntityLavaFactoryController extends TileEntityBase implements I
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.writeSyncableNBT(compound, sync);
+    public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
+        super.writeSyncableNBT(compound, type);
         this.storage.writeToNBT(compound);
-        compound.setInteger("WorkTime", this.currentWorkTime);
+        if(type != NBTType.SAVE_BLOCK){
+            compound.setInteger("WorkTime", this.currentWorkTime);
+        }
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.readSyncableNBT(compound, sync);
+    public void readSyncableNBT(NBTTagCompound compound, NBTType type){
+        super.readSyncableNBT(compound, type);
         this.storage.readFromNBT(compound);
-        this.currentWorkTime = compound.getInteger("WorkTime");
+        if(type != NBTType.SAVE_BLOCK){
+            this.currentWorkTime = compound.getInteger("WorkTime");
+        }
     }
 
     @Override
@@ -117,11 +121,6 @@ public class TileEntityLavaFactoryController extends TileEntityBase implements I
     @Override
     public int getEnergy(){
         return this.storage.getEnergyStored();
-    }
-
-    @Override
-    public void setEnergy(int energy){
-        this.storage.setEnergyStored(energy);
     }
 
     @Override

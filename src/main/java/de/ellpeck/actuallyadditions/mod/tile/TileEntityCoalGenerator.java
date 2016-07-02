@@ -19,7 +19,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityCoalGenerator extends TileEntityInventoryBase implements IEnergyProvider, IEnergySaver{
+public class TileEntityCoalGenerator extends TileEntityInventoryBase implements IEnergyProvider{
 
     public static final int PRODUCE = 30;
     public final EnergyStorage storage = new EnergyStorage(60000);
@@ -44,19 +44,23 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        compound.setInteger("BurnTime", this.currentBurnTime);
-        compound.setInteger("MaxBurnTime", this.maxBurnTime);
+    public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
+        if(type != NBTType.SAVE_BLOCK){
+            compound.setInteger("BurnTime", this.currentBurnTime);
+            compound.setInteger("MaxBurnTime", this.maxBurnTime);
+        }
         this.storage.writeToNBT(compound);
-        super.writeSyncableNBT(compound, sync);
+        super.writeSyncableNBT(compound, type);
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        this.currentBurnTime = compound.getInteger("BurnTime");
-        this.maxBurnTime = compound.getInteger("MaxBurnTime");
+    public void readSyncableNBT(NBTTagCompound compound, NBTType type){
+        if(type != NBTType.SAVE_BLOCK){
+            this.currentBurnTime = compound.getInteger("BurnTime");
+            this.maxBurnTime = compound.getInteger("MaxBurnTime");
+        }
         this.storage.readFromNBT(compound);
-        super.readSyncableNBT(compound, sync);
+        super.readSyncableNBT(compound, type);
     }
 
     @Override
@@ -126,15 +130,5 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
     @Override
     public boolean canConnectEnergy(EnumFacing from){
         return true;
-    }
-
-    @Override
-    public int getEnergy(){
-        return this.storage.getEnergyStored();
-    }
-
-    @Override
-    public void setEnergy(int energy){
-        this.storage.setEnergyStored(energy);
     }
 }

@@ -31,7 +31,7 @@ import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements IButtonReactor, IEnergyReceiver, IFluidSaver, IEnergySaver, net.minecraftforge.fluids.IFluidHandler{
+public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements IButtonReactor, IEnergyReceiver, net.minecraftforge.fluids.IFluidHandler{
 
     public static final int SLOT_COFFEE_BEANS = 0;
     public static final int SLOT_INPUT = 1;
@@ -85,21 +85,25 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.writeSyncableNBT(compound, sync);
+    public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
+        super.writeSyncableNBT(compound, type);
         this.storage.writeToNBT(compound);
         this.tank.writeToNBT(compound);
-        compound.setInteger("Cache", this.coffeeCacheAmount);
-        compound.setInteger("Time", this.brewTime);
+        if(type != NBTType.SAVE_BLOCK){
+            compound.setInteger("Cache", this.coffeeCacheAmount);
+            compound.setInteger("Time", this.brewTime);
+        }
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.readSyncableNBT(compound, sync);
+    public void readSyncableNBT(NBTTagCompound compound, NBTType type){
+        super.readSyncableNBT(compound, type);
         this.storage.readFromNBT(compound);
         this.tank.readFromNBT(compound);
-        this.coffeeCacheAmount = compound.getInteger("Cache");
-        this.brewTime = compound.getInteger("Time");
+        if(type != NBTType.SAVE_BLOCK){
+            this.coffeeCacheAmount = compound.getInteger("Cache");
+            this.brewTime = compound.getInteger("Time");
+        }
     }
 
     @Override
@@ -216,26 +220,6 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
     @Override
     public boolean canConnectEnergy(EnumFacing from){
         return true;
-    }
-
-    @Override
-    public int getEnergy(){
-        return this.storage.getEnergyStored();
-    }
-
-    @Override
-    public void setEnergy(int energy){
-        this.storage.setEnergyStored(energy);
-    }
-
-    @Override
-    public FluidStack[] getFluids(){
-        return new FluidStack[]{this.tank.getFluid()};
-    }
-
-    @Override
-    public void setFluids(FluidStack[] fluids){
-        this.tank.setFluid(fluids[0]);
     }
 
     @Override

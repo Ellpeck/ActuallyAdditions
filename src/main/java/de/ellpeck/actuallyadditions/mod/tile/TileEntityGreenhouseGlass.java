@@ -29,15 +29,19 @@ public class TileEntityGreenhouseGlass extends TileEntityBase{
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean isForSync){
-        super.writeSyncableNBT(compound, isForSync);
-        this.timeUntilNextFert = compound.getInteger("Time");
+    public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
+        super.writeSyncableNBT(compound, type);
+        if(type != NBTType.SAVE_BLOCK){
+            this.timeUntilNextFert = compound.getInteger("Time");
+        }
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean isForSync){
-        super.readSyncableNBT(compound, isForSync);
-        compound.setInteger("Time", this.timeUntilNextFert);
+    public void readSyncableNBT(NBTTagCompound compound, NBTType type){
+        super.readSyncableNBT(compound, type);
+        if(type != NBTType.SAVE_BLOCK){
+            compound.setInteger("Time", this.timeUntilNextFert);
+        }
     }
 
     @Override

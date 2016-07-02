@@ -25,17 +25,19 @@ public class TileEntitySmileyCloud extends TileEntityBase implements IStringReac
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.writeSyncableNBT(compound, sync);
-        if(this.name != null){
+    public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
+        super.writeSyncableNBT(compound, type);
+        if(this.name != null && type != NBTType.SAVE_BLOCK){
             compound.setString("Name", this.name);
         }
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.readSyncableNBT(compound, sync);
-        this.name = compound.getString("Name");
+    public void readSyncableNBT(NBTTagCompound compound, NBTType type){
+        super.readSyncableNBT(compound, type);
+        if(type != NBTType.SAVE_BLOCK){
+            this.name = compound.getString("Name");
+        }
     }
 
     @Override

@@ -11,7 +11,8 @@
 package de.ellpeck.actuallyadditions.mod.blocks.base;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.mod.tile.*;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityInventoryBase;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.block.Block;
@@ -28,17 +29,19 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagInt;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidUtil;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public abstract class BlockContainerBase extends BlockContainer implements ItemBlockBase.ICustomRarity{
@@ -112,9 +115,10 @@ public abstract class BlockContainerBase extends BlockContainer implements ItemB
         ItemStack stack = player.getHeldItemMainhand();
         if(stack != null && Block.getBlockFromItem(stack.getItem()) instanceof BlockRedstoneTorch){
             TileEntity tile = world.getTileEntity(pos);
-            if(tile instanceof IRedstoneToggle){
-                if(!world.isRemote){
-                    ((IRedstoneToggle)tile).toggle(!((IRedstoneToggle)tile).isPulseMode());
+            if(tile instanceof TileEntityBase){
+                TileEntityBase base = (TileEntityBase)tile;
+                if(!world.isRemote && base.isRedstoneToggle()){
+                    base.isPulseMode = !base.isPulseMode;
                     tile.markDirty();
 
                     if(tile instanceof TileEntityBase){
@@ -141,8 +145,11 @@ public abstract class BlockContainerBase extends BlockContainer implements ItemB
     public void updateTick(World world, BlockPos pos, IBlockState state, Random random){
         if(!world.isRemote){
             TileEntity tile = world.getTileEntity(pos);
-            if(tile instanceof IRedstoneToggle && ((IRedstoneToggle)tile).isPulseMode()){
-                ((IRedstoneToggle)tile).activateOnPulse();
+            if(tile instanceof TileEntityBase){
+                TileEntityBase base = (TileEntityBase)tile;
+                if(base.isRedstoneToggle() && base.isPulseMode){
+                    base.activateOnPulse();
+                }
             }
         }
     }
@@ -156,16 +163,17 @@ public abstract class BlockContainerBase extends BlockContainer implements ItemB
         if(!world.isRemote){
             TileEntity tile = world.getTileEntity(pos);
             if(tile instanceof TileEntityBase){
+                TileEntityBase base = (TileEntityBase)tile;
                 boolean powered = world.isBlockIndirectlyGettingPowered(pos) > 0;
-                boolean wasPowered = ((TileEntityBase)tile).isRedstonePowered;
+                boolean wasPowered = base.isRedstonePowered;
                 if(powered && !wasPowered){
-                    if(tile instanceof IRedstoneToggle && ((IRedstoneToggle)tile).isPulseMode()){
+                    if(base.isRedstoneToggle() && base.isPulseMode){
                         world.scheduleUpdate(pos, this, this.tickRate(world));
                     }
-                    ((TileEntityBase)tile).setRedstonePowered(true);
+                    base.setRedstonePowered(true);
                 }
                 else if(!powered && wasPowered){
-                    ((TileEntityBase)tile).setRedstonePowered(false);
+                    base.setRedstonePowered(false);
                 }
             }
         }
@@ -182,31 +190,12 @@ public abstract class BlockContainerBase extends BlockContainer implements ItemB
 
     @Override
     public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase entity, ItemStack stack){
-        if(stack.getTagCompound() != null){
+        if(stack.hasTagCompound()){
             TileEntity tile = world.getTileEntity(pos);
-
-            if(tile instanceof IEnergySaver){
-                ((IEnergySaver)tile).setEnergy(stack.getTagCompound().getInteger("Energy"));
-                stack.getTagCompound().removeTag("Energy");
-            }
-
-            if(tile instanceof IFluidSaver){
-                int amount = stack.getTagCompound().getInteger("FluidAmount");
-                stack.getTagCompound().removeTag("FluidAmount");
-
-                if(amount > 0){
-                    FluidStack[] fluids = new FluidStack[amount];
-
-                    for(int i = 0; i < amount; i++){
-                        NBTTagCompound compound = stack.getTagCompound().getCompoundTag("Fluid"+i);
-                        stack.getTagCompound().removeTag("Fluid"+i);
-                        if(compound != null){
-                            fluids[i] = FluidStack.loadFluidStackFromNBT(compound);
-                        }
-                    }
-
-                    ((IFluidSaver)tile).setFluids(fluids);
-                }
+            if(tile instanceof TileEntityBase){
+                TileEntityBase base = (TileEntityBase)tile;
+                NBTTagCompound compound = stack.getTagCompound().getCompoundTag("Data");
+                base.readSyncableNBT(compound, TileEntityBase.NBTType.SAVE_BLOCK);
             }
         }
     }
@@ -246,36 +235,31 @@ public abstract class BlockContainerBase extends BlockContainer implements ItemB
         ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
 
         TileEntity tile = world.getTileEntity(pos);
-        if(tile != null){
-            ItemStack stack = new ItemStack(this.getItemDropped(state, Util.RANDOM, fortune), 1, this.damageDropped(state));
+        if(tile instanceof TileEntityBase){
+            TileEntityBase base = (TileEntityBase)tile;
+            NBTTagCompound data = new NBTTagCompound();
+            base.writeSyncableNBT(data, TileEntityBase.NBTType.SAVE_BLOCK);
 
-            if(tile instanceof IEnergySaver){
-                int energy = ((IEnergySaver)tile).getEnergy();
-                if(energy > 0){
-                    if(stack.getTagCompound() == null){
-                        stack.setTagCompound(new NBTTagCompound());
+            //Remove unnecessarily saved default values to avoid unstackability
+            List<String> keysToRemove = new ArrayList<String>();
+            for(String key : data.getKeySet()){
+                NBTBase tag = data.getTag(key);
+                //Remove only ints because they are the most common ones
+                //Add else if below here to remove more types
+                if(tag instanceof NBTTagInt){
+                    if(((NBTTagInt)tag).getInt() == 0){
+                        keysToRemove.add(key);
                     }
-                    stack.getTagCompound().setInteger("Energy", energy);
                 }
             }
+            for(String key : keysToRemove){
+                data.removeTag(key);
+            }
 
-            if(tile instanceof IFluidSaver){
-                FluidStack[] fluids = ((IFluidSaver)tile).getFluids();
-
-                if(fluids != null && fluids.length > 0){
-                    if(stack.getTagCompound() == null){
-                        stack.setTagCompound(new NBTTagCompound());
-                    }
-
-                    stack.getTagCompound().setInteger("FluidAmount", fluids.length);
-                    for(int i = 0; i < fluids.length; i++){
-                        if(fluids[i] != null && fluids[i].amount > 0){
-                            NBTTagCompound compound = new NBTTagCompound();
-                            fluids[i].writeToNBT(compound);
-                            stack.getTagCompound().setTag("Fluid"+i, compound);
-                        }
-                    }
-                }
+            ItemStack stack = new ItemStack(this.getItemDropped(state, Util.RANDOM, fortune), 1, this.damageDropped(state));
+            if(!data.hasNoTags()){
+                stack.setTagCompound(new NBTTagCompound());
+                stack.getTagCompound().setTag("Data", data);
             }
 
             drops.add(stack);

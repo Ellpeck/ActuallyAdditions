@@ -354,29 +354,33 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.writeSyncableNBT(compound, sync);
-        compound.setInteger("SideToPut", this.sideToPut);
-        compound.setInteger("SlotToPut", this.slotToPutStart);
-        compound.setInteger("SlotToPutEnd", this.slotToPutEnd);
-        compound.setInteger("SideToPull", this.sideToPull);
-        compound.setInteger("SlotToPull", this.slotToPullStart);
-        compound.setInteger("SlotToPullEnd", this.slotToPullEnd);
-        compound.setBoolean("PullWhitelist", this.isPullWhitelist);
-        compound.setBoolean("PutWhitelist", this.isPutWhitelist);
+    public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
+        super.writeSyncableNBT(compound, type);
+        if(type != NBTType.SAVE_BLOCK){
+            compound.setInteger("SideToPut", this.sideToPut);
+            compound.setInteger("SlotToPut", this.slotToPutStart);
+            compound.setInteger("SlotToPutEnd", this.slotToPutEnd);
+            compound.setInteger("SideToPull", this.sideToPull);
+            compound.setInteger("SlotToPull", this.slotToPullStart);
+            compound.setInteger("SlotToPullEnd", this.slotToPullEnd);
+            compound.setBoolean("PullWhitelist", this.isPullWhitelist);
+            compound.setBoolean("PutWhitelist", this.isPutWhitelist);
+        }
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        this.sideToPut = compound.getInteger("SideToPut");
-        this.slotToPutStart = compound.getInteger("SlotToPut");
-        this.slotToPutEnd = compound.getInteger("SlotToPutEnd");
-        this.sideToPull = compound.getInteger("SideToPull");
-        this.slotToPullStart = compound.getInteger("SlotToPull");
-        this.slotToPullEnd = compound.getInteger("SlotToPullEnd");
-        this.isPullWhitelist = compound.getBoolean("PullWhitelist");
-        this.isPutWhitelist = compound.getBoolean("PutWhitelist");
-        super.readSyncableNBT(compound, sync);
+    public void readSyncableNBT(NBTTagCompound compound, NBTType type){
+        if(type != NBTType.SAVE_BLOCK){
+            this.sideToPut = compound.getInteger("SideToPut");
+            this.slotToPutStart = compound.getInteger("SlotToPut");
+            this.slotToPutEnd = compound.getInteger("SlotToPutEnd");
+            this.sideToPull = compound.getInteger("SideToPull");
+            this.slotToPullStart = compound.getInteger("SlotToPull");
+            this.slotToPullEnd = compound.getInteger("SlotToPullEnd");
+            this.isPullWhitelist = compound.getBoolean("PullWhitelist");
+            this.isPutWhitelist = compound.getBoolean("PutWhitelist");
+        }
+        super.readSyncableNBT(compound, type);
     }
 
     @Override

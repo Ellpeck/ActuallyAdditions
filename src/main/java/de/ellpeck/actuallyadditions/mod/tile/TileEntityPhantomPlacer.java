@@ -29,14 +29,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.ArrayList;
 
-public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements IPhantomTile, IRedstoneToggle{
+public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements IPhantomTile{
 
     public static final int RANGE = 3;
     public BlockPos boundPosition;
     public int currentTime;
     public int range;
     public boolean isBreaker;
-    private boolean activateOnceWithSignal;
     private int oldRange;
 
     public TileEntityPhantomPlacer(int slots, String name){
@@ -49,26 +48,30 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.writeSyncableNBT(compound, sync);
-        compound.setInteger("Range", this.range);
-        if(this.boundPosition != null){
-            compound.setInteger("XCoordOfTileStored", this.boundPosition.getX());
-            compound.setInteger("YCoordOfTileStored", this.boundPosition.getY());
-            compound.setInteger("ZCoordOfTileStored", this.boundPosition.getZ());
+    public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
+        super.writeSyncableNBT(compound, type);
+        if(type != NBTType.SAVE_BLOCK){
+            compound.setInteger("Range", this.range);
+            if(this.boundPosition != null){
+                compound.setInteger("XCoordOfTileStored", this.boundPosition.getX());
+                compound.setInteger("YCoordOfTileStored", this.boundPosition.getY());
+                compound.setInteger("ZCoordOfTileStored", this.boundPosition.getZ());
+            }
         }
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.readSyncableNBT(compound, sync);
-        int x = compound.getInteger("XCoordOfTileStored");
-        int y = compound.getInteger("YCoordOfTileStored");
-        int z = compound.getInteger("ZCoordOfTileStored");
-        this.range = compound.getInteger("Range");
-        if(!(x == 0 && y == 0 && z == 0)){
-            this.boundPosition = new BlockPos(x, y, z);
-            this.markDirty();
+    public void readSyncableNBT(NBTTagCompound compound, NBTType type){
+        super.readSyncableNBT(compound, type);
+        if(type != NBTType.SAVE_BLOCK){
+            int x = compound.getInteger("XCoordOfTileStored");
+            int y = compound.getInteger("YCoordOfTileStored");
+            int z = compound.getInteger("ZCoordOfTileStored");
+            this.range = compound.getInteger("Range");
+            if(!(x == 0 && y == 0 && z == 0)){
+                this.boundPosition = new BlockPos(x, y, z);
+                this.markDirty();
+            }
         }
     }
 
@@ -83,7 +86,7 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
             }
 
             if(this.isBoundThingInRange()){
-                if(!this.isRedstonePowered && !this.activateOnceWithSignal){
+                if(!this.isRedstonePowered && !this.isPulseMode){
                     if(this.currentTime > 0){
                         this.currentTime--;
                         if(this.currentTime <= 0){
@@ -207,13 +210,8 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
     }
 
     @Override
-    public void toggle(boolean to){
-        this.activateOnceWithSignal = to;
-    }
-
-    @Override
-    public boolean isPulseMode(){
-        return this.activateOnceWithSignal;
+    public boolean isRedstoneToggle(){
+        return true;
     }
 
     @Override

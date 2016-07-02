@@ -22,7 +22,7 @@ import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityOilGenerator extends TileEntityBase implements IEnergyProvider, IEnergySaver, IFluidSaver, net.minecraftforge.fluids.IFluidHandler{
+public class TileEntityOilGenerator extends TileEntityBase implements IEnergyProvider, net.minecraftforge.fluids.IFluidHandler{
 
     public static final int ENERGY_PRODUCED = 76;
     private static final int BURN_TIME = 100;
@@ -63,19 +63,23 @@ public class TileEntityOilGenerator extends TileEntityBase implements IEnergyPro
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        compound.setInteger("BurnTime", this.currentBurnTime);
+    public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
+        if(type != NBTType.SAVE_BLOCK){
+            compound.setInteger("BurnTime", this.currentBurnTime);
+        }
         this.storage.writeToNBT(compound);
         this.tank.writeToNBT(compound);
-        super.writeSyncableNBT(compound, sync);
+        super.writeSyncableNBT(compound, type);
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        this.currentBurnTime = compound.getInteger("BurnTime");
+    public void readSyncableNBT(NBTTagCompound compound, NBTType type){
+        if(type != NBTType.SAVE_BLOCK){
+            this.currentBurnTime = compound.getInteger("BurnTime");
+        }
         this.storage.readFromNBT(compound);
         this.tank.readFromNBT(compound);
-        super.readSyncableNBT(compound, sync);
+        super.readSyncableNBT(compound, type);
     }
 
     @Override
@@ -132,26 +136,6 @@ public class TileEntityOilGenerator extends TileEntityBase implements IEnergyPro
     @Override
     public IFluidHandler getFluidHandler(EnumFacing facing){
         return facing != EnumFacing.DOWN ? this.tank : null;
-    }
-
-    @Override
-    public int getEnergy(){
-        return this.storage.getEnergyStored();
-    }
-
-    @Override
-    public void setEnergy(int energy){
-        this.storage.setEnergyStored(energy);
-    }
-
-    @Override
-    public FluidStack[] getFluids(){
-        return new FluidStack[]{this.tank.getFluid()};
-    }
-
-    @Override
-    public void setFluids(FluidStack[] fluids){
-        this.tank.setFluid(fluids[0]);
     }
 
     @Override

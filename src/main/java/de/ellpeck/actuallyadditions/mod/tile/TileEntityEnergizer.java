@@ -19,7 +19,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityEnergizer extends TileEntityInventoryBase implements IEnergyReceiver, IEnergySaver{
+public class TileEntityEnergizer extends TileEntityInventoryBase implements IEnergyReceiver{
 
     public final EnergyStorage storage = new EnergyStorage(500000);
     private int lastEnergy;
@@ -29,15 +29,15 @@ public class TileEntityEnergizer extends TileEntityInventoryBase implements IEne
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
+    public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
         this.storage.writeToNBT(compound);
-        super.writeSyncableNBT(compound, sync);
+        super.writeSyncableNBT(compound, type);
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
+    public void readSyncableNBT(NBTTagCompound compound, NBTType type){
         this.storage.readFromNBT(compound);
-        super.readSyncableNBT(compound, sync);
+        super.readSyncableNBT(compound, type);
     }
 
     @Override
@@ -103,15 +103,5 @@ public class TileEntityEnergizer extends TileEntityInventoryBase implements IEne
     @Override
     public boolean canConnectEnergy(EnumFacing from){
         return true;
-    }
-
-    @Override
-    public int getEnergy(){
-        return this.storage.getEnergyStored();
-    }
-
-    @Override
-    public void setEnergy(int energy){
-        this.storage.setEnergyStored(energy);
     }
 }

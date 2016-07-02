@@ -12,7 +12,7 @@ package de.ellpeck.actuallyadditions.mod.event;
 
 import de.ellpeck.actuallyadditions.mod.blocks.IHudDisplay;
 import de.ellpeck.actuallyadditions.mod.tile.IEnergyDisplay;
-import de.ellpeck.actuallyadditions.mod.tile.IRedstoneToggle;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
@@ -61,18 +61,21 @@ public class HudEvent{
                     profiler.endSection();
                 }
 
-                if(tileHit instanceof IRedstoneToggle){
-                    profiler.startSection("RedstoneToggleHudDisplay");
+                if(tileHit instanceof TileEntityBase){
+                    TileEntityBase base = (TileEntityBase)tileHit;
+                    if(base.isRedstoneToggle()){
+                        profiler.startSection("RedstoneToggleHudDisplay");
 
-                    String strg = "Redstone Mode: "+TextFormatting.DARK_RED+(((IRedstoneToggle)tileHit).isPulseMode() ? "Pulse" : "Deactivation")+TextFormatting.RESET;
-                    font.drawStringWithShadow(strg, event.getResolution().getScaledWidth()/2+5, event.getResolution().getScaledHeight()/2+5, StringUtil.DECIMAL_COLOR_WHITE);
+                        String strg = "Redstone Mode: "+TextFormatting.DARK_RED+(base.isPulseMode ? "Pulse" : "Deactivation")+TextFormatting.RESET;
+                        font.drawStringWithShadow(strg, event.getResolution().getScaledWidth()/2+5, event.getResolution().getScaledHeight()/2+5, StringUtil.DECIMAL_COLOR_WHITE);
 
-                    if(stack != null && Block.getBlockFromItem(stack.getItem()) instanceof BlockRedstoneTorch){
-                        String expl = TextFormatting.GREEN+"Right-Click to toggle!";
-                        font.drawStringWithShadow(expl, event.getResolution().getScaledWidth()/2+5, event.getResolution().getScaledHeight()/2+15, StringUtil.DECIMAL_COLOR_WHITE);
+                        if(stack != null && Block.getBlockFromItem(stack.getItem()) instanceof BlockRedstoneTorch){
+                            String expl = TextFormatting.GREEN+"Right-Click to toggle!";
+                            font.drawStringWithShadow(expl, event.getResolution().getScaledWidth()/2+5, event.getResolution().getScaledHeight()/2+15, StringUtil.DECIMAL_COLOR_WHITE);
+                        }
+
+                        profiler.endSection();
                     }
-
-                    profiler.endSection();
                 }
 
                 if(tileHit instanceof IEnergyDisplay){

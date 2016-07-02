@@ -28,38 +28,41 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
-public class TileEntityDirectionalBreaker extends TileEntityInventoryBase implements IEnergyReceiver, IEnergySaver, IRedstoneToggle{
+public class TileEntityDirectionalBreaker extends TileEntityInventoryBase implements IEnergyReceiver{
 
     public static final int RANGE = 8;
     public static final int ENERGY_USE = 5;
     public final EnergyStorage storage = new EnergyStorage(10000);
     private int lastEnergy;
     private int currentTime;
-    private boolean activateOnceWithSignal;
 
     public TileEntityDirectionalBreaker(){
         super(9, "directionalBreaker");
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.writeSyncableNBT(compound, sync);
+    public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
+        super.writeSyncableNBT(compound, type);
         this.storage.writeToNBT(compound);
-        compound.setInteger("CurrentTime", this.currentTime);
+        if(type != NBTType.SAVE_BLOCK){
+            compound.setInteger("CurrentTime", this.currentTime);
+        }
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.readSyncableNBT(compound, sync);
+    public void readSyncableNBT(NBTTagCompound compound, NBTType type){
+        super.readSyncableNBT(compound, type);
         this.storage.readFromNBT(compound);
-        this.currentTime = compound.getInteger("CurrentTime");
+        if(type != NBTType.SAVE_BLOCK){
+            this.currentTime = compound.getInteger("CurrentTime");
+        }
     }
 
     @Override
     public void updateEntity(){
         super.updateEntity();
         if(!this.worldObj.isRemote){
-            if(!this.isRedstonePowered && !this.activateOnceWithSignal){
+            if(!this.isRedstonePowered && !this.isPulseMode){
                 if(this.currentTime > 0){
                     this.currentTime--;
                     if(this.currentTime <= 0){
@@ -144,24 +147,10 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase implem
         return true;
     }
 
-    @Override
-    public int getEnergy(){
-        return this.storage.getEnergyStored();
-    }
 
     @Override
-    public void setEnergy(int energy){
-        this.storage.setEnergyStored(energy);
-    }
-
-    @Override
-    public void toggle(boolean to){
-        this.activateOnceWithSignal = to;
-    }
-
-    @Override
-    public boolean isPulseMode(){
-        return this.activateOnceWithSignal;
+    public boolean isRedstoneToggle(){
+        return true;
     }
 
     @Override

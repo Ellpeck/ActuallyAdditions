@@ -194,9 +194,9 @@ public class TileEntityLaserRelayItemWhitelist extends TileEntityLaserRelayItem 
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean isForSync){
-        super.writeSyncableNBT(compound, isForSync);
-        if(!isForSync){
+    public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
+        super.writeSyncableNBT(compound, type);
+        if(type == NBTType.SAVE_TILE){
             TileEntityInventoryBase.saveSlots(this.slots, compound);
         }
         compound.setBoolean("LeftWhitelist", this.isLeftWhitelist);
@@ -204,9 +204,9 @@ public class TileEntityLaserRelayItemWhitelist extends TileEntityLaserRelayItem 
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean isForSync){
-        super.readSyncableNBT(compound, isForSync);
-        if(!isForSync){
+    public void readSyncableNBT(NBTTagCompound compound, NBTType type){
+        super.readSyncableNBT(compound, type);
+        if(type == NBTType.SAVE_TILE){
             TileEntityInventoryBase.loadSlots(this.slots, compound);
         }
         this.isLeftWhitelist = compound.getBoolean("LeftWhitelist");

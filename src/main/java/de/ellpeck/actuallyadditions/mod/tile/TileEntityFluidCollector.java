@@ -26,7 +26,7 @@ import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityFluidCollector extends TileEntityBase implements IFluidSaver, IRedstoneToggle, net.minecraftforge.fluids.IFluidHandler{
+public class TileEntityFluidCollector extends TileEntityBase implements net.minecraftforge.fluids.IFluidHandler{
 
     public final FluidTank tank = new FluidTank(8*Util.BUCKET){
         @Override
@@ -42,7 +42,6 @@ public class TileEntityFluidCollector extends TileEntityBase implements IFluidSa
     public boolean isPlacer;
     private int lastTankAmount;
     private int currentTime;
-    private boolean activateOnceWithSignal;
 
     public TileEntityFluidCollector(String name){
         super(name);
@@ -54,13 +53,8 @@ public class TileEntityFluidCollector extends TileEntityBase implements IFluidSa
     }
 
     @Override
-    public void toggle(boolean to){
-        this.activateOnceWithSignal = to;
-    }
-
-    @Override
-    public boolean isPulseMode(){
-        return this.activateOnceWithSignal;
+    public boolean isRedstoneToggle(){
+        return true;
     }
 
     @Override
@@ -115,16 +109,20 @@ public class TileEntityFluidCollector extends TileEntityBase implements IFluidSa
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.writeSyncableNBT(compound, sync);
-        compound.setInteger("CurrentTime", this.currentTime);
+    public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
+        super.writeSyncableNBT(compound, type);
+        if(type != NBTType.SAVE_BLOCK){
+            compound.setInteger("CurrentTime", this.currentTime);
+        }
         this.tank.writeToNBT(compound);
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.readSyncableNBT(compound, sync);
-        this.currentTime = compound.getInteger("CurrentTime");
+    public void readSyncableNBT(NBTTagCompound compound, NBTType type){
+        super.readSyncableNBT(compound, type);
+        if(type != NBTType.SAVE_BLOCK){
+            this.currentTime = compound.getInteger("CurrentTime");
+        }
         this.tank.readFromNBT(compound);
     }
 
@@ -132,7 +130,7 @@ public class TileEntityFluidCollector extends TileEntityBase implements IFluidSa
     public void updateEntity(){
         super.updateEntity();
         if(!this.worldObj.isRemote){
-            if(!this.isRedstonePowered && !this.activateOnceWithSignal){
+            if(!this.isRedstonePowered && !this.isPulseMode){
                 if(this.currentTime > 0){
                     this.currentTime--;
                     if(this.currentTime <= 0){
@@ -153,16 +151,6 @@ public class TileEntityFluidCollector extends TileEntityBase implements IFluidSa
     @SideOnly(Side.CLIENT)
     public int getTankScaled(int i){
         return this.tank.getFluidAmount()*i/this.tank.getCapacity();
-    }
-
-    @Override
-    public FluidStack[] getFluids(){
-        return new FluidStack[]{this.tank.getFluid()};
-    }
-
-    @Override
-    public void setFluids(FluidStack[] fluids){
-        this.tank.setFluid(fluids[0]);
     }
 
     @Override
