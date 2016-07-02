@@ -56,7 +56,7 @@ import java.util.Set;
 public class ItemDrill extends ItemEnergy{
 
     private static final int ENERGY_USE = 100;
-    private static final int HARVEST_LEVEL = 4;
+    public static final int HARVEST_LEVEL = 4;
 
     public ItemDrill(String name){
         super(500000, 5000, name);

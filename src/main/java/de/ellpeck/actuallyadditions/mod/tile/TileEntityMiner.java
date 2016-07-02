@@ -14,6 +14,7 @@ import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigStringListValues;
+import de.ellpeck.actuallyadditions.mod.items.ItemDrill;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.PosUtil;
@@ -106,7 +107,7 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyR
                     Block block = state.getBlock();
                     int meta = PosUtil.getMetadata(pos, this.worldObj);
                     if(!block.isAir(this.worldObj.getBlockState(pos), this.worldObj, pos)){
-                        if(block.getHarvestLevel(this.worldObj.getBlockState(pos)) <= 3F && state.getBlockHardness(this.worldObj, pos) >= 0F && !(block instanceof BlockLiquid) && !(block instanceof IFluidBlock) && this.isMinable(block, meta)){
+                        if(block.getHarvestLevel(this.worldObj.getBlockState(pos)) <= ItemDrill.HARVEST_LEVEL && state.getBlockHardness(this.worldObj, pos) >= 0F && !(block instanceof BlockLiquid) && !(block instanceof IFluidBlock) && this.isMinable(block, meta)){
                             List<ItemStack> drops = block.getDrops(this.worldObj, pos, this.worldObj.getBlockState(pos), 0);
                             float chance = ForgeEventFactory.fireBlockHarvesting(drops, this.worldObj, pos, this.worldObj.getBlockState(pos), 0, 1, false, null);
 
