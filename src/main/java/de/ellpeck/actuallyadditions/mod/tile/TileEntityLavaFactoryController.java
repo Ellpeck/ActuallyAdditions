@@ -128,4 +128,9 @@ public class TileEntityLavaFactoryController extends TileEntityBase implements I
     public int getMaxEnergy(){
         return this.storage.getMaxEnergyStored();
     }
+
+    @Override
+    public boolean needsHoldShift(){
+        return false;
+    }
 }

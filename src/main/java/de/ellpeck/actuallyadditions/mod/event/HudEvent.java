@@ -79,10 +79,13 @@ public class HudEvent{
                 }
 
                 if(tileHit instanceof IEnergyDisplay){
-                    profiler.startSection("EnergyDisplay");
-                    String strg = ((IEnergyDisplay)tileHit).getEnergy()+"/"+((IEnergyDisplay)tileHit).getMaxEnergy()+" RF";
-                    font.drawStringWithShadow(TextFormatting.GOLD+strg, event.getResolution().getScaledWidth()/2+5, event.getResolution().getScaledHeight()/2-10, StringUtil.DECIMAL_COLOR_WHITE);
-                    profiler.endSection();
+                    IEnergyDisplay display = (IEnergyDisplay)tileHit;
+                    if(!display.needsHoldShift() || player.isSneaking()){
+                        profiler.startSection("EnergyDisplay");
+                        String strg = display.getEnergy()+"/"+display.getMaxEnergy()+" RF";
+                        font.drawStringWithShadow(TextFormatting.GOLD+strg, event.getResolution().getScaledWidth()/2+5, event.getResolution().getScaledHeight()/2-10, StringUtil.DECIMAL_COLOR_WHITE);
+                        profiler.endSection();
+                    }
                 }
             }
 

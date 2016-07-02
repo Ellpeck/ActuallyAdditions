@@ -20,4 +20,7 @@ public interface IEnergyDisplay{
 
     @SideOnly(Side.CLIENT)
     int getMaxEnergy();
+
+    @SideOnly(Side.CLIENT)
+    boolean needsHoldShift();
 }

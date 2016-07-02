@@ -109,4 +109,9 @@ public class TileEntityHeatCollector extends TileEntityBase implements IEnergyPr
     public int getMaxEnergy(){
         return this.storage.getMaxEnergyStored();
     }
+
+    @Override
+    public boolean needsHoldShift(){
+        return false;
+    }
 }

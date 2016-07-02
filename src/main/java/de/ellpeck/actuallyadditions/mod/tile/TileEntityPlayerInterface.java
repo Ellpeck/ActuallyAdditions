@@ -216,4 +216,9 @@ public class TileEntityPlayerInterface extends TileEntityInventoryBase implement
     public int getMaxEnergy(){
         return this.storage.getMaxEnergyStored();
     }
+
+    @Override
+    public boolean needsHoldShift(){
+        return false;
+    }
 }

@@ -244,4 +244,9 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyR
     public int getMaxEnergy(){
         return this.storage.getMaxEnergyStored();
     }
+
+    @Override
+    public boolean needsHoldShift(){
+        return false;
+    }
 }

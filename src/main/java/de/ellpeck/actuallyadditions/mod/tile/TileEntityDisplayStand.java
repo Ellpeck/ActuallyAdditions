@@ -114,6 +114,11 @@ public class TileEntityDisplayStand extends TileEntityInventoryBase implements I
     }
 
     @Override
+    public boolean needsHoldShift(){
+        return true;
+    }
+
+    @Override
     public int receiveEnergy(EnumFacing from, int maxReceive, boolean simulate){
         return from != EnumFacing.UP ? this.storage.receiveEnergy(maxReceive, simulate) : 0;
     }

@@ -173,4 +173,9 @@ public class TileEntityFireworkBox extends TileEntityBase implements IEnergyRece
     public int getMaxEnergy(){
         return this.storage.getMaxEnergyStored();
     }
+
+    @Override
+    public boolean needsHoldShift(){
+        return false;
+    }
 }

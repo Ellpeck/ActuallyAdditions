@@ -208,6 +208,11 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
     }
 
     @Override
+    public boolean needsHoldShift(){
+        return false;
+    }
+
+    @Override
     public boolean isRedstoneToggle(){
         return true;
     }
