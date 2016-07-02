@@ -229,7 +229,7 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
                 data.setInteger("X", this.pos.getX());
                 data.setInteger("Y", this.pos.getY());
                 data.setInteger("Z", this.pos.getZ());
-                PacketHandler.theNetwork.sendToAllAround(new PacketServerToClient(data, PacketHandler.TILE_ENTITY_HANDLER), new NetworkRegistry.TargetPoint(this.worldObj.provider.getDimension(), this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), 64));
+                PacketHandler.theNetwork.sendToAllAround(new PacketServerToClient(data, PacketHandler.TILE_ENTITY_HANDLER), new NetworkRegistry.TargetPoint(this.worldObj.provider.getDimension(), this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), 128));
             }
         }
     }
