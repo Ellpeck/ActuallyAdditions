@@ -35,10 +35,6 @@ public final class Util{
 
     public static final EnumRarity FALLBACK_RARITY = addRarity("fallback", TextFormatting.STRIKETHROUGH, ModUtil.NAME+" Fallback");
 
-    public static void registerEvent(Object o){
-        MinecraftForge.EVENT_BUS.register(o);
-    }
-
     private static EnumRarity addRarity(String name, TextFormatting color, String displayName){
         return EnumHelper.addRarity((ModUtil.MOD_ID+"_"+name).toUpperCase(Locale.ROOT), color, displayName);
     }

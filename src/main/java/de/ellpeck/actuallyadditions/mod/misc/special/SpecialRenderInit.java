@@ -16,6 +16,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderPlayerEvent;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -27,9 +28,9 @@ public class SpecialRenderInit{
 
     public static final HashMap<String, RenderSpecial> SPECIAL_LIST = new HashMap<String, RenderSpecial>();
 
-    public static void init(){
+    public SpecialRenderInit(){
         new ThreadSpecialFetcher();
-        Util.registerEvent(new SpecialRenderInit());
+        MinecraftForge.EVENT_BUS.register(this);
     }
 
     public static void parse(Properties properties){

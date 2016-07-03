@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.config;
 
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -25,7 +26,7 @@ public class ConfigurationHandler{
     public ConfigurationHandler(File configFile){
         ModUtil.LOGGER.info("Grabbing Configurations...");
 
-        Util.registerEvent(this);
+        MinecraftForge.EVENT_BUS.register(this);
 
         config = new Configuration(configFile);
         config.load();

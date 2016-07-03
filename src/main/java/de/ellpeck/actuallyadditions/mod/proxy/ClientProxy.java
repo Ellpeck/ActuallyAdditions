@@ -20,7 +20,7 @@ import de.ellpeck.actuallyadditions.mod.blocks.render.RenderDisplayStand;
 import de.ellpeck.actuallyadditions.mod.blocks.render.RenderReconstructorLens;
 import de.ellpeck.actuallyadditions.mod.blocks.render.RenderSmileyCloud;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
-import de.ellpeck.actuallyadditions.mod.event.InitEvents;
+import de.ellpeck.actuallyadditions.mod.event.ClientEvents;
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.misc.special.SpecialRenderInit;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityAtomicReconstructor;
@@ -155,7 +155,7 @@ public class ClientProxy implements IProxy{
     public void init(FMLInitializationEvent event){
         ModUtil.LOGGER.info("Initializing ClientProxy...");
 
-        InitEvents.initClient();
+        new ClientEvents();
 
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCompost.class, new RenderCompost());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAtomicReconstructor.class, new RenderReconstructorLens());
@@ -175,7 +175,7 @@ public class ClientProxy implements IProxy{
     public void postInit(FMLPostInitializationEvent event){
         ModUtil.LOGGER.info("PostInitializing ClientProxy...");
 
-        SpecialRenderInit.init();
+        new SpecialRenderInit();
     }
 
     @Override

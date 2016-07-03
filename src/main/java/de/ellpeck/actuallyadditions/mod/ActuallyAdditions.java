@@ -18,7 +18,7 @@ import de.ellpeck.actuallyadditions.mod.config.ConfigurationHandler;
 import de.ellpeck.actuallyadditions.mod.crafting.CrusherCrafting;
 import de.ellpeck.actuallyadditions.mod.crafting.InitCrafting;
 import de.ellpeck.actuallyadditions.mod.crafting.ItemCrafting;
-import de.ellpeck.actuallyadditions.mod.event.InitEvents;
+import de.ellpeck.actuallyadditions.mod.event.CommonEvents;
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.gen.InitVillager;
 import de.ellpeck.actuallyadditions.mod.gen.OreGen;
@@ -88,7 +88,7 @@ public class ActuallyAdditions{
         FuelHandler.init();
         BannerHelper.init();
         SoundHandler.init();
-        UpdateChecker.init();
+        new UpdateChecker();
         proxy.preInit(event);
 
         ModUtil.LOGGER.info("PreInitialization Finished.");
@@ -101,9 +101,9 @@ public class ActuallyAdditions{
         InitOreDict.init();
         InitAchievements.init();
         GuiHandler.init();
-        OreGen.init();
+        new OreGen();
         TileEntityBase.init();
-        InitEvents.init();
+        new CommonEvents();
         InitCrafting.init();
         DungeonLoot.init();
 
