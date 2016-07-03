@@ -31,6 +31,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -44,6 +45,10 @@ public class ClientEvents{
 
     private static final String ADVANCED_INFO_TEXT_PRE = TextFormatting.DARK_GRAY+"     ";
     private static final String ADVANCED_INFO_HEADER_PRE = TextFormatting.GRAY+"  -";
+
+    public ClientEvents(){
+        MinecraftForge.EVENT_BUS.register(this);
+    }
 
     @SubscribeEvent
     public void onTooltipEvent(ItemTooltipEvent event){

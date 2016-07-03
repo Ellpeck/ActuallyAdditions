@@ -28,6 +28,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
@@ -38,6 +39,10 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import java.util.Locale;
 
 public class CommonEvents{
+
+    public CommonEvents(){
+        MinecraftForge.EVENT_BUS.register(this);
+    }
 
     @SubscribeEvent
     public void livingDeathEvent(LivingDeathEvent event){
