@@ -108,7 +108,7 @@ public class GuiLaserRelayItemWhitelist extends GuiContainer{
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y){
-        AssetUtil.displayNameString(this.fontRendererObj, this.xSize, -10, this.tile.name);
+        AssetUtil.displayNameString(this.fontRendererObj, this.xSize, -10, this.tile);
 
         String s1 = "INBOUND";
         String s2 = "OUTBOUND";

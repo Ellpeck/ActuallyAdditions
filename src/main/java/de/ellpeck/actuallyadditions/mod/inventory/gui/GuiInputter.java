@@ -157,7 +157,7 @@ public class GuiInputter extends GuiContainer{
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y){
-        AssetUtil.displayNameString(this.fontRendererObj, this.xSize, -10, this.tileInputter.getName());
+        AssetUtil.displayNameString(this.fontRendererObj, this.xSize, -10, this.tileInputter);
     }
 
     @Override

@@ -47,7 +47,7 @@ public class GuiRepairer extends GuiContainer{
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y){
-        AssetUtil.displayNameString(this.fontRendererObj, this.xSize, -10, this.tileRepairer.getName());
+        AssetUtil.displayNameString(this.fontRendererObj, this.xSize, -10, this.tileRepairer);
     }
 
     @Override

@@ -191,7 +191,6 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
         return stack;
     }
 
-
     @Override
     public String getName(){
         return this.name;
@@ -200,12 +199,6 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
     @Override
     public boolean hasCustomName(){
         return false;
-    }
-
-
-    @Override
-    public ITextComponent getDisplayName(){
-        return new TextComponentTranslation(this.getName());
     }
 
     @Override

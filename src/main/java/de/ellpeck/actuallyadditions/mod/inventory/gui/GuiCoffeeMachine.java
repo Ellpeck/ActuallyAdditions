@@ -81,7 +81,7 @@ public class GuiCoffeeMachine extends GuiContainer{
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y){
-        AssetUtil.displayNameString(this.fontRendererObj, this.xSize, -10, this.machine.getName());
+        AssetUtil.displayNameString(this.fontRendererObj, this.xSize, -10, this.machine);
     }
 
     @Override

@@ -35,12 +35,10 @@ public class CreativeTab extends CreativeTabs{
         super(ModUtil.MOD_ID);
     }
 
-
     @Override
     public ItemStack getIconItemStack(){
         return new ItemStack(this.getTabIconItem());
     }
-
 
     @Override
     public Item getTabIconItem(){
@@ -75,6 +73,7 @@ public class CreativeTab extends CreativeTabs{
         this.add(InitBlocks.blockXPSolidifier);
         this.add(InitBlocks.blockDisplayStand);
 
+        this.add(InitBlocks.blockShockSuppressor);
         this.add(InitBlocks.blockMiner);
         this.add(InitBlocks.blockGreenhouseGlass);
         this.add(InitBlocks.blockGrinder);
@@ -135,6 +134,7 @@ public class CreativeTab extends CreativeTabs{
         this.add(InitBlocks.blockTreasureChest);
 
         this.add(InitBlocks.blockBlackLotus);
+        this.add(InitBlocks.blockBookletStand);
 
         this.add(InitItems.itemColorLens);
         this.add(InitItems.itemExplosionLens);

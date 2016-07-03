@@ -49,7 +49,7 @@ public class GuiFluidCollector extends GuiContainer{
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y){
-        AssetUtil.displayNameString(this.fontRendererObj, this.xSize, -10, this.collector.name);
+        AssetUtil.displayNameString(this.fontRendererObj, this.xSize, -10, this.collector);
     }
 
     @Override

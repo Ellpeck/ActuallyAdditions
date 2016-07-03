@@ -49,7 +49,7 @@ public class GuiFeeder extends GuiContainer{
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y){
-        AssetUtil.displayNameString(this.fontRendererObj, this.xSize, -10, this.tileFeeder.getName());
+        AssetUtil.displayNameString(this.fontRendererObj, this.xSize, -10, this.tileFeeder);
     }
 
     @Override

@@ -24,6 +24,7 @@ import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformT
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -44,9 +45,12 @@ public final class AssetUtil{
         return new ResourceLocation(ModUtil.MOD_ID, "textures/gui/booklet/"+file+".png");
     }
 
-    public static void displayNameString(FontRenderer font, int xSize, int yPositionOfMachineText, String machineName){
-        String localMachineName = StringUtil.localize(machineName+".name");
-        font.drawString(localMachineName, xSize/2-font.getStringWidth(localMachineName)/2, yPositionOfMachineText, StringUtil.DECIMAL_COLOR_WHITE);
+    public static void displayNameString(FontRenderer font, int xSize, int yPositionOfMachineText, String text){
+        font.drawString(text, xSize/2-font.getStringWidth(text)/2, yPositionOfMachineText, StringUtil.DECIMAL_COLOR_WHITE);
+    }
+
+    public static void displayNameString(FontRenderer font, int xSize, int yPositionOfMachineText, TileEntity tile){
+        displayNameString(font, xSize, yPositionOfMachineText, tile.getDisplayName().getFormattedText());
     }
 
     @SideOnly(Side.CLIENT)

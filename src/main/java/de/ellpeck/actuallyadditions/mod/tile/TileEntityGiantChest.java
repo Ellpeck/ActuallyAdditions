@@ -20,12 +20,12 @@ import net.minecraft.util.EnumFacing;
 
 public class TileEntityGiantChest extends TileEntityInventoryBase implements IButtonReactor{
 
-    public TileEntityGiantChest(int slotAmount){
-        super(slotAmount, "giantChest");
+    public TileEntityGiantChest(int slotAmount, String name){
+        super(slotAmount, name);
     }
 
     public TileEntityGiantChest(){
-        this(9*13);
+        this(9*13, "giantChest");
     }
 
     @Override

@@ -47,7 +47,7 @@ public class GuiEnergizer extends GuiContainer{
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y){
-        AssetUtil.displayNameString(this.fontRendererObj, this.xSize, -10, this.energizer.getName());
+        AssetUtil.displayNameString(this.fontRendererObj, this.xSize, -10, this.energizer);
     }
 
     @Override

@@ -53,7 +53,7 @@ public class GuiMiner extends GuiContainer{
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y){
-        AssetUtil.displayNameString(this.fontRendererObj, this.xSize, -10, this.miner.getName());
+        AssetUtil.displayNameString(this.fontRendererObj, this.xSize, -10, this.miner);
     }
 
     @Override

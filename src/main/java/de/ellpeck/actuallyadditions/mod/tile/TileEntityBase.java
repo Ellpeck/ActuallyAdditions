@@ -16,6 +16,7 @@ import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
 import de.ellpeck.actuallyadditions.mod.network.PacketServerToClient;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import de.ellpeck.actuallyadditions.mod.util.compat.TeslaUtil;
 import net.minecraft.block.state.IBlockState;
@@ -27,6 +28,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
@@ -38,69 +41,70 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public abstract class TileEntityBase extends TileEntity implements ITickable{
 
     public static boolean teslaLoaded;
-    public final String name;
     public boolean isRedstonePowered;
     public boolean isPulseMode;
     protected int ticksElapsed;
+    public final String name;
 
     public TileEntityBase(String name){
-        this.name = "container."+ModUtil.MOD_ID+"."+name;
+        this.name = name;
     }
 
     //TODO Change for next major update to use the name variable automatically
     public static void init(){
         ModUtil.LOGGER.info("Registering TileEntities...");
 
-        GameRegistry.registerTileEntity(TileEntityCompost.class, ModUtil.MOD_ID+":tileEntityCompost");
-        GameRegistry.registerTileEntity(TileEntityFeeder.class, ModUtil.MOD_ID+":tileEntityFeeder");
-        GameRegistry.registerTileEntity(TileEntityGiantChest.class, ModUtil.MOD_ID+":tileEntityGiantChest");
-        GameRegistry.registerTileEntity(TileEntityGiantChestMedium.class, ModUtil.MOD_ID+":tileEntityGiantChestMedium");
-        GameRegistry.registerTileEntity(TileEntityGiantChestLarge.class, ModUtil.MOD_ID+":tileEntityGiantChestLarge");
-        GameRegistry.registerTileEntity(TileEntityGrinder.class, ModUtil.MOD_ID+":tileEntityGrinder");
-        GameRegistry.registerTileEntity(TileEntityFurnaceDouble.class, ModUtil.MOD_ID+":tileEntityFurnaceDouble");
-        GameRegistry.registerTileEntity(TileEntityInputter.class, ModUtil.MOD_ID+":tileEntityInputter");
-        GameRegistry.registerTileEntity(TileEntityFishingNet.class, ModUtil.MOD_ID+":tileEntityFishingNet");
-        GameRegistry.registerTileEntity(TileEntityFurnaceSolar.class, ModUtil.MOD_ID+":tileEntityFurnaceSolar");
-        GameRegistry.registerTileEntity(TileEntityHeatCollector.class, ModUtil.MOD_ID+":tileEntityHeatCollector");
-        GameRegistry.registerTileEntity(TileEntityItemRepairer.class, ModUtil.MOD_ID+":tileEntityRepairer");
-        GameRegistry.registerTileEntity(TileEntityGreenhouseGlass.class, ModUtil.MOD_ID+":tileEntityGreenhouseGlass");
-        GameRegistry.registerTileEntity(TileEntityBreaker.class, ModUtil.MOD_ID+":tileEntityBreaker");
-        GameRegistry.registerTileEntity(TileEntityDropper.class, ModUtil.MOD_ID+":tileEntityDropper");
-        GameRegistry.registerTileEntity(TileEntityInputterAdvanced.class, ModUtil.MOD_ID+":tileEntityInputterAdvanced");
-        GameRegistry.registerTileEntity(TileEntityPlacer.class, ModUtil.MOD_ID+":tileEntityPlacer");
-        GameRegistry.registerTileEntity(TileEntityGrinderDouble.class, ModUtil.MOD_ID+":tileEntityGrinderDouble");
-        GameRegistry.registerTileEntity(TileEntityCanolaPress.class, ModUtil.MOD_ID+":tileEntityCanolaPress");
-        GameRegistry.registerTileEntity(TileEntityFermentingBarrel.class, ModUtil.MOD_ID+":tileEntityFermentingBarrel");
-        GameRegistry.registerTileEntity(TileEntityOilGenerator.class, ModUtil.MOD_ID+":tileEntityOilGenerator");
-        GameRegistry.registerTileEntity(TileEntityCoalGenerator.class, ModUtil.MOD_ID+":tileEntityCoalGenerator");
-        GameRegistry.registerTileEntity(TileEntityPhantomItemface.class, ModUtil.MOD_ID+":tileEntityPhantomItemface");
-        GameRegistry.registerTileEntity(TileEntityPhantomLiquiface.class, ModUtil.MOD_ID+":tileEntityPhantomLiquiface");
-        GameRegistry.registerTileEntity(TileEntityPhantomEnergyface.class, ModUtil.MOD_ID+":tileEntityPhantomEnergyface");
-        GameRegistry.registerTileEntity(TileEntityPlayerInterface.class, ModUtil.MOD_ID+":tileEntityPlayerInterface");
-        GameRegistry.registerTileEntity(TileEntityPhantomPlacer.class, ModUtil.MOD_ID+":tileEntityPhantomPlacer");
-        GameRegistry.registerTileEntity(TileEntityPhantomBreaker.class, ModUtil.MOD_ID+":tileEntityPhantomBreaker");
-        GameRegistry.registerTileEntity(TileEntityFluidCollector.class, ModUtil.MOD_ID+":tileEntityFluidCollector");
-        GameRegistry.registerTileEntity(TileEntityFluidPlacer.class, ModUtil.MOD_ID+":tileEntityFluidPlacer");
-        GameRegistry.registerTileEntity(TileEntityLavaFactoryController.class, ModUtil.MOD_ID+":tileEntityLavaFactoryController");
-        GameRegistry.registerTileEntity(TileEntityCoffeeMachine.class, ModUtil.MOD_ID+":tileEntityCoffeeMachine");
-        GameRegistry.registerTileEntity(TileEntityPhantomBooster.class, ModUtil.MOD_ID+":tileEntityPhantomBooster");
-        GameRegistry.registerTileEntity(TileEntityEnergizer.class, ModUtil.MOD_ID+":tileEntityEnergizer");
-        GameRegistry.registerTileEntity(TileEntityEnervator.class, ModUtil.MOD_ID+":tileEntityEnervator");
-        GameRegistry.registerTileEntity(TileEntityXPSolidifier.class, ModUtil.MOD_ID+":tileEntityXPSolidifier");
-        GameRegistry.registerTileEntity(TileEntitySmileyCloud.class, ModUtil.MOD_ID+":tileEntityCloud");
-        GameRegistry.registerTileEntity(TileEntityLeafGenerator.class, ModUtil.MOD_ID+":tileEntityLeafGenerator");
-        GameRegistry.registerTileEntity(TileEntityDirectionalBreaker.class, ModUtil.MOD_ID+":tileEntityDirectionalBreaker");
-        GameRegistry.registerTileEntity(TileEntityRangedCollector.class, ModUtil.MOD_ID+":tileEntityRangedCollector");
-        GameRegistry.registerTileEntity(TileEntityAtomicReconstructor.class, ModUtil.MOD_ID+":tileEntityAtomicReconstructor");
-        GameRegistry.registerTileEntity(TileEntityMiner.class, ModUtil.MOD_ID+":tileEntityMiner");
-        GameRegistry.registerTileEntity(TileEntityFireworkBox.class, ModUtil.MOD_ID+":tileEntityFireworkBox");
-        GameRegistry.registerTileEntity(TileEntityPhantomRedstoneface.class, ModUtil.MOD_ID+":tileEntityPhantomRedstoneface");
-        GameRegistry.registerTileEntity(TileEntityLaserRelayItem.class, ModUtil.MOD_ID+":tileEntityLaserRelayItem");
-        GameRegistry.registerTileEntity(TileEntityLaserRelayEnergy.class, ModUtil.MOD_ID+":tileEntityLaserRelay");
-        GameRegistry.registerTileEntity(TileEntityLaserRelayItemWhitelist.class, ModUtil.MOD_ID+":tileEntityLaserRelayItemWhitelist");
-        GameRegistry.registerTileEntity(TileEntityItemViewer.class, ModUtil.MOD_ID+":tileItemViewer");
-        GameRegistry.registerTileEntity(TileEntityBookletStand.class, ModUtil.MOD_ID+":tileEntityBookletStand");
-        GameRegistry.registerTileEntity(TileEntityDisplayStand.class, ModUtil.MOD_ID+":tileEntityDisplayStand");
+        register(TileEntityCompost.class, "Compost");
+        register(TileEntityFeeder.class, "Feeder");
+        register(TileEntityGiantChest.class, "GiantChest");
+        register(TileEntityGiantChestMedium.class, "GiantChestMedium");
+        register(TileEntityGiantChestLarge.class, "GiantChestLarge");
+        register(TileEntityGrinder.class, "Grinder");
+        register(TileEntityFurnaceDouble.class, "FurnaceDouble");
+        register(TileEntityInputter.class, "Inputter");
+        register(TileEntityFishingNet.class, "FishingNet");
+        register(TileEntityFurnaceSolar.class, "FurnaceSolar");
+        register(TileEntityHeatCollector.class, "HeatCollector");
+        register(TileEntityItemRepairer.class, "Repairer");
+        register(TileEntityGreenhouseGlass.class, "GreenhouseGlass");
+        register(TileEntityBreaker.class, "Breaker");
+        register(TileEntityDropper.class, "Dropper");
+        register(TileEntityInputterAdvanced.class, "InputterAdvanced");
+        register(TileEntityPlacer.class, "Placer");
+        register(TileEntityGrinderDouble.class, "GrinderDouble");
+        register(TileEntityCanolaPress.class, "CanolaPress");
+        register(TileEntityFermentingBarrel.class, "FermentingBarrel");
+        register(TileEntityOilGenerator.class, "OilGenerator");
+        register(TileEntityCoalGenerator.class, "CoalGenerator");
+        register(TileEntityPhantomItemface.class, "PhantomItemface");
+        register(TileEntityPhantomLiquiface.class, "PhantomLiquiface");
+        register(TileEntityPhantomEnergyface.class, "PhantomEnergyface");
+        register(TileEntityPlayerInterface.class, "PlayerInterface");
+        register(TileEntityPhantomPlacer.class, "PhantomPlacer");
+        register(TileEntityPhantomBreaker.class, "PhantomBreaker");
+        register(TileEntityFluidCollector.class, "FluidCollector");
+        register(TileEntityFluidPlacer.class, "FluidPlacer");
+        register(TileEntityLavaFactoryController.class, "LavaFactoryController");
+        register(TileEntityCoffeeMachine.class, "CoffeeMachine");
+        register(TileEntityPhantomBooster.class, "PhantomBooster");
+        register(TileEntityEnergizer.class, "Energizer");
+        register(TileEntityEnervator.class, "Enervator");
+        register(TileEntityXPSolidifier.class, "XPSolidifier");
+        register(TileEntitySmileyCloud.class, "Cloud");
+        register(TileEntityLeafGenerator.class, "LeafGenerator");
+        register(TileEntityDirectionalBreaker.class, "DirectionalBreaker");
+        register(TileEntityRangedCollector.class, "RangedCollector");
+        register(TileEntityAtomicReconstructor.class, "AtomicReconstructor");
+        register(TileEntityMiner.class, "Miner");
+        register(TileEntityFireworkBox.class, "FireworkBox");
+        register(TileEntityPhantomRedstoneface.class, "PhantomRedstoneface");
+        register(TileEntityLaserRelayItem.class, "LaserRelayItem");
+        register(TileEntityLaserRelayEnergy.class, "LaserRelay");
+        register(TileEntityLaserRelayItemWhitelist.class, "LaserRelayItemWhitelist");
+        register(TileEntityItemViewer.class, "ItemViewer");
+        register(TileEntityBookletStand.class, "BookletStand");
+        register(TileEntityDisplayStand.class, "DisplayStand");
+        register(TileEntityShockSuppressor.class, "ShockSuppressor");
 
         if(ModAPIManager.INSTANCE.hasAPI("Tesla|API")){
             ModUtil.LOGGER.info("Tesla API loaded... Activating Tesla Power System integration...");
@@ -111,12 +115,23 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
         }
     }
 
+    private static void register(Class<? extends TileEntityBase> tileClass, String legacyName){
+        try{
+            //This is hacky and dirty but it works so whatever
+            String name = ModUtil.MOD_ID+":"+tileClass.newInstance().name;
+            String oldName = ModUtil.MOD_ID+":tileEntity"+legacyName;
+            GameRegistry.registerTileEntityWithAlternatives(tileClass, name, oldName);
+        }
+        catch(Exception e){
+            ModUtil.LOGGER.fatal("Registering a TileEntity failed!", e);
+        }
+    }
+
     @Override
     public void readFromNBT(NBTTagCompound compound){
         super.readFromNBT(compound);
         this.readSyncableNBT(compound, NBTType.SAVE_TILE);
     }
-
 
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound){
@@ -171,6 +186,11 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
         if(this.isRedstoneToggle() && (type != NBTType.SAVE_BLOCK || this.isPulseMode)){
             compound.setBoolean("IsPulseMode", this.isPulseMode);
         }
+    }
+
+    @Override
+    public ITextComponent getDisplayName(){
+        return new TextComponentTranslation("container."+ModUtil.MOD_ID+"."+this.name+".name");
     }
 
     public void readSyncableNBT(NBTTagCompound compound, NBTType type){
