@@ -11,8 +11,6 @@
 package de.ellpeck.actuallyadditions.mod.jei.booklet;
 
 import de.ellpeck.actuallyadditions.api.booklet.BookletPage;
-import de.ellpeck.actuallyadditions.api.recipe.CrusherRecipe;
-import de.ellpeck.actuallyadditions.mod.nei.NEIBookletRecipe;
 import mezz.jei.api.recipe.IRecipeHandler;
 import mezz.jei.api.recipe.IRecipeWrapper;
 
@@ -31,7 +29,7 @@ public class BookletRecipeHandler implements IRecipeHandler<BookletPage>{
 
     @Override
     public String getRecipeCategoryUid(){
-        return NEIBookletRecipe.NAME;
+        return BookletRecipeCategory.NAME;
     }
 
 

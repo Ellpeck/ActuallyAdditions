@@ -23,6 +23,7 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
+import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
@@ -70,7 +71,7 @@ public class ItemWingsOfTheBats extends ItemBase{
     }
 
     @SubscribeEvent
-    public void onPlayerInteractEvent(PlayerInteractEvent event){
+    public void livingUpdateEvent(LivingEvent.LivingUpdateEvent event){
         if(event.getEntityLiving() instanceof EntityPlayer){
             EntityPlayer player = (EntityPlayer)event.getEntityLiving();
             boolean wingsEquipped = ItemWingsOfTheBats.getWingItem(player) != null;

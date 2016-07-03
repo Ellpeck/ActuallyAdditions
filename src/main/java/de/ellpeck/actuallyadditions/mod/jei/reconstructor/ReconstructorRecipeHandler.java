@@ -11,11 +11,8 @@
 package de.ellpeck.actuallyadditions.mod.jei.reconstructor;
 
 import de.ellpeck.actuallyadditions.api.recipe.LensConversionRecipe;
-import de.ellpeck.actuallyadditions.mod.nei.NEIReconstructorRecipe;
 import mezz.jei.api.recipe.IRecipeHandler;
 import mezz.jei.api.recipe.IRecipeWrapper;
-
-import javax.annotation.Nonnull;
 
 public class ReconstructorRecipeHandler implements IRecipeHandler<LensConversionRecipe>{
 
@@ -26,7 +23,7 @@ public class ReconstructorRecipeHandler implements IRecipeHandler<LensConversion
 
     @Override
     public String getRecipeCategoryUid(){
-        return NEIReconstructorRecipe.NAME;
+        return ReconstructorRecipeCategory.NAME;
     }
 
     @Override

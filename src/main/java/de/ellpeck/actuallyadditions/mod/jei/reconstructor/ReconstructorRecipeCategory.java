@@ -11,7 +11,6 @@
 package de.ellpeck.actuallyadditions.mod.jei.reconstructor;
 
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
-import de.ellpeck.actuallyadditions.mod.nei.NEIReconstructorRecipe;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import mezz.jei.api.IGuiHelper;
@@ -24,6 +23,8 @@ import net.minecraft.item.ItemStack;
 
 public class ReconstructorRecipeCategory implements IRecipeCategory{
 
+    public static final String NAME = "actuallyadditions.reconstructor";
+
     private static final ItemStack RECONSTRUCTOR = new ItemStack(InitBlocks.blockAtomicReconstructor);
     private final IDrawable background;
 
@@ -34,13 +35,13 @@ public class ReconstructorRecipeCategory implements IRecipeCategory{
 
     @Override
     public String getUid(){
-        return NEIReconstructorRecipe.NAME;
+        return NAME;
     }
 
 
     @Override
     public String getTitle(){
-        return StringUtil.localize("container.nei."+NEIReconstructorRecipe.NAME+".name");
+        return StringUtil.localize("container.nei."+NAME+".name");
     }
 
 

@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.jei.booklet;
 
-import de.ellpeck.actuallyadditions.mod.nei.NEIBookletRecipe;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.IDrawable;
@@ -23,6 +22,8 @@ import java.util.Arrays;
 
 public class BookletRecipeCategory implements IRecipeCategory{
 
+    public static final String NAME = "actuallyadditions.booklet";
+
     private final IDrawable background;
 
     public BookletRecipeCategory(IGuiHelper helper){
@@ -32,13 +33,13 @@ public class BookletRecipeCategory implements IRecipeCategory{
 
     @Override
     public String getUid(){
-        return NEIBookletRecipe.NAME;
+        return NAME;
     }
 
 
     @Override
     public String getTitle(){
-        return StringUtil.localize("container.nei."+NEIBookletRecipe.NAME+".name");
+        return StringUtil.localize("container.nei."+NAME+".name");
     }
 
 

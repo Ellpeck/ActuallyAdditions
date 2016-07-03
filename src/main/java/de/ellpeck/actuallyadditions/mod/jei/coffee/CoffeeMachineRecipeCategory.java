@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.jei.coffee;
 
-import de.ellpeck.actuallyadditions.mod.nei.NEICoffeeMachineRecipe;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import mezz.jei.api.IGuiHelper;
@@ -22,6 +21,8 @@ import net.minecraft.client.Minecraft;
 
 public class CoffeeMachineRecipeCategory implements IRecipeCategory{
 
+    public static final String NAME = "actuallyadditions.coffee";
+
     private final IDrawable background;
 
     public CoffeeMachineRecipeCategory(IGuiHelper helper){
@@ -31,13 +32,13 @@ public class CoffeeMachineRecipeCategory implements IRecipeCategory{
 
     @Override
     public String getUid(){
-        return NEICoffeeMachineRecipe.NAME;
+        return NAME;
     }
 
 
     @Override
     public String getTitle(){
-        return StringUtil.localize("container.nei."+NEICoffeeMachineRecipe.NAME+".name");
+        return StringUtil.localize("container.nei."+NAME+".name");
     }
 
 
